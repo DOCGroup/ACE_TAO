@@ -27,7 +27,7 @@ namespace TAO
   /**
    * @class In_BD_String_Argument_T
    *
-   * @brief Template class for IN unbounded (w)string argument.
+   * @brief Template class for IN bounded (w)string argument.
    *
    */
   template<typename S, typename to_S, typename from_S, size_t BOUND>
@@ -37,8 +37,9 @@ namespace TAO
     In_BD_String_Argument_T (const S * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
   private:
     const S * x_;
@@ -47,7 +48,7 @@ namespace TAO
   /**
    * @class Inout_BD_String_Argument_T
    *
-   * @brief Template class for INOUT unbounded (w)string argument.
+   * @brief Template class for INOUT bounded (w)string argument.
    *
    */
   template<typename S, typename to_S, typename from_S, size_t BOUND>
@@ -58,7 +59,9 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
   private:
     mutable S *& x_;
@@ -67,7 +70,7 @@ namespace TAO
   /**
    * @class Out_BD_String_Argument_T
    *
-   * @brief Template class for INOUT unbounded (w)string argument.
+   * @brief Template class for INOUT bounded (w)string argument.
    *
    */
   template<typename S, 
@@ -80,9 +83,7 @@ namespace TAO
   public:
     Out_BD_String_Argument_T (S_out x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
   private:
     mutable S *& x_;
@@ -91,7 +92,7 @@ namespace TAO
   /**
    * @class Ret_BD_String_Argument_T
    *
-   * @brief Template class for return stub value of ub (w)string argument.
+   * @brief Template class for return stub value of bd (w)string argument.
    *
    */
   template<typename S, 
@@ -104,11 +105,12 @@ namespace TAO
   public:
     Ret_BD_String_Argument_T (void);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S * ();
+    virtual void interceptor_result (CORBA::Any *);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S * excp (void);
     S * retn (void);
 
   private:
@@ -118,7 +120,7 @@ namespace TAO
   /**
    * @class In_BD_String_SArgument_T
    *
-   * @brief Template class for IN skeleton UB (w)string argument.
+   * @brief Template class for IN skeleton bd (w)string argument.
    *
    */
   template<typename S, 
@@ -131,11 +133,12 @@ namespace TAO
   public:
     In_BD_String_SArgument_T (void);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator const S * () const;
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    const S * arg (void) const;
 
   private:
     S * x_;
@@ -144,7 +147,7 @@ namespace TAO
   /**
    * @class Inout_BD_String_SArgument_T
    *
-   * @brief Template class for INOUT skeleton UB (w)string argument.
+   * @brief Template class for INOUT skeleton bd (w)string argument.
    *
    */
   template<typename S, 
@@ -159,9 +162,11 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S *& ();
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S *& arg (void);
 
   private:
     S_var x_;
@@ -170,7 +175,7 @@ namespace TAO
   /**
    * @class Out_BD_String_SArgument_T
    *
-   * @brief Template class for INOUT skeleton UB (w)string argument.
+   * @brief Template class for INOUT skeleton bd (w)string argument.
    *
    */
   template<typename S, 
@@ -185,10 +190,8 @@ namespace TAO
     Out_BD_String_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S_out ();
+    S_out arg (void);
 
   private:
     S_var x_;
@@ -197,7 +200,7 @@ namespace TAO
   /**
    * @class Ret_BD_String_SArgument_T
    *
-   * @brief Template class for return skeleton value of UB (w)string.
+   * @brief Template class for return skeleton value of bd (w)string.
    *
    */
   template<typename S, 
@@ -211,10 +214,11 @@ namespace TAO
     Ret_BD_String_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S * ();
+    virtual void interceptor_result (CORBA::Any *);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S *& arg (void);
 
   private:
     S_var x_;

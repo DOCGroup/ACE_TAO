@@ -1,3 +1,11 @@
+Thu Jun 19 20:39:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+
+          Updates to make these files correspond with the 
+          unbounded version.
+
 Thu Jun 19 17:31:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Bench/wire/client.cpp:
