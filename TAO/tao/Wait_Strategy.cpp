@@ -39,8 +39,6 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 {
 }
 
-// Return value just like the return value of
-// <Reactor::handle_events>.
 int
 TAO_Wait_On_Reactor::wait (void)
 {
@@ -56,7 +54,7 @@ TAO_Wait_On_Reactor::wait (void)
   //    call if the reply is not arrived) (Alex).
   // @@ Alex: I think you are right, let's fix it later....
 
-  // Do the event loop, till there are no events and no errors.
+  // Do the event loop, till we received the reply.
 
   int result = 0;
   this->reply_received_ = 0;
@@ -149,10 +147,10 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
   // @@ Carlos: We do this only if the reactor is different right?
   //    (Alex)
   // @@ Alex: that is taken care of in
-  // IIOP_Transport::register_handler, but maybe we shouldn't do this
-  // checking everytime, I recall that there was a problem (sometime
-  // ago) about using the wrong ORB core, but that may have been
-  // fixed...
+  //    IIOP_Transport::register_handler, but maybe we shouldn't do
+  //    this checking everytime, I recall that there was a problem
+  //    (sometime ago) about using the wrong ORB core, but that may
+  //    have been fixed...
 
   // Send the request
   int result =
@@ -188,22 +186,6 @@ TAO_Wait_On_Leader_Follower::wait (void)
   // below:
   TAO_ORB_Core* orb_core =
     this->transport_->orb_core ();
-
-  // Set the state so that we know we're looking for a response.
-
-  // @@ Alex: maybe this should be managed by the Demux strategy?
-  // @@ Alex: this should be set *before* we enter this function,
-  //    actually before we *send* the request, otherwise we can run
-  //    into the following race condition:
-  //    + Thread A is running the event loop
-  //    + Thread B sends the request.
-  //    + Before B sets this flag thread A receives the response.
-  // IMHO the send_request method in the transport should invoke a
-  // method in the Wait_Strategy so we can set the flag on time (and
-  // while holding the L-F lock).
-
-  // @@ Carlos: I have done this: There is a <send_request> method for
-  //    this class now. (Alex).
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
@@ -474,8 +456,6 @@ TAO_Wait_On_Read::wait (void)
   int received_reply = 0;
   while (received_reply == 0)
     {
-      // @@ In this case sockets *must* be blocking.
-      //    We need to control how they are set!
       received_reply = this->transport_->handle_client_input (1);
       if (received_reply == -1)
         return -1;
