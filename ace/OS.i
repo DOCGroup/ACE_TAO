@@ -2888,7 +2888,7 @@ ACE_OS::mmap (void *addr,
 
 #  if defined(ACE_HAS_WINCE)
   ACE_UNUSED_ARG (addr);
-  if(ACE_BIT_ENABLED (flags, MAP_FIXED)     // not supported
+  if (ACE_BIT_ENABLED (flags, MAP_FIXED))     // not supported
   {
     errno = EINVAL;
     return MAP_FAILED;

@@ -3,7 +3,8 @@
 // NT_Service.cpp
 
 #include "ace/config-all.h"
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && \
+   !defined (ACE_HAS_PHARLAP) && !defined (ACE_HAS_WINCE)
 
 #include "ace/NT_Service.h"
 #include "ace/Log_Msg.h"

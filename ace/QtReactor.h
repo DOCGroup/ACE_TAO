@@ -27,10 +27,10 @@
 #include "ace/Map_Manager.h"
 
 // Qttoolkit specific includes.
-#include <qapplication.h>
-#include <qobject.h>
-#include <qsocketnotifier.h>
-#include <qtimer.h>
+#include /**/ <qapplication.h>
+#include /**/ <qobject.h>
+#include /**/ <qsocketnotifier.h>
+#include /**/ <qtimer.h>
 
 /**
  * @class ACE_QtReactor

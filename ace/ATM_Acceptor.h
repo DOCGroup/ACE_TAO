@@ -29,7 +29,7 @@
 #include "ace/ATM_QoS.h"
 
 #if defined (ACE_HAS_LINUX_ATM)
-#include "atm.h"
+#include /**/ "atm.h"
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)

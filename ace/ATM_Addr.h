@@ -32,7 +32,7 @@ typedef ATMSAPAddress ATM_Addr;
 typedef struct sockaddr_atm ATM_Addr;
 #elif defined (ACE_HAS_LINUX_ATM)
 
-#include "atm.h"
+#include /**/ "atm.h"
 
 //pbrandao:as Linux has this 2 structs separeted we "link it" here
 typedef struct _linux_atm_addr

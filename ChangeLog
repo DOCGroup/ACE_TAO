@@ -1,3 +1,165 @@
+Sat Dec 21 18:27:42 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_dll.vcp:
+        * ace/ace_os_dll.vcp:
+        * ace/ace.vcw: eMbedded Visual C++ workspace/projects deleted. These
+          need to be generated from ace.mpc when needed. The make_release
+          script now generates them for each source kit. When needed on a
+          CVS workspace build, use mwc/mpc. The autobuild system has commands
+          generate_workspace and generate_makefile that accomplish this.
+          See autobuild configs in the riverace directory for examples.
+
+        * tests/tests_WinCE.vcw:
+        * tests/ARGV_Test_WinCE.vcp:
+        * tests/Atomic_Op_Test_WinCE.vcp:
+        * tests/Auto_IncDec_Test_WinCE.vcp:
+        * tests/Barrier_Test_WinCE.vcp:
+        * tests/Basic_Types_Test_WinCE.vcp:
+        * tests/Bound_Ptr_Test_WinCE.vcp:
+        * tests/Buffer_Stream_Test_WinCE.vcp:
+        * tests/Cached_Accept_Conn_Test_WinCE.vcp:
+        * tests/Cached_Conn_Test_WinCE.vcp:
+        * tests/Cache_Map_Manager_Test_WinCE.vcp:
+        * tests/Capabilities_Test_WinCE.vcp:
+        * tests/CDR_Array_Test_WinCE.vcp:
+        * tests/CDR_File_Test_WinCE.vcp:
+        * tests/CDR_Test_WinCE.vcp:
+        * tests/Collection_Test_WinCE.vcp:
+        * tests/Conn_Test_WinCE.vcp:
+        * tests/DLList_Test_WinCE.vcp:
+        * tests/DLL_Test_DLL_WinCE.vcp:
+        * tests/DLL_Test_WinCE.vcp:
+        * tests/Dynamic_Priority_Test_WinCE.vcp:
+        * tests/Enum_Interfaces_Test_WinCE.vcp:
+        * tests/Future_Set_Test_WinCE.vcp:
+        * tests/Future_Test_WinCE.vcp:
+        * tests/Handle_Set_Test_WinCE.vcp:
+        * tests/Hash_Map_Bucket_Iterator_Test_WinCE.vcp:
+        * tests/Hash_Map_Manager_Test_WinCE.vcp:
+        * tests/High_Res_Timer_Test_WinCE.vcp:
+        * tests/Lazy_Map_Manager_Test_WinCE.vcp:
+        * tests/Logging_Strategy_Test_WinCE.vcp:
+        * tests/Log_Msg_Test_WinCE.vcp:
+        * tests/Malloc_Test_WinCE.vcp:
+        * tests/Map_Manager_Test_WinCE.vcp:
+        * tests/Map_Test_WinCE.vcp:
+        * tests/Max_Default_Port_Test_WinCE.vcp:
+        * tests/Mem_Map_Test_WinCE.vcp:
+        * tests/MEM_Stream_Test_WinCE.vcp:
+        * tests/Message_Block_Test_WinCE.vcp:
+        * tests/Message_Queue_Notifications_Test_WinCE.vcp:
+        * tests/Message_Queue_Test_Ex_WinCE.vcp:
+        * tests/Message_Queue_Test_WinCE.vcp:
+        * tests/MM_Shared_Memory_Test_WinCE.vcp:
+        * tests/MT_Reactor_Timer_Test_WinCE.vcp:
+        * tests/MT_Reactor_Upcall_Test_WinCE.vcp:
+        * tests/MT_SOCK_Test_WinCE.vcp:
+        * tests/Naming_Test_WinCE.vcp:
+        * tests/New_Fail_Test_WinCE.vcp:
+        * tests/Notify_Performance_Test_WinCE.vcp:
+        * tests/Object_Manager_Test_WinCE.vcp:
+        * tests/OrdMultiSet_Test_WinCE.vcp:
+        * tests/OS_Test_WinCE.vcp:
+        * tests/Priority_Buffer_Test_WinCE.vcp:
+        * tests/Priority_Reactor_Test_WinCE.vcp:
+        * tests/Priority_Task_Test_WinCE.vcp:
+        * tests/Process_Manager_Test_WinCE.vcp:
+        * tests/RB_Tree_Test_WinCE.vcp:
+        * tests/Reactors_Test_WinCE.vcp:
+        * tests/Reactor_Exceptions_Test_WinCE.vcp:
+        * tests/Reactor_Notify_Test_WinCE.vcp:
+        * tests/Reactor_Performance_Test_WinCE.vcp:
+        * tests/Reactor_Timer_Test_WinCE.vcp:
+        * tests/Reader_Writer_Test_WinCE.vcp:
+        * tests/Recursive_Mutex_Test_WinCE.vcp:
+        * tests/Refcounted_Auto_Ptr_Test_WinCE.vcp:
+        * tests/Reverse_Lock_Test_WinCE.vcp:
+        * tests/Semaphore_Test_WinCE.vcp:
+        * tests/Service_Config_DLL_WinCE.vcp:
+        * tests/Service_Config_Test_WinCE.vcp:
+        * tests/Sigset_Ops_Test_WinCE.vcp:
+        * tests/Simple_Message_Block_Test_WinCE.vcp:
+        * tests/SOCK_Connector_Test_WinCE.vcp:
+        * tests/SOCK_Send_Recv_Test_WinCE.vcp:
+        * tests/SOCK_Test_WinCE.vcp:
+        * tests/SPIPE_Test_WinCE.vcp:
+        * tests/SString_Test_WinCE.vcp:
+        * tests/Svc_Handler_Test_WinCE.vcp:
+        * tests/Task_Test_WinCE.vcp:
+        * tests/Thread_Manager_Test_WinCE.vcp:
+        * tests/Thread_Mutex_Test_WinCE.vcp:
+        * tests/Thread_Pool_Reactor_Resume_Test_WinCE.vcp:
+        * tests/Thread_Pool_Reactor_Test_WinCE.vcp:
+        * tests/Thread_Pool_Test_WinCE.vcp:
+        * tests/Timeprobe_Test_WinCE.vcp:
+        * tests/Timer_Queue_Test_WinCE.vcp:
+        * tests/Time_Service_Test_WinCE.vcp:
+        * tests/Time_Value_Test_WinCE.vcp:
+        * tests/Tokens_Test_WinCE.vcp:
+        * tests/TSS_Test_WinCE.vcp:
+        * tests/Upgradable_RW_Test_WinCE.vcp: eMbedded Visual C++
+          workspace/projects deleted. These need to be generated from
+          tests.mpc when needed. The make_release script now generates
+          them for each source kit. When needed on a CVS workspace build,
+          use mwc/mpc. The autobuild system has commands
+          generate_workspace and generate_makefile that accomplish this.
+          See autobuild configs in the riverace directory for examples.
+
+        * tests/tests.mpc: Added New_Fail_Test.
+
+        * ace/config-WinCE.h: Add #define ACE_LACKS_ACE_IOSTREAM. If it has
+          ACE_LACKS_IOSTREAM_TOTALLY, it can't possibly do ACE_IOStream<>.
+
+        * ace/ATM_Acceptor.{h cpp}:
+        * ace/ATM_Addr.{h cpp}:
+        * ace/ATM_Params.h:
+        * ace/ATM_QoS.h:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/FlReactor.cpp:
+        * ace/POSIX_Proactor.cpp:
+        * ace/QtReactor.h:
+        * ace/SUN_Proactor.h:
+        * ace/TkReactor.h: Add /**/ between #include and filename to silence
+          MS warnings about missing files during dependency updates.
+
+        * ace/OS.i: Fixed typo for ACE_HAS_WINCE.
+
+        * ace/OS.{h cpp}: Enabled ACE_OS::mktime() for ACE_HAS_WINCE. To do
+          this, define struct tm similarly to the way it is in the standard
+          C library. When called, converts the struct tm to a SYSTEMTIME,
+          then to a FILETIME, then inserts that into an ACE_Time_Value and
+          pulls out the sec() value.
+          In OS.h, add the ACE_HAS_WINCE section for the ace_timezone()
+          function.
+
+        * ace/Filecache.cpp (ACE_Filecache_Object::update): For ACE_HAS_WINCE,
+          return status to indicate every file has changed since cached.
+          There's probably a way to do this correctly on WinCE, but there's
+          no time to figure it out right now.
+
+        * ace/Logging_Strategy.cpp: In calls to ACE_OS::fopen(), added
+          ACE_LIB_TEXT around naked char strings to build clean with Unicode.
+
+        * ace/NT_Service.{h cpp}: Add ACE_HAS_WINCE to the platforms that
+          don't attempt to build this class.
+
+        * ace/SPIPE_Connector.cpp (connect): Pretty much disabled this for CE.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd: When generating
+          CPU-based /D options, just do /D, not /D<name>=1. If =1 is need
+          for something, add it to the .mpt file.
+
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt: Remove /GX, /Gm,
+          /GR, /Gy, and /Md[d] options - embedded VC++ doesn't do these or the
+          previous near-working .vcp files didn't use them and no value is
+          seen in enabling something not previously used.
+          Insured that the options are consistent, for example, all Release
+          builds use /Ob2 (high level of inlining).
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt: In addition to the
+          above removals, remove /G5 (optimize for Pentium) from Debug build.
+
 Sat Dec 21 12:38:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.cpp (snprintf): Win32 doesn't 0-terminate the string if
@@ -607,6 +769,7 @@ Thu Dec  5 20:30:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Sat Dec  7 19:54:12 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: For WinCE, define S_IFDIR and S_IFREG file mode masks.
+          Also, added define for ENXIO if not supplied (like on WinCE).
 
 Sat Dec 07 14:29:47 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
