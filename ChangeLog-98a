@@ -1,5 +1,9 @@
 Fri Apr 17 11:40:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.cpp (invoke): Should check against null thr_desc, not
+ 	  thr_desc->flag ().  Thanks to "Erickson, Jack (CICG - NY GFX)"
+ 	  <JErickson@exchange.ml.com> for reporting this.
+
 	* ace/OS.h (ACE_Service_Object_Exterminator): Typedef of ACE
 	  factory cleanup funciton. 
 	  (ACE_FACTORY_{DECLARE,DEFINE}): Added an extra argument to pass
