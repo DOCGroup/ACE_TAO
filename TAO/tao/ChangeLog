@@ -1,4 +1,17 @@
-Fri Apr 26 12:53:13 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+Fri Apr 26 13:18:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp: Made the changes
+	  made for IIOP to the above protocols.
+
+Fri Apr 26 12:53:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp:
 	* tao/IIOP_Connection_Handler.cpp: Removed vague debug statement

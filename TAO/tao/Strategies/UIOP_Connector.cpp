@@ -11,7 +11,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
-
+#include "tao/Connect_Strategy.h"
 ACE_RCSID(Strategies,
           UIOP_Connector,
           "$Id$")
@@ -68,6 +68,9 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
+  // Create our connect strategy
+  this->create_connect_strategy ();
+
   if (this->init_uiop_properties () != 0)
     return -1;
 
@@ -109,12 +112,9 @@ TAO_UIOP_Connector::close (void)
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
-    return -1;
-
   TAO_UIOP_Endpoint *uiop_endpoint =
-    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      endpoint );
+    this->remote_endpoint (endpoint);
+
   if (uiop_endpoint == 0)
     return -1;
 
@@ -151,11 +151,10 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for UIOP connection.\n")));
 
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
+
 
   TAO_UIOP_Endpoint *uiop_endpoint =
-    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      desc->endpoint ());
+    this->remote_endpoint (desc->endpoint ());
 
   if (uiop_endpoint == 0)
     return -1;
@@ -163,7 +162,6 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   const ACE_UNIX_Addr &remote_address =
     uiop_endpoint->object_addr ();
 
-  int result = 0;
   TAO_UIOP_Connection_Handler *svc_handler = 0;
 
   if (TAO_debug_level > 2)
@@ -171,29 +169,33 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                 ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
 
-  // Purge connections (if necessary)
-  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+  ACE_Time_Value *max_wait_time =
+    invocation->max_wait_time ();
 
-  if (max_wait_time != 0)
-    {
-      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                       *max_wait_time);
+  ACE_Synch_Options synch_options;
 
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address,
-                                              synch_options);
-    }
-  else
+  this->active_connect_strategy_->synch_options (max_wait_time,
+                                                 synch_options);
+
+
+  int result =
+    this->base_connector_.connect (svc_handler,
+                                   remote_address,
+                                   synch_options);
+
+  if (result == -1 && errno == EWOULDBLOCK)
     {
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address);
+      result =
+        this->active_connect_strategy_->wait (svc_handler,
+                                              max_wait_time);
     }
+
+
+  // Reduce the refcount to the svc_handler that we have. The
+  // increment to the handler is done in make_svc_handler (). Now
+  // that we dont need the reference to it anymore we can decrement
+  // the refcount whether the connection is successful ot not.
+  svc_handler->decr_refcount ();
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -366,6 +368,21 @@ TAO_UIOP_Connector::init_uiop_properties (void)
       recv_buffer_size;
 
   return 0;
+}
+
+TAO_UIOP_Endpoint *
+TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
+{
+  if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
+    return 0;
+
+  TAO_UIOP_Endpoint *uiop_endpoint =
+    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
+                      endpoint );
+  if (uiop_endpoint == 0)
+    return 0;
+
+  return uiop_endpoint;
 }
 
 
