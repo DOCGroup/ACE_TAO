@@ -141,7 +141,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   ch = '*';
   anyval >>= CORBA::Any::to_char (ch);
 
-  this->propsetdef_->define_property ("char_property",
+  this->propsetdef_->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                                      "char_property"),
                                       anyval
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -152,7 +153,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   s = 7;
   anyval >>= s;
 
-  propsetdef_->define_property ("short_property",
+  propsetdef_->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                                "short_property"),
                                 anyval
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -163,7 +165,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   l = 931233;
   anyval >>= l;
   CORBA::Any newany(anyval);
-  propsetdef_->define_property ("long_property",
+  propsetdef_->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                                "long_property"),
                                 anyval
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -174,7 +177,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   f = 4.14F;
   anyval >>= f;
 
-  propsetdef_->define_property ("float_property",
+  propsetdef_->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                                "float_property"),
                                 anyval
                                 ACE_ENV_ARG_PARAMETER);
 
@@ -185,7 +189,8 @@ Client::test_define_property (ACE_ENV_SINGLE_ARG_DECL)
   anyval <<= strvar.in ();
   const char * newstr;
   anyval >>= newstr;
-  propsetdef_->define_property ("string_property",
+  propsetdef_->define_property (ACE_const_cast (CosPropertyService::PropertyName,
+                                                "string_property"),
                                 anyval
                                 ACE_ENV_ARG_PARAMETER);
 
@@ -639,7 +644,8 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   ch = '*';
   anyval >>= CORBA::Any::to_char (ch);
 
-  this->propsetdef_->define_property_with_mode ("char_property",
+  this->propsetdef_->define_property_with_mode (ACE_const_cast (CosPropertyService::PropertyName,
+                                                                "char_property"),
                                                 anyval,
                                                 CosPropertyService::normal
                                                 ACE_ENV_ARG_PARAMETER);
@@ -651,7 +657,8 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   s = 7;
   anyval >>= s;
 
-  propsetdef_->define_property_with_mode ("short_property",
+  propsetdef_->define_property_with_mode (ACE_const_cast (CosPropertyService::PropertyName,
+                                                          "short_property"),
                                           anyval,
                                           CosPropertyService::read_only
                                           ACE_ENV_ARG_PARAMETER);
@@ -675,7 +682,8 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   anyval <<= f;
   f = 4.14F;
   anyval >>= f;
-  propsetdef_->define_property_with_mode ("float_property",
+  propsetdef_->define_property_with_mode (ACE_const_cast (CosPropertyService::PropertyName,
+                                                          "float_property"),
                                           anyval,
                                           CosPropertyService::fixed_readonly
                                           ACE_ENV_ARG_PARAMETER);
@@ -687,7 +695,8 @@ Client::test_define_property_with_mode (ACE_ENV_SINGLE_ARG_DECL)
   const char* newstr;
   anyval >>= newstr;
 
-  propsetdef_->define_property  ("string_property",
+  propsetdef_->define_property  (ACE_const_cast (CosPropertyService::PropertyName,
+                                                 "string_property"),
                                  anyval
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN ( -1);
@@ -701,8 +710,10 @@ Client::test_get_property_value (ACE_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
       // Get the ior property.
-      CORBA::Any_ptr any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR"
-                                                                      ACE_ENV_ARG_PARAMETER);
+      CORBA::Any_ptr any_ptr = 
+        this->propsetdef_->get_property_value (ACE_const_cast (CosPropertyService::PropertyName,
+                                                               "PropertySetDef_IOR")
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check whether the IOR is fine.
