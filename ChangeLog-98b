@@ -103,7 +103,7 @@ Tue Jun 02 12:19:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
           still copying thread_descriptors and deleting the copies
           directly.  This corrupted the cached thread_descriptor.
           Changing them to use Thread_Descriptor_Base solved the problem.
-          Thanks to Zoran Ivanovic <zoranic@pathcom.dot.com> for finding
+          Thanks to Zoran Ivanovic <zoranic@pathcom.com> for finding
           this.
 
 Tue Jun 02 08:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
