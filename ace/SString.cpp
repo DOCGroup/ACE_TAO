@@ -232,16 +232,16 @@ const int ACE_SString::npos = -1;
 const int ACE_WString::npos = -1;
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ostream &
-operator<< (ostream &os, const ACE_CString &cs)
+ACE_OSTREAM_TYPE &
+operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
 {
   if (cs.fast_rep () != 0)
     os << cs.fast_rep ();
   return os;
 }
 
-ostream &
-operator<< (ostream &os, const ACE_WString &ws)
+ACE_OSTREAM_TYPE &
+operator<< (ACE_OSTREAM_TYPE &os, const ACE_WString &ws)
 {
   if (ws.fast_rep () != 0)
     {
@@ -251,8 +251,8 @@ operator<< (ostream &os, const ACE_WString &ws)
   return os;
 }
 
-ostream &
-operator<< (ostream &os, const ACE_SString &ss)
+ACE_OSTREAM_TYPE &
+operator<< (ACE_OSTREAM_TYPE &os, const ACE_SString &ss)
 {
   if (ss.fast_rep () != 0)
     os << ss.fast_rep ();
@@ -1052,11 +1052,11 @@ ACE_WString::check_allocate (size_t len)
         {
           ACE_WSTRING_TYPE *t = (ACE_WSTRING_TYPE *)
             this->allocator_->malloc ((tempbuflen) * sizeof (ACE_WSTRING_TYPE));
- 
+
           ACE_OS::memcpy ((void *) t,
                           (const void *) this->rep_,
                           this->len_ * sizeof (ACE_WSTRING_TYPE));
- 
+
           this->allocator_->free (this->rep_);
           this->rep_ = t;
         }
