@@ -1,3 +1,19 @@
+Sat Dec 28 23:49:09 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/ReactorEx.h: Fixed some bugs with ACE_ReactorEx::dispatch.
+	  For instance, the index should only be incremented when handlers
+	  are dispatched.
+
+	* ace/OS.i: Fixed some typos regarding the ACE_cond_t for NT.
+
+	* examples/Reactor/Proactor/test_proactor.cpp: Dr. Schmidt and I
+	  hacked this to be way cool.  The Peer Handler now uses calls
+	  close_writer on the stream to notify the remote peer when its
+	  done writing.  The Input File Handler sends an mb==0 to tell the
+	  Peer Handler when it's done reading from the file.  The Peer
+	  Handle uses a state variable to OR in all the different
+	  conditions for exiting.  It works.
+
 Fri Dec 27 23:39:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Stream.cpp (pop): Modified the code so that we don't delete
