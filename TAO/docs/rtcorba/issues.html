@@ -102,25 +102,54 @@ redesign of Implementation Repository.</p>
 
 <hr>
 <h4><a name="12">Priority Banded Connections interoperability issues</a></h4>
-<p>Current implementation of Priority Banded Connections in TAO is not interoperable.&nbsp; TAO does not use <CODE>_bind_priority_band</CODE> operation and <CODE>
-RTCorbaPriorityRange</CODE> service context during band establishment. Instead,
-the server embeds a proprietary <CODE> TAO_TAG_ENDPOINTS</CODE> tagged component into
-an object's
-IOR to let the clients know about available priorities and corresponding endpoints. To
-establish a banded connection, the client simply uses the endpoint corresponding
-to the priority of interest. (See <a href="architecture.html">TAO Real-Time Architecture</a> section for more
-details.)</p>
-<p>We can provide an alternative interoperable implementation of Priority Banded
-Connections by
+<p>
+
+Section 4.12.2 (Binding of Priority Banded Connection) of the RT-CORBA
+spec talks about the <CODE>_bind_priority_band</CODE> implicit
+operation.  Clearly, this operation is not completely defined and
+neither is the reply to this implicit operation.  Therefore, it is
+almost impossible to get interoperability between RT-ORBs with respect
+to this operation.  <p>
+
+Even if we make assumptions about the <CODE>_bind_priority_band</CODE>
+implicit operation and its reply, it leads to an architecture where
+there is unnecessary jitter and unpredictability because the
+connection needs to be moved from the Reactor associated with the
+Acceptor to the Reactor associated with correct priority.  This is
+either done with the <CODE>_bind_priority_band</CODE> method or with
+the first request. <p>
+
+Because of the above mentioned issues, TAO does not use
+<CODE>_bind_priority_band</CODE> operation and <CODE>
+RTCorbaPriorityRange</CODE> service context during band
+establishment. Instead, the server embeds a proprietary <CODE>
+TAO_TAG_ENDPOINTS</CODE> tagged component into an object's IOR to let
+the clients know about available priorities and corresponding
+endpoints. To establish a banded connection, the client simply uses
+the endpoint corresponding to the priority of interest. (See <a
+href="architecture.html">TAO Real-Time Architecture</a> section for
+more details.)<p>
+
+Once the semantics of the <CODE>_bind_priority_band</CODE> operation
+have been fully described by the specification or if the application
+can deal with the unpredictability of the first request, and TAO can
+be redesigned to handle the additional complexity of connection
+movement between the Reactors, we can change the behavior of Priority
+Banded Connections by:
+
 <ol>
-  <li>modifying client to use <CODE> bind_priority_band </CODE> operation and
-<CODE> RTCorbaPriorityRange </CODE> service context during band establishment&nbsp;</li>
-  <li>modifying server to move a connection to the appropriate reactor once it receives <CODE> bind_priority_band
-    </CODE>request and/or <CODE> RTCorbaPriorityRange </CODE> service context&nbsp;</li>
-  <li>modifying client to store and
-look up connections based on address + priority range rather than just based on
-    address alone</li>
-</ol>
+
+  <li>modifying client to use <CODE>bind_priority_band</CODE>
+  operation and <CODE> RTCorbaPriorityRange </CODE> service context
+  during <CODE>Object::_validate_connection()</CODE> </li>
+
+  <li>modifying server to move a connection to the appropriate reactor
+  once it receives <CODE> bind_priority_band </CODE>request and/or
+  <CODE> RTCorbaPriorityRange </CODE> service context&nbsp;</li>
+
+  <li>modifying client to store and look up connections based on
+  address + priority range rather than just based on address
+  alone</li> </ol>
 
 <p><a href="#top">[back]</a></p>
 
