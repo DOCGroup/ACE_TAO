@@ -85,6 +85,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
       Object.cpp
       LocalObject.cpp
       ObjectIdListC.cpp
+      ObjectIdListA.cpp
       ORB.cpp
       Policy_ForwardC.cpp
       Policy_ForwardA.cpp
