@@ -1,6 +1,20 @@
-configurations = Release Debug "Static Release" "Static Debug"
-common_defines = WIN32 _WINDOWS
-pch_defines    = ACE_USING_PCH
+configurations        = Release Debug "Static Release" "Static Debug"
+platforms             = Win32
+default_configuration = Debug
+common_defines        = WIN32 _WINDOWS
+pch_defines           = ACE_USING_PCH
+
+Win32 {
+  machine_description = x86
+  machine             = I386
+}
+
+Win64 {
+  machine_description = IA64
+  machine             = IA64
+  cpu_defines         = WIN64
+  add_compile         = /Wp64
+}
 
 Release {
   type_code             = 0x0102
