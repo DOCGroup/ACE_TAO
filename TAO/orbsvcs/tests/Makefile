@@ -53,7 +53,8 @@ DIRS += Concurrency \
   Security \
   Miop \
   LoadBalancing \
-  Log
+  Log \
+  RTCosScheduling
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
