@@ -5838,14 +5838,13 @@ public:
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
                          size_t len,
-                         int error_on_eof = 1);
+                         size_t *bytes_transferred = 0);
   // Receive <len> bytes into <buf> from <handle> (uses the
   // <ACE_OS::read> call, which uses the <read> system call on UNIX
-  // and the <ReadFile> call on Win32). If EOF is reached while
-  // transmitting data, a value of 1 for <error_on_eof> causes -1 to
-  // be returned to the caller. However, if <error_on_eof> is 0,
-  // whatever has been transmitted so far will be returned to the
-  // caller.
+  // and the <ReadFile> call on Win32). If errors occur, -1 is
+  // returned.  If EOF occurs, 0 is returned.  Whatever data has been
+  // transmitted will be returned to the caller through
+  // <bytes_transferred>.
   static int readlink (const char *path,
                        char *buf,
                        size_t bufsiz);
@@ -5869,13 +5868,12 @@ public:
   static ssize_t write_n (ACE_HANDLE handle,
                           const void *buf,
                           size_t len,
-                          int error_on_eof = 1);
+                          size_t *bytes_transferred = 0);
   // Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
   // calls, which is uses the <write> system call on UNIX and the
-  // <WriteFile> call on Win32).  If EOF is reached while transmitting
-  // data, a value of 1 for <error_on_eof> causes -1 to be returned to
-  // the caller. However, if <error_on_eof> is 0, whatever has been
-  // transmitted so far will be returned to the caller.
+  // <WriteFile> call on Win32).  If errors occur, -1 is returned.  If
+  // EOF occurs, 0 is returned.  Whatever data has been transmitted
+  // will be returned to the caller through <bytes_transferred>.
   static ssize_t pwrite (ACE_HANDLE handle,
                          const void *buf,
                          size_t nbyte,

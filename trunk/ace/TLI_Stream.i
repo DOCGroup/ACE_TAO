@@ -66,14 +66,14 @@ inline ssize_t
 ACE_TLI_Stream::send_n (const void *buf,
                         size_t n,
                         const ACE_Time_Value *timeout,
-                        int error_on_eof) const
+                        size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
   return ACE::send_n (this->get_handle (),
                       buf,
                       n,
                       timeout,
-                      error_on_eof);
+                      bytes_transferred);
 }
 
 inline ssize_t
@@ -81,7 +81,7 @@ ACE_TLI_Stream::send_n (const void *buf,
                         size_t n,
                         int flags,
                         const ACE_Time_Value *timeout,
-                        int error_on_eof) const
+                        size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
 
@@ -90,21 +90,21 @@ ACE_TLI_Stream::send_n (const void *buf,
                        n,
                        flags,
                        timeout,
-                       error_on_eof);
+                       bytes_transferred);
 }
 
 inline ssize_t
 ACE_TLI_Stream::recv_n (void *buf,
                         size_t n,
                         const ACE_Time_Value *timeout,
-                        int error_on_eof) const
+                        size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
   return ACE::recv_n (this->get_handle (),
                       buf,
                       n,
                       timeout,
-                      error_on_eof);
+                      bytes_transferred);
 }
 
 inline ssize_t
@@ -112,7 +112,7 @@ ACE_TLI_Stream::recv_n (void *buf,
                         size_t n,
                         int *flags,
                         const ACE_Time_Value *timeout,
-                        int error_on_eof) const
+                        size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
 
@@ -121,7 +121,7 @@ ACE_TLI_Stream::recv_n (void *buf,
                        n,
                        flags,
                        timeout,
-                       error_on_eof);
+                       bytes_transferred);
 }
 
 inline void
