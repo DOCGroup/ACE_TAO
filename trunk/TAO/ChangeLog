@@ -1,3 +1,8 @@
+Fri Jan  2 08:20:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+	  Added include of ace/OS_NS_unistd.h to get ACE_OS::sleep
+
 Fri Jan  2 08:17:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Simple/time-date/Time_Date.cpp:
