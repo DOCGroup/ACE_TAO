@@ -5,30 +5,28 @@
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
 !IF "$(CFG)" == ""
-CFG=ACE dynamic library - Win32 Unicode Debug
+CFG=ACE dynamic library - Win32 Debug
 !MESSAGE No configuration specified.  Defaulting to ACE dynamic library - Win32\
- Unicode Debug.
+ Debug.
 !ENDIF 
 
 !IF "$(CFG)" != "ACE dynamic library - Win32 Release" && "$(CFG)" !=\
- "ACE dynamic library - Win32 Debug" && "$(CFG)" !=\
  "ACE static library - Win32 Release" && "$(CFG)" !=\
  "ACE static library - Win32 Debug" && "$(CFG)" !=\
  "ACE static library - Win32 Unicode Debug" && "$(CFG)" !=\
  "ACE static library - Win32 Unicode Release" && "$(CFG)" !=\
  "ACE dynamic library - Win32 Unicode Debug" && "$(CFG)" !=\
- "ACE dynamic library - Win32 Unicode Release"
+ "ACE dynamic library - Win32 Unicode Release" && "$(CFG)" !=\
+ "ACE dynamic library - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ace.mak" CFG="ACE dynamic library - Win32 Unicode Debug"
+!MESSAGE NMAKE /f "ace.mak" CFG="ACE dynamic library - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "ACE dynamic library - Win32 Release" (based on\
- "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "ACE dynamic library - Win32 Debug" (based on\
  "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ACE static library - Win32 Release" (based on\
  "Win32 (x86) Static Library")
@@ -42,6 +40,8 @@ CFG=ACE dynamic library - Win32 Unicode Debug
  "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "ACE dynamic library - Win32 Unicode Release" (based on\
  "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ACE dynamic library - Win32 Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
 !ENDIF 
@@ -53,7 +53,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-# PROP Target_Last_Scanned "ACE dynamic library - Win32 Unicode Debug"
+# PROP Target_Last_Scanned "ACE dynamic library - Win32 Debug"
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Release"
 
@@ -207,9 +207,9 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS"\
- /Fp"$(INTDIR)/ACE dynamic library.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
+CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D\
+ "_WINDOWS" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Release/
 CPP_SBRS=.\.
 
@@ -382,339 +382,6 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE dynamic library\Debug"
-# PROP BASE Intermediate_Dir "ACE dynamic library\Debug"
-# PROP BASE Target_Dir "ACE dynamic library"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\Debug"
-# PROP Target_Dir "ACE dynamic library"
-OUTDIR=.
-INTDIR=.\DLL\Debug
-
-ALL : "$(OUTDIR)\ACE dynamic library.dll"
-
-CLEAN : 
-	-@erase "$(INTDIR)\ACE.obj"
-	-@erase "$(INTDIR)\Activation_Queue.obj"
-	-@erase "$(INTDIR)\Addr.obj"
-	-@erase "$(INTDIR)\ARGV.obj"
-	-@erase "$(INTDIR)\Asynch_IO.obj"
-	-@erase "$(INTDIR)\CORBA_Handler.obj"
-	-@erase "$(INTDIR)\Date_Time.obj"
-	-@erase "$(INTDIR)\DEV.obj"
-	-@erase "$(INTDIR)\DEV_Addr.obj"
-	-@erase "$(INTDIR)\DEV_Connector.obj"
-	-@erase "$(INTDIR)\DEV_IO.obj"
-	-@erase "$(INTDIR)\Dump.obj"
-	-@erase "$(INTDIR)\Dynamic.obj"
-	-@erase "$(INTDIR)\Event_Handler.obj"
-	-@erase "$(INTDIR)\FIFO.obj"
-	-@erase "$(INTDIR)\FIFO_Recv.obj"
-	-@erase "$(INTDIR)\FIFO_Recv_Msg.obj"
-	-@erase "$(INTDIR)\FIFO_Send.obj"
-	-@erase "$(INTDIR)\FIFO_Send_Msg.obj"
-	-@erase "$(INTDIR)\FILE.obj"
-	-@erase "$(INTDIR)\FILE_Addr.obj"
-	-@erase "$(INTDIR)\FILE_Connector.obj"
-	-@erase "$(INTDIR)\FILE_IO.obj"
-	-@erase "$(INTDIR)\Filecache.obj"
-	-@erase "$(INTDIR)\Get_Opt.obj"
-	-@erase "$(INTDIR)\Handle_Set.obj"
-	-@erase "$(INTDIR)\High_Res_Timer.obj"
-	-@erase "$(INTDIR)\INET_Addr.obj"
-	-@erase "$(INTDIR)\IO_Cntl_Msg.obj"
-	-@erase "$(INTDIR)\IO_SAP.obj"
-	-@erase "$(INTDIR)\IOStream.obj"
-	-@erase "$(INTDIR)\IPC_SAP.obj"
-	-@erase "$(INTDIR)\Local_Name_Space.obj"
-	-@erase "$(INTDIR)\Local_Tokens.obj"
-	-@erase "$(INTDIR)\Log_Msg.obj"
-	-@erase "$(INTDIR)\Log_Record.obj"
-	-@erase "$(INTDIR)\LSOCK.obj"
-	-@erase "$(INTDIR)\LSOCK_Acceptor.obj"
-	-@erase "$(INTDIR)\LSOCK_CODgram.obj"
-	-@erase "$(INTDIR)\LSOCK_Connector.obj"
-	-@erase "$(INTDIR)\LSOCK_Dgram.obj"
-	-@erase "$(INTDIR)\LSOCK_Stream.obj"
-	-@erase "$(INTDIR)\Malloc.obj"
-	-@erase "$(INTDIR)\Mem_Map.obj"
-	-@erase "$(INTDIR)\Memory_Pool.obj"
-	-@erase "$(INTDIR)\Message_Block.obj"
-	-@erase "$(INTDIR)\Method_Object.obj"
-	-@erase "$(INTDIR)\Multiplexor.obj"
-	-@erase "$(INTDIR)\Name_Proxy.obj"
-	-@erase "$(INTDIR)\Name_Request_Reply.obj"
-	-@erase "$(INTDIR)\Name_Space.obj"
-	-@erase "$(INTDIR)\Naming_Context.obj"
-	-@erase "$(INTDIR)\Object_Manager.obj"
-	-@erase "$(INTDIR)\Obstack.obj"
-	-@erase "$(INTDIR)\OS.obj"
-	-@erase "$(INTDIR)\Parse_Node.obj"
-	-@erase "$(INTDIR)\Pipe.obj"
-	-@erase "$(INTDIR)\Proactor.obj"
-	-@erase "$(INTDIR)\Process.obj"
-	-@erase "$(INTDIR)\Process_Manager.obj"
-	-@erase "$(INTDIR)\Profile_Timer.obj"
-	-@erase "$(INTDIR)\Reactor.obj"
-	-@erase "$(INTDIR)\ReactorEx.obj"
-	-@erase "$(INTDIR)\Read_Buffer.obj"
-	-@erase "$(INTDIR)\Registry.obj"
-	-@erase "$(INTDIR)\Registry_Name_Space.obj"
-	-@erase "$(INTDIR)\Remote_Name_Space.obj"
-	-@erase "$(INTDIR)\Remote_Tokens.obj"
-	-@erase "$(INTDIR)\Sched_Params.obj"
-	-@erase "$(INTDIR)\Service_Config.obj"
-	-@erase "$(INTDIR)\Service_Main.obj"
-	-@erase "$(INTDIR)\Service_Manager.obj"
-	-@erase "$(INTDIR)\Service_Object.obj"
-	-@erase "$(INTDIR)\Service_Record.obj"
-	-@erase "$(INTDIR)\Service_Repository.obj"
-	-@erase "$(INTDIR)\Shared_Memory_MM.obj"
-	-@erase "$(INTDIR)\Shared_Memory_SV.obj"
-	-@erase "$(INTDIR)\Shared_Object.obj"
-	-@erase "$(INTDIR)\Signal.obj"
-	-@erase "$(INTDIR)\SOCK.obj"
-	-@erase "$(INTDIR)\SOCK_Acceptor.obj"
-	-@erase "$(INTDIR)\SOCK_CODgram.obj"
-	-@erase "$(INTDIR)\SOCK_Connector.obj"
-	-@erase "$(INTDIR)\SOCK_Dgram.obj"
-	-@erase "$(INTDIR)\SOCK_Dgram_Bcast.obj"
-	-@erase "$(INTDIR)\SOCK_Dgram_Mcast.obj"
-	-@erase "$(INTDIR)\SOCK_IO.obj"
-	-@erase "$(INTDIR)\SOCK_Stream.obj"
-	-@erase "$(INTDIR)\SPIPE.obj"
-	-@erase "$(INTDIR)\SPIPE_Acceptor.obj"
-	-@erase "$(INTDIR)\SPIPE_Addr.obj"
-	-@erase "$(INTDIR)\SPIPE_Connector.obj"
-	-@erase "$(INTDIR)\SPIPE_Stream.obj"
-	-@erase "$(INTDIR)\SString.obj"
-	-@erase "$(INTDIR)\Strategies.obj"
-	-@erase "$(INTDIR)\SV_Message.obj"
-	-@erase "$(INTDIR)\SV_Message_Queue.obj"
-	-@erase "$(INTDIR)\SV_Semaphore_Complex.obj"
-	-@erase "$(INTDIR)\SV_Semaphore_Simple.obj"
-	-@erase "$(INTDIR)\SV_Shared_Memory.obj"
-	-@erase "$(INTDIR)\Svc_Conf_l.obj"
-	-@erase "$(INTDIR)\Svc_Conf_y.obj"
-	-@erase "$(INTDIR)\Synch.obj"
-	-@erase "$(INTDIR)\Synch_Options.obj"
-	-@erase "$(INTDIR)\System_Time.obj"
-	-@erase "$(INTDIR)\Task.obj"
-	-@erase "$(INTDIR)\Thread.obj"
-	-@erase "$(INTDIR)\Thread_Manager.obj"
-	-@erase "$(INTDIR)\Time_Request_Reply.obj"
-	-@erase "$(INTDIR)\Timer_Queue.obj"
-	-@erase "$(INTDIR)\TLI.obj"
-	-@erase "$(INTDIR)\TLI_Acceptor.obj"
-	-@erase "$(INTDIR)\TLI_Connector.obj"
-	-@erase "$(INTDIR)\TLI_Stream.obj"
-	-@erase "$(INTDIR)\Token.obj"
-	-@erase "$(INTDIR)\Token_Collection.obj"
-	-@erase "$(INTDIR)\Token_Invariants.obj"
-	-@erase "$(INTDIR)\Token_Manager.obj"
-	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\Trace.obj"
-	-@erase "$(INTDIR)\TTY_IO.obj"
-	-@erase "$(INTDIR)\UNIX_Addr.obj"
-	-@erase "$(INTDIR)\UPIPE_Acceptor.obj"
-	-@erase "$(INTDIR)\UPIPE_Connector.obj"
-	-@erase "$(INTDIR)\UPIPE_Stream.obj"
-	-@erase "$(INTDIR)\vc40.idb"
-	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(OUTDIR)\ACE dynamic library.dll"
-	-@erase "$(OUTDIR)\ACE dynamic library.exp"
-	-@erase "$(OUTDIR)\ACE dynamic library.ilk"
-	-@erase "$(OUTDIR)\ACE dynamic library.lib"
-	-@erase "$(OUTDIR)\ACE dynamic library.pdb"
-
-"$(INTDIR)" :
-    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
-
-CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D\
- "_WINDOWS" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\DLL\Debug/
-CPP_SBRS=.\.
-
-.c{$(CPP_OBJS)}.obj:
-   $(CPP) $(CPP_PROJ) $<  
-
-.cpp{$(CPP_OBJS)}.obj:
-   $(CPP) $(CPP_PROJ) $<  
-
-.cxx{$(CPP_OBJS)}.obj:
-   $(CPP) $(CPP_PROJ) $<  
-
-.c{$(CPP_SBRS)}.sbr:
-   $(CPP) $(CPP_PROJ) $<  
-
-.cpp{$(CPP_SBRS)}.sbr:
-   $(CPP) $(CPP_PROJ) $<  
-
-.cxx{$(CPP_SBRS)}.sbr:
-   $(CPP) $(CPP_PROJ) $<  
-
-MTL=mktyplib.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /win32
-# ADD MTL /nologo /D "_DEBUG" /win32
-MTL_PROJ=/nologo /D "_DEBUG" /win32 
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/ACE dynamic library.bsc" 
-BSC32_SBRS= \
-	
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-LINK32_FLAGS=advapi32.lib /nologo /subsystem:windows /dll /incremental:yes\
- /pdb:"$(OUTDIR)/ACE dynamic library.pdb" /debug /machine:I386\
- /out:"$(OUTDIR)/ACE dynamic library.dll"\
- /implib:"$(OUTDIR)/ACE dynamic library.lib" 
-LINK32_OBJS= \
-	"$(INTDIR)\ACE.obj" \
-	"$(INTDIR)\Activation_Queue.obj" \
-	"$(INTDIR)\Addr.obj" \
-	"$(INTDIR)\ARGV.obj" \
-	"$(INTDIR)\Asynch_IO.obj" \
-	"$(INTDIR)\CORBA_Handler.obj" \
-	"$(INTDIR)\Date_Time.obj" \
-	"$(INTDIR)\DEV.obj" \
-	"$(INTDIR)\DEV_Addr.obj" \
-	"$(INTDIR)\DEV_Connector.obj" \
-	"$(INTDIR)\DEV_IO.obj" \
-	"$(INTDIR)\Dump.obj" \
-	"$(INTDIR)\Dynamic.obj" \
-	"$(INTDIR)\Event_Handler.obj" \
-	"$(INTDIR)\FIFO.obj" \
-	"$(INTDIR)\FIFO_Recv.obj" \
-	"$(INTDIR)\FIFO_Recv_Msg.obj" \
-	"$(INTDIR)\FIFO_Send.obj" \
-	"$(INTDIR)\FIFO_Send_Msg.obj" \
-	"$(INTDIR)\FILE.obj" \
-	"$(INTDIR)\FILE_Addr.obj" \
-	"$(INTDIR)\FILE_Connector.obj" \
-	"$(INTDIR)\FILE_IO.obj" \
-	"$(INTDIR)\Filecache.obj" \
-	"$(INTDIR)\Get_Opt.obj" \
-	"$(INTDIR)\Handle_Set.obj" \
-	"$(INTDIR)\High_Res_Timer.obj" \
-	"$(INTDIR)\INET_Addr.obj" \
-	"$(INTDIR)\IO_Cntl_Msg.obj" \
-	"$(INTDIR)\IO_SAP.obj" \
-	"$(INTDIR)\IOStream.obj" \
-	"$(INTDIR)\IPC_SAP.obj" \
-	"$(INTDIR)\Local_Name_Space.obj" \
-	"$(INTDIR)\Local_Tokens.obj" \
-	"$(INTDIR)\Log_Msg.obj" \
-	"$(INTDIR)\Log_Record.obj" \
-	"$(INTDIR)\LSOCK.obj" \
-	"$(INTDIR)\LSOCK_Acceptor.obj" \
-	"$(INTDIR)\LSOCK_CODgram.obj" \
-	"$(INTDIR)\LSOCK_Connector.obj" \
-	"$(INTDIR)\LSOCK_Dgram.obj" \
-	"$(INTDIR)\LSOCK_Stream.obj" \
-	"$(INTDIR)\Malloc.obj" \
-	"$(INTDIR)\Mem_Map.obj" \
-	"$(INTDIR)\Memory_Pool.obj" \
-	"$(INTDIR)\Message_Block.obj" \
-	"$(INTDIR)\Method_Object.obj" \
-	"$(INTDIR)\Multiplexor.obj" \
-	"$(INTDIR)\Name_Proxy.obj" \
-	"$(INTDIR)\Name_Request_Reply.obj" \
-	"$(INTDIR)\Name_Space.obj" \
-	"$(INTDIR)\Naming_Context.obj" \
-	"$(INTDIR)\Object_Manager.obj" \
-	"$(INTDIR)\Obstack.obj" \
-	"$(INTDIR)\OS.obj" \
-	"$(INTDIR)\Parse_Node.obj" \
-	"$(INTDIR)\Pipe.obj" \
-	"$(INTDIR)\Proactor.obj" \
-	"$(INTDIR)\Process.obj" \
-	"$(INTDIR)\Process_Manager.obj" \
-	"$(INTDIR)\Profile_Timer.obj" \
-	"$(INTDIR)\Reactor.obj" \
-	"$(INTDIR)\ReactorEx.obj" \
-	"$(INTDIR)\Read_Buffer.obj" \
-	"$(INTDIR)\Registry.obj" \
-	"$(INTDIR)\Registry_Name_Space.obj" \
-	"$(INTDIR)\Remote_Name_Space.obj" \
-	"$(INTDIR)\Remote_Tokens.obj" \
-	"$(INTDIR)\Sched_Params.obj" \
-	"$(INTDIR)\Service_Config.obj" \
-	"$(INTDIR)\Service_Main.obj" \
-	"$(INTDIR)\Service_Manager.obj" \
-	"$(INTDIR)\Service_Object.obj" \
-	"$(INTDIR)\Service_Record.obj" \
-	"$(INTDIR)\Service_Repository.obj" \
-	"$(INTDIR)\Shared_Memory_MM.obj" \
-	"$(INTDIR)\Shared_Memory_SV.obj" \
-	"$(INTDIR)\Shared_Object.obj" \
-	"$(INTDIR)\Signal.obj" \
-	"$(INTDIR)\SOCK.obj" \
-	"$(INTDIR)\SOCK_Acceptor.obj" \
-	"$(INTDIR)\SOCK_CODgram.obj" \
-	"$(INTDIR)\SOCK_Connector.obj" \
-	"$(INTDIR)\SOCK_Dgram.obj" \
-	"$(INTDIR)\SOCK_Dgram_Bcast.obj" \
-	"$(INTDIR)\SOCK_Dgram_Mcast.obj" \
-	"$(INTDIR)\SOCK_IO.obj" \
-	"$(INTDIR)\SOCK_Stream.obj" \
-	"$(INTDIR)\SPIPE.obj" \
-	"$(INTDIR)\SPIPE_Acceptor.obj" \
-	"$(INTDIR)\SPIPE_Addr.obj" \
-	"$(INTDIR)\SPIPE_Connector.obj" \
-	"$(INTDIR)\SPIPE_Stream.obj" \
-	"$(INTDIR)\SString.obj" \
-	"$(INTDIR)\Strategies.obj" \
-	"$(INTDIR)\SV_Message.obj" \
-	"$(INTDIR)\SV_Message_Queue.obj" \
-	"$(INTDIR)\SV_Semaphore_Complex.obj" \
-	"$(INTDIR)\SV_Semaphore_Simple.obj" \
-	"$(INTDIR)\SV_Shared_Memory.obj" \
-	"$(INTDIR)\Svc_Conf_l.obj" \
-	"$(INTDIR)\Svc_Conf_y.obj" \
-	"$(INTDIR)\Synch.obj" \
-	"$(INTDIR)\Synch_Options.obj" \
-	"$(INTDIR)\System_Time.obj" \
-	"$(INTDIR)\Task.obj" \
-	"$(INTDIR)\Thread.obj" \
-	"$(INTDIR)\Thread_Manager.obj" \
-	"$(INTDIR)\Time_Request_Reply.obj" \
-	"$(INTDIR)\Timer_Queue.obj" \
-	"$(INTDIR)\TLI.obj" \
-	"$(INTDIR)\TLI_Acceptor.obj" \
-	"$(INTDIR)\TLI_Connector.obj" \
-	"$(INTDIR)\TLI_Stream.obj" \
-	"$(INTDIR)\Token.obj" \
-	"$(INTDIR)\Token_Collection.obj" \
-	"$(INTDIR)\Token_Invariants.obj" \
-	"$(INTDIR)\Token_Manager.obj" \
-	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\Trace.obj" \
-	"$(INTDIR)\TTY_IO.obj" \
-	"$(INTDIR)\UNIX_Addr.obj" \
-	"$(INTDIR)\UPIPE_Acceptor.obj" \
-	"$(INTDIR)\UPIPE_Connector.obj" \
-	"$(INTDIR)\UPIPE_Stream.obj"
-
-"$(OUTDIR)\ACE dynamic library.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
 
 # PROP BASE Use_MFC 0
@@ -865,9 +532,9 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS"\
- /Fp"$(INTDIR)/ACE static library.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
+CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D\
+ "_WINDOWS" /Fp"$(INTDIR)/ACE static library.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Release/
 CPP_SBRS=.\.
 
@@ -1181,9 +848,9 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS"\
- /Fp"$(INTDIR)/ACE static library.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
+CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D\
+ "_WINDOWS" /Fp"$(INTDIR)/ACE static library.pch" /YX /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Debug/
 CPP_SBRS=.\.
 
@@ -1497,9 +1164,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
-CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS"\
- /D "UNICODE" /Fp"$(INTDIR)/ACE static library.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
+CPP_PROJ=/nologo /G5 /MTd /W3 /GX /Z7 /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D\
+ "_WINDOWS" /D "UNICODE" /Fp"$(INTDIR)/ACE static library.pch" /YX\
+ /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Unicode_Debug/
 CPP_SBRS=.\.
 
@@ -1813,9 +1481,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
-CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D\
- "UNICODE" /Fp"$(INTDIR)/ACE static library.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
+CPP_PROJ=/nologo /G5 /MT /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D\
+ "_WINDOWS" /D "UNICODE" /Fp"$(INTDIR)/ACE static library.pch" /YX\
+ /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\LIB\Unicode_Release/
 CPP_SBRS=.\.
 
@@ -2135,9 +1804,9 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
-CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D\
- "_WINDOWS" /D "UNICODE" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX\
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
+CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "WIN32" /D\
+ "_DEBUG" /D "_WINDOWS" /D "UNICODE" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Unicode_Debug/
 CPP_SBRS=.\.
@@ -2463,9 +2132,10 @@ CLEAN :
 
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
-CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D\
- "UNICODE" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX /Fo"$(INTDIR)/" /c 
+# ADD CPP /nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /c
+CPP_PROJ=/nologo /G5 /MD /W3 /GX /O2 /I "..\STL" /D "WIN32" /D "NDEBUG" /D\
+ "_WINDOWS" /D "UNICODE" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX\
+ /Fo"$(INTDIR)/" /c 
 CPP_OBJS=.\DLL\Unicode_Release/
 CPP_SBRS=.\.
 
@@ -2638,23 +2308,358 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ACE dynamic library\Debug"
+# PROP BASE Intermediate_Dir "ACE dynamic library\Debug"
+# PROP BASE Target_Dir "ACE dynamic library"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "DLL\Debug"
+# PROP Target_Dir "ACE dynamic library"
+OUTDIR=.\.
+INTDIR=.\DLL\Debug
+
+ALL : "$(OUTDIR)\ace.dll"
+
+CLEAN : 
+	-@erase "$(INTDIR)\ACE.obj"
+	-@erase "$(INTDIR)\Activation_Queue.obj"
+	-@erase "$(INTDIR)\Addr.obj"
+	-@erase "$(INTDIR)\ARGV.obj"
+	-@erase "$(INTDIR)\Asynch_IO.obj"
+	-@erase "$(INTDIR)\CORBA_Handler.obj"
+	-@erase "$(INTDIR)\Date_Time.obj"
+	-@erase "$(INTDIR)\DEV.obj"
+	-@erase "$(INTDIR)\DEV_Addr.obj"
+	-@erase "$(INTDIR)\DEV_Connector.obj"
+	-@erase "$(INTDIR)\DEV_IO.obj"
+	-@erase "$(INTDIR)\Dump.obj"
+	-@erase "$(INTDIR)\Dynamic.obj"
+	-@erase "$(INTDIR)\Event_Handler.obj"
+	-@erase "$(INTDIR)\FIFO.obj"
+	-@erase "$(INTDIR)\FIFO_Recv.obj"
+	-@erase "$(INTDIR)\FIFO_Recv_Msg.obj"
+	-@erase "$(INTDIR)\FIFO_Send.obj"
+	-@erase "$(INTDIR)\FIFO_Send_Msg.obj"
+	-@erase "$(INTDIR)\FILE.obj"
+	-@erase "$(INTDIR)\FILE_Addr.obj"
+	-@erase "$(INTDIR)\FILE_Connector.obj"
+	-@erase "$(INTDIR)\FILE_IO.obj"
+	-@erase "$(INTDIR)\Filecache.obj"
+	-@erase "$(INTDIR)\Get_Opt.obj"
+	-@erase "$(INTDIR)\Handle_Set.obj"
+	-@erase "$(INTDIR)\High_Res_Timer.obj"
+	-@erase "$(INTDIR)\INET_Addr.obj"
+	-@erase "$(INTDIR)\IO_Cntl_Msg.obj"
+	-@erase "$(INTDIR)\IO_SAP.obj"
+	-@erase "$(INTDIR)\IOStream.obj"
+	-@erase "$(INTDIR)\IPC_SAP.obj"
+	-@erase "$(INTDIR)\Local_Name_Space.obj"
+	-@erase "$(INTDIR)\Local_Tokens.obj"
+	-@erase "$(INTDIR)\Log_Msg.obj"
+	-@erase "$(INTDIR)\Log_Record.obj"
+	-@erase "$(INTDIR)\LSOCK.obj"
+	-@erase "$(INTDIR)\LSOCK_Acceptor.obj"
+	-@erase "$(INTDIR)\LSOCK_CODgram.obj"
+	-@erase "$(INTDIR)\LSOCK_Connector.obj"
+	-@erase "$(INTDIR)\LSOCK_Dgram.obj"
+	-@erase "$(INTDIR)\LSOCK_Stream.obj"
+	-@erase "$(INTDIR)\Malloc.obj"
+	-@erase "$(INTDIR)\Mem_Map.obj"
+	-@erase "$(INTDIR)\Memory_Pool.obj"
+	-@erase "$(INTDIR)\Message_Block.obj"
+	-@erase "$(INTDIR)\Method_Object.obj"
+	-@erase "$(INTDIR)\Multiplexor.obj"
+	-@erase "$(INTDIR)\Name_Proxy.obj"
+	-@erase "$(INTDIR)\Name_Request_Reply.obj"
+	-@erase "$(INTDIR)\Name_Space.obj"
+	-@erase "$(INTDIR)\Naming_Context.obj"
+	-@erase "$(INTDIR)\Object_Manager.obj"
+	-@erase "$(INTDIR)\Obstack.obj"
+	-@erase "$(INTDIR)\OS.obj"
+	-@erase "$(INTDIR)\Parse_Node.obj"
+	-@erase "$(INTDIR)\Pipe.obj"
+	-@erase "$(INTDIR)\Proactor.obj"
+	-@erase "$(INTDIR)\Process.obj"
+	-@erase "$(INTDIR)\Process_Manager.obj"
+	-@erase "$(INTDIR)\Profile_Timer.obj"
+	-@erase "$(INTDIR)\Reactor.obj"
+	-@erase "$(INTDIR)\ReactorEx.obj"
+	-@erase "$(INTDIR)\Read_Buffer.obj"
+	-@erase "$(INTDIR)\Registry.obj"
+	-@erase "$(INTDIR)\Registry_Name_Space.obj"
+	-@erase "$(INTDIR)\Remote_Name_Space.obj"
+	-@erase "$(INTDIR)\Remote_Tokens.obj"
+	-@erase "$(INTDIR)\Sched_Params.obj"
+	-@erase "$(INTDIR)\Service_Config.obj"
+	-@erase "$(INTDIR)\Service_Main.obj"
+	-@erase "$(INTDIR)\Service_Manager.obj"
+	-@erase "$(INTDIR)\Service_Object.obj"
+	-@erase "$(INTDIR)\Service_Record.obj"
+	-@erase "$(INTDIR)\Service_Repository.obj"
+	-@erase "$(INTDIR)\Shared_Memory_MM.obj"
+	-@erase "$(INTDIR)\Shared_Memory_SV.obj"
+	-@erase "$(INTDIR)\Shared_Object.obj"
+	-@erase "$(INTDIR)\Signal.obj"
+	-@erase "$(INTDIR)\SOCK.obj"
+	-@erase "$(INTDIR)\SOCK_Acceptor.obj"
+	-@erase "$(INTDIR)\SOCK_CODgram.obj"
+	-@erase "$(INTDIR)\SOCK_Connector.obj"
+	-@erase "$(INTDIR)\SOCK_Dgram.obj"
+	-@erase "$(INTDIR)\SOCK_Dgram_Bcast.obj"
+	-@erase "$(INTDIR)\SOCK_Dgram_Mcast.obj"
+	-@erase "$(INTDIR)\SOCK_IO.obj"
+	-@erase "$(INTDIR)\SOCK_Stream.obj"
+	-@erase "$(INTDIR)\SPIPE.obj"
+	-@erase "$(INTDIR)\SPIPE_Acceptor.obj"
+	-@erase "$(INTDIR)\SPIPE_Addr.obj"
+	-@erase "$(INTDIR)\SPIPE_Connector.obj"
+	-@erase "$(INTDIR)\SPIPE_Stream.obj"
+	-@erase "$(INTDIR)\SString.obj"
+	-@erase "$(INTDIR)\Strategies.obj"
+	-@erase "$(INTDIR)\SV_Message.obj"
+	-@erase "$(INTDIR)\SV_Message_Queue.obj"
+	-@erase "$(INTDIR)\SV_Semaphore_Complex.obj"
+	-@erase "$(INTDIR)\SV_Semaphore_Simple.obj"
+	-@erase "$(INTDIR)\SV_Shared_Memory.obj"
+	-@erase "$(INTDIR)\Svc_Conf_l.obj"
+	-@erase "$(INTDIR)\Svc_Conf_y.obj"
+	-@erase "$(INTDIR)\Synch.obj"
+	-@erase "$(INTDIR)\Synch_Options.obj"
+	-@erase "$(INTDIR)\System_Time.obj"
+	-@erase "$(INTDIR)\Task.obj"
+	-@erase "$(INTDIR)\Thread.obj"
+	-@erase "$(INTDIR)\Thread_Manager.obj"
+	-@erase "$(INTDIR)\Time_Request_Reply.obj"
+	-@erase "$(INTDIR)\Timer_Queue.obj"
+	-@erase "$(INTDIR)\TLI.obj"
+	-@erase "$(INTDIR)\TLI_Acceptor.obj"
+	-@erase "$(INTDIR)\TLI_Connector.obj"
+	-@erase "$(INTDIR)\TLI_Stream.obj"
+	-@erase "$(INTDIR)\Token.obj"
+	-@erase "$(INTDIR)\Token_Collection.obj"
+	-@erase "$(INTDIR)\Token_Invariants.obj"
+	-@erase "$(INTDIR)\Token_Manager.obj"
+	-@erase "$(INTDIR)\Token_Request_Reply.obj"
+	-@erase "$(INTDIR)\Trace.obj"
+	-@erase "$(INTDIR)\TTY_IO.obj"
+	-@erase "$(INTDIR)\UNIX_Addr.obj"
+	-@erase "$(INTDIR)\UPIPE_Acceptor.obj"
+	-@erase "$(INTDIR)\UPIPE_Connector.obj"
+	-@erase "$(INTDIR)\UPIPE_Stream.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\ace.dll"
+	-@erase "$(OUTDIR)\ace.exp"
+	-@erase "$(OUTDIR)\ace.ilk"
+	-@erase "$(OUTDIR)\ace.lib"
+	-@erase "$(OUTDIR)\ace.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+CPP=cl.exe
+# ADD BASE CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
+# ADD CPP /nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
+CPP_PROJ=/nologo /G5 /MDd /W3 /Gm /GX /Zi /Od /I "..\STL" /D "WIN32" /D\
+ "_DEBUG" /D "_WINDOWS" /Fp"$(INTDIR)/ACE dynamic library.pch" /YX\
+ /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_OBJS=.\DLL\Debug/
+CPP_SBRS=.\.
+
+.c{$(CPP_OBJS)}.obj:
+   $(CPP) $(CPP_PROJ) $<  
+
+.cpp{$(CPP_OBJS)}.obj:
+   $(CPP) $(CPP_PROJ) $<  
+
+.cxx{$(CPP_OBJS)}.obj:
+   $(CPP) $(CPP_PROJ) $<  
+
+.c{$(CPP_SBRS)}.sbr:
+   $(CPP) $(CPP_PROJ) $<  
+
+.cpp{$(CPP_SBRS)}.sbr:
+   $(CPP) $(CPP_PROJ) $<  
+
+.cxx{$(CPP_SBRS)}.sbr:
+   $(CPP) $(CPP_PROJ) $<  
+
+MTL=mktyplib.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /win32
+# ADD MTL /nologo /D "_DEBUG" /win32
+MTL_PROJ=/nologo /D "_DEBUG" /win32 
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/ACE dynamic library.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 advapi32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"ace.dll"
+# ADD LINK32 advapi32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"ace.dll"
+LINK32_FLAGS=advapi32.lib /nologo /subsystem:windows /dll /incremental:yes\
+ /pdb:"$(OUTDIR)/ace.pdb" /debug /machine:I386 /out:"$(OUTDIR)/ace.dll"\
+ /implib:"$(OUTDIR)/ace.lib" 
+LINK32_OBJS= \
+	"$(INTDIR)\ACE.obj" \
+	"$(INTDIR)\Activation_Queue.obj" \
+	"$(INTDIR)\Addr.obj" \
+	"$(INTDIR)\ARGV.obj" \
+	"$(INTDIR)\Asynch_IO.obj" \
+	"$(INTDIR)\CORBA_Handler.obj" \
+	"$(INTDIR)\Date_Time.obj" \
+	"$(INTDIR)\DEV.obj" \
+	"$(INTDIR)\DEV_Addr.obj" \
+	"$(INTDIR)\DEV_Connector.obj" \
+	"$(INTDIR)\DEV_IO.obj" \
+	"$(INTDIR)\Dump.obj" \
+	"$(INTDIR)\Dynamic.obj" \
+	"$(INTDIR)\Event_Handler.obj" \
+	"$(INTDIR)\FIFO.obj" \
+	"$(INTDIR)\FIFO_Recv.obj" \
+	"$(INTDIR)\FIFO_Recv_Msg.obj" \
+	"$(INTDIR)\FIFO_Send.obj" \
+	"$(INTDIR)\FIFO_Send_Msg.obj" \
+	"$(INTDIR)\FILE.obj" \
+	"$(INTDIR)\FILE_Addr.obj" \
+	"$(INTDIR)\FILE_Connector.obj" \
+	"$(INTDIR)\FILE_IO.obj" \
+	"$(INTDIR)\Filecache.obj" \
+	"$(INTDIR)\Get_Opt.obj" \
+	"$(INTDIR)\Handle_Set.obj" \
+	"$(INTDIR)\High_Res_Timer.obj" \
+	"$(INTDIR)\INET_Addr.obj" \
+	"$(INTDIR)\IO_Cntl_Msg.obj" \
+	"$(INTDIR)\IO_SAP.obj" \
+	"$(INTDIR)\IOStream.obj" \
+	"$(INTDIR)\IPC_SAP.obj" \
+	"$(INTDIR)\Local_Name_Space.obj" \
+	"$(INTDIR)\Local_Tokens.obj" \
+	"$(INTDIR)\Log_Msg.obj" \
+	"$(INTDIR)\Log_Record.obj" \
+	"$(INTDIR)\LSOCK.obj" \
+	"$(INTDIR)\LSOCK_Acceptor.obj" \
+	"$(INTDIR)\LSOCK_CODgram.obj" \
+	"$(INTDIR)\LSOCK_Connector.obj" \
+	"$(INTDIR)\LSOCK_Dgram.obj" \
+	"$(INTDIR)\LSOCK_Stream.obj" \
+	"$(INTDIR)\Malloc.obj" \
+	"$(INTDIR)\Mem_Map.obj" \
+	"$(INTDIR)\Memory_Pool.obj" \
+	"$(INTDIR)\Message_Block.obj" \
+	"$(INTDIR)\Method_Object.obj" \
+	"$(INTDIR)\Multiplexor.obj" \
+	"$(INTDIR)\Name_Proxy.obj" \
+	"$(INTDIR)\Name_Request_Reply.obj" \
+	"$(INTDIR)\Name_Space.obj" \
+	"$(INTDIR)\Naming_Context.obj" \
+	"$(INTDIR)\Object_Manager.obj" \
+	"$(INTDIR)\Obstack.obj" \
+	"$(INTDIR)\OS.obj" \
+	"$(INTDIR)\Parse_Node.obj" \
+	"$(INTDIR)\Pipe.obj" \
+	"$(INTDIR)\Proactor.obj" \
+	"$(INTDIR)\Process.obj" \
+	"$(INTDIR)\Process_Manager.obj" \
+	"$(INTDIR)\Profile_Timer.obj" \
+	"$(INTDIR)\Reactor.obj" \
+	"$(INTDIR)\ReactorEx.obj" \
+	"$(INTDIR)\Read_Buffer.obj" \
+	"$(INTDIR)\Registry.obj" \
+	"$(INTDIR)\Registry_Name_Space.obj" \
+	"$(INTDIR)\Remote_Name_Space.obj" \
+	"$(INTDIR)\Remote_Tokens.obj" \
+	"$(INTDIR)\Sched_Params.obj" \
+	"$(INTDIR)\Service_Config.obj" \
+	"$(INTDIR)\Service_Main.obj" \
+	"$(INTDIR)\Service_Manager.obj" \
+	"$(INTDIR)\Service_Object.obj" \
+	"$(INTDIR)\Service_Record.obj" \
+	"$(INTDIR)\Service_Repository.obj" \
+	"$(INTDIR)\Shared_Memory_MM.obj" \
+	"$(INTDIR)\Shared_Memory_SV.obj" \
+	"$(INTDIR)\Shared_Object.obj" \
+	"$(INTDIR)\Signal.obj" \
+	"$(INTDIR)\SOCK.obj" \
+	"$(INTDIR)\SOCK_Acceptor.obj" \
+	"$(INTDIR)\SOCK_CODgram.obj" \
+	"$(INTDIR)\SOCK_Connector.obj" \
+	"$(INTDIR)\SOCK_Dgram.obj" \
+	"$(INTDIR)\SOCK_Dgram_Bcast.obj" \
+	"$(INTDIR)\SOCK_Dgram_Mcast.obj" \
+	"$(INTDIR)\SOCK_IO.obj" \
+	"$(INTDIR)\SOCK_Stream.obj" \
+	"$(INTDIR)\SPIPE.obj" \
+	"$(INTDIR)\SPIPE_Acceptor.obj" \
+	"$(INTDIR)\SPIPE_Addr.obj" \
+	"$(INTDIR)\SPIPE_Connector.obj" \
+	"$(INTDIR)\SPIPE_Stream.obj" \
+	"$(INTDIR)\SString.obj" \
+	"$(INTDIR)\Strategies.obj" \
+	"$(INTDIR)\SV_Message.obj" \
+	"$(INTDIR)\SV_Message_Queue.obj" \
+	"$(INTDIR)\SV_Semaphore_Complex.obj" \
+	"$(INTDIR)\SV_Semaphore_Simple.obj" \
+	"$(INTDIR)\SV_Shared_Memory.obj" \
+	"$(INTDIR)\Svc_Conf_l.obj" \
+	"$(INTDIR)\Svc_Conf_y.obj" \
+	"$(INTDIR)\Synch.obj" \
+	"$(INTDIR)\Synch_Options.obj" \
+	"$(INTDIR)\System_Time.obj" \
+	"$(INTDIR)\Task.obj" \
+	"$(INTDIR)\Thread.obj" \
+	"$(INTDIR)\Thread_Manager.obj" \
+	"$(INTDIR)\Time_Request_Reply.obj" \
+	"$(INTDIR)\Timer_Queue.obj" \
+	"$(INTDIR)\TLI.obj" \
+	"$(INTDIR)\TLI_Acceptor.obj" \
+	"$(INTDIR)\TLI_Connector.obj" \
+	"$(INTDIR)\TLI_Stream.obj" \
+	"$(INTDIR)\Token.obj" \
+	"$(INTDIR)\Token_Collection.obj" \
+	"$(INTDIR)\Token_Invariants.obj" \
+	"$(INTDIR)\Token_Manager.obj" \
+	"$(INTDIR)\Token_Request_Reply.obj" \
+	"$(INTDIR)\Trace.obj" \
+	"$(INTDIR)\TTY_IO.obj" \
+	"$(INTDIR)\UNIX_Addr.obj" \
+	"$(INTDIR)\UPIPE_Acceptor.obj" \
+	"$(INTDIR)\UPIPE_Connector.obj" \
+	"$(INTDIR)\UPIPE_Stream.obj"
+
+"$(OUTDIR)\ace.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
 !ENDIF 
 
 ################################################################################
 # Begin Target
 
 # Name "ACE dynamic library - Win32 Release"
-# Name "ACE dynamic library - Win32 Debug"
 # Name "ACE dynamic library - Win32 Unicode Debug"
 # Name "ACE dynamic library - Win32 Unicode Release"
+# Name "ACE dynamic library - Win32 Debug"
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 !ENDIF 
 
@@ -2663,6 +2668,7 @@ LINK32_OBJS= \
 
 SOURCE=.\UPIPE_Stream.cpp
 DEP_CPP_UPIPE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -2674,7 +2680,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -2810,12 +2815,6 @@ DEP_CPP_UPIPE=\
 "$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -2823,6 +2822,12 @@ DEP_CPP_UPIPE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\UPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
@@ -2836,6 +2841,7 @@ DEP_CPP_UPIPE=\
 
 SOURCE=.\UPIPE_Connector.cpp
 DEP_CPP_UPIPE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -2847,7 +2853,6 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -2987,12 +2992,6 @@ DEP_CPP_UPIPE_=\
 "$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3000,6 +2999,12 @@ DEP_CPP_UPIPE_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\UPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_UPIPE_) "$(INTDIR)"
@@ -3013,6 +3018,7 @@ DEP_CPP_UPIPE_=\
 
 SOURCE=.\UPIPE_Acceptor.cpp
 DEP_CPP_UPIPE_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3024,7 +3030,6 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -3165,12 +3170,6 @@ DEP_CPP_UPIPE_A=\
 "$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3178,6 +3177,12 @@ DEP_CPP_UPIPE_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\UPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_UPIPE_A) "$(INTDIR)"
@@ -3191,6 +3196,7 @@ DEP_CPP_UPIPE_A=\
 
 SOURCE=.\UNIX_Addr.cpp
 DEP_CPP_UNIX_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3199,7 +3205,6 @@ DEP_CPP_UNIX_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -3222,12 +3227,6 @@ DEP_CPP_UNIX_=\
 "$(INTDIR)\UNIX_Addr.obj" : $(SOURCE) $(DEP_CPP_UNIX_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\UNIX_Addr.obj" : $(SOURCE) $(DEP_CPP_UNIX_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3235,6 +3234,12 @@ DEP_CPP_UNIX_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\UNIX_Addr.obj" : $(SOURCE) $(DEP_CPP_UNIX_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\UNIX_Addr.obj" : $(SOURCE) $(DEP_CPP_UNIX_) "$(INTDIR)"
@@ -3248,6 +3253,7 @@ DEP_CPP_UNIX_=\
 
 SOURCE=.\TTY_IO.cpp
 DEP_CPP_TTY_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3256,7 +3262,6 @@ DEP_CPP_TTY_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -3288,12 +3293,6 @@ DEP_CPP_TTY_I=\
 "$(INTDIR)\TTY_IO.obj" : $(SOURCE) $(DEP_CPP_TTY_I) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\TTY_IO.obj" : $(SOURCE) $(DEP_CPP_TTY_I) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3301,6 +3300,12 @@ DEP_CPP_TTY_I=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\TTY_IO.obj" : $(SOURCE) $(DEP_CPP_TTY_I) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\TTY_IO.obj" : $(SOURCE) $(DEP_CPP_TTY_I) "$(INTDIR)"
@@ -3314,13 +3319,13 @@ DEP_CPP_TTY_I=\
 
 SOURCE=.\Trace.cpp
 DEP_CPP_TRACE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -3342,12 +3347,6 @@ DEP_CPP_TRACE=\
 "$(INTDIR)\Trace.obj" : $(SOURCE) $(DEP_CPP_TRACE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Trace.obj" : $(SOURCE) $(DEP_CPP_TRACE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3355,6 +3354,12 @@ DEP_CPP_TRACE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Trace.obj" : $(SOURCE) $(DEP_CPP_TRACE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) $(DEP_CPP_TRACE) "$(INTDIR)"
@@ -3368,6 +3373,7 @@ DEP_CPP_TRACE=\
 
 SOURCE=.\Token_Request_Reply.cpp
 DEP_CPP_TOKEN=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3379,7 +3385,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -3496,12 +3501,6 @@ DEP_CPP_TOKEN=\
 "$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3509,6 +3508,12 @@ DEP_CPP_TOKEN=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Token_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -3522,6 +3527,7 @@ DEP_CPP_TOKEN=\
 
 SOURCE=.\Token_Manager.cpp
 DEP_CPP_TOKEN_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3533,7 +3539,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -3650,12 +3655,6 @@ DEP_CPP_TOKEN_=\
 "$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3663,6 +3662,12 @@ DEP_CPP_TOKEN_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Token_Manager.obj" : $(SOURCE) $(DEP_CPP_TOKEN_) "$(INTDIR)"
@@ -3676,6 +3681,7 @@ DEP_CPP_TOKEN_=\
 
 SOURCE=.\Token_Invariants.cpp
 DEP_CPP_TOKEN_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3687,7 +3693,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -3804,12 +3809,6 @@ DEP_CPP_TOKEN_I=\
 "$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3817,6 +3816,12 @@ DEP_CPP_TOKEN_I=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Token_Invariants.obj" : $(SOURCE) $(DEP_CPP_TOKEN_I) "$(INTDIR)"
@@ -3830,6 +3835,7 @@ DEP_CPP_TOKEN_I=\
 
 SOURCE=.\Token_Collection.cpp
 DEP_CPP_TOKEN_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -3841,7 +3847,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -3958,12 +3963,6 @@ DEP_CPP_TOKEN_C=\
 "$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -3971,6 +3970,12 @@ DEP_CPP_TOKEN_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Token_Collection.obj" : $(SOURCE) $(DEP_CPP_TOKEN_C) "$(INTDIR)"
@@ -3984,6 +3989,7 @@ DEP_CPP_TOKEN_C=\
 
 SOURCE=.\Token.cpp
 DEP_CPP_TOKEN_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -3991,7 +3997,6 @@ DEP_CPP_TOKEN_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -4027,12 +4032,6 @@ DEP_CPP_TOKEN_CP=\
 "$(INTDIR)\Token.obj" : $(SOURCE) $(DEP_CPP_TOKEN_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Token.obj" : $(SOURCE) $(DEP_CPP_TOKEN_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4040,6 +4039,12 @@ DEP_CPP_TOKEN_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Token.obj" : $(SOURCE) $(DEP_CPP_TOKEN_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Token.obj" : $(SOURCE) $(DEP_CPP_TOKEN_CP) "$(INTDIR)"
@@ -4053,6 +4058,7 @@ DEP_CPP_TOKEN_CP=\
 
 SOURCE=.\TLI_Stream.cpp
 DEP_CPP_TLI_S=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4061,7 +4067,6 @@ DEP_CPP_TLI_S=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -4090,12 +4095,6 @@ DEP_CPP_TLI_S=\
 "$(INTDIR)\TLI_Stream.obj" : $(SOURCE) $(DEP_CPP_TLI_S) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\TLI_Stream.obj" : $(SOURCE) $(DEP_CPP_TLI_S) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4103,6 +4102,12 @@ DEP_CPP_TLI_S=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\TLI_Stream.obj" : $(SOURCE) $(DEP_CPP_TLI_S) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\TLI_Stream.obj" : $(SOURCE) $(DEP_CPP_TLI_S) "$(INTDIR)"
@@ -4116,6 +4121,7 @@ DEP_CPP_TLI_S=\
 
 SOURCE=.\TLI_Connector.cpp
 DEP_CPP_TLI_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4124,7 +4130,6 @@ DEP_CPP_TLI_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -4157,12 +4162,6 @@ DEP_CPP_TLI_C=\
 "$(INTDIR)\TLI_Connector.obj" : $(SOURCE) $(DEP_CPP_TLI_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\TLI_Connector.obj" : $(SOURCE) $(DEP_CPP_TLI_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4170,6 +4169,12 @@ DEP_CPP_TLI_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\TLI_Connector.obj" : $(SOURCE) $(DEP_CPP_TLI_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\TLI_Connector.obj" : $(SOURCE) $(DEP_CPP_TLI_C) "$(INTDIR)"
@@ -4183,6 +4188,7 @@ DEP_CPP_TLI_C=\
 
 SOURCE=.\TLI_Acceptor.cpp
 DEP_CPP_TLI_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4191,7 +4197,6 @@ DEP_CPP_TLI_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -4223,12 +4228,6 @@ DEP_CPP_TLI_A=\
 "$(INTDIR)\TLI_Acceptor.obj" : $(SOURCE) $(DEP_CPP_TLI_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\TLI_Acceptor.obj" : $(SOURCE) $(DEP_CPP_TLI_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4236,6 +4235,12 @@ DEP_CPP_TLI_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\TLI_Acceptor.obj" : $(SOURCE) $(DEP_CPP_TLI_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\TLI_Acceptor.obj" : $(SOURCE) $(DEP_CPP_TLI_A) "$(INTDIR)"
@@ -4249,6 +4254,7 @@ DEP_CPP_TLI_A=\
 
 SOURCE=.\TLI.cpp
 DEP_CPP_TLI_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4257,7 +4263,6 @@ DEP_CPP_TLI_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -4282,12 +4287,6 @@ DEP_CPP_TLI_CP=\
 "$(INTDIR)\TLI.obj" : $(SOURCE) $(DEP_CPP_TLI_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\TLI.obj" : $(SOURCE) $(DEP_CPP_TLI_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4295,6 +4294,12 @@ DEP_CPP_TLI_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\TLI.obj" : $(SOURCE) $(DEP_CPP_TLI_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\TLI.obj" : $(SOURCE) $(DEP_CPP_TLI_CP) "$(INTDIR)"
@@ -4308,6 +4313,7 @@ DEP_CPP_TLI_CP=\
 
 SOURCE=.\Timer_Queue.cpp
 DEP_CPP_TIMER=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -4315,7 +4321,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -4371,12 +4376,6 @@ DEP_CPP_TIMER=\
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4384,6 +4383,12 @@ DEP_CPP_TIMER=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Timer_Queue.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
@@ -4397,13 +4402,13 @@ DEP_CPP_TIMER=\
 
 SOURCE=.\Time_Request_Reply.cpp
 DEP_CPP_TIME_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -4426,12 +4431,6 @@ DEP_CPP_TIME_=\
 "$(INTDIR)\Time_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Time_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4439,6 +4438,12 @@ DEP_CPP_TIME_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Time_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Time_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
@@ -4452,6 +4457,7 @@ DEP_CPP_TIME_=\
 
 SOURCE=.\Thread_Manager.cpp
 DEP_CPP_THREA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -4459,7 +4465,6 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -4495,12 +4500,6 @@ DEP_CPP_THREA=\
 "$(INTDIR)\Thread_Manager.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Thread_Manager.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4508,6 +4507,12 @@ DEP_CPP_THREA=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Thread_Manager.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Thread_Manager.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
@@ -4521,13 +4526,13 @@ DEP_CPP_THREA=\
 
 SOURCE=.\Thread.cpp
 DEP_CPP_THREAD=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -4550,12 +4555,6 @@ DEP_CPP_THREAD=\
 "$(INTDIR)\Thread.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Thread.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4563,6 +4562,12 @@ DEP_CPP_THREAD=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Thread.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Thread.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
@@ -4576,6 +4581,7 @@ DEP_CPP_THREAD=\
 
 SOURCE=.\Task.cpp
 DEP_CPP_TASK_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4587,7 +4593,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -4715,12 +4720,6 @@ DEP_CPP_TASK_=\
 "$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4728,6 +4727,12 @@ DEP_CPP_TASK_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Task.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
@@ -4741,6 +4746,7 @@ DEP_CPP_TASK_=\
 
 SOURCE=.\System_Time.cpp
 DEP_CPP_SYSTE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -4748,7 +4754,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -4800,12 +4805,6 @@ DEP_CPP_SYSTE=\
 "$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4813,6 +4812,12 @@ DEP_CPP_SYSTE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\System_Time.obj" : $(SOURCE) $(DEP_CPP_SYSTE) "$(INTDIR)"
@@ -4826,13 +4831,13 @@ DEP_CPP_SYSTE=\
 
 SOURCE=.\Synch_Options.cpp
 DEP_CPP_SYNCH=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -4854,12 +4859,6 @@ DEP_CPP_SYNCH=\
 "$(INTDIR)\Synch_Options.obj" : $(SOURCE) $(DEP_CPP_SYNCH) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Synch_Options.obj" : $(SOURCE) $(DEP_CPP_SYNCH) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4867,6 +4866,12 @@ DEP_CPP_SYNCH=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Synch_Options.obj" : $(SOURCE) $(DEP_CPP_SYNCH) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Synch_Options.obj" : $(SOURCE) $(DEP_CPP_SYNCH) "$(INTDIR)"
@@ -4880,6 +4885,7 @@ DEP_CPP_SYNCH=\
 
 SOURCE=.\Synch.cpp
 DEP_CPP_SYNCH_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -4887,7 +4893,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -4938,12 +4943,6 @@ DEP_CPP_SYNCH_=\
 "$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -4951,6 +4950,12 @@ DEP_CPP_SYNCH_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Synch.obj" : $(SOURCE) $(DEP_CPP_SYNCH_) "$(INTDIR)"
@@ -4964,6 +4969,7 @@ DEP_CPP_SYNCH_=\
 
 SOURCE=.\Svc_Conf_y.cpp
 DEP_CPP_SVC_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -4977,7 +4983,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -5112,12 +5117,6 @@ DEP_CPP_SVC_C=\
 "$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5125,6 +5124,12 @@ DEP_CPP_SVC_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Svc_Conf_y.obj" : $(SOURCE) $(DEP_CPP_SVC_C) "$(INTDIR)"
@@ -5138,6 +5143,7 @@ DEP_CPP_SVC_C=\
 
 SOURCE=.\Svc_Conf_l.cpp
 DEP_CPP_SVC_CO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -5149,7 +5155,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -5284,12 +5289,6 @@ DEP_CPP_SVC_CO=\
 "$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5297,6 +5296,12 @@ DEP_CPP_SVC_CO=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Svc_Conf_l.obj" : $(SOURCE) $(DEP_CPP_SVC_CO) "$(INTDIR)"
@@ -5310,13 +5315,13 @@ DEP_CPP_SVC_CO=\
 
 SOURCE=.\SV_Shared_Memory.cpp
 DEP_CPP_SV_SH=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -5339,12 +5344,6 @@ DEP_CPP_SV_SH=\
 "$(INTDIR)\SV_Shared_Memory.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SV_Shared_Memory.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5352,6 +5351,12 @@ DEP_CPP_SV_SH=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SV_Shared_Memory.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SV_Shared_Memory.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
@@ -5365,13 +5370,13 @@ DEP_CPP_SV_SH=\
 
 SOURCE=.\SV_Semaphore_Simple.cpp
 DEP_CPP_SV_SE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -5394,12 +5399,6 @@ DEP_CPP_SV_SE=\
 "$(INTDIR)\SV_Semaphore_Simple.obj" : $(SOURCE) $(DEP_CPP_SV_SE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SV_Semaphore_Simple.obj" : $(SOURCE) $(DEP_CPP_SV_SE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5407,6 +5406,12 @@ DEP_CPP_SV_SE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SV_Semaphore_Simple.obj" : $(SOURCE) $(DEP_CPP_SV_SE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SV_Semaphore_Simple.obj" : $(SOURCE) $(DEP_CPP_SV_SE) "$(INTDIR)"
@@ -5420,13 +5425,13 @@ DEP_CPP_SV_SE=\
 
 SOURCE=.\SV_Semaphore_Complex.cpp
 DEP_CPP_SV_SEM=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -5451,12 +5456,6 @@ DEP_CPP_SV_SEM=\
 "$(INTDIR)\SV_Semaphore_Complex.obj" : $(SOURCE) $(DEP_CPP_SV_SEM) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SV_Semaphore_Complex.obj" : $(SOURCE) $(DEP_CPP_SV_SEM) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5464,6 +5463,12 @@ DEP_CPP_SV_SEM=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SV_Semaphore_Complex.obj" : $(SOURCE) $(DEP_CPP_SV_SEM) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SV_Semaphore_Complex.obj" : $(SOURCE) $(DEP_CPP_SV_SEM) "$(INTDIR)"
@@ -5477,13 +5482,13 @@ DEP_CPP_SV_SEM=\
 
 SOURCE=.\SV_Message_Queue.cpp
 DEP_CPP_SV_ME=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -5508,12 +5513,6 @@ DEP_CPP_SV_ME=\
 "$(INTDIR)\SV_Message_Queue.obj" : $(SOURCE) $(DEP_CPP_SV_ME) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SV_Message_Queue.obj" : $(SOURCE) $(DEP_CPP_SV_ME) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5521,6 +5520,12 @@ DEP_CPP_SV_ME=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SV_Message_Queue.obj" : $(SOURCE) $(DEP_CPP_SV_ME) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SV_Message_Queue.obj" : $(SOURCE) $(DEP_CPP_SV_ME) "$(INTDIR)"
@@ -5534,13 +5539,13 @@ DEP_CPP_SV_ME=\
 
 SOURCE=.\SV_Message.cpp
 DEP_CPP_SV_MES=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -5563,12 +5568,6 @@ DEP_CPP_SV_MES=\
 "$(INTDIR)\SV_Message.obj" : $(SOURCE) $(DEP_CPP_SV_MES) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SV_Message.obj" : $(SOURCE) $(DEP_CPP_SV_MES) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5576,6 +5575,12 @@ DEP_CPP_SV_MES=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SV_Message.obj" : $(SOURCE) $(DEP_CPP_SV_MES) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SV_Message.obj" : $(SOURCE) $(DEP_CPP_SV_MES) "$(INTDIR)"
@@ -5589,6 +5594,7 @@ DEP_CPP_SV_MES=\
 
 SOURCE=.\Strategies.cpp
 DEP_CPP_STRAT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -5600,7 +5606,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -5715,12 +5720,6 @@ DEP_CPP_STRAT=\
 "$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5728,6 +5727,12 @@ DEP_CPP_STRAT=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Strategies.obj" : $(SOURCE) $(DEP_CPP_STRAT) "$(INTDIR)"
@@ -5741,6 +5746,7 @@ DEP_CPP_STRAT=\
 
 SOURCE=.\SString.cpp
 DEP_CPP_SSTRI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -5752,7 +5758,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -5867,12 +5872,6 @@ DEP_CPP_SSTRI=\
 "$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5880,6 +5879,12 @@ DEP_CPP_SSTRI=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SString.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
@@ -5893,6 +5898,7 @@ DEP_CPP_SSTRI=\
 
 SOURCE=.\SPIPE_Stream.cpp
 DEP_CPP_SPIPE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -5901,7 +5907,6 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -5930,12 +5935,6 @@ DEP_CPP_SPIPE=\
 "$(INTDIR)\SPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -5943,6 +5942,12 @@ DEP_CPP_SPIPE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SPIPE_Stream.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
@@ -5956,6 +5961,7 @@ DEP_CPP_SPIPE=\
 
 SOURCE=.\SPIPE_Connector.cpp
 DEP_CPP_SPIPE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -5964,7 +5970,6 @@ DEP_CPP_SPIPE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -5995,12 +6000,6 @@ DEP_CPP_SPIPE_=\
 "$(INTDIR)\SPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_SPIPE_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_SPIPE_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6008,6 +6007,12 @@ DEP_CPP_SPIPE_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_SPIPE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SPIPE_Connector.obj" : $(SOURCE) $(DEP_CPP_SPIPE_) "$(INTDIR)"
@@ -6021,6 +6026,7 @@ DEP_CPP_SPIPE_=\
 
 SOURCE=.\SPIPE_Addr.cpp
 DEP_CPP_SPIPE_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6029,7 +6035,6 @@ DEP_CPP_SPIPE_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -6052,12 +6057,6 @@ DEP_CPP_SPIPE_A=\
 "$(INTDIR)\SPIPE_Addr.obj" : $(SOURCE) $(DEP_CPP_SPIPE_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SPIPE_Addr.obj" : $(SOURCE) $(DEP_CPP_SPIPE_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6065,6 +6064,12 @@ DEP_CPP_SPIPE_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SPIPE_Addr.obj" : $(SOURCE) $(DEP_CPP_SPIPE_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SPIPE_Addr.obj" : $(SOURCE) $(DEP_CPP_SPIPE_A) "$(INTDIR)"
@@ -6078,6 +6083,7 @@ DEP_CPP_SPIPE_A=\
 
 SOURCE=.\SPIPE_Acceptor.cpp
 DEP_CPP_SPIPE_AC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6086,7 +6092,6 @@ DEP_CPP_SPIPE_AC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -6116,12 +6121,6 @@ DEP_CPP_SPIPE_AC=\
 "$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6129,6 +6128,12 @@ DEP_CPP_SPIPE_AC=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SPIPE_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SPIPE_AC) "$(INTDIR)"
@@ -6142,6 +6147,7 @@ DEP_CPP_SPIPE_AC=\
 
 SOURCE=.\SPIPE.cpp
 DEP_CPP_SPIPE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6150,7 +6156,6 @@ DEP_CPP_SPIPE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -6177,12 +6182,6 @@ DEP_CPP_SPIPE_C=\
 "$(INTDIR)\SPIPE.obj" : $(SOURCE) $(DEP_CPP_SPIPE_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SPIPE.obj" : $(SOURCE) $(DEP_CPP_SPIPE_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6190,6 +6189,12 @@ DEP_CPP_SPIPE_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SPIPE.obj" : $(SOURCE) $(DEP_CPP_SPIPE_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SPIPE.obj" : $(SOURCE) $(DEP_CPP_SPIPE_C) "$(INTDIR)"
@@ -6203,6 +6208,7 @@ DEP_CPP_SPIPE_C=\
 
 SOURCE=.\SOCK_Stream.cpp
 DEP_CPP_SOCK_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6211,7 +6217,6 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -6242,12 +6247,6 @@ DEP_CPP_SOCK_=\
 "$(INTDIR)\SOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6255,6 +6254,12 @@ DEP_CPP_SOCK_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
@@ -6268,6 +6273,7 @@ DEP_CPP_SOCK_=\
 
 SOURCE=.\SOCK_IO.cpp
 DEP_CPP_SOCK_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6276,7 +6282,6 @@ DEP_CPP_SOCK_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -6303,12 +6308,6 @@ DEP_CPP_SOCK_I=\
 "$(INTDIR)\SOCK_IO.obj" : $(SOURCE) $(DEP_CPP_SOCK_I) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_IO.obj" : $(SOURCE) $(DEP_CPP_SOCK_I) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6316,6 +6315,12 @@ DEP_CPP_SOCK_I=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_IO.obj" : $(SOURCE) $(DEP_CPP_SOCK_I) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_IO.obj" : $(SOURCE) $(DEP_CPP_SOCK_I) "$(INTDIR)"
@@ -6329,6 +6334,7 @@ DEP_CPP_SOCK_I=\
 
 SOURCE=.\SOCK_Dgram_Mcast.cpp
 DEP_CPP_SOCK_D=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6337,7 +6343,6 @@ DEP_CPP_SOCK_D=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -6368,12 +6373,6 @@ DEP_CPP_SOCK_D=\
 "$(INTDIR)\SOCK_Dgram_Mcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_D) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_Dgram_Mcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_D) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6381,6 +6380,12 @@ DEP_CPP_SOCK_D=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_Dgram_Mcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_D) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_Dgram_Mcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_D) "$(INTDIR)"
@@ -6394,6 +6399,7 @@ DEP_CPP_SOCK_D=\
 
 SOURCE=.\SOCK_Dgram_Bcast.cpp
 DEP_CPP_SOCK_DG=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6402,7 +6408,6 @@ DEP_CPP_SOCK_DG=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -6433,12 +6438,6 @@ DEP_CPP_SOCK_DG=\
 "$(INTDIR)\SOCK_Dgram_Bcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_DG) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_Dgram_Bcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_DG) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6446,6 +6445,12 @@ DEP_CPP_SOCK_DG=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_Dgram_Bcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_DG) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_Dgram_Bcast.obj" : $(SOURCE) $(DEP_CPP_SOCK_DG) "$(INTDIR)"
@@ -6459,6 +6464,7 @@ DEP_CPP_SOCK_DG=\
 
 SOURCE=.\SOCK_Dgram.cpp
 DEP_CPP_SOCK_DGR=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6468,7 +6474,6 @@ DEP_CPP_SOCK_DGR=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -6510,12 +6515,6 @@ DEP_CPP_SOCK_DGR=\
 "$(INTDIR)\SOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_DGR) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_DGR) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6523,6 +6522,12 @@ DEP_CPP_SOCK_DGR=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_DGR) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_DGR) "$(INTDIR)"
@@ -6536,6 +6541,7 @@ DEP_CPP_SOCK_DGR=\
 
 SOURCE=.\SOCK_Connector.cpp
 DEP_CPP_SOCK_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6544,7 +6550,6 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -6580,12 +6585,6 @@ DEP_CPP_SOCK_C=\
 "$(INTDIR)\SOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6593,6 +6592,12 @@ DEP_CPP_SOCK_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
@@ -6606,6 +6611,7 @@ DEP_CPP_SOCK_C=\
 
 SOURCE=.\SOCK_CODgram.cpp
 DEP_CPP_SOCK_CO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6614,7 +6620,6 @@ DEP_CPP_SOCK_CO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -6643,12 +6648,6 @@ DEP_CPP_SOCK_CO=\
 "$(INTDIR)\SOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_CO) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_CO) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6656,6 +6655,12 @@ DEP_CPP_SOCK_CO=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_CO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_SOCK_CO) "$(INTDIR)"
@@ -6669,6 +6674,7 @@ DEP_CPP_SOCK_CO=\
 
 SOURCE=.\SOCK_Acceptor.cpp
 DEP_CPP_SOCK_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6677,7 +6683,6 @@ DEP_CPP_SOCK_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -6711,12 +6716,6 @@ DEP_CPP_SOCK_A=\
 "$(INTDIR)\SOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SOCK_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SOCK_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6724,6 +6723,12 @@ DEP_CPP_SOCK_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SOCK_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_SOCK_A) "$(INTDIR)"
@@ -6737,6 +6742,7 @@ DEP_CPP_SOCK_A=\
 
 SOURCE=.\SOCK.cpp
 DEP_CPP_SOCK_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -6745,7 +6751,6 @@ DEP_CPP_SOCK_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -6770,12 +6775,6 @@ DEP_CPP_SOCK_CP=\
 "$(INTDIR)\SOCK.obj" : $(SOURCE) $(DEP_CPP_SOCK_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\SOCK.obj" : $(SOURCE) $(DEP_CPP_SOCK_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6783,6 +6782,12 @@ DEP_CPP_SOCK_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\SOCK.obj" : $(SOURCE) $(DEP_CPP_SOCK_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\SOCK.obj" : $(SOURCE) $(DEP_CPP_SOCK_CP) "$(INTDIR)"
@@ -6796,6 +6801,7 @@ DEP_CPP_SOCK_CP=\
 
 SOURCE=.\Signal.cpp
 DEP_CPP_SIGNA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -6803,7 +6809,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -6854,12 +6859,6 @@ DEP_CPP_SIGNA=\
 "$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6867,6 +6866,12 @@ DEP_CPP_SIGNA=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Signal.obj" : $(SOURCE) $(DEP_CPP_SIGNA) "$(INTDIR)"
@@ -6880,13 +6885,13 @@ DEP_CPP_SIGNA=\
 
 SOURCE=.\Shared_Object.cpp
 DEP_CPP_SHARE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -6909,12 +6914,6 @@ DEP_CPP_SHARE=\
 "$(INTDIR)\Shared_Object.obj" : $(SOURCE) $(DEP_CPP_SHARE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Shared_Object.obj" : $(SOURCE) $(DEP_CPP_SHARE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6922,6 +6921,12 @@ DEP_CPP_SHARE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Shared_Object.obj" : $(SOURCE) $(DEP_CPP_SHARE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Shared_Object.obj" : $(SOURCE) $(DEP_CPP_SHARE) "$(INTDIR)"
@@ -6935,13 +6940,13 @@ DEP_CPP_SHARE=\
 
 SOURCE=.\Shared_Memory_SV.cpp
 DEP_CPP_SHARED=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -6967,12 +6972,6 @@ DEP_CPP_SHARED=\
 "$(INTDIR)\Shared_Memory_SV.obj" : $(SOURCE) $(DEP_CPP_SHARED) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Shared_Memory_SV.obj" : $(SOURCE) $(DEP_CPP_SHARED) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -6980,6 +6979,12 @@ DEP_CPP_SHARED=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Shared_Memory_SV.obj" : $(SOURCE) $(DEP_CPP_SHARED) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Shared_Memory_SV.obj" : $(SOURCE) $(DEP_CPP_SHARED) "$(INTDIR)"
@@ -6993,13 +6998,13 @@ DEP_CPP_SHARED=\
 
 SOURCE=.\Shared_Memory_MM.cpp
 DEP_CPP_SHARED_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -7025,12 +7030,6 @@ DEP_CPP_SHARED_=\
 "$(INTDIR)\Shared_Memory_MM.obj" : $(SOURCE) $(DEP_CPP_SHARED_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Shared_Memory_MM.obj" : $(SOURCE) $(DEP_CPP_SHARED_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7038,6 +7037,12 @@ DEP_CPP_SHARED_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Shared_Memory_MM.obj" : $(SOURCE) $(DEP_CPP_SHARED_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Shared_Memory_MM.obj" : $(SOURCE) $(DEP_CPP_SHARED_) "$(INTDIR)"
@@ -7051,6 +7056,7 @@ DEP_CPP_SHARED_=\
 
 SOURCE=.\Service_Repository.cpp
 DEP_CPP_SERVI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -7062,7 +7068,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -7195,12 +7200,6 @@ DEP_CPP_SERVI=\
 "$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7208,6 +7207,12 @@ DEP_CPP_SERVI=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Service_Repository.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
@@ -7221,6 +7226,7 @@ DEP_CPP_SERVI=\
 
 SOURCE=.\Service_Record.cpp
 DEP_CPP_SERVIC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -7232,7 +7238,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -7363,12 +7368,6 @@ DEP_CPP_SERVIC=\
 "$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7376,6 +7375,12 @@ DEP_CPP_SERVIC=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Service_Record.obj" : $(SOURCE) $(DEP_CPP_SERVIC) "$(INTDIR)"
@@ -7389,13 +7394,13 @@ DEP_CPP_SERVIC=\
 
 SOURCE=.\Service_Object.cpp
 DEP_CPP_SERVICE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -7422,12 +7427,6 @@ DEP_CPP_SERVICE=\
 "$(INTDIR)\Service_Object.obj" : $(SOURCE) $(DEP_CPP_SERVICE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Service_Object.obj" : $(SOURCE) $(DEP_CPP_SERVICE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7435,6 +7434,12 @@ DEP_CPP_SERVICE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Service_Object.obj" : $(SOURCE) $(DEP_CPP_SERVICE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Service_Object.obj" : $(SOURCE) $(DEP_CPP_SERVICE) "$(INTDIR)"
@@ -7448,6 +7453,7 @@ DEP_CPP_SERVICE=\
 
 SOURCE=.\Service_Manager.cpp
 DEP_CPP_SERVICE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -7459,7 +7465,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -7598,12 +7603,6 @@ DEP_CPP_SERVICE_=\
 "$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7611,6 +7610,12 @@ DEP_CPP_SERVICE_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Service_Manager.obj" : $(SOURCE) $(DEP_CPP_SERVICE_) "$(INTDIR)"
@@ -7624,6 +7629,7 @@ DEP_CPP_SERVICE_=\
 
 SOURCE=.\Service_Main.cpp
 DEP_CPP_SERVICE_M=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -7635,7 +7641,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -7750,12 +7755,6 @@ DEP_CPP_SERVICE_M=\
 "$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7763,6 +7762,12 @@ DEP_CPP_SERVICE_M=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Service_Main.obj" : $(SOURCE) $(DEP_CPP_SERVICE_M) "$(INTDIR)"
@@ -7776,6 +7781,7 @@ DEP_CPP_SERVICE_M=\
 
 SOURCE=.\Service_Config.cpp
 DEP_CPP_SERVICE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -7789,7 +7795,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -7932,12 +7937,6 @@ DEP_CPP_SERVICE_C=\
 "$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -7945,6 +7944,12 @@ DEP_CPP_SERVICE_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Service_Config.obj" : $(SOURCE) $(DEP_CPP_SERVICE_C) "$(INTDIR)"
@@ -7958,13 +7963,13 @@ DEP_CPP_SERVICE_C=\
 
 SOURCE=.\Sched_Params.cpp
 DEP_CPP_SCHED=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -7987,12 +7992,6 @@ DEP_CPP_SCHED=\
 "$(INTDIR)\Sched_Params.obj" : $(SOURCE) $(DEP_CPP_SCHED) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Sched_Params.obj" : $(SOURCE) $(DEP_CPP_SCHED) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8000,6 +7999,12 @@ DEP_CPP_SCHED=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Sched_Params.obj" : $(SOURCE) $(DEP_CPP_SCHED) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Sched_Params.obj" : $(SOURCE) $(DEP_CPP_SCHED) "$(INTDIR)"
@@ -8013,6 +8018,7 @@ DEP_CPP_SCHED=\
 
 SOURCE=.\Remote_Tokens.cpp
 DEP_CPP_REMOT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -8024,7 +8030,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -8148,12 +8153,6 @@ DEP_CPP_REMOT=\
 "$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8161,6 +8160,12 @@ DEP_CPP_REMOT=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Remote_Tokens.obj" : $(SOURCE) $(DEP_CPP_REMOT) "$(INTDIR)"
@@ -8174,6 +8179,7 @@ DEP_CPP_REMOT=\
 
 SOURCE=.\Remote_Name_Space.cpp
 DEP_CPP_REMOTE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -8185,7 +8191,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -8306,12 +8311,6 @@ DEP_CPP_REMOTE=\
 "$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8319,6 +8318,12 @@ DEP_CPP_REMOTE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Remote_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REMOTE) "$(INTDIR)"
@@ -8340,6 +8345,7 @@ DEP_CPP_REGIS=\
 	"..\STL\iterator.h"\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -8351,7 +8357,6 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -8475,12 +8480,6 @@ DEP_CPP_REGIS=\
 "$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8488,6 +8487,12 @@ DEP_CPP_REGIS=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Registry_Name_Space.obj" : $(SOURCE) $(DEP_CPP_REGIS) "$(INTDIR)"
@@ -8509,13 +8514,13 @@ DEP_CPP_REGIST=\
 	"..\STL\iterator.h"\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -8538,12 +8543,6 @@ DEP_CPP_REGIST=\
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8551,6 +8550,12 @@ DEP_CPP_REGIST=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
@@ -8564,6 +8569,7 @@ DEP_CPP_REGIST=\
 
 SOURCE=.\Read_Buffer.cpp
 DEP_CPP_READ_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -8575,7 +8581,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -8692,12 +8697,6 @@ DEP_CPP_READ_=\
 "$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8705,6 +8704,12 @@ DEP_CPP_READ_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Read_Buffer.obj" : $(SOURCE) $(DEP_CPP_READ_) "$(INTDIR)"
@@ -8718,6 +8723,7 @@ DEP_CPP_READ_=\
 
 SOURCE=.\ReactorEx.cpp
 DEP_CPP_REACT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -8729,7 +8735,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -8844,12 +8849,6 @@ DEP_CPP_REACT=\
 "$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -8857,6 +8856,12 @@ DEP_CPP_REACT=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\ReactorEx.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
@@ -8870,6 +8875,7 @@ DEP_CPP_REACT=\
 
 SOURCE=.\Reactor.cpp
 DEP_CPP_REACTO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -8881,7 +8887,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -9000,12 +9005,6 @@ DEP_CPP_REACTO=\
 "$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9013,6 +9012,12 @@ DEP_CPP_REACTO=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Reactor.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
@@ -9026,13 +9031,13 @@ DEP_CPP_REACTO=\
 
 SOURCE=.\Profile_Timer.cpp
 DEP_CPP_PROFI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.i"\
@@ -9058,12 +9063,6 @@ DEP_CPP_PROFI=\
 "$(INTDIR)\Profile_Timer.obj" : $(SOURCE) $(DEP_CPP_PROFI) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Profile_Timer.obj" : $(SOURCE) $(DEP_CPP_PROFI) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9071,6 +9070,12 @@ DEP_CPP_PROFI=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Profile_Timer.obj" : $(SOURCE) $(DEP_CPP_PROFI) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Profile_Timer.obj" : $(SOURCE) $(DEP_CPP_PROFI) "$(INTDIR)"
@@ -9084,6 +9089,7 @@ DEP_CPP_PROFI=\
 
 SOURCE=.\Process_Manager.cpp
 DEP_CPP_PROCE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -9091,7 +9097,6 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -9129,12 +9134,6 @@ DEP_CPP_PROCE=\
 "$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9142,6 +9141,12 @@ DEP_CPP_PROCE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Process_Manager.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
@@ -9155,6 +9160,7 @@ DEP_CPP_PROCE=\
 
 SOURCE=.\Process.cpp
 DEP_CPP_PROCES=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.h"\
@@ -9164,7 +9170,6 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -9217,12 +9222,6 @@ DEP_CPP_PROCES=\
 "$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9230,6 +9229,12 @@ DEP_CPP_PROCES=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Process.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
@@ -9243,6 +9248,7 @@ DEP_CPP_PROCES=\
 
 SOURCE=.\Proactor.cpp
 DEP_CPP_PROAC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -9254,7 +9260,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -9380,12 +9385,6 @@ DEP_CPP_PROAC=\
 "$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9393,6 +9392,12 @@ DEP_CPP_PROAC=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Proactor.obj" : $(SOURCE) $(DEP_CPP_PROAC) "$(INTDIR)"
@@ -9406,6 +9411,7 @@ DEP_CPP_PROAC=\
 
 SOURCE=.\Pipe.cpp
 DEP_CPP_PIPE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -9414,7 +9420,6 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -9452,12 +9457,6 @@ DEP_CPP_PIPE_=\
 "$(INTDIR)\Pipe.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Pipe.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9465,6 +9464,12 @@ DEP_CPP_PIPE_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Pipe.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Pipe.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
@@ -9478,6 +9483,7 @@ DEP_CPP_PIPE_=\
 
 SOURCE=.\Parse_Node.cpp
 DEP_CPP_PARSE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -9489,7 +9495,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -9624,12 +9629,6 @@ DEP_CPP_PARSE=\
 "$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9637,6 +9636,12 @@ DEP_CPP_PARSE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Parse_Node.obj" : $(SOURCE) $(DEP_CPP_PARSE) "$(INTDIR)"
@@ -9650,6 +9655,7 @@ DEP_CPP_PARSE=\
 
 SOURCE=.\OS.cpp
 DEP_CPP_OS_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.h"\
@@ -9659,7 +9665,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -9712,12 +9717,6 @@ DEP_CPP_OS_CP=\
 "$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9725,6 +9724,12 @@ DEP_CPP_OS_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\OS.obj" : $(SOURCE) $(DEP_CPP_OS_CP) "$(INTDIR)"
@@ -9738,13 +9743,13 @@ DEP_CPP_OS_CP=\
 
 SOURCE=.\Obstack.cpp
 DEP_CPP_OBSTA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -9766,12 +9771,6 @@ DEP_CPP_OBSTA=\
 "$(INTDIR)\Obstack.obj" : $(SOURCE) $(DEP_CPP_OBSTA) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Obstack.obj" : $(SOURCE) $(DEP_CPP_OBSTA) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9779,6 +9778,12 @@ DEP_CPP_OBSTA=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Obstack.obj" : $(SOURCE) $(DEP_CPP_OBSTA) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Obstack.obj" : $(SOURCE) $(DEP_CPP_OBSTA) "$(INTDIR)"
@@ -9792,6 +9797,7 @@ DEP_CPP_OBSTA=\
 
 SOURCE=.\Object_Manager.cpp
 DEP_CPP_OBJEC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -9803,7 +9809,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -9938,12 +9943,6 @@ DEP_CPP_OBJEC=\
 "$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -9951,6 +9950,12 @@ DEP_CPP_OBJEC=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Object_Manager.obj" : $(SOURCE) $(DEP_CPP_OBJEC) "$(INTDIR)"
@@ -9972,6 +9977,7 @@ DEP_CPP_NAMIN=\
 	"..\STL\iterator.h"\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -9983,7 +9989,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -10113,12 +10118,6 @@ DEP_CPP_NAMIN=\
 "$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10126,6 +10125,12 @@ DEP_CPP_NAMIN=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Naming_Context.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
@@ -10139,6 +10144,7 @@ DEP_CPP_NAMIN=\
 
 SOURCE=.\Name_Space.cpp
 DEP_CPP_NAME_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -10150,7 +10156,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -10270,12 +10275,6 @@ DEP_CPP_NAME_=\
 "$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10283,6 +10282,12 @@ DEP_CPP_NAME_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Name_Space.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
@@ -10296,13 +10301,13 @@ DEP_CPP_NAME_=\
 
 SOURCE=.\Name_Request_Reply.cpp
 DEP_CPP_NAME_R=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -10325,12 +10330,6 @@ DEP_CPP_NAME_R=\
 "$(INTDIR)\Name_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_NAME_R) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Name_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_NAME_R) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10338,6 +10337,12 @@ DEP_CPP_NAME_R=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Name_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_NAME_R) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Name_Request_Reply.obj" : $(SOURCE) $(DEP_CPP_NAME_R) "$(INTDIR)"
@@ -10351,6 +10356,7 @@ DEP_CPP_NAME_R=\
 
 SOURCE=.\Name_Proxy.cpp
 DEP_CPP_NAME_P=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -10362,7 +10368,6 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -10481,12 +10486,6 @@ DEP_CPP_NAME_P=\
 "$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10494,6 +10493,12 @@ DEP_CPP_NAME_P=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Name_Proxy.obj" : $(SOURCE) $(DEP_CPP_NAME_P) "$(INTDIR)"
@@ -10507,6 +10512,7 @@ DEP_CPP_NAME_P=\
 
 SOURCE=.\Multiplexor.cpp
 DEP_CPP_MULTI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -10518,7 +10524,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -10646,12 +10651,6 @@ DEP_CPP_MULTI=\
 "$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10659,6 +10658,12 @@ DEP_CPP_MULTI=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Multiplexor.obj" : $(SOURCE) $(DEP_CPP_MULTI) "$(INTDIR)"
@@ -10672,13 +10677,13 @@ DEP_CPP_MULTI=\
 
 SOURCE=.\Method_Object.cpp
 DEP_CPP_METHO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -10700,12 +10705,6 @@ DEP_CPP_METHO=\
 "$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10713,6 +10712,12 @@ DEP_CPP_METHO=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Method_Object.obj" : $(SOURCE) $(DEP_CPP_METHO) "$(INTDIR)"
@@ -10726,6 +10731,7 @@ DEP_CPP_METHO=\
 
 SOURCE=.\Message_Block.cpp
 DEP_CPP_MESSA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -10733,7 +10739,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -10786,12 +10791,6 @@ DEP_CPP_MESSA=\
 "$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10799,6 +10798,12 @@ DEP_CPP_MESSA=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Message_Block.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
@@ -10812,6 +10817,7 @@ DEP_CPP_MESSA=\
 
 SOURCE=.\Memory_Pool.cpp
 DEP_CPP_MEMOR=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -10819,7 +10825,6 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -10870,12 +10875,6 @@ DEP_CPP_MEMOR=\
 "$(INTDIR)\Memory_Pool.obj" : $(SOURCE) $(DEP_CPP_MEMOR) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Memory_Pool.obj" : $(SOURCE) $(DEP_CPP_MEMOR) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10883,6 +10882,12 @@ DEP_CPP_MEMOR=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Memory_Pool.obj" : $(SOURCE) $(DEP_CPP_MEMOR) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Memory_Pool.obj" : $(SOURCE) $(DEP_CPP_MEMOR) "$(INTDIR)"
@@ -10896,13 +10901,13 @@ DEP_CPP_MEMOR=\
 
 SOURCE=.\Mem_Map.cpp
 DEP_CPP_MEM_M=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -10925,12 +10930,6 @@ DEP_CPP_MEM_M=\
 "$(INTDIR)\Mem_Map.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Mem_Map.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -10938,6 +10937,12 @@ DEP_CPP_MEM_M=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Mem_Map.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Mem_Map.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
@@ -10951,6 +10956,7 @@ DEP_CPP_MEM_M=\
 
 SOURCE=.\Malloc.cpp
 DEP_CPP_MALLO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -10958,7 +10964,6 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -11009,12 +11014,6 @@ DEP_CPP_MALLO=\
 "$(INTDIR)\Malloc.obj" : $(SOURCE) $(DEP_CPP_MALLO) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Malloc.obj" : $(SOURCE) $(DEP_CPP_MALLO) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11022,6 +11021,12 @@ DEP_CPP_MALLO=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Malloc.obj" : $(SOURCE) $(DEP_CPP_MALLO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Malloc.obj" : $(SOURCE) $(DEP_CPP_MALLO) "$(INTDIR)"
@@ -11035,6 +11040,7 @@ DEP_CPP_MALLO=\
 
 SOURCE=.\LSOCK_Stream.cpp
 DEP_CPP_LSOCK=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11043,7 +11049,6 @@ DEP_CPP_LSOCK=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -11080,12 +11085,6 @@ DEP_CPP_LSOCK=\
 "$(INTDIR)\LSOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_LSOCK) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\LSOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_LSOCK) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11093,6 +11092,12 @@ DEP_CPP_LSOCK=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\LSOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_LSOCK) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\LSOCK_Stream.obj" : $(SOURCE) $(DEP_CPP_LSOCK) "$(INTDIR)"
@@ -11106,6 +11111,7 @@ DEP_CPP_LSOCK=\
 
 SOURCE=.\LSOCK_Dgram.cpp
 DEP_CPP_LSOCK_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11114,7 +11120,6 @@ DEP_CPP_LSOCK_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -11145,12 +11150,6 @@ DEP_CPP_LSOCK_=\
 "$(INTDIR)\LSOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\LSOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11158,6 +11157,12 @@ DEP_CPP_LSOCK_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\LSOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\LSOCK_Dgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_) "$(INTDIR)"
@@ -11171,6 +11176,7 @@ DEP_CPP_LSOCK_=\
 
 SOURCE=.\LSOCK_Connector.cpp
 DEP_CPP_LSOCK_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11179,7 +11185,6 @@ DEP_CPP_LSOCK_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -11221,12 +11226,6 @@ DEP_CPP_LSOCK_C=\
 "$(INTDIR)\LSOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_LSOCK_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\LSOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_LSOCK_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11234,6 +11233,12 @@ DEP_CPP_LSOCK_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\LSOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_LSOCK_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\LSOCK_Connector.obj" : $(SOURCE) $(DEP_CPP_LSOCK_C) "$(INTDIR)"
@@ -11247,6 +11252,7 @@ DEP_CPP_LSOCK_C=\
 
 SOURCE=.\LSOCK_CODgram.cpp
 DEP_CPP_LSOCK_CO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11255,7 +11261,6 @@ DEP_CPP_LSOCK_CO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -11288,12 +11293,6 @@ DEP_CPP_LSOCK_CO=\
 "$(INTDIR)\LSOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CO) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\LSOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CO) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11301,6 +11300,12 @@ DEP_CPP_LSOCK_CO=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\LSOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CO) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\LSOCK_CODgram.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CO) "$(INTDIR)"
@@ -11314,6 +11319,7 @@ DEP_CPP_LSOCK_CO=\
 
 SOURCE=.\LSOCK_Acceptor.cpp
 DEP_CPP_LSOCK_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11322,7 +11328,6 @@ DEP_CPP_LSOCK_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -11364,12 +11369,6 @@ DEP_CPP_LSOCK_A=\
 "$(INTDIR)\LSOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_LSOCK_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\LSOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_LSOCK_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11377,6 +11376,12 @@ DEP_CPP_LSOCK_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\LSOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_LSOCK_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\LSOCK_Acceptor.obj" : $(SOURCE) $(DEP_CPP_LSOCK_A) "$(INTDIR)"
@@ -11390,6 +11395,7 @@ DEP_CPP_LSOCK_A=\
 
 SOURCE=.\LSOCK.cpp
 DEP_CPP_LSOCK_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11398,7 +11404,6 @@ DEP_CPP_LSOCK_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -11425,12 +11430,6 @@ DEP_CPP_LSOCK_CP=\
 "$(INTDIR)\LSOCK.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\LSOCK.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11438,6 +11437,12 @@ DEP_CPP_LSOCK_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\LSOCK.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\LSOCK.obj" : $(SOURCE) $(DEP_CPP_LSOCK_CP) "$(INTDIR)"
@@ -11451,13 +11456,13 @@ DEP_CPP_LSOCK_CP=\
 
 SOURCE=.\Log_Record.cpp
 DEP_CPP_LOG_R=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -11478,12 +11483,6 @@ DEP_CPP_LOG_R=\
 "$(INTDIR)\Log_Record.obj" : $(SOURCE) $(DEP_CPP_LOG_R) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Log_Record.obj" : $(SOURCE) $(DEP_CPP_LOG_R) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11491,6 +11490,12 @@ DEP_CPP_LOG_R=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Log_Record.obj" : $(SOURCE) $(DEP_CPP_LOG_R) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Log_Record.obj" : $(SOURCE) $(DEP_CPP_LOG_R) "$(INTDIR)"
@@ -11504,6 +11509,7 @@ DEP_CPP_LOG_R=\
 
 SOURCE=.\Log_Msg.cpp
 DEP_CPP_LOG_M=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11513,7 +11519,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -11580,12 +11585,6 @@ DEP_CPP_LOG_M=\
 "$(INTDIR)\Log_Msg.obj" : $(SOURCE) $(DEP_CPP_LOG_M) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Log_Msg.obj" : $(SOURCE) $(DEP_CPP_LOG_M) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11593,6 +11592,12 @@ DEP_CPP_LOG_M=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Log_Msg.obj" : $(SOURCE) $(DEP_CPP_LOG_M) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Log_Msg.obj" : $(SOURCE) $(DEP_CPP_LOG_M) "$(INTDIR)"
@@ -11606,6 +11611,7 @@ DEP_CPP_LOG_M=\
 
 SOURCE=.\Local_Tokens.cpp
 DEP_CPP_LOCAL=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11617,7 +11623,6 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -11734,12 +11739,6 @@ DEP_CPP_LOCAL=\
 "$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11747,6 +11746,12 @@ DEP_CPP_LOCAL=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Local_Tokens.obj" : $(SOURCE) $(DEP_CPP_LOCAL) "$(INTDIR)"
@@ -11760,6 +11765,7 @@ DEP_CPP_LOCAL=\
 
 SOURCE=.\Local_Name_Space.cpp
 DEP_CPP_LOCAL_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11771,7 +11777,6 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -11895,12 +11900,6 @@ DEP_CPP_LOCAL_=\
 "$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11908,6 +11907,12 @@ DEP_CPP_LOCAL_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Local_Name_Space.obj" : $(SOURCE) $(DEP_CPP_LOCAL_) "$(INTDIR)"
@@ -11921,13 +11926,13 @@ DEP_CPP_LOCAL_=\
 
 SOURCE=.\IPC_SAP.cpp
 DEP_CPP_IPC_S=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -11950,12 +11955,6 @@ DEP_CPP_IPC_S=\
 "$(INTDIR)\IPC_SAP.obj" : $(SOURCE) $(DEP_CPP_IPC_S) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\IPC_SAP.obj" : $(SOURCE) $(DEP_CPP_IPC_S) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -11963,6 +11962,12 @@ DEP_CPP_IPC_S=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\IPC_SAP.obj" : $(SOURCE) $(DEP_CPP_IPC_S) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\IPC_SAP.obj" : $(SOURCE) $(DEP_CPP_IPC_S) "$(INTDIR)"
@@ -11976,6 +11981,7 @@ DEP_CPP_IPC_S=\
 
 SOURCE=.\IOStream.cpp
 DEP_CPP_IOSTR=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -11984,7 +11990,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -12013,12 +12018,6 @@ DEP_CPP_IOSTR=\
 "$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12026,6 +12025,12 @@ DEP_CPP_IOSTR=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\IOStream.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
@@ -12039,13 +12044,13 @@ DEP_CPP_IOSTR=\
 
 SOURCE=.\IO_SAP.cpp
 DEP_CPP_IO_SA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IO_SAP.h"\
 	{$(INCLUDE)}"\.\IO_SAP.i"\
@@ -12068,12 +12073,6 @@ DEP_CPP_IO_SA=\
 "$(INTDIR)\IO_SAP.obj" : $(SOURCE) $(DEP_CPP_IO_SA) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\IO_SAP.obj" : $(SOURCE) $(DEP_CPP_IO_SA) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12081,6 +12080,12 @@ DEP_CPP_IO_SA=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\IO_SAP.obj" : $(SOURCE) $(DEP_CPP_IO_SA) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\IO_SAP.obj" : $(SOURCE) $(DEP_CPP_IO_SA) "$(INTDIR)"
@@ -12100,12 +12105,6 @@ SOURCE=.\IO_Cntl_Msg.cpp
 "$(INTDIR)\IO_Cntl_Msg.obj" : $(SOURCE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\IO_Cntl_Msg.obj" : $(SOURCE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12113,6 +12112,12 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\IO_Cntl_Msg.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\IO_Cntl_Msg.obj" : $(SOURCE) "$(INTDIR)"
@@ -12126,6 +12131,7 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 SOURCE=.\INET_Addr.cpp
 DEP_CPP_INET_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -12134,7 +12140,6 @@ DEP_CPP_INET_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -12157,12 +12162,6 @@ DEP_CPP_INET_=\
 "$(INTDIR)\INET_Addr.obj" : $(SOURCE) $(DEP_CPP_INET_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\INET_Addr.obj" : $(SOURCE) $(DEP_CPP_INET_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12170,6 +12169,12 @@ DEP_CPP_INET_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\INET_Addr.obj" : $(SOURCE) $(DEP_CPP_INET_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\INET_Addr.obj" : $(SOURCE) $(DEP_CPP_INET_) "$(INTDIR)"
@@ -12183,13 +12188,13 @@ DEP_CPP_INET_=\
 
 SOURCE=.\High_Res_Timer.cpp
 DEP_CPP_HIGH_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.i"\
@@ -12212,12 +12217,6 @@ DEP_CPP_HIGH_=\
 "$(INTDIR)\High_Res_Timer.obj" : $(SOURCE) $(DEP_CPP_HIGH_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\High_Res_Timer.obj" : $(SOURCE) $(DEP_CPP_HIGH_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12225,6 +12224,12 @@ DEP_CPP_HIGH_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\High_Res_Timer.obj" : $(SOURCE) $(DEP_CPP_HIGH_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\High_Res_Timer.obj" : $(SOURCE) $(DEP_CPP_HIGH_) "$(INTDIR)"
@@ -12238,13 +12243,13 @@ DEP_CPP_HIGH_=\
 
 SOURCE=.\Handle_Set.cpp
 DEP_CPP_HANDL=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -12267,12 +12272,6 @@ DEP_CPP_HANDL=\
 "$(INTDIR)\Handle_Set.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Handle_Set.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12280,6 +12279,12 @@ DEP_CPP_HANDL=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Handle_Set.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Handle_Set.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
@@ -12293,13 +12298,13 @@ DEP_CPP_HANDL=\
 
 SOURCE=.\Get_Opt.cpp
 DEP_CPP_GET_O=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Get_Opt.h"\
 	{$(INCLUDE)}"\.\Get_Opt.i"\
@@ -12322,12 +12327,6 @@ DEP_CPP_GET_O=\
 "$(INTDIR)\Get_Opt.obj" : $(SOURCE) $(DEP_CPP_GET_O) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Get_Opt.obj" : $(SOURCE) $(DEP_CPP_GET_O) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12335,6 +12334,12 @@ DEP_CPP_GET_O=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Get_Opt.obj" : $(SOURCE) $(DEP_CPP_GET_O) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Get_Opt.obj" : $(SOURCE) $(DEP_CPP_GET_O) "$(INTDIR)"
@@ -12348,6 +12353,7 @@ DEP_CPP_GET_O=\
 
 SOURCE=.\Filecache.cpp
 DEP_CPP_FILEC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -12359,7 +12365,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -12475,12 +12480,6 @@ DEP_CPP_FILEC=\
 "$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12488,6 +12487,12 @@ DEP_CPP_FILEC=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Filecache.obj" : $(SOURCE) $(DEP_CPP_FILEC) "$(INTDIR)"
@@ -12501,6 +12506,7 @@ DEP_CPP_FILEC=\
 
 SOURCE=.\FILE_IO.cpp
 DEP_CPP_FILE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -12509,7 +12515,6 @@ DEP_CPP_FILE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE.i"\
@@ -12538,12 +12543,6 @@ DEP_CPP_FILE_=\
 "$(INTDIR)\FILE_IO.obj" : $(SOURCE) $(DEP_CPP_FILE_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FILE_IO.obj" : $(SOURCE) $(DEP_CPP_FILE_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12551,6 +12550,12 @@ DEP_CPP_FILE_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FILE_IO.obj" : $(SOURCE) $(DEP_CPP_FILE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FILE_IO.obj" : $(SOURCE) $(DEP_CPP_FILE_) "$(INTDIR)"
@@ -12564,6 +12569,7 @@ DEP_CPP_FILE_=\
 
 SOURCE=.\FILE_Connector.cpp
 DEP_CPP_FILE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -12572,7 +12578,6 @@ DEP_CPP_FILE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE.i"\
@@ -12603,12 +12608,6 @@ DEP_CPP_FILE_C=\
 "$(INTDIR)\FILE_Connector.obj" : $(SOURCE) $(DEP_CPP_FILE_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FILE_Connector.obj" : $(SOURCE) $(DEP_CPP_FILE_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12616,6 +12615,12 @@ DEP_CPP_FILE_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FILE_Connector.obj" : $(SOURCE) $(DEP_CPP_FILE_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FILE_Connector.obj" : $(SOURCE) $(DEP_CPP_FILE_C) "$(INTDIR)"
@@ -12629,6 +12634,7 @@ DEP_CPP_FILE_C=\
 
 SOURCE=.\FILE_Addr.cpp
 DEP_CPP_FILE_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -12637,7 +12643,6 @@ DEP_CPP_FILE_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.i"\
@@ -12660,12 +12665,6 @@ DEP_CPP_FILE_A=\
 "$(INTDIR)\FILE_Addr.obj" : $(SOURCE) $(DEP_CPP_FILE_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FILE_Addr.obj" : $(SOURCE) $(DEP_CPP_FILE_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12673,6 +12672,12 @@ DEP_CPP_FILE_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FILE_Addr.obj" : $(SOURCE) $(DEP_CPP_FILE_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FILE_Addr.obj" : $(SOURCE) $(DEP_CPP_FILE_A) "$(INTDIR)"
@@ -12686,6 +12691,7 @@ DEP_CPP_FILE_A=\
 
 SOURCE=.\FILE.cpp
 DEP_CPP_FILE_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -12694,7 +12700,6 @@ DEP_CPP_FILE_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE.i"\
@@ -12721,12 +12726,6 @@ DEP_CPP_FILE_CP=\
 "$(INTDIR)\FILE.obj" : $(SOURCE) $(DEP_CPP_FILE_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FILE.obj" : $(SOURCE) $(DEP_CPP_FILE_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12734,6 +12733,12 @@ DEP_CPP_FILE_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FILE.obj" : $(SOURCE) $(DEP_CPP_FILE_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FILE.obj" : $(SOURCE) $(DEP_CPP_FILE_CP) "$(INTDIR)"
@@ -12747,13 +12752,13 @@ DEP_CPP_FILE_CP=\
 
 SOURCE=.\FIFO_Send_Msg.cpp
 DEP_CPP_FIFO_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -12782,12 +12787,6 @@ DEP_CPP_FIFO_=\
 "$(INTDIR)\FIFO_Send_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FIFO_Send_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12795,6 +12794,12 @@ DEP_CPP_FIFO_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FIFO_Send_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FIFO_Send_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_) "$(INTDIR)"
@@ -12808,13 +12813,13 @@ DEP_CPP_FIFO_=\
 
 SOURCE=.\FIFO_Send.cpp
 DEP_CPP_FIFO_S=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -12841,12 +12846,6 @@ DEP_CPP_FIFO_S=\
 "$(INTDIR)\FIFO_Send.obj" : $(SOURCE) $(DEP_CPP_FIFO_S) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FIFO_Send.obj" : $(SOURCE) $(DEP_CPP_FIFO_S) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12854,6 +12853,12 @@ DEP_CPP_FIFO_S=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FIFO_Send.obj" : $(SOURCE) $(DEP_CPP_FIFO_S) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FIFO_Send.obj" : $(SOURCE) $(DEP_CPP_FIFO_S) "$(INTDIR)"
@@ -12867,13 +12872,13 @@ DEP_CPP_FIFO_S=\
 
 SOURCE=.\FIFO_Recv_Msg.cpp
 DEP_CPP_FIFO_R=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -12902,12 +12907,6 @@ DEP_CPP_FIFO_R=\
 "$(INTDIR)\FIFO_Recv_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_R) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FIFO_Recv_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_R) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12915,6 +12914,12 @@ DEP_CPP_FIFO_R=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FIFO_Recv_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_R) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FIFO_Recv_Msg.obj" : $(SOURCE) $(DEP_CPP_FIFO_R) "$(INTDIR)"
@@ -12928,13 +12933,13 @@ DEP_CPP_FIFO_R=\
 
 SOURCE=.\FIFO_Recv.cpp
 DEP_CPP_FIFO_RE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -12961,12 +12966,6 @@ DEP_CPP_FIFO_RE=\
 "$(INTDIR)\FIFO_Recv.obj" : $(SOURCE) $(DEP_CPP_FIFO_RE) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FIFO_Recv.obj" : $(SOURCE) $(DEP_CPP_FIFO_RE) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -12974,6 +12973,12 @@ DEP_CPP_FIFO_RE=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FIFO_Recv.obj" : $(SOURCE) $(DEP_CPP_FIFO_RE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FIFO_Recv.obj" : $(SOURCE) $(DEP_CPP_FIFO_RE) "$(INTDIR)"
@@ -12987,13 +12992,13 @@ DEP_CPP_FIFO_RE=\
 
 SOURCE=.\FIFO.cpp
 DEP_CPP_FIFO_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -13018,12 +13023,6 @@ DEP_CPP_FIFO_C=\
 "$(INTDIR)\FIFO.obj" : $(SOURCE) $(DEP_CPP_FIFO_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\FIFO.obj" : $(SOURCE) $(DEP_CPP_FIFO_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13031,6 +13030,12 @@ DEP_CPP_FIFO_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\FIFO.obj" : $(SOURCE) $(DEP_CPP_FIFO_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\FIFO.obj" : $(SOURCE) $(DEP_CPP_FIFO_C) "$(INTDIR)"
@@ -13044,6 +13049,7 @@ DEP_CPP_FIFO_C=\
 
 SOURCE=.\Event_Handler.cpp
 DEP_CPP_EVENT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -13051,7 +13057,6 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -13104,12 +13109,6 @@ DEP_CPP_EVENT=\
 "$(INTDIR)\Event_Handler.obj" : $(SOURCE) $(DEP_CPP_EVENT) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Event_Handler.obj" : $(SOURCE) $(DEP_CPP_EVENT) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13117,6 +13116,12 @@ DEP_CPP_EVENT=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Event_Handler.obj" : $(SOURCE) $(DEP_CPP_EVENT) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Event_Handler.obj" : $(SOURCE) $(DEP_CPP_EVENT) "$(INTDIR)"
@@ -13130,13 +13135,13 @@ DEP_CPP_EVENT=\
 
 SOURCE=.\Dynamic.cpp
 DEP_CPP_DYNAM=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Dynamic.h"\
 	{$(INCLUDE)}"\.\Dynamic.i"\
@@ -13159,12 +13164,6 @@ DEP_CPP_DYNAM=\
 "$(INTDIR)\Dynamic.obj" : $(SOURCE) $(DEP_CPP_DYNAM) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Dynamic.obj" : $(SOURCE) $(DEP_CPP_DYNAM) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13172,6 +13171,12 @@ DEP_CPP_DYNAM=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Dynamic.obj" : $(SOURCE) $(DEP_CPP_DYNAM) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Dynamic.obj" : $(SOURCE) $(DEP_CPP_DYNAM) "$(INTDIR)"
@@ -13185,6 +13190,7 @@ DEP_CPP_DYNAM=\
 
 SOURCE=.\Dump.cpp
 DEP_CPP_DUMP_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -13192,7 +13198,6 @@ DEP_CPP_DUMP_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Dump.h"\
 	{$(INCLUDE)}"\.\Dump_T.cpp"\
@@ -13229,12 +13234,6 @@ DEP_CPP_DUMP_=\
 "$(INTDIR)\Dump.obj" : $(SOURCE) $(DEP_CPP_DUMP_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Dump.obj" : $(SOURCE) $(DEP_CPP_DUMP_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13242,6 +13241,12 @@ DEP_CPP_DUMP_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Dump.obj" : $(SOURCE) $(DEP_CPP_DUMP_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Dump.obj" : $(SOURCE) $(DEP_CPP_DUMP_) "$(INTDIR)"
@@ -13255,6 +13260,7 @@ DEP_CPP_DUMP_=\
 
 SOURCE=.\DEV_IO.cpp
 DEP_CPP_DEV_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13263,7 +13269,6 @@ DEP_CPP_DEV_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -13292,12 +13297,6 @@ DEP_CPP_DEV_I=\
 "$(INTDIR)\DEV_IO.obj" : $(SOURCE) $(DEP_CPP_DEV_I) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\DEV_IO.obj" : $(SOURCE) $(DEP_CPP_DEV_I) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13305,6 +13304,12 @@ DEP_CPP_DEV_I=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\DEV_IO.obj" : $(SOURCE) $(DEP_CPP_DEV_I) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\DEV_IO.obj" : $(SOURCE) $(DEP_CPP_DEV_I) "$(INTDIR)"
@@ -13318,6 +13323,7 @@ DEP_CPP_DEV_I=\
 
 SOURCE=.\DEV_Connector.cpp
 DEP_CPP_DEV_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13326,7 +13332,6 @@ DEP_CPP_DEV_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -13357,12 +13362,6 @@ DEP_CPP_DEV_C=\
 "$(INTDIR)\DEV_Connector.obj" : $(SOURCE) $(DEP_CPP_DEV_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\DEV_Connector.obj" : $(SOURCE) $(DEP_CPP_DEV_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13370,6 +13369,12 @@ DEP_CPP_DEV_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\DEV_Connector.obj" : $(SOURCE) $(DEP_CPP_DEV_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\DEV_Connector.obj" : $(SOURCE) $(DEP_CPP_DEV_C) "$(INTDIR)"
@@ -13383,6 +13388,7 @@ DEP_CPP_DEV_C=\
 
 SOURCE=.\DEV_Addr.cpp
 DEP_CPP_DEV_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13391,7 +13397,6 @@ DEP_CPP_DEV_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.i"\
@@ -13414,12 +13419,6 @@ DEP_CPP_DEV_A=\
 "$(INTDIR)\DEV_Addr.obj" : $(SOURCE) $(DEP_CPP_DEV_A) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\DEV_Addr.obj" : $(SOURCE) $(DEP_CPP_DEV_A) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13427,6 +13426,12 @@ DEP_CPP_DEV_A=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\DEV_Addr.obj" : $(SOURCE) $(DEP_CPP_DEV_A) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\DEV_Addr.obj" : $(SOURCE) $(DEP_CPP_DEV_A) "$(INTDIR)"
@@ -13440,6 +13445,7 @@ DEP_CPP_DEV_A=\
 
 SOURCE=.\DEV.cpp
 DEP_CPP_DEV_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13448,7 +13454,6 @@ DEP_CPP_DEV_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -13475,12 +13480,6 @@ DEP_CPP_DEV_CP=\
 "$(INTDIR)\DEV.obj" : $(SOURCE) $(DEP_CPP_DEV_CP) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\DEV.obj" : $(SOURCE) $(DEP_CPP_DEV_CP) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13488,6 +13487,12 @@ DEP_CPP_DEV_CP=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\DEV.obj" : $(SOURCE) $(DEP_CPP_DEV_CP) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\DEV.obj" : $(SOURCE) $(DEP_CPP_DEV_CP) "$(INTDIR)"
@@ -13501,13 +13506,13 @@ DEP_CPP_DEV_CP=\
 
 SOURCE=.\Date_Time.cpp
 DEP_CPP_DATE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Date_Time.h"\
 	{$(INCLUDE)}"\.\Date_Time.i"\
@@ -13530,12 +13535,6 @@ DEP_CPP_DATE_=\
 "$(INTDIR)\Date_Time.obj" : $(SOURCE) $(DEP_CPP_DATE_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Date_Time.obj" : $(SOURCE) $(DEP_CPP_DATE_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13543,6 +13542,12 @@ DEP_CPP_DATE_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Date_Time.obj" : $(SOURCE) $(DEP_CPP_DATE_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Date_Time.obj" : $(SOURCE) $(DEP_CPP_DATE_) "$(INTDIR)"
@@ -13556,6 +13561,7 @@ DEP_CPP_DATE_=\
 
 SOURCE=.\CORBA_Handler.cpp
 DEP_CPP_CORBA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13567,7 +13573,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -13684,12 +13689,6 @@ DEP_CPP_CORBA=\
 "$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13697,6 +13696,12 @@ DEP_CPP_CORBA=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\CORBA_Handler.obj" : $(SOURCE) $(DEP_CPP_CORBA) "$(INTDIR)"
@@ -13710,6 +13715,7 @@ DEP_CPP_CORBA=\
 
 SOURCE=.\Asynch_IO.cpp
 DEP_CPP_ASYNC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13721,7 +13727,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -13836,12 +13841,6 @@ DEP_CPP_ASYNC=\
 "$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13849,6 +13848,12 @@ DEP_CPP_ASYNC=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Asynch_IO.obj" : $(SOURCE) $(DEP_CPP_ASYNC) "$(INTDIR)"
@@ -13862,6 +13867,7 @@ DEP_CPP_ASYNC=\
 
 SOURCE=.\ARGV.cpp
 DEP_CPP_ARGV_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.h"\
@@ -13871,7 +13877,6 @@ DEP_CPP_ARGV_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -13922,12 +13927,6 @@ DEP_CPP_ARGV_=\
 "$(INTDIR)\ARGV.obj" : $(SOURCE) $(DEP_CPP_ARGV_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\ARGV.obj" : $(SOURCE) $(DEP_CPP_ARGV_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13935,6 +13934,12 @@ DEP_CPP_ARGV_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\ARGV.obj" : $(SOURCE) $(DEP_CPP_ARGV_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\ARGV.obj" : $(SOURCE) $(DEP_CPP_ARGV_) "$(INTDIR)"
@@ -13948,6 +13953,7 @@ DEP_CPP_ARGV_=\
 
 SOURCE=.\Addr.cpp
 DEP_CPP_ADDR_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -13956,7 +13962,6 @@ DEP_CPP_ADDR_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -13977,12 +13982,6 @@ DEP_CPP_ADDR_=\
 "$(INTDIR)\Addr.obj" : $(SOURCE) $(DEP_CPP_ADDR_) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Addr.obj" : $(SOURCE) $(DEP_CPP_ADDR_) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -13990,6 +13989,12 @@ DEP_CPP_ADDR_=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Addr.obj" : $(SOURCE) $(DEP_CPP_ADDR_) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Addr.obj" : $(SOURCE) $(DEP_CPP_ADDR_) "$(INTDIR)"
@@ -14003,6 +14008,7 @@ DEP_CPP_ADDR_=\
 
 SOURCE=.\Activation_Queue.cpp
 DEP_CPP_ACTIV=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Activation_Queue.h"\
@@ -14015,7 +14021,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -14131,12 +14136,6 @@ DEP_CPP_ACTIV=\
 "$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -14144,6 +14143,12 @@ DEP_CPP_ACTIV=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\Activation_Queue.obj" : $(SOURCE) $(DEP_CPP_ACTIV) "$(INTDIR)"
@@ -14157,6 +14162,7 @@ DEP_CPP_ACTIV=\
 
 SOURCE=.\ACE.cpp
 DEP_CPP_ACE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -14168,7 +14174,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -14287,12 +14292,6 @@ DEP_CPP_ACE_C=\
 "$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
 
 
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
-
-
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
 
 
@@ -14300,6 +14299,12 @@ DEP_CPP_ACE_C=\
 
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+
+"$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
 
 "$(INTDIR)\ACE.obj" : $(SOURCE) $(DEP_CPP_ACE_C) "$(INTDIR)"
@@ -14332,6 +14337,7 @@ DEP_CPP_ACE_C=\
 
 SOURCE=.\UPIPE_Stream.cpp
 DEP_CPP_UPIPE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -14343,7 +14349,6 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -14505,6 +14510,7 @@ DEP_CPP_UPIPE=\
 
 SOURCE=.\UPIPE_Connector.cpp
 DEP_CPP_UPIPE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -14516,7 +14522,6 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -14682,6 +14687,7 @@ DEP_CPP_UPIPE_=\
 
 SOURCE=.\UPIPE_Acceptor.cpp
 DEP_CPP_UPIPE_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -14693,7 +14699,6 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -14860,6 +14865,7 @@ DEP_CPP_UPIPE_A=\
 
 SOURCE=.\UNIX_Addr.cpp
 DEP_CPP_UNIX_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -14868,7 +14874,6 @@ DEP_CPP_UNIX_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -14917,6 +14922,7 @@ DEP_CPP_UNIX_=\
 
 SOURCE=.\TTY_IO.cpp
 DEP_CPP_TTY_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -14925,7 +14931,6 @@ DEP_CPP_TTY_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -14983,13 +14988,13 @@ DEP_CPP_TTY_I=\
 
 SOURCE=.\Trace.cpp
 DEP_CPP_TRACE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -15037,6 +15042,7 @@ DEP_CPP_TRACE=\
 
 SOURCE=.\Token_Request_Reply.cpp
 DEP_CPP_TOKEN=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15048,7 +15054,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -15191,6 +15196,7 @@ DEP_CPP_TOKEN=\
 
 SOURCE=.\Token_Manager.cpp
 DEP_CPP_TOKEN_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15202,7 +15208,6 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -15345,6 +15350,7 @@ DEP_CPP_TOKEN_=\
 
 SOURCE=.\Token_Invariants.cpp
 DEP_CPP_TOKEN_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15356,7 +15362,6 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -15499,6 +15504,7 @@ DEP_CPP_TOKEN_I=\
 
 SOURCE=.\Token_Collection.cpp
 DEP_CPP_TOKEN_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15510,7 +15516,6 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -15653,6 +15658,7 @@ DEP_CPP_TOKEN_C=\
 
 SOURCE=.\Token.cpp
 DEP_CPP_TOKEN_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -15660,7 +15666,6 @@ DEP_CPP_TOKEN_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -15722,6 +15727,7 @@ DEP_CPP_TOKEN_CP=\
 
 SOURCE=.\TLI_Stream.cpp
 DEP_CPP_TLI_S=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15730,7 +15736,6 @@ DEP_CPP_TLI_S=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -15785,6 +15790,7 @@ DEP_CPP_TLI_S=\
 
 SOURCE=.\TLI_Connector.cpp
 DEP_CPP_TLI_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15793,7 +15799,6 @@ DEP_CPP_TLI_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -15852,6 +15857,7 @@ DEP_CPP_TLI_C=\
 
 SOURCE=.\TLI_Acceptor.cpp
 DEP_CPP_TLI_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15860,7 +15866,6 @@ DEP_CPP_TLI_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -15918,6 +15923,7 @@ DEP_CPP_TLI_A=\
 
 SOURCE=.\TLI.cpp
 DEP_CPP_TLI_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -15926,7 +15932,6 @@ DEP_CPP_TLI_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -15977,6 +15982,7 @@ DEP_CPP_TLI_CP=\
 
 SOURCE=.\Timer_Queue.cpp
 DEP_CPP_TIMER=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -15984,7 +15990,6 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -16066,13 +16071,13 @@ DEP_CPP_TIMER=\
 
 SOURCE=.\Time_Request_Reply.cpp
 DEP_CPP_TIME_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -16121,6 +16126,7 @@ DEP_CPP_TIME_=\
 
 SOURCE=.\Thread_Manager.cpp
 DEP_CPP_THREA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -16128,7 +16134,6 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -16190,13 +16195,13 @@ DEP_CPP_THREA=\
 
 SOURCE=.\Thread.cpp
 DEP_CPP_THREAD=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -16245,6 +16250,7 @@ DEP_CPP_THREAD=\
 
 SOURCE=.\Task.cpp
 DEP_CPP_TASK_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -16256,7 +16262,6 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -16410,6 +16415,7 @@ DEP_CPP_TASK_=\
 
 SOURCE=.\System_Time.cpp
 DEP_CPP_SYSTE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -16417,7 +16423,6 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -16495,13 +16500,13 @@ DEP_CPP_SYSTE=\
 
 SOURCE=.\Synch_Options.cpp
 DEP_CPP_SYNCH=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -16549,6 +16554,7 @@ DEP_CPP_SYNCH=\
 
 SOURCE=.\Synch.cpp
 DEP_CPP_SYNCH_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -16556,7 +16562,6 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -16633,6 +16638,7 @@ DEP_CPP_SYNCH_=\
 
 SOURCE=.\Svc_Conf_y.cpp
 DEP_CPP_SVC_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -16646,7 +16652,6 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -16807,6 +16812,7 @@ DEP_CPP_SVC_C=\
 
 SOURCE=.\Svc_Conf_l.cpp
 DEP_CPP_SVC_CO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -16818,7 +16824,6 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -16979,13 +16984,13 @@ DEP_CPP_SVC_CO=\
 
 SOURCE=.\SV_Shared_Memory.cpp
 DEP_CPP_SV_SH=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -17034,13 +17039,13 @@ DEP_CPP_SV_SH=\
 
 SOURCE=.\SV_Semaphore_Simple.cpp
 DEP_CPP_SV_SE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -17089,13 +17094,13 @@ DEP_CPP_SV_SE=\
 
 SOURCE=.\SV_Semaphore_Complex.cpp
 DEP_CPP_SV_SEM=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -17146,13 +17151,13 @@ DEP_CPP_SV_SEM=\
 
 SOURCE=.\SV_Message_Queue.cpp
 DEP_CPP_SV_ME=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -17203,13 +17208,13 @@ DEP_CPP_SV_ME=\
 
 SOURCE=.\SV_Message.cpp
 DEP_CPP_SV_MES=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -17258,6 +17263,7 @@ DEP_CPP_SV_MES=\
 
 SOURCE=.\Strategies.cpp
 DEP_CPP_STRAT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17269,7 +17275,6 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -17410,6 +17415,7 @@ DEP_CPP_STRAT=\
 
 SOURCE=.\SString.cpp
 DEP_CPP_SSTRI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17421,7 +17427,6 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -17562,6 +17567,7 @@ DEP_CPP_SSTRI=\
 
 SOURCE=.\SPIPE_Stream.cpp
 DEP_CPP_SPIPE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17570,7 +17576,6 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -17625,6 +17630,7 @@ DEP_CPP_SPIPE=\
 
 SOURCE=.\SPIPE_Connector.cpp
 DEP_CPP_SPIPE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17633,7 +17639,6 @@ DEP_CPP_SPIPE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -17690,6 +17695,7 @@ DEP_CPP_SPIPE_=\
 
 SOURCE=.\SPIPE_Addr.cpp
 DEP_CPP_SPIPE_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17698,7 +17704,6 @@ DEP_CPP_SPIPE_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -17747,6 +17752,7 @@ DEP_CPP_SPIPE_A=\
 
 SOURCE=.\SPIPE_Acceptor.cpp
 DEP_CPP_SPIPE_AC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17755,7 +17761,6 @@ DEP_CPP_SPIPE_AC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -17811,6 +17816,7 @@ DEP_CPP_SPIPE_AC=\
 
 SOURCE=.\SPIPE.cpp
 DEP_CPP_SPIPE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17819,7 +17825,6 @@ DEP_CPP_SPIPE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -17872,6 +17877,7 @@ DEP_CPP_SPIPE_C=\
 
 SOURCE=.\SOCK_Stream.cpp
 DEP_CPP_SOCK_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17880,7 +17886,6 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -17937,6 +17942,7 @@ DEP_CPP_SOCK_=\
 
 SOURCE=.\SOCK_IO.cpp
 DEP_CPP_SOCK_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -17945,7 +17951,6 @@ DEP_CPP_SOCK_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -17998,6 +18003,7 @@ DEP_CPP_SOCK_I=\
 
 SOURCE=.\SOCK_Dgram_Mcast.cpp
 DEP_CPP_SOCK_D=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18006,7 +18012,6 @@ DEP_CPP_SOCK_D=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -18063,6 +18068,7 @@ DEP_CPP_SOCK_D=\
 
 SOURCE=.\SOCK_Dgram_Bcast.cpp
 DEP_CPP_SOCK_DG=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18071,7 +18077,6 @@ DEP_CPP_SOCK_DG=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -18128,6 +18133,7 @@ DEP_CPP_SOCK_DG=\
 
 SOURCE=.\SOCK_Dgram.cpp
 DEP_CPP_SOCK_DGR=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18137,7 +18143,6 @@ DEP_CPP_SOCK_DGR=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -18205,6 +18210,7 @@ DEP_CPP_SOCK_DGR=\
 
 SOURCE=.\SOCK_Connector.cpp
 DEP_CPP_SOCK_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18213,7 +18219,6 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -18275,6 +18280,7 @@ DEP_CPP_SOCK_C=\
 
 SOURCE=.\SOCK_CODgram.cpp
 DEP_CPP_SOCK_CO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18283,7 +18289,6 @@ DEP_CPP_SOCK_CO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -18338,6 +18343,7 @@ DEP_CPP_SOCK_CO=\
 
 SOURCE=.\SOCK_Acceptor.cpp
 DEP_CPP_SOCK_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18346,7 +18352,6 @@ DEP_CPP_SOCK_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -18406,6 +18411,7 @@ DEP_CPP_SOCK_A=\
 
 SOURCE=.\SOCK.cpp
 DEP_CPP_SOCK_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18414,7 +18420,6 @@ DEP_CPP_SOCK_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -18465,6 +18470,7 @@ DEP_CPP_SOCK_CP=\
 
 SOURCE=.\Signal.cpp
 DEP_CPP_SIGNA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -18472,7 +18478,6 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -18549,13 +18554,13 @@ DEP_CPP_SIGNA=\
 
 SOURCE=.\Shared_Object.cpp
 DEP_CPP_SHARE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -18604,13 +18609,13 @@ DEP_CPP_SHARE=\
 
 SOURCE=.\Shared_Memory_SV.cpp
 DEP_CPP_SHARED=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -18662,13 +18667,13 @@ DEP_CPP_SHARED=\
 
 SOURCE=.\Shared_Memory_MM.cpp
 DEP_CPP_SHARED_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -18720,6 +18725,7 @@ DEP_CPP_SHARED_=\
 
 SOURCE=.\Service_Repository.cpp
 DEP_CPP_SERVI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18731,7 +18737,6 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -18890,6 +18895,7 @@ DEP_CPP_SERVI=\
 
 SOURCE=.\Service_Record.cpp
 DEP_CPP_SERVIC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -18901,7 +18907,6 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -19058,13 +19063,13 @@ DEP_CPP_SERVIC=\
 
 SOURCE=.\Service_Object.cpp
 DEP_CPP_SERVICE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -19117,6 +19122,7 @@ DEP_CPP_SERVICE=\
 
 SOURCE=.\Service_Manager.cpp
 DEP_CPP_SERVICE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -19128,7 +19134,6 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -19293,6 +19298,7 @@ DEP_CPP_SERVICE_=\
 
 SOURCE=.\Service_Main.cpp
 DEP_CPP_SERVICE_M=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -19304,7 +19310,6 @@ DEP_CPP_SERVICE_M=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -19445,6 +19450,7 @@ DEP_CPP_SERVICE_M=\
 
 SOURCE=.\Service_Config.cpp
 DEP_CPP_SERVICE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -19458,7 +19464,6 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -19627,13 +19632,13 @@ DEP_CPP_SERVICE_C=\
 
 SOURCE=.\Sched_Params.cpp
 DEP_CPP_SCHED=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -19682,6 +19687,7 @@ DEP_CPP_SCHED=\
 
 SOURCE=.\Remote_Tokens.cpp
 DEP_CPP_REMOT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -19693,7 +19699,6 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -19843,6 +19848,7 @@ DEP_CPP_REMOT=\
 
 SOURCE=.\Remote_Name_Space.cpp
 DEP_CPP_REMOTE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -19854,7 +19860,6 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -20009,6 +20014,7 @@ DEP_CPP_REGIS=\
 	"..\STL\iterator.h"\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -20020,7 +20026,6 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -20169,6 +20174,9 @@ DEP_CPP_REGIS=\
 # Begin Source File
 
 SOURCE=.\Registry.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Release"
+
 DEP_CPP_REGIST=\
 	"..\STL\algobase.h"\
 	"..\STL\bool.h"\
@@ -20178,13 +20186,13 @@ DEP_CPP_REGIST=\
 	"..\STL\iterator.h"\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -20201,26 +20209,116 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
 
-!IF  "$(CFG)" == "ACE static library - Win32 Release"
-
-
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
 
+DEP_CPP_REGIST=\
+	"..\STL\algobase.h"\
+	"..\STL\bool.h"\
+	"..\STL\bstring.h"\
+	"..\STL\defalloc.h"\
+	"..\STL\function.h"\
+	"..\STL\iterator.h"\
+	"..\STL\pair.h"\
+	"..\STL\vector.h"\
+	".\config-win32.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\.\Auto_Ptr.h"\
+	{$(INCLUDE)}"\.\Auto_Ptr.i"\
+	{$(INCLUDE)}"\.\config-win32-common.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\Registry.h"\
+	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
+	
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+DEP_CPP_REGIST=\
+	"..\STL\algobase.h"\
+	"..\STL\bool.h"\
+	"..\STL\bstring.h"\
+	"..\STL\defalloc.h"\
+	"..\STL\function.h"\
+	"..\STL\iterator.h"\
+	"..\STL\pair.h"\
+	"..\STL\vector.h"\
+	".\config-win32.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\.\Auto_Ptr.h"\
+	{$(INCLUDE)}"\.\Auto_Ptr.i"\
+	{$(INCLUDE)}"\.\config-win32-common.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\Registry.h"\
+	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
+	
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
 
+DEP_CPP_REGIST=\
+	"..\STL\algobase.h"\
+	"..\STL\bool.h"\
+	"..\STL\bstring.h"\
+	"..\STL\defalloc.h"\
+	"..\STL\function.h"\
+	"..\STL\iterator.h"\
+	"..\STL\pair.h"\
+	"..\STL\vector.h"\
+	".\config-win32.h"\
+	{$(INCLUDE)}"\.\ACE.h"\
+	{$(INCLUDE)}"\.\ACE.i"\
+	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\.\Auto_Ptr.h"\
+	{$(INCLUDE)}"\.\Auto_Ptr.i"\
+	{$(INCLUDE)}"\.\config-win32-common.h"\
+	{$(INCLUDE)}"\.\config.h"\
+	{$(INCLUDE)}"\.\Log_Msg.h"\
+	{$(INCLUDE)}"\.\Log_Priority.h"\
+	{$(INCLUDE)}"\.\Log_Record.h"\
+	{$(INCLUDE)}"\.\Log_Record.i"\
+	{$(INCLUDE)}"\.\OS.h"\
+	{$(INCLUDE)}"\.\OS.i"\
+	{$(INCLUDE)}"\.\Registry.h"\
+	{$(INCLUDE)}"\.\SString.h"\
+	{$(INCLUDE)}"\.\SString.i"\
+	{$(INCLUDE)}"\.\stdcpp.h"\
+	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\ws2tcpip.h"\
+	{$(INCLUDE)}"\IOSTREAM.H"\
+	
 
 "$(INTDIR)\Registry.obj" : $(SOURCE) $(DEP_CPP_REGIST) "$(INTDIR)"
 
@@ -20233,6 +20331,7 @@ DEP_CPP_REGIST=\
 
 SOURCE=.\Read_Buffer.cpp
 DEP_CPP_READ_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -20244,7 +20343,6 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -20387,6 +20485,7 @@ DEP_CPP_READ_=\
 
 SOURCE=.\ReactorEx.cpp
 DEP_CPP_REACT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -20398,7 +20497,6 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -20539,6 +20637,7 @@ DEP_CPP_REACT=\
 
 SOURCE=.\Reactor.cpp
 DEP_CPP_REACTO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -20550,7 +20649,6 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -20695,13 +20793,13 @@ DEP_CPP_REACTO=\
 
 SOURCE=.\Profile_Timer.cpp
 DEP_CPP_PROFI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.i"\
@@ -20753,6 +20851,7 @@ DEP_CPP_PROFI=\
 
 SOURCE=.\Process_Manager.cpp
 DEP_CPP_PROCE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -20760,7 +20859,6 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
@@ -20824,6 +20922,7 @@ DEP_CPP_PROCE=\
 
 SOURCE=.\Process.cpp
 DEP_CPP_PROCES=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.h"\
@@ -20833,7 +20932,6 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -20912,6 +21010,7 @@ DEP_CPP_PROCES=\
 
 SOURCE=.\Proactor.cpp
 DEP_CPP_PROAC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -20923,7 +21022,6 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -21075,6 +21173,7 @@ DEP_CPP_PROAC=\
 
 SOURCE=.\Pipe.cpp
 DEP_CPP_PIPE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -21083,7 +21182,6 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -21147,6 +21245,7 @@ DEP_CPP_PIPE_=\
 
 SOURCE=.\Parse_Node.cpp
 DEP_CPP_PARSE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -21158,7 +21257,6 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -21319,6 +21417,7 @@ DEP_CPP_PARSE=\
 
 SOURCE=.\OS.cpp
 DEP_CPP_OS_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.h"\
@@ -21328,7 +21427,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -21407,13 +21505,13 @@ DEP_CPP_OS_CP=\
 
 SOURCE=.\Obstack.cpp
 DEP_CPP_OBSTA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -21461,6 +21559,7 @@ DEP_CPP_OBSTA=\
 
 SOURCE=.\Object_Manager.cpp
 DEP_CPP_OBJEC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -21472,7 +21571,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -21641,6 +21739,7 @@ DEP_CPP_NAMIN=\
 	"..\STL\iterator.h"\
 	"..\STL\pair.h"\
 	"..\STL\vector.h"\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -21652,7 +21751,6 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -21808,6 +21906,7 @@ DEP_CPP_NAMIN=\
 
 SOURCE=.\Name_Space.cpp
 DEP_CPP_NAME_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -21819,7 +21918,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -21965,13 +22063,13 @@ DEP_CPP_NAME_=\
 
 SOURCE=.\Name_Request_Reply.cpp
 DEP_CPP_NAME_R=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -22020,6 +22118,7 @@ DEP_CPP_NAME_R=\
 
 SOURCE=.\Name_Proxy.cpp
 DEP_CPP_NAME_P=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22031,7 +22130,6 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -22176,6 +22274,7 @@ DEP_CPP_NAME_P=\
 
 SOURCE=.\Multiplexor.cpp
 DEP_CPP_MULTI=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22187,7 +22286,6 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -22341,13 +22439,13 @@ DEP_CPP_MULTI=\
 
 SOURCE=.\Method_Object.cpp
 DEP_CPP_METHO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -22395,6 +22493,7 @@ DEP_CPP_METHO=\
 
 SOURCE=.\Message_Block.cpp
 DEP_CPP_MESSA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -22402,7 +22501,6 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -22481,6 +22579,7 @@ DEP_CPP_MESSA=\
 
 SOURCE=.\Memory_Pool.cpp
 DEP_CPP_MEMOR=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -22488,7 +22587,6 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -22565,13 +22663,13 @@ DEP_CPP_MEMOR=\
 
 SOURCE=.\Mem_Map.cpp
 DEP_CPP_MEM_M=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -22620,6 +22718,7 @@ DEP_CPP_MEM_M=\
 
 SOURCE=.\Malloc.cpp
 DEP_CPP_MALLO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -22627,7 +22726,6 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -22704,6 +22802,7 @@ DEP_CPP_MALLO=\
 
 SOURCE=.\LSOCK_Stream.cpp
 DEP_CPP_LSOCK=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22712,7 +22811,6 @@ DEP_CPP_LSOCK=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -22775,6 +22873,7 @@ DEP_CPP_LSOCK=\
 
 SOURCE=.\LSOCK_Dgram.cpp
 DEP_CPP_LSOCK_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22783,7 +22882,6 @@ DEP_CPP_LSOCK_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -22840,6 +22938,7 @@ DEP_CPP_LSOCK_=\
 
 SOURCE=.\LSOCK_Connector.cpp
 DEP_CPP_LSOCK_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22848,7 +22947,6 @@ DEP_CPP_LSOCK_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -22916,6 +23014,7 @@ DEP_CPP_LSOCK_C=\
 
 SOURCE=.\LSOCK_CODgram.cpp
 DEP_CPP_LSOCK_CO=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22924,7 +23023,6 @@ DEP_CPP_LSOCK_CO=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -22983,6 +23081,7 @@ DEP_CPP_LSOCK_CO=\
 
 SOURCE=.\LSOCK_Acceptor.cpp
 DEP_CPP_LSOCK_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -22991,7 +23090,6 @@ DEP_CPP_LSOCK_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -23059,6 +23157,7 @@ DEP_CPP_LSOCK_A=\
 
 SOURCE=.\LSOCK.cpp
 DEP_CPP_LSOCK_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -23067,7 +23166,6 @@ DEP_CPP_LSOCK_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -23120,13 +23218,13 @@ DEP_CPP_LSOCK_CP=\
 
 SOURCE=.\Log_Record.cpp
 DEP_CPP_LOG_R=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -23173,6 +23271,7 @@ DEP_CPP_LOG_R=\
 
 SOURCE=.\Log_Msg.cpp
 DEP_CPP_LOG_M=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -23182,7 +23281,6 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -23275,6 +23373,7 @@ DEP_CPP_LOG_M=\
 
 SOURCE=.\Local_Tokens.cpp
 DEP_CPP_LOCAL=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -23286,7 +23385,6 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -23429,6 +23527,7 @@ DEP_CPP_LOCAL=\
 
 SOURCE=.\Local_Name_Space.cpp
 DEP_CPP_LOCAL_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -23440,7 +23539,6 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -23590,13 +23688,13 @@ DEP_CPP_LOCAL_=\
 
 SOURCE=.\IPC_SAP.cpp
 DEP_CPP_IPC_S=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.h"\
 	{$(INCLUDE)}"\.\IPC_SAP.i"\
@@ -23645,6 +23743,7 @@ DEP_CPP_IPC_S=\
 
 SOURCE=.\IOStream.cpp
 DEP_CPP_IOSTR=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -23653,7 +23752,6 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -23708,13 +23806,13 @@ DEP_CPP_IOSTR=\
 
 SOURCE=.\IO_SAP.cpp
 DEP_CPP_IO_SA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\IO_SAP.h"\
 	{$(INCLUDE)}"\.\IO_SAP.i"\
@@ -23795,6 +23893,7 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 SOURCE=.\INET_Addr.cpp
 DEP_CPP_INET_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -23803,7 +23902,6 @@ DEP_CPP_INET_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\INET_Addr.h"\
 	{$(INCLUDE)}"\.\INET_Addr.i"\
@@ -23852,13 +23950,13 @@ DEP_CPP_INET_=\
 
 SOURCE=.\High_Res_Timer.cpp
 DEP_CPP_HIGH_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.h"\
 	{$(INCLUDE)}"\.\High_Res_Timer.i"\
@@ -23907,13 +24005,13 @@ DEP_CPP_HIGH_=\
 
 SOURCE=.\Handle_Set.cpp
 DEP_CPP_HANDL=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Handle_Set.h"\
 	{$(INCLUDE)}"\.\Handle_Set.i"\
@@ -23962,13 +24060,13 @@ DEP_CPP_HANDL=\
 
 SOURCE=.\Get_Opt.cpp
 DEP_CPP_GET_O=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Get_Opt.h"\
 	{$(INCLUDE)}"\.\Get_Opt.i"\
@@ -24017,6 +24115,7 @@ DEP_CPP_GET_O=\
 
 SOURCE=.\Filecache.cpp
 DEP_CPP_FILEC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24028,7 +24127,6 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -24170,6 +24268,7 @@ DEP_CPP_FILEC=\
 
 SOURCE=.\FILE_IO.cpp
 DEP_CPP_FILE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24178,7 +24277,6 @@ DEP_CPP_FILE_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE.i"\
@@ -24233,6 +24331,7 @@ DEP_CPP_FILE_=\
 
 SOURCE=.\FILE_Connector.cpp
 DEP_CPP_FILE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24241,7 +24340,6 @@ DEP_CPP_FILE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE.i"\
@@ -24298,6 +24396,7 @@ DEP_CPP_FILE_C=\
 
 SOURCE=.\FILE_Addr.cpp
 DEP_CPP_FILE_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24306,7 +24405,6 @@ DEP_CPP_FILE_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.h"\
 	{$(INCLUDE)}"\.\FILE_Addr.i"\
@@ -24355,6 +24453,7 @@ DEP_CPP_FILE_A=\
 
 SOURCE=.\FILE.cpp
 DEP_CPP_FILE_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24363,7 +24462,6 @@ DEP_CPP_FILE_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FILE.h"\
 	{$(INCLUDE)}"\.\FILE.i"\
@@ -24416,13 +24514,13 @@ DEP_CPP_FILE_CP=\
 
 SOURCE=.\FIFO_Send_Msg.cpp
 DEP_CPP_FIFO_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -24477,13 +24575,13 @@ DEP_CPP_FIFO_=\
 
 SOURCE=.\FIFO_Send.cpp
 DEP_CPP_FIFO_S=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -24536,13 +24634,13 @@ DEP_CPP_FIFO_S=\
 
 SOURCE=.\FIFO_Recv_Msg.cpp
 DEP_CPP_FIFO_R=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -24597,13 +24695,13 @@ DEP_CPP_FIFO_R=\
 
 SOURCE=.\FIFO_Recv.cpp
 DEP_CPP_FIFO_RE=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -24656,13 +24754,13 @@ DEP_CPP_FIFO_RE=\
 
 SOURCE=.\FIFO.cpp
 DEP_CPP_FIFO_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\FIFO.h"\
 	{$(INCLUDE)}"\.\FIFO.i"\
@@ -24713,6 +24811,7 @@ DEP_CPP_FIFO_C=\
 
 SOURCE=.\Event_Handler.cpp
 DEP_CPP_EVENT=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -24720,7 +24819,6 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -24799,13 +24897,13 @@ DEP_CPP_EVENT=\
 
 SOURCE=.\Dynamic.cpp
 DEP_CPP_DYNAM=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Dynamic.h"\
 	{$(INCLUDE)}"\.\Dynamic.i"\
@@ -24854,6 +24952,7 @@ DEP_CPP_DYNAM=\
 
 SOURCE=.\Dump.cpp
 DEP_CPP_DUMP_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Atomic_Op.i"\
@@ -24861,7 +24960,6 @@ DEP_CPP_DUMP_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Dump.h"\
 	{$(INCLUDE)}"\.\Dump_T.cpp"\
@@ -24924,6 +25022,7 @@ DEP_CPP_DUMP_=\
 
 SOURCE=.\DEV_IO.cpp
 DEP_CPP_DEV_I=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24932,7 +25031,6 @@ DEP_CPP_DEV_I=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -24987,6 +25085,7 @@ DEP_CPP_DEV_I=\
 
 SOURCE=.\DEV_Connector.cpp
 DEP_CPP_DEV_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -24995,7 +25094,6 @@ DEP_CPP_DEV_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -25052,6 +25150,7 @@ DEP_CPP_DEV_C=\
 
 SOURCE=.\DEV_Addr.cpp
 DEP_CPP_DEV_A=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -25060,7 +25159,6 @@ DEP_CPP_DEV_A=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.h"\
 	{$(INCLUDE)}"\.\DEV_Addr.i"\
@@ -25109,6 +25207,7 @@ DEP_CPP_DEV_A=\
 
 SOURCE=.\DEV.cpp
 DEP_CPP_DEV_CP=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -25117,7 +25216,6 @@ DEP_CPP_DEV_CP=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\DEV.h"\
 	{$(INCLUDE)}"\.\DEV.i"\
@@ -25170,13 +25268,13 @@ DEP_CPP_DEV_CP=\
 
 SOURCE=.\Date_Time.cpp
 DEP_CPP_DATE_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Date_Time.h"\
 	{$(INCLUDE)}"\.\Date_Time.i"\
@@ -25225,6 +25323,7 @@ DEP_CPP_DATE_=\
 
 SOURCE=.\CORBA_Handler.cpp
 DEP_CPP_CORBA=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -25236,7 +25335,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -25379,6 +25477,7 @@ DEP_CPP_CORBA=\
 
 SOURCE=.\Asynch_IO.cpp
 DEP_CPP_ASYNC=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -25390,7 +25489,6 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -25531,6 +25629,7 @@ DEP_CPP_ASYNC=\
 
 SOURCE=.\ARGV.cpp
 DEP_CPP_ARGV_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\ARGV.h"\
@@ -25540,7 +25639,6 @@ DEP_CPP_ARGV_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -25617,6 +25715,7 @@ DEP_CPP_ARGV_=\
 
 SOURCE=.\Addr.cpp
 DEP_CPP_ADDR_=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -25625,7 +25724,6 @@ DEP_CPP_ADDR_=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
@@ -25672,6 +25770,7 @@ DEP_CPP_ADDR_=\
 
 SOURCE=.\Activation_Queue.cpp
 DEP_CPP_ACTIV=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Activation_Queue.h"\
@@ -25684,7 +25783,6 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
@@ -25826,6 +25924,7 @@ DEP_CPP_ACTIV=\
 
 SOURCE=.\ACE.cpp
 DEP_CPP_ACE_C=\
+	".\config-win32.h"\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
 	{$(INCLUDE)}"\.\Addr.h"\
@@ -25837,7 +25936,6 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Auto_Ptr.h"\
 	{$(INCLUDE)}"\.\Auto_Ptr.i"\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
 	{$(INCLUDE)}"\.\Containers.cpp"\
 	{$(INCLUDE)}"\.\Containers.h"\
