@@ -190,11 +190,6 @@ TYPE = TIMEONLY
 LIST = http://amras.ece.uci.edu/~bugzilla/auto_compile_logs/amras_QNX/
 WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
 
-[RAPI]
-TYPE = TIMEONLY
-LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/dandia.cs.wustl.edu_RAPI/
-WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?dandia.cs.wustl.edu_RAPI
-
 [HPUX_ACC]
 TYPE = TIMEONLY
 LIST = http://prince.ociweb.com/~buildlog
