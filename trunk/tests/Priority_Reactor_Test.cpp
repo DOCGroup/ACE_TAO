@@ -242,7 +242,7 @@ main (int argc, char *argv[])
       impl = impl_ptr;
       ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr), -1);
-      reactor = reactor_ptr;
+      reactor = auto_ptr<ACE_Reactor> (reactor_ptr);
       ACE_Reactor::instance (reactor_ptr);
     }
 
