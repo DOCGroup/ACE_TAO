@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_exception, 
-           ctor_assign, 
+ACE_RCSID (be_visitor_exception,
+           ctor_assign,
            "$Id$")
 
 // ************************************************************************
@@ -201,23 +201,23 @@ be_visitor_exception_ctor_assign::visit_valuetype (be_valuetype *node)
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "ACE_const_cast (" << be_idt << be_idt_nl
-          << node->name () << " *," << be_nl
+          << "const_cast<" << be_idt << be_idt_nl
+          << node->name () << " *> (" << be_nl
           << "_tao_" << bd->local_name () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_" 
+      *os << "this->" << bd->local_name () << " = _tao_"
           << bd->local_name () << ";";
     }
   else
     {
       *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "ACE_const_cast (" << be_idt << be_idt_nl
-          << node->name () << " *," << be_nl
+          << "const_cast<" << be_idt << be_idt_nl
+          << node->name () << " *> (" << be_nl
           << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_excp." 
+      *os << "this->" << bd->local_name () << " = _tao_excp."
           << bd->local_name () << ".in ();";
     }
 
@@ -236,23 +236,23 @@ int be_visitor_exception_ctor_assign::visit_valuetype_fwd (
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "ACE_const_cast (" << be_idt << be_idt_nl
-          << node->name () << " *," << be_nl
+          << "const_cast<" << be_idt << be_idt_nl
+          << node->name () << " *> (" << be_nl
           << "_tao_" << bd->local_name () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_" 
+      *os << "this->" << bd->local_name () << " = _tao_"
           << bd->local_name () << ";";
     }
   else
     {
       *os << "CORBA::add_ref (" << be_idt << be_idt_nl
-          << "ACE_const_cast (" << be_idt << be_idt_nl
-          << node->name () << " *," << be_nl
+          << "const_cast<" << be_idt << be_idt_nl
+          << node->name () << " *> (" << be_nl
           << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << "this->" << bd->local_name () << " = _tao_excp." 
+      *os << "this->" << bd->local_name () << " = _tao_excp."
           << bd->local_name () << ".in ();";
     }
 

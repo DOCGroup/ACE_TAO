@@ -94,8 +94,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
-ACE_RCSID (ast, 
-           ast_interface, 
+ACE_RCSID (ast,
+           ast_interface,
            "$Id$")
 
 AST_Interface::AST_Interface (void)
@@ -568,7 +568,7 @@ AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
         }
       else
         {
-          if (!can_be_redefined (d)) 
+          if (!can_be_redefined (d))
             {
               idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                           t,
@@ -780,7 +780,7 @@ AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
         }
       else
         {
-          if (!can_be_redefined (d)) 
+          if (!can_be_redefined (d))
             {
               idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                           t,
@@ -1060,7 +1060,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           break;
         }
 
-      i->prefix (ACE_const_cast (char *, prefix_holder));
+      i->prefix (const_cast<char *> (prefix_holder));
       scope = parent->defined_in ();
     }
 
@@ -1087,7 +1087,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               break;
             }
 
-          d->prefix (ACE_const_cast (char *, prefix_holder));
+          d->prefix (const_cast<char *> (prefix_holder));
           scope = parent->defined_in ();
         }
 
@@ -1356,7 +1356,7 @@ AST_Interface::get_del_queue (void)
 
 idl_bool
 AST_Interface::redef_clash (void)
-{ 
+{
   this->insert_queue.reset ();
   this->redef_clash_populate_r (this);
 
@@ -1511,8 +1511,8 @@ AST_Interface::lookup_for_add (AST_Decl *d,
         }
     }
 
-  for (nis = this->n_inherits_flat (), is = this->inherits_flat (); 
-       nis > 0; 
+  for (nis = this->n_inherits_flat (), is = this->inherits_flat ();
+       nis > 0;
        nis--, is++)
     {
       prev = (*is)->lookup_by_name_local (id,

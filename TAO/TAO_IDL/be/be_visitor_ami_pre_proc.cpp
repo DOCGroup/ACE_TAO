@@ -38,8 +38,8 @@
 #include "nr_extern.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (be, 
-           be_visitor_ami_pre_proc, 
+ACE_RCSID (be,
+           be_visitor_ami_pre_proc,
            "$Id$")
 
 
@@ -106,7 +106,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
   be_valuetype *excep_holder = 0;
-  
+
   if (! node->imported ())
     {
       excep_holder = this->create_exception_holder (node);
@@ -380,7 +380,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                        "ExceptionHolder");
 
   UTL_ScopedName *excep_holder_name =
-    ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
   excep_holder_name->last_component ()->replace_string (
                                             excep_holder_local_name.rep ()
                                           );
@@ -484,11 +484,11 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                        "Handler");
 
   UTL_ScopedName *reply_handler_name =
-    ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
   reply_handler_name->last_component ()->replace_string (
                                              reply_handler_local_name.rep ()
                                            );
-  
+
   long n_parents = 0;
   AST_Interface_ptr *p_intf = this->create_inheritance_list (node, n_parents);
 
@@ -624,8 +624,8 @@ be_visitor_ami_pre_proc::create_raise_operation (
                   -1);
 
   // Name the operation properly
-  UTL_ScopedName *op_name = ACE_static_cast (UTL_ScopedName *,
-                                             excep_holder->name ()->copy ());
+  UTL_ScopedName *op_name =
+    static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
 
   ACE_CString new_local_name ("raise_");
 
@@ -735,8 +735,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
   ACE_CString new_op_name = ACE_CString ("sendc_") + original_op_name;
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *,
-                     node->name ()->copy ());
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
   op_name->last_component ()->replace_string (new_op_name.rep ());
 
   // Create the operation
@@ -765,7 +764,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                            "Handler");
 
       UTL_ScopedName *field_name =
-        ACE_static_cast (UTL_ScopedName *, parent->name ()->copy ());
+        static_cast<UTL_ScopedName *> (parent->name ()->copy ());
       field_name->last_component ()->replace_string (excep_holder_name.rep ());
 
       be_interface *field_type = 0;
@@ -786,14 +785,14 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
       ACE_NEW_RETURN (id,
                       Identifier ("ami_handler"),
                       0);
-                      
+
       UTL_ScopedName *tmp = 0;
 
       ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id,
                                       0),
                       0);
-                      
+
       sn = (UTL_ScopedName *)op->name ()->copy ();
       sn->nconc (tmp);
 
@@ -839,7 +838,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
             {
               // Create the argument.
               be_argument *arg = 0;
-              UTL_ScopedName *new_name = 
+              UTL_ScopedName *new_name =
                 (UTL_ScopedName *)original_arg->name ()->copy ();
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
@@ -898,8 +897,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                 );
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *,
-                     reply_handler->name ()-> copy ());
+    static_cast<UTL_ScopedName *> (reply_handler->name ()-> copy ());
 
   ACE_NEW_RETURN (id,
                   Identifier (original_op_name.rep ()),
@@ -931,14 +929,14 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
       ACE_NEW_RETURN (id,
                       Identifier ("ami_return_val"),
                       -1);
-                      
+
       UTL_ScopedName *tmp = 0;
 
       ACE_NEW_RETURN (tmp,
                       UTL_ScopedName (id,
                                       0),
                       -1);
-                      
+
       sn = (UTL_ScopedName *)operation->name ()->copy ();
       sn->nconc (tmp);
 
@@ -949,10 +947,10 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                                    node->return_type (),
                                    sn),
                       -1);
-                      
+
       arg->set_defined_in (operation);
       arg->set_name (sn);
-                      
+
       // Add the reply handler to the argument list.
       operation->be_add_argument (arg);
     }
@@ -985,7 +983,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
             {
               // Create the argument.
               be_argument *arg = 0;
-              UTL_ScopedName *new_name = 
+              UTL_ScopedName *new_name =
                 (UTL_ScopedName *)original_arg->name ()->copy ();
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
@@ -1077,7 +1075,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                excep_holder, // is also a valuetype
                                sn),
                   -1);
-                  
+
   UTL_ScopedName *tmp = (UTL_ScopedName *)sn->copy ();
 
   // Create the new name
@@ -1088,7 +1086,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   ACE_CString new_op_name = original_op_name + ACE_CString ("_excep");
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *, reply_handler->name ()->copy ());
+    static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ());
 
   ACE_NEW_RETURN (id,
                   Identifier (new_op_name.rep ()),
@@ -1114,7 +1112,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   operation->set_name (op_name);
   operation->be_add_argument (arg);
   operation->set_defined_in (reply_handler);
-  
+
   UTL_ScopedName *arg_name = (UTL_ScopedName *)op_name->copy ();
   arg_name->nconc (tmp);
   arg->set_name (arg_name);
@@ -1238,8 +1236,8 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
                 );
   ACE_CString new_op_name = ACE_CString ("get_") + original_op_name;
 
-  UTL_ScopedName *get_name = ACE_static_cast (UTL_ScopedName *,
-                                              node->name ()->copy ());
+  UTL_ScopedName *get_name =
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
   get_name->last_component ()->replace_string (new_op_name.rep ());
 
   be_operation *operation = 0;
@@ -1265,8 +1263,8 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
                 );
   ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
 
-  UTL_ScopedName *set_name = ACE_static_cast (UTL_ScopedName *,
-                                              node->name ()-> copy ());
+  UTL_ScopedName *set_name =
+    static_cast<UTL_ScopedName *> (node->name ()-> copy ());
   set_name->last_component ()->replace_string (new_op_name.rep ());
 
   // The return type  is "void".
@@ -1421,17 +1419,17 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
               continue;
             }
 
-          ACE_CString rh_local_name = 
+          ACE_CString rh_local_name =
             prefix + parent->local_name ()->get_string () + suffix;
 
-          UTL_ScopedName *rh_parent_name = 
-            ACE_static_cast (UTL_ScopedName *, parent->name ()->copy ());
+          UTL_ScopedName *rh_parent_name =
+            static_cast<UTL_ScopedName *> (parent->name ()->copy ());
 
           rh_parent_name->last_component ()->replace_string (
                                                  rh_local_name.fast_rep ()
                                                );
 
-          AST_Decl *d = 
+          AST_Decl *d =
             node->defined_in ()->lookup_by_name (rh_parent_name,
                                                  1);
 
@@ -1454,4 +1452,3 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 
   return retval;
 }
-

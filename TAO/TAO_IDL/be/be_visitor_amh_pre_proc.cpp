@@ -131,7 +131,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   response_handler->original_interface (node);
 
   module->be_add_interface (excep_holder, node);
-  
+
   return 0;
 }
 
@@ -148,7 +148,7 @@ be_visitor_amh_pre_proc::create_response_handler (
   class_name += "ResponseHandler";
 
   UTL_ScopedName *amh_name =
-    ACE_dynamic_cast(UTL_ScopedName*,node->name ()->copy ());
+    dynamic_cast<UTL_ScopedName*> (node->name ()->copy ());
   Identifier *local_name = amh_name->last_component ();
   local_name->replace_string (class_name.c_str ());
 
@@ -359,8 +359,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                 );
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *,
-                     response_handler->name ()->copy ());
+    static_cast<UTL_ScopedName *> (response_handler->name ()->copy ());
 
   ACE_NEW_RETURN (id,
                   Identifier (original_op_name.rep ()),
@@ -632,7 +631,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   AST_Interface **p_intf = 0;
 
   UTL_ScopedName *excep_holder_name =
-    node->compute_name ("AMH_", 
+    node->compute_name ("AMH_",
                         "ExceptionHolder");
 
   be_valuetype *excep_holder = 0;
@@ -739,7 +738,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
             }
         }
     }
-  
+
   // Create the return type, which is "void"
 
   ACE_NEW_RETURN (id,
@@ -758,8 +757,8 @@ be_visitor_amh_pre_proc::create_raise_operation (
                   -1);
 
   // Name the operation properly
-  UTL_ScopedName *op_name = ACE_static_cast (UTL_ScopedName *,
-                                             excep_holder->name ()->copy ());
+  UTL_ScopedName *op_name =
+    static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
 
   ACE_CString new_local_name ("raise_");
 
@@ -858,8 +857,8 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
                                 ->get_string ());
   ACE_CString new_op_name = ACE_CString ("get_") + original_op_name;
 
-  UTL_ScopedName *get_name = ACE_static_cast (UTL_ScopedName *,
-                                              node->name ()-> copy ());
+  UTL_ScopedName *get_name =
+    static_cast<UTL_ScopedName *> (node->name ()-> copy ());
   get_name->last_component ()->replace_string (new_op_name.rep ());
 
   be_operation *operation = 0;
@@ -885,8 +884,8 @@ be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
     );
   ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
 
-  UTL_ScopedName *set_name = ACE_static_cast (UTL_ScopedName *,
-                                              node->name ()-> copy ());
+  UTL_ScopedName *set_name =
+    static_cast<UTL_ScopedName *> (node->name ()-> copy ());
   set_name->last_component ()->replace_string (new_op_name.rep ());
 
   Identifier *id = 0;

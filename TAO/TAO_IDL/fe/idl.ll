@@ -213,8 +213,7 @@ oneway		return IDL_ONEWAY;
 
       entry = 
         cpp_key_tbl.lookup (tmp,
-                            ACE_static_cast (unsigned int,
-                                             ACE_OS::strlen (tmp)));
+                            static_cast<unsigned int> (ACE_OS::strlen (tmp)));
     }
 
   if (entry)

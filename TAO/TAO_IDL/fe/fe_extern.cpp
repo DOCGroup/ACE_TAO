@@ -75,8 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
-ACE_RCSID (fe, 
-           fe_extern, 
+ACE_RCSID (fe,
+           fe_extern,
            "$Id$")
 
 extern int tao_yyparse (void);
@@ -98,7 +98,7 @@ FE_yyparse (void)
 void
 FE_set_yyin (File *f)
 {
-  tao_yyin = ACE_reinterpret_cast (FILE *, f);
+  tao_yyin = reinterpret_cast<FILE *> (f);
 }
 
 // Constructor interfaces.
@@ -124,4 +124,3 @@ FE_new_UTL_Indenter (void)
 
   return retval;
 }
-

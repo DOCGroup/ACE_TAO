@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           any_op_cs, 
+ACE_RCSID (be_visitor_sequence,
+           any_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -49,12 +49,12 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Since we don't generate CDR stream operators for types that
-  // explicitly contain a local interface (at some level), we 
+  // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
   // calling the non-existent operators. The zero return value
   // will eventually cause CORBA::MARSHAL to be raised if this
@@ -119,8 +119,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << node->name () << " *&_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "return _tao_any >>= ACE_const_cast (" << be_idt << be_idt_nl
-      << "const " << node->name () << " *&," << be_nl
+      << "return _tao_any >>= const_cast<" << be_idt << be_idt_nl
+      << "const " << node->name () << " *&> (" << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;

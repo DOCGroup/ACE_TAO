@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           union_ch, 
+ACE_RCSID (be_visitor_union,
+           union_ch,
            "$Id$")
 
 // ******************************************************
@@ -86,7 +86,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ch::"
                          "visit_union - "
-                         "bad disciminant type\n"), 
+                         "bad disciminant type\n"),
                         -1);
     }
 
@@ -100,7 +100,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ch::"
                          " visit_union - "
-                         "codegen for discriminant failed\n"), 
+                         "codegen for discriminant failed\n"),
                         -1);
     }
 
@@ -108,7 +108,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the _var_type typedef.
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "typedef " << node->local_name () << "_var _var_type;";
 
   // Now generate the public defn for the union branch members. For this,
@@ -143,7 +143,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "void _default (void);";
     }
 
@@ -166,7 +166,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ch::"
                          "visit_union - "
-                         "codegen for private members of union\n"), 
+                         "codegen for private members of union\n"),
                         -1);
     }
 
@@ -174,7 +174,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   *os << "} u_;";
 
   // The reset method (TAO extension).
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "// TAO extension - frees any allocated storage." << be_nl;
   *os << "void _reset (" << bt->nested_type_name (node)
       << ", CORBA::Boolean /* finalize */);";
@@ -191,7 +191,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_ch::"
                              "visit_union - "
-                             "TypeCode declaration failed\n"), 
+                             "TypeCode declaration failed\n"),
                             -1);
         }
     }

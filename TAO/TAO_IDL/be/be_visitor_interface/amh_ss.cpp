@@ -151,7 +151,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 void
 be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
 {
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "_tao_server_request.tao_send_reply ();";
 }
 
@@ -207,8 +207,8 @@ emit (be_interface * /* derived */,
 
   *os << "if (ACE_OS::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
-      << "return ACE_static_cast ("
-      << amh_name.c_str () << "*, this);" << be_uidt_nl;
+      << "return static_cast<"
+      << amh_name.c_str () << "*> (this);" << be_uidt_nl;
 
   return 0;
 }

@@ -21,8 +21,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype_cdr_op_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cdr_op_cs,
            "$Id$")
 
 be_visitor_valuetype_cdr_op_cs::be_visitor_valuetype_cdr_op_cs (
@@ -40,7 +40,7 @@ int
 be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
 {
   // Already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_cdr_op_gen () 
+  if (node->cli_stub_cdr_op_gen ()
       || node->imported ()
       || ! node->is_defined ())
     {
@@ -53,7 +53,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_cs::"
                          "visit_valuetype - "
-                         "codegen for helper functions failed\n"), 
+                         "codegen for helper functions failed\n"),
                         -1);
     }
 
@@ -65,7 +65,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_ci"
                          "::visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -84,11 +84,11 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   *os << "return" << be_idt_nl
       << "CORBA::ValueBase::_tao_marshal (" << be_idt << be_idt_nl
       << "strm," << be_nl
-      << "ACE_const_cast (" << be_idt << be_idt_nl
-      << node->full_name () << " *," << be_nl
+      << "const_cast<" << be_idt << be_idt_nl
+      << node->full_name () << " *> (" << be_nl
       << "_tao_valuetype" << be_uidt_nl
       << ")," << be_uidt_nl
-      << "(ptrdiff_t) &" << node->full_name () <<"::_downcast" 
+      << "(ptrdiff_t) &" << node->full_name () <<"::_downcast"
       << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -100,7 +100,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << " *&_tao_valuetype" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "return " << node->full_name () 
+  *os << "return " << node->full_name ()
       << "::_tao_unmarshal (strm, _tao_valuetype);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -117,9 +117,9 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
 }
 
 // @@@ (JP) The following three methods are a hack to get CDR
-// operators generated for anonymous array and sequence 
+// operators generated for anonymous array and sequence
 // valuetype members. This should be done like it is in structs,
-// but part of that mechanism is used by valuetypes for 
+// but part of that mechanism is used by valuetypes for
 // generating code to marshal the state. Someday this should
 // be untangled and made consistent.
 
@@ -159,4 +159,3 @@ be_visitor_valuetype_cdr_op_cs::visit_sequence (be_sequence *node)
   be_visitor_sequence_cdr_op_cs visitor (&ctx);
   return node->accept (&visitor);
 }
-

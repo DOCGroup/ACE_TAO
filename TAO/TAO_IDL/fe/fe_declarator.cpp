@@ -72,8 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 #include "ace/config-all.h"
 
-ACE_RCSID (fe, 
-           fe_declarator, 
+ACE_RCSID (fe,
+           fe_declarator,
            "$Id$")
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
@@ -120,31 +120,31 @@ FE_Declarator::compose (AST_Decl *d)
     {
       char *current_prefix = 0;
       idl_global->pragma_prefixes ().top (current_prefix);
-      
+
       const char *original_prefix = d->prefix ();
       AST_Decl *scope = d;
-      
+
       // Maybe the prefix hasn't been applied yet.
       while (ACE_OS::strcmp (original_prefix, "") == 0)
         {
           scope = ScopeAsDecl (scope->defined_in ());
-          
+
           // Are we at global scope.8
           if (scope == 0)
             {
               break;
             }
-            
+
           original_prefix = scope->prefix ();
         }
-       
-      // Skip if the pointers are the same. 
+
+      // Skip if the pointers are the same.
       if (d->prefix () != original_prefix)
-        {  
-          d->prefix (ACE_const_cast (char *, original_prefix));
+        {
+          d->prefix (const_cast<char *> (original_prefix));
         }
 
-      if (current_prefix != 0 
+      if (current_prefix != 0
           && ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,

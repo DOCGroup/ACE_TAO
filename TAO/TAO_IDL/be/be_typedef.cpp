@@ -106,7 +106,7 @@ be_typedef::primitive_base_type (void)
 AST_Decl::NodeType
 be_typedef::base_node_type (void) const
 {
-  be_typedef *td = ACE_const_cast (be_typedef *, this);
+  be_typedef *td = const_cast<be_typedef *> (this);
 
   be_type *base = be_type::narrow_from_decl (td->base_type ());
 

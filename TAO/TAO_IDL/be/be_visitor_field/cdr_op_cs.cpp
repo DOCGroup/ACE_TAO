@@ -92,7 +92,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
                             -1);
         }
     }
-    
+
   // Now generate the (de)marshaling code for the array as a
   // field.
 
@@ -269,7 +269,7 @@ be_visitor_field_cdr_op_cs::visit_interface (be_interface *node)
         {
           if (f->is_abstract ())
             {
-              *os << "(strm << _tao_aggregate." 
+              *os << "(strm << _tao_aggregate."
                   << f->local_name () << ".in ())";
             }
           else
@@ -342,7 +342,7 @@ be_visitor_field_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
         {
           if (f->is_abstract ())
             {
-              *os << "(strm << _tao_aggregate." 
+              *os << "(strm << _tao_aggregate."
                   << f->local_name () << ".in ())";
             }
           else
@@ -615,7 +615,7 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
                             -1);
         }
     }
-    
+
   // How generate the marshaling code for the sequence as a field.
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -724,7 +724,7 @@ be_visitor_field_cdr_op_cs::visit_structure (be_structure *node)
                             -1);
         }
     }
-    
+
   // How generate the marshaling code for the struct as a field.
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -808,7 +808,7 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
                             -1);
         }
     }
-    
+
   // Now generate marshaling code for the union as a field.
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -962,8 +962,8 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << fname << "_forany "
           << "_tao_aggregate_" << f->local_name () << be_idt << be_idt_nl
-          << "(ACE_const_cast (" << be_idt << be_idt_nl
-          << fname << "_slice*," << be_nl
+          << "(const_cast<" << be_idt << be_idt_nl
+          << fname << "_slice*> (" << be_nl
           << "_tao_aggregate." << f->local_name () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
