@@ -386,12 +386,15 @@ endif
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Sender.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_IO_UDP.h \
  $(ACE_ROOT)/ace/RMCast/RMCast_Module.h \
  $(ACE_ROOT)/ace/RMCast/RMCast.h \
  $(ACE_ROOT)/ace/RMCast/RMCast_Export.h \
  $(ACE_ROOT)/ace/RMCast/RMCast.i \
  $(ACE_ROOT)/ace/RMCast/RMCast_Module.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Event_Handler.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Event_Handler.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -403,13 +406,6 @@ endif
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Sender.i \
- $(ACE_ROOT)/ace/RMCast/RMCast_Fragment.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_Fragment.i \
- $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Receiver.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Event_Handler.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Event_Handler.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -462,13 +458,11 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_UDP_Receiver.i \
- $(ACE_ROOT)/ace/RMCast/RMCast_Sender_Proxy_Best_Effort.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_Sender_Proxy.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_Sender_Proxy.i \
- $(ACE_ROOT)/ace/RMCast/RMCast_Sender_Proxy_Best_Effort.i \
- $(ACE_ROOT)/ace/RMCast/RMCast_Sender_Proxy_Factory.h \
- $(ACE_ROOT)/ace/RMCast/RMCast_Sender_Proxy_Factory.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_IO_UDP.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Fragment.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Fragment.i \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Module_Factory.h \
+ $(ACE_ROOT)/ace/RMCast/RMCast_Module_Factory.i \
  $(ACE_ROOT)/ace/RMCast/RMCast_Reassembly.h \
  $(ACE_ROOT)/ace/RMCast/RMCast_Reassembly.i \
  $(ACE_ROOT)/ace/Task.h \

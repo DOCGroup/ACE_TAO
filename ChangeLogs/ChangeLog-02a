@@ -1,3 +1,16 @@
+Mon Aug 21 10:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+          Fixed warnings about unused variables.
+
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+          Add newline to debug output, it was completely unreadable
+          otherwise.
+
+        * ace/RMCast/Makefile:
+        * tests/RMCast/Makefile:
+          Updated file list and dependencies.
+
 Mon Aug 21 08:58:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Another iteration on the design.  This time we use a single
