@@ -124,6 +124,10 @@ TAO_IIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
     ACE_dynamic_cast (const TAO_IIOP_Profile *,
                       pfile);
 
+  // Make sure the dynamically cast pointer is valid.
+  if (profile == 0)
+    return 0;
+
   for (size_t i = 0; i < this->num_hosts_; ++i)
     {
       // compare the port and sin_addr (numeric host address)

@@ -121,6 +121,10 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
     ACE_dynamic_cast(const TAO_SHMIOP_Profile *,
                      pfile);
 
+  // Make sure the dynamically cast pointer is valid.
+  if (profile == 0)
+    return 0;
+
   // compare the port and sin_addr (numeric host address)
   return this->address_.same_host (profile->object_addr ());
 }
