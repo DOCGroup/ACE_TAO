@@ -8,7 +8,8 @@ Sat Mar 13 08:07:25 1999  David L. Levine  <levine@cs.wustl.edu>
           6.2-007, they might have to manually remove the 1180 suppression.
 
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (handle_events),
-          C-inserver.cpp (main):
+          C-inserver.cpp (main),
+          netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
           replaced NOTREACHED comment with ACE_NOTREACHED macro.  DU cxx
           started complaining about the unreached return statement.
 
