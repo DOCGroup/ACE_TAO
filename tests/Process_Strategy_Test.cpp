@@ -186,7 +186,8 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
         else
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("WARNING: concurrency strategy \"%s\" is not supported\n"),
+                      ASYS_TEXT ("WARNING: concurrency strategy \"%s\" ")
+                      ASYS_TEXT ("is not supported\n"),
                       get_opt.optarg));
         break;
       case 'f':
@@ -194,7 +195,8 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
         break;
       default:
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("usage: %n [-f (filename)] [-c (concurrency strategy)]\n%a"), 1));
+                    ASYS_TEXT ("usage: %n [-f (filename)] ")
+                    ASYS_TEXT ("[-c (concurrency strategy)]\n%a"), 1));
         /* NOTREACHED */
       }
 
@@ -292,7 +294,8 @@ Counting_Service::Counting_Service (ACE_Thread_Manager *)
 int
 Counting_Service::read (void)
 {
-  ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
+  ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon,
+                         OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) reading on handle %d.\n"),
@@ -329,7 +332,8 @@ Counting_Service::read (void)
 int
 Counting_Service::inc (void)
 {
-  ACE_WRITE_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
+  ACE_WRITE_GUARD_RETURN (ACE_File_Lock, ace_mon,
+                          OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) incrementing on handle %d.\n"),
@@ -511,7 +515,7 @@ client (void *arg)
                           0);
       else if (stream.recv (buf, sizeof buf) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("(%P|%t) %p\n"),
                            ASYS_TEXT ("recv")),
                           0);
 
@@ -640,6 +644,7 @@ main (int argc, ASYS_TCHAR *argv[])
           break;
           /* NOTREACHED */
         default:
+          ACE_OS::sleep (1);
           client (&server_addr);
           break;
           /* NOTREACHED */
@@ -665,7 +670,8 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_Thread_Manager::instance ()->wait ();
 #else
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"),
+                  ASYS_TEXT ("(%P|%t) only one thread may be run ")
+                  ASYS_TEXT ("in a process on this platform\n%a"),
                   1));
 #endif /* ACE_HAS_THREADS */
     }
