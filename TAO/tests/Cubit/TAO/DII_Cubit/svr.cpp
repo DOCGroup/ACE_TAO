@@ -17,10 +17,6 @@
 
 #include "cubit_i.h"
 
-// @@ Shouldn't this be defined in a headerfile somewhere?
-extern void
-print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
-
 // Global Variables
 static CORBA::String key = (CORBA::String) "key0";
 
@@ -70,7 +66,7 @@ main (int argc, char *argv[])
 
   if (env.exception () != 0) 
     {
-      print_exception (env.exception (), "ORB init");
+      env.print_exception ("ORB init");
       return 1;
     }
 
@@ -130,7 +126,7 @@ main (int argc, char *argv[])
 
 	  if (env.exception () != 0) 
 	    {
-	      print_exception (env.exception (), "object2string");
+              env.print_exception ("object2string");
 	      return 1;
 	    }
 
