@@ -8,7 +8,7 @@ include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Executable.pre.rules)
 
 cxx_translation_units := SyntaxTree.cpp Traversal.cpp cdd.cpp
 
@@ -16,11 +16,11 @@ module_base           := cdd
 module_prefix         :=
 module_suffix         :=
 
-CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT)
+CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS)
 
 CXX_LINK_LIBS         += -L$(root)/CCF/CodeGenerationKit \
                          -lCodeGenerationKit             \
                          -L$(root)/CCF/CompilerElements  \
                          -lCompilerElements          
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Executable.post.rules)

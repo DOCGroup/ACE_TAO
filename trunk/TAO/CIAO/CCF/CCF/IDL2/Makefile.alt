@@ -8,7 +8,7 @@ include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Recursion.pre.rules)
 
 target_makefile_list  := Makefile.archive
 target_directory_list := SemanticGraph Traversal SemanticAction
@@ -16,4 +16,4 @@ default_makefile_name := Makefile.alt
 
 Makefile.archive : SemanticGraph Traversal SemanticAction
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.post.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Recursion.post.rules)

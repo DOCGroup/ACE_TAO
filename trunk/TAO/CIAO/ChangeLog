@@ -1,3 +1,59 @@
+Fri Jan  9 12:20:32 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Config.rules:
+	* CCF/Makefile.alt:
+	* CCF/CCF/Makefile.alt:
+	* CCF/CCF/CIDL/Makefile.alt:
+	* CCF/CCF/CIDL/Makefile.archive:
+	* CCF/CCF/CIDL/SemanticAction/Makefile.alt:
+	* CCF/CCF/CIDL/SemanticAction/Makefile.object:
+	* CCF/CCF/CIDL/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/CIDL/SemanticGraph/Makefile.alt:
+	* CCF/CCF/CIDL/Traversal/Makefile.alt:
+	* CCF/CCF/CodeGenerationKit/Makefile.alt:
+	* CCF/CCF/CompilerElements/Makefile.alt:
+	* CCF/CCF/IDL2/Makefile.alt:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/SemanticAction/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticAction/Makefile.object:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+	* CCF/CCF/IDL2/Traversal/Makefile.alt:
+	* CCF/CCF/IDL3/Makefile.alt:
+	* CCF/CCF/IDL3/Makefile.archive:
+	* CCF/CCF/IDL3/SemanticAction/Makefile.alt:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
+	* CCF/CCF/IDL3/SemanticGraph/Makefile.alt:
+	* CCF/CCF/IDL3/Traversal/Makefile.alt:
+	* CCF/Documentation/Build.html:
+	* CCF/Example/Makefile.alt:
+	* CCF/Example/CIDL/Makefile.alt:
+	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
+	* CCF/Example/CodeGenerationKit/Makefile.alt:
+	* CCF/Example/CodeGenerationKit/Indentation/Makefile.alt:
+	* CCF/Example/CodeGenerationKit/Indentation/IDL/Makefile.alt:
+	* CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
+	* CCF/Example/ComponentDeploymentDescriptor/Makefile.alt:
+	* CCF/Example/IDL2/Makefile.alt:
+	* CCF/Example/IDL2/CxxMapping/Makefile.alt:
+	* CCF/Test/Makefile.alt:
+	* CCF/Test/CIDL/Makefile.alt:
+	* CCF/Test/CIDL/Compiler/Makefile.alt:
+	* CCF/Test/CompilerElements/Makefile.alt:
+	* CCF/Test/CompilerElements/CPP/Makefile.alt:
+	* CCF/Test/IDL2/Makefile.alt:
+	* CCF/Test/IDL2/Compiler/Makefile.alt:
+	* CCF/Test/IDL2/SemanticGraph/Makefile.alt:
+	* CCF/Test/IDL2/SemanticGraph/HandBuilt/Makefile.alt:
+	* CCF/Test/IDL2/Traversal/Makefile.alt:
+	* CCF/Test/IDL2/Traversal/Recreate/Makefile.alt:
+	* CCF/Test/IDL3/Makefile.alt:
+	* CCF/Test/IDL3/Compiler/Makefile.alt:
+	* CIDLC/Makefile.alt:
+
+	  Added 'flexibility' variables to Config.rules and
+	  updated makefiles to reflect this change.
+
 Thu Jan  8 15:33:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CCF/CCF/CCF.mwc

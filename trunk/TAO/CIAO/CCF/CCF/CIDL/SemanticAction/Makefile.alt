@@ -8,12 +8,12 @@ include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Recursion.pre.rules)
 
 target_makefile_list  := Makefile.object
 target_directory_list := Impl
 default_makefile_name := Makefile.alt
 
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.post.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Recursion.post.rules)
 
