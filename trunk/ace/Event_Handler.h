@@ -152,11 +152,6 @@ protected:
   // Force ACE_Event_Handler to be an abstract base class.
 
 private:
-   ACE_Event_Handler (const ACE_Event_Handler &);
-   ACE_Event_Handler & operator= (const ACE_Event_Handler & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 
   int priority_;
   // Priority of this Event_Handler.
@@ -185,13 +180,6 @@ public:
 
   ACE_Reactor_Mask mask_;
   // Mask that indicates which method to call.
-
-private:
-    ACE_Notification_Buffer (const ACE_Notification_Buffer &);
-    ACE_Notification_Buffer & operator= (const ACE_Notification_Buffer & rhs);
-  // Explicitly disallow use of implicitly generated copy
-  // constructor and assignment operator to prevent inadvertent
-  // memory leaks.
 };
 
 #if defined (__ACE_INLINE__)

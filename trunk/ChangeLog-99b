@@ -1,5 +1,37 @@
 Thu Apr 01 19:01:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Containers.h (ACE_DLList_Node):
+	* ace/Containers_T.h (ACE_Double_Linked_List_Iterator):
+	* ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
+	* ace/Event_Handler.h (ACE_Event_Handler):
+	* ace/Event_Handler.h (ACE_Notification_Buffer):
+	* ace/Filecache.h (ACE_Filecache_Handle):
+	* ace/Filecache.h (ACE_Filecache_Object):
+	* ace/Local_Tokens.h (ACE_TPQ_Iterator):
+	* ace/Local_Tokens.h (ACE_Token_Proxy):
+	* ace/Local_Tokens.h (ACE_Token_Proxy_Queue):
+	* ace/Malloc.h (ACE_Name_Node):
+	* ace/Malloc.h (ACE_Static_Allocator_Base):
+	* ace/Memory_Pool.h (ACE_MMAP_Memory_Pool):
+	* ace/Memory_Pool.h (ACE_MMAP_Memory_Pool_Options):
+	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool):
+	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool_Options):
+	* ace/OS.h (ACE_Countdown_Time):
+	* ace/OS.h (ACE_Thread_Adapter):
+	* ace/OS.h (ACE_Thread_Control):
+	* ace/OS.h (ACE_Thread_Exit):
+	* ace/Service_Object.h (ACE_Service_Type):
+	* ace/Signal.h (ACE_Sig_Adapter):
+	* ace/Synch.h (ACE_Adaptive_Lock):
+	* ace/Synch.h (ACE_TSS_Adapter):
+
+	  In some cases, classes with pointers *can* use the default copy
+	  constructor and the assignment operator.  A more careful
+	  screening of the egcs -Weffc++ flag need to be done before a
+	  copy constructor and assignment operator can be considered
+	  harmful/dangerous.  For now, the changes Ossama made have been
+	  reverted.
+
 	* ace/Filecache.cpp (ACE_Filecache_Object):
 	* ace/Signal.i (ACE_Sig_Action):
 	* ace/OS.i (ACE_Time_Value):
@@ -19,7 +51,7 @@ Thu Apr  1 16:22:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  copy.
 
 	* ace/Containers.h (ACE_DLList_Node):
-	* ace/Containers_T.h (ACE_Double_Linked_List):
+	* ace/Containers_T.h (ACE_Double_Linked_List_Iterator):
 	* ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
 	* ace/Event_Handler.h (ACE_Event_Handler):
 	* ace/Event_Handler.h (ACE_Notification_Buffer):
