@@ -65,6 +65,18 @@ TAO_GIOP_Invocation::get_inconsistent_policies (void)
   return this->inconsistent_policies_._retn ();
 }
 
+ACE_INLINE TAO_Endpoint_Selection_State
+TAO_GIOP_Invocation::get_endpoint_selection_state (void)
+{
+  return this->endpoint_selection_state_;
+}
+
+ACE_INLINE TAO_Stub *
+TAO_GIOP_Invocation::get_stub (void)
+{
+  return this->stub_;
+}
+
 ACE_INLINE void
 TAO_GIOP_Invocation::location_forward_i (TAO_Stub *stubobj,
                                          CORBA::Environment &ACE_TRY_ENV)

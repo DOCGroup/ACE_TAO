@@ -147,6 +147,12 @@ public:
   /// give up its ownership.  User must deallocate memory.
   CORBA::PolicyList *get_inconsistent_policies (void);
 
+  /// Get the protected variable <endpoint_selection_state_>
+  TAO_Endpoint_Selection_State get_endpoint_selection_state (void);
+
+  /// Get the pointer to stub.
+  TAO_Stub *get_stub (void);
+
   /**
    * Add the given object reference to the list of forward profiles.
    * This basically emulates a LOCATION_FORWARD reply from the

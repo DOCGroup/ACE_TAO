@@ -331,37 +331,37 @@ TAO_ORB_Core::default_buffering_constraint (void) const
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-ACE_INLINE TAO_ThreadpoolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_threadpool (void) const
 {
   return this->default_policies_->threadpool ();
 }
 
-ACE_INLINE TAO_PriorityModelPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_priority_model (void) const
 {
   return this->default_policies_->priority_model ();
 }
 
-ACE_INLINE TAO_ServerProtocolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_server_protocol (void) const
 {
   return this->default_policies_->server_protocol ();
 }
 
-ACE_INLINE TAO_ClientProtocolPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_client_protocol (void) const
 {
   return this->default_policies_->client_protocol ();
 }
 
-ACE_INLINE TAO_PrivateConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_private_connection (void) const
 {
   return this->default_policies_->private_connection ();
 }
 
-ACE_INLINE TAO_PriorityBandedConnectionPolicy *
+ACE_INLINE CORBA::Policy *
 TAO_ORB_Core::default_priority_banded_connection (void) const
 {
   return this->default_policies_->priority_banded_connection ();

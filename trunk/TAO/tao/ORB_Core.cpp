@@ -36,6 +36,7 @@
 #include "Invocation.h"
 
 #include "Invocation_Endpoint_Selectors.h"
+#include "RT_Invocation_Endpoint_Selectors.h"
 
 #include "IORInfo.h"
 
@@ -63,10 +64,12 @@ TAO_default_environment ()
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 const char * TAO_ORB_Core::resource_factory_name_ = "Resource_Factory";
+const char *TAO_ORB_Core::protocols_hooks_name_ = "Protocols_Hooks";
 const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
-  : lock_ (),
+  : protocols_hooks_ (0),
+    lock_ (),
     connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
@@ -1244,6 +1247,39 @@ TAO_ORB_Core::resource_factory (void)
     }
 
   return this->resource_factory_;
+}
+
+void
+TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks)
+{
+  TAO_ORB_Core::protocols_hooks_name_ = protocols_hooks;
+}
+
+TAO_Protocols_Hooks *
+TAO_ORB_Core::get_protocols_hooks (void)
+{
+  if (TAO_ORB_Core::protocols_hooks_ == 0)
+    {
+      // Look in the service repository for an instance.
+      this->protocols_hooks_ =
+        ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
+        (TAO_ORB_Core::protocols_hooks_name_);
+    }
+
+  if (TAO_ORB_Core::protocols_hooks_name_ == 0)
+    {
+      // Still don't have one, so let's allocate the default.  This
+      // will throw an exception if it fails on exception-throwing
+      // platforms.
+      TAO_Protocols_Hooks *protocols_hooks;
+      ACE_NEW_RETURN (protocols_hooks,
+                      TAO_Protocols_Hooks,
+                      0);
+
+      this->protocols_hooks_ = protocols_hooks;
+    }
+
+  return this->protocols_hooks_;
 }
 
 void
@@ -2601,10 +2637,10 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-TAO_ThreadpoolPolicy *
+CORBA::Policy *
 TAO_ORB_Core::threadpool (void)
 {
-  TAO_ThreadpoolPolicy *result = 0;
+  CORBA::Policy *result = 0;
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
@@ -2620,10 +2656,10 @@ TAO_ORB_Core::threadpool (void)
   return result;
 }
 
-TAO_PriorityModelPolicy *
+CORBA::Policy *
 TAO_ORB_Core::priority_model (void)
 {
-  TAO_PriorityModelPolicy *result = 0;
+  CORBA::Policy *result = 0;
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy
@@ -2639,10 +2675,10 @@ TAO_ORB_Core::priority_model (void)
   return result;
 }
 
-TAO_ServerProtocolPolicy *
+CORBA::Policy *
 TAO_ORB_Core::server_protocol (void)
 {
-  TAO_ServerProtocolPolicy *result = 0;
+  CORBA::Policy *result = 0;
 
   // @@ Must lock, but is is harder to implement than just modifying
   //    this call: the ORB does take a lock to modify the policy

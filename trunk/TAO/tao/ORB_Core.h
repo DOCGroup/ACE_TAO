@@ -41,6 +41,9 @@
 #include "PortableInterceptorC.h"
 #include "Interceptor_List.h"
 
+#include "RT_Policy_i.h"
+#include "Protocols_Hooks.h"
+
 #include "ace/Hash_Map_Manager.h"
 
 // Forward declarations
@@ -76,6 +79,7 @@ class TAO_Bands_Protocol_Selector;
 class TAO_Client_Priority_Policy_Selector;
 class TAO_Message_State_Factory;
 class TAO_ServerRequest;
+class TAO_Protocols_Hooks;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -377,11 +381,20 @@ public:
 
   /// Returns pointer to the server factory.
   TAO_Server_Strategy_Factory *server_factory (void);
+
+  /// Returns pointer to the Protocol_Hooks
+  TAO_Protocols_Hooks *protocols_hooks (void);
   //@}
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
 
+  /// Sets the value of TAO_ORB_Core::protocols_hooks_
+  static void set_protocols_hooks (const char *protocols_hooks_name);
+
+  /// Gets the value of TAO_ORB_Core::protocols_hooks__
+  TAO_Protocols_Hooks * get_protocols_hooks (void);
+  
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
 
@@ -551,13 +564,12 @@ public:
   /// Methods for obtaining ORB implementation default values for RT
   /// policies.
   //@{
-  TAO_PrivateConnectionPolicy *default_private_connection (void) const;
-  TAO_PriorityBandedConnectionPolicy *
-  default_priority_banded_connection (void) const;
-  TAO_ClientProtocolPolicy *default_client_protocol (void) const;
-  TAO_ServerProtocolPolicy *default_server_protocol (void) const;
-  TAO_ThreadpoolPolicy *default_threadpool (void) const;
-  TAO_PriorityModelPolicy *default_priority_model (void) const;
+  CORBA::Policy *default_private_connection (void) const;
+  CORBA::Policy *default_priority_banded_connection (void) const;
+  CORBA::Policy *default_client_protocol (void) const;
+  CORBA::Policy *default_server_protocol (void) const;
+  CORBA::Policy *default_threadpool (void) const;
+  CORBA::Policy *default_priority_model (void) const;
   //@}
 
   /**
@@ -571,13 +583,22 @@ public:
    * check the ORB implementation default values.
    */
   //@{
-  TAO_ThreadpoolPolicy *threadpool (void);
-  TAO_PriorityModelPolicy *priority_model (void);
-  TAO_ServerProtocolPolicy *server_protocol (void);
+  CORBA::Policy *threadpool (void);
+  CORBA::Policy *priority_model (void);
+  CORBA::Policy *server_protocol (void);
   //@}
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+  /// Handle to the factory for protocols_hooks_..
+  TAO_Protocols_Hooks *protocols_hooks_;
+
+  // Name of the protocols_hooks that needs to be instantiated.
+  // The default value is "Protocols_Hooks". If RTCORBA option is
+  // set, its value will be set to 
+  // be "RT_Protocols_Hooks".
+  static const char *protocols_hooks_name_;
+  
   /**
    * Accessor and modifier to the current thread priority, used to
    * implement the RTCORBA::Current interface, but it is faster for

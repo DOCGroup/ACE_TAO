@@ -34,6 +34,8 @@ class TAO_PriorityModelPolicy;
 class TAO_ClientProtocolPolicy;
 class TAO_PriorityBandedConnectionPolicy;
 
+// ****************************************************************
+
 /**
  * @class TAO_Endpoint_Selector_Factory
  *
@@ -91,9 +93,8 @@ private:
                    CORBA::Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
-};
 
-// ****************************************************************
+};
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -125,12 +126,13 @@ public:
 
   // = State.
 
+  // RTCORBA policies that affect profile/endpoint selection.
   // Effective overrides of the RTCORBA policies that affect
   // profile/endpoint selection.
-  TAO_PriorityModelPolicy *priority_model_policy_;
-  TAO_ClientProtocolPolicy *client_protocol_policy_;
-  TAO_PrivateConnectionPolicy *private_connection_;
-  TAO_PriorityBandedConnectionPolicy *bands_policy_;
+  CORBA::Policy *priority_model_policy_;
+  CORBA::Policy *client_protocol_policy_;
+  CORBA::Policy *private_connection_;
+  CORBA::Policy *bands_policy_;
 
   /**
    * Index into the RTCORBA::ProtocolList of the
@@ -256,194 +258,6 @@ public:
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
 };
-
-// ****************************************************************
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-class TAO_Export TAO_Priority_Endpoint_Selector :
-  public TAO_Default_Endpoint_Selector
-{
-  // = TITLE
-  //   Strategy for selecting endpoints based on the priority of the
-  //   client thread making the invocation.
-  //
-  // = DESCRIPTION
-  //   This strategy is used when RTCORBA::PriorityModelPolicy is
-  //   set and its value is RTCORBA::CLIENT_PROPAGATED.
-  //
-public:
-  /// Constructor.
-  TAO_Priority_Endpoint_Selector (void);
-
-  /// Destructor.
-  virtual ~TAO_Priority_Endpoint_Selector (void);
-
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
-private:
-  /// Helper for <select_endpoint>.
-  int is_multihomed (TAO_Endpoint *endpoint);
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_Bands_Endpoint_Selector :
-  public TAO_Default_Endpoint_Selector
-{
-  // = TITLE
-  //   Strategy for selecting endpoints based on the priority range.
-  //
-  // = DESCRIPTION
-  //   This strategy is used when
-  //   RTCORBA::PriorityBandedConnectionPolicy is set.
-  //
-public:
-  /// Constructor.
-  TAO_Bands_Endpoint_Selector (void);
-
-  /// Destructor.
-  virtual ~TAO_Bands_Endpoint_Selector (void);
-
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_Protocol_Endpoint_Selector :
-  public TAO_Invocation_Endpoint_Selector
-{
-  // = TITLE
-  //   Strategy for selecting endpoints based on protocols.
-  //
-  // = DESCRIPTION
-  //   This strategy is used when only RTCORBA::ClientProtocolPolicy is
-  //   set or RTCORBA::ClientProtocolPolicy plus
-  //   RTCORBA::SERVER_DECLARED priority model.
-  //
-public:
-  /// Constructor.
-  TAO_Protocol_Endpoint_Selector (void);
-
-  /// Destructor.
-  virtual ~TAO_Protocol_Endpoint_Selector (void);
-
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
-  virtual void next (TAO_GIOP_Invocation *invocation,
-                     CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  virtual void forward (TAO_GIOP_Invocation *invocation,
-                        const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
-  virtual void success (TAO_GIOP_Invocation *invocation);
-  virtual void close_connection (TAO_GIOP_Invocation *invocation);
-
-protected:
-  /// Helper for <select_endpoint>.
-  virtual void endpoint (TAO_GIOP_Invocation *invocation,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_Client_Priority_Policy_Selector :
-  public TAO_Invocation_Endpoint_Selector
-{
-  // = TITLE
-  //   Strategy for selecting endpoints when
-  //   TAO::Client_Priority_Policy is set.
-  //
-  // = DESCRIPTION
-  //   TAO::Client_Priority_Policy is deprecated.  Similar (and
-  //   beyond) functionality can be achieved through standard RTCORBA
-  //   policies.  See TAO Real-Time CORBA documentation for more
-  //   information.
-  //
-public:
-  /// Constructor.
-  TAO_Client_Priority_Policy_Selector (void);
-
-  /// Destructor.
-  virtual ~TAO_Client_Priority_Policy_Selector (void);
-
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
-  virtual void next (TAO_GIOP_Invocation *invocation,
-                     CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
-  virtual void forward (TAO_GIOP_Invocation *invocation,
-                        const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ());
-  virtual void success (TAO_GIOP_Invocation *invocation);
-  virtual void close_connection (TAO_GIOP_Invocation *invocation);
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_Priority_Protocol_Selector :
-  public TAO_Protocol_Endpoint_Selector
-{
-  // = TITLE
-  //   Strategy for selecting endpoints based on protocols and the
-  //   priority of the client thread making the invocation.
-  //
-  // = DESCRIPTION
-  //   This strategy is used when RTCORBA::ClientProtocolPolicy is
-  //   set and the priority model is RTCORBA::CLIENT_PROPAGATED.
-  //
-public:
-  /// Constructor.
-  TAO_Priority_Protocol_Selector (void);
-
-  /// Destructor.
-  virtual ~TAO_Priority_Protocol_Selector (void);
-
-protected:
-  ///
-  virtual void endpoint (TAO_GIOP_Invocation *invocation,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
-
-  /// Helper for <select_endpoint>.
-  int is_multihomed (TAO_Endpoint *endpoint);
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_Bands_Protocol_Selector :
-  public TAO_Protocol_Endpoint_Selector
-{
-  // = TITLE
-  //   Strategy for selecting endpoints based on protocols and a
-  //   priority range.
-  //
-  // = DESCRIPTION
-  //   This strategy is used when both RTCORBA::ClientProtocolPolicy
-  //   and RTCORBA::PriorityBandedConnectionPolicy are set.
-  //
-public:
-  /// Constructor.
-  TAO_Bands_Protocol_Selector (void);
-
-  /// Destructor.
-  virtual ~TAO_Bands_Protocol_Selector (void);
-
-protected:
-  virtual void endpoint (TAO_GIOP_Invocation *invocation,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
-};
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if defined (__ACE_INLINE__)
 # include "tao/Invocation_Endpoint_Selectors.i"
