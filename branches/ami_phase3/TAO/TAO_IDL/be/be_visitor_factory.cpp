@@ -636,9 +636,6 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       
     case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CS:
       return new be_interpretive_visitor_operation_ami_handler_operation_cs (new_ctx);
-      
-    case TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS:
-      return new be_interpretive_visitor_operation_ami_handler_skeleton_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
@@ -822,9 +819,6 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CS:
       return new be_compiled_visitor_operation_ami_handler_operation_cs (new_ctx);
-
-    case TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS:
-      return new be_compiled_visitor_operation_ami_handler_skeleton_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:

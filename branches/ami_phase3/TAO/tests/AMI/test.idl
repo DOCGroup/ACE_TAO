@@ -4,13 +4,13 @@
 
 interface Simple_Server
 {
-  void test_method ();
+  // void test_method ();
 
   long get_number ();
 
-  void put_number (in long l);
+  // void put_number (in long l);
 
-  long get_put_number (out long out_l, in long in_l);
+  // long get_put_number (out long out_l, in long in_l);
  
-  oneway void shutdown ();
+  // oneway void shutdown ();
 };

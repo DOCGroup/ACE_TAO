@@ -10,7 +10,7 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
                                    TAO_ORB_Core *orb_core,
                                    const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                    Messaging::ReplyHandler_ptr reply_handler_ptr)
-  : TAO_GIOP_Asynch_Invocation (stub, operation, orb_core),
+  : TAO_GIOP_Invocation (stub, operation, orb_core),
     message_state_ (0),
     rd_ (0)
 {

@@ -24,29 +24,7 @@
 #include "tao/Invocation.h"
 #include "tao/MessagingC.h"
 
-class TAO_Export TAO_GIOP_Asynch_Invocation : public TAO_GIOP_Invocation
-{
-  // = TITLE
-  //     Encapsulates common behavior for Asynch_Invocations. 
-  //
-  // = DESCRIPTION
-  //
-public:
-
-  // = Initialization and termination methods.
-  
-  TAO_GIOP_Asynch_Invocation (TAO_Stub *data,
-                              const char *operation,
-                              TAO_ORB_Core* orb_core);
-  // Constructor.
-
-  ~TAO_GIOP_Asynch_Invocation (void);
-  // Destructor.
-};
-
-// ****************************************************************
-
-class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation : public TAO_GIOP_Asynch_Invocation
+class TAO_Export TAO_GIOP_Twoway_Asynch_Invocation : public TAO_GIOP_Invocation
 {
   // = TITLE
   //   Sends a two-way request does not expect the reply.

@@ -73,8 +73,9 @@ public:
   
   virtual ~TAO_GIOP_Invocation (void);
   // Destructor.
-  // @@ Carlos: I put a virtual here. Was it not there because of some
-  //    performance issues. (Alex).
+  // @@ Carlos: I have put a virtual here, since I have moved the
+  //    <transport_->idle ()> code to the destructors of the derived 
+  //    class. (Alex).
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
@@ -164,10 +165,13 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
   //   incoming CDR stream.
   //
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Twoway_Invocation (TAO_Stub *data,
                               const char *operation,
                               TAO_ORB_Core* orb_core);
+  // Constructor.
+
+  ~TAO_GIOP_Twoway_Invocation (void);
+  // Destructor.
 
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
@@ -222,10 +226,13 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
   //   Sends a oneway request.
   //
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Oneway_Invocation (TAO_Stub *data,
                               const char *operation,
                               TAO_ORB_Core* orb_core);
+  // Constructor.
+
+  ~TAO_GIOP_Oneway_Invocation (void);
+  // Destructor.
 
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
@@ -246,9 +253,12 @@ class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
   //   Sends a locate request.
   //
 public:
-  // = Initialization and termination methods.
   TAO_GIOP_Locate_Request_Invocation (TAO_Stub *data,
                                       TAO_ORB_Core* orb_core);
+  // Constructor.
+
+  ~TAO_GIOP_Locate_Request_Invocation (void);
+  // Destructor.
 
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
