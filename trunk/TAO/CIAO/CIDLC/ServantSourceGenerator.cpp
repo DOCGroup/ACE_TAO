@@ -3281,8 +3281,7 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : CIAO::Home_Servant_Impl_Base (c)," << endl
-         << "    " << "home_svnt_base (exe, c)" << endl
+         << "  : home_svnt_base (exe, c)" << endl
          << "{"
          << "}";
 
