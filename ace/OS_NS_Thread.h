@@ -35,6 +35,7 @@
 # include "ace/OS_Memory.h"
 # include "ace/OS_NS_signal.h"
 # include "ace/ACE_export.h"
+# include "ace/Object_Manager_Base.h"
 
 # if defined (ACE_EXPORT_MACRO)
 #   undef ACE_EXPORT_MACRO
