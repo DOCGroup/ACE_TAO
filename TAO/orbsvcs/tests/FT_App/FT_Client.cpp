@@ -1,6 +1,7 @@
 // $Id$
 
 #include "FT_TestReplicaC.h"
+#include "FT_UnitTests.h"
 // the following include is relative to $TAO_ROOT
 #include "examples/Simple/Simple_util.h"
 #include <fstream>
@@ -29,6 +30,7 @@ private:
   void usage (ostream & out)const;
   void commandUsage (ostream & out);
   int pass (
+    FT_UnitTests & unitTests, // in
     ServerVar & ft_server,  // in
     long & counter,         // inout
     int & more,             // out
@@ -48,6 +50,7 @@ private:
   int argc_;
   char ** argv_;
   const char * inFileName_;
+  const char * inRepMgrIor_;
   std::ifstream inFile_;
   std::istream *commandIn_;
 
@@ -184,7 +187,7 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  ACE_Get_Opt get_opts (argc, argv, "c:df:g:nk:x");
+  ACE_Get_Opt get_opts (argc, argv, "c:df:g:nk:r:x");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -214,6 +217,10 @@ FTClientMain::parse_args (int argc, char *argv[])
         // poor design, but its ubiquitous
         break;
 
+     case 'r':
+        inRepMgrIor_ = get_opts.opt_arg ();
+        break;
+
       default:
         std::cerr << "FT Client: Unknown argument -" << (char) c << std::endl;
         usage(std::cerr);
@@ -239,6 +246,7 @@ void FTClientMain::usage(ostream & out)const
 }
 
 int FTClientMain::pass (
+  FT_UnitTests & unitTests,
   ServerVar & ft_server,
   long & counter,
   int & more,
@@ -413,6 +421,18 @@ int FTClientMain::pass (
           }
           break;
         }
+        case 't':
+        {
+          if (verbose_ >= LOUD)
+          {
+            std::cout << "FT Client: Unit Test (" << operand << ");" << std::endl;
+          }
+          if (unitTests.run_test(operand))
+          {
+            std::cout << "FT Client: ERROR: Test failed." << endl;
+          }
+          break;
+        }
         case 'u':
         {
           if (verbose_ >= LOUD)
@@ -520,9 +540,14 @@ int FTClientMain::pass (
 int FTClientMain::run ()
 {
   int result = 0;
+
   ServerVar ft_server;
   // Initialize the ft_server.
   result = ft_server.init ("FT_TEST",argc_, argv_);
+
+  FT_UnitTests unitTests(ft_server.orb());
+  unitTests.parse_args(argc_, argv_);
+  unitTests.init();
 
   if ( result == 0)
   {
@@ -547,7 +572,7 @@ int FTClientMain::run ()
     {
       ACE_TRY_NEW_ENV
       {
-        result = pass(ft_server, counter, more, command, retry);
+      result = pass(unitTests, ft_server, counter, more, command, retry);
         ACE_TRY_CHECK;
       }
       ACE_CATCH (CORBA::SystemException, sysex)

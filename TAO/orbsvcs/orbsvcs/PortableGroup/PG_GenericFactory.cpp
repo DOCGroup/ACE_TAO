@@ -15,6 +15,7 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
   TAO_PG_ObjectGroupManager & object_group_manager,
   TAO_PG_PropertyManager & property_manager)
   : poa_ (),
+    next_group_id_(0),
     object_group_manager_ (object_group_manager),
     property_manager_ (property_manager),
     factory_map_ (TAO_PG_MAX_OBJECT_GROUPS),
@@ -122,14 +123,8 @@ TAO_PG_GenericFactory::create_object (
     fcid = this->next_fcid_;
   }
 
-  // The ObjectId for the newly created object group is comprised
-  // solely of the FactoryCreationId.
-  PortableServer::ObjectId_var oid;
-  this->get_ObjectId (fcid, oid.out ());
-
   PortableGroup::ObjectGroup_var object_group =
-    this->object_group_manager_.create_object_group (fcid,
-                                                     oid.in (),
+    this->object_group_manager_.create_object_group (++next_group_id_,
                                                      type_id,
                                                      the_criteria
                                                      ACE_ENV_ARG_PARAMETER);
@@ -179,7 +174,7 @@ TAO_PG_GenericFactory::create_object (
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->object_group_manager_.destroy_object_group (oid.in ()
+      this->object_group_manager_.destroy_object_group (next_group_id_
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -226,6 +221,7 @@ TAO_PG_GenericFactory::delete_object (
         {
           TAO_PG_Factory_Set & factory_set = entry->int_id_;
 
+
           this->delete_object_i (factory_set,
                                  0  /* Do not ignore exceptions */
                                  ACE_ENV_ARG_PARAMETER);
@@ -233,23 +229,24 @@ TAO_PG_GenericFactory::delete_object (
 
           if (this->factory_map_.unbind (fcid) != 0)
             ACE_THROW (CORBA::INTERNAL ());
+
+//TODO - fix this code. Factory-ids and group-ids are now different
+#if 0
+          PortableServer::ObjectId_var oid;
+          this->get_ObjectId (fcid, oid.out ());
+
+          // Destroy the object group entry.
+          this->object_group_manager_.destroy_object_group (
+            oid.in ()
+            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+#endif 0
         }
     }
   else
     ACE_THROW (PortableGroup::ObjectNotFound ());  // @@
                                                    //    CORBA::BAD_PARAM
                                                    //    instead?
-
-  // The ObjectId for the newly created object group is comprised
-  // solely of the FactoryCreationId.
-  PortableServer::ObjectId_var oid;
-  this->get_ObjectId (fcid, oid.out ());
-
-  // Destroy the object group entry.
-  this->object_group_manager_.destroy_object_group (
-    oid.in ()
-    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
@@ -305,10 +302,18 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
 
 void
 TAO_PG_GenericFactory::delete_member (
-  CORBA::ULong group_id,
+  PortableGroup::ObjectGroupId group_id,
   const PortableGroup::Location & location
   ACE_ENV_ARG_DECL)
 {
+
+  //TODO - Fix this code. The original implementation for the load balancer assumed
+  //       that the factory-creation-id was the same as the object-group-id. This
+  //       is not longer true. The find below is supposed to be a factory-creation-id.
+
+  return;
+
+#if 0
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   // If no entry exists in the factory map, infrastructure
@@ -362,6 +367,7 @@ TAO_PG_GenericFactory::delete_member (
             }
         }
     }
+#endif
 }
 
 void
@@ -583,11 +589,19 @@ TAO_PG_GenericFactory::process_criteria (
 void
 TAO_PG_GenericFactory::check_minimum_number_members (
   PortableGroup::ObjectGroup_ptr object_group,
-  CORBA::ULong group_id,
+  PortableGroup::ObjectGroupId group_id,
   const char * type_id
   ACE_ENV_ARG_DECL)
 {
-  // Check if we've dropped below the MinimumNumberMembers threshold.
+ 
+  //TODO - Fix this code. The original implementation for the load balancer assumed
+  //       that the factory-creation-id was the same as the object-group-id. This
+  //       is not longer true. The find below is supposed to be a factory-creation-id.
+
+  return;
+
+#if 0
+ // Check if we've dropped below the MinimumNumberMembers threshold.
   // If so, attempt to create enough new members to fill the gap.
 
   // If no entry exists in the factory map, infrastructure (this
@@ -686,6 +700,7 @@ TAO_PG_GenericFactory::check_minimum_number_members (
       //       threshold gap hasn't been filled, what do we do?  Throw
       //       a CORBA::TRANSIENT?
     }
+#endif
 }
 
 PortableGroup::GenericFactory::FactoryCreationId *

@@ -471,19 +471,14 @@ TAO_PG_ObjectGroupManager::get_member_ref (
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
-  CORBA::ULong group_id,
-  const PortableServer::ObjectId &oid,
+  PortableGroup::ObjectGroupId group_id,
   const char * type_id,
   const PortableGroup::Criteria & the_criteria
   ACE_ENV_ARG_DECL)
 {
-  // Create a reference for the ObjectGroup corresponding to the
-  // RepositoryId of the object being created.
-  CORBA::Object_var object_group =
-    this->poa_->create_reference_with_id (oid,
-                                          type_id
-                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  //TODO - Use IORManipulation to create and assign
+  //       an empty IOGR. For now, just leave it nil.
+  CORBA::Object_var object_group;
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -516,7 +511,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
                       this->lock_,
                       0);
 
-    if (this->object_group_map_.bind (oid, group_entry) != 0)
+    if (this->object_group_map_.bind (group_id, group_entry) != 0)
       ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
                         PortableGroup::ObjectGroup::_nil ());
   }
@@ -528,13 +523,13 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
 void
 TAO_PG_ObjectGroupManager::destroy_object_group (
-  const PortableServer::ObjectId & oid
+  const PortableGroup::ObjectGroupId group_id
   ACE_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.unbind (oid, group_entry) != 0)
+  if (this->object_group_map_.unbind (group_id, group_entry) != 0)
     ACE_THROW (PortableGroup::ObjectNotFound ());
 
   delete group_entry;
@@ -566,11 +561,15 @@ TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
                     this->lock_,
                     PortableGroup::ObjectGroup::_nil ());
 
+//TODO -- need to fix this code. The LoadBalancer uses this.
+//        Need to implement some sort of objectId-to-ObjectGroup nmap.
+#if 0
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.find (oid, group_entry) == 0)
+  if (this->object_group_map_.find (group_id, group_entry) == 0)
     return
       PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
   else
+#endif 0
     return PortableGroup::ObjectGroup::_nil ();
 }
 
@@ -640,6 +639,27 @@ TAO_PG_ObjectGroupManager::get_properties (
   return safe_properties._retn ();
 }
 
+
+PortableGroup::Properties *
+TAO_PG_ObjectGroupManager::get_dynamic_properties (
+    PortableGroup::ObjectGroup_ptr object_group
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableGroup::ObjectGroupNotFound))
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    0);
+
+  TAO_PG_ObjectGroup_Map_Entry * group_entry =
+    this->get_group_entry (object_group
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return & group_entry->properties;
+}
+
 TAO_PG_ObjectGroup_Map_Entry *
 TAO_PG_ObjectGroupManager::get_group_entry (
     CORBA::Object_ptr object_group
@@ -650,32 +670,12 @@ TAO_PG_ObjectGroupManager::get_group_entry (
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  PortableServer::ObjectId_var oid;
-  ACE_TRY
-    {
-      oid = this->poa_->reference_to_id (object_group
-                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
-    {
-      if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex, "TAO_PG (%P|%t) Unexpected exception\n");
-
-      ACE_TRY_THROW (CORBA::INTERNAL ());
-    }
-  ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
-    {
-      if (TAO_debug_level > 0)
-        ACE_PRINT_EXCEPTION (ex, "TAO_PG (%P|%t) Unexpected exception\n");
-
-      ACE_TRY_THROW (CORBA::INTERNAL ());
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  //TODO - Change this to call the IORManipulation::get_properties 
+  //       when its available, and then extract the object_group_id.
+  PortableGroup::ObjectGroupId group_id = 10; // dummy value for now
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
-  if (this->object_group_map_.find (oid.in (), group_entry) != 0)
+  if (this->object_group_map_.find (group_id, group_entry) != 0)
     ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
                       0);
 

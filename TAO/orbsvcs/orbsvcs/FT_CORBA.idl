@@ -105,15 +105,6 @@ module FT
              BadReplicationStyle);
   };
 
-  // Specification of ReplicationManager Interface
-  interface ReplicationManager : PropertyManager,
-                                 FTObjectGroupManager,
-                                 GenericFactory {
-    void register_fault_notifier(in FaultNotifier fault_notifier);
-    FaultNotifier get_fault_notifier()
-      raises (PortableGroup::InterfaceNotFound);
-  };
-
 #else // (not) FT_USES_PORTABLE_GROUP
   interface GenericFactory;
 
@@ -288,19 +279,12 @@ module FT
       raises (ObjectNotFound);
   };
 
-  // Specification of ReplicationManager Interface
-  interface ReplicationManager : PropertyManager,
-    ObjectGroupManager,
-    GenericFactory {
-    void register_fault_notifier(in FaultNotifier fault_notifier);
-    FaultNotifier get_fault_notifier()
-      raises (InterfaceNotFound);
-  };
 #endif // FT_USES_PORTABLE_GROUP
 
   // Specifications for Fault Management moved to FT_Replica.idl
   // Specification of FaultNotifier Interface: moved to FT_Notifier.idl
   // Specifications for Logging and Recovery: moved to FT_Replica.idl
+  // Specifications for Replication Manager moved to FT_ReplicationManager.idl
 };
 
 

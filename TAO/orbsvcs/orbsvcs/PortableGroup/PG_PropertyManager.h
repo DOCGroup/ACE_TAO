@@ -55,6 +55,10 @@ public:
   /// Constructor.
   TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
+  /// Specifies the property validator to use (0 means: use the default)
+  virtual void init ( 
+    TAO_PG_Default_Property_Validator * property_validator );
+
   /**
    * @name PortableGroup::PropertyManager methods
    *
@@ -115,7 +119,7 @@ public:
 
   /**
    * Dynamically set the properties associated with a given object
-   * group as the load balancer and replicas are being executed.
+   * group as the replicas are being executed.
    * These properties override the type-specific and default
    * properties.
    */
@@ -178,10 +182,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// The property validator.
-  /**
-   * @todo Strategize the validator, or use template policies.
-   */
-  TAO_PG_Default_Property_Validator property_validator_;
+  TAO_PG_Default_Property_Validator * property_validator_;
 
 };
 

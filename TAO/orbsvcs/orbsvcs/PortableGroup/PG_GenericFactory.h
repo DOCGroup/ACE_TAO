@@ -118,7 +118,7 @@ public:
    * This method is only used by the TAO_PG_ObjectGroupManager class
    * when ObjectGroupManager::remove_member() is explicitly called.
    */
-  void delete_member (CORBA::ULong group_id,
+  void delete_member (PortableGroup::ObjectGroupId group_id,
                       const PortableGroup::Location & location
                       ACE_ENV_ARG_DECL);
 
@@ -132,7 +132,7 @@ public:
    */
   void check_minimum_number_members (
     PortableGroup::ObjectGroup_ptr object_group,
-    CORBA::ULong group_id,
+    PortableGroup::ObjectGroupId group_id,
     const char * type_id
     ACE_ENV_ARG_DECL);
 
@@ -202,6 +202,10 @@ private:
 
   /// Reference to the POA used to create object group references.
   PortableServer::POA_var poa_;
+
+  /// The GroupCreationId that will be assigned to the next object
+  /// group that is created.
+  PortableGroup::ObjectGroupId next_group_id_;
 
   /// Reference to the ObjectGroup map.
   TAO_PG_ObjectGroupManager & object_group_manager_;
