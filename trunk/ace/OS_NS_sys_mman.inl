@@ -159,7 +159,7 @@ ACE_OS::mmap (void *addr,
     ACE_FAIL_RETURN (MAP_FAILED);
   else
     return addr_mapping;
-#elif defined (__Lynx__)
+#elif defined (ACE_HAS_LYNX_BROKEN_MMAP)
   // The LynxOS 2.5.0 mmap doesn't allow operations on plain
   // file descriptors.  So, create a shm object and use that.
   ACE_UNUSED_ARG (sa);
