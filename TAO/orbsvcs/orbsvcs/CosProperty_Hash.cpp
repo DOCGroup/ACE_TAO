@@ -9,16 +9,11 @@
 //     Defines equal and hash functions for the Hash_Property_Map class.
 //    
 // = Author
-//     Alexander Babu Arulanthu
+//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
 // ================================================================================================
 
 #include "CosProperty_Hash.h"
-
-// @@ Alex, make sure you don't "pollute" the global namespace.
-// Typedefs for the Hash_Map classes.
-typedef ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> 
-        Hash_Property_Map;
 
 EXT_ID::EXT_ID (void)
 {
@@ -35,7 +30,7 @@ EXT_ID::operator == (const EXT_ID &ext_id) const
   ACE_DEBUG ((LM_DEBUG, "EXT_ID::operator == : %s == %s \n",
               this->pname_.in (), ext_id.pname_.in ()));
 
-  return ACE_OS::strcmp(this->pname_.in (), ext_id.pname_.in ()) == 0;
+  return ACE_OS::strcmp (this->pname_.in (), ext_id.pname_.in ()) == 0;
 }
 
 u_long
