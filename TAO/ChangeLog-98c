@@ -1,3 +1,10 @@
+Wed Jan  7 14:17:14 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.{h,cpp} (key_to_object): Changed signature so that
+ 	it's more in line with what we really need.  This is okay because
+ 	this method is not in the standard, so we can choose whatever we
+ 	damn well please!
+
 Wed Jan  7 14:08:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Merged changes from version main_to_poa_merge_4 and

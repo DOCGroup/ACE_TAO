@@ -432,16 +432,10 @@ CORBA_ORB::resolve_initial_references (CORBA::String name)
 // Create an objref
 
 CORBA::Object_ptr
-CORBA_ORB::key_to_object (const TAO::ObjectKey_ptr key,
-                          CORBA::String type_id,
+CORBA_ORB::key_to_object (const TAO::ObjectKey &key,
+                          const char *type_id,
                           CORBA::Environment &env)
 {
-  if (key == 0)
-    {
-      env.exception (new CORBA::INV_OBJREF (CORBA::COMPLETED_NO));
-      return 0;
-    }
-  
   CORBA::String id;
   IIOP_Object *data;
 
@@ -464,7 +458,7 @@ CORBA_ORB::key_to_object (const TAO::ObjectKey_ptr key,
   // CORBA::OctetSeq *internal_key = (CORBA::OctetSeq *)key;
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         *key));
+                                         key));
   if (data != 0)
     env.clear ();
   else
