@@ -9,7 +9,7 @@
 
 #include "Property_Handler.h"
 #include "PCI_Handler.h"
-#include "CID_Handler.h"
+#include "CompIntfDesc_Handler.h"
 
 #include <iostream>
 
@@ -91,10 +91,10 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               // fetch the component package reference handler
-              CID_Handler cid_handler (iter_, false);
+              CompIntfDesc_Handler compintfdesc_handler (iter_, false);
 
               // delegate the populating process
-              cid_handler.process_ComponentInterfaceDescription (comppkgdesc.realizes);
+              compintfdesc_handler.process_ComponentInterfaceDescription (comppkgdesc.realizes);
             }
           else if (node_name == XStr (ACE_TEXT ("implementation")))
             {
