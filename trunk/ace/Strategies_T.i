@@ -53,6 +53,30 @@ ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   return 0;
 }
 
+template <class SVC_HANDLER> ASYS_INLINE
+ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::ACE_Svc_Handler_Pool_Strategy (ACE_Thread_Manager *tm)
+{
+  ACE_TRACE ("ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::ACE_Svc_Handler_Pool_Strategy");
+  this->open (tm);
+}
+
+template <class SVC_HANDLER> ASYS_INLINE
+ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::~ACE_Svc_Handler_Pool_Strategy (void)
+{
+  ACE_TRACE ("ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::~ACE_Svc_Handler_Pool_Strategy");
+}
+
+// Create a Singleton SVC_HANDLER by always returning the same
+// SVC_HANDLER.
+
+template <class SVC_HANDLER> ASYS_INLINE int
+ACE_Svc_Handler_Pool_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
+{
+  ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::make_svc_handler");
+  ACE_NEW_RETURN (sh, SVC_HANDLER, 0);
+  return 0;
+}
+
 template <class SVC_HANDLER> ASYS_INLINE int
 ACE_Creation_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr)
 {
@@ -176,6 +200,19 @@ template <class SVC_HANDLER> ASYS_INLINE
 ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy (void)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy");
+}
+
+template <class SVC_HANDLER> ASYS_INLINE
+ACE_Thread_Pool_Strategy<SVC_HANDLER>::ACE_Thread_Pool_Strategy (int flags)
+  : ACE_Concurrency_Strategy<SVC_HANDLER> (flags)
+{
+  ACE_TRACE ("ACE_Thread_Pool_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");
+}
+
+template <class SVC_HANDLER> ASYS_INLINE
+ACE_Thread_Pool_Strategy<SVC_HANDLER>::~ACE_Thread_Pool_Strategy (void)
+{
+  ACE_TRACE ("ACE_Thread_Pool_Strategy<SVC_HANDLER>::~ACE_Thread_Pool_Strategy");
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ASYS_INLINE int

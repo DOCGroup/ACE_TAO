@@ -183,6 +183,36 @@ protected:
 };
 
 template <class SVC_HANDLER>
+class ACE_Svc_Handler_Pool_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
+{
+  // = TITLE
+  //     Defines the interface for specifying a creation strategy for
+  //     a <SVC_HANDLER> that always returns the same <SVC_HANDLER> (i.e.,
+  //     it's a Singleton).
+  //
+  // = DESCRIPTION
+  //     Yadda, yadda... Unfinished...
+  //     Note that this class takes over the ownership of the
+  //     SVC_HANDLER passed into it as a parameter and it becomes
+  //     responsible for deleting this object.
+public:
+  // = Initialization and termination methods.
+  ACE_Svc_Handler_Pool_Strategy (ACE_Thread_Manager * = 0);
+  virtual ~ACE_Svc_Handler_Pool_Strategy (void);
+
+  // = Factory method.
+  virtual int make_svc_handler (SVC_HANDLER *&);
+  // Create a Singleton SVC_HANDLER by always returning the same
+  // SVC_HANDLER.  Returns -1 on failure, else 0.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
+template <class SVC_HANDLER>
 class ACE_Concurrency_Strategy
 {
   // = TITLE
@@ -331,6 +361,43 @@ protected:
 
   size_t n_threads_;
   // Number of threads to spawn.
+};
+
+template <class SVC_HANDLER>
+class ACE_Thread_Pool_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
+{
+  // = TITLE
+  //     Defines the interface for specifying a concurrency strategy
+  //     for a <SVC_HANDLER> based on multithreading.
+  //
+  // = DESCRIPTION
+  //     This class provides a strategy that handle requests from
+  //     clients concurrently using the current thread's context.  It
+  //     "activates" the user-supplied <SVC_HANDLER> by calling it's
+  //     svc () method directly.
+public:
+  // = Intialization and termination methods.
+  ACE_Thread_Pool_Strategy (int flags = 0);
+  // "Do-nothing constructor"
+
+  virtual ~ACE_Thread_Pool_Strategy (void);
+
+  // = Factory method.
+  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
+				    void *arg = 0);
+  // Activate the <svc_handler> with an appropriate concurrency
+  // strategy.  This method activates the SVC_HANDLER by first calling
+  // its open() method and then calling its activate() method to turn
+  // it into an active object.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> inherited;
 };
 
 template <class SVC_HANDLER>
