@@ -1,3 +1,39 @@
+Tue Jan 07 23:28:28 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CIAO_common.h: Added a new file to collect common CIAO
+	  macros.
+
+	* ciao/CIAO_Component_i.cpp:
+	* ciao/CIAO_Component_i.h: Removed.
+	* ciao/Client_init.cpp:
+	* ciao/Client_init.h:  The old CIAO_client_init in
+	  CIAO_Component_i is now called Client_init under CIAO namespace.
+	  This function initlializes the value factories for client side ORB.
+
+	* ciao/Server_init.cpp:
+	* ciao/Server_init.h: Added new function Server_init under CIAO
+	  namespace to initialize server side value factories for server
+	  side ORB.
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h:
+	* ciao/Cookies.inl: Added server-side implementation of
+	  Components::Cookie called CIAO::Map_Key_Cookie.  This
+	  implementation is only used within the containers (i.e., server
+	  side).  Client doesn't need to know how to interpret a Cookie.
+
+	* ciao/Container_Base.h:
+	* ciao/HomeRegistrar_i.h: Fixed various ACE-guideline conformity
+	  problems.
+
+	* ciao/CCM_Core.mpc:
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp:
+	* ciao/Makefile.client:
+	* ciao/Makefile.container:
+	* ciao/Makefile.server: Updated various makefiles/projects.
+
 Tue Jan 07 07:48:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/Container_Base.cpp (install_servant): Changed to decrease

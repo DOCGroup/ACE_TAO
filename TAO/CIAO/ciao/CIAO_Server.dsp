@@ -7,19 +7,19 @@
 CFG=CIAO_Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "CIAO_Server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "CIAO_Server.mak" CFG="CIAO_Server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "CIAO_Server - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "CIAO_Server - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -81,7 +81,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib CIAO_Containerd.lib TAO_Securityd.lib TAO_PortableServerd.lib TAO_CosNamingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Serverd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -100,6 +100,10 @@ SOURCE=.\CCM_DeploymentS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Container_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\HomeRegistrar_i.cpp
 # End Source File
 # Begin Source File
@@ -112,12 +116,12 @@ SOURCE=.\HomeRegistrarS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Container_Base.cpp
+SOURCE=.\Server_init.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "h;hpp;hxx;hm"
 # Begin Source File
 
 SOURCE=.\CCM_DeploymentC.h
@@ -125,6 +129,10 @@ SOURCE=.\CCM_DeploymentC.h
 # Begin Source File
 
 SOURCE=.\CCM_DeploymentS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Container_Base.h
 # End Source File
 # Begin Source File
 
@@ -140,7 +148,7 @@ SOURCE=.\HomeRegistrarS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Container_Base.h
+SOURCE=.\Server_init.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -212,7 +220,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -277,7 +285,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
