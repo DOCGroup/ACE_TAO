@@ -1,51 +1,56 @@
+Sun Sep 27 21:05:40 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Object_Table.i (create_object_id): added
+          ACE_UNUSED_ARG (servant).
+
 Sun Sep 27 19:25:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	  Added some more comments.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Added some more comments.
 
 Sun Sep 27 00:58:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/Object_Table.cpp: Cleaned up the code a bit and got it to
- 	  work on SunC++ again.  This may break DU's C++ compiler, but
- 	  we'll take on step at a time here...
+        * tao/Object_Table.cpp: Cleaned up the code a bit and got it to
+          work on SunC++ again.  This may break DU's C++ compiler, but
+          we'll take on step at a time here...
 
-	* TAO_IDL/be/be_interface.cpp: Generate the "unsigned int"
- 	  signatures for hash() and lookup() to match the changes in
- 	  gperf.
+        * TAO_IDL/be/be_interface.cpp: Generate the "unsigned int"
+          signatures for hash() and lookup() to match the changes in
+          gperf.
 
-	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Removed
- 	  the -S1 flag to GPERF.  This is now implicit if GPERF can't
- 	  generate a proper "lookup array" duplicate solution...
-  	  Naturally, this means that you MUST update GPERF...
+        * TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Removed
+          the -S1 flag to GPERF.  This is now implicit if GPERF can't
+          generate a proper "lookup array" duplicate solution...
+          Naturally, this means that you MUST update GPERF...
 
 Sun Sep 27 00:02:57 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Table and POA: 
+        * tao/Object_Table and POA:
 
-	  - Added no-op destructors to all class. g++ was having problems.
-	  
-	  - Moved the Hash_Map_Manager template specialization to the .i
- 	    file.  Hopefully, the DU compiler will pick it up.
+          - Added no-op destructors to all class. g++ was having problems.
 
-	  - There was a bug in TAO_POA::encode_sequence_to_string where
- 	    the order of encoding higher order bits vs the lower order
-	    bits was reversed relative to the decoding routine.
+          - Moved the Hash_Map_Manager template specialization to the .i
+            file.  Hopefully, the DU compiler will pick it up.
 
-	  - Changed the object id in the SYSTEM_ID case so that it now
- 	    contains the binary values for the index and the generation
- 	    count.  This should make the parsing of the id faster.
+          - There was a bug in TAO_POA::encode_sequence_to_string where
+            the order of encoding higher order bits vs the lower order
+            bits was reversed relative to the decoding routine.
 
-	  - Made sure that the POA policies are getting registered with
- 	    the RootPOA rather than the creator POA.  This allows implicit
- 	    activation of the policies.
+          - Changed the object id in the SYSTEM_ID case so that it now
+            contains the binary values for the index and the generation
+            count.  This should make the parsing of the id faster.
 
-	  - There was a bug in create_object_id which was fixed by moving
- 	    <next_> along if index is not reused.
+          - Made sure that the POA policies are getting registered with
+            the RootPOA rather than the creator POA.  This allows implicit
+            activation of the policies.
+
+          - There was a bug in create_object_id which was fixed by moving
+            <next_> along if index is not reused.
 
 Sat Sep 26 20:25:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	  Fixed problem in TAO_ECG_Mcast_EH::unsubscribe() method.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Fixed problem in TAO_ECG_Mcast_EH::unsubscribe() method.
 
 Sat Sep 26 09:59:59 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -56,23 +61,23 @@ Sat Sep 26 09:59:59 1998  Chris Gill  <cdgill@cs.wustl.edu>
           Expanded time members of Navigation and Weapons structures to have
           secs and usecs, as for ACE_Time_Value class in C++
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java:
+        * orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java:
           Made Latency, Jitter, and Deadlines GUI components the
-	  defaults for demo startup.
+          defaults for demo startup.
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/make.bat:
+        * orbsvcs/tests/Simulator/DOVEBrowser/make.bat:
           Massive cleanup and expansion of this script: now does make clean,
-	  make realclean, nicer VB rebuild on NT.
+          make realclean, nicer VB rebuild on NT.
 
-	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp:
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp:
           Added copy line to NavWeap.idl custom build step - copies the
-	  file from the parent directory before calling TAO_IDL.
+          file from the parent directory before calling TAO_IDL.
 
         * orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.{cpp, dsp, h}:
           New event supplier application to be used with actual runtime
-	  logging of scheduling behavior in the EC: does not depend on data
-	  being fed from simulation results file.
-	
+          logging of scheduling behavior in the EC: does not depend on data
+          being fed from simulation results file.
+
 Sat Sep 26 09:59:59 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/NS_Resolve.java:
