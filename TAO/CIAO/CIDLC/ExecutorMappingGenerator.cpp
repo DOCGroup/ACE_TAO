@@ -581,7 +581,8 @@ namespace
   // ContextEmitter generates component context interface.
   //
   //
-  struct ContextPortEmitter : Traversal::UserGet,
+  struct ContextPortEmitter : Traversal::MultiUserGet,
+                              Traversal::SingleUserGet,
                               Traversal::PublisherSet,
                               Traversal::EmitterSet,
                               Emitter
@@ -592,32 +593,65 @@ namespace
     }
 
 
-    // User.
+    // MultiUser.
     //
     virtual void
-    name (SemanticGraph::User& u)
+    returns (SemanticGraph::MultiUser& u)
     {
-      os << " get_connection_" << u.name ();
+      Component& c (dynamic_cast<Component&>((*u.named_begin ())->scope ()));
+      os << c.scoped_name () << "::" << u.name () << "Connections";
     }
 
     virtual void
-    receives_pre (SemanticGraph::User&)
+    name (SemanticGraph::MultiUser& u)
+    {
+      os << " get_connections_" << u.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::MultiUser&)
     {
       os << " (";
     }
 
     virtual void
-    receives_post (SemanticGraph::User&)
+    receives_post (SemanticGraph::MultiUser&)
     {
       os << ")";
     }
 
     virtual void
-    post (SemanticGraph::User&)
+    post (SemanticGraph::MultiUser&)
     {
       os << ";";
     }
 
+
+    // SingleUser.
+    //
+    virtual void
+    name (SemanticGraph::SingleUser& u)
+    {
+      os << " get_connection_" << u.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::SingleUser&)
+    {
+      os << " (";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::SingleUser&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    post (SemanticGraph::SingleUser&)
+    {
+      os << ";";
+    }
 
     // Publisher.
     //

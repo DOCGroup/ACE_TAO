@@ -21,6 +21,7 @@ namespace CCF
       keyword_table_.insert ("home"     );
       keyword_table_.insert ("finder"   );
       keyword_table_.insert ("manages"  );
+      keyword_table_.insert ("multiple" );
       keyword_table_.insert ("provides" );
       keyword_table_.insert ("publishes");
       keyword_table_.insert ("uses"     );

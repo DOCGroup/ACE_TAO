@@ -16,6 +16,9 @@ namespace CCF
       struct Uses
       {
         virtual void
+        multiple () = 0;
+
+        virtual void
         type (IdentifierPtr const& id) = 0;
 
         virtual void
