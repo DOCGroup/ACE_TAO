@@ -1,3 +1,12 @@
+Thu May 23 16:38:54 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Flushing_Strategy.h:
+
+	  No need to include `corbafwd.h'.  `TAO_Export.h' is enough.
+
+	  Forward declare ACE_Time_Value.  Necessitated by the above
+	  change.
+
 Thu May 23 17:38:10 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicInterface/Dynamic_Implementation.cpp:
