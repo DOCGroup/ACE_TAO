@@ -381,7 +381,11 @@ endif # ace_with_x11
 ifeq ($(exceptions),)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
-    CCFLAGS += -fno-exceptions -fcheck-new
+    ifneq ($(ACE_GNUG_ON_UNIXWARE),)
+      CCFLAGS += -fcheck-new
+    else
+      CCFLAGS += -fno-exceptions -fcheck-new
+    endif # ! ACE_GNUG_ON_UNIXWARE
   endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS

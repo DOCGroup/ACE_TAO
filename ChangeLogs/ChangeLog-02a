@@ -1,3 +1,17 @@
+Tue Jun  6 12:39:23 2000  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        Ported ACE & TAO to Unixware 7.1, using GNU C++ compiler gcc 2.95.2.
+        See ACE-INSTALL for specific information on configuring the build
+        environment.
+
+        * ACE-INSTALL.html
+        * ace/OS.h
+        * ace/config-unixware-7.1.0.h
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp
+        * examples/Threads/tss1.cpp
+        * include/makeinclude/platform_unixware_g++.GNU
+        * include/makeinclude/wrapper_macros.GNU
+
 Tue Jun  6 10:32:51 2000  Edan Ayal <edanayal@yahoo.com>
   
 	* ace/Message_Queue.h: Added the following two pure

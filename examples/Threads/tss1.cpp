@@ -104,7 +104,7 @@ int Tester<ACE_SYNCH_USE>::close (u_long)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) close: error = %d\n",
               TSS_Error->error ()));
-  close_started = 0;
+  //close_started = 0;
   return 0;
 }
 
@@ -132,11 +132,14 @@ main (int, char *[])
   tester.open ();
 
   // Keep looping until <Tester::close> is called.
-  while (!close_started)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) error = %d\n",
-                TSS_Error->error ()));
-
+  for (int i = 0; !close_started; i++) {
+  // while (!close_started)
+    if ((i % 100) == 0) {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) error = %d\n",
+                  TSS_Error->error ()));
+    }
+  }
   ACE_DEBUG ((LM_DEBUG,
               "(%t) main: setting error code to 4\n"));
   TSS_Error->error (4);
