@@ -334,7 +334,6 @@ TAO_OperationDef_i::contexts (CORBA::Environment &ACE_TRY_ENV)
                                           0,
                                           contexts_key);
 
-  int index = 0;
   ACE_Unbounded_Queue<ACE_TString> context_queue;
 
   // This section may not have been created.
