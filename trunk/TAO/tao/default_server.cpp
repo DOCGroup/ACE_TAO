@@ -10,7 +10,6 @@
 //     $Id$
 // ============================================================================
 
-#define ACE_BUILD_SVC_DLL
 #if 0
 #include "tao/default_server.h"
 #endif /* 0 */
@@ -63,7 +62,9 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
       TAO_CHECKANDSET (THR_BOUND);
       TAO_CHECKANDSET (THR_NEW_LWP);
       TAO_CHECKANDSET (THR_SUSPENDED);
+#if !defined (ACE_WIN32)
       TAO_CHECKANDSET (THR_DAEMON);
+#endif /* ACE_WIN32 */      
       TAO_ENDCHECK;
     }
 }

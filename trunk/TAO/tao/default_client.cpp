@@ -13,7 +13,6 @@
 //     $Id$
 // ============================================================================
 
-#define ACE_BUILD_SVC_DLL
 #if 0
 #include "tao/default_client.h"
 #endif /* 0 */
@@ -59,7 +58,7 @@ TAO_Default_Client_Strategy_Factory::connector (void)
 }
 
 int
-TAO_Default_Client_Strategy_Factory::parse_args (int /* argc */, char **/*argv*/)
+TAO_Default_Client_Strategy_Factory::parse_args (int /* argc */, char ** /* argv */)
 {
   // no args to parse at this time
   return 0;
