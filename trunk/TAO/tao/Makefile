@@ -25397,38 +25397,7 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
- Typecode.i \
- ORB.h \
- Services.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- objectid.h \
- PolicyC.h \
- CurrentC.h \
- Object.h \
- Policy_ForwardC.h \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- ORB.i
+ Typecode.i
 
 .obj/DLL_ORB.o .obj/DLL_ORB.so .shobj/DLL_ORB.o .shobj/DLL_ORB.so: DLL_ORB.cpp DLL_ORB.h \
  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Task.h \

@@ -153,6 +153,17 @@ public:
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
 
+#if defined (ACE_HAS_EXCEPTIONS)
+  /// Set a new unexpected exception handler.
+  /**
+   * The old one will be stored for restoration later on.
+   *
+   * @note Calling this method multiple times will cause the stored
+   *       old unexpected exception handler pointer to be lost.
+   */
+  void _set_unexpected (TAO_unexpected_handler u);
+#endif /* ACE_HAS_EXCEPTIONS */
+
 private:
 
   /// Force allocation on the heap.
