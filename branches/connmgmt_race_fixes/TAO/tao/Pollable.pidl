@@ -1,0 +1,76 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file   Pollable.pidl
+ *
+ *  $Id$
+ *
+ * This file was used to generate the code in Pollable{C,S,S_T}.{h,i,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl
+ *     -Ge 1
+ *     -DNO_VALUE
+ *     -Wb,export_macro=TAO_Export
+ *     -Wb,export_include="tao/corbafwd.h"
+ *     -Wb,pre_include="ace/pre.h"
+ *     -Wb,post_include="ace/post.h"
+ *     Pollable.pidl
+ *
+ * after the file is generated a patch must be applied.  The patch
+ * fixes the interface repository IDs, disables the code under
+ * certain configurations, and eliminates cycles in the include
+ * dependencies.  Those changes are required because the generated
+ * code is part of the TAO library, it hardly makes any sense to
+ * change the IDL compiler to support changes that are very
+ * occasional.
+ *
+ *
+ */
+//=============================================================================
+
+
+#pragma prefix "omg.org"
+
+
+// We should declare this stuff in the CORBA module, but then we
+// cannot support platforms that lack namespaces.
+// Instead we prefix all the names with CORBA_, then we add a number
+// of typedefs in corbafwd.h so it looks like they are in the CORBA
+// module.  Finally we modify the generated code to have all the right
+// interface repository ids.
+//
+// @@ module CORBA
+//    {
+
+local interface CORBA_PollableSet;
+
+local interface CORBA_Pollable {
+  boolean is_ready(in unsigned long timeout);
+
+  CORBA_PollableSet create_pollable_set( );
+};
+
+local interface CORBA_DIIPollable : CORBA_Pollable { };
+
+local interface CORBA_PollableSet {
+
+  exception NoPossiblePollable { };
+  exception UnknownPollable { };
+
+  CORBA_DIIPollable create_dii_pollable();
+
+  void add_pollable(in CORBA_Pollable potential );
+
+  CORBA_Pollable poll(in unsigned long timeout)
+    raises( NoPossiblePollable );
+
+  void remove(in CORBA_Pollable potential )
+    raises( UnknownPollable );
+
+  unsigned short number_left( );
+};
+
+#pragma prefix ""
