@@ -1,0 +1,10 @@
+//
+// $Id$
+//
+
+interface test
+{
+  unsigned long method (in unsigned long work,
+                        in unsigned long requesting_thread_id);
+  oneway void shutdown ();
+};

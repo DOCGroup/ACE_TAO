@@ -133,6 +133,13 @@ private:
 
   int client_thread_is_leader_;
   // Is a client thread the current leader?
+
+  int server_threads_waiting_;
+  // Are server threads waiting for the client leader to complete?
+
+  ACE_SYNCH_CONDITION server_threads_condition_;
+  // Condition variable for server threads waiting for the client
+  // leader to complete.
 };
 
 class TAO_Export TAO_LF_Client_Thread_Helper

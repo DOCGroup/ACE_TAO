@@ -1638,7 +1638,6 @@ TAO_ORB_Core::leader_follower (void)
 
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
-                   int break_on_timeouts,
                    int perform_work,
                    CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1693,8 +1692,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                     ASYS_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
       switch (r->handle_events (tv))
         {
-        case 0: // Timed out, so we return to caller.
-          if (break_on_timeouts)
+        case 0:
+          // Make sure that a timed out occured.  If so, we return to
+          // caller.
+          if (tv != 0 && *tv == ACE_Time_Value::zero)
             result = 0;
           break;
           /* NOTREACHED */
