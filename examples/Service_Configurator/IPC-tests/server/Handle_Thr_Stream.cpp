@@ -66,10 +66,10 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, char *argv[])
     switch (c)
       {
       case 'p':
-	local_addr.set (ACE_OS::atoi (get_opt.optarg));
+	local_addr.set (ACE_OS::atoi (get_opt.opt_arg ()));
 	break;
       case 't':
-	n_threads = ACE_OS::atoi (get_opt.optarg);
+	n_threads = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       default:
 	break;

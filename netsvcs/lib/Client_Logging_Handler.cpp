@@ -500,14 +500,14 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
 	{
 	case 'h':
           ACE_OS::free ((void *) this->server_host_);
-	  this->server_host_ = ACE_OS::strdup (get_opt.optarg);
+	  this->server_host_ = ACE_OS::strdup (get_opt.opt_arg ());
 	  break;
 	case 'k':
           ACE_OS::free ((void *) this->logger_key_);
-	  this->logger_key_ = ACE_OS::strdup (get_opt.optarg);
+	  this->logger_key_ = ACE_OS::strdup (get_opt.opt_arg ());
 	  break;
 	case 'p':
-	  this->server_port_ = ACE_OS::atoi (get_opt.optarg);
+	  this->server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	default:
 	  ACE_ERROR_RETURN ((LM_ERROR,

@@ -58,7 +58,7 @@ Handle_L_Stream::init (int argc, char *argv[])
      switch (c)
        {
        case 'r': 
-	 r = get_opt.optarg;
+	 r = get_opt.opt_arg ();
 	 break;
        default:
 	 break;

@@ -636,16 +636,16 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'h':
-        host = get_opt.optarg;
+        host = get_opt.opt_arg ();
         break;
       case 'n':
-        nThreads = ACE_OS::atoi (get_opt.optarg) ;
+        nThreads = ACE_OS::atoi (get_opt.opt_arg ()) ;
         break;
       case 'p':
-        port = ACE_OS::atoi (get_opt.optarg);
+        port = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'd':
-        duplex = ACE_OS::atoi (get_opt.optarg);
+        duplex = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       default:
         ACE_ERROR ((LM_ERROR, "%p.\n",

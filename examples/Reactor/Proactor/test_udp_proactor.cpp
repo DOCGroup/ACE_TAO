@@ -372,10 +372,10 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'h':
-        host = get_opt.optarg;
+        host = get_opt.opt_arg ();
         break;
       case 'p':
-        port = ACE_OS::atoi (get_opt.optarg);
+        port = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",

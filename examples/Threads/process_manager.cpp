@@ -135,10 +135,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        n_iterations = ACE_OS::atoi (get_opt.optarg);
+        n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'e':
-        exit_code = ACE_OS::atoi (get_opt.optarg);
+        exit_code = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'c':
         child = 1;

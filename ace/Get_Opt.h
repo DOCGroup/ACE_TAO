@@ -31,8 +31,6 @@
  *  These definitions are for backward compatibility with previous versions.
  *  of ACE_Get_Opt.
  */
-#define optarg opt_arg ()
-#define optind opt_ind ()
 
 /**
  * @class ACE_Get_Opt
@@ -223,12 +221,39 @@ public:
   /// <operator()> or 0 if none was found.
   const ACE_TCHAR *long_option (void) const;
 
+  /// Accessor for the <argv_> pointer.
+  ACE_TCHAR **argv (void) const;
+
   /// Dump the state of an object.
   void dump (void) const;
 
   /// Return the <optstring>.  This is handy to verify that calls to
   /// long_option added short options as expected.
   const ACE_TCHAR *optstring (void) const;
+
+public: 
+  /**
+   * The following five data members should be private, but that
+   * would break backwards compatibility.  However, we recommend not
+   * writing code that uses these fields directly.
+   */
+        
+  /// Index in argv_ of the next element to be scanned.
+  int optind;
+
+  /// Callers store zero here to inhibit the error message for
+  /// unrecognized options.
+  int opterr;
+
+  /// Points to the option argument when one is found on last call to
+  /// <operator()>.
+  ACE_TCHAR *optarg;
+
+  /// Holds the <argc> count.
+  int argc_;
+
+  /// Holds the <argv> pointer.
+  ACE_TCHAR **argv_;
 
 private:
   class ACE_Get_Opt_Long_Option 
@@ -279,21 +304,8 @@ private:
   /// Handles reordering <argv>-elements.
   int permute (void);
 
-  /// Holds the <argc> count.
-  int argc_;
-
-  /// Holds the <argv> pointer.
-  ACE_TCHAR **argv_;
-
   /// Holds the option string.
   ACE_TString optstring_;
-
-  /// Index in argv_ of the next element to be scanned.
-  int opt_ind_;
-
-  /// Callers store zero here to inhibit the error message for
-  /// unrecognized options.
-  int opt_err_;
 
   /// Treat all options as long options.
   int long_only_;
@@ -303,10 +315,6 @@ private:
   /// arguments are missing.
   int has_colon_;
   
-  /// Points to the option argument when one is found on last call to
-  /// <operator()>.
-  ACE_TCHAR *opt_arg_;
-
   /**
    * The next char to be scanned in the option-element in which the
    * last option character we returned was found.  This allows us to

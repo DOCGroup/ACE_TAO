@@ -50,49 +50,49 @@ HTTP_Server::parse_args (int argc,
     switch (c)
       {
       case 'p':
-	this->port_ = ACE_OS::atoi (get_opt.optarg);
+	this->port_ = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 'n':
-	this->threads_ = ACE_OS::atoi (get_opt.optarg);
+	this->threads_ = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 't':
 	// POOL        -> thread pool
 	// PER_REQUEST -> thread per request
 	// THROTTLE    -> thread per request with throttling
-        if (ACE_OS::strcmp (get_opt.optarg, "POOL") == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), "POOL") == 0)
           thr_strategy = JAWS::POOL;
-        else if (ACE_OS::strcmp (get_opt.optarg, "PER_REQUEST") == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "PER_REQUEST") == 0)
           {
             thr_strategy = JAWS::PER_REQUEST;
             this->throttle_ = 0;
           }
-        else if (ACE_OS::strcmp (get_opt.optarg, "THROTTLE") == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "THROTTLE") == 0)
           {
             thr_strategy = JAWS::PER_REQUEST;
             this->throttle_ = 1;
           }
 	break;
       case 'f':
-        if (ACE_OS::strcmp (get_opt.optarg, "THR_BOUND") == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), "THR_BOUND") == 0)
           {
             // What happened here?
           }
-        else if (ACE_OS::strcmp (get_opt.optarg, "THR_DAEMON") == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "THR_DAEMON") == 0)
           {
           }
-        else if (ACE_OS::strcmp (get_opt.optarg, "THR_DETACHED") == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "THR_DETACHED") == 0)
           {
           }
       case 'i':
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
-        if (ACE_OS::strcmp (get_opt.optarg, "SYNCH") == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), "SYNCH") == 0)
           io_strategy = JAWS::SYNCH;
-        else if (ACE_OS::strcmp (get_opt.optarg, "ASYNCH") == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "ASYNCH") == 0)
           io_strategy = JAWS::ASYNCH;
 	break;
       case 'b':
-	this->backlog_ = ACE_OS::atoi (get_opt.optarg);
+	this->backlog_ = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       default:
 	break;

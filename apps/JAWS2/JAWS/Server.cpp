@@ -148,34 +148,34 @@ JAWS_Server::parse_args (int argc, char *argv[])
         t = !t;
         break;
       case 'p':
-        this->port_ = ACE_OS::atoi (getopt.optarg);
+        this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'c':
-        if (ACE_OS::strcmp (getopt.optarg, "PER_REQUEST") == 0)
+        if (ACE_OS::strcmp (getopt.opt_arg (), "PER_REQUEST") == 0)
           this->concurrency_ = 1;
         else this->concurrency_ = 0;
         break;
       case 'd':
-        if (ACE_OS::strcmp (getopt.optarg, "ASYNCH") == 0)
+        if (ACE_OS::strcmp (getopt.opt_arg (), "ASYNCH") == 0)
           this->dispatch_ = 1;
         else this->dispatch_ = 0;
         break;
       case 'n':
-        this->nthreads_ = ACE_OS::atoi (getopt.optarg);
+        this->nthreads_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'm':
-        this->maxthreads_ = ACE_OS::atoi (getopt.optarg);
+        this->maxthreads_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'f':
-        if (ACE_OS::strcmp (getopt.optarg, "THR_BOUND") == 0)
+        if (ACE_OS::strcmp (getopt.opt_arg (), "THR_BOUND") == 0)
           this->flags_ |= THR_BOUND;
-        else if (ACE_OS::strcmp (getopt.optarg, "THR_DAEMON") == 0)
+        else if (ACE_OS::strcmp (getopt.opt_arg (), "THR_DAEMON") == 0)
           this->flags_ |= THR_DAEMON;
-        else if (ACE_OS::strcmp (getopt.optarg, "THR_DETACHED") == 0)
+        else if (ACE_OS::strcmp (getopt.opt_arg (), "THR_DETACHED") == 0)
           this->flags_ |= THR_DETACHED;
         break;
       case 'r':
-        this->ratio_ = ACE_OS::atoi (getopt.optarg);
+        this->ratio_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       }
 

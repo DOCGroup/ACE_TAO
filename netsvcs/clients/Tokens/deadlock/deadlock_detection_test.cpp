@@ -184,15 +184,15 @@ parse_args (int argc, char *argv[])
 	  ignore_deadlock = 1;
 	  break;
 	case 'h':
-	  server_host = get_opt.optarg;
+	  server_host = get_opt.opt_arg ();
 	  remote_mutexes = 1;
 	  break;
 	case 'p':
-	  server_port = ACE_OS::atoi (get_opt.optarg);
+	  server_port = ACE_OS::atoi (get_opt.opt_arg ());
 	  remote_mutexes = 1;
 	  break;
 	case 'n':
-	  iterations = ACE_OS::atoi (get_opt.optarg);
+	  iterations = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'u':
 	default:

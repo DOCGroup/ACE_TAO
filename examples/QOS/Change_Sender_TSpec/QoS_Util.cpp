@@ -43,16 +43,16 @@ QoS_Util::parse_args (void)
       {
       case 'm': // multicast session address.
         this->multicast_flag_ = 1;
-        this->mult_session_addr_->set (get_opts.optarg);
+        this->mult_session_addr_->set (get_opts.opt_arg ());
         break;
       case 'n': // to be used by Senders only to specify the destination.
-        this->dest_addr_->set (get_opts.optarg);
+        this->dest_addr_->set (get_opts.opt_arg ());
         break;
       case 'p': // protocol.
-        if (ACE_OS::strcasecmp (get_opts.optarg, "tcp") == 0)
+        if (ACE_OS::strcasecmp (get_opts.opt_arg (), "tcp") == 0)
           this->protocol_ = IPPROTO_TCP;
         else
-          if (ACE_OS::strcasecmp (get_opts.optarg, "udp") == 0)
+          if (ACE_OS::strcasecmp (get_opts.opt_arg (), "udp") == 0)
             this->protocol_ = IPPROTO_UDP;
           else
             ACE_DEBUG ((LM_DEBUG,
@@ -60,7 +60,7 @@ QoS_Util::parse_args (void)
                         "UDP assumed\n"));
         break;
       case 'P': // sender source port.
-        this->source_port_ = ACE_OS::atoi (get_opts.optarg);
+        this->source_port_ = ACE_OS::atoi (get_opts.opt_arg ());
           break;
       case 'h':  // display help for different options.
       default:

@@ -40,19 +40,19 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->operation_ = 'w';
         break;
       case 'h':
-        this->hostname_ = get_opt.optarg;
+        this->hostname_ = get_opt.opt_arg ();
         break;
       case 'p':
-        this->port_ = ACE_OS::atoi (get_opt.optarg);
+        this->port_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'f':
-        this->filename_ = get_opt.optarg;
+        this->filename_ = get_opt.opt_arg ();
         break;
       case 'l':
-        this->length_ = ACE_OS::atoi (get_opt.optarg);
+        this->length_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'o':
-        this->offset_ = ACE_OS::atoi (get_opt.optarg);
+        this->offset_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
         // Usage fallthrough.
       default:

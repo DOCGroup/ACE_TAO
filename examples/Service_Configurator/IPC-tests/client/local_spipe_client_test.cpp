@@ -44,7 +44,7 @@ parse_arguments (int argc, char *argv[])
       debug = 1;
       break;
     case 'r':
-      rendezvous_spipe = get_opt.optarg;
+      rendezvous_spipe = get_opt.opt_arg ();
       break;
     default:
       print_usage_and_die ();

@@ -186,7 +186,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-	INTERFACE = get_opt.optarg;
+	INTERFACE = get_opt.opt_arg ();
 	break;
       case 'u':
 	// Usage fallthrough.

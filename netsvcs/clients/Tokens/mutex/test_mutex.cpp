@@ -77,18 +77,18 @@ parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 't':
-	  spawn_count = ACE_OS::atoi (get_opt.optarg);
+	  spawn_count = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'h':  // specify the host machine on which the server is running
-	  server_host = get_opt.optarg;
+	  server_host = get_opt.opt_arg ();
 	  remote_mutexes = 1;
 	  break;
 	case 'p':  // specify the port on which the server is running
-	  server_port = ACE_OS::atoi (get_opt.optarg);
+	  server_port = ACE_OS::atoi (get_opt.opt_arg ());
 	  remote_mutexes = 1;
 	  break;
 	case 'n':  // specify the port on which the server is running
-	  iterations = ACE_OS::atoi (get_opt.optarg);
+	  iterations = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'u':
 	default:

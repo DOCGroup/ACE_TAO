@@ -42,7 +42,7 @@ Baseline_Test_Base::parse_args (int argc, char *argv[])
       {
       case 'i':                 // Total iterations
         {
-          int tmp = ACE_OS::atoi (getopt.optarg);
+          int tmp = ACE_OS::atoi (getopt.opt_arg ());
           if (tmp <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%d is not a valid value for iteration\n",

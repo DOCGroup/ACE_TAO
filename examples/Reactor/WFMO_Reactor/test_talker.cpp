@@ -269,10 +269,10 @@ Peer_Handler::Peer_Handler (int argc, char *argv[])
       switch (c)
         {
         case 'h':
-          host_ = get_opt.optarg;
+          host_ = get_opt.opt_arg ();
           break;
         case 'p':
-          port_ = ACE_OS::atoi (get_opt.optarg);
+          port_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         }
     }

@@ -20,11 +20,11 @@ int main (int argc, char* argv[])
       switch ((char) c)
         {
         case 'h':
-          host = getopt.optarg;
+          host = getopt.opt_arg ();
           break;
 
         case 'i':
-          nsamples = ACE_OS::atoi (getopt.optarg);
+          nsamples = ACE_OS::atoi (getopt.opt_arg ());
           break;
         }
     }

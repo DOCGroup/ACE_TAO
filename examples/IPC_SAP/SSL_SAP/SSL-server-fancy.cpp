@@ -179,10 +179,10 @@ Options::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'p':
-        this->port_ = ACE_OS::atoi (getopt.optarg);
+        this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'r':
-        this->reply_message_len_ = ACE_OS::atoi (getopt.optarg);
+        this->reply_message_len_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'v':
         this->verbose_ = 1;

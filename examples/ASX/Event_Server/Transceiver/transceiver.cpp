@@ -31,10 +31,10 @@ Event_Transceiver::parse_args (int argc, char *argv[])
         this->role_ = "Consumer";
         break;
       case 'h':
-        this->host_name_ = get_opt.optarg;
+        this->host_name_ = get_opt.opt_arg ();
         break;
       case 'p':
-        this->port_number_ = ACE_OS::atoi (get_opt.optarg);
+        this->port_number_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'S':
         this->role_ = "Supplier";

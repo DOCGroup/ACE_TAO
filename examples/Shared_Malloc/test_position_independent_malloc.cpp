@@ -129,7 +129,7 @@ parse_args (int argc, char *argv[])
         case 'a':
           // Override the default base address.
           base_addr = ACE_reinterpret_cast (void *, 
-                                            ACE_OS::atoi (get_opt.optarg));
+                                            ACE_OS::atoi (get_opt.opt_arg ()));
           break;
         case 'T':
           ACE_Trace::start_tracing ();

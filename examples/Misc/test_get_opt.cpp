@@ -20,32 +20,32 @@ main (int argc, ACE_TCHAR *argv[])
 	ACE_DEBUG ((LM_DEBUG, "got a\n"));
 	break;
       case 'b':
-	ACE_DEBUG ((LM_DEBUG, "got b with arg %s\n", get_opt.optarg));
+	ACE_DEBUG ((LM_DEBUG, "got b with arg %s\n", get_opt.opt_arg ()));
 	break;
       case 'c':
 	ACE_DEBUG ((LM_DEBUG, "got c\n"));
 	break;
       case 'd':
-	ACE_DEBUG ((LM_DEBUG, "got d with arg %s\n", get_opt.optarg));
+	ACE_DEBUG ((LM_DEBUG, "got d with arg %s\n", get_opt.opt_arg ()));
 	break;
       case 'e':
 	ACE_DEBUG ((LM_DEBUG, "got e\n"));
 	break;
       case 'f':
-	ACE_DEBUG ((LM_DEBUG, "got f with arg %s\n", get_opt.optarg));
+	ACE_DEBUG ((LM_DEBUG, "got f with arg %s\n", get_opt.opt_arg ()));
 	break;
       case 'g':
 	ACE_DEBUG ((LM_DEBUG, "got g\n"));
 	break;
       case 'h':
-	ACE_DEBUG ((LM_DEBUG, "got h with arg %s\n", get_opt.optarg));
+	ACE_DEBUG ((LM_DEBUG, "got h with arg %s\n", get_opt.opt_arg ()));
 	break;
       default:
 	ACE_DEBUG ((LM_DEBUG, "got %c, which is unrecognized!\n", c));
 	break;
       }
 
-  for (int i = get_opt.optind; i < argc; i++)
+  for (int i = get_opt.opt_ind (); i < argc; i++)
     ACE_DEBUG ((LM_DEBUG, "optind = %d, argv[optind] = %s\n",
 		i, argv[i]));
 

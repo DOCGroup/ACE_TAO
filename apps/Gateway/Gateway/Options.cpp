@@ -183,7 +183,7 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become an Acceptor.
 
-            for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
               if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
@@ -210,7 +210,7 @@ Options::parse_args (int argc, char *argv[])
           break;
         case 'C': // Use a different proxy config filename.
           ACE_OS::strncpy (this->consumer_config_file_,
-                           get_opt.optarg,
+                           get_opt.opt_arg (),
                            sizeof this->consumer_config_file_
                              / sizeof (ACE_TCHAR));
           break;
@@ -218,7 +218,7 @@ Options::parse_args (int argc, char *argv[])
           {
             // Become a Connector.
 
-            for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
               if (ACE_OS::strncasecmp (flag, "C", 1) == 0)
@@ -246,15 +246,15 @@ Options::parse_args (int argc, char *argv[])
           break;
         case 'P': // Use a different connection config filename.
           ACE_OS::strncpy (this->connection_config_file_,
-                           get_opt.optarg,
+                           get_opt.opt_arg (),
                            sizeof this->connection_config_file_);
           break;
         case 'q': // Use a different socket queue size.
-          this->socket_queue_size_ = ACE_OS::atoi (get_opt.optarg);
+          this->socket_queue_size_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 't': // Use a different threading strategy.
           {
-            for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+            for (char *flag = ACE_OS::strtok (get_opt.opt_arg (), "|");
                  flag != 0;
                  flag = ACE_OS::strtok (0, "|"))
               if (ACE_OS::strcmp (flag, "OUTPUT_MT") == 0)
@@ -270,7 +270,7 @@ Options::parse_args (int argc, char *argv[])
                         Options::VERBOSE);
           break;
         case 'w': // Time performance for a designated amount of time.
-          this->performance_window_ = ACE_OS::atoi (get_opt.optarg);
+          this->performance_window_ = ACE_OS::atoi (get_opt.opt_arg ());
           // Use blocking connection semantics so that we get accurate
           // timings (since all connections start at once).
           this->blocking_semantics_ = 0;

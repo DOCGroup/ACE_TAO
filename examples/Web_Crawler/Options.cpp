@@ -35,27 +35,27 @@ Options::parse_args (int argc, char *argv[])
         this->debug_ = 1;
         break;
       case 'f':
-        this->url_filter_ = getopt.optarg;
+        this->url_filter_ = getopt.opt_arg ();
         break;
       case 'h':
-        this->hostname_ = getopt.optarg;
+        this->hostname_ = getopt.opt_arg ();
         break;
       case 'i':
-        this->uri_ = getopt.optarg;
+        this->uri_ = getopt.opt_arg ();
         break;
       case 'l':
-        this->handle_limit_ = ACE_OS::atoi (getopt.optarg);
+        this->handle_limit_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'r':
         this->recurse_ = 1;
         break;
       case 't':
-        this->timeout_.sec (ACE_OS::atoi (getopt.optarg));
+        this->timeout_.sec (ACE_OS::atoi (getopt.opt_arg ()));
         break;
       case 'u':
         {
-          this->hostname_ = getopt.optarg;
-          char *s = ACE_OS::strchr (getopt.optarg, '/');
+          this->hostname_ = getopt.opt_arg ();
+          char *s = ACE_OS::strchr (getopt.opt_arg (), '/');
           if (s != 0)
             {
               this->uri_ = s + 1;
@@ -64,7 +64,7 @@ Options::parse_args (int argc, char *argv[])
           else
             ACE_ERROR ((LM_ERROR,
                         "invalid URL %s\n",
-                        getopt.optarg));
+                        getopt.opt_arg ()));
         }
         break;
       case 'v':
@@ -72,11 +72,11 @@ Options::parse_args (int argc, char *argv[])
         break;
       case 'o':
         {
-        this->order_ = getopt.optarg;
+        this->order_ = getopt.opt_arg ();
         }
         break;
       case 'p':
-        this->port_no_ = ACE_OS::atoi (getopt.optarg);
+        this->port_no_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       default:
         ACE_ERROR ((LM_ERROR,

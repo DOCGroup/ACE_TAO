@@ -52,7 +52,7 @@ Handle_Broadcast::init (int argc, char *argv[])
      switch (c)
        {
        case 'p': 
-	 sba.set (ACE_OS::atoi (get_opt.optarg));
+	 sba.set (ACE_OS::atoi (get_opt.opt_arg ()));
 	 break;
        default:
 	 break;

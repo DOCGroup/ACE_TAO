@@ -295,28 +295,28 @@ get_options (int argc, ACE_TCHAR *argv[])
       use_fork = 1;
       break;
     case 'h':
-      if (ACE_OS::atoi (get_opt.optarg) >= 2)
-        high_iterations = ACE_OS::atoi (get_opt.optarg);
+      if (ACE_OS::atoi (get_opt.opt_arg ()) >= 2)
+        high_iterations = ACE_OS::atoi (get_opt.opt_arg ());
       else
         ACE_ERROR_RETURN ((LM_ERROR, "%n: high iterations must be >= 2\n"),
                           -1);
       break;
     case 'l':
-      if (ACE_OS::atoi (get_opt.optarg) >= 2)
-        low_iterations = ACE_OS::atoi (get_opt.optarg);
+      if (ACE_OS::atoi (get_opt.opt_arg ()) >= 2)
+        low_iterations = ACE_OS::atoi (get_opt.opt_arg ());
       else
         ACE_ERROR_RETURN ((LM_ERROR, "%n: low iterations must be >= 2\n"), -1);
       break;
     case 'n':
-      if (ACE_OS::atoi (get_opt.optarg) >= 1)
-        high_priority_tasks = ACE_OS::atoi (get_opt.optarg);
+      if (ACE_OS::atoi (get_opt.opt_arg ()) >= 1)
+        high_priority_tasks = ACE_OS::atoi (get_opt.opt_arg ());
       else
         ACE_ERROR_RETURN ((LM_ERROR, "%n: number of high priority threads "
                            "must be >= 1\n"), -1);
       break;
     case 'p':
-      if (ACE_OS::atoi (get_opt.optarg) > 0)
-        read_period = ACE_OS::atoi (get_opt.optarg);
+      if (ACE_OS::atoi (get_opt.opt_arg ()) > 0)
+        read_period = ACE_OS::atoi (get_opt.opt_arg ());
       else
         ACE_ERROR_RETURN ((LM_ERROR, "%n: read period > 0\n"), -1);
       break;
@@ -333,7 +333,7 @@ get_options (int argc, ACE_TCHAR *argv[])
     }
   }
 
-  switch (argc - get_opt.optind) {
+  switch (argc - get_opt.opt_ind ()) {
   case 0:
     // OK, no non-flag arguments.
     break;
