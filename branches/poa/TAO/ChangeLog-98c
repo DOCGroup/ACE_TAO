@@ -1,3 +1,26 @@
+Thu Jan  8 13:20:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/ast/Makefile: 
+	* TAO_IDL/be/Makefile: 
+	  Added ast_native and be_native to the list of files.
+
+	* TAO_IDL/be_include/be_native.h: 
+	* TAO_IDL/be/be_native.cpp: 
+	* TAO_IDL/be_include/be_visitor.h: 
+	* TAO_IDL/be/be_visitor.cpp: 
+	  Added support for visiting be_native.
+
+	* TAO_IDL/be_include/be_visitor_args.h: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  Added support for native and improved the implementation.
+
+	* TAO_IDL/fe/y.tab.cpp: 
+	  Removed some includes and pragmas that cause trouble on NT.
+
+	* TAO_IDL/be/be_type.cpp: 
+	  Print an error if the default implementation for write_as_return
+	  is called.
+
 Thu Jan  8 12:53:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/corbacom.i (wstring_dup): Added this, which simply calls

@@ -49,186 +49,225 @@ int be_visitor_args_decl::visit_argument (be_argument *node)
 
   // Different types have different mappings when used as in/out or
   // inout parameters.
-  // IMHO those should be methods on the type, reducing the amount of
-  // switching just to the IN/OUT/INOUT on each type
-  // @@ TODO.
 
-  // LEVEL (1) switch on node type of the "type"
-  switch (type->base_node_type ())
-    {
-    case AST_Decl::NT_interface: // type is an obj reference
-    case AST_Decl::NT_interface_fwd: // type is an obj reference
-      {
-        switch (node->direction ())
-          {
-          case AST_Argument::dir_IN:
-	    this->stream () << type->name () << "_ptr ";
-	    break;
-          case AST_Argument::dir_INOUT: // inout
-	    this->stream () << type->name () << "_ptr &";
-            break;
-          case AST_Argument::dir_OUT:
-	    this->stream () << type->name () << "_out ";
-            break;
-          }
-      }
-      break;
-    case AST_Decl::NT_pre_defined: // type is predefined type
-      {
-	// @@ TODO This should be handled in a generic way, either:
-	// 1. Use another visitor to dump the types (this is the
-	// preferred method)
-	// 2. Add a method to be_type to dump each one as an
-	// argument).
-	//
-        be_predefined_type *bpd;
-	if (type->node_type () == AST_Type::NT_typedef)
-	  {
-	    be_typedef *td = 
-	      be_typedef::narrow_from_decl (type);
-	    bpd = be_predefined_type::narrow_from_decl
-	      (td->primitive_base_type ());
-	  }
-	else
-	  {
-	    bpd = be_predefined_type::narrow_from_decl (type);
-	  }
+  this->argument_direction_ = node->direction ();
 
-        // check if the type is an any
-        if (bpd->pt () == AST_PredefinedType::PT_any)
-          {
-            switch (node->direction ())
-              {
-              case AST_Argument::dir_IN:
-		this->stream () << "const " << type->name () << " &";
-		break;
-              case AST_Argument::dir_INOUT:
-		this->stream () << type->name () << " &";
-                break;
-              case AST_Argument::dir_OUT:
-		this->stream () << type->name () << "_out ";
-                break;
-              } // end switch direction
-          } // end of if
-        else if (bpd->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
-          {
-            switch (node->direction ())
-              {
-              case AST_Argument::dir_IN:
-		this->stream () << type->name () << "_ptr ";
-                break;
-              case AST_Argument::dir_INOUT:
-		this->stream () << type->name () << "_ptr &";
-		  ", ";
-                break;
-              case AST_Argument::dir_OUT:
-		this->stream () << type->name () << "_out ";
-                break;
-              } // end switch direction
-          } // end else if
-        else // simple predefined types
-          {
-            switch (node->direction ())
-              {
-              case AST_Argument::dir_IN:
-		this->stream () << type->name ();
-                break;
-              case AST_Argument::dir_INOUT:
-		this->stream () << type->name () << " &";
-                break;
-              case AST_Argument::dir_OUT:
-		this->stream () << type->name () << "_out ";
-                break;
-              } // end switch direction
-          } // end of else
-      } // end of case predefined
-      break;
-    case AST_Decl::NT_string: // type is a string
-      {
-        switch (node->direction ())
-          {
-          case AST_Argument::dir_IN:
-	    this->stream () << "const ";
-	    if (type->node_type () == AST_Decl::NT_typedef)
-	      this->stream () << type->name ();
-	    else
-	      this->stream () << "char *";
-	    break;
-          case AST_Argument::dir_INOUT:
-	    if (type->node_type () == AST_Decl::NT_typedef)
-	      this->stream () << type->name ();
-	    else
-	      this->stream () << "char *";
-            break;
-          case AST_Argument::dir_OUT:
-	    if (type->node_type () == AST_Decl::NT_typedef)
-	      this->stream () << type->name () << "_out";
-	    else
-	      this->stream () << "CORBA::String_out";
-            break;
-          } // end switch direction
-      } // end case string
-      break;
-    case AST_Decl::NT_array: // type is an array
-      switch (node->direction ())
-        {
-        case AST_Argument::dir_IN:
-	  this->stream () << "const " << type->name ();
-          break;
-        case AST_Argument::dir_INOUT:
-	  this->stream () << type->name ();
-	  if (type->size_type () == be_decl::VARIABLE)
-	    {
-	      this->stream () << "_slice *";
-	    }
-          break;
-        case AST_Argument::dir_OUT:
-	  this->stream () << type->name () << "_out";
-	  break;
-        } // end of switch direction
-      break;
-    case AST_Decl::NT_sequence: // type is a sequence
-    case AST_Decl::NT_struct: // type is a struct
-    case AST_Decl::NT_union: // type is a union
-      switch (node->direction ())
-        {
-        case AST_Argument::dir_IN:
-	  this->stream () << "const " << type->name () << " &";
-          break;
-        case AST_Argument::dir_INOUT:
-	  this->stream () << type->name () << " &";
-          break;
-        case AST_Argument::dir_OUT:
-	  this->stream () << type->name () << "_out";
-          break;
-        } // end switch direction
-      break;
-    case AST_Decl::NT_enum: // type is an enum
-      switch (node->direction ())
-        {
-        case AST_Argument::dir_IN:
-	  this->stream () << type->name ();
-          break;
-        case AST_Argument::dir_INOUT:
-	  this->stream () << type->name () << " &";
-          break;
-        case AST_Argument::dir_OUT:
-	  this->stream () << type->name () << "_out";
-          break;
-        } // end switch direction
-      break;
-    case AST_Decl::NT_except: // type is an exception
-      {
-        // XXXASG TODO: is this allowed ???
-      }
-      break;
-    case AST_Decl::NT_typedef: // type is a typedef
-      {
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "base_node_type cannot be typedef\n"), -1);
-      } // end of case
-      break;
-    } //end switch node type
+  // Use the actual type name, not the name for the node, this is
+  // useful for typedefs where the typedef name must be used, but the
+  // base type mapping rules must apply.
+  this->current_type_name_ = type->name ();
+
+  type->accept (this);
+
   this->stream () << " " << node->local_name () << ",\n";
+  return 0;
+}
+
+int be_visitor_args_decl::visit_predefined_type (be_predefined_type *node)
+{
+  // check if the type is an any
+  if (node->pt () == AST_PredefinedType::PT_any)
+    {
+      switch (this->argument_direction_)
+	{
+	case AST_Argument::dir_IN:
+	  this->stream () << "const " << node->name () << " &";
+	  break;
+	case AST_Argument::dir_INOUT:
+	  this->stream () << node->name () << " &";
+	  break;
+	case AST_Argument::dir_OUT:
+	  this->stream () << node->name () << "_out ";
+	  break;
+	} // end switch direction
+    } // end of if
+  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
+    {
+      switch (this->argument_direction_)
+	{
+	case AST_Argument::dir_IN:
+	  this->stream () << node->name () << "_ptr ";
+	  break;
+	case AST_Argument::dir_INOUT:
+	  this->stream () << node->name () << "_ptr &";
+	  break;
+	case AST_Argument::dir_OUT:
+	  this->stream () << node->name () << "_out ";
+	  break;
+	} // end switch direction
+    } // end else if
+  else // simple predefined types
+    {
+      switch (this->argument_direction_)
+	{
+	case AST_Argument::dir_IN:
+	  this->stream () << node->name ();
+	  break;
+	case AST_Argument::dir_INOUT:
+	  this->stream () << node->name () << " &";
+	  break;
+	case AST_Argument::dir_OUT:
+	  this->stream () << node->name () << "_out ";
+	  break;
+	} // end switch direction
+    } // end of else
+
+  return 0;
+}
+
+int be_visitor_args_decl::visit_interface (be_interface *)
+{
+  return this->dump_interface ();
+}
+
+int be_visitor_args_decl::visit_interface_fwd (be_interface_fwd *)
+{
+  return this->dump_interface ();
+}
+
+int be_visitor_args_decl::dump_interface (void) const
+{
+  switch (this->argument_direction_)
+    {
+    case AST_Argument::dir_IN:
+      this->stream () << this->current_type_name_ << "_ptr ";
+      break;
+    case AST_Argument::dir_INOUT: // inout
+      this->stream () << this->current_type_name_ << "_ptr &";
+      break;
+    case AST_Argument::dir_OUT:
+      this->stream () << this->current_type_name_ << "_out ";
+      break;
+    }
+  return 0;
+}
+
+int be_visitor_args_decl::visit_structure (be_structure *)
+{
+  return this->dump_structure ();
+}
+
+int be_visitor_args_decl::dump_structure () const
+{
+  switch (this->argument_direction_)
+    {
+    case AST_Argument::dir_IN:
+      this->stream () << "const " << this->current_type_name_ << " &";
+      break;
+    case AST_Argument::dir_INOUT:
+      this->stream () << this->current_type_name_ << " &";
+      break;
+    case AST_Argument::dir_OUT:
+      this->stream () << this->current_type_name_ << "_out";
+      break;
+    }
+  return 0;
+}
+
+int be_visitor_args_decl::visit_enum (be_enum *node)
+{
+  switch (this->argument_direction_)
+    {
+    case AST_Argument::dir_IN:
+      this->stream () << node->name ();
+      break;
+    case AST_Argument::dir_INOUT:
+      this->stream () << node->name () << " &";
+      break;
+    case AST_Argument::dir_OUT:
+      this->stream () << node->name () << "_out";
+      break;
+    }
+  return 0;
+}
+
+int be_visitor_args_decl::visit_union (be_union *node)
+{
+  return this->dump_structure ();
+}
+
+int be_visitor_args_decl::visit_array (be_array *node)
+{
+  switch (this->argument_direction_)
+    {
+    case AST_Argument::dir_IN:
+      this->stream () << "const " << this->current_type_name_;
+      break;
+    case AST_Argument::dir_INOUT:
+      this->stream () << this->current_type_name_;
+      if (node->size_type () == be_decl::VARIABLE)
+	{
+	  this->stream () << "_slice *";
+	}
+      break;
+    case AST_Argument::dir_OUT:
+      this->stream () << this->current_type_name_ << "_out";
+      break;
+    }
+  return 0;
+}
+
+int be_visitor_args_decl::visit_sequence (be_sequence *node)
+{
+  return this->dump_structure ();
+}
+
+int be_visitor_args_decl::visit_string (be_string *node)
+{
+  if (this->current_type_name_ == node->name ())
+    {
+      // Strings have special mapping, the <name> returned by
+      // be_string is not useful for this.
+
+      switch (this->argument_direction_)
+	{
+	case AST_Argument::dir_IN:
+	  this->stream () << "const char*";
+	  break;
+	case AST_Argument::dir_INOUT:
+	  this->stream () << "char*";
+	  break;
+	case AST_Argument::dir_OUT:
+	  this->stream () << "CORBA::String_out";
+	  break;
+	}
+    }
+  else
+    {
+      switch (this->argument_direction_)
+	{
+	case AST_Argument::dir_IN:
+	  this->stream () << "const " << this->current_type_name_;
+	  break;
+	case AST_Argument::dir_INOUT:
+	  this->stream () << this->current_type_name_;
+	  break;
+	case AST_Argument::dir_OUT:
+	  this->stream () << this->current_type_name_ << "_out";
+	  break;
+	}
+    }
+  return 0;
+}
+
+int be_visitor_args_decl::visit_typedef (be_typedef *node)
+{
+  return node->primitive_base_type ()->accept (this);
+}
+
+int be_visitor_args_decl::visit_native (be_native *node)
+{
+  switch (this->argument_direction_)
+    {
+    case AST_Argument::dir_IN:
+      this->stream () << this->current_type_name_;
+      break;
+    case AST_Argument::dir_INOUT:
+      this->stream () << this->current_type_name_ << " &";
+      break;
+    case AST_Argument::dir_OUT:
+      this->stream () << this->current_type_name_ << " &";
+      break;
+    }
   return 0;
 }

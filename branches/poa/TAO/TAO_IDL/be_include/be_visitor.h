@@ -30,6 +30,7 @@ class be_sequence;
 class be_string;
 class be_typedef;
 class be_root;
+class be_native;
 
 class be_visitor
 {
@@ -71,6 +72,7 @@ public:
   virtual int visit_string (be_string *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_root (be_root *node);
+  virtual int visit_native (be_native *node);
 };
 
 #endif // _BE_VISITOR_H

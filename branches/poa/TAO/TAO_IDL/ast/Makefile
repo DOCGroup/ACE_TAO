@@ -27,6 +27,7 @@ AST_FILES	= \
 		ast_interface \
 		ast_interface_fwd \
 		ast_module \
+		ast_native \
 		ast_operation \
 		ast_predefined_type \
 		ast_root \

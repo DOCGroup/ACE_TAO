@@ -155,3 +155,8 @@ int be_visitor::visit_root (be_root *)
 {
   return 0;
 }
+
+int be_visitor::visit_native (be_native *)
+{
+  return 0;
+}

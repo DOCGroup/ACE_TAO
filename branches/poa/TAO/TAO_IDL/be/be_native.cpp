@@ -83,6 +83,20 @@ be_native::tc_size (void)
   return 0;
 }
 
+int
+be_native::write_as_return (TAO_OutStream *stream,
+			       be_type *type)
+{
+  *stream << type->name ();
+  return 0;
+}
+
+int
+be_native::accept (be_visitor *visitor)
+{
+  return visitor->visit_native (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2(be_native, AST_Native, be_type)
 IMPL_NARROW_FROM_DECL(be_native)
