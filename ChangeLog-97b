@@ -2,7 +2,10 @@ Tue Nov 18 05:40:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: add -DACE_PURIFY to
           CFLAGS if purify make flag is set, and -DACE_QUANTIFY if
-          quantify is set.
+          quantify is set.  Thanks to Chris Cleeland for this suggestion.
+
+        * ace/Memory_Pool.cpp (ACE_Shared_Memory_Pool): reordered
+          initializers to match declaration order.
 
 Tue Nov 18 00:11:26 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
