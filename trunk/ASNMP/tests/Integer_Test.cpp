@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
  
 // ============================================================================
@@ -43,6 +42,8 @@ DAMAGES.
 #include "ace/OS.h"
 #include "asnmp/integer.h"
 #include "test_config.h"
+
+ACE_RCSID(tests, Integer_Test, "$Id$")
 
 static long l = LONG_MAX, nl = LONG_MIN;  // limits.h
 static unsigned long ul = ULONG_MAX, def = 0;

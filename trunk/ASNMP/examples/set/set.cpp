@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -36,6 +35,8 @@
 
 #include "asnmp/snmp.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(set, set, "$Id$")
 
 //
 // SNMPv1 Set Application

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
  
 // ============================================================================
@@ -42,6 +41,8 @@ DAMAGES.
  
 #include "asnmp/address.h"
 #include "test_config.h"
+
+ACE_RCSID(tests, Address_Test, "$Id$")
 
 // hack: do this so when linking SUNC 4.x compiler will instantiate template
 #include "ace/Containers.h"

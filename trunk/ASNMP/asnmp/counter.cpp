@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -33,6 +32,8 @@
 =====================================================================*/
 
 #include "asnmp/counter.h"
+
+ACE_RCSID(asnmp, counter, "$Id$")
 
 // constructor with a value
 Counter32::Counter32( const unsigned long i):SnmpUInt32(i)

@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -35,6 +34,8 @@
 
 #include "asnmp/snmp.h"
 #include "asnmp/pdu.h"       // include Pdu class definition
+
+ACE_RCSID(asnmp, pdu, "$Id$")
 
 //=====================[ constructor no args ]=========================
 Pdu::Pdu( void): vb_count_(0), error_status_(0), error_index_(0), 

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // This server daemon processes SNMPv1 requests over MIB II System group 
@@ -7,6 +6,8 @@
 #include "agent_impl.h"  // actual implementation
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
+
+ACE_RCSID(agent, snmp_agent, "$Id$")
 
 // module globals 
 #define SNMP_AGENT_PORT (161)

@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -38,6 +37,8 @@
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h" // enterprise standard traps
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(trap, trap, "$Id$")
 
 //
 // SNMPv1 Trap Application

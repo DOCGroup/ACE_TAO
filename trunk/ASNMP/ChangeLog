@@ -1,3 +1,43 @@
+Fri Jul 31 19:26:07 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* examples/Makefile: 
+	It had a missing info subdirectory.
+	
+	* agent/agent_impl.cpp: 
+	* agent/main.cpp: 
+	* agent/snmp_agent.cpp: 
+	* asnmp/address.cpp: 
+	* asnmp/asn1.cpp: 
+	* asnmp/counter.cpp: 
+	* asnmp/ctr64.cpp: 
+	* asnmp/gauge.cpp: 
+	* asnmp/integer.cpp: 
+	* asnmp/octet.cpp: 
+	* asnmp/oid.cpp: 
+	* asnmp/pdu.cpp: 
+	* asnmp/sagent.cpp: 
+	* asnmp/snmp.cpp: 
+	* asnmp/target.cpp: 
+	* asnmp/timetick.cpp: 
+	* asnmp/transaction.cpp: 
+	* asnmp/vb.cpp: 
+	* asnmp/wpdu.cpp: 
+	* examples/get/get.cpp: 
+	* examples/next/next.cpp: 
+	* examples/set/set.cpp: 
+	* examples/trap/trap.cpp: 
+	* examples/walk/walk.cpp: 
+	* tests/Address_Test.cpp: 
+	* tests/Counter64_Test.cpp: 
+	* tests/Counter_Test.cpp: 
+	* tests/Gauge_Test.cpp: 
+	* tests/Integer_Test.cpp: 
+	* tests/Octet_Test.cpp: 
+	* tests/Oid_Test.cpp: 
+	* tests/Target_Test.cpp: 
+	* tests/Varbind_Test.cpp: 
+	Added ACE_RCSID to these files.
+
 Wed Jul 15 20:34:55 CDT 1998
    * general fixes for SNMPv1 trap generation code reported by
      Hien Nguyen <hnguyen@adcapex.com> and Jeff Hall <jeff@liffe.com> 

@@ -1,11 +1,11 @@
-/* -*-C++-*- */
 // $Id$
 
 // This server daemon processes SNMP Version 1 get, get-next, and set
 // commands. over the MIB II "System" group only.
-//
 
 #include "snmp_agent.h"
+
+ACE_RCSID(agent, main, "$Id$")
 
 int main (int argc, char *argv[])
 {

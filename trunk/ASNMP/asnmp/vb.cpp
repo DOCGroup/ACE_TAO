@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -40,6 +39,8 @@
 #include "asnmp/oid.h"	       // include oid class defs
 #include "asnmp/vb.h"		       // include vb class defs
 #include "asnmp/snmperrs.h"      // error codes
+
+ACE_RCSID(asnmp, vb, "$Id$")
 
 //---------------[ Vb::Vb( void) ]--------------------------------------
 // constructor with no arguments
