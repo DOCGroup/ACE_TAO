@@ -11,6 +11,18 @@
 # include "tao/Server_Request.i"
 #endif /* ! __ACE_INLINE__ */
 
+const char *TAO_Server_Request_Timeprobe_Description[] = 
+{ 
+  "Server_Request::Server_Request - start",
+  "Server_Request::Server_Request - end",
+};
+
+enum 
+{
+  TAO_SERVER_REQUEST_START = 400,
+  TAO_SERVER_REQUEST_END,
+};
+
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,
 0x77420086, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
@@ -57,7 +69,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
     object_key_ (),
     requesting_principal_ (0)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_REQUEST_HEADER_INIT_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
 
   CORBA::Boolean hdr_status;
 

@@ -1,5 +1,7 @@
 Tue May 26 00:35:49 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tests/Timeprobe_Test.cpp: Added new test.
+
 	* ace/Timeprobe: Added the ability to have multiple event tables
  	  for time probes. Multiple maps can be used to chunk up the time
  	  probes.  Each one can be added by calling event_descriptions().
