@@ -1,3 +1,13 @@
+Fri Apr 16 16:32:32 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (parse_args):
+
+	  ptrdiff_t is a signed type, so use the
+	  ACE_INT64_FORMAT_SPECIFIER instead of its unsigned counterpart
+	  when reading a value into a ptrdiff_t variable via sscanf().
+	  Fixes a g++ warning regarding mismatched format specifiers and
+	  corresponding arguments in 64 bit platform builds.
+
 Fri Apr 16 10:28:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RTPortableServer.h:
