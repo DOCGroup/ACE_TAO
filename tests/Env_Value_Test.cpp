@@ -61,7 +61,7 @@ main (int argc, char *[])
             { \
               ACE_ERROR ((LM_ERROR, \
                           "val %u does not match expected value of %u\n", \
-                          (u_int) val, (u_int) (expval))); \
+                          (u_int) (type) val, (u_int) (expval))); \
             } \
           ACE_ASSERT (val == (expval)); \
         } \
