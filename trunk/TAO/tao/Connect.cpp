@@ -148,7 +148,7 @@ TAO_Server_Connection_Handler::activate (long flags,
                                          size_t stack_size[],
                                          ACE_thread_t  thread_names[])
 {
-  if (TAO_orbdebug) 
+  if (TAO_orbdebug)
     {
       ACE_DEBUG  ((LM_DEBUG,
                    "(%P|%t) TAO_Server_Connection_Handler::activate %d threads, flags = %d\n",
@@ -636,8 +636,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                           "but client is not waiting a response\n"));
               ACE_TRY_ENV.print_exception ("");
             }
-          //          this->handle_close ();
-          result = -1;
+
+          // It is unfotunate that an exception (probably a system
+          // exception) was thrown by the upcall code (even by the
+          // user) when the client was not expecting a response.
+          // However, in this case, we cannot close the connection
+          // down, since it really isn't the client's fault.
+          result = 0;
         }
       return result;
     }
