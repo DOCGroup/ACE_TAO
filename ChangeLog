@@ -1,3 +1,9 @@
+Wed May 24 10:08:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * THANKS:
+          Added Pedro Brandao <pbrandao@inescn.pt> name for his additions
+          to support ATM for Linux.
+
 Wed May 24 10:01:26 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Acceptor.{h,i,cpp}
