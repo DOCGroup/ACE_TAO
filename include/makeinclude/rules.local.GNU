@@ -191,9 +191,9 @@ realclean.local: clean.local
 #       Dependency generation target
 #----------------------------------------------------------------------------
 
-ifndef MAKEFILE
-  MAKEFILE=Makefile
-endif # MAKEFILE
+ifeq ($(MAKEFILE),)
+  MAKEFILE = Makefile
+endif # ! MAKEFILE
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
