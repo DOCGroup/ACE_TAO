@@ -534,17 +534,14 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
                                      env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  ACE_NEW_RETURN (this->stream_endpoint_,
-                  T_StreamEndpoint,
-                  -1);
+  if (this->make_stream_endpoint (this->stream_endpoint_) == -1)
+    return -1;
   
-  ACE_NEW_RETURN (this->vdev_,
-                  T_VDev,
-                  -1);
+  if (this->make_vdev (this->vdev_) == -1)
+    return -1;
   
-  ACE_NEW_RETURN (this->media_ctrl_,
-                  T_MediaCtrl,
-                  -1);
+  if (this->make_mediactrl (this->media_ctrl_) == -1)
+    return -1;
   
   this->orb_manager_.activate_under_child_poa ("Stream_Endpoint",
                                                this->stream_endpoint_,
@@ -711,14 +708,44 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_stream_endpoint (T_StreamEndpoint *&stream_endpoint)
+{
+  ACE_NEW_RETURN (stream_endpoint, 
+                  T_StreamEndpoint,
+                  -1);
+  return 0;
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_vdev (T_VDev *&vdev)
+{
+  ACE_NEW_RETURN (vdev, 
+                  T_VDev,
+                  -1);
+  return 0;
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_MediaCtrl *&media_ctrl)
+{
+  ACE_NEW_RETURN (media_ctrl, 
+                  T_MediaCtrl,
+                  -1);
+  return 0;
+}
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process ()
 {
-  if (this->stream_endpoint_ != 0)
-    delete this->stream_endpoint_;
-  if (this->vdev_ != 0)
-    delete this->vdev_;
-  if (this->media_ctrl_ != 0)
-    delete this->media_ctrl_;
+//  if (this->stream_endpoint_ != 0)
+//    delete this->stream_endpoint_;
+//  if (this->vdev_ != 0)      
+//    delete this->vdev_;      
+//  if (this->media_ctrl_ != 0)
+//    delete this->media_ctrl_;
 }
 
 // ----------------------------------------------------------------------
