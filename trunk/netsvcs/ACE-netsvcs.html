@@ -143,7 +143,7 @@ main through command line as follows:<P>
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--c &ltnaming context&gt <BR>
+-c &lt;naming context&gt; <BR>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Naming Context to use. Can be either "PROC_LOCAL" or "NODE_LOCAL" or
@@ -154,7 +154,7 @@ PROC_LOCAL
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--h &lthostname&gt
+-h &lt;hostname&gt;
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Specify the server hostname (needed by Name Server clients for
@@ -165,7 +165,7 @@ ACE_DEFAULT_SERVER_HOST
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--p &ltnameserver port&gt <BR>
+-p &lt;nameserver port&gt; <BR>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Port number where the server process expects requests <BR>
@@ -175,7 +175,7 @@ ACE_DEFAULT_SERVER_PORT
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--l &ltnamespace dir&gt <BR>
+-l &lt;namespace dir&gt; <BR>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Directory that holds the NameBinding databases <BR>
@@ -185,7 +185,7 @@ ACE_DEFAULT_NAMESPACE_DIR
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--P &ltprocess name&gt <BR>
+-P &lt;process name&gt; <BR>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Name of the client process
@@ -195,18 +195,18 @@ argv[0]
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--s &ltdatabase name&gt <BR>
+-s &lt;database name&gt; <BR>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Name of the database. NameBindings for the appropriate naming context
-are stored in file &ltnamespace_dir&gt/&ltdatabase name&gt.
+are stored in file &lt;namespace_dir&gt;/&lt;database name&gt;.
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 <I> null </I>
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--d &ltdebug&gt
+-d &lt;debug&gt;
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Turn debugging on/off
@@ -216,7 +216,7 @@ Turn debugging on/off
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--T &lttrace&gt
+-T &lt;trace&gt;
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Turn tracing on/off
@@ -226,7 +226,7 @@ Turn tracing on/off
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--v &ltverbose&gt
+-v &lt;verbose&gt;
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Turn verbose on/off
@@ -359,7 +359,7 @@ clerk and server services: <P>
 Configuring a server requires specifying the port number of the
 server. This can be specified as a command line argument as follows: <P>
 
-	-p &ltport number&gt
+	-p &lt;port number&gt;
 
 <P>
 A clerk communicates with one or more server processes. To communicate
@@ -368,7 +368,7 @@ the server offers its service. The configuration parameters namely the
 server port and server host are passed as command line arguments when
 starting up the clerk service as follows: <P>
 
-    -h &ltserver host1&gt:&ltserver port1&gt -h &ltserver host2&gt:&ltserver port2&gt ...
+    -h &lt;server host1&gt;:&lt;server port1&gt; -h &lt;server host2&gt;:&lt;server port2&gt; ...
 <P>
 Note that multiple servers can be specified in this manner for the
 clerk to connect to when it starts up. The server name and the port
@@ -688,7 +688,7 @@ through command line as follows:<P>
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--h &hostname&gt <BR>
+-h &lt;hostname&gt; <BR>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Hostname of the Server Logging Daemon <BR>
@@ -698,7 +698,7 @@ ACE_DEFAULT_SERVER_HOST
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--p &ltport number&gt
+-p &lt;port number&gt;
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Port number of the Server Logging Daemon <BR>
@@ -708,7 +708,7 @@ ACE_DEFAULT_LOGGING_SERVER_PORT
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
--p &ltrendezvous key&gt
+-p &lt;rendezvous key&gt;
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
 Rendezvous key used to create named pipe
@@ -771,7 +771,7 @@ Service:<p>
 Here are the command line arguments that can be given to the Logging
 Strategy Service: <P>
 
-    -f &ltflag1&gt|&ltflag2&gt|&ltflag3&gt    (etc...) <P>
+    -f &lt;flag1&gt;|&lt;flag2&gt;|&lt;flag3&gt;    (etc...) <P>
 
     where a flag can be any of the following: <P>
 
@@ -835,6 +835,16 @@ set and no filename is specified, ACE_DEFAULT_LOGFILE will be used to
 write the output to. <P>
 
 <LI> <B> Examples: </B> <P>
+      Here is an example svc.conf entry that dynamically loads the
+      Logging Strategy Service specifying that the output be sent 
+      to STDERR: <P>
+
+      <PRE> <CODE>
+      dynamic Logging_Strategy_Service Service_Object * 
+        ../lib/netsvcs:_make_ACE_Logging_Strategy() 
+        "-f STDERR"
+      </PRE></CODE>
+      <P>
 <OL>
 <LI> To direct output only to STDERR, specify command line arguments as: <P>
 	"-f STDERR"
