@@ -1,3 +1,12 @@
+Thu May 10 15:31:56 2001  Jeff Parsons  <parsons@cs.wustli.edu>
+
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao.IFR_CLient/diffs/IFR_ComponentsC.cpp.diff:
+          
+          Fixed repo ids of some base classes in _is_a
+          functions, that had been overlooked in the hand-crafting
+          process. Also regenerated the .diff file.  
+
 Thu May 10 14:12:42 2001  Jeff Parsons  <parsons@cs.wustli.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
