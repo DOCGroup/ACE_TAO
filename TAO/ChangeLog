@@ -1,3 +1,10 @@
+Sat Mar 29 20:04:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Server.dsp:
+	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.dsp: Fixed
+	  the release and debug configuratoins.
+
 Sat Mar 29 17:24:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile: Updated
