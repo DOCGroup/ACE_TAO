@@ -30,6 +30,28 @@
 #define ACE_MALLOC_ALIGN ((int) sizeof (long))
 #endif /* ACE_MALLOC_ALIGN */
 
+// States of a recyclable object.
+enum ACE_Recyclable_State
+{
+  ACE_RECYCLABLE_IDLE_AND_PURGABLE,
+  // Idle and can be purged.
+
+  ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE,
+  // Idle but cannot be purged.
+
+  ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE,
+  // Can be purged, but is not idle (mostly for debugging).
+
+  ACE_RECYCLABLE_BUSY = 2,
+  // Busy (i.e., cannot be recycled or purged).
+
+  ACE_RECYCLABLE_CLOSED = 3,
+  // Closed.
+
+  ACE_RECYCLABLE_UNKNOWN = 4
+  // Unknown state.
+};
+
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
 #define ACE_EBCDIC_SIZE 256
