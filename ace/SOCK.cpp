@@ -41,6 +41,7 @@ ACE_SOCK::get_remote_addr (ACE_Addr &sa) const
     return -1;
   
   sa.set_size (len);
+  sa.set_type (addr->sa_family);
   return 0;
 }
 

@@ -1,3 +1,14 @@
+(IPv6 changes) Tue Sep 25 15:24:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram.cpp (open): Use the local address or the IPv6-enabled
+          indicator to decide which protocol family to open the socket with.
+
+        * ace/SOCK.cpp (get_remote_addr): Reset the ACE_Addr's type, as
+          well as size, after learning the remote address.
+
+        * ace/SOCK_Acceptor.cpp (accept): Reset the ACE_Addr's type, as
+          well as size, to properly pick up UNIX/IPv4/IPv6 addresss family.
+
 (IPv6 changes) Tue Sep 18 17:20:51 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.cpp: Clear the inet_addr_ union before setting
