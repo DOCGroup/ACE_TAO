@@ -1,3 +1,8 @@
+Wed Apr 24 11:17:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * PROBLEM-REPORT-FORM: Always ask for config.h and
+          platform_macros.GNU; not just on compilation issues.
+
 Wed Apr 24 07:56:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Future_Set.h:
