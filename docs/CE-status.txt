@@ -7,8 +7,8 @@
      simple conversion.  However, the tricky part here is, FILETIME is
      the total 100ns elapse since _1601_ (why the heck did Microsoft
      choose this time?) whereas POSIX timeval gives you the
-     accumulated time since 1970.  This leads to data overflow in
-     timeval struture which ACE uses internally for its
+     accumulated time in us since 1970.  This leads to data overflow
+     in timeval struture which ACE uses internally for its
      ACE_Time_Value.  This also confuses ACE_OS::ctime, which, under
      CE, is a home-brewed implementation, and corrupt the whole
      program image.  I don't know of a way to deal with this yet
