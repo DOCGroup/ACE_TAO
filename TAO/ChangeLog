@@ -1,3 +1,21 @@
+Fri Sep  3 13:55:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+
+	  Include "tao/SystemException.h" instead of "tao/Exception.h" to
+	  pull CORBA::SystemException class declaration.
+
+	* tao/IORManipulation/IORC.h:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/RTPortableServer/RTPortableServerC.h:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+
+          Removed "tao_" prefix from methods in the TAO traits templates
+          used in these sources, as was done to the other traits templates
+	  used throughout TAO.
+
 Fri Sep  3 13:42:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Acceptor_Registry.h (open):
