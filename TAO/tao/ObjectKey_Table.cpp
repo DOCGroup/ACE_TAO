@@ -165,3 +165,21 @@ TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 
   return 0;
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  // Instantiations for the Hash Map
+template class ACE_Less_Than<long>;
+template class ACE_RB_Tree <long,
+                            TAO::Refcounted_ObjectKey,
+                            ACE_Less_Than<long>,
+                            ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Less_Than<long>;
+#pragma instantiate ACE_RB_Tree <long,
+                                 TAO::Refcounted_ObjectKey,
+                                 ACE_Less_Than<long>,
+                                 ACE_Null_Mutex>;
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
