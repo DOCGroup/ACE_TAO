@@ -154,44 +154,7 @@ sub Build_Core ()
         }
     }
     if ($Build_LIB) {
-      if ($Use_MPC == 0) {
-        @core_list = ($ACE_ROOT."\\ace\\ace_lib.dsp",
-                      $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
-                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_BE_LIB.dsp",
-                      $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_FE_LIB.dsp",
-                      $ACE_ROOT."\\TAO\\TAO_IDL\\tao_idl_static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\TAO_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\PortableServer\\TAO_PortableServer_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\DynamicAny\\TAO_DynamicAny_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\IORManipulation\\TAO_IORManip_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\IORTable\\TAO_IORTable_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Messaging\\TAO_Messaging_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Strategies\\TAO_Strategies_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\RTCORBA\\TAO_RTCORBA_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\RTPortableServer\\TAO_RTPortableServer_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\Valuetype\\TAO_Valuetype_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\IORInterceptor\\TAO_IORInterceptor_Static.dsp",
-                      $ACE_ROOT."\\TAO\\tao\\ObjRefTemplate\\TAO_ObjRefTemplate_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\Svc_Utils_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNaming_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosProperty_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTrading_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\AV_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSched_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTSchedEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RTOLDEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosEvent_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosConcurrency_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLifeCycle_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNotification_Static.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\PortableGroup_Static.dsp",
-		      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Server_static.dsp");
-        }
-        else {
+      if ($Use_MPC == 1) {
         @core_list = ($ACE_ROOT."\\ace\\ace.dsp",
                       $ACE_ROOT."\\Kokyu\\Kokyu.dsp",
                       $ACE_ROOT."\\ACEXML\\parser\\parser\\ACEXML_Parser.dsp",
@@ -242,24 +205,12 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosLoadBalancing.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\IFRService.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\RT_Notification.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Service.dsp");
+                      $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Service.dsp",
+                      $ACE_ROOT."\\tests\Test_Output.dsp");
          } 
 
 
-      if ($Use_MPC == 0) {
-        foreach $c (@core_list) {
-            if ($Build_Debug) {
-                $Status = Build ($c, "ALL - Win32 Static Debug");
-                return if $Status != 0 && !$Ignore_errors;
-            }
-            if ($Build_Release) {
-                $Status = Build ($c, "ALL - Win32 Static Release");
-                return if $Status != 0 && !$Ignore_errors;
-            }
-        }
-      }
-      else
-      {
+      if ($Use_MPC == 1) {
         foreach $c (@core_list) {
             if ($Build_Debug) {
                 $Status = Build ($c, "ALL - Win32 Debug");
