@@ -1,3 +1,8 @@
+Thu Apr 02 16:23:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.i (dump): Also changed the method from HANDLE
+ 	  to ACE_HANDLE.
+
 Thu Apr  2 15:36:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Added
