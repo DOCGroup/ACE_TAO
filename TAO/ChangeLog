@@ -1,3 +1,11 @@
+Wed Sep 17 13:01:15 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+
+          Reordered base class constructors in the initialization section
+          of the copy constructor of valuetype skeleton classes to eliminate
+          compiler warnings.
+
 Wed Sep 17 12:34:02 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.h:
