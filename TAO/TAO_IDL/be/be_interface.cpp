@@ -610,7 +610,28 @@ be_interface:: gen_var_out_seq_decls (void)
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
-      << "typedef " << lname << " *" << lname << "_ptr;" << be_nl << be_nl
+      << "typedef " << lname << " *" << lname << "_ptr;";
+
+  *os << be_nl << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "struct " << be_global->stub_export_macro () << " TAO::Objref_Traits<"
+      << lname << ">" << be_nl
+      << "{" << be_idt_nl
+      << "static " << lname << "_ptr tao_duplicate (" 
+      << be_idt << be_idt_nl
+      << lname << "_ptr" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "static void tao_release (" << be_idt << be_idt_nl
+      << lname << "_ptr" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "static " << lname << "_ptr tao_nil (void);" << be_nl
+      << "static CORBA::Boolean tao_marshal (" << be_idt << be_idt_nl
+      << lname << "_ptr," << be_nl
+      << "TAO_OutputCDR &" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "};";
+
+  *os << be_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
       << lname << be_uidt_nl
