@@ -11,6 +11,11 @@ Thu Apr 17 16:33:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	  C/CFLAGS pieces are together in each platform file, so they're
 	  easier to find.)
 
+	* ace/Memory_Pool.cpp: fixed typos in ACE_MMAP_Memory_Pool_Options
+	  constructor declaration and initializer list.  In init_acquire,
+	  added cast of minimum_bytes_ to size_t to avoid signed/unsigned
+	  comparison.
+
 Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Name_Handler.h: Arrgh, there was still one more
