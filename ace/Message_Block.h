@@ -116,7 +116,7 @@ public:
 		     ACE_Lock *locking_strategy = 0,
 		     u_long priority = 0,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-                     const ACE_Time_Value & deadline_time = ACE_Time_Value::zero);
+                     const ACE_Time_Value & deadline_time = ACE_Time_Value::max);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -143,7 +143,7 @@ public:
 	    ACE_Lock *locking_strategy = 0,
 	    u_long priority = 0,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-            const ACE_Time_Value & deadline_time = ACE_Time_Value::zero);
+            const ACE_Time_Value & deadline_time = ACE_Time_Value::max);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
