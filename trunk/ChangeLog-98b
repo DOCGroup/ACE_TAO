@@ -1,3 +1,16 @@
+Thu Sep 24 22:31:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: hard-code the ACE_THR_PRI_* values on suns.
+          SunOS 5.6 could use sched_get_priority_min/max () for FIFO
+          and RR.  But for OTHER, it returns negative values, which
+          can't be used.  sched_get_priority_min/max () aren't
+          supported in SunOS 5.5.1.  It would really be helpful
+          if SunOS defined PRI_FIFO_MIN, etc., in sched.h, but
+          it doesn't, probably because its process scheduling is
+          so flexible.  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for helping to figure this
+          out.
+
 Thu Sep 24 17:54:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Asynch_IO.cpp:
