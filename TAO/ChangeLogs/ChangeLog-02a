@@ -1,9 +1,15 @@
+Fri Jan 21 08:39:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+          More #ifdefs to compile when CORBA messaging is disabled.
+
 Thu Jan 20 09:07:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Minimum CORBA does not provide the _non_existent() method, we
-	  disable the test in that case.
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Minimum CORBA does not provide the _non_existent() method, we
+          disable the test in that case.
 
 Thu Jan 20 07:11:16 2000  David L. Levine  <levine@cs.wustl.edu>
 

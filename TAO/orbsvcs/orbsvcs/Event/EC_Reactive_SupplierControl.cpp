@@ -34,12 +34,12 @@ TAO_EC_Reactive_SupplierControl::query_suppliers (
 {
   TAO_EC_SupplierAdmin *supplier_admin =
     this->event_channel_->supplier_admin ();
-      
+
   TAO_EC_SupplierAdmin::Busy_Lock &lock =
     supplier_admin->busy_lock ();
 
   ACE_GUARD (TAO_EC_SupplierAdmin::Busy_Lock, ace_mon, lock);
-  
+
   TAO_EC_SupplierAdmin::ConsumerSetIterator end =
     supplier_admin->end ();
   for (TAO_EC_SupplierAdmin::ConsumerSetIterator i =
@@ -127,13 +127,14 @@ TAO_EC_Reactive_SupplierControl::handle_timeout (
 int
 TAO_EC_Reactive_SupplierControl::activate (void)
 {
+#if defined (TAO_HAS_CORBA_MESSAGING)
   long id = this->reactor_->schedule_timer (&this->adapter_,
                                             0,
                                             this->rate_,
                                             this->rate_);
   if (id == -1)
     return -1;
-  
+
   ACE_TRY_NEW_ENV
     {
       // Get the PolicyCurrent object
@@ -167,6 +168,7 @@ TAO_EC_Reactive_SupplierControl::activate (void)
       return -1;
     }
   ACE_ENDTRY;
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   return 0;
 }
