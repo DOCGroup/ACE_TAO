@@ -95,7 +95,7 @@ main (int, char *[])
 	   n_threads,
 	   ACE_THR_FUNC (tester), 
 	   (void *) &args,
-	   THR_NEW_LWP,
+	   THR_NEW_LWP | THR_JOINABLE,
 	   ACE_DEFAULT_THREAD_PRIORITY,
 	   -1,
 	   0,
