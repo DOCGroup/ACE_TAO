@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "typecode.h"
 
-ACE_RCSID(Param_Test, typecode, "$Id$")
+ACE_RCSID (Param_Test,
+           typecode, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_TypeCode

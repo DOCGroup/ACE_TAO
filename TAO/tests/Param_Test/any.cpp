@@ -20,7 +20,9 @@
 #include "any.h"
 #include "tao/debug.h"
 
-ACE_RCSID(Param_Test, any, "$Id$")
+ACE_RCSID (Param_Test, 
+           any, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Any
@@ -52,7 +54,7 @@ Test_Any::dii_req_invoke (CORBA::Request *req ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("o1") <<= this->in_;
   req->add_inout_arg ("o2") <<= this->inout_;
-  req->add_out_arg ("o3");
+  req->add_out_arg ("o3") <<= this->out_.in ();
 
   req->set_return_type (CORBA::_tc_any);
 

@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "ub_str_seq.h"
 
-ACE_RCSID(Param_Test, ub_str_seq, "$Id$")
+ACE_RCSID (Param_Test,
+           ub_str_seq, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_String_Sequence

@@ -22,7 +22,9 @@
 
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 
-ACE_RCSID(Param_Test, except, "$Id$")
+ACE_RCSID (Param_Test, 
+           except, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Exception
