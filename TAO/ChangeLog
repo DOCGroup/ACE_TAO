@@ -1,5 +1,11 @@
+Thu Jan 22 10:29:03 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+
+          Added the missing PortableGroup_Simple_DS.idl file.
+
 Wed Jan 22  9:23:47 2004  Scott Harris <harris_s@ociweb.com>
-        * ChangeLog:
+
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/IFRService/Options.h:
         * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
@@ -7,10 +13,12 @@ Wed Jan 22  9:23:47 2004  Scott Harris <harris_s@ociweb.com>
         * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:
         * orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:
+
           Remove tabs and trailing spaces to conform to
           coding standards.
 
 Wed Jan 21 16:35:47 2004  Scott Harris <harris_s@ociweb.com>
+
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
         * orbsvcs/orbsvcs/IFRService/Options.h:
         * orbsvcs/orbsvcs/IFRService/Options.cpp:
