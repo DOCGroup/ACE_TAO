@@ -5,7 +5,7 @@
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
+#include "Config_Scheduler.h"
 
 int main (int argc, char *argv[])
 {

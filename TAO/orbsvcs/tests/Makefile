@@ -13,6 +13,11 @@ DIRS  =	Simple_Naming \
 	Event_Latency \
 	EC_Multiple \
 
+ifdef av
+## Add the implementation files 
+DIRS += AVStreams
+endif
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

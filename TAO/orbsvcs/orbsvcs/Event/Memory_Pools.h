@@ -101,4 +101,5 @@ public:
 #if defined (__ACE_INLINE__)
 #include "Memory_Pools.i"
 #endif /* __ACE_INLINE__ */
+
 #endif /* ACE_MEMORY_POOLS_H */
