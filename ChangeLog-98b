@@ -1,6 +1,6 @@
 Fri Nov 20 22:12:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Makefile: Added an entry for DLL {h,cpp}.
+	* ace/Makefile: Added an entry for DLL.{h,cpp}.
 
 Fri Nov 20 15:49:04 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
