@@ -1,3 +1,8 @@
+Fri Aug  1 21:48:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/IFRService/Container_i.cpp: Fixed a simple
+	  compiler in non-native exception builds.
+
 Fri Aug  1 20:11:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Scheduler_Factory.h:

@@ -1832,7 +1832,7 @@ TAO_Container_i::create_ext_value_i (
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
       const CORBA::ExtInitializerSeq &initializers
-      ACE_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
