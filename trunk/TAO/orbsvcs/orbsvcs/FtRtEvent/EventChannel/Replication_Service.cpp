@@ -9,11 +9,14 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/CDR.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_strings.h"
+
 
 ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
+
 
 namespace FTRTEC
 {
@@ -105,7 +108,7 @@ namespace FTRTEC
   void Replication_Service::become_primary()
   {
     TAO_FTRTEC::Log(3, "become_primary\n");
-   
+
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
 
