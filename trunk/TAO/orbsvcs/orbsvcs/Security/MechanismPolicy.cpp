@@ -17,14 +17,14 @@ TAO_MechanismPolicy::~TAO_MechanismPolicy (void)
 }
 
 CORBA::PolicyType
-TAO_MechanismPolicy::policy_type (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_MechanismPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return Security::SecMechanismPolicy;
+  return Security::SecMechanismsPolicy;
 }
 
 CORBA::Policy_ptr
-TAO_MechanismPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
+TAO_MechanismPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_MechanismPolicy *policy = 0;
@@ -41,13 +41,13 @@ TAO_MechanismPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_MechanismPolicy::destroy (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_MechanismPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::MechanismTypeList *
-TAO_MechanismPolicy::mechanisms (CORBA::Environment &ACE_TRY_ENV)
+TAO_MechanismPolicy::mechanisms (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Security::MechanismTypeList *mechs = 0;
