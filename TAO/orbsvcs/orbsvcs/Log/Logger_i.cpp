@@ -228,7 +228,7 @@ template class ACE_Hash_Map_Reverse_Iterator <const char *, Logger_i *, ACE_Null
 
 #pragma instantiate ACE_Hash_Map_Entry <const char *, Logger_i *>
 #pragma instantiate ACE_Hash_Map_Manager <const char *, Logger_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base <const char *, Logger_i *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base <const char *, Logger_i *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator <const char *, Logger_i *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator <const char *, Logger_i *, ACE_Null_Mutex>
 
