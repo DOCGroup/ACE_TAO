@@ -1,3 +1,9 @@
+Mon Feb  7 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Trading/run_test.pl:
+          When we can't start the Trading_Service, directly exit instead of
+          waiting another 20 seconds for a file that doesn't appear
+
 Mon Feb  7 13:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Connection_Timeout_Policy_i.h:
