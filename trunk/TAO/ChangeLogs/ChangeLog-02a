@@ -7,6 +7,7 @@ Wed Apr  4 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/IFR_Service/LocalInterfaceDef_i.cpp:
         * orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
         * orbsvcs/IFR_Service/ValueDef_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
 
           Added some new behavior introduced in CORBA 2.4.2.
 
