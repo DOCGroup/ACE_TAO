@@ -26,12 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:390
+// .\be\be_codegen.cpp:391
 
 #ifndef _TAO_IDL_ORIG_OCTETSEQS_H_
 #define _TAO_IDL_ORIG_OCTETSEQS_H_
 
 #include /**/ "ace/pre.h"
+
 #include "OctetSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -54,25 +55,16 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:49
 
 namespace POA_CORBA
 {
   
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:946
-
-#include "OctetSeqS_T.h"
-
-#if defined (__ACE_INLINE__)
-#include "OctetSeqS.i"
-#endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

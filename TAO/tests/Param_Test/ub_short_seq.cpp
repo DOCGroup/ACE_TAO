@@ -29,10 +29,10 @@ ACE_RCSID (Param_Test,
 
 Test_Short_Sequence::Test_Short_Sequence (void)
   : opname_ (CORBA::string_dup ("test_short_sequence")),
-    in_ (new Param_Test::Short_Seq),
-    inout_ (new Param_Test::Short_Seq),
-    out_ (new Param_Test::Short_Seq),
-    ret_ (new Param_Test::Short_Seq)
+    in_ (new CORBA::ShortSeq),
+    inout_ (new CORBA::ShortSeq),
+    out_ (new CORBA::ShortSeq),
+    ret_ (new CORBA::ShortSeq)
 {
 }
 
@@ -56,26 +56,26 @@ Test_Short_Sequence::dii_req_invoke (CORBA::Request *req
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
 
-  req->set_return_type (Param_Test::_tc_Short_Seq);
+  req->set_return_type (CORBA::_tc_ShortSeq);
 
   req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  Param_Test::Short_Seq *tmp;
+  CORBA::ShortSeq *tmp;
   req->return_value () >>= tmp;
-  this->ret_ = new Param_Test::Short_Seq (*tmp);
+  this->ret_ = new CORBA::ShortSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o2->value () >>= tmp;
-  this->inout_ = new Param_Test::Short_Seq (*tmp);
+  this->inout_ = new CORBA::ShortSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *o3->value () >>= tmp;
-  this->out_ = new Param_Test::Short_Seq (*tmp);
+  this->out_ = new CORBA::ShortSeq (*tmp);
 }
 
 int
@@ -104,9 +104,9 @@ Test_Short_Sequence::init_parameters (Param_Test_ptr
 int
 Test_Short_Sequence::reset_parameters (void)
 {
-  this->inout_ = new Param_Test::Short_Seq; // delete the previous ones
-  this->out_ = new Param_Test::Short_Seq;
-  this->ret_ = new Param_Test::Short_Seq;
+  this->inout_ = new CORBA::ShortSeq; // delete the previous ones
+  this->out_ = new CORBA::ShortSeq;
+  this->ret_ = new CORBA::ShortSeq;
   return 0;
 }
 
@@ -116,7 +116,7 @@ Test_Short_Sequence::run_sii_test (Param_Test_ptr objref
 {
   ACE_TRY
     {
-      Param_Test::Short_Seq_out out (this->out_.out ());
+      CORBA::ShortSeq_out out (this->out_.out ());
 
       this->ret_ = objref->test_short_sequence (this->in_.in (),
                                                 this->inout_.inout (),

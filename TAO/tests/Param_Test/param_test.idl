@@ -108,41 +108,36 @@ interface Param_Test
   PathSpec test_unbounded_struct_sequence (in PathSpec s1,
                                            inout PathSpec s2,
                                            out PathSpec s3);
-  typedef sequence<short> Short_Seq;
-
-  Short_Seq test_short_sequence (in Short_Seq s1,
-                                 inout Short_Seq s2,
-                                 out Short_Seq s3);
+  CORBA::ShortSeq test_short_sequence (in CORBA::ShortSeq s1,
+                                       inout CORBA::ShortSeq s2,
+                                       out CORBA::ShortSeq s3);
 
   typedef sequence<short,32> Bounded_Short_Seq;
   Bounded_Short_Seq test_bounded_short_sequence (in Bounded_Short_Seq s1,
                                                  inout Bounded_Short_Seq s2,
                                                  out Bounded_Short_Seq s3);
 
-  typedef sequence<long> Long_Seq;
-  Long_Seq test_long_sequence (in Long_Seq s1,
-                               inout Long_Seq s2,
-                               out Long_Seq s3);
+  CORBA::LongSeq test_long_sequence (in CORBA::LongSeq s1,
+                                     inout CORBA::LongSeq s2,
+                                     out CORBA::LongSeq s3);
 
   typedef sequence<long,32> Bounded_Long_Seq;
   Bounded_Long_Seq test_bounded_long_sequence (in Bounded_Long_Seq s1,
                                                inout Bounded_Long_Seq s2,
                                                out Bounded_Long_Seq s3);
 
-  typedef sequence<string> StrSeq;
-  StrSeq test_strseq (in StrSeq s1,
-                      inout StrSeq s2,
-                      out StrSeq s3);
+  CORBA::StringSeq test_strseq (in CORBA::StringSeq s1,
+                                inout CORBA::StringSeq s2,
+                                out CORBA::StringSeq s3);
 
   typedef sequence<string,32> Bounded_StrSeq;
   Bounded_StrSeq test_bounded_strseq (in Bounded_StrSeq s1,
                                       inout Bounded_StrSeq s2,
                                       out Bounded_StrSeq s3);
 
-  typedef sequence<wstring> WStrSeq;
-  WStrSeq test_wstrseq (in WStrSeq ws1,
-                        inout WStrSeq ws2,
-                        out WStrSeq ws3);
+  CORBA::WStringSeq test_wstrseq (in CORBA::WStringSeq ws1,
+                                  inout CORBA::WStringSeq ws2,
+                                  out CORBA::WStringSeq ws3);
 
   typedef sequence<wstring,32> Bounded_WStrSeq;
   Bounded_WStrSeq test_bounded_wstrseq (in Bounded_WStrSeq ws1,
@@ -169,11 +164,9 @@ interface Param_Test
                                              inout Bounded_Coffee_Mix s2,
                                              out Bounded_Coffee_Mix s3);
 
-
-  typedef sequence<any> AnySeq;
-  AnySeq test_anyseq (in AnySeq s1,
-                      inout AnySeq s2,
-                      out AnySeq s3);
+  CORBA::AnySeq test_anyseq (in CORBA::AnySeq s1,
+                             inout CORBA::AnySeq s2,
+                             out CORBA::AnySeq s3);
 
 /*  typedef sequence<any, 32> Bounded_AnySeq;
   Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
@@ -190,7 +183,7 @@ interface Param_Test
     boolean boole;
     DUMMY dummy2;
     short shrt;
-    StrSeq seq;
+    CORBA::StringSeq seq;
   };
 
   Var_Struct test_var_struct (in Var_Struct s1,
@@ -285,7 +278,7 @@ interface Param_Test
     case 4:
       string the_string;
     case 5:
-      Short_Seq the_sequence;
+      CORBA::ShortSeq the_sequence;
     case 6:
       any the_any;
     case 7:

@@ -65,16 +65,16 @@ private:
   char *opname_;
   // operation name
 
-  Param_Test::WStrSeq_var in_;
+  CORBA::WStringSeq_var in_;
   // in parameter
 
-  Param_Test::WStrSeq_var inout_;
+  CORBA::WStringSeq_var inout_;
   // inout parameter
 
-  Param_Test::WStrSeq_var out_;
+  CORBA::WStringSeq_var out_;
   // out parameter
 
-  Param_Test::WStrSeq_var ret_;
+  CORBA::WStringSeq_var ret_;
   // return value
 };
 

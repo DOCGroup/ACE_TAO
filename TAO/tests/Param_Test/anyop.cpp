@@ -307,9 +307,9 @@ main (int argc, char *argv[])
           {
             CORBA::ULong len = 3;
             CORBA::Any any;
-            Param_Test::Long_Seq *i = 0;
+            CORBA::LongSeq *i = 0;
             ACE_NEW_RETURN (i,
-                            Param_Test::Long_Seq (len),
+                            CORBA::LongSeq (len),
                             -1);
             i->length (len);
         
@@ -319,7 +319,7 @@ main (int argc, char *argv[])
               }
 
             any <<= *i;
-            Param_Test::Long_Seq *o;
+            CORBA::LongSeq *o;
 
             if (!(any >>= o)
                 || (*i)[0] != (*o)[0]
