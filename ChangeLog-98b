@@ -1,3 +1,9 @@
+Sun Aug 23 15:42:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Process.cpp: Put the warning on failure on exec
+	("ACE_Process::spawn (); exec failed: exiting!!!!\n") under
+	condition (ACE_Service_Config::debug_). 
+
 Sun Aug 23 11:12:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile: 
