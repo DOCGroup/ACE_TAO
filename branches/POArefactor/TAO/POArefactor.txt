@@ -1,3 +1,8 @@
+Wed Sep  8 08:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.{h,cpp,i}:
+          Zapped tss_resources, we don't need to store them
+
 Wed Sep  8 08:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.pidl:
