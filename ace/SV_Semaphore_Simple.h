@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/os_include/sys/os_stat.h"
 #include "ace/os_include/sys/os_ipc.h"
 #include "ace/os_include/sys/os_sem.h"
 #include "ace/Default_Constants.h"

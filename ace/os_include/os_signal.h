@@ -195,7 +195,7 @@ extern "C"
 #endif /* ACE_PSOS && !ACE_PSOSIM */
 
 #if defined (VXWORKS)
-#  define NSIG (_NSIGS + 1)
+#  define ACE_NSIG (_NSIGS + 1)
 #elif defined (__Lynx__)
    // LynxOS Neutrino sets NSIG to the highest-numbered signal.
 #  define ACE_NSIG (NSIG + 1)
