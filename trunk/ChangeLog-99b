@@ -1,3 +1,11 @@
+Thu Jul 15 22:42:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Message_Queue.h: (ACE_MESSAGE_QUEUE_DEFAULT_TYPE):
+	* ace/Future_Set.{h,cpp} (ACE_Future_Set): Typedef'ed the
+	  ACE_Message_Queue to ACE_MESSAGE_QUEUE_DEFAULT_TYPE and use the
+	  typedef'ed name in ACE_Future_Set's contstructor to get around a
+	  bug in vxworks' g++ compiler.
+
 Thu Jul 15 22:14:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Cached_Connect_Strategy_T.cpp
