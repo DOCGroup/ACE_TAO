@@ -24,6 +24,7 @@ OBJFILES = \
 	$(OBJDIR)\Security_Current_Impl.obj \
         $(OBJDIR)\Security_ORBInitializer.obj \
         $(OBJDIR)\Security_PolicyFactory.obj \
+	$(OBJDIR)\EstablishTrustPolicy.obj \
         $(OBJDIR)\QOPPolicy.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res

@@ -9,6 +9,7 @@ ACE_RCSID (Security,
 #include "orbsvcs/SecurityLevel2C.h"
 
 #include "QOPPolicy.h"
+#include "EstablishTrustPolicy.h"
 
 CORBA::Policy_ptr
 TAO_Security_PolicyFactory::create_policy (
@@ -50,11 +51,38 @@ TAO_Security_PolicyFactory::create_policy (
 
       return qop_policy;
     }
+
+  else if (type == Security::SecEstablishTrustPolicy)
+    {
+      Security::EstablishTrust *trust = 0;
+
+      // Extract the desired establishing of trust value from the
+      // given Any.
+      if (!(value >>= trust))
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          CORBA::Policy::_nil ());
+
+      TAO_EstablishTrustPolicy *trust_policy = 0;
+      ACE_NEW_THROW_EX (trust_policy,
+                        TAO_EstablishTrustPolicy (*trust),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+      return trust_policy;
+    }
+
   else if (type == Security::SecMechanismsPolicy
            || type == Security::SecInvocationCredentialsPolicy
            || type == Security::SecFeaturePolicy               // Deprecated.
-           || type == Security::SecDelegationDirectivePolicy
-           || type == Security::SecEstablishTrustPolicy)
+           || type == Security::SecDelegationDirectivePolicy)
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
                       CORBA::Policy::_nil ());
   else

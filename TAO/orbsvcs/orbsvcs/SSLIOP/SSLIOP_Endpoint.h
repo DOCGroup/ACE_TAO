@@ -1,22 +1,16 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     SSLIOP_Endpoint.h
-//
-// = DESCRIPTION
-//     SSLIOP implementation of PP Framework Endpoint interface.
-//
-// = AUTHOR
-//     Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     SSLIOP_Endpoint.h
+ *
+ *  $Id$
+ *
+ *  SSLIOP implementation of PP Framework Endpoint interface.
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_SSLIOP_ENDPOINT_H
 #define TAO_SSLIOP_ENDPOINT_H
@@ -28,6 +22,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/INET_Addr.h"
 
 #include "tao/ORB.h"
 #include "tao/Endpoint.h"
@@ -91,15 +87,18 @@ public:
   virtual CORBA::ULong hash (void);
   // Return a hash value for this object.
 
+  /// Return the SSLIOP-specific ACE_INET_Addr.
+  const ACE_INET_Addr &object_addr (void) const;
+
 private:
 
   SSLIOP::SSL ssl_component_;
   // Cache the SSL tagged component in a decoded format. Notice that
   // we do not need to marshal this object!
 
-  // TAO_SSLIOP_Client_Connection_Handler *ssl_hint_;
-  // Hint indicating the last successfully used connection handler for
-  // a connection established through this endpoint's acceptor.
+  /// Cached instance of @param ACE_INET_Addr> for use in making
+  /// invocations, etc.
+  ACE_INET_Addr object_addr_;
 
   TAO_SSLIOP_Endpoint *next_;
   // IIOP Endpoints can be stringed into a list.  Return the next
