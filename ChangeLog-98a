@@ -5,6 +5,10 @@ Fri Dec 19 09:44:28 1997  David L. Levine  <levine@cs.wustl.edu>
           with ACE_OS::sigwait.  I replaced Thilo's #undef sigwait,
           and updated the ::sigwait declaration to what cxx uses internally.
 
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (server): cast arg
+          to long before casting to ACE_HANDLE, and removed function-style
+          cast.
+
 Fri Dec 19 00:39:40 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.7, released Fri Dec 19 00:39:40 1997.
