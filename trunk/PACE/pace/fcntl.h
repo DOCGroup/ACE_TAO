@@ -38,8 +38,8 @@ extern "C" {
 #if (PACE_HAS_POSIX_FS_UOF)
   PACE_INLINE int pace_creat (const char * path, pace_mode_t mode);
   /* WIN32 doesn't correctly return a file desciptor. WIN32 doesn't use
-     integers to represent file handles. Instead, we return (int)*HANDLE
-     for success and -1 for failure.
+     integers to represent file handles. Instead, we return 1 for success
+     and -1 for failure.
    */
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
