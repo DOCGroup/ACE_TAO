@@ -53,20 +53,19 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core_ = orb_core;
 
-  int result = this->make_caching_strategy ();
-  if (result == -1)
+  if (this->make_caching_strategy () == -1)
     return -1;
-
- TAO_Cached_Connector_Lock *connector_lock = 0;
- ACE_NEW_RETURN (connector_lock,
-                 TAO_Cached_Connector_Lock (this->orb_core_),
-                 -1);
 
   TAO_IIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy (
                                              this->orb_core_->thr_mgr (),
                                              this->orb_core_),
+                  -1);
+
+  TAO_Cached_Connector_Lock *connector_lock = 0;
+  ACE_NEW_RETURN (connector_lock,
+                  TAO_Cached_Connector_Lock (this->orb_core_),
                   -1);
 
   ACE_NEW_RETURN (this->cached_connect_strategy_,
