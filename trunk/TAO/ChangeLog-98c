@@ -1,3 +1,10 @@
+Sun Sep  6 10:34:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  Fixed some memory corruption problems, thanks to Ravi Nagabhyru
+	  <ravi@future-minds.com> for reporting them and providing a
+	  patch.
+
 Fri Sep 04 20:46:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp: Updated project source file list.
