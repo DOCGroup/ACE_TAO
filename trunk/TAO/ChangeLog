@@ -1,3 +1,11 @@
+Fri Jul 23 23:18:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security/CSI_Utils.cpp
+	  (extract_sas_service_context):
+
+	  Corrected return type to match prototype declared in header.
+	  Fixes compile time errors.
+
 Fri Jul 23 10:27:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/CSI_Utils.h (IOP::ServiceContext):
