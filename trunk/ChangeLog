@@ -4,13 +4,14 @@ Tue Jul 30 09:07:29 2002  Ossama Othman  <ossama@uci.edu>
 	* ace/Parse_Node.cpp:
 
 	  Unexported all classes in this file.  They are only meant for
-	  internal use by ACE's Service Configurator.
+	  internal use by ACE's Service Configurator.  Updated Doxygen
+	  comments accordingly.
 
 	  (apply, symbol, open_dll):
 
 	  These methods now accept a "yyerrno" reference argument to allow
 	  for modification of the error count in a reentrant manner.
-	
+
 	* ace/Svc_Conf.h:
 
 	  Removed "ace_yyerrno" and "ace_yylineno" global variables.
@@ -43,7 +44,7 @@ Tue Jul 30 09:07:29 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Removed initialization of "ace_yyerrno" and "ace_yylineno"
 	  global variables.  They no longer exist.  Poof!
-	  
+
 	  Reverted my previous change.  The above changes obviate the need
 	  to take into account the global parse error count.
 
@@ -68,7 +69,7 @@ Tue Jul 30 10:06:04 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  the #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT) check.  Thanks
  	  to Alan Tanga <stang1@lucent.com> for reporting this.
 
-	* ace/POSIX_Proactor.cpp (delete_result_aiocb_list): Moved 
+	* ace/POSIX_Proactor.cpp (delete_result_aiocb_list): Moved
 	  the definition of size_t ai out of the for loops to avoid
  	  problems on older C++ compilers.  Thanks to George Varsamis
  	  <gv@prismtechnologies.com> for reporting this.
