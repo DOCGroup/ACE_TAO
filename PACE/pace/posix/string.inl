@@ -82,7 +82,7 @@ pace_strncat (char * s1, const char * s2, size_t n)
 
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE
-const char *
+char *
 pace_strchr (const char * s, int c)
 {
   return strchr (s, c);
@@ -91,7 +91,7 @@ pace_strchr (const char * s, int c)
 
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE
-const char *
+char *
 pace_strrchr (const char * s, int c)
 {
   return strrchr (s, c);
@@ -163,7 +163,7 @@ pace_strlen (const char * s)
 
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_BROKEN_INLINE
-const char *
+char *
 pace_strpbrk (const char * s1, const char * s2)
 {
   return strpbrk (s1, s2);
@@ -172,7 +172,7 @@ pace_strpbrk (const char * s1, const char * s2)
 
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE
-const char *
+char *
 pace_strstr (const char * s1, const char * s2)
 {
   return strstr (s1, s2);

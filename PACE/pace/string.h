@@ -90,7 +90,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE const char * pace_strchr (const char * s, int c);
+  PACE_INLINE char * pace_strchr (const char * s, int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -99,7 +99,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE const char * pace_strrchr (const char * s, int c);
+  PACE_INLINE char * pace_strrchr (const char * s, int c);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -171,7 +171,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE const char * pace_strpbrk (const char * s1, const char * s2);
+  PACE_INLINE char * pace_strpbrk (const char * s1, const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**
@@ -180,7 +180,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
      */
 #if (PACE_HAS_POSIX_CLS_UOF)
-  PACE_INLINE const char * pace_strstr (const char * s1, const char * s2);
+  PACE_INLINE char * pace_strstr (const char * s1, const char * s2);
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
   /**

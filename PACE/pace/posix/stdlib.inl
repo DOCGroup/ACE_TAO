@@ -33,6 +33,15 @@ pace_abs (int val)
 }
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_atexit (void (*func)(void))
+{
+  return atexit (func);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
 #if (PACE_HAS_POSIX_CLS_UOF)
 PACE_INLINE
 double
@@ -82,6 +91,15 @@ pace_bsearch (const void *key, const void *base,
 # endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_CLS_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+pace_div_t
+pace_div (int numer, int denom)
+{
+  return div (numer, denom);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
 #if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
 void
@@ -101,8 +119,57 @@ pace_getenv (const char * name)
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+long int
+pace_labs (long int j)
+{
+  return labs (j);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+pace_ldiv_t
+pace_ldiv (long int numer, long int denom)
+{
+  return ldiv (numer, denom);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_mblen (const char* s, pace_size_t n)
+{
+  return mblen (s, n);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+pace_size_t
+pace_mbstowcs (pace_wchar_t* pwcs,
+               const char* s,
+               pace_size_t n)
+{
+  return mbstowcs (pwcs, s, n);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_mbtowc (pace_wchar_t* pwc,
+             const char* s,
+             pace_size_t n)
+{
+  return mbtowc (pwc, s, n);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
 #if (PACE_HAS_POSIX_CLS_UOF)
-# if defined (PACE_HAS_CPLUSPLUS)
+# if (PACE_HAS_CPLUSPLUS)
 PACE_INLINE
 void
 pace_qsort (void * base, size_t nel, size_t width,
@@ -114,7 +181,7 @@ pace_qsort (void * base, size_t nel, size_t width,
 PACE_INLINE
 void
 pace_qsort (void * base, size_t nel, size_t width,
-            int (*compar)(const void *, const void *))
+            int (*compar)(const void *,const void *))
 {
   qsort (base, nel, width, compar);
 }
@@ -153,6 +220,68 @@ pace_rand_r (unsigned int *seed)
 #endif /* ! PACE_HAS_REENTRANT */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
+
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+double
+pace_strtod (const char* nptr,
+             char** endptr)
+{
+  return strtod (nptr, endptr);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_strtol (const char* nptr,
+             char** endptr,
+             int base)
+{
+  return strtol (nptr, endptr, base);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+unsigned long int
+pace_strtoul (const char* nptr,
+              char** endptr,
+              int base)
+{
+  return strtoul (nptr, endptr, base);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_system (const char* string)
+{
+  return system (string);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+pace_size_t
+pace_wcstombs (char* s,
+               const pace_wchar_t* pwcs,
+               pace_size_t n)
+{
+  return wcstombs (s, pwcs, n);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
+
+#if (PACE_HAS_POSIX_NONUOF_FUNCS)
+PACE_INLINE
+int
+pace_wctomb (char* s, pace_wchar_t wchar)
+{
+  return wctomb (s, wchar);
+}
+#endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 /* Memory Management. */
 

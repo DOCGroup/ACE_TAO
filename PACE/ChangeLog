@@ -1,3 +1,23 @@
+Thu Jul 20 22:58:16 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/stdlib.h
+	* pace/posix/stdlib.inl
+	  Added atexit, div, labs, ldiv, mblen, mbstowcs, mbtowc
+	  strtod, strtol, strtoul, system, wcstombs, wctomb.
+
+	* pace/string.h
+	* pace/posix/string.inl
+	  Removed const return from strchr, strstr, strrchr, strpbrk.
+
+	*../ace/OS_String.*
+	  Paceified.
+
+	*../ace/ThreadManager.cpp
+	  Paceified.
+
+	* docs/ACE_Integration.txt
+	  Updated.
+
 Thu Jul 20 19:17:15 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/unistd.inl:
