@@ -30,7 +30,7 @@ catiiop (CORBA::String string,
   // removed, so we see it as an empty string.
   
   if (!string || !*string)
-    return CORBA::B_FALSE;
+    return 0;
   
   // Type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
@@ -54,14 +54,14 @@ catiiop (CORBA::String string,
   else
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return CORBA::B_FALSE;
+      return 0;
     }
 
   if (iiop_version_major != IIOP::MY_MAJOR
       || iiop_version_minor > IIOP::MY_MINOR)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return CORBA::B_FALSE;
+      return 0;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -78,7 +78,7 @@ catiiop (CORBA::String string,
   if (cp == 0)
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-      return CORBA::B_FALSE;
+      return 0;
     }
   
   hostname = CORBA::string_alloc (1 + cp - string);
@@ -97,7 +97,7 @@ catiiop (CORBA::String string,
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (hostname);
-      return CORBA::B_FALSE;
+      return 0;
     }
   
   port_number = (short) ACE_OS::atoi ((char *) string);
@@ -119,7 +119,7 @@ catiiop (CORBA::String string,
               "\nThe Object Key as string:\n%s\n",
               string));
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 static CORBA::Boolean
@@ -424,8 +424,12 @@ main (int argc, char *argv[])
             while (!ifstr.eof ())
               {
                 ifstr.get (ch);
+                if (ch == '\n' || ch == EOF)
+                  break;
                 aString += ch;
               }
+
+            aString += '\0';
 
             ACE_DEBUG ((LM_DEBUG,
                         "\nhere is the IOR\n%s\n\n",
