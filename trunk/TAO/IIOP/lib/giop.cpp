@@ -188,7 +188,7 @@ GIOP::send_message (CDR &stream,
 
       if (writelen == -1) 
 	{
-	  ACE_DEBUG ((LM_ERROR, "(%P|%t) OutgoingMessage::writebuf() $p\n"));
+	  ACE_DEBUG ((LM_ERROR, "(%P|%t) %p\n", "OutgoingMessage::writebuf()"));
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault\n", connection));
 	  ACE_OS::closesocket (connection);
 	  connection = ACE_INVALID_HANDLE;
