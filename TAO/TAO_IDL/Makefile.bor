@@ -1,7 +1,0 @@
-#
-# Makefile for building the TAO IDL compiler
-#
-
-MAKEFILES = TAO_IDL_FE.bor TAO_IDL_BE.bor tao_idl.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

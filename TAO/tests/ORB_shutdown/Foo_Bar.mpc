@@ -1,7 +1,0 @@
-project: server {
-  Source_Files {
-    Foo_Bar.cpp
-    server.cpp
-  }
-}
-

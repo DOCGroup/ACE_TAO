@@ -1,3 +1,0 @@
-project(Default Servant): server {
-  exename = Default_Servant
-}
