@@ -1,7 +1,10 @@
 Thu Oct 15 09:54:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * run_tests.sh: commented out MT_Reactor_Timer_Test because
+        * tests/run_tests.sh: commented out MT_Reactor_Timer_Test because
           it doesn't halt on g++/Solaris or DU 4.0.
+
+        * include/makeinclude/wrapper_macros.GNU: for g++, added
+          -DACE_LACKS_PRAGMA_ONCE to CCFLAGS.
 
 Wed Oct 14 23:20:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -13,7 +16,11 @@ Wed Oct 14 22:17:31 1998  David L. Levine  <levine@cs.wustl.edu>
           header files against multiple inclusion.  Thanks to
           Eric C. Newton <ecn@smart.net> for pointing out the construct
           used by gcc/g++ to minimize unnecessary file inclusion.
-          Fortunately, other compilers use the same method.
+          Fortunately, other compilers use the same method.  And,
+          thanks to Susan Liebeskind  <shl@cc.gatech.edu> for being
+          the last ACE user to suggest something like this, and to
+          Pat McNerthney <pat@cartia.com> for spurring the search for
+          such an optimization.
 
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
