@@ -593,6 +593,28 @@ been completed yet, so basically you are on your own here. The
 port was started by <A HREF="mailto:gonzo@ing.puc.cl">
 Gonzalo A. Diethelm</A>, so contact him for any further directions.<P>
  
+<EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
+confusion regarding MSVC 5 and its Service Pack 3.  Some ACE
+users have, in the past, had problems with SP3 that were not present in SP2.
+Thanks to the diligent efforts of
+<A HREF="mailto:fultonb@pcnet1.ascs.aro.allied.com">Bill Fulton</A>,
+the mystery appears to be solved.
+The key?  (Oh, this is a good one...) It would appear that there are
+actually multiple versions of SP3 in existence.  The
+earlier ones have the bug, while later ones have it fixed.  The service
+pack downloadable from Microsoft's web site as of June 16, 1998 works fine.
+The CD containing SP3, if it has part number X03-50158 on the disc (the part
+number on the jacket is probably different), also works fine.
+<P>
+So, if you are experiencing problems with SP3, get a newer one - it'll
+probably work.  Sheesh...
+<P>
+Note, however, that regardless of the version of SP3,
+there are some STL bugs in SP3 which you should get corrected.  Please see
+<A HREF="http://www.dinkumware.com/vc_fixes.html">
+http://www.dinkumware.com/vc_fixes.html</A> for details.
+Thank you to <A HREF="mailto:ben@jetpen.com">Ben Eng</A> for the pointer to
+the STL fixes.
 
 <OL>
 <LI> Create a directory, e.g., C:\ACE, and copy all of the ACE
