@@ -60,20 +60,19 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 CPPFLAGS += -I$(TAO_ROOT)
 
-.PRECIOUS: $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+.PRECIOUS: $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext))) .reopened_modules_stamp
 
-.PHONY:	maverick
-
-maverick:
+.reopened_modules_stamp:
 	$(TAO_ROOT)/TAO_IDL/tao_idl -w -Ge 1 reopened_modules.idl
+	@touch $@
 
 main:	$(addprefix $(VDIR),$(IDL_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-$(addprefix $(VDIR),$(IDL_TEST_OBJS)):	maverick
+$(addprefix $(VDIR),$(IDL_TEST_OBJS)): .reopened_modules_stamp
 
 realclean:	clean
-	-$(RM) $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
+	-$(RM) $(foreach file, $(IDL_SRC), $(foreach ext, $(IDL_EXT), $(file)$(ext))) .reopened_modules_stamp
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
