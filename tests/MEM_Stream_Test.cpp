@@ -97,7 +97,7 @@ Echo_Handler::handle_input (ACE_HANDLE)
   ACE_TCHAR buf[MAXPATHLEN];
   ssize_t len;
 
-  len = this->peer ().recv (buf, MAXPATHLEN * sizeof (ACE_CHAR));
+  len = this->peer ().recv (buf, MAXPATHLEN * sizeof (ACE_TCHAR));
 
   if (len == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
