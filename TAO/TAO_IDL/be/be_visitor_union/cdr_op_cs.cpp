@@ -120,7 +120,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->default_index () == -1)
+  if (node->gen_empty_default_label ())
     {
       *os << be_nl << "default:" << be_idt_nl;
       *os << "break;"<< be_uidt;
@@ -190,7 +190,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->default_index () == -1)
+  if (node->gen_empty_default_label ())
     {
       *os << be_nl;
       *os << "default:" << be_idt_nl;

@@ -54,6 +54,8 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
+  
+  idl_bool gen_empty_default_label (void);
 
   // Narrowing.
   DEF_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type);
