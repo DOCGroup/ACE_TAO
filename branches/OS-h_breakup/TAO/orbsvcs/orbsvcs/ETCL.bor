@@ -1,0 +1,28 @@
+#
+# Makefile for building the TAO ETCL library
+#
+
+NAME = TAO_ETCL
+
+OBJFILES = \
+        $(OBJDIR)\ETCL_Constraint.obj \
+        $(OBJDIR)\ETCL_Interpreter.obj \
+        $(OBJDIR)\ETCL_l.obj \
+        $(OBJDIR)\ETCL_y.obj
+
+#RESOURCE = $(OBJDIR)\ETCL.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_ETCL_CFLAGS) \
+        -DTAO_ETCL_BUILD_DLL
+
+CPPDIR = .;ETCL
+
+LIBFILES = \
+	$(ACE_LIB) \
+        $(TAO_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+

@@ -1,0 +1,77 @@
+#
+# Makefile for building the TAO PortableGroup library
+#
+
+NAME = TAO_PortableGroup
+
+TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+        -I..\.. -I.. -Ge 1 -Wb,export_macro=TAO_PortableGroup_Export \
+        -Wb,export_include=PortableGroup/portablegroup_export.h \
+	-Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+
+IDLFILES = \
+        $(IDLDIR)\miop.idl \
+        $(IDLDIR)\PortableGroup.idl
+
+OBJFILES = \
+        $(OBJDIR)\miopC.obj \
+        $(OBJDIR)\miopS.obj \
+        $(OBJDIR)\PortableGroupC.obj \
+        $(OBJDIR)\PortableGroupS.obj \
+        $(OBJDIR)\POA_Hooks.obj \
+        $(OBJDIR)\Portable_Group_Map.obj \
+        $(OBJDIR)\PortableGroup_Acceptor_Registry.obj \
+        $(OBJDIR)\PortableGroup_Loader.obj \
+        $(OBJDIR)\PortableGroup_ORBInitializer.obj \
+        $(OBJDIR)\PortableGroup_Request_Dispatcher.obj \
+        $(OBJDIR)\UIPMC_Acceptor.obj \
+        $(OBJDIR)\UIPMC_Connection_Handler.obj \
+        $(OBJDIR)\UIPMC_Connector.obj \
+        $(OBJDIR)\UIPMC_Endpoint.obj \
+        $(OBJDIR)\UIPMC_Factory.obj \
+        $(OBJDIR)\UIPMC_Profile.obj \
+        $(OBJDIR)\UIPMC_Transport.obj \
+        $(OBJDIR)\UIPMC_Wait_Never.obj
+
+RESOURCE = $(OBJDIR)\PortableGroup.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_IORMANIP_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS)	\
+	$(TAO_NAMING_CFLAGS) \
+        $(TAO_PORTABLEGROUP_CFLAGS) \
+        -DTAO_PORTABLEGROUP_BUILD_DLL
+
+CPPDIR = .;PortableGroup
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\PortableGroup
+INCLUDES = PortableGroup\*.h PortableGroup\*.i
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_IORMANIP_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+        $(TAO_NAMING_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\miopC.cpp $(IDLDIR)\miopS.cpp: $(IDLDIR)\miop.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\PortableGroupC.cpp $(IDLDIR)\PortableGroupS.cpp: $(IDLDIR)\PortableGroup.idl
+	$(TAO_IDL) $**

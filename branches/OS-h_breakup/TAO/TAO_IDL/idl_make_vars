@@ -1,0 +1,62 @@
+# Makefile include file for IDL compiler
+#
+# What OS we're compiling on.
+#
+# As shipped the CFE is preconfigured for SOLARIS 2.x
+# ===================================================
+#
+# Uncomment the next line for SOLARIS 2.x
+OSV		= SOLARIS2
+# Uncomment the next line for SUNOS 4.x
+# OSV		= SUNOS4
+# Uncomment the next line for HPUX
+# OSV		= hpux
+# Uncomment the next line for Apollo Domain
+# OSV		= apollo
+#
+# IDL_CFE_VERSION	Defines what the current IDL CFE version is
+IDL_CFE_VERSION =	\"1.3.0\"
+#
+# Define LEXFLAGS to pass to lex
+LEXFLAGS	= -t
+#
+# Define YFLAGS to pass to yacc
+YFLAGS	 	= -t -d
+#
+# C++			What C++ compiler to use
+#
+# Also define CCC which is used instead of C++ in
+# some versions of make. Make sure they refer to the
+# same executable; if you modify one please also modify
+# the other to be identical.
+#
+# Uncomment these two lines if you're using SunPro Sparcworks C++ compilers
+# (Tested for SunPro Sparcworks 2.x with SunOS 4.x and Solaris 2.x, for
+#  SunPro Sparcworks 3.0 with Solaris 2.x)
+C++		= CC
+CCC		= CC
+# Uncomment these two lines if you're using g++ (tested for SunOS 4.x and
+# Solaris 2.x only, with g++ 2.5.8)
+# C++		= g++
+# CCC		= g++
+#
+# What flags to pass to the C preprocessor
+CPPFLAGS += -I../include -I. -D$(OSV) \
+	    -DTAO_IDL_PREPROCESSOR=\"$(C++)\" \
+	    -DIDL_CFE_VERSION=$(IDL_CFE_VERSION) \
+#
+# What flags to pass to the CC phase
+CCFLAGS	 += -g
+#
+# What ranlib to use
+#
+# Uncomment the following line for SunOS 4.x and others which have ranlib
+# RANLIB	        = ranlib
+# Uncomment the following line for Solaris 2.x and others which don't have it
+RANLIB		= /bin/true
+#
+# What ar to use
+AR	        = ar
+#
+# What flags to give to ar
+ARFLAGS		= crv

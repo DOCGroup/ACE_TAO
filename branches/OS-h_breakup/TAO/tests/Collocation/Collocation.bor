@@ -1,0 +1,29 @@
+#
+# Makefile for building	the Collocation	test
+#
+
+NAME = Collocation
+
+OBJFILES = \
+	$(OBJDIR)\Collocation_Tester.obj \
+	$(OBJDIR)\Collocation.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_STRATEGIES_CFLAGS) \
+        -DDIAMOND_HAS_DLL=$(DLL_FLAG) \
+        -DMY_STUB_HAS_DLL=$(DLL_FLAG)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_STRATEGIES_LIB) \
+	$(CORE_BINDIR)\Diamond$(LIB_DECORATOR).lib \
+	$(CORE_BINDIR)\Collocation_Test_Stubs$(LIB_DECORATOR).lib
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

@@ -1,0 +1,9 @@
+#
+# Makefile for building the ACE XML Library
+#
+
+DIRS = \
+        common \
+        parser
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
