@@ -2,9 +2,6 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Service_Config.h"
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
 #include "Event.h"
 #include "Peer.h"
 #include "Options.h"
@@ -14,7 +11,9 @@ Peer_Handler::Peer_Handler (void)
     msg_frag_ (0),
     total_bytes_ (0)
 {
-  this->msg_queue ()->high_water_mark (Peer_Handler::MAX_QUEUE_SIZE);
+  // Set the high water mark of the <ACE_Message_Queue>.  This is used
+  // to exert flow control.
+  this->msg_queue ()->high_water_mark (Options::instance ()->max_queue_size ());
 }
 
 // Upcall from the <ACE_Acceptor::handle_input> that turns control
@@ -140,9 +139,9 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
   // <ACE_Message_Queue> and ask the <ACE_Reactor> to inform us (via
   // <handle_output>) when it is possible to try again.
 
-  ssize_t n;
+  ssize_t n = this->send (mb);
 
-  if ((n = this->send (mb)) == -1)
+  if (n == -1)
     return -1;
   else if (errno == EWOULDBLOCK) 
     {
@@ -159,7 +158,6 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
                            "%p\n",
                            "enqueue_head"),
                           -1);
-
       // Tell ACE_Reactor to call us back when we can send again.
       if (ACE_Reactor::instance ()->schedule_wakeup
 	  (this, ACE_Event_Handler::WRITE_MASK) == -1)
@@ -197,11 +195,11 @@ Peer_Handler::handle_output (ACE_HANDLE)
 	  // Caller is responsible for freeing a ACE_Message_Block if
 	  // failures occur.
 	  mb->release ();
-	  ACE_ERROR ((LM_ERROR, "%p\n",
+	  ACE_ERROR ((LM_ERROR,
+                      "%p\n",
 		      "transmission failure in handle_output"));
 	  /* FALLTHROUGH */
 	default: // Sent the whole thing.
-
 	  // If we succeed in writing the entire event (or we did not
 	  // fail due to EWOULDBLOCK) then check if there are more
 	  // events on the <ACE_Message_Queue>.  If there aren't, tell
@@ -249,10 +247,11 @@ Peer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 int
 Peer_Handler::send (ACE_Message_Block *mb)
 {
-  ssize_t n;
   size_t len = mb->length ();
 
-  if ((n = this->peer ().send (mb->rd_ptr (), len)) <= 0)
+  ssize_t n = this->peer ().send (mb->rd_ptr (), len);
+
+  if (n <= 0)
     return errno == EWOULDBLOCK ? 0 : n;
   else if (n < (ssize_t) len)
     {
@@ -295,12 +294,14 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   if (header_bytes_left_to_read > 0)
     {
       header_received = this->peer ().recv
-	(this->msg_frag_->wr_ptr (), header_bytes_left_to_read);
+	(this->msg_frag_->wr_ptr (),
+         header_bytes_left_to_read);
 
       if (header_received == -1 /* error */
 	  || header_received == 0  /* EOF */)
 	{
-	  ACE_ERROR ((LM_ERROR, "%p\n",
+	  ACE_ERROR ((LM_ERROR,
+                      "%p\n",
 		      "Recv error during header read"));
 	  ACE_DEBUG ((LM_DEBUG,
 		      "attempted to read %d bytes\n",
@@ -342,16 +343,18 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   // need to get the event payload.  Due to incomplete reads this may
   // not be the first time we've read in a fragment for this message.
   // We account for this here.  Note that the first time in here
-  // msg_frag_->wr_ptr() will point to event->data_.  Every time we do
-  // a successful fragment read, we advance wr_ptr().  Therefore, by
-  // subtracting how much we've already read from the
-  // event->header_.len_ we complete the data_bytes_left_to_read...
+  // <msg_frag_->wr_ptr> will point to <event->data_>.  Every time we
+  // do a successful fragment read, we advance <wr_ptr>.  Therefore,
+  // by subtracting how much we've already read from the
+  // <event->header_.len_> we complete the
+  // <data_bytes_left_to_read>...
 
   ssize_t data_bytes_left_to_read =
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
   ssize_t data_received =
-    this->peer ().recv (this->msg_frag_->wr_ptr (), data_bytes_left_to_read);
+    this->peer ().recv (this->msg_frag_->wr_ptr (),
+                        data_bytes_left_to_read);
 
   // Try to receive the remainder of the event.
 
@@ -389,16 +392,22 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
           this->msg_frag_ = 0;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
-		 event->header_.supplier_id_, event->header_.len_, data_received + header_received));
-      if (Options::instance ()->verbose ())
-	ACE_DEBUG ((LM_DEBUG, "data_ = %*s\n", event->header_.len_ - 2, event->data_));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
+                  event->header_.supplier_id_,
+                  event->header_.len_,
+                  data_received + header_received));
+      if (Options::instance ()->enabled (Options::VERBOSE))
+	ACE_DEBUG ((LM_DEBUG,
+                    "data_ = %*s\n",
+                    event->header_.len_ - 2,
+                    event->data_));
       return data_received + header_received;
     }
 }
 
-// Receive various types of input (e.g., Peer event from the
-// gatewayd, as well as stdio).
+// Receive various types of input (e.g., Peer event from the gatewayd,
+// as well as stdio).
 
 int
 Peer_Handler::handle_input (ACE_HANDLE sd)
@@ -469,14 +478,19 @@ Peer_Handler::await_events (void)
   switch (n)
     {
     case 0:
-      ACE_ERROR_RETURN ((LM_ERROR, "gatewayd has closed down\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "gatewayd has closed down\n"),
+                        -1);
       /* NOTREACHED */
     case -1:
       if (errno == EWOULDBLOCK)
 	// A short-read, we'll come back and finish it up later on!
 	return 0;
       else
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "recv"),
+                          -1);
       /* NOTREACHED */
     default:
       {
@@ -491,7 +505,7 @@ Peer_Handler::await_events (void)
 		    event->header_.supplier_id_,
 		    event->header_.len_,
 		    this->total_bytes_));
-        if (Options::instance ()->verbose ())
+        if (Options::instance ()->enabled (Options::VERBOSE))
           ACE_DEBUG ((LM_DEBUG,
                       "data_ = %s\n",
                       event->data_));
@@ -552,10 +566,49 @@ Peer_Handler::handle_close (ACE_HANDLE,
 }
 
 Peer_Acceptor::Peer_Acceptor (void)
+  : peer_handler_ (0)
 {
-  // This object only gets allocated once and is just recycled
-  // forever.  Thus, it acts like a Singleton.
-  ACE_NEW (peer_handler_, Peer_Handler);
+}
+
+int 
+Peer_Acceptor::open (void)
+{
+  if (Options::instance ()->enabled (Options::ACCEPTOR))
+    {
+      // This object only gets allocated once and is just recycled
+      // forever.
+      ACE_NEW_RETURN (peer_handler_, Peer_Handler, 0);
+
+      // Call down to the <Acceptor::open> method.
+      if (this->inherited::open (this->addr_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "open"),
+                          0);
+      else if (this->acceptor ().get_local_addr (this->addr_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "get_local_addr"),
+                          0);
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "listening at port %d\n",
+                    this->addr_.get_port_number ()));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                "warning: not running in Acceptor mode\n"));
+  return 0;
+}
+
+int
+Peer_Acceptor::close (void)
+{
+  // Will trigger a delete.
+  this->peer_handler_->destroy (); 
+
+  // Close down the base class.
+  return this->inherited::close ();
 }
 
 // Note how this method just passes back the pre-allocated
@@ -569,8 +622,12 @@ Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
   return 0;
 }
 
+Peer_Connector::Peer_Connector (void)
+{
+}
+
 int
-Peer_Acceptor::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Peer_Factory::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "signal %S occurred\n",
@@ -586,21 +643,25 @@ Peer_Acceptor::handle_signal (int signum, siginfo_t *, ucontext_t *)
 // Returns information on the currently active service.
 
 int
-Peer_Acceptor::info (char **strp, size_t length) const
+Peer_Factory::info (char **strp, size_t length) const
 {
   char buf[BUFSIZ];
   char addr_str[BUFSIZ];
 
   ACE_INET_Addr addr;
 
-  if (this->acceptor ().get_local_addr (addr) == -1)
+  if (this->acceptor_.acceptor ().get_local_addr (addr) == -1)
     return -1;
-  else if (addr.addr_to_string (addr_str, sizeof addr) == -1)
+  else if (addr.addr_to_string (addr_str,
+                                sizeof addr) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s\t %s/%s %s",
-	     "Gateway peer daemon", addr_str, "tcp",
-	     "# Gateway traffic generator and data sink\n");
+  ACE_OS::sprintf (buf,
+                   "%s\t %s/%s %s",
+                   "Gateway peer daemon",
+                   addr_str,
+                   "tcp",
+                   "# Gateway traffic generator and data sink\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -613,23 +674,21 @@ Peer_Acceptor::info (char **strp, size_t length) const
 // the peer.
 
 int
-Peer_Acceptor::fini (void)
+Peer_Factory::fini (void)
 {
-  this->peer_handler_->destroy (); // Will trigger a delete.
-  return inherited::fini ();
+  return this->acceptor_.close ();
 }
 
 // Hook called by the explicit dynamic linking facility to initialize
 // the peer.
 
 int
-Peer_Acceptor::init (int argc, char *argv[])
+Peer_Factory::init (int argc, char *argv[])
 {
   Options::instance ()->parse_args (argc, argv);
 
-  this->addr_.set (Options::instance ()->port ());
-
   ACE_Sig_Set sig_set;
+
   sig_set.sig_add (SIGINT);
 #if !defined (ACE_WIN32)
   sig_set.sig_add (SIGQUIT);
@@ -643,28 +702,14 @@ Peer_Acceptor::init (int argc, char *argv[])
                                                   this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 
-  // Call down to the <Acceptor::open> method.
-  if (this->inherited::open (this->addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
-  else if (this->acceptor ().get_local_addr (this->addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_local_addr"),
-                      -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "listening at port %d\n",
-		this->addr_.get_port_number ()));
-  return 0;
+  return this->acceptor_.open ();
 }
 
-// The following is a "Factory" used by the ACE_Service_Config and
-// svc.conf file to dynamically initialize the Peer_Acceptor.
+// The following is a "Factory" used by the <ACE_Service_Config> and
+// svc.conf file to dynamically initialize the <Peer_Acceptor> and
+// <Peer_Connector>.
 
-ACE_SVC_FACTORY_DEFINE (Peer_Acceptor)
+ACE_SVC_FACTORY_DEFINE (Peer_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
