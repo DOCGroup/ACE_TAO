@@ -14,7 +14,7 @@
 #ifndef ACE_ICMP_SOCKET_H
 #define ACE_ICMP_SOCKET_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -115,6 +115,6 @@ namespace ACE
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* ACE_ICMP_SOCKET_H */
