@@ -89,6 +89,10 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
           this->naming_service_ior_ = str.in ();
           this->naming_context_name_ = CORBA::string_dup (""); 
         }
+      TAO_CATCHANY
+	{
+	  TAO_TRY_ENV.print_exception ("TAO_Naming_Server::init");
+	}
       TAO_ENDTRY;
       
       char* naming_ior = ACE_OS::strdup (this->naming_service_ior_.in ());

@@ -230,18 +230,16 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 // through the Enviroment parameter.
 // Their use requires some discipline, but they certainly help...
 //
-// TODO: Currently the IDL compiler does not support C++ exceptions, so we
-// cannot use them even if the platform has them.
-//
 #if defined (TAO_USE_EXCEPTIONS)
 
 #define TAO_TRY_ENV __env
 // The first "do" scope is for the env.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY \
-try { CORBA::Environment TAO_TRY_ENV;
+CORBA::Environment TAO_TRY_ENV; \
+try {
 #define TAO_CATCH(TYPE,VAR) \
-} catch (TYPE VAR) {
+} catch (TYPE & VAR) {
 #define TAO_CATCHANY \
 } catch (...) {
 #define TAO_ENDTRY }
@@ -252,9 +250,17 @@ try { CORBA::Environment TAO_TRY_ENV;
 
 #define TAO_THROW(EXCEPTION) throw EXCEPTION
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
-#define TAO_RETHROW throw;
+#define TAO_RETHROW throw
+#define TAO_RETHROW_RETURN(RETURN) throw
 
-#define TAO_THROW_SPEC(X) ACE_THROW_SPEC(X)
+// #define TAO_THROW_SPEC(X) ACE_THROW_SPEC(X)
+#define TAO_THROW_SPEC(X)
+// The IDL compiler is not generating throw specs, so putting them in
+// the servant implementation only results in compilation
+// errors. Further the spec does not say that we should generate them
+// and I'm concerned that putting a throw spec can result in an
+// "unexpected" exception, which *could* be translated into a
+// CORBA::UNKNOWN, but I'm not sure.
 
 #define TAO_RAISE(EXCEPTION) throw EXCEPTION
 // This is used in the implementation of the _raise methods
@@ -320,23 +326,6 @@ if (TAO_TRY_ENV.exception () != 0) \
 #define TAO_CHECK_ENV_RETURN(X, Y) \
  if ( X . exception () != 0) return Y
 
-#define TAO_CHECK_ENV_RETURN_VOID(X) \
- if ( X . exception () != 0) return
-
-#define TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) \
- if (ENV . exception () != 0) \
-    { \
-        ENV.print_exception (PRINT_STRING); \
-        return RETURN; \
-    }
-
-#define TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING) \
- if (ENV . exception () != 0) \
-    { \
-        ENV.print_exception (PRINT_STRING); \
-        return; \
-    }
-
 #define TAO_THROW(EXCEPTION) \
 do {\
   _env.exception (new EXCEPTION); \
@@ -360,5 +349,22 @@ return RETURN
 #define TAO_RAISE(EXCEPTION)
 
 #endif /* ACE_HAS_EXCEPTIONS */
+
+#define TAO_CHECK_ENV_RETURN_VOID(X) \
+ if ( X . exception () != 0) return
+
+#define TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) \
+ if (ENV . exception () != 0) \
+    { \
+        ENV.print_exception (PRINT_STRING); \
+        return RETURN; \
+    }
+
+#define TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING) \
+ if (ENV . exception () != 0) \
+    { \
+        ENV.print_exception (PRINT_STRING); \
+        return; \
+    }
 
 #endif /* TAO_MASTER_CORBA_H */

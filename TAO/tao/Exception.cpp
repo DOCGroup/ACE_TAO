@@ -552,6 +552,7 @@ STANDARD_EXCEPTION_LIST
 void \
 CORBA_##name ::_raise (void) \
 { \
+  TAO_RAISE(*this); \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
