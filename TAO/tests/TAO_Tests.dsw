@@ -75,6 +75,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "IORTest"=.\IORManipulation\IORTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "InterOp Naming Client"=".\InterOp-Naming\client.dsp" - Package Owner=<4>
 
 Package=<5>
