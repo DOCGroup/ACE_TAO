@@ -26,26 +26,32 @@ extern CORBA_TypeCode_ptr	TC_Cubit_oneof;
 
 struct Cubit_Many 
 {
-   CORBA_Octet o;
-   CORBA_Long  l;
-   CORBA_Short s;
+  CORBA_Octet o;
+  CORBA_Long  l;
+  CORBA_Short s;
 };
 
 enum Cubit_discrim
-  { e_0th = 0, e_1st = 1, e_2nd = 2,
-    e_3rd = 3, e_4th = 4, e_5th = 5 };
+{ 
+  e_0th = 0,
+  e_1st = 1,
+  e_2nd = 2,
+  e_3rd = 3,
+  e_4th = 4,
+  e_5th = 5 
+};
 
 struct Cubit_oneof 
 {
-   Cubit_discrim  _disc;
+  Cubit_discrim  _disc;
    
-   union 
-   {    
-      CORBA_Octet o;
-      CORBA_Short s;
-      CORBA_Long  l;
-      Cubit_Many  cm;
-   };
+  union 
+  {    
+    CORBA_Octet o;
+    CORBA_Short s;
+    CORBA_Long  l;
+    Cubit_Many  cm;
+  };
 };
 
 class Cubit;
@@ -56,40 +62,32 @@ class Cubit : public virtual CORBA_Object
 {
 public:
  
-   static Cubit_ptr _duplicate(Cubit_ptr obj);
-   static Cubit_ptr _narrow(CORBA_Object_ptr obj);
-   static Cubit_ptr _nil();
+  static Cubit_ptr _duplicate(Cubit_ptr obj);
+  static Cubit_ptr _narrow(CORBA_Object_ptr obj);
+  static Cubit_ptr _nil();
 
-   virtual 
-   CORBA_Octet Cubit_cube_octet (CORBA_Octet       o,
-                                 CORBA_Environment &env);
+  virtual CORBA_Octet Cubit_cube_octet (CORBA_Octet       o,
+					CORBA_Environment &env);
 
-   virtual 
-   CORBA_Short Cubit_cube_short (CORBA_Short       s,
-                                 CORBA_Environment &env);
+  virtual CORBA_Short Cubit_cube_short (CORBA_Short       s,
+					CORBA_Environment &env);
   
-   virtual 
-   CORBA_Long Cubit_cube_long (CORBA_Long        l,
-                               CORBA_Environment &env);
+  virtual CORBA_Long Cubit_cube_long (CORBA_Long        l,
+				      CORBA_Environment &env);
   
-   virtual 
-   Cubit_Many* Cubit_cube_struct (Cubit_Many        &values,
-                                  CORBA_Environment &env);
+  virtual Cubit_Many* Cubit_cube_struct (Cubit_Many        &values,
+					 CORBA_Environment &env);
   
-   virtual 
-   Cubit_oneof* Cubit_cube_union (Cubit_oneof       &values,
-                                  CORBA_Environment &env);
+  virtual Cubit_oneof* Cubit_cube_union (Cubit_oneof       &values,
+					 CORBA_Environment &env);
   
-   virtual 
-   void Cubit_please_exit (CORBA_Environment &env);
+  virtual void Cubit_please_exit (CORBA_Environment &env);
 
 protected:
-   Cubit() { }
-   Cubit(STUB_Object *objref)
-      : CORBA_Object(objref) { }
-   virtual ~Cubit() { }
-
-   
+  Cubit (void) { }
+  Cubit (STUB_Object *objref)
+    : CORBA_Object (objref) { }
+  virtual ~Cubit (void) { }
 };
 
 extern const CORBA_Char *Cubit__id;		// type ID

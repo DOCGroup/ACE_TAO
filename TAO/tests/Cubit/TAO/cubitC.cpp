@@ -5,7 +5,7 @@
 // Modified version of Cubit Example written by Sun Microsystems Inc.
 // Modified by: Brian Mendel
 
-#include	"cubitC.h"		// for stubs ...
+#include "cubitC.h"		// for stubs ...
 
 Cubit_ptr Cubit::_duplicate (Cubit_ptr obj)
 {
@@ -18,6 +18,7 @@ Cubit_ptr Cubit::_duplicate (Cubit_ptr obj)
 Cubit_ptr Cubit::_narrow (CORBA_Object_ptr obj)
 {
   CORBA_Environment env;
+
   if (obj->_is_a ("IDL:Cubit:1.0", env))
     {
       obj->Release (); // Release the reference grabbed by _is_a ()
@@ -334,7 +335,7 @@ static const TAO_Call_Data Cubit_cube_union_calldata =
   0, 0
 };
 
-Cubit_oneof*
+Cubit_oneof *
 Cubit::Cubit_cube_union (Cubit_oneof &values,
 			 CORBA_Environment &env)
 {

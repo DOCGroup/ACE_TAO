@@ -4,14 +4,12 @@
 //
 // Hand-crafted C language binding glue ...
 //
-// This doesn't use C++ since doing the obvious derivation
-// (all parent interfaces are virtual public parents) makes
-// object references have different "views".  That is, a
-// pointer to a Cubit (i.e. a Cubit_ptr) would not have
-// the same binary value as a pointer to a CORBA_Object
-// (i.e. a CORBA_Object_ptr, generic objref).  That'd
+// This doesn't use C++ since doing the obvious derivation (all parent
+// interfaces are virtual public parents) makes object references have
+// different "views".  That is, a pointer to a Cubit (i.e. a
+// Cubit_ptr) would not have the same binary value as a pointer to a
+// CORBA_Object (i.e. a CORBA_Object_ptr, generic objref).  That'd
 // mean lots of narrowing/widening/RTTI infrastructure.
-//
 
 #ifndef	_CUBIT_HH
 #define	_CUBIT_HH
@@ -32,24 +30,27 @@ typedef Cubit *Cubit_ptr, *CubitRef;
 extern CORBA_TypeCode_ptr	TC_Cubit_Many;
 extern CORBA_TypeCode_ptr	TC_Cubit_oneof;
 
-struct Cubit_Many {
-    CORBA_Octet	o;
-    CORBA_Long	l;
-    CORBA_Short	s;
+struct Cubit_Many 
+{
+  CORBA_Octet	o;
+  CORBA_Long	l;
+  CORBA_Short	s;
 };
 
 enum Cubit_discrim {e_0th = 0, e_1st = 1, e_2nd = 2,
                     e_3rd = 3, e_4th = 4, e_5th = 5};
 
-struct Cubit_oneof {
-    Cubit_discrim          _disc;
+struct Cubit_oneof 
+{
+  Cubit_discrim _disc;
 
-    union {    
-        CORBA_Octet	o;
-        CORBA_Short	s;
-        CORBA_Long	l;
-        Cubit_Many      cm;
-    };
+  union 
+  {
+    CORBA_Octet	o;
+    CORBA_Short	s;
+    CORBA_Long	l;
+    Cubit_Many      cm;
+  };
 };
 
 CORBA_Octet
