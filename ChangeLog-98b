@@ -1,3 +1,12 @@
+Mon Nov 23 10:20:22 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+	* ace/DLL.h: Added a comment which specified that by default the 
+	  library would be closed before the ACE_DLL object gets 
+	  destroyed.
+
+	* ace/DLL.cpp (get_handle): Changed the value for the member 
+	  variable, close_on_destruction_ to 1 on orphaning the handle 
+	  and giving it to the new owner.
+	
 Mon Nov 23 17:14:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp (open): It is even
