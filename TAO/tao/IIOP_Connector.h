@@ -86,6 +86,9 @@ public:
   TAO_IIOP_Connector (CORBA::Boolean flag = 0);
   // Constructor.
 
+  ~TAO_IIOP_Connector (void);
+  // Destructor.
+
   // = The TAO_Connector methods, please check the documentation on
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);

@@ -56,6 +56,10 @@ TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
 {
 }
 
+TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
+{
+}
+
 int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
