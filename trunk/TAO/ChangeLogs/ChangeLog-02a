@@ -20,7 +20,7 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	
 	Fri Apr 12 15:39:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connector_Impl.cpp: Dont add the handler to the reactor. 
+	* tao/Connector_Impl.cpp: Do not add the handler to the reactor.  
 
 	* tao/IIOP_Connector.cpp:
 	* tao/Strategies/SHMIOP_Connector.cpp:
