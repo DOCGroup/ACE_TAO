@@ -1,3 +1,12 @@
+Thu Jun 19 11:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h: Changed the constructor to
+	  set buffer sizes for the dgram sockets created. 
+
+	  Thanks to J. Russell Noseworthy and Keith Snively for providing
+	  the patches.
+
 Sat Jun 21 19:54:47 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/RTPortableServer/RTPortableServerC.h:
@@ -955,7 +964,6 @@ Wed Jun 18 19:33:24 2003  Gan Deng <gan.deng@vanderbilt.edu>
           based on performance-tests/Latency/AMH, but uses different
           data types.
 
-
 Wed Jun 18 19:25:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
@@ -970,7 +978,6 @@ Wed Jun 18 19:03:53 2003  Gan Deng <gan.deng@vanderbilt.edu>
           based on performance-tests/Latency/Deffered, but uses different
           data types.
 
-
 Wed Jun 18 18:36:19 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/DII/*:
@@ -979,7 +986,6 @@ Wed Jun 18 18:36:19 2003  Gan Deng <gan.deng@vanderbilt.edu>
           is based on performance-tests/Latency/DII, but uses different
           data types.
 
-
 Wed Jun 18 18:15:33 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/DSI/*:
@@ -987,7 +993,6 @@ Wed Jun 18 18:15:33 2003  Gan Deng <gan.deng@vanderbilt.edu>
           New test for the sequence of different data types for DSI. This
           is based on performance-tests/Latency/DSI, but uses different
           data types.
-
 
 Wed Jun 18 17:47:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -1002,7 +1007,6 @@ Wed Jun 18 17:19:47 2003  George Edwards <g.edwards@vanderbilt.edu>
           Corrected scoping error for parameters of CORBA::release ()
           and CORBA::is_nil () for interfaces that inherit from
           abstract interfaces
-
 
 Wed Jun 18 17:06:40 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
