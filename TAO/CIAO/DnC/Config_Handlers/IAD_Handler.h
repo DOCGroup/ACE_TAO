@@ -14,18 +14,29 @@
 
 #include "DeploymentC.h"
 #include "Config_Handler_export.h"
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
+#include "tao/Exception.h"
+#include "XercesString.h"
+#include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/dom/DOM.hpp>
-#include "XercesString.h"
+#include <xercesc/util/XMLURL.hpp>
+#include <xercesc/util/XMLUri.hpp>
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
+using xercesc::XMLUri;
+using xercesc::XMLURL;
 using xercesc::XMLString;
 using xercesc::XMLException;
 using xercesc::DOMException;
@@ -33,6 +44,7 @@ using xercesc::DOMBuilder;
 using xercesc::DOMImplementationRegistry;
 using xercesc::DOMImplementationLS;
 using xercesc::DOMImplementation;
+using xercesc::DOMInputSource;
 using xercesc::DOMText;
 using xercesc::DOMNamedNodeMap;
 using xercesc::DOMLocator;
@@ -42,6 +54,7 @@ using xercesc::DOMDocumentTraversal;
 using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
+using xercesc::DOMNamedNodeMap;
 
 namespace CIAO
 {
@@ -49,47 +62,74 @@ namespace CIAO
     {
 
       class IAD_Handler
-        {
-        public:
+      {
+      public:
 
-          /// constructor
-          IAD_Handler (DOMDocument* doc, unsigned long filter_);
+      /// constructor
+      IAD_Handler (DOMDocument* doc, unsigned long filter_);
 
-          /// constructor
-          IAD_Handler (DOMNodeIterator* iter, bool release = false);
+     /// constructor
+      IAD_Handler (DOMNodeIterator* iter, bool release = false);
 
-          /// destructor
-          ~IAD_Handler();
+      /// destructor
+      ~IAD_Handler();
 
-          /// Process the component package description
-          void process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
+      /// Process the component package description
+      void process_ImplementationArtifactDescription (::Deployment::ImplementationArtifactDescription &iad);
 
-        protected:
+      protected:
 
-          /// Process the label attribute
-          void process_label (const XMLCh* label, ::Deployment::ImplementationArtifactDescription &iad);
+      /// Process the label attribute
+      void process_label (const XMLCh* label, ::Deployment::ImplementationArtifactDescription &iad);
 
-          /// Process the UUID attribute
-          void process_UUID (const XMLCh* UUID, ::Deployment::ImplementationArtifactDescription &iad);
+      /// Process the UUID attribute
+      void process_UUID (const XMLCh* UUID, ::Deployment::ImplementationArtifactDescription &iad);
 
-          /// Process the location attribute
-          void process_location (const XMLCh* location, ::Deployment::ImplementationArtifactDescription &iad);
+      /// Process the location attribute
+      void process_location (const XMLCh* location, ::Deployment::ImplementationArtifactDescription &iad);
+ 
+      /// process exec parameter element
+      void process_exec_parameter_element (DOMNode* node,
+        DOMDocument* doc, DOMNodeIterator* iter,
+        Deployment::ImplementationArtifactDescription& iad);
 
-        private:
+      /// process info property element
+      void process_info_property_element (DOMNode* node,
+        DOMDocument* doc, DOMNodeIterator* iter,
+        Deployment::ImplementationArtifactDescription& iad);
 
-          DOMDocument* doc_;
+      /// process attributes for property element
+      void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
+        DOMDocument* doc,
+        DOMNodeIterator* iter,
+        int value,
+        Deployment::Property& ccd_property);
 
-          DOMNode* root_;
+      /// parse a document
+      DOMDocument* create_document (const char *url);
 
-          unsigned long filter_;
+      private:
 
-          DOMNodeIterator* iter_;
+      typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
+      typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
+      typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
 
-          bool release_;
+      DOMDocument* doc_;
 
-        };
+      DOMNode* root_;
+
+      unsigned long filter_;
+
+      DOMNodeIterator* iter_;
+
+      bool release_;
+      int index_;
+      REF_MAP id_map_;
+      IDREF_MAP idref_map_;
 
     };
+
+  };
 
 };
 
