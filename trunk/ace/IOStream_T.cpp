@@ -4,6 +4,7 @@
 #define ACE_IOSTREAM_T_C
 
 #include "ace/IOStream_T.h"
+#include "ace/OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
