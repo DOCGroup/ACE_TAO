@@ -47,7 +47,7 @@ namespace TAO_PG
     const PortableGroup::Properties & overrides,
     PortableGroup::Properties &properties);
 
-};
+}
 
 #include "ace/post.h"
 #endif  /* TAO_PG_PROPERTY_UTILS_H */
