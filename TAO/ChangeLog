@@ -1,3 +1,13 @@
+Wed Sep  1 12:55:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* docs/libraries.html:
+
+	  Removed duplicate DynamicInterface entry.
+
+	* docs/orbsvcs.html:
+
+	  Fixed Sched service directory
+
 Wed Sep  1 10:42:38 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/cec_options.html:
