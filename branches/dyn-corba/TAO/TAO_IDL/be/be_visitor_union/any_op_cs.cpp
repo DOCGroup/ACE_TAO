@@ -53,100 +53,38 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "void operator<<= (" << be_idt << be_idt_nl
+  // Copying insertion.
+  *os << "// Copying insertion." << be_nl
+      << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt_nl
+      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
+      << be_idt << be_idt_nl
+      << "_tao_any," << be_nl
+      << node->tc_name () << "," << be_nl
+      << "_tao_elem" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
-  if (!node->is_local ())
-    {
-      *os << "TAO_OutputCDR stream;" << be_nl << be_nl
-          << "if (stream << _tao_elem)" << be_idt_nl
-          << "{" << be_idt_nl;
-    }
-  else
-    {
-      *os << node->name () << " *_tao_elem_copy = 0;" << be_nl
-          << "ACE_NEW (" << be_idt << be_idt_nl
-          << "_tao_elem_copy," << be_nl
-          << node->name () << " (_tao_elem)" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-    }
-
-  *os << "_tao_any._tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl;
-
-  if (!node->is_local ())
-    {
-      *os << "TAO_ENCAP_BYTE_ORDER," << be_nl
-          << "stream.begin ()" << be_uidt_nl;
-    }
-  else
-    {
-      *os << "1," << be_nl
-          << "_tao_elem_copy," << be_nl
-          << node->name () << "::_tao_any_destructor" << be_uidt_nl;
-    }
-
-  *os << ");" << be_uidt;
-
-  if (node->is_local ())
-    {
-      *os << be_nl << be_nl << "_tao_any.contains_local (1);";
-    }
-  else
-    {
-      *os << be_uidt_nl
-          << "}" << be_uidt;
-    }
-
-  *os << be_uidt_nl << "}\n" << be_nl;
-
-  // Non-copying insertion operator.
-
+  // Non-copying insertion.
   *os << "// Non-copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
       << "CORBA::Any &_tao_any," << be_nl
       << node->name () << " *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt_nl
+      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert ("
+      << be_idt << be_idt_nl
+      << "_tao_any," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
+      << node->tc_name () << "," << be_nl
+      << "_tao_elem" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
-  if (!node->is_local ())
-    {
-      *os << "TAO_OutputCDR stream;" << be_nl << be_nl
-          << "if (stream << *_tao_elem)" << be_idt_nl
-          << "{" << be_idt_nl;
-    }
-
-  *os << "_tao_any._tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl;
-
-  if (!node->is_local ())
-    {
-      *os << "TAO_ENCAP_BYTE_ORDER," << be_nl
-          << "stream.begin ()," << be_nl;
-    }
-
-  *os << "1," << be_nl
-      << "_tao_elem," << be_nl
-      << node->name () << "::_tao_any_destructor" << be_uidt_nl
-      << ");" << be_uidt;
-
-  if (node->is_local ())
-    {
-      *os << be_nl << be_nl << "_tao_any.contains_local (1);";
-    }
-  else
-    {
-      *os << be_uidt_nl
-          << "}" << be_uidt;
-    }
-
-  *os << be_uidt_nl << "}\n" << be_nl;
-
-  // Extraction to non-const pointer operator.
-
+  // Extraction to non-const pointer (deprecated, just calls the other).
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
       << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
       << "const CORBA::Any &_tao_any," << be_nl
@@ -157,82 +95,23 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "const " << node->name () << " *&," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_nl << be_nl;
 
-  // Exraction to const pointer operator.
-
+  // Extraction to const pointer.
   *os << "// Extraction to const pointer." << be_nl
       << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
       << "const CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " *&_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "_tao_elem = 0;" << be_nl << be_nl
-      << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl
-      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
-      << "CORBA::Boolean _tao_result =" << be_idt_nl
-      << "type->equivalent (" << be_idt << be_idt_nl
-      << node->tc_name () << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl << be_nl
-      << "if (_tao_result == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0; // not equivalent" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
-
-  if (!node->is_local ())
-    {
-      *os << "if (_tao_any.any_owns_data ())" << be_idt_nl
-          << "{" << be_idt_nl;
-    }
-
-  *os << "_tao_elem = ACE_static_cast (" << be_idt << be_idt_nl
-      << "const " << node->name () << " *," << be_nl
-      << "_tao_any.value ()" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl
-      << "return 1;" << be_uidt_nl;
-
-  if (!node->is_local ())
-    {
-      *os << "}" << be_uidt_nl
-          << "else" << be_idt_nl  // else any does not own the data
-          << "{" << be_idt_nl
-          << node->name () << " *tmp;" << be_nl
-          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-          << "tmp," << be_nl
-          << node->name () << "," << be_nl
-          << "0" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl
-          << "TAO_InputCDR stream (" << be_idt << be_idt_nl
-          << "_tao_any._tao_get_cdr ()," << be_nl
-          << "_tao_any._tao_byte_order ()" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl
-          << be_nl << "if (stream >> *tmp)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
-          << node->tc_name () << "," << be_nl
-          << "1," << be_nl
-          << "ACE_static_cast (void *, tmp)," << be_nl
-          << node->name () << "::_tao_any_destructor" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl
-          << "_tao_elem = tmp;" << be_nl
-          << "return 1;" << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl
-          << "delete tmp;" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl;
-    }
-
-  *os << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_nl << be_nl
-      << "return 0;" << be_uidt_nl
+      << "return" << be_idt_nl
+      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::extract ("
+      << be_idt << be_idt_nl
+      << "_tao_any," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
+      << node->tc_name () << "," << be_nl
+      << "_tao_elem" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
   // All we have to do is to visit the scope and generate code.

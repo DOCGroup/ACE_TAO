@@ -44,8 +44,7 @@ class TAO_IFRService_Export TAO_OperationDef_i : public virtual TAO_Contained_i
   //    of an interface.
   //
 public:
-  TAO_OperationDef_i (TAO_Repository_i *repo,
-                      ACE_Configuration_Section_Key section_key);
+  TAO_OperationDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_OperationDef_i (void);
@@ -57,13 +56,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -79,46 +78,46 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_IDLType_ptr result_def (
+  virtual CORBA::IDLType_ptr result_def (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_IDLType_ptr result_def_i (
+  CORBA::IDLType_ptr result_def_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void result_def (
-      CORBA_IDLType_ptr result_def
+      CORBA::IDLType_ptr result_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void result_def_i (
-      CORBA_IDLType_ptr result_def
+      CORBA::IDLType_ptr result_def
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_ParDescriptionSeq *params (
+  virtual CORBA::ParDescriptionSeq *params (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_ParDescriptionSeq *params_i (
+  CORBA::ParDescriptionSeq *params_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void params (
-      const CORBA_ParDescriptionSeq &params
+      const CORBA::ParDescriptionSeq &params
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void params_i (
-      const CORBA_ParDescriptionSeq &params
+      const CORBA::ParDescriptionSeq &params
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -145,51 +144,51 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_ContextIdSeq *contexts (
+  virtual CORBA::ContextIdSeq *contexts (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_ContextIdSeq *contexts_i (
+  CORBA::ContextIdSeq *contexts_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void contexts (
-      const CORBA_ContextIdSeq &contexts
+      const CORBA::ContextIdSeq &contexts
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void contexts_i (
-      const CORBA_ContextIdSeq &contexts
+      const CORBA::ContextIdSeq &contexts
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_ExceptionDefSeq *exceptions (
+  virtual CORBA::ExceptionDefSeq *exceptions (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_ExceptionDefSeq *exceptions_i (
+  CORBA::ExceptionDefSeq *exceptions_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void exceptions (
-      const CORBA_ExceptionDefSeq &exceptions
+      const CORBA::ExceptionDefSeq &exceptions
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void exceptions_i (
-      const CORBA_ExceptionDefSeq &exceptions
+      const CORBA::ExceptionDefSeq &exceptions
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_OperationDescription make_description (
+  CORBA::OperationDescription make_description (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -290,6 +290,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id (void) const;";
 
+  // The virtual marshal method, to prevent marshal of local iterfaces.
+  *os << be_nl << "virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
+
   if (node->is_abstract ())
     {
       *os << be_nl << be_nl

@@ -16,49 +16,38 @@
 //   time. This IDL file contains all the interfaces and other data
 //   types related to fixed types and valuetypes.
 //
-//   1. Patch this pidl file with
+//   The command used to generate code from this IDL file is:
 //
-//      patch < diffs/IFR_Extended.pidl.diff
-//
-//   This will remove the CORBA module, rename most types foo
-//   declared in it as CORBA_foo, unalias the simple typedefs
-//   which don't have a CORBA_ analog in corbafwd.h.
-//
-//   2. Generate the code. The command used to generate code from this 
-//   IDL file is:
-//
-//     tao_idl -o orig -Ge 1 -I.. \
+//     tao_idl -Ge 1 -I.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
-//          IFR_Extended.pidl
+//          IFR_ExtendedC.pidl
 //
-//   3. Copy the generated files to the current directory.
+//   Only the stub files are used in the TAO_IFR_Client library. The
+//   skeleton files can be deleted from this directory.
 //
-//   4. Patch the generated files, using
-//      
-//      patch < diffs/IFR_ExtendedC.h.diff
-//      patch < diffs/IFR_ExtendedC.i.diff
-//      patch < diffs/IFR_ExtendedC.cpp.diff
+//   No patching of the generated stub files is necessary.
 //
-//   If this fails for some reason, the files must be patched
-//   by hand, and the diff files regenerated with
+//   To generate the skeleton files for the IFR Service, the command is:
 //
-//      diff -wbu orig/IFR_ExtendedC.h IFR_ExtendedC.h > diffs/IFR_ExtendedC.h.diff
-//      diff -wbu orig/IFR_ExtendedC.i IFR_ExtendedC.i > diffs/IFR_ExtendedC.i.diff
-//      diff -wbu orig/IFR_ExtendedC.cpp IFR_ExtendedC.cpp > diffs/IFR_ExtendedC.cpp.diff
-//
-//   5. Restore IFR_Extended.pidl.
-//
-//   To regenerate the skeleton files IFR_ExtendedS.{h,i,cpp} and 
-//   IFR_ExtendedS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service,
-//   use the command
-//
-//     tao_idl -o ../../orbsvcs/IFR_Service/orig -Ge 1 \
+//     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
-//          IFR_Extended.pidl
+//          IFR_ExtendedC.pidl
+//
+//   The only modification necessary to the skelton files is to 
+//   change
+//
+//   #include "IFR_ExtendedC.h"
+//
+//   to
+//
+//   #include "tao/IFR_Client/IFR_ExtendedC.h"
+//
+//   in IFR_ExtendedS.h. The stub files may be deleted from the IFRService
+//   directory.
 //
 // ================================================================
 
@@ -71,7 +60,9 @@
 
 module CORBA
 {
-  typedef short ValueModifier; // PIDL
+// Already defined in corbafwd.h, included from orb.idl.
+/*
+  typedef short ValueModifier;
   const ValueModifier VM_NONE = 0;
   const ValueModifier VM_CUSTOM = 1;
   const ValueModifier VM_ABSTRACT = 2;
@@ -80,7 +71,7 @@ module CORBA
   typedef short Visibility;
   const Visibility PRIVATE_MEMBER = 0;
   const Visibility PUBLIC_MEMBER = 1;
-
+*/
   interface FixedDef : IDLType 
   {
     attribute unsigned short digits;
@@ -188,7 +179,5 @@ module CORBA
     attribute IDLType original_type_def;
   };
 };
-
-#pragma prefix ""
 
 #endif /* _IFR_EXTENDED_IDL_ */

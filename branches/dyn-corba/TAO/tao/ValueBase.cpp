@@ -40,6 +40,12 @@ CORBA_ValueBase::_downcast (CORBA_ValueBase *vt)
   return vt;  // every vt is a CORBA::ValueBase :-)
 }
 
+void
+CORBA_ValueBase::_tao_any_destructor (void *x)
+{
+  CORBA::ValueBase_ptr tmp = ACE_static_cast (CORBA::ValueBase *, x);
+  CORBA::remove_ref (tmp);
+}
 
 // OBV marshaling in principle:
 // _tao_marshal () is called from the CDR operator<< ()

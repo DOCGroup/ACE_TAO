@@ -63,11 +63,13 @@
 
 module CORBA
 {
+// These are pulled in from #includes.
+/*
   typedef string Identifier;
   typedef string RepositoryId;
   typedef short ValueModifier;
-
-  local interface TypeCodeFactory  // PIDL
+*/
+  local interface TypeCodeFactory
   {
     TypeCode create_struct_tc (
         in RepositoryId id,
@@ -172,5 +174,4 @@ module CORBA
   };
 };
 
-#pragma prefix ""
 #endif // _TYPECODEFACTORY_IDL_

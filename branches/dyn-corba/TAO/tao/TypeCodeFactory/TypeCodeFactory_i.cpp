@@ -53,14 +53,15 @@ TAO_TypeCodeFactory_i::_tao_QueryInterface (ptr_arith_t type)
       return this;
     }
 
-  return this->CORBA_TypeCodeFactory::_tao_QueryInterface (type);
+  return 
+    this->ACE_NESTED_CLASS (CORBA, TypeCodeFactory::_tao_QueryInterface) (type);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_struct_tc (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq &members
+    const CORBA::StructMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -77,7 +78,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA_UnionMemberSeq &members
+    const CORBA::UnionMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -323,7 +324,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_enum_tc (
     const char *id,
     const char *name,
-    const CORBA_EnumMemberSeq &members
+    const CORBA::EnumMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -476,7 +477,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_exception_tc (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq &members
+    const CORBA::StructMemberSeq &members
     ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -672,7 +673,7 @@ TAO_TypeCodeFactory_i::create_value_tc (
     const char * /* name */,
     CORBA::ValueModifier /* type_modifier */,
     CORBA::TypeCode_ptr /* concrete_base */,
-    const CORBA_ValueMemberSeq & /* members */
+    const CORBA::ValueMemberSeq & /* members */
     ACE_ENV_ARG_DECL_NOT_USED
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -832,7 +833,7 @@ void
 TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::TCKind kind,
     CORBA::ULong skip_slot,
-    const CORBA_UnionMemberSeq &members,
+    const CORBA::UnionMemberSeq &members,
     TAO_OutputCDR &cdr
   )
 {
@@ -1065,7 +1066,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::struct_except_tc_common (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq &members,
+    const CORBA::StructMemberSeq &members,
     CORBA::TCKind kind
     ACE_ENV_ARG_DECL
   )
@@ -1243,7 +1244,7 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::unique_label_values (const CORBA_UnionMemberSeq &members,
+TAO_TypeCodeFactory_i::unique_label_values (const CORBA::UnionMemberSeq &members,
                                             CORBA::TypeCode_ptr disc_tc,
                                             CORBA::ULong default_index_slot
                                             ACE_ENV_ARG_DECL)

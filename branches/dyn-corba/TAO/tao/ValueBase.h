@@ -44,6 +44,9 @@ public:
   // dynamic casting
   static CORBA::ValueBase* _downcast (CORBA::ValueBase*);
 
+  /// Used in the implementation of CORBA::Any
+  static void _tao_any_destructor (void*);
+
   /// TAO extension
   virtual const char* _tao_obv_repository_id (void) const = 0;
 

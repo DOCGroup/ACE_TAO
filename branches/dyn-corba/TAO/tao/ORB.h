@@ -185,9 +185,11 @@ public:
   void get_default_context (CORBA::Context_ptr &ctx
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean get_service_information (CORBA::ServiceType service_type,
-                                          CORBA::ServiceInformation_out service_information
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Boolean get_service_information (
+      CORBA::ServiceType service_type,
+      CORBA::ServiceInformation_out service_information
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
   void send_multiple_requests_oneway (const CORBA_ORB_RequestSeq &req
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -207,7 +209,6 @@ public:
       const char *name,
       const CORBA::StructMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_union_tc (
@@ -216,7 +217,6 @@ public:
       CORBA::TypeCode_ptr discriminator_type,
       const CORBA::UnionMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_enum_tc (
@@ -224,7 +224,6 @@ public:
       const char *name,
       const CORBA::EnumMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_alias_tc (
@@ -232,7 +231,6 @@ public:
       const char *name,
       CORBA::TypeCode_ptr original_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_exception_tc (
@@ -240,47 +238,40 @@ public:
       const char *name,
       const CORBA::StructMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_interface_tc (
       const char *id,
       const char *name
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_wstring_tc (
       CORBA::ULong bound
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_fixed_tc (
       CORBA::UShort digits,
       CORBA::UShort scale
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_sequence_tc (
       CORBA::ULong bound,
       CORBA::TypeCode_ptr element_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_array_tc (
       CORBA::ULong length,
       CORBA::TypeCode_ptr element_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_value_tc (
@@ -290,7 +281,6 @@ public:
       CORBA::TypeCode_ptr concrete_base,
       const CORBA::ValueMemberSeq &members
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_value_box_tc (
@@ -298,27 +288,23 @@ public:
       const char *name,
       CORBA::TypeCode_ptr boxed_type
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_native_tc (
       const char *id,
       const char *name
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_recursive_tc (
       const char *id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr create_abstract_interface_tc (
       const char *id,
       const char *name
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -326,7 +312,6 @@ public:
       const char *id,
       const char *ame
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

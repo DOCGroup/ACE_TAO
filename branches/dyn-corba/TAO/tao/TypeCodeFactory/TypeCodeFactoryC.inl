@@ -20,52 +20,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
 #if !defined (_CORBA_TYPECODEFACTORY___CI_)
 #define _CORBA_TYPECODEFACTORY___CI_
 
-ACE_INLINE CORBA_TypeCodeFactory_ptr
-tao_CORBA_TypeCodeFactory_duplicate (
-    CORBA_TypeCodeFactory_ptr p
-  )
+ACE_INLINE
+CORBA::Boolean
+CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
 {
-  return CORBA_TypeCodeFactory::_duplicate (p);
+  return 0;
 }
-
-ACE_INLINE void
-tao_CORBA_TypeCodeFactory_release (
-    CORBA_TypeCodeFactory_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE CORBA_TypeCodeFactory_ptr
-tao_CORBA_TypeCodeFactory_nil (
-    void
-  )
-{
-  return CORBA_TypeCodeFactory::_nil ();
-}
-
-ACE_INLINE CORBA_TypeCodeFactory_ptr
-tao_CORBA_TypeCodeFactory_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA_TypeCodeFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_CORBA_TypeCodeFactory_upcast (
-    void *src
-  )
-{
-  CORBA_TypeCodeFactory **tmp =
-    ACE_static_cast (CORBA_TypeCodeFactory **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 

@@ -44,8 +44,7 @@ class TAO_IFRService_Export TAO_EventDef_i : public virtual TAO_Contained_i
   //    object that contains information about the event.
   //
 public:
-    TAO_EventDef_i (TAO_Repository_i *repo,
-                    ACE_Configuration_Section_Key section_key);
+    TAO_EventDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_EventDef_i (void);
@@ -62,13 +61,13 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_Contained::Description *describe (
+  virtual CORBA::Contained::Description *describe (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual CORBA_Contained::Description *describe_i (
+  virtual CORBA::Contained::Description *describe_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -86,12 +85,12 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA_ValueDef_ptr event (
+  virtual CORBA::ValueDef_ptr event (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA_ValueDef_ptr event_i (
+  CORBA::ValueDef_ptr event_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -4,14 +4,15 @@
 #include "Repository_i.h"
 #include "PrimitiveDef_i.h"
 
-ACE_RCSID(IFR_Service, PrimitiveDef_i, "$Id$")
+ACE_RCSID (IFRService, 
+           PrimitiveDef_i, 
+           "$Id$")
 
 TAO_PrimitiveDef_i::TAO_PrimitiveDef_i (
-    TAO_Repository_i *repo,
-    ACE_Configuration_Section_Key section_key
+    TAO_Repository_i *repo
   )
-  : TAO_IRObject_i (repo, section_key),
-    TAO_IDLType_i (repo, section_key)
+  : TAO_IRObject_i (repo),
+    TAO_IDLType_i (repo)
 {
 }
 
@@ -21,37 +22,40 @@ TAO_PrimitiveDef_i::~TAO_PrimitiveDef_i (void)
 
 CORBA::DefinitionKind
 TAO_PrimitiveDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Primitive;
 }
 
 void
 TAO_PrimitiveDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 TAO_PrimitiveDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::BAD_INV_ORDER (2, CORBA::COMPLETED_NO));
 }
 
 CORBA::TypeCode_ptr
 TAO_PrimitiveDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_PrimitiveDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -111,16 +115,19 @@ TAO_PrimitiveDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CORBA::PrimitiveKind
 TAO_PrimitiveDef_i::kind (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::pk_null);
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::pk_null);
 
   return this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::PrimitiveKind
 TAO_PrimitiveDef_i::kind_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

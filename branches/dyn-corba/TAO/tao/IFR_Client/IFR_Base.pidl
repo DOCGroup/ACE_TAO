@@ -17,49 +17,38 @@
 //   the IFR as well as many of the non-interface data types used
 //   by all other IFR interfaces.
 //
-//   1. Patch this pidl file with
+//   The command used to generate code from this IDL file is:
 //
-//      patch < diffs/IFR_Base.pidl.diff
-//
-//   This will remove the CORBA module, rename most types foo
-//   declared in it as CORBA_foo, unalias the simple typedefs
-//   which don't have a CORBA_ analog in corbafwd.h.
-//
-//   2. Generate the code. The command used to generate code from this
-//   IDL file is:
-//
-//     tao_idl -o orig -Ge 1 -I.. \
+//     tao_idl -Ge 1 -I.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Base.pidl
 //
-//   3. Copy the generated files to the current directory.
+//   Only the stub files are used in the TAO_IFR_Client library. The
+//   skeleton files can be deleted from this directory.
 //
-//   4. Patch the generated files, using
+//   No patching of the generated stub files is necessary.
 //
-//      patch < diffs/IFR_BaseC.h.diff
-//      patch < diffs/IFR_BaseC.i.diff
-//      patch < diffs/IFR_BaseC.cpp.diff
+//   To generate the skeleton files for the IFR Service, the command is:
 //
-//   If this fails for some reason, the files must be patched
-//   by hand, and the diff files regenerated with
-//
-//      diff -wbu orig/IFR_BaseC.h IFR_BaseC.h > diffs/IFR_BaseC.h.diff
-//      diff -wbu orig/IFR_BaseC.i IFR_BaseC.i > diffs/IFR_BaseC.i.diff
-//      diff -wbu orig/IFR_BaseC.cpp IFR_BaseC.cpp > diffs/IFR_BaseC.cpp.diff
-//
-//   5. Restore IFR_Base.pidl.
-//
-//   To regenerate the skeleton files IFR_BaseS.{h,i,cpp} and
-//   IFR_BaseS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service, use the
-//   command
-//
-//     tao_idl -o ../../orbsvcs/IFR_Service/orig -Ge 1 \
+//     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
 //          -Wb,pre_include="ace/pre.h" \
 //          -Wb,post_include="ace/post.h" \
 //          IFR_Base.pidl
+//
+//   The only modification necessary to the skelton files is to 
+//   change
+//
+//   #include "IFR_BaseC.h"
+//
+//   to
+//
+//   #include "tao/IFR_Client/IFR_BaseC.h"
+//
+//   in IFR_BaseS.h. The stub files may be deleted from the IFRService
+//   directory.
 //
 // ================================================================
 
@@ -101,7 +90,17 @@ module CORBA
     dk_ValueMember,
     dk_Native,
     dk_AbstractInterface,
-    dk_LocalInterface
+    dk_LocalInterface,
+    dk_Component,
+    dk_Home,
+    dk_Factory,
+    dk_Finder,
+    dk_Emits,
+    dk_Publishes,
+    dk_Consumes,
+    dk_Provides,
+    dk_Uses,
+    dk_Event
   };
 
   interface IRObject
@@ -330,7 +329,5 @@ module CORBA
     TypeCode type;
   };
 };
-
-#pragma prefix ""
 
 #endif /* _IFR_BASE_IDL_ */

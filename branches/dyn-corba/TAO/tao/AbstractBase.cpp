@@ -14,7 +14,6 @@
 // ============================================================================
 
 #include "tao/AbstractBase.h"
-#include "tao/Any.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ValueFactory.h"
@@ -107,6 +106,13 @@ CORBA_AbstractBase::_add_ref (void)
 void
 CORBA_AbstractBase::_remove_ref (void)
 {
+}
+
+void
+CORBA_AbstractBase::_tao_any_destructor (void *x)
+{
+  CORBA::AbstractBase_ptr tmp = ACE_static_cast (CORBA::AbstractBase_ptr, x);
+  CORBA::release (tmp);
 }
 
 CORBA::Object_ptr

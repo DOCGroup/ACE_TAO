@@ -295,14 +295,6 @@ SOURCE=.\IFRService\SequenceDef_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IFRService\Servant_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IFRService\Servant_Locator.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\IFRService\StringDef_i.cpp
 # End Source File
 # Begin Source File
@@ -524,14 +516,6 @@ SOURCE=.\IFRService\Repository_i.h
 # Begin Source File
 
 SOURCE=.\IFRService\SequenceDef_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IFRService\Servant_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IFRService\Servant_Locator.h
 # End Source File
 # Begin Source File
 

@@ -23,7 +23,6 @@
 
 #include "tao/Object.h"
 #include "tao/ValueBase.h"
-#include "tao/ValueFactory.h"
 
 /**
  * @class CORBA_AbstractBase
@@ -54,6 +53,9 @@ public:
       CORBA::AbstractBase_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
+
+  /// Used in the implementation of CORBA::Any
+  static void _tao_any_destructor (void*);
 
   static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
   static CORBA::AbstractBase_ptr _nil (void);

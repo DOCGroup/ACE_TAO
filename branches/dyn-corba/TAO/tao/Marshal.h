@@ -26,7 +26,6 @@
 
 #include "tao/Typecode.h"
 #include "tao/Principal.h"
-#include "tao/Any.h"
 #include "tao/ORB.h"
 
 class TAO_OutputCDR;

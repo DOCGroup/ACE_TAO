@@ -2,13 +2,13 @@
 //
 // $Id$
 
+#include "concrete_classes.h"
 #include "Repository_i.h"
 #include "IDLType_i.h"
-#include "ExceptionDef_i.h"
 #include "Options.h"
-#include "Servant_Factory.h"
 
 #include "tao/ORB.h"
+#include "tao/Object_KeyC.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -19,75 +19,604 @@ ACE_RCSID (IFR_Service,
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
                                     ACE_Configuration *config)
-  : TAO_IRObject_i (0, ACE_Configuration_Section_Key ()),
-    TAO_Container_i (0, ACE_Configuration_Section_Key ()),
+  : TAO_IRObject_i (0),
+    TAO_Container_i (0),
     orb_ (orb),
-    ir_poa_ (poa),
+    root_poa_ (poa),
     config_ (config),
-    servant_factory_ (0),
     extension_ (CORBA::string_dup ("TAO_IFR_name_extension")),
     lock_ (0)
 {
-  ACE_TRY_NEW_ENV
+}
+
+TAO_Repository_i::~TAO_Repository_i (void)
+{
+  delete this->lock_;
+}
+
+CORBA::DefinitionKind
+TAO_Repository_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return CORBA::dk_Repository;
+}
+
+void
+TAO_Repository_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW (CORBA::BAD_INV_ORDER (2, CORBA::COMPLETED_NO));
+}
+
+CORBA::Contained_ptr
+TAO_Repository_i::lookup_id (const char *search_id
+                             ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (CORBA::Contained::_nil ());
+
+  return this->lookup_id_i (search_id
+                            ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Contained_ptr
+TAO_Repository_i::lookup_id_i (const char *search_id
+                               ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
+      || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
     {
-      // Create the appropriate lock.
-      if (OPTIONS::instance ()->enable_locking ())
+      return CORBA::Contained::_nil ();
+    }
+
+  ACE_TString path;
+  if (this->config_->get_string_value (this->repo_ids_key_,
+                                       search_id,
+                                       path)
+       != 0)
+    {
+      return CORBA::Contained::_nil ();
+    }
+
+  ACE_Configuration_Section_Key key;
+  this->config_->expand_path (this->root_key_,
+                              path,
+                              key);
+
+  u_int kind = 0;
+  this->config_->get_integer_value (key,
+                                    "def_kind",
+                                    kind);
+
+  CORBA::DefinitionKind def_kind =
+    ACE_static_cast (CORBA::DefinitionKind, kind);
+
+  CORBA::Object_var obj = this->create_objref (def_kind,
+                                               path.c_str ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Contained::_nil ());
+
+  return CORBA::Contained::_narrow (obj.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc
+                                          ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->get_canonical_typecode_i (tc
+                                         ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::TypeCode_ptr
+TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc
+                                            ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  switch (kind)
+  {
+    // For all the TCKinds not covered below, no change is needed.
+    default:
+      return CORBA::TypeCode::_duplicate (tc);
+    case CORBA::tk_fixed:
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+    case CORBA::tk_array:
+    {
+      CORBA::ULong length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      CORBA::TypeCode_var ctype = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      CORBA::TypeCode_var canon_ctype =
+        this->get_canonical_typecode_i (ctype.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      return this->tc_factory ()->create_array_tc (length,
+                                                   canon_ctype.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+    }
+    case CORBA::tk_sequence:
+    {
+      CORBA::ULong length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      CORBA::TypeCode_var ctype = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      CORBA::TypeCode_var canon_ctype =
+        this->get_canonical_typecode_i (ctype.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      return this->tc_factory ()->create_sequence_tc (length,
+                                                      canon_ctype.in ()
+                                                      ACE_ENV_ARG_PARAMETER);
+    }
+    case CORBA::tk_alias:
+    case CORBA::tk_objref:
+    case CORBA::tk_struct:
+    case CORBA::tk_union:
+    case CORBA::tk_enum:
+    case CORBA::tk_except:
+    case CORBA::tk_value:
+    case CORBA::tk_value_box:
+    case CORBA::tk_native:
+    case CORBA::tk_abstract_interface:
+    case CORBA::tk_component:
+    case CORBA::tk_home:
+    {
+      CORBA::String_var id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+      ACE_TString path;
+      int status =
+        this->config ()->get_string_value (this->repo_ids_key (),
+                                           id.in (),
+                                           path);
+
+      // TODO - something in case the repo id is an empty string,
+      //        or if it is not found in this repository
+      if (status != 0)
         {
-          ACE_NEW_THROW_EX (this->lock_,
-                            ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
-                            CORBA::NO_MEMORY ());
+          return CORBA::TypeCode::_nil ();
+        }
+
+      ACE_Configuration_Section_Key key;
+      this->config ()->expand_path (this->root_key (),
+                                    path,
+                                    key,
+                                    0);
+
+      // An ExceptionDef is not an IDLType.
+      if (kind == CORBA::tk_except)
+        {
+          TAO_ExceptionDef_i impl (this);
+          impl.section_key (key);
+          return impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
       else
         {
-          ACE_NEW_THROW_EX (this->lock_,
-                            ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-                            CORBA::NO_MEMORY ());
+          TAO_IDLType_i *impl = this->path_to_idltype (path);
+          impl->section_key (key);
+          return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
-      ACE_TRY_CHECK;
+    }
+  }
+}
 
-      // Create the servant factory.
-      ACE_NEW_THROW_EX (this->servant_factory_,
-                        IFR_Servant_Factory (this),
+CORBA::PrimitiveDef_ptr
+TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind
+                                 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_TString obj_id ("pkinds\\");
+
+  obj_id += this->pkind_to_string (kind);
+
+  CORBA::Object_var obj = this->create_objref (CORBA::dk_Primitive,
+                                               obj_id.c_str ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::PrimitiveDef::_nil ());
+
+  return CORBA::PrimitiveDef::_narrow (obj.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::StringDef_ptr
+TAO_Repository_i::create_string (CORBA::ULong bound
+                                 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA::StringDef::_nil ());
+
+  return this->create_string_i (bound
+                                ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::StringDef_ptr
+TAO_Repository_i::create_string_i (CORBA::ULong bound
+                                   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  u_int count = 0;
+  this->config_->get_integer_value (this->strings_key_,
+                                    "count",
+                                    count);
+
+  CORBA::String_var name = this->int_to_string (count++);
+  this->config_->set_integer_value (this->strings_key_,
+                                    "count",
+                                    count);
+
+  // Make new database entry.
+  ACE_Configuration_Section_Key new_key;
+  this->config_->open_section (this->strings_key_,
+                               name.in (),
+                               1,
+                               new_key);
+
+  this->config_->set_integer_value (new_key,
+                                    "bound",
+                                    bound);
+
+  this->config_->set_integer_value (new_key,
+                                    "def_kind",
+                                    CORBA::dk_String);
+
+  this->config_->set_string_value (new_key,
+                                   "name",
+                                   name.in ());
+
+  // Create the object reference.
+  ACE_TString obj_id ("strings\\");
+  obj_id += name.in ();
+
+  CORBA::Object_var obj = this->create_objref (CORBA::dk_String,
+                                               obj_id.c_str ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::StringDef::_nil ());
+
+  return CORBA::StringDef::_narrow (obj.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::WstringDef_ptr
+TAO_Repository_i::create_wstring (CORBA::ULong bound
+                                  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA::WstringDef::_nil ());
+
+  return this->create_wstring_i (bound
+                                 ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::WstringDef_ptr
+TAO_Repository_i::create_wstring_i (CORBA::ULong bound
+                                    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  u_int count = 0;
+  this->config_->get_integer_value (this->wstrings_key_,
+                                    "count",
+                                    count);
+
+  CORBA::String_var name = this->int_to_string (count++);
+  this->config_->set_integer_value (this->wstrings_key_,
+                                    "count",
+                                    count);
+
+  // Make new database entry.
+  ACE_Configuration_Section_Key new_key;
+  this->config_->open_section (this->wstrings_key_,
+                               name.in (),
+                               1,
+                               new_key);
+
+  this->config_->set_integer_value (new_key,
+                                    "bound",
+                                    bound);
+
+  this->config_->set_integer_value (new_key,
+                                    "def_kind",
+                                    CORBA::dk_Wstring);
+
+  this->config_->set_string_value (new_key,
+                                   "name",
+                                   name.in ());
+
+  // Create the object reference.
+  ACE_TString obj_id ("wstrings\\");
+  obj_id += name.in ();
+
+  CORBA::Object_var obj = this->create_objref (CORBA::dk_Wstring,
+                                               obj_id.c_str ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::WstringDef::_nil ());
+
+  return CORBA::WstringDef::_narrow (obj.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::SequenceDef_ptr
+TAO_Repository_i::create_sequence (CORBA::ULong bound,
+                                   CORBA::IDLType_ptr element_type
+                                   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA::SequenceDef::_nil ());
+
+  return this->create_sequence_i (bound,
+                                  element_type
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::SequenceDef_ptr
+TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
+                                     CORBA::IDLType_ptr element_type
+                                     ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  u_int count = 0;
+  this->config_->get_integer_value (this->sequences_key_,
+                                    "count",
+                                    count);
+
+  CORBA::String_var name = this->int_to_string (count++);
+  this->config_->set_integer_value (this->sequences_key_,
+                                    "count",
+                                    count);
+
+  // Make new database entry.
+  ACE_Configuration_Section_Key new_key;
+  this->config_->open_section (this->sequences_key_,
+                               name.in (),
+                               1,
+                               new_key);
+
+  // Set the bound attribute.
+  this->config_->set_integer_value (new_key,
+                                    "bound",
+                                    bound);
+
+  // Set the def_kind attribute.
+  this->config_->set_integer_value (new_key,
+                                    "def_kind",
+                                    CORBA::dk_Sequence);
+
+  // Set the "name" for destroy to use.
+  this->config_->set_string_value (new_key,
+                                   "name",
+                                   name.in ());
+
+  CORBA::String_var element_path =
+    this->reference_to_path (element_type);
+
+  // To get key to element type.
+  this->config_->set_string_value (new_key,
+                                   "element_path",
+                                   element_path.in ());
+
+  // Create the object reference.
+  ACE_TString obj_id ("sequences\\");
+  obj_id += name.in ();
+
+  CORBA::Object_var obj = this->create_objref (CORBA::dk_Sequence,
+                                               obj_id.c_str ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::SequenceDef::_nil ());
+
+  return CORBA::SequenceDef::_narrow (obj.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::ArrayDef_ptr
+TAO_Repository_i::create_array (CORBA::ULong length,
+                                CORBA::IDLType_ptr element_type
+                                ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA::ArrayDef::_nil ());
+
+  return this->create_array_i (length,
+                               element_type
+                               ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::ArrayDef_ptr
+TAO_Repository_i::create_array_i (CORBA::ULong length,
+                                  CORBA::IDLType_ptr element_type
+                                  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  u_int count = 0;
+  this->config_->get_integer_value (this->arrays_key_,
+                                    "count",
+                                    count);
+
+  CORBA::String_var name = this->int_to_string (count++);
+  this->config_->set_integer_value (this->arrays_key_,
+                                    "count",
+                                    count);
+
+  // Make new database entry.
+  ACE_Configuration_Section_Key new_key;
+  this->config_->open_section (this->arrays_key_,
+                               name.in (),
+                               1,
+                               new_key);
+
+  // Set the length attribute.
+  this->config_->set_integer_value (new_key,
+                                    "length",
+                                    length);
+
+  // Set the def_kind attribute.
+  this->config_->set_integer_value (new_key,
+                                    "def_kind",
+                                    CORBA::dk_Array);
+
+  // Set the "name" for destroy to use.
+  this->config_->set_string_value (new_key,
+                                   "name",
+                                   name.in ());
+
+  CORBA::String_var element_path =
+    this->reference_to_path (element_type);
+
+  // To get key to element type.
+  this->config_->set_string_value (new_key,
+                                   "element_path",
+                                   element_path.in ());
+
+  // Create the object reference.
+  ACE_TString obj_id ("arrays\\");
+  obj_id += name.in ();
+
+  CORBA::Object_var obj = this->create_objref (CORBA::dk_Array,
+                                               obj_id.c_str ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ArrayDef::_nil ());
+
+  return CORBA::ArrayDef::_narrow (obj.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::FixedDef_ptr
+TAO_Repository_i::create_fixed (CORBA::UShort digits,
+                                CORBA::Short scale
+                                ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA::FixedDef::_nil ());
+
+  return this->create_fixed_i (digits,
+                               scale
+                               ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::FixedDef_ptr
+TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
+                                  CORBA::Short /* scale */
+                                  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::FixedDef::_nil ());
+}
+
+int
+TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
+                             PortableServer::POA_ptr repo_poa
+                             ACE_ENV_ARG_DECL)
+{
+  this->repo_objref_ = repo_ref;
+  this->repo_poa_ = repo_poa;
+
+  // Create the appropriate lock.
+  if (OPTIONS::instance ()->enable_locking ())
+    {
+      ACE_NEW_THROW_EX (this->lock_,
+                        ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                         CORBA::NO_MEMORY ());
-      ACE_TRY_CHECK;
-
-      // Resolve and narrow the TypeCodeFactory.
-      CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("TypeCodeFactory"
-                                                ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (!CORBA::is_nil (object.in ()))
-        {
-          this->tc_factory_ =
-            CORBA::TypeCodeFactory::_narrow (object.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (this->tc_factory_.in ()))
-            ACE_ERROR ((
-                LM_ERROR,
-                ACE_TEXT ("Repository: TypeCodeFactory narrow failed\n")
-              ));
-        }
-      else
-        {
-          ACE_ERROR ((
-              LM_ERROR,
-              ACE_TEXT ("Repository: TypeCodeFactory resolve failed\n")
-            ));
-        }
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (
-          ACE_ANY_EXCEPTION,
-          ACE_TEXT ("Repository: Initialization failed\n")
-        );
-      ACE_RE_THROW;
+      ACE_NEW_THROW_EX (this->lock_,
+                        ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                        CORBA::NO_MEMORY ());
     }
-  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
+  // Resolve and narrow the TypeCodeFactory.
+  CORBA::Object_var object =
+    this->orb_->resolve_initial_references ("TypeCodeFactory"
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (!CORBA::is_nil (object.in ()))
+    {
+      this->tc_factory_ =
+        CORBA::TypeCodeFactory::_narrow (object.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (CORBA::is_nil (this->tc_factory_.in ()))
+        ACE_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("Repository: TypeCodeFactory narrow failed\n")
+          ),
+          -1
+        );
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("Repository: TypeCodeFactory resolve failed\n")
+        ),
+        -1
+      );
+    }
+
+  // Resolve and narrow the POACurrent object.
+  object =
+    this->orb_->resolve_initial_references ("POACurrent"
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (!CORBA::is_nil (object.in ()))
+    {
+      this->poa_current_ =
+        PortableServer::Current::_narrow (object.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (CORBA::is_nil (this->poa_current_.in ()))
+        ACE_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("Repository: POACurrent narrow failed\n")
+          ),
+          -1
+        );
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("Repository: POACurrent resolve failed\n")
+        ),
+        -1
+      );
+    }
+
+  if (this->create_sections () != 0)
+    {
+      return -1;
+    }
+
+  int status = this->create_servants_and_poas (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+TAO_Repository_i::create_sections (void)
+{
   this->config_->open_section (config_->root_section (),
                                "root",
                                1, // Will create if IFR is not persistent.
@@ -114,7 +643,8 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                    this->pkinds_key_);
 
       u_int num_pkinds = this->num_pkinds ();
-      for (u_int i = 0; i < num_pkinds; i++)
+
+      for (u_int i = 0; i < num_pkinds; ++i)
         {
           ACE_Configuration_Section_Key key;
           CORBA::PrimitiveKind pkind = ACE_static_cast (CORBA::PrimitiveKind,
@@ -212,517 +742,268 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
   this->config_->set_integer_value (this->section_key_,
                                     "def_kind",
                                     CORBA::dk_Repository);
+
+  return 0;
 }
 
-TAO_Repository_i::~TAO_Repository_i (void)
+int
+TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
 {
-  delete this->servant_factory_;
-  delete this->lock_;
-}
+  CORBA::PolicyList policies (5);
+  policies.length (5);
 
-CORBA::DefinitionKind
-TAO_Repository_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return CORBA::dk_Repository;
-}
+  // ID Assignment Policy.
+  policies[0] =
+    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID 
+                                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
-void
-TAO_Repository_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_THROW (CORBA::BAD_INV_ORDER (2, CORBA::COMPLETED_NO));
-}
+  // Lifespan Policy.
+  policies[1] =
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT 
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1); 
 
-CORBA_Contained_ptr
-TAO_Repository_i::lookup_id (const char *search_id
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_READ_GUARD_RETURN (CORBA_Contained::_nil ());
+  // Request Processing Policy.
+  policies[2] =
+    this->root_poa_->create_request_processing_policy (
+        PortableServer::USE_DEFAULT_SERVANT 
+        ACE_ENV_ARG_PARAMETER
+      );
+  ACE_CHECK_RETURN (-1);
 
-  return this->lookup_id_i (search_id
-                            ACE_ENV_ARG_PARAMETER);
-}
+  // Servant Retention Policy.
+  policies[3] =
+    this->root_poa_->create_servant_retention_policy (
+        PortableServer::NON_RETAIN 
+        ACE_ENV_ARG_PARAMETER
+      );
+  ACE_CHECK_RETURN (-1);
 
-CORBA_Contained_ptr
-TAO_Repository_i::lookup_id_i (const char *search_id
-                               ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
-      || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
+  // Id Uniqueness Policy.
+  policies[4] =
+    this->root_poa_->create_id_uniqueness_policy (
+        PortableServer::MULTIPLE_ID 
+        ACE_ENV_ARG_PARAMETER
+      );
+  ACE_CHECK_RETURN (-1);
+
+  PortableServer::POAManager_var poa_manager =
+    this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+#define GEN_IR_OBJECT(name) \
+  this-> ## name ## _poa_ = \
+    this->root_poa_->create_POA (#name "_poa", \
+                                 poa_manager.in (), \
+                                 policies \
+                                 ACE_ENV_ARG_PARAMETER); \
+  ACE_CHECK_RETURN (-1); \
+  TAO_ ## name ## _i * ## name ## _impl = 0; \
+  ACE_NEW_RETURN (name ## _impl, \
+                  TAO_ ## name ## _i (this), \
+                  -1); \
+  ACE_NEW_RETURN (this-> ## name ## _servant_, \
+                  POA_CORBA:: ## name ## _tie<TAO_ ## name ## _i> ( \
+                      name ## _impl, \
+                      this-> ## name ## _poa_, \
+                      1 \
+                    ), \
+                  -1); \
+  PortableServer::ServantBase_var name ## _safety ( \
+      this-> ## name ## _servant_ \
+    ); \
+  this-> ## name ## _poa_->set_servant (this-> ## name ## _servant_ \
+                                        ACE_ENV_ARG_PARAMETER); \
+  ACE_CHECK_RETURN (-1);
+
+  CONCRETE_IR_OBJECT_TYPES
+
+#undef GEN_IR_OBJECT
+#undef CONCRETE_IR_OBJECT_TYPES
+
+  CORBA::ULong length = policies.length ();
+
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
-      return CORBA_Contained::_nil ();
+      CORBA::Policy_ptr policy = policies[i];
+      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
     }
 
-  ACE_TString path;
-  if (this->config_->get_string_value (this->repo_ids_key_,
-                                       search_id,
-                                       path)
-       != 0)
-    {
-      return CORBA_Contained::_nil ();
-    }
-
-  ACE_Configuration_Section_Key key;
-  this->config_->expand_path (this->root_key_,
-                              path,
-                              key);
-
-  u_int kind = 0;
-  this->config_->get_integer_value (key,
-                                    "def_kind",
-                                    kind);
-
-  CORBA::DefinitionKind def_kind =
-    ACE_static_cast (CORBA::DefinitionKind, kind);
-
-  CORBA::Object_var obj =
-    this->servant_factory_->create_objref (def_kind,
-                                           path.c_str ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_Contained::_nil ());
-
-  return CORBA_Contained::_narrow (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
+  return 0;
 }
 
-CORBA::TypeCode_ptr
-TAO_Repository_i::get_canonical_typecode (CORBA::TypeCode_ptr tc
-                                          ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_IDLType_i *
+TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
-
-  return this->get_canonical_typecode_i (tc
-                                         ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::TypeCode_ptr
-TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc
-                                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  switch (kind)
+  switch (def_kind)
   {
-    // For all the TCKinds not covered below, no change is needed.
+    case CORBA::dk_AbstractInterface:
+      return this->AbstractInterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_Alias:
+      return this->AliasDef_servant_->_tied_object ();
+    case CORBA::dk_Array:
+      return this->ArrayDef_servant_->_tied_object ();
+    case CORBA::dk_Enum:
+      return this->EnumDef_servant_->_tied_object ();
+    case CORBA::dk_Fixed:
+      return this->FixedDef_servant_->_tied_object ();
+    case CORBA::dk_Interface:
+      return this->InterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_LocalInterface:
+      return this->LocalInterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_Native:
+      return this->NativeDef_servant_->_tied_object ();
+    case CORBA::dk_Primitive:
+      return this->PrimitiveDef_servant_->_tied_object ();
+    case CORBA::dk_Sequence:
+      return this->SequenceDef_servant_->_tied_object ();
+    case CORBA::dk_String:
+      return this->StringDef_servant_->_tied_object ();
+    case CORBA::dk_Struct:
+      return this->StructDef_servant_->_tied_object ();
+    case CORBA::dk_Union:
+      return this->UnionDef_servant_->_tied_object ();
+    case CORBA::dk_ValueBox:
+      return this->ValueBoxDef_servant_->_tied_object ();
+    case CORBA::dk_Value:
+      return this->ValueDef_servant_->_tied_object ();
+    case CORBA::dk_Wstring:
+      return this->WstringDef_servant_->_tied_object ();
     default:
-      return CORBA::TypeCode::_duplicate (tc);
-    case CORBA::tk_fixed:
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
-    case CORBA::tk_array:
-    {
-      CORBA::ULong length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      CORBA::TypeCode_var ctype = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      CORBA::TypeCode_var canon_ctype =
-        this->get_canonical_typecode_i (ctype.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      return this->tc_factory ()->create_array_tc (length,
-                                                   canon_ctype.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-    }
-    case CORBA::tk_sequence:
-    {
-      CORBA::ULong length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      CORBA::TypeCode_var ctype = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      CORBA::TypeCode_var canon_ctype =
-        this->get_canonical_typecode_i (ctype.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      return this->tc_factory ()->create_sequence_tc (length,
-                                                      canon_ctype.in ()
-                                                      ACE_ENV_ARG_PARAMETER);
-    }
-    case CORBA::tk_alias:
-    case CORBA::tk_objref:
-    case CORBA::tk_struct:
-    case CORBA::tk_union:
-    case CORBA::tk_enum:
-    case CORBA::tk_except:
-    case CORBA::tk_value:
-    case CORBA::tk_value_box:
-    case CORBA::tk_native:
-    case CORBA::tk_abstract_interface:
-    case CORBA::tk_component:
-    case CORBA::tk_home:
-    {
-      CORBA::String_var id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-      ACE_TString path;
-      int status =
-        this->config ()->get_string_value (this->repo_ids_key (),
-                                           id.in (),
-                                           path);
-
-      // TODO - something in case the repo id is an empty string,
-      //        or if it is not found in this repository
-      if (status != 0)
-        return CORBA::TypeCode::_nil ();
-
-      ACE_Configuration_Section_Key key;
-      this->config ()->expand_path (this->root_key (),
-                                    path,
-                                    key,
-                                    0);
-
-      // An ExceptionDef is not an IDLType.
-      if (kind == CORBA::tk_except)
-        {
-          TAO_ExceptionDef_i impl (this,
-                                   key);
-
-          return impl.type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-        }
-      else
-        {
-          TAO_IDLType_i *impl =
-            this->servant_factory ()->create_idltype (key
-                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-          auto_ptr<TAO_IDLType_i> safety (impl);
-
-          return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-        }
-    }
+      return 0;
   }
 }
 
-CORBA_PrimitiveDef_ptr
-TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Container_i *
+TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
 {
-  ACE_TString obj_id ("pkinds\\");
-
-  obj_id += this->pkind_to_string (kind);
-
-  CORBA::Object_var obj =
-    this->servant_factory_->create_objref (CORBA::dk_Primitive,
-                                           obj_id.c_str ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_PrimitiveDef::_nil ());
-
-  return CORBA_PrimitiveDef::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+  switch (def_kind)
+  {
+    case CORBA::dk_AbstractInterface:
+      return this->AbstractInterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_Exception:
+      return this->ExceptionDef_servant_->_tied_object ();
+    case CORBA::dk_Interface:
+      return this->InterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_LocalInterface:
+      return this->LocalInterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_Module:
+      return this->ModuleDef_servant_->_tied_object ();
+    case CORBA::dk_Repository:
+      return ACE_const_cast (TAO_Container_i *, this);
+    case CORBA::dk_Struct:
+      return this->StructDef_servant_->_tied_object ();
+    case CORBA::dk_Union:
+      return this->UnionDef_servant_->_tied_object ();
+    case CORBA::dk_Value:
+      return this->ValueDef_servant_->_tied_object ();
+    default:
+      return 0;
+  }
 }
 
-CORBA_StringDef_ptr
-TAO_Repository_i::create_string (CORBA::ULong bound
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_Contained_i *
+TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
 {
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_StringDef::_nil ());
-
-  return this->create_string_i (bound
-                                ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_StringDef_ptr
-TAO_Repository_i::create_string_i (CORBA::ULong bound
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  u_int count = 0;
-  this->config_->get_integer_value (this->strings_key_,
-                                    "count",
-                                    count);
-
-  CORBA::String_var name = this->int_to_string (count++);
-  this->config_->set_integer_value (this->strings_key_,
-                                    "count",
-                                    count);
-
-  // Make new database entry.
-  ACE_Configuration_Section_Key new_key;
-  this->config_->open_section (this->strings_key_,
-                               name.in (),
-                               1,
-                               new_key);
-
-  this->config_->set_integer_value (new_key,
-                                    "bound",
-                                    bound);
-
-  this->config_->set_integer_value (new_key,
-                                    "def_kind",
-                                    CORBA::dk_String);
-
-  this->config_->set_string_value (new_key,
-                                   "name",
-                                   name.in ());
-
-  // Create the object reference.
-  ACE_TString obj_id ("strings\\");
-  obj_id += name.in ();
-
-  CORBA::Object_var obj =
-    this->servant_factory_->create_objref (CORBA::dk_String,
-                                           obj_id.c_str ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_StringDef::_nil ());
-
-  return CORBA_StringDef::_narrow (obj.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_WstringDef_ptr
-TAO_Repository_i::create_wstring (CORBA::ULong bound
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_WstringDef::_nil ());
-
-  return this->create_wstring_i (bound
-                                 ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_WstringDef_ptr
-TAO_Repository_i::create_wstring_i (CORBA::ULong bound
-                                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  u_int count = 0;
-  this->config_->get_integer_value (this->wstrings_key_,
-                                    "count",
-                                    count);
-
-  CORBA::String_var name = this->int_to_string (count++);
-  this->config_->set_integer_value (this->wstrings_key_,
-                                    "count",
-                                    count);
-
-  // Make new database entry.
-  ACE_Configuration_Section_Key new_key;
-  this->config_->open_section (this->wstrings_key_,
-                               name.in (),
-                               1,
-                               new_key);
-
-  this->config_->set_integer_value (new_key,
-                                    "bound",
-                                    bound);
-
-  this->config_->set_integer_value (new_key,
-                                    "def_kind",
-                                    CORBA::dk_Wstring);
-
-  this->config_->set_string_value (new_key,
-                                   "name",
-                                   name.in ());
-
-  // Create the object reference.
-  ACE_TString obj_id ("wstrings\\");
-  obj_id += name.in ();
-
-  CORBA::Object_var obj =
-    this->servant_factory_->create_objref (CORBA::dk_Wstring,
-                                           obj_id.c_str ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_WstringDef::_nil ());
-
-  return CORBA_WstringDef::_narrow (obj.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_SequenceDef_ptr
-TAO_Repository_i::create_sequence (CORBA::ULong bound,
-                                   CORBA_IDLType_ptr element_type
-                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_SequenceDef::_nil ());
-
-  return this->create_sequence_i (bound,
-                                  element_type
-                                  ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_SequenceDef_ptr
-TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
-                                     CORBA_IDLType_ptr element_type
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  PortableServer::ObjectId_var oid =
-    this->ir_poa_->reference_to_id (element_type
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
-
-  CORBA::String_var element_path =
-    PortableServer::ObjectId_to_string (oid.in ());
-
-  u_int count = 0;
-  this->config_->get_integer_value (this->sequences_key_,
-                                    "count",
-                                    count);
-
-  CORBA::String_var name = this->int_to_string (count++);
-  this->config_->set_integer_value (this->sequences_key_,
-                                    "count",
-                                    count);
-
-  // Make new database entry.
-  ACE_Configuration_Section_Key new_key;
-  this->config_->open_section (this->sequences_key_,
-                               name.in (),
-                               1,
-                               new_key);
-
-  // Set the bound attribute.
-  this->config_->set_integer_value (new_key,
-                                    "bound",
-                                    bound);
-
-  // Set the def_kind attribute.
-  this->config_->set_integer_value (new_key,
-                                    "def_kind",
-                                    CORBA::dk_Sequence);
-
-  // Set the "name" for destroy to use.
-  this->config_->set_string_value (new_key,
-                                   "name",
-                                   name.in ());
-
-  // To get key to element type.
-  this->config_->set_string_value (new_key,
-                                   "element_path",
-                                   element_path.in ());
-
-  // Create the object reference.
-  ACE_TString obj_id ("sequences\\");
-  obj_id += name.in ();
-
-  CORBA::Object_var obj =
-    this->servant_factory_->create_objref (CORBA::dk_Sequence,
-                                           obj_id.c_str ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_SequenceDef::_nil ());
-
-  return CORBA_SequenceDef::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_ArrayDef_ptr
-TAO_Repository_i::create_array (CORBA::ULong length,
-                                CORBA_IDLType_ptr element_type
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_ArrayDef::_nil ());
-
-  return this->create_array_i (length,
-                               element_type
-                               ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_ArrayDef_ptr
-TAO_Repository_i::create_array_i (CORBA::ULong length,
-                                  CORBA_IDLType_ptr element_type
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  PortableServer::ObjectId_var oid =
-    this->ir_poa_->reference_to_id (element_type
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_ArrayDef::_nil ());
-
-  CORBA::String_var element_path =
-    PortableServer::ObjectId_to_string (oid.in ());
-
-  u_int count = 0;
-  this->config_->get_integer_value (this->arrays_key_,
-                                    "count",
-                                    count);
-
-  CORBA::String_var name = this->int_to_string (count++);
-  this->config_->set_integer_value (this->arrays_key_,
-                                    "count",
-                                    count);
-
-  // Make new database entry.
-  ACE_Configuration_Section_Key new_key;
-  this->config_->open_section (this->arrays_key_,
-                               name.in (),
-                               1,
-                               new_key);
-
-  // Set the length attribute.
-  this->config_->set_integer_value (new_key,
-                                    "length",
-                                    length);
-
-  // Set the def_kind attribute.
-  this->config_->set_integer_value (new_key,
-                                    "def_kind",
-                                    CORBA::dk_Array);
-
-  // Set the "name" for destroy to use.
-  this->config_->set_string_value (new_key,
-                                   "name",
-                                   name.in ());
-
-  // To get key to element type.
-  this->config_->set_string_value (new_key,
-                                   "element_path",
-                                   element_path.in ());
-
-  // Create the object reference.
-  ACE_TString obj_id ("arrays\\");
-  obj_id += name.in ();
-
-  CORBA::Object_var obj =
-    this->servant_factory_->create_objref (CORBA::dk_Array,
-                                           obj_id.c_str ()
-                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_ArrayDef::_nil ());
-
-  return CORBA_ArrayDef::_narrow (obj.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_FixedDef_ptr
-TAO_Repository_i::create_fixed (CORBA::UShort digits,
-                                CORBA::Short scale
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD_RETURN (CORBA_FixedDef::_nil ());
-
-  return this->create_fixed_i (digits,
-                               scale
-                               ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA_FixedDef_ptr
-TAO_Repository_i::create_fixed_i (CORBA::UShort /* digits */,
-                                  CORBA::Short /* scale */
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA_FixedDef::_nil ());
+  switch (def_kind)
+  {
+    case CORBA::dk_AbstractInterface:
+      return this->AbstractInterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_Alias:
+      return this->AliasDef_servant_->_tied_object ();
+    case CORBA::dk_Attribute:
+      return this->AttributeDef_servant_->_tied_object ();
+    case CORBA::dk_Constant:
+      return this->ConstantDef_servant_->_tied_object ();
+    case CORBA::dk_Enum:
+      return this->EnumDef_servant_->_tied_object ();
+    case CORBA::dk_Exception:
+      return this->ExceptionDef_servant_->_tied_object ();
+    case CORBA::dk_Interface:
+      return this->InterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_LocalInterface:
+      return this->LocalInterfaceDef_servant_->_tied_object ();
+    case CORBA::dk_Module:
+      return this->ModuleDef_servant_->_tied_object ();
+    case CORBA::dk_Native:
+      return this->NativeDef_servant_->_tied_object ();
+    case CORBA::dk_Operation:
+      return this->OperationDef_servant_->_tied_object ();
+    case CORBA::dk_Struct:
+      return this->StructDef_servant_->_tied_object ();
+    case CORBA::dk_Union:
+      return this->UnionDef_servant_->_tied_object ();
+    case CORBA::dk_ValueBox:
+      return this->ValueBoxDef_servant_->_tied_object ();
+    case CORBA::dk_Value:
+      return this->ValueDef_servant_->_tied_object ();
+    case CORBA::dk_ValueMember:
+      return this->ValueMemberDef_servant_->_tied_object ();
+    default:
+      return 0;
+  }
 }
 
 PortableServer::POA_ptr
-TAO_Repository_i::ir_poa (void) const
+TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
 {
-  return this->ir_poa_;
+  switch (def_kind)
+  {
+    case CORBA::dk_AbstractInterface:
+      return this->AbstractInterfaceDef_poa_.in ();
+    case CORBA::dk_Alias:
+      return this->AliasDef_poa_.in ();
+    case CORBA::dk_Array:
+      return this->ArrayDef_poa_.in ();
+    case CORBA::dk_Attribute:
+      return this->AttributeDef_poa_.in ();
+    case CORBA::dk_Constant:
+      return this->ConstantDef_poa_.in ();
+    case CORBA::dk_Enum:
+      return this->EnumDef_poa_.in ();
+    case CORBA::dk_Exception:
+      return this->ExceptionDef_poa_.in ();
+    case CORBA::dk_Fixed:
+      return this->FixedDef_poa_.in ();
+    case CORBA::dk_Interface:
+      return this->InterfaceDef_poa_.in ();
+    case CORBA::dk_LocalInterface:
+      return this->LocalInterfaceDef_poa_.in ();
+    case CORBA::dk_Module:
+      return this->ModuleDef_poa_.in ();
+    case CORBA::dk_Native:
+      return this->NativeDef_poa_.in ();
+    case CORBA::dk_Operation:
+      return this->OperationDef_poa_.in ();
+    case CORBA::dk_Primitive:
+      return this->PrimitiveDef_poa_.in ();
+    case CORBA::dk_Sequence:
+      return this->SequenceDef_poa_.in ();
+    case CORBA::dk_String:
+      return this->StringDef_poa_.in ();
+    case CORBA::dk_Struct:
+      return this->StructDef_poa_.in ();
+    case CORBA::dk_Union:
+      return this->UnionDef_poa_.in ();
+    case CORBA::dk_ValueBox:
+      return this->ValueBoxDef_poa_.in ();
+    case CORBA::dk_Value:
+      return this->ValueDef_poa_.in ();
+    case CORBA::dk_ValueMember:
+      return this->ValueMemberDef_poa_.in ();
+    case CORBA::dk_Wstring:
+      return this->WstringDef_poa_.in ();
+    default:
+      return PortableServer::POA::_nil ();
+  }
+}
+
+PortableServer::Current_ptr
+TAO_Repository_i::poa_current (void) const
+{
+  return this->poa_current_.in ();
 }
 
 ACE_Configuration *
@@ -731,26 +1012,20 @@ TAO_Repository_i::config (void) const
   return this->config_;
 }
 
-IFR_Servant_Factory *
-TAO_Repository_i::servant_factory (void) const
-{
-  return this->servant_factory_;
-}
-
 CORBA::TypeCodeFactory_ptr
 TAO_Repository_i::tc_factory (void) const
 {
   return this->tc_factory_.in ();
 }
 
-CORBA_Repository_ptr
+CORBA::Repository_ptr
 TAO_Repository_i::repo_objref (void) const
 {
-  return CORBA_Repository::_duplicate (this->repo_objref_);
+  return CORBA::Repository::_duplicate (this->repo_objref_.in ());
 }
 
 void
-TAO_Repository_i::repo_objref (CORBA_Repository_ptr objref)
+TAO_Repository_i::repo_objref (CORBA::Repository_ptr objref)
 {
   this->repo_objref_ = objref;
 }

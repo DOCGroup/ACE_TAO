@@ -44,7 +44,7 @@ public:
   virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target
                                         ACE_ENV_ARG_DECL) = 0;
 
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       const CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     ) = 0;

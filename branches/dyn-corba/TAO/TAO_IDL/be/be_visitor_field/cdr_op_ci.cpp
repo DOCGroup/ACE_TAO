@@ -263,7 +263,7 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
 
 // Visit interface type.
 int
-be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
+be_visitor_field_cdr_op_ci::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_field *f = this->ctx_->be_node_as_field ();
@@ -286,7 +286,16 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+      if (node->is_defined ())
+        {
+          *os << "_tao_aggregate." << f->local_name () 
+              << ".in ()->marshal (strm)";
+        }
+      else
+        {
+          *os << "tao_" << node->flat_name () << "_marshal ("
+              << "_tao_aggregate." << f->local_name () << ".in (), strm)";
+        }
 
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
@@ -307,7 +316,7 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
 
 // Visit interface forward type.
 int
-be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
+be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -332,7 +341,16 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+      if (node->is_defined ())
+        {
+          *os << "_tao_aggregate." << f->local_name () 
+              << ".in ()->marshal (strm)";
+        }
+      else
+        {
+          *os << "tao_" << node->flat_name () << "_marshal ("
+              << "_tao_aggregate." << f->local_name () << ".in (), strm)";
+        }
 
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:

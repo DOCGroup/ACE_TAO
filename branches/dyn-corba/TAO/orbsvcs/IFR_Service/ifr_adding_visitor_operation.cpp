@@ -37,7 +37,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // just return 0. The IDL file must be legal, otherwise the IDL
       // compiler front end would have told us.
 
-      CORBA_Contained_var prev_def =
+      CORBA::Contained_var prev_def =
         be_global->repository ()->lookup_id (node->repoID ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -84,7 +84,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           length = 0;
         }
 
-      CORBA_ExceptionDefSeq exceptions (length);
+      CORBA::ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
       UTL_ExceptlistActiveIterator ex_iter (excepts);
@@ -100,7 +100,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          exceptions[i++] = CORBA_ExceptionDef::_narrow (prev_def.in ()
+          exceptions[i++] = CORBA::ExceptionDef::_narrow (prev_def.in ()
                                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -121,7 +121,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           length = 0;
         }
 
-      CORBA_ContextIdSeq contexts (length);
+      CORBA::ContextIdSeq contexts (length);
       contexts.length (length);
 
       UTL_StrlistActiveIterator ctx_iter (ctx_list);
@@ -153,16 +153,16 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       // Create the repository entry.
 
-      CORBA_Container_ptr current_scope = CORBA_Container::_nil ();
+      CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          CORBA_InterfaceDef_var iface =
-            CORBA_InterfaceDef::_narrow (current_scope
+          CORBA::InterfaceDef_var iface =
+            CORBA::InterfaceDef::_narrow (current_scope
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA_OperationDef_var new_def =
+          CORBA::OperationDef_var new_def =
             iface->create_operation (node->repoID (),
                                      node->local_name ()->get_string (),
                                      node->version (),
@@ -217,7 +217,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
       ACE_TRY_CHECK;
 
       this->params_[this->index_].type_def =
-        CORBA_IDLType::_duplicate (this->ir_current_.in ());
+        CORBA::IDLType::_duplicate (this->ir_current_.in ());
 
 
       switch (node->direction ())

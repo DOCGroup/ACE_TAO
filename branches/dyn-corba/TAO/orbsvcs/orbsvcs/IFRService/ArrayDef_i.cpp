@@ -3,15 +3,15 @@
 
 #include "ArrayDef_i.h"
 #include "Repository_i.h"
-#include "Servant_Factory.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(IFR_Service, ArrayDef_i, "$Id$")
+ACE_RCSID (IFRService, 
+           ArrayDef_i, 
+           "$Id$")
 
-TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo,
-                                ACE_Configuration_Section_Key section_key)
-  : TAO_IRObject_i (repo, section_key),
-    TAO_IDLType_i (repo, section_key)
+TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
+  : TAO_IRObject_i (repo),
+    TAO_IDLType_i (repo)
 {
 }
 
@@ -21,23 +21,26 @@ TAO_ArrayDef_i::~TAO_ArrayDef_i (void)
 
 CORBA::DefinitionKind
 TAO_ArrayDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Array;
 }
 
 void
 TAO_ArrayDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 TAO_ArrayDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Only if it is (w)string, fixed, array or sequence.
   this->destroy_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -55,16 +58,19 @@ TAO_ArrayDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::TypeCode_ptr
 TAO_ArrayDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_ArrayDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::TypeCode_var element_typecode =
     this->element_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -82,16 +88,19 @@ TAO_ArrayDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::ULong
 TAO_ArrayDef_i::length (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   return this->length_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::ULong
 TAO_ArrayDef_i::length_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u_int length = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -108,6 +117,9 @@ TAO_ArrayDef_i::length (CORBA::ULong length
 {
   TAO_IFR_WRITE_GUARD;
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->length_i (length
                   ACE_ENV_ARG_PARAMETER);
 }
@@ -115,7 +127,7 @@ TAO_ArrayDef_i::length (CORBA::ULong length
 void
 TAO_ArrayDef_i::length_i (CORBA::ULong length
                           ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
                                              "length",
@@ -128,102 +140,79 @@ TAO_ArrayDef_i::element_type (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
   return this->element_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 TAO_ArrayDef_i::element_type_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "element_path",
                                             element_path);
-
-  ACE_Configuration_Section_Key element_key;
-  this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       element_path,
-                                       element_key,
-                                       0);
-
   TAO_IDLType_i *impl =
-    this->repo_->servant_factory ()->create_idltype (element_key
-                                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
-  auto_ptr<TAO_IDLType_i> safety (impl);
+    this->path_to_idltype (element_path);
 
   return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 TAO_ArrayDef_i::element_type_def (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (CORBA_IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
   return this->element_type_def_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA_IDLType_ptr
+CORBA::IDLType_ptr
 TAO_ArrayDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "element_path",
                                             element_path);
 
-  ACE_Configuration_Section_Key element_key;
-  this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       element_path,
-                                       element_key,
-                                       0);
+  CORBA::Object_var obj = this->path_to_ir_object (element_path
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
 
-  u_int kind = 0;
-  this->repo_->config ()->get_integer_value (element_key,
-                                             "def_kind",
-                                             kind);
-
-  CORBA::DefinitionKind def_kind =
-    ACE_static_cast (CORBA::DefinitionKind, kind);
-
-  CORBA::Object_var obj =
-    this->repo_->servant_factory ()->create_objref (def_kind,
-                                                    element_path.c_str ()
-                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
-
-  return CORBA_IDLType::_narrow (obj.in ()
+  return CORBA::IDLType::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ArrayDef_i::element_type_def (CORBA_IDLType_ptr element_type_def
+TAO_ArrayDef_i::element_type_def (CORBA::IDLType_ptr element_type_def
                                   ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->element_type_def_i (element_type_def
                             ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ArrayDef_i::element_type_def_i (CORBA_IDLType_ptr element_type_def
+TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def
                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->destroy_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  PortableServer::ObjectId_var oid =
-    this->repo_->ir_poa ()->reference_to_id (element_type_def
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
   CORBA::String_var new_element_path =
-    PortableServer::ObjectId_to_string (oid.in ());
+    this->reference_to_path (element_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "element_path",
@@ -232,8 +221,9 @@ TAO_ArrayDef_i::element_type_def_i (CORBA_IDLType_ptr element_type_def
 
 void
 TAO_ArrayDef_i::destroy_element_type (
-      ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -251,13 +241,12 @@ TAO_ArrayDef_i::destroy_element_type (
                                              "def_kind",
                                              kind);
 
-  CORBA::DefinitionKind def_kind =
-    ACE_static_cast (CORBA::DefinitionKind, kind);
+  CORBA::DefinitionKind def_kind = this->path_to_def_kind (element_path);
 
   switch (def_kind)
   {
     // These exist only as our elements, so the type should
-    // be destroyed when we are destroyed or our element type
+    // be destroyed when we are destroyed, or when our element type
     // is mutated.
     case CORBA::dk_String:
     case CORBA::dk_Wstring:
@@ -265,15 +254,12 @@ TAO_ArrayDef_i::destroy_element_type (
     case CORBA::dk_Array:
     case CORBA::dk_Sequence:
     {
-      TAO_IDLType_i *impl =
-        this->repo_->servant_factory ()->create_idltype (element_key
-                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      auto_ptr<TAO_IDLType_i> safety (impl);
+      TAO_IDLType_i *impl = this->repo_->select_idltype (def_kind);
+      impl->section_key (element_key);
 
       impl->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
       break;
     }
     default:

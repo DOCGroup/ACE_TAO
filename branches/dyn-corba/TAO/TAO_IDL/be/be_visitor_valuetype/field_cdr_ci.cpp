@@ -256,7 +256,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface (be_interface *)
       *os << "(strm >> " << pre_ << f->local_name () << post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ".in ())";
+      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because an interface cannit be declared inside a
@@ -299,7 +299,7 @@ be_visitor_valuetype_field_cdr_ci::visit_interface_fwd (be_interface_fwd *)
       *os << "(strm >> " << pre_ << f->local_name () << post_ << ").out ()";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << " << pre_ << f->local_name () << post_ << ").in ()";
+      *os << pre_ << f->local_name () << post_ << ".in ()->marshal (strm)";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because an interface cannit be declared inside a

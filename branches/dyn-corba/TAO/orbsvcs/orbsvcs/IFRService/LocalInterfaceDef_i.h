@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_LocalInterfaceDef_i : public virtual TAO_Interfa
   //    Represents an local interface definition.
   //
 public:
-  TAO_LocalInterfaceDef_i (TAO_Repository_i *repo,
-                           ACE_Configuration_Section_Key section_key);
+  TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_LocalInterfaceDef_i (void);

@@ -115,7 +115,6 @@ ORB_CORE_FILES = \
   DynamicInterface_Adapter.cpp \
   Object_KeyC.cpp \
   IFR_Client_Adapter.cpp \
-  IFR_TypeCodes.cpp \
   Invocation.cpp \
   Interceptor.cpp \
   InterceptorC.cpp \
@@ -238,6 +237,7 @@ TEMPLATE_FILES = \
   IOPS_T.cpp \
   PollableS_T.cpp \
   Sequence_T.cpp \
+  Any_T.cpp \
   TAOS_T.cpp \
   TimeBaseS_T.cpp \
   TAO_Singleton.cpp

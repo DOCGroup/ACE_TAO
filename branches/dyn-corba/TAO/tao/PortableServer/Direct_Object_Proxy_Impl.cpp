@@ -56,7 +56,7 @@ TAO_Direct_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
   return _tao_retval;
 }
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 TAO_Direct_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
                                               ACE_ENV_ARG_DECL)
 {

@@ -2,7 +2,6 @@
 
 #include "IFR_Service_Utils.h"
 #include "orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h"
-#include "orbsvcs/orbsvcs/IFRService/Servant_Locator.h"
 #include "orbsvcs/orbsvcs/IFRService/Options.h"
 #include "orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h"
 #include "orbsvcs/IOR_Multicast.h"
@@ -18,9 +17,7 @@ ACE_RCSID (IFR_Service,
 TAO_IFR_Server::TAO_IFR_Server (void)
   : servant_locator_impl_ (0),
     ior_multicast_ (0),
-    config_ (0),
-    repo_impl_ (0),
-    repository_ (CORBA_Repository::_nil ())
+    config_ (0)
 {
 }
 
@@ -43,7 +40,6 @@ TAO_IFR_Server::~TAO_IFR_Server (void)
       }
   }
 
-  CORBA::release (this->repository_);
   delete this->config_;
   delete this->ior_multicast_;
 }
@@ -80,44 +76,48 @@ TAO_IFR_Server::init_with_orb (int argc,
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int retval = OPTIONS::instance()->parse_args (argc,
+      int retval = OPTIONS::instance ()->parse_args (argc,
                                                     argv);
 
       if (retval != 0)
-        return retval;
+        {
+          return retval;
+        }
 
-      retval = this->create_poas (ACE_ENV_SINGLE_ARG_PARAMETER);
+      retval = this->create_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
-        return retval;
+        {
+          return retval;
+        }
 
       retval = this->open_config (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
-        return retval;
+        {
+          return retval;
+        }
 
       retval = this->create_repository (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
-        return retval;
-
-      retval = this->create_locator (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (retval != 0)
-        return retval;
+        {
+          return retval;
+        }
 
       if (use_multicast_server)
-      {
-        retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        {
+          retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-        if (retval != 0)
-          return retval;
-      }
+          if (retval != 0)
+            {
+              return retval;
+            }
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "The IFR IOR is: <%s>\n",
                   this->ifr_ior_.in ()));
@@ -155,7 +155,7 @@ TAO_IFR_Server::fini (void)
 }
 
 int
-TAO_IFR_Server::create_poas (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IFR_Server::create_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager_var poa_manager =
     this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -164,83 +164,53 @@ TAO_IFR_Server::create_poas (ACE_ENV_SINGLE_ARG_DECL)
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  CORBA::PolicyList policies (4);
-  policies.length (1);
+  CORBA::PolicyList policies (5);
+  policies.length (5);
 
-  // So the Repository's POA can survive a crash.
+  // ID Assignment Policy.
   policies[0] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
-                                             ACE_ENV_ARG_PARAMETER);
+    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID 
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  ACE_TString repo_name = "repoPOA";
-
-  this->repo_poa_ =
-    this->root_poa_->create_POA (repo_name.c_str (),
-                                 poa_manager.in (),
-                                 policies
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  policies.length (4);
-
-  // So we can create object ids based on the DefinitionKind.
+  // Lifespan Policy.
   policies[1] =
-    this->root_poa_->create_id_assignment_policy (
-                         PortableServer::USER_ID
-                         ACE_ENV_ARG_PARAMETER
-                       );
-  ACE_CHECK_RETURN (-1);
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT 
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1); 
 
-  // We'll use a servant manager.
+  // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
-                         PortableServer::USE_SERVANT_MANAGER
-                         ACE_ENV_ARG_PARAMETER
-                       );
+        PortableServer::USE_DEFAULT_SERVANT 
+        ACE_ENV_ARG_PARAMETER
+      );
   ACE_CHECK_RETURN (-1);
 
-  // Specifically, we'll use a servant locator.
+  // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-                         PortableServer::NON_RETAIN
-                         ACE_ENV_ARG_PARAMETER
-                       );
+        PortableServer::NON_RETAIN 
+        ACE_ENV_ARG_PARAMETER
+      );
   ACE_CHECK_RETURN (-1);
 
-  ACE_TString name = "ir_objectPOA";
+  // Id Uniqueness Policy.
+  policies[4] =
+    this->root_poa_->create_id_uniqueness_policy (
+        PortableServer::MULTIPLE_ID 
+        ACE_ENV_ARG_PARAMETER
+      );
+  ACE_CHECK_RETURN (-1);
 
-  this->ir_object_poa_ =
-    this->root_poa_->create_POA (name.c_str (),
+  this->repo_poa_ =
+    this->root_poa_->create_POA ("repoPOA",
                                  poa_manager.in (),
                                  policies
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  // Destroy the policy objects as they have been passed to
-  // create_POA and no longer needed.
-  CORBA::ULong length = policies.length ();
-
-  for (CORBA::ULong i = 0; i < length; ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-    }
-
-  return 0;
-}
-
-int
-TAO_IFR_Server::create_locator (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ACE_NEW_THROW_EX (this->servant_locator_impl_,
-                    IFR_ServantLocator (this->repo_impl_),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
-
-  this->ir_object_poa_->set_servant_manager (this->servant_locator_impl_
-                                             ACE_ENV_ARG_PARAMETER);
+  policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -308,7 +278,7 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
       impl,
       TAO_ComponentRepository_i (
           this->orb_.in (),
-          this->ir_object_poa_.in (),
+          this->root_poa_,
           this->config_
         ),
       CORBA::NO_MEMORY ()
@@ -322,7 +292,7 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
       impl_tie,
       POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i> (
           impl,
-          this->repo_poa_.in (),
+          this->repo_poa_,
           1
         ),
       CORBA::NO_MEMORY ()
@@ -332,22 +302,40 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
   PortableServer::ServantBase_var tie_safety (impl_tie);
   safety.release ();
 
-  this->repo_impl_ = impl;
-
-  PortableServer::ObjectId_var repo_oid =
-    this->repo_poa_->activate_object (impl_tie
-                                      ACE_ENV_ARG_PARAMETER);
+  this->repo_poa_->set_servant (impl_tie
+                                ACE_ENV_ARG_PARAMETER)
   ACE_CHECK_RETURN (-1);
 
-  this->repository_ = impl_tie->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  PortableServer::ObjectId_var oid = 
+    PortableServer::string_to_ObjectId ("");
+
+  CORBA::Object_var obj =
+    this->repo_poa_->create_reference_with_id (
+        oid.in (),
+        "IDL:omg.org/IR/ComponentRepository:1.0"
+        ACE_ENV_ARG_PARAMETER
+      );
   ACE_CHECK_RETURN (-1);
 
+  CORBA::Repository_ptr repo_ref =
+    CORBA::Repository::_narrow (obj.in ()
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
-  impl->repo_objref (this->repository_);
+  // Initialize the repository.
+  int status = impl->repo_init (repo_ref,
+                                this->repo_poa_
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
 
   // Save and output the IOR string.
   this->ifr_ior_ =
-    this->orb_->object_to_string (this->repository_
+    this->orb_->object_to_string (repo_ref
                                   ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
@@ -376,7 +364,7 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
 
   // Add the repository to the ORB's table of initialized object references.
   this->orb_->register_initial_reference ("InterfaceRepository", 
-                                          this->repository_ 
+                                          repo_ref 
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
 

@@ -61,26 +61,26 @@ BE_GlobalData::orb (CORBA::ORB_ptr orb)
   this->orb_ = orb;
 }
 
-CORBA_Repository_ptr 
+CORBA::Repository_ptr 
 BE_GlobalData::repository (void) const
 {
   return this->repository_.in ();
 }
 
 void 
-BE_GlobalData::repository (CORBA_Repository_ptr repo)
+BE_GlobalData::repository (CORBA::Repository_ptr repo)
 {
   this->repository_ = repo;
 }
 
-CORBA_ModuleDef_ptr 
+CORBA::ModuleDef_ptr 
 BE_GlobalData::holding_scope (void) const
 {
   return this->holding_scope_.in ();
 }
 
 void 
-BE_GlobalData::holding_scope (CORBA_ModuleDef_ptr scope)
+BE_GlobalData::holding_scope (CORBA::ModuleDef_ptr scope)
 {
   this->holding_scope_ = scope;
 }
@@ -91,7 +91,7 @@ BE_GlobalData::holding_scope_name (void) const
   return this->holding_scope_name_.in ();
 }
 
-ACE_Unbounded_Stack<CORBA_Container_ptr> &
+ACE_Unbounded_Stack<CORBA::Container_ptr> &
 BE_GlobalData::ifr_scopes (void)
 {
   return this->ifr_scopes_;
@@ -135,12 +135,12 @@ BE_GlobalData::do_included_files (idl_bool val)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Unbounded_Stack<CORBA_Container_ptr>;
-template class ACE_Node<CORBA_Container_ptr>;
+template class ACE_Unbounded_Stack<CORBA::Container_ptr>;
+template class ACE_Node<CORBA::Container_ptr>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Unbounded_Stack<CORBA_Container_ptr>
-#pragma instantiate ACE_Node<CORBA_Container_ptr>
+#pragma instantiate ACE_Unbounded_Stack<CORBA::Container_ptr>
+#pragma instantiate ACE_Node<CORBA::Container_ptr>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -3247,6 +3247,25 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   return string;
 }
 
+int
+TAO_POA::parse_ir_object_key (const TAO_ObjectKey &object_key,
+                              PortableServer::ObjectId &user_id)
+{
+  TAO_Object_Adapter::poa_name poa_system_name;
+  CORBA::Boolean is_root = 0;
+  CORBA::Boolean is_persistent = 0;
+  CORBA::Boolean is_system_id = 0;
+  TAO_Temporary_Creation_Time poa_creation_time;
+
+  return TAO_POA::parse_key (object_key,
+                             poa_system_name,
+                             user_id,
+                             is_root,
+                             is_persistent,
+                             is_system_id,
+                             poa_creation_time);
+}
+
 TAO_Object_Adapter &
 TAO_POA::object_adapter (void)
 {

@@ -453,7 +453,7 @@ CORBA::TypeCode_ptr
 CORBA_ORB::create_struct_tc (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq & members
+    const CORBA::StructMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -480,7 +480,7 @@ CORBA_ORB::create_union_tc (
     const char *id,
     const char *name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA_UnionMemberSeq & members
+    const CORBA::UnionMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -507,7 +507,7 @@ CORBA::TypeCode_ptr
 CORBA_ORB::create_enum_tc (
     const char *id,
     const char *name,
-    const CORBA_EnumMemberSeq & members
+    const CORBA::EnumMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -559,7 +559,7 @@ CORBA::TypeCode_ptr
 CORBA_ORB::create_exception_tc (
     const char *id,
     const char *name,
-    const CORBA_StructMemberSeq & members
+    const CORBA::StructMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -727,7 +727,7 @@ CORBA_ORB::create_value_tc (
     const char *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA_ValueMemberSeq & members
+    const CORBA::ValueMemberSeq & members
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
