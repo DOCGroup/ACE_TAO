@@ -165,9 +165,9 @@ IR_Helper::notify_startup (CORBA_Environment &ACE_TRY_ENV)
     TAO_ORB_Core_instance ()->acceptor_registry ();
 
   TAO_Acceptor *acceptor = 0;
-  TAO_AcceptorSetItor end = registry->end ();
+  TAO_AcceptorSetIterator end = registry->end ();
 
-  for (TAO_AcceptorSetItor i = registry->begin (); i != end; ++i)
+  for (TAO_AcceptorSetIterator i = registry->begin (); i != end; ++i)
     if ((*i)->tag () == TAO_TAG_IIOP_PROFILE)
       {
         acceptor = (*i);

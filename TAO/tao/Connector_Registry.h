@@ -41,12 +41,8 @@ class TAO_Stub;
 class TAO_MProfile;
 class TAO_Resource_Factory;
 
-typedef ACE_Unbounded_Set<TAO_Connector*>
-        TAO_ConnectorSet;
 
-typedef ACE_Unbounded_Set_Iterator<TAO_Connector*>
-        TAO_ConnectorSetItor;
-
+typedef TAO_Connector** TAO_ConnectorSetIterator;
 
 class TAO_Export TAO_Connector_Registry
 {
@@ -78,7 +74,7 @@ public:
   // Close all open connectors.
 
   int preconnect (TAO_ORB_Core *orb_core,
-                  TAO_PreconnectSet &preconnections);
+                  TAO_EndpointSet &preconnections);
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
@@ -107,15 +103,27 @@ public:
   int purge_connections (void);
   // Purge "old" connections.
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
+  // = Iterator.
+  TAO_ConnectorSetIterator begin (void);
+  TAO_ConnectorSetIterator end (void);
+
 private:
   int preprocess_preconnects (TAO_ORB_Core *orb_core,
-                              TAO_PreconnectSet &preconnects);
+                              TAO_EndpointSet &preconnects);
   // Put the preconnects in a form that makes it simple for protocol
   // implementers to parse.
 
 private:
-  TAO_ConnectorSet connectors_;
-  // list of connectors currently open.
+  TAO_Connector** connectors_;
+  // List of connectors that are currently open.
+
+  size_t size_;
+  // Number of connectors that are currently open.
 };
+
+#if defined(__ACE_INLINE__)
+#include "tao/Connector_Registry.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_CONNECTOR_REGISTRY_H */

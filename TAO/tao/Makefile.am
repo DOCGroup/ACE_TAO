@@ -389,6 +389,7 @@ INLINE_FILES = \
   CONV_FRAMES.i \
   CONV_FRAMES_T.i \
   Client_Priority_Policy.i \
+  Connector_Registry.i \
   Context.i \
   CurrentC.i \
   Direct_Priority_Mapping.i \
