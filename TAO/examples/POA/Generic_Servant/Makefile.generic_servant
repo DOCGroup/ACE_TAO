@@ -28,9 +28,6 @@ IDL_SRC = testC testS
 
 SHLIB_SRC = $(IDL_SRC) test_i
 
-POA_CLT_SRCS = $(addsuffix .cpp,$(BINFILES))
-POA_CLT_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(BINFILES)))
-
 ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
