@@ -428,10 +428,8 @@ public:
     TAO_TC_DEFN_ENCAP_LEN, // encap size computation
     TAO_TC_DEFN_SCOPE_LEN, // scope size computation
 
-    TAO_AMI_HANDLER_TC_DEFN_TYPECODE, // For AMI Handler interface.
-
     // means the upcall has arguments.
-    TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS,
+    TAO_USE_FULL_NAME,
 
     // means we are not generating the assignment operator
     TAO_UNION_COPY_CONSTRUCTOR,

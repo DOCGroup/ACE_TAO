@@ -739,6 +739,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   ctx.node (node); // set the node to be the node being visited. The scope is
                    // still the same
 
+  ctx.sub_state (TAO_CodeGen::TAO_USE_FULL_NAME);
   ctx.state (TAO_CodeGen::TAO_FIELD_CH);
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
