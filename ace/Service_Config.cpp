@@ -189,20 +189,9 @@ int
 ACE_Service_Config::init_svc_conf_file_queue (void)
 {
   if (ACE_Service_Config::svc_conf_file_queue_ == 0)
-    {
       ACE_NEW_RETURN (ACE_Service_Config::svc_conf_file_queue_,
                       ACE_SVC_QUEUE,
                       -1);
-
-      // Load the default "svc.conf" entry here.
-      if (ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
-          (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           "enqueue_tail"),
-                          -1);
-    }
-
   return 0;
 }
 
@@ -231,7 +220,7 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         ACE::debug (1);
         break;
       case 'f':
-        if (ACE_Service_Config::svc_queue_->enqueue_tail
+        if (ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
             (ACE_CString (getopt.optarg)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ASYS_TEXT ("%p\n"),
@@ -270,7 +259,6 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
           ACE_NEW_RETURN (ACE_Service_Config::svc_queue_,
                           ACE_SVC_QUEUE,
                           -1);
-
         if (ACE_Service_Config::svc_queue_->enqueue_tail
             (ACE_CString (getopt.optarg)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -428,23 +416,23 @@ ACE_Service_Config::process_directives (void)
           // defined as an ACE_WString...
           FILE *fp = ACE_OS::fopen (ASYS_WIDE_STRING (sptr->fast_rep ()),
                                     ASYS_TEXT ("r"));
-
           if (fp == 0)
             {
-              // Invalid svc.conf file.  We'll report it her and keep
-              // track of this and return -1 when the method finishes.
-              // all the files.
+              // Invalid svc.conf file.  We'll report it here and
+              // break out of the method.
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("%p\n"),
                           // @@ Beware of the WString here...  Not
                           // sure how to fix this with %p...
                           ASYS_TEXT (sptr->fast_rep ())));
-              result = -1; 
+              errno = ENOENT;
+              return -1;
             }
           else
             {
               ace_yyrestart (fp);
-              return ACE_Service_Config::process_directives_i ();
+              // Keep track of the number of errors.
+              result += ACE_Service_Config::process_directives_i ();
             }
         }
 
@@ -452,8 +440,6 @@ ACE_Service_Config::process_directives (void)
       ACE_Service_Config::svc_conf_file_queue_ = 0;
     }
 
-  if (result == -1)
-    errno = ENOENT;
   return result;
 }
 
@@ -542,6 +528,16 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
     return -1;
+
+  if (ACE_Service_Config::svc_conf_file_queue_->is_empty ()
+      // Load the default "svc.conf" entry here if there weren't
+      // overriding -f arguments in <parse_args>.
+      && ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
+      (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       "enqueue_tail"),
+                      -1);
 
   // Clear the LM_DEBUG bit from log messages if appropriate
   if (ACE::debug ())
