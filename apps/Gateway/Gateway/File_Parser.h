@@ -30,7 +30,7 @@ public:
     EOFILE,
     SUCCESS, 
     COMMENT, 
-    ERROR
+    PARSE_ERROR
   };
 };
 
