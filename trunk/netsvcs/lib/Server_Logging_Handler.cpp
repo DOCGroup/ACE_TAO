@@ -100,7 +100,9 @@ template class ACE_Server_Logging_Handler<Synch_Receiver>;
 template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 
   #if defined (ACE_HAS_TLI)
-      template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
+  // NOTE: The following line is not used with the #if 1 // !defined
+  // (ACE_HAS_TLI) override in Server_Logging_Handler_T.h:
+  //    template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
   // else if ! ACE_HAS_TLI, LOGGING_PEER_STREAM is ACE_SOCK_STREAM,
   // and the specialization would be
   //   template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -192,7 +194,9 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 #pragma instantiate ACE_Thr_Server_Logging_Handler<Synch_Receiver>
 
   #if defined (ACE_HAS_TLI)
-      #pragma instantiate ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>
+  // NOTE: The following line is not used with the #if 1 // !defined
+  // (ACE_HAS_TLI) override in Server_Logging_Handler_T.h:
+  //   #pragma instantiate ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>
   // else if ! ACE_HAS_TLI, LOGGING_PEER_STREAM is ACE_SOCK_STREAM,
   // and the specialization would be
   //   #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -201,4 +205,3 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   #endif /* ACE_HAS_TLI */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_SERVER_LOGGING_HANDLER_C */
-
