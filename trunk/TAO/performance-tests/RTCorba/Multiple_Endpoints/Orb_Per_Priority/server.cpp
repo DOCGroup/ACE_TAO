@@ -35,7 +35,7 @@ private:
   // used for creating the name of the orb.)
 
   int argc_;
-  char *argv_[20];
+  char *argv_[256];
 };
 
 // ****************************************************************
@@ -112,7 +112,7 @@ main (int argc, char *argv[])
   CORBA::ORB_var orb;
   ACE_TRY_NEW_ENV
     {
-      char *argv_[20];
+      char *argv_[256];
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
         argv_[i] = argv[i];

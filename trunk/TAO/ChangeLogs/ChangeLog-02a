@@ -1,3 +1,8 @@
+Fri Feb 18 13:53:43 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp: 
+	  Make argv buffers bigger, so they can handle more options.
+
 Fri Feb 18 12:53:13 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/vs.cpp: 
@@ -19,8 +24,8 @@ Fri Feb 18 10:44:33 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/Trading/export_test.cpp:
         * orbsvcs/tests/Trading/run_test.pl:
           The test was too brittle.  Now the export test creates a file
-        just before going into the event look, the script can use that
-        file to launch the import test only after that.
+          just before going into the event look, the script can use that
+          file to launch the import test only after that.
 
         * orbsvcs/Notify_Service/Notify_Service.cpp:
           Fixed a syntax error.  This program is obviously not compiled
