@@ -11,3 +11,4 @@ TAO_Wait_Strategy::is_registered (int flag)
 {
   this->is_registered_ = flag;
 }
+
