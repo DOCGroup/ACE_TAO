@@ -6,7 +6,6 @@
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
@@ -99,15 +98,13 @@ ECB_Driver::run (int argc, char* argv[])
                   "EC_Basic: The (local) scheduler IOR is <%s>\n",
                   str.in ()));
 
-      if (ACE_Scheduler_Factory::server (scheduler.in ()) == -1)
-        return -1;
-
       // Create the EventService implementation, but don't start its
       // internal threads.
       TAO_Reactive_Module_Factory module_factory;
       ACE_EventChannel ec_impl (0,
                                 ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                &module_factory);
+                                &module_factory,
+                                scheduler.in ());
 
       // Register Event_Service with the Naming Service.
       RtecEventChannelAdmin::EventChannel_var ec =
@@ -434,7 +431,7 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 
   int i;
 
-  for (i = 0; i < ECB_SupplierID_Test::PHASE_END; ++i)
+  for (i = 0; i <= ECB_SupplierID_Test::PHASE_END; ++i)
     {
       this->event_count_[i] = 0;
       this->error_count_[i] = 0;
@@ -772,7 +769,7 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 
   int i;
 
-  for (i = 0; i < ECB_Correlation_Test::PHASE_END; ++i)
+  for (i = 0; i <= ECB_Correlation_Test::PHASE_END; ++i)
     {
       this->event_count_[i] = 0;
       this->error_count_[i] = 0;

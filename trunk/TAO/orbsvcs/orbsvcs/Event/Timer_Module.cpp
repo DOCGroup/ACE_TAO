@@ -2,8 +2,9 @@
 
 #include "ace/Functor.h"
 
-#include "orbsvcs/orbsvcs/Event/ReactorTask.h"
-#include "orbsvcs/orbsvcs/Event/Timer_Module.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "ReactorTask.h"
+#include "Timer_Module.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Timer_Module.i"
@@ -117,9 +118,20 @@ TAO_EC_ST_Timer_Module::reactor (RtecScheduler::Preemption_Priority_t)
 
 // ****************************************************************
 
-TAO_EC_RPT_Timer_Module::TAO_EC_RPT_Timer_Module (void)
+TAO_EC_RPT_Timer_Module::
+  TAO_EC_RPT_Timer_Module (RtecScheduler::Scheduler_ptr scheduler)
   : shutdown_ (0)
 {
+  if (CORBA::is_nil (scheduler))
+    {
+      this->scheduler_ = 
+        RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
+    }
+  else
+    {
+      this->scheduler_ = 
+        RtecScheduler::Scheduler::_duplicate (scheduler);
+    }
   for (int i = 0; i < ACE_Scheduler_MAX_PRIORITIES; ++i)
     this->reactorTasks[i] = 0;
 }
@@ -153,7 +165,8 @@ void TAO_EC_RPT_Timer_Module::activate (void)
       RtecScheduler::Period_t period = period_tv.sec () * 10000000 +
                                        period_tv.usec () * 10;
 
-      ACE_NEW (this->reactorTasks[i], ReactorTask);
+      ACE_NEW (this->reactorTasks[i],
+               ReactorTask (this->scheduler_.in ()));
 
       if (!this->shutdown_)
         {

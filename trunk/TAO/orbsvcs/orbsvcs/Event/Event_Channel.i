@@ -698,12 +698,20 @@ ACE_EventChannel::schedule_timer (RtecScheduler::handle_t rt_info,
 
       TAO_TRY
         {
+#if 1
+          this->scheduler_->add_dependency (rt_info,
+                                            timer_rtinfo,
+                                            1,
+                                            RtecScheduler::ONE_WAY_CALL,
+                                            TAO_TRY_ENV);
+#else
           ACE_Scheduler_Factory::server()->add_dependency
             (rt_info,
 	     timer_rtinfo,
 	     1,
 	     RtecScheduler::ONE_WAY_CALL,
 	     TAO_TRY_ENV);
+#endif
           TAO_CHECK_ENV;
         }
       TAO_CATCHANY
@@ -734,6 +742,12 @@ ACE_EventChannel::cancel_timer (RtecScheduler::OS_Priority preemption_priority,
     return this->timer_module ()->cancel_timer (preemption_priority,
                                                 id,
                                                 act);
+}
+
+ACE_INLINE RtecScheduler::Scheduler_ptr
+ACE_EventChannel::scheduler (void)
+{
+  return RtecScheduler::Scheduler::_duplicate (this->scheduler_.in ());
 }
 
 // ************************************************************

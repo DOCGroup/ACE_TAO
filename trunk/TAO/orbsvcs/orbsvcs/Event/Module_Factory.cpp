@@ -24,7 +24,7 @@ TAO_Default_Module_Factory::~TAO_Default_Module_Factory (void)
 ACE_ES_Dispatching_Base*
 TAO_Default_Module_Factory::create_dispatching_module (ACE_EventChannel* ec)
 {
-  return new ACE_ES_Priority_Dispatching(ec);
+  return new ACE_ES_Priority_Dispatching (ec);
 }
 
 void
@@ -84,7 +84,8 @@ TAO_Default_Module_Factory::destroy_supplier_module (ACE_ES_Supplier_Module* x)
 TAO_EC_Timer_Module*
 TAO_Default_Module_Factory::create_timer_module (ACE_EventChannel* ec)
 {
-  return new TAO_EC_RPT_Timer_Module;
+  RtecScheduler::Scheduler_var scheduler = ec->scheduler ();
+  return new TAO_EC_RPT_Timer_Module (scheduler.in ());
 }
 
 void
@@ -164,7 +165,7 @@ TAO_Reactive_Module_Factory::destroy_supplier_module (ACE_ES_Supplier_Module* x)
 }
 
 TAO_EC_Timer_Module*
-TAO_Reactive_Module_Factory::create_timer_module (ACE_EventChannel*)
+TAO_Reactive_Module_Factory::create_timer_module (ACE_EventChannel* ec)
 {
   return new TAO_EC_ST_Timer_Module (TAO_ORB_Core_instance ()->reactor ());
 }

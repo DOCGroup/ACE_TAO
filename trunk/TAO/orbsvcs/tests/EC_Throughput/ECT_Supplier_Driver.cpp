@@ -5,9 +5,9 @@
 #include "ace/Sched_Params.h"
 
 #include "tao/Timeprobe.h"
+#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ECT_Supplier_Driver.h"
 
@@ -136,9 +136,19 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (ACE_Scheduler_Factory::use_config (naming_context.in ()) == -1)
-        return -1;
+      CosNaming::Name schedule_name (1);
+      schedule_name.length (1);
+      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
+      CORBA::Object_var sched_obj =
+        naming_context->resolve (schedule_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (CORBA::is_nil (sched_obj.in ()))
+        return 1;
+      RtecScheduler::Scheduler_var scheduler = 
+        RtecScheduler::Scheduler::_narrow (sched_obj.in (),
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
@@ -158,7 +168,9 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->connect_suppliers (channel.in (), TAO_TRY_ENV);
+      this->connect_suppliers (scheduler.in (), 
+                               channel.in (),
+                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
@@ -197,8 +209,10 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 }
 
 void
-ECT_Supplier_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &TAO_IN_ENV)
+ECT_Supplier_Driver::connect_suppliers
+    (RtecScheduler::Scheduler_ptr scheduler,
+     RtecEventChannelAdmin::EventChannel_ptr channel,
+     CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -207,7 +221,8 @@ ECT_Supplier_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr 
 
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
-      this->suppliers_[i]->connect (buf,
+      this->suppliers_[i]->connect (scheduler,
+                                    buf,
                                     this->burst_count_,
                                     this->burst_size_,
                                     this->event_size_,

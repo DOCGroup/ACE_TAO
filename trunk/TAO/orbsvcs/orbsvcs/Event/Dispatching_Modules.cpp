@@ -190,6 +190,9 @@ ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *chan
     {
       this->queues_[x] = 0;
     }
+
+  this->scheduler_ = 
+    this->channel_->scheduler ();
 }
 
 ACE_ES_Priority_Dispatching::~ACE_ES_Priority_Dispatching (void)
@@ -214,7 +217,9 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
                                        period_tv.usec () * 10;
 
       ACE_NEW (this->queues_[x],
-	       ACE_ES_Dispatch_Queue (this, &notification_strategy_));
+	       ACE_ES_Dispatch_Queue (this,
+                                      &this->notification_strategy_,
+                                      this->scheduler_.in ()));
       this->queues_[x]->thr_mgr (&this->thr_mgr_);
 
       if ( this->queues_[x]->open_queue (period,
@@ -339,17 +344,23 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
     {
       // @@ TODO use TAO_TRY&friends
       ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_REQUESTED);
+#if 1
+      this->scheduler_->priority
+        (request->rt_info (),
+         thread_priority,
+         subpriority,
+         preemption_priority,
+         TAO_IN_ENV);
+#else
       ACE_Scheduler_Factory::server ()->priority
         (request->rt_info (),
          thread_priority,
          subpriority,
          preemption_priority,
          TAO_IN_ENV);
+#endif
       ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED);
-      if (TAO_IN_ENV.exception ())
-        {
-          return;
-        }
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
   else
     {
@@ -512,9 +523,12 @@ ACE_ES_Priority_Dispatching::get_handle (void) const
 
 // ************************************************************
 
-ACE_ES_Dispatch_Queue::ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatching_module,
-                                              ACE_ES_Notification_Strategy *notification_strategy)
-  : dispatching_module_ (dispatching_module),
+ACE_ES_Dispatch_Queue::
+   ACE_ES_Dispatch_Queue (ACE_ES_Dispatching_Base *dispatching_module,
+                          ACE_ES_Notification_Strategy *notification_strategy,
+                          RtecScheduler::Scheduler_ptr scheduler)
+  : ACE_RT_Task (scheduler),
+    dispatching_module_ (dispatching_module),
     notification_strategy_ (notification_strategy)
 {
 }
@@ -604,6 +618,20 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
       {
 	TAO_TRY
 	  {// @@ TODO: Handle exceptions...
+#if 1
+            this->scheduler_->set
+              (rt_info_,
+               RtecScheduler::VERY_HIGH_CRITICALITY,
+               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero,
+               period,
+               RtecScheduler::VERY_LOW_IMPORTANCE,
+               ORBSVCS_Time::zero,
+               1,
+               RtecScheduler::OPERATION,
+               TAO_TRY_ENV);
+#else
 	    ACE_Scheduler_Factory::server()->set (rt_info_,
 						  RtecScheduler::VERY_HIGH_CRITICALITY,
 						  ORBSVCS_Time::zero,
@@ -615,6 +643,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
 						  1,
 						  RtecScheduler::OPERATION,
 						  TAO_TRY_ENV);
+#endif
 	    TAO_CHECK_ENV;
 	  }
 	TAO_CATCHANY

@@ -100,14 +100,6 @@ void TAO_ORBSVCS_Export dump_event (const RtecEventComm::Event &event);
 // ************************************************************
 
 
-// Helper function that returns the first RT_Info entry point name.
-// Use for debugging purposes only.
-const TAO_ORBSVCS_Export char *
-ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos,
-                      CORBA::Environment &_env);
-
-// ************************************************************
-
 class TAO_ORBSVCS_Export ACE_RTU_Manager
 // = TITLE
 //   ACE RTU Manager
@@ -183,7 +175,9 @@ public:
 
   ACE_EventChannel (CORBA::Boolean activate_threads = 1,
                     u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                    TAO_Module_Factory* factory = 0);
+                    TAO_Module_Factory* factory = 0,
+                    RtecScheduler::Scheduler_ptr scheduler = 
+                      RtecScheduler::Scheduler::_nil ());
   // Construction of the given <type>.  Check the **_CHANNEL
   // enumerations defined below.
   // By default we activate the threads on construction, but it is
@@ -274,6 +268,11 @@ public:
   // Timer_ACT used when scheduling the timer.  Returns 0 on success,
   // -1 on failure.
 
+  RtecScheduler::Scheduler_ptr scheduler (void);
+  // Return a reference to its SchedulerService, notice that it uses
+  // the CORBA semantics for memory managment, i.e. the user gains
+  // ownership of the reference returned.
+
 private:
   void cleanup_observers (void);
   // Remove all the observers, this simplifies the shutdown process.
@@ -339,6 +338,9 @@ private:
   TAO_Module_Factory* module_factory_;
   // This is the factory we use to create and destroy the Event
   // Channel modules.
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // The scheduler
 };
 
 // ************************************************************
@@ -1161,6 +1163,9 @@ private:
 
   ACE_ES_RW_LOCK lock_;
   // Protects access to all_suppliers_ and type_suppliers_;
+
+  RtecScheduler::Scheduler_ptr scheduler_;
+  // The scheduler;
 };
 
 // ************************************************************

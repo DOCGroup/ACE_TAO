@@ -32,29 +32,31 @@ TAO_EC_Basic_Filter_Builder::
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
+      pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
-          pos++;
           children[i] = this->recursive_build (qos, pos);
+          pos++;
         }
       return new TAO_EC_Conjunction_Filter (children, n);
     }
-  else if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
+  else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
+      pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
       TAO_EC_Filter** children;
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
-          pos++;
           children[i] = this->recursive_build (qos, pos);
+          pos++;
         }
-      return new TAO_EC_Conjunction_Filter (children, n);
+      return new TAO_EC_Disjunction_Filter (children, n);
     }
   return new TAO_EC_Type_Filter (e.header);
 }
@@ -65,8 +67,8 @@ TAO_EC_Basic_Filter_Builder::
                     CORBA::ULong pos) const
 {
   CORBA::ULong l = qos.dependencies.length ();
-  for (CORBA::ULong i = 1;
-       i + pos != l;
+  for (CORBA::ULong i = pos;
+       i != l;
        ++i)
     {
       const RtecEventComm::Event& e = qos.dependencies[i].event;
@@ -74,5 +76,5 @@ TAO_EC_Basic_Filter_Builder::
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
         break;
     }
-  return i;
+  return i - 1;
 }

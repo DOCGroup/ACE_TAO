@@ -29,9 +29,11 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Reactor_Task_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-ACE_ES_Reactor_Task::ACE_ES_Reactor_Task() :
-  //  reactor_ (0, &timer_queue_),
-  done_ (0)
+ACE_ES_Reactor_Task::
+    ACE_ES_Reactor_Task (RtecScheduler::Scheduler_ptr scheduler)
+      :  ACE_RT_Task (scheduler),
+         //  reactor_ (0, &timer_queue_),
+         done_ (0)
 {
   // Change the timer mechanism used by the reactor and the timer
   // queue.
@@ -75,17 +77,33 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
       {
         TAO_TRY
           {
-            ACE_Scheduler_Factory::server()->set(rt_info_,
-                                                 RtecScheduler::VERY_HIGH_CRITICALITY,
-                                                 ORBSVCS_Time::zero,
-                                                 ORBSVCS_Time::zero,
-                                                 ORBSVCS_Time::zero,
-                                                 period,
-                                                 RtecScheduler::VERY_LOW_IMPORTANCE,
-                                                 ORBSVCS_Time::zero,
-                                                 1,
-                                                 RtecScheduler::OPERATION,
-                                                 TAO_TRY_ENV);
+#if 1
+            this->scheduler_->set
+              (rt_info_,
+               RtecScheduler::VERY_HIGH_CRITICALITY,
+               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero,
+               period,
+               RtecScheduler::VERY_LOW_IMPORTANCE,
+               ORBSVCS_Time::zero,
+               1,
+               RtecScheduler::OPERATION,
+               TAO_TRY_ENV);
+#else
+            ACE_Scheduler_Factory::server()->set
+              (rt_info_,
+               RtecScheduler::VERY_HIGH_CRITICALITY,
+               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero,
+               period,
+               RtecScheduler::VERY_LOW_IMPORTANCE,
+               ORBSVCS_Time::zero,
+               1,
+               RtecScheduler::OPERATION,
+               TAO_TRY_ENV);
+#endif
             TAO_CHECK_ENV;
           }
         TAO_CATCHANY

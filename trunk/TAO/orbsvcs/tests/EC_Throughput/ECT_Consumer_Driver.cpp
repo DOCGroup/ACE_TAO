@@ -5,9 +5,9 @@
 #include "ace/Sched_Params.h"
 
 #include "tao/Timeprobe.h"
+#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ECT_Consumer_Driver.h"
 
@@ -122,8 +122,19 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (ACE_Scheduler_Factory::use_config (naming_context.in ()) == -1)
-        return -1;
+      CosNaming::Name schedule_name (1);
+      schedule_name.length (1);
+      schedule_name[0].id = CORBA::string_dup ("ScheduleService");
+
+      CORBA::Object_var sched_obj =
+        naming_context->resolve (schedule_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (CORBA::is_nil (sched_obj.in ()))
+        return 1;
+      RtecScheduler::Scheduler_var scheduler = 
+        RtecScheduler::Scheduler::_narrow (sched_obj.in (),
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       CosNaming::Name name (1);
       name.length (1);
@@ -144,7 +155,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->connect_consumers (channel.in (), TAO_TRY_ENV);
+      this->connect_consumers (scheduler.in (), channel.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
@@ -191,8 +202,10 @@ ECT_Consumer_Driver::shutdown_consumer (void*,
 }
 
 void
-ECT_Consumer_Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &TAO_IN_ENV)
+ECT_Consumer_Driver::connect_consumers
+     (RtecScheduler::Scheduler_ptr scheduler,
+      RtecEventChannelAdmin::EventChannel_ptr channel,
+      CORBA::Environment &TAO_IN_ENV)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -208,7 +221,8 @@ ECT_Consumer_Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr 
                               this->consumers_ + i,
                               this->n_suppliers_));
 
-      this->consumers_[i]->connect (buf,
+      this->consumers_[i]->connect (scheduler,
+                                    buf,
                                     this->event_a_,
                                     this->event_b_,
                                     channel,

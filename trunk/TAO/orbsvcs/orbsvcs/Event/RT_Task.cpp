@@ -72,11 +72,20 @@ ACE_RT_Task_Shutdown::execute (u_long &command_action)
 }
 
 // ************************************************************
-// ************************************************************
 
-ACE_RT_Task::ACE_RT_Task (void)
+ACE_RT_Task::ACE_RT_Task (RtecScheduler::Scheduler_ptr scheduler)
   : closed_ (0)
 {
+  if (CORBA::is_nil (scheduler))
+    {
+      this->scheduler_ = 
+        RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
+    }
+  else
+    {
+      this->scheduler_ = 
+        RtecScheduler::Scheduler::_duplicate (scheduler);
+    }
 }
 
 ACE_RT_Task::~ACE_RT_Task (void)
@@ -106,11 +115,19 @@ ACE_RT_Task::svc (void)
       RtecScheduler::Preemption_Subpriority_t subpriority;
       RtecScheduler::Preemption_Priority_t preemption_priority;
 
+#if 1
+      this->scheduler_->priority
+        (this->rt_info_,
+         thread_priority,
+         subpriority,
+         preemption_priority, TAO_TRY_ENV);
+#else
       ACE_Scheduler_Factory::server ()->priority
         (this->rt_info_,
          thread_priority,
          subpriority,
          preemption_priority, TAO_TRY_ENV);
+#endif
       TAO_CHECK_ENV;
       if (ACE_OS::thr_setprio (thread_priority) == -1)
         {
@@ -240,9 +257,14 @@ ACE_RT_Task::open_task (const char* name)
 
   TAO_TRY
     {
+#if 1
+      rt_info_ =
+        this->scheduler_->create (tempname, TAO_TRY_ENV);
+#else
       rt_info_ =
         ACE_Scheduler_Factory::server()->create (tempname,
                                                  TAO_TRY_ENV);
+#endif
       TAO_CHECK_ENV;
       // @@ TODO: We do no initialization of the new rt_info, the
       // caller does, this is (IMnsHO) very error prone.
@@ -293,11 +315,19 @@ ACE_RT_Task::synch_threads (size_t threads)
           {
             // @@ TODO handle exceptions
             ACE_FUNCTION_TIMEPROBE (TAO_RT_TASK_SYNCH_THREADS_PRIORITY_REQUESTED);
+#if 1
+            this->scheduler_->priority
+              (rt_info_,
+               thread_priority,
+               subpriority,
+               preemption_priority, TAO_TRY_ENV);
+#else
             ACE_Scheduler_Factory::server ()->priority
               (rt_info_,
                thread_priority,
                subpriority,
                preemption_priority, TAO_TRY_ENV);
+#endif
             TAO_CHECK_ENV;
           }
 

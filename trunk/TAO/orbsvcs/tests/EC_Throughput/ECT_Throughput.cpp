@@ -14,7 +14,7 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Null_Factory.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
@@ -167,7 +167,7 @@ ECT_Throughput::run (int argc, char* argv[])
         scheduler_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-
+#if 0
       CORBA::String_var str =
         this->orb_->object_to_string (scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -179,6 +179,7 @@ ECT_Throughput::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
+#endif /* 0 */
 
       // The factories must be destroyed *after* the EC, hence the
       // auto_ptr declarations must go first....
@@ -205,13 +206,14 @@ ECT_Throughput::run (int argc, char* argv[])
             auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
                 (new ACE_EventChannel (1,
                                        ACE_DEFAULT_EVENT_CHANNEL_TYPE,
-                                       module_factory.get ()));
+                                       module_factory.get (),
+                                       scheduler.in ()));
         }
       else
         {
-#if 0
+#if defined (TAO_ORBSVCS_HAS_Event2)
           ec_factory = 
-            auto_ptr<TAO_EC_Factory>(new TAO_EC_Null_Factory (root_poa.in ()));
+            auto_ptr<TAO_EC_Factory>(new TAO_EC_Basic_Factory (root_poa.in ()));
           
           TAO_EC_Event_Channel* ec = 
             new TAO_EC_Event_Channel (ec_factory.get ());
@@ -224,7 +226,7 @@ ECT_Throughput::run (int argc, char* argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "The new event channel is not supported "
                              "please recompile\n"), 1);
-#endif /* 0 */
+#endif /* TAO_ORBSVCS_HAS_Event2 */
         }
 
       RtecEventChannelAdmin::EventChannel_var channel =
@@ -234,12 +236,14 @@ ECT_Throughput::run (int argc, char* argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->connect_consumers (channel.in (), TAO_TRY_ENV);
+      this->connect_consumers (scheduler.in (), channel.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
-      this->connect_suppliers (channel.in (), TAO_TRY_ENV);
+      this->connect_suppliers (scheduler.in (),
+                               channel.in (),
+                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
@@ -254,8 +258,10 @@ ECT_Throughput::run (int argc, char* argv[])
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
+#if 0
       naming_context->unbind (schedule_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+#endif
 
       // Wait for the supplier threads...
       if (ACE_Thread_Manager::instance ()->wait () == -1)
@@ -330,8 +336,10 @@ ECT_Throughput::shutdown_consumer (void*,
 }
 
 void
-ECT_Throughput::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &TAO_IN_ENV)
+ECT_Throughput::connect_consumers
+     (RtecScheduler::Scheduler_ptr scheduler,
+      RtecEventChannelAdmin::EventChannel_ptr channel,
+      CORBA::Environment &TAO_IN_ENV)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -347,7 +355,8 @@ ECT_Throughput::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr chann
                               this->consumers_ + i,
                               this->n_suppliers_));
 
-      this->consumers_[i]->connect (buf,
+      this->consumers_[i]->connect (scheduler,
+                                    buf,
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
@@ -357,8 +366,10 @@ ECT_Throughput::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr chann
 }
 
 void
-ECT_Throughput::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &TAO_IN_ENV)
+ECT_Throughput::connect_suppliers
+     (RtecScheduler::Scheduler_ptr scheduler,
+      RtecEventChannelAdmin::EventChannel_ptr channel,
+      CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -367,7 +378,8 @@ ECT_Throughput::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr chann
 
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
-      this->suppliers_[i]->connect (buf,
+      this->suppliers_[i]->connect (scheduler,
+                                    buf,
                                     this->burst_count_,
                                     this->burst_size_,
                                     this->event_size_,

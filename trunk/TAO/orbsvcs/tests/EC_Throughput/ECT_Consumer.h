@@ -36,7 +36,8 @@ public:
                  void* cookie,
                  int n_suppliers);
 
-  void connect (const char* name,
+  void connect (RtecScheduler::Scheduler_ptr scheduler,
+                const char* name,
                 int event_a,
                 int event_b,
                 RtecEventChannelAdmin::EventChannel_ptr ec,

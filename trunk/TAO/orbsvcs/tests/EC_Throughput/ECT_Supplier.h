@@ -37,7 +37,8 @@ public:
   int svc (void);
   // Run the test, just forwards to the driver
 
-  void connect (const char* name,
+  void connect (RtecScheduler::Scheduler_ptr scheduler,
+                const char* name,
                 int burst_count,
                 int burst_size,
                 int event_size,
