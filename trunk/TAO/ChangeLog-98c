@@ -1,3 +1,11 @@
+Thu Dec 18 16:18:01 1997    <nw1@JIG>
+
+	* TAO_IDL/be/be_sequence.cpp (gen_name): Removed a local variable
+	  <seq>.  It is no longer used.
+
+	* TAO_IDL/be/be_union.cpp (gen_client_stubs): Removed local
+	  variables <bt> and <s>.  They are not longer used.
+
 Thu Dec 18 15:50:01 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
