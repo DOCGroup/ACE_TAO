@@ -250,6 +250,11 @@ main (int argc, char **argv)
 
       if (result != 0)
         return result;
+
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

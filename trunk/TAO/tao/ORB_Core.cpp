@@ -232,6 +232,24 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // -1 is unknown, default to what the resource factory sets.
   // @@ This is just for backwards compatibility.
 
+#if defined (DEBUG)
+  // Make it a little easier to debug programs using this code.
+  {
+    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
+
+    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
+
+    if (value != 0)
+      {
+        TAO_debug_level = ACE_OS::atoi (value);
+        if (TAO_debug_level <= 0)
+          TAO_debug_level = 1;
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_debug_level == %d", TAO_debug_level));
+      }
+  }
+#endif  /* DEBUG */
+
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = arg_shifter.get_current ();
@@ -769,24 +787,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         // caller can still use them.
         arg_shifter.ignore_arg ();
     }
-
-#if defined (DEBUG)
-  // Make it a little easier to debug programs using this code.
-  {
-    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
-
-    char *value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-    if (value != 0)
-      {
-        TAO_debug_level = ACE_OS::atoi (value);
-        if (TAO_debug_level <= 0)
-          TAO_debug_level = 1;
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_debug_level == %d", TAO_debug_level));
-      }
-  }
-#endif  /* DEBUG */
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
   // There's really no way to deal with this in a portable manner, so
