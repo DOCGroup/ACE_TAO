@@ -131,16 +131,28 @@ have_asynchio (void)
   // System defined POSIX Values.
   ACE_DEBUG ((LM_DEBUG,
               "System claims to have  POSIX_ASYNCHRONOUS_IO\n"));
+
+#if defined(_POSIX_AIO_LISTIO_MAX)
   ACE_DEBUG ((LM_DEBUG,
               "Number of operations in one listio: "
               "Minimum value is 2: "
               "_POSIX_AIO_LISTIO_MAX = %d\n",
               _POSIX_AIO_LISTIO_MAX));
+#else
+  ACE_DEBUG ((LM_DEBUG,
+             "No value for _POSIX_AIO_LISTIO_MAX\n"));
+#endif
+
+#if defined(_POSIX_AIO_MAX)
   ACE_DEBUG ((LM_DEBUG,
               "Number of simultaneous asynchronous I/Os: "
               "Minimum is 1: "
               "_POSIX_AIO_MAX = %d\n",
               _POSIX_AIO_MAX));
+#else
+  ACE_DEBUG ((LM_DEBUG,
+             "No value for _POSIX_AIO_MAX\n"));
+#endif
 
   // @@ Debugging.
   ACE_DEBUG ((LM_DEBUG,
