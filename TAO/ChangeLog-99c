@@ -9,7 +9,8 @@ Thu Jun 10 13:53:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  to ORB Manager to simplify the activatation of the POA Manager.
 	  The POA Manager must be activated before incoming calls can
 	  reach the servants registered with the POAs that the POA Manager
-	  manages.
+	  manages.  Thanks to Bill Tovrea <gwtovrea@west.raytheon.com> for
+	  pointing out this problem.
 
 Thu Jun 10 13:18:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
