@@ -31,6 +31,7 @@
 #include "tao/Alias_TypeCode.h"
 #include "tao/String_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
+#include "tao/TypeCode_Non_Default_Case.h"
 #include "tao/Union_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
@@ -128,7 +129,7 @@ static TAO::TypeCode::Union<char const *,
     &CORBA::_tc_short,
     _tao_cases_GIOP_TargetAddress,
     3,-1,
-    0, 0);
+    0, static_cast<CORBA::TypeCode_ptr const *>(0));
   
 namespace GIOP
 {

@@ -36,25 +36,35 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_Dynamic_ParameterList_0 (
-    CORBA::tk_sequence,
-    &Dynamic::_tc_Parameter,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      Dynamic_ParameterList_0 (
+        CORBA::tk_sequence,
+        &Dynamic::_tc_Parameter,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_Dynamic_ParameterList_0 =
+      &Dynamic_ParameterList_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Dynamic_ParameterList (
     "IDL:omg.org/Dynamic/ParameterList:1.0",
     "ParameterList",
-    &::_tao_tc_Dynamic_ParameterList_0);
+    &TAO::TypeCode::tc_Dynamic_ParameterList_0);
   
 namespace Dynamic
 {
@@ -65,30 +75,40 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_sequence_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_string,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_sequence_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_string,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_sequence_0 =
+      &CORBA_sequence_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_StringSeq (
     "IDL:omg.org/CORBA/StringSeq:1.0",
     "StringSeq",
-    &::_tao_tc_CORBA_sequence_0);
+    &TAO::TypeCode::tc_CORBA_sequence_0);
   
 namespace CORBA
 {
@@ -112,25 +132,35 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_Dynamic_ExceptionList_0 (
-    CORBA::tk_sequence,
-    &CORBA::_tc_TypeCode,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      Dynamic_ExceptionList_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_TypeCode,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_Dynamic_ExceptionList_0 =
+      &Dynamic_ExceptionList_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Dynamic_ExceptionList (
     "IDL:omg.org/Dynamic/ExceptionList:1.0",
     "ExceptionList",
-    &::_tao_tc_Dynamic_ExceptionList_0);
+    &TAO::TypeCode::tc_Dynamic_ExceptionList_0);
   
 namespace Dynamic
 {
@@ -141,30 +171,40 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_CORBA_sequence_0 (
-    CORBA::tk_sequence,
-    &::_tao_tc_CORBA::_tc_string,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      CORBA_sequence_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_string,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_sequence_0 =
+      &CORBA_sequence_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_StringSeq (
     "IDL:omg.org/CORBA/StringSeq:1.0",
     "StringSeq",
-    &::_tao_tc_CORBA_sequence_0);
+    &TAO::TypeCode::tc_CORBA_sequence_0);
   
 namespace CORBA
 {
@@ -188,7 +228,7 @@ namespace Dynamic
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -199,7 +239,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<Dynamic::ParameterList>::insert_copy (
       _tao_any,
       Dynamic::ParameterList::_tao_any_destructor,
-      Dynamic_ParameterList_0,
+      TAO::TypeCode::tc_Dynamic_ParameterList_0,
       _tao_elem
     );
 }
@@ -213,7 +253,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<Dynamic::ParameterList>::insert (
       _tao_any,
       Dynamic::ParameterList::_tao_any_destructor,
-      Dynamic_ParameterList_0,
+      TAO::TypeCode::tc_Dynamic_ParameterList_0,
       _tao_elem
     );
 }
@@ -240,13 +280,13 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<Dynamic::ParameterList>::extract (
         _tao_any,
         Dynamic::ParameterList::_tao_any_destructor,
-        Dynamic_ParameterList_0,
+        TAO::TypeCode::tc_Dynamic_ParameterList_0,
         _tao_elem
       );
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -257,7 +297,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>::insert_copy (
       _tao_any,
       Dynamic::ExceptionList::_tao_any_destructor,
-      Dynamic_ExceptionList_0,
+      TAO::TypeCode::tc_Dynamic_ExceptionList_0,
       _tao_elem
     );
 }
@@ -271,7 +311,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>::insert (
       _tao_any,
       Dynamic::ExceptionList::_tao_any_destructor,
-      Dynamic_ExceptionList_0,
+      TAO::TypeCode::tc_Dynamic_ExceptionList_0,
       _tao_elem
     );
 }
@@ -298,7 +338,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<Dynamic::ExceptionList>::extract (
         _tao_any,
         Dynamic::ExceptionList::_tao_any_destructor,
-        Dynamic_ExceptionList_0,
+        TAO::TypeCode::tc_Dynamic_ExceptionList_0,
         _tao_elem
       );
 }

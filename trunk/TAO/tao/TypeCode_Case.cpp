@@ -47,10 +47,10 @@ TAO::TypeCode::Case<STRING_TYPE>::equal (CORBA::ULong index,
   if (!equal_members)
     return 0;
 
-  // Check case labels.
-  return this->equal_labels (index,
-                             tc
-                             ACE_ENV_ARG_PARAMETER);
+  // Check case label.
+  return this->equal_label (index,
+                            tc
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 template <typename STRING_TYPE>
@@ -76,11 +76,11 @@ TAO::TypeCode::Case<STRING_TYPE>::equivalent (CORBA::ULong index,
   if (!equivalent_members)
     return 0;
 
-  // Check case labels.
-  // The labels must be equal when determining equivalence, too.
-  return this->equal_labels (index,
-                             tc
-                             ACE_ENV_ARG_PARAMETER);
+  // Check case label.
+  // The label must be equal when determining equivalence, too.
+  return this->equal_label (index,
+                            tc
+                            ACE_ENV_ARG_PARAMETER);
 }
 
 #endif  /* TAO_TYPECODE_CASE_CPP */

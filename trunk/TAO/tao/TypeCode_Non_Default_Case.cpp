@@ -24,7 +24,7 @@ namespace TAO
         return v;
       }
 
-      inline static T any_to (T & v)
+      inline static T & any_to (T & v)
       {
         return v;
       }
@@ -108,8 +108,8 @@ TAO::TypeCode::Non_Default_Case<DISCRIMINATOR_TYPE,
   // boolean, or (4) an enumeration.
 
   DISCRIMINATOR_TYPE tc_label;
-  if (any.in ()
-        >>= TAO::TypeCode::Case_Traits<DISCRIMINATOR_TYPE>::any_to (tc_label)
+  if ((any.in ()
+       >>= TAO::TypeCode::Case_Traits<DISCRIMINATOR_TYPE>::any_to (tc_label))
       && this->label_ == tc_label)
     {
       return true;

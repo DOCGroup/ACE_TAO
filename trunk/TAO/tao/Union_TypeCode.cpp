@@ -102,8 +102,8 @@ TAO::TypeCode::Union<StringType,
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean const equal_discriminators =
-    (*this->discriminator_type_)->equal (tc_discriminator.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+    (*this->discriminant_type_)->equal (tc_discriminator.in ()
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!equal_discriminators)
@@ -183,8 +183,8 @@ TAO::TypeCode::Union<StringType,
       ACE_CHECK_RETURN (0);
 
       CORBA::Boolean const equiv_discriminators =
-        (*this->discriminator_type_)->equivalent (tc_discriminator.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
+        (*this->discriminant_type_)->equivalent (tc_discriminator.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (!equiv_discriminators)
@@ -227,6 +227,7 @@ TAO::TypeCode::Union<StringType,
                      RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
+#if 0
   case_type * tc_cases = 0;
 
   ACE_Auto_Array_Ptr<Case<CORBA::String_var> > safe_cases;
@@ -268,10 +269,6 @@ TAO::TypeCode::Union<StringType,
                         CORBA::TypeCode::_nil ());
     }
 
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-
   CORBA::TypeCode_var tc =
     adapter->_tao_create_union_tc (this->base_attributes_.id (),
                                    "",  /* empty name */
@@ -287,6 +284,9 @@ TAO::TypeCode::Union<StringType,
   (void) safe_cases.release ();
 
   return tc._retn ();
+#else
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::TypeCode::_nil ());
+#endif /* 0 */
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
@@ -371,7 +371,7 @@ TAO::TypeCode::Union<StringType,
                      RefCountPolicy>::discriminator_type_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
-  return CORBA::TypeCode::_duplicate (*this->discriminator_type_);
+  return CORBA::TypeCode::_duplicate (*this->discriminant_type_);
 }
 
 template <typename StringType, class CaseArrayType, class RefCountPolicy>
