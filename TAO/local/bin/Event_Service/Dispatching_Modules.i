@@ -178,7 +178,7 @@ ACE_INLINE int
 ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
 					 u_long &command_action)
 {
-  ACE_TIMEPROBE ("decode the event");
+  ACE_TIMEPROBE ("  decode the event");
 
   ACE_TRY
     {

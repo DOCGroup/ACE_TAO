@@ -1316,7 +1316,7 @@ public:
 private:
   static ACE_Timeprobe *instance_;
 
-  enum { SLOTS = 1024 };
+  enum { SLOTS = 8192 };
 
   u_int current_slot_;
 

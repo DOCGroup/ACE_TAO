@@ -148,14 +148,14 @@ public:
   // destroy the channel upon shutting down. Returns 0 on success, -1
   // on failure.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &);
+  void disconnect_push_supplier (CORBA::Environment &);
   // The channel is disconnecting.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &);
+  void disconnect_push_consumer (CORBA::Environment &);
   // The channel is disconnecting.
 
-  virtual void push (const RtecEventComm::EventSet &events,
-		     CORBA::Environment &);
+  void push (const RtecEventComm::EventSet &events,
+	     CORBA::Environment &);
   // Takes a timestamp and then pushes event_ to all consumers, either
   // directly, or via a channel.
 
