@@ -55,8 +55,8 @@ Client_Task::validate_connection (void)
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Try to setup a connection to the remote server, ignoring all the
-  // exceptions  that are expected (see bug 189 on why it is so). We
-  // could use a a validate_connection for it . But we wantthis test
+  // exceptions that are expected (see bug 189 on why it is so). We
+  // could use a a validate_connection for it . But we want this test
   // to work with Minimum CORBA builds too..
   for (int i = 0; i != 100; ++i)
     {
@@ -66,7 +66,7 @@ Client_Task::validate_connection (void)
           this->reply_gen_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-        ACE_CATCHANY {}
-        ACE_ENDTRY;
+      ACE_CATCHANY {}
+      ACE_ENDTRY;
     }
 }

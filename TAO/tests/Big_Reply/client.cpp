@@ -73,6 +73,10 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Got all the replies...\n"));
 
+      // Request the server to shutdown
+      reply_gen->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
