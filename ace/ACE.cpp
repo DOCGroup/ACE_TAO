@@ -2480,6 +2480,7 @@ ACE::get_ip_interfaces (size_t &count,
           ifdevkey += TCP_PARAM_SUBKEY;
 
           // b. extract value
+	  buf_len = sizeof(buffer);   // Gets overwritten on each call
           if (get_reg_value (ifdevkey.fast_rep (), IPADDR_NAME_ID, buffer, buf_len))
             return -4;
 
