@@ -26,6 +26,7 @@ Client_StreamEndPoint::handle_close (void)
 CORBA::Boolean
 Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
+  the_spec.length (0);
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
   return 0;
 }
@@ -65,6 +66,64 @@ Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &the_spec,
 }
 
 // ----------------------------------------------------------------------
+
+ttcp_Acceptor::ttcp_Acceptor (ttcp_Client_StreamEndPoint *endpoint)
+  :endpoint_ (endpoint)
+{
+}
+
+int
+ttcp_Acceptor::make_svc_handler (ttcp_Client_StreamEndPoint *&sh)
+{
+  sh = this->endpoint_;
+  return 0;
+}
+
+//------------------------------------------------------------
+
+ttcp_Client_StreamEndPoint::ttcp_Client_StreamEndPoint (void)
+  :acceptor_ (this)
+{
+}
+
+CORBA::Boolean
+ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
+{
+  // listen for the tcp socket.
+  
+  ACE_INET_Addr tcp_addr;
+
+  tcp_addr.set (TCP_PORT);
+
+  if (this->acceptor_.open (tcp_addr,
+                            TAO_ORB_Core_instance ()->reactor ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"%p\n","open"),-1);
+  ACE_INET_Addr local_addr;
+
+  if (this->acceptor_.acceptor ().get_local_addr (local_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)acceptor get local addr failed %p"),-1);
+
+  char client_address_string [BUFSIZ];
+  ::sprintf (client_address_string,
+             "%s:%d",
+             local_addr.get_host_name (),
+             local_addr.get_port_number ());
+  the_spec.length (1);
+  the_spec [0] = CORBA::string_dup (client_address_string);
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) client flow spec is %s\n",
+              client_address_string));
+
+  return CORBA::B_TRUE;
+}
+
+int
+ttcp_Client_StreamEndPoint::open (void *)
+{
+  return 0;
+}
+
 Client::Client (int argc, char **argv, ACE_Barrier *barrier)
   : reactive_strategy_ (&orb_manager_),
     client_mmdevice_ (&reactive_strategy_),
@@ -99,7 +158,10 @@ Client::svc (void)
       this->barrier_->wait ();
       
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) All threads finished, starting tests.\n"));
-      
+
+      ACE_Time_Value tv (0);
+      this->orb_manager_.run (TAO_TRY_ENV,&tv);
+      TAO_CHECK_ENV;
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
       // Bind the client and server mmdevices.

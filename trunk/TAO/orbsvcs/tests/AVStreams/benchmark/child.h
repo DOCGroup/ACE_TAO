@@ -12,7 +12,8 @@
 #include "ace/Select_Reactor.h"
 #include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
-
+#include "ace/SOCK_Connector.h"
+#include "client.h"
 
 class Bench_Server_StreamEndPoint :
   public virtual TAO_Server_StreamEndPoint
@@ -39,6 +40,9 @@ public:
 
   virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                       CORBA::Environment &env) ;
+private:
+  ACE_SOCK_Connector connector_;
+  ACE_SOCK_Stream tcp_stream_;
 };
 
 
