@@ -1,7 +1,7 @@
 // $Id$
 
 #include "server.h"
-#include "../mpeg_server/Video_Server.h"
+#include "Video_Server.h"
 
 // creates a svc handler by passing "this", i.e.  a reference to the
 // acceptor that created it this is needed by the svc_handler to
@@ -480,15 +480,15 @@ AV_Server::init (int argc,
   TAO_TRY
     {
   // Initialize the orb_manager
-      this->orb_manager_->init_child_poa (argc,
-                                          argv,
-                                          "child_poa",
-                                          TAO_TRY_ENV);
+      this->orb_manager_.init_child_poa (argc,
+                                         argv,
+                                         "child_poa",
+                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->activate_under_child_poa ("Video_Control",
-                                      this->video_control_,
-                                      TAO_TRY_ENV);
+      this->orb_manager_.activate_under_child_poa ("Video_Control",
+                                                   this->video_control_,
+                                                   TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
