@@ -2,7 +2,7 @@ Wed Sep  1 12:30:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/MessagingS.cpp:
 	  Forgot to remove the 'return new...' line when replacing
-	  with 'ACE_NEW_RETURN...'.
+	  with 'ACE_NEW_RETURN...'. DU caught it.
 
 Wed Sep  1 10:56:57 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
