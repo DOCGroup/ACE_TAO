@@ -17,19 +17,6 @@
 #include "be_visitor_interface.h"
 #include "be_visitor_operation.h"
 
-class TAO_IDL_Downcast_Implementation_Worker
-  : public TAO_IDL_Inheritance_Hierarchy_Worker
-{
-public:
-  TAO_IDL_Downcast_Implementation_Worker ();
-
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived);
-};
-
-// ****************************************************************
-
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
 {
@@ -47,12 +34,10 @@ be_visitor_amh_interface_ss::visit_operation (be_operation *node)
 }
 
 int
-be_visitor_amh_interface_ss::visit_attribute (be_attribute *)
+be_visitor_amh_interface_ss::visit_attribute (be_attribute *node)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "be_visitor_amh_interface_ss::visit_attribute - "
-              "ignoring attribute, must generate code later\n"));
-  return 0;
+  be_visitor_amh_operation_ss visitor (this->ctx_);
+  return visitor.visit_attribute (node);
 }
 
 int
@@ -150,6 +135,49 @@ be_visitor_amh_interface_ss::generate_proxy_classes (be_interface *)
   return 0;
 }
 
+// ****************************************************************
+
+class TAO_IDL_Downcast_Implementation_Worker
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  TAO_IDL_Downcast_Implementation_Worker ();
+
+  virtual int emit (be_interface *base,
+                    TAO_OutStream *os,
+                    be_interface *derived);
+};
+
+TAO_IDL_Downcast_Implementation_Worker::
+TAO_IDL_Downcast_Implementation_Worker (void)
+{
+}
+
+int
+TAO_IDL_Downcast_Implementation_Worker::
+emit (be_interface * /* derived */,
+      TAO_OutStream *os,
+      be_interface *base)
+{
+  // @@ This whole thing would be more efficient if we could pass the
+  // ACE_CString to compute_full_name, after all it uses that
+  // internally.
+  ACE_CString amh_name ("POA_");
+
+  // @@ The following code is *NOT* exception-safe.
+  char *buf = 0;
+  base->compute_full_name ("AMH_", "", buf);
+  amh_name += buf;
+  delete[] buf;
+
+  *os << "if (ACE_OS::strcmp (logical_type_id, \""
+      << base->repoID () << "\") == 0)" << be_idt_nl
+      << "return ACE_static_cast ("
+      << amh_name.c_str () << "*, this);" << be_uidt_nl;
+
+  return 0;
+}
+
 int
 be_visitor_amh_interface_ss::generate_downcast_implementation (be_interface *node,
                                                                TAO_OutStream *os)
@@ -157,6 +185,59 @@ be_visitor_amh_interface_ss::generate_downcast_implementation (be_interface *nod
   TAO_IDL_Downcast_Implementation_Worker worker;
   return node->traverse_inheritance_graph (worker, os);
 }
+
+// ****************************************************************
+
+class TAO_IDL_Copy_Ctor_Worker
+  : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  TAO_IDL_Copy_Ctor_Worker (void);
+
+  virtual int emit (be_interface *base,
+                    TAO_OutStream *os,
+                    be_interface *derived);
+};
+
+TAO_IDL_Copy_Ctor_Worker::
+TAO_IDL_Copy_Ctor_Worker (void)
+{
+}
+
+int
+TAO_IDL_Copy_Ctor_Worker::
+emit (be_interface *derived,
+      TAO_OutStream *os,
+      be_interface *base)
+{
+  if (derived == base)
+    return 0;
+
+  // @@ This whole thing would be more efficient if we could pass the
+  // ACE_CString to compute_full_name, after all it uses that
+  // internally.
+  ACE_CString amh_name ("POA_");
+
+  // @@ The following code is *NOT* exception-safe.
+  char *buf = 0;
+  base->compute_full_name ("AMH_", "", buf);
+  amh_name += buf;
+  delete[] buf;
+
+  *os << amh_name.c_str () << " (rhs)," << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
+                                                 TAO_OutStream *os)
+{
+  TAO_IDL_Copy_Ctor_Worker worker;
+  return node->traverse_inheritance_graph (worker, os);
+}
+
+// ****************************************************************
 
 ACE_CString
 be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
@@ -166,7 +247,7 @@ be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
   node->compute_flat_name ("AMH_", "", buf);
 
   // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
+  // ACE_CString to compute_flat_name, after all it uses that
   // internally.
   ACE_CString result (buf);
   delete[] buf;
@@ -197,34 +278,4 @@ be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
   delete[] buf;
 
   return result;
-}
-
-TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker (void)
-{
-}
-
-int
-TAO_IDL_Downcast_Implementation_Worker::
-emit (be_interface * /* derived */,
-      TAO_OutStream *os,
-      be_interface *base)
-{
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString amh_name ("POA_");
-
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
-  base->compute_full_name ("AMH_", "", buf);
-  amh_name += buf;
-  delete[] buf;
-
-  *os << "if (ACE_OS::strcmp (logical_type_id, \""
-      << base->repoID () << "\") == 0)" << be_idt_nl
-      << "return ACE_static_cast ("
-      << amh_name.c_str () << "*, this);" << be_uidt_nl;
-
-  return 0;
 }

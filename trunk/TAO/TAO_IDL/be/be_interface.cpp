@@ -1048,7 +1048,7 @@ TAO_IDL_Gen_OpTable_Worker (const char *skeleton_name)
 }
 
 int
-TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
+TAO_IDL_Gen_OpTable_Worker::emit (be_interface * /* derived_interface */,
                                   TAO_OutStream *os,
                                   be_interface *base_interface)
 {
@@ -1301,7 +1301,7 @@ be_interface::gen_optable_entries (const char *full_skeleton_name,
             {
               // Start from current indentation level.
               os->indent ();
-              
+
               // We are an operation node.
               *os << "{\"" << d->original_local_name () << "\", &"
                   << full_skeleton_name << "::"
@@ -1628,10 +1628,10 @@ be_interface::gen_gperf_things (const char *flat_name)
     case BE_GlobalData::TAO_PERFECT_HASH:
       // Output a class definition deriving from
       // TAO_Perfect_Hash_OpTable.
-      gen_perfect_hash_class_definition (flat_name);
+      this->gen_perfect_hash_class_definition (flat_name);
 
       // Call GPERF and get the methods defined.
-      if (gen_gperf_lookup_methods (flat_name) == -1)
+      if (this->gen_gperf_lookup_methods (flat_name) == -1)
         {
           return -1;
         }
@@ -2068,10 +2068,6 @@ be_interface::gen_skel_helper (be_interface *derived,
                                be_interface *ancestor,
                                TAO_OutStream *os)
 {
-  UTL_ScopeActiveIterator *si = 0;;
-  AST_Decl *d = 0;
-  TAO_NL nl;
-
   // If derived and ancestor are same, skip it.
   if (derived == ancestor)
     {
@@ -2092,7 +2088,7 @@ be_interface::gen_skel_helper (be_interface *derived,
            si.next ())
         {
           // Get the next AST decl node
-          d = si.item ();
+          AST_Decl *d = si.item ();
           if (d->node_type () == AST_Decl::NT_op)
             {
               // Start from current indentation level.
@@ -2176,7 +2172,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << ancestor->full_skel_name ()
                       << "_ptr impl = ("
                       << derived->full_skel_name ()
-                      << "_ptr) obj;" << nl;
+                      << "_ptr) obj;" << be_nl;
                   *os << ancestor->full_skel_name ()
                       << "::_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl

@@ -193,12 +193,10 @@ be_visitor_amh_interface_sh::visit_operation (be_operation *node)
 }
 
 int
-be_visitor_amh_interface_sh::visit_attribute (be_attribute *)
+be_visitor_amh_interface_sh::visit_attribute (be_attribute *node)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "be_visitor_amh_interface_ss::visit_attribute - "
-              "ignoring attribute, must generate code later\n"));
-  return 0;
+  be_visitor_amh_operation_sh visitor (this->ctx_);
+  return visitor.visit_attribute (node);
 }
 
 int

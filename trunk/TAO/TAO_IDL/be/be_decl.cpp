@@ -312,7 +312,8 @@ be_decl::compute_flat_name  (const char *prefix,
   else
     {
       // Get scope name.
-      be_decl *parent = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      be_decl *parent =
+        be_scope::narrow_from_scope (this->defined_in ())->decl ();
       if (parent == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -322,11 +323,11 @@ be_decl::compute_flat_name  (const char *prefix,
         }
 
       // Parent name.
-      result_str = ACE_CString (parent->full_name ());
+      result_str = ACE_CString (parent->flat_name ());
 
       // _
-      if (ACE_OS::strcmp (parent->full_name (), "") != 0)
-        result_str += ACE_CString ("_");
+      if (ACE_OS::strcmp (parent->flat_name (), "") != 0)
+        result_str += "_";
 
       // Prefix.
       result_str += prefix_str;

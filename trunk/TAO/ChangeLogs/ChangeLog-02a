@@ -1,3 +1,56 @@
+Thu Jan 24 17:47:00 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_decl.cpp:
+	  Fixed the implementation of compute_flat_name() there was
+	  nothing flat about the named computed: it used the regular full
+	  name for the containing scope, so for nested modules the results
+	  were wrong.
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Fixed warning about unused argument and made several cosmetic
+	  fixes.
+
+	* TAO_IDL/be/be_visitor_argument.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	  Cosmetic fixes.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Implement code to process attributes as well as operations.
+
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Fixed implementation of the _downcast() method on the AMH
+	  skeleton.
+
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Generate correct code for AMH-copy constructors.  I used the new
+	  class-based traverse_inheritance_graph().
+
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Add support for attributes, in both cases I used a technique
+	  slightly different from what the rest of the IDL compiler does.
+	  Normally a fake be_operation node is generated on the fly
+	  (usually heap allocated) and used to generate the code "as if"
+	  it was a real operation.  However, the code to generate
+	  operations has to be modified to treat these nodes with some
+	  magic, because the attribute name (on GIOP) are different than
+	  the actual name of the attribute.
+	  My approach was to re-factor the common code to generate
+	  attributes and operations in these new fangled things called
+	  "subroutines".  The attribute code calls the subroutines to
+	  generate the desired code.  I did have to generate a temporary
+	  node (of type be_argument), but I was able to stack-allocate it
+	  and use it in a very localized section of the code.
+	  Also, none of the operation code has to understand about
+	  attributes.
+
+
 Thu Jan 24 15:48:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/TAO_Static.dsp:

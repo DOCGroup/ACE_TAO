@@ -21,15 +21,24 @@
  */
 class be_visitor_amh_operation_ss : public be_visitor_operation
 {
- public:
-    be_visitor_amh_operation_ss (be_visitor_context *ctx);
-    
-    ~be_visitor_amh_operation_ss (void);
-    
-    virtual int visit_operation (be_operation *node);
+public:
+  be_visitor_amh_operation_ss (be_visitor_context *ctx);
 
- protected:
-    virtual int demarshal_params (be_operation *node);
+  ~be_visitor_amh_operation_ss (void);
+
+  virtual int visit_operation (be_operation *node);
+  virtual int visit_attribute (be_attribute *node);
+
+protected:
+  virtual int demarshal_params (be_operation *node);
+
+  int generate_shared_prolog (be_decl *node,
+                              TAO_OutStream *os,
+                              const char *skel_prefix);
+  int generate_shared_section (be_decl *node,
+                               TAO_OutStream *os,
+                               int argument_count);
+  int generate_shared_epilogue (TAO_OutStream *os);
 };
 
 #endif /* AMH_OPERATION_SS_H */
