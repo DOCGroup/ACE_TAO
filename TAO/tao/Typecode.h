@@ -87,6 +87,10 @@ public:
                         CORBA_Environment &_env = CORBA_Environment::default_environment ()) const;
   // Compares two typecodes.
 
+  CORBA::Boolean equivalent (const CORBA::TypeCode_ptr,
+                             CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  // Unaliases receiver and argument before comparing.                           
+
   CORBA::TCKind kind (CORBA_Environment &_env = CORBA_Environment::default_environment ()) const;
   // For all TypeCode kinds, returns the "kind" of the typecode.
 

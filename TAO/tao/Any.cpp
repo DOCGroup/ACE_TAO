@@ -334,7 +334,7 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_short, env))
+  if (this->type_->equivalent (CORBA::_tc_short, env))
     {
       if (this->any_owns_data_)
         {
@@ -356,7 +356,7 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_ushort, env))
+  if (this->type_->equivalent (CORBA::_tc_ushort, env))
     {
       if (this->any_owns_data_)
         {
@@ -378,7 +378,7 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_long, env))
+  if (this->type_->equivalent (CORBA::_tc_long, env))
     {
       if (this->any_owns_data_)
         {
@@ -400,7 +400,7 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_ulong, env))
+  if (this->type_->equivalent (CORBA::_tc_ulong, env))
     {
       if (this->any_owns_data_)
         {
@@ -422,7 +422,7 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_longlong, env))
+  if (this->type_->equivalent (CORBA::_tc_longlong, env))
     {
       if (this->any_owns_data_)
         {
@@ -444,7 +444,7 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_ulonglong, env))
+  if (this->type_->equivalent (CORBA::_tc_ulonglong, env))
     {
       if (this->any_owns_data_)
         {
@@ -466,7 +466,7 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_float, env))
+  if (this->type_->equivalent (CORBA::_tc_float, env))
     {
       if (this->any_owns_data_)
         {
@@ -488,7 +488,7 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_double, env))
+  if (this->type_->equivalent (CORBA::_tc_double, env))
     {
       if (this->any_owns_data_)
         {
@@ -510,7 +510,7 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_any, env))
+  if (this->type_->equivalent (CORBA::_tc_any, env))
     {
       if (this->any_owns_data_)
         {
@@ -556,7 +556,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_TypeCode, env))
+  if (this->type_->equivalent (CORBA::_tc_TypeCode, env))
     {
       if (this->any_owns_data_)
         {
@@ -585,7 +585,7 @@ CORBA_Any::operator>>= (to_boolean b) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_boolean, env))
+  if (this->type_->equivalent (CORBA::_tc_boolean, env))
     {
       if (this->any_owns_data_)
         {
@@ -607,7 +607,7 @@ CORBA_Any::operator>>= (to_octet o) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_octet, env))
+  if (this->type_->equivalent (CORBA::_tc_octet, env))
     {
       if (this->any_owns_data_)
         {
@@ -629,7 +629,7 @@ CORBA_Any::operator>>= (to_char c) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_char, env))
+  if (this->type_->equivalent (CORBA::_tc_char, env))
     {
       if (this->any_owns_data_)
         {
@@ -651,7 +651,7 @@ CORBA_Any::operator>>= (to_wchar wc) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_wchar, env))
+  if (this->type_->equivalent (CORBA::_tc_wchar, env))
     {
       if (this->any_owns_data_)
         {
@@ -676,7 +676,7 @@ CORBA_Any::operator>>= (to_string s) const
   // The typecode must be equal. Since we do not readily have access
   // to the typecode of the string into which we want to retrieve, we
   // emulate the behavior of "equal"
-  if (this->type_->kind (env) == CORBA::tk_string)
+  if (this->type_->equivalent (CORBA::_tc_string, env))
     {
       CORBA::ULong bound = this->type_->length (env);
       if (s.bound_ == bound) // bounds are same
@@ -704,7 +704,7 @@ CORBA_Any::operator>>= (to_object obj) const
 {
   CORBA::Environment env;
 
-  if (this->type_->equal (CORBA::_tc_Object, env))
+  if (this->type_->equivalent (CORBA::_tc_Object, env))
     {
       if (this->any_owns_data_)
         {

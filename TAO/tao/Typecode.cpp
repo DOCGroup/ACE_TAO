@@ -194,6 +194,27 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
     }
 }
 
+// Returns true if the two unaliased typecodes are equal.
+CORBA::Boolean
+CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
+			    CORBA::Environment &env)
+{
+  CORBA::TypeCode_ptr rcvr = this;
+
+  if (this->kind_ == CORBA::tk_alias)
+    {
+      rcvr = this->content_type (env);
+
+      while (rcvr->kind (env) == CORBA::tk_alias)
+        rcvr = rcvr->content_type (env);
+    }
+
+  while (tc->kind (env) == CORBA::tk_alias)
+    tc = tc->content_type (env);
+
+  return rcvr->equal (tc, env);
+}
+
 // Return the i-th member typecode if it exists, else raise an
 // exception. Possible exceptions are BadKind and Bounds.
 //
