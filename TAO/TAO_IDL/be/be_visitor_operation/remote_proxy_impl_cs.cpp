@@ -220,7 +220,7 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (be_operation *node)
       if (!this->void_return_type (bt))
         {
           // now generate the normal successful return statement
-          os->indent ();
+          // os->indent ();
           if (bt->size_type () == be_decl::VARIABLE
               || bt->base_node_type () == AST_Decl::NT_array)
             {
@@ -306,8 +306,9 @@ be_visitor_operation_remote_proxy_impl_cs::gen_pre_stub_info (be_operation *node
 }
 
 int
-be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation *node,
-                                                 be_type *bt)
+be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
+  be_operation *node,
+  be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
@@ -371,9 +372,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
 
   *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
-  *os << be_nl
-      << "for (;;)" << be_nl
-      << "{" << be_idt_nl;
+  *os << be_nl 
+      << "for (;;)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "int _invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl;
 
   *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
 
@@ -449,9 +451,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
                         -1);
     }
 
-  *os << be_nl
-      << "int _invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl << be_nl;
-
   *os << "ACE_TRY" << be_idt_nl
       << "{\n"
       << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
@@ -485,6 +484,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
 
   // Invoke send_request() interception point.
   *os << be_nl << "TAO_INTERCEPTOR (" << be_idt_nl
+    // Get the request_id field for the Request Info. In TAO, request
+    // id's change with differnet profiles so this seems to be the
+    // appropriate place to populate the Request Info with it.
+      << "ri.request_id (_tao_call.request_id ()); " << be_nl
       << "_tao_vfr.send_request (" << be_idt_nl
       << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
@@ -524,7 +527,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
       *os << be_nl
           << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();"
           << be_nl
-          << "if (!(\n" << be_idt << be_idt << be_idt;
+          << "if (!(" << be_idt << be_idt_nl;
 
       // Marshal each in and inout argument.
       ctx = *this->ctx_;
@@ -540,8 +543,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
                              "codegen for return var in do_static_call failed\n"),
                             -1);
         }
-      *os << be_uidt << be_uidt_nl
-          << "))" << be_uidt_nl;
+      *os << be_uidt_nl
+          << "))" << be_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_interceptor_exception (bt,
@@ -556,7 +559,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
                             -1);
         }
 
-      *os << be_idt_nl;
+      *os << be_uidt_nl;
     }
 
   *os << "_invoke_status =" << be_idt_nl;
@@ -592,7 +595,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
     }
 
   *os << be_nl
-      << "if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_nl
+      << "if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
       << "{" << be_idt_nl;
 
   if (this->gen_raise_interceptor_exception (
@@ -607,7 +610,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
                         -1);
     }
 
-  *os << "}" << be_nl;
+  *os << be_uidt_nl << "}" << be_uidt_nl << be_nl;
 
   // If we reach here, we are ready to proceed.
   // the code below this is for twoway operations only.
@@ -665,7 +668,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
       // return val (if any) and parameters (if any) that came with
       // the response message
       *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
-          << "if (!(\n" << be_idt << be_idt << be_idt;
+          << "if (!(" << be_idt << be_idt_nl;
 
       if (!this->void_return_type (bt))
         {
@@ -689,7 +692,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
           this->has_param_type (node, AST_Argument::dir_OUT))
         {
           if (!this->void_return_type (bt))
-            *os << " &&\n";
+            *os << " &&" << be_nl;
 
           // demarshal each out and inout argument
           ctx = *this->ctx_;
@@ -707,8 +710,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
             }
         }
 
-      *os << be_uidt << be_uidt << be_nl
-          << "))" << be_nl
+      *os << be_nl
+          << "))" << be_uidt_nl
           << "{" << be_idt_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_interceptor_exception
@@ -722,7 +725,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
                             -1);
         }
 
-      *os << "}" << be_uidt_nl;
+      *os << be_uidt_nl << "}" << be_uidt_nl;
     }
 
 
@@ -740,7 +743,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
       // And finally the _retn () is returned from the operation w.o
       // causing any problems.
 
-      *os << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
+      *os << be_nl << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl;
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
@@ -847,7 +850,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
     *os << "ACE_RE_THROW;" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
-      << "ACE_ENDTRY;\n";
+      << "ACE_ENDTRY;" << be_nl;
 
   if (this->gen_check_exception (bt) == -1)
     {
@@ -858,7 +861,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
                         -1);
     }
 
-  *os << "#endif /* TAO_HAS_INTERCEPTORS */\n";
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
 
   if (node->flags () != AST_Operation::OP_oneway)
     {
@@ -874,7 +877,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (be_operation 
     }
 
   *os << be_nl << "break;" << be_uidt_nl
-      << "}\n\n";
+      << "}" << be_uidt_nl;
 
   return 0;
 }
@@ -932,10 +935,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (be_t
         }
       else
         {
-          *os << "TAO_INTERCEPTOR_THROW (" << be_idt << be_idt_nl
+          *os << "TAO_INTERCEPTOR_THROW (" << be_idt_nl
               << excep << " (" << completion_status
               << ")" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl;
+              << ");" << be_nl;
         }
     }
   else
@@ -943,17 +946,17 @@ be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (be_t
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt_nl
               << excep << " (" << completion_status << ")," << be_nl
               <<  "0" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl;
+              << ");" << be_nl;
         }
       else
         {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt_nl
               << excep << " (" << completion_status << ")," << be_nl
               <<  "_tao_retval" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl;
+              << ");" << be_nl;
         }
     }
 
@@ -965,22 +968,21 @@ be_visitor_operation_remote_proxy_impl_cs::gen_check_exception (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
   // check if there is an exception
   if (this->void_return_type (bt))
     {
-      *os << "ACE_CHECK;\n";
+      *os << "ACE_CHECK;" << be_nl;
     }
   else
     {
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "ACE_CHECK_RETURN (0);\n";
+          *os << "ACE_CHECK_RETURN (0);" << be_nl;
         }
       else
         {
-          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
+          *os << "ACE_CHECK_RETURN  (_tao_retval);" << be_nl;
         }
     }
 
