@@ -1,95 +1,101 @@
+Thu Dec 03 12:33:53 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Makefile: removed DynUnion_i_T from ORBCORE_SRCS, because
+          it just contains template members.  Thanks to Ossama for
+          reporting this.
+
 Thu Dec  3 11:59:23 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
 
-	  Ensured that a oneway operation can never have a "raises"
-	  clause. Thanks to Tom Ziomek (tomz@cc.comm.mot.com) for
-	  reporting this. 
+          Ensured that a oneway operation can never have a "raises"
+          clause. Thanks to Tom Ziomek (tomz@cc.comm.mot.com) for
+          reporting this.
 
-	* TAO_IDL/util/utl_error.cpp:
+        * TAO_IDL/util/utl_error.cpp:
 
-	  Improved the error message for EIDL_ILLEGAL_RAISES error code.
+          Improved the error message for EIDL_ILLEGAL_RAISES error code.
 
-	* TAO_IDL/fe/(idl.yy, y.tab.cpp, y.tab.h}:
+        * TAO_IDL/fe/(idl.yy, y.tab.cpp, y.tab.h}:
 
-	  Ensured that discriminant of type octet inside a union
-	  declaration is flagged as an error. The OMG spec does not allow
-	  discriminants of type octets.
+          Ensured that discriminant of type octet inside a union
+          declaration is flagged as an error. The OMG spec does not allow
+          discriminants of type octets.
 
 Thu Dec  3 10:31:12 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
-	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
 
-	  We make sure that the upcast and downcast methods are now
-	  generated only for CORBA::Object sequences and not for sequences
-	  of CORBA::TypeCodes. In the latter case, the upcast and downcast
-	  methods are not needed and furthermore, casting them to
-	  CORBA::Object_ptr is totally incorrect.
-	
+          We make sure that the upcast and downcast methods are now
+          generated only for CORBA::Object sequences and not for sequences
+          of CORBA::TypeCodes. In the latter case, the upcast and downcast
+          methods are not needed and furthermore, casting them to
+          CORBA::Object_ptr is totally incorrect.
+
 Thu Dec  3 07:09:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/README.tests: Added
- 	instructions for utilization test.
+        * performance-tests/Cubit/TAO/MT_Cubit/README.tests: Added
+        instructions for utilization test.
 
 Thu Dec 03 01:24:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/try_macros.h: Added TAO_TRY_VAR and TAO_TRY_VAR_EX.  These
- 	  macros are similar to TAO_TRY and TAO_TRY_EX, except that they
- 	  work with a user specified environment variable instead of
- 	  creating one for itself.
+        * tao/try_macros.h: Added TAO_TRY_VAR and TAO_TRY_VAR_EX.  These
+          macros are similar to TAO_TRY and TAO_TRY_EX, except that they
+          work with a user specified environment variable instead of
+          creating one for itself.
 
-	* tao/Object.cpp (_non_existent): Added the use of exception
- 	  macros to this method.  This will make this method work with
-	  native exceptions.  
-	  
-	  If the _non_existent() remote call succeeds, it return 0; if
- 	  CORBA::OBJECT_NOT_EXIST is thrown, it returns 1; and any other
- 	  (system) exception raised in making the remote call is passed
- 	  through to the user.  Thanks to Sunil Kumar <skumar@sutmyn.com>
-	  for reporting this.
+        * tao/Object.cpp (_non_existent): Added the use of exception
+          macros to this method.  This will make this method work with
+          native exceptions.
+
+          If the _non_existent() remote call succeeds, it return 0; if
+          CORBA::OBJECT_NOT_EXIST is thrown, it returns 1; and any other
+          (system) exception raised in making the remote call is passed
+          through to the user.  Thanks to Sunil Kumar <skumar@sutmyn.com>
+          for reporting this.
 
 Thu Dec 03 01:00:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Environment.cpp:
-	* tao/Exception.cpp:
-	* tao/POAC.cpp:
-	* tao/debug.cpp: Changed the uses of "completion ()" to "completed
-	  ()".
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/POAC.cpp:
+        * tao/debug.cpp: Changed the uses of "completion ()" to "completed
+          ()".
 
 Wed Dec  2 21:56:56 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/ttcp_decl.h: commented out
-	RtiPackets since I haven't gotten that working yet: Was preventing
-	compilation for anyone but me (the variable isn't defined but in
-	my workspace at the moment).
+        * performance-tests/Thruput/TAO/ttcp_decl.h: commented out
+        RtiPackets since I haven't gotten that working yet: Was preventing
+        compilation for anyone but me (the variable isn't defined but in
+        my workspace at the moment).
 
-	* performance-tests/Thruput/TAO/utils.cpp: fixed minor errors that
-	were preventing compilation on linux.
-	
+        * performance-tests/Thruput/TAO/utils.cpp: fixed minor errors that
+        were preventing compilation on linux.
+
 
 Wed Dec 02 18:33:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Exception (completed): The name of the function (both
- 	  accessor and modifier) should be completed(), not completion().
+        * tao/Exception (completed): The name of the function (both
+          accessor and modifier) should be completed(), not completion().
 
-	  Thanks to Steve Totten <totten_s@ociweb.com> for pointing this
- 	  out.
+          Thanks to Steve Totten <totten_s@ociweb.com> for pointing this
+          out.
 
 Wed Dec  2 17:40:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/ttcp_decl.h: forgot to add this
-	along with the changes to utils.cpp.  Changed the definition of
-	some of the methods in utils.cpp like prusage.  
+        * performance-tests/Thruput/TAO/ttcp_decl.h: forgot to add this
+        along with the changes to utils.cpp.  Changed the definition of
+        some of the methods in utils.cpp like prusage.
 
 Wed Dec  2 14:26:58 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
-	  TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
+          TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
 
-	  The upcast and downcast methods are now generated even for
-	  sequences of CORBA::Objects and CORBA::TypeCodes. Thanks to Ron Barack
-	  <rab@terminal.cz> for reporting the problem.
+          The upcast and downcast methods are now generated even for
+          sequences of CORBA::Objects and CORBA::TypeCodes. Thanks to Ron Barack
+          <rab@terminal.cz> for reporting the problem.
 
 Wed Dec 02 11:03:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -100,12 +106,12 @@ Wed Dec  2 09:17:34 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
         * TAO_IDL/be/be_helper.cpp (TAO_OutStream::gen_ifdef_AHETI):
 
-	  We were checking if the TAO_LACKS_TEMPLATE_SPECIALIZATION macro
-	  is defined or not. Such a macro is not defined anywhere in ACE
-	  or TAO. The correct macro to be used here is
-	  ACE_HAS_TEMPLATE_SPECIALIZATION. Thanks to Peter Nordlund
-	  (petern@nada.kth.se) for noticing this.
-	
+          We were checking if the TAO_LACKS_TEMPLATE_SPECIALIZATION macro
+          is defined or not. Such a macro is not defined anywhere in ACE
+          or TAO. The correct macro to be used here is
+          ACE_HAS_TEMPLATE_SPECIALIZATION. Thanks to Peter Nordlund
+          (petern@nada.kth.se) for noticing this.
+
         * TAO_IDL/be/be_visitor_union/union_ci.cpp:
 
           In the generated _reset (void) method, we now zero out the
