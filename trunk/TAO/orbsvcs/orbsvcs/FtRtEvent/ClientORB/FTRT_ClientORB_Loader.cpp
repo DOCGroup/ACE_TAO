@@ -23,8 +23,6 @@ namespace TAO_FTRT {
   int FTRT_ClientORB_Loader::init (int argc,
     ACE_TCHAR* argv[])
   {
-    ACE_TRACE ("FTRT_ClientORB_Loader::init");
-
     static int initialized = 0;
 
     // Only allow initialization once.

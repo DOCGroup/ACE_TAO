@@ -35,8 +35,6 @@ namespace FTRTEC
 
   int Replication_Service::init (int argc, ACE_TCHAR* argv[])
   {
-    ACE_TRACE ("Replication_Service::init");
-
     static int initialized = 0;
 
     // Only allow initialization once.
