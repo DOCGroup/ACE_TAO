@@ -1,0 +1,23 @@
+project(Assembly_Manager): ciao_server, acexml, iortable {
+
+  libs += CIAO_XML_Helpers
+  libpaths += ../XML_Helpers
+  after += XML_Helpers
+
+  Source_Files {
+    Assembly_ServiceC.cpp
+    Assembly_ServiceS.cpp
+    Assembly_Impl.cpp
+    Assembly_Visitors.cpp
+    Deployment_Configuration.cpp
+    Assembly_Manager.cpp                // Main
+    Assembly_Service_Impl.cpp
+  }
+}
+
+project(Assembly_Deployer) : ciao_server {
+  Source_Files {
+    Assembly_ServiceC.cpp
+    Assembly_Deployer.cpp
+  }
+}
