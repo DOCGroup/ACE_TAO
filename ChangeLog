@@ -10,7 +10,7 @@ Tue May  6 13:39:27 2003  Steve Huston <shuston@riverace.com>
 	  ptr_arith_t usage can be expunged from TAO. Required adding
 	  #include <stddef.h> to pick up the ptrdiff_t type.
 
-Tue May  6 11:50:18 2003  ace  <elliott_c@ociweb.com>
+Tue May  6 11:50:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Synch.cpp (get_nesting_level):
 
