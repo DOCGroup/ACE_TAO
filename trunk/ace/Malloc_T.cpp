@@ -328,10 +328,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
 
   // Search the freelist to locate a block of the appropriate size.
 
-  for (int i = 0;
-       ; i++)
 
-    // *Warning* Do not use "continue" within this for-loop.
+  while (1)
+
+    // *Warning* Do not use "continue" within this while-loop.
 
     {
       ACE_SEH_TRY
@@ -400,7 +400,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
         {
         }
     }
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 // General-purpose memory allocator.
