@@ -8,6 +8,8 @@
 
 ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
 
+#define  THE_IOR "theior"
+
 static const char *server_cmd = 0;
 
 void *
@@ -20,7 +22,7 @@ svr_worker (void *arg)
   ACE_OS::strcpy (cmd_line, "server ");
   if (server_cmd != 0)
     ACE_OS::strcat (cmd_line, server_cmd);
-  ACE_OS::strcat (cmd_line, " -f theior");
+  ACE_OS::strcat (cmd_line, " -f " THE_IOR);
   ACE_ARGV args (cmd_line);
 
   ACE_TRY_NEW_ENV
@@ -79,7 +81,7 @@ main (int argc, char **argv)
   ACE_OS::strcpy (cmd_line, "client ");
   if (client_cmd != 0)
     ACE_OS::strcat (cmd_line, client_cmd);
-  ACE_OS::strcat (cmd_line, " -f theior");
+  ACE_OS::strcat (cmd_line, " -f " THE_IOR);
   ACE_ARGV args (cmd_line);
 
   ACE_Barrier barrier (2);
@@ -104,5 +106,7 @@ main (int argc, char **argv)
     retv = cubit_client.run ();
 
   tm.wait ();
+
+  ACE_OS::unlink (THE_IOR);
   return retv;
 }
