@@ -21,7 +21,7 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
                               size_t memcpy_tradeoff,
                               ACE_CDR::Octet major_version,
                               ACE_CDR::Octet minor_version)
-  :  start_ (size ? size : ACE_CDR::DEFAULT_BUFSIZE + ACE_CDR::MAX_ALIGNMENT,
+  :  start_ ((size ? size : (size_t) ACE_CDR::DEFAULT_BUFSIZE) + ACE_CDR::MAX_ALIGNMENT,
              ACE_Message_Block::MB_DATA,
              0,
              0,
