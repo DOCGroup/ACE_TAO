@@ -9,18 +9,27 @@ THE ADAPTIVE COMMUNICATION ENVIRONMENT (ACE)
 
 An Object-Oriented Network Programming Toolkit
 
+----------------------------------------
+
 Overview of ACE
 
 The ADAPTIVE Communication Environment (ACE) is an object-oriented
 (OO) toolkit that implements fundamental design patterns for
 communication software.  ACE provides a rich set of reusable C++
-wrappers, class categories, and frameworks that perform common
-communication software tasks across a range of operating system
-platforms.  The communication software tasks provided by ACE include
-event demultiplexing and event handler dispatching, service
-initialization, interprocess communication, shared memory management,
-message routing, dynamic (re)configuration of distributed services,
-multi-threading, and concurrency control.
+wrappers and frameworks that perform common communication software
+tasks across a range of OS platforms, including Win32 (i.e., WinNT
+3.5.x and 4.x and Win95), most versions of UNIX (e.g., SunOS 4.x,
+Solaris 2.x, SGI IRIX 5.x and 6.x, HP-UX 9.x and 10.x, OSF/1
+a.k.a. DEC UNIX, AIX 4.x, Linux, SCO, UnixWare, and FreeBSD), VxWorks,
+Chorus, and MVS OpenEdition.  A single source tree is used for all
+these platforms and porting ACE to other platforms is relatively easy.
+
+The communication software components provided by ACE include event
+demultiplexing and event handler dispatching, service initialization,
+interprocess communication, shared memory management, message routing,
+dynamic (re)configuration of distributed services, multi-threading,
+and concurrency control.  There are both C++ and Java versions of ACE
+available.
 
 ACE is targeted for developers of high-performance and real-time
 communication services and applications on UNIX, POSIX, and Win32
@@ -31,16 +40,12 @@ automates system configuration and reconfiguration by dynamically
 linking services into applications at run-time and executing these
 services in one or more processes or threads.
 
-ACE has been ported to a wide range of uni-processor and multi-process
-OS platforms including Win32 (i.e., WinNT and Win95), most versions of
-UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux,
-SCO, and FreeBSD), VxWorks, and MVS OpenEdition.  It is currently used
-in commercial products by dozens of companies including Ericsson,
-Bellcore, Siemens, Motorola, Kodak, and McDonnell Douglas.  There are
-both C++ and Java versions of ACE available.
+ACE is currently used in commercial products by dozens of companies
+including Ericsson, Bellcore, Siemens, Motorola, Kodak, Boeing,
+Lucent, DEC, Lockheed Martin, and SAIC.  Commercial support for ACE is
+available at http://www.riverace.com.
 
-The remainder of this document outlines the structure and participants
-of the layers in this diagram.
+----------------------------------------
 
 C++ Wrappers for OS Interfaces
 
@@ -73,6 +78,8 @@ interfaces:
 
 The OS Adaptation Layer shields the upper levels of ACE from platform
 dependencies associated with the underlying OS interfaces.
+
+----------------------------------------
 
 Frameworks and Class Categories
 
@@ -107,6 +114,8 @@ following class categories:
 		   (such as single-threaded and multi-threaded
 		   Orbix and Visibroker for C++).
 
+----------------------------------------
+
 Distributed Services and Components
 
 Finally, ACE provides a standard library of distributed services that
@@ -128,6 +137,8 @@ global mobile communications system, and enterprise-wide electronic
 medical imaging systems for Kodak Health Imaging Systems and Siemens
 medical engineering.
 
+----------------------------------------
+
 OBTAINING ACE
 
 The current ACE release is provided as a tar file that is around 1.8
@@ -136,115 +147,20 @@ from http://www.cs.wustl.edu/~schmidt/ACE-obtain.html.  This release
 contains the source code, test drivers, and example applications for
 C++ wrapper libraries and the higher-level ACE network programming
 framework developed as part of the ADAPTIVE project at the University
-of California, Irvine and at Washington University.
+of California, Irvine and at Washington University, St. Louis.
 
-ACE DIRECTORY STRUCTURE
-
-The following subdirectories are included in C++_wrappers.tar.gz file:
-
-        . ace  -- the source code and binaries for C++ components (note that
-                  all of these are at the same "level" in order to work around
-                  Windows NT lack of symbolic links...)
-                . ASX -- higher-level C++ network programming
-                        framework based on System V STREAMs
-                . Collections -- stacks, sets, strings, etc.
-                . Concurrency -- wrappers for Solaris, POSIX, and Win32 threads
-                . Connection -- implementations of connection
-                        establishment patterns 
-                . CORBA -- C++ wrappers that make it easier to work with CORBA
-                . Debugging -- C++ assert macro, dump methods, method call tracing, etc.
-                . IPC_SAP -- C++ wrappers around UNIX communication mechanisms
-                        . Addr -- wrappers for various network addressing formats
-                        . DEV_SAP -- wrapper for UNIX device I/O
-                        . FIFO_SAP -- wrapper for FIFOS (named pipes)
-                        . FILE_SAP -- wrapper for UNIX FILE *s
-                        . IO_SAP -- wrapper for low-level serial-line I/O
-                        . SOCK_SAP -- wrapper for BSD sockets
-                        . SPIPE_SAP -- wrapper for SVR4 STREAM pipes and connld 
-                        . TLI_SAP -- wrapper for SVR4 TLI 
-        .               . UPIPE_SAP -- inter-thread communication mechanism
-                . Log_Msg -- library API for local/remote logging
-                . Memory
-                        . Mem_Map -- wrapper for BSD mmap() memory mapped files 
-                        . Shared_Malloc -- shared memory malloc/free classes
-                        . Shared_Memory -- wrapper for SysV/BSD shared memory
-                . Misc -- miscellaneous C++ wrappers for the GNU getopt utility,
-                        Obstacks, GoF-style patterns
-		. Name_Service -- client-side classes for distributed name service
-                . OS -- encapsulation of UNIX and Win32 OS APIs
-                . Reactor -- a framework for OO event demultiplexing and
-                        event handler dispatching 
-                . Service_Configurator -- a framework for dynamically
-                        linking/unlinking services into/from applications
-                        at run-time
-                . System V IPC
-                        . SV_Message_Queues -- wrapper for SysV message queues
-                        . SV_Semaphores -- wrapper for SysV semaphores
-                        . SV_Shared_Memory -- wrapper for SysV shared memory
-                . Timers -- High resolution timers and profile timers
-		. Token_Service -- client-side classes for distributed locking
-        . apps    -- Several example applications written using the ACE wrappers
-                . Gateway -- application-level gateway
-                . Orbix-Examples -- examples of how to integrate Orbix with ACE
-		. gperf -- a perfect hash function generator program written in C++
-		. Synch-Benchmarks -- benchmarks for OS IPC and synchronization mechanisms
-        . bin     -- utility programs for building this release, in
-                     particular, a set of scripts for automatically
-                     generating manual pages from C++ class headers.
-        . examples -- programs that illustrate how to use ACE components
-        . man   -- manual pages for ACE in nroff and HTML format
-                   generated automatically by OSE class2man
-	. netsvcs -- network services
-		. clients -- test programs that exercise the ACE network services
-		. lib -- network services implemented using the general ACE service
-		 	 framework:
-	                . Client Logger -- client-side for distributed logging service
-	                . Server Logger -- server-side for distributed logging service
-	                . Name Server -- a distributed name service
-	                . Token Server -- a distributed token service
-	                . Time Server -- a distributed time service
-		. servers -- dynamically linkable main programs that 
-			configure the services
-        . rpc++ -- C++ interface to Sun RPC developed by Michael Lipp
-                   (mnl@dtro.e-technik.th-darmstadt.de).  This code
-                   is distributed "as is" (under the GNU GPL) and is 
-                   not part of the ACE release that I maintain.
-        . tests -- a suite of automated regression tests to exercise ACE features
+----------------------------------------
 
 ACE DOCUMENTATION AND TUTORIALS
 
 Many of the C++ wrappers and higher-level components have been
 described in issues of the C++ Report, as well as in proceedings of
-the following journals, conferences, and workshops:
-
-        . The OOPSLA '96 conference in San Jose, CA, October 1996
-        . 4th IEEE International Conference on Software Reuse in
-          Orlando, Florida, April 1996.
-        . The SIGS OOP conference in Munich, Germany, February, 1996
-        . The OOPSLA '95 conference in Austin, TX, October 1995
-        . The ECOOP '95 conference in Aarhus, Denmark, June 1995
-        . The SIGS Object Expo conference in New York, NY, June, 1995
-        . The 1st USENIX Conference on Object-Oriented Technologies
-                in Monterey, CA, June, 1995
-        . The SIGS OOP conference in Munich, Germany, February, 1995
-        . The Winter USENIX General Conference in January, 1995
-        . 3rd SIGS C++ World conference in November, 1994
-        . The 9th ACM OOPSLA Conference held in October, 1994 
-        . The 1st Conference on the Pattern Languages of Programs, 
-                August, 1994
-        . The 6th USENIX C++ Conference, April, 1994
-        . The 2nd IEEE International Workshop on Configurable Distributed
-                Systems, March, 1994
-        . The 11th and 12th Annual Sun Users Group Conference in
-                December, 1993 and June, 1994 
-        . The 2nd SIGS C++ World conference, October, 1993
-        . IEE Distributed Systems Engineering Journal, December 1994.
+many journals, conferences, and workshops.
 
 A collection of white papers and tutorial handouts are included at
 ftp://wuarchive.wustl.edu/languages/c++/ACE/ACE-documentation.  This
 directory contains postscript versions of various papers that describe
-different aspects of ACE.  The documentation is approximately 6 meg
-compressed.
+different aspects of ACE.
 
 I update these papers periodically to reflect changes to the ACE
 architecture.  Therefore, you might want to check the date on the
@@ -253,24 +169,19 @@ these papers.
 
 This material is also available available via the WWW at URL:
 
-http://www.cs.wustl.edu/~schmidt/
+http://www.cs.wustl.edu/~schmidt/ACE.html
+
+----------------------------------------
 
 BUILDING AND INSTALLING ACE
 
-Please refer to the ACE-INSTALL.html file for information on how to
-build and test the ACE wrappers.  The overall ACE release is very
-large (~1 Meg).  Therefore, I'm sorry, but I will be unable to
-distribute the ACE wrappers via email.  The BIBLIOGRAPHY file contains
-information on where to obtain articles that describe the ACE wrappers
-and the ADAPTIVE system in more detail.
+Please refer to the http://www.cs.wustl.edu/~schmidt/ACE-INSTALL.html
+file for information on how to build and test the ACE wrappers.  The
+BIBLIOGRAPHY file contains information on where to obtain articles
+that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
-The current release has been tested extensively on Sun workstations
-running Sun OS 4.1.x and Solaris 2.x (on both SPARC and Intel
-platforms) using Sun C++ 4.x and GNU G++ 2.7.x.  The release has also
-been ported to SCO UNIX, HP-UX, SGI, OSF/1, AIX, Linux, Windows NT and
-Windows '95.  I expect that major portions of the release will port
-easily to other platforms.  If you can help port ACE to other
-platforms I'd appreciate it.
+The current release has been tested extensively, but if you find any
+bugs, please report them to me.  
 
 ACE MAILING LIST
 
@@ -283,12 +194,16 @@ ACKNOWLEDGEMENTS
 ACE has been deeply influenced and improved by the following members
 of my research group at Washington University:
 
+Darrell Brunsch <brunsch@cs.wustl.edu>
+Chris Cleeland <chris@milo.st-louis.mo.us>
 Aniruddha Gokhale <gokhale@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
-Irfan Pyarali <ip1@cs.wustl.edu>
 David Levine <levine@cs.wustl.edu>
+Carlos O'Ryan <coryan@mat.puc.cl>
+Irfan Pyarali <ip1@cs.wustl.edu>
+Nanbor Wang <nw1@cs.wustl.edu>
 
 I would also like to thank all the following people who have also
 contributed to ACE over the years:
@@ -300,17 +215,12 @@ Lee Baker <baker@ctis.af.mil>
 Alex Ranous <ranous@nsa.hp.com>
 Mark Patton <mark_patton@tx72.mot.com>
 Steffen Winther Sorensen <sts@dad.stibo.dk> for
-Chris Cleeland <chris@milo.st-louis.mo.us>
-Tim Harrison <harrison@cs.wustl.edu>
 Troy Warner <tnw1@core01.osi.com>
 Stacy Mahlon <mcs@contour.mayo.edu>
 Charles Eads <eads@synoptics.com>
 Mark Frutig <mfrutig@fnbc.com>
 Todd Hoff <thm@ictv.com>
 George <george@truffula.fp.trw.com>
-Aniruddha Gokhale <gokhale@cs.wustl.edu>
-Irfan Pyarali <ip1@cs.wustl.edu>
-Prashant Jain <pjain@cs.wustl.edu>
 Brad Needham <bneedham@ix.netcom.com>
 Leslee Xu <lxu@ics.uci.edu>
 Detlef Becker <beckerd@erlh.siemens.de>
@@ -463,9 +373,7 @@ Anthony McConnell <Tonym@datel.demon.co.uk>
 Mark Rabotnikov <mark@usp.elscintcorp.co.il>
 John Bossom <John.Bossom@Cognos.COM>
 Rino Simioni <sir@necsy.it>
-Carlos O''Ryan <coryan@mat.puc.cl>
 Slawomir Kuzniar <kuzniar@Bear.COM>
-Nanbor Wang <nw1@cs.wustl.edu>
 Rob Jordan <jordan@hursley.ibm.com>
 Michael Maxie <maxie@acm.org>
 John Cosby <John.D.Cosby@cpmx.saic.com>
@@ -496,7 +404,6 @@ Ganesh Pai <gpai@voicetek.com>
 Berni Merkle <merkle@io.freinet.de>
 Tom Wright <twright@gem-net.demon.co.uk>
 Torbjorn Lindgren <tl@funcom.no>
-Darrell Brunsch <brunsch@cs.wustl.edu>
 Mike Bernat <sagmb@sagus.com>
 Brian Mendel <bmendel@mdc.com>
 Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com>
@@ -536,7 +443,7 @@ I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
 Makefile scheme that underlies this distribution and also spent
 countless hours with me discussing object-oriented techniques for
-developing distributed application frameworks. 
+developing distributed application frameworks.
 
 Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to
