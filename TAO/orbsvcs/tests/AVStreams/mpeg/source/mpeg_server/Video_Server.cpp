@@ -27,133 +27,8 @@
 
 #include "Video_Server.h"
 
-// Global Methods
-
-PLAYpara Video_Server::para;
-
-// %% maybe put this in some class?
-// this sends one frame
-int
-play_send (int debug)
-{
-
-  //  ACE_DEBUG((LM_DEBUG,"play_send: sending the frame \n"));
-  int curGroup = Video_Timer_Global::timerGroup;
-  int curFrame = Video_Timer_Global::timerFrame;
-  int curHeader = Video_Timer_Global::timerHeader;
-  char * sp;
-    
-  if (VIDEO_SINGLETON::instance ()->preGroup != curGroup || 
-      curFrame != VIDEO_SINGLETON::instance ()->preFrame)
-    {
-      int sendStatus = -1;
-      int frameStep = 1;
-      if (debug)
-        cerr <<  " curgroup = " << curGroup << endl ;
-      if (curGroup == 0)
-        {
-      
-          int i = curFrame + 1;
-          while (i < VIDEO_SINGLETON::instance ()->firstPatternSize && 
-                 !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
-            {
-              frameStep ++;
-              i++;
-            }
-        }
-      else  /* (curGroup > 0) */
-        {
-          int i = curFrame + 1;
-          sp = VIDEO_SINGLETON::instance ()->sendPattern + ((curGroup - 1) % VIDEO_SINGLETON::instance ()->sendPatternGops) * VIDEO_SINGLETON::instance ()->patternSize;
-          while (i < VIDEO_SINGLETON::instance ()->patternSize && !sp[i])
-            {
-              frameStep ++;
-              i++;
-            }
-        }
-      if (curGroup == 0)
-        {
-          if (debug)
-            cerr << "first : " <<
-              VIDEO_SINGLETON::instance ()->firstSendPattern[curFrame] << endl;
-          if (VIDEO_SINGLETON::instance ()->firstSendPattern[curFrame])
-            sendStatus = 0;
-          else /*  (!VIDEO_SINGLETON::instance ()->firstVIDEO_SINGLETON::instance ()->SendVIDEO_SINGLETON::Instance ()->Pattern[curFrame]) */
-            {
-              int i = curFrame - 1;
-              while (i > 0 && !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
-                i--;
-              if (i > VIDEO_SINGLETON::instance ()->preFrame)
-                /* the frame (curGroup, i) hasn't been sent yet */
-                {
-                  sendStatus = 0;
-                  curFrame = i;
-                }
-              else
-                sendStatus = -1;
-              if (debug)
-                cerr << "SendStatus = " << sendStatus << endl;
-            }
-        }
-      else if (sp[curFrame]) /* curGroup > 0 */
-	sendStatus = 0;
-      else /*  (!sp[curFrame]) */
-        {
-          int i = curFrame - 1;
-          while (i > 0 && !sp[i])
-            i--;
-          if (curGroup == VIDEO_SINGLETON::instance ()->preGroup && i > VIDEO_SINGLETON::instance ()->preFrame)
-            /* the frame (curGroup, i) hasn't been sent yet */
-            {
-              sendStatus = 0;
-              curFrame = i;
-            }
-          else
-            sendStatus = -1;
-        }
-      if (!sendStatus)
-        {
-          // Send the current video frame, calls send_to_network which
-          // fragments and sends via blocking write .
-          sendStatus = Video_Server::SendPacket(VIDEO_SINGLETON::instance ()->preHeader != curHeader,
-                                  curGroup, curFrame,
-                                  (VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF) * frameStep);
-          if (!sendStatus)
-            {
-              VIDEO_SINGLETON::instance ()->preHeader = curHeader;
-              VIDEO_SINGLETON::instance ()->preGroup = curGroup;
-              VIDEO_SINGLETON::instance ()->preFrame = curFrame;
-#ifdef STAT
-              if (Video_Server::para.collectStat)
-                {
-                  int f = VIDEO_SINGLETON::instance ()->gopTable[curGroup].previousFrames + curFrame;
-                  VIDEO_SINGLETON::instance ()->framesSent[f>>3] |= (1 << (f % 8));
-                }
-#endif
-            }
-        }
-    }
-  return 0;
-}
-
-int
-fast_play_send (void)
-{
-  if (VIDEO_SINGLETON::instance ()->fast_preGroup != Video_Timer_Global::timerGroup)
-    {
-      Video_Server::SendPacket(VIDEO_SINGLETON::instance ()->fast_preHeader != Video_Timer_Global::timerHeader, Video_Timer_Global::timerGroup, 0,
-		 VIDEO_SINGLETON::instance ()->fast_para.usecPerFrame * VIDEO_SINGLETON::instance ()->patternSize >> 2);
-      VIDEO_SINGLETON::instance ()->fast_preHeader = Video_Timer_Global::timerHeader;
-      VIDEO_SINGLETON::instance ()->fast_preGroup = Video_Timer_Global::timerGroup;
-    }
-  return 0;
-}
-
 // Video_Sig_Handler methods
 // handles the timeout SIGALRM signal
-// %% this should *not* register itself,but it should
-// be registered by the Video_Server::run, alongwith
-// the remaining  handlers.
 Video_Sig_Handler::Video_Sig_Handler (Video_Control_Handler *vch)
   : vch_ (vch)
 {
@@ -243,15 +118,15 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       switch (this->vch_->get_state ()->get_state ())
         {
         case Video_Control_State::VIDEO_PLAY:
-          play_send ();
+          VIDEO_SINGLETON::instance ()->play_send   ();
           break;
         case Video_Control_State::VIDEO_FAST_FORWARD:
           // this handles the forward play case!
-          fast_play_send ();
+          VIDEO_SINGLETON::instance ()->fast_play_send   ();
           break;
         case Video_Control_State::VIDEO_FAST_BACKWARD:
           // this handles the backward play case!
-          fast_play_send ();
+          VIDEO_SINGLETON::instance ()->fast_play_send   ();
           break;
         default:
           break;
@@ -289,13 +164,13 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
   switch (this->vch_->get_state ()->get_state ())
     {
     case Video_Control_State::VIDEO_PLAY:
-      GetFeedBack ();
-      play_send (); // simulating the for loop in playvideo () in vs.cpp
+      VIDEO_SINGLETON::instance ()->GetFeedBack ();
+      VIDEO_SINGLETON::instance ()->play_send   (); // simulating the for loop in playvideo () in vs.cpp
       break;
     case Video_Control_State::VIDEO_FAST_FORWARD:
     case Video_Control_State::VIDEO_FAST_BACKWARD:
-      GetFeedBack ();
-      fast_play_send (); // simulating the for loop in fast_play
+      VIDEO_SINGLETON::instance ()->GetFeedBack ();
+      VIDEO_SINGLETON::instance ()->fast_play_send   (); // simulating the for loop in fast_play
       break;
     }
   return 0;
@@ -306,15 +181,17 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 Video_Control_Handler::Video_Control_Handler (int control_fd)
   : control_handle_ (control_fd)
 {
-  VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->set_video_control_handler (this);
 }
 
+// Called by the reactor to extract the handle associated with this handler.
 ACE_HANDLE
 Video_Control_Handler::get_handle (void) const
 {
   return this->control_handle_ ;
 }
 
+// Called by the Reactor when data is ready to be read from the
+// video control handle, which indicates a control message from the client.
 int
 Video_Control_Handler::handle_input (ACE_HANDLE handle)
 {
@@ -322,40 +199,47 @@ Video_Control_Handler::handle_input (ACE_HANDLE handle)
   // state pattern
 }
 
+// Returns the current state object .
 Video_Control_State *
 Video_Control_Handler::get_state (void)
 {
   return this->state_;
 }
 
+// Changes the state of the video control handler from the current
+// state to the state represented by the argument.
 void
 Video_Control_Handler::change_state (Video_Control_State *state)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Video_Control_Handler::Changing to state %d\n",
+              "(%P|%t) Video_Control_Handler::Changing to state %d\n",
               state->get_state ()));
   this->state_ = state;
 }
 
 // ----------------------------------------------------------------------
+// Video_Control_Handler_Instance methods.
 
+// Default constructor
 Video_Control_Handler_Instance::Video_Control_Handler_Instance (void)
 {
 }
 
+// Sets the video_control_handler associated with this instance singleton.
 void
 Video_Control_Handler_Instance::set_video_control_handler (Video_Control_Handler *h)
 {
   this->video_control_handler_ = h;
 }
 
+// Accessor method to the associated video_control_handler 
 Video_Control_Handler *
 Video_Control_Handler_Instance::get_video_control_handler (void)
 {
   return this->video_control_handler_;
 }
-// ----------------------------------------------------------------------
 
+// ----------------------------------------------------------------------
 // Video_Server methods
 
 // Do-nothing default constructor.
@@ -363,6 +247,8 @@ Video_Server::Video_Server ()
 {
 }
 
+// Constructor with arguments control_fd,data_fd,real-time tag,maximum
+// packet size.Calls the init methods with these arguments.
 Video_Server::Video_Server (int ctr_fd,
                             int data_fd,
                             int rttag,
@@ -390,11 +276,17 @@ Video_Server::init (int ctr_fd,
                     int rttag,
                     int max_pkt_size)
 {
+  int result;
+
+  // Associate the default ACE_Reactor instance as the reactor .
   this->reactor_ = ACE_Reactor::instance ();
 
+  // Create the control,data and signal handlers.
   ACE_NEW_RETURN (this->control_handler_, 
                   Video_Control_Handler (ctr_fd),
                   -1);
+
+  VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->set_video_control_handler (this->control_handler_);
 
   ACE_NEW_RETURN (this->data_handler_ ,
                   Video_Data_Handler (data_fd,
@@ -405,8 +297,7 @@ Video_Server::init (int ctr_fd,
                   Video_Sig_Handler (this->control_handler_),
                   -1);
 
-  int result;
-
+  // Set the global socket fd's from the arguments.
   VIDEO_SINGLETON::instance ()->serviceSocket = ctr_fd;
   VIDEO_SINGLETON::instance ()->videoSocket = data_fd;
   VIDEO_SINGLETON::instance ()->conn_tag = max_pkt_size;
@@ -421,35 +312,29 @@ Video_Server::init (int ctr_fd,
   
   VIDEO_SINGLETON::instance ()->start_time = time(NULL);
 
-  atexit(on_exit_routine);
+  // Set the atexit routine
+  atexit (on_exit_routine);
 
   VIDEO_SINGLETON::instance ()->lastRef[0] = VIDEO_SINGLETON::instance ()->lastRef[1] = -1;
   VIDEO_SINGLETON::instance ()->lastRefPtr = 0;
 
-  INITvideo();
+  VIDEO_SINGLETON::instance ()->init_video ();
 
   if (rttag) {
     if (SetRTpriority("VS", 0) == -1) rttag = 0;
   }
   // sets the video control handler state to be waiting
-
   this->control_handler_->change_state
     (VIDEO_CONTROL_WAITING_STATE::instance ());
   return 0;
 }
 
-// %% currently this only registers handlers
-// and handles the FIRST command. that needs
-// to be changed, and then maybe this 
-// needs tobe renamed to register_handles or something
-// like that
 int
-Video_Server::run (void)
+Video_Server::register_handlers (void)
 {
   int result;
 
   // Register the event handlers with the default ACE_REACTOR.
-
 
   // first the data handler, i.e. UDP
   result = this->reactor_->register_handler (this->data_handler_, 
@@ -490,237 +375,6 @@ Video_Server::run (void)
   return 0;
 }
 
-int
-Video_Server::init_play (void)
-{
-  int result;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Video_Server::play ()"));
-
-  // this gets the parameters for the play command
-  result = Video_Server::CmdRead((char *)&para, sizeof(para));
-  if (result != 0)
-    return result;
-#ifdef NeedByteOrderConversion
-  para.sn = ntohl(para.sn);
-  para.VIDEO_SINGLETON::instance ()->nextFrame = ntohl(para.VIDEO_SINGLETON::instance ()->nextFrame);
-  para.usecPerFrame = ntohl(para.usecPerFrame);
-  para.framesPerSecond = ntohl(para.framesPerSecond);
-  para.VIDEO_SINGLETON::instance ()->frameRateLimit1000 = ntohl(para.VIDEO_SINGLETON::instance ()->frameRateLimit1000);
-  para.collectStat = ntohl(para.collectStat);
-  para.VIDEO_SINGLETON::instance ()->sendPatternGops = ntohl(para.VIDEO_SINGLETON::instance ()->sendPatternGops);
-  para.VIDEO_SINGLETON::instance ()->VStimeAdvance = ntohl(para.VIDEO_SINGLETON::instance ()->VStimeAdvance);
-#endif
-
-  VIDEO_SINGLETON::instance ()->frameRateLimit = para.frameRateLimit1000 / 1000.0;
-  VIDEO_SINGLETON::instance ()->cmdsn = para.sn;
-  VIDEO_SINGLETON::instance ()->currentUPF = para.usecPerFrame;
-  VIDEO_SINGLETON::instance ()->VStimeAdvance = para.VStimeAdvance;
-
-  {
-    int ts = htonl(get_usec());
-    Video_Server::CmdWrite((char *)&ts, sizeof(int));
-  }
-  
-  if (VIDEO_SINGLETON::instance ()->live_source || VIDEO_SINGLETON::instance ()->video_format != VIDEO_MPEG1) {
-    if (VIDEO_SINGLETON::instance ()->live_source) 
-      PLAYliveVideo (&para);
-    return 0;
-  }
-  
-  fprintf(stderr, "VIDEO_SINGLETON::instance ()->VStimeAdvance from client: %d\n", VIDEO_SINGLETON::instance ()->VStimeAdvance);
-  
-  VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
-  ComputeFirstSendPattern(VIDEO_SINGLETON::instance ()->frameRateLimit);
-#ifdef STAT
-  if (para.collectStat)
-    memset(VIDEO_SINGLETON::instance ()->framesSent, 0, (VIDEO_SINGLETON::instance ()->numF + 7)>>3);
-#endif
-  CheckFrameRange(para.nextFrame);
-  Video_Timer_Global::timerFrame = para.nextFrame;
-  Video_Timer_Global::timerGroup = FrameToGroup(&Video_Timer_Global::timerFrame);
-  Video_Timer_Global::timerHeader = VIDEO_SINGLETON::instance ()->gopTable[Video_Timer_Global::timerGroup].systemHeader;
-  memcpy(VIDEO_SINGLETON::instance ()->sendPattern, para.sendPattern, PATTERN_SIZE);
-  result = SendReferences(Video_Timer_Global::timerGroup, Video_Timer_Global::timerFrame);
-  if (result < 0)
-    return result;
-  Video_Timer_Global::StartTimer ();
-
-  // Sends the first frame of the video...
-  result = play_send (0);
-  return 0;
-}
-
-int
-Video_Server::SendPacket (int shtag,int gop,int frame,int timeToUse)
-/* frame maybe out of range (PLAY, STEP), in this case, END_SEQ is sent
-   to force display of last frame in VD */
-{
-  char * buf = ((char *) VIDEO_SINGLETON::instance ()->packet) + sizeof(VideoPacket);
-  int f = VIDEO_SINGLETON::instance ()->gopTable[gop].previousFrames + frame;
-  int sh = VIDEO_SINGLETON::instance ()->gopTable[gop].systemHeader;
-  /*
-  SFprintf(stderr, "VS to send VIDEO_SINGLETON::instance ()->packet gop-%d, frame-%d.\n", gop, frame);
-  */
-
-  VIDEO_SINGLETON::instance ()->packet->currentUPF = ntohl(VIDEO_SINGLETON::instance ()->currentUPF);
-
-  if (frame >= VIDEO_SINGLETON::instance ()->gopTable[gop].totalFrames)
-  {
-    VIDEO_SINGLETON::instance ()->packet->cmd = htonl(VIDEO_SINGLETON::instance ()->cmd);
-    VIDEO_SINGLETON::instance ()->packet->cmdsn = htonl(VIDEO_SINGLETON::instance ()->cmdsn);
-    VIDEO_SINGLETON::instance ()->packet->sh = htonl(sh);
-    VIDEO_SINGLETON::instance ()->packet->gop = htonl(gop);
-    VIDEO_SINGLETON::instance ()->packet->frame = htonl(VIDEO_SINGLETON::instance ()->numF);
-    VIDEO_SINGLETON::instance ()->packet->display = htonl(VIDEO_SINGLETON::instance ()->numF-1);
-    VIDEO_SINGLETON::instance ()->packet->future = htonl((unsigned)-1);
-    VIDEO_SINGLETON::instance ()->packet->past = htonl((unsigned)-1);
-    VIDEO_SINGLETON::instance ()->packet->dataBytes = htonl(4);
-    *(int*)((char*)VIDEO_SINGLETON::instance ()->packet + sizeof(*VIDEO_SINGLETON::instance ()->packet)) = htonl(SEQ_END_CODE);
-
-    return send_to_network(timeToUse);
-  }
-
-  if (frame)
-    shtag = 0;
-  else if (VIDEO_SINGLETON::instance ()->needHeader)
-  {
-    shtag = 1;
-    VIDEO_SINGLETON::instance ()->needHeader = 0;
-  }
-  
-  VIDEO_SINGLETON::instance ()->packet->cmd = htonl(VIDEO_SINGLETON::instance ()->cmd);
-  VIDEO_SINGLETON::instance ()->packet->cmdsn = htonl(VIDEO_SINGLETON::instance ()->cmdsn);
-  VIDEO_SINGLETON::instance ()->packet->sh = htonl(sh);
-  VIDEO_SINGLETON::instance ()->packet->gop = htonl(gop);
-  VIDEO_SINGLETON::instance ()->packet->frame = htonl(f);
-  if (VIDEO_SINGLETON::instance ()->frameTable[f].type == 'B')
-  {
-    int pre1 = -1, pre2 = -1, i = f;
-    while (i>0)
-      if (VIDEO_SINGLETON::instance ()->frameTable[--i].type != 'B')
-      {
-	pre1 = i;
-	break;
-      }
-    while (i>0)
-      if (VIDEO_SINGLETON::instance ()->frameTable[--i].type != 'B')
-      {
-	pre2 = i;
-	break;
-      }
-    if (pre2 ==  -1)
-    {
-      /*
-      fprintf(stderr,
-	      "frame %d-%d (%d) is a B without past ref, no to be sent.\n",
-	      gop, frame, f);
-       */
-      return -1;
-    }
-    if (pre1 != VIDEO_SINGLETON::instance ()->lastRef[VIDEO_SINGLETON::instance ()->lastRefPtr] ||
-	pre2 != VIDEO_SINGLETON::instance ()->lastRef[1 - VIDEO_SINGLETON::instance ()->lastRefPtr])
-    {
-      /*
-      fprintf(stderr,
-	      "send of B frame %d gaveup for past %d/future %d ref not sent.\n",
-	      f, pre2, pre1);
-       */
-      return -1;
-    }
-    VIDEO_SINGLETON::instance ()->packet->display = htonl(f);
-    VIDEO_SINGLETON::instance ()->packet->future = htonl(pre1);
-    VIDEO_SINGLETON::instance ()->packet->past = htonl(pre2);
-  }
-  else
-  {
-    int next = f;
-    int pre = f;
-
-    while (next < VIDEO_SINGLETON::instance ()->numF && VIDEO_SINGLETON::instance ()->frameTable[++next].type == 'B');
-    while (pre > 0 && VIDEO_SINGLETON::instance ()->frameTable[--pre].type == 'B');
-    if (VIDEO_SINGLETON::instance ()->frameTable[f].type == 'P' && pre != VIDEO_SINGLETON::instance ()->lastRef[VIDEO_SINGLETON::instance ()->lastRefPtr])
-    {
-      /*
-      fprintf(stderr,
-	      "send of P frame %d gaveup for past ref %d not sent.\n",
-	      f, pre);
-      fprintf(stderr, "ref0=%d, ref1=%d, ptr=%d.\n",
-	      VIDEO_SINGLETON::instance ()->lastRef[0], VIDEO_SINGLETON::instance ()->lastRef[1], VIDEO_SINGLETON::instance ()->lastRefPtr);
-       */
-      return -1;
-    }
-    VIDEO_SINGLETON::instance ()->packet->display = htonl(next);
-    VIDEO_SINGLETON::instance ()->packet->future = htonl((unsigned)-1);
-    VIDEO_SINGLETON::instance ()->packet->past = htonl(VIDEO_SINGLETON::instance ()->frameTable[f].type == 'P' ? pre : (unsigned)-1);
-  }
-  {
-    char * ptr = buf;
-    int size = 0, offset = 0, i;
-    if (shtag)   /* send system header */
-    {
-      size = VIDEO_SINGLETON::instance ()->systemHeader[sh].size;
-      FileRead(VIDEO_SINGLETON::instance ()->systemHeader[sh].offset, ptr, size);
-      ptr += size;
-    }
-    if (!frame)   /* send gop header */
-    {
-      size = VIDEO_SINGLETON::instance ()->gopTable[gop].headerSize;
-      FileRead(VIDEO_SINGLETON::instance ()->gopTable[gop].offset, ptr, size);
-      ptr += size;
-    }
-    size = VIDEO_SINGLETON::instance ()->frameTable[f].size;
-    for (i=VIDEO_SINGLETON::instance ()->gopTable[gop].previousFrames; i<f; i++)
-      offset += VIDEO_SINGLETON::instance ()->frameTable[i].size;
-    FileRead((VIDEO_SINGLETON::instance ()->gopTable[gop].firstIoffset + offset), ptr, size);
-    ptr += size;
-    VIDEO_SINGLETON::instance ()->packet->dataBytes = htonl(ptr - buf);
-  }
-
-  {
-    int sent = send_to_network(timeToUse);
-    if (!sent)
-    {
-      /*
-      fprintf(stderr, "%c%d\n", VIDEO_SINGLETON::instance ()->frameTable[f].type, f);
-      fprintf(stderr, "%c frame %d sent.\n", VIDEO_SINGLETON::instance ()->frameTable[f].type, f);
-      */
-      if (VIDEO_SINGLETON::instance ()->frameTable[f].type != 'B')
-      {
-	VIDEO_SINGLETON::instance ()->lastRefPtr = 1 - VIDEO_SINGLETON::instance ()->lastRefPtr;
-	VIDEO_SINGLETON::instance ()->lastRef[VIDEO_SINGLETON::instance ()->lastRefPtr] = f;
-      }
-    }
-    return sent;
-  }
-}
-
-int
-Video_Server::CmdRead (char *buf, int psize)
-{
-  int res = wait_read_bytes (VIDEO_SINGLETON::instance ()->serviceSocket, 
-                             buf, 
-                             psize);
-  if (res == 0) return(1);
-  if (res == -1) {
-    fprintf(stderr, "VS error on read VIDEO_SINGLETON::instance ()->cmdSocket, size %d", psize);
-    perror("");
-    return(-1);
-  }
-  return 0;
-}
-
-void
-Video_Server::CmdWrite(char *buf, int size)
-{
-  int res = wait_write_bytes(VIDEO_SINGLETON::instance ()->serviceSocket, buf, size);
-  if (res == -1) {
-    if (errno != EPIPE) perror("VS writes to VIDEO_SINGLETON::instance ()->serviceSocket");
-    exit (errno != EPIPE);
-  }
-}
-
 void
 Video_Server::on_exit_routine(void)
 {
@@ -756,161 +410,6 @@ Video_Server::on_exit_routine(void)
   /*
   ComCloseConn(VIDEO_SINGLETON::instance ()->serviceSocket);
   ComCloseConn(VIDEO_SINGLETON::instance ()->videoSocket);*/
-}
-
-int
-Video_Server::position (void)
-{
-  int result;
-  POSITIONpara pos_para;
-  /*
-  fprintf(stderr, "POSITION . . .\n");
-  */
-  result = CmdRead((char *)&pos_para, sizeof(pos_para));
-  if (result != 0)
-    return result;
-
-  if (VIDEO_SINGLETON::instance ()->live_source) return 0;
-  
-#ifdef NeedByteOrderConversion
-  pos_para.nextGroup = ntohl(pos_para.nextGroup);
-  pos_para.sn = ntohl(pos_para.sn);
-#endif
-  
-  CheckGroupRange(pos_para.nextGroup);
-  VIDEO_SINGLETON::instance ()->cmdsn = pos_para.sn;
-  result = SendPacket(VIDEO_SINGLETON::instance ()->numS>1 || pos_para.nextGroup == 0, pos_para.nextGroup, 0, 0);
-  return result;
-}
-
-int
-Video_Server::step_video()
-{
-  int group;
-  STEPpara step_para;
-  int tag = 0;
-  int result;
-
-  result = CmdRead((char *)&step_para, sizeof(step_para));
-  if (result != 0)
-    return result;
-#ifdef NeedByteOrderConversion
-  step_para.sn = ntohl(step_para.sn);
-  step_para.VIDEO_SINGLETON::instance ()->nextFrame = ntohl(step_para.VIDEO_SINGLETON::instance ()->nextFrame);
-#endif
-
-  VIDEO_SINGLETON::instance ()->cmdsn = step_para.sn;
-
-  if (!VIDEO_SINGLETON::instance ()->live_source) {
-    if (step_para.nextFrame >= VIDEO_SINGLETON::instance ()->numF)  /* send SEQ_END */
-    {
-      tag = 1;
-      step_para.nextFrame --;
-    }
-    /*
-    fprintf(stderr, "STEP . . .frame-%d\n", step_para.VIDEO_SINGLETON::instance ()->nextFrame);
-    */
-    CheckFrameRange(step_para.nextFrame);
-    group = FrameToGroup(&step_para.nextFrame);
-    if (VIDEO_SINGLETON::instance ()->precmd != CmdSTEP && !tag ) {
-      result = SendReferences(group, step_para.nextFrame);
-      if (result < 0 )
-        return result;
-    }
-  }
-  if (VIDEO_SINGLETON::instance ()->live_source) StartPlayLiveVideo();
-  
-  if (VIDEO_SINGLETON::instance ()->live_source) {
-    SendPicture(&step_para.nextFrame);
-  }
-  else if (VIDEO_SINGLETON::instance ()->video_format == VIDEO_MPEG1) {
-    SendPacket(VIDEO_SINGLETON::instance ()->numS>1, group, tag ? VIDEO_SINGLETON::instance ()->numF : step_para.nextFrame, 0);
-  }
-  else {
-    fprintf(stderr, "VS: wierd1\n");
-  }
-  
-  if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo();
-  return 0;
-}
-
-int
-Video_Server::init_fast_play (void)
-{
-  int result;
-  
-  result = CmdRead((char *)&VIDEO_SINGLETON::instance ()->fast_para, sizeof(VIDEO_SINGLETON::instance ()->fast_para));
-  if (result != 0)
-    return result;
-#ifdef NeedByteOrderConversion
-  VIDEO_SINGLETON::instance ()->fast_para.sn = ntohl(VIDEO_SINGLETON::instance ()->fast_para.sn);
-  VIDEO_SINGLETON::instance ()->fast_para.VIDEO_SINGLETON::instance ()->nextGroup = ntohl(VIDEO_SINGLETON::instance ()->fast_para.VIDEO_SINGLETON::instance ()->nextGroup);
-  VIDEO_SINGLETON::instance ()->fast_para.usecPerFrame = ntohl(VIDEO_SINGLETON::instance ()->fast_para.usecPerFrame);
-  VIDEO_SINGLETON::instance ()->fast_para.framesPerSecond = ntohl(VIDEO_SINGLETON::instance ()->fast_para.framesPerSecond);
-  VIDEO_SINGLETON::instance ()->fast_para.VIDEO_SINGLETON::instance ()->VStimeAdvance = ntohl(VIDEO_SINGLETON::instance ()->fast_para.VIDEO_SINGLETON::instance ()->VStimeAdvance);
-#endif
-
-  if (VIDEO_SINGLETON::instance ()->live_source) return 0;
-  
-  VIDEO_SINGLETON::instance ()->VStimeAdvance = VIDEO_SINGLETON::instance ()->fast_para.VStimeAdvance;
-  /*
-  fprintf(stderr, "VIDEO_SINGLETON::instance ()->VStimeAdvance from client: %d\n", VIDEO_SINGLETON::instance ()->VStimeAdvance);
-  */
-  CheckGroupRange(VIDEO_SINGLETON::instance ()->fast_para.nextGroup);
-  VIDEO_SINGLETON::instance ()->cmdsn = VIDEO_SINGLETON::instance ()->fast_para.sn;
-  Video_Timer_Global::timerGroup = VIDEO_SINGLETON::instance ()->fast_para.nextGroup;
-  Video_Timer_Global::timerFrame = 0;
-  Video_Timer_Global::timerHeader = VIDEO_SINGLETON::instance ()->gopTable[Video_Timer_Global::timerGroup].systemHeader;
-  VIDEO_SINGLETON::instance ()->currentUPF = VIDEO_SINGLETON::instance ()->fast_para.usecPerFrame;
-  Video_Timer_Global::StartTimer();
-
-  fast_play_send ();
-  return 0;
-}
-
-int
-Video_Server::fast_forward (void)
-{
-  return Video_Server::init_fast_play ();
-}
-
-int
-Video_Server::fast_backward (void)
-{
-  return Video_Server::init_fast_play ();
-}
-
-int
-Video_Server::stat_stream(void)
-{
-  int i, j = 0;
-  for (i = 0; i < VIDEO_SINGLETON::instance ()->numF; i++)
-  {
-    short size = htons(VIDEO_SINGLETON::instance ()->frameTable[i].size);
-    char type = VIDEO_SINGLETON::instance ()->frameTable[i].type;
-    if (i == VIDEO_SINGLETON::instance ()->gopTable[j].previousFrames)
-    {
-      type = tolower(type);
-      j ++;
-    }
-    CmdWrite((char *)&type, 1);
-    CmdWrite((char *)&size, 2);
-  }
-  return 0;
-}
-
-int
-Video_Server::stat_sent(void)
-{
-#ifdef STAT
-  CmdWrite((char *)VIDEO_SINGLETON::instance ()->framesSent, (VIDEO_SINGLETON::instance ()->numF + 7) / 8);
-#else
-  int i;
-  char zeroByte = 0;
-  for (i = 0; i < (VIDEO_SINGLETON::instance ()->numF + 7) / 8; i++)
-    CmdWrite((char *)&zeroByte, 1);
-#endif
-  return 0;
 }
 
 // Destructor

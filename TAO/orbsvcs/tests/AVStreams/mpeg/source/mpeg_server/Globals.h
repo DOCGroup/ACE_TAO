@@ -60,6 +60,37 @@
 #define EXT_START_CODE 0x000001b5
 #define USER_START_CODE 0x000001b2
 
+// Global definitions
+#define nextByte  {int val; fileptr ++; \
+		   if ((val = getc(VIDEO_SINGLETON::instance ()->fp)) == EOF) \
+		   {\
+		     perror("Crossed EOF or error while scanning"); \
+		     return 1; \
+		   } nb = val;}
+
+#define computePicSize \
+	if (inpic) \
+	{ \
+	  if (pictype == 'I') \
+	  { \
+	    VIDEO_SINGLETON::instance ()->maxI = max(VIDEO_SINGLETON::instance ()->maxI, (int)(fileptr - picptr - 4)); \
+	    VIDEO_SINGLETON::instance ()->minI = min(VIDEO_SINGLETON::instance ()->minI, (int)(fileptr - picptr - 4)); \
+	  } \
+	  else if (pictype == 'P') \
+	  { \
+	    VIDEO_SINGLETON::instance ()->maxP = max(VIDEO_SINGLETON::instance ()->maxP, (int)(fileptr - picptr - 4)); \
+	    VIDEO_SINGLETON::instance ()->minP = min(VIDEO_SINGLETON::instance ()->minP, (int)(fileptr - picptr - 4)); \
+	  } \
+	  else \
+	  { \
+	    VIDEO_SINGLETON::instance ()->maxB = max(VIDEO_SINGLETON::instance ()->maxB, (int)(fileptr - picptr - 4)); \
+	    VIDEO_SINGLETON::instance ()->minB = min(VIDEO_SINGLETON::instance ()->minB, (int)(fileptr - picptr - 4)); \
+	  } \
+	  VIDEO_SINGLETON::instance ()->frameTable[ftptr].type = pictype; \
+	  VIDEO_SINGLETON::instance ()->frameTable[ftptr++].size = (int)(fileptr - picptr - 4); \
+	  inpic = 0; \
+	}
+
 
 #define FileRead(position, buf, size) \
 	{ \
@@ -85,13 +116,16 @@
   { fprintf(stderr, "VS: %d.VIDEO_SINGLETON::instance ()->nextGroup(%d) out of range (%d).\n", VIDEO_SINGLETON::instance ()->cmd, (pnextGroup), VIDEO_SINGLETON::instance ()->numG); \
     return 0; } }
 
-// Global definitions
-
 #include <sys/types.h>
 #include <sys/socket.h>
-#include "../include/common.h"
 #include "ace/Singleton.h"
+#include "../include/common.h"
 #include "../mpeg_shared/routine.h"
+#include "../mpeg_shared/fileio.h"
+#include "../mpeg_shared/com.h"   
+#include "../mpeg_shared/sendpt.h"
+#include "proto.h"
+#include "Video_Server.h"
 
 class Mpeg_Global
 {
@@ -219,9 +253,36 @@ class Video_Global
 
   // fast video play locals
   FFpara fast_para;
+  PLAYpara play_para;
   int fast_preGroup;
   int fast_preHeader;
-  
+
+  // globals functions
+  int CmdRead (char *buf, int psize);
+  int CmdWrite (char *buf, int size);
+  int SendPacket (int shtag, int gop, int frame, int timeToUse);
+  int FBread (char *buf, int size);
+  int PLAYliveVideo (PLAYpara * para);
+  void ComputeFirstSendPattern (float limit);
+  int FrameToGroup (int * frame);
+  int SendReferences (int group, int frame);
+  int send_to_network (int timeToUse);
+  void GetFeedBack (void);
+  int SendPicture (int *frame);
+  int ReadInfoFromFile (void);
+  void WriteInfoToFile (void);
+  int init_MPEG1_video_file (void);
+  int play_send (int debug=0);
+  int fast_play_send (void);
+  int position (void);
+  int step_video (void);
+  int fast_forward (void);
+  int fast_backward (void);
+  int stat_stream (void);
+  int stat_sent (void);
+  int init_play (void);
+  int init_fast_play (void);
+  int init_video (void);
 };
 
 typedef ACE_TSS_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
