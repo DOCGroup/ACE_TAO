@@ -1,6 +1,6 @@
 Mon Jun  4 09:35:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * tao/DynamicAny_i.cpp:
+        * tao/DynAny_i.cpp:
 
           Added guards for the insertion of longlong and
           ulonglong into the member Any, for platforms that
