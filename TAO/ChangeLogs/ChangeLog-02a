@@ -1,3 +1,9 @@
+Fri Jan 12 14:52:41 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+
+	  Fixed syntax error.
+
 Fri Jan 12 16:36:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
