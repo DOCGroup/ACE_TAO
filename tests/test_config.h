@@ -13,8 +13,8 @@
 //
 // = AUTHOR
 //    Prashant Jain <pjain@cs.wustl.edu>,
-//    Tim Harrison <harrison@cs.wustl.edu>,
-//    and David Levine <levine@cs.wustl.edu>
+//    Tim Harrison <harrison@cs.wustl.edu>, and
+//    David Levine <levine@cs.wustl.edu>
 //
 // ============================================================================
 

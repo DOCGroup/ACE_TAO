@@ -23,6 +23,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/CDR_Stream.h"
 
+ACE_RCSID(tests, CDR_Test, "$Id$")
+
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
@@ -243,123 +245,6 @@ short_stream (void)
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
-{
-  ACE_START_TEST (ASYS_TEXT ("CDR_Test"));
-
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE::major_version (),
-              ACE::minor_version(),
-              ACE::beta_version()));
-
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("dn:l:"));
-  int opt, debug = 0;
-
-  while ((opt = get_opt ()) != EOF)
-    {
-      switch (opt)
-        {
-          case 'd':
-            debug++;
-            break;
-          case 'n':
-            n = ACE_OS::atoi (get_opt.optarg);
-            break;
-          case 'l':
-            nloops = ACE_OS::atoi (get_opt.optarg);
-            break;
-          case '?':
-          default:
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("Usage: %s ")
-                        ASYS_TEXT ("-d debug")
-                        ASYS_TEXT ("-n <num> ")
-                        ASYS_TEXT ("-l <loops> ")
-                        ASYS_TEXT ("\n"),
-                        argv[0]));
-            return -1;
-        }
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Testing ACE CDR functions - short stream\n\n")));
-
-  if (short_stream () != 0 )
-    return 1;
-
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Short stream - no errors\n\n")
-              ASYS_TEXT ("Testing basic types - long stream\n\n")));
-
-  for (int i = 0; i < nloops; ++i)
-    {
-      ACE_OutputCDR output;
-      CDR_Test_Types test_types;
-
-      if (test_types.test_put (output) != 0)
-        return 1;
-
-      ACE_InputCDR input (output);
-      if (debug > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Output CDR: \n")));
-          ACE_HEX_DUMP ((LM_DEBUG,
-                         input.rd_ptr(),
-                         64));
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Input CDR: \n")));
-          ACE_HEX_DUMP ((LM_DEBUG,
-                         input.rd_ptr(),
-                         64));
-        }
-
-      if (test_types.test_get (input) != 0)
-        return 1;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Long stream - no errors\n\n")
-              ASYS_TEXT ("Testing basic types - long stream[2]\n\n")));
-
-  for (int j = 0; j < nloops; ++j)
-    {
-      ACE_OutputCDR output;
-      CDR_Test_Types test_types;
-
-      if (test_types.test_put (output) != 0)
-        return 1;
-
-      ACE_InputCDR input (output.begin ());
-      if (debug > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Output CDR: \n")));
-          ACE_HEX_DUMP ((LM_DEBUG,
-                         input.rd_ptr(),
-                         64));
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Input CDR: \n")));
-          ACE_HEX_DUMP ((LM_DEBUG,
-                         input.rd_ptr(),
-                         64));
-        }
-
-      if (test_types.test_get (input) != 0)
-        return 1;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Long stream[2] - no errors\n\n")));
-
-  ACE_END_TEST;
-
-  return 0;
-}
-
-// ****************************************************************
-
-int
 CDR_Test_Types::test_put (ACE_OutputCDR &cdr)
 {
   for (int i = 0; i < n; ++i)
@@ -476,16 +361,132 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
   return 0;
 }
 
-// ****************************************************************
+int
+main (int argc, ASYS_TCHAR *argv[])
+{
+  ACE_START_TEST (ASYS_TEXT ("CDR_Test"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("This is ACE Version %u.%u.%u\n\n"),
+              ACE::major_version (),
+              ACE::minor_version(),
+              ACE::beta_version()));
+
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("dn:l:"));
+  int opt;
+  int debug = 0;
+
+  while ((opt = get_opt ()) != EOF)
+    {
+      switch (opt)
+        {
+          case 'd':
+            debug++;
+            break;
+          case 'n':
+            n = ACE_OS::atoi (get_opt.optarg);
+            break;
+          case 'l':
+            nloops = ACE_OS::atoi (get_opt.optarg);
+            break;
+          case '?':
+          default:
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("Usage: %s ")
+                        ASYS_TEXT ("-d debug")
+                        ASYS_TEXT ("-n <num> ")
+                        ASYS_TEXT ("-l <loops> ")
+                        ASYS_TEXT ("\n"),
+                        argv[0]));
+            return -1;
+        }
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Testing ACE CDR functions - short stream\n\n")));
+
+  if (short_stream () != 0 )
+    return 1;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Short stream - no errors\n\n")
+              ASYS_TEXT ("Testing basic types - long stream\n\n")));
+
+  for (int i = 0; i < nloops; ++i)
+    {
+      ACE_OutputCDR output;
+      CDR_Test_Types test_types;
+
+      if (test_types.test_put (output) != 0)
+        return 1;
+
+      ACE_InputCDR input (output);
+      if (debug > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("Output CDR: \n")));
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("Input CDR: \n")));
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+        }
+
+      if (test_types.test_get (input) != 0)
+        return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Long stream - no errors\n\n")
+              ASYS_TEXT ("Testing basic types - long stream[2]\n\n")));
+
+  for (int j = 0; j < nloops; ++j)
+    {
+      ACE_OutputCDR output;
+      CDR_Test_Types test_types;
+
+      if (test_types.test_put (output) != 0)
+        return 1;
+
+      ACE_InputCDR input (output.begin ());
+      if (debug > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("Output CDR: \n")));
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("Input CDR: \n")));
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+        }
+
+      if (test_types.test_get (input) != 0)
+        return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Long stream[2] - no errors\n\n")));
+
+  ACE_END_TEST;
+  return 0;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
+// Not necessary here, because it's instantiated in
+// ace/Memory_Pool.cpp.
 // template class ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
+// Not necessary here, because it's instantiated in
+// ace/Memory_Pool.cpp.
 // #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

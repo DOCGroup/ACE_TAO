@@ -1011,9 +1011,9 @@ protected:
   // Used by derived classes to set errors in the CDR stream.
 };
 
-#if defined(__ACE_INLINE__)
+#if defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.i"
-#else
+#else /* __ACE_INLINE__ */
 
 // CDR output operators for primitive types
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,

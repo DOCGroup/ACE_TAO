@@ -78,7 +78,8 @@ public:
   int truncate (off_t length);
   // Set filesize to length byte.
 
-  off_t seek (off_t offset, int whence = SEEK_CUR);
+  off_t seek (off_t offset,
+              int whence = SEEK_CUR);
   // Sets the file pointer as follows:
   //    o If <whence> is <SEEK_SET>, the pointer is set to <offset>
   //      bytes.

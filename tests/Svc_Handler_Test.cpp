@@ -99,9 +99,11 @@ main (int argc, ASYS_TCHAR *argv[])
     if (connector.connect (file_io,
                            file) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, 
-                         ASYS_TEXT ("open failed for %p\n"),
+                         ASYS_TEXT ("connect failed for %p\n"),
                          file.get_path_name ()),
                         1);
+    // Unlink this file right away so that it is automatically removed
+    // when the process exits.
     else if (file_io.unlink () == -1)
       ACE_ERROR_RETURN ((LM_ERROR, 
                          ASYS_TEXT ("unlink failed for %p\n"),
