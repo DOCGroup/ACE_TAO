@@ -1,3 +1,15 @@
+Sun Sep 30 16:52:22 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_shutdown):
+
+	  Return the "retval" variable instead of always returning -1.
+	  The actual return value may not always be -1.  Thanks to Alain
+	  Totouom <atotouom@gmx.de> for providing this fix.
+
+	* THANKS:
+
+	  Added Alain to the list of contributors.
+
 Sun Sep 30 09:13:04 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
