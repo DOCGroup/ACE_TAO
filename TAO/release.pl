@@ -1,7 +1,7 @@
-// $Id$
-//
-// Takes over some of the release work rather than having it all
-// inline in the Makefile.
+# $Id$
+#
+# Takes over some of the release work rather than having it all
+# inline in the Makefile.
 
 $date = `/usr/bin/date +"%a %b %d %T %Y"`;
 chop $date;

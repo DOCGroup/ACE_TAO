@@ -1,3 +1,6 @@
+Mon Feb 16 18:00:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* release.pl: Changed C++ comment leaders to Perl comment leaders.
 
 Mon Feb 16 17:51:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
