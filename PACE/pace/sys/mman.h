@@ -58,7 +58,7 @@ extern "C" {
                                 pace_size_t len,
                                 int prot,
                                 int flags,
-                                int fildes,
+                                PACE_HANDLE fildes,
                                 pace_off_t off);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -108,7 +108,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 12.2.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_munmap (void *addr, pace_size_t len);
+  PACE_INLINE int pace_munmap (void * addr, pace_size_t len);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
