@@ -90,7 +90,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           if (CIAO::debug_level () > 1)
             {
               // The dump() function is broken.
-              //Deployment::DnC_Dump::dump (artifacts.child_plan_);
+              Deployment::DnC_Dump::dump (artifacts.child_plan_);
             }
 
           // Call preparePlan() method on the NodeManager with the
