@@ -141,14 +141,14 @@ void
 ACE_ES_Dispatching_Base::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "EC (%t) ACE_ES_Dispatching_Base module shutting down.\n"));
+              "EC (%t) ACE_ES_Dispatching_Base module shutting down.\n"));
 }
 
 // Just forward the request.  This is basically a hook for the RTU
-// stuff. 
+// stuff.
 int
 ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
-					 u_long &command_action)
+                                         u_long &command_action)
 {
   TAO_TRY
     {
@@ -191,7 +191,7 @@ ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *chan
       this->queues_[x] = 0;
     }
 
-  this->scheduler_ = 
+  this->scheduler_ =
     this->channel_->scheduler ();
 }
 
@@ -206,7 +206,7 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
   for (int x = 0; x < ACE_Scheduler_MAX_PRIORITIES; x++)
     {
       if (this->queues_[x] != 0)
-	continue;
+        continue;
 
       // Convert ACE_Scheduler_Rate (it's really a period, not a rate!)
       // to a form we can easily work with.
@@ -217,16 +217,16 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
                                        period_tv.usec () * 10;
 
       ACE_NEW (this->queues_[x],
-	       ACE_ES_Dispatch_Queue (this,
+               ACE_ES_Dispatch_Queue (this,
                                       &this->notification_strategy_,
                                       this->scheduler_.in ()));
       this->queues_[x]->thr_mgr (&this->thr_mgr_);
 
       if ( this->queues_[x]->open_queue (period,
-					 threads_per_queue_) == -1)
+                                         threads_per_queue_) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%p.\n",
-		      "ACE_ES_Priority_Dispatching::initialize_queues"));
+                      "ACE_ES_Priority_Dispatching::initialize_queues"));
           return;
         }
 
@@ -293,7 +293,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
           highest_priority_ = priority;
 
         ACE_DEBUG ((LM_DEBUG,
-		    "EC (%t) Created queue priority = %d.\n", priority));
+                    "EC (%t) Created queue priority = %d.\n", priority));
       }
     else
       queue_count_[priority]++;
@@ -379,7 +379,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
   if (queues_[preemption_priority] == 0)
     {
       ACE_ERROR ((LM_ERROR, "EC (%t): Push to closed queue %d,"
-		  " dropping event.\n", preemption_priority));
+                  " dropping event.\n", preemption_priority));
       return;
 #if 0
       TAO_THROW (SYNC_ERROR (0, CORBA::COMPLETED_NO, "ACE_ES_Priority_Dispatching::push"));
@@ -485,21 +485,21 @@ ACE_ES_Priority_Dispatching::shutdown (void)
     if (queues_[x] != 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-		    "EC (%t) shutting down dispatch queue %d.\n", x));
+                    "EC (%t) shutting down dispatch queue %d.\n", x));
         queues_[x]->shutdown_task ();
       }
 
   if (this->thr_mgr_.wait () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n",
-		"Priority_Dispatching::shutdown - waiting"));
+                "Priority_Dispatching::shutdown - waiting"));
 
   for (int i = 0; i <= this->highest_priority_; ++i)
     {
       if (this->queues_[i] != 0)
-	{
-	  delete this->queues_[i];
-	  this->queues_[i] = 0;
-	}
+        {
+          delete this->queues_[i];
+          this->queues_[i] = 0;
+        }
     }
 }
 
@@ -558,7 +558,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
   else
     {
       // quick hack to test dynamic queue performance (to be replaced soon)
-	  ACE_ES_QUEUE *mq = 0;
+          ACE_ES_QUEUE *mq = 0;
       #if defined (TAO_USES_STRATEGY_SCHEDULER)
         #if defined (TAO_USES_EDF_SCHEDULING)
 
@@ -617,42 +617,42 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
                          "ACE_ES_Dispatch_Queue::open_queue"), -1);
     case 0:
       {
-	TAO_TRY
-	  {// @@ TODO: Handle exceptions...
+        TAO_TRY
+          {// @@ TODO: Handle exceptions...
 #if 1
             this->scheduler_->set
               (rt_info_,
                RtecScheduler::VERY_HIGH_CRITICALITY,
-               ORBSVCS_Time::zero,
-               ORBSVCS_Time::zero,
-               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero (),
+               ORBSVCS_Time::zero (),
+               ORBSVCS_Time::zero (),
                period,
                RtecScheduler::VERY_LOW_IMPORTANCE,
-               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero (),
                1,
                RtecScheduler::OPERATION,
                TAO_TRY_ENV);
 #else
-	    ACE_Scheduler_Factory::server()->set (rt_info_,
-						  RtecScheduler::VERY_HIGH_CRITICALITY,
-						  ORBSVCS_Time::zero,
-						  ORBSVCS_Time::zero,
-						  ORBSVCS_Time::zero,
-						  period,
-						  RtecScheduler::VERY_LOW_IMPORTANCE,
-						  ORBSVCS_Time::zero,
-						  1,
-						  RtecScheduler::OPERATION,
-						  TAO_TRY_ENV);
+            ACE_Scheduler_Factory::server()->set (rt_info_,
+                                                  RtecScheduler::VERY_HIGH_CRITICALITY,
+                                                  ORBSVCS_Time::zero (),
+                                                  ORBSVCS_Time::zero (),
+                                                  ORBSVCS_Time::zero (),
+                                                  period,
+                                                  RtecScheduler::VERY_LOW_IMPORTANCE,
+                                                  ORBSVCS_Time::zero (),
+                                                  1,
+                                                  RtecScheduler::OPERATION,
+                                                  TAO_TRY_ENV);
 #endif
-	    TAO_CHECK_ENV;
-	  }
-	TAO_CATCHANY
-	  {
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "ACE_ES_Dispatch_Queue::exception"), -1);
-	  }
-	TAO_ENDTRY;
+            TAO_CHECK_ENV;
+          }
+        TAO_CATCHANY
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "ACE_ES_Dispatch_Queue::exception"), -1);
+          }
+        TAO_ENDTRY;
       }
       // FALLTHROUGH
     case 1:

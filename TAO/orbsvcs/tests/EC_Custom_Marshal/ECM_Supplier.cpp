@@ -251,8 +251,8 @@ ECMS_Driver::supplier_task (Test_Supplier *supplier,
 
           ACE_hrtime_t t = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
-          event[0].header.ec_recv_time = ORBSVCS_Time::zero;
-          event[0].header.ec_send_time = ORBSVCS_Time::zero;
+          event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
+          event[0].header.ec_send_time = ORBSVCS_Time::zero ();
 
           if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
             event[0].header.type = ACE_ES_EVENT_SHUTDOWN;

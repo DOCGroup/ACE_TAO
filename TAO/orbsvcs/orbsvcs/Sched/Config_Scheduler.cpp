@@ -46,12 +46,12 @@ ACE_Config_Scheduler::create (const char * entry_point,
 
   rt_info[0]->entry_point = CORBA::string_dup(entry_point);
   rt_info[0]->handle = -1;
-  rt_info[0]->worst_case_execution_time = ORBSVCS_Time::zero;
-  rt_info[0]->typical_execution_time = ORBSVCS_Time::zero;
-  rt_info[0]->cached_execution_time = ORBSVCS_Time::zero;
+  rt_info[0]->worst_case_execution_time = ORBSVCS_Time::zero ();
+  rt_info[0]->typical_execution_time = ORBSVCS_Time::zero ();
+  rt_info[0]->cached_execution_time = ORBSVCS_Time::zero ();
   rt_info[0]->period = 0;
   rt_info[0]->importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  rt_info[0]->quantum = ORBSVCS_Time::zero;
+  rt_info[0]->quantum = ORBSVCS_Time::zero ();
   rt_info[0]->threads = 0;
   rt_info[0]->priority = 0;
   rt_info[0]->preemption_subpriority = 0;
@@ -132,9 +132,9 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle,
 
 void ACE_Config_Scheduler::set (RtecScheduler::handle_t handle,
                                 RtecScheduler::Criticality_t criticality,
-				RtecScheduler::Time time,
-				RtecScheduler::Time typical_time,
-				RtecScheduler::Time cached_time,
+                                RtecScheduler::Time time,
+                                RtecScheduler::Time typical_time,
+                                RtecScheduler::Time cached_time,
                                 RtecScheduler::Period_t period,
                                 RtecScheduler::Importance_t importance,
                                 RtecScheduler::Quantum_t quantum,
@@ -271,19 +271,19 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   CORBA::ULong anomaly_index = 0;
   if (anomalies.ptr () == 0)
     {
-      anomalies = 
+      anomalies =
         new RtecScheduler::Scheduling_Anomaly_Set (anomaly_set.size ());
     }
   anomalies->length (anomaly_set.size ());
-  ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *> 
+  ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
     anomaly_iter (anomaly_set);
-  for (anomaly_iter.first (), anomaly_index = 0; 
-       anomaly_iter.next (anomaly); 
+  for (anomaly_iter.first (), anomaly_index = 0;
+       anomaly_iter.next (anomaly);
        anomaly_iter.advance (), ++anomaly_index)
     {
       if (0 == *anomaly)
         {
-          // if for some reason we stored a null anomaly pointer, 
+          // if for some reason we stored a null anomaly pointer,
           // just give default values to that entry in the sequence.
           anomalies[anomaly_index].severity = RtecScheduler::ANOMALY_NONE;
           anomalies[anomaly_index].description = "";
@@ -319,9 +319,9 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
             anomaly_severity_msg = "UNKNOWN";
             break;
         }
- 
+
         // Output the anomaly message
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "%s: %s\n",
                     anomaly_severity_msg,
                     (const char*) ((*anomaly)->description)));
@@ -335,37 +335,37 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
   switch (severity)
     {
-      // On a fatal anomaly abort without generating a schedule. 
+      // On a fatal anomaly abort without generating a schedule.
       case RtecScheduler::ANOMALY_FATAL:
         // TODO: throw something.
         ACE_ERROR ((LM_ERROR, "Schedule failed due to FATAL anomaly.\n"));
         return;
 
-      // Otherwise, make sure we didn't get a fatal return type.      
+      // Otherwise, make sure we didn't get a fatal return type.
       default:
         switch (schedule_status)
         {
           case BaseSchedImplType::ST_BAD_INTERNAL_POINTER :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         "Schedule failed due to bad internal pointer.\n"));
             return;
 
           case BaseSchedImplType::ST_VIRTUAL_MEMORY_EXHAUSTED :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         "Schedule failed due to insufficient memory.\n"));
             return;
 
           case BaseSchedImplType::THREAD_COUNT_MISMATCH :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         "Schedule failed due to thread count mismatch.\n"));
             return;
 
           case BaseSchedImplType::TASK_COUNT_MISMATCH :
             // TODO: throw something.
-            ACE_ERROR ((LM_ERROR, 
+            ACE_ERROR ((LM_ERROR,
                         "Schedule failed due to task count mismatch.\n"));
             return;
 
@@ -406,12 +406,12 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // return the set of scheduled Config_Infos
   if (configs.ptr () == 0)
     {
-      configs = 
+      configs =
         new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
     }
   configs->length (impl->minimum_priority_queue () + 1);
   for (RtecScheduler::Preemption_Priority_t priority = 0;
-       priority <= 
+       priority <=
          (RtecScheduler::Preemption_Priority_t) impl->minimum_priority_queue ();
        ++priority)
     {
@@ -435,15 +435,15 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
   ACE_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
   ACE_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
-  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(configs.ptr()), 
-	                                    *(anomalies.ptr()), 0);
+  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), *(configs.ptr()),
+                                            *(anomalies.ptr()), 0);
   ACE_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 
 
 void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                    RtecScheduler::OS_Priority& priority,
-				                   RtecScheduler::Dispatching_Type_t & d_type,
+                                                   RtecScheduler::Dispatching_Type_t & d_type,
                                                    CORBA::Environment &TAO_IN_ENV)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,
@@ -462,7 +462,7 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
   // provide the thread priority and queue type for the given priority level
 
 
-RtecScheduler::Preemption_Priority_t 
+RtecScheduler::Preemption_Priority_t
 ACE_Config_Scheduler::last_scheduled_priority (CORBA::Environment &TAO_IN_ENV)
     TAO_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED))
@@ -482,4 +482,4 @@ ACE_Config_Scheduler::last_scheduled_priority (CORBA::Environment &TAO_IN_ENV)
 }
   // Returns the last priority number assigned to an operation in the schedule.
   // The number returned is one less than the total number of scheduled priorities.
-  // All scheduled priorities range from 0 to the number returned, inclusive. 
+  // All scheduled priorities range from 0 to the number returned, inclusive.

@@ -1287,7 +1287,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
                                       act,
                                       ACE_Scheduler_MIN_PREEMPTION_PRIORITY,
                                       ns100,
-                                      ORBSVCS_Time::zero) == -1)
+                                      ORBSVCS_Time::zero ()) == -1)
     {
       ACE_ERROR ((LM_ERROR, "%p queue_request failed.\n", "ACE_ES_Consumer_Module"));
       delete sc;
@@ -1377,7 +1377,7 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
   CORBA::ULong cc = 0;
   dep[cc].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   dep[cc].event.header.source = 0;
-  dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
+  dep[cc].event.header.creation_time = ORBSVCS_Time::zero ();
   dep[cc].rt_info = 0;
   cc++;
 
@@ -1422,7 +1422,7 @@ ACE_ES_Consumer_Module::fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos)
             {
               dep[cc].event.header.type = event.header.type;
               dep[cc].event.header.source = event.header.source;
-              dep[cc].event.header.creation_time = ORBSVCS_Time::zero;
+              dep[cc].event.header.creation_time = ORBSVCS_Time::zero ();
               // The RT_Info is filled up later.
               dep[cc].rt_info = 0;
               cc++;
@@ -3302,7 +3302,7 @@ ACE_ES_Supplier_Module::fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos)
             {
               pub[sc].event.header.type = event.header.type;
               pub[sc].event.header.source = event.header.source;
-              pub[sc].event.header.creation_time = ORBSVCS_Time::zero;
+              pub[sc].event.header.creation_time = ORBSVCS_Time::zero ();
               pub[sc].dependency_info.dependency_type =
                 RtecScheduler::TWO_WAY_CALL;
               pub[sc].dependency_info.number_of_calls = 1;

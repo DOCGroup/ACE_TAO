@@ -116,8 +116,8 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data,
 
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time,
                                  t);
-  e.header.ec_recv_time = ORBSVCS_Time::zero;
-  e.header.ec_send_time = ORBSVCS_Time::zero;
+  e.header.ec_recv_time = ORBSVCS_Time::zero ();
+  e.header.ec_send_time = ORBSVCS_Time::zero ();
 
   e.data.any_value = data;
 
