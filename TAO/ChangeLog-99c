@@ -3,6 +3,9 @@ Fri Jan 22 08:43:30 1999  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (parse_args):
           initialize local "aux" to 0, because DU strtok_r requires it.
 
+        * examples/Simple/grid/Grid_Client_i.cpp (parse_args): removed
+          unused local "result".
+
 Thu Jan 21 22:21:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/util/utl_global.cpp (IDL_GlobalData),
