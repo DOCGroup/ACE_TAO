@@ -7,25 +7,26 @@
  *  @brief  Definition of ImR_Forwarder
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
 //=============================================================================
 
 #include "Forwarder.h"
-#include "ImplRepo_i.h"
-#include "Options.h"
+#include "ImR_Locator_i.h"
 
+#include "tao/ORB.h"
 #include "tao/PortableServer/Object_Adapter.h"
 
 /**
- * This constructor takes in orb and ImplRepo_i pointers to store for later
+ * This constructor takes in orb and ImR_Locator_i pointers to store for later
  * use.  It also grabs a reference to the POACurrent object for use in
  * preinvoke.
  */
-ImR_Forwarder::ImR_Forwarder (ImplRepo_i *imr_impl)
-  : imr_impl_ (imr_impl)
+ImR_Forwarder::ImR_Forwarder (ImR_Locator_i *imr_impl,
+                              CORBA::ORB_ptr orb)
+  : imr_impl_ (imr_impl),
+    orb_ (orb)
 {
-  CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
-
   ACE_ASSERT (imr_impl != 0);
 
   ACE_TRY_NEW_ENV
@@ -48,7 +49,6 @@ ImR_Forwarder::ImR_Forwarder (ImplRepo_i *imr_impl)
 }
 
 
-
 /**
  * We figure out the intended recipient from the POA name.  After activating
  * the server, we throw a forwarding exception to the correct server.
@@ -68,40 +68,40 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
-  CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
-
   ACE_TString ior;
   CORBA::Object_var forward_obj;
 
   ACE_TRY
     {
-      // Activate.
+      // Get the POA name.
       CORBA::String_var poa_name = poa->the_name();
-      ior = this->imr_impl_->activate_server_i (poa_name.in (),
-                                                1
-                                                ACE_ENV_ARG_PARAMETER);
+
+      // Activate the server.
+      ior =
+        this->imr_impl_->activate_server_with_startup (poa_name.in (),
+                                                       1
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Add the key
-
       char *key_str = 0;
 
       // Unlike POA Current, this implementation cannot be cached.
       TAO_POA_Current *tao_current =
-        ACE_dynamic_cast(TAO_POA_Current*, this->poa_current_var_.in ());
+        ACE_dynamic_cast (TAO_POA_Current*, this->poa_current_var_.in ());
       TAO_POA_Current_Impl *impl = tao_current->implementation ();
       TAO_ObjectKey::encode_sequence_to_string (key_str,
                                                 impl->object_key ());
 
+      // Append the key_string to the IOR that is received from the
+      // activate_server_with_startup function call.
       ior += key_str;
       CORBA::string_free (key_str);
 
-      if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
-
-      forward_obj = orb->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
+      // Get the object corresponding to the string.
+      forward_obj =
+        this->orb_->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -140,6 +140,5 @@ ImR_Forwarder::postinvoke (const PortableServer::ObjectId &,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;
+  delete imr_impl_;
 }
-
-

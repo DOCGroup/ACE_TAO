@@ -9,25 +9,17 @@
 //=============================================================================
 
 #include "Options.h"
-#include "NT_Service.h"
+
 #include "tao/Environment.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
-#include "ace/Configuration.h"
-
-#if defined (ACE_WIN32)
-const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
-const ACE_TCHAR *SERVICE_REG_PATH =
-  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImplRepo\\Parameters");
-const ACE_TCHAR *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
-#endif /* ACE_WIN32 */
-
 
 /**
  * Default Constructor.  Assigns default values to all the member variables.
  */
 Options::Options ()
-  : config_ (0)
+  : repo_config_ (0)
+  , repo_mode_ ("p")
   , debug_ (1)
   , ior_output_file_ (0)
   , multicast_ (0)
@@ -40,11 +32,11 @@ Options::Options ()
 
 
 /**
- * Destructor.  Just deletes this->config_.
+ * Destructor.  Just deletes this->repo_config_.
  */
 Options::~Options ()
 {
-  delete this->config_;
+  delete this->repo_config_;
 }
 
 
@@ -156,6 +148,25 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
             return -1;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-x")) == 0)
+        {
+          // Initialize file persistence. The file is going to be of
+          // XML format.
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ACE_ERROR ((LM_ERROR, "Error: -x option needs a filename\n"));
+              return -1;
+            }
+
+          /// Use XML for repository
+          if (this->initialize_xml_persistence (shifter.get_current ()) != 0)
+            return -1;
+
+          this->repo_mode_ = "x";
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-s")) == 0)
         {
           // Run as a service
@@ -247,7 +258,6 @@ Options::init (int argc, ACE_TCHAR *argv[])
 
   ACE_TRY_NEW_ENV
     {
-
       this->orb_ = CORBA::ORB_init (orb_argc,
                                     orb_args.argv (),
                                     0
@@ -275,7 +285,7 @@ Options::init (int argc, ACE_TCHAR *argv[])
     }
 
   // If no persistent implementation specified, use a simple heap.
-  if (this->config_ == 0)
+  if (this->repo_config_ == 0)
     if (this->initialize_non_persistence () != 0)
       return -1;
 
@@ -293,8 +303,8 @@ Options::print_usage (void) const
   ACE_ERROR ((LM_ERROR,
               "Usage:\n"
               "\n"
-              "ImplRepo_Service [-c cmd] [-d lvl] [-l] [-m 0/1] [-o file]"
-              " [-r|-p file] [-r] [-s] [-t secs]\n"
+              "ImR_Activator [-c cmd] [-d lvl] [-l] [-m 0/1] [-o file]"
+              " [-r|-p file|-x file] [-r] [-s] [-t secs]\n"
               "\n"
               "  -c command  Runs service commands ('install' or 'remove')\n"
               "  -d level    Sets the debug level\n"
@@ -302,6 +312,7 @@ Options::print_usage (void) const
               "  -m [0/1]    Turn on(1)/off(0) multicast (default: 1)\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -p file     Use file for storing/loading settings\n"
+              "  -x file     Use XML file for storing/loading setting\n"
               "  -r          Use the registry for storing/loading settings\n"
               "  -s          Runs as a service (NT Only)\n"
               "  -t secs     Timeout used for killing unresponsive servers\n")
@@ -320,7 +331,7 @@ Options::print_usage (void) const
 int
 Options::initialize_file_persistence (const ACE_TCHAR *filename)
 {
-  if (this->config_ != 0)
+  if (this->repo_config_ != 0)
   {
     ACE_ERROR ((LM_ERROR,
                 "Error: initialize_file_persistence (): "
@@ -329,30 +340,31 @@ Options::initialize_file_persistence (const ACE_TCHAR *filename)
     return -1;
   }
 
-  ACE_Configuration_Heap *heap = 0;
-  ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
+  Repository_Configuration *repo_config = 0;
+  ACE_NEW_RETURN (repo_config,
+                  Repository_Configuration ("h"),
+                  -1);
 
-  if (heap->open (filename) == 0)
+  if (repo_config->open (filename) == 0)
     {
-      this->config_ = heap;
+      this->repo_config_ = repo_config;
       return 0;
     }
-
-  delete heap;
-  heap = 0;
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Error: Opening persistent heap file '%s'\n"),
               filename));
 
   return -1;
+
+  return 0;
 }
 
 
 /**
  * On Windows, we have the option of using the Registry to store the
  * server data.  Assigns a ACE_Configuration_Win32Registry to
- * this->config_.  On non-Win32 systems, just returns an error.
+ * this->repo_config_.  On non-Win32 systems, just returns an error.
  *
  * @todo Where in the registry should this be stored?
  *
@@ -363,7 +375,7 @@ int
 Options::initialize_registry_persistence (void)
 {
 #if defined (ACE_WIN32)
-  if (this->config_ != 0)
+  if (this->repo_config_ != 0)
   {
     ACE_ERROR ((LM_ERROR,
                 "Error: initialize_registry_persistence (): "
@@ -372,11 +384,8 @@ Options::initialize_registry_persistence (void)
     return -1;
   }
 
-  HKEY root =
-    ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE,
-                                                 "Software\\TAO\\IR");
-  ACE_NEW_RETURN (this->config_,
-                  ACE_Configuration_Win32Registry(root),
+  ACE_NEW_RETURN (this->repo_config_,
+                  Repository_Configuration ("w"),
                   -1);
   return 0;
 #else /* ACE_WIN32 */
@@ -388,7 +397,7 @@ Options::initialize_registry_persistence (void)
 /**
  * In cases where persistence isn't needed, create an object of
  * the ACE_Configuration_Heap class to be used.  Initializes
- * this->config_ to an opened ACE_Configuration_Heap.
+ * this->repo_config_ to an opened ACE_Configuration_Heap.
  *
  * @retval 0  Success
  * @retval -1 Failure
@@ -396,24 +405,50 @@ Options::initialize_registry_persistence (void)
 int
 Options::initialize_non_persistence (void)
 {
-  ACE_Configuration_Heap *heap = 0;
-  ACE_NEW_RETURN (heap, ACE_Configuration_Heap, -1);
+  Repository_Configuration *repo_config = 0;
+  ACE_NEW_RETURN (repo_config,
+                  Repository_Configuration ("h"),
+                  -1);
 
-  if (heap->open () == 0)
+  if (repo_config->open () == 0)
     {
-      this->config_ = heap;
+      this->repo_config_ = repo_config;
       return 0;
     }
 
-  delete heap;
-  heap = 0;
+  delete repo_config;
+  repo_config = 0;
 
   ACE_ERROR ((LM_ERROR,
-             ACE_TEXT ("Error: Opening ACE_Configuration heap\n")));
-
+             ACE_TEXT ("Error: Opening Configuration heap\n")));
   return -1;
 }
 
+/// Initialize for the XML repository case.
+int
+Options::initialize_xml_persistence (const ACE_TCHAR *file_name)
+{
+  this->file_name_ = ACE_const_cast (ACE_TCHAR *, file_name);
+
+  Repository_Configuration *repo_config = 0;
+  ACE_NEW_RETURN (repo_config,
+                  Repository_Configuration ("x"),
+                  -1);
+
+  if (repo_config->open (file_name) == 0)
+    {
+      this->repo_config_ = repo_config;
+      return 0;
+    }
+
+  delete repo_config;
+  repo_config = 0;
+
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("Error: Opening Configuration XML file\n")));
+
+  return -1;
+}
 
 /**
  * Executes the various commands that are useful for a NT service.  Right
@@ -642,12 +677,54 @@ Options::ping_interval (void) const
 /**
  * @return The ACE_Configuration object that is used to store data.
  */
-ACE_Configuration *
+Repository_Configuration *
 Options::config (void) const
 {
-  return this->config_;
+  return this->repo_config_;
 }
 
+ACE_TCHAR *
+Options::repository_mode (void)
+{
+  return this->repo_mode_;
+}
+
+ACE_TCHAR *
+Options::file_name (void) const
+{
+  return this->file_name_;
+}
+
+const char *
+Options::convert_str (ImplementationRepository::ActivationMode mode)
+{
+  switch (mode)
+    {
+    case ImplementationRepository::NORMAL:
+      return "NORMAL";
+    case ImplementationRepository::MANUAL:
+      return "MANUAL";
+    case ImplementationRepository::PER_CLIENT:
+      return "PER_CLIENT";
+    case ImplementationRepository::AUTO_START:
+      return "AUTO_START";
+    default:
+      return "UNKNOWN";
+    };
+}
+
+ImplementationRepository::ActivationMode
+Options::convert_mode (const char * mode)
+{
+  if (ACE_OS::strcmp (mode, "NORMAL") == 0)
+    return ImplementationRepository::NORMAL;
+  else if (ACE_OS::strcmp (mode, "MANUAL") == 0)
+    return ImplementationRepository::MANUAL;
+  else if (ACE_OS::strcmp (mode, "PER_CLIENT") == 0)
+    return ImplementationRepository::PER_CLIENT;
+  else //if (ACE_OS::strcmp (mode, "AUTO_START") == 0)
+    return ImplementationRepository::AUTO_START;
+}
 
 /**
  * @return A pointer to the ORB.

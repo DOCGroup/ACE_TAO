@@ -17,7 +17,7 @@
 
 #include "tao/IORTable/IORTable.h"
 
-class ImplRepo_i;
+class ImR_Activator_i;
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -39,7 +39,7 @@ class ImR_Locator : public virtual IORTable::Locator,
 {
 public:
   /// Constructor
-  ImR_Locator (ImplRepo_i *repo);
+  ImR_Locator (ImR_Activator_i *repo);
 
   /// Locate the appropriate IOR.
   char * locate (const char *object_key
@@ -48,7 +48,7 @@ public:
 
 private:
   /// The Implementation Repository implementation
-  ImplRepo_i *repo_;
+  ImR_Activator_i *repo_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
