@@ -1,3 +1,11 @@
+Wed Aug 25 11:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/DnC_Dump.h:
+          Removed not needed qualifier
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+          Removed not needed ; after namespace closure
+
 Wed Aug 25 11:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Config_Error_Handler.h:
