@@ -1,3 +1,51 @@
+Thu May 17 12:19:24 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.cpp: 
+	  Modified the contructor of TAO_OutputCDR to go with the change
+	  in ACE_OutputCDR so that message blocks are allocated from TSS.
+	  This change and related changes fix bug147.
+
+	Added new methods for Resource Retrieval in the following files:
+
+	* tao/Resource_Factory.h (TAO_Resource_Factory): 
+	* tao/Resource_Factory.cpp: 
+	* tao/default_resource.cpp: 
+	* tao/default_resource.h: 
+	  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+          virtual ACE_Allocator* output_cdr_msgblock_allocator (void);
+
+	* tao/Strategies/advanced_resource.h : 
+	* tao/Strategies/advanced_resource.cpp (create_purging_strategy): 
+	  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
+
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.cpp: 
+	  ACE_Allocator *output_cdr_msgblock_allocator ()
+	  ACE_Allocator *input_cdr_msgblock_allocator ()
+	  ACE_Allocator *input_cdr_msgblock_allocator_i ()
+		
+	  and new private variables:
+	  ACE_Allocator *message_block_msgblock_allocator_ and 
+	  ACE_Allocator *input_cdr_msgblock_allocator_;
+
+	* tao/ORB.cpp: 
+	* tao/TAO_Server_Request.cpp: 
+	* tao/Typecode.cpp : 
+	* tao/Invocation.cpp: 
+	* tao/IIOP_Profile.cpp (encode_endpoints): 
+	* tao/GIOP_Message_Lite.cpp: 
+	* tao/GIOP_Message_Base.cpp (process_request): 
+	* tao/Exception.cpp : 
+	* tao/Strategies/UIOP_Profile.cpp (create_tagged_profile): 
+	* tao/Strategies/SHMIOP_Profile.cpp (create_tagged_profile): 
+	  Modified the instantiation of TAO_OutputCDR to go with the
+	  changed one.
+
+	* tao/GIOP_Message_Base.h: 
+	* tao/GIOP_Message_Lite.h (TAO_GIOP_Message_Lite): 
+          Added a new private variable: ACE_Allocator *cdr_msgblock_alloc_ 
+
 Thu May 17 11:03:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * examples/PluggableUDP/tests/Basic/client.dsp:

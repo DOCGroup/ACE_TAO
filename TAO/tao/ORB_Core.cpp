@@ -106,6 +106,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     resource_factory_ (0),
     message_block_dblock_allocator_ (0),
     message_block_buffer_allocator_ (0),
+    message_block_msgblock_allocator_ (0),
     resource_factory_from_service_config_ (0),
     // @@ This is not needed since the default resource factory, fredk
     //    is statically added to the service configurator.
@@ -1258,7 +1259,11 @@ TAO_ORB_Core::fini (void)
 
   if (this-> message_block_buffer_allocator_)
     this->message_block_buffer_allocator_->remove ();
-    delete this->message_block_buffer_allocator_;
+  delete this->message_block_buffer_allocator_;
+  
+  if (this->message_block_msgblock_allocator_)
+    this->message_block_msgblock_allocator_->remove ();
+  delete this->message_block_msgblock_allocator_;
 
   // @@ This is not needed since the default resource factory
   //    is statically added to the service configurator, fredk
@@ -2564,6 +2569,42 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 }
 
 ACE_Allocator*
+TAO_ORB_Core::input_cdr_msgblock_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
+{
+  if (tss->input_cdr_msgblock_allocator_ == 0)
+    tss->input_cdr_msgblock_allocator_ =
+      this->resource_factory ()->input_cdr_msgblock_allocator ();
+
+  return tss->input_cdr_msgblock_allocator_;
+}
+
+ACE_Allocator*
+TAO_ORB_Core::input_cdr_msgblock_allocator (void)
+{
+  if (this->use_tss_resources_)
+    {
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("TAO_ORB_Core::input_cdr_msgblock_allocator (); ")
+                           ACE_TEXT ("no more TSS keys")),
+                          0);
+      return this->input_cdr_msgblock_allocator_i (tss);
+    }
+
+  if (this->orb_resources_.input_cdr_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.input_cdr_msgblock_allocator_ == 0)
+        this->orb_resources_.input_cdr_msgblock_allocator_ =
+          this->resource_factory ()->input_cdr_msgblock_allocator ();
+    }
+  return this->orb_resources_.input_cdr_msgblock_allocator_;
+}
+
+ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
 #if 0
@@ -2633,12 +2674,48 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
 #endif /* 0 */
 }
 
+ACE_Allocator*
+TAO_ORB_Core::output_cdr_msgblock_allocator (void)
+{
+#if 0
+  if (this->use_tss_resources_)
+#endif /* 0 */
+    {
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("TAO_ORB_Core::output_cdr_msgblock_allocator (); ")
+                           ACE_TEXT ("no more TSS keys")),
+                          0);
+
+      if (tss->output_cdr_msgblock_allocator_ == 0)
+        tss->output_cdr_msgblock_allocator_ =
+          this->resource_factory ()->output_cdr_msgblock_allocator ();
+
+      return tss->output_cdr_msgblock_allocator_;
+    }
+
+#if 0
+  if (this->orb_resources_.output_cdr_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.output_cdr_msgblock_allocator_ == 0)
+        this->orb_resources_.output_cdr_msgblock_allocator_ =
+          this->resource_factory ()->output_cdr_msgblock_allocator ();
+    }
+  return this->orb_resources_.output_cdr_msgblock_allocator_;
+#endif /* 0 */
+}
+
 ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
 
   ACE_Allocator *dblock_allocator;
   ACE_Allocator *buffer_allocator;
+  ACE_Allocator *msgblock_allocator;
 
   if (this->use_tss_resources_)
     {
@@ -2654,6 +2731,9 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
         this->input_cdr_dblock_allocator_i (tss);
       buffer_allocator =
         this->input_cdr_buffer_allocator_i (tss);
+      msgblock_allocator =
+        this->input_cdr_msgblock_allocator_i (tss);
+
     }
   else
     {
@@ -2661,6 +2741,9 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
         this->input_cdr_dblock_allocator ();
       buffer_allocator =
         this->input_cdr_buffer_allocator ();
+      msgblock_allocator =
+        this->input_cdr_msgblock_allocator ();
+
     }
 
   ACE_Lock* lock_strategy = 0;
@@ -2672,6 +2755,7 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
   return this->create_data_block_i (size,
                                     buffer_allocator,
                                     dblock_allocator,
+                                    msgblock_allocator,
                                     lock_strategy);
 }
 
@@ -2681,11 +2765,14 @@ TAO_ORB_Core::data_block_for_message_block (size_t size)
 
   ACE_Allocator *dblock_allocator;
   ACE_Allocator *buffer_allocator;
+  ACE_Allocator *msgblock_allocator;
 
   dblock_allocator =
     this->message_block_dblock_allocator ();
   buffer_allocator =
     this->message_block_buffer_allocator ();
+  msgblock_allocator =
+    this->message_block_msgblock_allocator ();
 
   ACE_Lock* lock_strategy = 0;
   if (this->resource_factory ()->use_locked_data_blocks ())
@@ -2696,6 +2783,7 @@ TAO_ORB_Core::data_block_for_message_block (size_t size)
   return this->create_data_block_i (size,
                                     buffer_allocator,
                                     dblock_allocator,
+                                    msgblock_allocator,
                                     lock_strategy);
 }
 
@@ -2727,11 +2815,26 @@ TAO_ORB_Core::message_block_buffer_allocator (void)
   return this->message_block_buffer_allocator_;
 }
 
+ACE_Allocator*
+TAO_ORB_Core::message_block_msgblock_allocator (void)
+{
+  if (this->message_block_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->message_block_msgblock_allocator_ == 0)
+        this->message_block_msgblock_allocator_ =
+          this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+  return this->message_block_msgblock_allocator_;
+}
+
 
 ACE_Data_Block *
 TAO_ORB_Core::create_data_block_i (size_t size,
                                    ACE_Allocator *buffer_allocator,
                                    ACE_Allocator *dblock_allocator,
+                                   ACE_Allocator *msgblock_allocator,
                                    ACE_Lock *lock_strategy)
 {
   ACE_Data_Block *nb = 0;

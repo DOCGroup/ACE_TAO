@@ -83,6 +83,7 @@ public:
   virtual int init_protocol_factories (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
+  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
   virtual int input_cdr_allocator_type_locked (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 

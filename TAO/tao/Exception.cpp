@@ -823,11 +823,13 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                         &translator);
 #else
   TAO_OutputCDR stream (0,
                         ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);
@@ -884,11 +886,13 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
+                        TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                         &translator);
 #else
   TAO_OutputCDR stream (buffer, buflen,
                         ACE_CDR_BYTE_ORDER,
+                        TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF);

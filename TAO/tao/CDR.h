@@ -87,6 +87,7 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
+                 ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
                  ACE_Char_Codeset_Translator *char_translator = 0,
                  ACE_WChar_Codeset_Translator *wchar_translator = 0);
@@ -98,6 +99,7 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
+                 ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff = 0,
                  ACE_Char_Codeset_Translator *char_translator = 0,
                  ACE_WChar_Codeset_Translator *wchar_translator = 0);
@@ -208,6 +210,7 @@ public:
   TAO_InputCDR (const TAO_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
                 ACE_Allocator* data_block_allocator = 0,
+                ACE_Allocator* message_block_allocator = 0,
                 TAO_ORB_Core* orb_core = 0);
 
   /// Initialize the contents of one CDR from another, without data

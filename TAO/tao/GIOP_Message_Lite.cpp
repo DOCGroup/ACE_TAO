@@ -29,12 +29,15 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
    cdr_buffer_alloc_ (
         orb_core->resource_factory ()->output_cdr_buffer_allocator ()
       ),
-    cdr_dblock_alloc_ (
+   cdr_dblock_alloc_ (
         orb_core->resource_factory ()->output_cdr_dblock_allocator ()
       ),
+   cdr_msgblock_alloc_ (
+        orb_core->resource_factory ()->output_cdr_msgblock_allocator ()
+      ),
    input_cdr_ (orb_core->create_input_cdr_data_block (input_cdr_size),
-        TAO_ENCAP_BYTE_ORDER,
-        orb_core),
+               TAO_ENCAP_BYTE_ORDER,
+               orb_core),
    current_offset_ (0)
 {
 #if defined (ACE_HAS_PURIFY)
@@ -48,6 +51,7 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
                           TAO_ENCAP_BYTE_ORDER,
                           this->cdr_buffer_alloc_,
                           this->cdr_dblock_alloc_,
+                          this->cdr_msgblock_alloc_,
                           orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                           orb_core->to_iso8859 (),
                           orb_core->to_unicode ()));
@@ -1252,6 +1256,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
                         orb_core->output_cdr_dblock_allocator (),
+                        orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());

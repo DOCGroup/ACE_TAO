@@ -135,6 +135,7 @@ public:
   //@{
   ACE_Allocator *input_cdr_dblock_allocator_;
   ACE_Allocator *input_cdr_buffer_allocator_;
+  ACE_Allocator *input_cdr_msgblock_allocator_;
   //@}
 
   /// This is is just a place holder, in the future the transport
@@ -410,6 +411,11 @@ public:
   /// for allocating the buffers used in *outgoing* CDR streams.
   ACE_Allocator *output_cdr_buffer_allocator (void);
 
+  /// This allocator is always TSS and has no locks. It is intended
+  /// for allocating the ACE_Data_Blocks used in *outgoing* CDR
+  /// streams.
+  ACE_Allocator *output_cdr_msgblock_allocator (void);
+
   /// This allocator maybe TSS or global, may or may not have
   /// locks. It is intended for allocating the ACE_Data_Blocks used in
   /// *outgoing* / CDR streams.
@@ -418,6 +424,10 @@ public:
   /// This allocator is always TSS and has no locks. It is intended
   /// for allocating the buffers used in *outgoing* CDR streams.
   ACE_Allocator *input_cdr_buffer_allocator (void);
+
+  /// This allocator is always TSS and has no locks. It is intended
+  /// for allocating the buffers used in *outgoing* CDR streams.
+  ACE_Allocator *input_cdr_msgblock_allocator (void);
 
   /// This allocator is global, may or may not have locks. It is
   /// intended for ACE_Data_Blocks used in message blocks or CDR
@@ -430,6 +440,12 @@ public:
   /// streams that have no relation with the life of threads,
   /// something like used in a class on a per connection basis
   ACE_Allocator *message_block_buffer_allocator (void);
+
+  /// This allocator is global, may or may not have locks. It is
+  /// intended for ACE_Data_Blocks used in message blocks or CDR
+  /// streams that have no relation with the life of threads,
+  /// something like used in a class on a per connection basis
+  ACE_Allocator *message_block_msgblock_allocator (void);
 
   /// The Message Blocks used for input CDRs must have appropiate
   /// locking strategies.
@@ -904,12 +920,14 @@ protected:
   //@{
   ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
+  ACE_Allocator *input_cdr_msgblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
   //@}
 
   /// Routine that creates a ACE_Data_Block given the lock and allocators.
   ACE_Data_Block *create_data_block_i (size_t size,
                                        ACE_Allocator *buffer_allocator,
                                        ACE_Allocator *dblock_allocator,
+                                       ACE_Allocator *msgblock_allocator,
                                        ACE_Lock *lock);
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -1047,6 +1065,7 @@ protected:
   //@{
   ACE_Allocator *message_block_dblock_allocator_;
   ACE_Allocator *message_block_buffer_allocator_;
+  ACE_Allocator *message_block_msgblock_allocator_;
   //@}
 
   static const char *stub_factory_name_;

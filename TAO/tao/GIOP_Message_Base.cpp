@@ -36,6 +36,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                           TAO_ENCAP_BYTE_ORDER,
                           orb_core->message_block_buffer_allocator (),
                           orb_core->message_block_dblock_allocator (),
+                          orb_core->message_block_msgblock_allocator (),
                           orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                           orb_core->to_iso8859 (),
                           orb_core->to_unicode ()));
@@ -1045,6 +1046,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
                         TAO_ENCAP_BYTE_ORDER,
                         orb_core->output_cdr_buffer_allocator (),
                         orb_core->output_cdr_dblock_allocator (),
+                        orb_core->output_cdr_msgblock_allocator (),
                         orb_core->orb_params ()->cdr_memcpy_tradeoff (),
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
