@@ -1,17 +1,12 @@
-Sun Nov 09 17:55:50 1997    <nw1@COYOTE>
+Sun Nov  9 21:34:16 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (open):
-	  Removed codes that reset a socket's non-blocking flag.  This has
-	  been taken care of by ACE_Acceptor::activate_svc_handler now and
-	  resetting this flag twice on NT caused us grief.  Thanks to
-	  Georges Ata <George_ata@srt.ccmail.compuserve.com> for reporting
-	  the bug.
+	* ace/OS: Enhanced ACE_OS so that it *always* defines
+ 	  implementations for the wchar_t versions of strlen() and
+ 	  strcpy(), even if the platform doesn't explicitly support
+ 	  UNICODE.  This is necessary since TAO needs these functions.
 
-	* ace/ACE.i (hex2byte,nibble2hex): Replaced ACE_INLINE to inline
- 	  for these two functions.  Functions in this file are always
- 	  inlined.
-
-Sun Nov  9 14:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+	* ace/OS.h: Added a typedef for wchar_t to handle the case where
+ 	  the OS doesn't support UNICODE.
 
 	* ace/ACE.cpp: Added hex character routines from TAO since they
  	  are generally useful.
@@ -20,7 +15,18 @@ Sun Nov  9 14:07:02 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
           belong.  Thanks to David Levine and Chris Cleeland for insisting
           on this...
 
-Sun Nov  9 13:36:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+Sun Nov 09 17:55:50 1997    <nw1@COYOTE>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (open):
+ 	  Removed codes that reset a socket's non-blocking flag.  This has
+ 	  been taken care of by ACE_Acceptor::activate_svc_handler now and
+ 	  resetting this flag twice on NT caused us grief.  Thanks to
+ 	  Georges Ata <George_ata@srt.ccmail.compuserve.com> for reporting
+ 	  the bug.
+
+	* ace/ACE.i (hex2byte,nibble2hex): Replaced ACE_INLINE to inline
+ 	  for these two functions.  Functions in this file are always
+ 	  inlined.
 
 	* ace/config-win32-common.h (ACE_LACKS_RLIMIT): Added this flags
 	  so we don't need to treat ACE_WIN32 specially.

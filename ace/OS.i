@@ -7384,6 +7384,38 @@ ACE_Str_Buf::ACE_Str_Buf (strbuf &sb)
   this->buf = sb.buf;
 }
 
+ACE_INLINE size_t
+ACE_OS::strlen (const wchar_t *s)
+{
+  // ACE_TRACE ("ACE_OS::strlen");
+#if defined (ACE_HAS_UNICODE)
+  return ::wcslen (s);
+#else
+  u_int len = 0;
+
+  while (*s++ != 0)
+    len++;
+
+  return len;
+#endif /* ACE_HAS_UNICODE */
+}
+
+ACE_INLINE wchar_t *
+ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::strcpy");
+#if defined (ACE_HAS_UNICODE)
+  return ::wcscpy (s, t);
+#else
+  wchar_t *result = s;
+
+  while ((*t++ = *s++) != 0)
+    continue;
+
+  return result;
+#endif /* ACE_HAS_UNICODE */
+}
+
 #if defined (ACE_HAS_UNICODE)
 
 ACE_INLINE wchar_t *
@@ -7421,25 +7453,11 @@ ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
   return ::wcscmp (s, t);
 }
 
-ACE_INLINE wchar_t *
-ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
-{
-  // ACE_TRACE ("ACE_OS::strcpy");
-  return ::wcscpy (s, t);
-}
-
 ACE_INLINE wint_t
 ACE_OS::to_lower (wint_t c)
 {
   // ACE_TRACE ("ACE_OS::to_lower");
   return ::towlower (c);
-}
-
-ACE_INLINE size_t
-ACE_OS::strlen (const wchar_t *s)
-{
-  // ACE_TRACE ("ACE_OS::strlen");
-  return ::wcslen (s);
 }
 
 ACE_INLINE int
