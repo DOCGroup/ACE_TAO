@@ -1,3 +1,16 @@
+Mon May 21 23:22:20 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO_Internal.cpp (open_services):
+
+	  Fixed seg faults that occured due to brain damaged compilers
+	  that still treat string literals as "char *" instead of "const
+	  char *".  This compiler problem caused the wrong (shallow)
+	  assignment operator to be used instead of the correct (deep)
+	  assignment operator.  When the string sequence went out of
+	  scope, it attempted to delete a string that was not dynamically
+	  allocated.  To get around deficiencies in such compilers,
+	  duplicate the string literal using CORBA::string_dup().
+
 Mon May 21 16:54:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:

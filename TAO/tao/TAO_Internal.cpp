@@ -82,11 +82,10 @@ TAO_Internal::open_services (int &argc, char **argv)
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 1);
 
-          svc_config_argv[len] = "-b";
+          svc_config_argv[len] = CORBA::string_dup ("-b");
 
           arg_shifter.consume_arg ();
         }
-
 
       // Continue with flags that accept parameters.
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -99,7 +98,7 @@ TAO_Internal::open_services (int &argc, char **argv)
           // Configurator using the "command line" to provide
           // configuration information rather than using a svc.conf
           // file.  Pass the "-S" to the service configurator.
-          svc_config_argv[len] = "-S";
+          svc_config_argv[len] = CORBA::string_dup ("-S");
           svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
@@ -134,7 +133,7 @@ TAO_Internal::open_services (int &argc, char **argv)
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
-          svc_config_argv[len] = "-f";
+          svc_config_argv[len] = CORBA::string_dup ("-f");
           svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg();
