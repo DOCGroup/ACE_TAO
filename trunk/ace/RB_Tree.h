@@ -43,6 +43,22 @@ public:
   enum RB_Tree_Node_Color {RED, BLACK};
 };
 
+class ACE_RB_Tree_Base
+{
+public:
+  /// Search result enumeration.
+  enum RB_SearchResult {LEFT, EXACT, RIGHT};
+
+  /// get the allocator;
+  ACE_Allocator * allocator () const;
+  
+protected:
+  // = Protected members.
+
+  /// Pointer to a memory allocator.
+  ACE_Allocator *allocator_;
+};
+
 /**
  * @class ACE_RB_Tree_Node
  *
@@ -55,7 +71,7 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
+  ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t, const ACE_RB_Tree_Base &tree);
 
   /// Destructor.
   ~ACE_RB_Tree_Node (void);
@@ -109,13 +125,9 @@ private:
 
   /// Pointer to node's right child.
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_;
-};
-
-class ACE_RB_Tree_Base
-{
-public:
-  /// Search result enumeration.
-  enum RB_SearchResult {LEFT, EXACT, RIGHT};
+  
+  /// Pointer to tree base (to get the allocator).
+  const ACE_RB_Tree_Base *tree_;
 };
 
 /**
@@ -531,9 +543,6 @@ protected:
 private:
 
   // = Private members.
-
-  /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
 
   /// Synchronization variable for the MT_SAFE <ACE_RB_Tree>.
   ACE_LOCK lock_;
