@@ -541,7 +541,7 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 
 template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
-template class ACE_Set_Node<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
+template class ACE_Node<ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall> *>;
 
 template class ACE_Timer_Node_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
 

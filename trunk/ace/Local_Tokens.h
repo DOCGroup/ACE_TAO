@@ -40,7 +40,7 @@
 #define ACE_LOCAL_MUTEX_H
 
 #include "ace/Synch.h"
-#include "ace/Stack.h"
+#include "ace/Containers.h"
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
 

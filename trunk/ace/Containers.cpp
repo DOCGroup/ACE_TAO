@@ -1,15 +1,524 @@
-// Set.cpp
+// Containers.cpp
 // $Id$
 
-#if !defined (ACE_SET_C)
-#define ACE_SET_C
+#if !defined (ACE_CONTAINERS_C)
+#define ACE_CONTAINERS_C
 
 #define ACE_BUILD_DLL
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Set.i"
+#include "ace/Containers.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
+
+template <class T> void
+ACE_Bounded_Stack<T>::dump (void) const
+{
+  ACE_TRACE ("ACE_Bounded_Stack<T>::dump");
+}
+
+template<class T>
+ACE_Bounded_Stack<T>::ACE_Bounded_Stack (size_t size)
+  : top_ (0),
+    size_ (size)
+{
+  ACE_NEW (this->stack_, T[size]);
+
+  ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
+}
+
+template<class T>
+ACE_Bounded_Stack<T>::ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s)
+  : top_ (s.top_),
+    size_ (s.size_)
+{
+  ACE_NEW (this->stack_, T[s.size_]);
+
+  ACE_TRACE ("ACE_Bounded_Stack<T>::ACE_Bounded_Stack");
+
+  for (size_t i = 0; i < this->top_; i++)
+    this->stack_[i] = s.stack_[i];
+}
+
+template<class T> void
+ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
+{
+  ACE_TRACE ("ACE_Bounded_Stack<T>::operator=");
+  if (&s == this)
+    return;
+  else if (this->size_ < s.size_)
+    {
+      delete [] this->stack_;
+      ACE_NEW (this->stack_, T[s.size_]);
+    }
+  this->top_ = s.top_;
+
+  for (size_t i = 0; i < this->top_; i++)
+    this->stack_[i] = s.stack_[i];
+}
+
+template<class T>
+ACE_Bounded_Stack<T>::~ACE_Bounded_Stack (void) 
+{
+  ACE_TRACE ("ACE_Bounded_Stack<T>::~ACE_Bounded_Stack");
+  delete [] this->stack_;
+}
+
+// ----------------------------------------
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Stack)
+
+template <class T, size_t SIZE> void
+ACE_Fixed_Stack<T, SIZE>::dump (void) const
+{
+  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::dump");
+}
+
+template<class T, size_t SIZE>
+ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack (void)
+  : top_ (0),
+    size_ (SIZE)
+{
+  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack");
+}
+
+template<class T, size_t SIZE>
+ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s)
+  : top_ (s.top_),
+    size_ (s.size_)
+{
+  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::ACE_Fixed_Stack");
+  for (size_t i = 0; i < this->top_; i++)
+    this->stack_[i] = s.stack_[i];
+}
+
+template<class T, size_t SIZE> void
+ACE_Fixed_Stack<T, SIZE>::operator= (const ACE_Fixed_Stack<T, SIZE> &s)
+{
+  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::operator=");
+  if (&s == this)
+    return;
+  this->top_ = s.top_;
+
+  for (size_t i = 0; i < this->top_; i++)
+    this->stack_[i] = s.stack_[i];
+}
+
+template<class T, size_t SIZE>
+ACE_Fixed_Stack<T, SIZE>::~ACE_Fixed_Stack (void) 
+{
+  ACE_TRACE ("ACE_Fixed_Stack<T, SIZE>::~ACE_Fixed_Stack");
+  delete [] this->stack_;
+}
+
+//----------------------------------------
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Stack)
+
+template <class T> void
+ACE_Unbounded_Stack<T>::dump (void) const
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::dump");
+}
+
+template<class T>
+ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (void)
+  : head_ (0)
+{
+  ACE_NEW (this->last_resort_, ACE_Node<T>);
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
+}
+
+template<class T> void
+ACE_Unbounded_Stack<T>::delete_all_nodes (void)
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::delete_all_nodes");
+  while (this->head_ != 0)
+    {
+      ACE_Node<T> *temp = this->head_;
+      this->head_ = this->head_->next_;
+      delete temp;
+    }
+
+  delete this->last_resort_;
+  this->last_resort_ = 0;
+} 
+
+template<class T> void
+ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::copy_all_nodes");
+  // Push all of <s>'s nodes onto our stack (this puts them in the
+  // reverse order).
+  ACE_Node<T> *temp;
+
+  for (temp = s.head_;
+       temp != 0;
+       temp = temp->next_)
+    {
+      if (!this->is_full ())
+	this->push (temp->item_);
+      else 
+	break;
+    }
+
+  // Reverse the order of our stack.
+
+  ACE_Node<T> *prev = 0;
+
+  for (temp = this->head_; temp != 0; )
+    {
+      ACE_Node<T> *next = temp->next_;
+
+      temp->next_ = prev;
+      prev = temp;
+      temp = next;
+    }
+
+  this->head_ = prev;
+}
+
+template<class T>
+ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
+  : head_ (0)
+{
+  ACE_NEW (this->last_resort_, ACE_Node<T>);
+
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
+  this->copy_all_nodes (s);
+}
+
+template<class T> void
+ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
+  if (this == &s)
+    return;
+
+  this->delete_all_nodes ();
+  this->copy_all_nodes (s);
+}
+
+template<class T>
+ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void) 
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack");
+  this->delete_all_nodes ();
+}
+
+template<class T> void 
+ACE_Unbounded_Stack<T>::push (const T &new_item)
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::push");
+
+  ACE_Node<T> *temp = new ACE_Node<T> (new_item, this->head_);
+
+  if (temp == 0)
+    {
+      temp = this->last_resort_;
+      this->last_resort_ = 0;
+    }
+
+  this->head_ = temp;
+}
+
+template<class T> void
+ACE_Unbounded_Stack<T>::pop (T &item)
+{
+  ACE_TRACE ("ACE_Unbounded_Stack<T>::pop");
+  item = this->head_->item_;
+  ACE_Node<T> *temp = this->head_;
+  this->head_ = this->head_->next_;
+
+  // Restore the node of last resort if necessary.
+  if (this->last_resort_ == 0)
+    this->last_resort_ = temp;
+  else
+    delete temp;
+}
+
+template <class T>
+ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)
+  : head_ (0),
+    cur_size_ (0)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (void)");
+
+  ACE_NEW (this->head_, ACE_Node<T>);
+
+  // Make the list circular by pointing it back to itself.
+  this->head_->next_ = this->head_;
+}
+
+template <class T>
+ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
+  : head_ (0),
+    cur_size_ (0)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
+
+  ACE_NEW (this->head_, ACE_Node<T>);
+  this->head_->next_ = this->head_;
+  this->copy_nodes (us);
+}
+
+template <class T> void
+ACE_Unbounded_Queue<T>::operator = (const ACE_Unbounded_Queue<T> &us)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::operator =");
+
+  if (this == &us)
+    return;
+
+  this->delete_nodes ();
+  this->copy_nodes (us);
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
+
+template <class T> void
+ACE_Unbounded_Queue<T>::dump (void) const
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
+  ACE_DEBUG ((LM_DEBUG, "\nhead_->next_ = %u", this->head_->next_));
+  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d\n", this->cur_size_));
+
+  T *item = 0;
+  size_t count = 1;
+
+  for (ACE_Unbounded_Queue_Iterator<T> iter (*(ACE_Unbounded_Queue<T> *) this);
+       iter.next (item) != 0;
+       iter.advance ())
+    ACE_DEBUG ((LM_DEBUG, "count = %d\n", count++));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+}
+
+template <class T> void
+ACE_Unbounded_Queue<T>::copy_nodes (const ACE_Unbounded_Queue<T> &us)
+{
+  for (ACE_Node<T> *curr = us.head_->next_;
+       curr != us.head_;
+       curr = curr->next_)
+    if (this->enqueue_tail (curr->item_) == -1)
+      // @@ What's the right thing to do here?
+      this->delete_nodes ();
+}
+
+template <class T> void
+ACE_Unbounded_Queue<T>::delete_nodes (void)
+{
+  ACE_Node<T> *curr = this->head_->next_;
+
+  // Keep looking until we've hit the dummy node.
+
+  while (curr != this->head_)
+    {
+      ACE_Node<T> *temp = curr;
+      curr = curr->next_;
+      delete temp;
+      this->cur_size_--;
+    }
+
+  // Reset the list to be a circular list with just a dummy node.
+  this->head_->next_ = this->head_;
+}
+
+template <class T>
+ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
+
+  this->delete_nodes ();
+  delete this->head_;
+  this->head_ = 0;
+}
+
+template <class T> int
+ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
+
+  ACE_Node<T> *temp;
+
+  // Create a new node that points to the original head.
+  ACE_NEW_RETURN (temp, ACE_Node<T> (new_item, this->head_->next_->next_), -1);
+
+  // Link this pointer into the front of the list.
+  this->head_->next_ = temp;
+
+  this->cur_size_++;
+  return 0;
+}
+
+template <class T> int
+ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
+
+  ACE_Node<T> *temp;
+
+  // Insert <item> into the old dummy node location.
+  this->head_->item_ = new_item;
+
+  // Create a new dummy node.
+  ACE_NEW_RETURN (temp, ACE_Node<T> (this->head_->next_), -1);
+
+  // Link this dummy pointer into the list.
+  this->head_->next_ = temp;
+
+  // Point the head to the new dummy node.
+  this->head_ = temp;
+
+  this->cur_size_++;
+  return 0;
+}
+
+template <class T> int
+ACE_Unbounded_Queue<T>::dequeue_head (T &item)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::dequeue_head");
+
+  // Check for empty queue.
+  if (this->head_ == this->head_->next_)
+    return -1;
+
+  ACE_Node<T> *temp = this->head_->next_;
+
+  item = temp->item_;
+  this->head_->next = temp_->next_;
+  delete temp;
+  --this->cur_size_;
+  return 0;
+}
+
+template <class T> void
+ACE_Unbounded_Queue<T>::reset (void)
+{
+  ACE_TRACE ("reset");
+
+  this->delete_nodes ();
+}
+
+template <class T> int
+ACE_Unbounded_Queue<T>::get (T *&item, size_t index) const
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::get");
+
+  ACE_Node<T> *curr = this->head_->next_;
+
+  size_t i;
+
+  for (i = 0; i < this->cur_size_; i++)
+    {
+      if (i == index)
+	break;
+
+      curr = curr->next_;
+    }
+
+  if (i < this->cur_size_)
+    {
+      item = &curr->item_;
+      return 1;
+    }
+  else
+    return 0;
+}
+
+template <class T> int
+ACE_Unbounded_Queue<T>::set (const T &item, 
+			     size_t index)
+{
+  ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
+
+  ACE_Node<T> *curr = this->head_->next_;
+
+  int result = 1;
+  size_t i;
+
+  for (i = 0; i <= index; i++)
+    {
+      if (i == this->cur_size_)
+	{
+	  // We need to expand the list.
+
+	  result = 0;
+
+	  // A common case will be increasing the set size by 1.
+	  // Therefore, we'll optimize for this case.
+	  if (i + i == index)
+	    // Try to expand the size of the set by 1.
+	    return this->enqueue_tail (item);
+	  else
+	    {
+	      T dummy;
+
+	      // This head points to the existing dummy node, which is
+	      // about to be overwritten when we add the new dummy node.
+	      curr = this->head_;
+
+	      // Try to expand the size of the set by 1, but don't
+	      // store anything in the dummy node (yet).
+	      if (this->enqueue_tail (dummy) == -1)
+		return -1;
+	    }
+	}
+      else
+	curr = curr->next_;
+    }
+
+  curr->item_ = item;
+  return result;
+}
+
+template <class T> void
+ACE_Unbounded_Queue_Iterator<T>::dump (void) const
+{
+// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::dump");
+}
+
+template <class T>
+ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q)
+    : current_ (q.head_->next_),
+      queue_ (q)
+{
+// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::ACE_Unbounded_Queue_Iterator");
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Iterator<T>::advance (void) 
+{ 
+// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::advance");
+  this->current_ = this->current_->next_;
+  return this->current_ != this->queue_.head_;
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Iterator<T>::done (void) const
+{ 
+  ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::done");
+
+  return this->current_ == this->queue_.head_;
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
+{ 
+// ACE_TRACE ("ACE_Unbounded_Queue_Iterator<T>::next");
+  if (this->current_ == this->queue_.head_)
+    return 0;
+  else
+    {
+      item = &this->current_->item_;
+      return 1;
+    }
+}
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Fixed_Set)
 
@@ -424,51 +933,54 @@ ACE_Bounded_Set_Iterator<T>::next (T *&item)
     return 0;
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Set_Node)
+ACE_ALLOC_HOOK_DEFINE(ACE_Node)
 
 template <class T>
-class ACE_Set_Node
-{
-friend class ACE_Unbounded_Set<T>;
-friend class ACE_Unbounded_Set_Iterator<T>;
-public:
-  // = Initialization methods
-  ACE_Set_Node (const T &i, ACE_Set_Node<T> *n);
-  ACE_Set_Node (ACE_Set_Node<T> *n = 0, int MS_SUCKS = 0);
-  ACE_Set_Node (const ACE_Set_Node<T> &n);
-
-private:
-  ACE_Set_Node<T> *next_;
-  // Pointer to next element in the list of ACE_Set_Nodes.
-
-  T item_;
-  // Current value of the item in this node.
-};
-
-template <class T>
-ACE_Set_Node<T>::ACE_Set_Node (const T &i, ACE_Set_Node<T> *n)
+ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)
   : next_ (n), 
     item_ (i)
 {
-// ACE_TRACE ("ACE_Set_Node<T>::ACE_Set_Node");
+// ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 template <class T>
-ACE_Set_Node<T>::ACE_Set_Node (ACE_Set_Node<T> *n, int /* MS_SUCKS */)
+ACE_Node<T>::ACE_Node (ACE_Node<T> *n, int /* MS_SUCKS */)
   : next_ (n)
 {
-// ACE_TRACE ("ACE_Set_Node<T>::ACE_Set_Node");
+// ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 template <class T>
-ACE_Set_Node<T>::ACE_Set_Node (const ACE_Set_Node<T> &s)
+ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
   : next_ (s.next_), 
     item_ (s.item_)
 {
-// ACE_TRACE ("ACE_Set_Node<T>::ACE_Set_Node");
+// ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
+
+template <class T> int
+ACE_Unbounded_Set<T>::insert_tail (const T &item)
+{
+// ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
+  ACE_Node<T> *temp;
+
+  // Insert <item> into the old dummy node location.
+  this->head_->item_ = item;
+
+  // Create a new dummy node.
+  ACE_NEW_RETURN (temp, ACE_Node<T> (this->head_->next_), -1);
+
+  // Link this pointer into the list.
+  this->head_->next_ = temp;
+
+  // Point the head to the new dummy node.
+  this->head_ = temp;
+
+  this->cur_size_++;
+  return 0;
+}
 
 template <class T> void
 ACE_Unbounded_Set<T>::dump (void) const
@@ -494,7 +1006,7 @@ ACE_Unbounded_Set<T>::dump (void) const
 template <class T> void
 ACE_Unbounded_Set<T>::copy_nodes (const ACE_Unbounded_Set<T> &us)
 {
-  for (ACE_Set_Node<T> *curr = us.head_->next_;
+  for (ACE_Node<T> *curr = us.head_->next_;
        curr != us.head_;
        curr = curr->next_)
     this->insert_tail (curr->item_);
@@ -503,13 +1015,13 @@ ACE_Unbounded_Set<T>::copy_nodes (const ACE_Unbounded_Set<T> &us)
 template <class T> void
 ACE_Unbounded_Set<T>::delete_nodes (void)
 {
-  ACE_Set_Node<T> *curr = this->head_->next_;
+  ACE_Node<T> *curr = this->head_->next_;
 
   // Keep looking until we've hit the dummy node.
 
   while (curr != this->head_)
     {
-      ACE_Set_Node<T> *temp = curr;
+      ACE_Node<T> *temp = curr;
       curr = curr->next_;
       delete temp;
       this->cur_size_--;
@@ -538,7 +1050,7 @@ ACE_Unbounded_Set<T>::find (const T &item) const
   // Set <item> into the dummy node.
   this->head_->item_ = item;
 
-  ACE_Set_Node<T> *temp = this->head_->next_;
+  ACE_Node<T> *temp = this->head_->next_;
 
   // Keep looping until we find the item.
   while (!(temp->item_ == item))
@@ -549,68 +1061,6 @@ ACE_Unbounded_Set<T>::find (const T &item) const
   return temp == this->head_ ? 0 : 1;
 }
 
-template <class T> int
-ACE_Unbounded_Set<T>::get (T &item, size_t index) const
-{
-  ACE_TRACE ("ACE_Unbounded_Set<T>::get");
-
-  ACE_Set_Node<T> *curr = this->head_->next_;
-
-  size_t i;
-
-  for (i = 0; i < this->cur_size_; i++)
-    {
-      if (i == index)
-	break;
-
-      curr = curr->next_;
-    }
-
-  if (i < this->cur_size_)
-    {
-      item = curr->item_;
-      return 1;
-    }
-  else
-    return 0;
-}
-
-template <class T> int
-ACE_Unbounded_Set<T>::set (const T &item, size_t index)
-{
-  ACE_TRACE ("ACE_Unbounded_Set<T>::get");
-
-  ACE_Set_Node<T> *curr = this->head_->next_;
-
-  int result = 1;
-  size_t i;
-
-  for (i = 0; i <= index; i++)
-    {
-      if (i == this->cur_size_)
-	{
-	  // We need to expand the list.
-
-	  result = 0;
-
-	  T dummy;
-
-	  // This head points to the existing dummy node, which is
-	  // about to be overwritten when we add the new dummy node.
-	  curr = this->head_;
-
-	  // Try to expand the size of the set by 1.
-	  if (this->insert_tail (dummy) == -1)
-	    return -1;
-	}
-      else
-	curr = curr->next_;
-    }
-
-  curr->item_ = item;
-  return result;
-}
-
 template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (void)
   : head_ (0),
@@ -618,7 +1068,7 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (void)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
-  ACE_NEW (this->head_, ACE_Set_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
 
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
@@ -631,7 +1081,7 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
-  ACE_NEW (this->head_, ACE_Set_Node<T>);
+  ACE_NEW (this->head_, ACE_Node<T>);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
@@ -646,38 +1096,6 @@ ACE_Unbounded_Set<T>::operator = (const ACE_Unbounded_Set<T> &us)
 
   this->delete_nodes ();
   this->copy_nodes (us);
-}
-
-template <class T> void
-ACE_Unbounded_Set<T>::reset (void)
-{
-  ACE_TRACE ("reset");
-
-  this->delete_nodes ();
-}
-
-// Insert the new node at the tail of the list.
-
-template <class T> int
-ACE_Unbounded_Set<T>::insert_tail (const T &item)
-{
-// ACE_TRACE ("ACE_Unbounded_Set<T>::insert");
-  ACE_Set_Node<T> *temp;
-
-  // Insert <item> into the old dummy node location.
-  this->head_->item_ = item;
-
-  // Create a new dummy node.
-  ACE_NEW_RETURN (temp, ACE_Set_Node<T> (this->head_->next_), -1);
-
-  // Link this pointer into the list.
-  this->head_->next_ = temp;
-
-  // Point the head to the new dummy node.
-  this->head_ = temp;
-
-  this->cur_size_++;
-  return 0;
 }
 
 template <class T> int
@@ -698,7 +1116,7 @@ ACE_Unbounded_Set<T>::remove (const T &item)
   // Insert the item to be founded into the dummy node.
   this->head_->item_ = item;
 
-  ACE_Set_Node<T> *curr = this->head_;
+  ACE_Node<T> *curr = this->head_;
 
   while (!(curr->next_->item_ == item))
     curr = curr->next_;
@@ -707,7 +1125,7 @@ ACE_Unbounded_Set<T>::remove (const T &item)
     return 0; // Item was not found.
   else
     {
-      ACE_Set_Node<T> *temp = curr->next_;
+      ACE_Node<T> *temp = curr->next_;
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
@@ -761,4 +1179,4 @@ ACE_Unbounded_Set_Iterator<T>::next (T *&item)
     }
 }
 
-#endif /* ACE_SET_C */
+#endif /* ACE_CONTAINERS_C */

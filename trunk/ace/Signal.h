@@ -19,7 +19,7 @@
 
 #include "ace/Synch.h"
 #include "ace/Event_Handler.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;

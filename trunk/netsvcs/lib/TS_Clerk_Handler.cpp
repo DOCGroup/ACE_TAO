@@ -596,7 +596,7 @@ ACE_SVC_FACTORY_DEFINE (ACE_TS_Clerk_Processor)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Set_Node<ACE_TS_Clerk_Handler *>;
+template class ACE_Node<ACE_TS_Clerk_Handler *>;
 template class ACE_Svc_Tuple<ACE_TS_Clerk_Handler>;
 template class ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
 template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Stack.i
+// Containers.i
 
 template <class T> ACE_INLINE void 
 ACE_Bounded_Stack<T>::push (const T &new_item)

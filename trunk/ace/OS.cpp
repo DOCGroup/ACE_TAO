@@ -16,7 +16,7 @@
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #include "ace/Synch.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 #if defined (ACE_MT_SAFE)
 

@@ -9,7 +9,7 @@
 #include "ace/Service_Manager.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Record.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
 
@@ -961,7 +961,7 @@ ACE_Service_Config::reconfig_occurred (sig_atomic_t config_occurred)
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Set_Node<ACE_Static_Svc_Descriptor *>;
+template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;

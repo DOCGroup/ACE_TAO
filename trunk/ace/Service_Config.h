@@ -20,7 +20,7 @@
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
-#include "ace/Set.h"
+#include "ace/Containers.h"
 
 // Forward decl.
 class ACE_Service_Repository;
