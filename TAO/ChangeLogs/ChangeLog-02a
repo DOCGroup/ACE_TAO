@@ -1,3 +1,10 @@
+Thu Nov 16 09:32:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+
+          In TAO_DynamicImplementation::_dispatch, removed the 
+          environment argument from init_reply ().
+
 Thu Nov 16 11:16:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.cpp:

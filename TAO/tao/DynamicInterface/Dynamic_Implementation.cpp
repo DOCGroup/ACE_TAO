@@ -114,8 +114,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
 
   if (request.response_expected ())
     {
-      request.init_reply (ACE_TRY_ENV);
-      ACE_CHECK;
+      request.init_reply ();
 
       dsi_request->dsi_marshal (ACE_TRY_ENV);
       ACE_CHECK;
