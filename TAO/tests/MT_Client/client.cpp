@@ -94,6 +94,7 @@ main (int argc, char *argv[])
                             1);
         }
 
+#if 0
       Client client (server.in (), niterations);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
@@ -106,6 +107,16 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       server->shutdown (ACE_TRY_ENV);
+#endif /* 0 */
+      
+      // server->test_method (ACE_TRY_ENV);
+
+      CORBA::Long number = server->get_number (ACE_TRY_ENV);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "get_number = %d\n",
+                  number));
+      
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
