@@ -5,8 +5,8 @@ Sun Mar 21 15:45:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Sun Mar 21 14:47:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): Used 
-	#ifdef (ACE_LACKS_U_LONGLONG_T) instead of #ifdef (VXWORKS)||(CHORUS)
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): Used #ifdef
+ 	  (ACE_LACKS_U_LONGLONG_T) instead of #ifdef (VXWORKS)||(CHORUS)
 
 Sat Mar 20 23:38:39 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
