@@ -3,6 +3,7 @@
 #include "HT_Server.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_Memory.h"
 
 // Insert a KEY_NAME into the hash table, if it doesn't already exist
 // there.  What gets returned is a pointer to the node inserted.  Note
