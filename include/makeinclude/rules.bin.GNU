@@ -24,6 +24,6 @@ $(BIN): %: %.icc $(SRC)
 	vacbld $< -severitylevel=warning
 else
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
-	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 endif
 endif
