@@ -1,3 +1,10 @@
+Tue Nov  9 08:27:30 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/AMI_Buffering/client.cpp:
+
+          Increased the amount of time allowed to elapse before the flush
+          occurs due to differences in OS schedulers.
+
 Tue Nov  9 07:22:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/HTIOP/AMI/HTIOP_AMI.mpc:
