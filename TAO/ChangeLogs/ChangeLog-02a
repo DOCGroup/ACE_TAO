@@ -1,3 +1,9 @@
+Tue Feb 27 15:23:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+
+	  Fixed unused args compile warnings.
+	
 Tue Feb 27 12:21:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp: Moved the template instantiations to the
