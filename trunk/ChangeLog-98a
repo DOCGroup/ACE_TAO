@@ -1,3 +1,8 @@
+Fri Mar 27 09:21:21 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/test_config.h: with Green Hills on VxWorks, rename
+          main to ace_main for compatibility with run_tests.vxworks.
+
 Thu Mar 26 21:18:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.h,config-g++-common.h,config-freebsd*.h,
