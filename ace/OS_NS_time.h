@@ -265,7 +265,11 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime (const time_t *t);
 
+#if defined (ACE_HAS_WINCE) && !defined (_DEBUG)
+  extern ACE_EXPORT_MACRO
+#else
   ACE_NAMESPACE_INLINE_FUNCTION
+#endif
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
 # if defined (difftime)

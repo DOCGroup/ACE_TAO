@@ -326,9 +326,6 @@ private:
   /// Store the values as a timeval.
   timeval tv_;
 };
-#if defined (ACE_WIN32) && defined (_WIN32_WCE)
-}
-#endif
 
 /**
  * @class ACE_Countdown_Time
@@ -377,6 +374,9 @@ private:
   ACE_Countdown_Time (const ACE_Countdown_Time &);
   ACE_Countdown_Time &operator= (const ACE_Countdown_Time &);
 };
+#if defined (ACE_WIN32) && defined (_WIN32_WCE)
+}
+#endif
 
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
