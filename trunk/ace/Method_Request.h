@@ -15,8 +15,8 @@
 // 
 // ============================================================================
 
-#ifndef ACE_METHOD_OBJECT_H
-#define ACE_METHOD_OBJECT_H
+#ifndef ACE_METHOD_REQUEST_H
+#define ACE_METHOD_REQUEST_H
 
 #include "ace/OS.h"
 
@@ -27,20 +27,24 @@
 class ACE_Export ACE_Method_Request 
 {
   // = TITLE
-  //     Reifies a method into an object.  Subclasses typically
-  //     represent necessary state and behavior.
+  //     Reifies a method into a request.  Subclasses provide
+  //     the necessary state and behavior.
   //
   // = DESCRIPTION
-  //     A <Method_Request> is inserted in the <Activation_Queue>, where
-  //     it is subsequently removed by the <Scheduler> and invoked.
+  //     A <Method_Request> is inserted in the <Activation_Queue>,
+  //     where it is subsequently removed by a <Scheduler>, which
+  //     invokes the <call> method.
 public:
   // = Initialization and termination methods.
   ACE_Method_Request (void);
+  // Constructor.
+
   virtual ~ACE_Method_Request (void);
+  // Destructor.
 
   // = Invocation method
   virtual int call (void) = 0;
   // Invoked when the <Method_Request> is scheduled to run.
 };
 
-#endif /* ACE_METHOD_OBJECT_H */
+#endif /* ACE_METHOD_REQUEST_H */
