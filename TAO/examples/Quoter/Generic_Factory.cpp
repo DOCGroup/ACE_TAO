@@ -116,7 +116,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
-      
+
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Naming Service.\n"));
@@ -217,17 +217,13 @@ Quoter_Generic_Factory_Server::init (int argc,
 int
 Quoter_Generic_Factory_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Generic_Factory_Server is running\n"));
 
-  if (orb_manager_.orb()->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "run"),
-                      -1);
+  orb_manager_.orb()->run (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
@@ -251,7 +247,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
         break;
       default:
         exit_code = 1;
-        ACE_ERROR ((LM_ERROR, 
+        ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
       case '?':
