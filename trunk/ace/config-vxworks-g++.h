@@ -1,27 +1,10 @@
-Return-Path: ace@svappl36.mdc.com 
-Delivery-Date: Thu, 24 Oct 1996 10:50:14 -0500
-Return-Path: ace@svappl36.mdc.com
-Return-Path: <ace@svappl36.mdc.com>
-Received: from svmail01.mdc.com by cs.wustl.edu (SMI-8.6/ECL-J1.00)
-	id KAA03041; Thu, 24 Oct 1996 10:50:01 -0500
-Received: from svappl36 (SVAPPL36.MDC.COM) by svmail01.mdc.com with SMTP
-	(1.37.109.11/16.2) id AA215472200; Thu, 24 Oct 1996 10:50:00 -0500
-Received: from huskers by svappl36 (5.x/SMI-SVR4)
-	id AA25932; Thu, 24 Oct 1996 10:49:09 -0500
-Received: by huskers (SMI-8.6/SMI-SVR4)
-	id KAA26789; Thu, 24 Oct 1996 10:49:27 -0500
-Date: Thu, 24 Oct 1996 10:49:27 -0500
-From: ace@svappl36.mdc.com (Adaptive Comm Env)
-Message-Id: <199610241549.KAA26789@huskers>
-Content-Type: text
-Apparently-To: levine@cs.wustl.edu
-content-length: 1599
-
 // The following configuration file is designed to work for VxWorks
 // 5.2 platforms using the GNU g++ 2.7.2 compiler, without repo patch
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
+
+#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
