@@ -2,7 +2,7 @@ Mon Apr 28 07:05:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/PortableServerC.i (demarshal_value): Added
 	  ACE_INLINE to marshal_value and demarshal_value. This should fix
-	  link errors in MSVC6.
+	  link errors in MSVC6. Thanks to Simon McQueen for reporting this.
 
 Mon Apr 28 06:52:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
