@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS.h"
+#include "ace/Singleton.h"
 
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -11,10 +12,32 @@
 
 // initialize static class members
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
-ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ = 
+ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
   ACE_Scheduler_Factory::UNINITIALIZED;
 static int entry_count = -1;
 static ACE_Scheduler_Factory::POD_RT_Info* rt_info = 0;
+
+// Helper struct, to encapsulate the singleton static server and
+// ACE_TSS objects.  We can't use ACE_Singleton directly, because
+// construction of ACE_Runbtime_Scheduler takes arguments.
+struct ACE_Scheduler_Factory_Data
+{
+  ACE_Runtime_Scheduler scheduler_;
+  // The static runtime scheduler.
+
+  ACE_TSS <RtecScheduler::Preemption_Priority> preemption_priority_;
+  // The dispatch queue number of the calling thread.  For access by
+  // applications; must be set by either the application or Event
+  // Channel.
+
+  ACE_Scheduler_Factory_Data (void)
+    : scheduler_ (entry_count, rt_info),
+      preemption_priority_ ()
+    {
+    }
+};
+
+static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
 
 int ACE_Scheduler_Factory::use_runtime (int ec,
                                         POD_RT_Info rti[])
@@ -33,15 +56,24 @@ int ACE_Scheduler_Factory::use_runtime (int ec,
   return 0;
 }
 
-RtecScheduler::Scheduler_ptr static_server ()
+static RtecScheduler::Scheduler_ptr
+static_server ()
 {
   RtecScheduler::Scheduler_ptr server_ = 0;
 
-  static ACE_Runtime_Scheduler scheduler(entry_count, rt_info);
+  // This isn't thread safe, but the static instance that it replaces
+  // wasn't thread safe either.  Hola, Sr. Sandiego :-)  If it needs to
+  // be made thread safe, it should be protected using double-checked
+  // locking.
+  if (! ace_scheduler_factory_data  &&
+      (ace_scheduler_factory_data =
+         ACE_Singleton<ACE_Scheduler_Factory_Data,
+                       ACE_Null_Mutex>::instance ()) == 0)
+        return 0;
 
   TAO_TRY
     {
-      server_ = scheduler._this (TAO_TRY_ENV);
+      server_ = ace_scheduler_factory_data->scheduler_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -54,6 +86,7 @@ RtecScheduler::Scheduler_ptr static_server ()
                          "cannot allocate server\n"), 0);
     }
   TAO_ENDTRY;
+
   return server_;
 }
 
@@ -61,12 +94,12 @@ int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
 {
   return ACE_Scheduler_Factory::use_config (naming,
-					    "ScheduleService");
+                                            "ScheduleService");
 }
 
 int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
-				   const char* name)
+                                   const char* name)
 {
   if (server_ != 0 || entry_count != -1)
     {
@@ -196,7 +229,7 @@ int ACE_Scheduler_Factory::dump_schedule
                        info.priority,
                        info.preemption_subpriority,
                        info.preemption_priority,
-		       info.info_type);
+                       info.info_type);
     }
   // finish last line.
   ACE_OS::fprintf(file, "\n");
@@ -206,19 +239,36 @@ int ACE_Scheduler_Factory::dump_schedule
   return 0;
 }
 
+RtecScheduler::Preemption_Priority
+ACE_Scheduler_Factory::preemption_priority ()
+{
+  // Return whatever we've got.  The application or Event Channel is
+  // responsible for making sure that it was set.
+  return ace_scheduler_factory_data->preemption_priority_.ts_object () == 0  ?
+    (RtecScheduler::Preemption_Priority) -1  :
+    *ace_scheduler_factory_data->preemption_priority_;
+}
 
+void
+ACE_Scheduler_Factory::set_preemption_priority
+  (const RtecScheduler::Preemption_Priority preemption_priority)
+{
+  // Probably don't need this, because it should be safe to assume
+  // that static_server () was called before this function.  But just
+  // in case . . .
+  if (! ace_scheduler_factory_data  &&
+      (ace_scheduler_factory_data =
+         ACE_Singleton<ACE_Scheduler_Factory_Data,
+                       ACE_Null_Mutex>::instance ()) == 0)
+        return;
 
+  *ace_scheduler_factory_data->preemption_priority_ = preemption_priority;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>;
+template class ACE_TSS<RtecScheduler::Preemption_Priority>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
+#pragma instantiate ACE_TSS<RtecScheduler::Preemption_Priority>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
