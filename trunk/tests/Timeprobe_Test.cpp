@@ -33,6 +33,11 @@
 #include "tests/test_config.h"
 #include "ace/Timeprobe.h"
 
+#if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
+USELIB("..\ace\aced.lib");
+//---------------------------------------------------------------------------
+#endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
+
 static const char *events_descriptions_0[] =
 {
   "Event Zero",

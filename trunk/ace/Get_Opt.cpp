@@ -109,7 +109,7 @@ ACE_Get_Opt::operator () (void)
   opt = (int) *this->nextchar_++;
 
   if (opt == (int) ':' 
-      || !(oli = ACE_OS::strchr (this->optstring_, opt))) 
+      || ((oli = ACE_OS::strchr (this->optstring_, opt)) == 0))
     {
       // If the user didn't specify '-' as an option, assume it means
       // EOF.

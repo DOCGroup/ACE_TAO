@@ -1377,8 +1377,14 @@ ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
        ;
        number_of_handlers_dispatched++)
     {
-      if (wait_status >= WAIT_OBJECT_0 &&
-          wait_status <= (WAIT_OBJECT_0 + nCount))
+      bool ok = (
+#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530))
+		 // wait_status is unsigned in Borland;
+		 // This >= is always true, with a warning.
+		 wait_status >= WAIT_OBJECT_0 &&
+#endif
+		 wait_status <= (WAIT_OBJECT_0 + nCount));
+      if (ok)
         dispatch_index += wait_status - WAIT_OBJECT_0;
       else
         // Otherwise, a handle was abandoned.

@@ -186,11 +186,11 @@ main (int argc, char *argv[])
 
   name_options->parse_args (argc, argv);
 
+  int unicode = 0;
 #if (defined (ACE_WIN32) && defined (UNICODE))
-  if (name_options->use_registry () == 1)
-#else
-  if (0)  
+  unicode = 1;
 #endif /* ACE_WIN32 && UNICODE */
+  if (unicode && name_options->use_registry () == 1)
     {
       name_options->namespace_dir (__TEXT ("Software\\ACE\\Name Service"));
       name_options->database (__TEXT ("Version 1"));  

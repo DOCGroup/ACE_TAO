@@ -253,11 +253,13 @@ main (int, char *[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if defined (__BORLANDC__)
 // Borland C++ doesn't link with these instantiations in the ACE library.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Manager<ACE_Token_Name,ACE_Token_Proxy*,ACE_Null_Mutex>;
+#endif /* defined (__BORLANDC__) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (__BORLANDC__)
 #pragma instantiate ACE_Map_Manager<ACE_Token_Name,ACE_Token_Proxy*,ACE_Null_Mutex>
+#endif /* defined (__BORLANDC__) */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* __BORLANDC__ */

@@ -565,10 +565,11 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   // Insert canonical directory separators.
   ASYS_TCHAR *separator_ptr;
 
-  if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
-    // Make all the directory separators ``canonical'' to simplify
-    // subsequent code.
-    ACE::strrepl (tempcopy, ACE_DIRECTORY_SEPARATOR_CHAR, '/');
+#if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
+  // Make all the directory separators ``canonical'' to simplify
+  // subsequent code.
+  ACE::strrepl (tempcopy, ACE_DIRECTORY_SEPARATOR_CHAR, '/');
+#endif
 
   // Separate filename from pathname.
   separator_ptr = ACE_OS::strrchr (tempcopy, '/');
@@ -635,9 +636,10 @@ ACE::ldfind (const ASYS_TCHAR filename[],
         }
       else
         {
-          if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
-            // Revert to native path name separators
-            ACE::strrepl (searchpathname, '/', ACE_DIRECTORY_SEPARATOR_CHAR);
+#if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
+	  // Revert to native path name separators
+	  ACE::strrepl (searchpathname, '/', ACE_DIRECTORY_SEPARATOR_CHAR);
+#endif
 
           // First, try matching the filename *without* adding a
           // prefix.
@@ -1623,8 +1625,7 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
           /* NOTREACHED */
         }
     }
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 // Bind socket to an unused port.
