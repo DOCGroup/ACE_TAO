@@ -2,6 +2,8 @@
 #
 # A perl script that filers length VC output into a concise html report.
 
+$usage = "vc_filter.pl [-c] <source>";
+
 # Define html tags.
 $header = "<html><head>
 <title>Error/Warning Summary of Daily Build</title>
@@ -19,6 +21,29 @@ $in_sin_e = "</FONT>";
 
 $new_build_b = "<P>";
 $new_build_e = "";
+
+while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
+{
+    if ( $ARGV[0] eq '-c') # Text format
+    {
+        $header = "" ;
+        $trailer = "" ;
+        $kosher_b = "";
+        $kosher_e = "";
+
+        $in_sin_b = "";
+        $in_sin_e = "";
+
+        $new_build_b = "\n\n";
+        $new_build_e = "";
+    }
+    else
+    {
+        warn "$0:  unknown option $ARGV[0]\n";
+        die $usage;
+    }
+    shift;
+}
 
 # Get filename.
 $fname = $ARGV[0];
