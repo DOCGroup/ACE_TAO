@@ -28,6 +28,7 @@
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
 #include "ace/Singleton.h"
+#include "ace/Log_Msg.h"
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to

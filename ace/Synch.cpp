@@ -11,6 +11,7 @@
 
 #include "ace/Synch_T.h"
 #include "ace/Synch.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Synch, "$Id$")
 

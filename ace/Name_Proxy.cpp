@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Name_Proxy.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Name_Proxy, "$Id$")
 

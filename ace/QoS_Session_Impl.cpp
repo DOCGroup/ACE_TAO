@@ -4,6 +4,7 @@
 #include "ace/SOCK.h"
 #include "ace/QoS_Manager.h"
 #include "ace/QoS_Session_Impl.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/QoS_Session_Impl.i"

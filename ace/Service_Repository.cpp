@@ -3,6 +3,7 @@
 
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Repository.i"

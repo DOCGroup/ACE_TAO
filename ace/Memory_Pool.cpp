@@ -2,6 +2,7 @@
 
 // Memory_Pool.cpp
 #include "ace/Memory_Pool.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Memory_Pool.i"

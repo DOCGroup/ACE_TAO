@@ -6,6 +6,7 @@
 #include "ace/Signal.h"
 #include "ace/Process_Manager.h"
 #include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process_Manager.i"
