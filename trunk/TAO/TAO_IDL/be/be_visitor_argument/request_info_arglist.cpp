@@ -604,7 +604,7 @@ int be_visitor_args_request_info_arglist::visit_string (be_string *node)
           *os << "const char *";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "char *";
+          *os << "char *&";
           break;
         case AST_Argument::dir_OUT:
           *os << "CORBA::String_out";
@@ -619,7 +619,7 @@ int be_visitor_args_request_info_arglist::visit_string (be_string *node)
           *os << "const CORBA::WChar *";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *";
+          *os << "CORBA::WChar *&";
           break;
         case AST_Argument::dir_OUT:
           *os << "CORBA::WString_out";
