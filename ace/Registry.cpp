@@ -907,7 +907,7 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
   while (how_many > 0)
     {
       TCHAR string [ACE_Registry::Naming_Context::MAX_CONTEXT_NAME_SIZE];
-      u_long size = sizeof string / sizeof TCHAR;
+      u_long size = sizeof string / sizeof (TCHAR);
       long result = ::RegEnumValue (this->parent_->naming_context (). key(),
 				    this->index_,
 				    string, 
@@ -977,7 +977,7 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
   while (how_many > 0)
     {
       TCHAR string [ACE_Registry::Naming_Context::MAX_CONTEXT_NAME_SIZE];
-      u_long size = sizeof string / sizeof TCHAR;
+      u_long size = sizeof string / sizeof (TCHAR);
       long result = ::RegEnumKeyEx (this->parent_->naming_context (). key (),
 				    this->index_,
 				    string, 
@@ -1082,7 +1082,7 @@ int
 ACE_Predefined_Naming_Contexts::is_local_host (LPCTSTR machine_name)
 {
   TCHAR local_host[MAXHOSTNAMELEN];
-  int result = ACE_OS::hostname (local_host, sizeof local_host / sizeof TCHAR);
+  int result = ACE_OS::hostname (local_host, sizeof local_host / sizeof (TCHAR));
   if (result == 0)
     result = !ACE_OS::strcmp (local_host, machine_name);
   else
