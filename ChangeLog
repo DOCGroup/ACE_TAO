@@ -1,3 +1,9 @@
+Wed Apr 11 11:00:50 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ACE-INSTALL.html: Added a section illustrating how to build
+	  ACE+TAO for RTEMS.  Thanks to Joel Sherrill <joel@OARcorp.com>
+ 	  for this build procedure.
+
 Wed Apr 11 11:38:37 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/IOStream.h: Reverted change from

@@ -59,19 +59,20 @@ an enhancement, then use our
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 2.5, 2.6, and 7, Windows NT 4.0, Windows 2000 (MSVC++ 5.0, and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0 and 5.0,
-        HP/UX 10.x and 11.x, AIX 4.x, IRIX 6.x, and UnixWare 7.1.0
+        HP/UX 10.x and 11.x, AIX 4.x, IRIX 6.x, and UnixWare 7.1.0.
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, MVS, Chorus, PharLap TNT Embedded ToolSuite 9.1
+   <td>Windows 95, MVS, Chorus, PharLap TNT Embedded ToolSuite 9.1,
+       and QNX RTP.
    </td>
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
     <td> Windows NT and Windows 2000 (Borland C++ Builder 4.0 and IBM VisualAge C++),
          Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC,
-         QNX Neutrino 2.0 and QNX RTP.
+         QNX Neutrino 2.0, and RTEMS.
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -1324,7 +1325,6 @@ x86, the Alpha configuration can get corrupted.  This seems to happen when addit
 include or library directories are specified using backslashes instead of forward
 slashes.  If this occurs, the easiest way to fix it is to recreate it.</P>
 
-
 <P><hr align=left width="50%"><P>
 <H4><A NAME="vxworks">Building and Installing ACE on VxWorks</A></H4>
 For the most part, you should be able to follow the instructions above
@@ -1536,7 +1536,6 @@ the kernel:
 After building the shared lib, link it into the kernel by setting
 the <code>MACH_EXTRA</code> make variable in the kernel configuration
 Makefile.  Then, build the kernel using <code>make exe</code>.<p>
-
 
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
@@ -1899,6 +1898,59 @@ Here's what you need to do:<P>
   <LI>If you only want to link the services statically, simply remove
       or rename the svc.conf file.<P>
 </OL>
+
+<P><hr align=left width="50%"><P>
+<H4><A NAME="rtems">Building and Installing ACE on RTEMS</A></H4>
+
+<CODE>
+export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
+# setup the build structure
+cd ACE_wrappers 
+
+# create the host (e.g. Linux in this case) build tree
+./bin/create_ace_build Linux_g++ 
+cd build/Linux_g++/ace
+ln -s ../../../ace/config-linux.h config.h
+cd ../include/makeinclude/
+ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
+cd ../../../..
+
+# create the target build tree
+./bin/create_ace_build rtems 
+cd build/rtems/TAO 
+/bin/rm -r TAO_IDL 
+ln -s ../../Linux_g++/TAO/TAO_IDL .
+cd ../ace
+ln -s ../../../ace/config-rtems.h config.h
+cd ../include/makeinclude/
+ln -s ../../../../include/makeinclude/platform_rtems.x_g++.GNU platform_macros.GNU
+cd ../../../..
+
+# build the host side of things
+cd build/Linux_g++ 
+export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH 
+cd ace
+make
+
+# optionally build the ACE tests
+cd ../tests
+make
+
+cd ../TAO
+make
+
+# build the target side of things
+cd ../rtems 
+export ACE_ROOT=`pwd`
+cd ace
+make
+cd ../tests
+# build rtems_init.o by hand
+make -f  ../include/makeinclude/Makefile.rtems rtems_init.o
+make
+cd ../TAO
+make
+</CODE>
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="win32svcs">Building and Installing ACE Network Services on Win32</A></H4>
