@@ -1,3 +1,10 @@
+Fri May 16 18:43:17 1997  Nanbor Wang  <nw1@number.wustl.edu>
+
+	* ace/config-freebsd.h: Minor modification for working on FreeBSD
+	  2.1.x platform.  Added includion of <sys/time.h> and
+	  <sys/types.h>.  Defined ACE_HAS_POSIX_TIME for 2.1.x.  Redefine
+	  timespec to timeval to hack around a bug on 2.1.x.
+
 Fri May 16 12:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib: Reverted back to the original Server_Logging_Handler 
