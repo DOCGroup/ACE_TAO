@@ -414,8 +414,9 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
     TAO_Profile *profile,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (restart_policy_check (invoke->service_info (),
-                            profile))
+  if (restart_policy_check (
+          invoke->request_service_context ().service_info (),
+          profile))
     {
       return TAO_INVOKE_RESTART;
     }
@@ -437,8 +438,9 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
     TAO_Profile *profile,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (restart_policy_check (invoke->service_info (),
-                            profile))
+  if (restart_policy_check (
+        invoke->request_service_context ().service_info (),
+        profile))
     {
       return TAO_INVOKE_RESTART;
     }
