@@ -88,7 +88,7 @@
 // Don't define _LARGEFILE64_SOURCE in ACE to make llseek() or
 // lseek64() prototype visible.  ACE shouldn't depend on feature test
 // macros to make prototypes visible.
-#if __GLIBC__ > 1 
+#if __GLIBC__ > 1
 #  if __GLIBC_MINOR__ == 0
 #    define ACE_HAS_LLSEEK
 #    define ACE_LACKS_LLSEEK_PROTOTYPE
@@ -114,7 +114,8 @@
 # include "ace/config-g++-common.h"
 #elif defined (__KCC)
 # include "ace/config-kcc-common.h"
-#else  /* ! __GNUG__ && ! __KCC */
+#elif defined (__DECCXX)
+#else  /* ! __GNUG__ && ! __KCC && !__DECCXX */
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
