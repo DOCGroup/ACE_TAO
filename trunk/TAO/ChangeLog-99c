@@ -1,21 +1,46 @@
+Sat Jan 30 14:26:41 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added a new option -ORBInitRef to the ORB. The syntax is
+	-ORBInitRef <ObjectID>=<IOR: ....  >.
+
+	The option works for the IOR formats understandable by the
+	string_to_object (). The string_to_object () will be modified later to
+	understand other ior formats like iiopname, iioploc.
+
+	The new option takes precedence over the current methods of resolving
+	an initial reference to an arbitrary object ID
+	(through resolve_initial_references ()).
+
+	* tao/ORB.cpp  : Added a new function resolve_commandline_ref (). This
+	function is called by the resolve_initial_references () to resolve a
+	reference to an arbitrary object id specified in the -ORBInitRef param.
+	* tao/ORB.h : Added the declaration for the above method.
+	* tao/ORB_Core.cpp : Added the new option -ORBInitRef in init (). Also
+	set the init_ref parameter if this option is specified.
+	* tao/params.h : Added a new parameter init_ref_. Also added declarations
+	for the Get/Set methods of init_ref_.
+	* tao/params.i : Defined the Get/Set methods for the init_ref_ parameter.
+	* tao/params.cpp : Added the constructor initialization of the init_ref_.
+
+
 Sat Jan 30 11:55:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
           TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
           TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies_Runtime.h
           TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.{cpp, h}: updated
-	  types that had been changed in RtecScheduler.idl.  Thanks to gwross 
+	  types that had been changed in RtecScheduler.idl.  Thanks to gwross
 	  <gwross@west.raytheon.com> for providing this ix, which solves a
 	  compilation problem with MSVC++ 6.0.
-	
+
 Sat Jan 30 10:08:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/POA/Generic_Servant/Makefile: 
+	* examples/POA/Generic_Servant/Makefile:
 	  The definition for the static library target was missing (LIB=)
 	  Thanks to Robert V. Head <rhead@virtc.com> for pointing this
 	  out.
 
-	* examples/Event_Comm/Event_Comm_i.cpp: 
+	* examples/Event_Comm/Event_Comm_i.cpp:
 	  Fixed the instantiation pragmas. Thanks to Robert V. Head
 	  <rhead@virtc.com> for pointing this out.
 
@@ -31,7 +56,7 @@ Fri Jan 29 20:16:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Jan 29 18:07:28 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp: 
+	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
 	Removed unused variables
 
 
