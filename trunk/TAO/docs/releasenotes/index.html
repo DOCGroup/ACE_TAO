@@ -332,22 +332,24 @@ and <A HREF="mailto:marina@cs.wustl.edu">Marina Spivak</A>
 
 <P>&nbsp;
 
-<P>Current status (as of Dec 10th):
+<P>Current status (as of Feb 27th):
 <UL>
 <LI>
 The Naming Service implementation is complete.</LI>
 </UL>
-Known problems:
-<UL>
-<LI>
-The bind_new_context() call is not working correctly. This is getting looked
-at and will be resolved soon.</LI>
-</UL>
+
 Future work:
 <UL>
 <LI>
 Currently the bindings are stored as a table in memory. Future work will
-include a persistent database to store the bindings.</LI>
+include a persistent database to store the bindings.
+</LI>
+<LI>
+Replication of the bindings to other Naming Service's currently
+running.  It will probably be modeled after the LDAP Multi-Master
+Replication Protocol.  For more information on this replication
+protocol please read <A HREF="ftp://ds.internic.net/internet-drafts/draft-ietf-asid-ldap-mult-mast-rep-02.txt">LDAP Multi-Master Replication Protocol</A>
+</LI>
 </UL>
 For general documentation on the Naming Service please read <A HREF="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">The
 Naming Service Specification</A>.
