@@ -31,6 +31,7 @@
     <!-- we mention this as "reduced latencies" instead of improved -->
     <!-- latencies. I can make the change but thought would discuss -->
     <!-- with you before jumping on to it. - Bala -->
+      <!-- Bala, aren't they the same? In any case Doug wrote this. ;-) -->
       and latency for a variety of applications. </p>
 
      <p>
@@ -61,6 +62,11 @@
           <!-- Ossama, do we call it optimizing throughput? Shouldnt -->
           <!-- we mention it as Improving throughput? Because the -->
           <!-- suggestions that we give seems to show only that. -->
+	<!--
+           Bala, by optimizing throughput aren't we improving it?  I
+           prefer "optimizing" but if the general consensus is that
+           "improving" is better than I won't debate the issue.
+        -->
 
 	<a href="#throughput">Optimizing Throughput</a>
 	<ul>
@@ -122,19 +128,40 @@
           <!-- the configurations that we mention below wouldnt work -->
           <!-- with AMI. Say for instance we dont have a RW handler -->
           <!-- for AMI -->
+
+	<!--
+          Yes, I know that.  No claim was made that the ORB
+          configurations mentioned below should be or could be used
+          with AMI.  AMI was only given as an example of how to
+          potentially improve throughput using programmatical means,
+          as opposed to using static ORB configurations.
+        -->
+
           <!-- 2.For long we have been interchanging the terms, -->
           <!-- "Throughput" and "Latency". AMI is good for -->
           <!-- "Throughput", you could keep the client thread busy by -->
           <!-- making more invocations. I doubt whether that leads to -->
           <!-- better latencies. I dont know. Further the ORB -->
+
+	<!--
+	     No such claim was made, so what's the issue here?  This
+	     section is after all about improving throughput not
+	     latency. :-)
+         -->
+
           <!-- configuration section talks about options that improve -->
           <!-- latencies. IMHO, lower latencies can lead to improved -->
+
+	<!-- If the options I wrote about improve latency and not
+	throughput that should certainly be corrected. -->
+
           <!-- throughput, but vice-versa may not apply. -->
           <!-- Please correct me if I am wrong. I am willing to stand -->
           <!-- corrected.  -->
 	<b>Run-time features</b> offered by the ORB, such as
 	Asynchronous Method Invocations (AMI)
         <!-- Ossama, are there other examples you can list here? -->
+	<!-- ADD BUFFERED ONEWAYS -->
       </li>
       <li>
 	<b>ORB configurations</b>, such as disabling synchronization
@@ -198,9 +225,21 @@
               <!-- Ossama, if we are going to ask people to use ST, -->
               <!-- they could as well use ST reactor too. TAO uses a -->
               <!-- reactor for ST and it would be better to use ST -->
+
+	    <!-- Sure, but this particular section is about the
+	    -ORBClientConnectionHandler section.  We can certainly
+	    mention that it is better to use the ST reactor. -->
+
               <!-- reactor instead of TP. BTW, shouldnt we interchange -->
+
+	    <!-- The TP reactor was never mentioned here, so what the
+                 issue? -->
+
               <!-- things here for example tell about RW and then go -->
               <!-- to ST handlers? -->
+
+	    <!-- Fine with me Bala.  You know more about the this
+                 option than I do.  Go for it!  :-)  -->
 
 	    <blockquote>
 	      <code>
@@ -242,6 +281,12 @@
               <!-- increase the latencies a bit :-). Exclusive takes -->
               <!-- more resources and that could leade reduced -->
               <!-- scalability, right?-->
+
+	      <!-- Bala, isn't that what I said?  Paraphrasing what I
+                   said, if the client has low scalability
+                   requirements then exclusive connections can be used
+                   to improve throughput.  Isn't that incorrect? -->
+
 	      comes at the cost of a smaller number of requests that
 	      may be issued at a given point in time.  To enable this
 	      behaviour, add the following option to the
@@ -457,7 +502,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Mon Dec 17 07:23:41 CST 2001
+Last modified: Mon Dec 17 10:28:33 Pacific Standard Time 2001
 <!-- hhmts end -->
   </body>
 </html>
