@@ -1,3 +1,10 @@
+Mon Jul  2 09:40:45 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+
+          Add the output filter to the linker to avoid the duplicate symbol
+          warnings on AIX.
+
 Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Logging_Strategy.cpp: Enhanced the code so that it works with
