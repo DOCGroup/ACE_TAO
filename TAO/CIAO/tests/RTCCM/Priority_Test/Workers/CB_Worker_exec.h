@@ -48,9 +48,9 @@ namespace MyImpl
 
     // Operations from Priority_Test::Common_Ops
 
-    virtual CORBA::ULong
-    do_work (CORBA::ULong work,
-             CORBA::ULong aux
+    virtual CORBA::Long
+    do_work (CORBA::Long work,
+             CORBA::Long aux
              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -87,7 +87,7 @@ namespace MyImpl
    * CB_Worker home executor implementation class.
    */
   class WORKER_EXEC_Export CB_Worker_Home_exec :
-    public virtual Priority_Test::CCM_Worker_Home,
+    public virtual Priority_Test::CCM_WorkerHome,
     public virtual TAO_Local_RefCounted_Object
   {
   public:

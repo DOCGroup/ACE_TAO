@@ -2,10 +2,10 @@
 // This file is generated with "generate_component_mpc.pl -n Priority_Test"
 
 project(Priority_Test_stub): ciao_client {
-  
+
   sharedname = Priority_Test_stub
   idlflags += -Wb,stub_export_macro=PRIORITY_TEST_STUB_Export -Wb,stub_export_include=Priority_Test_stub_export.h -Wb,skel_export_macro=PRIORITY_TEST_SVNT_Export -Wb,skel_export_include=Priority_Test_svnt_export.h
-  dllflags   = PRIORITY_TEST_STUB_BUILD_DLL
+  dynamicflags   = PRIORITY_TEST_STUB_BUILD_DLL
 
   IDL_Files {
     Priority_Test.idl
@@ -17,28 +17,14 @@ project(Priority_Test_stub): ciao_client {
 }
 
 project(Priority_Test_svnt) : ciao_servant {
-  depends +=  Priority_Test_stub
+  after +=  Priority_Test_stub
   sharedname  = Priority_Test_svnt
-  libs    += Priority_Test_stub 
-  
+  libs    += Priority_Test_stub
+
   idlflags  +=  -Wb,export_macro=PRIORITY_TEST_SVNT_Export -Wb,export_include=Priority_Test_svnt_export.h
-  dllflags = PRIORITY_TEST_SVNT_BUILD_DLL
-
-  CIDL_Files {
-    Priority_Test.cidl
-  }
-
-  IDL_Files {
-    Priority_TestE.idl
-  }
+  dynamicflags = PRIORITY_TEST_SVNT_BUILD_DLL
 
   Source_Files {
-    Priority_TestEC.cpp
     Priority_TestS.cpp
-    Priority_Test_svnt.cpp
   }
 }
-
-
-
-

@@ -39,8 +39,8 @@ module Priority_Test
    */
   interface Common_Ops
   {
-    unsigned long do_work (in unsigned long work,
-                           in unsigned long aux);
+    long do_work (in long work,
+                  in long aux);
   };
 };
 

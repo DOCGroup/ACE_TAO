@@ -14,7 +14,7 @@ MyImpl::IOB_Worker_exec::~IOB_Worker_exec ()
 
 // Operations from Priority_Test::Worker
 
-HUDisplay::CCM_Common_Ops_ptr
+Priority_Test::CCM_Common_Ops_ptr
 MyImpl::IOB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -23,10 +23,10 @@ MyImpl::IOB_Worker_exec::get_some_device (ACE_ENV_SINGLE_ARG_DECL)
 
 // Operations from Priority_Test::Common_Ops
 
-CORBA::ULong
-MyImpl::IOB_Worker_exec::do_work (CORBA::ULong work,
-                                 CORBA::ULong aux
-                                 ACE_ENV_ARG_DECL)
+CORBA::Long
+MyImpl::IOB_Worker_exec::do_work (CORBA::Long work,
+                                  CORBA::Long aux
+                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong retv = work - aux;
