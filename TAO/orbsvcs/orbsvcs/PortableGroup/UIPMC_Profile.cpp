@@ -646,7 +646,7 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   CORBA::ULong length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
-  tagged_component.tag = TAO_TAG_GROUP;
+  tagged_component.tag = IOP::TAG_GROUP;
   tagged_component.component_data.length (length);
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
@@ -779,7 +779,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
     return -1;
 
   IOP::TaggedComponent tagged_component;
-  tagged_component.tag = TAO_TAG_GROUP;
+  tagged_component.tag = IOP::TAG_GROUP;
 
   // Try to find it.
   if (tagged_components.get_component (tagged_component) == 0)

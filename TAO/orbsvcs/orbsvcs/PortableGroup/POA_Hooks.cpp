@@ -90,7 +90,7 @@ TAO_POA_Hooks::find_group_component_in_profile (const TAO_Profile* profile,
   const TAO_Tagged_Components& components = profile->tagged_components ();
 
   IOP::TaggedComponent tagged_component;
-  tagged_component.tag = TAO_TAG_GROUP;
+  tagged_component.tag = IOP::TAG_GROUP;
 
   // Try to find it.
   if (components.get_component (tagged_component) == 0)

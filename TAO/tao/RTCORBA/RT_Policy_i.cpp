@@ -429,7 +429,7 @@ TAO_TCP_Properties::enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_TCP_Properties::enable_network_priority (CORBA::Boolean enable
-					     ACE_ENV_ARG_DECL_NOT_USED)
+                                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->enable_network_priority_ = enable;
@@ -803,8 +803,8 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
           ACE_TRY_CHECK;
           no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-	  enable_network_priority =
-	    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+          enable_network_priority =
+            tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -920,7 +920,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                                 int &send_buffer_size,
                                 int &recv_buffer_size,
                                 int &no_delay,
-				int &enable_network_priority,
+                                int &enable_network_priority,
                                 const char *protocol_type)
 {
   RTCORBA::ProtocolProperties_var properties =
@@ -1050,9 +1050,9 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
           ACE_TRY_CHECK;
           no_delay = tcp_properties->no_delay (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
-	  enable_network_priority =
-	    tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-	}
+          enable_network_priority =
+            tcp_properties->enable_network_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
 
       if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
         {
