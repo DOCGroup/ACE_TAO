@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_registration.cpp
 //
@@ -30,12 +30,12 @@
 //
 // = AUTHOR
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(ReactorEx, test_registration, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_registration, "$Id$")
 
 // Globals for this test
 int stop_test = 0;
@@ -50,7 +50,7 @@ public:
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
 
   ACE_Auto_Event event1_;
   ACE_Auto_Event event2_;
@@ -64,7 +64,7 @@ Simple_Handler::Simple_Handler (void)
 {
 }
 
-int 
+int
 Simple_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
 {
   ACE_HANDLE handle = s->si_handle_;
@@ -90,12 +90,12 @@ Simple_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
 
 int
 Simple_Handler::handle_close (ACE_HANDLE handle,
-			      ACE_Reactor_Mask close_mask)
+                              ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_close handle = %d\n", handle));
   this->handle_close_count_++;
 
-  if (this->handle_close_count_ == 1)    
+  if (this->handle_close_count_ == 1)
     stop_test = 0;
   else if (this->handle_close_count_ == 2)
     stop_test = 1;
@@ -106,7 +106,7 @@ Simple_Handler::handle_close (ACE_HANDLE handle,
 // Globals for this test
 Simple_Handler simple_handler;
 
-void 
+void
 worker (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creation\n"));
@@ -132,20 +132,20 @@ worker (void)
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread death\n"));
 }
 
-int 
+int
 main (int, char *[])
 {
-  int result = reactor.register_handler (&simple_handler, 
+  int result = reactor.register_handler (&simple_handler,
                                        simple_handler.event1_.handle ());
   ACE_ASSERT (result == 0);
 
-  result = reactor.register_handler (&simple_handler, 
+  result = reactor.register_handler (&simple_handler,
                                      simple_handler.event2_.handle ());
   ACE_ASSERT (result == 0);
 
   result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0);
   ACE_ASSERT (result == 0);
-  
+
   result = 0;
   while (!stop_test && result != -1)
     {

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_console_input.cpp
 //
@@ -20,15 +20,15 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(ReactorEx, test_console_input, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_console_input, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {
 public:
   Event_Handler (ACE_Reactor &reactor);
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);  
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   int handle_close (ACE_HANDLE handle,
-		    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask);
 };
 
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
@@ -36,12 +36,12 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
   this->reactor (&reactor);
 
   if (this->reactor ()->register_handler (this,
-					  ACE_STDIN) != 0)
+                                          ACE_STDIN) != 0)
     ACE_ERROR ((LM_ERROR,
-                "Registration with Reactor could not be done\n"));		    
+                "Registration with Reactor could not be done\n"));
 }
 
-int 
+int
 Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_TCHAR buffer[BUFSIZ];
@@ -58,13 +58,13 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
     this->reactor ()->close ();
 
   ACE_DEBUG ((LM_DEBUG, "User input: %s", buffer));
-  
+
   return 0;
 }
 
-int 
+int
 Event_Handler::handle_close (ACE_HANDLE handle,
-			     ACE_Reactor_Mask close_mask)
+                             ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from Reactor\n"));
   return 0;
