@@ -1,6 +1,11 @@
+Tue Feb 25 10:16:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Token_Strategy_Test.cpp:
+          Fixed unicode compile error
+
 Mon Feb 25 19:30:54 2002  Steve Huston  <shuston@riverace.com>
 
-        * tests/Collection_Test.cpp: Moved the declaration of UglyThing 
+        * tests/Collection_Test.cpp: Moved the declaration of UglyThing
           to a new file, Collection_Test.h.  Visual Age C++ needs it in
           a separate file to do auto template instantiation.
         * tests/Collection_Test.h: New file.
@@ -46,17 +51,17 @@ Mon Feb 25 17:17:37 2002 UTC Don Hinton <dhinton@ieee/org>
 	  TOKEN type within the paramaterized class, i.e.,
 	  ACE_Select_Reactor_Token_T and ACE_Select_Reactor_T.  Otherwise
 	  you get an error on some compilers, e.g., M$VC, that complain
-	  about generic types. 
+	  about generic types.
 
 Mon Feb 25 15:53:56 2002 UTC Don Hinton <dhinton@ieee.org>
 
-	* ace/Synch.i (queueing_strategy): Added ACE_UNUSED_ARG for unused  
+	* ace/Synch.i (queueing_strategy): Added ACE_UNUSED_ARG for unused
 	  queueing_strategy parameter, thanks to Craig Rodrigues
 	  <crodrigu@bbn.com> for pointing this out.
 
 Mon Feb 25 09:17:39 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* ace/SSL/SSL_Context.cpp (dh_params): Wrapped the second argument 
+	* ace/SSL/SSL_Context.cpp (dh_params): Wrapped the second argument
  	  to ACE_OS::fopen with ACE_TEXT so that it behaves properly on
 	  wide character platforms.  Thanks to Craig Rodrigues for
 	  pointing this out and Ossama Othman for explaining the
@@ -69,10 +74,10 @@ Mon Feb 25 13:50:43 2002 UTC Don Hinton <dhinton@ieee.org>
 	  methods.  The default is FIFO, which was the previous behavior.
 	  Now ACE_Token_Queue::insert_entry() is always called with the
 	  queueing_strategy in order to determine where the thread should
-	  requeue itself. 
+	  requeue itself.
 
 	* ace/Synch.{h|i}: Added queueing strategy methods to
-	  ACE_Noop_Token. 
+	  ACE_Noop_Token.
 
 	* ace/Select_Reactor_T.{h|cpp}:
 	* ace/TP_Reactor.{h|cpp}: Added QUEUEING_STRATEGY parameter to
@@ -98,11 +103,11 @@ Fri Feb 22 09:31:35 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/QoS/QoS_Session_Factory.h (ACE_QoS_Session_Type):
 	  Change "const static" to "static const" to remove gcc 3.1
-	  warning. 
+	  warning.
 
 Fri Feb 22 08:07:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
-        * ace/Makefile.bor: Added String_Base.cpp and Atomic_op.cpp to the 
+        * ace/Makefile.bor: Added String_Base.cpp and Atomic_op.cpp to the
           list of files that must be installed when doing a make install.
           Thanks to Cyrille Chépélov <cyrille@softek.fr> for reporting that
           these files missed.
@@ -115,11 +120,11 @@ Thu Feb 21 16:33:11 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  unneeded parameter from stop() and removed the unneeded
 	  re-definition of close() (since we are not shadowing it any
 	  more).  Thanks to Peter Heitman <pheitman@cisco.com> for
-	  reporting this. 
+	  reporting this.
 
 Thu Feb 21 13:12:44 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* ace/SSL/SSL_Context.* (ACE_SSL_Context): Added new methods to 
+	* ace/SSL/SSL_Context.* (ACE_SSL_Context): Added new methods to
 	  specify Diffie-Hellman parameters.  These parameters are
  	  required when using DSA certificates/keys.  The new methods are
  	  dh_params, dh_params_file_name, and dh_params_file_type.
@@ -127,7 +132,7 @@ Thu Feb 21 13:12:44 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 Thu Feb 21 09:32:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/TTY_IO.cpp (control): Use the appropriate B* macros to set
-	  all the baudrate cases.  Thanks to Olli Savia <ops@iki.fi> for 
+	  all the baudrate cases.  Thanks to Olli Savia <ops@iki.fi> for
  	  contributing this.
 
 	* ace/Signal.cpp (dispatch): Added a cast of (ACE_SignalHandler)
@@ -137,11 +142,11 @@ Thu Feb 21 09:32:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Thu Feb 21 13:09:13 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/streams.h: strstream was deprecated in the 1998 ISO C++ 
-	  standard [D.7 depr.str.strstreams], and has been replaced by 
-	  sstream.  Including <strstream> or <strstream.h> causes annoying 
-	  warnings with gcc 3.1.  Since strstream and sstream are not used 
-	  internally within ACE or TAO, remove includes for strstream, and 
+	* ace/streams.h: strstream was deprecated in the 1998 ISO C++
+	  standard [D.7 depr.str.strstreams], and has been replaced by
+	  sstream.  Including <strstream> or <strstream.h> causes annoying
+	  warnings with gcc 3.1.  Since strstream and sstream are not used
+	  internally within ACE or TAO, remove includes for strstream, and
 	  let the developer include them in their own code.
 
 Wed Feb 20 15:26:43 2002  Phil Mesnier  <mesnier_p@ociweb.com>
@@ -161,7 +166,7 @@ Wed Feb 20 15:26:43 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 	* apps/soreduce/soreduce.cpp:
 	  New application to assist in production of reduced footprint
 	  shared libraries for specific collections of applications. For
-	  more details see the enclosed README. 
+	  more details see the enclosed README.
 
 Wed Feb 20 14:18:14 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -174,7 +179,7 @@ Wed Feb 20 14:18:14 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Wed Feb 20 13:01:25 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Atomic_Op.i: Fix the return value of the ACE_GUARD_RETURN 
+	* ace/Atomic_Op.i: Fix the return value of the ACE_GUARD_RETURN
 	  macros so that if the lock fails, the comparison also fails.
   	  Thanks to Ivan Pia <pia@octet.spb.ru> for reporting this.
 
