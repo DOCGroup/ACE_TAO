@@ -1,3 +1,14 @@
+Fri Nov 07 17:26:49 1997    <nw1@CHA-CHA>
+
+	* tao/TAO.dsp:
+	* tests/Cubit/TAO/DII_Cubit/{client,server}.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/{client,server}.dsp:
+	* tests/Cubit/TAO/MT_Cubit/client/client.dsp:  Removed
+	  ACE_HAS_TSS_ORB_CORE flag.
+
+	* tests/Cubit/TAO/MT_Cubit/client/client.cpp (main): Added a
+ 	  return statement to satisfy MSVC.
+
 Fri Nov  7 18:20:46 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/{client,server}/svc.conf: Updated to
