@@ -1,3 +1,7 @@
+Fri Sep 04 20:46:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Updated project source file list.
+
 Fri Sep  4 18:46:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Thruput/TAO/ttcp_i.cpp: 
