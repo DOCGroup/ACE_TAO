@@ -1,3 +1,11 @@
+Thu Mar  1 15:21:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCode.cpp:
+
+          Modified private_member_label() to insert octet 0 into
+          the Any label for the default index, as the spec requires.
+          This closes out [BUGID:123].
+
 Thu Mar  1 14:09:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
