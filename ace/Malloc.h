@@ -88,7 +88,7 @@ public:
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 # define ACE_POINTER_CAST(PTR) ((PTR).addr ())
   typedef ACE_Based_Pointer<ACE_Malloc_Header> HEADER_PTR;
-#else 
+#else
 # define ACE_POINTER_CAST(PTR) ((PTR))
   typedef ACE_Malloc_Header *HEADER_PTR;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
@@ -163,6 +163,9 @@ public:
 
   void dump (void) const;
   // Dump the state of the object.
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
 };
 
 class ACE_Export ACE_Control_Block
