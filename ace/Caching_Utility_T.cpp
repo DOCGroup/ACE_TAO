@@ -157,7 +157,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   // upon the <purge_percent>.
   size_t entries_to_remove 
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(ssize_t, 
+               ACE_static_cast(size_t, 
                                ACE_static_cast(double, purge_percent) 
                                / 100 * current_map_size));
   
@@ -277,7 +277,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   // upon the <purge_percent>.
   size_t entries_to_remove 
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(ssize_t, 
+               ACE_static_cast(size_t, 
                                ACE_static_cast(double, purge_percent) 
                                / 100 * available_entries));
 
@@ -402,7 +402,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
   // upon the <purge_percent>.
   size_t entries_to_remove 
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(ssize_t, 
+               ACE_static_cast(size_t, 
                                ACE_static_cast(double, purge_percent) 
                                / 100 * current_map_size));
   
