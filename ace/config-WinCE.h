@@ -69,7 +69,7 @@ typedef void FILE;
 
 // SH3 cross-compiler can't handle inline functions correctly 
 // (along with other bugs.)
-#if defined (SH3) && defined (DEBUG)
+#if defined (SH3)
 #define ACE_LACKS_INLINE_FUNCTIONS
 #endif /* SH3 && _DEBUG */
 
