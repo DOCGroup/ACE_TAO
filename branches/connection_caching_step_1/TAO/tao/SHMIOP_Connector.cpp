@@ -17,12 +17,12 @@ ACE_RCSID(tao, SHMIOP_Connector, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Node<ACE_INET_Addr>;
-template class ACE_Unbounded_Stack<ACE_INET_Addr>;
-template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
-template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
-template class ACE_Hash<ARHR<ACE_INET_Addr> >;
-template class ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >;
+//
+//
+//
+//
+//
+//
 
 template class ACE_NOOP_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>;
@@ -41,12 +41,12 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Client_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Node<ACE_INET_Addr>
-#pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
-#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
-#pragma instantiate ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >
+//
+//
+//
+//r> >
+//
+//
 
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>
