@@ -98,13 +98,13 @@ ACE_InputCDR::to_octet::to_octet (CDR_Octet &o)
 }
 
 ACE_INLINE
-ACE_OutputCDR::from_char::from_char (char c)
+ACE_OutputCDR::from_char::from_char (CDR_Char c)
   : val_ (c)
 {
 }
 
 ACE_INLINE
-ACE_InputCDR::to_char::to_char (char &c)
+ACE_InputCDR::to_char::to_char (CDR_Char &c)
   : ref_ (c)
 {
 }
@@ -122,8 +122,8 @@ ACE_InputCDR::to_wchar::to_wchar (ACE_OS::WChar &wc)
 }
 
 ACE_INLINE
-ACE_OutputCDR::from_string::from_string (char *s,
-                                         u_long b,
+ACE_OutputCDR::from_string::from_string (CDR_Char *s,
+                                         CDR_ULong b,
                                          CDR_Boolean nocopy)
   : val_ (s),
     bound_ (b),
@@ -132,19 +132,21 @@ ACE_OutputCDR::from_string::from_string (char *s,
 }
 
 ACE_INLINE
-ACE_InputCDR::to_string::to_string (char *&s,
-                                    u_long b)
+ACE_InputCDR::to_string::to_string (CDR_Char *&s,
+                                    CDR_ULong b)
   : val_ (s),
     bound_ (b)
 {
 }
+
+// ****************************************************************
 
 // Decode the CDR stream.
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_octet (CDR_Octet x)
 {
-  return this->write_1 (ACE_reinterpret_cast (const char*,&x));
+  return this->write_1 (ACE_reinterpret_cast (const CDR_Octet*,&x));
 }
 
 ACE_INLINE CDR_Boolean
@@ -154,75 +156,73 @@ ACE_OutputCDR::write_boolean (CDR_Boolean x)
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_char (char x)
+ACE_OutputCDR::write_char (CDR_Char x)
 {
-  return this->write_1 (ACE_reinterpret_cast (char*, &x));
+  return this->write_1 (ACE_reinterpret_cast (CDR_Octet*, &x));
 }
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_wchar (ACE_OS::WChar x)
 {
-  return this->write_2 (ACE_reinterpret_cast (const ACE_UINT16*,&x));
+  return this->write_2 (ACE_reinterpret_cast (const CDR_UShort*,&x));
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_short (short x)
+ACE_OutputCDR::write_short (CDR_Short x)
 {
-  return this->write_2 (ACE_reinterpret_cast (const ACE_UINT16*, &x));
+  return this->write_2 (ACE_reinterpret_cast (const CDR_UShort*, &x));
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_ushort (u_short x)
+ACE_OutputCDR::write_ushort (CDR_UShort x)
 {
-  return this->write_2 (ACE_reinterpret_cast (const ACE_UINT16*, &x));
+  return this->write_2 (ACE_reinterpret_cast (const CDR_UShort*, &x));
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_long (long x)
+ACE_OutputCDR::write_long (CDR_Long x)
 {
-  return this->write_4 (ACE_reinterpret_cast (const ACE_UINT32*, &x));
+  return this->write_4 (ACE_reinterpret_cast (const CDR_ULong*, &x));
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_ulong (u_long x)
+ACE_OutputCDR::write_ulong (CDR_ULong x)
 {
-  return this->write_4 (ACE_reinterpret_cast (const ACE_UINT32*, &x));
+  return this->write_4 (ACE_reinterpret_cast (const CDR_ULong*, &x));
 }
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_longlong (const CDR_LongLong &x)
 {
-  return this->write_8 (ACE_reinterpret_cast (const ACE_UINT64*, &x));
+  return this->write_8 (ACE_reinterpret_cast (const CDR_ULongLong*, &x));
 }
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_ulonglong (const CDR_ULongLong &x)
 {
-  return this->write_8 (ACE_reinterpret_cast (const ACE_UINT64*,&x));
+  return this->write_8 (ACE_reinterpret_cast (const CDR_ULongLong*,&x));
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_float (float x)
+ACE_OutputCDR::write_float (CDR_Float x)
 {
-  return this->write_4 (ACE_reinterpret_cast (const ACE_UINT32*, &x));
+  return this->write_4 (ACE_reinterpret_cast (const CDR_ULong*, &x));
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_double (double x)
+ACE_OutputCDR::write_double (const CDR_Double &x)
 {
-  return this->write_8 (ACE_reinterpret_cast (const ACE_UINT64*, &x));
+  return this->write_8 (ACE_reinterpret_cast (const CDR_ULongLong*, &x));
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-ACE_OutputCDR::write_longdouble (const long double &x)
+ACE_OutputCDR::write_longdouble (const CDR_LongDouble &x)
 {
-  return this->write_16 (ACE_reinterpret_cast (const long double*,&x));
+  return this->write_16 (ACE_reinterpret_cast (const CDR_LongDouble*,&x));
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_string (const char *x)
+ACE_OutputCDR::write_string (const CDR_Char *x)
 {
   if (x != 0)
     return this->write_string (ACE_OS::strlen(x), x);
@@ -244,8 +244,8 @@ ACE_OutputCDR::write_wstring (const ACE_OS::WChar *x)
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_char_array (const char *x, 
-                                 unsigned long length)
+ACE_OutputCDR::write_char_array (const CDR_Char *x, 
+                                 CDR_ULong length)
 {
   return this->write_array (x, 
 			    ACE_CDR::OCTET_SIZE,
@@ -255,7 +255,7 @@ ACE_OutputCDR::write_char_array (const char *x,
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_wchar_array (const ACE_OS::WChar* x,
-                                  unsigned long length)
+                                  CDR_ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::SHORT_SIZE,
@@ -265,7 +265,7 @@ ACE_OutputCDR::write_wchar_array (const ACE_OS::WChar* x,
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_octet_array (const CDR_Octet* x,
-                                  unsigned long length)
+                                  CDR_ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::OCTET_SIZE,
@@ -274,8 +274,8 @@ ACE_OutputCDR::write_octet_array (const CDR_Octet* x,
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_short_array (const short *x, 
-                                  unsigned long length)
+ACE_OutputCDR::write_short_array (const CDR_Short *x, 
+                                  CDR_ULong length)
 {
   return this->write_array (x,
 			    ACE_CDR::SHORT_SIZE,
@@ -284,8 +284,8 @@ ACE_OutputCDR::write_short_array (const short *x,
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_ushort_array (const u_short *x, 
-                                   unsigned long length)
+ACE_OutputCDR::write_ushort_array (const CDR_UShort *x, 
+                                   CDR_ULong length)
 {
   return this->write_array (x,
 			    ACE_CDR::SHORT_SIZE,
@@ -294,8 +294,8 @@ ACE_OutputCDR::write_ushort_array (const u_short *x,
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_long_array (const long *x, 
-                                 unsigned long length)
+ACE_OutputCDR::write_long_array (const CDR_Long *x, 
+                                 CDR_ULong length)
 {
   return this->write_array (x,
 			    ACE_CDR::LONG_SIZE,
@@ -304,8 +304,8 @@ ACE_OutputCDR::write_long_array (const long *x,
 }
   
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_ulong_array (const u_long *x, 
-                                  unsigned long length)
+ACE_OutputCDR::write_ulong_array (const CDR_ULong *x, 
+                                  CDR_ULong length)
 {   
   return this->write_array (x,
 			    ACE_CDR::LONG_SIZE,
@@ -315,7 +315,7 @@ ACE_OutputCDR::write_ulong_array (const u_long *x,
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_longlong_array (const CDR_LongLong *x,
-                                     unsigned long length)
+                                     CDR_ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::LONGLONG_SIZE,
@@ -325,7 +325,7 @@ ACE_OutputCDR::write_longlong_array (const CDR_LongLong *x,
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::write_ulonglong_array (const CDR_ULongLong *x,
-                                      unsigned long length)
+                                      CDR_ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::LONGLONG_SIZE,
@@ -334,8 +334,8 @@ ACE_OutputCDR::write_ulonglong_array (const CDR_ULongLong *x,
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_float_array (const float *x, 
-                                  unsigned long length)
+ACE_OutputCDR::write_float_array (const CDR_Float *x, 
+                                  CDR_ULong length)
 {
   return this->write_array (x,
 			    ACE_CDR::LONG_SIZE,
@@ -345,8 +345,8 @@ ACE_OutputCDR::write_float_array (const float *x,
 
 
 ACE_INLINE CDR_Boolean 
-ACE_OutputCDR::write_double_array (const double *x, 
-                                   unsigned long length)
+ACE_OutputCDR::write_double_array (const CDR_Double *x, 
+                                   CDR_ULong length)
 {
   return this->write_array (x,
 			    ACE_CDR::LONGLONG_SIZE,
@@ -354,17 +354,15 @@ ACE_OutputCDR::write_double_array (const double *x,
 			    length);
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-ACE_OutputCDR::write_longdouble_array (const long double* x,
-                                       unsigned long length)
+ACE_OutputCDR::write_longdouble_array (const CDR_LongDouble* x,
+                                       CDR_ULong length)
 {
   return this->write_array (x,
                             ACE_CDR::LONGDOUBLE_SIZE,
                             ACE_CDR::LONGDOUBLE_ALIGN,
                             length);
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE int
 ACE_OutputCDR::good_bit (void) const
@@ -444,7 +442,7 @@ ACE_InputCDR::read_boolean (CDR_Boolean& x)
 }
 
 ACE_INLINE CDR_Boolean 
-ACE_InputCDR::read_char (char &x)
+ACE_InputCDR::read_char (CDR_Char &x)
 {
   return this->read_1 (ACE_reinterpret_cast (CDR_Octet*, &x));
 }
@@ -453,72 +451,70 @@ ACE_InputCDR::read_char (char &x)
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_wchar (ACE_OS::WChar& x)
 {
-  return this->read_2 (ACE_reinterpret_cast (ACE_UINT16*,&x));
+  return this->read_2 (ACE_reinterpret_cast (CDR_UShort*,&x));
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_short (short &x)
+ACE_InputCDR::read_short (CDR_Short &x)
 {
-  return this->read_2 (ACE_reinterpret_cast (ACE_UINT16*, &x));
+  return this->read_2 (ACE_reinterpret_cast (CDR_UShort*, &x));
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_ushort (u_short &x)
+ACE_InputCDR::read_ushort (CDR_UShort &x)
 {
-  return this->read_2 (ACE_reinterpret_cast (ACE_UINT16*, &x));
-}
-
-
-ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_long (long &x)
-{
-  return this->read_4 (ACE_reinterpret_cast (ACE_UINT32*, &x));
+  return this->read_2 (ACE_reinterpret_cast (CDR_UShort*, &x));
 }
 
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_ulong (u_long &x)
+ACE_InputCDR::read_long (CDR_Long &x)
 {
-  return this->read_4 (ACE_reinterpret_cast (ACE_UINT32*, &x));
+  return this->read_4 (ACE_reinterpret_cast (CDR_ULong*, &x));
+}
+
+
+ACE_INLINE CDR_Boolean
+ACE_InputCDR::read_ulong (CDR_ULong &x)
+{
+  return this->read_4 (ACE_reinterpret_cast (CDR_ULong*, &x));
 }
 
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_longlong (CDR_LongLong &x)
 {
-  return this->read_8 (ACE_reinterpret_cast (ACE_UINT64*, &x));
+  return this->read_8 (ACE_reinterpret_cast (CDR_ULongLong*, &x));
 }
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_ulonglong (CDR_ULongLong &x)
 {
-  return this->read_8 (ACE_reinterpret_cast (ACE_UINT64*,&x));
+  return this->read_8 (ACE_reinterpret_cast (CDR_ULongLong*,&x));
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_float (float &x)
+ACE_InputCDR::read_float (CDR_Float &x)
 {
-  return this->read_4 (ACE_reinterpret_cast (ACE_UINT32*, &x));
+  return this->read_4 (ACE_reinterpret_cast (CDR_ULong*, &x));
 }
 
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_double (double &x)
+ACE_InputCDR::read_double (CDR_Double &x)
 {
-  return this->read_8 (ACE_reinterpret_cast (ACE_UINT64*, &x));
+  return this->read_8 (ACE_reinterpret_cast (CDR_ULongLong*, &x));
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_longdouble (long double &x)
+ACE_InputCDR::read_longdouble (CDR_LongDouble &x)
 {
-  return this->read_16 (ACE_reinterpret_cast (long double*,&x));
+  return this->read_16 (ACE_reinterpret_cast (CDR_LongDouble*,&x));
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_char_array (char* x, 
-                               unsigned long length)
+ACE_InputCDR::read_char_array (CDR_Char* x, 
+                               CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::OCTET_SIZE,
@@ -528,7 +524,7 @@ ACE_InputCDR::read_char_array (char* x,
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_wchar_array (ACE_OS::WChar* x,
-                                unsigned long length)
+                                CDR_ULong length)
 {
   return this->read_array (x,
                            ACE_CDR::SHORT_SIZE,
@@ -538,7 +534,7 @@ ACE_InputCDR::read_wchar_array (ACE_OS::WChar* x,
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_octet_array (CDR_Octet* x,
-                                unsigned long length)
+                                CDR_ULong length)
 {
   return this->read_array (x,
                            ACE_CDR::OCTET_SIZE,
@@ -548,7 +544,7 @@ ACE_InputCDR::read_octet_array (CDR_Octet* x,
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_short_array (short *x, 
-                                unsigned long length)
+                                CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::SHORT_SIZE,
@@ -558,7 +554,7 @@ ACE_InputCDR::read_short_array (short *x,
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_ushort_array (u_short *x, 
-                                 unsigned long length)
+                                 CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::SHORT_SIZE,
@@ -567,8 +563,8 @@ ACE_InputCDR::read_ushort_array (u_short *x,
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_long_array (long *x, 
-                               unsigned long length)
+ACE_InputCDR::read_long_array (CDR_Long *x, 
+                               CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::LONG_SIZE,
@@ -577,8 +573,8 @@ ACE_InputCDR::read_long_array (long *x,
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_ulong_array (u_long *x, 
-                                unsigned long length)
+ACE_InputCDR::read_ulong_array (CDR_ULong *x, 
+                                CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::LONG_SIZE,
@@ -588,7 +584,7 @@ ACE_InputCDR::read_ulong_array (u_long *x,
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_longlong_array (CDR_LongLong *x,
-                                   unsigned long length)
+                                   CDR_ULong length)
 {
   return this->read_array (x,
                            ACE_CDR::LONGLONG_SIZE,
@@ -598,7 +594,7 @@ ACE_InputCDR::read_longlong_array (CDR_LongLong *x,
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::read_ulonglong_array (CDR_ULongLong *x,
-                                    unsigned long length)
+                                    CDR_ULong length)
 {
   return this->read_array (x,
                            ACE_CDR::LONGLONG_SIZE,
@@ -607,8 +603,8 @@ ACE_InputCDR::read_ulonglong_array (CDR_ULongLong *x,
 }
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_float_array (float *x, 
-                                unsigned long length)
+ACE_InputCDR::read_float_array (CDR_Float *x, 
+                                CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::LONG_SIZE,
@@ -618,8 +614,8 @@ ACE_InputCDR::read_float_array (float *x,
 
 
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_double_array (double *x, 
-                                 unsigned long length)
+ACE_InputCDR::read_double_array (CDR_Double *x, 
+                                 CDR_ULong length)
 {
   return this->read_array (x,
 			   ACE_CDR::LONGLONG_SIZE,
@@ -627,22 +623,20 @@ ACE_InputCDR::read_double_array (double *x,
 			   length);
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-ACE_InputCDR::read_longdouble_array (long double* x,
-                                      unsigned long length)
+ACE_InputCDR::read_longdouble_array (CDR_LongDouble* x,
+                                     CDR_ULong length)
 {
   return this->read_array (x,
                             ACE_CDR::LONGDOUBLE_SIZE,
                             ACE_CDR::LONGDOUBLE_ALIGN,
                             length);
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::skip_char (void)
 {
-  char x;
+  CDR_Char x;
   return this->read_1 (ACE_reinterpret_cast (CDR_Octet*,&x));
 }
 
@@ -724,14 +718,12 @@ ACE_InputCDR::skip_double (void)
   return this->read_8 (ACE_reinterpret_cast (ACE_UINT64*,&x));
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
 ACE_InputCDR::skip_longdouble (void)
 {
-  long double x;
-  return this->read_16 (ACE_reinterpret_cast (long double*,&x));
+  CDR_LongDouble x;
+  return this->read_16 (ACE_reinterpret_cast (CDR_LongDouble*,&x));
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE char*
 ACE_InputCDR::end (void)
@@ -804,41 +796,39 @@ operator<< (ACE_OutputCDR &os, u_short x)
 }
 
 ACE_INLINE CDR_Boolean
-operator<< (ACE_OutputCDR &os, long x)
+operator<< (ACE_OutputCDR &os, CDR_Long x)
 {
   os.write_long (x);
   return os.good_bit ();
 }
 
 ACE_INLINE CDR_Boolean
-operator<< (ACE_OutputCDR &os, u_long x)
+operator<< (ACE_OutputCDR &os, CDR_ULong x)
 {
   os.write_ulong (x);
   return os.good_bit ();
 }
 
 ACE_INLINE CDR_Boolean
-operator<< (ACE_OutputCDR& os, CDR_LongLong x)
+operator<< (ACE_OutputCDR &os, CDR_LongLong x)
 {
   os.write_longlong (x);
   return os.good_bit ();
 }
 
 ACE_INLINE CDR_Boolean
-operator<< (ACE_OutputCDR& os, CDR_ULongLong x)
+operator<< (ACE_OutputCDR &os, CDR_ULongLong x)
 {
   os.write_ulonglong (x);
   return os.good_bit ();
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-operator<< (ACE_OutputCDR& os, long double x)
+operator<< (ACE_OutputCDR &os, CDR_LongDouble x)
 {
   os.write_longdouble (x);
   return os.good_bit ();
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE CDR_Boolean
 operator<< (ACE_OutputCDR &os, float x)
@@ -921,14 +911,14 @@ operator>> (ACE_InputCDR &is, u_short &x)
 }
 
 ACE_INLINE CDR_Boolean
-operator>>(ACE_InputCDR &is, long &x)
+operator>>(ACE_InputCDR &is, CDR_Long &x)
 {
   is.read_long (x);
   return is.good_bit ();
 }
 
 ACE_INLINE CDR_Boolean
-operator>> (ACE_InputCDR &is, u_long &x)
+operator>> (ACE_InputCDR &is, CDR_ULong &x)
 { 
   is.read_ulong (x);
   return is.good_bit ();
@@ -948,14 +938,12 @@ operator>> (ACE_InputCDR& is, CDR_ULongLong &x)
   return is.good_bit ();
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
-operator>> (ACE_InputCDR& is, long double &x)
+operator>> (ACE_InputCDR& is, CDR_LongDouble &x)
 {
   is.read_longdouble (x);
   return is.good_bit ();
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE CDR_Boolean
 operator>> (ACE_InputCDR &is, float &x)
@@ -1073,14 +1061,14 @@ ACE_OutputCDR::append_ushort (ACE_InputCDR &stream)
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::append_long (ACE_InputCDR &stream)
 {
-  long x;
+  CDR_Long x;
   return (stream.read_long (x) ? this->write_long (x) : 0);
 }
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::append_ulong (ACE_InputCDR &stream)
 {
-  u_long x;
+  CDR_ULong x;
   return (stream.read_ulong (x) ? this->write_ulong (x) : 0);
 }
 
@@ -1112,14 +1100,12 @@ ACE_OutputCDR::append_double (ACE_InputCDR &stream)
   return (stream.read_double (x) ? this->write_double (x) : 0);
 }
 
-#  if   ACE_SIZEOF_LONG_DOUBLE == 16
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::append_longdouble (ACE_InputCDR &stream)
 {
-  long double x;
+  CDR_LongDouble x;
   return (stream.read_longdouble (x) ? this->write_longdouble (x) : 0);
 }
-#  endif /* ACE_SIZEOF_LONG_DOUBLE == 16 */
 
 ACE_INLINE CDR_Boolean
 ACE_OutputCDR::append_string (ACE_InputCDR &stream)
