@@ -1,3 +1,13 @@
+Tue Mar 12 15:22:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS.i (sendv): When using winsock1, we transfer data by
+	  sending one iovec at a time. If transfer of a buffer isnt
+	  complete because the socket buffers got full, we need to drop
+	  out of the loop that sends data. Thanks to Stephan Gudmundson
+	  <stephang@netacquire.com> for providing this patch.
+
+	* THANKS: Added Stephan Gudmundson to the Hall of fame. 
+
 Mon Feb 25 14:06:45 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-hpux-11.00.h:

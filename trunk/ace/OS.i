@@ -7891,7 +7891,7 @@ ACE_OS::thr_yield (void)
 # elif defined (VXWORKS)
   // An argument of 0 to ::taskDelay doesn't appear to yield the
   // current thread.
-  // Now, it does seem to work.  The context_switch_time test 
+  // Now, it does seem to work.  The context_switch_time test
   // works fine with task_delay set to 0.
   ::taskDelay (0);
 # endif /* ACE_HAS_STHREADS */
@@ -8046,7 +8046,12 @@ ACE_OS::sendv (ACE_HANDLE handle,
                        buffers[i].iov_base,
                        buffers[i].iov_len,
                        0);
-      bytes_sent += buffers[i].iov_len;     // Gets ignored on error anyway
+      // Gets ignored on error anyway
+      bytes_sent += buffers[i].iov_len;
+
+      // If the transfer isnt complete just drop out of the loop.
+      if (result < buffers[i].iov_len)
+        break;
     }
 # endif /* ACE_HAS_WINSOCK2 != 0 */
 
