@@ -454,41 +454,63 @@ typedef int key_t;
 // hard-coded to Microsoft proprietary extensions to C++.
 
 #if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1)
-#if defined (ACE_BUILD_DLL)
-#if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
-#define ACE_Export _export
-#else /* Microsoft: */
-#define ACE_Export __declspec (dllexport)
-#endif /* !_MSC_VER */
-#else /* Using the DLL. */
-#if !defined _MSC_VER
-#define ACE_Export _import
-#else
-#define ACE_Export  __declspec (dllimport)
-#endif /* !_MSC_VER */
-#endif /* ACE_BUILD_DLL */
+#  if defined (ACE_BUILD_DLL)
+#    if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
+#      define ACE_Export _export
+//     @@ Don't know how to handle this when using Borland's compilers.
+#      define ACE_SINGLETON_DECLARATION (T)
+#      define ACE_SINGLETON_INSTANTIATION (T)
+#    else /* Microsoft: */
+#      define ACE_Export __declspec (dllexport)
+#      define ACE_SINGLETON_DECLATATION (T)  template class ACE_Export T
+#      define ACE_SINGLETON_INSTANTIATION (T) template class T
+#    endif /* !_MSC_VER */
+#  else /* Using the DLL. */
+#    define ACE_SINGLETON_INSTANTIATION (T)
+#    if !defined _MSC_VER
+#      define ACE_Export _import
+//     @@ Don't know how to handle this when using Borland's compilers.
+#      define ACE_SINGLETON_DECLARATION (T)
+#    else
+#      define ACE_Export  __declspec (dllimport)
+#      define ACE_SINGLETON_DECLARATION (T)  extern template class T
+#    endif /* !_MSC_VER */
+#  endif /* ACE_BUILD_DLL */
  
 #else /* We're not building a DLL! */
-#define ACE_Export 
+#  define ACE_Export
+#  define ACE_SINGLETON_DECLARATION (T)
+#  define ACE_SINGLETON_INSTANTIATION (T)
 #endif /* ACE_HAS_DLL */
 
 #if defined (ACE_HAS_SVC_DLL) && (ACE_HAS_SVC_DLL == 1)
-#if defined (ACE_BUILD_SVC_DLL)
-#if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
-#define ACE_Svc_Export _export
-#else /* Microsoft: */
-#define ACE_Svc_Export __declspec (dllexport)
-#endif /* !_MSC_VER */
-#else /* Using the DLL. */
-#if !defined _MSC_VER
-#define ACE_Svc_Export _import
-#else
-#define ACE_Svc_Export  __declspec (dllimport)
-#endif /* !_MSC_VER */
-#endif /* ACE_BUILD_DLL || ACE_BUILD_SVC_DLL */
+#  if defined (ACE_BUILD_SVC_DLL)
+#    if !defined (_MSC_VER) /* Mark classes as exported, Borland. */
+#      define ACE_Svc_Export _export
+//     @@ Don't know how to handle this when using Borland's compilers.
+#      define ACE_SVC_SINGLETON_DECLARATION (T)
+#      define ACE_SVC_SINGLETON_INSTANTIATION (T)
+#    else /* Microsoft: */
+#      define ACE_Svc_Export __declspec (dllexport)
+#      define ACE_SVC_SINGLETON_DECLARATION (T) template class ACE_Svc_Export T
+#      define ACE_SVC_SINGLETON_INSTANTIATION (T) template class T
+#    endif /* !_MSC_VER */
+#  else /* Using the DLL. */
+#    define ACE_SVC_SINGLETON_INSTANTIATION (T)
+#    if !defined _MSC_VER
+#      define ACE_Svc_Export _import
+//     @@ Don't know how to handle this when using Borland's compilers.
+#      define ACE_SVC_SINGLETON_DECLARATION (T)
+#    else
+#      define ACE_Svc_Export  __declspec (dllimport)
+#      define ACE_SVC_SINGLETON_DECLARATION (T) extern template class T
+#    endif /* !_MSC_VER */
+#  endif /* ACE_BUILD_DLL || ACE_BUILD_SVC_DLL */
  
 #else /* We're not building a DLL! */
-#define ACE_Svc_Export 
+#  define ACE_Svc_Export
+#  define ACE_SVC_SINGLETON_DECLARATION (T)
+#  define ACE_SVC_SINGLETON_INSTANTIATION (T)
 #endif /* ACE_HAS_SVC_DLL */
 
 // This needs to go here *first* to avoid problems with AIX.
