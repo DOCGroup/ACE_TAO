@@ -114,8 +114,12 @@ namespace TAO
     /////////////////////
     // Construct/Destruct
   public:
+    /**
+     * @@TODO DOC
+     */
     PG_Object_Group (
       CORBA::ORB_ptr orb,
+      PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
       const PortableGroup::TagGroupTaggedComponent & tagged_component,
@@ -131,26 +135,8 @@ namespace TAO
     // public methods
 
   public:
-
-    /// Set object group id
-    void set_object_group_id (PortableGroup::ObjectGroupId oid);
-
-    /// Set type ID
-    void set_typeid (PortableGroup::TypeId type_id);
-
     /// return a duplicated reference to this group (IOGR)
     PortableGroup::ObjectGroup_ptr reference()const;
-
-    void set_membership_style (PortableGroup::MembershipStyleValue style);
-    PortableGroup::MembershipStyleValue get_membership_style () const;
-
-    void set_initial_number_members (PortableGroup::InitialNumberMembersValue count);
-    PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
-
-    void set_minimum_number_members (PortableGroup::MinimumNumberMembersValue count);
-    PortableGroup::MinimumNumberMembersValue get_minimum_number_members ()const;
-
-    void set_group_specific_factories (const PortableGroup::FactoryInfos & infos);
 
     /**
      * Note the caller receives a copy of the factoryinfos in the result argument.
@@ -161,7 +147,7 @@ namespace TAO
     /**
      * get location of primary member
      */
-    const PortableGroup::Location & primary_location() const;
+    const PortableGroup::Location & get_primary_location() const;
 
     /**
      * returns a duplicate
@@ -169,6 +155,27 @@ namespace TAO
      */
     PortableGroup::TypeId get_type_id ()const;
 
+
+    /**
+     * @@TODO DOC
+     */
+    PortableGroup::MembershipStyleValue get_membership_style() const;
+
+    /**
+     * @@TODO DOC
+     */
+    PortableGroup::MinimumNumberMembersValue get_minimum_number_members () const;
+
+    /**
+     * @@TODO DOC
+     */
+    PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
+
+
+
+    /**
+     * @@TODO DOC
+     */
     void set_properties_dynamically (
         const PortableGroup::Properties & overrides
         ACE_ENV_ARG_DECL)
@@ -176,9 +183,15 @@ namespace TAO
                        PortableGroup::InvalidProperty,
                        PortableGroup::UnsupportedProperty));
 
+    /**
+     * @@TODO DOC
+     */
     void get_properties (PortableGroup::Properties_var & result) const
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /**
+     * @@TODO DOC
+     */
     PortableGroup::ObjectGroupId  get_object_group_id () const;
 
     /**
@@ -209,6 +222,9 @@ namespace TAO
         , PortableGroup::MemberNotFound
       ));
 
+    /**
+     * @@TODO DOC
+     */
     void remove_member (
         const PortableGroup::Location & the_location
         ACE_ENV_ARG_DECL)
@@ -216,6 +232,9 @@ namespace TAO
                        PortableGroup::MemberNotFound));
 
 
+    /**
+     * @@TODO DOC
+     */
     void create_member (
         const PortableGroup::Location & the_location,
         const char * type_id,
@@ -228,16 +247,33 @@ namespace TAO
         PortableGroup::InvalidCriteria,
         PortableGroup::CannotMeetCriteria));
 
+    /**
+     * @@TODO DOC
+     */
     PortableGroup::Locations * locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /**
+     * @@TODO DOC
+     */
     CORBA::Object_ptr get_member_reference (
         const PortableGroup::Location & the_location
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
-        PortableGroup::ObjectGroupNotFound,
         PortableGroup::MemberNotFound));
+
+
+    /**
+     * @@TODO DOC
+     */
+    void initial_populate (ACE_ENV_SINGLE_ARG_DECL);
+
+    /**
+     * @@TODO DOC
+     */
+    void minimum_populate (ACE_ENV_SINGLE_ARG_DECL);
+
 
     /////////////////////////
     // Implementation methods
@@ -245,6 +281,13 @@ namespace TAO
 
     int increment_version ();
     void distribute_iogr (ACE_ENV_ARG_DECL);
+
+    void create_members (size_t count ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        PortableGroup::NoFactory
+        ));
+
 
     /////////////////////////
     // Forbidden methods
@@ -257,19 +300,7 @@ namespace TAO
     /////////////////
     // Static Methods
   public:
-#if 0
-    /**
-     * Static creation method needed because exceptions can happen.
-     */
-    static PG_Object_Group * create (
-      CORBA::ORB_ptr orb,
-      PortableServer::POA_ptr poa,
-      CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      TAO_PG::Properties_Decoder * type_properties
-      ACE_ENV_ARG_DECL);
-#endif
+
     ///////////////
     // Static Data
   private:
@@ -286,6 +317,10 @@ namespace TAO
 
     CORBA::ORB_var orb_;
 
+    /// Where to find the factories for replicas.
+    PortableGroup::FactoryRegistry_var factory_registry_;
+
+
     // The object group manipulator
     TAO::PG_Object_Group_Manipulator & manipulator_;
 
@@ -293,7 +328,7 @@ namespace TAO
     int empty_;
 
     ACE_CString role_;
-    PortableGroup::TypeId type_id_;
+    PortableGroup::TypeId_var type_id_;
 
     /**
      * the GroupTaggedComponent that defines this group
@@ -326,7 +361,6 @@ namespace TAO
 
     // Cached property information
 
-    PortableGroup::MembershipStyleValue membership_style_;
     PortableGroup::InitialNumberMembersValue initial_number_members_;
     PortableGroup::MinimumNumberMembersValue minimum_number_members_;
     PortableGroup::FactoryInfos group_specific_factories_;
