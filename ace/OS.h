@@ -2332,7 +2332,13 @@ extern "C" int sigwait (sigset_t *set);
 #endif /* ACE_HAS_ALLOCA_H */
 
 #if defined (ACE_HAS_TIUSER_H)
+#if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
+extern "C" {
+#endif
 #include /**/ <tiuser.h> 
+#if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
+}
+#endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
 #endif /* ACE_HAS_TIUSER_H */
 
 /* Set the proper handle type for dynamically-loaded libraries. */
