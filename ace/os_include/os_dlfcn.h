@@ -42,6 +42,13 @@
 #  endif /* (g++ || HP aC++) vs. HP C++ */
 #endif /* __hpux */
 
+#if defined (VXWORKS)
+#  include /**/ <loadLib.h> /* for module load */
+#  include /**/ <unldLib.h> /* for module unload */
+#  include /**/ <symLib.h> /* for findSymbol  */
+#  include /**/ <sysSymTbl.h> /* for global symbol table */
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
