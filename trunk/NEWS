@@ -6,11 +6,14 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.5
 
 . Support for shared libraries with VxWorks
 
+USER VISIBLE CHANGES BETWEEN ACE-5.4.4 and ACE-5.4.5
+====================================================
+
 . Remove special handling in the Thread Specific Storage(TSS) code
-  that released the TSS key for ACE_TSS<TYPE>.  ACE_TSS<TYPE> has 
+  that released the TSS key for ACE_TSS<TYPE>.  ACE_TSS<TYPE> has
   been changed to explicitly free the TSS key when necessary.
 
-. On Win32 systems: detect thread termination via a hook in DLLMain 
+. On Win32 systems: detect thread termination via a hook in DLLMain
   for ACE.dll.  This allows cleanup of TSS objects for non-ACE threads
   that use ACE functions.  The most common case was threads that used
   ACE logging.  Formerly any TSS objects created by these threads would
