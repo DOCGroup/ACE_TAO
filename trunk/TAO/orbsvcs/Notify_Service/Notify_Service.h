@@ -69,7 +69,7 @@ class TAO_Notify_Service
   // Initializes the Service.
   // Returns 0 on success, -1 on error.
 
-  int run (void);
+  int run (TAO_ENV_SINGLE_ARG_DECL);
   // run the Service.
   // Returns 0 on success, -1 on error.
 

@@ -1,3 +1,9 @@
+Sun Dec 30 09:14:04 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp: 
+	  orbsvcs/Notify_Service/Notify_Service.h:
+          Fixed compile errors.
+	 
 Sat Dec 29 19:51:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Makefile: 
