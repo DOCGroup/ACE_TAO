@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_Strategies -lTAO -lTAO_RTCORBA
+LDLIBS = -lTAO_RTCORBA -lTAO_Strategies -lTAO 
 
 BIN_UNCHECKED = catior
 

@@ -1,3 +1,8 @@
+Mon May 19 15:41:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Makefile:
+	* utils/catior/makefile: Makefile fixes for the static builds.
+
 Mon May 19 13:02:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp (main):
