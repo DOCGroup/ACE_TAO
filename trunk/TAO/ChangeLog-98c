@@ -1,3 +1,13 @@
+Fri Jul  3 18:40:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+	Debugged and tested directed queries.
+
+	* orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
+	* orbsvcs/tests/Trading/import_test.cpp:
+	Added code to test directed queries.
+
 Fri Jul 03 17:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* orbsvcs/tests/Simulator/README: Added more documentation.
