@@ -1,3 +1,9 @@
+Sat Oct 31 01:49:06 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp (main):
+	  Added check for argv[0] to determine whether to use collocation
+	  optimization or not.
+
 Fri Oct 30 23:04:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Callback_Quoter/Consumer_Handler.h (reactor_used):
