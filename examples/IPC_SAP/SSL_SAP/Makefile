@@ -169,6 +169,22 @@ endif
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.i \
  SSL-client.h
 
@@ -265,6 +281,25 @@ endif
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Connector.i \
  SSL-client-simple.h
 
@@ -384,6 +419,20 @@ endif
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.i
 
 .obj/SSL-server-fancy.o .obj/SSL-server-fancy.so .shobj/SSL-server-fancy.o .shobj/SSL-server-fancy.so: SSL-server-fancy.cpp \
@@ -708,6 +757,20 @@ endif
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.i
 
 .obj/SSL-server-poll.o .obj/SSL-server-poll.so .shobj/SSL-server-poll.o .shobj/SSL-server-poll.so: SSL-server-poll.cpp \
@@ -799,6 +862,25 @@ endif
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Test_and_Set.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Test_and_Set.i \
+ $(ACE_ROOT)/ace/Test_and_Set.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/SSL/SSL_SOCK_Acceptor.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
