@@ -32,6 +32,8 @@ be_decl::be_decl (void)
     seq_names_ (NULL),
     encap_len_ (-1),
     fullname_ (0),
+    flatname_ (0),
+    repoID_ (0),
     size_type_ (be_decl::FIXED) // everybody is fixed size to start with
 {
 }
