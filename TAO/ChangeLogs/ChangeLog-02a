@@ -1,3 +1,13 @@
+Thu Jul  6 20:46:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.i:
+
+	  Moved code for interface IDLType up to where it is
+	  forward declared in Interface.pidl. Digital Unix,
+	  when building TAO with TAO_HAS_INTERFACE_REPOSITORY=1,
+	  complained that IDLType_var constructors and destructor
+	  was used before declared inline.
+
 Thu Jul  6 17:46:24 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Makefile: Updated dependencies.
