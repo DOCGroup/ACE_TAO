@@ -12,23 +12,29 @@ ACE_RCSID(Reliable, test_i, "$Id$")
 
 void
 Test_i::oneway_op (CORBA::ULong work,
-                   CORBA::Environment &) 
+                   CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < work; i++)
     {
-      for (int j = 0; j < 1000; j++);
+      // Eat a little CPU
+      /* takes about 40.2 usecs on a 167 MHz Ultra2 */
+      u_long n = 11UL;
+      ACE::is_prime (n, 2, n / 2);
     }
 }
 
 void
 Test_i::twoway_op (CORBA::ULong work,
-                   CORBA::Environment &) 
+                   CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (CORBA::ULong i = 0; i < work; i++)
     {
-      for (int j = 0; j < 1000; j++);
+      // Eat a little CPU
+      /* takes about 40.2 usecs on a 167 MHz Ultra2 */
+      u_long n = 11UL;
+      ACE::is_prime (n, 2, n / 2);
     }
 }
 
@@ -36,6 +42,6 @@ void
 Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, 
+  this->orb_->shutdown (0,
                         ACE_TRY_ENV);
 }
