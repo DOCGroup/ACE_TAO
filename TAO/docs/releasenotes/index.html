@@ -930,13 +930,31 @@ Surendran</a> and <a href="mailto:yamuna@cs.wustl.edu">Yamuna Krishnamurthy</a>
 and Management of Audio/Video Streams</a>.For more documentation on
 TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~naga/av.html">here</A>.
 
-<p><h4>Current Status:</h4>
+<p><h4>Current Status:</h4> (as of Sep 1st 1999)
 <p>
 <ul>
   <li>
       The audio/video streaming service has been implemented in the full
       profile. The current implementation support all the flow related
       components like flowEndpoint,FDev,FlowConnection,..,etc.
+  </li>
+  <li>
+      Point-to_Point and Point-to-MultiPoint streams have been
+      implemented.
+  </li>
+  <li>
+      A Pluggable protocols framework has been implemented to flexibly
+      add new flow protocols like SFP, RTP and new transports like
+      ATM. The current implementation has protoocol implementations
+      for SFP, RTP over UDP and Multicast UDP. Please look at this<A
+      HREF="http://www.cs.wustl.edu/~naga/pluggable_av.ps.gz"> paper
+      </A> for more documentation about the implementation.
+  </li>
+  <li>
+      A Videoconferencing application based on Vic, a MBONE tool, has
+      been implemented using the AV components. Please contact <A
+      HREF="mailto:yamuna@cs.wustl.edu"> yamuna or <A
+      HREF="mailto:naga@cs.wustl.edu"> Naga </A> if you're interested.
   </li>
   <li>
       An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
@@ -954,15 +972,16 @@ TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~naga/av.h
 </ul>
 <p>Work in progress:
 <ul>
-<li>
-Implementing the SFP protocol.
-</li>
-<li>
-    Adding Multipoint streams support.
-</li>
-<li>
-    Developing a Video-conferencing application using the A/V Service.
-</li>
+  <li>
+      Adding more features to the VideoConferencing application
+      eg. porting vat, the audio counterpart of vic to use AV components.
+  </li>
+  <li>
+      Adding ATM AAL5 protocol support.
+  </li>
+  <li>
+      Adding QoS implementation.
+  </li>
 </ul>
 
 <hr>
