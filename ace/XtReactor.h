@@ -96,6 +96,9 @@ protected:
                                 ACE_Reactor_Mask);
   // Remove a set of <handles>.
 
+  virtual void remove_XtInput (ACE_HANDLE handle);
+  // Removes an Xt handle.
+
   virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
                                         ACE_Time_Value *);
   // Wait for events to occur.
