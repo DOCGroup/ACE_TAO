@@ -66,6 +66,7 @@ realclean: clean
 
 .obj/IORTest.o .obj/IORTest.so .shobj/IORTest.o .shobj/IORTest.so: IORTest.cpp \
  $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -73,6 +74,7 @@ realclean: clean
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

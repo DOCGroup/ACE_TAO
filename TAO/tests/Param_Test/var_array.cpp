@@ -85,10 +85,14 @@ Test_Var_Array::run_sii_test (Param_Test_ptr objref,
   ACE_TRY
     {
       Param_Test::Var_Array_out out_arr (this->out_.out ());
+      ACE_DEBUG ((LM_DEBUG,
+	          "(%N|%l) \n"));
       this->ret_ = objref->test_var_array (this->in_,
                                            this->inout_,
                                            out_arr,
                                            ACE_TRY_ENV);
+      ACE_DEBUG ((LM_DEBUG,
+	          "(%N|%l) \n"));
       ACE_TRY_CHECK;
 
       return 0;
