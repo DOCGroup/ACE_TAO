@@ -1,9 +1,0 @@
-This directory contains a collection of classes that provide an
-interface to SUN's RPCs. I dubbed the collection the rpc++-library. It
-has been tested with gcc-1.40 on a SparcStation running SunOS 4.0.
-
-There is no documentation. Look at the example in ./example.
-
-Peter Berens
-
-
