@@ -15,9 +15,6 @@
 //
 // ============================================================================
 
-#include <iostream.h>
-#include <fstream.h>
-
 #include "ace/ACE.h"
 #include "ttcpC.h"
 #include "ttcp_decl.h"
