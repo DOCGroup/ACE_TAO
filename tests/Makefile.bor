@@ -96,16 +96,20 @@ TESTS = \
 	UPIPE_SAP_Test \
 	XtReactor_Test
 
-!ifndef NAME
+!ifdef TARGET_NAME
+NAME = $(TARGET_NAME)
+!else
+!undef NAME
+
 all: $(TESTS)
 
 $(TESTS):
-	$(MAKE) -fMakefile.bor -DNAME=$@ $(MAKE_FLAGS)
+	$(MAKE) -fMakefile.bor -DTARGET_NAME=$@ $(MAKE_FLAGS)
 
 clean: $(TESTS:_Test=_Test.Clean)
 
 $(TESTS:_Test=_Test.Clean):
-	$(MAKE) -fMakefile.bor -DNAME=$(@:.Clean=) $(MAKE_FLAGS) clean
+	$(MAKE) -fMakefile.bor -DTARGET_NAME=$(@:.Clean=) $(MAKE_FLAGS) clean
 !endif
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
@@ -117,4 +121,3 @@ CPPDIR = .
 LIBFILES = $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
-
