@@ -1117,21 +1117,10 @@ TAO_ORB_Core::default_environment (CORBA_Environment* env)
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-TAO_Policy_Current*
-TAO_ORB_Core::policy_current (void) const
+TAO_Policy_Current &
+TAO_ORB_Core::policy_current (void)
 {
-  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->policy_current_;
-}
-
-TAO_Policy_Current*
-TAO_ORB_Core::policy_current (TAO_Policy_Current* current)
-{
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
-
-  TAO_Policy_Current *old = tss->policy_current_;
-  tss->policy_current_ = current;
-  return old;
+  return this->policy_current_;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
