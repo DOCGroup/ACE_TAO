@@ -78,7 +78,6 @@ TAO/tests/Connect_Strategy_Test/run_test.pl
 TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Smart_Proxies/Policy/run_test.pl
 TAO/tests/Smart_Proxies/run_test.pl
-TAO/tests/Server_Leaks/run_test.pl
 TAO/tests/Stack_Recursion/run_test.pl: !ST
 TAO/tests/Faults/run_test.pl: !MINIMUM !ST
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
