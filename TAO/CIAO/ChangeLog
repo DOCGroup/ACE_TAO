@@ -1,3 +1,38 @@
+Sat Mar 19 18:19:34 2005  Will Otte <wotte@dre.vanderbilt.edu>
+        
+	* DAnCE/Config_Handlers/XMLSchema/Traversal.hpp
+	* DAnCE/Config_Handlers/XMLSchema/Traversal.ipp
+	* DAnCE/Config_Handlers/XMLSchema/Traversal.tpp
+	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.hpp
+	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.ipp
+	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.tpp
+	* DAnCE/Config_Handlers/XMLSchema/Types.hpp
+	* DAnCE/Config_Handlers/XMLSchema/Types.ipp
+	* DAnCE/Config_Handlers/XMLSchema/Types.tpp
+	* DAnCE/Config_Handlers/XMLSchema/Writer.hpp
+	* DAnCE/Config_Handlers/XMLSchema/Writer.ipp
+	* DAnCE/Config_Handlers/XMLSchema/Writer.tpp
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp
+	* DAnCE/Config_Handlers/XSCRT/Elements.ipp
+	* DAnCE/Config_Handlers/XSCRT/Elements.tpp
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp
+	* DAnCE/Config_Handlers/XSCRT/Parser.hpp
+	* DAnCE/Config_Handlers/XSCRT/Parser.ipp
+	* DAnCE/Config_Handlers/XSCRT/Parser.tpp
+	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp
+	* DAnCE/Config_Handlers/XSCRT/Traversal.ipp
+	* DAnCE/Config_Handlers/XSCRT/Traversal.tpp
+	* DAnCE/Config_Handlers/XSCRT/Writer.hpp
+	* DAnCE/Config_Handlers/XSCRT/Writer.ipp
+	* DAnCE/Config_Handlers/XSCRT/Writer.tpp
+	* DAnCE/Config_Handlers/XSCRT/XML.hpp
+	* DAnCE/Config_Handlers/XSCRT/XML.ipp
+	* DAnCE/Config_Handlers/XSCRT/XML.tpp
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.ipp
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.tpp
+
+	Completed the merge of xsc_handler_1 into main.
 Sat Mar 19 17:29:50 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:

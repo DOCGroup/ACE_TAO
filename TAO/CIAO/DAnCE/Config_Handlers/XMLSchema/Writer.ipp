@@ -1,8 +1,10 @@
-// file      : XSCRT/XMLSchema.tpp
+// file      : XMLSchema/Writer.ipp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-namespace XSCRT
+namespace XMLSchema
 {
+  namespace Writer
+  {
+  }
 }
-

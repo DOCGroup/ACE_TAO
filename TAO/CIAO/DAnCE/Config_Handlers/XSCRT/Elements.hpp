@@ -8,9 +8,9 @@
 #include <map>
 #include <string>
 #include <sstream>
-//#include <iostream> //@@ tmp
+// #include <iostream> //@@ tmp
 
-#include "XSCRT/Parser.hpp"
+#include <XSCRT/Parser.hpp>
 
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
 
@@ -232,7 +232,7 @@ namespace XSCRT
         }
       }
 
-      throw 1;
+      return 0;
     }
 
 
@@ -309,138 +309,17 @@ namespace XSCRT
     X x_;
   };
 
-#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
+#if (!defined (_MSC_VER) || (_MSC_VER >= 1300)) && \
+    (__GNUC__ > 3 || (__GNUC__ == 3 && (__GNUC_MINOR__ > 2)))
+
 
   // Stuff for normal compilers.
   //
 
   // Specialization for `signed char'
-    //
-  template <>
-  class FundamentalType<signed char> : public Type
-  {
-  public:
-    FundamentalType ()
-    {
-    }
-
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-    {
-      std::basic_stringstream<C> s;
-      s << e.value ();
-
-      short t;
-      s >> t;
-
-      x_ = static_cast<signed char> (t);
-    }
-
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-    {
-      std::basic_stringstream<C> s;
-      s << a.value ();
-
-      short t;
-      s >> t;
-
-      x_ = static_cast<signed char> (t);
-    }
-
-    FundamentalType (signed char const& x)
-        : x_ (x)
-    {
-    }
-
-    FundamentalType&
-    operator= (signed char const& x)
-    {
-      x_ = x;
-      return *this;
-    }
-
-  public:
-    operator signed char const& () const
-    {
-      return x_;
-    }
-
-    operator signed char& ()
-    {
-      return x_;
-    }
-
-  protected:
-    signed char x_;
-  };
-
-  // Specialization for unsigned char.
-  //
-  template <>
-  class FundamentalType<unsigned char> : public Type
-  {
-  public:
-    FundamentalType ()
-    {
-    }
-
-    template<typename C>
-    FundamentalType (XML::Element<C> const& e)
-    {
-      std::basic_stringstream<C> s;
-      s << e.value ();
-
-      unsigned short t;
-      s >> t;
-
-      x_ = static_cast<unsigned char> (t);
-    }
-
-    template<typename C>
-    FundamentalType (XML::Attribute<C> const& a)
-    {
-      std::basic_stringstream<C> s;
-      s << a.value ();
-
-      unsigned short t;
-      s >> t;
-
-      x_ = static_cast<unsigned char> (t);
-    }
-
-    FundamentalType (unsigned char const& x)
-        : x_ (x)
-    {
-    }
-
-    FundamentalType&
-    operator= (unsigned char const& x)
-    {
-      x_ = x;
-      return *this;
-    }
-
-  public:
-    operator unsigned char const& () const
-    {
-      return x_;
-    }
-
-    operator unsigned char& ()
-    {
-      return x_;
-    }
-
-  protected:
-    unsigned char x_;
-  };
-
   //
   //
-  // Commented out with Boris's advice since g++ 3.2.3 doesn't handle
-  // this.
-  /*  template<>
+  template<>
   template<typename C>
   inline
   FundamentalType<signed char>::
@@ -503,50 +382,10 @@ namespace XSCRT
     x_ = static_cast<unsigned char> (t);
   }
 
-  */
-
-  // Specialization for `bool'
-  //
-  //
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Element<char> const& e)
-  {
-    x_ = e.value () == "true";
-  }
-
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Element<wchar_t> const& e)
-  {
-    x_ = e.value () == L"true";
-  }
-
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Attribute<char> const& a)
-  {
-    x_ = a.value () == "true";
-  }
-
-  template<>
-  template<>
-  inline
-  FundamentalType<bool>::
-  FundamentalType (XML::Attribute<wchar_t> const& a)
-  {
-    x_ = a.value () == L"true";
-  }
-
 #else
 
-  // Stuff for broken VC6. Don't like what you see - use better compiler!
+  // Stuff for broken VC6 & gcc < 3.3. Don't like what you see - use better
+  // compiler!
   //
 
   // Specialization for signed char.
@@ -671,8 +510,53 @@ namespace XSCRT
     unsigned char x_;
   };
 
+#endif
+
+
   // Specialization for bool.
   //
+  //
+
+#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
+
+  template<>
+  template<>
+  inline
+  FundamentalType<bool>::
+  FundamentalType (XML::Element<char> const& e)
+  {
+    x_ = (e.value () == "true") || (e.value () == "1");
+  }
+
+  template<>
+  template<>
+  inline
+  FundamentalType<bool>::
+  FundamentalType (XML::Element<wchar_t> const& e)
+  {
+    x_ = (e.value () == L"true") || (e.value () == L"1");
+  }
+
+  template<>
+  template<>
+  inline
+  FundamentalType<bool>::
+  FundamentalType (XML::Attribute<char> const& a)
+  {
+    x_ = (a.value () == "true") || (a.value () == "1");
+  }
+
+  template<>
+  template<>
+  inline
+  FundamentalType<bool>::
+  FundamentalType (XML::Attribute<wchar_t> const& a)
+  {
+    x_ = (a.value () == L"true") || (a.value () == L"1");
+  }
+
+#else
+
   template <>
   class FundamentalType<bool> : public Type
   {
@@ -684,13 +568,13 @@ namespace XSCRT
     template<typename C>
     FundamentalType (XML::Element<C> const& e)
     {
-      x_ = e.value ()[0] == 't';
+      x_ = (e.value ()[0] == 't') || (e.value ()[0] == '1');
     }
 
     template<typename C>
     FundamentalType (XML::Attribute<C> const& a)
     {
-      x_ = a.value ()[0] == 't';
+      x_ = (a.value ()[0] == 't') || (a.value ()[0] == '1');
     }
 
     FundamentalType (bool const& x)
@@ -724,7 +608,7 @@ namespace XSCRT
 
 }
 
-#include "XSCRT/Elements.ipp"
-#include "XSCRT/Elements.tpp"
+#include <XSCRT/Elements.ipp>
+#include <XSCRT/Elements.tpp>
 
 #endif  // XSCRT_ELEMENTS_HPP
