@@ -27,7 +27,7 @@ namespace TAO
       {
         case ::PortableServer::MULTIPLE_ID :
         {
-/*          strategy =
+          strategy =
             ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
 
           if (strategy == 0)
@@ -38,8 +38,7 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
-            }*/
-          ACE_NEW_RETURN (strategy, IdUniquenessStrategyMultiple, 0);
+            }
           break;
         }
         case ::PortableServer::UNIQUE_ID :

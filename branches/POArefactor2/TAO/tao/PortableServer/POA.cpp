@@ -266,9 +266,6 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-// todo make here a return value of the update and check this, in case of error
-// we get inconsistent policies
-
   // Set the folded name of this POA.
   this->set_folded_name ();
 

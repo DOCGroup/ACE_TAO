@@ -19,7 +19,6 @@ namespace TAO
       TAO_POA */*poa*/
       ACE_ENV_ARG_DECL_NOT_USED)
     {
-      // dependent on type create the correct strategy.
     }
 
     void

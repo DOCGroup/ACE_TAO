@@ -47,7 +47,7 @@ namespace TAO
         }
         case ::PortableServer::ORB_CTRL_MODEL :
         {
-/*          strategy =
+          strategy =
             ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
 
           if (strategy == 0)
@@ -58,8 +58,7 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategyORBControl");
-            }*/
-          ACE_NEW_RETURN (strategy, ThreadStrategyORBControl, 0);
+            }
           break;
         }
       }

@@ -2,8 +2,6 @@
 
 #include "IdAssignmentStrategyFactoryImpl.h"
 #include "IdAssignmentStrategy.h"
-#include "IdAssignmentStrategySystem.h"
-#include "IdAssignmentStrategyUser.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -27,7 +25,7 @@ namespace TAO
       {
         case ::PortableServer::SYSTEM_ID :
         {
-/*          strategy =
+          strategy =
             ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategySystem");
 
           if (strategy == 0)
@@ -38,13 +36,12 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategySystem");
-            }*/
-          ACE_NEW_RETURN (strategy, IdAssignmentStrategySystem, 0);
+            }
           break;
         }
         case ::PortableServer::USER_ID :
         {
-/*          strategy =
+          strategy =
             ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategyUser");
 
           if (strategy == 0)
@@ -55,8 +52,7 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<IdAssignmentStrategy>::instance ("IdAssignmentStrategyUser");
-            }*/
-          ACE_NEW_RETURN (strategy, IdAssignmentStrategyUser, 0);
+            }
           break;
         }
       }

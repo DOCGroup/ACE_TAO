@@ -35,7 +35,6 @@ namespace TAO
       virtual char id_assignment_key_type (void) const;
 
       virtual bool has_system_id (void) const;
-    private:
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdAssignmentStrategyUser)

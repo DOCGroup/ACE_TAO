@@ -28,7 +28,7 @@ namespace TAO
       {
         case ::PortableServer::IMPLICIT_ACTIVATION :
         {
-/*          strategy =
+          strategy =
             ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyImplicit");
 
           if (strategy == 0)
@@ -39,13 +39,12 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyImplicit");
-            }*/
-          ACE_NEW_RETURN (strategy, ImplicitActivationStrategyImplicit, 0);
+            }
           break;
         }
         case ::PortableServer::NO_IMPLICIT_ACTIVATION :
         {
-/*          strategy =
+          strategy =
             ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyExplicit");
 
           if (strategy == 0)
@@ -56,8 +55,7 @@ namespace TAO
 
               strategy =
                 ACE_Dynamic_Service<ImplicitActivationStrategy>::instance ("ImplicitActivationStrategyExplicit");
-            }*/
-          ACE_NEW_RETURN (strategy, ImplicitActivationStrategyExplicit, 0);
+            }
           break;
         }
       }
