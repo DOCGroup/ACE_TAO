@@ -1,3 +1,12 @@
+Fri Apr  6 15:08:47 2001  Chad Elliott  <elliott_c@ociweb.com>
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * tests/Param_Test/anyop.cpp:                       
+        * tests/Param_Test/ulonglong.cpp:                   
+                                                           
+          Changed these to correspond with the as_string() changes to
+          ACE_U_LongLong.
+
 Fri Apr  6 14:55:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/IFR_BaseS.cpp:
@@ -54,7 +63,6 @@ Fri Apr  6 08:29:44 2001  Chad Elliott  <elliott_c@ociweb.com>
         * performance-tests/Latency/ami-throughput-client.cpp:
         * tests/Param_Test/anyop.cpp:
         * tests/Param_Test/ulonglong.cpp:
-
           Remove build warnings for platforms that don't support unsigned
           long long types.
 
