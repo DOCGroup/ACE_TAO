@@ -127,7 +127,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
         {
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
-          status = ACE::select (handle + 1,
+          status = ACE::select (int (handle) + 1,
                                 &rd_handle,
                                 &wr_handle,
                                 0,
