@@ -1,3 +1,20 @@
+Fri Aug 18 15:20:50 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+	  Corrected ACE_RCSID string.
+	* orbsvcs/tests/Notify/Basic/Makefile: 
+	* orbsvcs/tests/Notify/Basic/README: 
+	  Updated.
+
+	  Added 2 new tests:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.h:
+	  Checks if id's are assigned correctly to EC and admin objects.
+	
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp: 
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.h:
+	  Creates and destroys EC and admin objects.
+
 Fri Aug 18 15:07:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	
 	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection.cpp:
