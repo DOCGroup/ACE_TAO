@@ -6,8 +6,8 @@
 ACE_RCSID(Thread_Per_Connection_Latency, Client_Task, "$Id$")
 
 Client_Task::Client_Task (const char *data_type,
-                          const int size,
-                                                  Test::Roundtrip_ptr roundtrip,
+                          int size,
+                          Test::Roundtrip_ptr roundtrip,
                           int niterations)
   : data_type_ (CORBA::string_dup (data_type))
   , size_ (size)
