@@ -8,17 +8,16 @@
 // = FILENAME
 //    svr.cpp
 //
-// = DESCRIPTION 
-//    This program is an implementation of a simple logger service.  
+// = DESCRIPTION
+//    This program is an implementation of a simple logger service.
 //    Whatever is sent to it through its interface is displayed on stdout.
-//    It uses the Logger_Factory server to create logger objects.  
+//    It uses the Logger_Factory server to create logger objects.
 //
 // = AUTHORS
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
 
-#include "ace/streams.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/LoggerS.h"
 #include "logger_i.h"
@@ -32,7 +31,7 @@ main (int argc, char ** argv)
       TAO_CHECK_ENV;
 
       // Initialize the Object Adapter
-      CORBA::Object_var poa_object = 
+      CORBA::Object_var poa_object =
 	orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil(poa_object.in()))
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -46,7 +45,7 @@ main (int argc, char ** argv)
       PortableServer::POAManager_var poa_manager =
 	root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-  
+
       CORBA::Object_var naming_obj =
 	orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
@@ -54,9 +53,9 @@ main (int argc, char ** argv)
 			   " (%P|%t) Unable to resolve the Name Service.\n"),
 			  1);
 
-      ACE_DEBUG ((LM_DEBUG, "Naming Service resolved.\n"));      
+      ACE_DEBUG ((LM_DEBUG, "Naming Service resolved.\n"));
 
-      CosNaming::NamingContext_var naming_context = 
+      CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -65,7 +64,7 @@ main (int argc, char ** argv)
       // create a factory implementation
       Logger_Factory_i factory_impl;
 
-      Logger_Factory_var factory = 
+      Logger_Factory_var factory =
 	factory_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -81,7 +80,7 @@ main (int argc, char ** argv)
       factory_name[0].id = CORBA::string_dup ("logger_factory");
       naming_context->bind (factory_name, factory.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
- 
+
 //      naming_context->bind (factory_name, factory.in (), TAO_TRY_ENV);
 //      if (TAO_TRY_ENV.exception () != 0)
 //	{ TAO_TRY_ENV.print_exception ("bind: name already bound\n");
@@ -96,7 +95,7 @@ main (int argc, char ** argv)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
 
-      // unbind the logger factory name 
+      // unbind the logger factory name
       naming_context->unbind (factory_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -108,4 +107,3 @@ main (int argc, char ** argv)
 
   return 0;
 }
-
