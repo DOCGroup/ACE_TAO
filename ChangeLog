@@ -1,3 +1,9 @@
+Mon Jan  3 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks5.x.h:
+          Added include of vxCpu.h to get the CPU defines from VxWorks
+          so that we can determine if we use pentium or not
+
 Sun Jan  2 13:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Thread_Manager_Test.cpp:
