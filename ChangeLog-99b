@@ -1,3 +1,9 @@
+Mon Jan 18 11:23:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
+	  Added the -multigot flag when building shared libraries,
+	  otherwise TAO/orbsvcs is too big.
+
 Mon Jan 18 09:54:54 1999  David L. Levine  <levine@cs.wustl.ed
         * examples/Log_Msg/test_ostream.cpp: don't try to create the
           ofstream if ACE_LACKS_IOSTREAM_TOTALLY.  Also, removed
