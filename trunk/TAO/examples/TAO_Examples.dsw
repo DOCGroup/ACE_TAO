@@ -345,6 +345,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Persistent Grid Client Files"=".\Persistent_Grid\Persistent_Grid_Client_Files.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Persistent Grid Second Client FIles"=".\Persistent_Grid\Persistent_Grid_Second_Client_Files.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Persistent Grid Server FIles"=".\Persistent_Grid\Persistent_Grid_Server_Files.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Quoter Client"=.\Quoter\client.dsp - Package Owner=<4>
 
 Package=<5>
