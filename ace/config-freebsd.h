@@ -274,6 +274,10 @@ typedef union sigval sigval_t;
 // Even though we do have tolower, we have a conflict when ACE_HAS_WCHAR is defined.
 #define ACE_LACKS_TOWLOWER
 
+#if (__FreeBSD_version >= 501000)
+#  define ACE_HAS_PTHREAD_SETSTACK
+#endif
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_H */
