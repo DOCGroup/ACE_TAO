@@ -5,6 +5,9 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
           a compiler warning.  Thanks to Brian Mendel <bmendel@mdc.com>
           for reporting this.
 
+        * ace/config-osf1-4.0.h: updated g++ support.  Thanks to
+          Oliver Kellogg <Oliver.Kellogg@vs.dasa.de> for the patch.
+
         Thanks to Tom Venturella <tventurell@mdc.com> and Dave Mayerhoefer
         <davem@lynx.com> (!) for requesting the following three changes:
 
