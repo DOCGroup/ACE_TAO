@@ -2324,7 +2324,10 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 
   size_t queue_size  = this->message_queue_.message_count ();
   int number_purged = 0;
-  for (size_t index = 0; index < queue_size; ++index)
+
+  size_t index;
+
+  for (index = 0; index < queue_size; ++index)
     {
       ACE_Message_Block  *mb;
       if (-1 == this->message_queue_.dequeue_head (mb))
@@ -2404,7 +2407,7 @@ ACE_WFMO_Reactor::max_notify_iterations (void)
   return this->notify_handler_->max_notify_iterations ();
 }
 
-int 
+int
 ACE_WFMO_Reactor::purge_pending_notifications (ACE_Event_Handler *eh)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::purge_pending_notifications");
