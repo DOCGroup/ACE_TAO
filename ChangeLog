@@ -1,3 +1,14 @@
+Thu May 17 11:36:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Configuration.cpp: Fixed an inconsistency in the
+	  enumerate_sections() method so that
+ 	  ACE_Configuration_Win32Registry and ACE_Configuration_Heap will
+ 	  behave the same.  ACE_Configuration_Win32Registry was returning
+ 	  -2 upon no more sections to enumerate, rather than 1.  This is
+ 	  because it is not checking for a return of ERROR_NO_MORE_ITEMS
+ 	  from ACE_TEXT_RegEnumKeyEx.  Thanks to Kevin Burge
+ 	  <kcburge@systemware-inc.com> for reporting this.
+
 Thu May 17 10:46:31 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/nightlybuilds/builds.lst:
@@ -8115,7 +8126,7 @@ Wed Nov 15 14:23:54 2000  Ossama Othman  <ossama@uci.edu>
           Fixed bug in the auto_ptr / C++ std namespace test where the
           template argument for the auto_ptr being instantiated was
           a non-existent type.
-          Reported by Kevin Marhsall <KCMarshall@att.net>
+          Reported by Kevin Marshall <KCMarshall@att.net>
 
         * THANKS:
 
