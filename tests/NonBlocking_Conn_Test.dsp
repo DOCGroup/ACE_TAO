@@ -145,6 +145,10 @@ LINK32=link.exe
 
 SOURCE=.\NonBlocking_Conn_Test.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Main.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
