@@ -1,3 +1,10 @@
+Wed Nov 22 17:35:55 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: 
+
+	  Added entry for Collocation test. Moved entry for Client 
+	  Exposed Policy test from the old list file to this one.
+
 Wed Nov 22 09:29:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * etc/ace.doxygen:
