@@ -42,6 +42,7 @@ static int test_result = 0;
 // count is 0).
 static ACE_Thread_Semaphore s (0);
 
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
 // Default number of iterations.
 static size_t n_iterations = 10;
 
@@ -50,21 +51,27 @@ static size_t n_workers = 10;
 
 // Amount to release the semaphore.
 static size_t n_release_count = 3;
+#endif /* ! ACE_HAS_STHREADS && ! ACE_HAS_POSIX_SEM */
 
-#if !defined (ACE_HAS_STHREADS)
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
 // Number of times to call test_timeout ().
 static size_t test_timeout_count = 3;
 
 // Number of timeouts.
 static size_t timeouts = 0;
-#endif /* ! ACE_HAS_STHREADS */
+#endif /* ! ACE_HAS_STHREADS  && ! ACE_HAS_POSIX_SEM */
 
 // Explain usage and exit.
 static void
 print_usage_and_die (void)
 {
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
+#else  /* ACE_HAS_STHREADS || ACE_HAS_POSIX_SEM */
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("usage: %n\n")));
+#endif /* ACE_HAS_STHREADS || ACE_HAS_POSIX_SEM */
   ACE_OS::exit (1);
 }
 
@@ -78,6 +85,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
   while ((c = get_opt ()) != -1)
     switch (c)
     {
+#if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
     case 's':
       n_release_count = ACE_OS::atoi (get_opt.optarg);
       break;
@@ -87,6 +95,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
     case 'n':
       n_iterations = ACE_OS::atoi (get_opt.optarg);
       break;
+#endif /* ! ACE_HAS_STHREADS && ! ACE_HAS_POSIX_SEM */
     default:
       print_usage_and_die ();
       break;
