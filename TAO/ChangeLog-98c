@@ -1,3 +1,21 @@
+Thu Aug 27 17:20:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/Param_Test/: 
+		Modified the Makefiles and the following source files to
+		have the IDL-compiler-generated  stubs to have "Ser.h" & 
+		"Ser.cpp" suffixes and the skeletons to have "Cli.h" &
+		"Cli.cpp". Just an example to show the newly added IDL 
+		compiler options for optional file name endings.
+
+	Modified Files:
+	Makefile any.h bd_long_seq.h bd_short_seq.h bd_str_seq.h
+	bd_string.h bd_struct_seq.h client.dsp client.h except.h
+	fixed_array.h fixed_struct.h helper.h nested_struct.h objref.h
+	objref_struct.h param_test_i.h server.dsp short.h tmplinst.cpp
+	typecode.h ub_any_seq.h ub_long_seq.h ub_objref_seq.h
+	ub_short_seq.h ub_str_seq.h ub_string.h ub_struct_seq.h
+	ulonglong.h var_array.h var_struct.h 
+
 Thu Aug 27 17:20:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/POA/Makefile (DIRS): Added TIE and Forwarding to the list
