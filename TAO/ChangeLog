@@ -46,14 +46,14 @@ Sat Aug 23 04:28:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
 
         * TAOACE.mwc
-        
+
           Was picking up Kokyu tests directory.
-          
+
         * TAO_IDL/tao_idl.mpc
-        
+
           Renamed gperf_exe to gperf. We used to have a hack for vc6 that
-        required all exe projects to be named _exe. 
-        
+        required all exe projects to be named _exe.
+
         * orbsvcs/examples/Notify/Lanes/Lanes.mpc
         * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc
         * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc
@@ -63,8 +63,8 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/AVStreams_Simple_Two_Stage_With_QoS.mpc
         * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc
         * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc
-        
-          Fixes to mpc files to avoid duplicate names, and to use 
+
+          Fixes to mpc files to avoid duplicate names, and to use
           inheritance to get base project info instead of hard-coding
 	  libs.
 
@@ -121,7 +121,7 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.cpp
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.i
-        
+
           Added support for typed events to CosEvent. This was submitted
 	  by Jonathan Astle <JNASTLE@qinetiq.com>. I modified the code to
 	  use mpc, and added a new feature. Set ec_typed_event=0 to
