@@ -1,3 +1,12 @@
+Wed Jul 28 15:47:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orbconf.h: Added new marco ACE_HAS_UIOP. If the user has not
+	  already specified TAO_HAS_UIOP, and the platform supports UNIX
+	  domain sockets, and minimum CORBA is not defined, we turn on
+	  TAO_HAS_UIOP by default.  Note that even with minimum CORBA, the
+	  user can still get UIOP support simply be defining TAO_HAS_UIOP
+	  before reaching this code.
+
 Wed Jul 28 14:23:29 1999  Fred Kuhns <fredk@cs.wustl.edu>
 
         * tao/IORManipulation

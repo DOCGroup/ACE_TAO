@@ -333,6 +333,9 @@
 // OBV is in experimental stage
 #define TAO_HAS_VALUETYPE
 
+// UIOP support (GIOP over UNIX domain sockets)
+// #define TAO_HAS_UIOP
+
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
@@ -367,6 +370,19 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 # endif /* TAO_HAS_REMOTE_POLICIES */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+// If the user has not already specified TAO_HAS_UIOP, and the
+// platform supports UNIX domain sockets, and minimum CORBA is not
+// defined, we turn on TAO_HAS_UIOP by default.  Note that even with
+// minimum CORBA, the user can still get UIOP support simply be
+// defining TAO_HAS_UIOP before reaching this code.
+#if !defined (TAO_HAS_UIOP) && \
+    !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && \
+    !defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_UIOP
+#endif /* !TAO_HAS_UIOP &&
+          !ACE_LACKS_UNIX_DOMAIN_SOCKETS &&
+          !TAO_HAS_MINIMUM_CORBA */
 
 // Policies are not locality constraint by default.
 #if !defined (TAO_HAS_REMOTE_POLICIES)
