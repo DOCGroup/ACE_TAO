@@ -304,14 +304,14 @@ ACE_DLL_Manager_Ex::close_dll (const ACE_TCHAR *dll_name)
 u_long
 ACE_DLL_Manager_Ex::unload_policy (void) const
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_strategy");
+  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_policy");
   return this->unload_policy_;
 }
 
 void
 ACE_DLL_Manager_Ex::unload_policy (u_long unload_policy)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_strategy");
+  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_policy");
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
 
   u_long old_policy = this->unload_policy_;
