@@ -1,3 +1,10 @@
+Wed Apr 10 19:28:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Simple/time-date/Time_Date.h:
+	* tests/Smart_Proxies/On_Demand/Smart_Test_Factory.h:
+
+	  Include "ace/svc_export.h" to pull in ACE_Svc_Export macro.
+
 Wed Apr 10 17:34:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
