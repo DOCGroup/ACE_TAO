@@ -1,3 +1,8 @@
+Tue Sep 01 16:22:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Filecache.cpp (init and ~ACE_Filecache_Object): Changed
+ 	  SUCCESS to ACE_SUCCESS.
+
 Tue Sep 1 13:54:10 PDT 1998  James C. Hu <jxh@entera.com>
 
 	* ace/Message_Block.h:
