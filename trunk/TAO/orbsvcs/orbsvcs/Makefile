@@ -111,6 +111,13 @@ ifneq (,$(findstring Trader,$(TAO_ORBSVCS)))
         Trader/Trader_Interfaces \
         Trader/Trader_T \
         Trader/Trader_Utils
+
+  ifeq (,$(findstring Naming,$(TAO_ORBSVCS)))
+    #### The Trader needs IOR_Multicast, so add it in if the
+    #### Naming Service isn't included.
+    TAO_ORBSVCS_SRCS += \
+        IOR_Multicast
+  endif # Naming
 endif # Trader
 
 ifneq (,$(findstring Sched,$(TAO_ORBSVCS)))
@@ -171,7 +178,6 @@ ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
 	Event/EC_Timeout_Filter \
 	Event/EC_Timeout_Generator \
 	Event/EC_Reactive_Timeout_Generator \
-
 endif # Event2
 
 ifneq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
