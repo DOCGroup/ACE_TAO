@@ -338,8 +338,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -576,8 +576,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -814,8 +814,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1052,8 +1052,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1290,8 +1290,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1529,8 +1529,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -1774,8 +1774,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -2013,8 +2013,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -2252,8 +2252,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -2491,8 +2491,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -2730,8 +2730,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -2971,8 +2971,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -3210,8 +3210,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -3448,8 +3448,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -3687,8 +3687,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -3926,8 +3926,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -4163,8 +4163,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -4401,8 +4401,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -4639,8 +4639,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -4884,8 +4884,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -5128,8 +5128,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -5366,8 +5366,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -5604,8 +5604,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -5842,8 +5842,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -6080,8 +6080,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -6318,8 +6318,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -6556,8 +6556,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -6794,8 +6794,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -7034,8 +7034,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -7272,8 +7272,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -7510,8 +7510,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -7748,8 +7748,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -7987,8 +7987,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -8225,8 +8225,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -8465,8 +8465,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -8703,8 +8703,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -8941,8 +8941,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -9179,8 +9179,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -9418,8 +9418,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -9656,8 +9656,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -9893,8 +9893,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -10131,8 +10131,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -10369,8 +10369,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -10609,8 +10609,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -10849,8 +10849,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -11089,8 +11089,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -11327,8 +11327,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -11565,8 +11565,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -11601,7 +11601,7 @@ endif # cxvx86
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h
-.obj/Object_Table.o .obj/Object_Table.so .shobj/Object_Table.o .shobj/Object_Table.so: Object_Table.cpp \
+.obj/Active_Object_Map.o .obj/Active_Object_Map.so .shobj/Active_Object_Map.o .shobj/Active_Object_Map.so: Active_Object_Map.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -11806,8 +11806,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -12044,8 +12044,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -12282,8 +12282,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -12539,8 +12539,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -12777,8 +12777,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -13015,8 +13015,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -13255,8 +13255,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -13494,8 +13494,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -13732,8 +13732,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
@@ -13970,8 +13970,8 @@ endif # cxvx86
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
- $(TAO_ROOT)/tao/Object_Table.i \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.i \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \

@@ -545,7 +545,7 @@ realclean: clean
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/POAS.i \
- $(TAO_ROOT)/tao/Object_Table.h \
+ $(TAO_ROOT)/tao/Active_Object_Map.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
  $(TAO_ROOT)/tao/params.h \
