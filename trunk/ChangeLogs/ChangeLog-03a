@@ -1,3 +1,13 @@
+Sat Dec 29 02:55:24 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ace/OS.i: 
+	  Fixed problem with idl compiler segmentation fault.
+	  replaced 
+	  # if !defined ACE_LACKS_ENV 
+	  with
+	  # if defined ACE_LACKS_ENV 
+	  in ACE_OS::strenvdup. 
+
 Fri Dec 28 16:01:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Global_Macros.h: Fixed a fuzz error.
