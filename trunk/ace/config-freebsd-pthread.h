@@ -189,5 +189,11 @@ extern "C" { char * cuserid (char *s); }
 #define TCGETS TIOCGETA
 #define TCSETS TIOCSETA
 
+#if (__FreeBSD_version > 400000)
+#undef ACE_LACKS_SIGSET
+#define ACE_HAS_UCONTEXT_T
+#define ACE_HAS_SOCKLEN_T
+#endif
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
