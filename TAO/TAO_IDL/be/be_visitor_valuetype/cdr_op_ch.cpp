@@ -50,10 +50,10 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
   // generate the CDR << and >> operator declarations (prototypes)
 
   os->indent ();
-  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
+  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->full_name ()
       << " *); // " << be_nl;
-  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
+  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);\n";
 
