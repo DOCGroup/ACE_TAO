@@ -47,7 +47,7 @@ public:
              CORBA::Octet min = MY_MINOR);
   };
 
-  struct Profile
+  struct TAO_Export Profile
     // = TITLE
     // IOR support ... Profile is encapsulated in an IIOP profile
     // entry within an IOR.  Note that this structure is specified
