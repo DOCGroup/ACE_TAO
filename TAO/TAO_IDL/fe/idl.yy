@@ -1855,6 +1855,7 @@ switch_type_spec :
                   case AST_PredefinedType::PT_longlong:
                   case AST_PredefinedType::PT_ulonglong:
                   case AST_PredefinedType::PT_short:
+                  case AST_PredefinedType::PT_ushort:
                   case AST_PredefinedType::PT_char:
                   case AST_PredefinedType::PT_wchar:
                   case AST_PredefinedType::PT_boolean:
