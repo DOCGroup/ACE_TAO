@@ -17,6 +17,8 @@
 #if !defined (_OPTIONS_H)
 #define _OPTIONS_H
 
+#include "global.h"
+
 class Options
 {
   // = TITLE

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Multicast_Manager.h"
-#include "ACE_Mem_Map.h"
+#include "ace/Mem_Map.h"
 
 // Initialize all the static member vars.
 int Multicast_Manager::received_host_count = 0;
