@@ -50,7 +50,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/NativePriority:1.0",
     "NativePriority",
     &CORBA::_tc_short);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_NativePriority =
@@ -68,7 +68,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/Priority:1.0",
     "Priority",
     &CORBA::_tc_short);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Priority =
@@ -86,7 +86,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/NetworkPriority:1.0",
     "NetworkPriority",
     &CORBA::_tc_long);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_NetworkPriority =
@@ -104,7 +104,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/ThreadpoolId:1.0",
     "ThreadpoolId",
     &CORBA::_tc_ulong);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadpoolId =
@@ -121,7 +121,7 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_RTCORBA_ThreadpoolL
     { "lane_priority", &RTCORBA::_tc_Priority },
     { "static_threads", &CORBA::_tc_ulong },
     { "dynamic_threads", &CORBA::_tc_ulong }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
@@ -132,7 +132,7 @@ static TAO::TypeCode::Struct<char const *,
     "ThreadpoolLane",
     _tao_fields_RTCORBA_ThreadpoolLane,
     3);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadpoolLane =
@@ -158,10 +158,10 @@ namespace TAO
         CORBA::tk_sequence,
         &RTCORBA::_tc_ThreadpoolLane,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_RTCORBA_ThreadpoolLanes_0 =
       &RTCORBA_ThreadpoolLanes_0;
-    
+
   }
 }
 
@@ -171,7 +171,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/ThreadpoolLanes:1.0",
     "ThreadpoolLanes",
     &TAO::TypeCode::tc_RTCORBA_ThreadpoolLanes_0);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadpoolLanes =
@@ -187,7 +187,7 @@ static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_RTCORBA_Pr
   {
     { "CLIENT_PROPAGATED" },
     { "SERVER_DECLARED" }
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -198,7 +198,7 @@ static TAO::TypeCode::Enum<char const *,
     "PriorityModel",
     _tao_enumerators_RTCORBA_PriorityModel,
     2);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityModel =
@@ -216,7 +216,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_PriorityModelPolicy (
     "IDL:omg.org/RTCORBA/PriorityModelPolicy:1.0",
     "PriorityModelPolicy");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityModelPolicy =
@@ -234,7 +234,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_ThreadpoolPolicy (
     "IDL:omg.org/RTCORBA/ThreadpoolPolicy:1.0",
     "ThreadpoolPolicy");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadpoolPolicy =
@@ -252,7 +252,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_ProtocolProperties (
     "IDL:omg.org/RTCORBA/ProtocolProperties:1.0",
     "ProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ProtocolProperties =
@@ -269,7 +269,7 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_RTCORBA_Protocol[] 
     { "protocol_type", &IOP::_tc_ProfileId },
     { "orb_protocol_properties", &RTCORBA::_tc_ProtocolProperties },
     { "transport_protocol_properties", &RTCORBA::_tc_ProtocolProperties }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
@@ -280,7 +280,7 @@ static TAO::TypeCode::Struct<char const *,
     "Protocol",
     _tao_fields_RTCORBA_Protocol,
     3);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Protocol =
@@ -306,10 +306,10 @@ namespace TAO
         CORBA::tk_sequence,
         &RTCORBA::_tc_Protocol,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_RTCORBA_ProtocolList_0 =
       &RTCORBA_ProtocolList_0;
-    
+
   }
 }
 
@@ -319,7 +319,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/ProtocolList:1.0",
     "ProtocolList",
     &TAO::TypeCode::tc_RTCORBA_ProtocolList_0);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ProtocolList =
@@ -337,7 +337,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_ServerProtocolPolicy (
     "IDL:omg.org/RTCORBA/ServerProtocolPolicy:1.0",
     "ServerProtocolPolicy");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ServerProtocolPolicy =
@@ -355,7 +355,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_ClientProtocolPolicy (
     "IDL:omg.org/RTCORBA/ClientProtocolPolicy:1.0",
     "ClientProtocolPolicy");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ClientProtocolPolicy =
@@ -373,7 +373,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_PrivateConnectionPolicy (
     "IDL:omg.org/RTCORBA/PrivateConnectionPolicy:1.0",
     "PrivateConnectionPolicy");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PrivateConnectionPolicy =
@@ -391,7 +391,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_TCPProtocolProperties (
     "IDL:omg.org/RTCORBA/TCPProtocolProperties:1.0",
     "TCPProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_TCPProtocolProperties =
@@ -409,7 +409,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_GIOPProtocolProperties (
     "IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0",
     "GIOPProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_GIOPProtocolProperties =
@@ -427,7 +427,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_UnixDomainProtocolProperties (
     "IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0",
     "UnixDomainProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_UnixDomainProtocolProperties =
@@ -445,7 +445,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_SharedMemoryProtocolProperties (
     "IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0",
     "SharedMemoryProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_SharedMemoryProtocolProperties =
@@ -463,7 +463,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_UserDatagramProtocolProperties (
     "IDL:omg.org/RTCORBA/UserDatagramProtocolProperties:1.0",
     "UserDatagramProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_UserDatagramProtocolProperties =
@@ -481,7 +481,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_StreamControlProtocolProperties (
     "IDL:omg.org/RTCORBA/StreamControlProtocolProperties:1.0",
     "StreamControlProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_StreamControlProtocolProperties =
@@ -497,7 +497,7 @@ static TAO::TypeCode::Struct_Field<char const *> _tao_fields_RTCORBA_PriorityBan
   {
     { "low", &RTCORBA::_tc_Priority },
     { "high", &RTCORBA::_tc_Priority }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
@@ -508,7 +508,7 @@ static TAO::TypeCode::Struct<char const *,
     "PriorityBand",
     _tao_fields_RTCORBA_PriorityBand,
     2);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityBand =
@@ -534,10 +534,10 @@ namespace TAO
         CORBA::tk_sequence,
         &RTCORBA::_tc_PriorityBand,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_RTCORBA_PriorityBands_0 =
       &RTCORBA_PriorityBands_0;
-    
+
   }
 }
 
@@ -547,7 +547,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/RTCORBA/PriorityBands:1.0",
     "PriorityBands",
     &TAO::TypeCode::tc_RTCORBA_PriorityBands_0);
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityBands =
@@ -565,7 +565,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_PriorityBandedConnectionPolicy (
     "IDL:omg.org/RTCORBA/PriorityBandedConnectionPolicy:1.0",
     "PriorityBandedConnectionPolicy");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityBandedConnectionPolicy =
@@ -583,7 +583,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_Current (
     "IDL:omg.org/RTCORBA/Current:1.0",
     "Current");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Current =
@@ -601,7 +601,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_Mutex (
     "IDL:omg.org/RTCORBA/Mutex:1.0",
     "Mutex");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Mutex =
@@ -623,7 +623,7 @@ static TAO::TypeCode::Struct<char const *,
     "MutexNotFound",
     _tao_fields_RTCORBA_RTORB_MutexNotFound,
     0);
-  
+
 ::CORBA::TypeCode_ptr const RTCORBA::RTORB::_tc_MutexNotFound =
   &_tao_tc_RTCORBA_RTORB_MutexNotFound;
 
@@ -640,7 +640,7 @@ static TAO::TypeCode::Struct<char const *,
     "InvalidThreadpool",
     _tao_fields_RTCORBA_RTORB_InvalidThreadpool,
     0);
-  
+
 ::CORBA::TypeCode_ptr const RTCORBA::RTORB::_tc_InvalidThreadpool =
   &_tao_tc_RTCORBA_RTORB_InvalidThreadpool;
 
@@ -653,7 +653,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_RTCORBA_RTORB (
     "IDL:omg.org/RTCORBA/RTORB:1.0",
     "RTORB");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_RTORB =
@@ -662,7 +662,7 @@ namespace RTCORBA
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -720,7 +720,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -802,7 +802,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<RTCORBA::PriorityModel>::extract (
         _tao_any,
         RTCORBA::_tc_PriorityModel,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -1013,19 +1013,19 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<RTCORBA::Protocol>::demarshal_value (TAO_InputCDR &)
 {
@@ -1085,19 +1085,19 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<RTCORBA::ProtocolList>::demarshal_value (TAO_InputCDR &)
 {
@@ -1778,7 +1778,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -1836,7 +1836,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -2170,7 +2170,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
@@ -2242,7 +2242,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
@@ -2568,4 +2568,4 @@ CORBA::Boolean operator>>= (
         RTCORBA::RTORB \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -166,7 +166,7 @@ TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 
 // Specializations for CORBA::Exception Any operators.
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 void
 TAO::Any_Dual_Impl_T<CORBA::Exception>::value (
     const CORBA::Exception & val
@@ -175,7 +175,7 @@ TAO::Any_Dual_Impl_T<CORBA::Exception>::value (
   this->value_ = val._tao_duplicate ();
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
 {
@@ -195,7 +195,7 @@ TAO::Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
   return 0;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
 {
@@ -219,7 +219,7 @@ TAO::Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
 // for CORBA::Exception, but it is here to sidestep the constructor call
 // in the unspecialized version that causes a problem with compilers that
 // require explicit instantiation
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<CORBA::Exception>::extract (
     const CORBA::Any &,

@@ -81,7 +81,7 @@ namespace TAO
   /**
    * @brief Specializations needed for using with Value_Var_T
    */
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Valuetype_Export Value_Traits<CORBA::ValueFactoryBase>
   {
     static void add_ref (CORBA::ValueFactoryBase *);

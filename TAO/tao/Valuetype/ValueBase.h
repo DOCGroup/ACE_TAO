@@ -212,7 +212,7 @@ operator>> (TAO_InputCDR&, CORBA::ValueBase *&);
 /// Used in generated code if CORBA::ValueBase is an argument or return type.
 namespace TAO
 {
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_Valuetype_Export Arg_Traits<CORBA::ValueBase>
     : public Object_Arg_Traits_T<CORBA::ValueBase *,
                                  CORBA::ValueBase_var,
@@ -222,7 +222,7 @@ namespace TAO
   };
 
 
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Valuetype_Export Value_Traits<CORBA::ValueBase>
   {
     static void add_ref (CORBA::ValueBase *);

@@ -52,7 +52,7 @@ static TAO::TypeCode::Struct<char const *,
     "AdapterInactive",
     _tao_fields_PortableServer_POAManager_AdapterInactive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_AdapterInactive =
   &_tao_tc_PortableServer_POAManager_AdapterInactive;
 
@@ -65,7 +65,7 @@ static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_PortableSe
     { "ACTIVE" },
     { "DISCARDING" },
     { "INACTIVE" }
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -76,7 +76,7 @@ static TAO::TypeCode::Enum<char const *,
     "State",
     _tao_enumerators_PortableServer_POAManager_State,
     4);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
   &_tao_tc_PortableServer_POAManager_State;
 
@@ -89,7 +89,7 @@ static TAO::TypeCode::Objref<char const *,
   _tao_tc_PortableServer_POAManager (
     "IDL:omg.org/PortableServer/POAManager:2.3",
     "POAManager");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAManager =
@@ -167,7 +167,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
 template<>
@@ -244,14 +244,14 @@ CORBA::Boolean operator>>= (
 
 
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
 {
@@ -277,7 +277,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
         _tao_any,
         PortableServer::POAManager::_tc_State,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -315,4 +315,4 @@ CORBA::Boolean operator>>= (
         PortableServer::POAManager \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
