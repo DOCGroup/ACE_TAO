@@ -1,3 +1,14 @@
+Sun Aug 30 15:11:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* tests/Param_Test/Makefile: 
+	* tests/NestedUpcall/Reactor/Makefile: 
+	* tests/Simple/time/Makefile: 
+	  Updated dependencies.
+
+	* utils/Makefile: 
+	  Fixed the directory name for IorParser (again).
+
 Sun Aug 30 01:57:51 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/GIOP.cpp (recv_request): Fixed type mismatch.
