@@ -20,7 +20,7 @@
 //    2. When a gatewayd connects, <Peer_Acceptor> creates an
 //       <Peer_Handler> object that sends/receives events from
 //       gatewayd on that connection.
-//  
+//
 //    3. The <Peer_Handler> waits for gatewayd to inform it of its
 //       connection ID, which is prepended to all subsequent outgoing
 //       events sent from peerd.
@@ -84,11 +84,11 @@ public:
   // Finish sending a event when flow control conditions abate.
 
   virtual int handle_timeout (const ACE_Time_Value &,
-			      const void *arg);
+                              const void *arg);
   // Periodically send events via <ACE_Reactor> timer mechanism.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
   // Perform object termination.
 
 protected:
@@ -150,7 +150,7 @@ public:
 
   int open (u_short);
   //  the <Peer_Acceptor>.
-  
+
   int close (void);
   // Terminate the <Peer_Acceptor>.
 
@@ -178,8 +178,11 @@ class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOC
   //     gatewayd.
 public:
   // = Initialization method.
-  int open (void);
-  // Initialize the <Peer_Connector>.
+  int open (ACE_Reactor * = 0, int = 0);
+  // Initialize the <Peer_Connector>.  NOTE:  the arguments are
+  // ignored.  They are only provided to avoid a compiler warning
+  // about hiding the virtual function ACE_Connector<Peer_Handler,
+  // ACE_SOCK_CONNECTOR>::open(ACE_Reactor*, int)
 
 private:
   int open_connector (Peer_Handler *&ph, u_short port);
@@ -198,7 +201,7 @@ class ACE_Svc_Export Peer_Factory : public ACE_Service_Object
   //     A factory class that actively and/or passively establishes
   //     connections with the gatewayd.
 public:
-  // = Dynamic initialization and termination hooks from <ACE_Service_Object>. 
+  // = Dynamic initialization and termination hooks from <ACE_Service_Object>.
 
   virtual int init (int argc, char *argv[]);
   // Initialize the acceptor and connector.
