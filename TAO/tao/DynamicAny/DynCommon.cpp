@@ -1422,20 +1422,17 @@ TAO_DynCommon::get_any (ACE_ENV_SINGLE_ARG_DECL)
     {
       const CORBA::Any *tmp = 0;
 
-      ACE_NEW_THROW_EX (tmp,
-                        CORBA::Any,
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
-
-      CORBA::Any_var val = ACE_const_cast (CORBA::Any *, tmp);
-
       if ((this->any_ >>= tmp) == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                             0);
         }
 
-      return val._retn ();
+      CORBA::Any *retval = 0;
+      ACE_NEW_RETURN (retval,
+                      CORBA::Any (*tmp),
+                      0);
+      return retval;
     }
 }
 
