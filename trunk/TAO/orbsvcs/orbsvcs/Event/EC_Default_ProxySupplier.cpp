@@ -82,6 +82,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
           return; // @@ Should we throw
       }
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
       if ( consumer_validate_connection_ == 1 )
       {
         // Validate connection during connect.
@@ -95,6 +96,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         ACE_UNUSED_ARG(status);
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
       }
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
       this->consumer_ =
         RtecEventComm::PushConsumer::_duplicate (push_consumer);
