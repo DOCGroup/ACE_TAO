@@ -633,7 +633,8 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>policy</EM>
           </TD>
           <TD>Select the consumer ec control policy (<EM>null</EM> or
-            <EM>reactive</EM>) to detect and discard broken consumer ec's.
+            <EM>reactive</EM> or <EM>reconnect</EM>) to detect and handle 
+             broken consumer ec's.
           </TD>
         </TR>
         <!-- <TR NAME="ECGIIOPConsumerECControlPeriod"> -->
@@ -641,9 +642,9 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-ECGIIOPConsumerECControlPeriod</CODE>
             <EM>period</EM>
           </TD>
-          <TD>Set the period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
-            <EM>reactive</EM>) to poll the state of the consumer ec.
+          <TD>Set the period (in microseconds) used by the reactive and reconnect
+            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
+            <EM>reactive</EM> or <EM>reconnect</EM>) to poll the state of the consumer ec.
             When set to 0 there is no polling but the
             reactive strategy is in place.
           </TD>
@@ -654,9 +655,9 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-ECGIIOPConsumerECControlTimeout</CODE>
             <EM>timeout</EM>
           </TD>
-          <TD>Set the timeout period (in microseconds) used by the reactive
+          <TD>Set the timeout period (in microseconds) used by the reactive and reconnect
             consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
-            <EM>reactive</EM>) to detect a timeout when polling the state
+            <EM>reactive</EM> or <EM>reconnect</EM>) to detect a timeout when polling the state
             of the consumer ec.
           </TD>
         </TR>
