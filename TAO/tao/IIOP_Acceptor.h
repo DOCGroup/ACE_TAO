@@ -74,9 +74,14 @@ public:
   virtual CORBA::ULong endpoint_count (void);
 
 private:
-  int open_i (TAO_ORB_Core* orb_core,
-              const ACE_INET_Addr& addr);
+  int open_i (TAO_ORB_Core *orb_core,
+              const ACE_INET_Addr &addr);
   // Implement the common part of the open*() methods.
+
+  int hostname (TAO_ORB_Core *orb_core,
+                ACE_INET_Addr &addr,
+                ACE_CString &host);
+  // Set the host name for the given addr.
 
   virtual int parse_options (const char *options);
   // Parse protocol specific options.

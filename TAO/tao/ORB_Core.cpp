@@ -62,7 +62,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     root_poa_ (0),
     root_poa_reference_ (),
     orb_params_ (),
-    orbid_ (ACE_OS::strdup (orbid?orbid:"")),
+    orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),
     // @@ This is not needed since the default resource factory, fredk
