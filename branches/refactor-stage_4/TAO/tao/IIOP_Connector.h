@@ -89,6 +89,10 @@ protected:
                        TAO_Transport_Descriptor_Interface *desc,
                        ACE_Time_Value *timeout = 0);
 
+  TAO_Transport *make_connection (TAO::Profile_Connection_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface &desc,
+                                  ACE_Time_Value *timeout = 0);
+
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);

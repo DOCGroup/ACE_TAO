@@ -37,11 +37,9 @@ TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 
 
 void
-TAO_GIOP_Message_Base::init (CORBA::Octet /*major*/,
-                             CORBA::Octet /*minor*/)
+TAO_GIOP_Message_Base::init (CORBA::Octet major,
+                             CORBA::Octet minor)
 {
-  // Set the state
-  // this->set_state (major, minor);
 }
 
 

@@ -60,6 +60,43 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 }
 
 void
+TAO_Default_Endpoint_Selector::select_endpoint (
+  TAO::Profile_Connection_Resolver *r
+  ACE_ENV_ARG_DECL)
+{
+  do
+    {
+      r->profile (r->stub ()->profile_in_use ());
+
+      size_t endpoint_count =
+        this->profile_->endpoint_count();
+
+      TAO_Endpoint *ep =
+        r->profile ()->endpoint ();
+
+      for (size_t i = 0; i < endpoint_count; ++i)
+        {
+          int retval =
+            r->try_connect (ep ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
+          // Check if the connect has completed.
+          if (retval)
+            return;
+
+          // Go to the next endpoint in this profile.
+          ep = ep->next ();
+        }
+    }
+  while (this->stub_->next_profile_retry () != 0);
+
+  // If we get here, we completely failed to find an endpoint selector
+  // that we know how to use, so throw an exception.
+  ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
+                               CORBA::COMPLETED_NO));
+}
+
+void
 TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation *invocation,
                                         const TAO_MProfile &mprofile
                                         ACE_ENV_ARG_DECL)
@@ -125,4 +162,13 @@ TAO_Default_Endpoint_Selector::endpoint_from_profile (
     }
 
   return 0;
+}
+
+
+int
+TAO_Default_Endpoint_Selector::endpoint_from_profile (
+    TAO::Profile_Connection_Resolver *r
+    ACE_ENV_ARG_DECL)
+{
+
 }

@@ -276,6 +276,131 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    return 0;
 }
 
+TAO_Transport *
+TAO_IIOP_Connector::make_connection (TAO::Profile_Connection_Resolver *r,
+                                     TAO_Transport_Descriptor_Interface &desc,
+                                     ACE_Time_Value *max_wait_time)
+{
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    this->remote_endpoint (desc.endpoint ());
+
+   if (iiop_endpoint == 0)
+     return -1;
+
+   const ACE_INET_Addr &remote_address =
+     iiop_endpoint->object_addr ();
+
+   if (TAO_debug_level > 2)
+     ACE_DEBUG ((LM_DEBUG,
+                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                 "to <%s:%d>\n",
+                 iiop_endpoint->host(), iiop_endpoint->port()));
+
+   // Get the right synch options
+   ACE_Synch_Options synch_options;
+
+   this->active_connect_strategy_->synch_options (max_wait_time,
+                                                  synch_options);
+
+   TAO_IIOP_Connection_Handler *svc_handler = 0;
+
+   // Active connect
+   int result = this->base_connector_.connect (svc_handler,
+                                               remote_address,
+                                               synch_options);
+
+
+   if (result == -1 && errno == EWOULDBLOCK)
+     {
+       if (TAO_debug_level > 2)
+         ACE_DEBUG ((LM_DEBUG,
+                     "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                     "going to wait for connection completion on local"
+                     "handle [%d]\n",
+                     svc_handler->get_handle ()));
+
+       result =
+         this->active_connect_strategy_->wait (svc_handler,
+                                               max_wait_time);
+
+       if (TAO_debug_level > 2)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+                       "TAO (%P|%t) - IIOP_Connector::make_connection"
+                       "wait done for handle[%d], result = %d\n",
+                       svc_handler->get_handle (), result));
+         }
+
+     }
+
+   int status =
+     svc_handler->is_finalized ();
+
+   // Reduce the refcount to the svc_handler that we have. The
+   // increment to the handler is done in make_svc_handler (). Now
+   // that we dont need the reference to it anymore we can decrement
+   // the refcount whether the connection is successful ot not.
+
+   // REFCNT: Matches with TAO_Connect_Strategy<>::make_svc_handler()
+   long refcount = svc_handler->decr_refcount ();
+
+   ACE_ASSERT (refcount >= 0);
+
+   ACE_UNUSED_ARG (refcount);
+
+   if (result == -1)
+     {
+       // Give users a clue to the problem.
+       if (TAO_debug_level)
+         {
+           ACE_DEBUG ((LM_ERROR,
+                       "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                       "connection to <%s:%d> failed (%p)\n",
+                       iiop_endpoint->host (), iiop_endpoint->port (),
+                       "errno"));
+         }
+
+       (void) this->active_connect_strategy_->post_failed_connect (svc_handler,
+                                                                   status);
+
+       return -1;
+     }
+
+   if (TAO_debug_level > 2)
+     ACE_DEBUG ((LM_DEBUG,
+                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                 "new connection to <%s:%d> on Transport[%d]\n",
+                 iiop_endpoint->host (), iiop_endpoint->port (),
+                 svc_handler->peer ().get_handle ()));
+
+   TAO_Transport *base_transport =
+     TAO_Transport::_duplicate (svc_handler->transport ());
+
+   // Add the handler to Cache
+   int retval =
+     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                              base_transport);
+
+   if (retval != 0 && TAO_debug_level > 0)
+     {
+       ACE_DEBUG ((LM_DEBUG,
+                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                   "could not add the new connection to cache\n"));
+     }
+
+   // If the wait strategy wants us to be registered with the reactor
+   // then we do so.
+   retval =  base_transport->wait_strategy ()->register_handler ();
+
+   if (retval != 0 && TAO_debug_level > 0)
+     {
+       ACE_DEBUG ((LM_DEBUG,
+                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                   "could not register the new connection in the reactor\n"));
+     }
+
+   return base_transport;
+}
 
 
 TAO_Profile *
