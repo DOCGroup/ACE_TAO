@@ -66,13 +66,13 @@ CORBA_Environment::~CORBA_Environment (void)
 }
 
 ACE_INLINE 
-CORBA::Exception_ptr CORBA_Exception::exception (void) const 
+CORBA::Exception_ptr CORBA_Environment::exception (void) const 
 { 
   return _exception; 
 }
 
 ACE_INLINE void 
-CORBA::Exception::exception (CORBA::Exception *ex)
+CORBA_Environment::exception (CORBA::Exception *ex)
 {
   if (ex != _exception)
     {
