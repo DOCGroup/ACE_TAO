@@ -1,3 +1,10 @@
+Wed Apr 19 20:41:40 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/Logging_Service/Makefile:
+	* orbsvcs/Notify_Service/Makefile:
+          added $(TAO_ROOT)/rules.tao.GNU macros. Thanks to Thomas Groth
+	  <groth.th@t-online.de> for providing the fix.
+
 Wed Apr 19 17:47:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* performance-tests/Cubit/README:
@@ -184,7 +191,7 @@ Wed Apr 19 15:47:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed Apr 19 14:46:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (messaging_init): 
+	* tao/IIOP_Transport.cpp (messaging_init):
 	* tao/SHMIOP_Transport.cpp:
 	* tao/UIOP_Transport.cpp:
 	* tao/GIOP_Message_Accept_State.cpp:
@@ -206,8 +213,8 @@ Wed Apr 19 14:46:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Utils.h: Implemented the GIOP1.2 message formats. The
 	  clients and servers would now be able to recognise the 1.2
 	  message formats. I have not switched the GIOP format for TAO
-	  from 1.1 to 1.2, as some more work is pending. 
-	
+	  from 1.1 to 1.2, as some more work is pending.
+
 Wed Apr 19 12:11:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
