@@ -1,7 +1,7 @@
 #include "Incoming_Message_Queue.h"
 #include "ORB_Core.h"
 #include "debug.h"
-#include "Pluggable_Messaging_Utils.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"
@@ -19,16 +19,19 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  // Need to delete all the unused data-blocks
+  // @@Bala:Need to delete all the unused data-blocks
 }
 
 size_t
-TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
+TAO_Incoming_Message_Queue::copy_tail (ACE_Message_Block &block)
 {
+  // The size of message that is copied
   size_t n = 0;
 
   if (this->size_ > 0)
     {
+      // Check to see if the length of the incoming block is less than
+      // that of the <missing_data_> of the tail.
       if ((CORBA::Long)block.length () <= this->queued_data_->missing_data_)
         {
           n = block.length ();
@@ -38,9 +41,11 @@ TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
           n = this->queued_data_->missing_data_;
         }
 
+      // Do the copy
       this->queued_data_->msg_block_->copy (block.rd_ptr (),
                                             n);
 
+      // Decerement the missing data
       this->queued_data_->missing_data_ -= n;
     }
 
@@ -114,9 +119,23 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
 
 
 /************************************************************************/
+// Methods  for TAO_Queued_Data
+/************************************************************************/
+
 
 TAO_Queued_Data::TAO_Queued_Data (void)
   : msg_block_ (0),
+    missing_data_ (0),
+    byte_order_ (0),
+    major_version_ (0),
+    minor_version_ (0),
+    msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
+    next_ (0)
+{
+}
+
+TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb)
+  : msg_block_ (mb),
     missing_data_ (0),
     byte_order_ (0),
     major_version_ (0),

@@ -28,82 +28,127 @@ class TAO_Transport;
 
 /**
  * @class TAO_Incoming_Message_Queue
- * //@@Bala: Documentation..
+ *
+ * @brief A queue of the messages in the incoming data path.
+ *
+ * Please read the documentation in the TAO_Transport class to find
+ * out more about the design of the incoming data path.
+ *
+ * Under certain conditions TAO may have to maintain a queue
+ * per-connection. This queue is drained by the pluggable
+ * protocols framework, normally under control of the ACE_Reactor, but
+ * other configurations are conceivable.
+ *
+ * The memory that is allocated for holding the messages comes from
+ * the global pool for the following reasons
+ *
+ * - the thread that reads a part of the message would not be the same
+ *   thread that reads and fills the rest of the message
+ * - the thread that actually processes the message can be totally
+ *   different.
+ *
  */
 
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
-  /// Ctor.
+  /// Contructor.
   TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
-  /// Dtor.
+  /// Destructor.
   ~TAO_Incoming_Message_Queue (void);
 
-
-  /// @@Bala:Docu
-  /*  int add_message (ACE_Message_Block *block,
-                   ssize_t missing_data,
-                   CORBA::Octet byte_order);*/
-
-  size_t copy_message (ACE_Message_Block &block);
-
-  CORBA::ULong queue_length (void);
-
-  int is_tail_complete (void);
-
-  int is_head_complete (void);
-
-  size_t missing_data (void) const;
-  void missing_data (size_t data);
-
-
+  /// Adding and deleting a node from the queue.
   TAO_Queued_Data *dequeue_head (void);
   TAO_Queued_Data *dequeue_tail (void);
-
-
-
   int enqueue_tail (TAO_Queued_Data *nd);
+
+  /// Copy message from <block> to the tail of the queue. The size
+  /// of message that is copied to the tail node is returned. The
+  /// number of bytes copied depends on the amount of bytes needed to
+  /// make the tail node consistent.
+  size_t copy_tail (ACE_Message_Block &block);
+
+  /// Return the length of the queue..
+  CORBA::ULong queue_length (void);
+
+  /// Methods for sanity check. Checks to see whether the node on the
+  /// head or tail is complete or not and ready for further
+  /// processing.
+  int is_tail_complete (void);
+  int is_head_complete (void);
+
+  /// Return the size of data that is missing in tail of the queue.
+  size_t missing_data_tail (void) const;
+  ///  void missing_data (size_t data);
 
 private:
 
   friend class TAO_Transport;
 
-  /// @@Bala:Docu
+  /// Make a node for the queue.
   TAO_Queued_Data *get_node (void);
 
 private:
-  ///
+
+  /// A circular linked listof messages that await processing
   TAO_Queued_Data *queued_data_;
 
-  /// @@Bala:Docu
+  /// The size of the queue
   CORBA::ULong size_;
 
+  /// Copy of our ORB Core
   TAO_ORB_Core *orb_core_;
 };
+
+/************************************************************************/
+
+/**
+ * @class TAO_Queued_Data
+ *
+ * @brief Represents a node in the queue of incoming messages.
+ *
+ * This class contains necessary information about a message that is
+ * stored in the queue. Such a node can be used by the incoming thread
+ * from the reactor to dequeue and process the message by sending it
+ * to the higher layers of the ORB.
+ */
 
 class TAO_Export TAO_Queued_Data
 {
 public:
+  /// Default Constructor
   TAO_Queued_Data (void);
 
-  ~TAO_Queued_Data (void);
+  /// Constructor.
+  TAO_Queued_Data (ACE_Message_Block *mb);
 
+  /// Creation and deletion of a node in the queue.
   static TAO_Queued_Data* get_queued_data (void);
 
-  /// The actual message queue
+  static void release (TAO_Queued_Data *qd);
+
+  /// The message block that contains the message.
   ACE_Message_Block *msg_block_;
 
+  /// Data missing in the above message that hasn't been read or
+  /// processed yet.
   CORBA::Long missing_data_;
 
+  /// The byte order of the message that is stored in the node..
   CORBA::Octet byte_order_;
 
+  /// Many protocols like GIOP have a major and minor version
+  /// information that would be needed to read and decipher the
+  /// message.
   CORBA::Octet major_version_;
 
   CORBA::Octet minor_version_;
 
+  /// The message type of the message
   TAO_Pluggable_Message_Type msg_type_;
 
+  /// Pounter to the next element in the queue.
   TAO_Queued_Data *next_;
 };
 
