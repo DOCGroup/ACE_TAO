@@ -35,10 +35,10 @@
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
 class ACE_Export ACE_DEV : public ACE_IO_SAP
+{
   // = TITLE
   //     Defines the member functions for the base class of the
   //     ACE_DEV abstraction. 
-{
 public:
   int close (void);
   // Close down the DEVICE

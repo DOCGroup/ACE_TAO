@@ -29,10 +29,10 @@
 struct ACE_XtReactorID;
 
 class ACE_XtReactor : public ACE_Select_Reactor
+{
   // = TITLE
   //     An object oriented event demultiplexor and event handler
   //     dispatcher that uses the X Toolkit functions.
-{
 public:
   // = Initialization and termination methods.
   ACE_XtReactor (XtAppContext context,

@@ -22,17 +22,17 @@
 #include "ace/IPC_SAP.h"
 
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
+{
   // = TITLE
   //     An abstract class which forms the basis for more specific
   //     classes (such as ACE_SOCK_Acceptor and ACE_SOCK_Connector).
   //     Do not instantiate this class.
-  
-  // =  This class provides functions that are common to all of the
-  //    SOCK-type classes. ACE_SOCK provides the ability to get and set
-  //    socket options, get the local and remote addresses, and close 
-  //    the socket.
-  
-{
+  //  
+  // = DESCRIPTION
+  //    This class provides functions that are common to all of the
+  //    SOCK-type classes. ACE_SOCK provides the ability to get and
+  //    set socket options, get the local and remote addresses, and
+  //    close the socket.
 public:
   int set_option (int level, 
                   int option, 

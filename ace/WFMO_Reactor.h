@@ -29,35 +29,33 @@ class ACE_WFMO_Reactor;
 class ACE_Handle_Set;
 
 class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
+{
   // = TITLE
   //     This is a helper class whose sole purpose is to handle events
   //     on <ACE_WFMO_Reactor->wakeup_all_threads_>
-{
 public:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when the <ACE_WFMO_Reactor->wakeup_all_threads_>
-
-private:
 };
 
 class ACE_Export ACE_WFMO_Reactor_Handler_Repository
+{
   // = TITLE
   //     Used to map <ACE_HANDLE>s onto the appropriate
   //     <ACE_Event_Handler> * and other information.
   //
-{
+public:
   friend class ACE_WFMO_Reactor;
 
-public:
-
-  struct Common_Info
+  class Common_Info
+  {
     // = TITLE
     //     This struct contains the necessary information for every
     //     <Event_Handler> entry. The reason the event is not in this
     //     structure is because we need to pass an event array into
     //     WaitForMultipleObjects and therefore keeping the events
     //     seperate makes sense.
-  {
+  public:
     int io_entry_;
     // This indicates whether this entry is for I/O or for a regular
     // event
@@ -96,11 +94,12 @@ public:
     // Set the structure to these new values
   };
 
-  struct Current_Info : public Common_Info
+  class Current_Info : public Common_Info
+  {
     // = TITLE
     //     This structure inherits from the common structure to add
     //     information for current entries.
-  {
+  public:
     int delete_entry_;
     // This is set when the entry needed to be deleted.
 
@@ -133,11 +132,12 @@ public:
     // Set the structure to these new values
   };
 
-  struct To_Be_Added_Info : public Common_Info
+  class To_Be_Added_Info : public Common_Info
+  {
     // = TITLE
     //     This structure inherits from the common structure to add
     //     information for <to_be_added> entries.
-  {
+  public:
     ACE_HANDLE event_handle_;
     // Handle for the event
 
@@ -160,11 +160,12 @@ public:
     // Set the structure to these new values
   };
 
-  struct Suspended_Info : public Common_Info
+  class Suspended_Info : public Common_Info
+  {
     // = TITLE
     //     This structure inherits from the common structure to add
     //     information for suspended entries.
-  {
+  public:
     ACE_HANDLE event_handle_;
     // Handle for the event
 
@@ -344,6 +345,7 @@ protected:
 };
 
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Event_Handler
+{
   // = TITLE
   //     Unblock the <ACE_WFMO_Reactor> from its event loop, passing it an
   //     optional <ACE_Event_Handler> to dispatch.
@@ -357,7 +359,6 @@ class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Event_Handler
   //     <ACE_WFMO_Reactor> is listening on.  If an <ACE_Event_Handler>
   //     and <ACE_Reactor_Mask> is passed to <notify>, the appropriate
   //     <handle_*> method is dispatched.
-{
 public:
   ACE_WFMO_Reactor_Notify (void);
   // Constructor
@@ -429,6 +430,7 @@ private:
 
 #if defined (ACE_WIN32)
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
+{
   // = TITLE
   //     An object oriented event demultiplexor and event handler
   //     WFMO_Reactor for Win32 WaitForMultipleObjects
@@ -439,10 +441,10 @@ class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
   //     ACE_WFMO_Reactor waits for and dispatches includes I/O events,
   //     general Win32 synchronization events (such as mutexes,
   //     semaphores, threads, etc.) and timer events.
-{
+public:
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
-public:
+
   enum
   {
     DEFAULT_SIZE = MAXIMUM_WAIT_OBJECTS - 2

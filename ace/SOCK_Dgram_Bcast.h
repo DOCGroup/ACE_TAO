@@ -19,8 +19,9 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
 
-struct ACE_Bcast_Node 
+class ACE_Bcast_Node 
 {
+public:
   ACE_Bcast_Node (ACE_INET_Addr &, ACE_Bcast_Node *);
 
   ACE_INET_Addr bcast_addr_;
@@ -31,10 +32,10 @@ struct ACE_Bcast_Node
 };
 
 class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
+{
   // = TITLE
   //     Defines the member functions for the ACE_SOCK datagram
   //     abstraction. 
-{
 public:
   // = Initialization and termination methods.
   ACE_SOCK_Dgram_Bcast (void);

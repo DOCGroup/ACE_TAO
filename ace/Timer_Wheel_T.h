@@ -26,6 +26,7 @@ class ACE_Timer_Wheel_T;
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Wheel_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE
   //     Iterates over an <ACE_Timer_Wheel>.
   //
@@ -33,7 +34,6 @@ class ACE_Timer_Wheel_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNC
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it doesn't transverse
   //     in the order of timeout values.  
-{
 public:
   ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &);
   // Constructor
@@ -63,6 +63,7 @@ protected:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Wheel_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE 
   //      Provides a Timing Wheel version of Timer Queue
   //
@@ -76,8 +77,6 @@ class ACE_Timer_Wheel_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
   //      George Varghese's paper "Redesigning the BSD Callout and
   //      Timer Facilities" 
   //      (http://dworkin.wustl.edu/~varghese/PAPERS/newbsd.ps.Z)
-  //        
-{
 public: 
   typedef ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> WHEEL_ITERATOR;
   // Type of iterator

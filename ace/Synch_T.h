@@ -25,8 +25,8 @@ class ACE_Time_Value;
 
 template <class ACE_LOCKING_MECHANISM>
 class ACE_Lock_Adapter : public ACE_Lock
+{
   // = TITLE
-
   //     This is an adapter that allows applications to transparently
   //     combine the <ACE_Lock> abstract base class (which contains
   //     pure virtual methods) with any of the other concrete ACE
@@ -35,7 +35,6 @@ class ACE_Lock_Adapter : public ACE_Lock
   //
   // = DESCRIPTION
   //     This class uses a form of the Adapter pattern.
-{
 public:
   typedef ACE_LOCKING_MECHANISM ACE_LOCK;
 
@@ -95,6 +94,7 @@ private:
 template <class ACE_LOCK, class TYPE>
 class ACE_Test_and_Set : public ACE_Event_Handler
 {
+public:
   // = TITLE
   //     Implements the classic ``test and set'' operation.
   //
@@ -105,7 +105,6 @@ class ACE_Test_and_Set : public ACE_Event_Handler
   //     that it can be "signaled" by a Reactor when a signal occurs.
   //     We assume that <TYPE> is a data type that can be assigned the
   //     value 0 or 1.
-public:
   ACE_Test_and_Set (TYPE initial_value = 0);
 
   TYPE is_set (void) const;
@@ -131,6 +130,7 @@ private:
 
 template <class ACE_LOCK, class TYPE>
 class ACE_Atomic_Op
+{
   // = TITLE
   //     Transparently parameterizes synchronization into basic
   //     arithmetic operations.
@@ -139,7 +139,6 @@ class ACE_Atomic_Op
   //     This class is described in an article in the July/August 1994
   //     issue of the C++ Report magazine.  It implements a
   //     templatized version of the Decorator pattern from the GoF book.
-{
 public:
   // = Initialization methods.
 
@@ -228,6 +227,7 @@ private:
 
 template <class TYPE>
 class ACE_TSS
+{
   // = TITLE
   //     Allows objects that are "physically" in thread specific
   //     storage (i.e., private to a thread) to be accessed as though
@@ -238,7 +238,6 @@ class ACE_TSS
   //     thread-specific functions.  It uses the C++ operator->() to
   //     shield applications from the details of accessing
   //     thread-specific storage.
-{
 public:
   // = Initialization and termination methods.
 
@@ -311,6 +310,7 @@ protected:
 
 template <class ACE_LOCK>
 class ACE_Guard
+{
   // = TITLE
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
@@ -320,7 +320,6 @@ class ACE_Guard
   //     The <ACE_LOCK> class given as an actual parameter must provide at
   //     the very least the <acquire>, <tryacquire>, <release>, and
   //     <remove> methods.
-{
 public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_LOCK &l): lock_ (&l) { this->owner_ = this->acquire(); }
@@ -390,12 +389,12 @@ private:
 
 template <class ACE_LOCK>
 class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
+{
   // = TITLE
   //     This class is similar to class <ACE_Guard>, though it
   //     acquires/releases a write lock automatically (naturally, the
   //     <ACE_LOCK> it is instantiated with must support the appropriate
   //     API).
-{
 public:
   // = Initialization method.
 
@@ -434,12 +433,12 @@ public:
 
 template <class ACE_LOCK>
 class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
+{
   // = TITLE
   //     This class is similar to class <ACE_Guard>, though it
   //     acquires/releases a read lock automatically (naturally, the
   //     <ACE_LOCK> it is instantiated with must support the appropriate
   //     API).
-{
 public:
   // = Initialization methods.
 
@@ -487,12 +486,12 @@ public:
 
 template <class ACE_LOCK>
 class ACE_TSS_Guard
+{
   // = TITLE
   //     This data structure is meant to be used within a method or
   //     function...  It performs automatic aquisition and release of
   //     a synchronization object.  Moreover, it ensures that the lock
   //     is released even if a thread exits via "thr_exit()"!
-{
 public:
   // = Initialization and termination methods.
 
@@ -545,12 +544,12 @@ private:
 
 template <class ACE_LOCK>
 class ACE_TSS_Write_Guard : public ACE_TSS_Guard<ACE_LOCK>
+{
   // = TITLE
   //     This class is similar to class ACE_TSS_Guard, though it
   //     acquires/releases a write-lock automatically (naturally, the
   //     ACE_LOCK it is instantiated with must support the appropriate
   //     API).
-{
 public:
   // = Initialization method.
 
@@ -582,12 +581,12 @@ public:
 
 template <class ACE_LOCK>
 class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
+{
   // = TITLE
   //     This class is similar to class <ACE_TSS_Guard>, though it
   //     acquires/releases a read lock automatically (naturally, the
   //     <ACE_LOCK> it is instantiated with must support the
   //     appropriate API).
-{
 public:
   // = Initialization method.
   ACE_TSS_Read_Guard (ACE_LOCK &lock, int block = 1);
@@ -621,6 +620,7 @@ public:
 
 template <class MUTEX>
 class ACE_Condition
+{
   // = TITLE
   //     ACE_Condition variable wrapper, which allows threads to block
   //     until shared data changes state.
@@ -637,7 +637,6 @@ class ACE_Condition
   //     variable.  The waiting threads, upon awakening, reacquire the
   //     mutex and re-evaluate the condition.
   //
-{
 public:
   // = Initialiation and termination methods.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
@@ -699,6 +698,7 @@ private:
 
 template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
+{
   // = TITLE
   //     ACE_Condition variable wrapper that works within processes.
   //
@@ -714,7 +714,6 @@ class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   //     up waiting threads by signaling the associated condition
   //     variable.  The waiting threads, upon awakening, reacquire the
   //     mutex and re-evaluate the condition.
-{
 public:
   // = Initialization method.
   ACE_Thread_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
@@ -731,10 +730,10 @@ public:
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 class ACE_NULL_SYNCH
+{
   // = TITLE
   //     Implement a do nothing Synchronization wrapper that
   //     typedefs the <ACE_Condition> and <ACE_Mutex> to the Null* versions.
-{
 public:
   typedef ACE_Null_Mutex MUTEX;
   typedef ACE_Null_Mutex NULL_MUTEX;
@@ -749,13 +748,13 @@ public:
 #if defined (ACE_HAS_THREADS)
 
 class ACE_MT_SYNCH
+{
   // = TITLE
   //     Implement a default thread safe synchronization wrapper that
   //     typedefs the <ACE_Condition> and <ACE_Mutex> to the
   //     <ACE_Condition> and <ACE_Mutex> versions.  Note that this
   //     should be a template, but SunC++ 4.0.1 complains about
   //     this...
-{
 public:
   typedef ACE_Thread_Mutex MUTEX;
   typedef ACE_Null_Mutex NULL_MUTEX;

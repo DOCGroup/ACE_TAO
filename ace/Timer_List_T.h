@@ -25,13 +25,13 @@ class ACE_Timer_List_T;
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_List_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE
   //     Iterates over an <ACE_Timer_List>.
   //
   // = DESCRIPTION
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  
-{
 public:
   ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &);
   // Constructor.
@@ -57,11 +57,11 @@ protected:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE 
   //      Provides a simple implementation of timers.
   //
   // = DESCRIPTION
-  //
   //      This implementation uses a linked list of absolute times.
   //      Therefore, in the average case, scheduling and canceling
   //      timers is O(N) (where N is the total number of timers) and
@@ -74,7 +74,6 @@ class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
   //      heap-based callout queue.  For most applications, the
   //      <ACE_Timer_Heap> will perform substantially faster than the
   //      <ACE_Timer_List>.
-{
 public: 
   typedef ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> LIST_ITERATOR;
   // Type of iterator

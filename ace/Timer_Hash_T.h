@@ -27,13 +27,13 @@ class ACE_Timer_Hash_T;
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
+{
   // = TITLE 
   //      Functor for Timer_Hash
   //
   // = DESCRIPTION
   //      This class calls up to the Timer Hash's functor from the 
   //      timer queues in the hash table
-{
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
                             ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, 
@@ -74,6 +74,7 @@ private:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE
   //     Iterates over an <ACE_Timer_Hash>.
   //
@@ -81,7 +82,6 @@ class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCT
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it doesn't transverse
   //     in the order of timeout values.  
-{
 public:
   ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &);
   // Constructor.
@@ -111,6 +111,7 @@ protected:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE 
   //      Provides a hash table of <BUCKET>s as an implementation for
   //      a timer queue.
@@ -119,15 +120,16 @@ class ACE_Timer_Hash_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
   //      This implementation uses a hash table of BUCKETs.  The hash 
   //      is based on the time_value of the event.  Unlike other Timer 
   //      Queues, ACE_Timer_Hash does not expire events in order.  
-{
 public: 
-  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> HASH_ITERATOR;
+  typedef ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> 
+          HASH_ITERATOR;
   // Type of iterator
 
   friend class ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>;
   // Iterator is a friend
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> 
+          INHERITED;
   // Type inherited from 
 
   // = Initialization and termination methods.

@@ -20,16 +20,15 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_IPC_SAP
+{
   // = TITLE
   //     Defines the member functions for the base class of the
   //     ACE_IPC_SAP abstraction.
-{
 public:
   int control (int cmd, void *) const;
   // Interface for ioctl. 
 
-  // = Methods for manipulating common I/O descriptor options related
-  // to sockets.
+  // = Common I/O descriptor options related to sockets.
   int enable (int signum) const;
   // Enable signal <signum>.
 

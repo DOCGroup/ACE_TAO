@@ -9,7 +9,6 @@ LIBNAME  = libTAO
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-# @@ Need to clean up this makefile...it's a MESS!!!! (cjc)
 # These are components that are only headers and must be installed
 CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
 CORBA_SRCS = any corbacom except nvlist object orbobj poa \

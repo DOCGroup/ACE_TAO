@@ -21,9 +21,9 @@
 #include "ace/IPC_SAP.h"
 
 class ACE_Export ACE_FIFO : public ACE_IPC_SAP
+{
   // = TITLE
   //    Abstract base class for UNIX FIFOs (a.k.a. Named Pipes).
-{
 public:
   int open (const char *rendezvous, int flags, int perms,
             LPSECURITY_ATTRIBUTES sa = 0);

@@ -28,8 +28,8 @@ ACE_DECLARE_EXPORT(class, ACE_Filecache);
 ACE_DECLARE_EXPORT(class, ACE_Filecache_Handle);
 class ACE_Filecache_Object;
 
-
 class ACE_Filecache_Handle
+{
   // = TITLE
   //     Abstraction over a real file.  This is meant to be the entry
   //     point into the Cached Virtual Filesystem.
@@ -82,7 +82,6 @@ class ACE_Filecache_Handle
   // rather conservative, but for some reason it still ran into problems.
   // Since this design should be simpler, problems should be easier to spot.
   //
-{
 public:
 
   ACE_Filecache_Handle (const char *filename, int mapit = 1);
@@ -155,12 +154,12 @@ typedef ACE_Hash_Map_Manager<ACE_CString, ACE_Filecache_Object *, ACE_Null_Mutex
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 class ACE_Filecache
+{
   // = TITLE
   //     A hash table holding the information about entry point into
   //     the Cached Virtual Filesystem. On insertion, the reference
   //     count is incremented. On destruction, reference count is
   //     decremented.
-{
 public:
   static ACE_Filecache *instance (void);
   // Singleton pattern.
@@ -226,15 +225,15 @@ private:
 };
 
 class ACE_Filecache_Object
+{
   // = TITLE
   //     Abstraction over a real file.  This is what the Virtual
   //     Filesystem contains.  This class is not intended for general
   //     consumption.  Please consult a physician before attempting to
   //     use this class.
-{
+public:
   friend class ACE_Filecache;
 
-public:
   ACE_Filecache_Object (const char *filename,
                         ACE_SYNCH_RW_MUTEX &lock,
                         int mapit = 1,

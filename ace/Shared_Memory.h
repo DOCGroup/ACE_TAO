@@ -21,6 +21,7 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Shared_Memory
+{
   // = TITLE
   //     This base class adapts both System V shared memory and "BSD"
   //     mmap to a common API.
@@ -30,7 +31,6 @@ class ACE_Export ACE_Shared_Memory
   //     useful for allocating large contiguous chunks of shared
   //     memory.  For a much more sophisticated version, please check
   //     out the <ACE_Malloc> class.
-{
 public:
   // = Note that all methods are pure virtual.
   virtual int close (void) = 0;

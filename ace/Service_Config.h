@@ -69,6 +69,7 @@ typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
         ACE_STATIC_SVCS_ITERATOR;
 
 class ACE_Export ACE_Service_Config
+{
   // = TITLE
   //     Supplies common server operations for dynamic and static
   //     configuration of services.
@@ -80,7 +81,6 @@ class ACE_Export ACE_Service_Config
   //     ACE_Service_Config objects, there might be initialization
   //     order problems.  They can be minimized, but not eliminated,
   //     by _not_ #defining ACE_HAS_NONSTATIC_OBJECT_MANAGER.
-{
 public:
   enum {MAX_SERVICES = ACE_DEFAULT_SELECT_REACTOR_SIZE};
 

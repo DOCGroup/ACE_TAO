@@ -21,16 +21,14 @@
 #include "ace/Select_Reactor.h"
 
 class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
+{
   // = TITLE
-  //
   //     Implements priority based dispatching.
   //
   // = DESCRIPTION
-  //
   //     This class refines the dispatching mechanism for the
   //     Select_Reactor by taking advantage of the priority method on
   //     ACE_Event_Handler.
-{
 public:
   // = Initialization and termination methods.
 

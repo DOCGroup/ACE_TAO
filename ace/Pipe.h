@@ -21,6 +21,7 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Pipe
+{
   // = TITLE
   //     Provides a bidirectional "pipe" abstraction that is portable
   //     to Windows NT, SVR4 UNIX, and BSD UNIX.
@@ -28,7 +29,6 @@ class ACE_Export ACE_Pipe
   // = DESCRIPTION
   //     Uses "name" for lookup in the ACE service repository. Obtains
   //	 the object and returns it as the appropriate type.
-{
 public:
   // = Initialization and termination.
   ACE_Pipe (void);

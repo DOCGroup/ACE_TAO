@@ -20,13 +20,13 @@
 #include "ace/OS.h"
 
 class ACE_Export ACE_Process_Options
+{
   // = TITLE
   //    Process Options
   //
   // = DESCRIPTION
   //    This class controls the options passed to <CreateProcess> (or <fork>
   //    and <exec>).
-{
 public:
   enum 
   { 
@@ -234,12 +234,12 @@ protected:
 // ************************************************************
 
 class ACE_Export ACE_Process
+{
   // = TITLE
   //     Process
   //
   // = DESCRIPTION
   //     A Portable encapsulation for creating new processes.
-{
 public:
   ACE_Process (void);
   // Default construction.  Must use ACE_Process::start.
@@ -283,6 +283,7 @@ protected:
 // ************************************************************
 
 class ACE_Export ACE_Tokenizer
+{
   // = TITLE
   //    Tokenizer
   //
@@ -290,7 +291,6 @@ class ACE_Export ACE_Tokenizer
   //    Tokenizes a buffer.  Allows application to set delimiters and
   //    preserve designators.  Does not allow special characters, yet
   //    (e.g., printf ("\"like a quoted string\"").
-{
 public:
   ACE_Tokenizer (LPTSTR buffer);
   // <buffer> will be parsed.
@@ -331,9 +331,11 @@ private:
   LPTSTR buffer_;
   int index_;
 
-  struct Preserve_Entry
+  class Preserve_Entry
+  {
     // = TITLE
     //    Preserve Entry
+    //
     // = DESCRIPTION
     //    Defines a set of characters that designate an area that
     //    should not be parsed, but should be treated as a complete
@@ -341,7 +343,7 @@ private:
     //    would be a left paren -(- and stop would be a right paren
     //    -)-.  The strip determines whether the designators should be
     //    removed from the token.
-  {
+  public:
     TCHAR start_;
     // E.g., "(".
     TCHAR stop_;
@@ -356,12 +358,14 @@ private:
   int preserves_index_;
   // Pointer to the next free spot in preserves_.
 
-  struct Delimiter_Entry
+  class Delimiter_Entry
+  {
     // = TITLE
     //    Delimiter Entry
+    //
     // = DESCRIPTION
     //    Describes a delimiter for the tokenizer.
-  {
+  public:
     TCHAR delimiter_;
     // Most commonly a space ' '.
     TCHAR replacement_;

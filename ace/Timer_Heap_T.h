@@ -27,6 +27,7 @@ class ACE_Timer_Heap_T;
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> 
+{
   // = TITLE
   //     Iterates over an <ACE_Timer_Heap_T>.
   //
@@ -34,7 +35,6 @@ class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTO
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it doesn't transverse
   //     in the order of timeout values.  
-{
 public:
   ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &);
   // Constructor.
@@ -61,11 +61,11 @@ protected:
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
+{
   // = TITLE 
   //      Provides a very fast and predictable timer implementation.
   //
   // = DESCRIPTION
-  //
   //      This implementation uses a heap-based callout queue of
   //      absolute times.  Therefore, in the average and worst case,
   //      scheduling, canceling, and expiring timers is O(log N) (where
@@ -74,7 +74,6 @@ class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>
   //      the heap.  This allows us to completely remove the need for
   //      dynamic memory allocation, which is important for real-time
   //      systems.
-{
 public:
   typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> HEAP_ITERATOR;
   friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>;

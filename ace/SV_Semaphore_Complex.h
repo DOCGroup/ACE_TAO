@@ -20,6 +20,7 @@
 #include "ace/SV_Semaphore_Simple.h"
 
 class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
+{
   // = TITLE
   //     This is a more complex semaphore wrapper that handles race
   //     conditions for initialization correctly...
@@ -49,7 +50,6 @@ class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
   //      The members beyond [1] are actual ACE_SV_Semaphore values in
   //      the array of SV_Semaphores (which may be sized by the user
   //      in the constructor).
-{
 public:
   enum 
   {

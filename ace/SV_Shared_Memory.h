@@ -21,9 +21,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_SV_Shared_Memory
+{
   // = TITLE
   //     This is a wrapper for System V shared memory.
-{
 public:
   enum 
   {

@@ -25,6 +25,7 @@
 #include "ace/DEV_IO.h"
 
 class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
+{
   // = TITLE
   //     Class definitions for platform specific TTY features.
   //   
@@ -35,7 +36,6 @@ class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
   //     a special structure (Serial_Params) as argument to allow a
   //     comfortable user interface (away from that annoying termios
   //     structure, which is very specific to UNIX).
-{
 public:
   enum Control_Mode
   {

@@ -28,18 +28,18 @@
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 
 class ACE_Export ACE_Remote_Name_Space : public ACE_Name_Space
+{
   // = TITLE
   //     Maintaining accesses Remote Name Server Database.  Allows to
   //     add NameBindings, change them, remove them and resolve
   //     NameBindings.
   //
   // = DESCRIPTION
-  //     Manages a Naming Service for a remote name space which includes
-  //	 bindings for net_local naming context.
-  //	 All strings are stored in wide character format.
-  //     A Name Binding consists of a name (that's the key), a value
-  //	 string and an optional type string (no wide chars).
-{
+  //     Manages a Naming Service for a remote name space which
+  //     includes bindings for net_local naming context.  All strings
+  //     are stored in wide character format.  A Name Binding consists
+  //     of a name (that's the key), a value string and an optional
+  //     type string (no wide chars).
 public:
   // = Initialization and termination methods.
   ACE_Remote_Name_Space (void);
@@ -60,13 +60,13 @@ public:
   // file
 
   virtual int bind (const ACE_WString &name_in,
-		    const ACE_WString &value_in,
-		    const char *type_in = "");
+                    const ACE_WString &value_in,
+                    const char *type_in = "");
   // Bind a new name to a naming context (Wide character strings).
 
   virtual int rebind (const ACE_WString &name_in,
-		      const ACE_WString &value_in,
-		      const char *type_in = "");
+                      const ACE_WString &value_in,
+                      const char *type_in = "");
   // Overwrite the value or type of an existing name in a
   // ACE_Remote_Name_Space or bind a new name to the context, if it
   // didn't exist yet. (Wide charcter strings interface).
@@ -76,40 +76,40 @@ public:
   // Interface).
 
   virtual int resolve (const ACE_WString &name_in,
-		       ACE_WString &value_out,
-		       char *&type_out);
+                       ACE_WString &value_out,
+                       char *&type_out);
   // Get value and type of a given name binding (Wide chars).  The
   // caller is responsible for deleting both <value_out> and <type_out>!
 
   virtual int list_names (ACE_WSTRING_SET &set_out,
-			  const ACE_WString &pattern_in);
+                          const ACE_WString &pattern_in);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string.
 
   virtual int list_values (ACE_WSTRING_SET &set_out,
-			   const ACE_WString &pattern_in);
+                           const ACE_WString &pattern_in);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string.
 
   virtual int list_types (ACE_WSTRING_SET &set_out,
-			  const ACE_WString &pattern_in);
+                          const ACE_WString &pattern_in);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string.
 
   virtual int list_name_entries (ACE_BINDING_SET &set,
-				 const ACE_WString &pattern);
+                                 const ACE_WString &pattern);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_value_entries (ACE_BINDING_SET &set,
-				  const ACE_WString &pattern);
+                                  const ACE_WString &pattern);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
   virtual int list_type_entries (ACE_BINDING_SET &set,
-				 const ACE_WString &pattern);
+                                 const ACE_WString &pattern);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string. Returns the
   // complete binding associated each pattern match.

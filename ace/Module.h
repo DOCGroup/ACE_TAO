@@ -25,6 +25,7 @@
 
 template <ACE_SYNCH_DECL>
 class ACE_Module
+{
   // = TITLE
   //     An abstraction for managing a bi-directional flow of messages.
   // 
@@ -32,9 +33,9 @@ class ACE_Module
   //     This is based on the Module concept in System V Streams,
   //     which contains a pair of Tasks, one for handling upstream
   //     processing, one for handling downstream processing.
-{
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
+  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
+
   enum
   {
     M_DELETE_NONE = 0,

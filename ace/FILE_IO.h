@@ -21,11 +21,12 @@
 #include "ace/FILE_Addr.h"
 
 class ACE_Export ACE_FILE_IO : public ACE_FILE
+{
   // = TITLE
   //     Read/Write operations on Files
-{
-friend class ACE_FILE_Connector;
 public:
+  friend class ACE_FILE_Connector;
+
   // = Initialization method.
   ACE_FILE_IO (void);
   // Default constructor.

@@ -20,6 +20,7 @@
 
 template <class SERVICE>
 class ACE_Dynamic_Service
+{
   // = TITLE
   //     Provides a general interface to retrieve arbitrary objects
   //     from the ACE service repository.
@@ -27,7 +28,6 @@ class ACE_Dynamic_Service
   // = DESCRIPTION
   //     Uses "name" for lookup in the ACE service repository. Obtains
   //	 the object and returns it as the appropriate type.
-{
 public:
   static SERVICE *instance (const char *name);
   // Return instance using <name> to search the Service_Repository.

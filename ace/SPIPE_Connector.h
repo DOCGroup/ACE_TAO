@@ -21,10 +21,10 @@
 #include "ace/SPIPE_Stream.h"
 
 class ACE_Export ACE_SPIPE_Connector : public ACE_SPIPE
+{
   // = TITLE
   //     Defines an active connection factory for the STREAM pipe
   //     wrappers. 
-{
 public:
   // = Initialization method.
   ACE_SPIPE_Connector (void);

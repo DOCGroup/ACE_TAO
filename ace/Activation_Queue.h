@@ -23,6 +23,7 @@
 #include "ace/Method_Object.h"
 
 class ACE_Export ACE_Activation_Queue
+{
   // = TITLE
   //     Reifies a method into an object.  Subclasses typically
   //     represent necessary state and behavior.
@@ -30,7 +31,6 @@ class ACE_Export ACE_Activation_Queue
   // = DESCRIPTION
   //     A <Method_Object> is inserted in the <Activation_Queue>, where
   //     it is subsequently removed by the <Scheduler> and invoked.
-{
 public:
   // = Initialization and termination methods.
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0);

@@ -20,12 +20,12 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_Get_Opt
+{
   // = TITLE
   //   Iterator for parsing command-line arguments.
   //
   // = DESCRIPTION
   //    This is a C++ wrapper for getopt(3c).
-{
 public:
   ACE_Get_Opt (int argc, 
 	       char **argv, 

@@ -31,10 +31,10 @@
 #endif
 
 class ACE_Export ACE_TLI : public ACE_IPC_SAP
+{
   // = TITLE
   //     Defines the member functions for the base class of the
   //     ACE_TLI  abstraction. 
-{
 public:
   // = Initialization and termination methods.
   ACE_HANDLE open (const char device[], 

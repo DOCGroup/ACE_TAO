@@ -100,6 +100,7 @@
 class ACE_Thread_Descriptor;
 
 class ACE_Export ACE_Log_Msg
+{
   // = TITLE
   //     Provides a variable length argument message logging
   //     abstraction.
@@ -110,7 +111,6 @@ class ACE_Export ACE_Log_Msg
   //     distributed logger.  Moreover, the message is kept in a
   //     thread-specific storage location, which can be used to
   //     communicate errors between framework methods and callers.
-{
 public:
   // Logger Flags.
   enum

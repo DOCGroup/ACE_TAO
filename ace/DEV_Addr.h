@@ -22,9 +22,9 @@
 #include "ace/ACE.h"
 
 class ACE_Export ACE_DEV_Addr : public ACE_Addr
+{
   // = TITLE
   //    Defines device address family address format. 
-{
 public:
   // = Initialization methods.
   ACE_DEV_Addr (void);

@@ -20,9 +20,9 @@
 #include "ace/DEV_IO.h"
 
 class ACE_Export ACE_DEV_Connector : public ACE_DEV
+{
   // = TITLE
   //     Defines an active connection factory for the ACE_DEV wrappers. 
-{
 public:
   ACE_DEV_Connector (void);
   // Default constructor.

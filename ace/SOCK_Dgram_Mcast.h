@@ -22,10 +22,10 @@
 #include "ace/INET_Addr.h"
 
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
+{
   // = TITLE
   //     Defines the member functions for the ACE SOCK wrapper
   //     multicast abstraction. 
-{
 public:
   // = Initialization routine.
   ACE_SOCK_Dgram_Mcast (void);

@@ -1,3 +1,16 @@
+Sun Dec 21 12:39:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Changed all ACE class documentation so that it puts the
+ 	  =TITLE and =DESCRIPTION comments *after* the opening '{' rather
+ 	  than before.  I did this since (1) it makes emacs C++ mode
+ 	  happier and (2) it makes Rational Rose reverse-engineering tool
+ 	  happier too.  Thanks to Thomas Jordan
+ 	  <Thomas_Jordan@deluxedata.com> for suggesting this.
+
+	* ace/LOCK_SOCK_Acceptor.h: The accept() method of class
+ 	  ACE_LOCK_SOCK_Acceptor is no longer a virtual.  I don't know why
+ 	  this was made virtual in the first place, but it was a mistake.
+
 Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/test_config.h (ACE_INIT_LOG): Added (%P|%t) to an

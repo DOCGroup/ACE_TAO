@@ -44,6 +44,7 @@ template <class T> class ACE_Unbounded_Queue;
 #endif /* ! ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS */
 
 class ACE_Export ACE_Object_Manager
+{
   // = TITLE
   //     Manager for ACE library services and singleton cleanup.
   //
@@ -142,7 +143,6 @@ class ACE_Export ACE_Object_Manager
   //        cleaned up by the Object_Manager, they'll get cleaned up too
   //        late.  The ACE tests do not violate this requirement.
   //        However, applications may have trouble with it.
-{
 public:
   static int at_exit (ACE_Cleanup *object, void *param = 0);
   // Register an ACE_Cleanup object for cleanup at process termination.
@@ -357,6 +357,7 @@ private:
 class ACE_Recursive_Thread_Mutex;
 
 class ACE_Export ACE_Static_Object_Lock
+{
   // = TITLE
   //     Provide an interface to access a global lock.
   //
@@ -365,7 +366,6 @@ class ACE_Export ACE_Static_Object_Lock
   //     singleton objects.  It really isn't needed any more, because
   //     anyone can access ACE_STATIC_OBJECT_LOCK directly.  But, it
   //     is retained for backward compatibility.
-{
 public:
   static ACE_Recursive_Thread_Mutex *instance (void);
   // Static lock access point.

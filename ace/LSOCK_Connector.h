@@ -24,10 +24,10 @@
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
-  // = TITLE
-  //     Defines the format and interface for the connector side of the 
-  //     local ACE_SOCK ACE_Stream. 
 {
+  // = TITLE
+  //     Defines the format and interface for the connector side of
+  //     the <ACE_LSOCK_Stream>.
 public:
   // = Initialization methods.
   ACE_LSOCK_Connector (void);

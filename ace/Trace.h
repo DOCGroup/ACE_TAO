@@ -19,6 +19,7 @@
 #define ACE_TRACE_H
 
 class ACE_Export ACE_Trace
+{
   // = TITLE
   //     A C++ trace facility that keeps track of which methods are
   //     entered and exited.
@@ -27,7 +28,6 @@ class ACE_Export ACE_Trace
   //     This class uses C++ constructors and destructors to automate
   //     the ACE_Trace nesting.  In addition, thread-specific storage
   //     is used to enable multiple threads to work correctly.
-{
 public:
   // = Initialization and termination methods.
 
