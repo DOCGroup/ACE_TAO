@@ -1,3 +1,24 @@
+Sun Oct 31 16:39:53 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Capabilities.cpp:
+          Added ACE_BUILD_DLL so the class is properly exported on NT.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Added Capabilities files to MSVC projects.
+
+        * tests/Capabilities_Test.cpp:
+          Was loading the wrong file, changed to loading 
+          Capabilites_Test.cfg instead of captest.cfg.
+
+        * tests/Capabilities_Test.dsp:
+        * tests/version_tests/Capabilities_Test.dsp:
+        * tests/tests.dsw:
+          Added Capabilities_Test project files.
+
+        * tests/run_tests.bat:
+          Added Capabilities_Test to the list of tests.
+
 Sun Oct 31 15:29:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Capabilities.cpp: Cleaned up some of the explicit template
