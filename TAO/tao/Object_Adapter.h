@@ -133,6 +133,12 @@ public:
   PortableServer::Servant servant (void) const;
   // Get the servant for the current upcall.
 
+  void priority (CORBA::Short priority);
+  // Set the priority for the current upcall.
+
+  CORBA::Short priority (void) const;
+  // Get the priority for the current upcall.
+
   TAO_POA_Current_Impl (void);
   // Convenience constructor combining construction & initialization.
 
@@ -140,8 +146,7 @@ public:
   // Teardown the current for this request.
 
   void setup (TAO_POA *impl,
-              const TAO_ObjectKey &key,
-              PortableServer::Servant servant);
+              const TAO_ObjectKey &key);
   // Setup the current.
 
 protected:
@@ -158,6 +163,9 @@ protected:
 
   PortableServer::Servant servant_;
   // The servant for the current upcall.
+
+  CORBA::Short priority_;
+  // The priority for the current upcall.
 
   TAO_POA_Current_Impl *previous_current_impl_;
   // Current previous from <this>.

@@ -100,10 +100,12 @@ TAO_Active_Object_Map::find_user_id_using_servant (PortableServer::Servant serva
 
 ACE_INLINE int
 TAO_Active_Object_Map::find_system_id_using_servant (PortableServer::Servant servant,
-                                                     PortableServer::ObjectId_out system_id)
+                                                     PortableServer::ObjectId_out system_id,
+                                                     CORBA::Short &priority)
 {
   return this->id_uniqueness_strategy_->find_system_id_using_servant (servant,
-                                                                      system_id);
+                                                                      system_id,
+                                                                      priority);
 }
 
 ACE_INLINE int
@@ -141,7 +143,8 @@ TAO_Active_Object_Map::find_servant_using_system_id_and_user_id (const PortableS
 ACE_INLINE int
 TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
                                                                  PortableServer::Servant &servant,
-                                                                 PortableServer::ObjectId_out system_id)
+                                                                 PortableServer::ObjectId_out system_id,
+                                                                 CORBA::Short &priority)
 {
   Map_Entry *entry = 0;
   int result = this->user_id_map_->find (user_id,
@@ -155,9 +158,13 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableS
         result = -1;
       else
         {
-          servant = entry->servant_;
           result = this->id_hint_strategy_->system_id (system_id,
                                                        *entry);
+          if (result == 0)
+            {
+              servant = entry->servant_;
+              priority = entry->priority_;
+            }
         }
     }
 

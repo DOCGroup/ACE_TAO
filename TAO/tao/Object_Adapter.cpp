@@ -802,8 +802,7 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
   // Setup current for this request.
   this->current_context_.setup (this->poa_,
-                                key,
-                                0);
+                                key);
 
   // We have setup the POA Current.  Record this for later use.
   this->state_ = POA_CURRENT_SETUP;
@@ -822,6 +821,9 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
   // Now that we know the servant.
   this->current_context_.servant (this->servant_);
+
+  if (this->active_object_map_entry ())
+    this->current_context_.priority (this->active_object_map_entry ()->priority_);
 
   // Increase <poa->outstanding_requests_> for the duration of the
   // upcall.
@@ -1059,6 +1061,7 @@ TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
     object_id_ (),
     object_key_ (0),
     servant_ (0),
+    priority_ (TAO_DEFAULT_PRIORITY),
     previous_current_impl_ (0),
     setup_done_ (0)
 {
@@ -1066,13 +1069,11 @@ TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
 
 void
 TAO_POA_Current_Impl::setup (TAO_POA *p,
-                             const TAO_ObjectKey &key,
-                             PortableServer::Servant servant)
+                             const TAO_ObjectKey &key)
 {
   // Remember information about this upcall.
   this->poa_ = p;
   this->object_key_ = &key;
-  this->servant_ = servant;
 
   // Set the current context and remember the old one.
   this->tss_resources_ = TAO_TSS_RESOURCES::instance ();

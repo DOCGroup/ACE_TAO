@@ -261,3 +261,15 @@ TAO_POA_Current_Impl::servant (void) const
 {
   return this->servant_;
 }
+
+ACE_INLINE void
+TAO_POA_Current_Impl::priority (CORBA::Short priority)
+{
+  this->priority_ = priority;
+}
+
+ACE_INLINE CORBA::Short
+TAO_POA_Current_Impl::priority (void) const
+{
+  return this->priority_;
+}

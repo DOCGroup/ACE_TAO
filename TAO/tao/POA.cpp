@@ -140,8 +140,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     wait_for_completion_pending_ (0),
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
-    waiting_servant_deactivation_ (0),
-    client_exposed_policies_ ()
+    waiting_servant_deactivation_ (0)
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -1352,6 +1351,7 @@ TAO_POA::create_reference_i (const char *intf,
                               intf,
                               0,
                               1,
+                              priority,
                               ACE_TRY_ENV);
 }
 
@@ -1427,6 +1427,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                               intf,
                               servant,
                               1,
+                              priority,
                               ACE_TRY_ENV);
 }
 
@@ -1470,7 +1471,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             -1,
+                                                                             TAO_DEFAULT_PRIORITY,
                                                                              user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1544,6 +1545,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
 
 PortableServer::ObjectId *
 TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
+                                 CORBA::Short &priority,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   // This operation requires the RETAIN and either the UNIQUE_ID or
@@ -1564,7 +1566,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
   PortableServer::ObjectId_var system_id;
   if (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID &&
       this->active_object_map ().find_system_id_using_servant (servant,
-                                                               system_id.out ()) != -1)
+                                                               system_id.out (),
+                                                               priority) != -1)
     {
       return system_id._retn ();
     }
@@ -1581,7 +1584,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var system_id;
       if (this->active_object_map ().bind_using_system_id_returning_system_id (servant,
-                                                                               -1,
+                                                                               priority,
                                                                                system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1632,7 +1635,9 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
+  CORBA::Short priority;
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
+                                                                priority,
                                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1644,6 +1649,7 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
                               servant->_interface_repository_id (),
                               servant,
                               1,
+                              priority,
                               ACE_TRY_ENV);
 }
 
@@ -1942,9 +1948,11 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
   // activate the object is returned.
   PortableServer::ObjectId_var system_id;
   PortableServer::Servant servant;
+  CORBA::Short priority;
   if (this->active_object_map ().find_servant_and_system_id_using_user_id (id,
                                                                            servant,
-                                                                           system_id.out ()) == 0)
+                                                                           system_id.out (),
+                                                                           priority) == 0)
     {
       // Create object key.
       TAO_ObjectKey_var key = this->create_object_key (system_id.in ());
@@ -1954,6 +1962,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
                                   servant->_interface_repository_id (),
                                   servant,
                                   1,
+                                  priority,
                                   ACE_TRY_ENV);
     }
   else
@@ -2042,7 +2051,7 @@ TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
   // Register the forwarding servant with the same object Id.
   this->activate_object_with_id_i (oid,
                                    forwarding_servant,
-                                   -1,
+                                   TAO_DEFAULT_PRIORITY,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -3638,7 +3647,8 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
      servant_retention_ (PortableServer::RETAIN),
      request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
      priority_model_ (TAO_POA_Policies::CLIENT_PROPAGATED),
-     server_priority_ (-1)
+     server_priority_ (TAO_DEFAULT_PRIORITY),
+     client_exposed_fixed_policies_ ()
 {
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -3652,10 +3662,8 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
         priority_model->priority_model (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (rt_priority_model == RTCORBA::CLIENT_PROPAGATED)
-        this->priority_model_ = TAO_POA_Policies::CLIENT_PROPAGATED;
-      else
-        this->priority_model_ = TAO_POA_Policies::SERVER_DECLARED;
+      this->priority_model_ =
+        TAO_POA_Policies::PriorityModel (rt_priority_model);
 
       this->server_priority_ =
         priority_model->server_priority (ACE_TRY_ENV);
@@ -3831,10 +3839,8 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
         priority_model->priority_model (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (rt_priority_model == RTCORBA::CLIENT_PROPAGATED)
-        this->priority_model_ = TAO_POA_Policies::CLIENT_PROPAGATED;
-      else
-        this->priority_model_ = TAO_POA_Policies::SERVER_DECLARED;
+      this->priority_model_ =
+        TAO_POA_Policies::PriorityModel (rt_priority_model);
 
       this->server_priority_ =
         priority_model->server_priority (ACE_TRY_ENV);
@@ -3900,6 +3906,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
                         CORBA::Boolean collocated,
+                        CORBA::Short priority,
                         CORBA_Environment &ACE_TRY_ENV)
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
@@ -3967,15 +3974,79 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+  CORBA::PolicyList_var client_exposed_policies =
+    this->client_exposed_policies (priority,
+                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (obj);
+
   obj = this->orb_core_.orb ()->key_to_object (key,
                                                type_id,
-                                               this->client_exposed_policies (),
+                                               client_exposed_policies._retn (),
                                                servant,
                                                collocated,
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (obj);
 
   return obj;
+}
+
+CORBA::PolicyList *
+TAO_POA::client_exposed_policies (CORBA::Short object_priority,
+                                  CORBA_Environment &ACE_TRY_ENV)
+{
+  const CORBA::PolicyList &client_exposed_fixed_policies =
+    this->policies ().client_exposed_fixed_policies ();
+
+  CORBA::PolicyList *client_exposed_policies = 0;
+  ACE_NEW_THROW_EX (client_exposed_policies,
+                    CORBA::PolicyList (client_exposed_fixed_policies.length ()),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+
+  for (CORBA::ULong i = 0;
+       i < client_exposed_fixed_policies.length ();
+       ++i)
+    (*client_exposed_policies)[i] =
+      client_exposed_fixed_policies[i]->copy ();
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  CORBA::Short poa_priority =
+    this->policies ().server_priority ();
+
+  TAO_POA_Policies::PriorityModel priority_model =
+    this->policies ().priority_model ();
+
+  if (poa_priority != TAO_DEFAULT_PRIORITY)
+    {
+      CORBA::Short priority;
+      if (priority_model == TAO_POA_Policies::CLIENT_PROPAGATED)
+        priority = poa_priority;
+      else
+        {
+          if (object_priority != TAO_DEFAULT_PRIORITY)
+            priority = poa_priority;
+          else
+            priority = object_priority;
+        }
+
+      TAO_PriorityModelPolicy *priority_model_policy;
+      ACE_NEW_THROW_EX (priority_model_policy,
+                        TAO_PriorityModelPolicy (RTCORBA::PriorityModel (priority_model),
+                                                 priority),
+                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (0);
+
+      CORBA::ULong current_length = client_exposed_policies->length ();
+      client_exposed_policies->length (current_length + 1);
+      (*client_exposed_policies)[current_length] = priority_model_policy;
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return client_exposed_policies;
 }
 
 //
@@ -4007,7 +4078,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   this->activate_object_with_id_i (id.in (),
                                    this->server_object_,
-                                   -1,
+                                   TAO_DEFAULT_PRIORITY,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
