@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/config-lite.h"
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/OS_NS_unistd.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Task.h"
@@ -198,3 +201,15 @@ template class ACE_Atomic_Op_Ex<ACE_Null_Mutex, unsigned int>;
 #pragma instantiate ACE_Atomic_Op<ACE_Null_Mutex, unsigned int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Null_Mutex, unsigned int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
+
+int ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_OS::puts (ACE_TEXT ("This example requires threads."));
+  return 0;
+}
+
+#endif /* ACE_HAS_THREADS */

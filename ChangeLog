@@ -1,3 +1,27 @@
+Mon May 10 14:42:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Active_Objects/AO.cpp:
+	* examples/APG/Active_Objects/AO2.cpp:
+	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
+	* examples/APG/ThreadManagement/Priorities.cpp:
+	* examples/APG/ThreadManagement/Pool.cpp:
+	* examples/APG/ThreadManagement/Signals.cpp:
+	* examples/APG/ThreadManagement/Signals2.cpp:
+	* examples/APG/ThreadPools/LF_ThreadPool.cpp:
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadPools/Task_ThreadPool.cpp:
+	* examples/APG/ThreadPools/ThreadPool.cpp:
+	* examples/APG/ThreadPools/TP_Reactor.cpp:
+	* examples/APG/ThreadSafety/Barrier.cpp:
+	* examples/APG/ThreadSafety/Mutex.cpp:
+	* examples/APG/ThreadSafety/RW_Lock.cpp:
+	* examples/APG/ThreadSafety/Semaphore.cpp:
+	* examples/APG/ThreadSafety/TSS.cpp:
+	* examples/APG/Threads/Condition_Variables.cpp:
+	* examples/APG/Threads/Mutexes.cpp:
+	* examples/APG/Threads/Message_Queue.cpp:
+	  Fixed to compile without ACE_HAS_THREADS enabled.
+
 Mon May 10 18:40:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:

@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/config-lite.h"
+#if defined (ACE_AS_THREADS)
+
 #include "ace/OS.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
@@ -68,3 +71,15 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 // Listing 1
+
+#else
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdio.h"
+
+int ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_OS::puts (ACE_TEXT ("This example requires threads."));
+  return 0;
+}
+
+#endif /* ACE_HAS_THREADS */
