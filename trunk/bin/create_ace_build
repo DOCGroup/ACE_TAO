@@ -7,6 +7,25 @@
 # directory structure, except that instead of containing any plain files,
 # it contains only symlinks to the files in the ACE top level structure.
 #
+# This program has a similar purpose to "clone", but in addition to
+# only creating symlinks (clone creates hard links, by default), this
+# script:
+# 1) uses relative rather than absolute symlinks,
+# 2) tries not to put junk files into the build tree,
+# 3) only creates a new tree in a build/ directory below the current,
+#    top level ACE directory (it's a feature :-), but it does enforce
+#    consistency), and
+# 4) is ACE-specific, so it can always create the ChangeLog symlink,
+#    for example.
+#
+# This program can be re-run on a build tree at any time in order to
+# update it.  It will only add new symlinks, it won't remove any that
+# are no longer valid.  If you want to do that, it's easiest just to
+# remove the build completely and start from scratch.
+#
+# If the <build name> starts with "build/", that part will be removed
+# from it.
+#
 # The first line above and the following one let this script run without
 # specifying the full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
@@ -44,6 +63,8 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
 
 die $usage unless $#ARGV == 0;
 $build = $ARGV[0];
+$build =~ s%^build/%%;        #### remove leading "build/", if any
+$build = "build/$build";
 
 ####
 #### check that we're in an ACE "top level" directory
@@ -55,7 +76,7 @@ $build = $ARGV[0];
 #### create build directories, if needed.
 ####
 -d 'build'  ||  mkdir 'build', $directory_mode;
--d "build/$build"  ||  mkdir "build/$build", $directory_mode;
+-d "$build"  ||  mkdir "$build", $directory_mode;
 
 ####
 #### get all ACE plain file and directory names
@@ -75,30 +96,39 @@ foreach $file ( @files ) {
     $file =~ s%^\./%%g;  #### excise leading ./ directory component
 
     if ( -d $file ) {
-        print "mkdir build/$build/$file, $directory_mode\n" if $verbose;
-        -d "build/$build/$file"  ||  mkdir "build/$build/$file",
-                                           $directory_mode;
+        unless ( -d "$build/$file" ) {
+            print "mkdir $build/$file, $directory_mode\n" if $verbose;
+            mkdir "$build/$file", $directory_mode;
+        }
     } else {
-        $up = '../..';
-        while ( $file =~ m%/%g ) { $up .= '/..'; }
+        unless ( -e "$build/$file" ) {
+            $up = '../..';
+            while ( $file =~ m%/%g ) { $up .= '/..'; }
 
-        print "symlink $up/$file build/$build/$file\n" if $verbose;
-        symlink "$up/$file", "build/$build/$file"  ||
-            die "$0 symlink to build/$build/$file failed\n";
+            print "symlink $up/$file $build/$file\n" if $verbose;
+            symlink "$up/$file", "$build/$file"  ||
+                die "$0 symlink to $build/$file failed\n";
+        }
     }
 }
 
 ####
 #### create symlink to ChangeLog symlink
 ####
-symlink '../../ChangeLog', "build/$build/ChangeLog"  ||
-    die "$0: unable to create build/$build/ChangeLog symlink\n";
+unless ( -e "$build/ChangeLog" ) {
+    symlink '../../ChangeLog', "$build/ChangeLog"  ||
+        die "$0: unable to create $build/ChangeLog symlink\n";
+}
 
 ####
 #### done: print message
 ####
-print "\nCompleted creation of build/$build/.\n" .
-      "Be sure to setup build/$build/ace/config.h and\n" .
-      "build/$build/include/makeinclude/platform_macros.GNU symlinks.\n";
+print "\nCompleted creation of $build/.\n";
+
+unless ( -e "$build/ace/config.h"  &&
+         -e "$build/include/makeinclude/platform_macros.GNU" ) {
+    print "Be sure to setup $build/ace/config.h and\n" .
+          "$build/include/makeinclude/platform_macros.GNU symlinks.\n";
+}
 
 #### EOF
