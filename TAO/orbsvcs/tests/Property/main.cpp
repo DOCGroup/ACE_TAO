@@ -389,7 +389,9 @@ TAO_PropertySet_Tester::test_delete_all_properties (CORBA::Environment &ACE_TRY_
   // Deleting all the properties
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_all_properties\n"));
-  if (property_set_.delete_all_properties (ACE_TRY_ENV) == 1)
+  int ret = property_set_.delete_all_properties (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  if (ret == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "All properties deleted, I guess\n"));
   else
@@ -418,10 +420,13 @@ TAO_PropertyNamesIterator_Tester::test_next_one (CORBA::Environment &ACE_TRY_ENV
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting next_one of NamesIterator, Iterating thru names.\n"));
   // Let us iterate, now.
-  while (iterator_.next_one (strvar.out (), ACE_TRY_ENV) != 0)
+  int ret = iterator_.next_one (strvar.out (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (1);
+  while (ret != 0)
     {
-      ACE_CHECK_RETURN ( 1);
       ACE_DEBUG ((LM_DEBUG, "Str : %s\n", strvar.in ()));
+      ret = iterator_.next_one (strvar.out (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (1);
     }
   return 0;
 }
@@ -446,15 +451,15 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n,
   ACE_DEBUG ((LM_DEBUG,
               "Checking next_n (), next %d\n",
               n));
-  if (iterator_.next_n (n, pnames_var.out (), ACE_TRY_ENV) == 0)
+  int ret = iterator_.next_n (n, pnames_var.out (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (1);
+  if (ret == 0)
     {
       // Return if no more items in the iterator.
-      ACE_CHECK_RETURN ( 1);
       ACE_DEBUG ((LM_DEBUG,
                   "Iterator has no more items\n"));
       return 0;
     }
-  ACE_CHECK_RETURN ( 1);
   for (size_t i = 0; i < pnames_var.in ().length (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 "str %s \n",

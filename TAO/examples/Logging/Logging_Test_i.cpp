@@ -275,6 +275,7 @@ Logger_Client::run (void)
 
       // Log the fourth record using log2()
       this->logger_2_->log2 (rec4, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
 
   ACE_CATCHANY
