@@ -9,7 +9,7 @@
 ACE_RCSID(SPIPE_SAP, NPClient, "$Id$")
 
 #if defined (ACE_WIN32)
-#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\"#X
+#define MAKE_PIPE_NAME(X) "\\\\.\\pipe\\" X
 #else
 #define MAKE_PIPE_NAME(X) X
 #endif
@@ -28,8 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   char[size],
                   1);
 
-  const char *pipe_name = "acepipe";
-  const char *rendezvous = MAKE_PIPE_NAME (pipe_name);
+  const char *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
