@@ -869,7 +869,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // This is the Solaris implementation of pthreads, where
       // ACE_thread_t and ACE_hthread_t are the same.
       if (result == 0 && thr_handle != 0)
-	*thr_handle = *thr_id;
+	*thr_handle = thr_id == 0 ? 0 : *thr_id;
 #else
       if (thr_handle != 0)
 	*thr_handle = ACE_OS::NULL_hthread;
