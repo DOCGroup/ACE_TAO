@@ -1,15 +1,25 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsLogAdmin) : orbsvcslib, core {
-  sharedname   = TAO_DsLogAdmin
-  dynamicflags = TAO_LOG_BUILD_DLL
+project(DsLogAdmin_IDL) : orbsvcslib, core {
+
+  custom_only = 1
 
   idlflags    += -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h
 
   IDL_Files {
     DsLogAdmin.idl
     DsLogNotification.idl
+  }
+}
+
+
+project(DsLogAdmin) : orbsvcslib, core {
+  after += DsLogAdmin_IDL
+  sharedname   = TAO_DsLogAdmin
+  dynamicflags = TAO_LOG_BUILD_DLL
+
+  IDL_Files {
   }
 
   Source_Files {
