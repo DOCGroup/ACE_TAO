@@ -720,7 +720,12 @@ ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (
 
 ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option (void)
 {
+  // MSVC++ 6 can't deal with deleting a const ACE_TCHAR *.
+#if defined (_MSC_VER) && _MSC_VER < 1300
+  delete [] const_cast <ACE_TCHAR *> (this->name_);
+#else
   delete [] this->name_;
+#endif  /* _MSC_VER < 1300 */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

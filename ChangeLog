@@ -1,3 +1,13 @@
+Wed May  5 23:35:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Get_Opt.cpp (~ACE_Get_Opt_Long_Option):
+
+	  MSVC++ 6 can't deal with delete[]ing a const ACE_TCHAR *.
+	  Reintroduced a const_cast<> that addresses this issue by
+	  reverting a portion of the change in the "Wed May  5 14:14:53
+	  2004  Ossama Othman  <ossama@dre.vanderbilt.edu>" set of
+	  changes.
+
 Wed May  5 23:27:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_sys_stat.inl (fstat):
