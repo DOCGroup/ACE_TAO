@@ -1,3 +1,8 @@
+Fri Jul 16 06:57:34 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+	  Added support for building UUID subset.
+
 Thu Jul 15 18:57:55 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* tests/QtReactor_Test.cpp: Fixed acceptor bug for Windows Qt. 
