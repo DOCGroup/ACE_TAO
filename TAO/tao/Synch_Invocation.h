@@ -52,6 +52,9 @@ namespace TAO
                                         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    Invocation_Status handle_user_exception (TAO_InputCDR &cdr
+                                             ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   private:
 
     Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd,

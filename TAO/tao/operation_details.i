@@ -5,13 +5,17 @@
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
-                                              CORBA::Boolean argument_flag)
-  : opname_ (name),
-    opname_len_ (len),
-    request_id_ (0),
-    argument_flag_ (argument_flag),
-    response_flags_ (0),
-    addressing_mode_ (TAO_Target_Specification::Key_Addr)
+                                              CORBA::Boolean argument_flag,
+                                              TAO_Exception_Data *data,
+                                              CORBA::Long count)
+  : opname_ (name)
+    , opname_len_ (len)
+    , request_id_ (0)
+    , argument_flag_ (argument_flag)
+    , response_flags_ (0)
+    , addressing_mode_ (TAO_Target_Specification::Key_Addr)
+    , ex_data_ (data)
+    , ex_count_ (count)
 {
 }
 

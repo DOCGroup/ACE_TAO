@@ -1,3 +1,29 @@
+Tue Jul  8 20:24:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/operation_details.i:
+	* tao/operation_details.cpp (corba_exception): 
+	* tao/operation_details.h: This class will henceforth have the
+	  information about the exceptions declared in the IDL for every
+	  operation. This detail would be used by the ORB to find out the
+	  right exception that needs to be raised if the incoming GIOP
+	  message is flagged as a user defined exception. This information
+	  is used by the new Invocation classes. A new method,
+	  corba_exception () has been added which converts a repo id into
+	  an equivalent CORBA exception
+
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Base.cpp: The invoke () creates the
+	  TAO_Operation_Details object with the exception list and a count
+	  of the number of the exceptions specified in the IDL file.
+
+	* tao/Synch_Invocation.h:
+	* tao/Synch_Invocation.cpp: Added support for raising the right
+	  type of user exceptions to the application if the message
+	  received indicates the content to be of type user exception.
+
+	* tao/UB_String_Argument_T.cpp: Fixed compile errors on win32 by
+	  applying the right const qualifier.
+
 Tue Jul  8 15:00:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp (TAO): 
