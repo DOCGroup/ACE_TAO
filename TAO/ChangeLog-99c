@@ -1,3 +1,21 @@
+Tue Jul 13 16:15:43 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/IIOP_Connect.cpp
+	* tao/IIOP_Connect.h
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h
+	* tao/Pluggable.cpp
+	* tao/Pluggable.h
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/UIOP_Connect.cpp
+	* tao/UIOP_Connect.h
+	* tao/Wait_Strategy.cpp
+	* tao/Wait_Strategy.h 
+  	  Changes for the Muxed Leader Follower Wait Strategy. This is
+	  leader follower will be created when MT connection handler and
+	  MUXED transport is selected.
+
 Mon Jul 12 22:55:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/GIOP.cpp
