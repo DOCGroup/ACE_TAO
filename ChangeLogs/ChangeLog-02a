@@ -1,3 +1,16 @@
+Wed May 29 09:38:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS_String.inl (strstr):
+
+	  Only use wcswcs() if _XOPEN_SOURCE is defined.  In any case, the
+	  Single UNIX Specification version 2 strongly encourages use of
+	  wcsstr().  Fixes a compile-time error on glibc 2.x platforms.
+
+	  (strtok_r):
+
+	  Glibc has the 3 argument version of wcstok().  Use it instead.
+	  Fixes a compile-time error on glibc 2.x platforms.
+
 Wed May 29 15:52:52 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL_Manager.{h,cpp}:
@@ -5,7 +18,6 @@ Wed May 29 15:52:52 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  Cleaned some problems with auto_ptr usage and added symbol
 	  name to the debug message if the symbol isn't found--not
 	  all systems seem to give you the name of the unfound symbol.
-
 
 Wed May 29 15:06:32 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 

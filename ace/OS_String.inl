@@ -481,7 +481,7 @@ ACE_OS_String::strstr (const wchar_t *s, const wchar_t *t)
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS_String::wcsstr_emulation (s, t);
 #  else /* ACE_LACKS_WCSSTR */
-#    if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#    if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR) && defined (_XOPEN_SOURCE)
   return (const wchar_t *) ::wcswcs (s, t);
 #    else
   return (const wchar_t *) ::wcsstr (s, t);
@@ -507,7 +507,7 @@ ACE_OS_String::strstr (wchar_t *s, const wchar_t *t)
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS_String::wcsstr_emulation (s, t);
 #  else /* ACE_LACKS_WCSSTR */
-#    if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#    if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR) && defined (_XOPEN_SOURCE)
   return ::wcswcs (s, t);
 #    else
   return ::wcsstr (s, t);
@@ -708,18 +708,20 @@ ACE_INLINE wchar_t*
 ACE_OS_String::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
 {
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
-#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-    // The XPG4 spec says 2-arg wcstok() is thread-safe. wcstok_r is obsolete.
-    *lasts = ::wcstok (s, tokens);
-    return *lasts;
+#  if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR) && !defined (__GLIBC__)
+  // The XPG4 spec says 2-arg wcstok() is thread-safe. wcstok_r is
+  // obsolete.
+  // Glibc 2+ has the 3 argument version of wcstok().
+  *lasts = ::wcstok (s, tokens);
+  return *lasts;
 #  else
-    // Apparantly, UNIX98 and ISO/ANSI C define this with 3 args.
-    // Still no mention of wcstok_r...
-    // return ::wcstok_r (s, tokens, lasts);
-    return ::wcstok (s, tokens, lasts);
+  // Apparantly, UNIX98 and ISO/ANSI C define this with 3 args.
+  // Still no mention of wcstok_r...
+  // return ::wcstok_r (s, tokens, lasts);
+  return ::wcstok (s, tokens, lasts);
 #  endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #else
-    return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
+  return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
 #endif  // ACE_HAS_REENTRANT_FUNCTIONS
 }
 #endif  // ACE_HAS_WCHAR
