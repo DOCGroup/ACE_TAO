@@ -66,7 +66,11 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
     {
       ::TranslateMessage (&msg);
       if (msg.message == WM_QUIT)
-        return -1;
+        {
+          // Should inform the main thread
+          ::PostQuitMessage (msg.wParam); 
+          return -1;
+        }
       
       ::DispatchMessage (&msg);
       number_of_messages++;

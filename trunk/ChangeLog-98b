@@ -1,5 +1,17 @@
 Thu Sep 17 01:20:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Msg_WFMO_Reactor.cpp (dispatch_window_messages): There was a
+ 	  slight problem in Msg_WFMO_Reactor.cpp when ACE coexists with
+ 	  MFC.  Basically the dispatch_window_messages routine simply
+ 	  returns -1 when the WM_QUIT message is received.  However, if
+ 	  the WFMO_Reactor and the MFC application run on the different
+ 	  threads the main thread would never shut down since it just keep
+ 	  waiting forever for the Quit message from other threads.  The
+ 	  easiest way to fix the above problem to call PostQuiteMessage
+ 	  when WM_QUIT is received by WFMO_Reactor.
+
+	  Thanks to Hongbo Xu <hxu@mas.co.nz> for fixing this.
+	
 	* ace/OS.i (open): No need to find the file size since
  	  SetFilePointer supports FILE_END.  Also fixed the UNICODE
  	  version of ACE_OS::open().
