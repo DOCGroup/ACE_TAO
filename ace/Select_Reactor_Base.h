@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
@@ -210,6 +209,12 @@ private:
   int max_notify_iterations_;
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+  // = This configuration queues up notifications in separate buffers that
+  //   are in user-space, rather than stored in a pipe in the OS
+  //   kernel.  The kernel-level notifications are used only to trigger
+  //   the Reactor to check its notification queue.  This enables many
+  //   more notifications to be stored than would otherwise be the case.
+
   /// Keeps track of allocated arrays of type
   /// <ACE_Notification_Buffer>.
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
