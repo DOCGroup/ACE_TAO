@@ -1,0 +1,37 @@
+//
+// $Id$
+//
+
+module Test
+{
+  typedef sequence<octet> Payload;
+
+  interface Receiver {
+    /// Receive a big payload
+    oneway void receive_data (in Payload the_payload);
+  };
+
+  interface Sender {
+    /// Create a Data_Server that sends back data to <payload>
+    void add_receiver (in Receiver the_receiver);
+
+    /// Start sending events...
+    oneway void send_events(in long event_count,
+                            in unsigned long event_size);
+
+    /// Shutdown the sender
+    oneway void shutdown();
+  };
+
+  interface Coordinator {
+    /// Add a new pair
+    void add_pair (in Receiver the_receiver,
+                   in Sender the_sender);
+
+    /// Run the test
+    void start();
+
+    /// Shutdown the test
+    oneway void shutdown();
+  };
+};

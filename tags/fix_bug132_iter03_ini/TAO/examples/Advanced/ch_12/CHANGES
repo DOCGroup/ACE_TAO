@@ -1,0 +1,84 @@
+$Id$
+
+Changelog for chapter 8 and 10  example in "Advanced CORBA 
+Programming with C++" by Michi Henning and Steve Vinoski, 
+Copyright 1999, Addison-Wesley, Reading, MA.  The following 
+changes have been made to the book's source code to make the 
+example work with TAO and with various platforms and compilers.
+
+_______________________________________________________________________________
+ESSENTIAL CHANGES:
+  1. Changed filename extensions from .hh and .cc to .h 
+     and .cpp, and made all necessary changes in file content.
+
+  2. a) Commented-out "#include <corba/poaS.h>" in server.h
+    
+     b) Added #include "icp.h" to server.h.
+    
+     c) Unnecessary standard includes of <iostreams.h>, <assert.h>,
+        <fstream.h> and <stdlib.h> must be removed or moved to follow the 
+        local includes in server.h, server.cpp, client.cpp, and icp.cpp.
+
+     d) The following files may need their includes further rearranged 
+        to avoid warnings and errors (g++). The following orderings 
+        seem to work fine: 
+          - server.cpp: "server.h", <algorithm>, "icp.h", <strstream.h>  
+          - server.h:   "CCSS.h", "icp.h", <map>, <list>
+
+  3. Added CORBA_Environment variable to 
+     DeviceLocator::preinvoke() and ::postinvoke() 
+     in server.h and server.cpp to match the signatures of parent
+     methods in TAO's ServanLocator class.
+
+  4. removed if 0 code surrounding
+     operator<<(ostream & os, const CCS::Controller::EChange & ec)
+     definition in server.cpp and client.cpp.
+
+  5. commented-out "delete this;" from method 
+     Thermometer_impl::remove() in server.cpp.
+     (Change should soon be reflected in authors' code)
+_______________________________________________________________________________
+ADDITIONAL CHANGES:
+  6. Added .in() to _var parameters wherever needed:
+     -client.cpp: 
+         4 times in operator<<(ostream, CCS::Thermometer_ptr)
+         6 times in main().  5 are is_nil(), 1 is _narrow()
+         2 additions in main() of .inout to _var parameters to set_temp(..).
+
+     -server.cpp, 
+         2 changes in make_dref()
+         2 changes in Controller_impl::Controller_impl()
+         4 changes in Controller_impl::~Controller_impl()
+         1 change in Controller_impl::create_thermometer
+         2 changes in Controller_impl::create_thermostat()
+         1 change in Controller_impl::list()
+         3 changes in Controller_impl::find
+         7 changes in main()
+
+  7. created needed file at /tmp/CCS_DB. (location is hard-coded)
+     To run, move CCS_DB from this directory to /tmp on the 
+     local machine.
+
+  8. fixed warnings by commented out unused parameters in 
+       -DeviceLocator_impl::postinvoke(..) in server.h
+       -DeviceLocator_impl::preinvoke(..) in server.cpp
+
+  9. MAX_EQ_SIZE changed from int to unsigned int
+     in class DeviceLocator_impl in server.h.
+
+  10. added cast to unsigned long in ~ICP_Persist() in icp.cpp:
+      db << (unsigned long)(i->second.type) << endl;
+
+
+______________________________________________________________________________
+To Do:
+  - fix error on 2 cases of fstream.close() 
+    in server.cpp and icp.cpp
+
+
+
+
+
+
+
+

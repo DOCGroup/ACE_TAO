@@ -1,0 +1,59 @@
+#
+# Makefile for building the TAO tests
+#
+
+DIRS = \
+        AMI \
+        AMI_Timeouts \
+        Bidirectional \
+        Bidirectional_NestedUpcall \
+	CDR \
+	Client_Leaks \
+	Codec \
+	Collocation \
+	Connection_Purging \
+	Crashed_Callback \
+	DSI_Gateway \
+	DynAny_Test \
+	Endpoint_Per_Priority \
+	Explicit_Event_Loop \
+        Exposed_Policies \
+	Faults \
+        FL_Cube \
+        Forwarding \
+        Hello \
+	IDL_Test \
+	InterOp-Naming \
+        ior_corbaloc \
+	IORManipulation \
+	Leader_Followers \
+        LongUpcalls \
+        LongWrites \
+	MProfile \
+        MProfile_Forwarding \
+	MT_Client \
+	MT_Server \
+        Multiple \
+	Multiple_Inheritance \
+	Muxing \
+        Native_Exceptions \
+	Nested_Event_Loop \
+        NestedUpcall \
+        Object_Loader \
+	OctetSeq \
+	ORB_destroy \
+	ORB_init \
+	Param_Test \
+        POA \
+	Policies \
+        Portable_Interceptors \
+        QtTests \
+	RTCORBA \
+	Server_Leaks \
+        Single_Read \
+        Smart_Proxies \
+        Strategies \
+	Timed_Buffered_Oneways \
+        Timeout
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
