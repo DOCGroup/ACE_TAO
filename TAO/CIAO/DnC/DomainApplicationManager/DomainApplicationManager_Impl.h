@@ -17,15 +17,15 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/Vector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "Object_Set_T.h"
+#include "ace/Hash_Map_Manager.h"
 #include "ace/Vector_T.h"
+#include "ace/Functor.h"
 #include "DeploymentS.h"
 
 #include "tao/Valuetype/ValueBase.h"
@@ -227,11 +227,13 @@ namespace CIAO
     /// NodeApplication, Connections, etc.
     /// Key: NodeManager name with CString type.
     /// Value: Chained_Artifacts struct type.
-    ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            Chained_Artifacts,
-                            ACE_Hash<ACE_CString>,
-                            ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> artifact_map_;
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Chained_Artifacts,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> Artifacts_Table;
+                                    
+    Artifacts_Table artifact_map_;
 
     /// The deployment information data file.
     const char * deployment_file_;
