@@ -1,3 +1,8 @@
+Mon Feb 14 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/RTEvent/lib/Implicit_Deactivator.h:
+          Replaced ACE_EXPLICIT with explicit
+
 Sun Feb 13 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.h:
