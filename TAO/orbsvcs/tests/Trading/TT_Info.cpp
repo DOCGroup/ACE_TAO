@@ -17,7 +17,9 @@ const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
 {
   "Name",
   "Location",
-  "Description"
+  "Description",
+  "Host_Name",
+  "Trader_Name"
 };
 
 const char* TT_Info::PLOTTER_NAME = "Plotter";
@@ -127,8 +129,8 @@ const char* TT_Info::QUERIES[][3] =
   {INTERFACE_NAMES[PLOTTER], "'sbw1' in User_Queue", "min Cost_Per_Page"},
   {INTERFACE_NAMES[PLOTTER], "Num_Colors > 1 and Location ~ 'Cupples'", "min Cost_Per_Page"},
   {INTERFACE_NAMES[PRINTER], "Pages_Per_Sec > 3 and Color == TRUE", "with 'sbw1' in User_Queue"},
-  {INTERFACE_NAMES[PRINTER], "Color == TRUE and Double_Sided == TRUE", "random"},
-  {INTERFACE_NAMES[PRINTER], "Color and Double_Sided and 'sbw1' in User_Queue", "with Location ~ 'Cupples'"}
+  {INTERFACE_NAMES[PRINTER], "Color == TRUE or Double_Sided == TRUE", "random"},
+  {INTERFACE_NAMES[PRINTER], "(Color or Double_Sided) and 'sbw1' in User_Queue", "with Location ~ 'Cupples'"}
 };
 
 void

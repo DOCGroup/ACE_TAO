@@ -22,50 +22,96 @@ class TAO_Service_Type_Exporter
 {
 public:
 
-  typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
+  TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
+                             CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException));
   
-  TAO_Service_Type_Exporter (CosTradingRepos::ServiceTypeRepository_ptr str);
-
   void remove_all_types (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTrading::IllegalServiceType, 
 		     CosTrading::UnknownServiceType, 
-		     SERVICE_TYPE_REPOS::HasSubTypes));
+		     CosTradingRepos::ServiceTypeRepository::HasSubTypes));
+  // Remove all service types from the trading service instance.
   
   void add_all_types (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTrading::IllegalServiceType, 
-		     SERVICE_TYPE_REPOS::ServiceTypeExists, 
-		     SERVICE_TYPE_REPOS::InterfaceTypeMismatch, 
+		     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, 
+		     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch, 
 		     CosTrading::IllegalPropertyName, 
 		     CosTrading::DuplicatePropertyName, 
-		     SERVICE_TYPE_REPOS::ValueTypeRedefinition, 
+		     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, 
 		     CosTrading::UnknownServiceType, 
-		     SERVICE_TYPE_REPOS::DuplicateServiceTypeName));
+		     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+  // Add all the generated service types to the trading service instance. 
 
+  void add_all_types_to_all (CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTrading::IllegalServiceType, 
+		     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, 
+		     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch, 
+		     CosTrading::IllegalPropertyName, 
+		     CosTrading::DuplicatePropertyName, 
+		     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, 
+		     CosTrading::UnknownServiceType, 
+		     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+  // Add all the generated service types to all the trading service
+  // instances linked to the trading service we bootstrapped to.
+      
   void list_all_types (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException));
+  // List all the service types registered with the trading service
+  // instance. 
 
   void describe_all_types (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::IllegalServiceType, 
 		   CosTrading::UnknownServiceType));
+  // Describe all the service types registered with the trading
+  // service instance. 
 
   void fully_describe_all_types (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		     CosTrading::IllegalServiceType, 
 		     CosTrading::UnknownServiceType));
+  // Same as describe_all_types, but fully describe lists the
+  // properties of all service types the described service type
+  // inherits from. 
   
 private:
 
   void create_types (void);
-
+  // Generate the service type description structures. 
+  
+  void add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
+                         CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTrading::IllegalServiceType, 
+		     CosTradingRepos::ServiceTypeRepository::ServiceTypeExists, 
+		     CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch, 
+		     CosTrading::IllegalPropertyName, 
+		     CosTrading::DuplicatePropertyName, 
+		     CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition, 
+		     CosTrading::UnknownServiceType, 
+		     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
+  // Add all types to a sepcified service type repository reference.
+  
   void 
   dump_typestruct (const char* type_name,
-		   const SERVICE_TYPE_REPOS::TypeStruct& type_struct) const;
+		   const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const;
+  // Dump the contents of a service type description to standard
+  // output. 
+  
+  CosTrading::Lookup_var lookup_;
+  // A reference to the lookup interface of the trading service
+  // instance. 
   
   CosTradingRepos::ServiceTypeRepository_var repos_;
-  SERVICE_TYPE_REPOS::TypeStruct type_structs_[NUM_TYPES];
+  // A reference to a service type repository instance. 
+  
+  CosTradingRepos::ServiceTypeRepository::TypeStruct type_structs_[NUM_TYPES];
+  // Descriptions of all the service types whose property names are
+  // defined in TT_Info. 
 };
 
 #endif /* TAO_SERVICE_TYPE_EXPORTER_H */

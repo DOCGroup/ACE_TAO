@@ -17,6 +17,7 @@
 #define TAO_OFFER_IMPORTER
 
 #include "TT_Info.h"
+#include "ace/Task_T.h"
 
 class TAO_Offer_Importer
 {
@@ -37,7 +38,8 @@ public:
 		     CosTrading::DuplicatePropertyName,
 		     CosTrading::DuplicatePolicyName));
 
-  void perform_federated_queries (CORBA::Environment& _env)
+  /*
+  void perform_multithreaded_queries (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
 		     CosTrading::IllegalServiceType,
 		     CosTrading::UnknownServiceType,
@@ -49,7 +51,7 @@ public:
 		     CosTrading::IllegalPropertyName,
 		     CosTrading::DuplicatePropertyName,
 		     CosTrading::DuplicatePolicyName));
-  
+                     */  
 private:
 
   void display_results (const CosTrading::OfferSeq& offer_seq,
