@@ -959,7 +959,10 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
   if (CORBA::is_nil (new_obj.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
 
-  safe_data.get ()->servant_orb (CORBA::ORB::_duplicate (this));
+  // @@ Do not duplicate the ORB here!  TAO_Stub::servant_orb()
+  //    duplicates it.
+  //       -Ossama
+  safe_data.get ()->servant_orb (this);
 
   data = safe_data.release ();
 
@@ -2018,7 +2021,11 @@ CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
               // to work first.
 
               // There could only be one ORB which is us.
-              sobj->servant_orb (CORBA::ORB::_duplicate (orb_core->orb ()));
+
+              // @@ Do not duplicate the ORB here!
+              //    TAO_Stub::servant_orb()  duplicates it.
+              //       -Ossama
+              sobj->servant_orb (orb_core->orb ());
 
               return servant_location;
             }
