@@ -80,6 +80,12 @@ class CosEvent_Service
   // Creates a local Rtec.
   // Returns 0 on success, -1 on error.
 
+  void init_SupplierQOS (RtecScheduler::handle_t supp_handle);
+  // Initialize the SupplierQOS Factory.
+
+  void init_ConsumerQOS (RtecScheduler::handle_t cons_handle);
+  // Initialize the ConsumerQOS Factory.
+
   int create_CosEC (void);
   // Creates a local CosEC.
   // Returns 0 on success, -1 on error.
@@ -93,6 +99,9 @@ class CosEvent_Service
 
   const char* rt_service_name;
   // The name of the Real Time Event Service.
+
+  const char* schedule_name_;
+  // The name of the scheduler service.
 
   CORBA::ORB_var orb_;
   // The ORB that we use.
@@ -127,5 +136,22 @@ class CosEvent_Service
 
   CosEventChannelAdmin::EventChannel_ptr cos_ec_;
   // Reference to the CosEC returned after activating it in the ORB.
+
+  int global_scheduler_;
+  // Flag to indicate if the scheduler is local/global,
+  // 0 => local, 1 => global, default is local.
+
+  int remote_Rtec_;
+  // Flag to indicate if the RtEC is local/remote,
+  // 0 => local, 1 => remote, default is remote.\
+
+  char* eventTypeIds_;
+  // The list of EventTypeIDs (for ConsumerQOS) seperated by spaces. e.g. "1 2 3 4"
+
+  char* eventSourceIds_;
+  // The list of EventSourceIDs (for ConsumerQOS) seperated by spaces. e.g. "1 2 3 4"
+
+  char *source_type_pairs_;
+  // The pairs of Source and EventType Ids (for the SupplierQOS).
 };
 #endif /* COSEVENT_SERVICE_H */
