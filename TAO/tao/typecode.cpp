@@ -402,7 +402,6 @@ CORBA_TypeCode::private_equal (CORBA_TypeCode_ptr,
 const CORBA_String
 CORBA_TypeCode::private_id (CORBA_Environment &env) const
 {
-  CORBA_Boolean status = CORBA_B_TRUE;
   env.clear ();
 
   switch (_kind) 
