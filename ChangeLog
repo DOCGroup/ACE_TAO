@@ -10,7 +10,7 @@ Fri Jan 26 16:48:06 2001  Ossama Othman  <ossama@uci.edu>
 	* ace/config-qnx-neutrino.h (ACE_HAS_MUTEX_TIMEOUTS):
 	* ace/config-qnx-rtp.h (ACE_HAS_MUTEX_TIMEOUTS):
 
-	  QNX apparently supports pthread_mutex_timedlock().
+	  QNX supports pthread_mutex_timedlock().  Yes!
 
 Fri Jan 26 17:50:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
