@@ -29,12 +29,14 @@ public:
 
 ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository (void)
 {
+  ACE_TRACE ("ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository");
   ACE_NEW (this->rep_,
            ACE_Based_Pointer_Repository_Rep);
 }
 
 ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository (void)
 {
+  ACE_TRACE ("ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository");
   delete this->rep_;
 }
 
@@ -44,6 +46,7 @@ int
 ACE_Based_Pointer_Repository::find (void *addr,
                                     void *&base_addr)
 {
+  ACE_TRACE ("ACE_Based_Pointer_Repository::find");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
   MAP_ENTRY *ce = 0;
 
@@ -59,7 +62,7 @@ ACE_Based_Pointer_Repository::find (void *addr,
         return 1;
       }
 
-  // Assume base address 0 (e.g. if new'ed).
+  // Assume base address 0 (e.g., if new'ed).
   base_addr = 0;
   return 0;
 }
@@ -71,6 +74,7 @@ int
 ACE_Based_Pointer_Repository::bind (void *addr, 
                                     size_t size)
 {
+  ACE_TRACE ("ACE_Based_Pointer_Repository::bind");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
 
   size_t *sizep;
@@ -96,6 +100,7 @@ ACE_Based_Pointer_Repository::bind (void *addr,
 int
 ACE_Based_Pointer_Repository::unbind (void *addr)
 {
+  ACE_TRACE ("ACE_Based_Pointer_Repository::unbind");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
   MAP_ENTRY *ce = 0;
 
@@ -105,13 +110,16 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
        iter.next (ce) != 0;
        iter.advance ())
     {
-      // Check to see if <addr> is within any of the regions.
+      // Check to see if <addr> is within any of the regions and if
+      // so, delete the memory and unbind the key from the map.
       if (addr >= ce->ext_id_
           && addr < ((char *) ce->ext_id_ + * (ce->int_id_)))
-        delete ce->int_id_;
+        {
+          delete ce->int_id_;
 
-      // Unbind base address.
-      return this->rep_->addr_map_.unbind (ce->ext_id_);
+          // Unbind base address.
+          return this->rep_->addr_map_.unbind (ce->ext_id_);
+        }
     }
 
   return 0;
