@@ -40,6 +40,9 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="#pservices">CORBA Property Service</A></LI>
 
 <LI>
+<A HREF="#av">CORBA Audio/Video Control Service</A></LI>
+
+<LI>
 <A HREF="#ace">ORB-related ACE Changes</A></LI>
 
 <LI>
@@ -382,6 +385,46 @@ Property Service.
 Property Service Specification.</A>
 
 <P>
+<HR>
+<A NAME="av"></A>CORBA Audio/Video Control Service</H3><br>
+
+Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh
+Mungee</a> and <A HREF="mailto:naga@cs.wustl.edu">Nagarajan
+Surendran</a> <p>
+
+This is an implementation of the OMG spec addressing the <a
+href=http://www.cs.wustl.edu/~sumedh/research/corbaav.pdf>Control and
+Management of Audio/Video Streams</a>. <p>
+
+We are currently implementing the various interfaces defined in the
+above spec. We are also working on building a audio/video streaming
+demo that will use the above service as the control mechanism and JAWS
+as an efficient transport and protocol processing framework. <p>
+
+Current Status: <p>
+
+<ul>
+  <li> Implemented the handshake mechanism between the consumer and
+      supplier of the stream.
+  <li> Implemented a simple version of the stream controller
+      (StreamCtrl).
+  <li> Implemented the VDev and StreamEndPoint base class
+      functionality.
+  <li> Implemented the MMDevice interface, which is a factory for
+      StreamEndPoint and VDev objects.
+</ul>
+
+Work in progress: <p>
+
+<ul>
+  <li> Implementing the SFP protocol
+  <li> Porting the distributed audio/video player developed at <a
+href=http://www.cse.ogi.edu/~scen/Player>OGI</a> to ACE (and in the
+      future to JAWS)
+  <li> Implementing the CORBA Stream controller for the above
+      audio/video player
+</ul>
+
 <HR>
 <H3>
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
