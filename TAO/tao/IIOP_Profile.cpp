@@ -155,11 +155,6 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   // Read and verify major, minor versions, ignoring IIOP
   // profiles whose versions we don't understand.
   //
-  // @@ Fred: if we find a version like 1.5 we are supposed to handle
-  // it, i.e. read the fields we know about and ignore the rest!
-  //
-  // XXX this doesn't actually go back and skip the whole
-  // encapsulation...
   if (!(cdr.read_octet (this->version_.major)
         && this->version_.major == TAO_DEF_GIOP_MAJOR
         && cdr.read_octet (this->version_.minor)
@@ -200,6 +195,8 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   if ((cdr >> this->object_key_) == 0)
     return -1;
 
+  // Tagged Components *only* exist after version 1.0!
+  // For GIOP 1.2, IIOP and GIOP have same version numbers!
   if (this->version_.major > 1
       || this->version_.minor > 0)
     if (this->tagged_components_.decode (cdr) == 0)
@@ -265,16 +262,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (this->host_)
     {
-      // @@ You are setting this->host_ using CORBA::string_alloc() a
-      // couple of lines below, you should then use CORBA::string_free()
-      // to release it!  In general use a single form of memory
-      // allocation for a field/variable to avoid new/free() and
-      // malloc/delete() mismatches.
-      // Ohh, and if you are going to use CORBA::string_alloc() &
-      // friends you may consider using CORBA::String_var to manage
-      // the memory automatically (though there may be forces that
-      // suggest otherwise).
-      delete [] this->host_;
+      CORBA::string_free (this->host_);
       this->host_ = 0;
     }
 
@@ -309,16 +297,14 @@ TAO_IIOP_Profile::parse_string (const char *string,
 }
 
 CORBA::Boolean
-TAO_IIOP_Profile::is_equivalent (TAO_Profile *other_profile,
-                                 CORBA::Environment &env)
+TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
-  env.clear ();
 
   if (other_profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     return 0;
 
-  TAO_IIOP_Profile *op =
-    ACE_dynamic_cast (TAO_IIOP_Profile *, other_profile);
+  const TAO_IIOP_Profile *op =
+    ACE_dynamic_cast (const TAO_IIOP_Profile *, other_profile);
 
   ACE_ASSERT (op->object_key_.length () < UINT_MAX);
 

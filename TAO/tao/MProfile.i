@@ -177,7 +177,7 @@ TAO_MProfile::get_profile (CORBA::ULong slot) const
   return this->pfiles_[slot];
 }
 
-ACE_INLINE TAO_Profile_ptr *
+ACE_INLINE TAO_Profile **
 TAO_MProfile::pfiles (void) const
 {
   return this->pfiles_;
@@ -192,9 +192,9 @@ TAO_MProfile::grow (CORBA::ULong sz)
     return 0;
 
   // get the additional space
-  TAO_Profile_ptr *new_pfiles, *old_pfiles;
+  TAO_Profile **new_pfiles, **old_pfiles;
   ACE_NEW_RETURN (new_pfiles,
-                  TAO_Profile_ptr[sz],
+                  TAO_Profile *[sz],
                   -1);
 
   old_pfiles = this->pfiles_;
@@ -211,4 +211,23 @@ TAO_MProfile::grow (CORBA::ULong sz)
   delete [] old_pfiles;
 
   return 0;
+}
+
+ACE_INLINE int
+TAO_MProfile::add_profile (TAO_Profile *pfile)
+{
+  // skip by the used slots
+  if (last_ == size_) // full!
+    {
+      if (this->grow (this->size_ + 1) < 0)
+        return -1;
+    }
+
+  pfiles_[last_++] = pfile;
+
+  if (pfile && pfile->_incr_refcnt () == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Unable to increment reference count in add_profile!\n"),
+                      -1);
+  return last_ - 1;
 }

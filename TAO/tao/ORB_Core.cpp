@@ -344,12 +344,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBHost") == 0)
         {
-          // @@ Fred&Carlos: This option now has the same effect as specifying
-          //                 an extra -ORBendpoint.  Ideally, this option
-          //                 should be removed so that all INET specific
-          //                 stuff can be removed from the ORB core but I
-          //                 guess we need to leave it here for backward
-          //                 compatibility.  C'est la vie.
+          // @@ This option now has the same effect as specifying
+          //    an extra -ORBendpoint.  Ideally, this option
+          //    should be removed so that all INET specific
+          //    stuff can be removed from the ORB core but I
+          //    guess we need to leave it here for backward
+          //    compatibility.  C'est la vie.
 
           old_style_endpoint = 1;
           // Specify the name of the host (i.e., interface) on which

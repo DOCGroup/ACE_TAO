@@ -120,8 +120,7 @@ TAO_Stub::hash (CORBA::ULong max,
 // NOTE that this must NOT go across the network!
 // @@ Two object references are the same if any two profiles are the same!
 CORBA::Boolean
-TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
-                         CORBA::Environment &env)
+TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
   if (CORBA::is_nil (other_obj) == 1)
     return 0;
@@ -133,7 +132,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
     return 0;
 
   // Compare the profiles
-  return this_profile->is_equivalent (other_profile, env);
+  return this_profile->is_equivalent (other_profile);
 }
 
 // Memory managment
