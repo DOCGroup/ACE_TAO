@@ -5,6 +5,15 @@ Thu Dec 10 09:08:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * ACE-INSTALL.html: ACE/TAO build on Linux RedHat 5.2
           as well as 5.1.
 
+        * ace/config-osf1-3.2.h: added getpgid () prototype, because
+          an old comment said that it was missing from the system headers.
+
+        * ace/config-linux-common.h: replaced ACE_LACKS_GETPGID with
+          a getpgid () prototype.
+
+        Thanks to Ivan Pascal <pascal@info.tsu.ru> for motivating the
+        above two getpgid () updates.
+
 Wed Dec 09 22:59:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.7 released.
