@@ -194,16 +194,6 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
 }
 
 void
-TAO_EC_ProxyPushConsumer::activate (
-        RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
-        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  proxy = RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-void
 TAO_EC_ProxyPushConsumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY

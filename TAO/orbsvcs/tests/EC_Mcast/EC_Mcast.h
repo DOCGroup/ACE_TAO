@@ -56,11 +56,12 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/Event/EC_Gateway_UDP.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/EC_UDP_Admin.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
 
 class ECM_Driver;
 
@@ -141,7 +142,7 @@ private:
   char** consumer_names_;
   CORBA::ULong* consumer_ipaddr_;
 
-  TAO_ECG_UDP_Sender sender_;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender) sender_;
   // The sender
 
   TAO_EC_Simple_AddrServer addr_server_;
@@ -295,7 +296,7 @@ public:
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-                      TAO_ECG_UDP_Out_Endpoint* ignore_from
+                      TAO_ECG_Refcounted_Endpoint ignore_from
                       ACE_ENV_ARG_DECL);
   // Connect the UDP receiver to the EC.
 
@@ -359,11 +360,11 @@ private:
   // The last time we changed our publication, so we don't change too
   // often.
 
-  TAO_ECG_UDP_Receiver receiver_;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver_;
   // This object reads the events and pushes them into the EC. Notice
   // that it can receive events from multiple Event Handlers.
 
-  TAO_ECG_Mcast_EH mcast_eh_;
+  TAO_ECG_Mcast_EH* mcast_eh_;
   // The event handler, it receives callbacks from the reactor
   // whenever an event is available in some of the multicast groups,
   // it then forwards to the <mcast_recv_> object for processing and
