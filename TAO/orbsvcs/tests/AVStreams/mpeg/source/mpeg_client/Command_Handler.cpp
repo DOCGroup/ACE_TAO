@@ -6,7 +6,8 @@
 const char *TAO_AV_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
 
 Command_Handler::Command_Handler (ACE_HANDLE command_handle)
-  :video_data_handle_ (-1),
+  :busy_ (0),
+   video_data_handle_ (-1),
    audio_data_handle_ (-1),
    command_handle_ (command_handle),
    video_control_ (0),
@@ -181,102 +182,113 @@ Command_Handler::get_handle (void) const
 int
 Command_Handler::handle_input (ACE_HANDLE fd)
 {
-
+  //  cerr << "(" << getpid () << " Command_Handler::handle_input\n" ;
   unsigned char cmd;
   int val;
-  val = OurCmdRead ((char*)&cmd, 1);
-  ::TimerProcessing ();
+  
+  if (!(this->busy_))
+    {
+      val = OurCmdRead ((char*)&cmd, 1);
+      this->busy_ = 1;
+      ::TimerProcessing ();
 
-  // if we get an interrupt while reading we go back to the event loop    
-  if (val == 1)
-    return 0;
+      // if we get an interrupt while reading we go back to the event loop    
+      if (val == 1)
+        return 0;
 
-  FILE * fp = NULL;   /* file pointer for experiment plan */
-  usr1_flag = 0;
+      FILE * fp = NULL;   /* file pointer for experiment plan */
+      usr1_flag = 0;
     
-    //    fprintf(stderr, "CTR: cmd received - %d\n", cmd);
-  TAO_TRY
-    {
-      switch (cmd)
+      //      fprintf(stderr, "CTR: cmd received - %d\n", cmd);
+      TAO_TRY
         {
-        case CmdINIT:
-          ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
-          if (this->init_av () == -1)
+          switch (cmd)
             {
-              TAO_ORB_Core_instance ()->orb ()->shutdown ();
-              return -1;
+            case CmdINIT:
+              ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler:CmdINIT received\n"));
+              if (this->init_av () == -1)
+                {
+                  ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_av failed\n"));
+                  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+                  return -1;
+                }
+              //              cerr << "init_av done\n";
+              // automatic experiment code zapped :-)
+              fp = NULL;
+              break;
+            case CmdSTOP:
+              this->stop();
+              break;
+            case CmdFF:
+              this->fast_forward ();
+              break;
+            case CmdFB:
+              this->fast_backward ();
+              break;
+            case CmdSTEP:
+              this->step ();
+              break;
+            case CmdPLAY:
+              // automatic experiment code zapped :-)
+              if (this->play (fp != NULL,
+                              TAO_TRY_ENV) < 0)
+                ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)play failed\n"),-1);
+              TAO_CHECK_ENV;
+              break;
+            case CmdPOSITION:
+              this->position ();
+              break;
+            case CmdPOSITIONrelease:
+              this->position_release ();
+              break;
+            case CmdVOLUME:
+              this->volume ();
+              break;
+            case CmdBALANCE:
+              this->balance ();
+              break;
+            case CmdSPEED:
+              this->speed ();
+              break;
+            case CmdLOOPenable:
+              {
+                shared->loopBack = 1;
+                break;
+              }
+            case CmdLOOPdisable:
+              {
+                shared->loopBack = 0;
+                break;
+              }
+            default:
+              fprintf(stderr, "CTR: unexpected command from UI: cmd = %d.\n", cmd);
+              exit(1);
+              break;
             }
-          // automatic experiment code zapped :-)
-          fp = NULL;
-          break;
-        case CmdSTOP:
-          this->stop();
-          break;
-        case CmdFF:
-          this->fast_forward ();
-          break;
-        case CmdFB:
-          this->fast_backward ();
-          break;
-        case CmdSTEP:
-          this->step ();
-          break;
-        case CmdPLAY:
-          // automatic experiment code zapped :-)
-          if (this->play (fp != NULL,
-                          TAO_TRY_ENV) < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)play failed\n"),-1);
-          TAO_CHECK_ENV;
-          break;
-        case CmdPOSITION:
-          this->position ();
-          break;
-        case CmdPOSITIONrelease:
-          this->position_release ();
-          break;
-        case CmdVOLUME:
-          this->volume ();
-          break;
-        case CmdBALANCE:
-          this->balance ();
-          break;
-        case CmdSPEED:
-          this->speed ();
-          break;
-        case CmdLOOPenable:
-          {
-            shared->loopBack = 1;
-            break;
-          }
-        case CmdLOOPdisable:
-          {
-            shared->loopBack = 0;
-            break;
-          }
-        default:
-          fprintf(stderr, "CTR: unexpected command from UI: cmd = %d.\n", cmd);
-          exit(1);
-          break;
         }
+      TAO_CATCHANY
+        {
+          TAO_TRY_ENV.print_exception ("Command_Handler::handle_input ()");
+          return -1;
+        }
+      TAO_ENDTRY;
+      //      cerr << "returning from Command_Handler::handle_input \n";
+      this->busy_ = 0;
+      // unset the busy flag,done with processing the command.
     }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Command_Handler::handle_input ()");
-      return -1;
-    }
-  TAO_ENDTRY;
   return 0;
 }
 
 int 
 Command_Handler::init_av (void)
 {
-
+  //  cerr << "inside init_av \n";
   int i, j;
 
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
     {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Reached line %d in %s\n", __LINE__, __FILE__));
       // this may have to be taken care of afterwards.
       unsigned char tmp = CmdCLOSE;
       int result = 
@@ -312,20 +324,38 @@ Command_Handler::init_av (void)
         }
     }
 
+  int result;
   /* read in video/audio files */
+  // set the vf and af to 0 , very important.
+
+  vh [0] = 0;
+  vf [0]= 0;
+  ah [0] = 0;
+  af [0]=0;
+  
   NewCmd(CmdINIT);
-  CmdRead((char*)&i, 4);
-  CmdRead(vh, i);
-  vh[i] = 0;
-  CmdRead((char*)&i, 4);
-  CmdRead(vf, i);
+  i = 0;
+  //  cerr << "cmdsocket = " << cmdSocket << endl;
+//   result = OurCmdRead((char*)&i, 4);
+//   cerr << " " <<i << " ";
+//   result = OurCmdRead(vh, i);
+//   vh[i] = 0;
+//   cerr << vh << "\n";
+  result = OurCmdRead((char*)&i, 4);
+  //  cerr << i << " ";
+  result = OurCmdRead(vf, i);
   vf[i] = 0;
-  CmdRead((char*)&i, 4);
-  CmdRead(ah, i);
-  ah[i] = 0;
-  CmdRead((char*)&i, 4);
-  CmdRead(af, i);
+  //  cerr << vf << "\n";
+//   result = OurCmdRead((char*)&i, 4);
+//   cerr << i << " ";
+//   result = OurCmdRead(ah, i);
+//   ah[i] = 0;
+//   cerr << ah << endl;
+  result = OurCmdRead((char*)&i, 4);
+  //  cerr << i << " ";
+  result = OurCmdRead(af, i);
   af[i] = 0;
+  //  cerr << af << endl;
   /*
     fprintf(stderr, "INIT: vh-%s, vf-%s, ah-%s, af-%s\n", vh, vf, ah, af);
   */
@@ -402,6 +432,7 @@ Command_Handler::init_av (void)
         }
       return 0;
     }
+  //  cerr << "returning from init_av \n";
   return 0;
 }
 

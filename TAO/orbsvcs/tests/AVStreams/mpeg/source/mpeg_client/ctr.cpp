@@ -2909,7 +2909,7 @@ int CTRmain(int argc,
     exit(1);
   }
   cmdSocket = sv[0];
-  
+  cerr << "cmdsocket = " << cmdSocket << endl;
   /* fork processes: VD, GUI */
  
   if ((VDpid = fork()) == -1)

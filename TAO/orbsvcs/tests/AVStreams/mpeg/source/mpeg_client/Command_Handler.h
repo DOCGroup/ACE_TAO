@@ -360,6 +360,9 @@ public:
   // mmdevices together.
 
 private:
+  int busy_;
+  // flag to indicate the state of the command handler
+
   ACE_SOCK_Dgram video_dgram_;
   // UDP socket on which to send/recv data
   
