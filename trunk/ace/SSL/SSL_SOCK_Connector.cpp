@@ -1,13 +1,11 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #include "SSL_SOCK_Connector.h"
 #include "SSL_Connect_Handler.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/Synch_T.h"
+#include "ace/Log_Msg.h"
 
 #include <openssl/err.h>
 
@@ -43,9 +41,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
 
   if (::SSL_get_error (new_stream.ssl (), status) != SSL_ERROR_NONE)
     {
-#ifndef ACE_NDEBUG
-      ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+      ACE_SSL_Context::report_error ();
 
       return -1;
     }
@@ -227,7 +223,7 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
+		ACE_TEXT ("%p\n"),
 		ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }
 
@@ -265,6 +261,6 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
+		ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }

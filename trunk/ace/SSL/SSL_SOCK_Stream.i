@@ -82,9 +82,8 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
           return bytes_sent;
 
         default:
-#ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+          ACE_SSL_Context::report_error ();
+
           return -1;
         }
     }
@@ -204,9 +203,8 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           ACE_OS::set_errno_to_last_error ();
 
         default:
-#ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
+          ACE_SSL_Context::report_error ();
+
           return -1;
         }
     }
