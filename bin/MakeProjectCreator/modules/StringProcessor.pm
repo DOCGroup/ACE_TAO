@@ -59,50 +59,30 @@ sub process_special {
 
 
 sub create_array {
-  my($self)   = shift;
-  my($line)   = shift;
-  my(@array)  = ();
-  my($length) = length($line);
-  my($prev)   = 0;
-  my($double) = 0;
-  my($single) = 0;
+  my($self)  = shift;
+  my($line)  = shift;
+  my(@array) = ();
 
-  for(my $i = 0; $i <= $length; $i++) {
-    my($ch) = substr($line, $i, 1);
-    if (!$double && !$single && ($ch eq '' || $ch =~ /\s/)) {
-      my($val) = substr($line, $prev, $i - $prev);
-      $val =~ s/^\s+//;
-      $val =~ s/\s+$//;
-      if ($val =~ /^\"(.*)\"$/) {
-        $val = $1;
-      }
-      elsif ($val =~ /^\'(.*)\'$/) {
-        $val = $1;
-      }
+  ## Replace all escaped double and single quotes with special characters
+  my($escaped) = ($line =~ s/\\\"/\01/g);
+  $escaped |= ($line =~ s/\\\'/\02/g);
 
-      ## Only add the value to the array if the string isn't empty
-      if ($val ne '') {
-        push(@array, $val);
-      }
-      for(; $i < $length; $i++) {
-        if (substr($line, $i, 1) !~ /\s/) {
-          $i--;
-          last;
-        }
-      }
-      $prev = $i + 1;
+  foreach my $part (grep(!/^\s*$/,
+                         split(/(\"[^\"]+\"|\'[^\']+\'|\s+)/, $line))) {
+    ## Remove enclosing double and single quotes
+    $part =~ s/^"(.*)"$/$1/;
+    $part =~ s/^'(.*)'$/$1/;
+
+    ## Put any escaped double or single quotes back into the string.
+    if ($escaped) {
+      $part =~ s/\01/\"/g;
+      $part =~ s/\02/\'/g;
     }
-    elsif ($double && $ch eq "\\" && $i + 1 < $length) {
-      substr($line, $i, 1) = '';
-      $length--;
-    }
-    elsif ($ch eq '"') {
-      $double ^= 1;
-    }
-    elsif ($ch eq "'") {
-      $single ^= 1;
-    }
+
+    ## Push it onto the array
+    push(@array, $part);
   }
+
   return \@array;
 }
 

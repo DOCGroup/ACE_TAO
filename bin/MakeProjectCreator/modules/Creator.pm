@@ -55,28 +55,29 @@ sub new {
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
-  $self->{'relative'}       = $relative;
-  $self->{'template'}       = $template;
-  $self->{'ti'}             = $ti;
-  $self->{'global'}         = $global;
-  $self->{'grammar_type'}   = $type;
-  $self->{'type_check'}     = $type . '_defined';
-  $self->{'global_read'}    = 0;
-  $self->{'current_input'}  = '';
-  $self->{'progress'}       = $progress;
-  $self->{'addtemp'}        = $addtemp;
-  $self->{'addproj'}        = $addproj;
-  $self->{'toplevel'}       = $toplevel;
-  $self->{'files_written'}  = [];
-  $self->{'reading_global'} = 0;
-  $self->{'global_assign'}  = {};
-  $self->{'assign'}         = {};
-  $self->{'baseprojs'}      = $baseprojs;
-  $self->{'dynamic'}        = $dynamic;
-  $self->{'static'}         = $static;
-  $self->{'feature_file'}   = $feature;
-  $self->{'hierarchy'}      = $hierarchy;
-  $self->{'name_modifier'}  = $nmodifier;
+  $self->{'relative'}        = $relative;
+  $self->{'template'}        = $template;
+  $self->{'ti'}              = $ti;
+  $self->{'global'}          = $global;
+  $self->{'grammar_type'}    = $type;
+  $self->{'type_check'}      = $type . '_defined';
+  $self->{'global_read'}     = 0;
+  $self->{'current_input'}   = '';
+  $self->{'progress'}        = $progress;
+  $self->{'addtemp'}         = $addtemp;
+  $self->{'addproj'}         = $addproj;
+  $self->{'toplevel'}        = $toplevel;
+  $self->{'files_written'}   = [];
+  $self->{'reading_global'}  = 0;
+  $self->{'global_assign'}   = {};
+  $self->{'assign'}          = {};
+  $self->{'baseprojs'}       = $baseprojs;
+  $self->{'dynamic'}         = $dynamic;
+  $self->{'static'}          = $static;
+  $self->{'feature_file'}    = $feature;
+  $self->{'hierarchy'}       = $hierarchy;
+  $self->{'name_modifier'}   = $nmodifier;
+  $self->{'convert_slashes'} = $self->convert_slashes();
 
   return $self;
 }
@@ -316,7 +317,7 @@ sub parse_scope {
     $flags = {};
   }
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -501,7 +502,7 @@ sub modify_assignment_value {
   my($self)  = shift;
   my($value) = shift;
 
-  if ($self->convert_slashes()) {
+  if ($self->{'convert_slashes'}) {
     $value = $self->slash_to_backslash($value);
   }
   return $value;
