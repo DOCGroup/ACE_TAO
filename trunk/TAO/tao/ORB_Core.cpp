@@ -15,12 +15,9 @@
 typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 
-ACE_Lock *TAO_COLTBL_Lock::coltbl_lock_ = 0;
-
 TAO_COLTBL_Lock::TAO_COLTBL_Lock (void)
 {
-  if (TAO_COLTBL_Lock::coltbl_lock_ == 0)
-    TAO_COLTBL_Lock::coltbl_lock_ =TAO_ORB_Core_instance ()->server_factory ()->create_coltbl_lock ();
+    this->lock_ =TAO_ORB_Core_instance ()->server_factory ()->create_coltbl_lock ();
   // We don't need to worry about the race condition here because this
   // is called from within the ctor of Hash_Map_Manager which is
   // placed inside a ACE_Singleton.
@@ -28,62 +25,8 @@ TAO_COLTBL_Lock::TAO_COLTBL_Lock (void)
 
 TAO_COLTBL_Lock::~TAO_COLTBL_Lock (void)
 {
-  delete TAO_COLTBL_Lock::coltbl_lock_;
-  TAO_COLTBL_Lock::coltbl_lock_ = 0;
-}
-
-int
-TAO_COLTBL_Lock::remove (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->remove ();
-}
-
-int
-TAO_COLTBL_Lock::acquire (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->acquire ();
-}
-
-int
-TAO_COLTBL_Lock::tryacquire (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->tryacquire ();
-}
-
-int
-TAO_COLTBL_Lock::release (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->release ();
-}
-
-int
-TAO_COLTBL_Lock::acquire_read (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->acquire_read ();
-}
-
-int
-TAO_COLTBL_Lock::acquire_write (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->acquire_write ();
-}
-
-int
-TAO_COLTBL_Lock::tryacquire_read (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->tryacquire_read ();
-}
-
-int
-TAO_COLTBL_Lock::tryacquire_write (void)
-{
-  return TAO_COLTBL_Lock::coltbl_lock_->tryacquire_write ();
-}
-
-void
-TAO_COLTBL_Lock::dump (void) const
-{
-  //  return TAO_COLTBL_Lock::coltbl_lock_->dump ();
+  delete this->lock_;
+  this->lock_ = 0;
 }
 
 
