@@ -184,11 +184,18 @@ public:
   // Accessor for the scheduling
 
 private:
-  // @@ Please comment me.
   ACE_Sched_Params::Policy policy_;
   int scope_;
+  // The Scheduling policy (FIFO, RR, etc.) and scheduling scope
+  // (PROCESS, SYSTEM) we are iterating on.
+
   int priority_;
+  // The current priority.
+
   int done_;
+  // This is set to 1 when there are no more priorities. Cannot easily
+  // compare against the highest priority on platforms were priorities
+  // are non-contigous or descending.
 };
 
 #if defined (__ACE_INLINE__)

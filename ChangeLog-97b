@@ -1,3 +1,11 @@
+Sun Oct 12 16:45:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Sched_Params.h: 
+	  Added some comments.
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
+	  Added some comments and template specializations.
+
 Sun Oct 12 16:22:06 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* examples/Naming/Makefile: 
