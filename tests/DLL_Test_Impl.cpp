@@ -17,8 +17,11 @@
 // ============================================================================
 
 #include "DLL_Test_Impl.h"
+#include "ace/svc_export.h"
 
-ACE_RCSID(tests, DLL_Test_Impl, "$Id$")
+ACE_RCSID (tests,
+           DLL_Test_Impl,
+           "$Id$")
 
 Hello_Impl::Hello_Impl (void)
 {

@@ -1,3 +1,30 @@
+Wed Apr 10 19:25:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* apps/Gateway/Gateway/Config_Files.cpp (read_entry): 
+
+	  Use "unsigned short" instead of the "u_short" typedef to avoid
+	  including "ace/OS.h".
+
+	* apps/Gateway/Gateway/Gateway.h:
+	* apps/Gateway/Gateway/Event_Channel.h:
+	* apps/Gateway/Gateway/Options.h:
+	* apps/Gateway/Peer/Options.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
+	* examples/Service_Configurator/Misc/Timer_Service.h:
+	* netsvcs/clients/Naming/Client/Client_Test.h:
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
+	* tests/DLL_Test_Impl.cpp:
+
+	  Include "ace/svc_export.h" to pull in ACE_Svc_Export macro.
+
 Wed Apr 10 18:57:11 2002  Ossama Othman  <ossama@uci.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.h:

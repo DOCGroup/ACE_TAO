@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 /* Handle connections from local UNIX ACE_FIFO */
@@ -16,6 +17,7 @@
 #include "ace/Service_Types.h"
 #include "ace/FIFO_Recv_Msg.h"
 #include "ace/Log_Msg.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_Recv_Msg
 {

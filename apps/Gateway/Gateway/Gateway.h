@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -22,6 +23,7 @@
 #define ACE_GATEWAY
 
 #include "ace/OS.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,4 +32,3 @@
 ACE_SVC_FACTORY_DECLARE (Gateway)
 
 #endif /* ACE_GATEWAY */
-

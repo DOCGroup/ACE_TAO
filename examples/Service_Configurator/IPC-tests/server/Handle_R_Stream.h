@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 /* Handle connections from remote INET connections. */
@@ -17,6 +18,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Handle_R_Stream : public ACE_Service_Object, public ACE_SOCK_Acceptor
 {

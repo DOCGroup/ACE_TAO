@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 /* Handles INET broadcast datagram messages from remote hosts on the local subnet. */
@@ -16,6 +17,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/Log_Msg.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Handle_Broadcast : public ACE_Service_Object, public ACE_SOCK_Dgram
 {

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // Handle connections from local UNIX domain sockets that are sending
@@ -16,6 +17,7 @@
 #include "ace/Service_Types.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK_Acceptor.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
