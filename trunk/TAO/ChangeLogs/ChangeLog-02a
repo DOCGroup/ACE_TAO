@@ -1,3 +1,10 @@
+Thu May 25 19:35:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+	  Removed .in() from two things that weren't _vars in
+	  create_exception_tc - the same change that was made
+	  to create_struct_tc a few days ago.
+
 Thu May 25 12:14:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
