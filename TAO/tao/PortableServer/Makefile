@@ -25,6 +25,7 @@ CPP_SRCS += \
   PortableServer \
   PortableServerC \
   POA \
+  Default_Acceptor_Filter \
   Object_Adapter \
   Operation_Table \
   Key_Adapters \

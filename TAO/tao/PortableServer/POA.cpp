@@ -20,7 +20,7 @@
 #include "tao/debug.h"
 
 #include "tao/RT_Policy_i.h"
-#include "tao/Acceptor_Filter.h"
+#include "Default_Acceptor_Filter.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
@@ -3797,53 +3797,6 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-
-// @@ We may want to move these Filter classes to a separate file, but they
-// are only used here.
-
-class TAO_Default_Acceptor_Filter : public TAO_Acceptor_Filter
-{
-  // = TITLE
-  //   Default Acceptor_Filter.
-  //
-  // = DESCRIPTION
-  //   Default strategy for populating mprofile: all available
-  //   endpoints are included.
-  //
-public:
-  TAO_Default_Acceptor_Filter (void);
-
-  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile,
-                             TAO_Acceptor **acceptors_begin,
-                             TAO_Acceptor **acceptors_end);
-  // Populate <mprofile> with all available endpoints.
-};
-
-TAO_Default_Acceptor_Filter::TAO_Default_Acceptor_Filter (void)
-{
-}
-
-int
-TAO_Default_Acceptor_Filter::fill_mprofile (const TAO_ObjectKey &object_key,
-                                            TAO_MProfile &mprofile,
-                                            TAO_Acceptor **acceptors_begin,
-                                            TAO_Acceptor **acceptors_end)
-{
-  //int acceptors_used = 0;
-
-  for (TAO_Acceptor** acceptor = acceptors_begin;
-       acceptor != acceptors_end;
-       ++acceptor)
-    {
-      if ((*acceptor)->create_mprofile (object_key, mprofile)
-          == -1)
-        return -1;
-    }
-
-  return 0;
-}
 
 #if (TAO_HAS_RT_CORBA == 1)
 
