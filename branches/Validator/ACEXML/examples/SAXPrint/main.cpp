@@ -11,7 +11,7 @@
 #include "ace/Auto_Ptr.h"
 
 static const ACEXML_Char *test_string =
-ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &amp; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
+ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &quot; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
 
 static void
 usage (const ACE_TCHAR* program)
@@ -112,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   else {
     ACE_NEW_RETURN (stm,
-                    ACEXML_StrCharStream (test_string),
+                    ACEXML_StrCharStream (test_string, "test_string"),
                     -1);
   }
 

@@ -218,3 +218,9 @@ ACEXML_FileCharStream::getEncoding (void)
 {
   return this->encoding_;
 }
+
+const ACEXML_Char*
+ACEXML_FileCharStream::getSystemId (void)
+{
+  return this->filename_;
+}

@@ -348,6 +348,13 @@ ACEXML_HttpCharStream::getEncoding (void)
   return this->encoding_;
 }
 
+const ACEXML_Char*
+ACEXML_HttpCharStream::getSystemId (void)
+{
+  return this->url_;
+}
+
+
 int
 ACEXML_HttpCharStream::read (ACEXML_Char *str,
                              size_t len)

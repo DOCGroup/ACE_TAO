@@ -68,7 +68,16 @@ ACEXML_Parser::initialize(ACEXML_InputSource* input)
           return -1;
         }
     }
-  return this->switch_input (input);
+  return this->switch_input (input, input->getSystemId());
+}
+
+void
+ACEXML_Parser::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
+{
+  ACEXML_InputSource* input = 0;
+  ACE_NEW (input, ACEXML_InputSource (systemId));
+  this->parse (input ACEXML_ENV_ARG_PARAMETER);
 }
 
 void
@@ -197,18 +206,6 @@ ACEXML_Parser::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
   this->reset();
 }
 
-void
-ACEXML_Parser::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((ACEXML_SAXException))
-{
-  // @@ Not implemented.
-  ACE_UNUSED_ARG (systemId);
-
-  ACEXML_THROW (ACEXML_SAXNotSupportedException ());
-}
-
-
-
 int
 ACEXML_Parser::parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
@@ -286,55 +283,6 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ACEXML_Parser::parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
-{
-  this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
-  ACEXML_Char* publicId = 0;
-  ACEXML_Char* systemId = 0;
-  if (this->parse_external_id (publicId, systemId
-                               ACEXML_ENV_ARG_PARAMETER) != 0)
-    {
-      this->fatal_error (ACE_TEXT ("Error in parsing ExternalID")
-                         ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_CHECK_RETURN (-1);
-    }
-  if (this->validate_)
-    {
-      ACEXML_Char* uri = this->normalize_systemid (systemId);
-      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
-      ACEXML_InputSource* ip = 0;
-      if (this->entity_resolver_)
-        {
-          ip = this->entity_resolver_->resolveEntity (publicId,
-                                                      (uri ? uri : systemId)
-                                                      ACEXML_ENV_ARG_PARAMETER);
-          ACEXML_CHECK_RETURN (-1);
-        }
-      if (ip)
-        {
-          if (this->switch_input (ip, (uri ? uri : systemId), publicId) != 0)
-            return -1;
-        }
-      else
-        {
-          ACEXML_StreamFactory factory;
-          ACEXML_CharStream* cstream = factory.create_stream (uri ?
-                                                              uri: systemId);
-          if (!cstream) {
-            this->fatal_error (ACE_TEXT ("Invalid input source")
-                               ACEXML_ENV_ARG_PARAMETER);
-            ACEXML_CHECK_RETURN (-1);
-          }
-          if (this->switch_input (cstream, systemId, publicId) != 0)
-            return -1;
-        }
-      this->parse_external_subset (ACEXML_ENV_SINGLE_ARG_PARAMETER);
-      ACEXML_CHECK_RETURN (-1);
-    }
-  return 0;
-}
-
-int
 ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   this->ref_state_ = ACEXML_ParserInt::IN_INT_DTD;
@@ -387,6 +335,56 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
 
   ACE_NOTREACHED (return -1);
 }
+
+int
+ACEXML_Parser::parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
+{
+  this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
+  ACEXML_Char* publicId = 0;
+  ACEXML_Char* systemId = 0;
+  if (this->parse_external_id (publicId, systemId
+                               ACEXML_ENV_ARG_PARAMETER) != 0)
+    {
+      this->fatal_error (ACE_TEXT ("Error in parsing ExternalID")
+                         ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+    }
+  if (this->validate_)
+    {
+      ACEXML_Char* uri = this->normalize_systemid (systemId);
+      ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_uri (uri);
+      ACEXML_InputSource* ip = 0;
+      if (this->entity_resolver_)
+        {
+          ip = this->entity_resolver_->resolveEntity (publicId,
+                                                      (uri ? uri : systemId)
+                                                      ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK_RETURN (-1);
+        }
+      if (ip)
+        {
+          if (this->switch_input (ip, (uri ? uri : systemId), publicId) != 0)
+            return -1;
+        }
+      else
+        {
+          ACEXML_StreamFactory factory;
+          ACEXML_CharStream* cstream = factory.create_stream (uri ?
+                                                              uri: systemId);
+          if (!cstream) {
+            this->fatal_error (ACE_TEXT ("Invalid input source")
+                               ACEXML_ENV_ARG_PARAMETER);
+            ACEXML_CHECK_RETURN (-1);
+          }
+          if (this->switch_input (cstream, systemId, publicId) != 0)
+            return -1;
+        }
+      this->parse_external_subset (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+    }
+  return 0;
+}
+
 
 int
 ACEXML_Parser::parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
@@ -736,37 +734,26 @@ ACEXML_Parser::normalize_systemid (const char* systemId)
     {
       ACEXML_Char* normalized_uri = 0;
       const char* baseURI = this->current_->getLocator()->getSystemId();
-      if (!baseURI)
-        return 0;
+      ACE_ASSERT (baseURI);
+      const ACEXML_Char* temp = 0;
       if (ACE_OS::strstr (baseURI, ACE_TEXT ("http://")) != 0)
+        // baseURI is a HTTP URL and systemId is relative. Note that this
+        // is not compliant with RFC2396. Caveat Emptor !
+        temp = ACE_OS::strrchr (baseURI, '/');
+      else
+        // baseURI is a local file and systemId is relative
+        // Unlike the HTTP one, this will work always.
+        temp = ACE_OS::strrchr (baseURI,ACE_DIRECTORY_SEPARATOR_CHAR);
+      if (temp)
         {
-          // baseURI is a HTTP URL and systemId is relative. Note that this
-          // is not compliant with RFC2396. Caveat Emptor !
-          const ACEXML_Char* temp = ACE_OS::strrchr (baseURI, '/');
           size_t pos = temp - baseURI + 1;
           size_t len = pos + ACE_OS::strlen (systemId) + 1;
           ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], 0);
           ACE_OS::strncpy (normalized_uri, baseURI, pos);
-          ACE_OS::strcpy (normalized_uri + pos + 1, systemId);
+          ACE_OS::strcpy (normalized_uri + pos, systemId);
           return normalized_uri;
         }
-      else
-        {
-          const ACEXML_Char*
-            temp = ACE_OS::strrchr (baseURI,ACE_DIRECTORY_SEPARATOR_CHAR);
-          // baseURI is a local file and systemId is relative
-          // Unlike the HTTP one, this will work always.
-          if (temp)
-            {
-              size_t pos = temp - baseURI + 1;
-              size_t len = pos + ACE_OS::strlen (systemId) + 1;
-              ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], 0);
-              ACE_OS::strncpy (normalized_uri, baseURI, pos);
-              ACE_OS::strcpy (normalized_uri + pos + 1, systemId);
-              return normalized_uri;
-            }
-          return 0;
-        }
+      return 0;
     }
 }
 
@@ -2266,7 +2253,7 @@ ACEXML_Parser::parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
   const ACEXML_Char* entity = this->internal_GE_.resolve_entity(replace);
 
   // Look in the predefined entities.
-  if (!entity && !this->validate_)
+  if (!entity)
     {
       entity = this->predef_entities_.resolve_entity (replace);
       if (!entity)
@@ -2325,7 +2312,7 @@ ACEXML_Parser::parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
       //       ACE_DEBUG ((LM_DEBUG,
       //                   ACE_TEXT ("Entity is %s\n Replacement Text is : %s\n"),
       //                   replace, entity));
-      ACE_NEW_RETURN (str, ACEXML_StrCharStream (entity), 0);
+      ACE_NEW_RETURN (str, ACEXML_StrCharStream (entity, replace), 0);
       if (str)
         {
           if (this->switch_input (str, replace) != 0)
@@ -2445,7 +2432,7 @@ ACEXML_Parser::parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
       //       ACE_DEBUG ((LM_DEBUG,
       //                   ACE_TEXT ("Entity is %s\n Replacement Text is : %s\n"),
       //                   replace, str.c_str()));
-      ACE_NEW_RETURN (sstream, ACEXML_StrCharStream (str.c_str()), 0);
+      ACE_NEW_RETURN (sstream, ACEXML_StrCharStream (str.c_str(), replace), 0);
       if (sstream)
         {
           if (this->switch_input (sstream, replace) != 0)
@@ -2810,6 +2797,8 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
                              const ACEXML_Char* publicId)
 {
   ACEXML_LocatorImpl* locator = 0;
+  if (!systemId)
+    systemId = input->getSystemId();
   ACE_NEW_RETURN (locator, ACEXML_LocatorImpl (systemId, publicId), -1);
   ACEXML_Parser_Context* new_context = 0;
   ACE_NEW_RETURN (new_context, ACEXML_Parser_Context(input, locator), -1);

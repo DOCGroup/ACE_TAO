@@ -70,6 +70,11 @@ public:
    */
   virtual const ACEXML_Char *getEncoding (void)  = 0;
 
+  /*
+   * Get the systemId for the underlying CharStream
+   */
+  virtual const ACEXML_Char* getSystemId (void) = 0;
+
 };
 
 #include "ace/post.h"

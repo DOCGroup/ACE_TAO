@@ -1,23 +1,23 @@
 // -*- C++ -*- $Id$
 
 #include "ACEXML/common/InputSource.h"
+#include "ACEXML/common/StreamFactory.h"
 #include "ace/ACE.h"
 
 ACEXML_InputSource::ACEXML_InputSource (void)
-  : publicId_ (0),
-    systemId_ (0),
-    charStream_ (0),
-    encoding_ (0)
+  : charStream_ (0),
+    encoding_ (0),
+    publicId_ (0),
+    systemId_ (0)
 {
 }
 
 ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
-  : publicId_ (0),
-    systemId_ (0),
-    charStream_ (stm),
-    encoding_ (0)
+  : charStream_ (stm),
+    encoding_ (ACE::strnew (stm->getEncoding())),
+    publicId_ (0),
+    systemId_ (stm->getSystemId() ? ACE::strnew (stm->getSystemId()): 0)
 {
-  this->setEncoding (stm->getEncoding());
 }
 
   /*
@@ -26,8 +26,14 @@ ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
   */
 
 ACEXML_InputSource::ACEXML_InputSource (const ACEXML_Char *systemId)
-  : systemId_ (ACE::strnew (systemId))
+  : charStream_ (0),
+    encoding_ (0),
+    publicId_ (0),
+    systemId_ (ACE::strnew (systemId))
 {
+  ACEXML_StreamFactory factory;
+  this->setCharStream (factory.create_stream (this->systemId_));
+  this->setEncoding (this->charStream_->getEncoding());
 }
 
 ACEXML_InputSource::~ACEXML_InputSource (void)
