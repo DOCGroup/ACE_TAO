@@ -1,3 +1,7 @@
+Thu Nov  6 01:36:43 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* tao/orbconf.h: Added NetBSD to the #define around HAVE_WIDEC_H.
+
 Thu Nov  6 01:34:49 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/orb_core.cpp: #defined around some thread-specific template
