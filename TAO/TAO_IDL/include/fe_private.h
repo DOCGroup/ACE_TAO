@@ -99,9 +99,9 @@ struct TAO_IDL_CPP_Keyword_Entry
 class TAO_IDL_CPP_Keyword_Table
 {
 private:
-  unsigned int hash (const char *str, int len);
+  unsigned int hash (const char *str, unsigned int len);
 public:
-  const TAO_IDL_CPP_Keyword_Entry *lookup (const char *str, int len);
+  const TAO_IDL_CPP_Keyword_Entry *lookup (const char *str, unsigned int len);
 };
 
 #endif           // _FE_FE_HH
