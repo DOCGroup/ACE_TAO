@@ -228,8 +228,6 @@ template class ACE_Hash_Map_Manager_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_C
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-// The ACE_CString case is covered in TAO
-template class ACE_Equal_To<ACE_CString>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -238,7 +236,5 @@ template class ACE_Equal_To<ACE_CString>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
-// The ACE_CString case is covered in TAO
-#pragma instantiate ACE_Equal_To<ACE_CString>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

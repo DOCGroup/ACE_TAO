@@ -1,3 +1,10 @@
+Tue Jul 13 22:09:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service: removed ACE_Equal_To<ACE_CString>
+          explicit instantiation, because it's in tao/POA.cpp.
+          Thanks to Denis Ouellet <douellet@gel.ulaval.ca> for
+          reporting this.
+
 Tue Jul 13 21:51:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* utils/Makefile (DIRS):
@@ -32,8 +39,8 @@ Tue Jul 13 18:41:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  case where a union member is a sequence typedef included from
 	  another file. The union's extraction operator creates a
 	  temporary, which means the visitor needs type info from the
-	  sequence node, which it now gets from the alias node in its 
-	  context, if necessary. Thanks to 
+	  sequence node, which it now gets from the alias node in its
+	  context, if necessary. Thanks to
 	  Dwayne Burns <dburns@isrglobal.com> for sending in the
 	  example.
 
@@ -53,11 +60,11 @@ Tue Jul 13 16:05:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Some protocols (like UIOP) should not create endpoints unless
 	  the user requires one; the problem is that they tend to leave
 	  garbage on the filesystem (in the future we may have the same
-	  problem with shared memory segments or semaphores) if the server 
+	  problem with shared memory segments or semaphores) if the server
 	  crashes.
-	  The current behavior is to automatically create an IIOP endpoint 
+	  The current behavior is to automatically create an IIOP endpoint
 	  if the user does not specify any -ORBendpoint options, yet the
-	  UIOP protocol is loaded by default and uiop endpoints (including 
+	  UIOP protocol is loaded by default and uiop endpoints (including
 	  uiop://) can be specified in the command line.
 	  This fixes [BUGID:22]
 
@@ -122,18 +129,18 @@ Tue Jul 13 11:03:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 1999-07-13  Yamuna Krishnamurthy  <krishnam@ss135.rsch.comm.mot.com>
 
-	* TAO_IDL/be/be_visitor_operation/operation_is.cpp (visit_operation): 
-	* TAO_IDL/be/be_visitor_operation/operation_ih.cpp (visit_operation): 
+	* TAO_IDL/be/be_visitor_operation/operation_is.cpp (visit_operation):
+	* TAO_IDL/be/be_visitor_operation/operation_ih.cpp (visit_operation):
 	Fixed the duplicate generation of the ACE_THROW_SPEC macro
 	Thanks to Rick H. Wesson <wessorh@ar.com> for informing the bug
-	
+
 	* TAO_IDL/be/be_visitor_interface/interface_is.cpp (visit_interface):
-	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp (be_visitor_interface_ih): 
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp (be_visitor_interface_ih):
 	Modified the code generated to avoid dominance problem with
 	multiple inheritance
 
 Tue Jul 13 09:53:57 1999  Fred Kuhns  <fredk@cs.wustl.edu>
-       
+
         * Moved the implementation of TAO_Stub::add_forward_profiles
           outside of the TAO_HAS_CORBA_MESSAGING ifdef's.  Thanks to
           Stefan <SUllrich@Heimannsystems.com> for identifying this bug.
