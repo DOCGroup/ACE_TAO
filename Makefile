@@ -49,6 +49,7 @@ clone:
 	done
 
 RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
+		ACE_wrappers/ACE-INSTALL \
 		ACE_wrappers/ACE-categories \
 	        ACE_wrappers/ACE-install.sh \
 	        ACE_wrappers/ACE-lessons.html \
@@ -107,6 +108,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                  if (s/(, released ).*/$$1$$date./) { \
                    ($$version = $$_) =~ s/^This is //; } \
                  END { print $$version  } ' VERSION;` export ACE_VERSION; \
+	      lynx -dump ACE-INSTALL.html > ACE-INSTALL \
               perl -i -e \
                 'BEGIN {($$message = \
                            $$ENV{"DATE"} . "  " . \
