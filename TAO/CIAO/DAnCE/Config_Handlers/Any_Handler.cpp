@@ -2,8 +2,11 @@
 
 #include "Any_Handler.h"
 #include "DT_Handler.h"
-#include "tao/Exception.h"
 #include "Utils.h"
+
+#include "tao/Exception.h"
+
+#include "ace/OS_NS_string.h"
 
 void
 CIAO::Config_Handler::Any_Handler::validate_ValueNode (DOMNodeIterator * iter,

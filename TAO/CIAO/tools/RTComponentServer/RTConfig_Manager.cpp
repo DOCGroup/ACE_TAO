@@ -279,7 +279,7 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
                                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        retv = 
+        retv =
           this->rtorb_->create_priority_banded_connection_policy (bands.in ()
                                                                   ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);

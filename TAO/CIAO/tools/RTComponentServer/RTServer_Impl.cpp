@@ -2,6 +2,7 @@
 
 #include "RTServer_Impl.h"
 #include "ciao/CIAO_common.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)

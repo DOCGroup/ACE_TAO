@@ -3,9 +3,11 @@
 #include "SP_Handler.h"
 #include "Any_Handler.h"
 #include "SPK_Handler.h"
+#include "Utils.h"
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
-#include "Utils.h"
+#include "ace/SString.h"
+
 
 using CIAO::Config_Handler::Utils;
 using CIAO::Config_Handler::Any_Handler;
@@ -46,14 +48,14 @@ process_SatisfierProperty (DOMNodeIterator * iter,
                         {
                           XMLURL url (attr_node_value.c_str ());
                           DOMNodeIterator * value_iter =
-                            Utils::parse_href_tag (url, 
+                            Utils::parse_href_tag (url,
                                                    node->getOwnerDocument ());
 
                           // Get to the root-node
                           value_iter->nextNode ();
 
                           // Process the property href tag
-                          Any_Handler::process_Any (value_iter, 
+                          Any_Handler::process_Any (value_iter,
                                                     property.value);
                         }
                     }
