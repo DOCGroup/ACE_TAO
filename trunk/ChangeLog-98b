@@ -1,5 +1,12 @@
 Sat Aug 22 13:24:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Message_Queue_Notifications_Test.cpp (main): Cleaned up
+ 	  the formatting a bit.
+
+	* tests: Renamed MsgQueue_Notifications_Test.{cpp,bpr,dsp} to
+ 	  Message_Queue_Notifications_Test.{cpp,bpr,dsp} to be more
+ 	  consistent with spelling.
+
 	* ace/OS.h: Moved the ACE_timer_t down a bit in the file so that
  	  ACE_UINT is defined.  Thanks to Naga for reporting this.
 
