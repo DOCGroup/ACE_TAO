@@ -383,6 +383,30 @@ public:
   /// read and write pointers to align with the base.
   void reset (void);
 
+  /// Access all the allocators in the message block.
+  /// @@todo: Not sure whether we would need finer control while
+  /// trying to access allocators ie. a method for every allocator.
+  /**
+   * @param allocator_strategy Strategy used to allocate the
+   *                           underlying buffer
+   *
+   * @param data_block_allocator Strategy used to allocate the
+   *                             underlying data block
+   *
+   * @param message_block_allocator Strategy used to allocate the
+   *                                message block
+   */
+  void access_allocators (ACE_Allocator *&allocator_strategy,
+                          ACE_Allocator *&data_block_allocator,
+                          ACE_Allocator *&message_block_allocator);
+
+  /// Reset all the allocators in the message block.
+  /// @@todo: Not sure whether we would need finer control while
+  /// trying to reset allocators ie. a method for every allocator.
+  void reset_allocators (ACE_Allocator *allocator_strategy = 0,
+                         ACE_Allocator *data_block_allocator = 0,
+                         ACE_Allocator *message_block_allocator = 0);
+
   /// Get message data.
   char *base (void) const;
 
