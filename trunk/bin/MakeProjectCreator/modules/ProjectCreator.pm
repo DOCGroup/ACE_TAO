@@ -767,41 +767,47 @@ sub generate_default_target_names {
 
 
 sub generate_default_pch_filenames {
-  my($self)   = shift;
-  my($files)  = shift;
-  my($vc)     = $self->{'valid_components'};
-  my($gc)     = $$vc{'header_files'};
-  my($found)  = 0;
+  my($self)  = shift;
+  my($files) = shift;
+  my($pname) = $self->get_assignment('project_name');
 
   if (!defined $self->get_assignment('pch_header')) {
+    my($count)    = 0;
+    my($matching) = undef;
     foreach my $file (@$files) {
-      foreach my $ext (@$gc) {
+      foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_header', $1);
-          $found = 1;
+          ++$count;
+          if ($file =~ /$pname/) {
+            $matching = $file;
+          }
           last;
         }
       }
-      if ($found) {
-        last;
-      }
+    }
+    if ($count > 1 && defined $matching) {
+      $self->process_assignment('pch_header', $matching);
     }
   }
 
   if (!defined $self->get_assignment('pch_source')) {
-    $gc    = $$vc{'source_files'};
-    $found = 0;
+    my($count)    = 0;
+    my($matching) = undef;
     foreach my $file (@$files) {
-      foreach my $ext (@$gc) {
+      foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
         if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_source', $1);
-          $found = 1;
+          ++$count;
+          if ($file =~ /$pname/) {
+            $matching = $file;
+          }
           last;
         }
       }
-      if ($found) {
-        last;
-      }
+    }
+    if ($count > 1 && defined $matching) {
+      $self->process_assignment('pch_source', $matching);
     }
   }
 }
