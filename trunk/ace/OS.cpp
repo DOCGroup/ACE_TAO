@@ -1653,7 +1653,7 @@ ACE_Thread_Adapter::invoke (void)
 
   void *status = 0;
 
-#if 1
+#if 0
   status = (void*) (*func) (arg);  // Call thread entry point.
 #else
   ACE_SEH_TRY {
