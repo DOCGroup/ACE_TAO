@@ -1,3 +1,13 @@
+Mon Sep 13 11:47:13 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated.
+
 Mon Sep 13 06:40:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
