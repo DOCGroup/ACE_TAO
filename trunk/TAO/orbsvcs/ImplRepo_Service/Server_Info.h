@@ -78,7 +78,7 @@ public:
 
   /// This is a flag to determine if the process has already been spawned
   /// and we are just waiting for it to start up.
-  int starting_up_;
+  bool starting_up_;
 
 private:
   /// Which server process this poa is grouped in.

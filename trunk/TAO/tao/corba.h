@@ -65,7 +65,7 @@
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
 
-#include "tao/Remote_Object_Proxy_Impl.h"
+//#include "tao/Remote_Object_Proxy_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"

@@ -11,27 +11,12 @@
  */
 //=============================================================================
 
-#include "NT_Service.h"
+#include "Activator_NT_Service.h"
 
-// Only on Windows for now
 #if defined (ACE_WIN32)
 
 #include "ImR_Activator_i.h"
 #include "tao/ORB_Core.h"
-
-/**
- * Default constructor, does nothing special.
- */
-ImR_NT_Service::ImR_NT_Service (void)
-{
-}
-
-/**
- * Destructor, does nothing special.
- */
-ImR_NT_Service::~ImR_NT_Service (void)
-{
-}
 
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands
@@ -39,7 +24,7 @@ ImR_NT_Service::~ImR_NT_Service (void)
  * handles the command.
  */
 void
-ImR_NT_Service::handle_control (DWORD control_code)
+Activator_NT_Service::handle_control (DWORD control_code)
 {
   if (control_code == SERVICE_CONTROL_SHUTDOWN
       || control_code == SERVICE_CONTROL_STOP)
@@ -47,7 +32,6 @@ ImR_NT_Service::handle_control (DWORD control_code)
       report_status (SERVICE_STOP_PENDING);
       TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
       TAO_ORB_Core_instance ()->orb ()->shutdown (1);
-      report_status (SERVICE_STOPPED);
     }
   else
     {
@@ -59,7 +43,7 @@ ImR_NT_Service::handle_control (DWORD control_code)
 /**
  */
 int
-ImR_NT_Service::handle_exception (ACE_HANDLE)
+Activator_NT_Service::handle_exception (ACE_HANDLE)
 {
   return 0;
 }
@@ -70,7 +54,7 @@ ImR_NT_Service::handle_exception (ACE_HANDLE)
  * we update the report_status after init.
  */
 int
-ImR_NT_Service::svc (void)
+Activator_NT_Service::svc (void)
 {
   ImR_Activator_i server;
 
@@ -84,6 +68,7 @@ ImR_NT_Service::svc (void)
 
       if (status == -1)
         {
+          report_status (SERVICE_STOPPED);
           return -1;
         }
       else
@@ -95,28 +80,28 @@ ImR_NT_Service::svc (void)
           status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          if (status == -1)
-              return -1;
+          report_status (SERVICE_STOPPED);
+
         }
+        if (status != -1)
+            return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_PRINT_EXCEPTION (sysex, "Implementation Repository");
-      return -1;
+      ACE_PRINT_EXCEPTION (sysex, IMR_ACTIVATOR_DISPLAY_NAME);
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_PRINT_EXCEPTION (userex, "Implementation Repository");
-      return -1;
+      ACE_PRINT_EXCEPTION (userex, IMR_ACTIVATOR_DISPLAY_NAME);
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Implementation Repository");
-      return -1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, IMR_ACTIVATOR_DISPLAY_NAME);
     }
   ACE_ENDTRY;
 
-  return 0;
+  report_status (SERVICE_STOPPED);
+  return -1;
 }
 
 #endif /* ACE_WIN32 */

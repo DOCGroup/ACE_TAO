@@ -52,6 +52,7 @@ a question since responses are usually just replied back to the group.
 The NT Service part of the ImR was developed by Jeff Parsons @<<a
 href="mailto:parsons@cs.wustl.edu">parsons@cs.wustl.edu</a>@>.  He can
 also be reached via the same channels.
+It was later extended and enhanced by Justin Michel <michel_j@ociweb.com>
 
 */
 
@@ -137,7 +138,7 @@ Nothing yet.
 @subsection XML Database Support
 
   As of now, the support is only to be able to have the information
-about a registered server written to an XML file. Have to support
+	about a registered server written to an XML file. Have to support
 retrieving information from the XML file to be able to do any actions
 on the registered servers.
 
@@ -489,43 +490,30 @@ Service.  The -c option can be used to install and remove the service
 of its required ACE/TAO DLL's in the path or in the same directory.
 For example, the run_test.pl copies ImplRepo_Service.exe to the
 ACE_wrappers@\bin directory before using "-c install".
+Alternatively, You can set the usual ACE_ROOT, TAO_ROOT, and PATH environment
+variables on a system wide basis.
 
 The service can be then started either from the Windows NT "Services"
 Admin Tool or via the "net" program on the command line:
 
-<CODE>net start "TAO Implementation Repository"</CODE>
+<CODE>net start "TAO Implementation Repository Locator"</CODE>
+<CODE>net start "TAO Implementation Repository Activator"</CODE>
 
 The Implementation Repository supports start and stop but not pause.
 
 @subsection serviceopts Service Options
 
-When installing the Implementation Repository as a service, there isn't an
-opportunity to specify any command line options.  So if you want to specify
-that the ImplRepo_Service should output to a file or set the debug level to 2,
-for example, you will have to manually edit the registry to do this.
+Any options that are specified along with -c install, will be saved in
+the registry under 
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRActivator\Parameters and
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRLocator\Parameters. 
+For example:
+ImR_Activator -c install -d 3 -l -m -o activator.ior -x persist.xml -t 30 -orbendpoint iiop://:9988 -orbdebuglevel 1
 
-The magic key for extra options to pass to the Implementation Repository is
-<B>SYSTEM\CurrentControlSet\Services\TAOImplRepo\Parameters\ORBOptions</B>
-under <B>HKEY_LOCAL_MACHINE</B>.  This value should be a MULTI_SZ value with
-each parameter in separate strings.  Since it is a MULTI_SZ, you will need to
-use regedt32.exe to add this, since regedit.exe doesn't support MULTI_SZ types
-yet.
+The order of arguments makes no difference, but you must run 
+-c remove and then -c install if you want to change the parameters.
 
-So let's say you want to up the debug level to 2 and record the output to the
-C:@\ImplRepo.log file.  First you will have to install the ImplRepo_Service
-as a service to create the TAOImplRepo subkey under Services.  Now fire up
-regedt32 and browse to the TAOImplRepo key.  The Parameters key under
-TAOImplRepo will now need to be created.  And now you can create the
-"ORBOptions" value in Parameters.  Now when the multi-string editor pops up,
-add the following on separate lines:
-
-- -ORBLogFile
-- C:@\ImplRepo.log
-- -ORBDebugLevel
-- 2
-
-And when the ImplRepo_Service is run as a service (and only when it runs as
-a service) it will use these options.
+You can also manually change these using the typical regedit utility.
 
 */
 

@@ -1,3 +1,122 @@
+Mon Nov 10 11:33:34 2003  Justin Michel <michel_j@ociweb.com>
+
+        * TAO/orbsvcs/ImplRepo_Service/Activator_NT_Service.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Activator_NT_Service.h:
+        * TAO/orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.h:
+        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * TAO/orbsvcs/ImplRepo_Service/Iterator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Iterator.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_NT_Service.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_NT_Service.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/NT_Service.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/NT_Service.h:
+        * TAO/orbsvcs/ImplRepo_Service/Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/README.txt:
+        * TAO/orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Repository_Configuration.h:
+        * TAO/orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Server_Info.h:
+        * TAO/orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Server_Repository.h:
+        * TAO/orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/XML_ContentHandler.h:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * TAO/orbsvcs/tests/ImplRepo/README:
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/NameService/ImplRepo_NameService.mpc:
+        * TAO/tao/corba.h:
+        * TAO/tao/PortableServer/ImR_ActivatorC.cpp:
+        * TAO/tao/PortableServer/ImR_ActivatorC.h:
+        * TAO/tao/PortableServer/ImR_ActivatorC.i:
+        * TAO/tao/PortableServer/ImR_ActivatorS.cpp:
+        * TAO/tao/PortableServer/ImR_ActivatorS.h:
+        * TAO/tao/PortableServer/ImR_ActivatorS.i:
+        * TAO/tao/PortableServer/ImR_ActivatorS_T.cpp:
+        * TAO/tao/PortableServer/ImR_ActivatorS_T.h:
+        * TAO/tao/PortableServer/ImR_ActivatorS_T.i:
+        * TAO/tao/PortableServer/ImR_Locator.pidl:
+        * TAO/tao/PortableServer/ImR_LocatorC.cpp:
+        * TAO/tao/PortableServer/ImR_LocatorC.h:
+        * TAO/tao/PortableServer/ImR_LocatorC.i:
+        * TAO/tao/PortableServer/ImR_LocatorS.cpp:
+        * TAO/tao/PortableServer/ImR_LocatorS.h:
+        * TAO/tao/PortableServer/ImR_LocatorS.i:
+        * TAO/tao/PortableServer/ImR_LocatorS_T.cpp:
+        * TAO/tao/PortableServer/ImR_LocatorS_T.h:
+        * TAO/tao/PortableServer/ImR_LocatorS_T.i:
+        * TAO/tao/PortableServer/ImplRepo.pidl:
+        * TAO/tao/PortableServer/ImplRepoC.cpp:
+        * TAO/tao/PortableServer/ImplRepoC.h:
+        * TAO/tao/PortableServer/ImplRepoC.i:
+        * TAO/tao/PortableServer/ImplRepoS.cpp:
+        * TAO/tao/PortableServer/ImplRepoS.h:
+        * TAO/tao/PortableServer/ImplRepoS.i:
+        * TAO/tao/PortableServer/ImplRepoS_T.cpp:
+        * TAO/tao/PortableServer/ImplRepoS_T.h:
+        * TAO/tao/PortableServer/ImplRepoS_T.i:
+        * TAO/tao/PortableServer/Makefile:
+        * TAO/tao/PortableServer/Makefile.bor:
+        * TAO/tao/PortableServer/POA.cpp:
+        * TAO/tao/PortableServer/PortableServer.mpc:
+        * TAO/tao/PortableServer/TAO_PortableServer.dsp:
+        * TAO/tao/PortableServer/TAO_PortableServer.vcp:
+        * TAO/tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+          Added server->activator hash map and renamed the existing hash map.
+        Also removed unnecessary typedefs for entry and iterator.
+
+          Added the ability to safely unregister an activator, although it
+        is really untested, as there is no way to cleanly shutdown except
+        when run as an nt service.
+
+          Many tao_imr commands now seem to work. I don't know of any problems,
+        but many combinations are untested.
+
+          Updated idl exception specifications because many operations should
+        throw NotFound when an activator can't be found for a server, and
+        reregister_server() can throw AlreadyRegistered if you try to register
+        with a different activator.
+
+        Removed unused template files from tao/PortableServer, and 
+          updated instructions to use -Sc.
+
+          Changed the text of some output messages to remove
+        the use of Error: which was incorrectly showing up as
+        errors during implrepo run_test.pl's
+          Updated to support passing of persisted servers back
+        to the locator when the activator registers.
+
+          Updated to support passing of persisted servers back
+        to the locator when the activator registers.
+
+        Removed unused tao/PortableServer/ImR_Activator*.*
+     
+        Support for ImR as NT Services.
+
+        Updated run_test.pl for the main ImplRepo tests.
+
+        Updated all -?/-h options for command line programs.
+
+        Commented out include of missing file in corba.h
+
 Mon Nov 10 11:20:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynUnion.cpp (to_any):

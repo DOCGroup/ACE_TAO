@@ -1,6 +1,6 @@
 #include "Server_Repository.h"
 #include "XML_ContentHandler.h"
-#include "Options.h"
+#include "Activator_Options.h"
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
@@ -10,30 +10,17 @@ ACE_RCSID (ImplRepo_Service,
            "$Id$")
 
 
-Server_Repository::Server_Repository (void)
-{
-}
-
-
-Server_Repository::~Server_Repository (void)
-{
-}
-
-
-// Initialize the the configuration class.
-
 int
 Server_Repository::init (void)
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
-
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  int rmode = OPTIONS::instance ()->repository_mode ();
+  if (rmode != Options::REPO_XML_FILE)
     {
       Repository_Configuration *config = OPTIONS::instance ()->config ();
-
-      // NON-XML mode
+      ACE_ASSERT(config != 0);
 
       // iterate through the list of registered servers and register them
+
       config->open_section (config->root_section (),
                             ACE_LIB_TEXT ("Servers"),
                             1,
@@ -81,10 +68,11 @@ Server_Repository::init (void)
           // way to store env vars.
 
           if (error != 0)
-            {              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Error reading configuration data for ")
-                          ACE_TEXT ("service '%s',skipping\n"),
-                          name.c_str ()));
+            {              
+              ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Error reading configuration data for ")
+                ACE_TEXT ("service '%s',skipping\n"),
+                name.c_str ()));
             }
           else
             {
@@ -114,20 +102,19 @@ Server_Repository::init (void)
 
 int
 Server_Repository::add (
-    const ACE_CString POA_name,
-    const ACE_CString logical_server_name,
-    const ACE_CString startup_command,
-    const ImplementationRepository::EnvironmentList environment_vars,
-    const ACE_CString working_dir,
-    const ImplementationRepository::ActivationMode activation
+    const ACE_CString& POA_name,
+    const ACE_CString& logical_server_name,
+    const ACE_CString& startup_command,
+    const ImplementationRepository::EnvironmentList& environment_vars,
+    const ACE_CString& working_dir,
+    const ImplementationRepository::ActivationMode& activation
   )
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
-
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  int rmode = OPTIONS::instance ()->repository_mode ();
+  if (rmode != Options::REPO_XML_FILE)
     {
-
       Repository_Configuration *config = OPTIONS::instance ()->config ();
+      ACE_ASSERT(config != 0);
 
       // @@ Add this to the persistent configuration; environment_vars??
       ACE_Configuration_Section_Key server;
@@ -162,40 +149,39 @@ Server_Repository::add (
                                    activation),
                       -1);
 
-      return this->repository_.bind (POA_name,
-                                     new_server);
+      return this->repository_.bind (POA_name, new_server);
     }
   else
     {
-      /// XML mode: So, write into file.
-      ACE_TCHAR *filename = OPTIONS::instance ()->file_name ();
+      ACE_CString filename = OPTIONS::instance ()->file_name ();
 
-      FILE *fp = ACE_OS::fopen (filename, "r");
-
-      ACE_TCHAR buffer[4096];
-      ACE_TCHAR *found;
-
-      while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
+      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
+      
+      if (fp != 0) 
         {
-          /// Obviously, we need to/can update only if we find an
-          /// entry for it in the xml file.
-          found = ACE_OS::strstr (buffer, POA_name.c_str ());
-
-          if (found)
+          ACE_TCHAR buffer[4096];
+          while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
             {
-              /// An entry found for the POA_name. So, dont
-              /// add it again.
-              ACE_DEBUG ((LM_DEBUG,
-                          "The %s is already added.\n", POA_name.c_str ()));
+              /// Obviously, we need to/can update only if we find an
+              /// entry for it in the xml file.
+              ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-              ACE_OS::fclose (fp);
+              if (found != 0)
+                {
+                  /// An entry found for the POA_name. So, dont
+                  /// add it again.
+                  ACE_DEBUG ((LM_DEBUG,
+                              "ImR Activator: The %s is already added.\n", POA_name.c_str ()));
 
-              return 0;
+                  ACE_OS::fclose (fp);
+
+                  return 0;
+                }
             }
         }
 
       /// If control comes here, it means this server isnt added already.
-      fp = ACE_OS::fopen (filename, "a");
+      fp = ACE_OS::fopen (filename.c_str(), "a");
 
       if (fp == 0)
         {
@@ -215,9 +201,8 @@ Server_Repository::add (
       server_info += OPTIONS::instance ()->convert_str (activation);
       server_info += "</Activation>\n</StartupOptions>\n</SERVER_INFORMATION>\n";
 
-      ACE_OS::fprintf (fp,
-                       server_info.c_str ());
-      ACE_OS::fclose (fp);
+      ACE_OS::fprintf(fp, server_info.c_str());
+      ACE_OS::fclose(fp);
 
       return 0;
     }
@@ -226,45 +211,41 @@ Server_Repository::add (
 // Update the associated process information.
 
 int
-Server_Repository::update (const ACE_CString POA_name,
-                           const ACE_CString location,
-                           const ACE_CString server_object_ior)
+Server_Repository::update (const ACE_CString& POA_name,
+                           const ACE_CString& location,
+                           const ACE_CString& server_object_ior)
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
-
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  int rmode = OPTIONS::instance ()->repository_mode ();
+  if (rmode != Options::REPO_XML_FILE)
     {
-      Server_Info *server;
-      int retval = this->repository_.find (POA_name,
-                                           server);
+      Server_Info *server = 0;
+      int retval = this->repository_.find (POA_name, server);
 
       // Only fill in data if it was found
       if (retval == 0)
         {
-          server->update_running_info (location,
-                                       server_object_ior);
+          ACE_ASSERT(server != 0);
+          server->update_running_info (location, server_object_ior);
         }
 
       return retval;
     }
   else
     {
-      /// XML mode
-      ACE_TCHAR *filename = OPTIONS::instance ()->file_name ();
+      ACE_CString filename = OPTIONS::instance ()->file_name ();
 
-      FILE *fp = ACE_OS::fopen (filename, "r+");
+      FILE *fp = ACE_OS::fopen (filename.c_str(), "r+");
+      ACE_ASSERT(fp != 0);
 
       ACE_TCHAR buffer[4096];
-
-      ACE_TCHAR *found;
 
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           /// Obviously, we need to/can update only if we find an
           /// entry for it in the xml file.
-          found = ACE_OS::strstr (buffer, POA_name.c_str ());
+          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-          if (found)
+          if (found != 0)
             {
               /// found an entry. So, need to update the entry
               /// information.
@@ -282,32 +263,30 @@ Server_Repository::update (const ACE_CString POA_name,
 
 int
 Server_Repository::get_startup_info (
-    const ACE_CString POA_name,
-    ACE_CString &logical_server_name,
-    ACE_CString &startup_command,
-    ImplementationRepository::EnvironmentList &environment_vars,
-    ACE_CString &working_dir,
-    ImplementationRepository::ActivationMode &activation
+    const ACE_CString& POA_name,
+    ACE_CString& logical_server_name,
+    ACE_CString& startup_command,
+    ImplementationRepository::EnvironmentList& environment_vars,
+    ACE_CString& working_dir,
+    ImplementationRepository::ActivationMode& activation
   )
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
-
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  int rmode = OPTIONS::instance ()->repository_mode ();
+  if (rmode != Options::REPO_XML_FILE)
     {
-
-      Server_Info *server;
+      Server_Info* server = 0;
       int retval = this->repository_.find (POA_name, server);
 
       // Only fill in data if it was found
       if (retval == 0)
         {
+          ACE_ASSERT(server != 0);
           server->get_startup_info (logical_server_name,
                                     startup_command,
                                     environment_vars,
                                     working_dir,
                                     activation);
         }
-
       return retval;
     }
   else
@@ -317,17 +296,14 @@ Server_Repository::get_startup_info (
                       ACEXML_FileCharStream (),
                       1);
 
-
-      if (fstm->open (OPTIONS::instance ()->file_name ()) != 0)
+      const char* fname = OPTIONS::instance()->file_name().c_str();
+      if (fstm->open (fname) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("Fail to open XML file: trial.xml\n ")),
-                            -1);
+          ACE_ERROR((LM_ERROR, ACE_LIB_TEXT("Fail to open XML file: %s\n"), fname));
+          return 1;
         }
 
-      /// XML case
-      this->handler_ =
-        new XML_ContentHandler (POA_name.c_str ());
+      this->handler_ = new XML_ContentHandler (POA_name.c_str ());
 
       ACEXML_Parser parser;
 
@@ -367,43 +343,39 @@ Server_Repository::get_startup_info (
 // Returns information related to a running copy.
 
 int
-Server_Repository::get_running_info (const ACE_CString POA_name,
-                                     ACE_CString &location,
-                                     ACE_CString &server_object_ior)
+Server_Repository::get_running_info (const ACE_CString& POA_name,
+                                     ACE_CString& location,
+                                     ACE_CString& server_object_ior)
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
+  int rmode = OPTIONS::instance ()->repository_mode ();
 
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  if (rmode != Options::REPO_XML_FILE)
     {
-
       Server_Info *server;
-      int retval = this->repository_.find (POA_name,
-                                           server);
+      int retval = this->repository_.find (POA_name, server);
 
       // Only fill in data if it was found
       if (retval == 0)
         {
-          server->get_running_info (location,
-                                    server_object_ior);
+          ACE_ASSERT(server != 0);
+          server->get_running_info (location, server_object_ior);
         }
-
       return retval;
     }
   else
     {
-      /// XML mode
-      ACE_TCHAR *filename = OPTIONS::instance ()->file_name ();
+      ACE_CString filename = OPTIONS::instance ()->file_name ();
 
-      FILE *fp = ACE_OS::fopen (filename, "r");
+      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
+      ACE_ASSERT(fp != 0);
 
       ACE_TCHAR buffer[4096];
-      ACE_TCHAR *found;
 
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
-          found = ACE_OS::strstr (buffer, POA_name.c_str ());
+          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-          if (found)
+          if (found != 0)
             {
               /// Found an entry for the POA_name. So, we can proceed.
               this->handler_->get_running_information (POA_name,
@@ -423,51 +395,44 @@ Server_Repository::get_running_info (const ACE_CString POA_name,
 // returns the previous value or -1 if the POA_name wasn't found
 
 int
-Server_Repository::starting_up (const ACE_CString POA_name,
+Server_Repository::starting_up (const ACE_CString& POA_name,
                                 int new_value)
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
+  int rmode = OPTIONS::instance ()->repository_mode ();
 
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  if (rmode != Options::REPO_XML_FILE)
     {
       Server_Info *server;
-      int retval = this->repository_.find (POA_name,
-                                           server);
+      int retval = this->repository_.find (POA_name, server);
 
       // Only fill in data if it was found
       if (retval == 0)
         {
-          retval = server->starting_up_;
-          server->starting_up_ = new_value;
+          ACE_ASSERT(server != 0);
+          retval = server->starting_up_ ? 1 : 0;
+          server->starting_up_ = new_value != 0;
         }
-
       return retval;
     }
   else
     {
-      /// XML mode
-      ACE_TCHAR *filename = OPTIONS::instance ()->file_name ();
+      ACE_CString filename = OPTIONS::instance ()->file_name ();
 
-      FILE *fp = ACE_OS::fopen (filename, "r");
+      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
+      ACE_ASSERT(fp != 0);
 
       ACE_TCHAR buffer[4096];
-      ACE_TCHAR *found;
 
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
-          found = ACE_OS::strstr (buffer, POA_name.c_str ());
+          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-          if (found)
+          if (found != 0)
             {
               int retval;
-
               /// Found an entry for the POA_name. So, we can proceed.
-              this->handler_->get_startup_value (POA_name,
-                                                 retval);
-
-              this->handler_->set_startup_value (POA_name,
-                                                 new_value);
-
+              this->handler_->get_startup_value (POA_name, retval);
+              this->handler_->set_startup_value (POA_name, new_value);
               return retval;
             }
         }
@@ -480,51 +445,46 @@ Server_Repository::starting_up (const ACE_CString POA_name,
 // Same as above but does not alter the value
 
 int
-Server_Repository::starting_up (const ACE_CString POA_name)
+Server_Repository::starting_up (const ACE_CString& POA_name)
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
+  int rmode = OPTIONS::instance ()->repository_mode ();
 
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  if (rmode != Options::REPO_XML_FILE)
     {
       Server_Info *server;
 
-      int retval = this->repository_.find (POA_name,
-                                           server);
+      int retval = this->repository_.find (POA_name, server);
 
       // Only fill in data if it was found
       if (retval == 0)
         {
-          retval = server->starting_up_;
+          ACE_ASSERT(server != 0);
+          retval = server->starting_up_ != 0;
         }
 
       return retval;
     }
   else
     {
-      /// XML mode
-      ACE_TCHAR *filename = OPTIONS::instance ()->file_name ();
+      ACE_CString filename = OPTIONS::instance ()->file_name ();
 
-      FILE *fp = ACE_OS::fopen (filename, "r");
+      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
+      ACE_ASSERT(fp != 0);
 
       ACE_TCHAR buffer[4096];
-      ACE_TCHAR *found;
-
+      
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
-          found = ACE_OS::strstr (buffer, POA_name.c_str ());
+          ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-          if (found)
+          if (found != 0)
             {
               int retval;
-
               /// Found an entry for the POA_name. So, we can proceed.
-              this->handler_->get_startup_value (POA_name,
-                                                 retval);
-
+              this->handler_->get_startup_value (POA_name, retval);
               return retval;
             }
         }
-
       /// If control comes here.. implies, there is no entry for the
       /// POA_name.
       return -1;
@@ -535,61 +495,59 @@ Server_Repository::starting_up (const ACE_CString POA_name)
 // Removes the server from the Repository.
 
 int
-Server_Repository::remove (const ACE_CString POA_name)
+Server_Repository::remove (const ACE_CString& POA_name)
 {
-  ACE_TCHAR *mode = OPTIONS::instance ()->repository_mode ();
+  int rmode = OPTIONS::instance ()->repository_mode ();
 
-  if (ACE_OS::strcmp (mode, "x") != 0)
+  if (rmode != Options::REPO_XML_FILE)
     {
       Repository_Configuration *config = OPTIONS::instance ()->config ();
-
+      ACE_ASSERT(config != 0);
       // Remove the persistent configuration information
       config->remove_section (this->servers_,
                               POA_name.c_str(),
                               1);
-
       return this->repository_.unbind (POA_name);
     }
   else
     {
-      /// XML mode
-      ACE_TCHAR *filename = OPTIONS::instance ()->file_name ();
+      ACE_CString filename = OPTIONS::instance ()->file_name ();
 
-      FILE *fp = ACE_OS::fopen (filename, "r");
+      FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
+      ACE_ASSERT(fp != 0);
 
       /// Have a temporary file
       CORBA::String_var temp_file = "temporary_file";
 
       FILE *fp_temp = ACE_OS::fopen (temp_file.in (), "w");
+      ACE_ASSERT(fp_temp != 0);
 
       ACE_TCHAR buffer[4096];
 
-      int remove_section = 0;
-      ACE_TCHAR *found;
+      bool remove_section = false;
       // int dtd_section = 0;
 
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
-          if (remove_section == 0)
+          if (! remove_section)
             {
-              found = ACE_OS::strstr (buffer, POA_name.c_str ());
+              ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-              if (!found)
+              if (found == 0)
                 {
-                  ACE_OS::fprintf (fp_temp,
-                                   buffer);
+                  ACE_OS::fprintf (fp_temp, buffer);
                 }
               else
                 {
-                  remove_section = 1;
+                  remove_section = true;
                 }
             }
           else
             {
-              found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
+              ACE_TCHAR* found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
 
-              if (found)
-                remove_section = 0;
+              if (found != 0)
+                remove_section = false;
             }
         }
 
@@ -598,13 +556,14 @@ Server_Repository::remove (const ACE_CString POA_name)
 
       // Now copy the temporary file to the original file.
       fp_temp = ACE_OS::fopen (temp_file.in (), "r");
+      ACE_ASSERT(fp_temp != 0);
 
-      fp = ACE_OS::fopen (filename, "w");
+      fp = ACE_OS::fopen (filename.c_str(), "w");
+      ACE_ASSERT(fp != 0);
 
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp_temp))
         {
-          ACE_OS::fprintf (fp,
-                           buffer);
+          ACE_OS::fprintf (fp, buffer);
         }
 
       ACE_OS::fclose (fp);
@@ -621,7 +580,7 @@ Server_Repository::remove (const ACE_CString POA_name)
             {
             found = ACE_OS::strstr (buffer, "]>");
 
-            if (found)
+            if (found != 0)
             {
             dtd_section = 1;
             remove_section = 0;
@@ -636,21 +595,21 @@ Server_Repository::remove (const ACE_CString POA_name)
             {
             found = ACE_OS::strstr (buffer, POA_name.c_str ());
 
-            if (!found)
+            if (found == 0)
             {
-	    ACE_OS::fprintf (fp_temp,
+    ACE_OS::fprintf (fp_temp,
             buffer);
             }
             else
             {
-	    remove_section = 1;
+    remove_section = 1;
             }
             }
             else
             {
-	    found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
+    found = ACE_OS::strstr (buffer, "</SERVER_INFORMATION>");
 
-            if (found)
+            if (found != 0)
             remove_section = 0;
             }
             }
@@ -677,15 +636,14 @@ Server_Repository::remove (const ACE_CString POA_name)
           */
 }
 
-// Writes to XML file.
 int
 Server_Repository::write_to_xml (
-    const ACE_CString,
-    const ACE_CString,
-    const ACE_CString,
-    const ImplementationRepository::EnvironmentList,
-    const ACE_CString,
-    const ImplementationRepository::ActivationMode)
+    const ACE_CString&,
+    const ACE_CString&,
+    const ACE_CString&,
+    const ImplementationRepository::EnvironmentList&,
+    const ACE_CString&,
+    const ImplementationRepository::ActivationMode&)
 {
   /*
     ACE_TCHAR *filename = "trial.xml";
@@ -711,12 +669,12 @@ Server_Repository::write_to_xml (
 
 // Returns a new iterator that travels over the repository.
 
-Server_Repository::HASH_IMR_ITER *
+Server_Repository::HASH_IMR_MAP::ITERATOR *
 Server_Repository::new_iterator (void)
 {
-  HASH_IMR_ITER *hash_iter = 0;
+  HASH_IMR_MAP::ITERATOR *hash_iter = 0;
   ACE_NEW_RETURN (hash_iter,
-                  Server_Repository::HASH_IMR_ITER (this->repository_),
+    Server_Repository::HASH_IMR_MAP::ITERATOR (this->repository_),
                   0);
 
   return hash_iter;
