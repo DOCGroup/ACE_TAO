@@ -27,43 +27,9 @@
 
 #include "tao/corbafwd.h"
 #include "tao/CDR.h"
+#include "tao/GIOP_Message_Version.h"
 
 class TAO_ORB_Core;
-
-/**
- * @class TAO_GIOP_Version
- *
- * @brief Major and Minor version number of the Inter-ORB Protocol.
- */
-class TAO_Export TAO_GIOP_Version
-{
-public:
-  /// Major version number
-  CORBA::Octet major;
-
-  /// Minor version number
-  CORBA::Octet minor;
-
-  /// Copy constructor
-  TAO_GIOP_Version (const TAO_GIOP_Version &src);
-
-  /// Default constructor.
-  TAO_GIOP_Version (CORBA::Octet maj = TAO_DEF_GIOP_MAJOR,
-                    CORBA::Octet min = TAO_DEF_GIOP_MINOR);
-
-  /// Destructor.
-  ~TAO_GIOP_Version (void);
-
-  /// Explicitly set the major and minor version.
-  void set_version (CORBA::Octet maj, CORBA::Octet min);
-
-  /// Copy operator.
-  TAO_GIOP_Version &operator= (const TAO_GIOP_Version &src);
-
-  /// Equality operator
-  int operator== (const TAO_GIOP_Version &src);
-  int operator!= (const TAO_GIOP_Version &src);
-};
 
 
 /**
@@ -101,7 +67,7 @@ public:
   int message_fragmented (void);
 
   /// Version info
-  TAO_GIOP_Version giop_version;
+  TAO_GIOP_Message_Version giop_version;
 
   /// 0 = big, 1 = little
   CORBA::Octet byte_order;
@@ -139,7 +105,7 @@ public:
 
   /// The GIOP version for the first fragment
   /// @@ Same as above, all GIOP versions must match.
-  TAO_GIOP_Version first_fragment_giop_version;
+  TAO_GIOP_Message_Version first_fragment_giop_version;
 
   /**
    * If the messages are chained this represents the message type for

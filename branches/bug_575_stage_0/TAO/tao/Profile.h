@@ -23,7 +23,7 @@
 
 #include "Tagged_Components.h"
 #include "PolicyC.h"
-#include "GIOP_Message_State.h"
+#include "GIOP_Message_Version.h"
 
 class TAO_MProfile;
 class TAO_Stub;
@@ -45,7 +45,7 @@ public:
   /// Constructor
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
-               const TAO_GIOP_Version &version);
+               const TAO_GIOP_Message_Version &version);
 
   /// If you have a virtual method you need a virtual dtor.
   virtual ~TAO_Profile (void);
@@ -55,7 +55,7 @@ public:
 
   /// Return a pointer to this profile's version.  This object
   /// maintains ownership.
-  const TAO_GIOP_Version &version (void) const;
+  const TAO_GIOP_Message_Version &version (void) const;
 
   /// Get a poiter to the TAO_ORB_Core
   TAO_ORB_Core *orb_core (void) const;
@@ -179,7 +179,7 @@ private:
 protected:
 
   /// IIOP version number.
-  TAO_GIOP_Version version_;
+  TAO_GIOP_Message_Version version_;
 
   /// The tagged components
   TAO_Tagged_Components tagged_components_;
