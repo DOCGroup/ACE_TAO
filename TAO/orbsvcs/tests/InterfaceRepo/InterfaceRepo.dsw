@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Latency Test"=".\Latency_Test\Latency Test.dsp" - Package Owner=<4>
+Project: "Latency Test"=.\Latency_Test\Latency_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

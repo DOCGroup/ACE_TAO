@@ -259,7 +259,11 @@ SOURCE=.\UDPC.cpp
 
 !IF  "$(CFG)" == "UDP Basic Server - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Basic Server - Win32 Debug"
+
+# ADD CPP /GR
 
 !ELSEIF  "$(CFG)" == "UDP Basic Server - Win32 Alpha Debug"
 
@@ -267,7 +271,11 @@ SOURCE=.\UDPC.cpp
 
 !ELSEIF  "$(CFG)" == "UDP Basic Server - Win32 Static Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Basic Server - Win32 Static Debug"
+
+# ADD CPP /GR
 
 !ENDIF 
 

@@ -286,7 +286,11 @@ SOURCE=.\UDPC.cpp
 
 !IF  "$(CFG)" == "UDP Basic Client - Win32 Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Debug"
+
+# ADD CPP /GR
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Alpha Debug"
 
@@ -294,7 +298,11 @@ SOURCE=.\UDPC.cpp
 
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "UDP Basic Client - Win32 Static Debug"
+
+# ADD CPP /GR
 
 !ENDIF 
 

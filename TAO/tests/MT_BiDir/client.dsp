@@ -104,6 +104,7 @@ SOURCE=.\Receiver_i.cpp
 # Begin Source File
 
 SOURCE=.\ReceiverC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -112,6 +113,7 @@ SOURCE=.\ReceiverS.cpp
 # Begin Source File
 
 SOURCE=.\SenderC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

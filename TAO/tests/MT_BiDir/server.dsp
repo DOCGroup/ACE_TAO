@@ -92,6 +92,7 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\ReceiverC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -100,6 +101,7 @@ SOURCE=.\Sender_i.cpp
 # Begin Source File
 
 SOURCE=.\SenderC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
