@@ -356,6 +356,7 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
 #if defined (VXWORKS)
+  ACE_UNUSED_ARG (len);
   int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
                                hostname);
   if (error == OK)
