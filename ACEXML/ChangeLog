@@ -1,3 +1,56 @@
+Thu Jan  8 18:40:34 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+
+        * common/CharStream.h: Added a new rewind() method so that we can
+          reuse the same parser instance to parse the same file multiple
+          times.
+
+        * common/FileCharStream.cpp:
+        * common/HttpCharStream.h:
+        * common/HttpCharStream.cpp:
+        * common/StrCharStream.cpp:
+        * common/ZipCharStream.cpp:
+
+          Fixed implementation of rewind().
+
+        * common/Mem_Map_Stream.cpp:
+
+          Fixed memory leak caused by the Svc_Handler not getting deleted.
+
+        * apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser:
+        * parser/parser/Makefile.ACEXML_Parser:
+        * examples/SAXPrint/Makefile.SAXPrint:
+        * common/Makefile.ACEXML:
+        * tests/Makefile.ContentHandler_Test:
+        * tests/Makefile.HttpCharStream_Test:
+        * tests/Makefile.NamespaceSupport_Test:
+        * tests/Makefile.Transcoder_Test:
+
+          Updated dependencies.
+
+        * examples/SAXPrint/main.cpp:
+
+          Added code to test the parser to parse the same file multiple
+          times. This still needs some cleaning.
+
+        * parser/parser/Entity_Manager.h:
+        * parser/parser/Entity_Manager.i:
+        * parser/parser/Entity_Manager.cpp:
+
+          Use a pointer to ACE_Hash_Map_Manager_Ex and delete it on every
+          reset() of the Entity_Manager. This should fix all the problems
+          with SIGFPE's when we try to recover from a parse error.
+
+        * parser/parser/Parser.cpp:
+        * parser/parser/ParserContext.h:
+        * parser/parser/ParserContext.inl:
+
+          Fixed memory leaks reported by Ken Sedgewick <ken@bonsai.com>.
+          This should fix Bugzill bug 1694. While at it, fix bugs in
+          handling of entity references in INCLUDE/IGNORE sections,
+          ATTLIST sections.
+
+
 Thu Dec 18 13:13:57 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * common/Transcode.h (ACEXML_Transcoder):
@@ -59,9 +112,9 @@ Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Jun 24 23:31:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* apps/svcconf/Svcconf.cpp: Turned off validation temporarily when
-	  handling svc.conf files.  All of the converted svc.conf.xml
-	  files do not have associate doctype at the moment.
+        * apps/svcconf/Svcconf.cpp: Turned off validation temporarily when
+          handling svc.conf files.  All of the converted svc.conf.xml
+          files do not have associate doctype at the moment.
 
 Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
 
@@ -70,9 +123,9 @@ Tue Jun 24 15:38:49 UTC 2003  Don Hinton  <dhinton@dresystems.h>
 
 Sun Jun  1 09:09:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* parser/parser/Parser.cpp:
-	* parser/parser/Entity_Manager.cpp: Added explicit template
-	  instantiations.
+        * parser/parser/Parser.cpp:
+        * parser/parser/Entity_Manager.cpp: Added explicit template
+          instantiations.
 
 Fri May 30 14:16:33 2003  Krishnakumar B  <kitty@spam.invalid.domain>
 

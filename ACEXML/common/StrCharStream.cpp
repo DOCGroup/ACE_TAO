@@ -67,6 +67,8 @@ ACEXML_StrCharStream::determine_encoding (void)
     return -1;
   else
     {
+      if (this->encoding_)
+        delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
       // ACE_DEBUG ((LM_DEBUG, "String's encoding is %s\n", this->encoding_));
     }
@@ -77,6 +79,7 @@ void
 ACEXML_StrCharStream::rewind (void)
 {
   this->ptr_ = this->start_;
+  this->determine_encoding();
 }
 
 int

@@ -128,6 +128,8 @@ private:
 
   off_t size_;
 
+  off_t data_offset_;
+
   ACEXML_Char* encoding_;
 
 };
