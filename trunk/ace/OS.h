@@ -120,6 +120,74 @@
 // 10 millisecond fudge factor to account for Solaris timers...
 #define ACE_TIMER_SKEW 1000 * 10
 
+// Increase the range of "address families".
+#define AF_SPIPE (AF_MAX + 1)
+#define AF_FILE (AF_MAX + 2)
+#define AF_DEV (AF_MAX + 3)
+#define AF_UPIPE (AF_SPIPE)
+
+// Turn a number into a string.
+#define ACE_ITOA(X) #X
+
+// Create a string of a server address with a "host:port" format.
+#define ACE_SERVER_ADDRESS(H,P) H":"P
+
+// A couple useful inline functions for checking whether bits are 
+// enabled or disabled. 
+
+// Efficiently returns the least power of two >= X...
+#define ACE_POW(X) ((!X)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
+#define ACE_EVEN(NUM) (((NUM) & 1) == 0)
+#define ACE_ODD(NUM) (((NUM) & 1) == 1)
+#define ACE_BIT_ENABLED(WORD, BIT) (((WORD) & (BIT)) != 0)
+#define ACE_BIT_DISABLED(WORD, BIT) (((WORD) & (BIT)) == 0)
+#define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
+#define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
+
+// A useful abstraction for expressions involving operator new since
+// we can change memory allocation error handling policies (e.g.,
+// depending on whether ANSI/ISO exception handling semantics are
+// being used). 
+
+#define ACE_NEW(POINTER,CONSTRUCTOR) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; }} while (0)
+#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; }} while (0)
+
+// These hooks enable ACE to have all dynamic memory management
+// automatically handled on a per-object basis.
+
+#if defined (ACE_HAS_ALLOC_HOOKS)
+#define ACE_ALLOC_HOOK_DECLARE \
+  void *operator new (size_t bytes); \
+  void operator delete (void *ptr);
+
+// Note that these are just place holders for now.  They'll
+// be replaced by the ACE_Malloc stuff shortly...
+#define ACE_ALLOC_HOOK_DEFINE(CLASS) \
+  void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
+  void CLASS::operator delete (void *ptr) { delete (ptr); }
+#else
+#define ACE_ALLOC_HOOK_DECLARE struct __Ace {} // Just need a dummy...
+#define ACE_ALLOC_HOOK_DEFINE(CLASS) 
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
+#if defined (VXWORKS)
+#if defined (ghs)
+// horrible hacks to get around inconsistency between ansi and VxWorks
+// stdarg.h with Green Hills 1.8.8 compiler
+#define __INCstdargh
+#include <stdarg.h>
+#endif /* ghs */
+
+typedef int key_t;
+#include <vxWorks.h>
+#endif /* VXWORKS */
+
+#include "ace/Time_Value.h"
+
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
 // arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
@@ -130,8 +198,8 @@
 // Handle ACE_Message_Queue.
 #define ACE_SYNCH_1 class _ACE_SYNCH
 #define ACE_SYNCH_2 _ACE_SYNCH
-#define ACE_SYNCH_MUTEX _ACE_SYNCH::ACE_MUTEX
-#define ACE_SYNCH_CONDITION _ACE_SYNCH::ACE_CONDITION
+#define ACE_SYNCH_MUTEX _ACE_SYNCH::MUTEX
+#define ACE_SYNCH_CONDITION _ACE_SYNCH::CONDITION
 
 // Handle ACE_Malloc*
 #define ACE_MEM_POOL_1 class _ACE_MEM_POOL
@@ -220,74 +288,6 @@
 #define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options
 
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
-
-// Increase the range of "address families".
-#define AF_SPIPE (AF_MAX + 1)
-#define AF_FILE (AF_MAX + 2)
-#define AF_DEV (AF_MAX + 3)
-#define AF_UPIPE (AF_SPIPE)
-
-// Turn a number into a string.
-#define ACE_ITOA(X) #X
-
-// Create a string of a server address with a "host:port" format.
-#define ACE_SERVER_ADDRESS(H,P) H":"P
-
-// A couple useful inline functions for checking whether bits are 
-// enabled or disabled. 
-
-// Efficiently returns the least power of two >= X...
-#define ACE_POW(X) ((!X)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
-#define ACE_EVEN(NUM) (((NUM) & 1) == 0)
-#define ACE_ODD(NUM) (((NUM) & 1) == 1)
-#define ACE_BIT_ENABLED(WORD, BIT) (((WORD) & (BIT)) != 0)
-#define ACE_BIT_DISABLED(WORD, BIT) (((WORD) & (BIT)) == 0)
-#define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
-#define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
-
-// A useful abstraction for expressions involving operator new since
-// we can change memory allocation error handling policies (e.g.,
-// depending on whether ANSI/ISO exception handling semantics are
-// being used). 
-
-#define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; }} while (0)
-#define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; }} while (0)
-
-// These hooks enable ACE to have all dynamic memory management
-// automatically handled on a per-object basis.
-
-#if defined (ACE_HAS_ALLOC_HOOKS)
-#define ACE_ALLOC_HOOK_DECLARE \
-  void *operator new (size_t bytes); \
-  void operator delete (void *ptr);
-
-// Note that these are just place holders for now.  They'll
-// be replaced by the ACE_Malloc stuff shortly...
-#define ACE_ALLOC_HOOK_DEFINE(CLASS) \
-  void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
-  void CLASS::operator delete (void *ptr) { delete (ptr); }
-#else
-#define ACE_ALLOC_HOOK_DECLARE struct __Ace {} // Just need a dummy...
-#define ACE_ALLOC_HOOK_DEFINE(CLASS) 
-#endif /* ACE_HAS_ALLOC_HOOKS */
-
-#if defined (VXWORKS)
-#if defined (ghs)
-// horrible hacks to get around inconsistency between ansi and VxWorks
-// stdarg.h with Green Hills 1.8.8 compiler
-#define __INCstdargh
-#include <stdarg.h>
-#endif /* ghs */
-
-typedef int key_t;
-#include <vxWorks.h>
-#endif /* VXWORKS */
-
-#include "ace/Time_Value.h"
 
 // For Win32 compatibility...
 #if !defined (ACE_WSOCK_VERSION)

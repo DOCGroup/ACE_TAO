@@ -27,7 +27,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // Use a typedef to make life easier later on.
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
+typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 
 class ACE_Export ACE_UPIPE_Stream : public ACE_SPIPE
   // = TITLE
