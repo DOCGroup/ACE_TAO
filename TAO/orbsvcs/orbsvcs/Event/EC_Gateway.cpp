@@ -204,9 +204,9 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
       RtecEventComm::EventSourceID sid = h.source;
 
-      // ACE_DEBUG ((LM_DEBUG,
+      //ACE_DEBUG ((LM_DEBUG,
       //            "ECG (%t)    trying (%d,%d)\n",
-      //            sid, h.type));
+      //           sid, h.type));
 
       // Skip all subscriptions that do not require an specific source
       // id.
@@ -219,17 +219,17 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
       if (this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
-          // ACE_DEBUG ((LM_DEBUG,
-          //             "ECG (%t)    binding source %d\n",
-          //             sid));
+          //ACE_DEBUG ((LM_DEBUG,
+          //            "ECG (%t)    binding source %d\n",
+          //            sid));
           proxy = supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
           ACE_CHECK;
           this->consumer_proxy_map_.bind (sid, proxy);
         }
     }
-  // ACE_DEBUG ((LM_DEBUG,
-  //             "ECG (%t)    consumer map computed (%d entries)\n",
-  //             this->consumer_proxy_map_.current_size ()));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "ECG (%t)    consumer map computed (%d entries)\n",
+  //            this->consumer_proxy_map_.current_size ()));
 
   if (this->consumer_proxy_map_.current_size () > 0)
     {
@@ -251,13 +251,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
           pub.publications.length (sub.dependencies.length () + 1);
           pub.is_gateway = 1;
 
-          pub.publications[0].event.header.type =
-            ACE_ES_DISJUNCTION_DESIGNATOR;
-          pub.publications[0].dependency_info.dependency_type =
-            RtecBase::TWO_WAY_CALL;
-          pub.publications[0].dependency_info.number_of_calls = 1;
-          pub.publications[0].dependency_info.rt_info = this->lcl_info_;
-          int c = 1;
+          int c = 0;
 
           RtecEventComm::EventSourceID sid = (*j).ext_id_;
           for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
@@ -275,17 +269,16 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
               pub.publications[c].dependency_info.rt_info = this->lcl_info_;
               c++;
             }
-          // ACE_DEBUG ((LM_DEBUG,
-          //             "ECG (%t) supplier id %d has %d elements\n",
-          //             sid, c));
-          if (c == 1)
+          //ACE_DEBUG ((LM_DEBUG,
+          //            "ECG (%t) supplier id %d has %d elements\n",
+          //            sid, c));
+          if (c == 0)
             continue;
 
-
-          // The prefix filter builder needs to know the number of
-          // elements in the disjunction
-          pub.publications[0].event.header.source = c - 1;
           pub.publications.length (c);
+
+          // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Supplier "));
+          // ACE_SupplierQOS_Factory::debug (pub);
           (*j).int_id_->connect_push_supplier (supplier_ref.in (),
                                                pub,
                                                ACE_TRY_ENV);
@@ -332,6 +325,8 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       ACE_CHECK;
 
       pub.publications.length (c);
+      // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
+      // ACE_SupplierQOS_Factory::debug (pub);
       this->default_consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                             pub,
                                                             ACE_TRY_ENV);
@@ -339,8 +334,6 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
     }
 
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Supplier "));
-  // ACE_SupplierQOS_Factory::debug (pub);
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->rmt_ec_->for_consumers (ACE_TRY_ENV);
@@ -355,7 +348,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
     this->consumer_._this (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Consumer "));
+  // ACE_DEBUG ((LM_DEBUG, "ECG (%P|%t) Gateway/Consumer "));
   // ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
@@ -377,24 +370,24 @@ TAO_EC_Gateway_IIOP::update_supplier (
 void
 TAO_EC_Gateway_IIOP::disconnect_push_consumer (CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "ECG (%t): Supplier-consumer received "
-              "disconnect from channel.\n"));
+  // ACE_DEBUG ((LM_DEBUG,
+  //             "ECG (%t): Supplier-consumer received "
+  //            "disconnect from channel.\n"));
 }
 
 void
 TAO_EC_Gateway_IIOP::disconnect_push_supplier (CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "ECG (%t): Supplier received "
-              "disconnect from channel.\n"));
+  // ACE_DEBUG ((LM_DEBUG,
+  //            "ECG (%t): Supplier received "
+  //            "disconnect from channel.\n"));
 }
 
 void
 TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
                            CORBA::Environment & ACE_TRY_ENV)
 {
-  //ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push - "));
+  // ACE_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) - \n"));
 
   if (events.length () == 0)
     {
@@ -435,6 +428,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
       out[0] = events[i];
       out[0].header.ttl--;
 
+      // ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       proxy->push (out, ACE_TRY_ENV);
       ACE_CHECK;
     }

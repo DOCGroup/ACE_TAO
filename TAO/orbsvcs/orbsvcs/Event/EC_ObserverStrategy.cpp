@@ -330,7 +330,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   CORBA::ULong count = 1;
   for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)
     {
-      qos.dependencies[count++].event.header = (*i).key ();
+      dep[count++].event.header = (*i).key ();
     }
 }
 
