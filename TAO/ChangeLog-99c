@@ -7,7 +7,11 @@ Fri Oct 29 12:58:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Fri Oct 29 12:04:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.h:
-	  Added missing 'const' to signature of equivalent().
+	* tao/Typecode.i:
+	  Removed the 'const' from the TypeCode_ptr argument in
+	  equal() and equivalent(). As Carlos points out, they
+	  are not needed, and may be misinterpreted by some
+	  compilers.
 
 Fri Oct 29 10:11:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
