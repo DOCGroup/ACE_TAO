@@ -12,8 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO_IDL_FE_DLL
-ACE_SHLIBS = -lTAO_IDL_FE_DLL -lACE
+LDLIBS += -lTAO_IDL_FE_DLL -lTAO
+ACE_SHLIBS += -lTAO_IDL_FE_DLL -lACE
 
 VPATH = .
 
@@ -41,16 +41,18 @@ LSRC = $(addsuffix .cpp,$(FILES))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
 
-CPPFLAGS += -I../TAO_IDL/include -I../TAO_IDL/fe
+CPPFLAGS += -I../../TAO_IDL/include -I../../TAO_IDL/fe
 
 realclean: clean
 
