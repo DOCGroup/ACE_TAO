@@ -1,3 +1,8 @@
+Sun Jan 20 21:42:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Framework_Component.cpp:
+	* ace/Framework_Component_T.cpp: Fixed fuzz errors.
+
 2002-01-20  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* bin/subst_env.pl: New script to ease the transition to the
