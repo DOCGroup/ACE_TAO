@@ -42,8 +42,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MT /W3 /GX /O1 /I "../" /I "../PACE" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
@@ -69,8 +69,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
@@ -96,8 +96,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /Zi /O1 /I "../" /I "../PACE" /D "_WINDOWS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -122,8 +122,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_WINDOWS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -330,10 +330,6 @@ SOURCE=.\Dynamic_Service_Base.h
 # Begin Source File
 
 SOURCE=.\Event_Handler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event_Handler_T.cpp
 # End Source File
 # Begin Source File
 
@@ -3222,20 +3218,13 @@ SOURCE=.\Dump_T.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Framework_Component_T.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
+SOURCE=.\Event_Handler_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
 
-!ENDIF 
-
+SOURCE=.\Framework_Component_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Thread_Exit.h"
+#include "ace/Synch.h"
 #include "ace/Managed_Object.h"
 #include "ace/Thread_Manager.h"
 
@@ -9,11 +10,11 @@ ACE_RCSID(ace, Thread_Exit, "$Id$")
 u_int ACE_Thread_Exit::is_constructed_ = 0;
 
 void
-ACE_Thread_Exit::cleanup (ACE_TSS_TYPE (ACE_Thread_Exit) *instance)
+ACE_Thread_Exit::cleanup (void *instance)
 {
   ACE_OS_TRACE ("ACE_Thread_Exit::cleanup");
 
-  delete instance;
+  delete (ACE_TSS_TYPE (ACE_Thread_Exit) *) instance;
 
   ACE_Thread_Exit::is_constructed_ = 0;
   // All TSS objects have been destroyed.  Reset this flag so

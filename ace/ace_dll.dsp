@@ -342,10 +342,6 @@ SOURCE=.\Event_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event_Handler_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\FIFO.cpp
 # End Source File
 # Begin Source File
@@ -3235,20 +3231,13 @@ SOURCE=.\Dump_T.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Framework_Component_T.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
+SOURCE=.\Event_Handler_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
 
-!ENDIF 
-
+SOURCE=.\Framework_Component_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
