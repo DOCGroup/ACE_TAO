@@ -10,7 +10,8 @@
 #include "EC_ProxySupplier.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
-#include "EC_ProxyPushSupplier_Set_T.h"
+#include "EC_Proxy_Collection.h"
+#include "EC_Concrete_Proxy_Set.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_ConsumerControl.h"
 #include "EC_SupplierControl.h"
@@ -150,14 +151,32 @@ TAO_EC_Null_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
   delete x;
 }
 
-TAO_EC_ProxyPushSupplier_Set*
-TAO_EC_Null_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
+TAO_EC_ProxyPushConsumer_Collection*
+TAO_EC_Null_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel *)
 {
-  return new TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_Null_Mutex> ();
+  return new TAO_EC_Immediate_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator,
+      ACE_Null_Mutex> ();
 }
 
 void
-TAO_EC_Null_Factory::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set *x)
+TAO_EC_Null_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection *x)
+{
+  delete x;
+}
+
+TAO_EC_ProxyPushSupplier_Collection*
+TAO_EC_Null_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel *)
+{
+  return new TAO_EC_Immediate_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator,
+      ACE_Null_Mutex> ();
+}
+
+void
+TAO_EC_Null_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection *x)
 {
   delete x;
 }
@@ -182,30 +201,6 @@ TAO_EC_Null_Factory::create_supplier_lock (void)
 
 void
 TAO_EC_Null_Factory::destroy_supplier_lock (ACE_Lock* x)
-{
-  delete x;
-}
-
-ACE_Lock*
-TAO_EC_Null_Factory::create_consumer_admin_lock (void)
-{
-  return new ACE_Lock_Adapter<ACE_Null_Mutex> ();
-}
-
-void
-TAO_EC_Null_Factory::destroy_consumer_admin_lock (ACE_Lock* x)
-{
-  delete x;
-}
-
-ACE_Lock*
-TAO_EC_Null_Factory::create_supplier_admin_lock (void)
-{
-  return new ACE_Lock_Adapter<ACE_Null_Mutex> ();
-}
-
-void
-TAO_EC_Null_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 {
   delete x;
 }

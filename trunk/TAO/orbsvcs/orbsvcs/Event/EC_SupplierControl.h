@@ -58,6 +58,12 @@ public:
   virtual int shutdown (void);
   // Activate any internal threads or timers used to poll the state of
   // the suppliers
+
+  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy,
+                                   CORBA::Environment &);
+  // Invoked by helper classes when they detect that a supplier does
+  // not exists (i.e. _non_existent() returns true and/or the
+  // CORBA::OBJECT_NOT_EXIST exception has been raised).
 };
 
 #if defined (__ACE_INLINE__)

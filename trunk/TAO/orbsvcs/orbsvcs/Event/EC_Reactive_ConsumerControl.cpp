@@ -5,7 +5,7 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 
-#if ! defined (__ACE_INdLINE__)
+#if ! defined (__ACE_INLINE__)
 #include "EC_Reactive_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
@@ -32,54 +32,10 @@ void
 TAO_EC_Reactive_ConsumerControl::query_consumers (
       CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_ConsumerAdmin *consumer_admin =
-    this->event_channel_->consumer_admin ();
-
-  TAO_EC_ConsumerAdmin::Busy_Lock &lock =
-    consumer_admin->busy_lock ();
-
-  ACE_GUARD (TAO_EC_ConsumerAdmin::Busy_Lock, ace_mon, lock);
-
-  TAO_EC_ConsumerAdmin::SupplierSetIterator end =
-    consumer_admin->end ();
-  for (TAO_EC_ConsumerAdmin::SupplierSetIterator i =
-         consumer_admin->begin ();
-       i != end;
-       ++i)
-    {
-      TAO_EC_ProxyPushSupplier *proxy = *i;
-      ACE_TRY
-        {
-          CORBA::Boolean disconnected;
-          CORBA::Boolean non_existent =
-            proxy->consumer_non_existent (disconnected,
-                                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          if (non_existent && !disconnected)
-            {
-              this->consumer_not_exist (proxy, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-            }
-        }
-      ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
-        {
-          this->consumer_not_exist (proxy, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCH (CORBA::TRANSIENT, transient)
-        {
-          // This is TAO's minor code for a failed connection, we may
-          // want to be more lenient in the future..
-          // if (transient.minor () == 0x54410085)
-          this->consumer_not_exist (proxy, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // Ignore all exceptions
-        }
-      ACE_ENDTRY;
-    }
+  TAO_EC_Ping_Consumer worker (this);
+  this->event_channel_->consumer_admin ()->for_each (&worker,
+                                                     ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -239,6 +195,45 @@ TAO_EC_ConsumerControl_Adapter::handle_timeout (
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
+}
+
+// ****************************************************************
+
+void
+TAO_EC_Ping_Consumer::work (TAO_EC_ProxyPushSupplier *supplier,
+                            CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_TRY
+    {
+      CORBA::Boolean disconnected;
+      CORBA::Boolean non_existent =
+        supplier->consumer_non_existent (disconnected,
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (non_existent && !disconnected)
+        {
+          this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::TRANSIENT, transient)
+    {
+      // This is TAO's minor code for a failed connection, we may
+      // want to be more lenient in the future..
+      // if (transient.minor () == 0x54410085)
+      this->control_->consumer_not_exist (supplier, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions
+    }
+  ACE_ENDTRY;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

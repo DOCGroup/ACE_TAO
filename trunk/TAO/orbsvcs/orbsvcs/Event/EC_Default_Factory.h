@@ -103,20 +103,19 @@ public:
       create_scheduling_strategy (TAO_EC_Event_Channel*);
   virtual void
       destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy*);
-  virtual TAO_EC_ProxyPushSupplier_Set*
-      create_proxy_push_supplier_set (TAO_EC_Event_Channel*);
+  virtual TAO_EC_ProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (TAO_EC_Event_Channel*);
   virtual void
-      destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
+      destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*);
+  virtual TAO_EC_ProxyPushSupplier_Collection*
+    create_proxy_push_supplier_collection (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
   virtual ACE_Lock* create_supplier_lock (void);
   virtual void destroy_supplier_lock (ACE_Lock*);
-
-  virtual ACE_Lock* create_consumer_admin_lock (void);
-  virtual void destroy_consumer_admin_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_admin_lock (void);
-  virtual void destroy_supplier_admin_lock (ACE_Lock*);
 
   virtual TAO_EC_ConsumerControl*
       create_consumer_control (TAO_EC_Event_Channel*);
@@ -134,11 +133,10 @@ private:
   int timeout_;
   int observer_;
   int scheduling_;
-  int supplier_set_;
+  int consumer_collection_;
+  int supplier_collection_;
   int consumer_lock_;
   int supplier_lock_;
-  int consumer_admin_lock_;
-  int supplier_admin_lock_;
   // Several flags to control the kind of object created.
 
   int dispatching_threads_;

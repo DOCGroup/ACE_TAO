@@ -84,10 +84,10 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Shutdown_Command : public TAO_EC_Dispatch_Command
+class TAO_ORBSVCS_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
 {
 public:
-  TAO_EC_Shutdown_Command (ACE_Allocator *mb_allocator = 0);
+  TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
   // Constructor
 
   virtual int execute (CORBA::Environment&);

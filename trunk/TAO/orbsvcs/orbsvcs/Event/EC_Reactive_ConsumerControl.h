@@ -21,6 +21,7 @@
 #define TAO_EC_REACTIVE_CONSUMERCONTROL_H
 
 #include "EC_ConsumerControl.h"
+#include "EC_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -119,6 +120,20 @@ private:
 
   ACE_Reactor *reactor_;
   // The ORB reactor
+};
+
+// ****************************************************************
+
+class TAO_EC_Ping_Consumer : public TAO_EC_Worker<TAO_EC_ProxyPushSupplier>
+{
+public:
+  TAO_EC_Ping_Consumer (TAO_EC_ConsumerControl *control);
+
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier,
+                     CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_EC_ConsumerControl *control_;
 };
 
 #if defined (__ACE_INLINE__)

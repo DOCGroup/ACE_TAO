@@ -158,9 +158,17 @@ public:
   void destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
   // Create and destroy a ProxyPushConsumer
 
-  TAO_EC_ProxyPushSupplier_Set* create_proxy_push_supplier_set (void);
-  void destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
-  // Create and destroy a ProxyPushSupplier_Set
+  TAO_EC_ProxyPushSupplier_Collection*
+      create_proxy_push_supplier_collection (void);
+  void destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
+  // Create and destroy a the collections used to store
+  // ProxyPushSuppliers
+
+  TAO_EC_ProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (void);
+  void destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*);
+  // Create and destroy a the collections used to store
+  // ProxyPushConsumers
 
   PortableServer::POA_ptr supplier_poa (void);
   PortableServer::POA_ptr consumer_poa (void);
@@ -172,13 +180,6 @@ public:
   void destroy_supplier_lock (ACE_Lock*);
   // Locking strategies for the ProxyPushConsumer and
   // ProxyPushSupplier objects
-
-  ACE_Lock* create_consumer_admin_lock (void);
-  void destroy_consumer_admin_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_admin_lock (void);
-  void destroy_supplier_admin_lock (ACE_Lock*);
-  // Locking strategies for the ConsumerAdmin and SupplierAdmin
-  // objects
 
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);

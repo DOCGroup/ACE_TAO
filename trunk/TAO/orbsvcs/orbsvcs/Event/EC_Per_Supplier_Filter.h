@@ -32,7 +32,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_ProxyPushSupplier_Set;
+template<class PROXY> class TAO_EC_Proxy_Collection;
 
 class TAO_ORBSVCS_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
@@ -76,9 +76,9 @@ private:
   TAO_EC_ProxyPushConsumer* consumer_;
   // The proxy for the supplier we are bound to.
 
-  TAO_EC_ProxyPushSupplier_Set* supplier_set_;
-  // Keep the list of proxies for the consumers that may be interested
-  // in our events.
+  TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier>* collection_;
+  // Keep the collection of proxies for the consumers that may be
+  // interested in our events.
 
   CORBA::ULong refcnt_;
   // Reference counting

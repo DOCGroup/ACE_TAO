@@ -83,7 +83,7 @@ TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command (void)
 // ****************************************************************
 
 int
-TAO_EC_Shutdown_Command::execute (CORBA::Environment&)
+TAO_EC_Shutdown_Task_Command::execute (CORBA::Environment&)
 {
   return -1;
 }

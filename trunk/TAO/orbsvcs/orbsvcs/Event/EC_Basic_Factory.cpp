@@ -10,7 +10,8 @@
 #include "EC_ProxySupplier.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
-#include "EC_ProxyPushSupplier_Set_T.h"
+#include "EC_Proxy_Collection.h"
+#include "EC_Concrete_Proxy_Set.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_Reactive_ConsumerControl.h"
 #include "EC_Reactive_SupplierControl.h"
@@ -140,12 +141,6 @@ TAO_EC_Basic_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
   delete x;
 }
 
-TAO_EC_ProxyPushSupplier_Set*
-TAO_EC_Basic_Factory::create_proxy_push_supplier_set (TAO_EC_Event_Channel *)
-{
-  return new TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH> ();
-}
-
 TAO_EC_Scheduling_Strategy*
 TAO_EC_Basic_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
 {
@@ -158,8 +153,32 @@ TAO_EC_Basic_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x
   delete x;
 }
 
+TAO_EC_ProxyPushConsumer_Collection*
+TAO_EC_Basic_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel *)
+{
+  return new TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator,
+      ACE_SYNCH> ();
+}
+
 void
-TAO_EC_Basic_Factory::destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set *x)
+TAO_EC_Basic_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection *x)
+{
+  delete x;
+}
+
+TAO_EC_ProxyPushSupplier_Collection*
+TAO_EC_Basic_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel *)
+{
+  return new TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator,
+      ACE_SYNCH> ();
+}
+
+void
+TAO_EC_Basic_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection *x)
 {
   delete x;
 }
@@ -184,30 +203,6 @@ TAO_EC_Basic_Factory::create_supplier_lock (void)
 
 void
 TAO_EC_Basic_Factory::destroy_supplier_lock (ACE_Lock* x)
-{
-  delete x;
-}
-
-ACE_Lock*
-TAO_EC_Basic_Factory::create_consumer_admin_lock (void)
-{
-  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
-}
-
-void
-TAO_EC_Basic_Factory::destroy_consumer_admin_lock (ACE_Lock* x)
-{
-  delete x;
-}
-
-ACE_Lock*
-TAO_EC_Basic_Factory::create_supplier_admin_lock (void)
-{
-  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
-}
-
-void
-TAO_EC_Basic_Factory::destroy_supplier_admin_lock (ACE_Lock* x)
 {
   delete x;
 }
@@ -250,16 +245,6 @@ TAO_EC_Basic_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH>;
-template class ACE_Node<ACE_Command_Base*>;
-template class ACE_Unbounded_Queue<ACE_Command_Base*>;
-template class ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>;
-
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH>
-#pragma instantiate ACE_Node<ACE_Command_Base*>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Command_Base*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Command_Base*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

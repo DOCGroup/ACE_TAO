@@ -94,7 +94,7 @@ TAO_EC_Priority_Dispatching::shutdown (void)
     return;
 
   for (int i = 0; i < this->ntasks_; ++i)
-    this->tasks_[i]->putq (new TAO_EC_Shutdown_Command);
+    this->tasks_[i]->putq (new TAO_EC_Shutdown_Task_Command);
 
   this->thread_manager_.wait ();
 

@@ -125,11 +125,14 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
   this->qos_ = qos;
   this->shutdown_event_type_ = shutdown_event_type;
 
-  RtecEventComm::PushSupplier_var objref = this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (CORBA::is_nil (this->myself_.in ()))
+    {
+      this->myself_ = this->_this (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
   this->is_active_ = 1;
 
-  this->consumer_proxy_->connect_push_supplier (objref.in (),
+  this->consumer_proxy_->connect_push_supplier (this->myself_.in (),
                                                 qos,
                                                 ACE_TRY_ENV);
   ACE_CHECK;
@@ -164,6 +167,7 @@ EC_Supplier::shutdown (CORBA::Environment &ACE_TRY_ENV)
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
   this->is_active_ = 0;
+  this->myself_ = RtecEventComm::PushSupplier::_nil ();
 }
 
 void

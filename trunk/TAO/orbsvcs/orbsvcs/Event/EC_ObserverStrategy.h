@@ -25,13 +25,14 @@
 #ifndef TAO_EC_OBSERVERSTRATEGY_H
 #define TAO_EC_OBSERVERSTRATEGY_H
 
-#include "ace/Map_Manager.h"
+#include "EC_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/RB_Tree.h"
+#include "ace/Map_Manager.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 class ACE_Lock;
@@ -245,6 +246,38 @@ protected:
   typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
   typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 };
+
+// ****************************************************************
+
+class TAO_EC_Accumulate_Supplier_Headers : public TAO_EC_Worker<TAO_EC_ProxyPushSupplier>
+{
+public:
+  TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  // Constructor
+
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier,
+                     CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_EC_Basic_ObserverStrategy::Headers &headers_;
+};
+
+// ****************************************************************
+
+class TAO_EC_Accumulate_Consumer_Headers : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+{
+public:
+  TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  // Constructor
+
+  virtual void work (TAO_EC_ProxyPushConsumer *consumer,
+                     CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  TAO_EC_Basic_ObserverStrategy::Headers &headers_;
+};
+
+
 
 #if defined (__ACE_INLINE__)
 #include "EC_ObserverStrategy.i"

@@ -41,11 +41,14 @@ EC_Consumer::connect (
 
   this->shutdown_event_type_ = shutdown_event_type;
 
-  RtecEventComm::PushConsumer_var objref = this->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (CORBA::is_nil (this->myself_.in ()))
+    {
+      this->myself_ = this->_this (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
   this->is_active_ = 1;
 
-  this->supplier_proxy_->connect_push_consumer (objref.in (),
+  this->supplier_proxy_->connect_push_consumer (this->myself_.in (),
                                                 qos,
                                                 ACE_TRY_ENV);
   ACE_CHECK;
@@ -85,6 +88,7 @@ EC_Consumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
+  this->myself_ = RtecEventComm::PushConsumer::_nil ();
   this->is_active_ = 0;
 }
 
