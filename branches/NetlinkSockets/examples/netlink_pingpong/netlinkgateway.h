@@ -4,8 +4,6 @@
     
     This class is used to pass buffer to the driver and back.
     
-    Why use netlink sockets as a communication facility 
-    
 */
 #ifndef NETLINKGATEWAY_H
 #define NETLINKGATEWAY_H

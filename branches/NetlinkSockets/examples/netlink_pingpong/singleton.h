@@ -1,11 +1,11 @@
 // $Id$
 
-/*! \file NFSingleton.h
+/*! \file singleton.h
  * \brief singleton template
  *
  */
-#ifndef _NFSINGLETON_H_
-#define _NFSINGLETON_H_
+#ifndef _SINGLETON_H_
+#define _SINGLETON_H_
 
 /*! \class CNFSingleon
     \brief singleton template
