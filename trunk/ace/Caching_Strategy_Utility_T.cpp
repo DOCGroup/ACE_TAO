@@ -42,7 +42,7 @@ ACE_Svc_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cache
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
   double val = (double) purge_percent / 100;
-  int no_of_entries = (int) ceil (val * entries);
+  int no_of_entries = (int) (val * entries + 0.5);
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
@@ -112,7 +112,7 @@ ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_c
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
   double val = (double) purge_percent / 100;
-  int no_of_entries = (int) ceil (val * entries);
+  int no_of_entries = (int) (val * entries + 0.5);
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
