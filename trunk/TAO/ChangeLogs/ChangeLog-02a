@@ -3,7 +3,7 @@ Tue Sep 11 18:07:46 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h: 
 	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp: 	
 
-	  
+	  Fixed compile errors with RAPI enabled.
 
 Tue Sep 11 15:46:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
