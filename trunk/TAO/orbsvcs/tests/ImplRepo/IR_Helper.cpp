@@ -161,7 +161,7 @@ void
 IR_Helper::notify_startup (CORBA_Environment &_env)
 {
   // Get our host and port and convert it to something we can use.
-  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->addr ();
+  ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
   Implementation_Repository::INET_Addr my_ir_addr;
   my_ir_addr.port_ = my_addr.get_port_number ();
   my_ir_addr.host_ = CORBA::string_dup (my_addr.get_host_name ());
