@@ -48,28 +48,27 @@ class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
 public:
   TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req,
                                      TAO_ORB_Core *orb_core);
- // Constructor.
 
-  virtual ~TAO_DII_Deferred_Reply_Dispatcher (void);
-  // Destructor.
+
 
   // = The Reply_Dispatcher methods
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &param);
 
   virtual void connection_closed (void);
 
+  /// The following methods are not needed for this class..
+  virtual void reply_timed_out (void)  {}
+  virtual long schedule_timer (CORBA::ULong ,
+                               const ACE_Time_Value &)
+  {
+    return 0;
+  }
+
+protected:
+  // Destructor.
+  ~TAO_DII_Deferred_Reply_Dispatcher (void);
+
 private:
-
-  /// The buffer that is used to initialise the data block
-  char buf_[ACE_CDR::DEFAULT_BUFSIZE];
-
-  /// datablock that is created on teh stack to initialise the CDR
-  /// stream underneath.
-  ACE_Data_Block db_;
-
-  /// CDR stream for reading the input.
-  TAO_InputCDR reply_cdr_;
-
   /// Where the reply needs to go.
   const CORBA::Request_ptr req_;
 };

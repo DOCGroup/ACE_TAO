@@ -134,6 +134,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                   "id = %d\n",
                   params.request_id_));
 
+
     if (result != 0)
       {
         if (TAO_debug_level > 0 && result != 0)
@@ -155,21 +156,6 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
                   "TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, "
                   "id = %d\n",
                   params.request_id_));
-
-    if (result != 0)
-      {
-        if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply: ")
-                      ACE_TEXT ("unbind dispatcher failed: result = %d\n"),
-                      result));
-
-        // This return value means that the mux strategy was not able
-        // to find a registered reply handler, either because the reply
-        // was not our reply - just forget about it - or it was ours, but
-        // the reply timed out - just forget about the reply.
-        return 0;
-      }
 
     // Do not move it outside the scope of the lock. A follower thread
     // could have timedout unwinding the stack and the reply
