@@ -1,12 +1,18 @@
+Tue Oct  6 21:02:24 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* examples/Simple/bank/AccountManager_i.cpp (close):
+		Changed TAO_TRY_ENV to _env to avoid duplicate
+		definition.
+
 Tue Oct  6 20:28:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/try_macros.h: 
+	* tao/try_macros.h:
 	  The TAO_TRY macro generates a new do/while block even for the
 	  native C++ exception case, this is more consistent with the
 	  alternative mapping.
 
-	* examples/Callback_Quoter/MarketFeed_i.cpp: 
-	* examples/Callback_Quoter/Client_i.cpp: 
+	* examples/Callback_Quoter/MarketFeed_i.cpp:
+	* examples/Callback_Quoter/Client_i.cpp:
 	  Removed instantiations of TAO_TRY_ENV because TAO_TRY does it
 	  for us.
 
