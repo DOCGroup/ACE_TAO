@@ -110,6 +110,7 @@ ACE::strenvdup (const char *str)
 /*
 
 Examples:
+
 Source               NT                       UNIX
 ===============================================================
 netsvc               netsvc.dll               libnetsvc.so
@@ -118,15 +119,15 @@ netsvc               netsvc.dll               libnetsvc.so
 libnetsvc.dll        libnetsvc.dll            libnetsvc.dll + warning
 netsvc.so            netsvc.so + warning      libnetsvc.so 
 
-..\../libs/netsvc    ..\..\libs\netsvc.dll     ../../libs/libnetsvc.so
+..\../libs/netsvc    ..\..\libs\netsvc.dll     ../../libs/netsvc.so
 		     (absolute path used)         (absolute path used)
 
 */
 
 int
-ACE::ldfind (const char *filename, 
- 	     char *pathname, 
-	     size_t maxlen)
+ACE::ldfind (const char filename[],
+ 	     char pathname[], 
+	     size_t maxpathnamelen)
 {
   ACE_TRACE ("ACE::ldfind");
   
@@ -144,66 +145,78 @@ ACE::ldfind (const char *filename,
   else
     ACE_OS::strcpy (tempcopy, filename);
 
-  // Insert canonical directory separators
+  // Insert canonical directory separators.
   char *separator_ptr;
 
-  for (separator_ptr = tempcopy; *separator_ptr != '\0'; separator_ptr++)
+  for (separator_ptr = tempcopy; 
+       *separator_ptr != '\0'; 
+       separator_ptr++)
     if (*separator_ptr == '\\' 
 	|| *separator_ptr == ACE_DIRECTORY_SEPARATOR_CHAR)
       *separator_ptr = '/';
 
-  separator_ptr = ACE_OS::strrchr (tempcopy, '/');
-  // Separate filename from pathname
+  int got_prefix = 0;
 
-  if (separator_ptr != NULL)
+  // Separate filename from pathname.
+
+  separator_ptr = ACE_OS::strrchr (tempcopy, '/');
+
+  // This is a relative path.
+  if (separator_ptr == 0)
+    {
+      searchpathname[0] = '\0';
+      ACE_OS::strcpy (tempfilename, tempcopy);
+
+      // Note that we only try to set the prefix if we're dealing with
+      // a relative path.
+      if (ACE_OS::strlen (ACE_DLL_PREFIX) == 0
+	  || ACE_OS::strncmp (tempfilename, ACE_DLL_PREFIX, 
+			      ACE_OS::strlen (ACE_DLL_PREFIX) == 0))
+	got_prefix = 1;
+    } 
+  else // This is an absolute path.
     {
       ACE_OS::strcpy (tempfilename, separator_ptr + 1);
       separator_ptr[1] = '\0';
       ACE_OS::strcpy (searchpathname, tempcopy);
-    } 
-  else 
-    {
-      searchpathname[0] = '\0';
-      ACE_OS::strcpy (tempfilename, tempcopy);
     }
 
-  // Determine, how the filename needs to be decorated.
+  // Determine how the filename needs to be decorated.
 
-  int got_prefix = 0;
   int got_suffix = 0;
 
-  if (ACE_OS::strchr (tempfilename, '.') != NULL)
-    got_suffix = -1;
+  // Check to see if this has an appropriate DLL suffix for the OS
+  // platform.
+  char *s = ACE_OS::strrchr (tempfilename, '.');
+  if (s != 0 && ACE_OS::strcmp (s + 1, ACE_DLL_SUFFIX))
+    got_suffix = 1;
 
-  if (ACE_OS::strlen(ACE_DLL_PREFIX) == 0
-      || (ACE_OS::strncmp(tempfilename, ACE_DLL_PREFIX, 
-			  ACE_OS::strlen(ACE_DLL_PREFIX) == 0)))
-    got_prefix = -1;
-
-  // Create the properly decorated filename
+  // Create the properly decorated filename.
   if (ACE_OS::strlen (tempfilename) + 
-      (got_prefix) ? 0 : ACE_OS::strlen(ACE_DLL_PREFIX) + 
-      (got_suffix) ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= sizeof searchfilename) 
+      got_prefix ? 0 : ACE_OS::strlen (ACE_DLL_PREFIX) + 
+      got_suffix ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= sizeof searchfilename) 
     {
       errno = ENOMEM;
       return -1;
     } 
   else 
     ::sprintf (searchfilename, "%s%s%s", 
-	       (got_prefix) ? "" : ACE_DLL_PREFIX,
+	       got_prefix ? "" : ACE_DLL_PREFIX,
 	       tempfilename, 
-	       (got_suffix) ? "" : ACE_DLL_SUFFIX);
+	       got_suffix ? "" : ACE_DLL_SUFFIX);
 
-  if (ACE_OS::strcmp (searchfilename + ACE_OS::strlen (searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
+  if (ACE_OS::strcmp (searchfilename 
+		      + ACE_OS::strlen (searchfilename) - ACE_OS::strlen (ACE_DLL_SUFFIX), 
 		      ACE_DLL_SUFFIX))
     ACE_ERROR ((LM_NOTICE, 
 		"CAUTION: improper name for a shared library on this patform: %s\n", 
 		searchfilename));
   
+  // Use absolute pathname if there is one.
   if (ACE_OS::strlen (searchpathname) > 0)
     {
-      // Use absolute pathname.
-      if (ACE_OS::strlen (searchfilename) + ACE_OS::strlen (searchpathname) >= maxlen) 
+      if (ACE_OS::strlen (searchfilename) 
+	  + ACE_OS::strlen (searchpathname) >= maxpathnamelen) 
 	{
 	  errno = ENOMEM;
 	  return -1;
@@ -212,7 +225,9 @@ ACE::ldfind (const char *filename,
 	{
 
 	  // Revert to native path name separators
-	  for (separator_ptr = searchpathname; *separator_ptr != '\0'; separator_ptr++)
+	  for (separator_ptr = searchpathname; 
+	       *separator_ptr != '\0'; 
+	       separator_ptr++)
 	    if (*separator_ptr == '/') 
 	      *separator_ptr = ACE_DIRECTORY_SEPARATOR_CHAR;
 
@@ -220,23 +235,25 @@ ACE::ldfind (const char *filename,
 	  return 0;
 	}
     }
-  else
+
+  // Use relative filenames via LD_LIBRARY_PATH or PATH (depending on
+  // OS platform).
+  else 
     {
-      // Using LD_LIBRARY_PATH
       char *ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
 
       if (ld_path != 0 && (ld_path = ACE_OS::strdup (ld_path)) != 0)
 	{
 	  // Look at each dynamic lib directory in the search path.
-	  char *path_entry = ACE_OS::strtok (ld_path, 
-					     ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+	  char *path_entry = ACE_OS::strtok 
+	    (ld_path, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
       
 	  int result = 0;
 
 	  while (path_entry != 0)
 	    {
-	      if (ACE_OS::strlen (path_entry) + 1 + ACE_OS::strlen
-		  (searchfilename) >= maxlen)
+	      if (ACE_OS::strlen (path_entry) 
+		  + 1 + ACE_OS::strlen (searchfilename) >= maxpathnamelen)
 		{
 		  errno = ENOMEM;
 		  result = -1;
