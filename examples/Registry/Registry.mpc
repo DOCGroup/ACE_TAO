@@ -1,39 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*iterator) : aceexe {
+project(*iterator) : aceexe, win32registry {
   exename = iterator
-
-  verbatim(gnuace, top) {
-    ifneq ($(MAKE),)
-    include $(ACE_ROOT)/include/makeinclude/macros.GNU
-    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
-    $(TARGETS_NESTED):
-    "	@echo iterator will only build on Windows"
-    else
-  }
-  verbatim(gnuace, bottom) {
-    endif
-  }
 
   Source_Files {
     test_registry_iterator.cpp
   }
 }
-project(*update) : aceexe {
+project(*update) : aceexe, win32registry {
   exename = update
-
-  verbatim(gnuace, top) {
-    ifneq ($(MAKE),)
-    include $(ACE_ROOT)/include/makeinclude/macros.GNU
-    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
-    $(TARGETS_NESTED):
-    "	@echo update will only build on Windows"
-    else
-  }
-  verbatim(gnuace, bottom) {
-    endif
-  }
 
   Source_Files {
     test_registry_update.cpp

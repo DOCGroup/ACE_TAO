@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+feature(winregistry) {
+  requires += winregistry
+}
