@@ -1,3 +1,10 @@
+Fri Sep 28 12:46:25 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.cpp (report_error):
+
+	  Don't bother displaying an error message if the error code is
+	  zero (i.e. no error).
+
 Fri Sep 28 12:31:39 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
