@@ -191,14 +191,16 @@ ACE_U_LongLong::dump (FILE *file) const
     {
 #     if ULONG_MAX == 4294967295UL
         // 32-bit unsigned long, which has 10 decimal digits.
-        ::fprintf (file, "%lu%010lu", hi_, lo_);
+        // We only keep 9 in the lo_ member of ACE_U_LongLong
+        // (0 thru 999999999), though.
+        ACE_OS::fprintf (file, "%lu%09lu", hi_, lo_);
 #     else
 #       error Unsupported ULONG_MAX size
 #     endif /* ULONG_MAX */
     }
   else
     {
-      ::fprintf (file, "%lu", lo_);
+      ACE_OS::fprintf (file, "%lu", lo_);
     }
 }
 #endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
