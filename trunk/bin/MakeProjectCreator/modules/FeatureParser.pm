@@ -11,6 +11,7 @@ package FeatureParser;
 # ************************************************************
 
 use strict;
+use File::Basename;
 
 use Parser;
 
@@ -38,8 +39,7 @@ sub new {
         ## We only want to warn the user about problems
         ## with the feature file.
         my($lnumber) = $self->get_line_number();
-        print "$f: line $lnumber:\n";
-        $self->warning($warn);
+        $self->warning(basename($f) . ": line $lnumber: $warn");
       }
     }
   }

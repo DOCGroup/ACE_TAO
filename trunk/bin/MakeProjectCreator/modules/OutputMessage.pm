@@ -28,8 +28,10 @@ sub new {
   my($class) = shift;
   my($info)  = shift;
   my($warn)  = shift;
+  my($diag)  = shift;
   my($self)  = bless {'information' => $info,
                       'warnings'    => $warn,
+                      'diagnostic'  => $diag,
                      }, $class;
   return $self;
 }
@@ -42,6 +44,16 @@ sub split_message {
 
   $msg =~ s/\.\s+/.\n$spc/g;
   return $msg . "\n";
+}
+
+
+sub diagnostic {
+  my($self) = shift;
+  my($msg)  = shift;
+
+  if ($self->{'diagnostic'}) {
+    print "$msg\n";
+  }
 }
 
 
@@ -70,9 +82,13 @@ sub warning {
 sub error {
   my($self) = shift;
   my($msg)  = shift;
+  my($pre)  = shift;
 
-  print $error . $self->split_message($msg, ' ' x
-                                      length($error));
+  if (defined $pre) {
+    print STDERR "$pre\n";
+  }
+  print STDERR $error . $self->split_message($msg, ' ' x
+                                             length($error));
 }
 
 
