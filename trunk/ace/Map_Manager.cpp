@@ -610,7 +610,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT
   if (this->map_man_->search_structure_ != 0
       // Note that this->next_ is never negative at this point...
       && ACE_static_cast(size_t, this->next_) < this->map_man_->cur_size_
-      && ACE_static_cast(size_t, this->next_) > -1)
+      && this->next_ > -1)
     {
       mm = &this->map_man_->search_structure_[this->next_];
       return 1;
@@ -628,7 +628,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
   return this->map_man_->search_structure_ == 0
     // Note that this->next_ is never negative at this point...
     || ACE_static_cast(size_t, this->next_) >= this->map_man_->cur_size_
-    || ACE_static_cast(size_t, this->next_) <= -1;
+    || this->next_ <= -1;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
