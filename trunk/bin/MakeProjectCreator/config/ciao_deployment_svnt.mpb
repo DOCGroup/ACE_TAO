@@ -4,5 +4,5 @@
 project : protableserver {
   after += Deployment_svnt
   libs  += Deployment_svnt
-  includes += $(CIAO_ROOT)/DnC
+  includes += $(CIAO_ROOT)/DnC/Core
 }
