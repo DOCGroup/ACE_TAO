@@ -160,21 +160,10 @@ main (int argc, char *argv[])
   return 0;
 }
 
-void run_test (Simple_Server_ptr server
-               ACE_ENV_ARG_DECL)
+void
+run_test (Simple_Server_ptr server
+          ACE_ENV_ARG_DECL)
 {
-  ACE_TRY
-    {
-      CORBA::Long ret=
-        server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Unexpected exception");
-    }
-  ACE_ENDTRY;
+  (void) server->remote_call (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
