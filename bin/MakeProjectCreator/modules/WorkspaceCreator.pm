@@ -84,6 +84,7 @@ sub new {
   $self->{'modified_count'}      = 0;
   $self->{'global_feature_file'} = $gfeature;
   $self->{'coexistence'}         = $makeco;
+  $self->{'project_file_list'}   = {};
 
   if (defined $$exclude[0]) {
     my($type) = $self->{'wctype'};
@@ -698,6 +699,9 @@ sub generate_project_files {
   ## Remove the address portion of the $self string
   $postkey =~ s/=.*//;
 
+  ## Set the source file callback on our project creator
+  $generator->set_source_listing_callback([\&source_listing_callback, $self]);
+
   foreach my $ofile (@{$self->{'project_files'}}) {
     if (!$self->excluded($ofile)) {
       my($file)    = $ofile;
@@ -838,7 +842,92 @@ sub generate_project_files {
   $self->{'projects'}     = \@projects;
   $self->{'project_info'} = \%pi;
 
+  ## Add implict project dependencies based on source files
+  ## that have been used by multiple projects
+  if ($status && $self->generate_implicit_project_dependencies()) {
+    $self->add_implicit_project_dependencies($generator, $cwd);
+  }
+
   return $status, $generator;
+}
+
+
+sub array_contains {
+  my($self)   = shift;
+  my($left)   = shift;
+  my($right)  = shift;
+  my($over)   = shift;
+  my($status) = 0;
+  my(%check)  = ();
+
+  ## Initialize the hash keys with the left side array
+  @check{@$left} = ();
+
+  ## Check each element on the right against the left.
+  ## Store anything that isn't in the left side in the over array.
+  foreach my $r (@$right) {
+    if (exists $check{$r}) {
+      $status = 1;
+    }
+    elsif (defined $over) {
+      push(@$over, $r);
+    }
+  }
+  return $status;
+}
+
+
+sub add_implicit_project_dependencies {
+  my($self)      = shift;
+  my($generator) = shift;
+  my($cwd)       = shift;
+  my(%bidir)     = ();
+
+  ## Take the current working directory and regular expression'ize it.
+  $cwd = $self->escape_regex_special($cwd) . '/';
+
+  ## Look at each projects file list and check it against all of the
+  ## others.  If any of the other projects file lists contains anothers
+  ## file, then they are dependent (due to build parallelism).  So, we
+  ## append the dependency and remove the file in question from the
+  ## project so that the next time around the foreach, we don't find it
+  ## as a dependent on the one that we just modified.
+  foreach my $key (sort keys %{$self->{'project_file_list'}}) {
+    foreach my $ikey (keys %{$self->{'project_file_list'}}) {
+      if ($key ne $ikey && 
+          (!defined $bidir{$ikey} ||
+           !$self->array_contains($bidir{$ikey}, [$key])) &&
+          ($self->{'project_file_list'}->{$key}->[1] eq
+           $self->{'project_file_list'}->{$ikey}->[1])) {
+        my(@over) = ();
+        if ($self->array_contains(
+                      $self->{'project_file_list'}->{$key}->[2],
+                      $self->{'project_file_list'}->{$ikey}->[2],
+                      \@over)) {
+          $self->{'project_file_list'}->{$ikey}->[2] = \@over;
+          if (defined $bidir{$key}) {
+            push(@{$bidir{$key}}, $ikey);
+          }
+          else {
+            $bidir{$key} = [$ikey];
+          }
+          my($append) = $generator->translate_value('after', $key);
+          my($file)   = $self->{'project_file_list'}->{$ikey}->[0];
+          my($dir)    = $self->{'project_file_list'}->{$ikey}->[1];
+
+          ## Remove our starting directory from the projects directory
+          ## to get the right part of the directory to prepend.
+          $dir =~ s/^$cwd//;
+          if ($dir ne '') {
+            $file = "$dir/$file";
+          }
+
+          ## Append the dependency
+          $self->{'project_info'}->{$file}->[1] .= " $append";
+        }
+      }
+    }
+  }
 }
 
 
@@ -873,6 +962,10 @@ sub sort_dependencies {
     %$prepref = %prepend;
   }
 
+  ## These will help us catch circular dependencies
+  my($start_project)  = '';
+  my($moved_project) = '';
+
   ## Put the projects in the order specified
   ## by the project dpendencies.
   for(my $i = 0; $i <= $#list; ++$i) {
@@ -890,7 +983,15 @@ sub sort_dependencies {
         if ($project ne $full) {
           ## See if the dependency is listed after this project
           for(my $j = $i; $j <= $#list; ++$j) {
-            if ($list[$j] eq $full && $i != $j) {
+            if ($i != $j && $list[$j] eq $full &&
+                $list[$i] ne $moved_project &&
+                $list[$j] ne $start_project) {
+              ## Keep track of the one we started with and the
+              ## one we are going to move.  If there is a circular
+              ## dependency, the next time through we will catch it.
+              $start_project = $list[$i];
+              $moved_project = $list[$j];
+
               ## If so, move it in front of the current project.
               ## The original code, which had splices, didn't always
               ## work correctly (especially on AIX for some reason).
@@ -1173,7 +1274,7 @@ sub get_validated_ordering {
     my($projects) = $self->get_projects();
     foreach my $dep (@$darr) {
       my($found) = 0;
-      ## Avoid cirular dependencies
+      ## Avoid circular dependencies
       if ($dep ne $name && $dep ne basename($project)) {
         foreach my $p (@$projects) {
           if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
@@ -1198,14 +1299,32 @@ sub get_validated_ordering {
   return $deps;
 }
 
+
+sub source_listing_callback {
+  my($self)         = shift;
+  my($project_file) = shift;
+  my($project_name) = shift;
+  my(@files)        = @_;
+  my($cwd)          = $self->getcwd();
+  $self->{'project_file_list'}->{$project_name} = [ $project_file,
+                                                    $cwd, \@files ];
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub generate_implicit_project_dependencies {
+  #my($self) = shift;
+  return 0;
+}
+
 
 sub allow_duplicates {
   #my($self) = shift;
   return 1;
 }
+
 
 sub workspace_file_name {
   #my($self) = shift;

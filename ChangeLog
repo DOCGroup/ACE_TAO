@@ -1,3 +1,16 @@
+Wed Sep 10 08:04:25 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added automatic parallel dependencies.  If more than one project
+          in the same directory contains shared source files, then the
+          projects will become dependent upon each other.  This will help
+          avoid files (both generated source and object) being overwritten
+          by multiple instances of make.  This only has an effect on the
+          GNUACE workspaces.
+
 Tue Sep  9 08:56:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/ace_dll.dsp:

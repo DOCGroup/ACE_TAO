@@ -175,6 +175,7 @@ sub new {
   $self->{'feature_parser'}        = new FeatureParser($gfeature, $feature);
   $self->{'convert_slashes'}       = $self->convert_slashes();
   $self->{'sort_files'}            = $self->sort_files();
+  $self->{'source_callback'}       = undef;
   $self->reset_generating_types();
 
   return $self;
@@ -2032,6 +2033,23 @@ sub write_output_file {
       ($status, $error) = $tp->parse_file($tfile);
 
       if ($status) {
+        if (defined $self->{'source_callback'}) {
+          my($cb)     = $self->{'source_callback'};
+          my($pjname) = $self->get_assignment('project_name');
+          my(@list)   = $self->get_component_list('source_files');
+          if (UNIVERSAL::isa($cb, 'ARRAY')) {
+            my(@copy) = @$cb;                
+            my($s) = shift(@copy);
+            &$s(@copy, $name, $pjname, @list);
+          }
+          elsif (UNIVERSAL::isa($cb, 'CODE')) {
+            &$cb($name, $pjname, @list);
+          }
+          else {
+            print "WARNING: Ignoring callback: $cb\n";
+          }
+        }
+
         if ($self->get_toplevel()) {
           my($fh)  = new FileHandle();
           my($dir) = dirname($name);
@@ -2092,11 +2110,11 @@ sub write_output_file {
 
 
 sub write_project {
-  my($self)     = shift;
-  my($status)   = 1;
-  my($error)    = '';
-  my($file_name)     = $self->transform_file_name($self->project_file_name());
-  my($progress) = $self->get_progress_callback();
+  my($self)      = shift;
+  my($status)    = 1;
+  my($error)     = '';
+  my($file_name) = $self->transform_file_name($self->project_file_name());
+  my($progress)  = $self->get_progress_callback();
 
   if (defined $progress) {
     &$progress();
@@ -2163,6 +2181,13 @@ sub set_component_extensions {
       $$ec{$key} = $ov;
     }
   }
+}
+
+
+sub set_source_listing_callback {
+  my($self) = shift;
+  my($cb)   = shift;
+  $self->{'source_callback'} = $cb;
 }
 
 
