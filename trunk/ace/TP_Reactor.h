@@ -186,6 +186,11 @@ protected:
   // in the timer queue expiry functions and the notification class to
   // do this without some significant redesign.
 
+  int dispatch_i_protected (ACE_Time_Value *max_wait_time,
+                            ACE_EH_Dispatch_Info &event);
+  // Only really does anything for Win32. Wraps a call to dispatch_i in an
+  // ACE_SEH_TRY block.
+
   virtual void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask,
                               ACE_Handle_Set &,

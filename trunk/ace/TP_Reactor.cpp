@@ -109,7 +109,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // *not* dispatch any I/O handlers.  It will dispatch signals,
   // timeouts, and notifications.
   ACE_EH_Dispatch_Info dispatch_info;
-  result = this->dispatch_i (max_wait_time, dispatch_info);
+  result = this->dispatch_i_protected (max_wait_time, dispatch_info);
   if (result == -1)
     {
       ACE_MT (this->token_.release ());
@@ -214,68 +214,57 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   // existing notion of handles in <dispatch_set_> may no longer be
   // correct.
 
-  //  ACE_SEH_TRY
-  //{
-
-      // First check for interrupts.
-      if (active_handle_count == -1)
-	{
-	  // Bail out -- we got here since <select> was interrupted.
-	  if (ACE_Sig_Handler::sig_pending () != 0)
-	    {
-	      ACE_Sig_Handler::sig_pending (0);
+  // First check for interrupts.
+  if (active_handle_count == -1)
+    {
+      // Bail out -- we got here since <select> was interrupted.
+      if (ACE_Sig_Handler::sig_pending () != 0)
+        {
+          ACE_Sig_Handler::sig_pending (0);
 
 #if 0
-	      // Not sure if this should be done in the TP_Reactor
-	      // case... leave it out for now.   -Steve Huston 22-Aug-00
+          // Not sure if this should be done in the TP_Reactor
+          // case... leave it out for now.   -Steve Huston 22-Aug-00
 
-	      // If any HANDLES in the <ready_set_> are activated as a
-	      // result of signals they should be dispatched since
-	      // they may be time critical...
-	      active_handle_count = this->any_ready (dispatch_set);
+          // If any HANDLES in the <ready_set_> are activated as a
+          // result of signals they should be dispatched since
+          // they may be time critical...
+          active_handle_count = this->any_ready (dispatch_set);
 #else
-	      active_handle_count = 0;
+          active_handle_count = 0;
 #endif
 
-	      // Record the fact that the Reactor has dispatched a
-	      // handle_signal() method.  We need this to return the
-	      // appropriate count below.
-	      signal_occurred = 1;
-	    }
-	  else
-	    return -1;
-	}
+          // Record the fact that the Reactor has dispatched a
+          // handle_signal() method.  We need this to return the
+          // appropriate count below.
+          signal_occurred = 1;
+        }
+      else
+        return -1;
+    }
 
-      // Handle timers early since they may have higher latency
-      // constraints than I/O handlers.  Ideally, the order of
-      // dispatching should be a strategy...
-      this->dispatch_timer_handlers (handlers_dispatched);
+  // Handle timers early since they may have higher latency
+  // constraints than I/O handlers.  Ideally, the order of
+  // dispatching should be a strategy...
+  this->dispatch_timer_handlers (handlers_dispatched);
 
-      // If either the state has changed as a result of timer
-      // expiry, or there are no handles ready for dispatching,
-      // all done for now.
-      if (this->state_changed_ || active_handle_count == 0)
-	return signal_occurred + handlers_dispatched;
+  // If either the state has changed as a result of timer
+  // expiry, or there are no handles ready for dispatching,
+  // all done for now.
+  if (this->state_changed_ || active_handle_count == 0)
+    return signal_occurred + handlers_dispatched;
 
-      // Next dispatch the notification handlers (if there are any to
-      // dispatch).  These are required to handle multi-threads that
-      // are trying to update the <Reactor>.
+  // Next dispatch the notification handlers (if there are any to
+  // dispatch).  These are required to handle multi-threads that
+  // are trying to update the <Reactor>.
 
-      this->dispatch_notification_handlers (this->ready_set_,
-					    active_handle_count,
-					    handlers_dispatched);
+  this->dispatch_notification_handlers (this->ready_set_,
+                                        active_handle_count,
+                                        handlers_dispatched);
 
-      // If one of those changed the state, return.
-      if (this->state_changed_ || active_handle_count == 0)
-	return signal_occurred + handlers_dispatched;
-      //    }
-
-  //  ACE_SEH_EXCEPT (this->release_token ())
-  //  {
-      // As it stands now, we catch and then rethrow all Win32
-      // structured exceptions so that we can make sure to release the
-      // <token_> lock correctly.
-  //  }
+  // If one of those changed the state, return.
+  if (this->state_changed_ || active_handle_count == 0)
+    return signal_occurred + handlers_dispatched;
 
   // Check for dispatch in write, except, read. Only catch one.
   int found_io = 0;
@@ -340,6 +329,27 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   result = signal_occurred + handlers_dispatched;
 
   return result;
+}
+
+int
+ACE_TP_Reactor::dispatch_i_protected (ACE_Time_Value *max_wait_time,
+                                      ACE_EH_Dispatch_Info &event)
+{
+  int result;
+
+  ACE_SEH_TRY
+    {
+      result = this->dispatch_i (max_wait_time, event);
+    }
+  ACE_SEH_EXCEPT (this->release_token ())
+    {
+      // As it stands now, we catch and then rethrow all Win32
+      // structured exceptions so that we can make sure to release the
+      // <token_> lock correctly.
+    }
+
+  return result;
+
 }
 
 
