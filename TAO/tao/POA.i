@@ -465,6 +465,13 @@ TAO_POA::system_id (void)
 
 
 ACE_INLINE CORBA::Boolean
+TAO_POA::root (void)
+{
+  return this->parent_ == 0;
+}
+
+
+ACE_INLINE CORBA::Boolean
 TAO_POA::persistent (void)
 {
   return this->persistent_;
@@ -558,6 +565,33 @@ TAO_POA::system_id_key_type (void)
 
 ACE_INLINE CORBA::ULong
 TAO_POA::system_id_key_type_length (void)
+{
+  return sizeof (char);
+}
+
+ACE_INLINE char
+TAO_POA::root_key_char (void)
+{
+  return 'R';
+}
+
+ACE_INLINE char
+TAO_POA::non_root_key_char (void)
+{
+  return 'N';
+}
+
+ACE_INLINE char
+TAO_POA::root_key_type (void)
+{
+  if (this->root ())
+    return TAO_POA::root_key_char ();
+  else
+    return TAO_POA::non_root_key_char ();
+}
+
+ACE_INLINE CORBA::ULong
+TAO_POA::root_key_type_length (void)
 {
   return sizeof (char);
 }

@@ -599,9 +599,10 @@ protected:
 
   static int parse_key (const TAO_ObjectKey &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,
-                        PortableServer::ObjectId &id,
-                        CORBA::Boolean &persistent,
-                        CORBA::Boolean &system_id,
+                        PortableServer::ObjectId &system_id,
+                        CORBA::Boolean &is_root,
+                        CORBA::Boolean &is_persistent,
+                        CORBA::Boolean &is_system_id,
                         TAO_Temporary_Creation_Time &poa_creation_time);
 
   // Should really be protected, but some compilers complain
@@ -645,6 +646,16 @@ protected:
   static char user_id_key_char (void);
 
   static CORBA::ULong system_id_key_type_length (void);
+
+  virtual CORBA::Boolean root (void);
+
+  virtual char root_key_type (void);
+
+  static char root_key_char (void);
+
+  static char non_root_key_char (void);
+
+  static CORBA::ULong root_key_type_length (void);
 
   String name_;
 
