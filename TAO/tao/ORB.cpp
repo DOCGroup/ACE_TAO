@@ -2079,7 +2079,7 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 
 void
 CORBA::ORB::unregister_value_factory (const char *repository_id
-                                      ACE_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (this->valuetype_adapter_)
     {
