@@ -1,0 +1,124 @@
+// -*- MPC -*-
+// $Id$
+
+project(chain_example_server) : orbsvcsexe, kokyu, rtscheduling, rtcorba {
+  exename  = chain_example_server
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
+  includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers $(TAO_ROOT)/orbsvcs
+  libs += wrappers Kokyu_DSRT_EDF_Scheduler
+  after += Kokyu_DSRT_EDF_Scheduler
+
+  Define_Custom(DSUI) {
+    automatic 	     = 1
+    dependent	     = 1
+    command	     = /usr/local/bin/dsui-parse
+    commandflags     = -t chain -n
+    inputext	     = .dsui
+    source_outputext = .cpp
+    pre_extension    = _dsui_vars
+    header_outputext = .h
+  }
+
+  DSUI_Files {
+	chain.dsui
+  }
+
+  Source_Files {
+	threeway_server.cpp
+	workC.cpp
+	work_i.cpp
+	workS.cpp
+  }
+
+  Header_Files {
+	chain_dsui_families.h
+	chain_dsui_table.h
+	chain_dsui_info.h
+	workC.h
+	work_i.h
+	workS.h
+  }
+}
+
+project(chain_example_client_server) : orbsvcsexe, kokyu, rtscheduling, rtcorba {
+  exename  = threeway_le_client_server
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
+  includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers $(TAO_ROOT)/orbsvcs
+  libs += wrappers Kokyu_DSRT_EDF_Scheduler
+  after += Kokyu_DSRT_EDF_Scheduler
+
+  Define_Custom(DSUI) {
+    automatic 	     = 1
+    dependent	     = 1
+    command	     = /usr/local/bin/dsui-parse
+    commandflags     = -t chain -n
+    inputext	     = .dsui
+    source_outputext = .cpp
+    pre_extension    = _dsui_vars
+    header_outputext = .h
+  }
+
+  DSUI_Files {
+	chain.dsui
+  }
+
+
+  Source_Files {
+	test_i.cpp
+	testS.cpp
+	threeway_client_and_server.cpp
+	workC.cpp
+  }
+
+  Header_Files {
+	chain_dsui_families.h
+	chain_dsui_table.h
+	chain_dsui_info.h
+	test_i.h
+	testS.h
+	workC.h
+  }
+}
+
+project(chain_client) : orbsvcsexe, kokyu, rtscheduling, rtcorba, dsui {
+  exename  = chain_client
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
+  includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers $(TAO_ROOT)/orbsvcs
+  libs += wrappers Kokyu_DSRT_EDF_Scheduler
+  after += Kokyu_DSRT_EDF_Scheduler
+
+  Define_Custom(DSUI) {
+    automatic 	     = 1
+    dependent	     = 1
+    command	     = /usr/local/bin/dsui-parse
+    commandflags     = -t chain -n
+    inputext	     = .dsui
+    source_outputext = .cpp
+    pre_extension    = _dsui_vars
+    header_outputext = .h
+  }
+
+  DSUI_Files {
+	chain.dsui
+  }
+
+
+  Source_Files {
+	cpuload.cpp
+	testC.cpp
+	threeway_client.cpp
+	chain_dsui_vars.cpp
+  }
+
+  Header_Files {
+	chain_dsui_families.h
+	chain_dsui_table.h
+	chain_dsui_info.h
+	cpuload.h
+	testC.h
+	workC.h
+  }
+}
