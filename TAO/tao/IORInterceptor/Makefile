@@ -229,16 +229,19 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -427,16 +430,19 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \

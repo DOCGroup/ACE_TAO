@@ -212,7 +212,7 @@ endif
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -228,11 +228,14 @@ endif
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.h \
   $(TAO_ROOT)/tao/Valuetype/valuetype_export.h \
   $(TAO_ROOT)/tao/Valuetype/ValueBase.inl \

@@ -33,7 +33,7 @@
 #include "OctetSeqC.i"
 #endif /* !defined INLINE */
 
-#include "Any_T.h"
+#include "Any_Dual_Impl_T.h"
 #include "ORB_Core.h"
 
 #if !defined (_CORBA_OCTETSEQ_CS_)

@@ -201,7 +201,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(TAO_ROOT)/tao/Exception.i \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -233,11 +233,26 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -546,7 +561,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -578,11 +593,26 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -783,7 +813,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -815,11 +845,26 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -1071,7 +1116,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1103,11 +1148,26 @@ realclean: clean
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Special_Basic_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Array_Impl_T.cpp \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \

@@ -304,7 +304,12 @@ TEMPLATE_FILES = \
   Connector_Impl \
   Connector_Impl \
   Sequence_T \
-  Any_T \
+  Any_Impl_T \
+  Any_Array_Impl_T \
+  Any_Basic_Impl_T \
+  Any_Dual_Impl_T \
+  Any_Special_Basic_Impl_T \
+  Any_Special_Impl_T \
   TAO_Singleton
 
 ifndef TAO_ROOT
@@ -661,7 +666,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -671,11 +676,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i Transport_Acceptor.inl
 
@@ -844,7 +852,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -854,11 +862,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -868,7 +879,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -1116,7 +1127,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -1126,11 +1137,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -1140,7 +1154,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -1400,7 +1414,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -1410,11 +1424,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -1422,8 +1439,8 @@ realclean:
   ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
-  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  CurrentC.h CurrentC.i Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -1460,8 +1477,7 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
+  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
   Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl PICurrent.h \
@@ -1652,7 +1668,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -1662,11 +1678,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -1676,7 +1695,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -1892,7 +1911,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -1902,15 +1922,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -1938,9 +1957,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -2127,7 +2149,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -2137,11 +2159,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   CONV_FRAMEC.h \
@@ -2465,7 +2490,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -2475,14 +2501,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -2524,6 +2549,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -2737,7 +2765,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -2747,15 +2776,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -2783,9 +2811,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -3005,7 +3036,7 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -3015,11 +3046,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Tagged_Components.i \
@@ -3695,7 +3729,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -3705,11 +3739,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Transport_Acceptor.inl \
@@ -4070,7 +4107,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -4080,11 +4117,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Transport_Acceptor.inl \
@@ -4446,7 +4486,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -4456,11 +4496,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   CONV_FRAMEC.h \
@@ -4715,7 +4758,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -4725,11 +4768,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -5217,7 +5263,7 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -5227,11 +5273,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   CONV_FRAMEC.h \
@@ -5464,7 +5513,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -5474,11 +5523,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Transport_Acceptor.inl \
@@ -5928,7 +5980,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -5938,13 +5991,12 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -5976,6 +6028,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -6194,7 +6249,7 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i IOP_IORC.i IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -6205,11 +6260,15 @@ realclean:
   IOP_IORC.h \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
-  debug.h IOP_CodecC.i IOPC.i debug.h
+  debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp IOP_CodecC.i \
+  IOPC.i debug.h
 
 .obj/IIOPC.o .obj/IIOPC.SO .shobj/IIOPC.o .shobj/IIOPC.SO: IIOPC.cpp IIOPC.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -6361,7 +6420,7 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   IIOPC.i \
-  Any_T.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -6375,8 +6434,8 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h
@@ -6541,7 +6600,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -6551,15 +6611,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -6582,9 +6641,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -6793,7 +6855,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -6803,14 +6866,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -6847,6 +6909,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -7066,7 +7131,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -7076,14 +7142,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -7117,6 +7182,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -7717,10 +7785,10 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   CurrentC.h \
-  Any_T.h \
-  Any_T.inl \
-  Any_T.cpp \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -7757,6 +7825,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -8131,10 +8202,10 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   CurrentC.h \
-  Any_T.h \
-  Any_T.inl \
-  Any_T.cpp \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -8171,6 +8242,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -8383,7 +8457,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -8393,14 +8468,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -8408,7 +8482,7 @@ realclean:
   PolicyC.i \
   ORB.i
 
-.obj/Any.o .obj/Any.SO .shobj/Any.o .shobj/Any.SO: Any.cpp Any_T.h \
+.obj/Any.o .obj/Any.SO .shobj/Any.o .shobj/Any.SO: Any.cpp Any_Impl_T.h \
   $(ACE_ROOT)/ace/pre.h \
   Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -8570,11 +8644,23 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Basic_Impl_T.h \
+  Any_Basic_Impl_T.inl \
+  Any_Basic_Impl_T.cpp \
+  Any_Special_Impl_T.h \
+  Any_Special_Impl_T.inl \
+  Any_Special_Impl_T.cpp \
+  Any_Special_Basic_Impl_T.h \
+  Any_Special_Basic_Impl_T.inl \
+  Any_Special_Basic_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   ORB_Core.h \
   ORB.h \
   ServicesC.h \
@@ -8876,11 +8962,11 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i
@@ -9065,13 +9151,13 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
-  Any_T.h \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -9109,6 +9195,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -9271,7 +9360,8 @@ realclean:
   Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -9321,14 +9411,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -9381,6 +9470,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -9638,7 +9730,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -9648,14 +9741,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -9697,6 +9789,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -9906,15 +10001,15 @@ realclean:
   Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -9967,6 +10062,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -10231,16 +10329,17 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i Object_KeyC.h LocalObject.i \
-  PolicyC.h CurrentC.h Object.h \
-  Any_T.h \
+  PolicyC.h TAO_Export.h Any_Impl_T.h \
   Any.h \
+  Object.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Exception.h Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i debug.h
 
@@ -10392,12 +10491,13 @@ realclean:
   Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -10408,14 +10508,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -10467,6 +10566,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -10714,7 +10816,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -10724,15 +10827,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i ORB_Table.h \
   ORB_Table.inl Connector_Registry.h \
@@ -10783,6 +10885,9 @@ realclean:
   PI_ForwardC.i \
   CurrentC.h \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -10831,9 +10936,8 @@ realclean:
   ORB_Core_Auto_Ptr.h \
   ORB_Core_Auto_Ptr.inl \
   Stub.i ORB_Core.h debug.h \
-  TAO_Internal.h TAO_Export.h NVList.h \
-  NVList.i Dynamic_Adapter.h CDR.h \
-  MProfile.h Profile.h \
+  TAO_Internal.h NVList.h NVList.i \
+  Dynamic_Adapter.h CDR.h MProfile.h Profile.h \
   Tagged_Components.h \
   Tagged_Components.i \
   GIOP_Message_Version.h \
@@ -10922,7 +11026,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  corbafwd.i Sequence.h \
+  corbafwd.i TAO_Export.h Sequence.h \
   Managed_Types.h \
   Managed_Types.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -11050,10 +11154,8 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i varbase.h Policy_ForwardC.i \
-  Stub.h \
-  MProfile.h \
-  PolicyC.h \
-  CurrentC.h \
+  Any_Basic_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   Object_KeyC.h \
@@ -11064,14 +11166,23 @@ realclean:
   CDR.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Basic_Impl_T.inl \
+  Any_Basic_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_IMpl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
+  Stub.h \
+  MProfile.h \
+  PolicyC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  CurrentC.h \
   varbase.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
@@ -11239,7 +11350,29 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  corbafwd.i CurrentC.h \
+  corbafwd.i TAO_Export.h Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -11249,26 +11382,8 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -11315,7 +11430,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -11367,8 +11481,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -11379,15 +11491,14 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Exception.h Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i Stub.h \
   MProfile.h \
@@ -11440,6 +11551,9 @@ realclean:
   PI_ForwardC.i \
   CurrentC.h \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -11692,22 +11806,22 @@ realclean:
   OctetSeqC.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Object_KeyC.h \
   Object_KeyC.i \
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Policy_Manager.h \
   Policy_Set.h \
@@ -11735,9 +11849,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -12001,17 +12118,20 @@ realclean:
   Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
-  Object.h \
-  Policy_ForwardC.h \
-  Sequence.h \
-  Managed_Types.h \
-  Managed_Types.i \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  Sequence.h \
+  Managed_Types.h \
+  Managed_Types.i \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -12048,8 +12168,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -12060,14 +12178,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Encodable.h \
   PolicyC.i \
@@ -12118,6 +12235,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -12342,7 +12462,7 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   Exception.i \
   Typecode.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -12374,11 +12494,26 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Basic_Impl_T.h \
+  Any_Basic_Impl_T.inl \
+  Any_Basic_Impl_T.cpp \
+  Any_Special_Impl_T.h \
+  Any_Special_Impl_T.inl \
+  Any_Special_Impl_T.cpp \
+  Any_Special_Basic_Impl_T.h \
+  Any_Special_Basic_Impl_T.inl \
+  Any_Special_Basic_Impl_T.cpp \
+  Any_Array_Impl_T.h \
+  Any_Array_Impl_T.inl \
+  Any_Array_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   NVList.h \
   NVList.i \
   LocalObject.h \
@@ -12563,30 +12698,9 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  corbafwd.i \
-  Any_T.h \
-  Any.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
+  corbafwd.i TAO_Export.h \
+  SmartProxies/Smart_Proxies.h \
+  SmartProxies/smartproxies_export.h \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -12596,8 +12710,26 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -12644,6 +12776,7 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -12695,6 +12828,8 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -12705,14 +12840,6 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any.i \
-  Any_T.inl \
-  Any_T.cpp \
-  Marshal.h \
-  Marshal.i \
-  debug.h TAO_Export.h \
-  SmartProxies/Smart_Proxies.h \
-  SmartProxies/smartproxies_export.h \
   TAO_Singleton.h \
   TAO_Singleton.inl \
   TAO_Singleton.cpp \
@@ -12727,6 +12854,14 @@ realclean:
   TimeBaseC.i Stub.h \
   MProfile.h \
   PolicyC.h \
+  Any_Impl_T.h \
+  Any.h \
+  Any.i \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Marshal.h \
+  Marshal.i \
+  debug.h \
   CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
@@ -12770,6 +12905,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -13206,7 +13344,17 @@ realclean:
   TAO_Export.h \
   corbafwd.i \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -13214,12 +13362,6 @@ realclean:
   Managed_Types.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -13255,7 +13397,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -13307,8 +13448,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -13319,14 +13458,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -13337,6 +13475,9 @@ realclean:
   Tagged_Components.h \
   IOPC.h \
   IOP_CodecC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   CONV_FRAMEC.h \
@@ -13395,7 +13536,17 @@ realclean:
   Endpoint.i Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -13403,12 +13554,6 @@ realclean:
   Managed_Types.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -13444,7 +13589,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -13496,8 +13640,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -13508,14 +13650,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -13568,6 +13709,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -13995,7 +14139,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -14005,14 +14150,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -14054,6 +14198,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -14308,7 +14455,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -14317,14 +14465,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -14366,6 +14513,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -14433,7 +14583,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i Policy_ForwardC.h \
-  corbafwd.h Sequence.h \
+  corbafwd.h TAO_Export.h Sequence.h \
   Managed_Types.h \
   Managed_Types.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -14591,7 +14741,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i Policy_ForwardC.h \
-  corbafwd.h Sequence.h \
+  corbafwd.h TAO_Export.h Sequence.h \
   Managed_Types.h \
   Managed_Types.i \
   $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -14725,7 +14875,8 @@ realclean:
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   Default_Protocols_Hooks.i PolicyC.h \
-  CurrentC.h Object.h \
+  Any_Impl_T.h Any.h \
+  Object.h \
   Policy_ForwardC.h \
   Object_KeyC.h \
   Object_KeyC.i \
@@ -14735,14 +14886,13 @@ realclean:
   CDR.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h \
+  debug.h CurrentC.h \
   varbase.h CurrentC.i Exception.h \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
@@ -15044,7 +15194,7 @@ realclean:
   CDR.h \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -15054,11 +15204,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -15369,7 +15522,7 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -15379,11 +15532,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -15691,7 +15847,7 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -15701,11 +15857,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -16011,7 +16170,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -16021,11 +16180,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Service_Context.inl \
@@ -16199,16 +16361,19 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   CurrentC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -16396,16 +16561,19 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   CurrentC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -16686,7 +16854,7 @@ realclean:
   Typecode.i \
   Environment.h \
   Environment.i StringSeqC.i \
-  Any_T.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -16704,8 +16872,8 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h DynamicC.i Any.h
@@ -16871,16 +17039,19 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
+  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
   Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i \
@@ -17285,16 +17456,19 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
+  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
   Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i \
@@ -17597,16 +17771,19 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
+  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
   Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object.h Object_KeyC.h \
@@ -17835,17 +18012,20 @@ realclean:
   PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h StringSeqC.h \
   corbafwd.h Sequence.h StringSeqC.i PI_ForwardC.i CurrentC.h \
   Object.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Policy_ForwardC.h \
-  Exception.h Remote_Object_Proxy_Impl.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i PICurrent.h \
   $(ACE_ROOT)/ace/Array_Base.h \
@@ -18053,7 +18233,7 @@ realclean:
   Typecode.i \
   Environment.h \
   Environment.i StringSeqC.i \
-  Any_T.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -18071,14 +18251,17 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h DynamicC.i \
   Stub.h \
   MProfile.h \
   PolicyC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
@@ -18368,8 +18551,8 @@ realclean:
   Exception.i \
   Typecode.i \
   Environment.h \
-  Environment.i OctetSeqC.i Any_T.h \
-  Any.h \
+  Environment.i OctetSeqC.i \
+  Any_Dual_Impl_T.h Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
@@ -18385,16 +18568,19 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
-  Any_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
   Marshal.h \
   Marshal.i \
   debug.h ORB_Core.h ORB.h Exception.h \
   ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -18423,8 +18609,8 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   StringSeqC.h StringSeqC.i PI_ForwardC.i DynamicC.h DynamicC.i \
-  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
-  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
@@ -18601,8 +18787,8 @@ realclean:
   Exception.i \
   Typecode.i \
   Environment.h \
-  Environment.i StringSeqC.i Any_T.h \
-  Any.h \
+  Environment.i StringSeqC.i \
+  Any_Dual_Impl_T.h Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
@@ -18619,9 +18805,9 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
-  Any_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
   Marshal.h \
   Marshal.i \
   debug.h
@@ -18787,7 +18973,7 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -18797,10 +18983,13 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOPC.h \
@@ -19190,7 +19379,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -19200,15 +19390,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -19236,9 +19425,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -19521,7 +19713,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -19531,15 +19724,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -19567,9 +19759,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -20022,7 +20217,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -20032,15 +20228,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -20068,9 +20263,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -20269,7 +20467,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -20279,14 +20478,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -20328,6 +20526,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -20548,7 +20749,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -20558,14 +20760,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -20607,6 +20808,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -20828,7 +21032,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -20838,14 +21043,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -20887,6 +21091,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -21107,7 +21314,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -21117,14 +21325,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -21166,6 +21373,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -21415,7 +21625,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -21425,14 +21636,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -21474,6 +21684,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -21718,7 +21931,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -21728,14 +21942,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -21777,6 +21990,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -22070,7 +22286,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -22080,14 +22297,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -22129,6 +22345,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -22466,7 +22685,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -22476,14 +22696,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -22517,6 +22736,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -22776,7 +22998,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -22786,11 +23008,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -23087,7 +23312,8 @@ realclean:
   StringSeqC.h corbafwd.h Sequence.h StringSeqC.i ORB_Core.h ORB.h \
   Exception.h ServicesC.h OctetSeqC.h \
   OctetSeqC.i ServicesC.i CORBA_String.h \
-  ObjectIdListC.h ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.h ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -23095,15 +23321,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -23125,9 +23350,12 @@ realclean:
   $(ACE_ROOT)/ace/Managed_Object.cpp \
   TAO_Singleton_Manager.h \
   PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
-  OctetSeqC.h PI_ForwardC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i IOPC.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i \
-  IOPC.i PortableInterceptorC.i \
+  OctetSeqC.h PI_ForwardC.i DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
   $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
@@ -23341,7 +23569,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -23351,11 +23579,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOPC.h \
@@ -23367,8 +23598,8 @@ realclean:
   $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
   PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
   CurrentC.h CurrentC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h Exception.h \
-  Remote_Object_Proxy_Impl.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
   LocalObject.i PICurrent.inl TAO_Server_Request.i CDR.h Environment.h \
@@ -23407,8 +23638,8 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
-  Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -23608,7 +23839,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -23618,14 +23850,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -23634,6 +23865,21 @@ realclean:
   ORB.i \
   DomainC.h \
   corba.h \
+  Any_Basic_Impl_T.h \
+  Any_Basic_Impl_T.inl \
+  Any_Basic_Impl_T.cpp \
+  Any_Special_Impl_T.h \
+  Any_Special_Impl_T.inl \
+  Any_Special_Impl_T.cpp \
+  Any_Special_Basic_Impl_T.h \
+  Any_Special_Basic_Impl_T.inl \
+  Any_Special_Basic_Impl_T.cpp \
+  Any_Array_Impl_T.h \
+  Any_Array_Impl_T.inl \
+  Any_Array_Impl_T.cpp \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   NVList.h \
   NVList.i \
   LocalObject.h \
@@ -23968,7 +24214,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -23978,11 +24224,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -24172,7 +24421,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -24182,14 +24432,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -24231,6 +24480,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -24474,7 +24726,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -24484,14 +24737,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -24533,6 +24785,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -24778,7 +25033,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -24788,11 +25043,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Reply_Dispatcher.h \
@@ -24958,7 +25216,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -24968,11 +25226,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Reply_Dispatcher.h \
@@ -25153,7 +25414,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -25163,11 +25424,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -25196,7 +25460,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -25415,7 +25679,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -25425,11 +25689,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -25594,7 +25861,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -25604,11 +25871,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -25948,7 +26218,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -25958,11 +26228,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -26227,7 +26500,8 @@ realclean:
   Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -26236,14 +26510,13 @@ realclean:
   Object_KeyC.i \
   IOP_IORC.h \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -26296,6 +26569,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -26412,7 +26688,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
@@ -26554,11 +26830,14 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
-  debug.h IOP_CodecC.i \
+  debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp IOP_CodecC.i \
   Stub.h \
   MProfile.h \
   PolicyC.h \
@@ -26859,7 +27138,7 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i IOP_IORC.i IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -26870,12 +27149,15 @@ realclean:
   IOP_IORC.h \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
-  debug.h IOP_CodecC.i IOPC.i \
-  Stub.h \
+  debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp IOP_CodecC.i \
+  IOPC.i Stub.h \
   MProfile.h \
   PolicyC.h \
   CurrentC.h \
@@ -27195,7 +27477,7 @@ realclean:
   Environment.h \
   Environment.i \
   CONV_FRAMEC.i \
-  Any_T.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -27209,8 +27491,8 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h
@@ -27371,7 +27653,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -27381,11 +27663,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   CONV_FRAMEC.h \
@@ -27645,7 +27930,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -27655,11 +27940,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Service_Context.inl
@@ -27818,7 +28106,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -27828,11 +28116,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i GIOPC.i \
   ORB_Core.h \
@@ -28042,7 +28333,8 @@ realclean:
   Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -28094,14 +28386,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -28154,6 +28445,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -28268,7 +28562,29 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
-  corbafwd.i PolicyC.h CurrentC.h \
+  corbafwd.i PolicyC.h TAO_Export.h \
+  Any_Impl_T.h Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -28278,26 +28594,8 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -28344,7 +28642,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -28396,8 +28693,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -28408,17 +28703,16 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Exception.h Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
-  PolicyC.i TimeBaseC.h TAO_Export.h \
+  PolicyC.i TimeBaseC.h \
   SmartProxies/Smart_Proxies.h \
   SmartProxies/smartproxies_export.h \
   TAO_Singleton.h \
@@ -28432,7 +28726,9 @@ realclean:
   TAO_Singleton_Manager.h \
   TAO_Singleton_Manager.inl \
   SmartProxies/Smart_Proxies.inl \
-  TimeBaseC.i TAOC.i
+  TimeBaseC.i TAOC.i Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp
 
 .obj/Object_Loader.o .obj/Object_Loader.SO .shobj/Object_Loader.o .shobj/Object_Loader.SO: Object_Loader.cpp Object_Loader.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -28895,7 +29191,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -28905,14 +29202,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -29107,15 +29403,15 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -29150,6 +29446,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -29471,7 +29770,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -29481,11 +29780,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Service_Callbacks.i \
@@ -29668,7 +29970,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -29678,14 +29981,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -29722,6 +30024,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -30242,15 +30547,15 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -30421,7 +30726,8 @@ realclean:
   CDR.i ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -30431,15 +30737,14 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -30462,9 +30767,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -30668,7 +30976,7 @@ realclean:
   CDR.h \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -30678,11 +30986,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -30981,17 +31292,17 @@ realclean:
   IOP_IORC.i \
   Object.i ORB_Core.h corbafwd.h ORB.h \
   Exception.h ServicesC.h ServicesC.i CORBA_String.h ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
-  Object.h \
-  Any_T.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
   Any.h \
+  Object.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -31014,9 +31325,12 @@ realclean:
   TAO_Singleton_Manager.h Adapter.h \
   Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
   OctetSeqC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
-  DynamicC.h DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i \
-  IOPC.h TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i \
-  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
+  DynamicC.h Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PortableInterceptorC.i \
+  $(ACE_ROOT)/ace/Map_Manager.h \
   $(ACE_ROOT)/ace/Map_Manager.i \
   $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
   Parser_Registry.i Service_Callbacks.h \
@@ -31223,7 +31537,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -31233,11 +31547,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Condition.h \
@@ -31404,7 +31721,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -31414,11 +31731,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Service_Callbacks.i \
@@ -31687,16 +32007,19 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   CurrentC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -31961,16 +32284,19 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
   CurrentC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -32208,16 +32534,19 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
+  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
   Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object.h Object_KeyC.h \
@@ -32440,16 +32769,19 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
+  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
   Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i \
@@ -32632,16 +32964,19 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  TAO_Export.h IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h TAO_Export.h \
+  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
   Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i \
@@ -32816,7 +33151,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -32826,11 +33161,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -33061,7 +33399,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -33071,11 +33409,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -33434,17 +33775,17 @@ realclean:
   Object.i ORB.h Exception.h ServicesC.h \
   ServicesC.i CORBA_String.h $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h \
-  Object.h \
-  Any_T.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
   Any.h \
+  Object.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
+  Any_Impl_T.h \
   Marshal.h \
   Marshal.i \
-  debug.h CurrentC.i Policy_ForwardC.h \
-  Remote_Object_Proxy_Impl.h \
+  debug.h CurrentC.h CurrentC.i \
+  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h debug.h
 
@@ -33713,7 +34054,7 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i IOP_IORC.i IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -33724,12 +34065,16 @@ realclean:
   IOP_IORC.h \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
-  debug.h IOP_CodecC.i IOPC.i \
-  LocalObject.h Object.h Object_KeyC.h LocalObject.i CDR_Encaps_Codec.h
+  debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp IOP_CodecC.i \
+  IOPC.i LocalObject.h Object.h Object_KeyC.h LocalObject.i \
+  CDR_Encaps_Codec.h
 
 .obj/CodecFactory_ORBInitializer.o .obj/CodecFactory_ORBInitializer.SO .shobj/CodecFactory_ORBInitializer.o .shobj/CodecFactory_ORBInitializer.SO: CodecFactory_ORBInitializer.cpp \
   CodecFactory_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
@@ -33891,17 +34236,20 @@ realclean:
   OctetSeqC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h CurrentC.i DynamicC.h \
-  DynamicC.i Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h \
-  IOP_IORC.h IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Policy_ForwardC.h \
-  Exception.h Remote_Object_Proxy_Impl.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp DynamicC.i \
+  Messaging_SyncScopeC.h Messaging_SyncScopeC.i IOPC.h IOP_IORC.h \
+  IOP_CodecC.h IOP_CodecC.i IOPC.i PolicyC.h Any_Impl_T.h \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object.h Object_KeyC.h \
   LocalObject.i CodecFactory.h ORBInitInfo.h ORBInitInfo.inl
@@ -34068,13 +34416,16 @@ realclean:
   Any.i Typecode.h Marshal.h \
   Marshal.i CDR_Encaps_Codec.h \
   TAO_Export.h IOPC.h IOP_IORC.h IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
-  debug.h IOP_CodecC.i IOPC.i \
-  LocalObject.h Object.h Object_KeyC.h LocalObject.i
+  debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp IOP_CodecC.i \
+  IOPC.i LocalObject.h Object.h Object_KeyC.h LocalObject.i
 
 .obj/Endpoint_Selector_Factory.o .obj/Endpoint_Selector_Factory.SO .shobj/Endpoint_Selector_Factory.o .shobj/Endpoint_Selector_Factory.SO: Endpoint_Selector_Factory.cpp \
   Endpoint_Selector_Factory.h \
@@ -34297,7 +34648,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -34307,11 +34658,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -34487,7 +34841,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -34497,11 +34851,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -34511,7 +34868,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -34766,7 +35123,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -34776,11 +35133,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -34790,7 +35150,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -35021,7 +35381,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -35031,11 +35391,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -35045,7 +35408,7 @@ realclean:
   Transport.inl ORB_Core.h ORB.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
+  ObjectIdListC.i objectid.h PolicyC.h Any_Impl_T.h CurrentC.h CurrentC.i \
   Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
@@ -35496,7 +35859,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -35506,11 +35869,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -35695,7 +36061,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -35705,11 +36071,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -35741,7 +36110,29 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -35751,26 +36142,8 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -35817,7 +36190,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -35869,8 +36241,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -35881,14 +36251,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -36189,7 +36558,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -36199,14 +36569,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -36248,6 +36617,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -36493,7 +36865,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -36503,14 +36876,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -36547,6 +36919,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -36777,7 +37152,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -36787,14 +37163,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -36831,6 +37206,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -37020,17 +37398,20 @@ realclean:
   $(ACE_ROOT)/ace/Reactor_Impl.h Stub.h \
   MProfile.h \
   PolicyC.h \
-  CurrentC.h \
-  Object.h \
-  Policy_ForwardC.h \
-  Sequence.h \
-  Managed_Types.h \
-  Managed_Types.i \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
+  Object.h \
+  Policy_ForwardC.h \
+  Sequence.h \
+  Managed_Types.h \
+  Managed_Types.i \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -37050,8 +37431,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -37062,14 +37441,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -37117,6 +37495,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -37324,7 +37705,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -37332,11 +37713,14 @@ realclean:
   Policy_ForwardC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i TAO_Server_Request.h corbafwd.h \
   Tagged_Profile.h GIOPC.h \
@@ -37348,8 +37732,8 @@ realclean:
   $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
   PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
   CurrentC.h CurrentC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h Exception.h \
-  Remote_Object_Proxy_Impl.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
   LocalObject.i PICurrent.inl TAO_Server_Request.i ORB_Core.h ORB.h \
@@ -37388,8 +37772,8 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
-  Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -37606,7 +37990,7 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i ServicesC.i \
-  Any_T.h \
+  Any_Dual_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -37618,8 +38002,8 @@ realclean:
   IOP_IORC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
@@ -37633,6 +38017,9 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
@@ -37895,13 +38282,13 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
-  Any_T.h \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.h \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -38079,7 +38466,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -38089,14 +38477,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -38133,6 +38520,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -38208,7 +38598,29 @@ realclean:
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -38218,26 +38630,8 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -38284,7 +38678,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -38336,8 +38729,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -38348,14 +38739,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -38405,6 +38795,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -38485,7 +38878,29 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.inl \
   corbafwd.i \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
+  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
+  $(ACE_ROOT)/ace/OS_String.h \
+  $(ACE_ROOT)/ace/OS_String.inl \
+  $(ACE_ROOT)/ace/Message_Block.h \
+  $(ACE_ROOT)/ace/Time_Value.h \
+  $(ACE_ROOT)/ace/Time_Value.inl \
+  $(ACE_ROOT)/ace/Message_Block.i \
+  $(ACE_ROOT)/ace/Message_Block_T.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  $(ACE_ROOT)/ace/Message_Block_T.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/OS.h \
+  $(ACE_ROOT)/ace/OS_Dirent.h \
+  $(ACE_ROOT)/ace/OS_Dirent.inl \
+  $(ACE_ROOT)/ace/OS_TLI.h \
+  $(ACE_ROOT)/ace/OS_TLI.inl \
+  $(ACE_ROOT)/ace/Min_Max.h \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/CDR_Stream.i \
   Object.h \
   Policy_ForwardC.h \
   Sequence.h \
@@ -38495,26 +38910,8 @@ realclean:
   $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/OS.h \
-  $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Dirent.inl \
-  $(ACE_ROOT)/ace/OS_String.h \
-  $(ACE_ROOT)/ace/OS_String.inl \
-  $(ACE_ROOT)/ace/OS_TLI.h \
-  $(ACE_ROOT)/ace/OS_TLI.inl \
-  $(ACE_ROOT)/ace/Time_Value.h \
-  $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Message_Block.h \
-  $(ACE_ROOT)/ace/Message_Block.i \
-  $(ACE_ROOT)/ace/Message_Block_T.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i \
-  $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
   Sequence.i \
   Sequence_T.h \
   Sequence_T.i \
@@ -38561,7 +38958,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
-  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -38613,8 +39009,6 @@ realclean:
   Environment.h \
   Environment.i \
   CDR.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
   varbase.h \
   Policy_ForwardC.i \
@@ -38625,14 +39019,13 @@ realclean:
   OctetSeqC.i \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -38809,7 +39202,7 @@ realclean:
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i IOP_IORC.i IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -38820,12 +39213,16 @@ realclean:
   IOP_IORC.h \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
-  debug.h IOP_CodecC.i IOPC.i Sequence.h \
-  Messaging_PolicyValueC.i Stub.h \
+  debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp IOP_CodecC.i \
+  IOPC.i Sequence.h Messaging_PolicyValueC.i \
+  Stub.h \
   MProfile.h \
   PolicyC.h \
   CurrentC.h \
@@ -39130,7 +39527,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -39140,11 +39537,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -39306,7 +39706,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -39316,11 +39716,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -39577,7 +39980,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -39587,11 +39990,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -39619,8 +40025,8 @@ realclean:
   GIOP_Utils.h debug.h ORB_Core.h ORB.h Exception.h ServicesC.h \
   ServicesC.i CORBA_String.h $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
-  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  CurrentC.h CurrentC.i Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -39657,8 +40063,7 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
+  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
   Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl PICurrent.h \
@@ -39873,7 +40278,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -39883,11 +40288,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -40205,7 +40613,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -40215,11 +40623,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   Pluggable_Messaging_Utils.i \
@@ -40395,14 +40806,17 @@ realclean:
   Object.i \
   IOPC.h \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOP_Utils.i \
@@ -40423,8 +40837,8 @@ realclean:
   $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
   PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
   CurrentC.h CurrentC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h Exception.h \
-  Remote_Object_Proxy_Impl.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
   LocalObject.i PICurrent.inl TAO_Server_Request.i GIOP_Message_State.h \
@@ -40465,8 +40879,8 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h Cleanup_Func_Registry.inl \
-  Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
@@ -40760,14 +41174,17 @@ realclean:
   Object.i \
   IOPC.h \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOP_Utils.i GIOP_Message_State.h \
@@ -40791,12 +41208,11 @@ realclean:
   $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
   PI_ForwardC.h StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i \
   CurrentC.h CurrentC.i DynamicC.h DynamicC.i Messaging_SyncScopeC.h \
-  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h Exception.h \
-  Remote_Object_Proxy_Impl.h \
+  Messaging_SyncScopeC.i IOPC.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  Policy_ForwardC.h Exception.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i PortableInterceptorC.i LocalObject.h Object_KeyC.h \
   LocalObject.i PICurrent.inl TAO_Server_Request.i TAOC.h TimeBaseC.h \
-  TAO_Export.h \
   SmartProxies/Smart_Proxies.h \
   SmartProxies/smartproxies_export.h \
   TAO_Singleton.h \
@@ -41145,14 +41561,17 @@ realclean:
   Object.i \
   IOPC.h \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOP_Utils.i \
@@ -41425,7 +41844,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -41435,11 +41854,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOPC.h \
@@ -41605,7 +42027,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -41613,11 +42035,14 @@ realclean:
   Policy_ForwardC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   target_specification.i
@@ -41798,7 +42223,8 @@ realclean:
   ObjectIdListC.i \
   objectid.h \
   PolicyC.h \
-  CurrentC.h \
+  Any_Impl_T.h \
+  Any.h \
   Object.h \
   Policy_ForwardC.h \
   varbase.h \
@@ -41808,14 +42234,13 @@ realclean:
   IOP_IORC.h \
   IOP_IORC.i \
   Object.i \
-  Any_T.h \
-  Any.h \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  CurrentC.h \
   CurrentC.i \
   Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h \
@@ -41857,6 +42282,9 @@ realclean:
   StringSeqC.i \
   PI_ForwardC.i \
   DynamicC.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   DynamicC.i \
   Messaging_SyncScopeC.h \
   Messaging_SyncScopeC.i \
@@ -42090,7 +42518,7 @@ realclean:
   CDR.i \
   IOP_IORC.i \
   IOP_CodecC.h \
-  Any_T.h \
+  Any_Impl_T.h \
   Any.h \
   Object.h \
   Policy_ForwardC.h \
@@ -42100,11 +42528,14 @@ realclean:
   Object_KeyC.i \
   Object.i \
   Any.i \
-  Any_T.inl \
-  Any_T.cpp \
+  Any_Impl_T.inl \
+  Any_Impl_T.cpp \
   Marshal.h \
   Marshal.i \
   debug.h \
+  Any_Dual_Impl_T.h \
+  Any_Dual_Impl_T.inl \
+  Any_Dual_Impl_T.cpp \
   IOP_CodecC.i \
   IOPC.i \
   GIOPC.h \
@@ -42113,8 +42544,8 @@ realclean:
   ORB.h Exception.h ServicesC.h ServicesC.i CORBA_String.h \
   $(ACE_ROOT)/ace/iosfwd.h \
   CORBA_String.inl ObjectIdListC.h \
-  ObjectIdListC.i objectid.h PolicyC.h CurrentC.h CurrentC.i \
-  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
+  ObjectIdListC.i objectid.h PolicyC.h TAO_Export.h Any_Impl_T.h \
+  CurrentC.h CurrentC.i Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
   Object_Proxy_Impl.h Encodable.h \
   PolicyC.i ORB.i Environment.h \
   Policy_Manager.h Policy_Set.h \
@@ -42151,8 +42582,7 @@ realclean:
   Service_Callbacks.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
-  Cleanup_Func_Registry.h TAO_Export.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
+  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
   Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl PICurrent.h \

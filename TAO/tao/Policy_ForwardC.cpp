@@ -24,6 +24,8 @@
 
 
 #include "Policy_ForwardC.h"
+#include "tao/Any_Basic_Impl_T.h"
+#include "tao/Any_Dual_IMpl_T.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"

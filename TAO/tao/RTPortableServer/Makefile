@@ -241,7 +241,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -251,11 +251,14 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -280,6 +283,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i RTPortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -496,11 +502,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -510,11 +516,17 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -695,7 +707,7 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
@@ -703,11 +715,14 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -732,6 +747,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
   RT_Acceptor_Filters.i \
   $(TAO_ROOT)/tao/Transport_Acceptor.h \
@@ -919,7 +937,8 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
-  $(TAO_ROOT)/tao/CurrentC.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
+  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/varbase.h \
@@ -929,14 +948,13 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/IOP_IORC.h \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
-  $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
+  $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
@@ -973,6 +991,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -1029,6 +1050,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -1276,11 +1300,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -1290,6 +1314,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -1371,6 +1398,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -1594,11 +1624,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -1608,6 +1638,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -1661,6 +1694,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -1955,11 +1991,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -1969,6 +2005,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -2016,6 +2055,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PI_ForwardC.i \
   $(TAO_ROOT)/tao/DynamicC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/DynamicC.i \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
@@ -2274,11 +2316,11 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Any_T.h \
+  $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
-  $(TAO_ROOT)/tao/Any_T.inl \
-  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Any_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Impl_T.cpp \
   $(TAO_ROOT)/tao/Marshal.h \
   $(TAO_ROOT)/tao/Marshal.i \
   $(TAO_ROOT)/tao/debug.h \
@@ -2288,6 +2330,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Encodable.h \
   $(TAO_ROOT)/tao/PolicyC.i \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Basic_Impl_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   $(ACE_ROOT)/ace/Map_T.h \
   $(ACE_ROOT)/ace/Pair_T.h \
@@ -2338,6 +2383,9 @@ endif # corba_messaging
   $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOP_CodecC.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
   $(TAO_ROOT)/tao/IOP_CodecC.i \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/TimeBaseC.h \
