@@ -2195,10 +2195,10 @@ ACE::send_n (ACE_HANDLE handle,
     {
       // Our current message block chain.
       const ACE_Message_Block *current_message_block = message_block;
-      char *this_block_ptr = current_message_block->rd_ptr ();
 
       while (current_message_block != 0)
         {
+          char *this_block_ptr = current_message_block->rd_ptr ();
           size_t current_message_block_length =
             current_message_block->length ();
 
