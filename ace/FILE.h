@@ -91,20 +91,12 @@ public:
    *
    *    o  If <whence> is <SEEK_END>, the pointer is set to the size
    *       of the file plus offset.
-   * Same as <seek>, but <position> is deprecated.
    */
   off_t seek (off_t offset,
               int whence = SEEK_CUR);
-  off_t position (long offset, int startpos);
 
   /// Return an offset for the file handle.
   off_t tell (void);
-
-  /**
-   * @deprecated
-   * Same as tell(), but position() is deprecated.
-   */
-  off_t position (void);
 
   /**
    * Disable signal @a signum

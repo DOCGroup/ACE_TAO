@@ -92,24 +92,10 @@ ACE_FILE::seek (off_t offset, int startpos)
 }
 
 off_t
-ACE_FILE::position (long offset, int startpos)
-{
-  ACE_TRACE ("ACE_FILE::position");
-  return this->seek (offset, startpos);
-}
-
-off_t
 ACE_FILE::tell (void)
 {
   ACE_TRACE ("ACE_FILE::tell");
   return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
-}
-
-off_t
-ACE_FILE::position (void)
-{
-  ACE_TRACE ("ACE_FILE::position");
-  return this->tell ();
 }
 
 // Return the local endpoint address.
