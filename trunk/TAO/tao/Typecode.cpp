@@ -1787,9 +1787,13 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
           else
             ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-      // the first time in. Precompute and store names of all members
-      // Allocate a list to hold the member names
-        this->private_state_->tc_member_name_list_ = new char* [mcount];
+        // the first time in. Precompute and store names of all members
+        // Allocate a list to hold the member names
+        ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
+                          char* [mcount],
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK_RETURN (0);
+        // this->private_state_->tc_member_name_list_ = new char* [mcount];
 
         if (this->private_state_->tc_member_name_list_ == 0)
           // no memory for the member_list
@@ -1833,9 +1837,13 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
           else
             ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-      // the first time in. Precompute and store names of all members
-      // Allocate a list to hold the member names
-        this->private_state_->tc_member_name_list_ = new char* [mcount];
+        // the first time in. Precompute and store names of all members
+        // Allocate a list to hold the member names
+        ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
+                          char* [mcount],
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK_RETURN (0);
+        //this->private_state_->tc_member_name_list_ = new char* [mcount];
 
         if (this->private_state_->tc_member_name_list_ == 0)
           // no memory for the member_list
@@ -1878,9 +1886,13 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
           else
             ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
 
-      // the first time in. Precompute and store names of all members
-      // Allocate a list to hold the member names
-        this->private_state_->tc_member_name_list_ = new char* [mcount];
+        // the first time in. Precompute and store names of all members
+        // Allocate a list to hold the member names
+        ACE_NEW_THROW_EX (this->private_state_->tc_member_name_list_,
+                          char* [mcount],
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK_RETURN (0);
+        // this->private_state_->tc_member_name_list_ = new char* [mcount];
 
         if (this->private_state_->tc_member_name_list_ == 0)
           // no memory for the member_list
