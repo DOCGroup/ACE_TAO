@@ -1,8 +1,12 @@
+Thu Apr 11 14:37:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added ACE_LACKS_PARAM_H.
+
 Thu Apr 11 18:21:25 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Basic_Types.h:  Added include of <sys/param.h>
 	  to pickup MAXPATHLEN if available and get rid of warning.
-	
+
 Thu Apr 11 17:37:20 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Basic_Types.h: Added missing typedefs for pid_t and
@@ -13,38 +17,38 @@ Thu Apr 11 14:42:32 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/ARGV.h:  Replaced include of ACE.h with config-all.h.
 
-	* ace/Addr.cpp: 
+	* ace/Addr.cpp:
 	* ace/OS_Dirent.cpp:
 	* ace/Trace.cpp:
 
 	  Added include of OS.h.
-	
+
 	* apps/gperf/src/Bool_Array.cpp: Changed ACE_OS::memset() to
 	  ACE_OS_String::memset() and added include of OS_String.h.
 
-	* tests/Log_Msg_Test.cpp:  
+	* tests/Log_Msg_Test.cpp:
 	* examples/Logger/Acceptor-server.cpp:
 	* examples/Logger/simple-server/Logging_Handler.cpp:
 	* examples/Log_Msg/test_callback.cpp:
-	
+
 	  Added includes of Log_Record.h.
-	
+
 	* ace/Log_Msg.{h,cpp}:
 
 	  Added new method, last_error_adapter(), and changed the
-	  ACE_DEBUG, et al, macros to use new method instead of 
-	  ACE_OS::last_error().  Removed includes of OS.h and 
+	  ACE_DEBUG, et al, macros to use new method instead of
+	  ACE_OS::last_error().  Removed includes of OS.h and
 	  Log_Record. Changed ACE_Log_Record::MAXLOGMSGLEN to
 	  ACE_MAXLOGMSGLEN.  Removed ACE_OS::cleanup_tss friend.
 
-	* ace/Basic_Types.h:  Added definition of MAXPATHLEN and 
+	* ace/Basic_Types.h:  Added definition of MAXPATHLEN and
 	  typedef of ACE_thread_t to prevent need to include OS.h
 	  in Log_Msg.h above.
 
-	* ace/Default_Constants.h:  
-	* ace/OS.h:  
+	* ace/Default_Constants.h:
+	* ace/OS.h:
 
-	  Moved definitions of ACE_MAXLOGMSGLEN, ACE_MAXTOKENNAMELEN, 
+	  Moved definitions of ACE_MAXLOGMSGLEN, ACE_MAXTOKENNAMELEN,
 	  and ACE_MAXCLIENTIDLEN here from OS.h.
 
 Thu Apr 11 14:26:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
