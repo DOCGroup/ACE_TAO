@@ -1,3 +1,9 @@
+Fri Dec 12 08:38:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+
+	  Used a simple cast during initializing a float from a double.
+
 Fri Dec 12 08:37:04 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
