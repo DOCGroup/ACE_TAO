@@ -86,12 +86,19 @@ protected:
   virtual int register_handler_i (void);
 
   virtual int send_message_shared (TAO_Stub *stub,
-					               int message_semantics,
-							       const ACE_Message_Block *message_block,
-								   ACE_Time_Value *max_wait_time);
+                                   int message_semantics,
+                                   const ACE_Message_Block *message_block,
+                                   ACE_Time_Value *max_wait_time);
 
 
 public:
+
+  /// Bridge method to call a similar method on the connection handler
+  void update_protocol_properties (int send_buffer_size,
+                                   int recv_buffer_size,
+                                   int no_delay,
+                                   int enable_network_priority);
+
   /// @@TODO: These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
@@ -106,7 +113,7 @@ public:
                             ACE_Time_Value *max_time_wait = 0);
 
   /*virtual int send_reply (TAO_OutputCDR &stream,
-			  TAO_Adapter *poa = 0);*/
+                          TAO_Adapter *poa = 0);*/
 
   virtual int generate_request_header (TAO_Operation_Details &opdetails,
                                        TAO_Target_Specification &spec,

@@ -30,6 +30,7 @@ class TAO_Resource_Factory;
 class TAO_Service_Context;
 class TAO_Acceptor_Registry;
 class TAO_Connection_Handler;
+class TAO_Transport;
 class TAO_Stub;
 
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
@@ -45,48 +46,32 @@ public:
   virtual int call_client_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
                                           int &no_delay,
-					  int &enable_network_priority,
+                                          int &enable_network_priority,
                                           const char *protocol_type) = 0;
 
   virtual int call_server_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
                                           int &no_delay,
-					  int &enable_network_priority,
+                                          int &enable_network_priority,
                                           const char *protocol_type) = 0;
-/*
-  virtual int get_effective_client_protocol_properties (TAO_Stub *stub,
-							int &send_buffer_size,
-							int &recv_buffer_size,
-							int &no_delay,
-							int &enable_network_priority,
-							const char *protocol_type) = 0;
-  
 
-  virtual int get_effective_server_protocol_properties (TAO_Adapter *poa,
-							int &send_buffer_size,
-							int &recv_buffer_size,
-							int &no_delay,
-							int &enable_network_priority,
-							const char *protocol_type) = 0;
+  virtual int update_client_protocol_properties (TAO_Stub *stub,
+                                                 TAO_Transport *t,
+                                                 const char *protocol_type) = 0;
 
-  */
-    virtual int update_client_protocol_properties (TAO_Stub *stub,
-						   TAO_Connection_Handler * connection_handler,
-						   const char *protocol_type) = 0;
-  
-  
+
   virtual int update_server_protocol_properties (CORBA::Policy *policy,
-						 TAO_Connection_Handler * connection_handler,
-						 const char *protocol_type) = 0;
-  
-  
+                                                 TAO_Transport *t,
+                                                 const char *protocol_type) = 0;
+
+
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
-  
+
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart
                                    ACE_ENV_ARG_DECL) = 0;
-  
+
   virtual void add_rt_service_context_hook (TAO_Service_Context &service_context,
                                             CORBA::Policy *model_policy,
                                             CORBA::Short &client_priority

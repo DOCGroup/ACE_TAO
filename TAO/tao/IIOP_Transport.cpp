@@ -179,19 +179,10 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
       if (tph != 0)
         {
-          ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-          if (this->check_event_handler_i ("IIOP_Transport::send_request")
-              == -1)
-            return -1;
-
-          const char protocol[] = "iiop";
-          const char * protocol_type = protocol;
-
           int result =
             tph->update_client_protocol_properties (stub,
-                                                    this->connection_handler_,
-                                                    protocol_type);
+                                                    this,
+                                                    "iiop");
 
           if (result == -1)
             return -1;
@@ -499,4 +490,30 @@ TAO_IIOP_Transport::invalidate_event_handler_i (void)
   TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
   return eh;
+}
+
+void
+TAO_IIOP_Transport::update_protocol_properties (int snd_buf_sz,
+                                                int rcv_buf_sz,
+                                                int no_delay,
+                                                int enable_nw_prio)
+{
+  // Just make sure that the connection handler is sane before we go
+  // head and do anything with it.
+  ACE_GUARD (ACE_Lock,
+             ace_mon,
+             *this->handler_lock_);
+
+  if (this->check_event_handler_i (
+          "IIOP_Transport::update_protocol_properties") == -1)
+    return;
+
+  /// Making an outbound call holding a lock. This is not suposed to
+  /// be done. But it would be dangerous to leave the lock since the
+  /// connection handler could dissappear.
+  this->connection_handler_->update_protocol_properties (
+      snd_buf_sz,
+      rcv_buf_sz,
+      no_delay,
+      enable_nw_prio);
 }
