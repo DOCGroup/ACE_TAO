@@ -84,10 +84,21 @@ ACE_RT_Task::~ACE_RT_Task (void)
 int
 ACE_RT_Task::svc (void)
 {
-  // @@ TODO It may be necessary to call ORB init here...
-
   TAO_TRY
     {
+      // @@ TODO It may be necessary to pass the options to this class
+
+#if 0
+      static char* const argv[] = {
+	"task",
+	"-ORBport", "0",
+      };
+      int argc = sizeof (argv)/sizeof (argv[0]);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+#endif
+
       RtecScheduler::OS_Priority thread_priority;
       RtecScheduler::Preemption_Subpriority subpriority;
       RtecScheduler::Preemption_Priority preemption_priority;
@@ -100,8 +111,29 @@ ACE_RT_Task::svc (void)
       TAO_CHECK_ENV;
       if (ACE_OS::thr_setprio (thread_priority) == -1)
 	{
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed\n"));
+	  ACE_ERROR ((LM_ERROR, "(%P|%t) RT_Task thr_setprio failed\n"));
 	}
+
+      int done = 0;
+
+      ACE_hthread_t self;
+      ACE_OS::thr_self (self);
+
+      int priority;
+      if (ACE_OS::thr_getprio (self, priority) == 0)
+	ACE_DEBUG ((LM_DEBUG, "(%t) new thread priority = %d.\n", priority));
+
+      // Initialize channel thread-specific data.
+      ACE_ES_Memory_Pools::thr_init ();
+
+      done = this->svc_hook (priority);
+
+      while (!done)
+	{
+	  done = this->svc_one ();
+	}
+
+      ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
     }
   TAO_CATCHANY
     {
@@ -109,26 +141,6 @@ ACE_RT_Task::svc (void)
     }
   TAO_ENDTRY;
 
-  int done = 0;
-
-  ACE_hthread_t self;
-  ACE_OS::thr_self (self);
-
-  int priority;
-  if (ACE_OS::thr_getprio (self, priority) == 0)
-    ACE_DEBUG ((LM_DEBUG, "(%t) new thread priority = %d.\n", priority));
-
-  // Initialize channel thread-specific data.
-  ACE_ES_Memory_Pools::thr_init ();
-
-  done = this->svc_hook (priority);
-
-  while (!done)
-    {
-      done = this->svc_one ();
-    }
-
-  ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
   return 0;
 }
 

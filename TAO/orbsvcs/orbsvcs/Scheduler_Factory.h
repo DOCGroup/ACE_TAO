@@ -42,7 +42,7 @@ public:
     RtecScheduler::OS_Priority priority;
     RtecScheduler::Preemption_Subpriority static_subpriority;
     RtecScheduler::Preemption_Priority preemption_priority;
-    RtecScheduler::Info_Type info_type;
+    CORBA::Long info_type;
   };
 
   static int use_config (CosNaming::NamingContext_ptr naming);

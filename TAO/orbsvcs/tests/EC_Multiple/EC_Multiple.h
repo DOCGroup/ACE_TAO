@@ -244,7 +244,7 @@ private:
   char* rmt_name_;
   // The name of the "remote" EC.
 
-  TAO_EC_Gateway ecg_;
+  TAO_EC_Gateway_IIOP ecg_;
   // The proxy used to connect both event channels.
 
   enum {

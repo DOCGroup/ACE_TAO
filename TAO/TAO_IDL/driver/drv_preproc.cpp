@@ -321,7 +321,7 @@ DRV_pre_proc(char *myfile)
   }
   (*DRV_FE_set_yyin)((File *) yyin);
 
-  // @@ TODO: This is not protable, cat(1) is a UNIX tool.
+  // @@ TODO: This is not portable, cat(1) is a UNIX tool.
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) {
     sprintf(catbuf, "cat < %s", tmp_file);
     system(catbuf);
