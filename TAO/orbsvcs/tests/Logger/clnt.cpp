@@ -248,6 +248,14 @@ Logger_Client::init (int argc, char **argv)
       return 1;
     }
 
+  this->naming_service_->unbind (nc1, env);
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("unbind");
+      return 1;
+    }
+
   CORBA::release (nc1);
   return 0;
 }

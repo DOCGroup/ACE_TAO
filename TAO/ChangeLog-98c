@@ -1,3 +1,11 @@
+Thu Dec 18 19:35:28 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/clnt.cpp (init): 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp (bind_new_context): Fixed
+ 	a bug in the Naming Service and the Logger test program
+ 	implementation.  Thanks to Marina Spivak <marina@cs.wustl.edu> for
+ 	debugging this.
+
 Thu Dec 18 16:18:01 1997    <nw1@JIG>
 
 	* TAO_IDL/be/be_sequence.cpp (gen_name): Removed a local variable

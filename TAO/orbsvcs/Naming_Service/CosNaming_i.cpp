@@ -398,7 +398,10 @@ NS_NamingContext::bind_new_context (const CosNaming::Name& n,
   
   // release object if exception occurs.   
   if (IT_env.exception () != 0)
-    CORBA::release (c);
+    {
+      CORBA::release (c);
+      return ACE_NESTED_CLASS (CosNaming,NamingContext)::_nil ();
+    }
   
   return c->_duplicate (c);
 }
