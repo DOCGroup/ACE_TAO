@@ -1,3 +1,34 @@
+Sat Dec 22 11:24:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Service_Configurator/IPC-tests/client/client.dsw:
+	* examples/Service_Configurator/IPC-tests/client/broadcast_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/local_stream_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.dsp:
+	* examples/Service_Configurator/IPC-tests/server/server.dsw:
+	* examples/Service_Configurator/IPC-tests/server/Server.dsp:
+	* examples/Service_Configurator/IPC-tests/server/Server_static.dsp:
+	* examples/Service_Configurator/IPC-tests/server/server_test.dsp:
+	  Add missing project files and workspaces.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
+	  Add export directives for Win32 builds.
+
 Fri Dec 21 14:39:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Map_Manager/Map_Manager.dsw:

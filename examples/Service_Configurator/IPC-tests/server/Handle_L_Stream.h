@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Handle connections from local UNIX domain sockets. 
+// Handle connections from local UNIX domain sockets.
 
 #ifndef _HANDLE_L_STREAM_H
 #define _HANDLE_L_STREAM_H
@@ -18,7 +18,7 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-class Handle_L_Stream : public ACE_Service_Object, public ACE_LSOCK_Acceptor
+class ACE_Svc_Export Handle_L_Stream : public ACE_Service_Object, public ACE_LSOCK_Acceptor
 {
 public:
   Handle_L_Stream (void);
@@ -49,5 +49,3 @@ extern ACE_Service_Object_Type ls;
 #endif /* __ACE_INLINE__ */
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* _HANDLE_L_STREAM_H */
-
-

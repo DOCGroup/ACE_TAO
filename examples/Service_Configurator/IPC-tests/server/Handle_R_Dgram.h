@@ -17,7 +17,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Log_Msg.h"
 
-class Handle_R_Dgram : public ACE_Service_Object, public ACE_SOCK_Dgram
+class ACE_Svc_Export Handle_R_Dgram : public ACE_Service_Object, public ACE_SOCK_Dgram
 {
 public:
   Handle_R_Dgram (void);
