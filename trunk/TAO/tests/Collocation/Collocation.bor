@@ -2,7 +2,11 @@
 # Makefile for building	the Collocation	test
 #
 
+!ifndef STATIC
 NAME = Collocation
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\Collocation_Tester.obj \

@@ -1,4 +1,12 @@
-Wed Sep 18 06:41:12 UTC 2002  Ossama Othman  <ossama@uci.edu>
+Wed Sep 18 07:47:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation/Diamond.bor:
+        * tests/Collocation/Collocation_Test_Stubs.bor:
+        * tests/Collocation/Collocation.bor:
+          Fixed dynamic build and don't build in static environment because
+          this test only works when building dynamic.
+
+Wed Sep 18 06:41:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
         * orbsvcs/tests/Notify/Basic/Makefile.bor:
