@@ -1,3 +1,9 @@
+Fri Apr 23 11:32:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1495_Regression/interceptors.cpp:
+        * tests/Smart_Proxies/Collocation/Diamond_i.cpp:
+          Fixed warning in Tru64 build about extra ";" ignored
+
 Fri Apr 23 11:30:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/LoadBalancing/client.cpp:
