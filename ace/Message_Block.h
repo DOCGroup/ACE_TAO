@@ -122,8 +122,8 @@ public:
                      ACE_Allocator *allocator_strategy = 0,
                      ACE_Lock *locking_strategy = 0,
                      u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
-                     const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-                     const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
+                     const ACE_Time_Value &execution_time = ACE_Time_Value::zero,
+                     const ACE_Time_Value &deadline_time = ACE_Time_Value::max_time,
                      ACE_Allocator *data_block_allocator = 0,
                      ACE_Allocator *message_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
@@ -161,8 +161,8 @@ public:
             ACE_Allocator *allocator_strategy = 0,
             ACE_Lock *locking_strategy = 0,
             u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
-            const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
-            const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
+            const ACE_Time_Value &execution_time = ACE_Time_Value::zero,
+            const ACE_Time_Value &deadline_time = ACE_Time_Value::max_time,
             ACE_Allocator *data_block_allocator = 0,
             ACE_Allocator *message_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
@@ -218,16 +218,16 @@ public:
   void msg_priority (u_long priority);
   // Set priority of the message.
 
-  const ACE_Time_Value & msg_execution_time (void) const;
+  const ACE_Time_Value &msg_execution_time (void) const;
   // Get execution time associated with the message.
 
-  void msg_execution_time (const ACE_Time_Value & et);
+  void msg_execution_time (const ACE_Time_Value &et);
   // Set execution time associated with the message.
 
-  const ACE_Time_Value & msg_deadline_time (void) const;
+  const ACE_Time_Value &msg_deadline_time (void) const;
   // Get absolute time of deadline associated with the message.
 
-  void msg_deadline_time (const ACE_Time_Value & dt);
+  void msg_deadline_time (const ACE_Time_Value &dt);
   // Set absolute time of deadline associated with the message.
 
   // = Deep copy and shallow copy methods.
@@ -425,8 +425,8 @@ protected:
                      ACE_Lock *locking_strategy,
                      Message_Flags flags,
                      u_long priority,
-                     const ACE_Time_Value & execution_time,
-                     const ACE_Time_Value & deadline_time,
+                     const ACE_Time_Value &execution_time,
+                     const ACE_Time_Value &deadline_time,
                      ACE_Data_Block *db,
                      ACE_Allocator *data_block_allocator,
                      ACE_Allocator *message_block_allocator);
@@ -444,8 +444,8 @@ protected:
               ACE_Lock *locking_strategy,
               Message_Flags flags,
               u_long priority,
-              const ACE_Time_Value & execution_time,
-              const ACE_Time_Value & deadline_time,
+              const ACE_Time_Value &execution_time,
+              const ACE_Time_Value &deadline_time,
               ACE_Data_Block *db,
               ACE_Allocator *data_block_allocator,
               ACE_Allocator *message_block_allocator);
@@ -460,11 +460,13 @@ protected:
   u_long priority_;
   // Priority of message.
 
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   ACE_Time_Value execution_time_;
   // execution time associated with the message
 
   ACE_Time_Value deadline_time_;
   // absolute deadline time for message
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 
   // = Links to other ACE_Message_Block *s.
   ACE_Message_Block *cont_;
@@ -736,8 +738,8 @@ public:
   // Dump the state of the strategy.
 
 protected:
-  virtual void convert_priority (ACE_Time_Value & priority,
-                                 const ACE_Message_Block & mb) = 0;
+  virtual void convert_priority (ACE_Time_Value &priority,
+                                 const ACE_Message_Block &mb) = 0;
   // Hook method for dynamic priority conversion.
 
   u_long static_bit_field_mask_;
@@ -789,8 +791,8 @@ public:
   virtual ~ACE_Deadline_Message_Strategy (void);
   // Virtual dtor.
 
-  virtual void convert_priority (ACE_Time_Value & priority,
-                                 const ACE_Message_Block & mb);
+  virtual void convert_priority (ACE_Time_Value &priority,
+                                 const ACE_Message_Block &mb);
   // Dynamic priority conversion function based on time to deadline.
 
   virtual void dump (void) const;
@@ -823,8 +825,8 @@ public:
   virtual ~ACE_Laxity_Message_Strategy (void);
   // virtual dtor.
 
-  virtual void convert_priority (ACE_Time_Value & priority,
-                                 const ACE_Message_Block & mb);
+  virtual void convert_priority (ACE_Time_Value &priority,
+                                 const ACE_Message_Block &mb);
   // Dynamic priority conversion function based on laxity.
 
   virtual void dump (void) const;

@@ -203,29 +203,45 @@ ACE_INLINE const ACE_Time_Value &
 ACE_Message_Block::msg_execution_time (void) const
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (void)");
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   return this->execution_time_;
+#else
+  return ACE_Time_Value::zero; 
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
-
 ACE_INLINE void
-ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)
+ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)");
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   this->execution_time_ = et;
+#else
+  ACE_UNUSED_ARG (et);
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
 ACE_INLINE const ACE_Time_Value &
 ACE_Message_Block::msg_deadline_time (void) const
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (void)");
+
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   return this->deadline_time_;
+#else
+  return ACE_Time_Value::max_time; // absolute time of deadline
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
 ACE_INLINE void
-ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & dt)
+ACE_Message_Block::msg_deadline_time (const ACE_Time_Value &dt)
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & et)");
+#if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   this->deadline_time_ = dt;
+#else
+  ACE_UNUSED_ARG (dt);
+#endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
 ACE_INLINE char *

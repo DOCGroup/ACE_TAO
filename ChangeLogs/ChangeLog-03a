@@ -1,3 +1,16 @@
+Mon Feb 21 20:40:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/MEM_*: Minor modifications to formatting here.
+
+	* tests/Dynamic_Priority_Test.cpp: Only run this test if
+ 	  ACE_HAS_TIMED_MESSAGE_BLOCKS is enabled.
+
+	* ace/Message_Block: By default, the deadline_time_ and execution_time_
+	  data members are now omitted and their accessor/mutator
+ 	  operations rendered "no-op"s unless ACE_HAS_TIMED_MESSAGE_BLOCKS
+ 	  is enabled.  This is necessary to avoid an unnecessary 16 bytes
+ 	  per-Message_Block.  Thanks to Irfan for pointing this out.
+  
 Mon Feb 21 17:22:33 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (ACE_LACKS_SETREUID):

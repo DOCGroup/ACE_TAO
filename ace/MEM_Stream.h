@@ -10,7 +10,7 @@
 //    MEM_Stream.h
 //
 // = AUTHOR
-//    Nanbor Wang
+//    Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -121,6 +121,6 @@ public:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Stream.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_MEM_STREAM_H */
