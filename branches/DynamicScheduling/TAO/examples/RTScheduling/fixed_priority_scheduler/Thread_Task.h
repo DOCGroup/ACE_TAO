@@ -3,6 +3,7 @@
 #define THREAD_TASK_H
 
 #include "tao/RTScheduling/RTSchedulerC.h"
+#include "FP_Scheduler.h"
 #include "ace/Task.h"
 
 
@@ -11,15 +12,14 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
  public:
 
   Thread_Task (RTScheduling::Current_ptr current,
-	       CORBA::Policy_ptr sched_param,
+	       FP_Scheduling::SegmentSchedulingParameterPolicy_ptr sched_param,
 	       int start_time,
 	       int load,
-	       long flags,
-	       ACE_Barrier* barrier);
+	       long flags);
   
   int perform_task (int times);
 
-  int activate_task (void);
+  int activate_task (ACE_Barrier* barrier);
 
 
  protected:
@@ -27,8 +27,10 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   virtual int svc (void);
  private:
   RTScheduling::Current_var current_;
-  CORBA::Policy_var sched_param_;
+  FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_;
   int start_time_;
+  int load_;
+  int count_;
   ACE_Barrier* barrier_;
 };
 
