@@ -33,8 +33,6 @@ static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
 // static data members
-JAWS_Virtual_Filesystem *
-JAWS_File_Handle::vfs_ = JAWS_Virtual_Filesystem::instance ();
 JAWS_Virtual_Filesystem * JAWS_Virtual_Filesystem::cvf_ = 0;
 ACE_SYNCH_MUTEX JAWS_Virtual_Filesystem::lock_;
 
@@ -72,7 +70,7 @@ JAWS_File_Handle::JAWS_File_Handle (const char * filename)
   this->init ();
   // fetch the file from the Virtual_Filesystem
   // let it do the work of cache coherency
-  this->file_ = this->vfs_->fetch (filename);
+  this->file_ = JAWS_Virtual_Filesystem::instance ()->fetch (filename);
   this->file_->acquire ();
 }
 
@@ -102,7 +100,7 @@ JAWS_File_Handle::~JAWS_File_Handle (void)
           this->file_->release ();
           // assert (this->file_->reference_count () == 0);
           // put it into the CVF
-          this->vfs_->replace (this->file_);
+          JAWS_Virtual_Filesystem::instance ()->replace (this->file_);
           break;
 
         case JAWS_File::WAITING:

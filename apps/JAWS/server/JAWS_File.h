@@ -85,8 +85,6 @@ protected:
 private:
   JAWS_File * file_;
   ACE_HANDLE handle_;
-
-  static JAWS_Virtual_Filesystem * vfs_;
 };
 
 class JAWS_Virtual_Filesystem
