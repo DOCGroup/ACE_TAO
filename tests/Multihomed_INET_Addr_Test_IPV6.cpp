@@ -1,16 +1,24 @@
 // $Id$
 // ============================================================================
-/**
- * @file Multihomed_INET_Addr_Test_IPV6.cpp
- *
- * @brief Performs several tests on the Multihomed_ACE_INET_Addr class.
- *
- * It creates several IPV6 addresses and checks that the address
- * formed by the class is valid.
- *
- * @author Edward Mulholland <emulholl@atl.lmco.com>
- *         Brian Buesker <bbuesker@qualcomm.com>
- */
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Multihomed_INET_Addr_Test.cpp
+//
+// = DESCRIPTION
+//     Performs several tests on the Multihomed_ACE_INET_Addr class.
+//     It creates several IPv6 addresses and checks that the
+//     address formed by the class is valid.
+//
+// = AUTHOR
+//    Edward Mulholland (emulholl@atl.lmco.com)
+//    Brian Buesker (bbuesker@qualcomm.com) - Added testing of
+//                                            ACE_Multihomed_INET_Addr class
+//                                            using IPv6 addresses based on
+//                                            Multihomed_INET_Addr_Test.
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -110,7 +118,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       }
 
       // Pass the in_out array to the accessor
-      addr.get_secondary_addresses(in_out, i);
+      addr.get_secondary_addresses(in_out, i); 
 
       // Check that the in_out array matches stay_out array
       for (j = 0; j < i; ++j) {
@@ -138,7 +146,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Check that the primary address in the in_out_sockaddr array
       // matches the primary address reported by the superclass
-      if (ACE_OS::memcmp(in_out_sockaddr6, addr.get_addr(),
+      if (ACE_OS::memcmp(in_out_sockaddr6, addr.get_addr(), 
                          sizeof(sockaddr_in6))) {
 
           ACE_ERROR ((LM_ERROR,
@@ -155,7 +163,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
            j < i + 1;
            ++j, ++pointer6) {
 
-        if (ACE_OS::memcmp(pointer6, stay_out[j-1].get_addr(),
+        if (ACE_OS::memcmp(pointer6, stay_out[j-1].get_addr(), 
                            sizeof(sockaddr_in6))) {
 
           ACE_ERROR ((LM_ERROR,
