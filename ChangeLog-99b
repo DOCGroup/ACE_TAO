@@ -1,45 +1,54 @@
+Thu Dec 23 13:57:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU: uncommented the
+          rules for building .o files from .C and .cc files.
+          They've been commented out since this file was put
+          under CVS control, so it's not obvious why they can't
+          be used.  Thanks to Wei.Chiang@nokia.com for suggesting
+          this.
+
 Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
-  
+
         * ace: Added missing files Capabilities.cpp and Configuration.cpp
-	  to $ACE_ROOT/ace/Makefile.bor.
+          to $ACE_ROOT/ace/Makefile.bor.
 
-	* ACE/tests: Added new tests Auto_IncDec_Test and
-	  Capabilities_test to Makefile.bor.
+        * ACE/tests: Added new tests Auto_IncDec_Test and
+          Capabilities_test to Makefile.bor.
 
-	* ACE/tests: Fixed syntax error in a Borland C++Builder specific
-	  section of Auto_IncDec_Test.cpp.
+        * ACE/tests: Fixed syntax error in a Borland C++Builder specific
+          section of Auto_IncDec_Test.cpp.
 
         * ACE/tests: Fixed Malloc_Test so that it does not fail with
-	  Borland C++Builder. 
+          Borland C++Builder.
 
-	* ACE/tests/ Changed run_tests.bat so that it does not invoke
-	  ACE_Init_Test when run with the "bor" command line
- 	  argument. This test uses MFC and need not be built or run.
-	
-Thu Dec 23 11:46:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>  
+        * ACE/tests/ Changed run_tests.bat so that it does not invoke
+          ACE_Init_Test when run with the "bor" command line
+          argument. This test uses MFC and need not be built or run.
 
-	* ace/OS.h: Moved
-  
+Thu Dec 23 11:46:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/OS.h: Moved
+
           #if defined (ACE_HAS_SYS_FILIO_H)
-	  # include /**/ <sys/filio.h>
-	  #endif /* ACE_HAS_SYS_FILIO_H */
+          # include /**/ <sys/filio.h>
+          #endif /* ACE_HAS_SYS_FILIO_H */
 
-	  from OS.i to OS.h so that the FIONREAD macro will be defined for
- 	  the ACE_SOCK_Dgram::recv() method even if inline = 0.  Thanks to
- 	  Alain Sauron <sauron@syseca.thomson-csf.com> for reporting this.
+          from OS.i to OS.h so that the FIONREAD macro will be defined for
+          the ACE_SOCK_Dgram::recv() method even if inline = 0.  Thanks to
+          Alain Sauron <sauron@syseca.thomson-csf.com> for reporting this.
 
 Wed Dec 22 11:29:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/auto_compile_win32.pl: Renamed ImplRepo.dsw to
-	  ImplRepo_Service.dsw.  Thanks to Derek Dominish
-	  <derek.dominish@boeing.com> for reporting this.
+        * bin/auto_compile_win32.pl: Renamed ImplRepo.dsw to
+          ImplRepo_Service.dsw.  Thanks to Derek Dominish
+          <derek.dominish@boeing.com> for reporting this.
 
 Wed Dec 22 08:44:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Log_Msg_Test.cpp: Conditionally compiled the iostream
-	  print statements so that the test builds correctly if
- 	  ACE_LACKS_IOSTREAM_TOTALLY is defined.  Thanks to David Levine
- 	  for reporting this.
+        * tests/Log_Msg_Test.cpp: Conditionally compiled the iostream
+          print statements so that the test builds correctly if
+          ACE_LACKS_IOSTREAM_TOTALLY is defined.  Thanks to David Levine
+          for reporting this.
 
 Wed Dec 22 08:22:24 1999  David L. Levine  <levine@cs.wustl.edu>
 

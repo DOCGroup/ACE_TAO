@@ -61,11 +61,13 @@ $(VDIR)%.o: %.cpp
 	${MVCMD}
 endif
 
-#$(VDIR)%.o: %.C
-#	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+$(VDIR)%.o: %.C
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
 
-#$(VDIR)%.o: %.cc
-#	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+$(VDIR)%.o: %.cc
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG) $@ $<
+	${MVCMD}
 
 # If SOLINK is defined, then the .$(SOEXT) file is built from the .$(OBJEXT) file via
 # separate rules in the same directory.  Otherwise, the .$(SOEXT) and .$(OBJEXT) are
