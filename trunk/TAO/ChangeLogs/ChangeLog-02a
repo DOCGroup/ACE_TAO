@@ -1,3 +1,8 @@
+Mon Apr 29 14:42:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Muxed_GIOP_Versions/serevr.cpp: Fixed a compile error in
+	  single threaded builds.
+
 Mon Apr 29 11:28:59 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:

@@ -244,7 +244,7 @@ SelfClient::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
   // run on minimum CORBA builds too!
-  ACE_GUARD(ACE_Thread_Mutex, guard, mutex_);
+  ACE_GUARD (ACE_SYNCH_MUTEX, guard, mutex_);
 
   for (int j = 0; j != 100; ++j)
     {
