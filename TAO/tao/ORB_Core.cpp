@@ -92,6 +92,8 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     arl_same_port_connect_ (0),
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0),
+    input_cdr_dblock_allocator_ (0),
+    input_cdr_buffer_allocator_ (0),
     default_environment_ (0),
     tss_environment_ (this)
 {
@@ -106,8 +108,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
     ACE_OS::free (preconnections_);
 
   // Clean up memory pools
-  this->data_block_allocator_.remove ();
-  this->cdr_buffer_allocator_.remove ();
+  this->output_cdr_dblock_allocator_.remove ();
+  this->output_cdr_buffer_allocator_.remove ();
 }
 
 TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
@@ -121,8 +123,6 @@ TAO_Default_Reactor::TAO_Default_Reactor (int nolock)
 TAO_Default_Reactor::~TAO_Default_Reactor (void)
 {
 }
-
-#define quote(x) #x
 
 int
 TAO_ORB_Core::init (int &argc, char *argv[])
@@ -153,7 +153,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   ACE_Arg_Shifter arg_shifter (argc, argv);
   svc_config_argv[svc_config_argc++] = argv[0];
 
-  ACE_Env_Value<int> defport (quote (TAO_DEFAULT_SERVER_PORT),
+  ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
                               TAO_DEFAULT_SERVER_PORT);
   CORBA::String_var host = CORBA::string_dup ("");
   CORBA::UShort port = defport;
@@ -436,7 +436,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         arg_shifter.ignore_arg ();
    }
 
-
 #if defined (DEBUG)
   // Make it a little easier to debug programs using this code.
   {
@@ -522,6 +521,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   this->thr_mgr (trf->get_thr_mgr ());
   this->connector (trf->get_connector ());
   this->acceptor (trf->get_acceptor ());
+
+  this->input_cdr_dblock_allocator_ =
+    trf->input_cdr_dblock_allocator ();
+  this->input_cdr_buffer_allocator_ =
+    trf->input_cdr_buffer_allocator ();
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
@@ -1129,53 +1133,42 @@ TAO_ORB_Core::get_next_follower (void)
   return *iterator;
 }
 
+ACE_Allocator*
+TAO_ORB_Core::input_cdr_dblock_allocator (void)
+{
+  if (this->input_cdr_dblock_allocator_ == 0)
+    {
+      this->input_cdr_dblock_allocator_ = 
+        this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+  return this->input_cdr_dblock_allocator_;
+}
+
+ACE_Allocator*
+TAO_ORB_Core::input_cdr_buffer_allocator (void)
+{
+  if (this->input_cdr_buffer_allocator_ == 0)
+    {
+      this->input_cdr_buffer_allocator_ = 
+        this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+  return this->input_cdr_buffer_allocator_;
+}
+
+// ****************************************************************
+
 
 TAO_Resource_Factory::TAO_Resource_Factory (void)
   : resource_source_ (TAO_GLOBAL),
     poa_source_ (TAO_GLOBAL),
     collocation_table_source_ (TAO_GLOBAL),
-    reactor_lock_ (TAO_TOKEN)
+    reactor_lock_ (TAO_TOKEN),
+    cdr_allocator_source_ (TAO_TSS)
 {
 }
 
 TAO_Resource_Factory::~TAO_Resource_Factory (void)
 {
-}
-
-void
-TAO_Resource_Factory::resource_source (int which_source)
-{
-  resource_source_ = which_source;
-}
-
-int
-TAO_Resource_Factory::resource_source (void)
-{
-  return resource_source_;
-}
-
-void
-TAO_Resource_Factory::poa_source (int which_source)
-{
-  poa_source_ = which_source;
-}
-
-int
-TAO_Resource_Factory::poa_source (void)
-{
-  return poa_source_;
-}
-
-int
-TAO_Resource_Factory::reactor_lock (void)
-{
-  return reactor_lock_;
-}
-
-int
-TAO_Resource_Factory::init (int argc, char *argv[])
-{
-  return this->parse_args (argc, argv);
 }
 
 int
@@ -1254,6 +1247,19 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
               collocation_table_source_ = TAO_GLOBAL;
             else if (ACE_OS::strcasecmp (name, "orb") == 0)
               collocation_table_source_ = TAO_TSS;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBinputcdrallocator") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "global") == 0)
+              this->cdr_allocator_source_ = TAO_GLOBAL;
+            else if (ACE_OS::strcasecmp (name, "tss") == 0)
+              this->cdr_allocator_source_ = TAO_TSS;
           }
       }
 
@@ -1388,6 +1394,69 @@ TAO_Resource_Factory::get_allocator (void)
   return 0;
 }
 
+typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> TSS_MALLOC;
+typedef ACE_Allocator_Adapter<TSS_MALLOC> TSS_ALLOCATOR;
+
+typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> GBL_MALLOC;
+typedef ACE_Allocator_Adapter<GBL_MALLOC> GBL_ALLOCATOR;
+  
+// @@ TODO We may be changing the state of the global App_Allocated
+// structure, but without any locks? It seems to be done all over
+// the place.
+
+ACE_Allocator*
+TAO_Resource_Factory::input_cdr_dblock_allocator (void)
+{
+  switch (this->cdr_allocator_source_)
+    {
+    case TAO_GLOBAL:
+      if (GLOBAL_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (GLOBAL_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_,
+                          GBL_ALLOCATOR,
+                          0);
+        }
+      return GLOBAL_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_;
+      break;
+    case TAO_TSS:
+      if (TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_,
+                          TSS_ALLOCATOR,
+                          0);
+        }
+      return TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_;
+      break;
+    }
+  return 0;
+}
+
+ACE_Allocator *
+TAO_Resource_Factory::input_cdr_buffer_allocator (void)
+{
+  switch (this->cdr_allocator_source_)
+    {
+    case TAO_GLOBAL:
+      if (GLOBAL_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (GLOBAL_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_,
+                          GBL_ALLOCATOR,
+                          0);
+        }
+      return GLOBAL_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_;
+    case TAO_TSS:
+      if (TSS_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_ == 0)
+        {
+          ACE_NEW_RETURN (TSS_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_,
+                          TSS_ALLOCATOR,
+                          0);
+        }
+      return TSS_APP_ALLOCATED::instance ()->input_cdr_buffer_allocator_;
+    }
+  return 0;
+}
+
+
 TAO_GLOBAL_Collocation_Table *
 TAO_Resource_Factory::get_global_collocation_table (void)
 {
@@ -1401,6 +1470,8 @@ TAO_Resource_Factory::Pre_Allocated::Pre_Allocated (void)
   // Make sure that the thread manager does not wait for threads
   this->tm_.wait_on_exit (0);
 }
+
+// ****************************************************************
 
 TAO_Resource_Factory::Pre_Allocated::~Pre_Allocated (void)
 {
@@ -1434,6 +1505,8 @@ TAO_ORB_Core_instance (void)
     template void ACE_Convert (const char *, u_int &);
 # endif /* __GNUG__ */
 
+template class ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH_MUTEX>;
+template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH)MUTEX> >;
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 template class ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;
@@ -1484,6 +1557,8 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MEMORY_POOL,ACE_SYNCH)MUTEX> >
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>

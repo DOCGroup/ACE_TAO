@@ -62,7 +62,7 @@ private:
   enum Client_Connection_Handler_Type
   {
     MT_CLIENT_CONNECTION_HANDLER,
-    ST_CLIENT_CONNECTION_HANDLER,
+    ST_CLIENT_CONNECTION_HANDLER
   };
 
   Client_Connection_Handler_Type client_connection_handler_;

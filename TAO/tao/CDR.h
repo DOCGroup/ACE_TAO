@@ -386,7 +386,9 @@ public:
   TAO_InputCDR (const char* buf, size_t bufsiz,
 		int byte_order = TAO_ENCAP_BYTE_ORDER,
 		TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                ACE_Allocator* buffer_allocator = 0,
+                ACE_Allocator* data_block_allocator = 0);
   // Create an input stream from an arbitrary buffer, care must be
   // exercised wrt alignment, because this contructor will *not* work
   // if the buffer is unproperly aligned.
@@ -394,14 +396,17 @@ public:
   TAO_InputCDR (size_t bufsiz,
 		int byte_order = TAO_ENCAP_BYTE_ORDER,
 		TAO_Marshal_Factory *f =
-		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+		     TAO_Marshal::DEFAULT_MARSHAL_FACTORY,
+                ACE_Allocator* buffer_allocator = 0,
+                ACE_Allocator* data_block_allocator = 0);
   // Create an empty input stream. The caller is responsible for
   // putting the right data in here.
 
   TAO_InputCDR (ACE_Message_Block *data,
-		int byte_order = TAO_ENCAP_BYTE_ORDER,
+		int byte_order =
+                    TAO_ENCAP_BYTE_ORDER,
 		TAO_Marshal_Factory *f =
-                TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
+                    TAO_Marshal::DEFAULT_MARSHAL_FACTORY);
   // Create an input stream from an ACE_Message_Block
 
   TAO_InputCDR (const TAO_InputCDR& rhs);
@@ -416,11 +421,14 @@ public:
   // When interpreting indirected TypeCodes it is useful to make a
   // "copy" of the stream starting in the new position.
 
-  TAO_InputCDR (const TAO_InputCDR& rhs, size_t size);
+  TAO_InputCDR (const TAO_InputCDR& rhs,
+                size_t size);
   // This creates an encapsulated stream, the first byte must be (per
   // the spec) the byte order of the encapsulation.
 
-  TAO_InputCDR (const TAO_OutputCDR& rhs);
+  TAO_InputCDR (const TAO_OutputCDR& rhs,
+                ACE_Allocator* buffer_allocator = 0,
+                ACE_Allocator* data_block_allocator = 0);
   // Create an input CDR from an output CDR.
 
   ~TAO_InputCDR (void);
