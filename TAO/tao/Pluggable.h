@@ -191,11 +191,11 @@ public:
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
   
-  virtual int idle_after_reply (void);
+  // virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
   // now. 
 
-  virtual int reply_received (const CORBA::ULong request_id);
+  // virtual int reply_received (const CORBA::ULong request_id);
   // Check with the TMS whether the reply has been receieved for the
   // request with <request_id>.
 
