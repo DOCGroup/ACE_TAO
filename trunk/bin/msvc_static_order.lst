@@ -61,6 +61,7 @@ TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Lib.dsp
 TAO/orbsvcs/orbsvcs/FTRT_ClientORB.dsp
 TAO/orbsvcs/tests/Event/lib/Event_Test_Lib.dsp
 TAO/orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.dsp
+TAO/orbsvcs/tests/Trading/Trading_Test_Lib.dsp
 TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib.dsp
 TAO/tests/Smart_Proxies/Collocation/Smart_Proxies_Collocation_TestStubsLib.dsp
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib.dsp
