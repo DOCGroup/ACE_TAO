@@ -158,6 +158,12 @@ TAO_POA_Policies::server_protocol (void) const
   return this->server_protocol_;
 }
 
+ACE_INLINE TAO_PriorityBandedConnectionPolicy *
+TAO_POA_Policies::priority_bands (void) const
+{
+  return this->priority_bands_;
+}
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 ACE_INLINE const CORBA::PolicyList &

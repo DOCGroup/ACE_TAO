@@ -13,7 +13,8 @@
 //     Default strategy for populating mprofile
 //
 // = AUTHOR
-//     Carlos O'Ryan
+//     Marina Spivak <marina@cs.wustl.edu>
+//     Carlos O'Ryan <coryan@uci.edu>
 //
 // ============================================================================
 

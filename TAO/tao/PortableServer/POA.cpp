@@ -21,6 +21,7 @@
 
 #include "tao/RT_Policy_i.h"
 #include "Default_Acceptor_Filter.h"
+#include "RT_Acceptor_Filters.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
@@ -109,6 +110,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   : name_ (name),
     poa_manager_ (poa_manager),
     policies_ (policies),
+    acceptor_filter_ (0),
     parent_ (parent),
     active_object_map_ (0),
 
@@ -168,6 +170,11 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // Check for exception in construction of the active object map.
   ACE_CHECK;
 
+  // Create acceptor filter that will be used to construct ior for
+  // objects registering with this POA.
+  this->acceptor_filter_ = this->policies_.make_filter (ACE_TRY_ENV);
+  ACE_CHECK;
+
   // Register self with manager.
   int result = this->poa_manager_.register_poa (this);
   if (result != 0)
@@ -210,6 +217,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 
 TAO_POA::~TAO_POA (void)
 {
+  delete this->acceptor_filter_;
 }
 
 void
@@ -2084,7 +2092,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 #if (TAO_HAS_RT_CORBA == 1)
 
 int
-TAO_POA::valid_priority (RTCORBA::Priority /* priority */)
+TAO_POA::valid_priority (RTCORBA::Priority priority )
 {
   return 1;
 }
@@ -2118,7 +2126,7 @@ TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
   // shall raise a BAD_PARAM system exception.
   if (!this->valid_priority (priority))
     {
-      ACE_THROW (PortableServer::POA::ObjectNotActive ());
+      ACE_THROW (CORBA::BAD_PARAM ());
     }
 
   // In all other respects the semantics of the corresponding
@@ -3347,6 +3355,7 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
 #if (TAO_HAS_RT_CORBA == 1)
 
      server_protocol_ (0),
+     priority_bands_ (0),
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -3404,6 +3413,7 @@ TAO_POA_Policies::TAO_POA_Policies (const TAO_POA_Policies &rhs)
 #if (TAO_HAS_RT_CORBA == 1)
 
      server_protocol_ (0),
+     priority_bands_ (0),
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -3413,6 +3423,7 @@ TAO_POA_Policies::TAO_POA_Policies (const TAO_POA_Policies &rhs)
 #if (TAO_HAS_RT_CORBA == 1)
 
   this->server_protocol (rhs.server_protocol ());
+  this->priority_bands (rhs.priority_bands ());
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -3440,9 +3451,57 @@ TAO_POA_Policies::~TAO_POA_Policies (void)
 #if (TAO_HAS_RT_CORBA == 1)
 
   this->server_protocol (0);
+  this->priority_bands (0);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+}
+
+TAO_Acceptor_Filter *
+TAO_POA_Policies::make_filter (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Acceptor_Filter *filter = 0;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  if (this->priority_bands_ != 0)
+    {
+      ACE_NEW_THROW_EX (filter,
+                        TAO_Bands_Acceptor_Filter
+                        (this->server_protocol_->protocols_rep (),
+                         this->priority_bands_->priority_bands_rep ()),
+                        CORBA::NO_MEMORY ());
+      return filter;
+    }
+
+  else if (this->priority_model_ == SERVER_DECLARED
+           && this->server_priority_ != TAO_INVALID_PRIORITY)
+    {
+      ACE_NEW_THROW_EX (filter,
+                        TAO_Priority_Acceptor_Filter
+                        (this->server_protocol_->protocols_rep (),
+                         this->server_priority_),
+                        CORBA::NO_MEMORY ());
+      return filter;
+    }
+
+  else
+    {
+      ACE_NEW_THROW_EX (filter,
+                        TAO_Server_Protocol_Acceptor_Filter
+                        (this->server_protocol_->protocols_rep ()),
+                        CORBA::NO_MEMORY ());
+      return filter;
+    }
+
+#else  /* TAO_HAS_RT_CORBA == 1 */
+
+  ACE_NEW_THROW_EX (filter,
+                    TAO_Default_Acceptor_Filter,
+                    CORBA::NO_MEMORY ());
+  return filter;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 }
 
 void
@@ -3500,6 +3559,10 @@ TAO_POA_Policies::validity_check (void)
   if (result != 0)
     return result;
 
+  result = this->validate_priority_bands ();
+  if (result != 0)
+    return result;
+
   return 0;
 }
 
@@ -3524,7 +3587,7 @@ TAO_POA_Policies::validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr)
 }
 
 int
-TAO_POA_Policies::validate_priority_bands (RTCORBA::PriorityBandedConnectionPolicy_ptr)
+TAO_POA_Policies::validate_priority_bands ()
 {
   return 0;
 }
@@ -3690,11 +3753,11 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
   if (!CORBA::is_nil (priority_bands.in ()))
     {
-      int result =
-        this->validate_priority_bands (priority_bands.in ());
+      TAO_PriorityBandedConnectionPolicy *priority_bands_i =
+        ACE_dynamic_cast (TAO_PriorityBandedConnectionPolicy *,
+                          priority_bands.in ());
 
-      if (result != 0)
-        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+      this->priority_bands (priority_bands_i);
 
       CORBA::ULong current_length =
         this->client_exposed_fixed_policies_.length ();
@@ -3730,6 +3793,24 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 }
 
 #if (TAO_HAS_RT_CORBA == 1)
+
+void
+TAO_POA_Policies::priority_bands (TAO_PriorityBandedConnectionPolicy *policy)
+{
+  if (this->priority_bands_)
+    {
+      this->priority_bands_->destroy ();
+      CORBA::release (this->priority_bands_);
+      this->priority_bands_ = 0;
+    }
+
+  if (policy)
+    {
+      ACE_NEW (this->priority_bands_,
+               TAO_PriorityBandedConnectionPolicy (*policy));
+    }
+
+}
 
 void
 TAO_POA_Policies::server_protocol (TAO_ServerProtocolPolicy *policy)
@@ -3796,72 +3877,6 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-class TAO_Server_Protocol_Acceptor_Filter : public TAO_Acceptor_Filter
-{
-  // = TITLE
-  //   RTCORBA::ServerProtocolPolicy Acceptor_Filter.
-  //
-  // = DESCRIPTION
-  //   Populates mprofile with endpoints selected based on the
-  //   RTCORBA::ServerProtocolPolicy.
-  //
-public:
-  TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
-
-  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile,
-                             TAO_Acceptor **acceptors_begin,
-                             TAO_Acceptor **acceptors_end);
-  // Populate <mprofile> based on what's in <protocols_>.
-
-private:
-  RTCORBA::ProtocolList &protocols_;
-  // Value of the ServerProtocolPolicy used for endpoint
-  // selection.
-};
-
-TAO_Server_Protocol_Acceptor_Filter::
-TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
-  :  protocols_ (protocols)
-{
-}
-
-int
-TAO_Server_Protocol_Acceptor_Filter::
-fill_mprofile (const TAO_ObjectKey &object_key,
-               TAO_MProfile &mprofile,
-               TAO_Acceptor **acceptors_begin,
-               TAO_Acceptor **acceptors_end)
-{
-  // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
-  // which protocols get included into IOR and in what order.
-  for (CORBA::ULong j = 0; j < protocols_.length (); ++j)
-    {
-      CORBA::ULong protocol_type = protocols_[j].protocol_type;
-
-      for (TAO_Acceptor** acceptor = acceptors_begin;
-           acceptor != acceptors_end;
-           ++acceptor)
-        if ((*acceptor)->tag () == protocol_type
-            && (*acceptor)->create_mprofile (object_key,
-                                             mprofile) == -1)
-          return -1;
-    }
-
-  // Encode endpoints.
-  for (TAO_PHandle i = 0;
-       i < mprofile.profile_count ();
-       ++i)
-    {
-      TAO_Profile *profile = mprofile.get_profile (i);
-      profile->encode_endpoints ();
-    }
-
-  return 0;
-}
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 CORBA::Object_ptr
 TAO_POA::key_to_object (const TAO_ObjectKey &key,
@@ -4007,30 +4022,41 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                                    ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  // By default all the acceptors are useful, but with RT CORBA we
-  // must only use acceptors that satisfy the specified policies.
-  TAO_Acceptor_Filter *filter = 0;
-  TAO_Default_Acceptor_Filter default_filter;
-  filter = &default_filter;
+  TAO_Stub *data = 0;
 
+  // If POA has RTCORBA::SERVER_DECLARED priority model,
+  // each object can potentially have a different priority.
+  // To preserve correctness with multithreading applications, a
+  // separate filter must be used for each object.  Here we allocate a
+  // filter of the stack, if necessary.
+  if (this->policies ().priority_model ()
+      == TAO_POA_Policies::SERVER_DECLARED
+      && this->policies ().server_priority () != priority)
+    {
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_ServerProtocolPolicy *policy =
-    this->policies ().server_protocol ();
-  RTCORBA::ProtocolList & protocols = policy->protocols_rep ();
+      TAO_Priority_Acceptor_Filter
+        filter (this->policies ().server_protocol ()->protocols_rep (),
+                priority);
 
-  TAO_Server_Protocol_Acceptor_Filter server_protocol_filter (protocols);
-  filter = &server_protocol_filter;
-
+      data = this->orb_core_.create_stub_object (key,
+                                                 type_id,
+                                                 client_exposed_policies._retn (),
+                                                 &filter,
+                                                 ACE_TRY_ENV);
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-  TAO_Stub *data =
-    this->orb_core_.create_stub_object (key,
-                                        type_id,
-                                        client_exposed_policies._retn (),
-                                        filter,
-                                        ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (0);
+    }
+  else
+    {
+      data = this->orb_core_.create_stub_object (key,
+                                                 type_id,
+                                                 client_exposed_policies._retn (),
+                                                 this->acceptor_filter_,
+                                                 ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
 
   return data;
 }
