@@ -1334,11 +1334,11 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc
   CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_var tmp;
+  CORBA::TypeCode_var tmp = CORBA::TypeCode::_duplicate (tc);
 
   while (kind == CORBA::tk_alias)
     {
-      tmp = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      tmp = tmp->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       kind = tmp->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1563,7 +1563,7 @@ TAO_TypeCodeFactory_i::update_map (
 {
   ptr_arith_t unaligned_offset =
     ACE_static_cast (ptr_arith_t,
-                     cdr.begin ()->wr_ptr () - cdr.buffer ());
+                     cdr.total_length ());
 
   CORBA::Long aligned_offset =
     ACE_static_cast (CORBA::Long,

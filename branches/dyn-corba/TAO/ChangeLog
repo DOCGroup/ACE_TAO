@@ -1,3 +1,9 @@
+Wed Feb  5 13:11:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (valid_content_type):
+
+	  Fixed a bug in the unaliasing loop. 
+
 Mon Feb  3 16:14:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
