@@ -1,3 +1,10 @@
+Fri Apr 28 21:49:27 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp
+
+          Bala didn't add new files to the MSVC projects.
+
 Fri Apr 28 21:32:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * MessagingC.h:
