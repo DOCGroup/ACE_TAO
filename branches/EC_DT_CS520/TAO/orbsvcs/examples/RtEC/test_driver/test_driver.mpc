@@ -2,13 +2,12 @@ project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, ace
   sharedname    = Test_Driver
 
   Source_Files {
-    Config_Factory.cpp
     Consumer.cpp
     Supplier.cpp
     TimeoutConsumer.cpp
     TestConfig.cpp
     Test_Handler.cpp
-    ECConfig.cpp
+    Config_Factory.cpp
     AddrServer.cpp
   }
 
@@ -17,7 +16,7 @@ project(test_driver_lib): orbsvcslib, rtevent, rtsched, rtkokyuevent, kokyu, ace
   }
 }
 
-project(test_driver_app): orbsvcsexe, rtevent, rtsched, kokyu, acexml {
+project(test_driver_app): orbsvcsexe, rtevent, rtsched, rtschedevent, kokyu, acexml {
   exename = Test
   after += test_driver_lib
   libs += wrappers Test_Driver
