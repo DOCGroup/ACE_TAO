@@ -158,3 +158,15 @@ TAO_ORB_Core::cdr_buffer_allocator (void)
 {
   return &this->cdr_buffer_allocator_;
 }
+
+ACE_INLINE CORBA_Environment*
+TAO_ORB_Core::default_environment (void) const
+{
+  return this->default_environment_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::default_environment (CORBA_Environment* env)
+{
+  this->default_environment_ = env;
+}

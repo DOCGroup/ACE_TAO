@@ -821,12 +821,12 @@ public:
   // can be used for initialization or in comparisons.
 
   virtual CORBA::Object_ptr string_to_object (CORBA::String str,
-                                              CORBA::Environment &env) = 0;
+                                              CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   // Turn a string-ified object reference back into an object pointer.
   // Each type of ORB, e.g. an IIOP ORB, must implement this.
   // Typically these strings are created using <object_to_string()>.
   virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
-                                          CORBA::Environment &env) = 0;
+                                          CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
@@ -907,13 +907,13 @@ public:
 
   STUB_Object *create_stub_object (const TAO_ObjectKey &key,
                                    const char *type_id,
-                                   CORBA::Environment &env);
+                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Makes sure that the ORB is open and then creates an IIOP object
   // based on the endpoint.
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  CORBA::Environment &env);
+                                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
   //
@@ -945,7 +945,7 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
-  static void init_orb_globals (CORBA::Environment &env);
+  static void init_orb_globals (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
 
@@ -1082,17 +1082,9 @@ private:
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */
 
-// Signature of a skeleton for every operation of an interface.
-typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
-                             void *, // object_ptr
-                             void *, // context_ptr
-                             CORBA::Environment &);
-
-// NOTE: stub APIs are nonportable, and must be explicitly #included
-// by code emitted from an IDL compiler.
-
-#if     defined (_MSC_VER)
-#       pragma pack (pop)               // VC++, goes back to other padding rules
+#if  defined (_MSC_VER)
+// VC++, goes back to other padding rules
+# pragma pack (pop)
 #endif /* _MSV_VER */
 
 #endif /* TAO_ORB_H */

@@ -50,7 +50,7 @@ public:
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
-                  CORBA::Environment &env);
+                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Encodes the value into the undelying CDR stream based on the
   // TypeCode parameter
 
@@ -60,13 +60,13 @@ public:
 protected:
   void start (CORBA::Boolean is_roundtrip,
               TAO_GIOP::Message_Type message_type,
-	      CORBA::Environment &env);
+	      CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Locates the right Client_Connection_Handler and initializes the
   // CDR stream.
   // The message_type tells how to initialize the output CDR stream
 
   TAO_GIOP_ReplyStatusType invoke (CORBA::Boolean is_roundtrip,
-				   CORBA::Environment &env);
+				   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Sends the request, does not wait for the response.
 
   TAO_GIOP_ReplyStatusType close_connection (void);
@@ -74,7 +74,7 @@ protected:
   // we are fowarded (to the same server)
 
   TAO_GIOP_ReplyStatusType location_forward (TAO_InputCDR &inp_stream,
-                                             CORBA::Environment &env);
+                                             CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // do the location forwarding, which means exchanging the profile
 
 protected:
@@ -115,17 +115,17 @@ public:
 			      const char *operation,
 			      TAO_ORB_Core* orb_core);
 
-  void start (CORBA::Environment &env);
+  void start (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Calls TAO_GIOP_Invocation::start.
 
   TAO_GIOP_ReplyStatusType invoke (CORBA::ExceptionList &exceptions,
-                                   CORBA::Environment &env);
+                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Send request, block until any reply comes back, and unmarshal
   // reply parameters as appropriate.
 
   TAO_GIOP_ReplyStatusType invoke (TAO_Exception_Data *excepts,
                                    CORBA::ULong except_count,
-                                   CORBA::Environment &env);
+                                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Special purpose invoke method used by the stubs. This
   // accomplishes the same task as the normal invoke except that
   // Exceptions are allocated and decoded here. This keeps the size of
@@ -133,7 +133,7 @@ public:
 
   void get_value (CORBA::TypeCode_ptr tc,
                   void *value,
-                  CORBA::Environment &env);
+                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // No CORBA::Context support (deprecated).
 
   TAO_InputCDR &inp_stream (void);
@@ -155,10 +155,10 @@ public:
 			      const char *operation,
 			      TAO_ORB_Core* orb_core);
 
-  void start (CORBA::Environment &env);
+  void start (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Call TAO_GIOP_Invocation::start()
 
-  TAO_GIOP_ReplyStatusType invoke (CORBA::Environment &env);
+  TAO_GIOP_ReplyStatusType invoke (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Send request, without blocking for any response.
 };
 
@@ -173,10 +173,10 @@ public:
   TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data,
 				      TAO_ORB_Core* orb_core);
 
-  void start (CORBA::Environment &env);
+  void start (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Calls TAO_GIOP_Invocation::start.
 
-  TAO_GIOP_ReplyStatusType invoke (CORBA::Environment &env);
+  TAO_GIOP_ReplyStatusType invoke (CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // Send request, without blocking for any response.
 
 private:

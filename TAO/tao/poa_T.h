@@ -14,27 +14,27 @@ public:
                   PortableServer::POAManager_ptr poa_manager,
                   TAO_POA_Policies &policies,
                   PortableServer::POA_ptr parent,
-                  CORBA::Environment &env);
+                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   TAO_Locked_POA (const char *adapter_name,
                   PortableServer::POAManager_ptr poa_manager,
                   TAO_POA_Policies &policies,
                   PortableServer::POA_ptr parent,
                   TAO_Object_Table &active_object_table,
-                  CORBA::Environment &env);
+                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual TAO_POA *clone (const char *adapter_name,
                           PortableServer::POAManager_ptr poa_manager,
                           TAO_POA_Policies &policies,
                           PortableServer::POA_ptr parent,
-                          CORBA::Environment &env);
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual TAO_POA *clone (const char *adapter_name,
                           PortableServer::POAManager_ptr poa_manager,
                           TAO_POA_Policies &policies,
                           PortableServer::POA_ptr parent,
                           TAO_Object_Table &active_object_table,
-                          CORBA::Environment &env);
+                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
 protected:
 
