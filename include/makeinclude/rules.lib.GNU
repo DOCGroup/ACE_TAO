@@ -35,28 +35,23 @@ endif # versioned_so
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
-ifndef LIB
-  LIB ?=
-endif
+LIB ?=
 VLIB = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
+CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VLIB to VLIBS if building static_libs.
 ifdef static_libs 
   VLIBS += $(VLIB)
 endif
 
-ifndef SHLIB
-  SHLIB ?=
-endif
+SHLIB ?=
 # Setup shared library variables, including versions.
 VSHLIB_NO_VER = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
 
-ifndef SHLIBA
-  SHLIBA ?=
-endif
+SHLIBA ?=
 VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 # Add VSHLIB if we're building shared_libs.
@@ -76,6 +71,12 @@ ifeq ($(VLIBS),)
   ifeq ($(LIB_WARNING),1)
     @echo Warning: rules.lib.GNU included, but no library targets detected.
   endif # LIB_WARNING
+else # VLIBS
+  # Libraries always depend on idl_stubs, if they exist.
+  IDL_SRC ?=
+  ifeq ($(IDL_SRC),)
+    $(VLIBS): $(IDL_SRC)
+  endif # IDL_SRC
 endif # !VLIBS
 
 VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(LSRC)))))
@@ -88,7 +89,7 @@ VSHOBJS1 = $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LS
 
 ifdef static_libs
   LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_LIB:%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
 endif # static_libs
 
 ifdef shared_libs
@@ -101,13 +102,8 @@ ifdef shared_libs
   endif
 endif # shared_libs
 
-
-ifndef ace_lib_prelink
-  ace_lib_prelink = 0
-endif
-ifndef aix_build
-  aix_build = 0
-endif
+ace_lib_prelink ?= 0
+aix_build ?= 0
 
 $(VLIB): $(VLOBJS)
 

@@ -10,27 +10,13 @@
 # variable must be set to its actual name before including this
 # file to allow the recursive MAKE to work properly.
 
-ifndef MAKEFILE
-  MAKEFILE ?=
-endif
-ifeq ($(MAKEFILE),)
-  MAKEFILE = Makefile
-endif # ! MAKEFILE
-
-ifndef SUBDIR_MAKEFILE
-  SUBDIR_MAKEFILE ?=
-endif
-ifeq ($(SUBDIR_MAKEFILE),)
-  SUBDIR_MAKEFILE=$(MAKEFILE)
-endif
+MAKEFILE ?= Makefile
+SUBDIR_MAKEFILE ?= $(MAKEFILE)
 
 # Make sure that we build directories with DIRS= in sequence instead of in
 # parallel, unless DIRS_PARALLEL is set, in which case they may be built
 # in parallel if enabled by the proper flags and not disabled elsewhere.
-
-ifndef DIRS_PARALLEL
-  DIRS_PARALLEL ?=
-endif # DIRS_PARALLEL
+DIRS_PARALLEL ?=
 
 ifeq ($(DIRS_PARALLEL),)
 .NOTPARALLEL:
