@@ -401,7 +401,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 #else
   ACE_UNUSED_ARG (folded_name);
   ACE_UNUSED_ARG (poa);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   return result;
@@ -1325,7 +1325,7 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
         ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 #else
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif /* !TAO_HAS_MINIMUM_POA == 0 */
 }
 
