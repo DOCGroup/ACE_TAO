@@ -594,35 +594,7 @@ ACE_OS::uname (struct utsname *name)
     TCHAR processor[bufsize] = ACE_TEXT ("Unknown");
     TCHAR subtype[bufsize] = ACE_TEXT ("Unknown");
 
-    WORD arch;
-#if (! defined(__BORLANDC__))
-    arch = sinfo.wProcessorArchitecture;
-#else
-    // Hack alarm:
-    // Some Borland compilers ship with an incorrect definition
-    // of SYSTEM_INFO that makes it impossible to access the
-    // wProcessArchitecture field.
-    // This awful hack will work around that, but no guarantees!
-    switch(sinfo.dwProcessorType)
-    {
-      case PROCESSOR_INTEL_386:
-      case PROCESSOR_INTEL_486:
-      case PROCESSOR_INTEL_PENTIUM:
-        arch = PROCESSOR_ARCHITECTURE_INTEL;
-        break;
-
-      case PROCESSOR_MIPS_R4000:
-        arch = PROCESSOR_ARCHITECTURE_MIPS;
-        break;
-
-      case PROCESSOR_ALPHA_21064:
-        arch = PROCESSOR_ARCHITECTURE_ALPHA;
-        break;
-
-      default:
-        arch = PROCESSOR_ARCHITECTURE_UNKNOWN;
-    }
-#endif /* (! defined(__BORLANDC__)) */
+    WORD arch = sinfo.wProcessorArchitecture;
 
     switch (arch)
     {

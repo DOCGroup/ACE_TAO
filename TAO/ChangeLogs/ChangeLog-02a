@@ -1,3 +1,19 @@
+Mon Jan 31 20:21:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * Added the following changes for Borland C++Builder 4:  
+  
+          TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
+
+ 	  TAO/tests/MProfile/test_i.cpp, test_i.h: Added definition of
+ 	  missing constructor, added required ACE_THROW_SPEC and removed
+ 	  reference to missing inline file.
+
+	  TAO/tests/Param_Test/client.bor: Added new file
+	  recursive_union.obj.
+ 
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+ 	  contributing these.
+  
 Mon Jan 31 20:29:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
@@ -9,15 +25,13 @@ Mon Jan 31 20:29:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added keyword 'fixed' to lexer and parser.
 
 	* TAO_IDL/util/utl_scope.cpp:
-	  Modified lookup_by_name_local() to output an
-	  error if it sees any case variation of 'fixed'. The
-	  change to the lexer and parser will catch the use
-	  of 'fixed' as a type. This change will catch the use
-	  of 'fixed' as an identifier. Fixed types are not
-	  implemented in TAO, so we need to output an error
-	  message whenever the word is used in an IDL file.
-	  Thanks to J. Scott Evans <evans@cpi.com> for reporting
-	  this bug.
+	  Modified lookup_by_name_local() to output an error if it sees
+ 	  any case variation of 'fixed'. The change to the lexer and
+ 	  parser will catch the use of 'fixed' as a type. This change will
+ 	  catch the use of 'fixed' as an identifier. Fixed types are not
+ 	  implemented in TAO, so we need to output an error message
+ 	  whenever the word is used in an IDL file.  Thanks to J. Scott
+ 	  Evans <evans@cpi.com> for reporting this bug.
 
 Mon Jan 31 20:15:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
