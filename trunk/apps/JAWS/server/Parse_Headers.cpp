@@ -129,9 +129,9 @@ Headers::operator[] (const char * const header) const
 }
 
 int
-Headers::end_of_line (char * &line, int &offset) const
+Headers::end_of_line (char *&line, int &offset) const
 {
-  const char *old_line = line;
+  char *old_line = line;
   char *ptr = ACE_OS::strchr (old_line, '\n');
 
   if (ptr == NULL)

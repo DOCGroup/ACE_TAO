@@ -1,3 +1,9 @@
+Mon Nov 17 07:34:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* server/Parse_Headers.cpp (end_of_line): Replaced a const char *
+ 	  with a char * to work with the new ACE_OS::strchr() signature.
+  	  Thanks to James for finding this.
+
 Tue Nov 11 19:52:38 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* server/Pipeline.{h,cpp}: The beginning of a new Pipeline
