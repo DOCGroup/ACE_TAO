@@ -99,16 +99,17 @@ namespace Kokyu
   public:
     ConfigInfoSet config_info_set_;
     int immediate_activation_;
-    void sched_policy (int);
-    void sched_scope (int);
 
   public:
     Dispatcher_Attributes ();
+    void sched_policy (int);
+    void sched_scope (int);
     int thread_creation_flags () const;
 
   private:
+    int sched_policy_;
+    int sched_scope_;
     int base_thread_creation_flags_;
-    int thread_creation_flags_;
   };
 
 
