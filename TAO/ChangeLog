@@ -1,3 +1,11 @@
+Thu Sep 26 16:07:18 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+
+	  Added newlines and annotation for the generation of code for 
+	  sequences as members. Thanks to Bala 
+	  <bala@isis-server.isis.vanderbilt.edu> for pointing out the lack.
+
 Thu Sep 26 14:59:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root.cpp:
