@@ -1,3 +1,15 @@
+Mon Jul 20 16:55:54 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp (copy_ctor_helper):
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+	* TAO_IDL/be_include/be_interface.h (copy_ctor_helper):
+	  To alleviate the g++ linker's confusion in the face of profuse
+	  virtual inheritence in the skeletons, the IDL compiler now
+	  explicitly generates a copy constructor in each skeleton
+	  class. The copy constructor calls the copy constructor of each
+	  superclass in the skeleton's inheritence hierarchy.
+	
 Mon Jul 20 15:08:11 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args):  Added a "#if
