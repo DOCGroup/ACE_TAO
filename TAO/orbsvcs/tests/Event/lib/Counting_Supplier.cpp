@@ -64,10 +64,10 @@ EC_Counting_Supplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
 void
 EC_Counting_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    int event_source,
-    int event_type,
     int published_source,
     int published_type,
+    int event_source,
+    int event_type,
     CORBA::Environment &ACE_TRY_ENV)
 {
   this->event_source_ = event_source;
@@ -92,9 +92,12 @@ EC_Counting_Supplier::connect (
     this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (CORBA::is_nil (this->supplier_proxy_.in ()))
+    {
+      this->consumer_proxy_ =
+        supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
   this->consumer_proxy_->connect_push_supplier (supplier.in (),
                                                 qos,
@@ -195,8 +198,6 @@ void
 EC_Counting_Supplier_Task::run (CORBA::Environment &ACE_TRY_ENV)
 {
   this->event_.length (1);
-  this->event_[0].header.type = 0;
-  this->event_[0].header.source = 0;
 
   int stop = 0;
   do {

@@ -1,3 +1,33 @@
+Tue Feb  1 11:25:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+          More fixes in the can_match() routine, this is why we need
+          something better that "0" as a wildcard for source and/or type.
+
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+          It was using the wrong object reference to disconnect
+
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          Fixed several bugs in the connect/disconnect calls and their
+          use.
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter.cpp:
+          Added some debugging messages (that are not compiled by
+          default).
+
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/Event/Basic/svc.conf:
+          Fixed configuration scripts.
+
 Mon Jan 31 19:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
