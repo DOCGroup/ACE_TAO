@@ -1,3 +1,80 @@
+Sat Apr 15 19:48:47 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/POA.cpp:
+
+          ImR code was using this->the_name () to figure out the POA name.
+          It now uses this->name ().c_str () instead so we don't have a
+          local copy of the string to clean up.
+
+        * TAO_IDL/tao_idl.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * tao/TAO.dsp:
+
+          Changed around the order of the configurations so that in the 
+          default case (such as out of the box) the regular Debug version 
+          will be the current configuration.
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        
+          Sandro Doro <doro.s@flashnet.it> reported that NT_Naming_Service
+          wasn't linking to some win32 libraries it needed.  Added
+          user32.lib and advapi32.lib.
+
+Sat Apr 15 19:44:40 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
+
+        * tao/Makefile.bor: 
+        
+          Added new files.
+
+        * tao/Smart_Proxies.h: 
+        
+          Added missing pre/post includes.
+
+        * TAO_IDL/Makefile.bor: 
+        
+          Tidied up formatting.
+
+        * orbsvcs/orbsvcs/AV.bor: (added)
+        * orbsvcs/orbsvcs/CosConcurrency.bor: (added)
+        * orbsvcs/orbsvcs/CosEvent.bor: (added)
+        * orbsvcs/orbsvcs/CosLifeCycle.bor: (added)
+        * orbsvcs/orbsvcs/CosNaming.bor: (added)
+        * orbsvcs/orbsvcs/CosNotification.bor: (added)
+        * orbsvcs/orbsvcs/CosProperty.bor: (added)
+        * orbsvcs/orbsvcs/CosTime.bor: (added)
+        * orbsvcs/orbsvcs/CosTrading.bor: (added)
+        * orbsvcs/orbsvcs/DsLogAdmin.bor: (added)
+        * orbsvcs/orbsvcs/RTEvent.bor: (added)
+        * orbsvcs/orbsvcs/RTSched.bor: (added)
+        * orbsvcs/orbsvcs/Svc_Utils.bor: (added)
+        * orbsvcs/orbsvcs/Makefile.bor:
+
+          Added makefiles for split up orbsvcs.
+
+        * orbsvcs/CosEvent_Service/Makefile.bor:
+        * orbsvcs/Event_Service/Makefile.bor:
+        * orbsvcs/Naming_Service/Naming_Service.bor:
+        * orbsvcs/Naming_Service/NT_Naming_Service.bor:
+        * orbsvcs/Notify_Service/Makefile.bor:
+        * orbsvcs/Trading_Service/Makefile.bor:
+        * tests/InterOp-Naming/client.bor:
+        * tests/InterOp-Naming/server.bor:
+        * utils/nslist/Makefile.bor:
+        
+          Updated for new orbsvcs libraries.
+
+        * orbsvcs/orbsvcs/AV/AV_export.h: 
+        
+          Removed unnecessary include of ace/pre.h.
+
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
+        
+          Workaround for C++Builder compiler bug - compiler doesn't like 
+          having this template constructor inlined.
+
 Sat Apr 15 21:53:44 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
