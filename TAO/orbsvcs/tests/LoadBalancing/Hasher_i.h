@@ -31,8 +31,14 @@ public:
   /// Perform a simple hashing operation on the input string and
   /// return the computed hash.
   virtual CORBA::ULong hash_string (const char * str,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+//   /// Shutdown the ORB.
+//   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
+//                            TAO_default_environment ())
+//     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };
 

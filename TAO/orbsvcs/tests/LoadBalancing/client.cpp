@@ -1,13 +1,15 @@
 // -*- C++ -*-
 
-// $Id$
-
 // TAO Load Balancer test client
 
 #include "HasherC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
+
+ACE_RCSID (LoadBalancer,
+           client,
+           "$Id$")
 
 static void run_test (int iterations,
                       int timeout,
@@ -101,7 +103,7 @@ run_test (int iterations,
     {
       ACE_UINT64 call_start = ACE_OS::gethrtime ();
 
-      hasher->do_hash ("This is a silly test", ACE_TRY_ENV);
+      hasher->hash_string ("This is a silly test", ACE_TRY_ENV);
       ACE_CHECK;
       ACE_UINT64 end = ACE_OS::gethrtime ();
 

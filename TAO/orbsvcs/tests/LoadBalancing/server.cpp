@@ -1,15 +1,13 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "ace/Get_Opt.h"
 
-#include "orbsvcs/LoadBalancingC.h"
+#include "HasherFactory.h"
 
-#include "PropertyManagerTest.h"
+//#include "PropertyManagerTest.h"
 
 ACE_RCSID (LoadBalancer,
-           server.cpp,
+           server,
            "$Id$")
 
 const char *ior_output_file = 0;
@@ -97,15 +95,15 @@ main (int argc, char *argv[])
                            "GenericFactory reference is nil.\n"),
                           -1);
 
-      LoadBalancing::PropertyManager_var property_manager =
-        LoadBalancing::PropertyManager::_narrow (lb.in (),
-                                                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+//       LoadBalancing::PropertyManager_var property_manager =
+//         LoadBalancing::PropertyManager::_narrow (lb.in (),
+//                                                  ACE_TRY_ENV);
+//       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (property_manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "PropertManager reference is nil.\n"),
-                          -1);
+//       if (CORBA::is_nil (property_manager.in ()))
+//         ACE_ERROR_RETURN ((LM_ERROR,
+//                            "PropertManager reference is nil.\n"),
+//                           -1);
 
       // Run the PropertyManager tests, in addition to setting up the
       // Load Balancer for the remainder of this test.
@@ -115,7 +113,7 @@ main (int argc, char *argv[])
         factory_creation_id;
 
       // Create a replicated Hasherobject (object group)
-      obj = factory->create_object ("IDL:Hasher:1.0",
+      obj = factory->create_object (HasherFactory::replica_type_id (),
                                     the_criteria,
                                     factory_creation_id.out (),
                                     ACE_TRY_ENV);
@@ -155,7 +153,7 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (&ACE_ANY_EXCEPTION,
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
 
       return -1;
