@@ -934,7 +934,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Equal_To<TYPE>;
-template class ACE_Pair<TYPE, ATTR >;
+template class ACE_Pair<TYPE, ATTR>;
 template class ACE_Reference_Pair<TYPE, TYPE>;
 template class ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
@@ -967,7 +967,7 @@ template class ACE_Cache_Map_Iterator<TYPE, TYPE, CACHE_ITER_IMPL, NULL_CACHING_
 template class ACE_Cache_Map_Reverse_Iterator<TYPE,TYPE, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Equal_To<TYPE>
-#pragma instantiate ACE_Pair<TYPE, ATTR >
+#pragma instantiate ACE_Pair<TYPE, ATTR>
 #pragma instantiate ACE_Reference_Pair<TYPE, TYPE>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>

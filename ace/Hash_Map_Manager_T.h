@@ -75,6 +75,10 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Reverse_Iterator_Ex;
 
 // Forward decl.
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
+class ACE_Hash_Map_Bucket_Iterator;
+
+// Forward decl.
 class ACE_Allocator;
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -97,24 +101,25 @@ public:
   friend class ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  friend class ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  typedef EXT_ID 
+  typedef EXT_ID
           KEY;
-  typedef INT_ID 
+  typedef INT_ID
           VALUE;
-  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> 
+  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID>
           ENTRY;
 
   // = ACE-style iterator typedefs.
-  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           ITERATOR;
-  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           REVERSE_ITERATOR;
 
   // = STL-style iterator typedefs.
-  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           iterator;
-  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           reverse_iterator;
 
   // = Initialization and termination methods.
@@ -506,6 +511,77 @@ public:
 };
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
+class ACE_Hash_Map_Bucket_Iterator
+{
+  // = TITLE
+  //     Forward iterator for the <ACE_Hash_Map_Manager_Ex> which only
+  //     traverses a particular bucket.  The particular bucket is
+  //     specified by the <EXT_ID> parameter specified in the
+  //     constructor.
+  //
+  // = DESCRIPTION
+  //     This class does not perform any internal locking of the
+  //     <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking
+  //     is inherently inefficient and/or error-prone within an
+  //     STL-style iterator.  If you require locking, you can
+  //     explicitly use an <ACE_Guard> or <ACE_Read_Guard> on the
+  //     <ACE_Hash_Map_Manager_Ex>'s internal lock, which is
+  //     accessible via its <mutex> method.
+  //
+  //     Note that this iterator cannot be created by calling a method
+  //     on the map, since this would require
+public:
+  // = Initialization method.
+  ACE_Hash_Map_Bucket_Iterator (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+                                const EXT_ID &ext_id,
+                                int tail = 0);
+
+  // = STL styled iteration, compare, and reference functions.
+
+  ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ (void);
+  // Prefix advance.
+
+  ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator++ (int);
+  // Postfix advance.
+
+  ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- (void);
+  // Prefix reverse.
+
+  ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+  // Postfix reverse.
+
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  // Returns a reference to the interal element <this> is pointing to.
+
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map (void);
+  // Returns reference the Hash_Map_Manager_Ex that is being iterated
+  // over.
+
+  int operator== (const ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  int operator!= (const ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  // Check if two iterators point to the same position
+
+protected:
+  int forward_i (void);
+  // Move forward by one element in the set.  Returns 0 when there's
+  // no more item in the set after the current items, else 1.
+
+  int reverse_i (void);
+  // Move backward by one element in the set.  Returns 0 when there's
+  // no more item in the set before the current item, else 1.
+
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
+  // Map we are iterating over.
+
+  ssize_t index_;
+  // Keeps track of how far we've advanced in the table.
+
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next_;
+  // Keeps track of how far we've advanced in a linked list in each
+  // table slot.
+};
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Map_Reverse_Iterator_Ex : public ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
   // = TITLE
@@ -594,7 +670,7 @@ public:
 
   ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
   operator= (const ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
-  // Assignment from base 
+  // Assignment from base
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -613,7 +689,7 @@ public:
 
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
   operator= (const ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
-  // Assignment from base 
+  // Assignment from base
 };
 
 #if defined (__ACE_INLINE__)

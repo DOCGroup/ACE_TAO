@@ -1,10 +1,19 @@
+Wed Jul 14 16:30:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.h (class ACE_Hash_Map_Bucket_Iterator):
+	  Added a new class that allows the iteration over the entries of
+	  a of a particular bucket in a hash map.
+
+	* tests/Hash_Map_Bucket_Iterator_Test.cpp: A test for the new
+	  ACE_Hash_Map_Bucket_Iterator class.
+
 Wed Jul 14 16:37:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* Makefile:
 
 	  Added Makefile.am and NEWS to the list of controlled files.  The
 	  file `NEWS' will get generated when a release is made.
-	
+
 	* TODO:
 	* acconfig.h:
 	* configure.in:

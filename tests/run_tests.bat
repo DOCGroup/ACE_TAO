@@ -77,6 +77,7 @@ call %run_cmd% %dopure% %platform% Future_Test
 call %run_cmd% %dopure% %platform% Future_Set_Test
 call %run_cmd% %dopure% %platform% Handle_Set_Test
 call %run_cmd% %dopure% %platform% Hash_Map_Manager_Test
+call %run_cmd% %dopure% %platform% Hash_Map_Bucket_Iterator_Test
 call %run_cmd% %dopure% %platform% High_Res_Timer_Test
 call %run_cmd% %dopure% %platform% IOStream_Test
 call %run_cmd% %dopure% %platform% Map_Manager_Test
