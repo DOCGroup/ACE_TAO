@@ -3849,10 +3849,10 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
 
   len = this->tagged_component_id_.length ();
 
-  for (CORBA::ULong i = 0; i != len; ++i)
+  for (CORBA::ULong k = 0; k != len; ++k)
     {
-      this->tao_add_ior_component_to_profile (this->tagged_component_id_[i],
-                                              this->profile_id_array_[i]
+      this->tao_add_ior_component_to_profile (this->tagged_component_id_[k],
+                                              this->profile_id_array_[k]
                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
