@@ -1,3 +1,12 @@
+Sat Feb 17 23:08:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.cpp: Fixed a problem that showed up
+	  only in EC_throughput. When multiple messages were read out of
+	  the socket and processed, sometime we could be left with
+	  messages that are not even the size of GIOP header length. Added
+	  a conditional check for this case. This fixes the problem in
+	  EC_Throughput. 
+
 Sat Feb 17 20:38:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_INSTALL.html: Added GPERF building to unix instructions.
