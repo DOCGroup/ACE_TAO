@@ -1,3 +1,14 @@
+Mon May 17 11:04:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/tests/Param_Test/ub_any_seq.cpp:
+	  Changed the logic of check_validity() so that *all* the
+	  elements of the sequence get checked instead of just the
+	  first one (this should also get rid of a DU warning), 
+	  added a constant representing the number of possible
+	  types tested in the sequence, and removed some 
+	  unnecessary switch cases in init_parameters() and
+	  reset_parameters().
+
 Sun May 16 21:07:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* rules.tao.GNU: Merged the stub and skeleton rules for flick
