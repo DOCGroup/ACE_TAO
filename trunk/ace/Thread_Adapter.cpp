@@ -4,6 +4,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Thread_Exit.h"
 #include "ace/Thread_Hook.h"
+#include "ace/Object_Manager_Base.h"
 
 ACE_RCSID (ace,
            Thread_Adapter,

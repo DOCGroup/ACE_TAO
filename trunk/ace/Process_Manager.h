@@ -15,6 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

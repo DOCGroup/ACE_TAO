@@ -8,6 +8,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ACE.h"
+#include "ace/Guard_T.h"
 #include "ace/Process.h"
 #include "ace/Signal.h"
 #include "ace/Object_Manager.h"

@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Global_Macros.h"
+
 // Return the number of args
 ACE_INLINE int
 ACE_ARGV::argc (void) const
@@ -23,7 +25,7 @@ ACE_ARGV::buf (void)
 {
   ACE_TRACE ("ACE_ARGV::buf");
 
-  if (this->buf_ == 0 && this->state_ == ITERATIVE) 
+  if (this->buf_ == 0 && this->state_ == ITERATIVE)
     this->create_buf_from_queue ();
 
   return (const ACE_TCHAR *) this->buf_;
@@ -37,7 +39,7 @@ ACE_ARGV::argv (void)
   ACE_TRACE ("ACE_ARGV::argv");
 
   // Try to create the argv_ if it isn't there
-  if (this->argv_ == 0) 
+  if (this->argv_ == 0)
     {
       if (this->state_ == ITERATIVE && this->buf_ == 0)
         this->create_buf_from_queue ();
@@ -50,7 +52,7 @@ ACE_ARGV::argv (void)
   return (ACE_TCHAR **) this->argv_;
 }
 
-// Subscript operator.  
+// Subscript operator.
 
 ACE_INLINE const ACE_TCHAR *
 ACE_ARGV::operator[] (size_t i)

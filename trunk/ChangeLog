@@ -1,3 +1,83 @@
+Wed Nov  5 18:16:40 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/ARGV.i: Added #include "ace/Global_Macros.h" to find ACE_TRACE.
+
+	* ace/Global_Macros.h: Added #include "ace/OS_Errno.h" near the
+	  ACE_ALLOCATOR* and ACE_NEW* macros to see errno and ENOMEM.
+
+	* ace/ACE.cpp: Added #include "ace/OS_NS_string.h" to find
+	  ACE_OS::strlen().
+
+	* ace/Capabilities.cpp: Added #include "ace/os_includes/os_ctype.h"
+	  to get isdigit(), "ace/OS_Memory.h" to get ACE_NEW_RETURN, and
+	  "ace/OS_NS_string.h" to get ACE_OS::strcmp().
+
+	* ace/Configuration.cpp:
+	* ace/Configuration_Import_Export.cpp:
+	* ace/DLL_Manager.cpp:
+	* ace/Filecache.cpp:
+	* ace/Get_Opt.cpp:
+	* ace/Process.{cpp i}
+	* ace/SString.cpp:
+	* ace/UPIPE_Stream.cpp: Added #include "ace/OS_NS_string.h" to pick
+	  up ACE_OS string functions.
+
+	* ace/Based_Pointer_Repository.cpp:
+	* ace/Filecache.cpp:
+	* ace/Local_Name_Space_T.cpp:
+	* ace/Malloc_T.h:
+	* ace/Object_Manager.cpp:
+	* ace/Process_Manager.cpp:
+	* ace/Reactor.cpp:
+	* ace/Select_Reactor_T.cpp:
+	* ace/Signal.cpp:
+	* ace/Singleton.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Thread_Exit.cpp:
+	* ace/Thread_Manager.cpp:
+	* ace/Timer_Heap_T.cpp:
+	* ace/Timer_Queue_T.cpp:
+	* ace/UUID.cpp: Added #include "ace/Guard_T.h" to find ACE_Guard.
+
+	* ace/DEV_Addr.cpp:
+	* ace/FILE_Addr.cpp:
+	* ace/SPIPE_Addr.cpp: Added #include "ace/OS_NS_string.h" to get
+	  ACE_OS functions and "ace/os_include/sys/os_socket.h" to get
+	  AF_DEV, etc. defs.
+
+	* ace/Log_Msg.cpp: Added #include "ace/OS_NS_stdio.h" to pick up
+	  ACE_OS::snprintf() and "ace/Guard_T.h" to find ACE_Guard.
+	* ace/SString.h: Added #include "ace/streams.h" if
+	  !ACE_LACKS_IOSTREAM_TOTALLY to pick up the correct ostream type.
+
+	* ace/Process_Manager.h: Add #include "ace/Time_Value.h" to get the
+	  ACE_Time_Value class and member defs needed.
+
+	* ace/Sock_Connect.cpp: Added #include "ace/OS_NS_string.h",
+	  "ace/OS_NS_unistd.h" and "ace/OS_NS_stdlib.h" and "ace/OS_Memory.h"
+	  to get missing functions.
+
+	* ace/Thread_Adapter.cpp: Added #include "ace/Object_Manager_Base.h" to
+	  get ACE_OS_Object_Manager class.
+
+	* ace/Time_Request_Reply.cpp: Added #include
+	  "ace/os_include/netinet/os_in.h" to get htonl(), ntohl().
+
+	* ace/TP_Reactor.cpp: Added #include "ace/OS_NS_sys_time.h" to get
+	  ACE_OS::gettimeofday() and "ace/Log_Msg.h" to get logging macros.
+
+	* ace/TP_Reactor.h: Added #include "ace/Timer_Queue.h" so IBM Visual
+	  Age C++ can see the whole ACE_Timer_Queue type for template reasons.
+
+	* ace/Timer_Queue.h: Add #include of either
+	  ace/Recursive_Thread_Mutex.h or ace/Null_Mutex.h based on
+	  ACE_HAS_THREADS. IBM Visual Age C++ needs to see the complete
+	  type.
+
+	* ace/Parse_Node.cpp: Added #include "ace/ACE.h" to see ACE::debug().
+
+	* netsvcs/lib/TS_Clerk_Handler.h: Added #include "ace/Null_Mutex.h".
+
 Wed Nov  5 23:26:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-all.h:
@@ -2097,7 +2177,7 @@ Mon Oct 27 11:17:03 2003  Gautam Thaker  <gthaker@atl.lmco.com>
           Fixed a previously made change that was using sizes for tests as
           n**2 rather than 2**n!
 
-Fat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h: Fixed compile problem in this file
 
