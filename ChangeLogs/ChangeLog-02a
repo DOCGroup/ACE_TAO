@@ -1,3 +1,8 @@
+Tue Jun 25 15:13:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Basic_Types.h: Added ACE_WIN64 versions of
+          ACE_SSIZE_T_FORMAT_SPECIFIER and ACE_SIZE_T_FORMAT_SPECIFIER.
+
 Tue Jun 25 23:22:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/SOCK_Dgram_Mcast.cpp:

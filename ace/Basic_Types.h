@@ -505,11 +505,19 @@ typedef unsigned char ACE_Byte;
 #endif /* ACE_INT64_FORMAT_SPECIFIER */
 
 #if !defined (ACE_SSIZE_T_FORMAT_SPECIFIER)
-# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%d")
+# if defined (ACE_WIN64)
+#  define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
+# else
+#  define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%d")
+# endif /* ACE_WIN64 */
 #endif /* ACE_SSIZE_T_FORMAT_SPECIFIER */
 
 #if !defined (ACE_SIZE_T_FORMAT_SPECIFIER)
-# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%u")
+# if defined (ACE_WIN64)
+#  define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+# else
+#  define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%u")
+# endif /* ACE_WIN64 */
 #endif /* ACE_SIZE_T_FORMAT_SPECIFIER */
 
 // Cast from UINT64 to a double requires an intermediate cast to INT64
