@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Id_Assignment_Strategy.h"
+#include "IdAssignmentStrategy.h"
 
 ACE_RCSID (PortableServer,
            Id_Assignment_Strategy,

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Id_Uniqueness_Strategy.h"
+#include "IdUniquenessStrategy.h"
 #include "ServantRetentionStrategy.h"
 #include "POA.h"
 
