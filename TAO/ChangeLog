@@ -1,3 +1,25 @@
+Wed Sep 18 06:41:12 UTC 2002  Ossama Othman  <ossama@uci.edu>
+
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.bor:
+        * orbsvcs/tests/Notify/Basic/Makefile.bor:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/Blocking/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/Discarding/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.bor:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.bor:
+          Fixed for static build
+
 Tue Sep 17 16:57:19 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp

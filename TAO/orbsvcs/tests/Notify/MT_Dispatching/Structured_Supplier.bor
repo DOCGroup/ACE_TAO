@@ -22,7 +22,8 @@ CFLAGS = \
         $(TAO_PORTABLESERVER_CFLAGS) \
         $(TAO_ETCL_CFLAGS) \
         $(TAO_NOTIFY_CFLAGS) \
-        $(TAO_NOTIFYTESTS_CFLAGS)
+        $(TAO_NOTIFYTESTS_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS)
 
 CPPDIR = .
 
@@ -36,7 +37,8 @@ LIBFILES = \
         $(TAO_PORTABLESERVER_LIB) \
         $(TAO_ETCL_LIB) \
         $(TAO_NOTIFY_LIB) \
-        $(TAO_NOTIFYTESTS_LIB)
+        $(TAO_NOTIFYTESTS_LIB) \
+        $(TAO_MESSAGING_LIB)
 
 IDLFILES = \
         $(IDLDIR)\go.idl
