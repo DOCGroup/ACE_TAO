@@ -510,7 +510,6 @@ typedef int key_t;
 # include "pace/unistd.h"
 # include "pace/sys/utsname.h"
 # include "pace/sys/wait.h"
-# define ACE_HAS_POSIX_SEM
 #endif /* ACE_HAS_PACE */
 
 # if defined (ACE_PSOS)

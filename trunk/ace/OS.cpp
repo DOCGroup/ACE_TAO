@@ -965,7 +965,11 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
   int result = 0;
   va_list ap;
   va_start (ap, format);
+#  if defined (ACE_HAS_PACE)
+  ACE_OSCALL (::pace_vfprintf (fp, format, ap), int, -1, result);
+#  else
   ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
+#  endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
 # endif /* ACE_HAS_WINCE */
@@ -1001,7 +1005,11 @@ ACE_OS::printf (const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
+#if defined (ACE_HAS_PACE)
+  ACE_OSCALL (::pace_vprintf (format, ap), int, -1, result);
+#else
   ACE_OSCALL (::vprintf (format, ap), int, -1, result);
+#endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
 }
@@ -1014,7 +1022,11 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
+#if defined (ACE_HAS_PACE)
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::pace_vsprintf (buf, format, ap)), int, -1, result);
+#else
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsprintf (buf, format, ap)), int, -1, result);
+#endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
 }
