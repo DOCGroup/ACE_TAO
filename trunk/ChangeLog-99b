@@ -4,6 +4,14 @@ Wed Mar 10 08:52:59 1999  David L. Levine  <levine@cs.wustl.edu>
           exceptions=1 support.  Thanks to Wei Chang for
           reporting this.
 
+        * include/makeinclude/wrapper_macros.GNU: added exceptions=1
+          support for pre-2.8 g++.  It's not recommended, because pre-2.8
+          g++ doesn't support exceptions well.  It's provided for
+          completeness.
+
+        * include/makeinclude/platform_chorus.GNU: removed
+          exceptions=1 support, because now it's in wrapper_macros.GNU.
+
 Tue Mar 09 21:54:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * netsvcs/Makefile,netsvcs/clients/Makefile: updated
