@@ -1,3 +1,9 @@
+Tue Jun 22 19:27:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Performance/run_test.pl:
+	  Make the tests shorter because they were timing out on some
+	  platforms.
+
 Tue Jun 22 17:09:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Active_Object_Map.cpp
