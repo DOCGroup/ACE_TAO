@@ -160,7 +160,8 @@ sub is_error ()
 
     # Look for possible errors
     return 1 if (/error/i
-                 || /^Fatal\:/);
+                 || /^Fatal\:/
+		 || /: fatal:/);
 
     # didn't find anything
     return 0;

@@ -1,3 +1,45 @@
+Thu Nov  9 17:47:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+          Antoher missing Log_Msg.h
+
+        * examples/Threads/thread_specific.cpp:
+          Tru64 does not like the convertion from ACE_hthread_t to
+          unsigned long.  I'm trying with a reinterpret_cast, but I don't
+          have much hope for it.
+        
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+        * examples/Service_Configurator/Misc/Makefile:
+        * examples/Timer_Queue/Makefile:
+	* apps/Gateway/Gateway/Makefile:
+	* apps/Gateway/Peer/Makefile:
+          Avoid problems where the library is linked twice, once for the
+          required dependency in parallel builds an another for the LDLIBS
+          flag.
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+          Use a separate file to generate man pages.  We don't want to
+          document .cpp files or include code in man pages, but that looks
+          great in HTML documents.
+
+        * etc/tao.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtevent.doxygen:
+          Update the replacement path to some of the tag files, the
+          generated documents did not get the right cross references.
+
+	* bin/make_pretty.pl:
+	  Add yet another linker error.
+
+	* bin/generate_doxygen.pl:
+	  Parse the man page generation code to create its output path too.
+
 Thu Nov  9 15:10:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/make_pretty.pl:
