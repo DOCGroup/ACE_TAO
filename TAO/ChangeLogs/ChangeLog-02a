@@ -1,3 +1,9 @@
+Wed Sep 13 11:13:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/default_resource.cpp (get_parser_names): 
+	  Assigned the CORBALOC and CORBANAME parsers to the list of
+	  parsers without any condition.
+
 Wed Sep 13 10:43:32 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/default_resource.cpp (get_parser_names): 
