@@ -14,9 +14,10 @@
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Supplier, 
+ACE_RCSID (EC_Throughput,
+           ECT_Supplier,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -5,10 +5,11 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 
+#include "ace/OS_NS_unistd.h"
+
 ACE_RCSID (ImplRepo_Service,
            Server_Repository,
            "$Id$")
-
 
 int
 Server_Repository::init (void)
@@ -68,7 +69,7 @@ Server_Repository::init (void)
           // way to store env vars.
 
           if (error != 0)
-            {              
+            {
               ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Error reading configuration data for ")
                 ACE_TEXT ("service '%s',skipping\n"),
@@ -156,8 +157,8 @@ Server_Repository::add (
       ACE_CString filename = OPTIONS::instance ()->file_name ();
 
       FILE *fp = ACE_OS::fopen (filename.c_str(), "r");
-      
-      if (fp != 0) 
+
+      if (fp != 0)
         {
           ACE_TCHAR buffer[4096];
           while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
@@ -472,7 +473,7 @@ Server_Repository::starting_up (const ACE_CString& POA_name)
       ACE_ASSERT(fp != 0);
 
       ACE_TCHAR buffer[4096];
-      
+
       while (ACE_OS::fgets (buffer, sizeof (buffer), fp))
         {
           ACE_TCHAR* found = ACE_OS::strstr (buffer, POA_name.c_str ());

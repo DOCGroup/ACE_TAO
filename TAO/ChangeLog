@@ -1,3 +1,70 @@
+Mon Jun 14 09:27:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/PSS/PSDL_Datastore.cpp:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/Concurrency/CC_command.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Random.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * orbsvcs/tests/Event/Basic/Control.cpp:
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+        * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+        * orbsvcs/tests/Notify/Basic/Sequence.cpp:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * orbsvcs/tests/RTCosScheduling/Object1_i.cpp:
+        * orbsvcs/tests/RTCosScheduling/client.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+          Added needed includes
+
 Mon Jun 14 07:04:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Notifier_Input_Handler.cpp:

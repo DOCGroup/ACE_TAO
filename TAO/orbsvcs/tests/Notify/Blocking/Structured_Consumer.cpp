@@ -5,6 +5,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"

@@ -16,13 +16,14 @@
 #include "ace/Sched_Params.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (EC_Mcast, 
-           EC_Mcast, 
+ACE_RCSID (EC_Mcast,
+           EC_Mcast,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

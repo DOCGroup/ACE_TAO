@@ -4,6 +4,7 @@
 #include "PSDL_OctetSeq.h"
 #include "PSDL_String.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "tao/debug.h"
 #include "tao/OctetSeqC.h"
@@ -158,7 +159,7 @@ TAO_PSDL_Datastore::create_index (void)
 #endif /* ACE_LACKS_ACCESS */
 
   void *name_obj_map = 0;
-  
+
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
   if (this->allocator_->find (TAO_PERSISTENT_NAME_OBJ_MAP, name_obj_map) == 0)

@@ -16,6 +16,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined(EC_DISABLE_OLD_EC)
 #include "EC_Scheduler_Info.h"

@@ -17,6 +17,7 @@
 #include "tao/debug.h"
 #include "tao/Version.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

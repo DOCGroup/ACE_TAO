@@ -13,6 +13,7 @@
 #include "orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_Examples,
            MCast,

@@ -16,6 +16,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_Custom_Marshal,
            ECM_Consumer,
