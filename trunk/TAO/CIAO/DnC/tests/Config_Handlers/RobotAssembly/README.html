@@ -20,12 +20,12 @@ implementation.
       http://www.dre.vanderbilt.edu/cidlc/binary/
     </A>
 
-    Copy the file into the <code> $CIAO_ROOT/bin </code> directory.
+    Copy the file into the <code> ACE_wrappers/TAO/CIAO/bin </code> directory.
   </LI>
 
   <LI>
     Generate the make/project files for the DnC directory by using <code>
-    $ACE_ROOT/bin/mwc.pl </code> script:
+    ACE_wrappers/bin/mwc.pl </code> script:
     <UL>
       <LI> <em> linux: </em> <code> [in $CIAO_ROOT/DnC] mwc.pl </code> </LI>
       <LI> <em> windows: </em> <code> [in %CIAO_ROOT%/DnC] mwc.pl </code> </LI>
@@ -68,27 +68,25 @@ implementation.
   
   <LI> Start the execution manager:
     <code>
-      [Your ACE_wrapper directory]/TAO/CIAO/DnC/ExecutionManager/Execution_Manager
+      ACE_wrappers/TAO/CIAO/DnC/ExecutionManager/Execution_Manager
         -o EM.ior
         -i deployment.dat
     </code>
   </LI>
 
   <LI> Start the executor:
+       Note: You should give the correct path of your ACE_wrappers directory.
+       <BR/>
     <code>
-     $CIAO_ROOT/DnC/RepositoryManager/executor
-       -p file://[Your ACE_wrapper directory]/TAO/CIAO/DnC/tests/Config_Handlers/RobotAssembly/package.tpd
+     ACE_wrappers/TAO/CAIO/DnC/RepositoryManager/executor
+       -p file://ACE_wrappers/TAO/CIAO/DnC/tests/Config_Handlers/RobotAssembly/package.tpd
        -d
-file://[Your ACE_wrapper directory]/TAO/CIAO/DnC/tests/Config_Handlers/RobotAssembly/DeploymentPlan.cdp
+file://ACE_wrappers/TAO/CIAO/DnC/tests/Config_Handlers/RobotAssembly/DeploymentPlan.cdp
        -k file://EM.ior
     </code>
 
   <BR/>
 
-  <I>
-    You can download the files and change the parameters of the executor
-    accordingly.
-  </I>
   </LI>
 </UL>
 
