@@ -63,7 +63,8 @@ DIRS  = CDR \
 	Hello \
 	MT_Timeout \
 	Crash_On_Write \
-	Reliable_Oneways
+	Reliable_Oneways \
+	Blocking_Sync_None
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
