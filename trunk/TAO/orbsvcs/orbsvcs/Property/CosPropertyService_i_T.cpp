@@ -406,9 +406,9 @@ TAO_PropertySet<IF>::get_number_of_properties (CORBA::Environment &TAO_IN_ENV)
 template <class IF>
 void
 TAO_PropertySet<IF>::get_all_property_names (CORBA::ULong how_many,
-                                         CosPropertyService::PropertyNames_out property_names,
-                                         CosPropertyService::PropertyNamesIterator_out rest,
-                                         CORBA::Environment &TAO_IN_ENV)
+                                             CosPropertyService::PropertyNames_out property_names,
+                                             CosPropertyService::PropertyNamesIterator_out rest,
+                                             CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "get_all_property_names\n"));
 

@@ -92,6 +92,9 @@ public:
   // Property Mode.
 };
 
+// forward declarations.
+class TAO_PropertyNamesIterator;
+class TAO_PropertiesIterator;
 
 // Include templates here.
 #include "CosPropertyService_i_T.h"
