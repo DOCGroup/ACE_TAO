@@ -59,5 +59,21 @@
 #include <malloc.h>
 #define ACE_HAS_ALLOCA 1
 
+#define ACE_LACKS_INTTYPES_H
+#define ACE_LACKS_NETINET_IN_H
+#define ACE_LACKS_STDINT_H
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_SYS_IOCTL_H
+#define ACE_LACKS_SYS_IPC_H
+#define ACE_LACKS_SYS_MMAN_H
+#define ACE_LACKS_SYS_RESOURCE_H
+#define ACE_LACKS_SYS_SELECT_H
+#define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_SYS_SOCKET_H
+#define ACE_LACKS_SYS_TIME_H
+#define ACE_LACKS_SYS_UIO_H
+#define ACE_LACKS_SYS_WAIT_H
+#define ACE_LACKS_UCONTEXT_H
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_H */

@@ -223,6 +223,12 @@
 #   define ACE_DEFAULT_SHM_KEY 1234
 # endif /* ACE_DEFAULT_SHM_KEY */
 
+// Default address for shared memory mapped files and SYSV shared memory
+// (defaults to 64 M).
+# if !defined (ACE_DEFAULT_BASE_ADDR)
+#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
+# endif /* ACE_DEFAULT_BASE_ADDR */
+
 // Default segment size used by SYSV shared memory (128 K)
 # if !defined (ACE_DEFAULT_SEGMENT_SIZE)
 #   define ACE_DEFAULT_SEGMENT_SIZE 1024 * 128

@@ -27,6 +27,10 @@
 #include "ace/os_include/inttypes.h"
 #include "ace/os_include/sys/socket.h"
 
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#  include /**/ <ws2tcpip.h>
+#endif /* ACE_HAS_WINSOCK2 */
+
 #if !defined (ACE_LACKS_NETINET_IN_H)
 # include /**/ <netinet/in.h>
 #endif /* !ACE_LACKS_NETINET_IN_H */

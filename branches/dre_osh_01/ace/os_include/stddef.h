@@ -90,5 +90,10 @@ typedef ACE_WCHAR_T_TYPE wchar_t;
 typedef ACE_SIZE_T_TYPE size_t;
 #endif /* ACE_LACKS_SIZE_T */
 
+#if defined (ACE_PSOS_DIAB_MIPS)
+#undef size_t
+typedef unsigned int size_t;
+#endif
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDDEF_H */

@@ -30,5 +30,30 @@
 # include /**/ <sys/mman.h>
 #endif /* !ACE_LACKS_SYS_MMAN_H */
 
+#if defined (ACE_WIN32)
+// These two may be used for internal flags soon:
+#   define MAP_PRIVATE 1
+#   define MAP_SHARED  2
+#   define MAP_FIXED   4
+
+// MMAP flags
+#   define PROT_READ PAGE_READONLY
+#   define PROT_WRITE PAGE_READWRITE
+#   define PROT_RDWR PAGE_READWRITE
+/* If we can find suitable use for these flags, here they are:
+PAGE_WRITECOPY
+PAGE_EXECUTE
+PAGE_EXECUTE_READ
+PAGE_EXECUTE_READWRITE
+PAGE_EXECUTE_WRITECOPY
+PAGE_GUARD
+PAGE_NOACCESS
+PAGE_NOCACHE  */
+#endif /* ACE_WIN32 */
+
+#if !defined (PROT_RDWR)
+#  define PROT_RDWR (PROT_READ|PROT_WRITE)
+#endif /* PROT_RDWR */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_MMAN_H */

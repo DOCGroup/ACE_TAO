@@ -20,6 +20,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Default size of the ACE Reactor.
+#if defined (FD_SETSIZE)
+   int const ACE_FD_SETSIZE = FD_SETSIZE;
+#else
+#  define ACE_FD_SETSIZE FD_SETSIZE
+#endif /* ACE_FD_SETSIZE */
+
+#if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
+#  define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
+#endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
+
 /**
  * @class ACE_Handle_Set
  *
