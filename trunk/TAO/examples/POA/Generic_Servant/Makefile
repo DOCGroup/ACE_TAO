@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -15,13 +15,13 @@ endif # ! TAO_ROOT
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDLFLAGS += -Wb,export_macro=GENERIC_SERVANT_Export \
-			 -Wb,export_include=generic_servant_export.h
+                         -Wb,export_include=generic_servant_export.h
 
 LDLIBS = -lTAO
 
-SHLIB = libMyFoo.$(SOEXT) 
+SHLIB = libMyFoo.$(SOEXT)
 
-IDL_SRC	= FooC FooS
+IDL_SRC = FooC FooS
 
 BINFILES = $(IDL_SRC) client
 
@@ -43,7 +43,7 @@ LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -57,16 +57,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 
-.PRECIOUS: FooC.h FooC.i FooC.cpp FooS.h FooS.i FooS.cpp 
-
-#$(IDL_SRC): cubit.idl
-#	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
+.PRECIOUS: FooC.h FooC.i FooC.cpp FooS.h FooS.i FooS.cpp
 
 client: $(POA_CLT_OBJS)
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-#clean:
-#	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf FooC.* FooS.* FooS_T.*
