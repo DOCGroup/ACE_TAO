@@ -166,16 +166,7 @@ public:
    */
   //@{
 
-  // Versions of GNU G++ less than version 3.0 defined a pre-C99
-  // bool type that was an enumeration.  In some cases the enumeration
-  // could be promoted to an int, causing a potential problem where a
-  // 4 byte integer (for example) could be selected when attempting to
-  // send a boolean over a CDR stream.
-#if defined (__GNUC__) && __GNUC__ < 3
   typedef unsigned char Boolean;
-#else
-  typedef bool Boolean;
-#endif  /* bool || __GNUC__ < 3 */
   typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;

@@ -1,3 +1,13 @@
+Fri Aug 13 18:43:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h (ACE_CDR): 
+
+	  Reverted the usage of C++ bool as a typedef of
+	  ACE_CDR::Boolean. We will now use unsigned char on all
+	  platforms. MacOSX (Panther) atleast makes the size of bool to be
+	  4 bytes which creates problems for TAO. Thanks to Rich Shapiro
+	  <rshapiro at bbn dot com> for reporting the problem.
+
 Fri Aug 13 18:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IOStream_T.h:
