@@ -3,8 +3,8 @@
 #include "dll.h"
 #include <iostream>
 
-int 
-main (int, char *[])
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int failure_count = 0;
   test_class my_test_class;
@@ -24,7 +24,7 @@ main (int, char *[])
 
   // Test out the export of a function.  Like above,
   // I don't know how this can fail at runtime.
-  
+
   std::cout << "Function Test: ";
   if (test_function () != RETVAL)
     {
