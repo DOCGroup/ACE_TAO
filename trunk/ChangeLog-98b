@@ -1,3 +1,7 @@
+Fri Nov  6 23:08:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Env_Value_Test.cpp: Reformatted the test a bit.
+
 Fri Nov 06 22:41:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Process.cpp (spawn): initialized local "result" to 0

@@ -1,4 +1,3 @@
-
 Fri Nov  6 19:11:39 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Notifier_i.cpp:
@@ -17,7 +16,6 @@ Fri Nov 06 10:59:43 1998  David L. Levine  <levine@cs.wustl.edu>
         * VERSION: added reference to BUG-REPORT-FORM.  Thanks to
           Peter Nordlund <petern@nada.kth.se> for provided the new
           text.
-
 
 Thu Nov  5 23:46:42 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
@@ -52,7 +50,6 @@ Wed Nov  4 15:31:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/tests/ImplRepo/*: Updated the test to check DSI and
           the Ping Object, and also added a test for just the Repository
           class in ImplRepo_Service.
-
 
 Tue Nov  3 21:02:30 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
