@@ -1,4 +1,8 @@
-Wed Sep 13 23:13:47 2000  Marina Spivak  <marina@cs.wustl.edu>
+Wed Sep 13 23:36:58 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp:
+	
+	  Updated.
 
 	* tao/uiop_endpoints.h
 	* tao/iiop_endpoints.h:
