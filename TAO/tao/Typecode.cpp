@@ -49,9 +49,9 @@ int
 CORBA_TypeCode::Bounds::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-			  "IDL:omg.orb/CORBA/TypeCode/Bounds:1.0") ==
-	   0)
-	  || CORBA_UserException::_is_a (interface_id));
+                          "IDL:omg.orb/CORBA/TypeCode/Bounds:1.0") ==
+           0)
+          || CORBA_UserException::_is_a (interface_id));
 }
 
 CORBA_TypeCode::BadKind::BadKind (void)
@@ -77,9 +77,9 @@ int
 CORBA_TypeCode::BadKind::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-			  "IDL:omg.orb/CORBA/TypeCode/BadKind:1.0") ==
-	   0)
-	  || CORBA_UserException::_is_a (interface_id));
+                          "IDL:omg.orb/CORBA/TypeCode/BadKind:1.0") ==
+           0)
+          || CORBA_UserException::_is_a (interface_id));
 }
 
 // decreases the refcount and deletes when refcount reaches 0
@@ -295,7 +295,7 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 // Returns true if the two unaliased typecodes are equal.
 CORBA::Boolean
 CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
-			    CORBA::Environment &ACE_TRY_ENV) const
+                            CORBA::Environment &ACE_TRY_ENV) const
 {
   CORBA::TypeCode_var rcvr = CORBA::TypeCode::_duplicate (ACE_const_cast(CORBA_TypeCode *, this));
   CORBA::Boolean status = 0;
@@ -320,9 +320,9 @@ CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
 
   status = (tc->kind (ACE_TRY_ENV) == CORBA::tk_alias);
   ACE_CHECK_RETURN (0);
-  
+
   // Added by Bala to check for leaks as content_type duplicates the
-  // pointers 
+  // pointers
   CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (tc);
 
   while (status)
@@ -352,17 +352,16 @@ CORBA_TypeCode::member_type (CORBA::ULong slot,
       && this->private_state_->tc_member_type_list_known_)
     {
       if (slot < this->private_state_->tc_member_count_)
-        typecode = CORBA::TypeCode::_duplicate (
-                                                this->private_state_->tc_member_type_list_[slot]);
+        typecode = CORBA::TypeCode::_duplicate (this->private_state_->tc_member_type_list_[slot]);
       else
         ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
     }
   else
     {
-      typecode = CORBA::TypeCode::_duplicate (this->private_member_type (slot, 
-                                                                         ACE_TRY_ENV)); 
+      typecode = CORBA::TypeCode::_duplicate (this->private_member_type (slot,
+                                                                         ACE_TRY_ENV));
     }
-    
+
     return typecode;
 }
 
@@ -578,13 +577,13 @@ TC_Private_State::~TC_Private_State (void)
               for (CORBA::ULong i = 0;
                    i < this->tc_member_count_;
                    i++)
-	              {
-		              CORBA::string_free (this->tc_member_name_list_ [i]);
-		              this->tc_member_name_list_ [i] = 0;
-	              }
+                      {
+                              CORBA::string_free (this->tc_member_name_list_ [i]);
+                              this->tc_member_name_list_ [i] = 0;
+                      }
 
               delete [] this->tc_member_name_list_;
-	            this->tc_member_name_list_ = 0;
+                    this->tc_member_name_list_ = 0;
             }
           break;
 
@@ -597,13 +596,13 @@ TC_Private_State::~TC_Private_State (void)
               for (CORBA::ULong i = 0;
                    i < this->tc_member_count_;
                    i++)
-	              {
-		              CORBA::string_free (this->tc_member_name_list_ [i]);
-		              this->tc_member_name_list_ [i] = 0;
-	              }
+                      {
+                              CORBA::string_free (this->tc_member_name_list_ [i]);
+                              this->tc_member_name_list_ [i] = 0;
+                      }
 
               delete [] this->tc_member_name_list_;
-	            this->tc_member_name_list_ = 0;
+                    this->tc_member_name_list_ = 0;
             }
 
           // free up member type list
@@ -612,13 +611,13 @@ TC_Private_State::~TC_Private_State (void)
               for (CORBA::ULong i = 0;
                    i < this->tc_member_count_;
                    i++)
-	              {
-		              CORBA::release (this->tc_member_type_list_[i]);
-	              }
+                      {
+                              CORBA::release (this->tc_member_type_list_[i]);
+                      }
 
               // Now free up the array.
               delete [] this->tc_member_type_list_;
-	            this->tc_member_type_list_ = 0;
+                    this->tc_member_type_list_ = 0;
             }
           this->tc_member_count_ = 0;
         }
@@ -631,10 +630,10 @@ TC_Private_State::~TC_Private_State (void)
         // is not acquired from the pool of constant or predefined
         // typecodes.
         if (this->tc_content_type_known_ && this->tc_content_type_ != 0)
-	        {
-	          CORBA::release (this->tc_content_type_);
-	          this->tc_content_type_ = 0;
-	        }
+                {
+                  CORBA::release (this->tc_content_type_);
+                  this->tc_content_type_ = 0;
+                }
         break;
 
       case CORBA::tk_union:
@@ -645,10 +644,10 @@ TC_Private_State::~TC_Private_State (void)
               for (CORBA::ULong i = 0;
                    i < this->tc_member_count_;
                    i++)
-	              {
-		              CORBA::string_free (this->tc_member_name_list_ [i]);
-		              this->tc_member_name_list_ [i] = 0;
-	              }
+                      {
+                              CORBA::string_free (this->tc_member_name_list_ [i]);
+                              this->tc_member_name_list_ [i] = 0;
+                      }
 
               delete [] this->tc_member_name_list_;
             }
@@ -659,13 +658,13 @@ TC_Private_State::~TC_Private_State (void)
               for (CORBA::ULong i = 0;
                    i < this->tc_member_count_;
                    i++)
-	              {
+                      {
                   CORBA::release (this->tc_member_type_list_[i]);
-	              }
+                      }
 
               // Now free up the array.
               delete [] this->tc_member_type_list_;
-	            this->tc_member_type_list_ = 0;
+                    this->tc_member_type_list_ = 0;
             }
           if (this->tc_member_label_list_known_)
             {
@@ -676,14 +675,14 @@ TC_Private_State::~TC_Private_State (void)
                 delete this->tc_member_label_list_[i];
 
               delete [] this->tc_member_label_list_;
-	            this->tc_member_label_list_ = 0;
+                    this->tc_member_label_list_ = 0;
             }
           this->tc_member_count_ = 0;
 
           // Discriminator must come last b/c it will be inside the Any
           // in each element of the label list.
           CORBA::release (this->tc_discriminator_type_);
-	        this->tc_discriminator_type_ = 0;
+                this->tc_discriminator_type_ = 0;
         }
         break;
 
@@ -1669,9 +1668,9 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
               {
                 // the ith entry will have the name of the ith member
                 CORBA::TypeCode::traverse_status status =
-                  stream.decode (tc.in (), 
-                                 &scratch, 
-                                 this,  
+                  stream.decode (tc.in (),
+                                 &scratch,
+                                 this,
                                  ACE_TRY_ENV); // member label
                 ACE_CHECK_RETURN (0);
 
