@@ -472,6 +472,81 @@ DRV_check_for_include (const char* buf)
   idl_global->add_to_included_idl_files (file_name);
 }
 
+// Preprocessing over. Let us make sure all the included_idl_files 
+// are valid. Let us get rid of the ones that are ignored by the pre
+// processor.
+void
+DRV_validate_included_idl_files (void)
+{
+  for (size_t newj = 0, j = 0;
+       j < idl_global->n_included_idl_files ();
+       j++)
+    {
+      // Get the base part.
+      char *base_part = ACE_OS::strrchr (idl_global->included_idl_files ()[j],
+                                         '/'); 
+      
+      // If no / then take the whole name.
+      if (base_part == 0)
+        base_part = idl_global->included_idl_files ()[j];
+      
+      // Base part.
+      ACE_DEBUG ((LM_DEBUG, "base part %s\n", base_part));
+      
+      ACE_DEBUG ((LM_DEBUG, "n_include_file_names = %d\n",
+                  idl_global->n_include_file_names ()));
+      
+      // Check this name with the names list that we got from the
+      // preprocessor.
+      size_t valid_file = 0;
+      for (size_t ni = 0;
+           ni < idl_global->n_include_file_names ();
+           ni++) 
+        {
+          char *file_name = idl_global->include_file_names ()[ni]->get_string ();
+          
+          ACE_DEBUG ((LM_DEBUG, "filename  %s\n", file_name));
+
+          if (ACE_OS::strstr (file_name, base_part) == 0)
+            {
+              // This file name is valid.
+              valid_file = 1;
+              break;
+            }
+        }
+      
+      // Remove the file, if it is not valid. 
+      if (valid_file == 0)
+        {
+          delete idl_global->included_idl_files ()[j];
+          idl_global->included_idl_files ()[j] = 0;
+        }
+      else
+        {
+          // File is valid.
+          
+          // Move it to new index if necessary.
+          if (j != newj)
+            {
+              // Move to the new index position.
+              idl_global->included_idl_files ()[newj] =
+                idl_global->included_idl_files ()[j];
+              
+              // Make old position 0.
+              idl_global->included_idl_files ()[j] = 0;
+            }
+          
+          // Increment the new index.
+          newj++;
+        }
+    }
+  
+  // Now adjust the count on the included_idl_files.
+  idl_global->n_included_idl_files (newj);
+  
+  ACE_DEBUG ((LM_DEBUG, "newj=%d\n", newj));
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Env_Value<char*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
