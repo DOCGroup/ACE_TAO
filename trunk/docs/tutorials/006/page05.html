@@ -16,15 +16,15 @@
 <P>
 <HR WIDTH="100%">
 
-<P><A HREF="client_handler.cpp">client_handler.cpp</A> exposes all the
-things I've been hinting at.&nbsp; Pay special attention to the decision
-made in open()&nbsp;as well as the bit of cleverness in svc().
+<P><A HREF="client_handler.cpp">client_handler.cpp</A>
+exposes all the things I've been hinting at.&nbsp; Pay special attention
+to the decision made in open() as well as the bit of cleverness in svc().
 
 <P>
 <HR WIDTH="100%">
 
 <P><FONT FACE="Arial,Helvetica">// $Id: client_handler.cpp,v 1.1 1998/08/30
-13:38:27 jcej Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
+23:47:13 schmidt Exp $</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In client_handler.h I alluded
@@ -271,6 +271,32 @@ zero on success.</FONT>
 <BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As mentioned in the header,
+the typical way to close an object in a threaded</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; context is to invoke it's
+close() method.&nbsp; Since we already have a handle_close()</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; method built to cleanup after
+us, we'll just forward the request on to that</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; object.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::close(u_long flags)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+this->handle_close(ACE_INVALID_HANDLE,0);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+After we've taken care of ourselves, call the baseclass method</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+to do any other necessary cleanup.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return inherited::close();</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In the open() method, we
 registered with the reactor and requested to be</FONT>
 <BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; notified when there is data
@@ -465,11 +491,12 @@ nasty topic.&nbsp; Still, for the simple case, this is all you have to
 do.
 
 <P>The next page is the last for this tutorial.&nbsp; Head on over there
-&amp;&nbsp;we'll round up the file list one last time.
+&amp; we'll round up the file list one last time.
 
 <P>
 <HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page06.html">Continue
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page06.html">Continue
 This Tutorial</A>]</CENTER>
 
 </BODY>
