@@ -12,8 +12,8 @@ OBJFILES = \
         $(OBJDIR)\ORT_testS.obj \
         $(OBJDIR)\ORT_testC.obj \
         $(OBJDIR)\ORT_test_i.obj \
-        $(OBJDIR)\ORT_test_IORInterceptor.obj \
         $(OBJDIR)\ObjectReferenceFactoryC.obj \
+        $(OBJDIR)\ORT_test_IORInterceptor.obj \
         $(OBJDIR)\ObjectReferenceFactory.obj \
         $(OBJDIR)\ServerRequestInterceptor.obj \
         $(OBJDIR)\ServerORBInitializer.obj \
@@ -47,4 +47,4 @@ $(IDLDIR)\ORT_testS.cpp $(IDLDIR)\ORT_testC.cpp: $(IDLDIR)\ORT_test.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\ObjectReferenceFactoryC.cpp: $(IDLDIR)\ObjectReferenceFactory.idl
-	$(TAO_IDL) -Gv -DCORBA3 $**
+        $(TAO_IDL) -Gv -DCORBA3 -I..\.. $**

@@ -1,3 +1,8 @@
+Sat Oct 26 14:44:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ORT/server.bor:
+          Fixed this BCB makefile.
+
 Sat Oct 26 14:03:59 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/pluggable_av_log:
