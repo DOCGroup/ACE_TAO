@@ -18,11 +18,10 @@ Thu Apr 29 13:48:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/OS_NS_unistd.inl (read):
 
 	  Do not set errno to EWOULDBLOCK when errno is set to EAGAIN and
-	  both EGAIN equals EWOULDBLOCK.  This saves us two (equality
-	  check and assignment) TSS accesses for the _REENTRANT case on
-	  platforms where EGAIN and EWOULDBLOCK are the same
-	  (e.g. Linux).  Performance improvements should be evident those
-	  platforms.
+	  EGAIN equals EWOULDBLOCK.  This saves us two (equality check and
+	  assignment) TSS accesses for the _REENTRANT case on platforms
+	  where EGAIN and EWOULDBLOCK are the same (e.g. Linux).
+	  Performance improvements should be evident those platforms.
 
 	* ace/OS_NS_sys_uio.cpp (writev_emulation):
 
