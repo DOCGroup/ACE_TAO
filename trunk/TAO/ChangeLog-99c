@@ -1,3 +1,10 @@
+Mon Apr  5 16:26:32 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
+	  Fixed the handle_input () that handles the multicast to 
+	  work for both Naming and Trading Service. Thanks to 
+          James CE Johnson <jcej@tragus.org> for reporting this.
+
 Mon Apr 05 09:59:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile,docs/configurations.html: removed enabling of

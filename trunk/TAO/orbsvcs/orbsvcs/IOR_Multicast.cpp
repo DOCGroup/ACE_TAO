@@ -134,13 +134,14 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   
   ACE_CString ior(this->ior_);
   
-  if (ACE_OS::strcmp (service_name.in (), "NameService") != 0)
+  if ((ACE_OS::strcmp (service_name.in (), "NameService") != 0) &&
+      (ACE_OS::strcmp (service_name.in (), "TradingService") != 0))
     {
-      // The client has requested an IOR other than for the Name
+      // The client has requested an IOR other than for the Name/Trading
       // Service.  Lookup the table for the IOR. The call to find_ior
       // will fill the ior for us if the service name is found in the
       // table.
-
+      
       ACE_CString service (service_name.in ());
       
       if (this->ior_lookup_table_.find_ior (service, ior) != 0)
@@ -148,7 +149,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 			   "IOR_Multicast::find failed.\n"),
 			  0);
     }
-  
+
   ACE_SOCK_Connector connector;
   ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
 			   remote_addr.get_host_name ());
