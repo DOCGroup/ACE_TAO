@@ -108,6 +108,19 @@ public:
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
   // Recv <n> bytes via Win32 ReadFile using overlapped I/O.
 
+  ssize_t sendv (const iovec iov[],
+                 size_t n) const;
+  // Send an <iovec> of size <n> to the stream.
+
+  ssize_t sendv_n (const iovec iov[],
+                   size_t n) const;
+  // Send an <iovec> of size <n> to the stream.  Will block until all
+  // bytes are sent or an error occurs.
+
+  ssize_t recvv_n (iovec iov[],
+                   size_t n) const;
+  // Receive an <iovec> of size <n> to the stream.
+
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;
 

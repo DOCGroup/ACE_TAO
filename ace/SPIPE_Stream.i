@@ -155,6 +155,44 @@ ACE_SPIPE_Stream::recv (void *buf, size_t n,
                         ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv");
-  return ACE_OS::read (this->get_handle (), (char *) buf, n,
+  return ACE_OS::read (this->get_handle (),
+                       (char *) buf, n,
                        overlapped);
 }
+
+ASYS_INLINE ssize_t
+ACE_SPIPE_Stream::sendv_n (const iovec iov[],
+                           size_t n) const
+{
+  ACE_TRACE ("ACE_SPIPE_Stream::sendv_n");
+  return ACE::writev_n (this->get_handle (),
+                        iov,
+                        n);
+}
+
+// Recv an n byte message from the Stream.
+
+ASYS_INLINE ssize_t
+ACE_SPIPE_Stream::recvv_n (iovec iov[],
+                           size_t n) const
+{
+  ACE_TRACE ("ACE_SPIPE_Stream::recvv_n");
+  // @@ Carlos, can you please update this to call the
+  // new ACE::recvv_n() method that you write?
+  return ACE_OS::readv (this->get_handle (),
+                        iov,
+                        n);
+}
+
+// Send an <iovec> of size <n> to the Stream.
+
+ASYS_INLINE ssize_t
+ACE_SPIPE_Stream::sendv (const iovec iov[],
+                         size_t n) const
+{
+  ACE_TRACE ("ACE_SPIPE_Stream::sendv");
+  return ACE_OS::writev (this->get_handle (),
+                         iov,
+                         n);
+}
+
