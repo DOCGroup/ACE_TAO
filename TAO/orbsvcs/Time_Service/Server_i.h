@@ -50,7 +50,7 @@ public:
 
   int init_naming_service (int argc,
                            char* argv[]
-                           ACE_ENV_SINGLE_ARG_DECL);
+                           ACE_ENV_ARG_DECL);
   // Initialises the name server.
 
   int create_server (void);

@@ -196,7 +196,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
-                               this->ior_file_name_),
+                               this->ior_file_name_.c_str()),
                               1);
           ACE_OS::fprintf (output_file, "%s", str.in ());
           ACE_OS::fclose (output_file);

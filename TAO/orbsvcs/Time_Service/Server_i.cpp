@@ -67,7 +67,7 @@ Server_i::parse_args (int argc,
 int
 Server_i::init_naming_service (int argc,
                                char* argv[]
-                               ACE_ENV_SINGLE_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
