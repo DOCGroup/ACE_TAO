@@ -1,11 +1,9 @@
 /**
- * @file poa_destroyer.h
+ * @file POA_Destroyer.h
  *
  * $Id$
  *
- * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 #ifndef CS_POA_DESTROYER_H
 #define CS_POA_DESTROYER_H

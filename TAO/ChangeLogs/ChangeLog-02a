@@ -1,3 +1,8 @@
+Fri Jan 11 07:50:41 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Colocated_Latency/POA_Destroyer.h:
+	  Fixed some Fuzz warnings.
+
 Fri Jan 11 09:53:41 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/Makefile:
@@ -46,7 +51,7 @@ Thu Jan 10 12:48:02 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Thu Jan 10 12:13:28 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tests/Two_Objects/Two_Objects.idl: 
+	* tests/Two_Objects/Two_Objects.idl:
 	* tests/Two_Objects/server.cpp:
 	* tests/Two_Objects/client.cpp:
 	* tests/Two_Objects/worker.h:
@@ -68,8 +73,8 @@ Thu Jan 10 12:13:28 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* tests/Two_Objects/README:
 
 	Created a new test for bug fix 575. This is a test to show
-	that there can be concurrent upcalls to two objects in the 
-	same POA on the same connection. 
+	that there can be concurrent upcalls to two objects in the
+	same POA on the same connection.
 
 Thu Jan 10 11:53:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -77,7 +82,7 @@ Thu Jan 10 11:53:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOPC.h:
 	* tao/GIOPC.cpp:
 	* tao/GIOPC.i (Version_var): Added GIOP::Version_var to the
-	  generated code.  
+	  generated code.
 
 	* tao/diffs/GIOPC.cpp.diff:
 	* tao/diffs/GIOPC.h.diff:
@@ -158,7 +163,7 @@ Tue Jan  8 14:52:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_typedef/cdr_op_ci.cpp:
 
           Changed the logic for generating CDR operators for
-          named arrays of anonymous sequences. Some recent 
+          named arrays of anonymous sequences. Some recent
           change broke this, and it was showing up in IDL_Test.
           Also made cosmetic changes.
 
@@ -168,7 +173,7 @@ Tue Jan  8 14:52:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
           Added line breaks to strings of output stream operators,
           to avoid side effects when a method call is in the string.
           Also made cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
         * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
 
@@ -195,17 +200,17 @@ Sun Jan  6 13:18:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sun Jan  6 09:45:24 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Advanced/ch_8_and_10/client.cpp (main): 
+	* examples/Advanced/ch_8_and_10/client.cpp (main):
 	  Added some casts to make certain C++ compilers happy.
 	  Thanks to Roy Sharon <roysharon@hotmail.com> for
 	  reporting this.
 
 Sat Jan  5 21:31:43 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
-	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp: 
-	  Added code to generate the Client side abstract RH class and the 
-	  skeleton RH class. For the above two interfaces, there should be 
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Added code to generate the Client side abstract RH class and the
+	  skeleton RH class. For the above two interfaces, there should be
 	  no classes generated on teh 'other side' i.e. for the client RH
 	  interface node, there should be no class generatd in the skeleton
 	  files.  Currently there are a few problems with this and with the
@@ -213,37 +218,37 @@ Sat Jan  5 21:31:43 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 Sat Jan  5 18:27:59 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h: 
-	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp: 
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
 	  Added code to generate the skeleton-source code for AMH-skelton
-	  operation.  The amh-method differs from the original method in 
+	  operation.  The amh-method differs from the original method in
 	  the following ways:
 	  - Return type is always void
 	  - IN and INOUT parameters _only_ are de-marshalled
-	  One part left to be done is the creation and instantiation of 
+	  One part left to be done is the creation and instantiation of
 	  the RH inside the generated method body.
 
-	
+
 Sat Jan  5 18:15:34 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
 	  Added actions for all the AMH states (including amh_rh).
 	  Previously some of them returned 0 or just didn't do anything.
-	
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	  Removed all the code from the visit_interface that generates
-	  code for the this_method and put it into a seperate method called 
+	  code for the this_method and put it into a seperate method called
 	  this_method.  This method alre4ady existed but for some reason a
-	  part of the code was left in the visit_interface method.  With 
-	  this in place, the AMH class can now implement all the changes that 
+	  part of the code was left in the visit_interface method.  With
+	  this in place, the AMH class can now implement all the changes that
 	  are needed in the _this () method.
-	  
-	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp: 
-	  - Changed the this_method().  This method now generates all the code 
+
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  - Changed the this_method().  This method now generates all the code
 	  for the _this() method in amh-skeleton.  Changes include a narrow
-	  of original interface rather than teh AMH-skeleton narrow and 
+	  of original interface rather than teh AMH-skeleton narrow and
 	  commenting of the generation of the safe_stub.release() line.
-	  - Changed the dispath_method () so that it now generates a call to 
+	  - Changed the dispath_method () so that it now generates a call to
 	  asynchronous_upcall_dispatch rather than synchronous_upcall_dispatch
 	  as is generated for a normal skeleton.
 
@@ -332,7 +337,7 @@ Sat Jan  5 15:04:46 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:  Fix comments.
 
-	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:  
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
  	* orbsvcs/performance-tests/EC_Scalability/Makefile:
  	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
  	* orbsvcs/performance-tests/EC_Latency/Makefile:
@@ -348,14 +353,14 @@ Fri Jan 4 17:30:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 Fri Jan  4 19:02:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ChangeLogs/ChangeLog-01c: A new file after splitting from this
-	  one. 
+	  one.
 
 Fri Jan  4 18:28:44 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_decl.cpp:
         * TAO_IDL/be_include/be_decl.h:
 
-          Removed compute_repoID(), the version that is always 
+          Removed compute_repoID(), the version that is always
           called in in the base class AST_Decl. Thanks to
           Brian Olson <bolson@rtlogic.com> for pointing out
           that the be_decl version was not doing the version
@@ -369,11 +374,11 @@ Fri Jan  4 16:30:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
           and ultimately inserted into the member Any with the
           non-virtual operator <<=, then
           dyn_any->to_any()->type ()->id() would always yield
-          "IDL:CORBA/Object:1.0", no matter what 
+          "IDL:CORBA/Object:1.0", no matter what
           dyn_any->type()->id() yields. So the insertion into
           the memeber Any has been changed to use _tao_replace(),
-          and passing in the dyn_any's type code, which is 
-          always of the derived type. Thanks to Mahesh Vedantam 
+          and passing in the dyn_any's type code, which is
+          always of the derived type. Thanks to Mahesh Vedantam
           <mahesh@ociweb.com> for reporting the problem.
 
 Fri Jan  4 15:21:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -405,7 +410,7 @@ Fri Jan  4 15:21:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed all use of ACE_TEXT from methods that return char*.
           When compilation is done with ACE_USES_WCHAR, the return
-          type is incorrect. Thanks to Johnny Willemsen 
+          type is incorrect. Thanks to Johnny Willemsen
           <johnny_willemsen@planet.nl> for reporting the problem.
 
 Fri Jan  4 14:32:43 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -442,7 +447,7 @@ Wed Jan  2 18:00:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Jan  2 15:57:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp (to_url): 
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp (to_url):
 	  The to_url method should actually be returning a corbaname type
 	  URL instead of the corbaloc style URL. According to the
 	  INS specification, the method should return a fully formed URL
@@ -457,9 +462,9 @@ Wed Jan  2 15:57:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Modified the string that is passed to the to_url method to have
 	  a ':' before the dummy address. Now, its in one of the correct
 	  syntaxes.
-	
+
 	  Thanks to Scott Harris <harris_s@ociweb.com> for reporting all
-	  these. 	
+	  these.
 
 Wed Jan 02 15:25:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
