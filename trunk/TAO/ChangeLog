@@ -1,3 +1,11 @@
+Wed Oct 16 12:23:29 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory:
+	  Added a new directory "Application_Controlled".
+	  This directory contains all the files required for testing
+	  the object group creation and deletion with 
+	  application-controlled membership.
+
 Wed Oct 16 11:49:21 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
