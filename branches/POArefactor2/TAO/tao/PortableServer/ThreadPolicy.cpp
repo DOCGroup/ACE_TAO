@@ -1,6 +1,7 @@
 #include "ThreadPolicy.h"
 #include "ThreadPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -42,30 +43,32 @@ namespace TAO
         case ::PortableServer::ORB_CTRL_MODEL :
           {
             this->value_ =
-              ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
+              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ORB_CTRL_Thread_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_ORB_CTRL_Thread_Policy);
+                  ACE_TEXT("dynamic ThreadPolicyValue Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_ORB_CTRL_Thread_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
+                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("ORB_CTRL_Thread_Policy");
               }
             break;
           }
         case ::PortableServer::SINGLE_THREAD_MODEL :
           {
             this->value_ =
-              ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");
+              ACE_Dynamic_Service<ThreadPolicyValue>::instance ("SINGLE_THREAD_Thread_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_SINGLE_THREAD_Thread_Policy);
+                  ACE_TEXT("dynamic ThreadPolicyValue Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_SINGLE_THREAD_Thread_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");
+                  ACE_Dynamic_Service<ThreadPolicyValue>::instance ("SINGLE_THREAD_Thread_Policy");
               }
 
             break;
