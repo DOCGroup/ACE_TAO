@@ -161,7 +161,8 @@ Options::~Options (void)
                        "\nDUP is.........: %s\nFAST is........: %s\nCOMP is........: %s"
                        "\nNOTYPE is......: %s\nGLOBAL is......: %s\nCONSTANT is....: %s"
                        "\nCPLUSPLUS is...: %s\nC is...........: %s\nENUM is........: %s"
-                       "\nSTRCASECMP is..: %s\nOPTIMIZE is....: %s"
+                       "\nSTRCASECMP is..: %s\nOPTIMIZE is....: %s\nLINEARSEARCH is: %s"
+		       "\nBINARYSEARCH is: %s"
                        "\niterations = %d\nlookup function name = %s\nhash function name = %s"
                        "\nkey name = %s\njump value = %d\nmax associcated value = %d"
                        "\ninitial associated value = %d\ndelimiters = %s\nnumber of switch statements = %d\n",
@@ -187,6 +188,8 @@ Options::~Options (void)
                        ACE_BIT_ENABLED (option_word_, ENUM) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, STRCASECMP) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word_, OPTIMIZE) ? "enabled" : "disabled",
+                       ACE_BIT_ENABLED (option_word_, LINEARSEARCH) ? "enabled" : "disabled",
+                       ACE_BIT_ENABLED (option_word_, BINARYSEARCH) ? "enabled" : "disabled",
                        iterations_,
                        function_name_,
                        hash_name_,
