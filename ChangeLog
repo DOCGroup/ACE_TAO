@@ -1,3 +1,21 @@
+Thu Apr 17 13:26:23 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * bin/MakeProjectCreator/configmessaging_only.mpb:
+        * bin/MakeProjectCreator/rt_client.mpb:
+        * bin/MakeProjectCreator/rt_server.mpb:
+
+          Supplied missing libpaths.
+
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.dsp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.dsp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.dsp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.dsp:
+        * tests/Multihomed_INET_Addr_Test.dsp:
+        * tests/SOCK_SEQPACK_Association_Test.dsp:
+
+          Removed these dsp's pending the resubmission of the SCTP support
+          to prevent continual build errors.
+
 Thu Apr 17 12:07:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Configuration.cpp (temp_name):
