@@ -64,13 +64,16 @@ public:
   Server (void);
   // Default constructor.
 
-  int initialize (int argc, char **argv);
+  int init (int argc, char **argv);
   // Initialize the server state.
 
-  int start_servants (ACE_Thread_Manager *serv_thr_mgr);
-  // Start the high and low priority servants.
+  int run (void);
+  // Run method.
 
 private:
+  int start_servants (void);
+  // Start the high and low priority servants.
+
   void prelim_args_process (void);
   // Preliminary argument processing code.
 
@@ -80,10 +83,10 @@ private:
   int  write_iors (void);
   // Writes the iors of the servants to a file
 
-  int activate_high_servant (ACE_Thread_Manager *serv_thr_mgr);
+  int activate_high_servant (void);
   // Activates the high priority servant.
 
-  int activate_low_servants (ACE_Thread_Manager *serv_thr_mgr);
+  int activate_low_servants (void);
   // Activates the low priority servants.
 
   int argc_;
@@ -130,6 +133,9 @@ private:
 
   MT_Priority priority_;
   // Priority helper object.
+  
+  ACE_Thread_Manager servant_manager_;
+  // Thread manager for the servant threads.
 };
 
 #endif /* SERVER_H */

@@ -277,15 +277,17 @@ Client::put_latency (JITTER_ARRAY *jitter,
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) My latency was %A msec\n",
-              latency));
+              latency/ACE_ONE_SECOND_IN_MSECS));
 }
 
+// Returns the latency in usecs.
 ACE_timer_t
 Client::get_high_priority_latency (void)
 {
   return (ACE_timer_t) this->ts_->latency_ [0];
 }
 
+// Returns the latency in usecs.
 ACE_timer_t
 Client::get_low_priority_latency (void)
 {
@@ -310,6 +312,7 @@ Client::get_latency (u_int thread_id)
                           this->ts_->latency_ [thread_id]);
 }
 
+// Returns the jitter in usecs.
 ACE_timer_t
 Client::get_high_priority_jitter (void)
 {
@@ -328,7 +331,7 @@ Client::get_high_priority_jitter (void)
 
   JITTER_ARRAY_ITERATOR iterator =
     this->ts_->global_jitter_array_[0]->begin ();
-  
+  // latency in usecs.
   ACE_timer_t *latency = 0;
   u_int i=0;
   for (iterator.first ();
@@ -337,7 +340,9 @@ Client::get_high_priority_jitter (void)
     {
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      stats.sample ((ACE_UINT32) (*latency *1000 + 0.5));
+      // since latency is in usecs, lets convert it to seconds before
+      // giving it to stats.
+      stats.sample ((ACE_UINT32) (*latency *1000 *1000 + 0.5));
     }          
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
@@ -350,6 +355,7 @@ Client::get_high_priority_jitter (void)
   return sqrt (jitter / (number_of_samples - 1));
 }
 
+// Returns the jitter in usecs.
 ACE_timer_t
 Client::get_low_priority_jitter (void)
 {
@@ -387,7 +393,7 @@ Client::get_low_priority_jitter (void)
           ACE_timer_t difference
             = *latency - average;
           jitter += difference * difference;
-          stats.sample ((ACE_UINT32) (*latency * 1000 + 0.5));
+          stats.sample ((ACE_UINT32) (*latency * 1000 *1000));
         }
     }
 
@@ -429,7 +435,7 @@ Client::get_jitter (u_int id)
     {
       ACE_timer_t difference = *latency - average;
       jitter += difference * difference;
-      stats.sample ((ACE_UINT32) (*latency *1000 + 0.5));
+      stats.sample ((ACE_UINT32) (*latency *1000 *1000 + 0.5));
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -814,6 +820,7 @@ Client::cube_octet (void)
 {
   TAO_TRY
     {
+      this->call_count_++;
       // Cube an octet.
       CORBA::Octet arg_octet = func (this->num_);
       CORBA::Octet ret_octet = 0;
@@ -842,7 +849,7 @@ Client::cube_octet (void)
                              ret_octet),
                             -1);
         }
-      this->call_count_++;
+
     }
   TAO_CATCHANY
     {
@@ -1044,21 +1051,22 @@ Client::print_stats (void)
     {
       if (this->error_count_ == 0)
         {
+          // since latency is in usecs.
           ACE_timer_t calls_per_second =
-            TIME_IN_MICROSEC (this->call_count_) / this->latency_;
+            (this->call_count_ * ACE_ONE_SECOND_IN_USECS) / this->latency_;
 
-          // Calculate average this->latency_.
+          // Calculate average latency in usecs.
           this->latency_ = this->latency_/this->call_count_;
 
           if (this->latency_ > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) cube average call ACE_OS::time\t= %A usec, \t"
+                          "(%P|%t) cube average call ACE_OS::time\t= %A msec, \t"
                           "%A calls/second\n",
-                          this->latency_,
+                          this->latency_ / ACE_ONE_SECOND_IN_MSECS,
                           calls_per_second));
               this->put_latency (this->my_jitter_array_,
-                                 TIME_IN_MICROSEC (this->latency_),
+                                 this->latency_,
                                  this->id_,
                                  this->call_count_);
             }
@@ -1081,6 +1089,19 @@ Client::print_stats (void)
                   this->call_count_,
                   this->error_count_));
     }
+}
+
+ACE_timer_t
+Client::calc_delta (ACE_timer_t real_time,
+                    ACE_timer_t delta)
+{
+  ACE_timer_t new_delta;
+#if defined (ACE_LACKS_FLOATING_POINT)
+  new_delta = (40 * fabs (real_time) / 100) + (60 * delta / 100);
+#else /* !ACE_LACKS_FLOATING_POINT */
+  new_delta = (0.4 * fabs (real_time)) + (0.6 * delta);
+#endif /* ACE_LACKS_FLOATING_POINT */
+  return new_delta;
 }
 
 int
@@ -1121,7 +1142,6 @@ Client::do_test (void)
       this->num_ = i;
       // make a request to the server object depending on the datatype.
       result = this->make_request ();
-
       if (result != 0)
         return 2;
 
@@ -1134,16 +1154,12 @@ Client::do_test (void)
           // Calculate time elapsed.
           ACE_timer_t real_time;
           real_time = this->timer_->get_elapsed ();
-
           // Recalculate delta = 0.4 * elapsed_time + 0.6 *
           // delta. This is used to adjust the sleeping time so that
           // we make calls at the required frequency.
-          delta = 
-            (ACE_timer_t) 40 * fabs (TIME_IN_MICROSEC (real_time))
-            / (ACE_timer_t) 100 + (ACE_timer_t) 60 * delta/ 100;
-
+          delta = this->calc_delta (real_time,delta);
           this->latency_ += real_time * this->ts_->granularity_;
-          this->my_jitter_array_->insert (TIME_IN_MICROSEC (real_time));
+          this->my_jitter_array_->insert (real_time);
         } 
       if (this->ts_->thread_per_rate_ == 1 
           && id_ < (this->ts_->thread_count_ - 1))
@@ -1181,17 +1197,14 @@ Client::run_tests (void)
   // Time to wait for utilization tests to know when to stop.
   ACE_Time_Value max_wait_time (this->ts_->util_time_, 0);
   ACE_Countdown_Time countdown (&max_wait_time);
-
   ACE_NEW_RETURN (this->timer_,
                   MT_Cubit_Timer (this->ts_->granularity_),
                   -1);
   if (this->ts_->use_utilization_test_ == 1)
     this->timer_->start ();
-
   // Make the calls in a loop.
   if ((result = this->do_test ()) != 0)
     return result;
-
   if (id_ == 0)
     this->ts_->high_priority_loop_count_ =
       this->call_count_;
@@ -1201,6 +1214,7 @@ Client::run_tests (void)
       ACE_timer_t util_time = this->timer_->get_elapsed ();
       this->ts_->util_test_time_ = util_time;
     }
+  // print the latency results.
   this->print_stats ();
   return 0;
 }
