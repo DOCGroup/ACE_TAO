@@ -31,7 +31,7 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A HREF="ec.html">CORBA Event Service</A></LI>
 
 <LI>
-<A HREF="#tservices">CORBA Trader Service</A></LI>
+<A HREF="#tservices">CORBA Trading Service</A></LI>
 
 <LI>
 <A HREF="#pservices">CORBA Property Service</A></LI>
@@ -350,24 +350,31 @@ Naming Service Specification</A>.
 <A NAME="tservices"></A>CORBA Trading Service</H3>
 Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A>
 
-<P>Development is complete, and testing and debugging have commenced on
-the TAO Trading Service. Currently, it meets the Linked Trader conformance
-requirements, in that it supports the Lookup, Register, Admin, and Link
-interfaces. The Lookup interface supports subtype searching, preference
-sorting, dynamic property evaluation, federated queries, and concurrent
-queries as a multi-threaded servant.
+<P>
+      The TAO Trading Service is a transient implementation of the COS
+      Trading Service speficiation that meets the Linked Trader
+      conformance criteria --- it implements the <tt>Lookup</tt>,
+      <tt>Register</tt>, <tt>Admin</tt>, and <tt>Link</tt> interfaces,
+      but not the <tt>Proxy</tt> interface. Notably, the TAO trader
+      supports the following features:
+<ul>
+      <li> Multithreaded operation;
+      <li> Trader federations and distributed queries;
+      <li> Dynamic properties;
+      <li> Modifiable properties;
+      <li> All policies described in the specification;
+      <li> Preference sorting;
+      <li> Service type inheritance hierarchies and subtype searching.
+</ul>
 
-<P>The Trading Service uses the Object Space implementation of the Standard
-Template Library.
+Expected official initial release date: June 28th, 1998.
 
 <P>Future Work:
 <UL>
-<LI>
-The Proxy Interface.</LI>
-
-<LI>
-Persistent storage of service types and offers.</LI>
+<LI>The Proxy Interface.</LI>
+<LI>Persistent storage of service types and offers.</LI>
 </UL>
+
 For general documentation of the Trading Service, please read <A HREF="http://www.omg.org/corba/sectrans.htm#trader">The
 Trading Service Specification.</A>
 
