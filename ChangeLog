@@ -1,7 +1,7 @@
 Tue Nov  4 14:29:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/CDR_Streams.i:
-          Added #include OS_NS_string.h"
+          Added #include OS_NS_string.h and OS_Memory.h.
 
 Tue Nov  4 06:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>
 
