@@ -1,3 +1,7 @@
+Tue Jul  1 23:35:53 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* VERSION: Added a VERSION file, starting at version 0.0.0...
+
 Tue Jul  1 23:00:15 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* Added a new tests directory with the Cubit and TTCP
