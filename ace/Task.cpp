@@ -175,7 +175,7 @@ ACE_Task_Base::activate (long flags,
   if (this->thr_count_ > 0 && force_active == 0)
     return 1; // Already active.
   else
-    this->thr_count_ = n_threads;
+    this->thr_count_ += n_threads;
 
   // Use the ACE_Thread_Manager singleton if we're running as an
   // active object and the caller didn't supply us with a
