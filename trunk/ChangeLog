@@ -1,3 +1,12 @@
+Tue Nov 23 20:41:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.inl:
+
+	  Reverted this change "Tue Nov 23 20:26:51 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" since this has no scope of
+	  working. I guess the policy stuff itself is a bad thing for
+	  Win32. Let me find out from the original contributor. 
+
 Tue Nov 23 20:26:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.inl:
