@@ -18,6 +18,12 @@ ACE_Dynamic::ACE_Dynamic (void)
   ACE_TRACE ("ACE_Dynamic::ACE_Dynamic");
 }
 
+/* static */ ACE_Dynamic *
+ACE_Dynamic::instance (void)
+{
+  return DYNAMIC::instance ();
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

@@ -13,6 +13,8 @@
 #include "ace/Svc_Handler.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Dynamic.h"
+
 ACE_RCSID(ace, Svc_Handler, "$Id$")
 
 #define PR_ST_1 ACE_PEER_STREAM_1
@@ -24,7 +26,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new");
   // Allocate the memory and store it (usually in thread-specific
   // storage, depending on config flags).
-  DYNAMIC::instance ()->set ();
+  ACE_Dynamic::instance ()->set ();
   return ::new char[n];
 }
 
@@ -76,10 +78,10 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
   // in the April '96 issue of the C++ Report.  We've spruced it up to
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
-  this->dynamic_ = DYNAMIC::instance ()->is_dynamic ();
+  this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
   if (this->dynamic_)
     // Make sure to reset the flag
-    DYNAMIC::instance ()->reset ();
+    ACE_Dynamic::instance ()->reset ();
 }
 
 // Default behavior for a ACE_Svc_Handler object is to be registered with

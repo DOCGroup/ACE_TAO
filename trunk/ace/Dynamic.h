@@ -19,6 +19,8 @@
 #define ACE_DYNAMIC_H
 
 #include "ace/ACE.h"
+#include "ace/Synch_T.h"
+#include "ace/Singleton.h"
 
 class ACE_Export ACE_Dynamic
 {
@@ -46,6 +48,11 @@ public:
 
   void reset (void);
   // Resets state flag.
+
+  static ACE_Dynamic *instance (void);
+
+  typedef ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX> DYNAMIC;
+  // Point of access to the ACE_Dynamic singleton.
 
 private:
   int is_dynamic_;
