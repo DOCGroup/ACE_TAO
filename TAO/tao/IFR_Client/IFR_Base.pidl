@@ -61,9 +61,7 @@ module CORBA
 {
   typeprefix CORBA "omg.org";
 
-  typedef string Identifier;
   typedef string ScopedName;
-  typedef string RepositoryId;
 
   enum DefinitionKind
   {
