@@ -1,3 +1,14 @@
+Thu Nov 16 11:29:27 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/README.txt:
+
+          Updated the NT Service documentation page.
+
+        * docs/implrepo/index.html:
+        * docs/implrepo/usersguide.html:
+
+          Changed these to pointers to the doxygen documentation.
+
 Thu Nov 16 11:23:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Cleanup_Func_Registry.cpp (cleanup):
