@@ -22,8 +22,8 @@ LIBS     += -lsocket -ldl -lgen -lnsl -lposix4 -lthread
 OCFLAGS  += -OL -OM
 PIC      = -PIC
 RANLIB   = @true
-AR       = ax
-ARFLAGS  = ruv
+AR       = $(CC) $(LDFLAGS)
+ARFLAGS  = -archive -o
 RANLIB   = @true
 SOFLAGS  = -shared
 
