@@ -2,7 +2,7 @@
 #include "TT_Info.h"
 #include "orbsvcs/Trader/Trader_Utils.h"
 
-const char* TT_Info::INTERFACE_NAMES[] = 
+const char* TT_Info::INTERFACE_NAMES[] =
 {
   "Remote_IO",
   "Plotter",
@@ -13,7 +13,7 @@ const char* TT_Info::INTERFACE_NAMES[] =
 
 const char* TT_Info::REMOTE_IO_NAME = "Remote_IO";
 
-const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] = 
+const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
 {
   "Name",
   "Location",
@@ -25,7 +25,7 @@ const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
 
 const char* TT_Info::PLOTTER_NAME = "Plotter";
 
-const char* TT_Info::PLOTTER_PROPERTY_NAMES[] = 
+const char* TT_Info::PLOTTER_PROPERTY_NAMES[] =
 {
   "Num_Colors",
   "Auto_Loading",
@@ -37,7 +37,7 @@ const char* TT_Info::PLOTTER_PROPERTY_NAMES[] =
 
 const char* TT_Info::PRINTER_NAME = "Printer";
 
-const char* TT_Info::PRINTER_PROPERTY_NAMES[] = 
+const char* TT_Info::PRINTER_PROPERTY_NAMES[] =
 {
   "Color",
   "Double_Sided",
@@ -57,7 +57,7 @@ const char* TT_Info::FILESYSTEM_PROPERTY_NAMES[] =
   "Permission_Level"
 };
 
-const char* TT_Info::PS_PRINTER_PROPERTY_NAMES[] = 
+const char* TT_Info::PS_PRINTER_PROPERTY_NAMES[] =
 {
   "Version"
 };
@@ -83,7 +83,7 @@ const char* TT_Info::LOCATIONS[] =
   "McMillan 123"
 };
 
-const char* TT_Info::USERS[] = 
+const char* TT_Info::USERS[] =
 {
   "sbw1",
   "schmidt",
@@ -135,65 +135,65 @@ const char* TT_Info::QUERIES[][3] =
 };
 
 void
-TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq, 
-			  CORBA::Boolean print_dynamic)
+TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
+                          CORBA::Boolean print_dynamic)
 {
   CORBA::Environment env;
   TAO_Property_Evaluator prop_eval (prop_seq);
-  
+
   for (int length = prop_seq.length (), k = 0; k < length; k++)
     {
-      CORBA::ULong seq_length = 0, i= 0;
+      CORBA::Long seq_length = 0, i= 0;
       CORBA::Any* value = 0;
       CORBA::TypeCode_ptr tc = 0;
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       TAO_TRY
-	{
-	  CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
-	  TAO_CHECK_ENV;
-	  
-	  if (print_dynamic || ! is_dynamic)
-	    {
-	      value = prop_eval.property_value(k, env);
-	      TAO_CHECK_ENV;
+        {
+          CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
+          TAO_CHECK_ENV;
 
-	      tc = value->type ();
-	    }
-	  else
-	    {
-	      ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
-	    }
-	}
+          if (print_dynamic || ! is_dynamic)
+            {
+              value = prop_eval.property_value(k, env);
+              TAO_CHECK_ENV;
+
+              tc = value->type ();
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
+            }
+        }
       TAO_CATCHANY
-	{
-	  ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));	  
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
+        }
       TAO_ENDTRY;
 
       if (tc == 0)
-	continue;
+        continue;
       else if (tc->equal (TAO_Trader_Test::_tc_StringSeq, env))
-	{
-	  TAO_Trader_Test::StringSeq* str_seq;
-	  (*value) >>= str_seq;
+        {
+          TAO_Trader_Test::StringSeq* str_seq;
+          (*value) >>= str_seq;
 
-	  for (seq_length = str_seq->length (), i = 0; i < length; i++)
-	    ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) (*str_seq)[i]));
+          for (seq_length = str_seq->length (), i = 0; i < length; i++)
+            ACE_DEBUG ((LM_DEBUG, "%s ", (const char *) (*str_seq)[i]));
 
-	  ACE_DEBUG ((LM_DEBUG, "\n"));
-	}
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
       else if (tc->equal (TAO_Trader_Test::_tc_ULongSeq, env))
-	{
-	  TAO_Trader_Test::ULongSeq* ulong_seq;
-	  (*value) >>= ulong_seq;
+        {
+          TAO_Trader_Test::ULongSeq* ulong_seq;
+          (*value) >>= ulong_seq;
 
-	  for (seq_length = ulong_seq->length (), i = 0; i < length; i++)
-	    ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
+          for (seq_length = ulong_seq->length (), i = 0; i < length; i++)
+            ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
 
-	  ACE_DEBUG ((LM_DEBUG, "\n"));
-	}
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
       else
-	CORBA::Any::dump (*value);
+        CORBA::Any::dump (*value);
     }
 }
 
