@@ -7,6 +7,7 @@ CXX           = <%cxx%>
 <%endfor%>
 CCC           = $(CXX)
 MAKEFILE      = <%project_file%>
+DEPENDENCIES  = .depend.<%project_file%>
 <%if(exename)%>
 BIN           = <%exename%>
 <%endif%>
@@ -148,8 +149,7 @@ INSTARGET = $(LIB)
 <%endif%>
 install:
 	@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
-	@$(RM) "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)"
-	@ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+	@[ -f "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)" ] || ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
 <%endif%>
 <%endif%>
 clean:
@@ -164,4 +164,12 @@ realclean: clean
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
+
+$(DEPENDENCIES):
+	touch $(DEPENDENCIES)
+
+depend:
+	perl <%depgen("$(ACE_ROOT)/bin/depgen.pl")%> -t gnu<%foreach(includes)%> -I<%include%><%endfor%><%foreach(macros)%> -D<%macro%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
+
+include $(DEPENDENCIES)
 <%marker(bottom)%>

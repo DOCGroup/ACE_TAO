@@ -69,7 +69,7 @@ sub write_comps {
 
   ## Print out the projet Makefile
   print $fh $crlf .
-            "all clean realclean:$crlf";
+            "all clean depend realclean:$crlf";
 
   ## If there is more than one project, use a for loop
   if ($#list > 0) {
