@@ -1,3 +1,17 @@
+Thu Nov 13 16:11:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_TLI.h:
+          Fixed a typo by changing the test to determine whether or not to
+          include os_tcp.h and #undef TCP_NODELY and TCP_MAXSEG to avoid a
+          conflict with sys/xti.h from ACE_HAS_BROKEN_XTI_MACROS to
+          ACE_HAS_CONFLICTING_XTI_MACROS.  This should fix compile
+          problems in HP.
+
+        * ace/os_include/netinet/os_tcp.h:
+          Removed the ACE_HAS_CONFLICTING_XTI_MACROS test that #undef'd
+          TCP_NODELAY and TCP_MAXSEG.  This only needs to be done prior to
+          including sys/xti.h.
+
 Thu Nov 13 04:26:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.lib.GNU;
