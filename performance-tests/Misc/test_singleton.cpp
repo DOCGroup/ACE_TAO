@@ -32,6 +32,8 @@
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 
+#include "test_singleton.h"
+
 ACE_RCSID(Misc, test_singleton, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
@@ -65,18 +67,6 @@ Mutex_Singleton::instance (void)
 
   return Mutex_Singleton::instance_;
 }
-
-class DC_Singleton
-{
-public:
-  DC_Singleton (void) {}
-  void svc (void) {}
-  static DC_Singleton *instance (void);
-
-private:
-  static ACE_Thread_Mutex lock_;
-  static DC_Singleton *instance_;
-};
 
 ACE_Thread_Mutex DC_Singleton::lock_;
 
