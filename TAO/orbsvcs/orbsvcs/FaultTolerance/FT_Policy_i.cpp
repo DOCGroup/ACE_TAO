@@ -148,6 +148,16 @@ TAO_FT_Heart_Beat_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
   return tmp;
 }
 
+TAO_FT_Heart_Beat_Policy *
+TAO_FT_Heart_Beat_Policy::clone (void) const
+{
+  TAO_FT_Heart_Beat_Policy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  TAO_FT_Heart_Beat_Policy (*this),
+                  0);
+  return copy;
+}
+
 void
 TAO_FT_Heart_Beat_Policy::destroy (CORBA_Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -225,6 +235,17 @@ TAO_FT_Heart_Beat_Enabled_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 
   return tmp;
 }
+
+TAO_FT_Heart_Beat_Enabled_Policy *
+TAO_FT_Heart_Beat_Enabled_Policy::clone (void) const
+{
+  TAO_FT_Heart_Beat_Enabled_Policy *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  TAO_FT_Heart_Beat_Enabled_Policy (*this),
+                  0);
+  return copy;
+}
+
 
 void
 TAO_FT_Heart_Beat_Enabled_Policy::destroy (CORBA_Environment &)
