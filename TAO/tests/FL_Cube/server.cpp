@@ -3,9 +3,20 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 
-#include <FL/Fl.h>
-
 ACE_RCSID(FL_Cube, server, "$Id$")
+
+#if !defined (ACE_HAS_FL)
+
+int main (int, char *[])
+{
+  ACE_ERROR ((LM_INFO,
+              "FL not supported on this platform\n"));
+  return 0;
+}
+
+#else
+
+#include <FL/Fl.h>
 
 const char *ior_output_file = 0;
 
@@ -38,12 +49,6 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-#if !defined (ACE_HAS_FL)
-
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-
-#else
   Fl_Window window(300, 300);
 
   Simple_Window sw (10, 10,
@@ -120,6 +125,7 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-#endif /* ACE_HAS_FL */
   return 0;
 }
+
+#endif /* ACE_HAS_FL */
