@@ -6515,18 +6515,48 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 
 // Stuff used by the ACE CDR classes.
 #if defined ACE_LITTLE_ENDIAN
-#  define STREAM_BYTE_ORDER 1
+#  define ACE_CDR_BYTE_ORDER 1  
 // little endian encapsulation byte order has value = 1
 #else  /* ! ACE_LITTLE_ENDIAN */
-#  define STREAM_BYTE_ORDER 0
+#  define ACE_CDR_BYTE_ORDER 0  
 // big endian encapsulation byte order has value = 0
 #endif /* ! ACE_LITTLE_ENDIAN */
 
 // Default constants for ACE CDR performance optimizations.
-#define DEFAULT_CDR_BUFSIZE 512
-#define DEFAULT_CDR_EXP_GROWTH_MAX 4096
-#define DEFAULT_CDR_LINEAR_GROWTH_CHUNK 4096
-#define DEFAULT_CDR_MEMCPY_TRADEOFF 256
+#define ACE_DEFAULT_CDR_BUFSIZE 512
+#define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 4096
+#define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 4096
+// Even though the strategy above minimizes copies in some cases it is
+// more efficient just to copy the octet sequence, for instance, while
+// enconding a "small" octet sequence in a buffer that has enough
+// space. This parameter controls the default value for "small enough",
+// but an ORB may use a different value, set from a command line option. 
+#define ACE_DEFAULT_CDR_MEMCPY_TRADEOFF 256
+
+// In some environments it is useful to swap the bytes on write, for
+// instance: a fast server can be feeding a lot of slow clients that
+// happen to have the wrong byte order.
+// This macro enables the functionality to support that, but we still
+// need a way to activate it on a per-connection basis.
+//
+// #define ACE_ENABLE_SWAP_ON_WRITE
+
+// In some environements we never need to swap bytes when reading, for
+// instance embebbed systems (such as avionics) or homogenous
+// networks.
+// Setting this macro disables the capabilities to demarshall streams
+// in the wrong byte order.
+//
+// #define ACE_DISABLE_SWAP_ON_READ
+
+// For some applications it is important to optimize octet sequences
+// and minimize the number of copies made of the sequence buffer.
+// TAO supports this optimizations by sharing the CDR stream buffer
+// and the octet sequences buffer via ACE_Message_Block's.
+// This feature can be disabled for: debugging, performance
+// comparisons, complaince checking (the octet sequences add an API to
+// access the underlying message block).
+
 
 // Typedefs and macros for efficient ACE CDR memory address
 // boundary alignment
