@@ -88,6 +88,39 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> void
+ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (CONTAINER &container,
+                                                                                              KEY *&key_to_remove,
+                                                                                              VALUE *&value_to_remove)
+{
+  // Starting values.
+  ITERATOR iter = container.begin ();
+  ITERATOR end = container.end ();
+  ATTRIBUTES min = (*iter).int_id_.second ();
+  key_to_remove = &(*iter).ext_id_;
+  value_to_remove = &(*iter).int_id_;
+
+  // The iterator moves thru the container searching for the entry
+  // with the lowest ATTRIBUTES.
+  for (++iter;
+       iter != end;
+       ++iter)
+    {
+      if ((*iter).int_id_.first ()->state () == ACE_Recyclable::IDLE_AND_PURGABLE))
+        {
+          if (min > (*iter).int_id_.second ())
+            {
+              // Ah! an item with lower ATTTRIBUTES...
+              min = (*iter).int_id_.second ();
+              key_to_remove = &(*iter).ext_id_;
+              value_to_remove = &(*iter).int_id_;
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES> int
 ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cache (CONTAINER &container,
                                                                                        ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,

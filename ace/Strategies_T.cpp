@@ -823,7 +823,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cache_i (
 
   // Mark the <svc_handler> in the cache as not being <in_use>.
   // Therefore recyclable is IDLE.
-  entry->ext_id_.state (ACE_Recyclable::IDLE);
+  entry->ext_id_.state (ACE_Recyclable::IDLE_AND_PURGABLE);
 
   return 0;
 }

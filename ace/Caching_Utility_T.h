@@ -52,12 +52,34 @@ public:
 
 protected:
 
-  void minimum (CONTAINER &container,
-                KEY *&key_to_remove,
-                VALUE *&value_to_remove);
+  virtual void minimum (CONTAINER &container,
+                        KEY *&key_to_remove,
+                        VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.
 };
 
+////////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
+class ACE_Recyclable_Handler_Caching_Utility : public ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>
+{
+  // = TITLE
+  //    Defines a helper class for the Caching Strategies.
+  //
+  // = DESCRIPTION
+  //    This class defines the methods commonly used by the different
+  //    caching strategies. For instance: clear_cache () method which
+  //    decides and purges the entry from the container.  Note: This
+  //    class helps in the caching_strategies using a container
+  //    containing entries of <KEY, Svc_Handler> kind. The attributes
+  //    helps in deciding the entries to be purged.
+protected:
+
+  virtual void minimum (CONTAINER &container,
+                        KEY *&key_to_remove,
+                        VALUE *&value_to_remove);
+  // Find the entry with minimum caching attributes.
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,9 +108,9 @@ public:
 
 protected:
 
-  void minimum (CONTAINER &container,
-                KEY *&key_to_remove,
-                VALUE *&value_to_remove);
+  virtual void minimum (CONTAINER &container,
+                        KEY *&key_to_remove,
+                        VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.  This is handler
   // specific since this utility is to be used very specifically for
   // handler who have caching_attributes for server side acched
@@ -119,9 +141,9 @@ public:
 
 protected:
 
-  void minimum (CONTAINER &container,
-                KEY *&key_to_remove,
-                VALUE *&value_to_remove);
+  virtual void minimum (CONTAINER &container,
+                        KEY *&key_to_remove,
+                        VALUE *&value_to_remove);
   // Find the entry with minimum caching attributes.  This is handler
   // specific since this utility is to be used very specifically for
   // handler who have caching_attributes for server side acched
