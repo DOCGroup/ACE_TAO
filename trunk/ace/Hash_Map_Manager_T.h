@@ -557,6 +557,14 @@ public:
   // = Initialization method.
   ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                          int tail = 0);
+  // Construct from map
+
+  ACE_Hash_Map_Iterator (ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  // Construct from base
+
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
+  operator= (ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  // Assignment from base 
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -569,6 +577,13 @@ public:
   // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                  int head = 0);
+
+  ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  // Construct from base
+
+  ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
+  operator= (ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  // Assignment from base 
 };
 
 #if defined (__ACE_INLINE__)

@@ -563,6 +563,9 @@ ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::bind (PortableServer::Servant servant,
                                                             const PortableServer::ObjectId &id)
 {
+  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (id);
+
   // Successful no-op
   return 0;
 }
@@ -570,6 +573,8 @@ TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::bind (PortableServer::Serv
 ACE_INLINE int 
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::unbind (PortableServer::Servant servant)
 {
+  ACE_UNUSED_ARG (servant);
+
   // Successful no-op
   return 0;
 }
@@ -578,6 +583,9 @@ ACE_INLINE int
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (const PortableServer::Servant servant,
                                                             PortableServer::ObjectId &id)
 {
+  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (id);
+
   // Unsuccessful no-op
   return -1;
 }
@@ -585,6 +593,8 @@ TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (const PortableServer
 ACE_INLINE int 
 TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy::find (PortableServer::Servant servant)
 {
+  ACE_UNUSED_ARG (servant);
+
   // Unsuccessful no-op
   return -1;
 }
