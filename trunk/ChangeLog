@@ -1,3 +1,18 @@
+Thu Aug 22 01:32:46 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML\common\StreamFactory.cpp:
+
+          Use ACE_TEXT for literals. Add destructor to avoid linker
+          problems.
+
+        * ACEXML/parser/parser/Parser.cpp:
+
+          Use ACEXML_Char instead of char* to fix compilation with WCHAR.
+
+        * ACEXML/common/XML_Common.dsp:
+
+          Add files StreamFactory.{h,cpp} to the project files.
+
 Thu Aug 22 01:16:16 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace\OS.h:

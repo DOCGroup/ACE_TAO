@@ -156,6 +156,10 @@ SOURCE=.\StrCharStream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\StreamFactory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transcode.cpp
 # End Source File
 # Begin Source File
@@ -269,6 +273,10 @@ SOURCE=.\SAXExceptions.h
 # Begin Source File
 
 SOURCE=.\StrCharStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StreamFactory.h
 # End Source File
 # Begin Source File
 
