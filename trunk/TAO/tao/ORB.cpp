@@ -503,9 +503,9 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                       return_value);
 
   if (response.get_local_addr (response_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "get_local_addr failed.\n"),
-               return_value);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "get_local_addr failed.\n"),
+                      return_value);
   struct
   {
     u_short reply_port;
