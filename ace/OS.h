@@ -2109,8 +2109,41 @@ typedef rwlock_t ACE_rwlock_t;
 #     endif /* ! ACE_WTHREADS */
 #   endif /* ! ACE_THR_PRI_OTHER_DEF */
 
+// Recursive mutex support.
+//
+// There are two parts to this:
+// 1. The mutex type itself. This is based on whether or not the
+//    platform supports recursive mutexes natively or they're emulated.
+// 2. Support for using the recursive mutex with a condition variable.
+//    When a thread waits on a condition variable, it has to relinquish
+//    the lock and wait atomically, then reacquire it after the condition
+//    variable is signaled. In non-recursive mutexes, the platform
+//    handles this automatically. But in recursive mutexes, especially
+//    when emulated, the recursion count needs to be maintained across
+//    the wait. Since another thread needs to be able to acquire the
+//    lock, it needs to appear free, even if the waiting thread had done
+//    multiple acquires. Thus, there's another structure to hold this
+//    information, and is used with the recursive_mutex_cond_unlock()
+//    and recursive_mutex_cond_relock() methods to maintain the expected
+//    state when the wait finishes.
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
 typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
+#  if defined (ACE_WIN32)
+// Windows has recursive mutexes, but doesn't have condition variables,
+// so there's no built-in support for this. Thus, the condition-related
+// save/restore is handled in ACE.
+struct ACE_recursive_mutex_state
+{
+  // On windows the mutex is a CRITICAL_SECTION, and these members
+  // match those in the CRITICAL_SECTION struct.
+  LONG lock_count_;
+  LONG recursion_count_;
+  HANDLE owning_thread_;
+};
+#  else
+// No need for special handling; just need a type for method signatures.
+typedef int ACE_recursive_mutex_state;
+#  endif /* ACE_WIN32 */
 #else
 /**
  * @class ACE_recursive_thread_mutex_t
@@ -2136,6 +2169,14 @@ public:
   int nesting_level_;
 
   /// Current owner of the lock.
+  ACE_thread_t owner_id_;
+};
+
+// Since recursive mutex is emulated, the state saving needs to be handled
+// in ACE as well. These members save those from ACE_recursive_thread_mutex_t.
+struct ACE_recursive_mutex_state
+{
+  int nesting_level_;
   ACE_thread_t owner_id_;
 };
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
@@ -4971,6 +5012,13 @@ public:
   static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
   static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
   static int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
+  // These two methods are primarily in support of
+  // ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
+  // be called outside that context.
+  static int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
+                                          ACE_recursive_mutex_state &state);
+  static void recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
+                                           ACE_recursive_mutex_state &state);
   //@}
 
   //@{ @name A set of wrappers for mutex locks.
