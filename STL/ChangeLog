@@ -1,3 +1,7 @@
+Fri Nov 21 01:16:49 1997    <irfan@TWOSTEP>
+
+	* bstring.h: Removed strange looking template specialization.
+
 Thu Apr 03 08:58:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* STL/bool.h: added /**/ to #include <yvals.h>.  Thanks to
