@@ -9,19 +9,22 @@ script was started.  It looks for .mpc files and generates a project or
 projects for each one found.
 
 
-Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse[=dir1,...]]
+Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
+              [-exclude <directories>]
               [-type <automake | borland | em3 | ghs | gnuace | make |
                       nmake | va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
                        project file.
+       -exclude        Use this option to exclude directories when searching
+                       for input files.
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
@@ -39,8 +42,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse[=dir1,...]]
                        addition to dynamic projects.
        -static_only    Specifies that only static projects will be generated.
        -recurse        Recurse from the current directory and generate from
-                       all found input files.  If directories are passed to
-                       this option, then those directories are not recursed.
+                       all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
@@ -79,6 +81,9 @@ input file name with the -ti option.  The file must have a 'mpt' extension
 and must reside within the include search directories.  NOTE: the 'lib' and
 the 'lib_exe' template input files are only used if the project creator makes
 a separate project file for dynamic libraries and static libraries.
+
+The -exclude option is used to exclude directories when searching for input
+files.  NOTE: This option has no effect when used with mpc.pl.
 
 The -hierarchy option is used to force the generation of a hierarchical
 workspace at each directory level in between the toplevel directory and the
@@ -130,19 +135,22 @@ file) is not provided, the project creator will attempt to create a default
 project in the directory from which the script was started.
 
 
-Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse[=dir1,...]]
+Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-feature_file <file name>] [-make_coexistence]
+              [-exclude <directories>]
               [-type <automake | borland | em3 | ghs | gnuace | make |
                       nmake | va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
                        project file.
+       -exclude        Use this option to exclude directories when searching
+                       for input files.
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
@@ -160,8 +168,7 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse[=dir1,...]]
                        addition to dynamic projects.
        -static_only    Specifies that only static projects will be generated.
        -recurse        Recurse from the current directory and generate from
-                       all found input files.  If directories are passed to
-                       this option, then those directories are not recursed.
+                       all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.

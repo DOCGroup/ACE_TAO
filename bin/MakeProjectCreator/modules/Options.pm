@@ -30,7 +30,7 @@ sub completion_command {
                "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
                "value_template value_project make_coexistence " .
-               "hierarchy)/' " .
+               "hierarchy exclude)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -60,15 +60,16 @@ sub options {
   my(%relative)   = ();
   my(%addtemp)    = ();
   my(%addproj)    = ();
+  my(@exclude)    = ();
   my($global)     = undef;
   my($template)   = undef;
   my($feature_f)  = undef;
-  my($recurse)    = undef;
   my($hierarchy)  = 0;
   my($dynamic)    = ($defaults ? 1 : undef);
   my($reldefs)    = ($defaults ? 1 : undef);
   my($toplevel)   = ($defaults ? 1 : undef);
   my($static)     = ($defaults ? 0 : undef);
+  my($recurse)    = ($defaults ? 0 : undef);
   my($makeco)     = ($defaults ? 0 : undef);
 
   ## Process the command line arguments
@@ -112,6 +113,16 @@ sub options {
         }
       }
     }
+    elsif ($arg eq '-exclude') {
+      $i++;
+      if (defined $args[$i]) {
+        @exclude = split(',', $args[$i]);
+      }
+      else {
+        $self->optionError('-exclude requires a ' .
+                           'comma separated list argument');
+      }
+    }
     elsif ($arg eq '-feature_file') {
       $i++;
       $feature_f = $args[$i];
@@ -148,15 +159,8 @@ sub options {
     elsif ($arg eq '-notoplevel') {
       $toplevel = 0;
     }
-    elsif ($arg =~ /^\-recurse(=(.*))?/) {
-      my($exc) = $2;
-      if (!defined $exc) {
-        $recurse = [];
-      }
-      else {
-        my(@exc) = split(',', $exc);
-        $recurse = \@exc;
-      }
+    elsif ($arg eq '-recurse') {
+      $recurse = 1;
     }
     elsif ($arg eq '-template') {
       $i++;
@@ -292,6 +296,7 @@ sub options {
                   'addproj'      => \%addproj,
                   'coexistence'  => $makeco,
                   'hierarchy'    => $hierarchy,
+                  'exclude'      => \@exclude,
                  );
 
   return \%options;
