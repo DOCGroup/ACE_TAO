@@ -19,7 +19,7 @@
 #define TAO_UIOP_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "tao/Transport_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,10 +62,7 @@ public:
   //@{
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
-  int preconnect (const char *preconnections);
+
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
@@ -81,6 +78,9 @@ protected:
    * Please check the documentation in Pluggable.h.
    */
   //@{
+  int make_connect (TAO_GIOP_Invocation *invocation,
+                    TAO_Transport_Descriptor_Interface *desc);
+
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtains uiop properties that must be used by this connector, i.e.,

@@ -3,10 +3,9 @@
 #include "tao/GIOP_Message_State.h"
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/ORB_Core.h"
-#include "tao/Pluggable.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-//#include "Transport.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"

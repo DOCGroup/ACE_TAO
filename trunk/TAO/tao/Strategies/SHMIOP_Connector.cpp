@@ -116,16 +116,14 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
-TAO_SHMIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc
-                               ACE_ENV_ARG_DECL_NOT_USED)
+TAO_SHMIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
+                                    TAO_Transport_Descriptor_Interface *desc)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for SHMIOP connection.\n")));
 
-  TAO_Transport *&transport = invocation->transport ();
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
@@ -161,252 +159,95 @@ TAO_SHMIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   int result = 0;
   TAO_SHMIOP_Connection_Handler *svc_handler = 0;
-  TAO_Transport *base_transport = 0;
 
-  // Check the Cache first for connections
-  // If transport found, reference count is incremented on assignment
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
-                                                                              base_transport) == 0)
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                ACE_TEXT ("making a new connection \n")));
+
+  // Purge connections (if necessary)
+  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+
+  if (max_wait_time != 0)
     {
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                    ACE_TEXT ("got an existing transport with id %d \n"),
-                    base_transport->id ()));
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
+
+          // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options);
     }
   else
     {
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                    ACE_TEXT ("making a new connection \n")));
-
-      // Purge connections (if necessary)
-      this->orb_core ()->lane_resources ().transport_cache ().purge ();
-
-      // @@ This needs to change in the next round when we implement a
-      // policy that will not allow new connections when a connection
-      // is busy.
-      if (max_wait_time != 0)
-        {
-          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                           *max_wait_time);
-
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address,
-                                                  synch_options);
-        }
-      else
-        {
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address);
-        }
-
-      if (TAO_debug_level > 4)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                    ACE_TEXT ("The result is <%d> \n"), result));
-
-      if (result == -1)
-        {
-          char buffer [MAXNAMELEN * 2];
-          endpoint->addr_to_string (buffer,
-                                    (MAXNAMELEN * 2) - 1);
-
-          // Give users a clue to the problem.
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                          ACE_TEXT ("%s failed (%p)\n"),
-                          __FILE__,
-                          __LINE__,
-                          buffer,
-                          ACE_TEXT ("errno")));
-            }
-          return -1;
-        }
-
-      base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
-      // Add the handler to Cache
-      int retval =
-        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                                 svc_handler->transport ());
-
-      if (retval != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                      ACE_TEXT ("could not add the new  connection to Cache \n")));
-        }
+      // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address);
     }
 
-  // No need to _duplicate and release since base_transport
-  // is going out of scope.  transport now has control of base_transport.
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                ACE_TEXT ("The result is <%d> \n"), result));
+
+  if (result == -1)
+    {
+      char buffer [MAXNAMELEN * 2];
+      endpoint->addr_to_string (buffer,
+                                (MAXNAMELEN * 2) - 1);
+
+      // Give users a clue to the problem.
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s failed (%p)\n"),
+                      __FILE__,
+                      __LINE__,
+                      buffer,
+                      ACE_TEXT ("errno")));
+        }
+      return -1;
+    }
+
+  TAO_Transport *base_transport =
+    TAO_Transport::_duplicate (svc_handler->transport ());
+
+  // Add the handler to Cache
+  int retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                             base_transport);
+
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                  ACE_TEXT ("could not add the new  connection to Cache \n")));
+    }
+
+
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so.
+  retval =  base_transport->wait_strategy ()->register_handler ();
+
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                  ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+    }
+
+  // Handover the transport pointer to the Invocation class.
+  TAO_Transport *&transport = invocation->transport ();
   transport = base_transport;
 
   return 0;
 }
 
-
-int
-TAO_SHMIOP_Connector::preconnect (const char *preconnects)
-{
-#if 0
-  // Check for the proper protocol prefix.
-  if (this->check_prefix (preconnects) != 0)
-    return 0; // Failure: zero successful preconnections
-
-  const char *protocol_removed =
-    ACE_OS::strstr (preconnects,
-                    "://") + 3;
-  // "+ 3" since strlen of "://" is 3.
-
-  char *preconnections =
-    ACE_OS::strdup (protocol_removed);
-
-  int successes = 0;
-  if (preconnections)
-    {
-      ACE_INET_Addr dest;
-      ACE_Unbounded_Stack<ACE_INET_Addr> dests;
-
-      size_t num_connections;
-
-      char *nextptr = 0;
-      char *where = 0;
-      for (where = ACE::strsplit_r (preconnections, ",", nextptr);
-           where != 0;
-           where = ACE::strsplit_r (0, ",", nextptr))
-        {
-          int version_offset = 0;
-          // Additional offset to remove version from preconnect, if it exists.
-
-          if (isdigit (where[0]) &&
-              where[1] == '.' &&
-              isdigit (where[2]) &&
-              where[3] == '@')
-            version_offset = 4;
-
-          // @@ For now, we just drop the version prefix.  However, at
-          //    some point in the future the version may become useful.
-
-          char *tport = 0;
-          char *thost = where + version_offset;
-          char *sep = ACE_OS::strchr (where, ':');
-
-          // @@ Notice we reuqire the host name in preconnect
-          // so the MEM_Connector can identify if we are trying
-          // to a local host or not.
-
-          if (sep)
-            {
-              *sep = '\0';
-              tport = sep + 1;
-
-              dest.set ((u_short) ACE_OS::atoi (tport), thost);
-              dests.push (dest);
-            }
-          // @@ Skip the entry if we don't have a host:port pair available.
-        }
-
-      // Create an array of addresses from the stack, as well as an
-      // array of eventual handlers.
-      num_connections = dests.size ();
-      ACE_INET_Addr *remote_addrs = 0;
-      TAO_SHMIOP_Connection_Handler **handlers = 0;
-      char *failures = 0;
-
-      ACE_NEW_RETURN (remote_addrs,
-                      ACE_INET_Addr[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
-
-      ACE_NEW_RETURN (handlers,
-                      TAO_SHMIOP_Connection_Handler *[num_connections],
-                      -1);
-
-      ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>
-        safe_handlers (handlers);
-
-      ACE_NEW_RETURN (failures,
-                      char[num_connections],
-                      -1);
-
-      // No longer need to worry about exception safety at this point.
-      remote_addrs = safe_remote_addrs.release ();
-      handlers = safe_handlers.release ();
-
-      size_t slot = 0;
-
-      // Fill in the remote address array
-      while (dests.pop (remote_addrs[slot]) == 0)
-        handlers[slot++] = 0;
-
-      // Finally, try to connect.
-      this->base_connector_.connect_n (num_connections,
-                                       handlers,
-                                       remote_addrs,
-                                       failures);
-      // Loop over all the failures and set the handlers that
-      // succeeded to idle state.
-      for (slot = 0;
-           slot < num_connections;
-           slot++)
-        {
-          if (!failures[slot])
-            {
-              TAO_SHMIOP_Endpoint endpoint (remote_addrs[slot]);
-
-              TAO_Base_Transport_Property prop (&endpoint);
-
-              // Add the handler to Cache
-              int retval =
-                this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
-                                                                                         handlers[slot]->transport ());
-              successes++;
-
-              if (retval != 0 && TAO_debug_level > 4)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Unable to add handles\n"),
-                            ACE_TEXT ("to cache \n")));
-
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
-                            ACE_TEXT ("succeeded.\n"),
-                            remote_addrs[slot].get_host_name (),
-                            remote_addrs[slot].get_port_number ()));
-            }
-          else if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
-                        remote_addrs[slot].get_host_name (),
-                        remote_addrs[slot].get_port_number ()));
-        }
-
-      ACE_OS::free (preconnections);
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) SHMIOP preconnections: %d successes and ")
-                    ACE_TEXT ("%d failures.\n"),
-                    successes,
-                    num_connections - successes));
-    }
-  return successes;
-#else
-  ACE_UNUSED_ARG (preconnects);
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
 
 TAO_Profile *
 TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)

@@ -3,9 +3,7 @@
 #include "GIOP_Message_Generator_Parser_12.h"
 #include "GIOP_Utils.h"
 #include "GIOP_Message_State.h"
-
 #include "GIOP_Message_Locate_Header.h"
-
 #include "operation_details.h"
 #include "CDR.h"
 #include "Any.h"
@@ -15,7 +13,6 @@
 #include "TAO_Server_Request.h"
 #include "TAOC.h"
 #include "Service_Context.h"
-#include "Pluggable.h"
 #include "ORB_Core.h"
 #include "Transport.h"
 

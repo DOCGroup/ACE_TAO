@@ -18,13 +18,13 @@
 #define TAO_CONNECTOR_REGISTRY_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "params.h"
+#include "Endpoint.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -65,7 +65,8 @@ public:
   ~TAO_Connector_Registry (void);
 
   /// Return the connector bridges
-   TAO_Connector *get_connector (CORBA::ULong tag);
+  TAO_Connector *get_connector (CORBA::ULong tag);
+  TAO_Connector *get_connector (TAO_Endpoint *ep);
 
   /// Initialize all registered connectors.
   int open (TAO_ORB_Core *orb_core);
@@ -73,12 +74,11 @@ public:
   /// Close all open connectors.
   int close_all (void);
 
-  /// For this list of preconnections call the connector specific
-  /// preconnect method for each preconnection.
-  int preconnect (TAO_ORB_Core *orb_core,
-                  TAO_EndpointSet &preconnections);
 
   /**
+   * @@ todo: This method needs to be removed. There should be no need
+   * for the registry to establish connections.
+   *
    * This is where the transport protocol is selected based on some
    * policy.  This member will call the connect member of the
    * TAO_Connector class which in turn will call the concrete
@@ -106,11 +106,6 @@ public:
   TAO_ConnectorSetIterator end (void);
 
 private:
-  /// Put the preconnects in a form that makes it simple for protocol
-  /// implementers to parse.
-  int preprocess_preconnects (TAO_ORB_Core *orb_core,
-                              TAO_EndpointSet &preconnects);
-
   // Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Connector_Registry (const TAO_Connector_Registry&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connector_Registry&))

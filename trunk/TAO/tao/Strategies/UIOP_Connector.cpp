@@ -21,10 +21,6 @@ ACE_RCSID(Strategies,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Node<ACE_UNIX_Addr>;
-template class ACE_Unbounded_Stack<ACE_UNIX_Addr>;
-template class ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>;
-
 template class TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_UIOP_Connection_Handler, ACE_LSOCK_CONNECTOR>;
@@ -117,16 +113,14 @@ TAO_UIOP_Connector::close (void)
 
 
 int
-TAO_UIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                             TAO_Transport_Descriptor_Interface *desc
-                             ACE_ENV_ARG_DECL_NOT_USED)
+TAO_UIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
+                                  TAO_Transport_Descriptor_Interface *desc)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for UIOP connection.\n")));
 
-  TAO_Transport *&transport = invocation->transport ();
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
@@ -152,95 +146,215 @@ TAO_UIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   int result = 0;
   TAO_UIOP_Connection_Handler *svc_handler = 0;
-  TAO_Transport *base_transport = 0;
 
-  // Check the Cache first for connections
-  // If transport found, reference count is incremented on assignment
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
-                                                                              base_transport) == 0)
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
+                ACE_TEXT ("making a new connection \n")));
+
+  // Purge connections (if necessary)
+  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+
+  if (max_wait_time != 0)
     {
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
-                    ACE_TEXT ("got an existing transport with id %d \n"),
-                    base_transport->id ()));
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
+
+      // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options);
     }
   else
     {
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
-                    ACE_TEXT ("making a new connection \n")));
-
-      // Purge connections (if necessary)
-      this->orb_core ()->lane_resources ().transport_cache ().purge ();
-
-      // @@ This needs to change in the next round when we implement a
-      // policy that will not allow new connections when a connection
-      // is busy.
-      if (max_wait_time != 0)
-        {
-          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                           *max_wait_time);
-
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address,
-                                                  synch_options);
-        }
-      else
-        {
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address);
-        }
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
-                    ACE_TEXT ("The result is <%d> \n"), result));
-
-      if (result == -1)
-        {
-          // Give users a clue to the problem.
-          if (TAO_debug_level)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                          ACE_TEXT ("%s failed (%p)\n"),
-                          __FILE__,
-                          __LINE__,
-                          uiop_endpoint->rendezvous_point (),
-                          ACE_TEXT ("errno")));
-            }
-          return -1;
-        }
-
-      base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
-      // Add the handler to Cache
-      int retval =
-        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                                 base_transport);
-
-      if (retval != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
-                      ACE_TEXT ("could not add the new connection to Cache \n")));
-        }
+      // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address);
     }
 
-  // No need to _duplicate and release since base_transport
-  // is going out of scope.  transport now has control of base_transport.
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
+                ACE_TEXT ("The result is <%d> \n"), result));
+
+  if (result == -1)
+    {
+      // Give users a clue to the problem.
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s failed (%p)\n"),
+                      __FILE__,
+                      __LINE__,
+                      uiop_endpoint->rendezvous_point (),
+                      ACE_TEXT ("errno")));
+        }
+      return -1;
+    }
+
+  TAO_Transport *base_transport =
+    TAO_Transport::_duplicate (svc_handler->transport ());
+
+  // Add the handler to Cache
+  int retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                             base_transport);
+
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
+                  ACE_TEXT ("could not add the new connection to Cache \n")));
+    }
+
+  // If the wait strategy wants us to be registered with the reactor
+  // then we do so.
+  retval =  base_transport->wait_strategy ()->register_handler ();
+
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect ")
+                  ACE_LIB_TEXT ("could not add the new connection to reactor \n")));
+    }
+
+  // Handover the transport pointer to the Invocation class.
+  TAO_Transport *&transport = invocation->transport ();
   transport = base_transport;
 
   return 0;
 }
 
+
+
+TAO_Profile *
+TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
+{
+  TAO_Profile *pfile;
+  ACE_NEW_RETURN (pfile,
+                  TAO_UIOP_Profile (this->orb_core ()),
+                  0);
+
+  int r = pfile->decode (cdr);
+  if (r == -1)
+    {
+      pfile->_decr_refcnt ();
+      pfile = 0;
+    }
+
+  return pfile;
+}
+
+TAO_Profile *
+TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Profile *profile = 0;
+  ACE_NEW_THROW_EX (profile,
+                    TAO_UIOP_Profile (this->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+
+  ACE_CHECK_RETURN (0);
+
+  return profile;
+}
+
+int
+TAO_UIOP_Connector::check_prefix (const char *endpoint)
+{
+  // Check for a valid string
+  if (!endpoint || !*endpoint)
+    return -1;  // Failure
+
+  const char *protocol[] = { "uiop", "uioploc" };
+
+  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+
+  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t len1 = ACE_OS::strlen (protocol[1]);
+
+  // Check for the proper prefix in the IOR.  If the proper prefix
+  // isn't in the IOR then it is not an IOR we can use.
+  if (slot == len0
+      && ACE_OS::strncasecmp (endpoint,
+                              protocol[0],
+                              len0) == 0)
+    return 0;
+  else if (slot == len1
+           && ACE_OS::strncasecmp (endpoint,
+                                   protocol[1],
+                                   len1) == 0)
+    return 0;
+
+  return -1;
+  // Failure: not an UIOP IOR DO NOT throw an exception here.
+}
+
+char
+TAO_UIOP_Connector::object_key_delimiter (void) const
+{
+  return TAO_UIOP_Profile::object_key_delimiter_;
+}
+
+int
+TAO_UIOP_Connector::init_uiop_properties (void)
+{
+  // Connector protocol properties are obtained from ORB-level
+  // RTCORBA::ClientProtocolProperties policy override.
+  // If the override doesn't exist or doesn't contain the
+  // properties, we use ORB default.
+  //
+  // Currently, we do not use Object-level and Current-level policy
+  // overrides for protocol configuration because connection
+  // lookup and caching are not done based on protocol
+  // properties.
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
+  int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
+  int no_delay = 0;
+
+  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (tph != 0)
+    {
+      const char protocol [] = "uiop";
+      const char *protocol_type = protocol;
+      int hook_result =
+        tph->call_client_protocols_hook (send_buffer_size,
+                                         recv_buffer_size,
+                                         no_delay,
+                                         protocol_type);
+
+      if(hook_result == -1)
+        return -1;
+    }
+
+    // Extract and locally store properties of interest.
+    this->uiop_properties_.send_buffer_size =
+      send_buffer_size;
+    this->uiop_properties_.recv_buffer_size =
+      recv_buffer_size;
+
+  return 0;
+}
+
+
+#if 0
+/*
+ *  TODO Needs to be removed
+ *
+ */
 int
 TAO_UIOP_Connector::preconnect (const char *preconnects)
 {
@@ -376,126 +490,6 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
 
   return successes;
 }
-
-TAO_Profile *
-TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
-{
-  TAO_Profile *pfile;
-  ACE_NEW_RETURN (pfile,
-                  TAO_UIOP_Profile (this->orb_core ()),
-                  0);
-
-  int r = pfile->decode (cdr);
-  if (r == -1)
-    {
-      pfile->_decr_refcnt ();
-      pfile = 0;
-    }
-
-  return pfile;
-}
-
-TAO_Profile *
-TAO_UIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
-{
-  TAO_Profile *profile = 0;
-  ACE_NEW_THROW_EX (profile,
-                    TAO_UIOP_Profile (this->orb_core ()),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-
-  ACE_CHECK_RETURN (0);
-
-  return profile;
-}
-
-int
-TAO_UIOP_Connector::check_prefix (const char *endpoint)
-{
-  // Check for a valid string
-  if (!endpoint || !*endpoint)
-    return -1;  // Failure
-
-  const char *protocol[] = { "uiop", "uioploc" };
-
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
-
-  // Check for the proper prefix in the IOR.  If the proper prefix
-  // isn't in the IOR then it is not an IOR we can use.
-  if (slot == len0
-      && ACE_OS::strncasecmp (endpoint,
-                              protocol[0],
-                              len0) == 0)
-    return 0;
-  else if (slot == len1
-           && ACE_OS::strncasecmp (endpoint,
-                                   protocol[1],
-                                   len1) == 0)
-    return 0;
-
-  return -1;
-  // Failure: not an UIOP IOR DO NOT throw an exception here.
-}
-
-char
-TAO_UIOP_Connector::object_key_delimiter (void) const
-{
-  return TAO_UIOP_Profile::object_key_delimiter_;
-}
-
-int
-TAO_UIOP_Connector::init_uiop_properties (void)
-{
-  // Connector protocol properties are obtained from ORB-level
-  // RTCORBA::ClientProtocolProperties policy override.
-  // If the override doesn't exist or doesn't contain the
-  // properties, we use ORB default.
-  //
-  // Currently, we do not use Object-level and Current-level policy
-  // overrides for protocol configuration because connection
-  // lookup and caching are not done based on protocol
-  // properties.
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  int send_buffer_size = this->orb_core ()->orb_params ()->sock_sndbuf_size ();
-  int recv_buffer_size = this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
-  int no_delay = 0;
-
-  TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  if (tph != 0)
-    {
-      const char protocol [] = "uiop";
-      const char *protocol_type = protocol;
-      int hook_result =
-        tph->call_client_protocols_hook (send_buffer_size,
-                                         recv_buffer_size,
-                                         no_delay,
-                                         protocol_type);
-
-      if(hook_result == -1)
-        return -1;
-    }
-
-    // Extract and locally store properties of interest.
-    this->uiop_properties_.send_buffer_size =
-      send_buffer_size;
-    this->uiop_properties_.recv_buffer_size =
-      recv_buffer_size;
-
-  return 0;
-}
-
-
-
-
+#endif /*if 0*/
 
 #endif /* TAO_HAS_UIOP == 1 */
