@@ -1,16 +1,16 @@
 // $Id$
 
-#ifndef TAO_ARRAY_TYPECODE_CPP
-#define TAO_ARRAY_TYPECODE_CPP
+#ifndef TAO_SEQUENCE_TYPECODE_CPP
+#define TAO_SEQUENCE_TYPECODE_CPP
 
-#include "Array_TypeCode.h"
+#include "Sequence_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/Array_TypeCode.inl"
+# include "tao/Sequence_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 template <class RefCountPolicy>
-TAO::TypeCode::Array<RefCountPolicy>::~Array (void)
+TAO::TypeCode::Sequence<RefCountPolicy>::~Sequence (void)
 {
   if (this->content_type_)
     CORBA::release (*this->content_type_);
@@ -18,7 +18,7 @@ TAO::TypeCode::Array<RefCountPolicy>::~Array (void)
 
 template <class RefCountPolicy>
 bool
-TAO::TypeCode::Array<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
+TAO::TypeCode::Sequence<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
 {
   // A tk_array or tk_sequence TypeCode has a "complex" parameter list
   // type (see Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR
@@ -34,21 +34,21 @@ TAO::TypeCode::Array<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::Array<RefCountPolicy>::tao_duplicate (void)
+TAO::TypeCode::Sequence<RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
 
 template <class RefCountPolicy>
 void
-TAO::TypeCode::Array<RefCountPolicy>::tao_release (void)
+TAO::TypeCode::Sequence<RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }
 
 template <class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Array<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
+TAO::TypeCode::Sequence<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
                                                ACE_ENV_ARG_DECL) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
@@ -69,7 +69,7 @@ TAO::TypeCode::Array<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
 
 template <class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::Array<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
+TAO::TypeCode::Sequence<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
                                                      ACE_ENV_ARG_DECL) const
 {
   // We could refactor this code to the CORBA::TypeCode::equivalent()
@@ -83,14 +83,7 @@ TAO::TypeCode::Array<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_array directly since a
-  // subclass, such as WArray_TypeCode, can use this equivalent_i()
-  // implementation.
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != this_kind)
+  if (tc_kind != this->kind_)
     return 0;
 
   CORBA::TypeCode_var rhs_content_type =
@@ -103,7 +96,7 @@ TAO::TypeCode::Array<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
 
 template <class RefCountPolicy>
 CORBA::TCKind
-TAO::TypeCode::Array<RefCountPolicy>::kind_i (
+TAO::TypeCode::Sequence<RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->kind_;
@@ -111,10 +104,10 @@ TAO::TypeCode::Array<RefCountPolicy>::kind_i (
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Array<RefCountPolicy>::get_compact_typecode_i (
+TAO::TypeCode::Sequence<RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  // Already compact since tk_array TypeCodes have no name or member
+  // Already compact since tk_sequence TypeCodes have no name or member
   // names, meaning that we can simply call _duplicate() on this
   // TypeCode.
   return CORBA::TypeCode::_duplicate (this);
@@ -122,11 +115,11 @@ TAO::TypeCode::Array<RefCountPolicy>::get_compact_typecode_i (
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Array<RefCountPolicy>::length_i (
+TAO::TypeCode::Sequence<RefCountPolicy>::length_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->length_;
 }
 
 
-#endif  /* TAO_ARRAY_TYPECODE_CPP */
+#endif  /* TAO_SEQUENCE_TYPECODE_CPP */

@@ -70,14 +70,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Call kind_i() instead of using CORBA::tk_objref directly since a
-  // subclass, such as Home_TypeCode, can use this equivalent_i()
-  // implementation.
-  CORBA::TCKind const this_kind =
-    this->kind_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (tc_kind != this_kind)
+  if (tc_kind != Objref_Traits<Kind>::kind)
     return 0;
 
   char const * const this_id = this->attributes_.id ();
@@ -115,8 +108,8 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::get_compact_typecode_i (
     }
 
   return
-    Objref_Traits<Kind>::create_compact_typecode (this->attributes_.id (),
-                                                  ""  /* empty name */
+    Objref_Traits<Kind>::create_compact_typecode (adapter,
+                                                  this->attributes_.id (),
                                                   ACE_ENV_ARG_PARAMETER);
 }
 

@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    Array_TypeCode.h
+ *  @file    Sequence_TypeCode.h
  *
  *  $Id$
  *
- *  Header file for @c CORBA::tk_array @c CORBA::TypeCodes.
+ *  Header file for @c tk_sequence and @c tk_array @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef TAO_ARRAY_TYPECODE_H
-#define TAO_ARRAY_TYPECODE_H
+#ifndef TAO_SEQUENCE_TYPECODE_H
+#define TAO_SEQUENCE_TYPECODE_H
 
 #include /**/ "ace/pre.h"
 
@@ -29,27 +29,27 @@ namespace TAO
   {
 
     /**
-     * @class Array
+     * @class Sequence
      *
-     * @brief @c CORBA::TypeCode implementation for OMG IDL array
-     *        types.
+     * @brief @c CORBA::TypeCode implementation for OMG IDL
+     *        @c sequence and @c array types.
      *
-     * This class implements a @c CORBA::TypeCode for OMG IDL array
-     * types, including @c warray.
+     * This class implements a @c CORBA::TypeCode for OMG IDL
+     * @c sequence and array types.
      */
     template <class RefCountPolicy>
-    class Array : public CORBA::TypeCode
+    class Sequence : public CORBA::TypeCode
       : private RefCountPolicy
     {
     public:
 
       /// Constructor.
-      Array (CORBA::TCKind kind,
+      Sequence (CORBA::TCKind kind,
              CORBA::ULong length,
              CORBA::TypeCode_ptr * tc);
 
       /// Destructor.
-      ~Array (void);
+      ~Sequence (void);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -70,7 +70,7 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c CORBA::TypeCode template methods specific to @c tk_array
+       * @c CORBA::TypeCode template methods specific to @c tk_sequence
        * @c TypeCodes.
        *
        * @see @c CORBA::TypeCode
@@ -90,12 +90,12 @@ namespace TAO
 
       /// The kind of this @c TypeCode.
       /**
-       * @c kind_ is either @c CORBA::tk_array or
-       * @c CORBA::tk_warray.
+       * @c kind_ is either @c CORBA::tk_sequence or
+       * @c CORBA::tk_array.
        */
       CORBA::TCKind const kind_;
 
-      /// Element type of the array.
+      /// Element type of the sequence.
       /**
        * A pointer to the @c CORBA::TypeCode_ptr rather than the
        * @c CORBA::TypeCode_ptr itself is stored since that address is
@@ -104,12 +104,12 @@ namespace TAO
        * compile-time, hence the indirection.
        *
        * @note This @c TypeCode is released upon destruction of this
-       *       @c TypeCode::Array.
+       *       @c TypeCode::Sequence.
        */
       CORBA::TypeCode_ptr * content_type_;
 
-      /// Length of the @c array.  A length of zero indicates an
-      /// unbounded @c array.
+      /// Length of the @c sequence or array.  A length of zero
+      /// indicates an unbounded @c sequence.
       CORBA::ULong const length_;
 
     };
@@ -119,9 +119,9 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Array_TypeCode.inl"
+# include "tao/Sequence_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_ARRAY_TYPECODE_H */
+#endif /* TAO_SEQUENCE_TYPECODE_H */
