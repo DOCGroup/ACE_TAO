@@ -32,12 +32,12 @@ public:
   ACE_HANDLE handle (void);
 
   virtual void read (ACE_Message_Block& mb, int size) = 0;
-  virtual void transmit_file (char *filename,
+  virtual void transmit_file (const char *filename,
 			      const char *header,
 			      int header_size,
 			      const char *trailer,
 			      int trailer_size) = 0;
-  virtual void receive_file (char *filename,
+  virtual void receive_file (const char *filename,
 			     void *initial_data,
 			     int initial_data_length,
 			     int entire_length) = 0;
@@ -96,12 +96,12 @@ public:
   JAWS_Synch_IO (void);
   ~JAWS_Synch_IO (void);
   void read (ACE_Message_Block& mb, int size);  
-  void transmit_file (char *filename,
+  void transmit_file (const char *filename,
 		      const char *header,
 		      int header_size,
 		      const char *trailer,
 		      int trailer_size);
-  void receive_file (char *filename,
+  void receive_file (const char *filename,
 		     void *initial_data,
 		     int initial_data_length,
 		     int entire_length);
@@ -121,12 +121,12 @@ public:
   JAWS_Asynch_IO (void);
   ~JAWS_Asynch_IO (void);
   void read (ACE_Message_Block& mb, int size);  
-  void transmit_file (char *filename,
+  void transmit_file (const char *filename,
 		      const char *header,
 		      int header_size,
 		      const char *trailer,
 		      int trailer_size);
-  void receive_file (char *filename,
+  void receive_file (const char *filename,
 		     void *initial_data,
 		     int initial_data_length,
 		     int entire_length);

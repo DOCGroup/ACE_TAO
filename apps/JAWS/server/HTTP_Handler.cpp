@@ -86,7 +86,7 @@ void
 HTTP_Handler::receive_file_complete (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s received successfully\n",
-              request_.filename ()));
+              request_.uri ()));
 
   char buffer[BUFSIZ];
   int buflen =
@@ -103,7 +103,7 @@ void
 HTTP_Handler::receive_file_error (int result)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in receiving file\n",
-              request_.filename ()));
+              request_.uri ()));
 
   char buffer[BUFSIZ];
   int buflen =
@@ -132,7 +132,7 @@ void
 HTTP_Handler::transmit_file_complete (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s transmitted successfully\n",
-              request_.filename ()));
+              request_.uri ()));
 
   this->done ();
 }
@@ -141,7 +141,7 @@ void
 HTTP_Handler::transmit_file_error (int result)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in transmitting file\n",
-              request_.filename ()));
+              request_.uri ()));
 
   this->response_.error_response (result, "error in transmitting file");
 }
@@ -157,7 +157,7 @@ void
 HTTP_Handler::write_error (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in writing response\n",
-              request_.filename ()));
+              request_.uri ()));
 
   this->done ();
 }
@@ -166,7 +166,7 @@ void
 HTTP_Handler::timeout (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in reading request\n",
-              request_.filename ()));
+              request_.uri ()));
 
   this->response_.
     error_response (HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR,

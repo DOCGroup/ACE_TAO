@@ -27,6 +27,7 @@ HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
 HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
   : io_(io), request_(request)
 {
+  delete this->HTTP_HEADER;
 }
 
 HTTP_Response::~HTTP_Response (void)
@@ -42,77 +43,38 @@ HTTP_Response::process_request(HTTP_Response &response)
 void
 HTTP_Response::process_request (void)
 {
-  switch (this->request_.status ()) {
-  case HTTP_Request::OK :
+  ACE_DEBUG ((LM_DEBUG, "  (%t) processing request: %s\n",
+              this->request_.status_string ()));
 
-    switch (this->request_.type ()) {
-    case HTTP_Request::GET :
+ switch (this->request_.status ())
+    {
+    case HTTP_Status_Code::STATUS_OK :
+
       if (this->request_.cgi ())
         {
-	  // Build command line if any
-	  // Build environment variables
-	  // Exec the cgi program
+          this->cgi_response ();
         }
       else
         {
-          this->build_headers ();
-          this->io_.transmit_file (this->request_.filename (), 
-                                   this->HTTP_HEADER, 
-                                   this->HTTP_HEADER_LENGTH,
-                                   this->HTTP_TRAILER, 
-                                   this->HTTP_TRAILER_LENGTH);
+          this->normal_response ();
         }
+
       break;
 
-    case HTTP_Request::HEAD :
-      this->build_headers ();
-      this->io_.send_confirmation_message (this->HTTP_HEADER,
-                                           this->HTTP_HEADER_LENGTH);
-      break;
-
-    case HTTP_Request::POST :
-      if (this->request_.cgi ())
-	{
-	  // Build command line if any
-	  // Build environment variables
-	  // Exec the cgi program
-	}
-      else
-	{
-	  // What to do here?
-	  // Standard says this is implementation dependent.
-	  // Examples: annotations, page updates, etc.
-	  // They may be a good place to stick CORBA stuff,
-	  // and mobile code.
-	}
-      break;
-
-    case HTTP_Request::PUT :
-      this->io_.receive_file (this->request_.filename (),
-                              this->request_.data (),
-                              this->request_.data_length (),
-                              this->request_.content_length ());
-      break;
-
-    default :
-      this->error_response (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED,
-                            "Requested method is not implemented.");
+    default:
+      this->error_response (this->request_.status (),
+                            this->request_.status_string ());
     }
-    break;
-
-  default:
-    this->error_response (HTTP_Status_Code::STATUS_BAD_REQUEST, "");
-  }
 }
 
 void
 HTTP_Response::error_response (int status_code, const char *log_message)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) [%s %s %s] %s\n",
-              this->request_.type(),
-              this->request_.filename(),
-              this->request_.version(),
-              log_message));
+              this->request_.method () ? this->request_.method () : "-",
+              this->request_.uri () ? this->request_.uri () : "-",
+              this->request_.version() ? this->request_.version () : "-",
+              log_message ? log_message : "-"));
 
   static char const error_header[] =
     "%s %d %s\r\n"
@@ -126,35 +88,103 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     "<html>\n"
     "<head><title>Server error message</title></head>\n"
     "<body>\n"
-    "<h1>Error %d: %s</h1>"
-    "The request could not be completed because: %s\n"
+    "<h1>Error %d: %s</h1>\n"
+    "The request could not be completed because:\n %s\n"
     "</body>\n"
     "</html>\n"
     ;
 
-  char buffer[4 * BUFSIZ];
+
+  char *buf;
+  char buf1[4 * BUFSIZ];
+  char buf2[BUFSIZ];
 
   int length;
 
-  if (ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0) {
-    length =
-      sprintf(buffer, error_message,
-              status_code, HTTP_Status_Code::instance()[status_code],
-              log_message);
-  }
-  else {
-    char message[BUFSIZ];
-    length =
-      sprintf(buffer, error_header,
-              this->request_.version(), status_code,
-              HTTP_Status_Code::instance()[status_code],
-              sprintf(message, error_message,
-                      status_code, HTTP_Status_Code::instance()[status_code],
-                      log_message),
-              message);
-  }
+  length =
+    ACE_OS::sprintf (buf2, error_message,
+                     status_code, HTTP_Status_Code::instance ()[status_code],
+                     log_message);
+
+  if (this->request_.version () == 0
+      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+    {
+      buf = buf2;
+    }
+  else
+    {
+      length +=
+        ACE_OS::sprintf (buf1, error_header,
+                         this->request_.version(), status_code,
+                         HTTP_Status_Code::instance()[status_code],
+                         length,
+                         buf2);
+      buf = buf1;
+    }
           
-  this->io_.send_error_message (buffer, length);
+  this->io_.send_error_message (buf, length);
+}
+
+void
+HTTP_Response::normal_response (void)
+{
+  ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s, version %s\n",
+              request_.method (), request_.uri (),
+              (request_.version () ? request_.version () : "HTTP/0.9")));
+
+  switch (this->request_.type ())
+    {
+    case HTTP_Request::GET :
+
+      this->build_headers ();
+      this->io_.transmit_file (this->request_.uri (), 
+                               this->HTTP_HEADER
+                               ? this->HTTP_HEADER
+                               : "",
+                               this->HTTP_HEADER_LENGTH,
+                               this->HTTP_TRAILER, 
+                               this->HTTP_TRAILER_LENGTH);
+
+      break;
+
+    case HTTP_Request::HEAD :
+      this->build_headers ();
+      this->io_.send_confirmation_message (this->HTTP_HEADER
+                                           ? this->HTTP_HEADER
+                                           : "",
+                                           this->HTTP_HEADER_LENGTH);
+      break;
+
+    case HTTP_Request::POST :
+      // What to do here?
+      // Standard says this is implementation dependent.
+      // Examples: annotations, page updates, etc.
+      // They may be a good place to stick CORBA stuff,
+      // and mobile code.
+      this->error_response (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED,
+                            "Requested method is not implemented.");
+      break;
+
+    case HTTP_Request::PUT :
+      this->io_.receive_file (this->request_.uri (),
+                              this->request_.data (),
+                              this->request_.data_length (),
+                              this->request_.content_length ());
+      break;
+
+    default :
+      this->error_response (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED,
+                            "Requested method is not implemented.");
+    }
+}
+
+
+void
+HTTP_Response::cgi_response (void)
+{
+  // Build command line if any
+  // Build environment variables
+  // Exec the cgi program
 }
 
 void
@@ -167,35 +197,40 @@ HTTP_Response::build_headers (void)
 
   // Let's assume this is HTML for now.
 
-  if (ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0) {
-    HTTP_HEADER = "";
-    HTTP_HEADER_LENGTH = 0;
-  }
-  else {
-    HTTP_HEADER = new char[BUFSIZ * 4];
-
-    HTTP_HEADER[0] = '\0';
-    HTTP_HEADER_LENGTH = 0;
-
-    HTTP_HEADER_LENGTH +=
-      sprintf(HTTP_HEADER, "%s %d %s\r\n",
-              this->request_.version (),
-              this->request_.status (),
-              this->request_.status_string ());
-
-    char date[30];
-    const char *date_ptr = HTTP_Helper::HTTP_date (date, sizeof(date)-1);
-
-    if (date_ptr != 0) {
-      HTTP_HEADER_LENGTH +=
-        sprintf(HTTP_HEADER, "Date: %s\r\n",
-                date);
+  if (this->request_.version () == 0
+      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+    {
+      HTTP_HEADER = 0;
+      HTTP_HEADER_LENGTH = 0;
     }
+  else
+    {
+      HTTP_HEADER = new char[BUFSIZ * 4];
 
-    HTTP_HEADER_LENGTH +=
-      sprintf(HTTP_HEADER, "Content-type: %s\r\n\r\n",
-              "text/html");
-  }
+      HTTP_HEADER[0] = '\0';
+      HTTP_HEADER_LENGTH = 0;
+
+      HTTP_HEADER_LENGTH +=
+        ACE_OS::sprintf(HTTP_HEADER, "%s %d %s\r\n",
+                        this->request_.version (),
+                        this->request_.status (),
+                        this->request_.status_string ());
+
+      char date[40];
+      const char *date_ptr = HTTP_Helper::HTTP_date (date, sizeof(date)-1);
+
+      if (date_ptr != 0)
+        {
+          HTTP_HEADER_LENGTH +=
+            ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH,
+                            "Date: %s\r\n", date_ptr);
+        }
+
+      HTTP_HEADER_LENGTH +=
+        ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
+                        "Content-type: %s\r\n\r\n",
+                        "text/html");
+    }
 
   HTTP_TRAILER = "";
   HTTP_TRAILER_LENGTH = 0;
