@@ -1111,7 +1111,12 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
   // If we're checking the state of our thread, try to get the cached
   // value out of TSS to avoid lookup.
   if (self_check)
-    thr_state = this->thread_desc_self ()->thr_state_;
+    {
+      ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
+      if (desc == 0)
+        return 0;               // Always return false.
+      thr_state = desc->thr_state_;
+    }
   else
     {
       // Not calling from self, have to look it up from the list.
