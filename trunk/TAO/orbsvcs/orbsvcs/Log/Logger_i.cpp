@@ -126,6 +126,21 @@ Logger_i::log (const Logger::Log_Record &log_rec,
 }
 
 void
+Logger_i::log2 (const Logger::Log_Record &log_rec,
+               CORBA::Environment &_env)
+{
+  this->logv (log_rec, verbosity_level_, _env);
+}
+
+void
+Logger_i::logv2 (const Logger::Log_Record &log_rec,
+               Logger::Verbosity_Level verbosity,
+               CORBA::Environment &_env)
+{
+  this->logv (log_rec, verbosity, _env);
+}
+
+void
 Logger_i::logv (const Logger::Log_Record &log_rec,
                Logger::Verbosity_Level verbosity,
                CORBA::Environment &_env)
@@ -177,67 +192,6 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
   // Print out the logging message to stderr with the given level of
   // verbosity
 }
-
-void
-Logger_i::log2 (const Logger::Log_Record &log_rec,
-               CORBA::Environment &_env)
-{
-  this->logv2 (log_rec, verbosity_level_, _env);
-}
-
-void
-Logger_i::logv2 (const Logger::Log_Record &log_rec,
-               Logger::Verbosity_Level verbosity,
-               CORBA::Environment &_env)
-{
-  ACE_Time_Value temp (log_rec.time);
-
-  // Create an <ACE_Log_Record> to leverage existing logging
-  // code. Since Logger::Log_Priority enum tags don't cleanly map to
-  // ACE_Log_Priority tags, <priority_conversion> is used to coerce
-  // the mapping.
-  ACE_Log_Record rec (this->priority_conversion (log_rec.type),
-                      ACE_Time_Value (log_rec.time),
-                      log_rec.app_id);
-
-  // Create a temporary buffer for manipulating the logging message,
-  // adding additional space for formatting characters..
-  ASYS_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
-
-  // Format the message for proper display.
-  ACE_OS::strcpy (msgbuf, "::");
-
-  // Copy the message data into the temporary buffer
-  ACE_OS::strncat (msgbuf,
-                   log_rec.msg_data,
-                   ACE_MAXLOGMSGLEN);
-
-  // Set <ACE_Log_Record.msg_data> to the value stored in <msgbuf>.
-  rec.msg_data (msgbuf);
-
-  CORBA::Long addr = log_rec.host_addr;
-
-  // The constructor for <ACE_INET_Addr> requires a port number, which
-  // is not relevant in this context, so we give it 0.
-  ACE_INET_Addr addy (ACE_static_cast (u_short, 0),
-                      ACE_static_cast (ACE_UINT32,
-                                       addr));
-
-  // Create a buffer and fill it with the host name of the logger
-  ASYS_TCHAR namebuf[MAXHOSTNAMELEN + 1];
-  addy.get_host_name (namebuf,
-                      MAXHOSTNAMELEN);
-
-
-  u_long verb_level = this->verbosity_conversion (verbosity);
-
-  rec.print (namebuf,
-             verb_level,
-             stderr);
-  // Print out the logging message to stderr with the given level of
-  // verbosity
-}
-
 
 Logger::Verbosity_Level
 Logger_i::verbosity (void) const

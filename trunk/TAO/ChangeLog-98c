@@ -1,3 +1,8 @@
+Fri Nov 13 11:51:21 1998  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Modified to reuse code a
+	  little better
+
 Thu Nov 12 23:21:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/orbconf.h: Native exceptions seem to be working fine.  I
