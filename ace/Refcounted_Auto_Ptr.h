@@ -43,7 +43,7 @@ public:
 
   /// Constructor that initializes an @c ACE_Refcounted_Auto_Ptr to
   /// point to the result immediately.
-  ACE_Refcounted_Auto_Ptr (X *p = 0);
+  explicit ACE_Refcounted_Auto_Ptr (X *p = 0);
 
   /// Copy constructor binds the created object and @c r to the same
   /// @c ACE_Refcounted_Auto_Ptr_Rep. An @c ACE_Refcounted_Auto_Ptr_Rep
