@@ -15,6 +15,9 @@ if (!defined $svcconf_ext) {
     $svcconf_ext = ".conf";
 }
 
+# Default timeout.  NSCORBA needs more time for process start up.
+$wait_interval_for_process_creation = ($^O eq "nonstop_kernel") ? 10 : 5;
+
 # Turn on autoflush
 $| = 1;
 

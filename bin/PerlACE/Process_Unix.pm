@@ -305,10 +305,15 @@ sub check_return_value ($)
     my $self = shift;
     my $rc = shift;
 
+    # NSK OSS has a 32-bit waitpid() status 
+    my $is_NSK = ($^O eq "nonstop_kernel");
+    my $CC_MASK = $is_NSK ? 0xffff00 : 0xff00;
+
+    # Exit code processing
     if ($rc == 0) {
         return 0;
     }
-    elsif ($rc == 0xff00) {
+    elsif ($rc == $CC_MASK) {
         print STDERR "ERROR: <", $self->{EXECUTABLE},
                      "> failed: $!\n";
         return ($rc >> 8);
@@ -318,6 +323,10 @@ sub check_return_value ($)
         return $rc;
     }
 
+    # Ignore NSK 16-bit completion code
+    $rc &= 0xff if $is_NSK;
+
+    # Remember Core dump flag
     my $dump = 0;
 
     if ($rc & 0x80) {
