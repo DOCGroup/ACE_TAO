@@ -1,3 +1,11 @@
+Mon Nov 29 12:39:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/IIOP_Endpoint.cpp:
+	* tao/Strategies/SCIOP_Endpoint.cpp:
+
+	  Fixed a stupid typo which resulted in some tests failing in the
+	  daily builds.  Thanks to Johnny for pointing me to the builds. 
+
 Mon Nov 29 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
