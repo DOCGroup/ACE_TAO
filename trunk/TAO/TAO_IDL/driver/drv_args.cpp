@@ -295,6 +295,11 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT ("  \t\t\td - Generate debug (source file/line#) information.")
+      ACE_TEXT (" (off by default)\n")
+     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Gp \t\t\tGenerate the code for thru-POA collocation")
       ACE_TEXT (" (default)\n")
     ));
