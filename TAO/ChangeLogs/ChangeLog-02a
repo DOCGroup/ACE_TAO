@@ -1,3 +1,27 @@
+Thu Feb 15 19:23:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/POA/Default_Servant/File_i.cpp:
+
+          Changed the use of 0644 for open permissions to 
+          ACE_DEFAULT_FILE_PERMS.  On Win32, 0644 causes ACE_OS::open 
+          to fail.
+
+        * examples/Load_Balancing/service.dsp:
+
+          Changed the output file from service.exe to load_balancer.exe
+          to match what the Makefile does.
+
+        * tests/Exposed_Policies/run_test.pl:
+
+          Test wasn't waiting between starting server and client, thus it
+          usually would fail.
+
+        * examples/POA/Default_Servant/run_test.pl:
+        * examples/Load_Balancing/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+
+          Updated to use PerlACE::Run_Test.
+
 Thu Feb 15 13:19:47 2001  Ossama Othman  <ossama@uci.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp

@@ -5,38 +5,33 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
+use lib "../../../../bin";
+use PerlACE::Run_Test;
 
-$iorfile = "server.ior";
+$iorfile = PerlACE::LocalFile ("server.ior");
 
 unlink $iorfile;
 
-$SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-		       " -o $iorfile");
+$SV = new PerlACE::Process ("server", "-o $iorfile");
+$CL = new PerlACE::Process ("client", "-k $iorfile");
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
+  $SV->Kill ();
   exit 1;
 }
 
-$CL  = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-			" -k $iorfile");
+$client = $CL->SpawnWaitKill (60);
 
-$client = $CL->TimedWait (60);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
 }
 
-$SV->Kill (); $SV->TimedWait (1);
+$SV->Kill ();
 
 unlink $iorfile;
 unlink "test"; # created by the program
 
-if ($client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $client;
