@@ -11,6 +11,10 @@ Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Tom Brusehaver <tgb@cozy.netco.com> for reporting
           this.
 
+        * orbsvcs/Runtime_Scheduler.{h,i},
+          orbsvcs/orbsvcs/Config_Scheduler.{h,i} (set):
+          removed const from Criticality and Info_Type arguments.
+
 Wed Apr 08 07:41:53 1998  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/{default.bld, tao.bld}: Updated VxWorks GHS Build files.
