@@ -1,3 +1,12 @@
+Wed Jun 18 17:28:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_linux.GNU (CXX): Added some default
+	  options specified in the /usr/sys/features.h. 
+
+	  Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
+          Noseworthy <j.russell.noseworthy@objectsciences.com> for
+	  providing these patches.
+
 Wed Jun 18 17:20:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Log_Record.cpp:
