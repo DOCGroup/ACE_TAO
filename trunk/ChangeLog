@@ -1,3 +1,19 @@
+Tue Aug 10 11:20:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+	Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for the information leading to these guard conditions.
+
+        * ace/Sock_Connect.cpp
+          Added guard checks around #include "ace/OS_NS_fcntl.h"
+
+        * ace/DEV_IO.h
+        * ace/FILE_IO.h
+        * ace/FIFO_Send_Msg.h
+          Added guard checks around #include "ace/OS_NS_stropts.h"
+
+        * ace/Pipe.cpp
+        * ace/SPIPE_Acceptor.cpp
+          Added guard checks around #include "ace/OS_NS_unistd.h"
+
 Mon Aug  9 23:13:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-freebsd.h:

@@ -14,7 +14,10 @@
 #define ACE_FILE_IO_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS_NS_stropts.h"
+#if defined (ACE_HAS_STREAM_PIPES)
+#  include "ace/OS_NS_stropts.h"
+#endif /* ACE_HAS_STREAM_PIPES */
+
 #include "ace/FILE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
