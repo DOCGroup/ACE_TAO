@@ -80,6 +80,20 @@ ACE_SSL_Connect_Handler::ssl_connect (void)
         case SSL_ERROR_WANT_READ:
           break;
 
+        case SSL_ERROR_ZERO_RETURN:
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
+          //
+          // Removing this event handler causes the SSL stream to be
+          // shutdown.
+          return -1;
+
+        case SSL_ERROR_SYSCALL:
+          // On some platforms (e.g. MS Windows) OpenSSL does not
+          // store the last error in errno so explicitly do so.
+          ACE_OS::set_errno_to_last_error ();
+
         default:
           ACE_SSL_Context::report_error ();
 
