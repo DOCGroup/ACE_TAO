@@ -42,6 +42,7 @@ OBJFILES = \
 	$(OBJDIR)\Configuration_Import_Export.obj \
         $(OBJDIR)\Connection_Recycling_Strategy.obj \
 	$(OBJDIR)\Containers.obj \
+	$(OBJDIR)\Copy_Disabled.obj \
 	$(OBJDIR)\Date_Time.obj \
 	$(OBJDIR)\DEV.obj \
 	$(OBJDIR)\DEV_Addr.obj \
