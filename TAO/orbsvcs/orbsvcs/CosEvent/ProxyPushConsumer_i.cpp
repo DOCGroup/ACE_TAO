@@ -63,12 +63,15 @@ PushSupplierWrapper::disconnect_push_supplier (CORBA::Environment &TAO_TRY_ENV)
 
 ProxyPushConsumer_i::ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos, RtecEventChannelAdmin::ProxyPushConsumer_ptr ppc)
   : qos_ (qos),
-    ppc_ (ppc)
+    ppc_ (ppc),
+    wrapper_ (0)
 {
+  // No-Op.
 }
 
 ProxyPushConsumer_i::~ProxyPushConsumer_i ()
 {
+  // No-Op.
 }
 
 void
@@ -79,12 +82,14 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
   events.length (1);
 
   RtecEventComm::Event& e = events[0];
-  // TODO: fill this..
-  //e.header.source = ECB_SupplierID_Test::SUPPLIER_ID;
-  e.header.source = 1;
-  e.header.ttl = 1;
-  // TODO: fill this..
-  e.header.type = ACE_ES_EVENT_ANY;
+  RtecEventComm::Event eqos = qos_.publications[0].event;
+  /*
+    NOTE: we initialize the <EventHeader> field using the 1st <publications>
+    from the <SupplierQOS>.so we assume that publications[0] is initialized.
+  */
+  e.header.source = eqos.header.source;
+  e.header.ttl = eqos.header.ttl ;
+  e.header.type = eqos.header.type;
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
@@ -120,13 +125,19 @@ ProxyPushConsumer_i::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 void
 ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier, CORBA::Environment &TAO_TRY_ENV)
 {
-  //if (this->connected ())
-  //TAO_THROW (EventChannelAdmin::AlreadyConnected());
+   CORBA::Environment &_env = TAO_TRY_ENV;
 
-  // Implements the RtecEventSupplier interface
-  PushSupplierWrapper *wrapper = new PushSupplierWrapper(push_supplier);
+  if (this->connected ())
+    TAO_THROW (CosEventChannelAdmin::AlreadyConnected());
 
-  this->ppc_->connect_push_supplier (wrapper->_this (TAO_TRY_ENV),
+  this->wrapper_ = new PushSupplierWrapper(push_supplier);
+
+  this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_TRY_ENV),
                                      this->qos_,
                                      TAO_TRY_ENV);
+}
+
+int ProxyPushConsumer_i::connected (void)
+{
+  return this->wrapper_ == 0 ? 0 : 1;
 }
