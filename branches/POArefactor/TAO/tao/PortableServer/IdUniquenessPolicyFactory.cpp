@@ -49,18 +49,6 @@ namespace TAO
       return policy;
     }
 
-    TAO_Cached_Policy_Type
-    IdUniquenessPolicyFactory::_tao_cached_type (void) const
-    {
-      return TAO_CACHED_POLICY_ID_UNIQUENESS;
-    }
-
-    TAO_Policy_Scope
-    IdUniquenessPolicyFactory::_tao_scope (void) const
-    {
-      return TAO_POLICY_POA_SCOPE;
-    }
-
     ACE_STATIC_SVC_DEFINE (
         IdUniquenessPolicyFactory,
         ACE_TEXT ("IdUniquenessPolicyFactory"),

@@ -51,18 +51,6 @@ namespace TAO
       return policy;
     }
 
-    TAO_Cached_Policy_Type
-    ImplicitActivationPolicyFactory::_tao_cached_type (void) const
-    {
-      return TAO_CACHED_POLICY_IMPLICIT_ACTIVATION;
-    }
-
-    TAO_Policy_Scope
-    ImplicitActivationPolicyFactory::_tao_scope (void) const
-    {
-      return TAO_POLICY_POA_SCOPE;
-    }
-
     ACE_STATIC_SVC_DEFINE (
         ImplicitActivationPolicyFactory,
         ACE_TEXT ("ImplicitActivationPolicyFactory"),

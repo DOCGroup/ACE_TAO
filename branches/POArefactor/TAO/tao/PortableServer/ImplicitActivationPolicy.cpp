@@ -104,6 +104,18 @@ namespace TAO
     {
       return ::PortableServer::IMPLICIT_ACTIVATION_POLICY_ID;
     }
+
+    TAO_Cached_Policy_Type
+    ImplicitActivationPolicy::_tao_cached_type (void) const
+    {
+      return TAO_CACHED_POLICY_IMPLICIT_ACTIVATION;
+    }
+
+    TAO_Policy_Scope
+    ImplicitActivationPolicy::_tao_scope (void) const
+    {
+      return TAO_POLICY_POA_SCOPE;
+    }
   }
 }
 

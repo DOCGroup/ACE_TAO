@@ -38,12 +38,6 @@ namespace TAO
     public:
       virtual ~IdAssignmentPolicyFactory (void);
 
-      /// Return the cached policy type for this policy.
-      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
-
-      /// Returns the scope at which this policy can be applied. See orbconf.h.
-      virtual TAO_Policy_Scope _tao_scope (void) const;
-
       /// Create a new id uniqueness policy
       /**
        * @note If all the compilers supported covariant return types we could

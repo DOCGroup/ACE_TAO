@@ -120,6 +120,20 @@ namespace TAO
     {
       return ::PortableServer::REQUEST_PROCESSING_POLICY_ID;
     }
+
+    TAO_Cached_Policy_Type
+    RequestProcessingPolicy::_tao_cached_type (void) const
+    {
+      return TAO_CACHED_POLICY_REQUEST_PROCESSING;
+    }
+
+    TAO_Policy_Scope
+    RequestProcessingPolicy::_tao_scope (void) const
+    {
+      return TAO_POLICY_POA_SCOPE;
+    }
+
+
   }
 }
 

@@ -51,18 +51,6 @@ namespace TAO
       return policy;
     }
 
-    TAO_Cached_Policy_Type
-    ThreadPolicyFactory::_tao_cached_type (void) const
-    {
-      return TAO_CACHED_POLICY_THREAD;
-    }
-
-    TAO_Policy_Scope
-    ThreadPolicyFactory::_tao_scope (void) const
-    {
-      return TAO_POLICY_POA_SCOPE;
-    }
-
     ACE_STATIC_SVC_DEFINE (
         ThreadPolicyFactory,
         ACE_TEXT ("ThreadPolicyFactory"),

@@ -30,13 +30,6 @@ namespace TAO
     {
     public:
       virtual ~PolicyFactory (void);
-
-      /// Return the cached policy type for this policy.
-      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const = 0;
-
-      /// Returns the scope at which this policy can be applied. See
-      /// orbconf.h.
-      virtual TAO_Policy_Scope _tao_scope (void) const = 0;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

@@ -104,6 +104,20 @@ namespace TAO
     {
       return ::PortableServer::LIFESPAN_POLICY_ID;
     }
+
+    TAO_Cached_Policy_Type
+    POA_LifespanPolicy::_tao_cached_type (void) const
+    {
+      return TAO_CACHED_POLICY_LIFESPAN;
+    }
+
+    TAO_Policy_Scope
+    POA_LifespanPolicy::_tao_scope (void) const
+    {
+      return TAO_POLICY_POA_SCOPE;
+    }
+
+
   }
 }
 

@@ -104,6 +104,19 @@ namespace TAO
     {
       return ::PortableServer::THREAD_POLICY_ID;
     }
+
+    TAO_Cached_Policy_Type
+    POA_ThreadPolicy::_tao_cached_type (void) const
+    {
+      return TAO_CACHED_POLICY_THREAD;
+    }
+
+    TAO_Policy_Scope
+    POA_ThreadPolicy::_tao_scope (void) const
+    {
+      return TAO_POLICY_POA_SCOPE;
+    }
+
   }
 }
 

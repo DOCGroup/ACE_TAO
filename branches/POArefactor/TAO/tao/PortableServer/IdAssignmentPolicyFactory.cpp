@@ -49,18 +49,6 @@ namespace TAO
       return policy;
     }
 
-    TAO_Cached_Policy_Type
-    IdAssignmentPolicyFactory::_tao_cached_type (void) const
-    {
-      return TAO_CACHED_POLICY_ID_ASSIGNMENT;
-    }
-
-    TAO_Policy_Scope
-    IdAssignmentPolicyFactory::_tao_scope (void) const
-    {
-      return TAO_POLICY_POA_SCOPE;
-    }
-
 ACE_STATIC_SVC_DEFINE (IdAssignmentPolicyFactory,
                        ACE_TEXT ("IdAssignmentPolicyFactory"),
                        ACE_SVC_OBJ_T,

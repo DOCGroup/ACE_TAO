@@ -104,6 +104,18 @@ namespace TAO
     {
       return ::PortableServer::ID_ASSIGNMENT_POLICY_ID;
     }
+
+    TAO_Cached_Policy_Type
+    IdAssignmentPolicy::_tao_cached_type (void) const
+    {
+      return TAO_CACHED_POLICY_ID_ASSIGNMENT;
+    }
+
+    TAO_Policy_Scope
+    IdAssignmentPolicy::_tao_scope (void) const
+    {
+      return TAO_POLICY_POA_SCOPE;
+    }
   }
 }
 

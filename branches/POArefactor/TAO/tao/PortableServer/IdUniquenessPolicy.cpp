@@ -104,6 +104,18 @@ namespace TAO
     {
       return ::PortableServer::ID_UNIQUENESS_POLICY_ID;
     }
+
+    TAO_Cached_Policy_Type
+    IdUniquenessPolicy::_tao_cached_type (void) const
+    {
+      return TAO_CACHED_POLICY_ID_UNIQUENESS;
+    }
+
+    TAO_Policy_Scope
+    IdUniquenessPolicy::_tao_scope (void) const
+    {
+      return TAO_POLICY_POA_SCOPE;
+    }
   }
 }
 

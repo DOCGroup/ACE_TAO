@@ -51,18 +51,6 @@ namespace TAO
       return policy;
     }
 
-    TAO_Cached_Policy_Type
-    ServantRetentionPolicyFactory::_tao_cached_type (void) const
-    {
-      return TAO_CACHED_POLICY_SERVANT_RETENTION;
-    }
-
-    TAO_Policy_Scope
-    ServantRetentionPolicyFactory::_tao_scope (void) const
-    {
-      return TAO_POLICY_POA_SCOPE;
-    }
-
     ACE_STATIC_SVC_DEFINE (
         ServantRetentionPolicyFactory,
         ACE_TEXT ("ServantRetentionPolicyFactory"),

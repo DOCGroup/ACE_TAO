@@ -49,18 +49,6 @@ namespace TAO
       return policy;
     }
 
-    TAO_Cached_Policy_Type
-    LifespanPolicyFactory::_tao_cached_type (void) const
-    {
-      return TAO_CACHED_POLICY_LIFESPAN;
-    }
-
-    TAO_Policy_Scope
-    LifespanPolicyFactory::_tao_scope (void) const
-    {
-      return TAO_POLICY_POA_SCOPE;
-    }
-
     ACE_STATIC_SVC_DEFINE (
         LifespanPolicyFactory,
         ACE_TEXT ("LifespanPolicyFactory"),
