@@ -1,3 +1,9 @@
+Wed Feb 10 16:36:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/Request.{i,cpp}:
+          Streamlined the new arg manipulation helper functions.
+          They're now short enought to be inlined.
+
 Wed Feb 10 14:22:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* rules.tao.GNU: 
