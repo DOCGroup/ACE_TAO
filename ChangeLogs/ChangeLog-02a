@@ -1,3 +1,11 @@
+Thu Jan 18 06:26:42 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Configuration.{h,cpp}: Added functionality to read in all
+	  values in a config file without requiring a type prefix on each
+ 	  value, skips whitespace and allows comments on the end of lines.
+  	  Thanks to Michael Searles <msearles@base16.com> for contributing
+ 	  this.
+
 Wed Jan 17 11:48:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:
