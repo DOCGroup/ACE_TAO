@@ -4909,9 +4909,10 @@ public:
   void ttl (int t);
 };
 
-class ACE_Export ACE_QoS
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  : public QOS
+class ACE_Export ACE_QoS : public QOS
+#else
+class ACE_Export ACE_QoS
 #endif /* ACE_HAS_WINSOCK2 */
 {
   // = TITLE

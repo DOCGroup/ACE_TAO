@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// SOCK_Dgram_Mcast.i
-
 ASYS_INLINE
 ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast (void)
 {
@@ -13,13 +11,17 @@ ACE_SOCK_Dgram_Mcast::set_option (int option,
 				  char optval) 
 { 
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::set_option");
-#if !defined (ACE_WIN32)
-  return this->ACE_SOCK::set_option (IPPROTO_IP, option, 
-				     &optval, sizeof (char));
-#else
+#if defined (ACE_WIN32)
   int sock_opt = optval;
-  return this->ACE_SOCK::set_option (IPPROTO_IP, option, 
-				     &sock_opt, sizeof (sock_opt));
+  return this->ACE_SOCK::set_option (IPPROTO_IP,
+                                     option, 
+				     &sock_opt,
+                                     sizeof (sock_opt));
+#else
+  return this->ACE_SOCK::set_option (IPPROTO_IP,
+                                     option, 
+				     &optval,
+                                     sizeof (optval));
 #endif /* !ACE_WIN32 */  
 }
 

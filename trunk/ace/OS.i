@@ -4582,10 +4582,10 @@ ACE_QoS::provider_specific (const iovec &ps)
 
 ACE_INLINE
 ACE_QoS_Params::ACE_QoS_Params (iovec *caller_data,
-                                                iovec *callee_data,
-                                                ACE_QoS *socket_qos,
-                                                ACE_QoS *group_socket_qos,
-                                                u_long flags)
+                                iovec *callee_data,
+                                ACE_QoS *socket_qos,
+                                ACE_QoS *group_socket_qos,
+                                u_long flags)
   : caller_data_ (caller_data),
     callee_data_ (callee_data),
     socket_qos_ (socket_qos),
@@ -4841,11 +4841,14 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   ACE_TRACE ("ACE_OS::bind");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,  (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
+                               (struct sockaddr_in *) addr,
                                (ACE_SOCKET_LEN) addrlen),
                        int, -1);
 #else /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
-  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
+  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
+                               addr,
+                               (ACE_SOCKET_LEN) addrlen), int, -1);
 #endif /* defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
@@ -4856,11 +4859,14 @@ ACE_OS::connect (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_OS::connect");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
+                                  (struct sockaddr_in *) addr,
                                   (ACE_SOCKET_LEN) addrlen),
                        int, -1);
 #else  /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
-  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
+  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
+                                  addr,
+                                  (ACE_SOCKET_LEN) addrlen), int, -1);
 #endif /* defined (ACE_PSOS)  && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
@@ -4920,9 +4926,7 @@ ACE_OS::gethostbyname2 (const char *name, int family)
 # else
   // IPv4-only implementation
   if (family == AF_INET)
-    {
-      return ACE_OS::gethostbyname (name);
-    }
+    return ACE_OS::gethostbyname (name);
 
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_PSOS */
@@ -5005,16 +5009,15 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 {
   ACE_TRACE ("ACE_OS::recv");
 
-
-  // On UNIX, a non-blocking socket with no data to receive, this system
-  // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
-  // UNIX 98 allows either errno, and they may be the same numeric value.
-  // So to make life easier for upper ACE layers as well as application
-  // programmers, always change EAGAIN to EWOULDBLOCK.  Rather than hack the
-  // ACE_OSCALL_RETURN macro, it's handled explicitly here.  If the ACE_OSCALL
-  // macro ever changes, this function needs to be reviewed.
-  // On Win32, the regular macros can be used, as this is not an issue.
-
+  // On UNIX, a non-blocking socket with no data to receive, this
+  // system call will return EWOULDBLOCK or EAGAIN, depending on the
+  // platform.  UNIX 98 allows either errno, and they may be the same
+  // numeric value.  So to make life easier for upper ACE layers as
+  // well as application programmers, always change EAGAIN to
+  // EWOULDBLOCK.  Rather than hack the ACE_OSCALL_RETURN macro, it's
+  // handled explicitly here.  If the ACE_OSCALL macro ever changes,
+  // this function needs to be reviewed.  On Win32, the regular macros
+  // can be used, as this is not an issue.
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
 #else
@@ -5109,7 +5112,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                               overlapped,
                               func);
   flags = the_flags;
-  number_of_bytes_recvd = ACE_static_cast(size_t,bytes_recvd);
+  number_of_bytes_recvd = ACE_static_cast (size_t, bytes_recvd);
   return result;
 #else
   ACE_UNUSED_ARG (handle);
@@ -5178,7 +5181,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                             addrlen,
                             overlapped,
                             func);
-  number_of_bytes_sent = ACE_static_cast(size_t, bytes_sent);
+  number_of_bytes_sent = ACE_static_cast (size_t, bytes_sent);
   return result;
 #else
   ACE_UNUSED_ARG (overlapped);
@@ -5191,8 +5194,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; i++)
     {
        result = ACE_OS::sendto (handle,
-                                ACE_reinterpret_cast(char* ACE_CAST_CONST,
-                                                     buffers[i].iov_base),
+                                ACE_reinterpret_cast (char *ACE_CAST_CONST,
+                                                      buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
                                 addr,
@@ -5212,11 +5215,14 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 {
   ACE_TRACE ("ACE_OS::getpeername");
 #if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
-  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
+                                      (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #else
-  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
+  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
+                                      addr,
+                                      (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #endif /* defined (ACE_PSOS) */
 }

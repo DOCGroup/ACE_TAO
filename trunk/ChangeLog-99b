@@ -1,3 +1,24 @@
+Sun Jul 18 14:30:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast: Finished implementing the QoS-enabled APIs for 
+	  socket datagram multicast.  This required refactoring quite a
+ 	  bit of code and adding some new methods that take the
+ 	  ACE_QoS_Params.
+
+	* ace/SOCK_Dgram.cpp: Finished integrating the QoS support
+	  for SOCK dgrams.
+	
+	* ace/SOCK_Dgram.cpp: Factored out common code in the
+ 	  ACE_SOCK_Dgram constructors.
+
+	* ace/SOCK_Connector: Finished implementing the QoS-enabled
+ 	  connect() methods.  To make this cleaner, I've created a new
+ 	  "shared_open()" method that factors out the common code.
+
+	* ace/SOCK_Acceptor: Finished implementing the QoS-enabled open()
+	  method.  To make this cleaner, I've created a new
+ 	  "shared_open()" method that factors out the common code.
+
 Sat Jul 17 13:36:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/High_Res_Timer.cpp (get_cpuinfo):
