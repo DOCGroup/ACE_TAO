@@ -1,5 +1,6 @@
 // $Id$
 
+#include "CIAO_common.h"
 #include "BMClosedED_exec.h"
 
 #define DISPLACEMENT 256
@@ -42,6 +43,9 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
 
   if (CORBA::is_nil (dat.in ()))
   {
+    ACE_DEBUG ((LM_DEBUG,
+                "BMClosedED - got nil from get_connection \n"));
+
     ACE_THROW (CORBA::BAD_INV_ORDER ());
   }
 
@@ -54,8 +58,8 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
                str));
 
   if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
-    {	  
-      this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");	   
+    {
+      this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");
     }
 
   // Notify others
@@ -101,6 +105,14 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
+
+  char *argv[1] = { "BMClosedED_exec"};
+
+  int argc = sizeof(argv)/sizeof(argv[0]);
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv ACE_ENV_ARG_PARAMETER);
+
+  CIAO_REGISTER_VALUE_FACTORY (orb.in(), BasicSP::DataAvailable_init,
+                               BasicSP::DataAvailable);
 }
 
 void
