@@ -1,4 +1,4 @@
-project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu {
+project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu {
   exename = Consumer_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   libs += wrappers dsui
@@ -13,17 +13,11 @@ project(Consumer_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, 
   }
 }
 
-//Can't inherit from kokyu because we want to use the RG version!
-project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent {
+project(Supplier_EC): orbsvcsexe, rtevent, rtsched, rtschedevent, rtrgkokyuevent, rgkokyu {
   exename = Supplier_EC
   idlflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-
-  //except for "libs += wrappers", this is copied from kokyu project:
-  after    += Kokyu
-  libs     += wrappers Kokyu dsui
-  libpaths += $(DATASTREAM_ROOT)/lib
+  libs += wrappers dsui
   includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include $(TAO_ROOT)/orbsvcs
-  //end copy
 
   Source_Files {
     Consumer.cpp
