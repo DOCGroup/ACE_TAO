@@ -1,3 +1,13 @@
+Sat Jan 17 21:28:05 1998    <coryan@MILONGA>
+
+	* tao/corba.h: 
+	* tao/corbacom.h: 
+	  Moved the definition of TAO_opaque from corbacom.h to corba.h so
+	  it appears after the "sequence.h" file.
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	  The OA uses TAO_opaque instead of CORBA::OctetSeq.
+	
 Sat Jan 17 16:07:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_args.cpp: 
