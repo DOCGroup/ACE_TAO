@@ -58,10 +58,12 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_lynxos.GNU: added -Winline and
           removed -fno-strict-prototypes.
 
-        * tests/Message_Queue_Test (main): increased queue size from
+        * tests/Message_Queue_Test.cpp (main): increased queue size from
           default of 16Kb to 32Kb, so that it runs on machines with 8Kb
           pagesizes.  And, added a check to see if the queue is full
           before enqueuing.
+
+        * ace/OS.i, config-osf1-4.0.h: DECXX 6009006 has SIGWAIT.
 
         * ACE-INSTALL.html: updated DEC_UNIX test status.  Message_Queue_Test
           and all of the Mutex_Tests now pass.  Conn_Test no longer does.
