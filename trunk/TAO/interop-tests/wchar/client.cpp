@@ -23,32 +23,59 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
-const int WCHAR_TO_SERVER = 0x0001;
-const int WSTRING_TO_SERVER = 0x0002;
-const int WARRAY_TO_SERVER = 0x0004;
-const int ANY_WCHAR_TO_SERVER = 0x0008;
-const int WSTRING_EXCEPTION = 0x0010;
-const int WCHAR_FROM_SERVER = 0x0020;
-const int WSTRING_FROM_SERVER = 0x0040;
-const int WARRAY_FROM_SERVER = 0x0080;
-const int ANY_WCHAR_FROM_SERVER = 0x0100;
-const int ANY_WSTRING_TO_SERVER = 0x0200;
-const int ANY_WSTRING_FROM_SERVER = 0x0400;
-const int ANY_WSTRING_ECHO = 0x0800;
-const int WSTRUCTSEQ_FROM_SERVER = 0x1000;
-const int WSTRUCTSEQ_TO_SERVER = 0x2000;
-const int TBD_1 = 0x4000; // update ALL_TESTS if this is defined
-const int TBD_0 = 0x8000; // update ALL_TESTS if this is defined
-const int ALL_TESTS = 0x3FFF;
+const int WCHAR_TO_SERVER         = 0x00000001;
+const int WSTRING_TO_SERVER       = 0x00000002;
+const int WARRAY_TO_SERVER        = 0x00000004;
+const int ANY_WCHAR_TO_SERVER     = 0x00000008;
+const int WSTRING_EXCEPTION       = 0x00000010;
+const int WCHAR_FROM_SERVER       = 0x00000020;
+const int WSTRING_FROM_SERVER     = 0x00000040;
+const int WARRAY_FROM_SERVER      = 0x00000080;
+const int ANY_WCHAR_FROM_SERVER   = 0x00000100;
+const int ANY_WSTRING_TO_SERVER   = 0x00000200;
+const int ANY_WSTRING_FROM_SERVER = 0x00000400;
+const int ANY_WSTRING_ECHO        = 0x00000800;
+const int WSTRUCTSEQ_FROM_SERVER  = 0x00001000;
+const int WSTRUCTSEQ_TO_SERVER    = 0x00002000;
+const int NUL_WSTRING_TO_SERVER   = 0x00004000;
+const int TBD_16 = 0x00008000; // update ALL_TESTS if this is defined
+const int TBD_15 = 0x00010000; // update ALL_TESTS if this is defined
+const int TBD_14 = 0x00020000; // update ALL_TESTS if this is defined
+const int TBD_13 = 0x00040000; // update ALL_TESTS if this is defined
+const int TBD_12 = 0x00080000; // update ALL_TESTS if this is defined
+const int TBD_11 = 0x00100000; // update ALL_TESTS if this is defined
+const int TBD_10 = 0x00200000; // update ALL_TESTS if this is defined
+const int TBD_9  = 0x00400000; // update ALL_TESTS if this is defined
+const int TBD_8  = 0x00800000; // update ALL_TESTS if this is defined
+const int TBD_7  = 0x01000000; // update ALL_TESTS if this is defined
+const int TBD_6  = 0x02000000; // update ALL_TESTS if this is defined
+const int TBD_5  = 0x04000000; // update ALL_TESTS if this is defined
+const int TBD_4  = 0x08000000; // update ALL_TESTS if this is defined
+const int TBD_3  = 0x10000000; // update ALL_TESTS if this is defined
+const int TBD_2  = 0x20000000; // update ALL_TESTS if this is defined
+const int TBD_1  = 0x40000000; // update ALL_TESTS if this is defined
+const int TBD_0  = 0x80000000; // update ALL_TESTS if this is defined
+
+const int ALL_TESTS = 0x00007FFF;
 
 // The length of this array determines which tests are run for "all tests"
 const char * test_name[] =
   {
-    "wchar_to_server", "wstring_to_server", "warray_to_server",
-    "any(wchar)_to_server", "wstring_exception", "wchar_from_server",
-    "wstring_from_server", "warray_from_server", "any(wchar)_from_server",
-    "any(wstring)_to_server", "any(wstring)_from_server", "any(wstring)_echo",
-    "wstructseq_from_server", "wstructseq_to_server"
+    "wchar_to_server",
+    "wstring_to_server",
+    "warray_to_server",
+    "any(wchar)_to_server",
+    "wstring_exception",
+    "wchar_from_server",
+    "wstring_from_server",
+    "warray_from_server",
+    "any(wchar)_from_server",
+    "any(wstring)_to_server",
+    "any(wstring)_from_server",
+    "any(wstring)_echo",
+    "wstructseq_from_server",
+    "wstructseq_to_server",
+    "nul_wstring_to_server"
   };
 
 const int LAST_TEST = sizeof (test_name) / sizeof (test_name[0]);
@@ -200,8 +227,13 @@ run_one_test (interop::WChar_Passer_ptr server,
         {
           assign_wstruct(data_set, (*wsList)[i]);
         }
-        return server->wstructseq_to_server(wsList.in(), data_set ACE_ENV_ARG_PARAMETER);
+        return server->wstructseq_to_server(wsList.in(), data_set
+                                            ACE_ENV_ARG_PARAMETER);
       }
+    case NUL_WSTRING_TO_SERVER:
+      return server->wstring_to_server (L"",
+                                        -1
+                                        ACE_ENV_ARG_PARAMETER);
     default:
       break;
     }

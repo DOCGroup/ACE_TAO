@@ -327,6 +327,10 @@ UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
   if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
       && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
     {
+      if (len == 0) // for zero length strings, only write a length of
+                    // zero. The BOM is not needed in this case.
+        return this->write_4(cdr, &len);
+
       if (this->forceBE_ && cdr.byte_order())
         {
           ACE_CDR::ULong l = (len+1) * ACE_UTF16_CODEPOINT_SIZE;

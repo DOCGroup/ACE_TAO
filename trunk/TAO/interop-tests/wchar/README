@@ -16,7 +16,7 @@ The default ior file for the server is "./IOR"
 The -v option causes the server to output some details of its operation.
 
 The TAO client command line is:
-  ./client [-k ior] [[-t 0 < n <= 8]...] [-v] [-x]
+  ./client [-k ior] [[-t 0 < n <= 14]...] [-v] [-x]
 The default ior is "file://IOR". Note that it is an IOR, not a filename.
 The -t option selects individual tests, no selection implies all tests,
   the -t option may be repeated to select a number of tests
@@ -27,6 +27,6 @@ Anything else, such as -?, will yield a list of options and test descriptions.
 
 To run the JacORB client or server, use the "jaco" utility,
 
-jaco interop.wchar.Server [-o iorfile] [-v]
-jaco interop.wchar.Client [-i iorfile] [-t 0..8] [-v] [-x]
+jaco -classpath ../classes interop.wchar.Server [-o iorfile] [-v]
+jaco -classpath ../classes interop.wchar.Client [-i iorfile] [-t 0..14] [-v] [-x]
 Note that Client takes -i iorfile, not -k ior.
