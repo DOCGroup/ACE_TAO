@@ -1,3 +1,12 @@
+Mon Jun  4 10:32:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+
+          Added two fixes sent in by Chris Kohlhoff
+          <kohlhoff@pop.ihug.com.au>, one for a memory leak,
+          and the other for a Borland compiler problem when
+          the target of an sprintf call is also an argument.
+
 Mon Jun  4 09:35:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynAny_i.cpp:
