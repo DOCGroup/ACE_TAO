@@ -1,23 +1,28 @@
+Fri Dec 18 09:30:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.h (elapsed_time_incr): added missing
+          const to member function declaration.
+
 Fri Dec 18 06:08:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/High_Res_Timer: Made several methods const.  Thanks to Ulf
- 	  Jaehrig <jaehrig@desys.com> for reporting this.
+        * ace/High_Res_Timer: Made several methods const.  Thanks to Ulf
+          Jaehrig <jaehrig@desys.com> for reporting this.
 
-	* ace/Thread.h (ACE_Thread): Removed a stray join(ACE_Thread_ID)
- 	  method.  Thanks to Jody Hagins <jody@atdesk.com> for reporting
- 	  this.
+        * ace/Thread.h (ACE_Thread): Removed a stray join(ACE_Thread_ID)
+          method.  Thanks to Jody Hagins <jody@atdesk.com> for reporting
+          this.
 
 Thu Dec 17 21:06:30 EST 1998  James CE Johnson <jcej@lads.com>
 
-	* docs/tutorials/000:
-    Removed.  This is redundant with the Chap* directories.
+        * docs/tutorials/000:
+          Removed.  This is redundant with the Chap* directories.
 
 Thu Dec 17 17:18:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/platform_sco5.0.0-{nothread,fsu-pthread}.GNU:
-	  This file was been modified to get rid of thread related stuff
- 	  until we can obtain the FSU threads library.  Thanks to Michael
- 	  Preobrazhensky <mikep@xpedite.com> for this.
+        * include/makeinclude/platform_sco5.0.0-{nothread,fsu-pthread}.GNU:
+          This file was been modified to get rid of thread related stuff
+          until we can obtain the FSU threads library.  Thanks to Michael
+          Preobrazhensky <mikep@xpedite.com> for this.
 
 Thu Dec 17 16:56:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
