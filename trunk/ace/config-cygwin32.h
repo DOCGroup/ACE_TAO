@@ -48,6 +48,8 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#include /**/ <cygwin/version.h>
+
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 // It's there on all libc 5 systems I checked.
 #include /**/ <features.h>
@@ -134,7 +136,7 @@
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
-#if (((CYGWIN_VERSION_API_MAJOR == 0) && (CYGWIN_VERSION_API_MINOR >= 108)) || (CYGWIN_VERSION_API_MAJOR > 0))
+#if (((CYGWIN_VERSION_API_MAJOR == 0 && CYGWIN_VERSION_API_MINOR >= 108)) || (CYGWIN_VERSION_API_MAJOR > 0))
 # define ACE_HAS_SIGWAIT
 # define ACE_HAS_SIGINFO_T
 #else
@@ -169,15 +171,10 @@
 // ... and the final standard even!
 #  define ACE_HAS_PTHREADS_STD
 #  define ACE_LACKS_THREAD_STACK_ADDR
-# if ((CYGWIN_VERSION_API_MAJOR == 0) && (CYGWIN_VERSION_API_MINOR < 108))
 // Cygwin (see pthread.h): Not supported or implemented.
 #  define ACE_LACKS_SETSCHED
 #  define ACE_LACKS_SETDETACH
 #  define ACE_LACKS_PTHREAD_CANCEL
-# else
-#  define ACE_HAS_POSIX_SEM
-#  define ACE_HAS_PTHREADS_DRAFT6
-# endif
 #endif  /* ACE_MT_SAFE */
 
 // Include math.h here so that it will be included before ACE.h.  math.h defines
