@@ -97,6 +97,10 @@ public:
   /// Dump the state of an object.
   virtual void dump (void) const;
 
+  /// Return the base address of this memory pool, 0 if base_addr
+  /// never changes.
+  virtual void *base_addr (void) const;
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -201,6 +205,10 @@ public:
   /// Change the protection of the pages of the mapped region to <prot>
   /// starting at <addr> up to <len> bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+
+  /// Return the base address of this memory pool, 0 if base_addr
+  /// never changes.
+  virtual void *base_addr (void) const;
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -356,6 +364,10 @@ public:
    */
   virtual int remap (void *addr);
 
+  /// Return the base address of this memory pool, 0 if base_addr
+  /// never changes.
+  virtual void *base_addr (void) const;
+
   /// Dump the state of an object.
   virtual void dump (void) const;
 
@@ -383,7 +395,7 @@ protected:
 class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
 public:
-  enum 
+  enum
   {
     FIRSTCALL_FIXED = 0,
     ALWAYS_FIXED = 1,
@@ -693,6 +705,11 @@ public:
   int sync (void *, size_t, int = MS_SYNC);
   int protect (ssize_t = -1, int = PROT_RDWR);
   int protect (void *, size_t, int = PROT_RDWR);
+
+  /// Return the base address of this memory pool, 0 if base_addr
+  /// never changes.
+  virtual void *base_addr (void) const;
+
   void dump (void) const {}
 
 protected:
