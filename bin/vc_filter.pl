@@ -32,9 +32,10 @@ while ($line = <fp>)
     }
 
     print "<FONT COLOR=\"RED\"><B> $line </B></FONT><BR>"
-        if ($line =~/^[A-Z_a-z0-9.\\:]+\([0-9]+\) : / ||
+        if ($line =~/^[A-Z_a-z0-9.\/\\:]+\([0-9]+\) : / ||
             $line =~/^[A-Z_a-z0-9.\\:]+\.obj : / ||
-            $line =~/^fatal error/);
+            $line =~/^fatal error/ ||
+            $line =~/^LINK : /);
 
 }
 
