@@ -43,6 +43,10 @@ static ACE_SPIPE_Stream message_queue_;
 static ACE_FIFO_Send_Msg message_queue_;
 #endif /* ACE_WIN32 */
 
+#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# include /**/ <iostream.h>
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if !defined (VXWORKS) && defined (ACE_MT_SAFE)
