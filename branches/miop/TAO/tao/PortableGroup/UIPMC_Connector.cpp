@@ -90,7 +90,7 @@ TAO_UIPMC_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
   TAO_UIPMC_Connection_Handler *svc_handler = 0;
 
   // @@ Michael -- UIPMC Additions ----------------------------
-  if (svc_handler_table_.find (remote_address, svc_handler) == -1)
+  if (this->svc_handler_table_.find (remote_address, svc_handler) == -1)
     {
       TAO_UIPMC_Connection_Handler *svc_handler_i = 0;
       ACE_NEW_RETURN (svc_handler_i,

@@ -278,11 +278,12 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache (void)
 {
   ACE_INET_Addr addr;
 
-  // Get the peername.
-  if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
+  // This function is called by the acceptor to add this 
+  // transport to the transport cache.  This is really 
+  // important for proper shutdown.  The address used
+  // is irrelevent, since UIPMC is connectionless.
 
-  // Construct a UIPMC_Endpoint object
+  // Construct a UIPMC_Endpoint object.
   TAO_UIPMC_Endpoint endpoint (addr);
 
   // Construct a property object
