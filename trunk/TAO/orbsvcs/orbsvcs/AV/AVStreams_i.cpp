@@ -1527,7 +1527,7 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
 // destroys the streamendpoint and the Vdev.
 void
 TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr /* the_ep */,
-                       const char */* vdev_name */,
+                       const char * /* vdev_name */,
                        CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notSupported))
