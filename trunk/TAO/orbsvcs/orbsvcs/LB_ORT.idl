@@ -12,7 +12,7 @@
 #ifndef TAO_LB_ORT_IDL
 #define TAO_LB_ORT_IDL
 
-#include "tao/ObjectReferenceTemplate.pidl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 
 
 module TAO_LB
