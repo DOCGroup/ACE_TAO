@@ -1,3 +1,11 @@
+Tue Jan 23 14:34:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/Makefile*:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/tests/InterfaceRepo/*Makefile:
+
+          Updated dependencies.
+
 Tue Jan 23 11:15:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Leader_Follower.i:
