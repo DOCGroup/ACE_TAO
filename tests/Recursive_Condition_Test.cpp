@@ -46,6 +46,8 @@ public:
     
     ACE_Time_Value timeout = ACE_OS::gettimeofday () + ACE_Time_Value (1, 0);
 
+    ACE_UNUSED_ARG (timeout);
+
     ACE_TRACE ("[%t] scheduling timer\n");
     
     /*
