@@ -13,7 +13,7 @@ my $STILL_ACTIVE = 259;
 
 ###############################################################################
 
-### Constructor
+### Constructor and Destructor
 
 sub new  
 {
@@ -29,6 +29,17 @@ sub new
     
     bless ($self, $class);
     return $self;
+}
+
+sub DESTROY
+{
+    my $self = shift;
+    
+    if ($self->{RUNNING} == 1) {
+        print STDERR "ERROR: <", $self->{EXECUTABLE}, 
+                     "> still running upon object destruction\n";
+        $self->Kill ();             
+    }
 }
 
 ###############################################################################
@@ -209,7 +220,7 @@ sub TerminateWaitKill ($)
     my $timeout = shift;
     
     if ($self->{RUNNING}) {
-        Win32::Process::Kill ($self->{PROCESS}, -1);
+        Win32::Process::Kill ($self->{PROCESS}, 0);
     }
     
     return $self->WaitKill ($timeout);

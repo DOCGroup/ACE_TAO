@@ -1,3 +1,224 @@
+Sun Mar  4 19:31:16 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_run_tests.lst:
+
+          Added the run_test_mt.pl for Leader_Follers.
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          Added a destructor to detect if a process wasn't explicitly 
+          killed before the object went out of scope. Will print out 
+          an error and kill it.
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Turned on autoflush for all scripts.
+
+        * M docs/run_test.txt:
+
+          Updated run_test.pl instructions to fit all the changes I
+          just made.
+        
+        * M examples/Export/run_test.pl:
+        * M performance-tests/RPC/run_test.pl:
+        * M performance-tests/TCP/run_test.pl:
+        * M performance-tests/UDP/run_test.pl:
+
+          Updated to use PerlACE::Run_Test;
+
+        * tests/Atomic_Op_Test.dsp:
+        * tests/Auto_IncDec_Test.dsp:
+        * tests/Barrier_Test.dsp:
+        * tests/Basic_Types_Test.dsp:
+        * tests/Buffer_Stream_Test.dsp:
+        * tests/CDR_Array_Test.dsp:
+        * tests/CDR_File_Test.dsp:
+        * tests/CDR_Test.dsp:
+        * tests/Cache_Map_Manager_Test.dsp:
+        * tests/Cached_Accept_Conn_Test.dsp:
+        * tests/Cached_Conn_Test.dsp:
+        * tests/Capabilities_Test.dsp:
+        * tests/Collection_Test.dsp:
+        * tests/Config_Test.dsp:
+        * tests/Conn_Test.dsp:
+        * tests/DLL_Test.dsp:
+        * tests/DLList_Test.dsp:
+        * tests/Dirent_Test.dsp:
+        * tests/Dynamic_Priority_Test.dsp:
+        * tests/Enum_Interfaces_Test.dsp:
+        * tests/Env_Value_Test.dsp:
+        * tests/Future_Set_Test.dsp:
+        * tests/Future_Test.dsp:
+        * tests/Handle_Set_Test.dsp:
+        * tests/Hash_Map_Bucket_Iterator_Test.dsp:
+        * tests/Hash_Map_Manager_Test.dsp:
+        * tests/High_Res_Timer_Test.dsp:
+        * tests/IOStream_Test.dsp:
+        * tests/Lazy_Map_Manager_Test.dsp:
+        * tests/Log_Msg_Test.dsp:
+        * tests/MEM_Stream_Test.dsp:
+        * tests/MM_Shared_Memory_Test.dsp:
+        * tests/MT_Reactor_Timer_Test.dsp:
+        * tests/MT_SOCK_Test.dsp:
+        * tests/Malloc_Test.dsp:
+        * tests/Map_Manager_Test.dsp:
+        * tests/Map_Test.dsp:
+        * tests/Mem_Map_Test.dsp:
+        * tests/Message_Block_Test.dsp:
+        * tests/Message_Queue_Notifications_Test.dsp:
+        * tests/Message_Queue_Test.dsp:
+        * tests/Message_Queue_Test_Ex.dsp:
+        * tests/Naming_Test.dsp:
+        * tests/New_Fail_Test.dsp:
+        * tests/Notify_Performance_Test.dsp:
+        * tests/OS_Test.dsp:
+        * tests/Object_Manager_Test.dsp:
+        * tests/OrdMultiSet_Test.dsp:
+        * tests/Pipe_Test.dsp:
+        * tests/Priority_Buffer_Test.dsp:
+        * tests/Priority_Reactor_Test.dsp:
+        * tests/Priority_Task_Test.dsp:
+        * tests/Process_Manager_Test.dsp:
+        * tests/Process_Mutex_Test.dsp:
+        * tests/Process_Strategy_Test.dsp:
+        * tests/RB_Tree_Test.dsp:
+        * tests/Reactor_Exceptions_Test.dsp:
+        * tests/Reactor_Notify_Test.dsp:
+        * tests/Reactor_Performance_Test.dsp:
+        * tests/Reactor_Timer_Test.dsp:
+        * tests/Reactors_Test.dsp:
+        * tests/Reader_Writer_Test.dsp:
+        * tests/Recursive_Mutex_Test.dsp:
+        * tests/Refcounted_Auto_Ptr_Test.dsp:
+        * tests/Reverse_Lock_Test.dsp:
+        * tests/SOCK_Connector_Test.dsp:
+        * tests/SOCK_Send_Recv_Test.dsp:
+        * tests/SOCK_Test.dsp:
+        * tests/SPIPE_Test.dsp:
+        * tests/SString_Test.dsp:
+        * tests/SV_Shared_Memory_Test.dsp:
+        * tests/Semaphore_Test.dsp:
+        * tests/Service_Config_Test.dsp:
+        * tests/Sigset_Ops_Test.dsp:
+        * tests/Simple_Message_Block_Test.dsp:
+        * tests/Svc_Handler_Test.dsp:
+        * tests/TSS_Test.dsp:
+        * tests/Task_Test.dsp:
+        * tests/Thread_Manager_Test.dsp:
+        * tests/Thread_Mutex_Test.dsp:
+        * tests/Thread_Pool_Reactor_Test.dsp:
+        * tests/Thread_Pool_Test.dsp:
+        * tests/Time_Service_Test.dsp:
+        * tests/Time_Value_Test.dsp:
+        * tests/Timeprobe_Test.dsp:
+        * tests/Timer_Queue_Test.dsp:
+        * tests/Tokens_Test.dsp:
+        * tests/UPIPE_SAP_Test.dsp:
+        * tests/Upgradable_RW_Test.dsp:
+        * tests/version_tests/Atomic_Op_Test.dsp: (removed)
+        * tests/version_tests/Auto_IncDec_Test.dsp: (removed)
+        * tests/version_tests/Barrier_Test.dsp: (removed)
+        * tests/version_tests/Basic_Types_Test.dsp: (removed)
+        * tests/version_tests/Buffer_Stream_Test.dsp: (removed)
+        * tests/version_tests/CDR_Array_Test.dsp: (removed)
+        * tests/version_tests/CDR_File_Test.dsp: (removed)
+        * tests/version_tests/CDR_Test.dsp: (removed)
+        * tests/version_tests/Cache_Map_Manager_Test.dsp: (removed)
+        * tests/version_tests/Cached_Accept_Conn_Test.dsp: (removed)
+        * tests/version_tests/Cached_Conn_Test.dsp: (removed)
+        * tests/version_tests/Capabilities_Test.dsp: (removed)
+        * tests/version_tests/Collection_Test.dsp: (removed)
+        * tests/version_tests/Config_Test.dsp: (removed)
+        * tests/version_tests/Conn_Test.dsp: (removed)
+        * tests/version_tests/DLL_Test.dsp: (removed)
+        * tests/version_tests/DLList_Test.dsp: (removed)
+        * tests/version_tests/Dirent_Test.dsp: (removed)
+        * tests/version_tests/Dynamic_Priority_Test.dsp: (removed)
+        * tests/version_tests/Enum_Interfaces_Test.dsp: (removed)
+        * tests/version_tests/Env_Value_Test.dsp: (removed)
+        * tests/version_tests/Future_Set_Test.dsp: (removed)
+        * tests/version_tests/Future_Test.dsp: (removed)
+        * tests/version_tests/Handle_Set_Test.dsp: (removed)
+        * tests/version_tests/Hash_Map_Bucket_Iterator_Test.dsp: (removed)
+        * tests/version_tests/Hash_Map_Manager_Test.dsp: (removed)
+        * tests/version_tests/High_Res_Timer_Test.dsp: (removed)
+        * tests/version_tests/IOStream_Test.dsp: (removed)
+        * tests/version_tests/Lazy_Map_Manager_Test.dsp: (removed)
+        * tests/version_tests/Log_Msg_Test.dsp: (removed)
+        * tests/version_tests/MEM_Stream_Test.dsp: (removed)
+        * tests/version_tests/MM_Shared_Memory_Test.dsp: (removed)
+        * tests/version_tests/MT_Reactor_Timer_Test.dsp: (removed)
+        * tests/version_tests/MT_SOCK_Test.dsp: (removed)
+        * tests/version_tests/Malloc_Test.dsp: (removed)
+        * tests/version_tests/Map_Manager_Test.dsp: (removed)
+        * tests/version_tests/Map_Test.dsp: (removed)
+        * tests/version_tests/Mem_Map_Test.dsp: (removed)
+        * tests/version_tests/Message_Block_Test.dsp: (removed)
+        * tests/version_tests/Message_Queue_Notifications_Test.dsp: (removed)
+        * tests/version_tests/Message_Queue_Test.dsp: (removed)
+        * tests/version_tests/Message_Queue_Test_Ex.dsp: (removed)
+        * tests/version_tests/Naming_Test.dsp: (removed)
+        * tests/version_tests/New_Fail_Test.dsp: (removed)
+        * tests/version_tests/Notify_Performance_Test.dsp: (removed)
+        * tests/version_tests/OS_Test.dsp: (removed)
+        * tests/version_tests/Object_Manager_Test.dsp: (removed)
+        * tests/version_tests/OrdMultiSet_Test.dsp: (removed)
+        * tests/version_tests/Pipe_Test.dsp: (removed)
+        * tests/version_tests/Priority_Buffer_Test.dsp: (removed)
+        * tests/version_tests/Priority_Reactor_Test.dsp: (removed)
+        * tests/version_tests/Priority_Task_Test.dsp: (removed)
+        * tests/version_tests/Process_Manager_Test.dsp: (removed)
+        * tests/version_tests/Process_Mutex_Test.dsp: (removed)
+        * tests/version_tests/Process_Strategy_Test.dsp: (removed)
+        * tests/version_tests/RB_Tree_Test.dsp: (removed)
+        * tests/version_tests/Reactor_Exceptions_Test.dsp: (removed)
+        * tests/version_tests/Reactor_Notify_Test.dsp: (removed)
+        * tests/version_tests/Reactor_Performance_Test.dsp: (removed)
+        * tests/version_tests/Reactor_Timer_Test.dsp: (removed)
+        * tests/version_tests/Reactors_Test.dsp: (removed)
+        * tests/version_tests/Reader_Writer_Test.dsp: (removed)
+        * tests/version_tests/Recursive_Mutex_Test.dsp: (removed)
+        * tests/version_tests/Refcounted_Auto_Ptr_Test.dsp: (removed)
+        * tests/version_tests/Reverse_Lock_Test.dsp: (removed)
+        * tests/version_tests/SOCK_Connector_Test.dsp: (removed)
+        * tests/version_tests/SOCK_Send_Recv_Test.dsp: (removed)
+        * tests/version_tests/SOCK_Test.dsp: (removed)
+        * tests/version_tests/SPIPE_Test.dsp: (removed)
+        * tests/version_tests/SString_Test.dsp: (removed)
+        * tests/version_tests/SV_Shared_Memory_Test.dsp: (removed)
+        * tests/version_tests/Semaphore_Test.dsp: (removed)
+        * tests/version_tests/Service_Config_Test.dsp: (removed)
+        * tests/version_tests/Sigset_Ops_Test.dsp: (removed)
+        * tests/version_tests/Simple_Message_Block_Test.dsp: (removed)
+        * tests/version_tests/Svc_Handler_Test.dsp: (removed)
+        * tests/version_tests/TSS_Test.dsp: (removed)
+        * tests/version_tests/Task_Test.dsp: (removed)
+        * tests/version_tests/Thread_Manager_Test.dsp: (removed)
+        * tests/version_tests/Thread_Mutex_Test.dsp: (removed)
+        * tests/version_tests/Thread_Pool_Reactor_Test.dsp: (removed)
+        * tests/version_tests/Thread_Pool_Test.dsp: (removed)
+        * tests/version_tests/Time_Service_Test.dsp: (removed)
+        * tests/version_tests/Time_Value_Test.dsp: (removed)
+        * tests/version_tests/Timeprobe_Test.dsp: (removed)
+        * tests/version_tests/Timer_Queue_Test.dsp: (removed)
+        * tests/version_tests/Tokens_Test.dsp: (removed)
+        * tests/version_tests/UPIPE_SAP_Test.dsp: (removed)
+        * tests/version_tests/Upgradable_RW_Test.dsp: (removed)
+        * tests/version_tests/run_all_tests.bat: (removed)
+        * tests/version_tests/version_tests.dsw: (removed)
+
+          Moved the version_tests back into the tests/*.dsp files.  The
+          reason they were originally moved is because it was easier to
+          select all the debug versions during a batch build.  But now
+          we have pippen.pl and msvc_auto_compile.pl, so this is no
+          longer an issue, while this strange setup would compilicate the 
+          nightly builds.  Thus, it was standardized back.
+
+        * bin/create_vt_dsps.pl: (removed)
+
+          No need for this anymore.
+
 Sun Mar  4 19:27:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Log_Msg.cpp:

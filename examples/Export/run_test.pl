@@ -6,23 +6,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../bin";
+use PerlACE::Run_Test;
 
-require ACEutils;
-use Cwd;
+$TEST = new PerlACE::Process ("test");
 
-$cwd = getcwd();
-$test_exe = "$cwd$DIR_SEPARATOR"."test".$EXE_EXT;
+$status = $TEST->SpawnWaitKill (20);
 
-$TEST = Process::Create ($test_exe, "");
-
-$status = $TEST->TimedWait (20);
-if ($status == -1) {
-    print STDERR "ERROR: test timed out\n";
-    $status = 1;
-    $TEST->Kill (); $TEST->TimedWait (1);
-}
-elsif ($status > 0) {
-    print STDERR "ERROR: test failed\n";
-}
+$status = 1 if ($status < 0);
 
 exit $status;
