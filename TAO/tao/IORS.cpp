@@ -10,7 +10,7 @@
 
 #include "IORS.h"
 
-ACE_RCSID(tao, IORCS.cpp, "$Id$")
+ACE_RCSID(tao, IORS, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "IORS.i"
