@@ -30,7 +30,9 @@
 #define ACE_LACKS_GETPPID
 #define ACE_LACKS_SETPGID
 #define ACE_HAS_THREAD_SAFE_ACCEPT
+#if !defined (ACE_HAS_WINCE)
 #define ACE_HAS_EXCEPTIONS
+#endif /* ACE_HAS_WINCE */
 #define ACE_HAS_BROKEN_NAMESPACES
 #define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
@@ -462,7 +464,7 @@ typedef unsigned __int64 ACE_UINT64;
 // Try to make a good guess whether we are compiling with the newer version
 // of WinSock 2 that has GQOS support.
 #if !defined (ACE_HAS_WINSOCK2_GQOS)
-#  if defined (WINSOCK_VERSION) 
+#  if defined (WINSOCK_VERSION)
 #    define ACE_HAS_WINSOCK2_GQOS 1
 #  endif /* WINSOCK_VERSION */
 #endif /* ACE_HAS_WINSOCK2_GQOS */
