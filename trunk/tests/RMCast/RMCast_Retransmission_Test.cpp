@@ -112,8 +112,11 @@ class Tester : public ACE_RMCast_Module
 public:
   Tester (void);
 
-  //! Run the test for \iterations times
+  //! Run the test for \param iterations times
   void run (int iterations);
+
+  //! Validate the number of messages received by each proxy
+  void validate_message_count (void);
 
   //! One of the proxies has received an Ack_Join message, we need to
   //! validate it
@@ -191,6 +194,7 @@ main (int, ACE_TCHAR *[])
     //! Run the test in single threaded mode
     Tester tester;
     tester.run (100);
+    tester.validate_message_count ();
   }
   {
     ACE_DEBUG ((LM_DEBUG, "Running multi threaded test\n"));
@@ -200,6 +204,7 @@ main (int, ACE_TCHAR *[])
     if (task.activate (THR_NEW_LWP|THR_JOINABLE, 4) == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate the threads\n"), 1);
     ACE_Thread_Manager::instance ()->wait ();
+    tester.validate_message_count ();
   }
 
   ACE_END_TEST;
@@ -244,6 +249,38 @@ Tester::run (int iterations)
     {
       this->send_ack ();
     }
+}
+
+void
+Tester::validate_message_count (void)
+{
+  for (size_t i = 0; i != nproxy; ++i)
+    {
+      if (this->proxy_[i].joined () == 0)
+        continue;
+      if (this->proxy_[i].next_expected () != this->sequence_number_generator_)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Invalid message count for proxy %d, "
+                      "it is %d, should be %d\n",
+                      i, this->proxy_[i].next_expected (),
+                      this->sequence_number_generator_));
+        }
+    }
+}
+
+int
+Tester::reply_ack_join (Test_Proxy *, ACE_RMCast::Ack_Join &ack_join)
+{
+  if (ack_join.next_sequence_number > this->sequence_number_generator_)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Unexpected sequence number in ack_join (%d,%d)\n",
+                  ack_join.next_sequence_number,
+                  this->sequence_number_generator_));
+      return -1;
+    }
+  return 0;
 }
 
 int
@@ -321,7 +358,7 @@ Tester::data (ACE_RMCast::Data &data)
 {
   // After going through the Retransmission layer we got some data,
   // simulate the work of the following layers:
-  //  - Fragmentation: assing message sequence numbers
+  //  - Fragmentation: setting message sequence numbers
   //  - IO_XXX: send to all known members
   //  - Reassembly: reconstruct the message on the receiving side.
 
@@ -451,7 +488,10 @@ Test_Proxy::ack (ACE_RMCast::Ack &ack)
 }
 
 int
-Test_Proxy::reply_ack_join (ACE_RMCast::Ack_Join & /* ack_join */)
+Test_Proxy::reply_ack_join (ACE_RMCast::Ack_Join & ack_join)
 {
-  return 0; // this->tester_->proxy_reply_ack_join (this, ack_join);
+  int r = this->tester_->reply_ack_join (this, ack_join);
+  if (r == 0)
+    (void) this->ACE_RMCast_Proxy::reply_ack_join (ack_join);
+  return r;
 }

@@ -96,23 +96,9 @@ ACE_RMCast_Retransmission::join (ACE_RMCast::Join &join)
     return 0;
 
   ACE_RMCast::Ack_Join ack_join;
-#if 0
-  // @@
-  {
-    Messages_Iterator end   = this->messages_.end ();
-    Messages_Iterator begin = this->messages_.begin ();
+  ack_join.source = 0;
+  ack_join.next_sequence_number = this->messages_.first_key ();
 
-    ack_join.source = 0;
-    if (begin == end)
-      {
-        ack_join.next_sequence_number = 0;
-      }
-    else
-      {
-        ack_join.next_sequence_number = (*begin).key ();
-      }
-  }
-#endif
   (void) join.source->reply_ack_join (ack_join);
 
   // @@ We should force a full retransmission of all the messages!
@@ -134,13 +120,14 @@ public:
   }
 
   int work (ACE_UINT32 const & key,
-            ACE_RMCast::Data const &)
+            ACE_RMCast::Data const &item)
   {
     if (key >= this->ack_.next_expected)
       return 0;
     // ACE_DEBUG ((LM_DEBUG,
     //             "  Retransmission::ack - message %d erased\n",
     //             key));
+    ACE_Message_Block::release (item.payload);
     return this->messages_->unbind_i (this->ace_mon_, key);
   }
 

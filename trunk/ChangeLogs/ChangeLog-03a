@@ -1,22 +1,43 @@
+Wed Oct 04 12:23:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast_Copy_On_Write.h:
+        * ace/RMCast/RMCast_Copy_On_Write.i:
+        * ace/RMCast/RMCast_Copy_On_Write.cpp:
+          More cleanup, this time for the Read_Guard class
+
+        * ace/RMCast/RMCast_Proxy.h:
+        * ace/RMCast/RMCast_Proxy.cpp:
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+          The ACE_RMCast_Proxy class now handles outgoing Ack_Join
+          messages to update the sequence numbers.
+
+        * ace/RMCast/RMCast_Reordering.cpp:
+        * ace/RMCast/RMCast_Retransmission.cpp:
+          Fixed memory management problems.
+
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+          Add tests to verify that the right number of messages is
+          received by *all* proxies.  Also check the Ack_Join messages.
+
 Wed Oct  4 12:03:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (ACE_HAS_STREAM_PIPES):
+        * configure.in (ACE_HAS_STREAM_PIPES):
 
-	  Verify that we can actually set a STREAM option that ACE uses.
-	  This is particularly necessary for platforms that have ioctl
-	  conflicts.  For example, the Linux kernel's CDROM ioctls have
-	  the same values as glibc 2.1.94's STREAM ioctls.  Attempting to
-	  set a STREAM ioctl actually causes one of the CDROM ioctls to be
-	  set (unsuccessfully)!
+          Verify that we can actually set a STREAM option that ACE uses.
+          This is particularly necessary for platforms that have ioctl
+          conflicts.  For example, the Linux kernel's CDROM ioctls have
+          the same values as glibc 2.1.94's STREAM ioctls.  Attempting to
+          set a STREAM ioctl actually causes one of the CDROM ioctls to be
+          set (unsuccessfully)!
 
-	* configure.in:
-	* m4/ace.m4:
-	* m4/compiler.m4:
+        * configure.in:
+        * m4/ace.m4:
+        * m4/compiler.m4:
 
-	  Changed all uses of "$target" to "$host."  "$target" is only
-	  used for compiler tool chains.  "$host" is the correct variable
-	  since it refers to the host the application will be run on (as
-	  opposed to the host the application was built on $build).
+          Changed all uses of "$target" to "$host."  "$target" is only
+          used for compiler tool chains.  "$host" is the correct variable
+          since it refers to the host the application will be run on (as
+          opposed to the host the application was built on $build).
 
 Wed Oct  4 09:15:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
