@@ -16,8 +16,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H
-#define TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H
+#ifndef CUSTOM_NETWORK_PRIORITY_MAPPING_H
+#define CUSTOM_NETWORK_PRIORITY_MAPPING_H
 
 #include /**/ "ace/pre.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
+class Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
   //
   // = TITLE
@@ -39,7 +39,7 @@ class TAO_Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
   //   priorities (0...32767)
   //
 public:
-  TAO_Custom_Network_Priority_Mapping (void);
+  Custom_Network_Priority_Mapping (void);
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
                              RTCORBA::NetworkPriority &network_priority);
@@ -55,4 +55,4 @@ public:
 
 
 #include /**/ "ace/post.h"
-#endif /* TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H */
+#endif /* CUSTOM_NETWORK_PRIORITY_MAPPING_H */

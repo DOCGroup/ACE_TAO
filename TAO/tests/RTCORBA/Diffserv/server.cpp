@@ -155,9 +155,9 @@ main (int argc, char *argv[])
                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_Custom_Network_Priority_Mapping *cnpm = 0;
+      Custom_Network_Priority_Mapping *cnpm = 0;
       ACE_NEW_RETURN  (cnpm,
-                       TAO_Custom_Network_Priority_Mapping,
+                       Custom_Network_Priority_Mapping,
                        -1);
 
       cnpm->corba_priority (corba_priority);
