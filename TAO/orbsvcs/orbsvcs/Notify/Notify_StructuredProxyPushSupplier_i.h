@@ -24,6 +24,13 @@
 
 class TAO_Notify_ConsumerAdmin_i;
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Notify_StructuredProxyPushSupplier_i :
 public virtual POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier,
   public virtual TAO_Notify_ProxySupplier_i,
@@ -93,5 +100,9 @@ public virtual POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier,
  CosNotifyComm::StructuredPushConsumer_var push_consumer_;
  // The consumer that we are connected with.
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* NOTIFY_STRUCTUREDPROXYPUSHSUPPLIER_I_H */

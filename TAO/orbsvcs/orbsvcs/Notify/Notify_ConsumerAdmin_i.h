@@ -15,6 +15,8 @@
 //    Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ==========================================================================
+#ifndef NOTIFY_CONSUMERADMIN_I_H
+#define NOTIFY_CONSUMERADMIN_I_H
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h"
@@ -28,6 +30,13 @@
 
 class TAO_Notify_EventChannel_i;
 class TAO_Notify_ProxySupplier_i;
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 class TAO_Notify_ConsumerAdmin_i :
 public virtual POA_CosNotifyChannelAdmin::ConsumerAdmin,
@@ -197,3 +206,9 @@ protected:
   TAO_Notify_Dispatcher *dispatcher_;
   //
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+#endif /* NOTIFY_CONSUMERADMIN_I_H */

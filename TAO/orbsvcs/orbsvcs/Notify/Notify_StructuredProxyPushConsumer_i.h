@@ -23,6 +23,13 @@
 #include "orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.h"
 #include "orbsvcs/orbsvcs/Notify/NotifyPublish_i.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Notify_StructuredProxyPushConsumer_i :
 public virtual POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer,
   public virtual TAO_Notify_ProxyConsumer_i,
@@ -73,4 +80,9 @@ virtual void disconnect_structured_push_consumer (
  CosNotifyComm::StructuredPushSupplier_var push_supplier_;
  //
 };
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H */
