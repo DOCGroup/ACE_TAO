@@ -1,3 +1,10 @@
+Fri Dec  3 15:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LB_ORT.idl:
+        * tests/ORT/ObjectReferenceFactory.idl:
+          Include the ObjectReferenceTemplate_include.pidl file instead of
+          ObjectReferenceTemplate.pidl.
+
 Fri Dec  3 14:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.cpp:
