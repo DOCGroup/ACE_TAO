@@ -65,11 +65,11 @@ Thu Dec 13 22:16:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 Fri Dec 14 00:08:57 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/OS.h: Move around definitions of ACE_SOCK_GROUP
-	and ACE_OVERLAPPED_COMPLETION_FUNCTION_FUNC to fix
-	Win32 builds.
+	  and ACE_OVERLAPPED_COMPLETION_FUNCTION_FUNC to fix
+	  Win32 builds.
 
 	* ace/OS.cpp: Add #include "ace/OS_QoS.h" to fix Win32
-	builds.
+	  builds.
 
 Thu Dec 13 22:21:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -91,12 +91,12 @@ Thu Dec 13 16:53:00 2001  Ossama Othman  <ossama@uci.edu>
 Thu Dec 13 18:11:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/OS.h:  Move QoS data structures to OS_QoS.h.  Forward
-	declare QoS data structures now contained in OS_QoS.h and
-	OS_QoS.cpp.
+	  declare QoS data structures now contained in OS_QoS.h and
+	  OS_QoS.cpp.
 
 	* ace/OS.i:
 	* ace/OS.cpp:  Move QoS enabled socket API functions from OS.i to
-	OS.cpp.
+	  OS.cpp.
 
 	* ace/OS_QoS.h (added):
 	* ace/OS_QoS.cpp (added):  OS specific QoS data structures go here.
@@ -107,7 +107,7 @@ Thu Dec 13 18:11:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	* ace/QoS/QoS_Session.h: Add #include "ace/OS_QoS.h".
 
 	* ace/QoS/QoS_Session_Impl.cpp: Add u_long casts to eliminate
-	compiler warnings.
+	  compiler warnings.
 
 	* ace/Makefile: Add rule for OS_QoS.
 	* ace/Makefile.bor: Same.
