@@ -520,20 +520,20 @@ typedef ACE_UINT16 ACE_USHORT16;
 // Byte-order (endian-ness) determination.
 # if defined (BYTE_ORDER)
 #   if (BYTE_ORDER == LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0123X
+#     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
 #   elif (BYTE_ORDER == BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 3210X
+#     define ACE_BIG_ENDIAN 0x3210
 #     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
 #   else
 #     error: unknown BYTE_ORDER!
 #   endif /* BYTE_ORDER */
 # elif defined (__BYTE_ORDER)
 #   if (__BYTE_ORDER == __LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0123X
+#     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
 #   elif (__BYTE_ORDER == __BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 3210X
+#     define ACE_BIG_ENDIAN 0x3210
 #     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
 #   else
 #     error: unknown __BYTE_ORDER!
@@ -543,11 +543,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
      defined (vax) || defined (__alpha)
     // We know these are little endian.
-#     define ACE_LITTLE_ENDIAN 0123X
+#     define ACE_LITTLE_ENDIAN 0x0123
 #     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
 #   else
     // Otherwise, we assume big endian.
-#     define ACE_BIG_ENDIAN 3210X
+#     define ACE_BIG_ENDIAN 0x3210
 #     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
 #   endif
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
