@@ -1334,7 +1334,7 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1382,7 +1382,7 @@ char * Messaging::Poller::operation_name (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1430,7 +1430,7 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1478,7 +1478,7 @@ void Messaging::Poller::associated_handler (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF ());
+    ACE_THROW (CORBA::INTERNAL ());
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1527,7 +1527,7 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1575,7 +1575,7 @@ CORBA::Object_ptr Messaging::Poller::target (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1623,7 +1623,7 @@ char * Messaging::Poller::op_name (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (

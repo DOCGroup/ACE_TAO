@@ -223,7 +223,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -271,7 +271,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -318,7 +318,7 @@ void CORBA_Policy::destroy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF ());
+    ACE_THROW (CORBA::INTERNAL ());
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (

@@ -1748,7 +1748,8 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to add IOR to table\n"),
+                       "TAO (%P|%t): Cannot add nil object to table <%s>\n",
+                       object_id.c_str ()),
                       -1);
 
   CORBA::String_var string =
@@ -1761,7 +1762,8 @@ CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
 
   if (this->lookup_table_.add_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to add IOR to table\n"),
+                       "TAO (%P|%t): Unable to add IOR to table <%s>\n",
+                       object_id.c_str ()),
                       -1);
 
   return 0;
@@ -1780,7 +1782,8 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
 
   if (this->lookup_table_.find_ior (object_id, ior) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "No match for the given ObjectID\n"),
+                       "TAO (%P|%t) cannot find IOR for <%s>\n",
+                       object_id.c_str ()),
                       -1);
 
   obj = this->string_to_object (ior.c_str ());

@@ -85,6 +85,8 @@ foreach $o (@opts)
 
 print STDERR "\n";
 
+print STDERR "          Multithreaded Test:\n";
+
 # Now run the multithreaded test, sending output to the file.
 open (OLDOUT, ">&STDOUT");
 open (STDOUT, ">test_run.data") or die "can't redirect stdout: $!";
@@ -92,7 +94,7 @@ open (OLDERR, ">&STDERR");
 open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
 
 name_server ();
-sleep $sleeptime;
+
 client ("-m25");
 
 $client = $CL->TimedWait (60);
@@ -100,7 +102,6 @@ if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
 }
-
 
 close (STDERR);
 close (STDOUT);
@@ -115,7 +116,6 @@ if ($server == -1) {
 
 unlink $iorfile;
 
-print STDERR "          Multithreaded Test:\n";
 $FL = Process::Create ($EXEPREFIX."process-m-output.pl",
                        " test_run.data 25");
 $filter = $FL->TimedWait (60);
