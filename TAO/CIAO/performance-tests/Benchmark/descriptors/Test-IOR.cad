@@ -32,7 +32,7 @@
      <existinginterface>
       <findby>
         <!-- One needs to add the correct IOR of the server here -->
-        <stringifiedobjectref></stringifiedobjectref>
+        <stringifiedobjectref>file://rtserver.ior</stringifiedobjectref>
        </findby>
       </existinginterface>
     </connectinterface>
