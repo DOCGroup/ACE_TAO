@@ -23,6 +23,10 @@ Audio_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
                         char *&named_vdev,
                         const AVStreams::flowSpec &the_spec,
                         CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC (( CORBA::SystemException, AVStreams::streamOpFailed,
+      AVStreams::streamOpDenied, AVStreams::notSupported,
+      AVStreams::QoSRequestFailed, AVStreams::noSuchFlow ))
+
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_MMDevice::create_B called \n"));
   AVStreams::StreamEndPoint_B_ptr stream_ptr;

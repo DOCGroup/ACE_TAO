@@ -27,32 +27,38 @@ public:
       const Audio_Control::INITaudioPara & para,
       Audio_Control::INITaudioReply_out reply_para,
       CORBA::Environment &_tao_environment
-     ) ;
+     )
+     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean play (
       const Audio_Control::PLAYPara & para,
       CORBA::Long_out ats,
       CORBA::Environment &_tao_environment
-     ) ;
+     ) 
+     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean speed (
       const Audio_Control::SPEEDPara & para,
       CORBA::Environment &_tao_environment
-     ) ;
+     ) 
+     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean stop (
       CORBA::Long cmdsn,
       CORBA::Environment &_tao_environment
-     ) ;
+     ) 
+     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual CORBA::Boolean set_peer (
                                    char *&peer,
       CORBA::Environment &_tao_environment
-     ) ;
+     ) 
+     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   virtual void close (
       CORBA::Environment &_tao_environment
-      ) ;
+      ) 
+     ACE_THROW_SPEC (( CORBA::SystemException ));
 
   void change_state (Audio_Control_State *state);
   // Changes the state of the Audio Control object.
