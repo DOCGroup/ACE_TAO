@@ -1,3 +1,14 @@
+Tue May 29 12:29:25 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ior_corbaloc/run_test.pl: 
+	  Matched the @corabloc_tests and @comments.
+	
+	* tao/CORBALOC_Parser.cpp (assign_key_string): 
+	  Set things so that when the port is unspecified, it defaults to
+	  2809. Thanks to Craig Rodrigues  <crodrigu@bbn.com> for pointing
+	  out and hence made me commit the stuff that I had lying in my
+	  workspace for a while now.
+
 Tue May 29 13:01:54 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* tao/Strategies/SHMIOP_Acceptor.cpp (open_i):
