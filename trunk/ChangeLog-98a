@@ -1,3 +1,9 @@
+Tue Dec 16 08:30:41 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/IPC_SAP/FILE_SAP/client.cpp (main): Fixed "lines" to
+ 	  "links."  Thanks to Istvan Buki <ibuki@fedex.com> for reporting
+ 	  this.
+
 Tue Dec 16 14:15:48 1997    <irfan@TWOSTEP>
 
 	* ace/OS.i (fstat): Fixed Dr. Schmidt's typo.
