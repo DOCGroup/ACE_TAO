@@ -1,3 +1,11 @@
+Wed Mar 21 23:57:44 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (key_to_stub_i):
+	  Fixed Typo.
+
+	* tests/RTCORBA/Explicit_Binding/client.cpp:
+	  Disabled temporarily one diagnostic message.
+
 Wed Mar 21 14:54:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
