@@ -1,3 +1,9 @@
+Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Makefile: Temporarily removed Synch-Benchmark
+	  from the targets.  It should be added back once the work is
+	  done. 
+
 Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: map ACE_dynamic_cast to static_cast with Sun C++,
