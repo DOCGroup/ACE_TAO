@@ -721,11 +721,12 @@ namespace CIAO_GLUE
                              ACE_SYNCH_MUTEX> component_map_;
   };
 
-  extern "C" [SERVANT]_Export ::PortableServer::Servant
-  create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
-                             CIAO::Session_Container *c
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 }
+
+extern "C" [SERVANT]_Export ::PortableServer::Servant
+create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
+                           CIAO::Session_Container *c
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #if defined (__ACE_INLINE__)
 # include "[idl-name]_svnt.inl"

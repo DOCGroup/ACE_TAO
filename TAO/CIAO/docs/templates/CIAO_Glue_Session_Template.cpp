@@ -1186,3 +1186,23 @@ void
   this->_ciao_passivate_component (_ciao_comp.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }
+
+extern "C" [SERVANT]_Export ::PortableServer::Servant
+create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
+                           CIAO::Session_Container *c
+                           ACE_ENV_ARG_DECL);
+{
+  if (p == 0)
+    return 0;
+
+  CCM_[home name]_var x
+    = CCM_[home name]::_narrow (p
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (CORBA::is_nil (x.in ()))
+    return 0;
+
+  return new [ciao module name]::[home name]_Servant (x.in (),
+                                                      c);
+}
