@@ -18,7 +18,6 @@ BIN = basic_perf \
 
 # Only build static library for optimum run-time speed.
 static_libs = 1
-shared_libs = 0
 LIB     = libPerf.a
 FILES   = basic_func
 LSRC    = $(addsuffix .cpp,$(FILES))
