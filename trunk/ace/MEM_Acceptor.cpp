@@ -79,8 +79,6 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 {
   ACE_TRACE ("ACE_MEM_Acceptor::accept");
 
-  sockaddr *addr = 0;
-
   int in_blocking_mode = 1;
   if (this->shared_accept_start (timeout,
                                  restart,
@@ -88,12 +86,24 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
   else
     {
+      sockaddr *addr = 0;
+      struct sockaddr_in inet_addr;
+      int *len_ptr = 0;
+      int len;
+
+      if (remote_sap != 0)
+        {
+          addr = (sockaddr *) &inet_addr;
+          len = sizeof (inet_addr);
+          len_ptr = &len;
+        }
+
       do
         // On Win32 the third parameter to <accept> must be a NULL
         // pointer if to ignore the client's address.
         new_stream.set_handle (ACE_OS::accept (this->get_handle (),
                                                addr,
-                                               0));
+                                               len_ptr));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
@@ -102,7 +112,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
       if (remote_sap != 0)
         {
           ACE_INET_Addr temp (ACE_reinterpret_cast (sockaddr_in *, addr),
-                              sizeof (sockaddr_in));
+                              len);
           remote_sap->set_port_number(temp.get_port_number ());
         }
     }
