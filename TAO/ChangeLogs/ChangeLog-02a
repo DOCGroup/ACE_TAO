@@ -1,3 +1,9 @@
+Wed Mar 20 22:09:12 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp:
+	  Replace ACE_TRY_ENV with ACE_ENV_ARG_PARAMETER and
+	  ACE_ENV_SINGLE_ARG_PARAMETER macros.
+
 Wed Mar 20 11:20:14 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/MT_Timeout/Client_Task.cpp: Include Messaging.h instead of
