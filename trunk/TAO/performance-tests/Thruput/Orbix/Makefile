@@ -34,7 +34,7 @@ ttcp.h ttcpC.$(C++SUFFIX) ttcpS.$(C++SUFFIX):ttcp.idl
 .PHONY:	clean
 
 clean:
-	rm -f core *.o *~ client server *C.cpp *S.cpp ttcp.h
+	$(RM) core *.o *~ client server *C.cpp *S.cpp ttcp.h
 
 checkin:
 	ci ttcp.idl
@@ -44,7 +44,7 @@ checkin:
 	ci Client.cpp
 	ci ttcp_decl.h
 	ci utils.cpp
-	rm -f core *.o *~ client server *C.cpp *S.cpp ttcp.h
+	$(RM) core *.o *~ client server *C.cpp *S.cpp ttcp.h
 
 checkout:
 	co -l ttcp.idl
