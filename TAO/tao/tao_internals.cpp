@@ -1,15 +1,11 @@
 // $Id$
 
-#include "tao/corba.h"
-
-#if 0
 #include "tao/tao_internals.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "tao/default_server.h"
 #include "tao/default_client.h"
-#endif /* 0 */
 
 int TAO_Internal::service_open_count_ = 0;
 

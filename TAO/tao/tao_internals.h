@@ -20,9 +20,7 @@
 #if !defined (TAO_INTERNALS_H)
 #  define TAO_INTERNALS_H
 
-#if 0
-#  include "ace/Synch.h"
-#endif /* 0 */
+#  include "tao/corba.h"
 
 class TAO_Export TAO_Internal
   // = TITLE
@@ -56,8 +54,10 @@ private:
   TAO_Internal (void);
   // Private CTOR prevents this class from being instantiated.
 
- static int service_open_count_;
- // @@ Please document me.
+  static int service_open_count_;
+  // Number of times <open_services> has been called.  Incremented by
+  // <open_services>, and decremented by <close_services>.  Access to
+  // this is protected via the <ACE_Static_Object_Lock>.
 };
 
 #endif /* TAO_INTERNALS_H */
