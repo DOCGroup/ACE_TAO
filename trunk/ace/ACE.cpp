@@ -10,6 +10,8 @@
 #include "ace/Reactor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
+#include "ace/SString.h"
+#include "ace/Process.h"
 
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
@@ -1654,84 +1656,7 @@ ACE::get_handle (void)
   return handle;
 }
 
-// helper routine for get_ip_interfaces
-#if defined(ACE_WIN32)
-#include <ace/SString.h>
-#define NIL_STR TEXT("")
-
-#if defined (UNICODE)
-#define STRLEN wcslen
-#else
-#define STRLEN ACE_OS::strlen
-#endif
-
-// Zero terminated strings laid out like argv[], or NT registry
-// MULTI_SZ data type note, this object does not.
-
-class string_array 
-{
-public:
-  string_array (const TCHAR *the_str);
-  ~string_array (void);
-  long count () const;
-  const TCHAR *const operator[] (int idx) const;
-
-private:
-  string_array (const string_array&);
-  void build_object (wchar_t *str, int sz);
-  const TCHAR *buffer_;
-  long count_;
-};
-
-string_array::string_array (const TCHAR * str)
-  : count_(0), buffer_(0)
-{
-  if (str == 0 || *str == '\0')
-    return;
-  
-  buffer_ = str; // 
-
-  const TCHAR *ptr = buffer_;
-  
-  // determine how many items there are (count_)
-  while (*ptr) 
-    {
-      int len = STRLEN (ptr);
-      count_++;  // how may strings
-      ptr += len + 1; // move to start of next string
-    }
-}
-
-string_array::~string_array (void)
-{
-}
-
-// how many strings
-long 
-string_array::count (void) const
-{
-  return count_;
-}
-
-// * return a const only ptr
-
-const TCHAR *const 
-string_array::operator[] (int idx) const
-{
-  if (idx < 0 || idx > count_) 
-    return (TCHAR *) 0;
-
-  const TCHAR *ptr = buffer_;
-
-  for (int j = 0; j < idx; j++) 
-    {
-      int len = STRLEN(ptr);
-      ptr += len + 1; // move to start of next string (skip past null)
-    }
-
-  return (const TCHAR *const) ptr;
-}
-
+#if defined (ACE_WIN32)
 // Return value in buffer for a key/name pair from the Windows
 // Registry up to buf_len size.
 
@@ -1773,43 +1698,38 @@ int
 ACE::get_ip_interfaces (size_t &count,
 			ACE_INET_Addr *&addrs)
 {
-  // code for NT
+  ACE_TRACE ("ACE::get_ip_interfaces");
+
 #if defined (ACE_WIN32)
 
-  // this is ugly but the string classes are not parametrized ...
-#if defined (UNICODE)
-#define NT_STRING ACE_WString
-#else 
-#define NT_STRING ACE_CString
-#endif /* UNICODE */
-
-// TODO: add windows code here
-#define SVCS_KEY1 TEXT("SYSTEM\\CurrentControlSet\\Services\\")
-#define LINKAGE_KEY1 TEXT("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage")
-#define TCP_PARAM_SUBKEY TEXT("\\Parameters\\Tcpip")
-#define BIND_NAME_ID TEXT("Bind")
-#define IPADDR_NAME_ID TEXT("IPAddress")
-#define PERIOD_STR TEXT(".")
-#define BLANK_STR TEXT(" ")
-#define INVALID_TCPIP_DEVICE_ADDR TEXT("0.0.0.0")
-
+  const TCHAR *SVCS_KEY1 =  __TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
+  const TCHAR *LINKAGE_KEY1 =
+    __TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
+  const TCHAR *TCP_PARAM_SUBKEY = __TEXT ("\\Parameters\\Tcpip");
+  const TCHAR *BIND_NAME_ID =  __TEXT ("Bind");
+  const TCHAR *IPADDR_NAME_ID = __TEXT ("IPAddress");
+  const TCHAR *INVALID_TCPIP_DEVICE_ADDR = __TEXT ("0.0.0.0");
   const int MAX_STRING_SZ = 4096;
 
-  // 1. extract bind=device list 
   TCHAR raw_buffer[MAXPATHLEN];
   DWORD raw_buflen = MAXPATHLEN;
-  TCHAR buffer[MAX_STRING_SZ]; // 45 chars
-  DWORD buf_len = MAX_STRING_SZ;
+  TCHAR buffer[MAXPATHLEN];
+  DWORD buf_len = MAXPATHLEN;
 
   if (::get_reg_value (LINKAGE_KEY1,
 		       BIND_NAME_ID,
 		       raw_buffer,
 		       raw_buflen))
     return -1;
+  // return buffer contains NULL delimited strings
+  
+  ACE_Tokenizer dev_names (raw_buffer); 
+  dev_names.delimiter (__TEXT('\0'));
+  int n_interfaces = 0;
 
-  // 2. returned buffer may contain "\\Device\\dev1\0\\device\\dev2\0\0"
-  string_array dev_names ((TCHAR *) raw_buffer); // access raw buffer through this class
-  int n_interfaces = dev_names.count ();
+  // Count the number of interfaces
+  while (dev_names.next () != NULL)
+    n_interfaces ++;
 
   // case 1. no interfaces present, empty string? OS version change?
   if (n_interfaces == 0)
@@ -1822,9 +1742,10 @@ ACE::get_ip_interfaces (size_t &count,
     {
 
       // a. construct name to access IPAddress for this interface 
-      NT_STRING ifdevkey (SVCS_KEY1);
-      NT_STRING the_dev = dev_names[i]; // chop off the "\Device" and keep last name.
+      ACE_TEXT_STRING ifdevkey (SVCS_KEY1);
+      ACE_TEXT_STRING the_dev = dev_names.next ();
 
+      // chop off the "\Device" and keep last name.
       if (the_dev.length() < 8)
 	return -3;		// Something's wrong
       else 
@@ -1841,21 +1762,14 @@ ACE::get_ip_interfaces (size_t &count,
 	    continue;		// Don't count this device
 
 	  // c. store in hostinfo object array and up the counter
-#if defined (UNICODE)
-	  const MAX_HOSTNAME_LEN = 256; // per rfc
-	  char c_string[MAX_HOSTNAME_LEN +1];
-	  ::wcstombs(c_string, buffer, MAX_HOSTNAME_LEN);
-	  addrs[count++] = ACE_INET_Addr ((unsigned short) 0, c_string);
-#else
-	  addrs[count++] = ACE_INET_Addr ((unsigned short) 0, buffer);
-#endif /* UNICODE */
+	  addrs[count++] = ACE_INET_Addr ((unsigned short) 0,
+					  ACE_MULTIBYTE_STRING (buffer));
 	}
     }
   return 0;
 #elif defined(__unix)
   //  COMMON (SVR4 and BSD) UNIX CODE
 
-  ACE_TRACE ("ACE::get_ip_interfaces");
   size_t num_ifs;
 
   ACE_HANDLE handle = get_handle();	// call specific routine as necessary
