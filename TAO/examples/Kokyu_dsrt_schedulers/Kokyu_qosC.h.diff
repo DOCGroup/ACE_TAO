@@ -1,0 +1,11 @@
+--- Kokyu_qosC.h.orig	Mon Sep  1 11:01:16 2003
++++ Kokyu_qosC.h	Mon Sep  1 11:01:28 2003
+@@ -39,7 +39,7 @@
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+ 
+-#include "tao/RTCORBA/RTCORBAC.h"
++#include "tao/RTCORBA/RTCORBA.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
