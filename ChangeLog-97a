@@ -21,6 +21,9 @@ Sun Feb 02 21:24:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-aix-4.2.x.h: added #define ACE_HAS_LONGLONG_T.
 
+	* ace/Thread_Priority.{h,cpp}: moved #include of OS.h from .cpp
+	  to .h file.
+
 Sun Feb 02 10:30:29 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Local_Name_Space.cpp: removed ACE_Map_Manager, ACE_Map_Iterator,
