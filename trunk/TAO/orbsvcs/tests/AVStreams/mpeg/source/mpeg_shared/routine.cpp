@@ -218,7 +218,7 @@ void remove_shared_mem(char *ptr)
   shmdt(ptr);
 }
 
-#define SEM_NUM 20
+#define SEM_NUM 6
 static int semId = -1;
 static int masterPid = -1;
 static int nextSem = -1;
