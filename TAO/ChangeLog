@@ -1,3 +1,11 @@
+Sun Apr 20 07:55:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw:
+	* tests/Bug_1020_Basic_Regression/client.dsp:
+	* tests/Bug_1020_Basic_Regression/server.dsp: Removed them from
+	  the repo. They dont compile with VC6.0 and spoils our daily
+	  builds.
+
 Sun Apr 20 07:50:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1020_Regression/Bug_1020_Regression.dsw:
