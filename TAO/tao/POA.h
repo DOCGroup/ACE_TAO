@@ -681,7 +681,7 @@ protected:
 
   PortableServer::ServantLocator_var servant_locator_;
 
-  PortableServer::Servant default_servant_;
+  PortableServer::ServantBase_var default_servant_;
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

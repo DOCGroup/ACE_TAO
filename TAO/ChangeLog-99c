@@ -1,3 +1,29 @@
+Mon Apr 19 02:02:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: The following changes were made to comply with the new
+	  servant reference counting schemes in the upcoming CORBA 2.3
+	  specification:
+
+	  - Changed type of <default_servant_> from Servant to
+	    ServantBase_var.  This will help in (a) calling _remove_ref()
+	    on <default_servant_> when it is replaced with a new
+	    <default_servant_> and (b) calling _remove_ref() on
+	    <default_servant_> when the POA goes away.
+
+	  - Added servant reference counting to the following methods:
+
+	    get_servant
+	    set_servant
+	    activate_object
+	    activate_object_with_id
+	    servant_to_id
+	    servant_to_reference
+	    reference_to_servant
+	    id_to_servant
+
+	  - To be done: Calling _remove_ref() on deactivation of objects,
+	    deactivation of POAs, and destruction of POAs.
+
 Sun Apr 18 12:32:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args): Added check of
