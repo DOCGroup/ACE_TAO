@@ -40,6 +40,7 @@ ACE_HAS_AIX_HI_RES_TIMER		Platform has AIX4 ::read_real_time ()
 ACE_HAS_ALLOCA				Compiler/platform supports alloca()
 ACE_HAS_ALLOCA_H			Compiler/platform has <alloca.h>
 ACE_HAS_AUTOMATIC_INIT_FINI 		Compiler/platform correctly calls init()/fini() for shared libraries
+ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't support namespaces (or the support is not fully implemented.)
 ACE_HAS_BROKEN_BITSHIFT                 Compiler has integer overflow problem with bit-shift operations.
 ACE_HAS_BROKEN_CONVERSIONS		Compiler can't handle calls like foo->operator T *()
 ACE_HAS_BROKEN_CTIME			Compiler/platform uses macro for ctime (e.g., MVS)
