@@ -64,7 +64,7 @@ PP_Test_Server::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  if (this->parse_args () == -1);
+  if (this->parse_args () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "parse_args"),
