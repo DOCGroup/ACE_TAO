@@ -109,7 +109,7 @@ public:
 
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  // Called when object is removed from the ACE_Reactor
+  // Called when object is removed from the <ACE_Reactor>.
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
