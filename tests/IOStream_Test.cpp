@@ -343,7 +343,7 @@ server (void *arg = 0)
   // or the implicit <<endl.
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server sleeping\n"));
-  ACE_OS::sleep (30);
+  ACE_OS::sleep (5);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n"));
   client_handler << 1 << " ";
