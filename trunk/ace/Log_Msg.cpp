@@ -7,7 +7,7 @@
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
-#undef ACE_NTRACE
+# undef ACE_NTRACE
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
@@ -964,7 +964,20 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   ACE_OS::sprintf (bp, fp, w[0], w[1], va_arg (argp, double));
                   break;
                 case 10:
+#if defined (ACE_LACKS_LONGLONG_T)
+                  {
+                    // This relies on the ACE_U_LongLong storage layout.
+                    ACE_UINT32 hi = va_arg (argp, ACE_UINT32);
+                    ACE_UINT32 lo = va_arg (argp, ACE_UINT32);
+                    if (hi > 0)
+                      ACE_OS::sprintf (bp, "0x%lx%0*lx", hi, 2 * sizeof lo,
+                                       lo);
+                    else
+                      ACE_OS::sprintf (bp, "0x%lx", lo);
+                  }
+#else  /* ! ACE_LACKS_LONGLONG_T */
                   ACE_OS::sprintf (bp, ACE_UINT64_FORMAT_SPECIFIER, va_arg (argp, ACE_UINT64));
+#endif /* ! ACE_LACKS_LONGLONG_T */
                   break;
                 }
               *format = c;      // Restore char we overwrote.
