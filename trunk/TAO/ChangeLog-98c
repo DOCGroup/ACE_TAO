@@ -1,13 +1,13 @@
 Sat Aug 15 12:00:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/varout.h: 
-	* tao/varout.i: 
-	  Fixed some cast-away-const problems in the new
-	  TAO_Object_Field_T class.
+        * tao/varout.h:
+        * tao/varout.i:
+          Fixed some cast-away-const problems in the new
+          TAO_Object_Field_T class.
 
-	* orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: 
-	  Typecodes use a TAO_Unbounded_Pseudo_Sequence, not a
-	  TAO_Unbounded_Object_Sequence.
+        * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp:
+          Typecodes use a TAO_Unbounded_Pseudo_Sequence, not a
+          TAO_Unbounded_Object_Sequence.
 
 Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,6 +15,11 @@ Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
           tao/decode.cpp (decode),
           tao/encode.cpp (encode):
           replaced ACE_static_cast with an ACE_reinterpret_cast/ACE_const_cast.
+
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp (export_offers_to_all):
+          added a TAO_CHECK_ENV for platforms without
+          TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG.  This avoids a warning
+          about TAO_TRY_LABEL being declared but not referenced.
 
 Fri Aug 14 22:09:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
