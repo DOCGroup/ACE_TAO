@@ -1,5 +1,6 @@
-Tue Mar  9 16:40:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Mar  9 19:58:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* tao/POA.{h,cpp}:
 	* tao/Makefile:
 	* tao/TAO[_Static].dsp:
 	* tao/POAManager.{h,i,cpp}: Moved POA_Manager implementation to
