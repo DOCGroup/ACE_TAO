@@ -199,6 +199,11 @@ public:
   // Check with the TMS whether the reply has been receieved for the
   // request with <request_id>.
 
+  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  // Return the TSS leader follower condition variable used in the
+  // Wait Strategy. Muxed Leader Follower implementation returns a
+  // valid condition variable, others return 0.
+
 protected:
   CORBA::ULong tag_;
   // IOP protocol tag.

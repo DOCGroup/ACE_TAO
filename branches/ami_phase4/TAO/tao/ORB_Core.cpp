@@ -1303,6 +1303,28 @@ TAO_ORB_Core::object_adapter_i (void)
   return this->object_adapter_;
 }
 
+ACE_SYNCH_CONDITION* 
+TAO_ORB_Core::leader_follower_condition_variable (void)
+{
+  // Always using TSS.
+
+  // Get tss key.
+  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+
+  if (tss->leader_follower_condition_variable_ == 0)
+    {
+      // Create a new one and return.
+      ACE_NEW_RETURN (tss->leader_follower_condition_variable_,
+                      ACE_SYNCH_CONDITION (this->leader_follower ().lock ()),
+                      0);
+    }
+  else
+    {
+      // Return the condtion variable.
+      return tss->leader_follower_condition_variable_;
+    }
+}
+
 int
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
@@ -1659,7 +1681,8 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
      input_cdr_buffer_allocator_ (0),
      connection_cache_ (0),
      is_server_thread_ (0),
-     is_leader_thread_ (0)
+     is_leader_thread_ (0),
+     leader_follower_condition_variable_ (0)
 {
 }
 
@@ -1694,6 +1717,9 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
   // unimplemented delete this->connection_cache_;
   this->connection_cache_ = 0;
+
+  delete this->leader_follower_condition_variable_;
+  this->leader_follower_condition_variable_ = 0;
 }
 
 // ****************************************************************

@@ -50,6 +50,11 @@ public:
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Get the Message State into which the reply has been read.
+
+  virtual void leader_follower_condition_variable (TAO_Transport *);
+  // Obtain the condition variable used in the Leader Follower Wait
+  // Strategy. This is valid only for the synchronous reply dispatcher
+  // and only when the Leader Follower wait strategy is used.
 };
 
 // *********************************************************************
@@ -100,6 +105,10 @@ public:
   // reply will be dispatched as soon as it is available and the
   // dispatcher will go away immediately after that. 
 
+  virtual void leader_follower_condition_variable (TAO_Transport *);
+  // Obtain the condition variable used in the Leader Follower Wait
+  // Strategy.
+
 private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
@@ -112,14 +121,18 @@ private:
 
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
-  // @@ Carlos : message_state should go away. All we need is the reply
-  //    cdr. Is that rite? (Alex).
+  // @@ Carlos : message_state should go away. All we need is the
+  //    reply cdr. Is that rite? (Alex).
 
   TAO_InputCDR reply_cdr_;
   // CDR where the reply message is placed.
 
   int reply_received_;
-  // Flag that indicates the reply  has been received. 
+  // Flag that indicates the reply  has been received.
+
+  ACE_SYNCH_CONDITION *leader_follower_condition_variable_;
+  // Condition variable used by the leader to notify the follower
+  // about the availability of the response.
 };
 
 // *********************************************************************
