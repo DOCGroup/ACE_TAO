@@ -314,6 +314,10 @@ SOURCE=.\DLL.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Manager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Dump.cpp
 # End Source File
 # Begin Source File
@@ -1331,6 +1335,10 @@ SOURCE=.\Dirent_Selector.h
 # Begin Source File
 
 SOURCE=.\DLL.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DLL_Manager.h
 # End Source File
 # Begin Source File
 
