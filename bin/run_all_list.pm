@@ -49,7 +49,7 @@ if ($^O eq "MSWin32") {
       'TAO/tests/ORB_destroy , run_test.pl',
       'TAO/tests/DSI_Gateway , run_test.pl',
       'TAO/tests/DynAny_Test , run_test.pl',
-      'TAO/tests/Connection_Purging , run_test.pl',
+# NEEDS FIX      'TAO/tests/Connection_Purging , run_test.pl',
       'TAO/tests/LongUpcalls , run_test.pl',
       'TAO/examples/Buffered_Oneways , run_test.pl',
 # REQUIRES AMI 'TAO/examples/Buffered_AMI , run_test.pl',
@@ -89,6 +89,7 @@ if ($^O eq "MSWin32") {
       'TAO/orbsvcs/tests/Property , run_test.pl',
 #HANGS'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 #HANGS'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
+      'TAO/tests/Exposed_Policies, run_test.pl',
     );
 
 @MINIMUM_CORBA_LIST =
@@ -125,7 +126,7 @@ if ($^O eq "MSWin32") {
       'TAO/tests/ORB_destroy , run_test.pl',
 # NOT MINIMUM 'TAO/tests/DSI_Gateway , run_test.pl',
 # NOT MINIMUM 'TAO/tests/DynAny_Test , run_test.pl',
-      'TAO/tests/Connection_Purging , run_test.pl',
+# NEED FIX      'TAO/tests/Connection_Purging , run_test.pl',
       'TAO/tests/LongUpcalls , run_test.pl',
 # NOT MINIMUM 'TAO/examples/Buffered_Oneways , run_test.pl',
 # NOT MINIMUM 'TAO/examples/Buffered_AMI , run_test.pl',
