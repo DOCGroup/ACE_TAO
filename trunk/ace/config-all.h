@@ -368,7 +368,7 @@
     // (03.10 and before) a failed new threw bad_alloc. After that (03.13
     // and above) the exception thrown is dependent on the below settings.
 #   if (defined (__HP_aCC) && \
-        (!defined (RWSTD_NO_NAMESPACE) || defined (_NAMESPACE_STD))) \
+        (__HP_aCC < 32500 && !defined (RWSTD_NO_NAMESPACE)) || (__HP_aCC >= 32500 && defined (_NAMESPACE_STD))) \
        || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #     define ACE_bad_alloc std::bad_alloc
 #   else

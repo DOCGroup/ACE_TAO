@@ -7,6 +7,14 @@ Fri Jan 19 13:01:13 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* ace/Makefile : 
 	  Updated dependencies
 
+        * ace/config-all.h
+          Fix a build problem on HP-UX 11.00 with aCC A.03.25.  The macro
+          used to determine the use of the std namespace changed from
+          RWSTD_NO_NAMESPACE to _NAMESPACE_STD.  NOTE: I did preserve the
+          check for RWSTD_NO_NAMESPACE with aCC versions less than A.03.25.
+
+          Thanks to Chad Elliott  <elliott_c@ociweb.com> for making this fix. 
+
 Fri Jan 19 11:22:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/tutorials/022/client_handler.cpp : 
