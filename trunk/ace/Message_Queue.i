@@ -135,6 +135,14 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivate (void)
   return this->deactivate_i ();
 }
 
+template <ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::deactivated");
+
+  return this->deactivated_;
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Reverse_Iterator)
 
 

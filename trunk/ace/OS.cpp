@@ -1696,13 +1696,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   // being we are all non-super actors.  Should be fixed to take care
   // of super actors!!!
   if (stacksize == 0)
-    stacksize = 2 * ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
-  else
-    {
-      size_t _s = 2 * ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
-      if (stacksize < _s)
-        stacksize = _s;
-    }
+    stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
+  else if (stacksize < ACE_CHORUS_DEFAULT_MIN_STACK_SIZE)
+    stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
 #     endif /*CHORUS */
 
   if (stacksize != 0)

@@ -156,6 +156,9 @@ public:
   // before the call and WAS_ACTIVE if queue was active before the
   // call.
 
+  virtual int deactivated (void);
+  // Returns true if <deactivated_> is enabled.
+
   // = Notification hook.
 
   virtual int notify (void);
