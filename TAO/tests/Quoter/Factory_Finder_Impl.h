@@ -33,10 +33,6 @@ public:
   // Returns a squence of Factories if factories matching the
   // factory_key were found. If no factory was found, then the
   // NoFactory exception, defined in CosLifeCycle, is raised.
-
-private:
-  // CosNaming::NamingContext_var quoterNamingContext_var_;    
-  // Hold a reference to the Quoter example naming context.
 };
 
 #endif /* QUOTER_FACTORY_FINDER_IMPL_H */
