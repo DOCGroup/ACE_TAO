@@ -867,28 +867,3 @@ ACE_Service_Config::start_daemon (void)
   ACE_TRACE ("ACE_Service_Config::start_daemon");
   return ACE::daemonize ();
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<ACE_Static_Svc_Descriptor *>;
-template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
-template class ACE_Node<ACE_TString>;
-template class ACE_Unbounded_Queue<ACE_TString>;
-template class ACE_Unbounded_Queue_Iterator<ACE_TString>;
-template class ACE_Unbounded_Set<ACE_TString>;
-template class ACE_Unbounded_Set_Iterator<ACE_TString>;
-template class auto_ptr<ACE_Obstack>;
-template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<ACE_Static_Svc_Descriptor *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
-#pragma instantiate ACE_Node<ACE_TString>
-#pragma instantiate ACE_Unbounded_Queue<ACE_TString>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_TString>
-#pragma instantiate ACE_Unbounded_Set<ACE_TString>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_TString>
-#pragma instantiate auto_ptr<ACE_Obstack>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

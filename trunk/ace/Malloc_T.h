@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Synch.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
 
 template <class T>

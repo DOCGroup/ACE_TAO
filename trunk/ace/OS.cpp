@@ -430,6 +430,7 @@ ACE_OS_Exit_Info::call_hooks ()
         (* ACE_reinterpret_cast (ACE_EXIT_HOOK, info.cleanup_hook_)) ();
       else
         (*info.cleanup_hook_) (info.object_, info.param_);
+      
     }
 }
 

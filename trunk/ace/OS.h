@@ -1480,12 +1480,27 @@ typedef void (*ACE_Service_Object_Exterminator)(void *);
 # define ACE_STATIC_SVC_DECLARE(X) extern ACE_Static_Svc_Descriptor ace_svc_desc_##X ;
 # define ACE_STATIC_SVC_DEFINE(X, NAME, TYPE, FN, FLAGS, ACTIVE) \
 ACE_Static_Svc_Descriptor ace_svc_desc_##X = { NAME, TYPE, FN, FLAGS, ACTIVE };
+
+#if defined(ACE_LACKS_STATIC_CONSTRUCTORS)
+# define ACE_STATIC_SVC_REQUIRE(X)\
+class ACE_Static_Svc_##X {\
+public:\
+        ACE_Static_Svc_##X() { ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_##X); }\
+};
+#define ACE_STATIC_SVC_REGISTER(X)\
+ACE_Static_Svc_##X ace_static_svc_##X
+
+#else /* !ACE_LACKS_STATIC_CONSTRUCTORS */
+
 # define ACE_STATIC_SVC_REQUIRE(X)\
 class ACE_Static_Svc_##X {\
 public:\
         ACE_Static_Svc_##X() { ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_##X); }\
 };\
 static ACE_Static_Svc_##X ace_static_svc_##X;
+#define ACE_STATIC_SVC_REGISTER(X) do {} while (0)
+
+#endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
 
 
 // More generic dynamic/static service macros.
@@ -3727,7 +3742,7 @@ extern "C"
 #   endif /* ACE_DEFAULT_GLOBALNAME_A */
 
 // ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
-// way of doing this is something like ACE::get_temp_dir, since
+// way of doing this is something like ACE_Lib_Find::get_temp_dir, since
 // this directory may not exist
 #   if defined (ACE_LEGACY_MODE)
 #     if defined (ACE_WIN32)
@@ -4958,7 +4973,7 @@ public:
   static int hostname (char *name,
                        size_t maxnamelen);
 
-#if defined (ACE_HAS_WCHAR)  
+#if defined (ACE_HAS_WCHAR)
   static int hostname (wchar_t *name,
                        size_t maxnamelen);
 #endif /* ACE_HAS_WCHAR */

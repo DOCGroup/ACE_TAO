@@ -33,7 +33,7 @@ ACE_DEV_Connector::connect (ACE_DEV_IO &new_io,
 {
   ACE_TRACE ("ACE_DEV_Connector::connect");
 
-  ACE_HANDLE handle = ACE::handle_timed_open (timeout, 
+  ACE_HANDLE handle = ACE_Handle_Ops::handle_timed_open (timeout, 
 					      remote_sap.get_path_name (),
 					      flags, perms);
   new_io.set_handle (handle);

@@ -18,7 +18,7 @@
 #define ACE_MEM_SAP_H
 #include "ace/pre.h"
 
-#include "ace/Malloc.h"
+#include "ace/PI_Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

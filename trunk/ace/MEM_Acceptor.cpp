@@ -124,7 +124,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     {
       ACE_TCHAR name[25];
       // - 24 is so we can append name to the end.
-      if (ACE::get_temp_dir (buf, MAXPATHLEN - 24) == -1)
+      if (ACE_Lib_Find::get_temp_dir (buf, MAXPATHLEN - 24) == -1)
         {
           ACE_ERROR ((LM_ERROR, 
                       ACE_LIB_TEXT ("Temporary path too long, ")
@@ -183,10 +183,10 @@ ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
 
       // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
       // originally.
-      ACE::clr_flags (this->get_handle (),
-                      ACE_NONBLOCK);
-      ACE::clr_flags (new_handle,
-                      ACE_NONBLOCK);
+      ACE_Flag_Manip::clr_flags (this->get_handle (),
+                                 ACE_NONBLOCK);
+      ACE_Flag_Manip::clr_flags (new_handle,
+                                 ACE_NONBLOCK);
     }
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)

@@ -40,7 +40,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
 
   // Check to see if caller has requested that we create the filename.
   if (ACE_reinterpret_cast (const ACE_Addr &,
-                            ACE_const_cast (ACE_FILE_Addr &, 
+                            ACE_const_cast (ACE_FILE_Addr &,
                                             remote_sap)) == ACE_Addr::sap_any)
     // Create a new temporary file.
     new_io.addr_ =
@@ -48,11 +48,10 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   else
     new_io.addr_ = remote_sap; // class copy.
 
-  ACE_HANDLE handle = ACE::handle_timed_open (timeout, 
-                                              new_io.addr_.get_path_name (),
-                                              flags,
-                                              perms);
+  ACE_HANDLE handle = ACE_Handle_Ops::handle_timed_open (timeout,
+                                                         new_io.addr_.get_path_name (),
+                                                         flags,
+                                                         perms);
   new_io.set_handle (handle);
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
-
