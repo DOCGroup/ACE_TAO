@@ -1,6 +1,6 @@
 // $Id$
 /**
- * @file Attributes.idl
+ * @file HomeAttributes.idl
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
  * Tests attributes in homes
