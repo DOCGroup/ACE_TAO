@@ -1,3 +1,14 @@
+Wed Jul 12 10:53:01 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pace.dsw:
+
+	  Added the PACE/pace/*.h files. These currently contain
+	  the interface we need to compile into our code. Maybe
+	  we can change the following, but we now have
+	  PACE/pace/aio.h and PACE/pace/win32/aio.h
+	  both showing up in the VC++ list as aio.h and aio.h.
+	  The PACE/pace/win32 files always show up second :-)
+
 Wed Jul 12 10:24:20 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/wait.h:
