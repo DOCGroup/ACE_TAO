@@ -1,4 +1,19 @@
+Thu Jun 29 14:47:19 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/man/pace.jpg:
+          JPEG file of the PACE icon used in the html man pages.
+
+        * pace/man/banner:
+          Created banner file that is inserted at the bottom of
+          the generated html man pages. This file contains the
+          PACE logo pointing to the PACE Web page.
+
+        * pace/man/Makefile:
+          Created Makefile for the html man pages using doc++
+
 Thu Jun 29 09:21:19 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/man/Makefile: 
 
         * pace/config/config.h:
           Changed C++ // comment to C /* */ comment. The compiler
