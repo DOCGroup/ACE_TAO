@@ -3086,7 +3086,7 @@ ACE_OS::getpwnam (const char *name)
 #else
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_LACKS_PWD_FUNCTIONS */
+#endif /* ! ACE_LACKS_PWD_FUNCTIONS */
 }
 
 ACE_INLINE struct passwd *
@@ -3113,21 +3113,21 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
-#endif /* NOT ACE_LACKS_PWD_REENTRANT_FUNCTIONS */
+#endif /* ! ACE_LACKS_PWD_REENTRANT_FUNCTIONS */
 #else
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS && ACE_MT_SAFE */
 #else
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
-#endif /* NOT ACE_LACKS_PWD_FUNCTIONS */
+#endif /* ! ACE_LACKS_PWD_FUNCTIONS */
 }
 
 // DNS accessors.
