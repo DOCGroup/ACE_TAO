@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/TLI_Connector.h"
+#include "ace/ATM_QoS.h"                              
 #include "ace/ATM_Addr.h"                              
 
 ACE_RCSID(TLI_SAP, CPP_ATM_client, "$Id$")
@@ -13,13 +14,13 @@ int main (int argc, char *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       "Usage: %s hostname [-s selector] [QoS in KB/sec]\n",
+                       "Usage: %s [-s selector] hostname [QoS in KB/sec]\n",
                        argv[0]),
                       1);
 
-  const char *host = argv[1];
   unsigned char selector = ACE_ATM_Addr::DEFAULT_SELECTOR;
   int selector_specified = 0;
+  extern int optind;
   int opt;
   while ((opt = ACE_OS::getopt (argc, argv, "s:?h")) != EOF)
     {
@@ -38,7 +39,9 @@ int main (int argc, char *argv[])
       } // switch
     } // while getopt
 
-  int qos = (argc == 3) ? ACE_OS::atoi (argv[2]) :
+  const char *host = argv[optind];
+
+  int rate = (argc == 3) ? ACE_OS::atoi (argv[2]) :
     (argc == 5) ? ACE_OS::atoi (argv[4]) : 0;
   // The timeout really gets ignored since FORE's drivers don't work when
   //  ioctl or fcntl calls are made on the transport id/file descriptor
@@ -71,14 +74,20 @@ int main (int argc, char *argv[])
   ACE_TLI_Connector con;
                                                         
   // Construct QoS options - currently FORE only supports bandwidth
-  long optlen = 0;
-  char *options = ACE_ATM_Addr::construct_options (cli_stream.get_handle (),
-                                                   qos,
-                                                   ACE_ATM_Addr::OPT_FLAGS_CPID,
-                                                   &optlen);
-  struct netbuf optbuf;
-  optbuf.len = optlen;
-  optbuf.buf = options;
+  ACE_ATM_QoS qos;
+  qos.set_rate(cli_stream.get_handle (),
+               rate,
+               ACE_ATM_QoS::OPT_FLAGS_CPID);
+
+  struct netbuf optbuf = qos.get_qos();
+//   long optlen = 0;
+//   char *options = remote_addr.construct_options (cli_stream.get_handle (),
+//                                                  rate,
+//                                                  ACE_ATM_Addr::OPT_FLAGS_CPID,
+//                                                  &optlen);
+//   struct netbuf optbuf;
+//   optbuf.len = optlen;
+//   optbuf.buf = options;
 
   // Not sure why but reuse_addr set to true/1 causes problems for
   // FORE/XTI/ATM - this is now handled in ACE_TLI_Connector::connect()
