@@ -9,7 +9,7 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
      disconnect_callbacks (TAO_EC_DEFAULT_DISCONNECT_CALLBACKS),
      busy_hwm (TAO_EC_DEFAULT_BUSY_HWM),
      max_write_delay (TAO_EC_DEFAULT_MAX_WRITE_DELAY),
-     scheduler (RtecScheduler::Scheduler::_nil ()),
+     scheduler (CORBA::Object::_nil ()),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
 {
@@ -171,10 +171,10 @@ TAO_EC_Event_Channel::disconnect_callbacks (void) const
   return this->disconnect_callbacks_;
 }
 
-ACE_INLINE RtecScheduler::Scheduler_ptr
+ACE_INLINE CORBA::Object_ptr
 TAO_EC_Event_Channel::scheduler (void)
 {
-  return RtecScheduler::Scheduler::_duplicate (this->scheduler_.in ());
+  return CORBA::Object::_duplicate (this->scheduler_.in ());
 }
 
 ACE_INLINE int

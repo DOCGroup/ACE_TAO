@@ -168,22 +168,22 @@ public:
 
   int insert (RtecEventComm::EventSourceID source,
               RtecEventComm::EventType type,
-              RtecScheduler::handle_t rt_info);
+              RtecBase::handle_t rt_info);
   // Insert source/type dependency.  <source> of the event (may be
   // zero), <type> of the event.  <rt_info> describes the method that
   // will handle the <source>/<type> events.
 
   int insert_type (RtecEventComm::EventType type,
-                   RtecScheduler::handle_t rt_info);
+                   RtecBase::handle_t rt_info);
   // Insert type-only dependency.
 
   int insert_source (RtecEventComm::EventSourceID source,
-                     RtecScheduler::handle_t rt_info);
+                     RtecBase::handle_t rt_info);
   // Insert source-only dependency.
 
   int insert_time (RtecEventComm::EventType type,
                    RtecEventComm::Time interval,
-                   RtecScheduler::handle_t rt_info);
+                   RtecBase::handle_t rt_info);
   // Register temporal dependency.  <type> designates interval or
   // deadline timeout that will occur every <interval>.
 
@@ -227,7 +227,7 @@ public:
 
   int insert (RtecEventComm::EventSourceID sid,
               RtecEventComm::EventType type,
-              RtecScheduler::handle_t rtinfo,
+              RtecBase::handle_t rtinfo,
               u_int ncalls);
   // Publish <sid> and <type> that is generate by a method described by
   // <rtinfo>.  The method generates <type> <ncalls> number of times

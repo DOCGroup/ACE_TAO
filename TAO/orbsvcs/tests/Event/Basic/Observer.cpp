@@ -286,9 +286,6 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
 
       this->gwys_[i].init (rmt_ec,
                            this->event_channel_.in (),
-                           RtecScheduler::Scheduler::_nil (),
-                           RtecScheduler::Scheduler::_nil (),
-                           0, 0,
                            ACE_TRY_ENV);
 
       RtecEventChannelAdmin::Observer_var obs =

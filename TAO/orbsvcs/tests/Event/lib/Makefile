@@ -14,13 +14,13 @@ LIB2      = $(LIBNAME).a
 SHLIB2    = $(LIBNAME).$(SOEXT)
 
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
   LIB = $(LIB2)
   SHLIB = $(SHLIB2)
 endif # Event2
 
-ACE_SHLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO -lACE
-LDLIBS  = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO
+ACE_SHLIBS = -lTAO_RTEvent -lTAO -lACE
+LDLIBS  = -lTAO_RTEvent -lTAO
 
 SRCS = Driver Consumer Supplier Counting_Consumer Counting_Supplier
 FILES = $(SRCS)

@@ -26,14 +26,16 @@
 #define TAO_EC_SCHED_FILTER_H
 #include "ace/pre.h"
 
-#include "orbsvcs/RtecSchedulerC.h"
 #include "EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_RTEvent_Export TAO_EC_Sched_Filter : public TAO_EC_Filter
+#include "orbsvcs/RtecSchedulerC.h"
+#include "sched_event_export.h"
+
+class TAO_RTSchedEvent_Export TAO_EC_Sched_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   Decorate a filter with scheduling information

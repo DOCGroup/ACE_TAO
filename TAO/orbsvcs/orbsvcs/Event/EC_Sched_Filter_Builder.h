@@ -32,10 +32,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "sched_event_export.h"
+
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel;
 
-class TAO_RTEvent_Export TAO_EC_Sched_Filter_Builder : public TAO_EC_Filter_Builder
+class TAO_RTSchedEvent_Export TAO_EC_Sched_Filter_Builder : public TAO_EC_Filter_Builder
 {
   // = TITLE
   //   Implement a builder for the fundamental filters.

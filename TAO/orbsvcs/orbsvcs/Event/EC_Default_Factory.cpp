@@ -1,11 +1,9 @@
 // $Id$
 
 #include "EC_Default_Factory.h"
-#include "EC_Priority_Dispatching.h"
 #include "EC_MT_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
 #include "EC_Prefix_Filter_Builder.h"
-#include "EC_Sched_Filter_Builder.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
@@ -14,7 +12,6 @@
 #include "EC_Per_Supplier_Filter.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
-#include "EC_Priority_Scheduling.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
 #include "EC_Reactive_ConsumerControl.h"
@@ -74,13 +71,9 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                 {
                   this->dispatching_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
-                {
-                  this->dispatching_ = 1;
-                }
               else if (ACE_OS::strcasecmp (opt, "mt") == 0)
                 {
-                  this->dispatching_ = 2;
+                  this->dispatching_ = 1;
                 }
               else
                 {
@@ -120,13 +113,9 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                 {
                   this->filtering_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
-                {
-                  this->filtering_ = 2;
-                }
               else if (ACE_OS::strcasecmp (opt, "prefix") == 0)
                 {
-                  this->filtering_ = 3;
+                  this->filtering_ = 2;
                 }
               else
                 {
@@ -178,12 +167,6 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                 {
                   this->timeout_ = 0;
                 }
-#if 0
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
-                {
-                  this->timeout_ = 1;
-                }
-#endif /* 0 */
               else
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -231,10 +214,6 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 {
                   this->scheduling_ = 0;
-                }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
-                {
-                  this->scheduling_ = 1;
                 }
               else
                 {
@@ -528,13 +507,11 @@ TAO_EC_Default_Factory::fini (void)
 // ****************************************************************
 
 TAO_EC_Dispatching*
-TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *ec)
+TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel *)
 {
   if (this->dispatching_ == 0)
     return new TAO_EC_Reactive_Dispatching ();
   else if (this->dispatching_ == 1)
-    return new TAO_EC_Priority_Dispatching (ec);
-  else if (this->dispatching_ == 2)
     return new TAO_EC_MT_Dispatching (this->dispatching_threads_,
                                       this->dispatching_threads_flags_,
                                       this->dispatching_threads_priority_,
@@ -556,8 +533,6 @@ TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
   else if (this->filtering_ == 1)
     return new TAO_EC_Basic_Filter_Builder (ec);
   else if (this->filtering_ == 2)
-    return new TAO_EC_Sched_Filter_Builder (ec);
-  else if (this->filtering_ == 3)
     return new TAO_EC_Prefix_Filter_Builder (ec);
   return 0;
 }
@@ -681,15 +656,10 @@ TAO_EC_Default_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
 }
 
 TAO_EC_Scheduling_Strategy*
-TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel* ec)
+TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
 {
   if (this->scheduling_ == 0)
     return new TAO_EC_Null_Scheduling;
-  else if (this->scheduling_ == 1)
-    {
-      RtecScheduler::Scheduler_var scheduler = ec->scheduler ();
-      return new TAO_EC_Priority_Scheduling (scheduler.in ());
-    }
   return 0;
 }
 

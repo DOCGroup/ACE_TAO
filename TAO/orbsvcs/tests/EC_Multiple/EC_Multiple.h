@@ -25,7 +25,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/Event/EC_Gateway.h"
+#include "orbsvcs/Event/EC_Gateway_Sched.h"
 
 class Test_ECG;
 
@@ -260,7 +260,7 @@ private:
   const char* rmt_name_;
   // The name of the "remote" EC.
 
-  TAO_EC_Gateway_IIOP ecg_;
+  TAO_EC_Gateway_Sched ecg_;
   // The proxy used to connect both event channels.
 
   enum {

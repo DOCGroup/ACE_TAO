@@ -47,7 +47,6 @@ EC_Driver::EC_Driver (void)
 #if !defined(TAO_EC_DISABLE_OLD_EC)
      module_factory_ (0),
 #endif
-     scheduler_impl_ (0),
      ec_impl_ (0),
      busy_hwm_ (TAO_EC_DEFAULT_BUSY_HWM),
      max_write_delay_ (TAO_EC_DEFAULT_MAX_WRITE_DELAY)
@@ -562,7 +561,7 @@ EC_Driver::build_consumer_qos (
   int& shutdown_event_type,
   CORBA::Environment&)
 {
-  RtecScheduler::handle_t rt_info = 0;
+  RtecBase::handle_t rt_info = 0;
 
   int type_start =
     this->consumer_type_start_
@@ -625,7 +624,7 @@ EC_Driver::build_supplier_qos (
   int supplier_id = i + 1;
   shutdown_event_type = type_start + this->supplier_type_count_;
 
-  RtecScheduler::handle_t rt_info = 0;
+  RtecBase::handle_t rt_info = 0;
 
   ACE_SupplierQOS_Factory qos_factory;
   for (int j = 0; j != this->supplier_type_count_; ++j)
@@ -1099,7 +1098,6 @@ void
 EC_Driver::cleanup_ec (void)
 {
   delete this->ec_impl_;
-  delete this->scheduler_impl_;
 #if !defined(EC_DISABLE_OLD_EC)
   delete this->module_factory_;
 #endif

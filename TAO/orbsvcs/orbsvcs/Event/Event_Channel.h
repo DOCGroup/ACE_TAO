@@ -96,7 +96,7 @@ int operator != (const TAO_EC_Event &rhs, const TAO_EC_Event &lhs);
 
 // = DESCRIPTION
 //   Utility for debugging events.
-void TAO_RTEvent_Export dump_event (const RtecEventComm::Event &event);
+void TAO_RTOLDEvent_Export dump_event (const RtecEventComm::Event &event);
 
 // ************************************************************
 
@@ -108,7 +108,7 @@ void TAO_RTEvent_Export dump_event (const RtecEventComm::Event &event);
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_RTEvent_Export ACE_RTU_Manager
+class TAO_RTOLDEvent_Export ACE_RTU_Manager
 // = TITLE
 //   ACE RTU Manager
 //
@@ -167,7 +167,7 @@ class TAO_Module_Factory;
 // Factory class for the modules in the EC.
 
 
-class TAO_RTEvent_Export ACE_EventChannel : public POA_RtecEventChannelAdmin::EventChannel
+class TAO_RTOLDEvent_Export ACE_EventChannel : public POA_RtecEventChannelAdmin::EventChannel
 //
 // = TITLE
 //   TAO's Real-time Event Channel.
@@ -373,7 +373,7 @@ private:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_ES_Dependency_Iterator
+class TAO_RTOLDEvent_Export ACE_ES_Dependency_Iterator
 // = TITLE
 //    ConsumerQOS Iterator
 //
@@ -440,7 +440,7 @@ protected:
 // Forward decl.
 class ACE_ES_Consumer_Rep_Timeout;
 
-class TAO_RTEvent_Export ACE_ES_Disjunction_Group
+class TAO_RTOLDEvent_Export ACE_ES_Disjunction_Group
 // = TITLE
 //    Disjunction Group
 //
@@ -487,7 +487,7 @@ private:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_ES_Conjunction_Group : public ACE_ES_Disjunction_Group
+class TAO_RTOLDEvent_Export ACE_ES_Conjunction_Group : public ACE_ES_Disjunction_Group
 // = TITLE
 //    Conjunction Group
 //
@@ -525,7 +525,7 @@ private:
 // Forward decl.
 class ACE_ES_Consumer_Correlation;
 
-class TAO_RTEvent_Export ACE_ES_Consumer_Rep : public ACE_Command_Base
+class TAO_RTOLDEvent_Export ACE_ES_Consumer_Rep : public ACE_Command_Base
 // = TITLE
 //    Consumer Representation.
 //
@@ -646,7 +646,7 @@ protected:
   // Lock for reference count.
 };
 
-class TAO_RTEvent_Export ACE_ES_Consumer_Rep_Timeout : public ACE_ES_Consumer_Rep
+class TAO_RTOLDEvent_Export ACE_ES_Consumer_Rep_Timeout : public ACE_ES_Consumer_Rep
 // = TITLE
 //    Consumer Representation.
 //
@@ -688,7 +688,7 @@ protected:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_ES_Subscription_Info
+class TAO_RTOLDEvent_Export ACE_ES_Subscription_Info
 // = TITLE
 //    Event Service Subscription Info
 //
@@ -798,7 +798,7 @@ public:
 class ACE_ES_Dispatch_Request;
 class ACE_Push_Consumer_Proxy;
 
-class TAO_RTEvent_Export ACE_ES_Consumer_Correlation : public POA_RtecEventComm::PushSupplier
+class TAO_RTOLDEvent_Export ACE_ES_Consumer_Correlation : public POA_RtecEventComm::PushSupplier
 // = TITLE
 //    Event Service Consumer_Correlation
 //
@@ -910,7 +910,7 @@ private:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_ES_ACT
+class TAO_RTOLDEvent_Export ACE_ES_ACT
 // = TITLE
 //    Event Service ACT
 //
@@ -928,7 +928,7 @@ public:
 // Forward declarations.
 class ACE_ES_Dispatch_Request;
 
-class TAO_RTEvent_Export ACE_ES_Consumer_Module : public POA_RtecEventChannelAdmin::ConsumerAdmin
+class TAO_RTOLDEvent_Export ACE_ES_Consumer_Module : public POA_RtecEventChannelAdmin::ConsumerAdmin
 // = TITLE
 //    Event Service Consumer Module
 //
@@ -995,7 +995,7 @@ private:
 // Forward declaration.
 class ACE_ES_Subscription_Module;
 
-class TAO_RTEvent_Export ACE_ES_Correlation_Module
+class TAO_RTOLDEvent_Export ACE_ES_Correlation_Module
 // = TITLE
 //    Event Service Correlation Module
 //
@@ -1063,7 +1063,7 @@ private:
 class ACE_ES_Supplier_Module;
 class ACE_Push_Supplier_Proxy;
 
-class TAO_RTEvent_Export ACE_ES_Subscription_Module
+class TAO_RTOLDEvent_Export ACE_ES_Subscription_Module
 // = TITLE
 //    Event Service Subscription Module
 //
@@ -1201,7 +1201,7 @@ private:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_ES_Supplier_Module : public POA_RtecEventChannelAdmin::SupplierAdmin
+class TAO_RTOLDEvent_Export ACE_ES_Supplier_Module : public POA_RtecEventChannelAdmin::SupplierAdmin
 // = TITLE
 //    Event Service Supplier Proxy Module
 //
@@ -1269,7 +1269,7 @@ class ACE_EventChannel;
 
 // = Event Channel interfaces.
 
-class TAO_RTEvent_Export ACE_Push_Supplier_Proxy : public POA_RtecEventChannelAdmin::ProxyPushConsumer, public PortableServer::RefCountServantBase
+class TAO_RTOLDEvent_Export ACE_Push_Supplier_Proxy : public POA_RtecEventChannelAdmin::ProxyPushConsumer, public PortableServer::RefCountServantBase
 //
 // = TITLE
 //    Push Supplier Proxy.
@@ -1351,7 +1351,7 @@ private:
 
 // ************************************************************
 
-class TAO_RTEvent_Export ACE_Push_Consumer_Proxy : public POA_RtecEventChannelAdmin::ProxyPushSupplier, public PortableServer::RefCountServantBase
+class TAO_RTOLDEvent_Export ACE_Push_Consumer_Proxy : public POA_RtecEventChannelAdmin::ProxyPushSupplier, public PortableServer::RefCountServantBase
 //
 // = TITLE
 //     Push Consumer Proxy.
