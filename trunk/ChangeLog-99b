@@ -1,5 +1,6 @@
-Thu Jul 29 03:08:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Jul 29 12:32:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/WFMO_Reactor.cpp (ACE_WFMO_Reactor):
 	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T): I forgot to
 	  initialize <deactivated_> flag in one of the two ctors.  Thanks
 	  to Ruediger Franke <Ruediger.Franke@decrc.abb.de> for catching
