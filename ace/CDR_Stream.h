@@ -80,6 +80,7 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
+                 ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff =
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet major_version =
@@ -94,6 +95,7 @@ public:
                  int byte_order = ACE_CDR_BYTE_ORDER,
                  ACE_Allocator* buffer_allocator = 0,
                  ACE_Allocator* data_block_allocator = 0,
+                 ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff=
                    ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version =
@@ -533,6 +535,7 @@ public:
   ACE_InputCDR (const ACE_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
                 ACE_Allocator* data_block_allocator = 0,
+                ACE_Allocator* message_block_allocator = 0,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
                 ACE_CDR::Octet minor_version =
