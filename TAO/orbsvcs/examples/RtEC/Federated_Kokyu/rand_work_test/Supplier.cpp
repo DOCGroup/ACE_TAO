@@ -83,57 +83,6 @@ Supplier::get_id(void) const
 
 // ****************************************************************
 
-Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
-  :supplier_impl_ (supplier)
-{
-}
-
-void
-Timeout_Consumer::push (const RtecEventComm::EventSet& events
-                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  if (events.length () == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TimeoutConsumer (%t) no events\n"));
-      return;
-    }
-
-  ACE_DEBUG ((LM_DEBUG, "(%t) Timeout Event received\n"));
-  //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
-  //timeout occurs to trigger event push. Roughly equivalent to the
-  //scheduling segments started for each one-way call of the DTs.
-  //DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
-             this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
-
-  Object_ID oid;
-  oid.id = events[0].header.eid.id;
-  oid.tid = events[0].header.eid.tid;
-  oid.pid = events[0].header.eid.pid;
-  oid.queue_id = events[0].header.eid.queue_id;
-  oid.type = events[0].header.type;
-
-  DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
-
-  supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  //@BT: Finished handling the timeout.
-  //DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
-  ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
-             this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
-  DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
-}
-
-void
-Timeout_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-// ****************************************************************
-
 /// Constructor
 Supplier_Timeout_Handler::Supplier_Timeout_Handler (Supplier * supplier_impl)
   : supplier_impl_(supplier_impl)

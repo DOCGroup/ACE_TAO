@@ -8,6 +8,7 @@
 #include "ace/Select_Reactor_Base.h" //for ACE_Select_Reactor_Impl::DEFAULT_SIZE
 #include "ace/Map.h"
 #include "ace/Vector_T.h"
+#include "ace/Reactor.h"
 
 #include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
@@ -26,6 +27,8 @@
 #include "federated_dsui_families.h"
 #endif //ACE_HAS_DSUI
 
+#include <sstream>
+
 namespace
 {
   int config_run = 0;
@@ -40,6 +43,7 @@ class Supplier_EC : public Kokyu_EC
 {
   //need to handle multiple gateways!
   typedef ACE_Map_Manager<const char*,TAO_EC_Gateway_Sched*,ACE_Thread_Mutex> Gateway_Map;
+
   Gateway_Map gateways;
 public:
   Supplier_EC()
@@ -145,63 +149,113 @@ public:
 
       consumer_ec->start(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-  }
+  } //init_gateway()
 
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , RtecScheduler::UNKNOWN_TASK
-        , RtecScheduler::INTERNAL
-        , RtecScheduler::SYNCHRONIZATION_FAILURE
-      ))
+  void set_up_supp_and_cons (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ))
   {
-    Supplier *supplier_impl1_1;
-    Timeout_Consumer *timeout_consumer_impl1_1;
-    ACE_NEW(supplier_impl1_1,
-            Supplier(1));
-    ACE_NEW(timeout_consumer_impl1_1,
-            Timeout_Consumer(supplier_impl1_1));
-    ACE_Time_Value tv(0,200000); //period
-    add_supplier_with_timeout(supplier_impl1_1,
-                              "supplier1_1",
-                              ACE_ES_EVENT_UNDEFINED,
-                              timeout_consumer_impl1_1,
-                              "supplier1_1_timeout_consumer",
-                              tv,
-                              RtecScheduler::VERY_LOW_CRITICALITY,
-                              RtecScheduler::VERY_LOW_IMPORTANCE
-                              ACE_ENV_ARG_PARAMETER
-                              );
-    ACE_CHECK;
+    // P 2
 
-    Supplier *supplier_impl1_2;
-    ACE_NEW(supplier_impl1_2,
-            Supplier(2));
-    Consumer * consumer_impl1_1;
-    ACE_NEW(consumer_impl1_1,
-            Consumer(supplier_impl1_2));
+    subtask_t subt;
+    // T_1_2 32 849 335
+    subt.task_index = 1;
+    subt.subtask_index = 2;
+    subt.exec = ACE_Time_Value(0,32);
+    subt.period = ACE_Time_Value(0,849);
+    subt.phase = ACE_Time_Value(0,335);
 
-    tv.set(0,50000);
-    consumer_impl1_1->setWorkTime(tv);
-    //consumer's rate will get propagated from the supplier.
-    //so no need to specify a period here.
-    tv.set(0,200000); //Period
-    add_consumer_with_supplier(consumer_impl1_1, //deleted in consumer
-                               "consumer1_1",
-                               tv,
-                               ACE_ES_EVENT_UNDEFINED,
-                               RtecScheduler::VERY_LOW_CRITICALITY,
-                               RtecScheduler::VERY_LOW_IMPORTANCE,
-                               supplier_impl1_2,
-                               "supplier1_2",
-                               ACE_ES_EVENT_UNDEFINED+1
-                               ACE_ENV_ARG_PARAMETER
-                               );
-    ACE_CHECK;
+    int supp_id = 100*subt.task_index + subt.subtask_index;
+    int next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_middle_subtask(subt,supp_id,
+                         supp_id,next_supp_id //use same val for event type and supplier ids
+                         ACE_ENV_ARG_PARAMETER);
 
-    Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-  }
+    // T_4_1 30 257 132
+    subt.task_index = 4;
+    subt.subtask_index = 1;
+    subt.exec = ACE_Time_Value(0,30);
+    subt.period = ACE_Time_Value(0,257);
+    subt.phase = ACE_Time_Value(0,132);
+
+    supp_id = 100*subt.task_index + subt.subtask_index;
+    next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_first_subtask(subt,supp_id,next_supp_id,
+                         supp_id,next_supp_id //use same val for event type and supplier ids
+                         ACE_ENV_ARG_PARAMETER);
+
+    // T_6_1 3 896 312
+    subt.task_index = 6;
+    subt.subtask_index = 1;
+    subt.exec = ACE_Time_Value(0,3);
+    subt.period = ACE_Time_Value(0,896);
+    subt.phase = ACE_Time_Value(0,312);
+
+    supp_id = 100*subt.task_index + subt.subtask_index;
+    next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_first_subtask(subt,supp_id,next_supp_id,
+                         supp_id,next_supp_id //use same val for event type and supplier ids
+                         ACE_ENV_ARG_PARAMETER);
+
+    // T_7_4 9 110 26
+    subt.task_index = 7;
+    subt.subtask_index = 4;
+    subt.exec = ACE_Time_Value(0,9);
+    subt.period = ACE_Time_Value(0,110);
+    subt.phase = ACE_Time_Value(0,26);
+
+    supp_id = 100*subt.task_index + subt.subtask_index;
+    next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_last_subtask(subt,supp_id //use same val for event type and supplier ids
+                        ACE_ENV_ARG_PARAMETER);
+
+    // T_9_1 143 838 277
+    subt.task_index = 9;
+    subt.subtask_index = 1;
+    subt.exec = ACE_Time_Value(0,143);
+    subt.period = ACE_Time_Value(0,838);
+    subt.phase = ACE_Time_Value(0,277);
+
+    supp_id = 100*subt.task_index + subt.subtask_index;
+    next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_first_subtask(subt,supp_id,next_supp_id,
+                         supp_id,next_supp_id //use same val for event type and supplier ids
+                         ACE_ENV_ARG_PARAMETER);
+
+    // T_10_2 59 703 673
+    subt.task_index = 10;
+    subt.subtask_index = 2;
+    subt.exec = ACE_Time_Value(0,59);
+    subt.period = ACE_Time_Value(0,703);
+    subt.phase = ACE_Time_Value(0,673);
+
+    supp_id = 100*subt.task_index + subt.subtask_index;
+    next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_middle_subtask(subt,supp_id,
+                         supp_id,next_supp_id //use same val for event type and supplier ids
+                         ACE_ENV_ARG_PARAMETER);
+
+    // T_12_3 11 190 168
+    subt.task_index = 12;
+    subt.subtask_index = 3;
+    subt.exec = ACE_Time_Value(0,11);
+    subt.period = ACE_Time_Value(0,190);
+    subt.phase = ACE_Time_Value(0,168);
+
+    supp_id = 100*subt.task_index + subt.subtask_index;
+    next_supp_id = 100*subt.task_index + subt.subtask_index+1;
+    set_up_middle_subtask(subt,supp_id,
+                         supp_id,next_supp_id //use same val for event type and supplier ids
+                         ACE_ENV_ARG_PARAMETER);
+
+
+    //Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
+    //ACE_CHECK;
+  } //set_up_supp_and_cons()
 };
 
 int parse_args (int argc, char *argv[]);
@@ -255,7 +309,7 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       Supplier_EC supplier_ec;
-      if (supplier_ec.init(sched_type.c_str(), poa.in()) == -1)
+      if (supplier_ec.init(sched_type.c_str(), poa.in(),orb->orb_core()->reactor()) == -1)
         {
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
         }

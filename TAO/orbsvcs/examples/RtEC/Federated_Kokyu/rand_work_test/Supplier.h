@@ -67,33 +67,6 @@ private:
   RtecScheduler::handle_t rt_info_;
 };
 
-class Timeout_Consumer : public POA_RtecEventComm::PushConsumer
-{
-  // = TITLE
-  //   Timer consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of timeout events from EC.
-  //   It registers for timeout event with EC and calls
-  //   the
-  //
-public:
-  Timeout_Consumer (Supplier * supplier_impl);
-  // Constructor
-
-  // = The RtecEventComm::PushConsumer methods
-
-  virtual void push (const RtecEventComm::EventSet& events
-                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-  // The skeleton methods.
-
-private:
-  Supplier *supplier_impl_;
-}; //class Timeout_Consumer
-
 class Supplier_Timeout_Handler : public ACE_Event_Handler
 {
   // = TITLE

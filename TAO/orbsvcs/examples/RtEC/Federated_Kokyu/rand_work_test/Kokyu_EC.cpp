@@ -9,8 +9,9 @@
 #include <orbsvcs/Event/EC_Event_Channel.h>
 #include <orbsvcs/Event/EC_Default_Factory.h>
 #include <orbsvcs/Event/EC_Kokyu_Factory.h>
-#include <ace/OS_NS_strings.h> //for ACE_OS::strcasecmp
-#include <ace/OS_NS_sys_time.h> // for ACE_OS::gettimeofday
+#include "ace/OS_NS_strings.h" //for ACE_OS::strcasecmp
+#include "ace/OS_NS_sys_time.h" // for ACE_OS::gettimeofday
+#include "ace/Reactor.h"
 
 namespace {
 
@@ -60,16 +61,22 @@ Kokyu_EC::~Kokyu_EC(void)
   for(size_t i=0; i<suppliers_.size(); ++i) {
     delete suppliers_[i];
   }
-  for(size_t i=0; i<timeout_consumers_.size(); ++i) {
-    delete timeout_consumers_[i];
-  }
   for(size_t i=0; i<consumers_.size(); ++i) {
     delete consumers_[i];
   }
+  if (this->reactor_ != 0)
+    {
+      for(size_t i=0; i<timer_handles_.size(); ++i) {
+        this->reactor_->cancel_timer(timer_handles_[i]);
+      }
+      for(size_t i=0; i<timeout_handlers_.size(); ++i) {
+        delete timeout_handlers_[i];
+      }
+    }
 }
 
 int
-Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa)
+Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa, ACE_Reactor * reactor)
 {
   ACE_TRY_NEW_ENV {
 
@@ -89,6 +96,8 @@ Kokyu_EC::init(const char* schedule_discipline, PortableServer::POA_ptr poa)
     ACE_TRY_CHECK;
     supplier_admin_ = ec_impl_->for_suppliers(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
+    this->reactor_ = reactor;
   }
   ACE_CATCHALL {
     return -1;
@@ -267,6 +276,39 @@ Kokyu_EC::add_supplier_with_timeout(
                                     Supplier * supplier_impl,
                                     const char * supp_entry_point,
                                     RtecEventComm::EventType supp_type,
+                                    Supplier_Timeout_Handler * timeout_handler_impl,
+                                    ACE_Time_Value phase,
+                                    ACE_Time_Value period
+                                    ACE_ENV_ARG_DECL
+                                    )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , RtecScheduler::UNKNOWN_TASK
+                   , RtecScheduler::INTERNAL
+                   , RtecScheduler::SYNCHRONIZATION_FAILURE
+                   ))
+{
+  add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (this->reactor_ != 0)
+    {
+      long timer_handle = this->reactor_->schedule_timer(timeout_handler_impl,
+                                                         0, //arg
+                                                         phase, //delay
+                                                         period //period
+                                                         );
+      this->timer_handles_.push_back(timer_handle);
+      this->timeout_handlers_.push_back(timeout_handler_impl);
+    }
+} //add_supplier_with_timeout()
+/*
+///Takes ownership of Supplier and Timeout_Consumer
+void
+Kokyu_EC::add_supplier_with_timeout(
+                                    Supplier * supplier_impl,
+                                    const char * supp_entry_point,
+                                    RtecEventComm::EventType supp_type,
                                     Timeout_Consumer * timeout_consumer_impl,
                                     const char * timeout_entry_point,
                                     ACE_Time_Value period,
@@ -337,7 +379,7 @@ Kokyu_EC::add_timeout_consumer(
 
   this->timeout_consumers_.push_back(timeout_consumer_impl);
 } //add_supplier_with_timeout()
-
+*/
 ///Takes ownership of Supplier
 void
 Kokyu_EC::add_supplier(
@@ -456,3 +498,136 @@ Kokyu_EC::add_consumer(
 
   this->consumers_.push_back(consumer_impl);
 } //add_consumer()
+
+void
+Kokyu_EC::set_up_last_subtask (subtask_t subtask,
+                               RtecEventComm::EventType in_type ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , RtecScheduler::UNKNOWN_TASK
+                   , RtecScheduler::INTERNAL
+                   , RtecScheduler::SYNCHRONIZATION_FAILURE
+                   ))
+{
+  Consumer * consumer_impl;
+  ACE_NEW(consumer_impl,
+          Consumer());
+
+  consumer_impl->setWorkTime(subtask.exec);
+
+  std::stringstream cons_entry;
+  cons_entry << "consumer" << subtask.task_index << "_" << subtask.subtask_index;
+
+  add_consumer(consumer_impl, //stores impl inside Kokyu_EC
+               cons_entry.str().c_str(),
+               subtask.period,
+               in_type,
+               RtecScheduler::VERY_LOW_CRITICALITY,
+               RtecScheduler::VERY_LOW_IMPORTANCE
+               ACE_ENV_ARG_PARAMETER
+               );
+  ACE_CHECK;
+
+} //set_up_last_subtask()
+
+void
+Kokyu_EC::set_up_first_subtask (subtask_t subtask,
+                                RtecEventComm::EventSourceID supp_id1, RtecEventComm::EventSourceID supp_id2,
+                                RtecEventComm::EventType in_type, RtecEventComm::EventType out_type ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , RtecScheduler::UNKNOWN_TASK
+                   , RtecScheduler::INTERNAL
+                   , RtecScheduler::SYNCHRONIZATION_FAILURE
+                   ))
+{
+  Supplier *supplier_impl;
+  Supplier_Timeout_Handler *timeout_handler_impl;
+  ACE_NEW(supplier_impl,
+          Supplier(supp_id1));
+  ACE_NEW(timeout_handler_impl,
+          Supplier_Timeout_Handler(supplier_impl));
+
+  std::stringstream supp_entry;
+  supp_entry << "supplier" << subtask.task_index << "_" << subtask.subtask_index;
+
+  add_supplier_with_timeout(supplier_impl, //stores impl inside Kokyu_EC
+                            supp_entry.str().c_str(),
+                            in_type,
+                            timeout_handler_impl, //stores impl inside Kokyu_EC
+                            subtask.phase,
+                            subtask.period
+                            ACE_ENV_ARG_PARAMETER
+                            );
+  ACE_CHECK;
+
+  Supplier *next_supplier_impl;
+  ACE_NEW(next_supplier_impl,
+          Supplier(supp_id2));
+  Consumer * consumer_impl;
+  ACE_NEW(consumer_impl,
+          Consumer(next_supplier_impl));
+
+  consumer_impl->setWorkTime(subtask.exec);
+
+  std::stringstream cons_entry;
+  cons_entry << "consumer" << subtask.task_index << "_" << subtask.subtask_index;
+
+  std::stringstream next_entry;
+  next_entry << "supplier" << subtask.task_index << "_" << (subtask.subtask_index+1);
+
+  add_consumer_with_supplier(consumer_impl, //stores impl inside Kokyu_EC
+                             cons_entry.str().c_str(),
+                             subtask.period,
+                             in_type,
+                             RtecScheduler::VERY_LOW_CRITICALITY,
+                             RtecScheduler::VERY_LOW_IMPORTANCE,
+                             next_supplier_impl, //stores impl inside Kokyu_EC
+                             next_entry.str().c_str(),
+                             out_type
+                             ACE_ENV_ARG_PARAMETER
+                             );
+  ACE_CHECK;
+
+} //set_up_first_subtask
+
+void
+Kokyu_EC::set_up_middle_subtask (subtask_t subtask,
+                                 RtecEventComm::EventSourceID supp_id,
+                                 RtecEventComm::EventType in_type, RtecEventComm::EventType out_type ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , RtecScheduler::UNKNOWN_TASK
+                   , RtecScheduler::INTERNAL
+                   , RtecScheduler::SYNCHRONIZATION_FAILURE
+                   ))
+{
+  Supplier *next_supplier_impl;
+  ACE_NEW(next_supplier_impl,
+          Supplier(supp_id));
+  Consumer * consumer_impl;
+  ACE_NEW(consumer_impl,
+          Consumer(next_supplier_impl));
+
+  consumer_impl->setWorkTime(subtask.exec);
+
+  std::stringstream cons_entry;
+  cons_entry << "consumer" << subtask.task_index << "_" << subtask.subtask_index;
+
+  std::stringstream next_entry;
+  next_entry << "supplier" << subtask.task_index << "_" << (subtask.subtask_index+1);
+
+  add_consumer_with_supplier(consumer_impl, //stores impl inside Kokyu_EC
+                             cons_entry.str().c_str(),
+                             subtask.period,
+                             in_type,
+                             RtecScheduler::VERY_LOW_CRITICALITY,
+                             RtecScheduler::VERY_LOW_IMPORTANCE,
+                             next_supplier_impl, //stores impl inside Kokyu_EC
+                             next_entry.str().c_str(),
+                             out_type
+                             ACE_ENV_ARG_PARAMETER
+                             );
+  ACE_CHECK;
+
+} //set_up_middle_subtask()
