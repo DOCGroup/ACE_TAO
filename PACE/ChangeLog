@@ -1,3 +1,15 @@
+Mon Aug 14 22:24:50 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/sched.inl (pace_sched_get_priority_max):
+
+	  Removed an extraneous '#include' left from the previous commit.
+
+	* pace/win32/pace_dll.dsp:
+	* pace/win32/pace_lib.dsp:
+
+	  Added new files to the project files.
+	  (pthreadtypes.h schedtypes.h)
+
 Mon Aug 14 21:41:24 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/pthreadtypes.h:
