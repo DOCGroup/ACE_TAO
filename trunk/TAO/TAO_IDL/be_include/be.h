@@ -69,13 +69,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // be.h
 //
-// Main include file for dummy BE
+
+// ACE includes
+
+#include        "ace/ACE.h"
+#include        "ace/OS.h"
+#include        "ace/Singleton.h"
+#include        "ace/Synch.h"
+#include        "ace/Log_Msg.h"
 
 /*
  * BE includes
  */
 
+#include        "be_decl.h"             // class BE_Decl
+#include        "be_scope.h"            // class BE_Scope
 #include	"be_generator.h"	// BE generator class
+#include        "be_type.h"
 #include	"be_predefined_type.h"  // class BE_PredefinedType
 #include	"be_module.h"		// class BE_Module
 #include	"be_interface.h"	// class BE_Interface
@@ -100,4 +110,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_root.h"             // class BE_Root
 
 #include        "be_helper.h"           // helper functions
+#include        "be_codegen.h"          // code generator
+#include        "be_factory.h"          // factory
+
 #endif           // _BE_BE_HH
