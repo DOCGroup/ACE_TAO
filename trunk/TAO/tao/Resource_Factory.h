@@ -237,6 +237,10 @@ public:
   TAO_Resource_Factory::Resource_Usage
   resource_usage_strategy (void) const = 0;
 
+  /// Return the value of the strategy that indicates whether
+  /// the ORB should wait for the replies during shutdown or drop
+  /// replies during shutdown.
+  virtual bool drop_replies_during_shutdown () const = 0;
 protected:
   /**
    * Loads the default protocols. This method is used so that the
