@@ -231,21 +231,19 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
       ACE_Configuration_Section_Key key;
       key_queue.dequeue_head (key);
 
-      IR_ParameterDescription pd;
-
       ACE_TString name;
       this->repo_->config ()->get_string_value (key,
                                                 "name",
                                                 name);
 
-      pd.name = name.c_str ();
+      retval[i].name = name.c_str ();
 
       u_int mode = 0;
       this->repo_->config ()->get_integer_value (key,
                                                  "mode",
                                                  mode);
 
-      pd.mode = ACE_static_cast (IR_ParameterMode, mode);
+      retval[i].mode = ACE_static_cast (IR_ParameterMode, mode);
 
       ACE_TString type_path;
       this->repo_->config ()->get_string_value (key,
@@ -265,7 +263,7 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
 
       auto_ptr<TAO_IDLType_i> safety (impl);
 
-      pd.type = impl->type_i (ACE_TRY_ENV);
+      retval[i].type = impl->type_i (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       u_int kind = 0;
@@ -282,11 +280,9 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
                                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      pd.type_def = IR_IDLType::_narrow (obj.in (),
-                                          ACE_TRY_ENV);
+      retval[i].type_def = IR_IDLType::_narrow (obj.in (),
+                                                ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-
-      retval[i] = pd;
     }
 
   return retval._retn ();
