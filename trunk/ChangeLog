@@ -6,7 +6,7 @@ Tue Feb 25 10:00:54 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Removed newly added 32-bit assignment and comparison operators.
 	  Comparison is non-trivial in this signed case, and assignment
-	  operators are potential source of confusion when implicit
+	  operators are a potential source of confusion when implicit
 	  conversions are performed.  This change basically reverts
 	  ACE_CDR::LongLong to its previous implementation, and also
 	  addresses some build problems on platforms with non-native 64
