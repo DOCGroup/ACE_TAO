@@ -179,6 +179,15 @@ Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Removed all the borland makefiles files from the
           repository. Files in include/makeinclude have not been removed.
 
+Thu Apr  8 11:57:29 2004  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Asynch_IO.cpp (handle_output): Be sure to unregister this
+          handler from the asynch task before posting the completion. The
+          completion handler may do anything, including delete the handler,
+          before this method has a chance to remove it from the asynch task.
+	  Matches an earlier fix for Windows:
+	  Thu Mar 11 17:00:14 2004  Steve Huston  <shuston@riverace.com>
+
 Thu Apr  8 08:03:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
