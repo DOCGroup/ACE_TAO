@@ -855,9 +855,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -917,8 +920,6 @@ realclean:
   CONV_FRAMEC.h \
   Tagged_Components.i \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i Environment.h Thread_Lane_Resources.h \
   Thread_Lane_Resources.i \
@@ -1170,9 +1171,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -1691,9 +1695,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -2400,6 +2407,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -2455,8 +2464,6 @@ realclean:
   GIOP_Message_Version.h \
   GIOP_Message_Version.inl \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i \
   Transport_Connector.h \
@@ -2703,9 +2710,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -4027,6 +4037,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -4452,6 +4464,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -5197,6 +5211,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -5220,8 +5236,6 @@ realclean:
   Tagged_Components.h \
   Tagged_Components.i \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i \
   IIOP_Endpoint.h \
@@ -6054,6 +6068,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -6091,8 +6107,6 @@ realclean:
   Tagged_Components.h \
   Tagged_Components.i \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i \
   IIOP_Endpoint.h \
@@ -6469,6 +6483,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -7506,6 +7522,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -8226,6 +8244,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -8677,6 +8697,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -9037,6 +9059,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -10217,6 +10241,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -11298,9 +11324,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -11349,8 +11378,6 @@ realclean:
   GIOP_Message_Version.h \
   GIOP_Message_Version.inl \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i default_ports.h ORBInitInfo.h ORBInitInfo.inl \
   ORBInitializer_Registry.h TAO_Singleton_Manager.h \
@@ -11961,6 +11988,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -12614,6 +12643,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -12964,6 +12995,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -14498,6 +14531,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -14911,6 +14946,7 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -17033,8 +17069,10 @@ realclean:
   Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
   ObjectKey_Table.h $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -17080,8 +17118,6 @@ realclean:
   CONV_FRAMEC.h \
   Tagged_Components.i \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i Tagged_Components.h Valuetype_Adapter.h debug.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
@@ -17522,7 +17558,9 @@ realclean:
   Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
   ObjectKey_Table.h $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp PICurrent.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i PICurrent.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -18207,8 +18245,10 @@ realclean:
   Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -18254,8 +18294,6 @@ realclean:
   TAO_Server_Request.h Tagged_Profile.h \
   GIOPC.h \
   GIOPC.i \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Tagged_Profile.i \
   Service_Context.h \
   Service_Context.inl \
@@ -18493,8 +18531,10 @@ realclean:
   Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
   ObjectKey_Table.h $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -19042,9 +19082,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -19902,9 +19945,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -19979,8 +20025,6 @@ realclean:
   GIOP_Message_Version.h \
   GIOP_Message_Version.inl \
   Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Refcounted_ObjectKey.inl \
   Profile.i Stub.h MProfile.h \
   ORB.h \
@@ -20349,9 +20393,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -21058,9 +21105,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -21407,6 +21457,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -21726,6 +21778,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -22046,6 +22100,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -22365,6 +22421,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -22722,6 +22780,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -23064,6 +23124,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -23448,6 +23510,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -24404,9 +24468,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -25733,6 +25800,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -26061,6 +26130,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -26614,9 +26685,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -27071,6 +27145,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -27552,6 +27628,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -30876,6 +30954,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -31768,9 +31848,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -32357,9 +32440,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -32722,6 +32808,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -33576,8 +33664,10 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h PICurrent.inl \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h PICurrent.inl \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -34613,6 +34703,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -36226,9 +36318,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -36723,9 +36818,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -37018,9 +37116,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -38369,6 +38470,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -38734,6 +38837,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -39085,6 +39190,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -39893,13 +40000,31 @@ realclean:
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
   TAO_Export.h \
-  $(ACE_ROOT)/ace/Null_Mutex.h ORB_Core.h \
-  corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
+  Object_KeyC.h \
+  corbafwd.h \
+  $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   orbconf.h \
   $(ACE_ROOT)/ace/Synch_Traits.h \
   corbafwd.i \
-  Resource_Factory.h \
+  Seq_Var_T.h \
+  Seq_Var_T.inl \
+  Seq_Var_T.cpp \
+  Seq_Out_T.h \
+  Seq_Out_T.inl \
+  Seq_Out_T.cpp \
+  Sequence_T.h \
+  Sequence.h \
+  Managed_Types.h \
+  Managed_Types.i \
+  $(ACE_ROOT)/ace/CORBA_macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
+  Sequence.i \
+  Sequence_T.i \
+  Sequence_T.cpp \
+  Object_KeyC.i \
+  $(ACE_ROOT)/ace/Null_Mutex.h ORB_Core.h \
+  corbafwd.h Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -39921,9 +40046,6 @@ realclean:
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp CONV_FRAMEC.h \
   CDR.h \
-  corbafwd.h \
-  $(ACE_ROOT)/ace/CORBA_macros.h \
-  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -39932,13 +40054,6 @@ realclean:
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/CDR_Stream.i \
   CDR.i \
-  Sequence.h \
-  Managed_Types.h \
-  Managed_Types.i \
-  Sequence.i \
-  Sequence_T.h \
-  Sequence_T.i \
-  Sequence_T.cpp \
   VarOut_T.h \
   VarOut_T.inl \
   VarOut_T.cpp CONV_FRAMEC.i \
@@ -39951,13 +40066,8 @@ realclean:
   Exception.h \
   Exception.i Adapter.i \
   PolicyFactory_Registry.h PortableInterceptorC.h PI_ForwardC.h \
-  OctetSeqC.h Seq_Var_T.h \
-  Seq_Var_T.inl \
-  Seq_Var_T.cpp \
-  Seq_Out_T.h \
-  Seq_Out_T.inl \
-  Seq_Out_T.cpp OctetSeqC.i \
-  StringSeqC.h Sequence.h StringSeqC.i PI_ForwardC.i Object.h \
+  OctetSeqC.h OctetSeqC.i StringSeqC.h Sequence.h StringSeqC.i \
+  PI_ForwardC.i Object.h \
   Policy_ForwardC.h \
   Objref_VarOut_T.h \
   varbase.h \
@@ -40055,10 +40165,7 @@ realclean:
   $(ACE_ROOT)/ace/Lock_Adapter_T.h \
   $(ACE_ROOT)/ace/Lock_Adapter_T.inl \
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp ORB_Core.i \
-  Refcounted_ObjectKey.h \
-  Object_KeyC.h \
-  Object_KeyC.i \
-  Refcounted_ObjectKey.inl Object_KeyC.h
+  Refcounted_ObjectKey.h Refcounted_ObjectKey.inl
 
 .obj/Refcounted_ObjectKey.o .obj/Refcounted_ObjectKey.so .shobj/Refcounted_ObjectKey.o .shobj/Refcounted_ObjectKey.so: Refcounted_ObjectKey.cpp Refcounted_ObjectKey.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -40634,6 +40741,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -41090,6 +41199,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -41879,6 +41990,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -42274,6 +42387,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -42581,9 +42696,12 @@ realclean:
   Cleanup_Func_Registry.inl Object_Ref_Table.h ObjectKey_Table.h \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
-  $(ACE_ROOT)/ace/RB_Tree.cpp Interceptor_List.h \
-  Interceptor_List.inl PICurrent.h LocalObject.h LocalObject.i \
-  PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
+  Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
+  LocalObject.i PICurrent.inl \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -42643,8 +42761,6 @@ realclean:
   TAO_Server_Request.h Tagged_Profile.h \
   GIOPC.h \
   GIOPC.i \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Tagged_Profile.i \
   TAO_Server_Request.i GIOP_Message_Locate_Header.h \
   Tagged_Profile.h \
@@ -42934,6 +43050,8 @@ realclean:
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/RB_Tree.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
+  Object_KeyC.h \
+  Object_KeyC.i \
   Interceptor_List.h \
   Interceptor_List.inl \
   PICurrent.h \
@@ -42993,8 +43111,6 @@ realclean:
   Tagged_Profile.h \
   GIOPC.h \
   GIOPC.i \
-  Object_KeyC.h \
-  Object_KeyC.i \
   Tagged_Profile.i \
   TAO_Server_Request.i \
   GIOP_Message_Locate_Header.h \
