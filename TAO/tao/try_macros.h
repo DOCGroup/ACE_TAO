@@ -23,7 +23,7 @@
 //   *        NOTICE !!!    NOTICE !!!   NOTICE !!!   NOTICE !!!     *
 //   *                                                               *
 //   *                                                               *
-//   *        The macros in this file is deprecated.                 *
+//   *        The macros in this file is depricated.                 *
 //   *                                                               *
 //   *        Please check out $ACE_ROOT/ace/CORBA_macros.h          *
 //   *        for a new set of helper macros that replace            *

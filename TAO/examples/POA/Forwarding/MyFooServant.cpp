@@ -61,35 +61,41 @@ MyFirstFooServant::shutdown (CORBA::Environment &/*env*/)
 
 
 void 
-MyFirstFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
+MyFirstFooServant::forward (CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
               "MyFirstFooServant::forward: being called\n"));
   if (!CORBA::is_nil (this->forward_to_var_.in ()))
     {
       PortableServer::ObjectId_var oid =
-        this->poa_var_->servant_to_id (this, ACE_TRY_ENV);
-      ACE_CHECK;
+        this->poa_var_->servant_to_id (this, env);
+      
+      if (env.exception () != 0)
+        return;
 
       PortableServer::Servant servant = this->poa_var_->_servant ();
       if (servant == 0)
         {
-          ACE_THROW (Foo::Cannot_Forward ());
+          CORBA::Exception *exception = new Foo::Cannot_Forward;
+          env.exception (exception);
+          return;
         }
       
-      void *ptr = servant->_downcast ("IDL:omg.org/PortableServer/POA:1.0");
+      void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
       POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
       TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
       
       tao_poa->forward_object (oid.in (),
                                this->forward_to_var_.in (),
-                               ACE_TRY_ENV);
+                               env);
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   "POA approach: Forward_to refenence is nil.\n"));
-      ACE_THROW (Foo::Cannot_Forward ());
+      CORBA::Exception *exception = new Foo::Cannot_Forward;
+      env.exception (exception);
+      return;
     }
 }
 
@@ -119,13 +125,12 @@ MySecondFooServant::doit (CORBA::Environment &/*env*/)
 }
 
 void 
-MySecondFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
+MySecondFooServant::forward (CORBA::Environment &env)
 {
   // forward the forwarding request to the Servant Locator :-) This is
   // kind of a loop back, but it is correct only the IDL interface can
   // be assumed !!
-  this->locator_ptr_->forward (ACE_TRY_ENV);
-  ACE_CHECK;
+  this->locator_ptr_->forward (env);  
 }
 
 

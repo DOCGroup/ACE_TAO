@@ -46,7 +46,7 @@ Test_DynArray::run_test (void)
 
   DynAnyTests::test_array ta = {0};
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
@@ -58,25 +58,25 @@ Test_DynArray::run_test (void)
       CORBA::Any in_any1;
       in_any1 <<= ta;
       CORBA_DynAny_ptr dp1 = this->orb_->create_dyn_any (in_any1,
-                                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA_DynArray_ptr fa1 = CORBA_DynArray::_narrow (dp1,
-                                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       fa1->seek (1,
-                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       fa1->insert_long (data.m_long1,
-                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      fa1->rewind (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      fa1->rewind (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::Long l_out1 = data.m_long2;
       fa1->seek (1,
-                 ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      l_out1 = fa1->get_long (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      l_out1 = fa1->get_long (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       if (l_out1 == data.m_long1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
@@ -88,16 +88,16 @@ Test_DynArray::run_test (void)
 
       CORBA_DynArray_ptr ftc1 = 
         this->orb_->create_dyn_array (DynAnyTests::_tc_test_array,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ta[1] = data.m_long1;
       CORBA::Any in_any2;
       in_any2 <<= ta;
       ftc1->from_any (in_any2,
-                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      CORBA::Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::Any* out_any1 = ftc1->to_any (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       DynAnyTests::test_array_forany ta_out;
       *out_any1 >>= ta_out; 
       
@@ -120,10 +120,10 @@ Test_DynArray::run_test (void)
       as_in[0] = in_any3;
       as_in[1] = in_any3;
       ftc1->set_elements (as_in,
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      AnySeq* as_out = ftc1->get_elements (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA_Any out_any2 = (*as_out)[1];
       CORBA::Long l_out2;
       out_any2 >>= l_out2;
@@ -136,20 +136,20 @@ Test_DynArray::run_test (void)
       // Created with NEW
       delete as_out;
 
-      fa1->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      fa1->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::release (fa1);
-      ftc1->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ftc1->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::release (ftc1);
       CORBA::release (dp1);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("test_dynarray::run_test");
+      TAO_TRY_ENV.print_exception ("test_dynarray::run_test");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",

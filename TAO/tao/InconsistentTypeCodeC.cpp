@@ -23,12 +23,7 @@
 // ======================================================================
 
 #include "tao/InconsistentTypeCodeC.h"
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 #include "tao/ORB.h"
-
-ACE_RCSID(tao, InconsistentTypeCodeC, "$Id$")
 
 // default constructor
 CORBA_ORB_InconsistentTypeCode::CORBA_ORB_InconsistentTypeCode (void)
@@ -60,12 +55,12 @@ CORBA_ORB_InconsistentTypeCode::operator= (
 }
 
 // narrow
-CORBA_ORB_InconsistentTypeCode*
+CORBA_ORB_InconsistentTypeCode* 
 CORBA_ORB_InconsistentTypeCode::_narrow (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0",
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0", 
                        exc->_id ())) // same type
-    return ACE_dynamic_cast (CORBA_ORB_InconsistentTypeCode*,
+    return ACE_dynamic_cast (CORBA_ORB_InconsistentTypeCode*, 
                              exc);
   else
     return 0;
@@ -83,4 +78,3 @@ CORBA::Exception *CORBA_ORB_InconsistentTypeCode::_alloc (void)
   return new CORBA_ORB_InconsistentTypeCode;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

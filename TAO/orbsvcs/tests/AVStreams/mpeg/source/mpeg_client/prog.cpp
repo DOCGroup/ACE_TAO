@@ -101,17 +101,17 @@ static void InitBuf(void)
 
   deletedprog.title[0] = 0;
   
-  item = (XmString *)ACE_OS::malloc(sizeof(*item) * ITEMS);
+  item = (XmString *)malloc(sizeof(*item) * ITEMS);
   if (item == NULL)
   {
-   ACE_OS::perror ("UI allocate proglist item(XmString)");
-    ACE_OS::exit (1);
+    perror("UI allocate proglist item(XmString)");
+    exit(1);
   }
-  prog = (struct ProgramList *) ACE_OS::malloc(sizeof(*prog) * ITEMS);
+  prog = (struct ProgramList *) malloc(sizeof(*prog) * ITEMS);
   if (prog == NULL)
   {
-   ACE_OS::perror ("UI allocate prog");
-    ACE_OS::exit (1);
+    perror("UI allocate prog");
+    exit(1);
   }
   fp = NULL;
   if (proglistName[0] != 0) { /* file name given in command line */
@@ -120,7 +120,7 @@ static void InitBuf(void)
     fp = fopen(buf, "r");
     if (fp == NULL) {
       fprintf(stderr,"PROG.C error opening %s:", proglistName);
-     ACE_OS::perror ("");
+      perror("");
     }
   }
   if (fp == NULL) {
@@ -149,7 +149,7 @@ static void InitBuf(void)
 	fname = tmpnam(NULL);
 	if (ptr != NULL) {
 	  strncpy(fname, ptr, L_tmpnam);
-	  ACE_OS::free (ptr);
+	  free(ptr);
 	}
 	strcpy(buf, fname);
 	fp = tmpfile();
@@ -226,7 +226,7 @@ lemond.cse.ogi.edu\n\
 	}
 	else {
 	  fprintf(stderr, "Warning: failed to read newly created %s:", buf);
-	 ACE_OS::perror ("");
+	  perror("");
 	}
 	*/
       }
@@ -244,7 +244,7 @@ lemond.cse.ogi.edu\n\
     goto InitBuf_exit1;
   }
   buf[strlen(buf)-1] = 0;
-  if (strncmp(buf, BANNER,ACE_OS::strlen (BANNER)))
+  if (strncmp(buf, BANNER, strlen(BANNER)))
   {
     fprintf(stderr, "BANNER in %s not expected\n", fname);
     fprintf(stderr, "    Expected: %s\n", BANNER);
@@ -288,7 +288,7 @@ static void SaveBuf(void)
   if (fp == NULL)
   {
     fprintf(stderr, "Fail to open %s for saving programs", buf);
-   ACE_OS::perror ("");
+    perror("");
     return;
   }
   Fputs(BANNER);
@@ -309,8 +309,8 @@ static void CmdWrite(char * buf, int size)
   while (write(cmdSocket, (buf), (size)) == -1)
   {
     if (errno == EINTR) continue;
-   ACE_OS::perror ("UI write to cmdSocket");
-    ACE_OS::exit (1);
+    perror("UI write to cmdSocket");
+    exit(1);
   }
 }
 
@@ -321,39 +321,39 @@ void StartProgram(char * title, char * vh, char * vf, char * ah, char * af)
   int len;
   if (!cmdBusy) {
     char *str = title;
-    len =ACE_OS::strlen (str);
+    len = strlen(str);
 //     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
 //     str = vh;
-    //    len =ACE_OS::strlen (str);
+    //    len = strlen(str);
     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
     str = vf;
-    //    len =ACE_OS::strlen (str);
+    //    len = strlen(str);
     //    if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
     //    str = ah;
-    len =ACE_OS::strlen (str);
+    len = strlen(str);
     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
     str = af;
-    len =ACE_OS::strlen (str);
+    len = strlen(str);
     if (len > 0 && str[len-1] == 0x0d) str[len - 1] = 0;
     XmTextFieldSetString(titlewidget, title);
     cmdBusy = 1;
     CmdWrite(&tmp, 1);
-//     len =ACE_OS::strlen (vh);
+//     len = strlen(vh);
 //     CmdWrite((char *)&len, 4);
 //     cerr << "StartProgram: len =" << len;
 //     CmdWrite(vh, len);
 //     cerr << " StartProgram: vh =" << vh << endl;
-    len =ACE_OS::strlen (vf);
+    len = strlen(vf);
     CmdWrite((char *)&len, 4);
     cerr << "StartProgram: len =" << len;
     CmdWrite(vf, len);
     cerr << " StartProgram: vf =" << vf << endl;
-//     len =ACE_OS::strlen (ah);
+//     len = strlen(ah);
 //     CmdWrite((char *)&len, 4);
 //     cerr << "StartProgram: len =" << len;
 //     CmdWrite(ah, len);
 //     cerr << " StartProgram: ah =" << ah << endl;
-    len =ACE_OS::strlen (af);
+    len = strlen(af);
     CmdWrite((char *)&len, 4);
     cerr << "StartProgram: len =" << len;
     CmdWrite(af, len);
@@ -392,7 +392,7 @@ static void modifyprog(struct ProgramList *p)
   XmListReplaceItemsPos(wproglist, &item, 1, progid+1);
   XmListSelectPos(wproglist, progid+1, 0);
   XmStringFree(item);
-  ACE_OS::memcpy (&(prog[progid]), p, sizeof(*p));
+  memcpy(&(prog[progid]), p, sizeof(*p));
   SaveBuf();
 }
 
@@ -401,7 +401,7 @@ static void insertprog(struct ProgramList *p)
   XmString item;
   
   if (items <= 0 || items >= ITEMS) return;
-  ACE_OS::memcpy ((char*)&(prog[items]), (char *)p, sizeof(*p));
+  memcpy((char*)&(prog[items]), (char *)p, sizeof(*p));
   item = (XmString)XmStringCreateLtoR(p->title, XmStringTag);
   XmListAddItemUnselected(wproglist, item, items+1);
   XmStringFree(item);
@@ -423,9 +423,9 @@ static void deleteCB(Widget w, XtPointer closure, XtPointer call_data)
   if (items <= 0) { beep(); return; }
   j = curListPos();
   if (j == -1) return;
-  ACE_OS::memcpy (&deletedprog, &prog[j], sizeof(deletedprog));
+  memcpy(&deletedprog, &prog[j], sizeof(deletedprog));
   for (i = j+1; i < items; i++)
-    ACE_OS::memcpy (&prog[i-1], &prog[i], sizeof(*prog));
+    memcpy(&prog[i-1], &prog[i], sizeof(*prog));
   XmListDeletePos(wproglist, j+1);
   items --;
   SaveBuf();
@@ -734,7 +734,7 @@ static void CreateModifyWindow(Widget parent)
   XtManageChild(wcancel);
   XtAddCallback (wcancel, XmNactivateCallback, (XtCallbackProc)modifydismissCB, NULL);
 
-  titleSize =ACE_OS::strlen (LINE1);
+  titleSize = strlen(LINE1);
   
   n=0;
   XtSetArg (args[n], XmNleftOffset, 5); n++;
@@ -901,7 +901,7 @@ Widget CreateProgramWindow(Widget parent, int cmdSock, int * playflag, Widget fr
   wproglist = wlist;
   for (n = 0; n < items; n++)
     XmStringFree(item[n]);
-  ACE_OS::free (item);
+  free(item);
   
   n=0;
   XtSetArg (args[n], XmNtopOffset, 2); n++;

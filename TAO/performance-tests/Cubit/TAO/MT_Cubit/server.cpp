@@ -42,7 +42,7 @@ Server::init (int argc, char **argv)
   int result;
 
   result = GLOBALS::instance ()->sched_fifo_init ();
-  if (result == -1)
+  if (result != 0)
     return result;
 
   this->argc_ = argc;
@@ -199,15 +199,13 @@ Server::activate_high_servant (void)
 
   // Make the high priority task an active object.
   if (this->high_priority_task_->activate
-      (GLOBALS::instance ()->thr_create_flags,
+      (THR_BOUND | ACE_SCHED_FIFO,
        1,
        0,
        this->high_priority_) == -1)
-    ACE_DEBUG ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) task activation at priority %d ")
-                ASYS_TEXT (" failed, exiting!\n%a"),
-                this->high_priority_,
-                -1));
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) %p\n"
+                "\thigh_priority_task->activate failed"));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
                             ready_mon,
@@ -232,20 +230,14 @@ Server::activate_low_servants (void)
   ACE_OS::sprintf (orbhost,
                    "-ORBhost %s ",
                    GLOBALS::instance ()->hostname);
-
-  if (ACE_static_cast (int, this->num_low_priority_) > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Creating %d servants starting at priority %d\n",
-                  this->num_low_priority_,
-                  this->low_priority_));
-
-      // Create the low priority servants.
-      ACE_NEW_RETURN (this->low_priority_tasks_,
-                      Cubit_Task *[GLOBALS::instance ()->num_of_objs],
-                      -1);
-    }
-
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating %d servants starting at priority %d\n",
+              this->num_low_priority_,
+              this->low_priority_));
+  // Create the low priority servants.
+  ACE_NEW_RETURN (this->low_priority_tasks_,
+                  Cubit_Task *[GLOBALS::instance ()->num_of_objs],
+                  -1);
   for (int i = this->num_low_priority_;
        i > 0;
        i--)
@@ -277,17 +269,14 @@ Server::activate_low_servants (void)
                       -1);
 
       // Make the low priority task an active object.
-      if (this->low_priority_tasks_[i - 1]->activate
-          (GLOBALS::instance ()->thr_create_flags,
+      if (this->low_priority_tasks_ [i - 1]->activate
+          (THR_BOUND | ACE_SCHED_FIFO,
            1,
            0,
            this->low_priority_) == -1)
-        ACE_DEBUG ((LM_ERROR,
-                    ASYS_TEXT ("(%P|%t) task activation at priority %d ")
-                    ASYS_TEXT (" failed, exiting!\n%a"),
-                    this->low_priority_,
-                    -1));
-
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) %p\n"
+                    "\tthis->low_priority_tasks_[i]->activate"));
       ACE_DEBUG ((LM_DEBUG,
                   "Created servant %d with priority %d\n",
                   i,

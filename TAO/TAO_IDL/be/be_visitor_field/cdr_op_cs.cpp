@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_field.h"
 
@@ -86,26 +86,24 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
                          ), -1);
     }
 
-  // for anonymous arrays, the type name has a _ prepended. We compute
-  // the fullname with or without the underscore and use it later on.
+  // for anonymous arrays, the type name has a _ prepended. We compute the
+  // fullname with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];  // to hold the full and
-
-  // save the node's local name and full name in a buffer for quick
-  // use later on
+      
+      // save the node's local name and full name in a buffer for quick use later
+      // on 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
     {
       // for anonymous arrays ...
-      // we have to generate a name for us that has an underscore
-      // prepended to our local name. This needs to be inserted after
-      // the parents's name
-
+      // we have to generate a name for us that has an underscope prepended to
+      // our local name. This needs to be inserted after the parents's name
+          
       if (node->is_nested ())
         {
-          be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
                            node->local_name ()->get_string ());
         }
       else
@@ -119,8 +117,8 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
       ACE_OS::sprintf (fname, "%s", node->fullname ());
     }
 
-  // check what is the code generation substate. Are we generating
-  // code for the in/out operators for our parent or for us?
+  // check what is the code generation substate. Are we generating code for
+  // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
@@ -285,7 +283,7 @@ be_visitor_field_cdr_op_cs::visit_interface (be_interface *)
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done because an interface cannit be declared inside a
-      // structure
+      // structure 
       break;
     default:
       // error
@@ -328,7 +326,7 @@ be_visitor_field_cdr_op_cs::visit_interface_fwd (be_interface_fwd *)
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // nothing to be done because an interface cannit be declared inside a
-      // structure
+      // structure 
       break;
     default:
       // error
@@ -365,40 +363,40 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       // is a psuedo obj
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (node->pt () == AST_PredefinedType::PT_pseudo) 
         *os << "(strm >> _tao_aggregate." << f->local_name ()
-            << ".out ())";
+	    << ".out ())";
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "(strm >> CORBA::Any::to_char (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_wchar)
         *os << "(strm >> CORBA::Any::to_wchar (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_octet)
         *os << "(strm >> CORBA::Any::to_octet (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_boolean)
         *os << "(strm >> CORBA::Any::to_boolean (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else
         *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       // is a psuedo obj
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (node->pt () == AST_PredefinedType::PT_pseudo) 
         *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "(strm << CORBA::Any::from_char (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_wchar)
         *os << "(strm << CORBA::Any::from_wchar (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_octet)
         *os << "(strm << CORBA::Any::from_octet (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_boolean)
         *os << "(strm << CORBA::Any::from_boolean (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else
         *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       break;
@@ -456,8 +454,8 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
                          ), -1);
     }
 
-  if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()))
+  if (node->node_type () != AST_Decl::NT_typedef 
+      && node->is_child (this->ctx_->scope ())) 
     // not a typedef AND
     // node is defined inside the structure
     {
@@ -621,7 +619,7 @@ be_visitor_field_cdr_op_cs::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_cdr_op_cs::"
+                         "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_typedef - "
                          "Bad primitive type\n"
                          ), -1);
@@ -768,7 +766,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
   // for anonymous arrays, the type name has a _ prepended. We compute
   // the fullname with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];  // to hold the full and
-
+      
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
@@ -777,11 +775,11 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
       // we have to generate a name for us that has an underscope
       // prepended to our local name. This needs to be inserted after
       // the parents's name
-
+          
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
                            node->local_name ()->get_string ());
         }
       else
@@ -819,27 +817,4 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
                          ), -1);
     }
   ACE_NOTREACHED (return 0);
-}
-
-
-// visit typedef type
-int
-be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)
-{
-  this->ctx_->alias (node); // save the typedef node for use in code generation
-                           // as we visit the base type
-
-  // the node to be visited in the base primitve type that gets typedefed
-  be_type *bt = node->primitive_base_type ();
-  if (!bt || (bt->accept (this) == -1))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_cdr_op_field_decl::"
-                         "visit_typedef - "
-                         "Bad primitive type\n"
-                         ), -1);
-    }
-
-  this->ctx_->alias (0);
-  return 0;
 }

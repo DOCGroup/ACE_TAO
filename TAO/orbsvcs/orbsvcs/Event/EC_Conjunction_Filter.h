@@ -12,6 +12,10 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   A per-consumer filter that accepts events from a set of
+//   children.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -31,7 +35,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_EC_Conjunction_Filter : public TAO_EC_Filter
+class TAO_EC_Conjunction_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   The conjunction filter.
@@ -48,15 +52,12 @@ public:
                              size_t n);
   // Constructor. It assumes ownership of both the array and the
   // children.
-
+  
   virtual ~TAO_EC_Conjunction_Filter (void);
   // Destructor
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual ChildrenIterator begin (void) const;
-  virtual ChildrenIterator end (void) const;
-  virtual int size (void) const;
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
@@ -71,21 +72,25 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info,
-                                CORBA::Environment &ACE_TRY_ENV);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
+
+  typedef TAO_EC_Filter* value_type;
+  typedef TAO_EC_Filter* const const_value_type;
+  typedef const_value_type* ChildrenIterator;
+  ChildrenIterator begin (void) const;
+  ChildrenIterator end (void) const;
+  // STL-like iterators...
 
   typedef unsigned int Word;
 
-private:
+private: 
   int all_received (void) const;
   // Determine if all the children have received their events.
-
+  
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Conjunction_Filter
                               (const TAO_EC_Conjunction_Filter&))
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Conjunction_Filter& operator=
-                              (const TAO_EC_Conjunction_Filter&))
+                              (const TAO_EC_Conjunction_Filter&))  
 
 private:
   TAO_EC_Filter** children_;

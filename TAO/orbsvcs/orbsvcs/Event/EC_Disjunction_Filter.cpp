@@ -3,7 +3,7 @@
 #include "EC_Disjunction_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Disjunction_Filter.i"
+#include "EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Disjunction_Filter, "$Id$")
@@ -36,24 +36,6 @@ TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter (void)
   delete[] this->children_;
   this->children_ = 0;
   this->n_ = 0;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Disjunction_Filter::begin (void) const
-{
-  return this->children_;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Disjunction_Filter::end (void) const
-{
-  return this->children_ + this->n_;
-}
-
-ACE_INLINE int
-TAO_EC_Disjunction_Filter::size (void) const
-{
-  return this->n_;
 }
 
 int
@@ -138,26 +120,14 @@ TAO_EC_Disjunction_Filter::max_event_size (void) const
   return n;
 }
 
-int
-TAO_EC_Disjunction_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+void
+TAO_EC_Disjunction_Filter::event_ids(TAO_EC_Filter::Headers& headers)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      if ((*i)->can_match (header) != 0)
-        return 1;
+      (*i)->event_ids (headers);
     }
-  return 0;
-}
-
-int
-TAO_EC_Disjunction_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &,
-      CORBA::Environment &)
-{
-  return 0;
 }

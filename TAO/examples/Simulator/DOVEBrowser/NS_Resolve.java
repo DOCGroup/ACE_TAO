@@ -7,7 +7,6 @@
 //
 // = AUTHOR
 //    Michael Kircher (mk1@cs.wustl.edu)
-//    Modified for new protocol by Hans Ridder <ridder@veritas.com>
 //
 // = DESCRIPTION
 //   Resolves the initial reference to the Naming service,
@@ -27,10 +26,15 @@ import java.io.*;
 
 public class NS_Resolve
 {
+  
   private static final String ACE_DEFAULT_MULTICAST_ADDR = "224.9.9.2";
   private static final int TAO_DEFAULT_NAME_SERVER_REQUEST_PORT = 10013;
-  private static final String TAO_SERVICEID_NAMESERVICE = "NameService";
+  private static final int MULTICAST_SEND_PORT = 10060;
+  private static final int MULTICAST_RECEIVE_PORT = 10061;
+  private static final int TAO_SERVICEID_NAMESERVICE = 0;
+  private static final int TAO_SERVICEID_TRADINGSERVICE = 1;
 
+  org.omg.CORBA.Object name_service_;
   int nameServicePort_;
 
   public NS_Resolve (String nameServicePort)
@@ -51,53 +55,47 @@ public class NS_Resolve
     {
       try
 	{
-	  // Create the multicast socket at any port
-	  MulticastSocket sendSocket = new MulticastSocket(0);
+	  // Create a message with the multicast receive port in it
+	  ByteArrayOutputStream byte_stream_ = new ByteArrayOutputStream ();
+      	  byte_stream_.write ((int)((MULTICAST_RECEIVE_PORT&0xff00)>>>8));
+	  byte_stream_.write ((int)(MULTICAST_RECEIVE_PORT&0x00ff));
+      	  byte_stream_.write ((int)((TAO_SERVICEID_NAMESERVICE&0xff00)>>>8));
+	  byte_stream_.write ((int)(TAO_SERVICEID_NAMESERVICE&0x00ff));
+	  byte[] msg = byte_stream_.toByteArray();
 
-	  // Create a socket at any port for the Naming Service answer
-	  ServerSocket listenSocket = new ServerSocket(0);
-
-	  // Create a message with the port and service name in it,
-	  // length and port number are in network byte order
-	  ByteArrayOutputStream msg = new ByteArrayOutputStream();
-	  int dataLength = TAO_SERVICEID_NAMESERVICE.length() + 2;
-	  msg.write((dataLength >> 8) & 0xff);
-	  msg.write(dataLength & 0xff);
-	  msg.write((listenSocket.getLocalPort() >> 8) & 0xff);
-	  msg.write(listenSocket.getLocalPort() & 0xff);
-	  msg.write(TAO_SERVICEID_NAMESERVICE.getBytes());
 
 	  // Define the group for the multicast
+
 	  InetAddress group = InetAddress.getByName(ACE_DEFAULT_MULTICAST_ADDR);
-	  // Create a datagram with the message and send it
-	  sendSocket.send(new DatagramPacket(msg.toByteArray(),
-					 msg.size(),
-					 group, nameServicePort_));
+	  // Create the multicast socket at any port you want
+	  MulticastSocket multicastsocket_ = new MulticastSocket(MULTICAST_SEND_PORT);
+	  // Create a socket for the answer of the Naming Service 
+	  DatagramSocket socket_ = new DatagramSocket (MULTICAST_RECEIVE_PORT);
+	  // Give three seconds time for the Naming Service to respond
+	  socket_.setSoTimeout (3000);
+	  // Build a packet with the port number in it
+	  DatagramPacket  hello = new DatagramPacket(msg, msg.length,
+						     group, nameServicePort_);
 
-	  // Wait 3 seconds for the Naming Service to connect
-	  listenSocket.setSoTimeout(3000);
-	  Socket replySocket = listenSocket.accept();
-      
+	  // Send the packet
+	  multicastsocket_.send (hello);
+
 	  // @@ The restriction right now is that the length of the IOR cannot be longer than 4096
-	  byte[] reply = new byte[4096];
+	  byte[] buf = new byte[4096];
+	  // Set up packet which can be received
+	  DatagramPacket recv = new DatagramPacket (buf, buf.length);	  
+	  // Receive a packet or time out
+	  socket_.receive (recv);
 
-	  // Receive the reply (0 terminated string) or time out
-	  replySocket.setSoTimeout(3000);
-	  InputStream in = replySocket.getInputStream();
+	  // Determine the length of the IOR
 	  int length;
-	  for (length = 0; length < reply.length; length++) {
-	    if ((reply[length] = (byte) in.read()) == 0) {
-	      break;
-	    }
-	  }
+	  for (length = 0; buf[length] != 0; length++);
 
-	  // Close all the sockets
-	  sendSocket.close();
-	  listenSocket.close();
-	  replySocket.close();
+	  // Store the IOR in a String
+       	  String name_service_ior_ = new String (recv.getData (),0,length);
 
-	  // Convert the String into ??
-	  return orb.string_to_object(new String(reply, 0, length));
+	  // Convert the String into
+	  return orb.string_to_object (name_service_ior_);
 	}
       catch (SocketException e)
 	{
@@ -116,5 +114,12 @@ public class NS_Resolve
 	  System.err.println (e);
 	}
       return null;
+      
     } 
-}
+
+};
+
+
+
+
+

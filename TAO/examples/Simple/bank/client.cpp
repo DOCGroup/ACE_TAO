@@ -1,23 +1,21 @@
 // $Id$
 
-# include "Bank_Client_i.h"
+#include "Client_i.h"
 
-// The client program for the application.
+ACE_RCSID(Time, client, "$Id$")
+
+// This function runs the Bank client test.
 
 int
-main (int argc, char **argv)
+main (int argc, char *argv[])
 {
-  Bank_Client_i client;
-  
+  Client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nBank client\n\n"));
+              "[CLIENT] Process/Thread Id : (%P/%t) Bank client\n"));
 
-  if (client.run ("Bank",argc, argv) == -1)
-    return -1; 
+  if (client.init (argc, argv) == -1)
+    return -1;
   else
-    return 0;
-   
+    return client.run ();
 }
-
-                                 

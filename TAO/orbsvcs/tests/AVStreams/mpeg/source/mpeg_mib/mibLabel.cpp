@@ -26,8 +26,7 @@ mib_Widget *mib_create_Label(mib_Widget *parent, char *name, char *label,
 {
   mib_Widget *temp;
   mib_Label *myres;
-  //unsigned char *label_text;
-  XmString label_text;
+  unsigned char *label_text;
   Arg     args[20];
   int     n;
 
@@ -127,8 +126,7 @@ void mib_save_Label(mib_Widget *thisw, FILE *fout)
 int mib_load_Label(mib_Widget *thisw, mib_Buffer *fin)
 {
   mib_Label    *myres;
-  //  unsigned char *label_text;
-  XmString label_text;
+  unsigned char *label_text;
   char          res[MI_MAXSTRLEN];
   char          val[MI_MAXSTRLEN];
   Arg           args[5];
@@ -141,7 +139,7 @@ int mib_load_Label(mib_Widget *thisw, mib_Buffer *fin)
 
   if (!strcmp(res,"label"))
   {
-    vallen =ACE_OS::strlen (val);
+    vallen = strlen(val);
     if (vallen < 2)
       return 0;
     val[vallen-1] = '\0';
@@ -161,7 +159,7 @@ int mib_load_Label(mib_Widget *thisw, mib_Buffer *fin)
   if (!mib_read_line(fin, res, val))
     return 0;
 
-  if (ACE_OS::strcmp (res,"EndWidget"))
+  if (strcmp(res,"EndWidget"))
     return 0;
 
   return 1;

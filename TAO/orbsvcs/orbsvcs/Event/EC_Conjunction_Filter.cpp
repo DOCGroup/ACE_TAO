@@ -3,7 +3,7 @@
 #include "EC_Conjunction_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Conjunction_Filter.i"
+#include "EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
@@ -56,28 +56,10 @@ TAO_EC_Conjunction_Filter::all_received (void) const
        i != this->bitvec_ + this->nwords_;
        ++i)
     {
-      if (*i != ACE_static_cast(Word,~0))
+      if (*i != ~0)
         return 0;
     }
   return 0;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Conjunction_Filter::begin (void) const
-{
-  return this->children_;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Conjunction_Filter::end (void) const
-{
-  return this->children_ + this->n_;
-}
-
-int
-TAO_EC_Conjunction_Filter::size (void) const
-{
-  return this->n_;
 }
 
 int
@@ -121,7 +103,7 @@ TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info,
                                  CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA::Long pos = this->current_child_ - this->begin ();
+  offset_t pos = this->current_child_ - this->begin ();
   int w = pos / bits_per_word;
   int b = pos % bits_per_word;
   if (ACE_BIT_ENABLED (this->bitvec_[w], 1<<b))
@@ -184,26 +166,14 @@ TAO_EC_Conjunction_Filter::max_event_size (void) const
   return n;
 }
 
-int
-TAO_EC_Conjunction_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+void
+TAO_EC_Conjunction_Filter::event_ids (TAO_EC_Filter::Headers& headers)
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
        ++i)
     {
-      if ((*i)->can_match (header) != 0)
-        return 1;
+      (*i)->event_ids (headers);
     }
-  return 0;
-}
-
-int
-TAO_EC_Conjunction_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info&,
-      CORBA::Environment &)
-{
-  return 0;
 }

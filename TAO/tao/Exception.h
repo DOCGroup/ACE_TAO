@@ -67,11 +67,6 @@ public:
   // = TAO extension. It makes it easier to write generic code.
   static CORBA_Exception* _narrow (CORBA_Exception* x);
 
-  void print_exception (const char *info,
-                        FILE *f=stdout) const;
-  // Print the exception <ex> to output determined by f.
-  // This function is not CORBA compliant.
-
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -174,7 +169,9 @@ public:
 
   virtual void _raise (void);
 
+#if defined (TAO_USES_FLICK)
 private:
+#endif /* TAO_USES_FLICK */
 
   CORBA::ULong minor_;
   // minor code
@@ -193,8 +190,8 @@ private:
 class TAO_Export CORBA_ ## name : public CORBA_SystemException { \
 public: \
   CORBA_ ## name (void); \
-  CORBA_ ## name (CORBA::ULong code, \
-                  CORBA::CompletionStatus completed) \
+  CORBA_ ## name (CORBA::CompletionStatus completed, \
+                  CORBA::ULong code = 0xffff0000L) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
   virtual void _raise (void); \
@@ -228,14 +225,6 @@ TAO_SYSTEM_EXCEPTION(INTF_REPOS);
 TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);
 TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);
 TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
-TAO_SYSTEM_EXCEPTION(INV_POLICY);
-TAO_SYSTEM_EXCEPTION(REBIND);
-TAO_SYSTEM_EXCEPTION(TIMEOUT);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_UNAVAILABLE);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_MODE);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED);
-TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK);
-TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION);
 
 #undef TAO_SYSTEM_EXCEPTION
 
@@ -310,10 +299,6 @@ public:
   // list of system exceptions
 };
 
-
-class CORBA_ExceptionList;
-typedef CORBA_ExceptionList* CORBA_ExceptionList_ptr;
-
 class CORBA_ExceptionList
 {
   // = TITLE
@@ -336,12 +321,6 @@ public:
   CORBA::ULong count ();
   // return the number of elements
 
-  CORBA_ExceptionList_ptr _duplicate (void);
-
-  void _destroy (void);
-
-  static CORBA_ExceptionList_ptr _nil ();
-
   void add (CORBA::TypeCode_ptr tc);
   // add a TypeCode to the list
 
@@ -354,47 +333,13 @@ public:
   void remove (CORBA::ULong index, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // remove the typecode at index i. Raises the "Bounds" exception
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-  typedef CORBA::ExceptionList_ptr _ptr_type;
-  typedef CORBA::ExceptionList_var _var_type;
-#endif /* __GNUC__ */
-  // Useful for template programming.
-
 private:
   // not allowed
   CORBA_ExceptionList (const CORBA_ExceptionList &);
   CORBA_ExceptionList &operator= (const CORBA_ExceptionList &);
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
-  // Reference counter.
-
   ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
   // internal list of typecodes
-};
-
-class TAO_Export CORBA_ExceptionList_var
-{
-public:
-  CORBA_ExceptionList_var (void); // default constructor
-  CORBA_ExceptionList_var (CORBA_ExceptionList_ptr);
-  CORBA_ExceptionList_var (const CORBA_ExceptionList_var &); // copy constructor
-  ~CORBA_ExceptionList_var (void); // destructor
-
-  CORBA_ExceptionList_var &operator= (CORBA_ExceptionList_ptr);
-  CORBA_ExceptionList_var &operator= (const CORBA_ExceptionList_var &);
-  CORBA_ExceptionList_ptr operator-> (void) const;
-
-  operator const CORBA_ExceptionList_ptr &() const;
-  operator CORBA_ExceptionList_ptr &();
-  // in, inout, out, _retn
-  CORBA_ExceptionList_ptr in (void) const;
-  CORBA_ExceptionList_ptr &inout (void);
-  CORBA_ExceptionList_ptr &out (void);
-  CORBA_ExceptionList_ptr _retn (void);
-  CORBA_ExceptionList_ptr ptr (void) const;
-
-private:
-  CORBA_ExceptionList_ptr ptr_;
 };
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)

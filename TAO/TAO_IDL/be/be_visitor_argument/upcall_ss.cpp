@@ -96,7 +96,7 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_enum (be_enum *)
+int be_visitor_args_upcall_ss::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -114,7 +114,7 @@ int be_visitor_args_upcall_ss::visit_enum (be_enum *)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_interface (be_interface *)
+int be_visitor_args_upcall_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -148,7 +148,7 @@ int be_visitor_args_upcall_ss::visit_interface (be_interface *)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
+int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -181,79 +181,6 @@ int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *)
     }
   return 0;
 }
-
-#ifdef IDL_HAS_VALUETYPE
-
-int be_visitor_args_upcall_ss::visit_valuetype (be_valuetype *)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  os->indent ();
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        *os << arg->local_name ();
-      else
-        *os << arg->local_name () << ".in ()";
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        *os << arg->local_name ();
-      else
-        *os << arg->local_name () << ".inout ()";
-      break;
-    case AST_Argument::dir_OUT:
-      //      *os << arg->local_name ();
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        *os << arg->local_name ();
-      else
-        *os << arg->local_name () << ".out ()";
-      break;
-    }
-  return 0;
-}
-
-int be_visitor_args_upcall_ss::visit_valuetype_fwd (be_valuetype_fwd *)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
-  os->indent ();
-  switch (this->direction ())
-    {
-    case AST_Argument::dir_IN:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        *os << arg->local_name ();
-      else
-        *os << arg->local_name () << ".in ()";
-      break;
-    case AST_Argument::dir_INOUT:
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        *os << arg->local_name ();
-      else
-        *os << arg->local_name () << ".inout ()";
-      break;
-    case AST_Argument::dir_OUT:
-      //      *os << arg->local_name ();
-      if (this->ctx_->state ()
-          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
-        *os << arg->local_name ();
-      else
-        *os << arg->local_name () << ".out ()";
-      break;
-    }
-  return 0;
-}
-
-#endif /* IDL_HAS_VALUETYPE */
-
 
 int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
 {
@@ -266,64 +193,64 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
   if (node->pt () == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
+	{
+	case AST_Argument::dir_IN:
+	case AST_Argument::dir_INOUT:
           *os << arg->local_name ();
           break;
-        case AST_Argument::dir_OUT:
+	case AST_Argument::dir_OUT:
           if (this->ctx_->state ()
               == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
             *os << arg->local_name ();
           else
             *os << arg->local_name () << ".out ()";
-          break;
-        } // end switch direction
+	  break;
+	} // end switch direction
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
       switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
+	{
+	case AST_Argument::dir_IN:
           if (this->ctx_->state ()
               == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
             *os << arg->local_name ();
           else
             *os << arg->local_name () << ".in ()";
-          break;
-        case AST_Argument::dir_INOUT:
+	  break;
+	case AST_Argument::dir_INOUT:
           if (this->ctx_->state ()
               == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
             *os << arg->local_name ();
           else
             *os << arg->local_name () << ".inout ()";
-          break;
-        case AST_Argument::dir_OUT:
+	  break;
+	case AST_Argument::dir_OUT:
           //          *os << arg->local_name ();
           if (this->ctx_->state ()
               == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
             *os << arg->local_name ();
           else
             *os << arg->local_name () << ".out ()";
-          break;
-        } // end switch direction
+	  break;
+	} // end switch direction
     } // end else if
   else // simple predefined types
     {
       switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-        case AST_Argument::dir_INOUT:
-        case AST_Argument::dir_OUT:
+	{
+	case AST_Argument::dir_IN:
+	case AST_Argument::dir_INOUT:
+	case AST_Argument::dir_OUT:
           *os << arg->local_name ();
-          break;
-        } // end switch direction
+	  break;
+	} // end switch direction
     } // end of else
 
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
+int be_visitor_args_upcall_ss::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument

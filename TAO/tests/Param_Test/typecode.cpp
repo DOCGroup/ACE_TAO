@@ -43,15 +43,14 @@ Test_TypeCode::opname (void) const
 }
 
 void
-Test_TypeCode::dii_req_invoke (CORBA::Request *req,
-                               CORBA::Environment &ACE_TRY_ENV)
+Test_TypeCode::dii_req_invoke (CORBA::Request *req)
 {
-  req->invoke (ACE_TRY_ENV);
+  req->invoke ();
 }
 
 int
 Test_TypeCode::init_parameters (Param_Test_ptr objref,
-                                CORBA::Environment &/*ACE_TRY_ENV*/)
+                                CORBA::Environment &env)
 {
   static CORBA::TypeCode_ptr tc_table [] =
     {
@@ -91,20 +90,20 @@ Test_TypeCode::reset_parameters (void)
 
 int
 Test_TypeCode::run_sii_test (Param_Test_ptr objref,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &env)
 {
   CORBA::TypeCode_out out (this->out_);
   this->ret_ = objref->test_typecode (this->in_.in (),
                                       this->inout_.inout (),
                                       out,
-                                      ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+                                      env);
+  return (env.exception () ? -1:0);
 }
 
 int
 Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
 			 CORBA::NVList_ptr retval,
-			 CORBA::Environment &ACE_TRY_ENV)
+			 CORBA::Environment &env)
 {
   CORBA::Any in_arg (CORBA::_tc_TypeCode,
                      &this->in_,
@@ -122,34 +121,33 @@ Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+                         env);
 
   // add return value
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_TypeCode,
-                                                    &this->ret_,
-                                                    0, // does not own
-                                                    ACE_TRY_ENV);
+  retval->item (0, env)->value ()->replace (CORBA::_tc_TypeCode,
+                                            &this->ret_,
+                                            0, // does not own
+                                            env);
   return 0;
 }
 
 CORBA::Boolean
 Test_TypeCode::check_validity (void)
 {
-  //CORBA::Environment env;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  if (this->in_.in ()->equal (this->inout_.in (), ACE_TRY_ENV) &&
-      this->in_.in ()->equal (this->out_.in (), ACE_TRY_ENV) &&
-      this->in_.in ()->equal (this->ret_.in (), ACE_TRY_ENV))
+  CORBA::Environment env;
+  if (this->in_.in ()->equal (this->inout_.in (), env) &&
+      this->in_.in ()->equal (this->out_.in (), env) &&
+      this->in_.in ()->equal (this->ret_.in (), env))
     return 1;
   else
     return 0;

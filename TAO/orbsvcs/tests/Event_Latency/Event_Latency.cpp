@@ -13,8 +13,6 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Basic_Factory.h"
 #include "Event_Latency.h"
 
 #include "tao/Timeprobe.h"
@@ -109,10 +107,10 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
                    wcet,
                    wcet,
-                   ORBSVCS_Time::zero (),
+                   ORBSVCS_Time::zero,
                    0,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
-                   ORBSVCS_Time::zero (),
+                   ORBSVCS_Time::zero,
                    1,
                    RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
@@ -174,11 +172,12 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
   ACE_TIMEPROBE (EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
   if (events.length () == 0)
     {
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
 #if defined (ACE_HAS_QUANTIFY)
   // If measuring jitter, just Quantify the supplier-consumer path.
@@ -416,12 +415,12 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 
       server->set (rt_info_,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
-                   ORBSVCS_Time::zero (),
-                   ORBSVCS_Time::zero (),
-                   ORBSVCS_Time::zero (),
+                   ORBSVCS_Time::zero,
+                   ORBSVCS_Time::zero,
+                   ORBSVCS_Time::zero,
                    period,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
-                   ORBSVCS_Time::zero (),
+                   ORBSVCS_Time::zero,
                    1,
                    RtecScheduler::OPERATION,
                    TAO_TRY_ENV);
@@ -543,11 +542,13 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
   // ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
   ACE_UNUSED_ARG (TAO_IN_ENV);
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
   if (events.length () == 0)
     {
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
+
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -622,8 +623,8 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "(%t) %s received unexpected events: %d\n",
-                      entry_point (), events[i].header.type));
+          ACE_ERROR ((LM_ERROR, "(%t) %s received unexpected events: ",
+                      entry_point ()));
           // ::dump_sequence (events);
           return;
         }
@@ -886,7 +887,6 @@ main (int argc, char *argv [])
       // the cost of doing it later.
       ACE_TIMEPROBE_RESET;
 
-#if 0
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup ("EventService");
@@ -899,17 +899,6 @@ main (int argc, char *argv [])
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
                                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
-#else
-      TAO_EC_Event_Channel_Attributes attr(root_poa.in (),
-                                           root_poa.in ());
-      TAO_EC_Event_Channel ec_impl  (attr);
-      ec_impl.activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-#endif /* 0 */
 
       // Create supplier(s).
       Latency_Supplier **supplier;

@@ -27,7 +27,7 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Federated Query.\n"));
 
-  TAO_Policy_Creator policies;
+  TAO_Policy_Manager policies;
   policies.exact_type_match (0);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
@@ -54,7 +54,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Importer::Directed Query.\n"));
 
-  TAO_Policy_Creator policies;
+  TAO_Policy_Manager policies;
   policies.exact_type_match (0);
   policies.search_card (16*NUM_OFFERS);
   policies.match_card (16*NUM_OFFERS);
@@ -86,7 +86,17 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
         link_if->describe_link (link_name_seq[0], TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
-      CosTrading::Lookup_ptr lookup_if = link_info->target.in ();
+      CosTrading::Lookup_var lookup_if;
+#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
+      CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
+      CORBA::Object_var obj = orb->string_to_object (link_info->target, TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+      lookup_if = CosTrading::Lookup::_narrow (obj.in (), TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+#else
+      lookup_if = CosTrading::Lookup::_duplicate (link_info->target.in ());
+#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
+
       CosTrading::Link_var link_if2 = lookup_if->link_if (TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
@@ -137,7 +147,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& TAO_IN_ENV)
 
 void
 TAO_Offer_Importer::
-perform_queries_with_policies (const TAO_Policy_Creator& policies,
+perform_queries_with_policies (const TAO_Policy_Manager& policies,
                                CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,

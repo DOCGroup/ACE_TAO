@@ -67,7 +67,7 @@ static void on_exit_routine(void)
   char buf[256];
   if (getpid() != curpid) return;
   get_full_path(PID_FILE, buf, 256);
-  ACE_OS::unlink (buf);
+  unlink(buf);
 }
 
 static void register_pid(void)
@@ -76,7 +76,7 @@ static void register_pid(void)
   FILE *fp;
   get_full_path(PID_FILE, buf, 256);
   fp = fopen(buf, "w");
-  fprintf(fp, "%d -- pid of current VS process\n",ACE_OS::getpid ());
+  fprintf(fp, "%d -- pid of current VS process\n", getpid());
   fclose(fp);
 }
 
@@ -135,18 +135,18 @@ int InitLiveVideo(int argc, char ** argv)  /* -1 -- failed, 0 - succ */
   
   /* all other fields to be initialized by LVS process */
 
-  while ((lvspid = ACE_OS::fork ()) == -1);
+  while ((lvspid = fork()) == -1);
 
   if (lvspid == 0) { /* child process, reading from camera */
     LiveVideoProcess(argc, argv);
-    ACE_OS::exit (1);
+    exit(1);
   }
 
   while (shared->initState == 0) usleep(100000);  /* wait for SunVideo to init */
 
   if (shared->initState == -1) {
     fprintf(stderr, "LVS error: init of child process failed\n");
-    ACE_OS::kill (lvspid, SIGINT);
+    kill(lvspid, SIGINT);
     remove_shared_mem(buf);
     remove_semaphore(sid);
     remove_semaphore(susid);
@@ -157,7 +157,7 @@ int InitLiveVideo(int argc, char ** argv)  /* -1 -- failed, 0 - succ */
     
     fprintf(stderr, "LVS initialized.\n");
 
-    curpid =ACE_OS::getpid ();
+    curpid = getpid();
     
     atexit(on_exit_routine);
 
@@ -185,7 +185,7 @@ void ExitLiveVideo(void)
   return;
 #else
   if (lvspid == -1) return;
-  ACE_OS::kill (lvspid, SIGINT);
+  kill(lvspid, SIGINT);
   remove_semaphore(shared->sid);
   remove_semaphore(shared->susid);
   remove_shared_mem((char *)shared);
@@ -212,7 +212,7 @@ int OpenLiveVideo(int * format,
   *fps = shared->fps;
   *pelAspectRatio = shared->pelAspectRatio;
   
-  fprintf(stderr, "LVS session %d opened.\n",ACE_OS::getpid ());
+  fprintf(stderr, "LVS session %d opened.\n", getpid());
   
   return 0;
 #endif
@@ -247,7 +247,7 @@ void StartPlayLiveVideo(void)
     usleep(10000);
   }
   
-  fprintf(stderr, "LVS session %d started\n",ACE_OS::getpid ());
+  fprintf(stderr, "LVS session %d started\n", getpid());
   
   return;
 #endif
@@ -263,7 +263,7 @@ void StopPlayLiveVideo(void)
   shared->activeSessions --;
   leave_cs(shared->sid);
   
-  fprintf(stderr, "LVS session %d stopped, at %5.2f fps.\n",ACE_OS::getpid (),
+  fprintf(stderr, "LVS session %d stopped, at %5.2f fps.\n", getpid(),
 	  ((double)count * 1000.0) / get_duration(session_time, get_msec()));
   
   return;
@@ -324,7 +324,7 @@ int ReadLiveVideoPicture(int * frame, char * buf, int size) /* ret # bytes */
   ssize = shared->buf[bufptr].size;
 
   ssize = (ssize < size ? ssize : size);
-  ACE_OS::memcpy (buf, shared->buf[bufptr].data, ssize);
+  memcpy(buf, shared->buf[bufptr].data, ssize);
 
   enter_cs(shared->sid);
 
@@ -341,7 +341,7 @@ int ReadLiveVideoPicture(int * frame, char * buf, int size) /* ret # bytes */
   /*
   fprintf(stderr,
 	  "LVS session %d read curbuf %d fid %d, frame %d size %d (ffid %d, fframe %d)\n",
-	 ACE_OS::getpid (), curbuf, prefid, *frame, ssize, first_fid, first_frame);
+	  getpid(), curbuf, prefid, *frame, ssize, first_fid, first_frame);
   */
   /*
   fprintf(stderr, "LVS read fid %d, frame %d\n", prefid, *frame);
@@ -397,7 +397,7 @@ int ReadLiveVideoPicture(int * frame, char * buf, int size) /* ret # bytes */
   ssize = shared->buf[shared->curbuf].size;
 
   ssize = (ssize < size ? ssize : size);
-  ACE_OS::memcpy (buf, sbuf, ssize);
+  memcpy(buf, sbuf, ssize);
   /*
   leave_cs(shared->sid);
   */

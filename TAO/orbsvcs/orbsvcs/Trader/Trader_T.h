@@ -94,9 +94,7 @@ private:
   // *************************************************************
 
 template <class IF>
-class TAO_Trader_Components : 
-  public virtual IF,
-  public virtual PortableServer::RefCountServantBase
+class TAO_Trader_Components : public virtual IF
 {
 public:
 

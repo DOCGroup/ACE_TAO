@@ -39,7 +39,7 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_Event_Channel;
 
-class TAO_ORBSVCS_Export TAO_EC_SupplierFiltering
+class TAO_EC_SupplierFiltering
 {
   // = TITLE
   //   The strategy to handle filtering close to the supplier.
@@ -96,24 +96,48 @@ public:
   // information can simply ignore the message.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-                          CORBA::Environment &env) = 0;
+			  CORBA::Environment &env) = 0;
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-                             CORBA::Environment &env) = 0;
+			     CORBA::Environment &env) = 0;
   // Concrete implementations can use this methods to keep track of
   // the consumers interested in this events.
-
-  virtual void shutdown (CORBA::Environment &env) = 0;
-  // The event channel is shutting down.
 
   virtual void push (const RtecEventComm::EventSet& event,
                      CORBA::Environment &) = 0;
   // The ProxyPushConsumer delegates on this class to actually send
   // the event.
+};
 
-  virtual CORBA::ULong _incr_refcnt (void) = 0;
-  virtual CORBA::ULong _decr_refcnt (void) = 0;
-  // Increment and decrement the reference count, locking must be
-  // provided by the user.
+// ****************************************************************
+
+class TAO_EC_Null_SupplierFiltering : public TAO_EC_SupplierFiltering
+{
+  // = TITLE
+  //   A null filtering strategy.
+  //
+  // = DESCRIPTION
+  //   This strategy does no filtering, it is useful for backends of
+  //   the CosEventChannel, testing and broadcasters; it uses the
+  //   ConsumerAdmin to find all the consumers and pushes the event to
+  //   all of them.
+  //
+public:
+  TAO_EC_Null_SupplierFiltering (TAO_EC_Event_Channel* ec);
+  // Constructor
+
+  // = The TAO_EC_SupplierFiltering methods.
+  virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
+  virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
+			  CORBA::Environment &env);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
+			     CORBA::Environment &env);
+  virtual void push (const RtecEventComm::EventSet& event,
+                     CORBA::Environment &);
+
+private:
+  TAO_EC_Event_Channel *event_channel_;
+  // The event channel, used to locate the set of consumers.
 };
 
 #if defined (__ACE_INLINE__)

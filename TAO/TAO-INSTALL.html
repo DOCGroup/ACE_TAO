@@ -44,34 +44,22 @@ likely unpredictable and erroneous results. <P>
   <LI>Set <CODE>TAO_ROOT</CODE> environment variable to
       <CODE>$ACE_ROOT/TAO</CODE>. <P>
 
-  <LI>Build and install the TAO release under
-        <CODE>$TAO_ROOT</CODE>.<P>
+  <LI>Build and install the TAO release under <CODE>$TAO_ROOT</CODE>.<P>
 
-        <P>The easiest and recommended way to compile the
-          <B>complete</B> TAO distribution by simply simply executing
-          <code><a href="#makenotes">make</a></code>
-          in the <CODE>$TAO_ROOT</CODE> directory.
-        </P>
+      <UL>
+        <LI>Compile the Library: Change directory to
+            <CODE>$TAO_ROOT/tao</CODE> and execute
+            <code><a href="#makenotes">make</a></code>.
+	<LI>Compile TAO_IDL: Change directory to
+            <CODE>$TAO_ROOT/TAO_IDL</CODE> and execute
+            <code><a href="#makenotes">make</a></code>.
+	<LI>Compile ORB Services: Change directory to
+            <CODE>$TAO_ROOT/orbsvcs/orbsvcs</CODE> and execute
+            <code><a href="#makenotes">make</a></code>.
+      </UL>
 
-        <P>A smaller subset, that may be of interest to test basic TAO
-          functionality, is:
-          <CODE>$TAO_ROOT/tao</CODE>,
-          <CODE>$TAO_ROOT/TAO_IDL</CODE>,
-          <CODE>$TAO_ROOT/tests/Param_Test</CODE>.
-          Then you can execute the <CODE>run_test.pl</CODE> script in
-          <CODE>$TAO_ROOT/tests/Param_Test</CODE> and/or
-          follow the instructions contained in the <CODE>README</CODE>
-          file in the same directory.
-        </P>
-
-        <P>If you wish to compile the services distributed with TAO,
-          including the <CODE>Naming_Service</CODE> you
-          must include <CODE>$TAO_ROOT/orbsvcs</CODE> to the list
-          above.
-        </P>
-
-  <LI>To test that the TAO release is properly configured,
-        follow instructions on executing the various examples under
+  <LI>To test that the TAO release is properly configured, follow
+      instructions on executing the various examples under
       <CODE>$TAO_ROOT/tests</CODE>.<P>
 
 </OL>
@@ -113,20 +101,20 @@ tree:<p>
   <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
 </ol><p>
 
-To build on the host:
+To build, first on the host, then on the target:<p>
 <ol>
   <li><code>cd build/SunOS5_g++</code>
   <li><code>export ACE_ROOT=`pwd`;
     export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH</code>
   <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
-    make.log</code>
+    make.log 2&gt;&1</code>
   <li><code>cd ../vxworks</code>
   <li><code>export ACE_ROOT=`pwd`</code>
   <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
-    make.log</code>
+    make.log 2&gt;&1</code>
 </ol><p>
 
-For NT hosts, please see the detailed instructions for building and
+For NT host, please see the detailed instructions for building and
 installing ACE and TAO in <a
 href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>.<p>
 
@@ -151,12 +139,6 @@ add a variable CPP_LOCATION to your environment and set it to the compiler
 you want to use.  This variable will override the default.
 </P>
 
-<p><a href="http://www.panix.com/~hoggardb/index.shtml">Barry
-Hoggard</a> maintains a <a
-href="http://www.panix.com/~hoggardb/corba/">CORBA Page</a>
-which contains very helpful information on setting MSVC project
-settings for TAO applications.</P>
-
 Remember to <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">set
 up ACE</A> before building TAO.
 
@@ -174,12 +156,12 @@ files in the correct place.</P>
   <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
       Directories in Tools|Options.  This is needed if using the TAO_IDL
       compiler under MSVC.  If you intend to also use the release version of the
-          libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
-          <STRONG>Note:</STRONG> The order that these are listed is important.  If your
-          main development is with the debug versions, make sure \bin is before
-          \bin\Release, otherwise put the \bin\Release first.  Because the output names
-          for the release and debug versions of TAO_IDL are the same, extra care must be
-          taken when both versions are generated simulataneously. <P>
+	  libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
+	  <STRONG>Note:</STRONG> The order that these are listed is important.  If your
+	  main development is with the debug versions, make sure \bin is before
+	  \bin\Release, otherwise put the \bin\Release first.  Because the output names
+	  for the release and debug versions of TAO_IDL are the same, extra care must be
+	  taken when both versions are generated simulataneously. <P>
 
   <LI>Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO
       library. <P>
@@ -213,11 +195,6 @@ version of the Naming Service.</P>
       <CODE>tests\Cubit\TAO\test.mdp</CODE> and build both client and
       server.<P>
 </OL>
-
-<H4>Upgrading From Older Releases</H4>
-
-<P>When a newer version of ACE/TAO is installed, rebuild all should be
-used to make sure everything is built correctly.</P>
 
 <H4>Changing Include Paths</H4>
 
@@ -329,18 +306,6 @@ compiler flags must also be given to the compiler to enable them.</P>
 
 <HR>
 <P>
-
-<H3>minimumTAO</H3>
-
-<P>By default, all components in TAO will be compiled.  If you only
-want support for <A HREF="docs/minimumTAO.html">minimumTAO</A>, define
-TAO_HAS_MINIMUM_CORBA. This can be accomplished in two ways: by
-defining TAO_HAS_MINIMUM_CORBA in the config.h or orbconf.h files or
-by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
-
-<HR>
-<P>
-
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->

@@ -14,9 +14,6 @@
 //
 // ============================================================================
 
-#ifndef TAO_LIFECYCLESERVICE_IDL
-#define TAO_LIFECYCLESERVICE_IDL
-
 #include "CosLifeCycle.idl"
 
 module LifeCycleService
@@ -72,4 +69,3 @@ module LifeCycleService
     };
 };
 
-#endif /* TAO_LIFECYCLESERVICE_IDL */

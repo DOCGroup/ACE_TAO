@@ -10,21 +10,16 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Generic_Servant \
-	Adapter_Activator \
-	DSI \
-	Default_Servant \
-	Explicit_Activation \
+DIRS  = Default_Servant \
 	FindPOA \
 	Forwarding \
-	Identity \
-	Loader \
+	Generic_Servant \
+	Explicit_Activation \
 	NewPOA \
 	On_Demand_Activation \
-	On_Demand_Loading \
 	RootPOA \
-	Reference_Counted_Servant \
-	TIE
+	TIE \
+	locking \
 
 # The following test hasn't been updated yet
 # Demux_Test
@@ -40,3 +35,4 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
+

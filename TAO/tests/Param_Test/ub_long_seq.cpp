@@ -47,17 +47,19 @@ Test_Long_Sequence::opname (void) const
 }
 
 void
-Test_Long_Sequence::dii_req_invoke (CORBA::Request *req,
-                                    CORBA::Environment &ACE_TRY_ENV)
+Test_Long_Sequence::dii_req_invoke (CORBA::Request *req)
 {
-  req->invoke (ACE_TRY_ENV);
+  req->invoke ();
 }
 
 int
-Test_Long_Sequence::init_parameters (Param_Test_ptr ,
-                                     CORBA::Environment &/*ACE_TRY_ENV*/)
+Test_Long_Sequence::init_parameters (Param_Test_ptr objref,
+                                     CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
+
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
@@ -85,20 +87,20 @@ Test_Long_Sequence::reset_parameters (void)
 
 int
 Test_Long_Sequence::run_sii_test (Param_Test_ptr objref,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &env)
 {
   Param_Test::Long_Seq_out out (this->out_.out ());
   this->ret_ = objref->test_long_sequence (this->in_.in (),
                                            this->inout_.inout (),
                                            out,
-                                           ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+                                           env);
+  return (env.exception () ? -1:0);
 }
 
 int
 Test_Long_Sequence::add_args (CORBA::NVList_ptr param_list,
                                CORBA::NVList_ptr retval,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_Long_Seq,
                      (void *) &this->in_.in (),
@@ -116,23 +118,23 @@ Test_Long_Sequence::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+                         env);
 
   // add return value type
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Long_Seq,
-                                                    &this->ret_.inout (), // see above
-                                                    0, // does not own
-                                                    ACE_TRY_ENV);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Long_Seq,
+                                            &this->ret_.inout (), // see above
+                                            0, // does not own
+                                            env);
   return 0;
 }
 
@@ -159,8 +161,9 @@ Test_Long_Sequence::check_validity (void)
 }
 
 CORBA::Boolean
-Test_Long_Sequence::check_validity (CORBA::Request_ptr )
+Test_Long_Sequence::check_validity (CORBA::Request_ptr req)
 {
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

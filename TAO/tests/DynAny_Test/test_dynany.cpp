@@ -44,7 +44,7 @@ Test_DynAny::run_test (void)
 {
   Data data (this->orb_);
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %s =*=*=*=*\n",
@@ -55,13 +55,13 @@ Test_DynAny::run_test (void)
 
       CORBA_Any in1 (CORBA::_tc_double);
       CORBA_DynAny_ptr fa1 = this->orb_->create_dyn_any (in1,
-                                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       fa1->insert_double (data.m_double1, 
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      CORBA::Double d_out = fa1->get_double (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::Double d_out = fa1->get_double (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       if (d_out == data.m_double1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
@@ -74,15 +74,15 @@ Test_DynAny::run_test (void)
       d_out = data.m_double2;
       CORBA_DynAny_ptr ftc1 = 
         this->orb_->create_basic_dyn_any (CORBA::_tc_double,
-                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::Any in_any1;
       in_any1 <<= data.m_double1;
       ftc1->from_any (in_any1, 
-                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      CORBA::Any* out_any1 = ftc1->to_any (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::Any* out_any1 = ftc1->to_any (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       *out_any1 >>= d_out;
 
       // value in DynAny_i created with NEW
@@ -94,11 +94,11 @@ Test_DynAny::run_test (void)
       else 
         ++this->error_count_;
 
-      fa1->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      fa1->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::release (fa1);
-      ftc1->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ftc1->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::release (ftc1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -111,21 +111,21 @@ Test_DynAny::run_test (void)
       CORBA_Any in (CORBA::_tc_TypeCode);
       CORBA_DynAny_ptr fa2 = 
         this->orb_->create_dyn_any (in,
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       fa2->insert_typecode (data.m_typecode1, 
-                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      CORBA::TypeCode_ptr tc_out = fa2->get_typecode (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                            TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::TypeCode_ptr tc_out = fa2->get_typecode (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       if (tc_out->equal (data.m_typecode1,
-                         ACE_TRY_ENV))
+                         TAO_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -133,43 +133,43 @@ Test_DynAny::run_test (void)
       tc_out = data.m_typecode2;
       CORBA_DynAny_ptr ftc2 = 
         this->orb_->create_basic_dyn_any (CORBA::_tc_TypeCode,
-                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                          TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::Any in_any2;
       in_any2 <<= data.m_typecode1;
       ftc2->from_any (in_any2, 
-                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      CORBA::Any* out_any2 = ftc2->to_any (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      CORBA::Any* out_any2 = ftc2->to_any (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       *out_any2 >>= tc_out;
 
       // value in DynAny_i created with NEW
       delete out_any2;
 
       if (tc_out->equal(data.m_typecode1,
-                        ACE_TRY_ENV))
+                        TAO_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
         ++this->error_count_;
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 
-      fa2->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      fa2->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::release (fa2);
-      ftc2->destroy (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ftc2->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       CORBA::release (ftc2);
       CORBA::release (tc_out);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("test_dynany::run_test");
+      TAO_TRY_ENV.print_exception ("test_dynany::run_test");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",

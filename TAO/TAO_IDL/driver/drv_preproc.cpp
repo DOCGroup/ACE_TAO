@@ -116,8 +116,7 @@ DRV_cpp_putarg(char *str)
 void
 DRV_cpp_init()
 {
-  // @@ There are two "one time" memory leaks in this function.
-  //    They will not blow off the program but should be fixed at some point.
+
   char *cpp_loc;
 
   // DRV_cpp_putarg("\\cygnus\\H-i386-cygwin32\\bin\\echo");
@@ -125,62 +124,15 @@ DRV_cpp_init()
 
   if (cpp_path != 0)
       cpp_loc = cpp_path;
-#if defined (_MSC_VER)
-  else
-    {
-      cpp_path.open ("MSVCDir", (char*) 0);
-
-      if (cpp_path != 0)
-        {
-          cpp_loc = new char[BUFSIZ];
-          ACE_OS::strcpy (cpp_loc, cpp_path);
-          ACE_OS::strcat (cpp_loc, "\\bin\\CL.exe");
-        }
-      else
-        cpp_loc = idl_global->cpp_location();
-    }
-
-#else
   else
       cpp_loc = idl_global->cpp_location();
-#endif /* _MSC_VER */
-
-  DRV_cpp_putarg (cpp_loc);
+  DRV_cpp_putarg(cpp_loc);
 #if defined (ACE_WIN32)
-  DRV_cpp_putarg ("-nologo");
+  DRV_cpp_putarg("-nologo");
 #endif /* ACE_WIN32 */
-  DRV_cpp_putarg ("-E");
+  DRV_cpp_putarg("-E");
   DRV_cpp_putarg("-DIDL");
-  DRV_cpp_putarg ("-I.");
-
-  // So we can find the required orb.idl file.
-  char* option = new char[BUFSIZ];
-  ACE_OS::strcpy (option, "-I");
-  const char* TAO_ROOT =
-    ACE_OS::getenv ("TAO_ROOT");
-  if (TAO_ROOT != 0)
-    {
-      ACE_OS::strcat (option, TAO_ROOT);
-      ACE_OS::strcat (option, "/tao");
-    }
-  else
-    {
-      const char* ACE_ROOT =
-        ACE_OS::getenv ("ACE_ROOT");
-      if (ACE_ROOT != 0)
-        {
-          ACE_OS::strcat (option, ACE_ROOT);
-          ACE_OS::strcat (option, "TAO/tao");
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "TAO_IDL: neither TAO_ROOT nor ACE_ROOT defined\n"));
-          ACE_OS::strcat (option, ".");
-        }
-    }
-
-  DRV_cpp_putarg (option);
+  DRV_cpp_putarg("-I.");
 }
 
 /*
@@ -223,12 +175,12 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
          << GTDEVEL(": cannot open temp file ")
          << fn
          << GTDEVEL(" for writing\n");
-    ACE_OS::exit (99);
+    exit(99);
   }
   if (fin == NULL) {
       cerr << idl_global->prog_name()
            << GTDEVEL(": cannot open input file\n");
-      ACE_OS::exit (99);
+      exit(99);
   }
 #if !defined (ACE_WIN32)
   fprintf (f, "#line 1 \"%s\"\n", orig_filename);
@@ -268,9 +220,8 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
 }
 
 /*
- * Strip down a name to the last component, i.e. everything after the
- last
- * '/' or '\' character
+ * Strip down a name to the last component, i.e. everything after the last
+ * '/' character
  */
 static char *
 DRV_stripped_name(char *fn)
@@ -279,13 +230,10 @@ DRV_stripped_name(char *fn)
     long        l;
 
     if (n == NULL)
-      return NULL;
+        return NULL;
     l = strlen(n);
-    int slash_found = 0;
-    for (n += l-1; n >= fn && !slash_found; n--)
-        slash_found = (*n == '/' || *n == '\\');
-    n += 1;
-    if (slash_found) n += 1;
+    for (n += l; l > 0 && *n != '/'; l--, n--);
+    if (*n == '/') n++;
     return n;
 }
 
@@ -307,17 +255,28 @@ DRV_pre_proc(char *myfile)
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (readfromstdin);
 
-  const char* tmpdir = idl_global->temp_dir ();
+  const char* tmpdir = getenv("TMP");
+  if (tmpdir != 0)
+    {
+      ACE_OS::strcpy (tmp_file, tmpdir);
+      ACE_OS::strcpy (tmp_ifile, tmpdir);
+    }
+  else
+    {
+      ACE_OS::strcpy (tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
+      ACE_OS::strcat (tmp_file, "tmp");
+      ACE_OS::strcpy (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
+      ACE_OS::strcat (tmp_ifile, "tmp");
+    }
 
-  ACE_OS::strcpy (tmp_file, tmpdir);
-  ACE_OS::strcpy (tmp_ifile, tmpdir);
-
+  ACE_OS::strcat (tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
   ACE_OS::strcat (tmp_file, "idlf_XXXXXX");
+
+  ACE_OS::strcat (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
   ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
 
   (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
   (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
-
   if (strcmp(myfile, "standard input") == 0)
     {
       idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
@@ -401,7 +360,7 @@ DRV_pre_proc(char *myfile)
          << GTDEVEL(": Could not open cpp output file ")
          << tmp_file
          << "\n";
-    ACE_OS::exit (99);
+    exit(99);
   }
   (*DRV_FE_set_yyin)(ACE_reinterpret_cast(File *, yyin));
 
@@ -416,21 +375,19 @@ DRV_pre_proc(char *myfile)
          << GTDEVEL(": Could not remove cpp input file ")
          << tmp_ifile
          << "\n";
-    ACE_OS::exit (99);
+    exit(99);
   }
 
-#if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
   if (ACE_OS::unlink(tmp_file) == -1) {
     cerr << idl_global->prog_name()
          << GTDEVEL(": Could not remove cpp output file ")
          << tmp_file
          << "\n";
-    ACE_OS::exit (99);
+    exit(99);
   }
-#endif /* ACE_HAS_WINNT4 && ACE_HAS_WINNT4 != 0 */
 
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
-    ACE_OS::exit (0);
+    exit(0);
 }
 
 // We really need to know whether this line is a "#include ...". If
@@ -465,17 +422,12 @@ DRV_check_for_include (const char* buf)
       return;
 
   // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the startng " or < character.
-  for (; (*r != '"') && (*r != '<'); r++)
+  // all the blanks and tabs and reach the startng " character.
+  for (; *r != '"'; r++)
     if (*r == '\n' || *r == '\0')
       return;
 
-  // Decide on the end char.
-  char end_char = '"';
-  if (*r == '<')
-    end_char = '>';
-
-  // Skip this " or <.
+  // Skip this ".
   r++;
 
   // Store this position.
@@ -485,8 +437,8 @@ DRV_check_for_include (const char* buf)
   if (*h == '\0')
     return;
 
-  // Find the closing " or < character.
-  for (; *r != end_char; r++)
+  // Find the closing " character.
+  for (; *r != '"'; r++)
     continue;
 
   // Make a new string for this file name.
@@ -515,10 +467,8 @@ DRV_check_for_include (const char* buf)
   // Terminate this string.
   file_name [i] = '\0';
 
-  // Store in the idl_global, unless it's "orb.idl" -
-  // we don't want to generate header includes for that.
-  if (ACE_OS::strcmp (file_name, "orb.idl"))
-    idl_global->add_to_included_idl_files (file_name);
+  // Store in the idl_global.
+  idl_global->add_to_included_idl_files (file_name);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

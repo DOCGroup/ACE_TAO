@@ -1,8 +1,5 @@
 /* -*- C++ -*- */
-// $Id$
-
-#ifndef TAO_SFP_IDL
-#define TAO_SFP_IDL
+/* $Id$ */
 
 module flowProtocol
 {
@@ -47,9 +44,9 @@ module flowProtocol
     char magic_number[4];
     // 'F', 'R', 'A', 'G' 
     octet flags; 
-    // bit 1 = more fragments, %%bit 0 = byteorder 
+    // bit 1 = more fragments 
     unsigned long frag_number; 
-    // 1,..,n 
+    // 0,..,n 
     unsigned long sequence_num;
     unsigned long frag_sz; 
     unsigned long source_id; 
@@ -114,7 +111,6 @@ module flowProtocol
     // "=",'C','R','E'
     unsigned long cred_num;
   };
+
   
 };
-
-#endif /* TAO_SFP_IDL */
