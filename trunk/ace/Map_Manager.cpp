@@ -72,11 +72,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i");
 
-  if (this->search_structure_ != 0)
-    {
-      this->allocator_->free (this->search_structure_);
-      this->search_structure_ = 0;
-    }
+  this->free_search_structure ();
   return 0;
 }
 
@@ -128,11 +124,26 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
       new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID>;
       temp[i].is_free_ = 1;
     }
-  
-  this->allocator_->free (this->search_structure_);
+
+  this->free_search_structure ();
   
   this->search_structure_ = temp;
   return 0;  
+}
+
+template <class EXT_ID, class INT_ID, class LOCK> void
+ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::free_search_structure (void)
+{
+  if (this->search_structure_ != 0)
+    {
+      for (int i = 0; i < this->total_size_; i++)
+	// Explicitly call the destructor.
+	this->search_structure_[i].~ACE_Map_Entry<EXT_ID, INT_ID> ();
+
+      // Actually free the memory.
+      this->allocator_->free (this->search_structure_);
+      this->search_structure_ = 0;
+    }
 }
 
 // Create a new search_structure of size SIZE.
