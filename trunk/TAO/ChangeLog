@@ -2,18 +2,15 @@ Mon Oct 18 18:28:23 2004  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/orbsvcs/AV/AV_Core.cpp:
         * orbsvcs/orbsvcs/AV/sfp.cpp:
-
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
-
         * orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
         * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
-
         * orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
         * orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
-
         * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
         * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+          Added explicit static template member instantiations.
 
 Sat Oct 16 18:40:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
