@@ -27,21 +27,21 @@ This license is effective until terminated by Sun for failure to comply
 with this license.  Upon termination, you shall destroy or return all code
 and documentation for the Interface Definition Language CFE.
 
-INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
-ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
+IDL_INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
+IDL_ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
 FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A COURSE OF
 DEALING, USAGE OR TRADE PRACTICE.
 
-INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
-ANY OBLIGATION ON THE PART OF Sun OR ANY OF ITS SUBSIDIARIES OR AFFILIATES
-TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
+IDL_INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
+IDL_ANY OBLIGATION ON THE PART OF Sun OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES
+TO ASSIST IDL_IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
 
-SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
-RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY
-INTERFACE DEFINITION LANGUAGE CFE OR ANY PART THEREOF.
+SUN OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
+RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR IDL_ANY PATENTS BY
+IDL_INTERFACE DEFINITION LANGUAGE CFE OR IDL_ANY PART THEREOF.
 
-IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
-ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
+IDL_IN NO EVENT WILL SUN OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
+IDL_ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
 DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 Use, duplication, or disclosure by the government is subject to
@@ -123,51 +123,51 @@ extern "C" int yywrap (void);
 
 %token <strval>	IDENTIFIER
 
-%token		CONST
-%token		MODULE
-%token		INTERFACE
-%token		TYPEDEF
-%token		LONG
-%token		SHORT
-%token		UNSIGNED
-%token		DOUBLE
-%token		FLOAT
-%token		CHAR
-%token		WCHAR
-%token		OCTET
-%token		BOOLEAN
-%token		ANY
-%token		STRUCT
-%token		UNION
-%token		SWITCH
-%token		ENUM
-%token		SEQUENCE
-%token		STRING
-%token		WSTRING
-%token		EXCEPTION
-%token		CASE
-%token		DEFAULT
-%token		READONLY
-%token		ATTRIBUTE
-%token		ONEWAY
-%token		IDEMPOTENT
-%token		VOID
-%token		IN
-%token		OUT
-%token		INOUT
-%token		RAISES
-%token		CONTEXT
+%token		IDL_CONST
+%token		IDL_MODULE
+%token		IDL_INTERFACE
+%token		IDL_TYPEDEF
+%token		IDL_LONG
+%token		IDL_SHORT
+%token		IDL_UNSIGNED
+%token		IDL_DOUBLE
+%token		IDL_FLOAT
+%token		IDL_CHAR
+%token		IDL_WCHAR
+%token		IDL_OCTET
+%token		IDL_BOOLEAN
+%token		IDL_ANY
+%token		IDL_STRUCT
+%token		IDL_UNION
+%token		IDL_SWITCH
+%token		IDL_ENUM
+%token		IDL_SEQUENCE
+%token		IDL_STRING
+%token		IDL_WSTRING
+%token		IDL_EXCEPTION
+%token		IDL_CASE
+%token		IDL_DEFAULT
+%token		IDL_READONLY
+%token		IDL_ATTRIBUTE
+%token		IDL_ONEWAY
+%token		IDL_IDEMPOTENT
+%token		IDL_VOID
+%token		IDL_IN
+%token		IDL_OUT
+%token		IDL_INOUT
+%token		IDL_RAISES
+%token		IDL_CONTEXT
 
-%token <ival>	INTEGER_LITERAL
-%token <sval>	STRING_LITERAL
-%token <cval>	CHARACTER_LITERAL
-%token <dval>	FLOATING_PT_LITERAL
-%token		TRUETOK
-%token		FALSETOK
+%token <ival>	IDL_INTEGER_LITERAL
+%token <sval>	IDL_STRING_LITERAL
+%token <cval>	IDL_CHARACTER_LITERAL
+%token <dval>	IDL_FLOATING_PT_LITERAL
+%token		IDL_TRUETOK
+%token		IDL_FALSETOK
 
-%token <strval>	SCOPE_DELIMITOR
-%token		LEFT_SHIFT
-%token		RIGHT_SHIFT
+%token <strval>	IDL_SCOPE_DELIMITOR
+%token		IDL_LEFT_SHIFT
+%token		IDL_RIGHT_SHIFT
 
 /*
  * These are production names:
@@ -282,7 +282,7 @@ definition
 	}
 	;
 
-module	: MODULE
+module	: IDL_MODULE
 	  {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSeen);
 	  }
@@ -434,7 +434,7 @@ interface :
 	;
 
 interface_decl:
-	 INTERFACE
+	 IDL_INTERFACE
 	 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSeen);
 	 }
@@ -568,7 +568,7 @@ scoped_name
 
 	  $$ = new UTL_IdList($1, NULL);
 	}
-	| SCOPE_DELIMITOR
+	| IDL_SCOPE_DELIMITOR
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
         }
@@ -580,7 +580,7 @@ scoped_name
 			      new UTL_IdList($3, NULL));
 	}
 	| scoped_name
-	  SCOPE_DELIMITOR
+	  IDL_SCOPE_DELIMITOR
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
         }
@@ -620,7 +620,7 @@ forward :
 	;
 
 const_dcl :
-	CONST
+	IDL_CONST
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstSeen);
         }
@@ -743,11 +743,11 @@ and_expr
 
 shift_expr
 	: add_expr
-	| shift_expr LEFT_SHIFT add_expr
+	| shift_expr IDL_LEFT_SHIFT add_expr
 	{
 	  $$ = idl_global->gen()->create_expr(AST_Expression::EC_right,$1,$3);
 	}
-	| shift_expr RIGHT_SHIFT add_expr
+	| shift_expr IDL_RIGHT_SHIFT add_expr
 	{
 	  $$ = idl_global->gen()->create_expr(AST_Expression::EC_left,$1,$3);
 	}
@@ -821,28 +821,28 @@ primary_expr
 	;
 
 literal
-	: INTEGER_LITERAL
+	: IDL_INTEGER_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
 	}
-	| STRING_LITERAL
+	| IDL_STRING_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
 	}
-	| CHARACTER_LITERAL
+	| IDL_CHARACTER_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
 	}
-	| FLOATING_PT_LITERAL
+	| IDL_FLOATING_PT_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
 	}
-	| TRUETOK
+	| IDL_TRUETOK
 	{
 	  $$ = idl_global->gen()->create_expr((idl_bool) I_TRUE,
 					    AST_Expression::EV_bool);
 	}
-	| FALSETOK
+	| IDL_FALSETOK
 	{
 	  $$ = idl_global->gen()->create_expr((idl_bool) I_FALSE,
 					    AST_Expression::EV_bool);
@@ -858,7 +858,7 @@ positive_int_expr :
 	;
 
 type_dcl
-	: TYPEDEF
+	: IDL_TYPEDEF
 	  {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_TypedefSeen);
 	  }
@@ -1039,84 +1039,84 @@ integer_type
 	;
 
 signed_int
-	: LONG
+	: IDL_LONG
 	{
 	  $$ = AST_Expression::EV_long;
 	}
-	| LONG LONG
+	| IDL_LONG IDL_LONG
 	{
 	  $$ = AST_Expression::EV_longlong;
         }
-	| SHORT
+	| IDL_SHORT
 	{
 	  $$ = AST_Expression::EV_short;
 	}
 	;
 
 unsigned_int
-	: UNSIGNED LONG
+	: IDL_UNSIGNED IDL_LONG
 	{
 	  $$ = AST_Expression::EV_ulong;
 	}
-	| UNSIGNED LONG LONG
+	| IDL_UNSIGNED IDL_LONG IDL_LONG
 	{
 	  $$ = AST_Expression::EV_ulonglong;
         }
-	| UNSIGNED SHORT
+	| IDL_UNSIGNED IDL_SHORT
 	{
 	  $$ = AST_Expression::EV_ushort;
 	}
 	;
 
 floating_pt_type
-	: DOUBLE
+	: IDL_DOUBLE
 	{
 	  $$ = AST_Expression::EV_double;
 	}
-	| FLOAT
+	| IDL_FLOAT
 	{
 	  $$ = AST_Expression::EV_float;
 	}
-	| LONG DOUBLE
+	| IDL_LONG IDL_DOUBLE
 	{
 	  $$ = AST_Expression::EV_longdouble;
         }
 	;
 
 char_type
-	: CHAR
+	: IDL_CHAR
 	{
 	  $$ = AST_Expression::EV_char;
 	}
-	| WCHAR
+	| IDL_WCHAR
 	{
 	  $$ = AST_Expression::EV_wchar;
         }
 	;
 
 octet_type
-	: OCTET
+	: IDL_OCTET
 	{
           $$ = AST_Expression::EV_octet;
 	}
 	;
 
 boolean_type
-	: BOOLEAN
+	: IDL_BOOLEAN
 	{
 	  $$ = AST_Expression::EV_bool;
         }
 	;
 
 any_type
-	: ANY
+	: IDL_ANY
 	{
 	  $$ = AST_Expression::EV_any;
 	}
 	;
 
 struct_type :
-	STRUCT
+	IDL_STRUCT
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructSeen);
         }
@@ -1230,7 +1230,7 @@ member	:
 	;
 
 union_type :
-	UNION
+	IDL_UNION
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionSeen);
         }
@@ -1238,7 +1238,7 @@ union_type :
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionIDSeen);
         }
-	SWITCH
+	IDL_SWITCH
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchSeen);
         }
@@ -1463,7 +1463,7 @@ case_labels
 	;
 
 case_label
-	: DEFAULT
+	: IDL_DEFAULT
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DefaultSeen);
         }
@@ -1475,7 +1475,7 @@ case_label
 	            create_union_label(AST_UnionLabel::UL_default,
 				       NULL);
 	}
-	| CASE
+	| IDL_CASE
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_CaseSeen);
         }
@@ -1523,7 +1523,7 @@ element_spec :
 	;
 
 enum_type :
-	ENUM
+	IDL_ENUM
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSeen);
         }
@@ -1686,7 +1686,7 @@ sequence_type_spec
 	;
 
 seq_head:
-	SEQUENCE
+	IDL_SEQUENCE
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSeen);
 	  /*
@@ -1751,7 +1751,7 @@ string_type_spec
 	;
 
 string_head:
-	STRING
+	IDL_STRING
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
         }
@@ -1803,7 +1803,7 @@ wstring_type_spec
 	;
 
 wstring_head:
-	WSTRING
+	IDL_WSTRING
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
         }
@@ -1876,7 +1876,7 @@ array_dim :
 
 attribute:
 	opt_readonly
-	ATTRIBUTE
+	IDL_ATTRIBUTE
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrSeen);
         }
@@ -1918,7 +1918,7 @@ attribute:
 	;
 
 opt_readonly
-	: READONLY
+	: IDL_READONLY
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrROSeen);
 	  $$ = I_TRUE;
@@ -1930,7 +1930,7 @@ opt_readonly
 	;
 
 exception :
-	EXCEPTION
+	IDL_EXCEPTION
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSeen);
 	}
@@ -2044,12 +2044,12 @@ operation :
 	;
 
 opt_op_attribute
-	: ONEWAY
+	: IDL_ONEWAY
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  $$ = AST_Operation::OP_oneway;
 	}
-	| IDEMPOTENT
+	| IDL_IDEMPOTENT
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  $$ = AST_Operation::OP_idempotent;
@@ -2062,7 +2062,7 @@ opt_op_attribute
 
 op_type_spec
 	: param_type_spec
-	| VOID
+	| IDL_VOID
 	{
 	  $$ =
 	    idl_global->scopes()->bottom()
@@ -2152,22 +2152,22 @@ param_type_spec
 	;
 
 direction
-	: IN
+	: IDL_IN
 	{
 	  $$ = AST_Argument::dir_IN;
 	}
-	| OUT
+	| IDL_OUT
 	{
 	  $$ = AST_Argument::dir_OUT;
 	}
-	| INOUT
+	| IDL_INOUT
 	{
 	  $$ = AST_Argument::dir_INOUT;
 	}
 	;
 
 opt_raises
-	: RAISES
+	: IDL_RAISES
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSeen);
         }
@@ -2188,7 +2188,7 @@ opt_raises
 	;
 
 opt_context
-	: CONTEXT
+	: IDL_CONTEXT
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSeen);
         }
@@ -2209,7 +2209,7 @@ opt_context
 	;
 
 at_least_one_string_literal :
-	STRING_LITERAL string_literals
+	IDL_STRING_LITERAL string_literals
 	{
 	  $$ = new UTL_StrList($1, $2);
 	}
@@ -2221,7 +2221,7 @@ string_literals
 	{
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextCommaSeen);
         }
-	  STRING_LITERAL
+	  IDL_STRING_LITERAL
 	{
 	  if ($1 == NULL)
 	    $$ = new UTL_StrList($4, NULL);

@@ -28,21 +28,21 @@ This license is effective until terminated by Sun for failure to comply
 with this license.  Upon termination, you shall destroy or return all code
 and documentation for the Interface Definition Language CFE.
 
-INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
-ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
+IDL_INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
+IDL_ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
 FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A COURSE OF
 DEALING, USAGE OR TRADE PRACTICE.
 
-INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
-ANY OBLIGATION ON THE PART OF Sun OR ANY OF ITS SUBSIDIARIES OR AFFILIATES
-TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
+IDL_INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
+IDL_ANY OBLIGATION ON THE PART OF Sun OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES
+TO ASSIST IDL_IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
 
-SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
-RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY
-INTERFACE DEFINITION LANGUAGE CFE OR ANY PART THEREOF.
+SUN OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
+RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR IDL_ANY PATENTS BY
+IDL_INTERFACE DEFINITION LANGUAGE CFE OR IDL_ANY PART THEREOF.
 
-IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
-ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
+IDL_IN NO EVENT WILL SUN OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
+IDL_ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
 DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 Use, duplication, or disclosure by the government is subject to
@@ -95,49 +95,49 @@ static char	*__yytext = (char *) yytext;
 
 %%
 
-any             return ANY;
-module		return MODULE;
-raises		return RAISES;
-readonly	return READONLY;
-attribute	return ATTRIBUTE;
-exception	return EXCEPTION;
-context		return CONTEXT;
-interface	return INTERFACE;
-const		return CONST;
-typedef		return TYPEDEF;
-struct		return STRUCT;
-enum		return ENUM;
-string		return STRING;
-wstring_t	return WSTRING;
-sequence	return SEQUENCE;
-union		return UNION;
-switch		return SWITCH;
-case		return CASE;
-default		return DEFAULT;
-float		return FLOAT;
-double		return DOUBLE;
-long		return LONG;
-short		return SHORT;
-unsigned	return UNSIGNED;
-char		return CHAR;
-wchar_t		return WCHAR;
-boolean		return BOOLEAN;
-octet		return OCTET;
-void		return VOID;
+any             return IDL_ANY;
+module		return IDL_MODULE;
+raises		return IDL_RAISES;
+readonly	return IDL_READONLY;
+attribute	return IDL_ATTRIBUTE;
+exception	return IDL_EXCEPTION;
+context		return IDL_CONTEXT;
+interface	return IDL_INTERFACE;
+const		return IDL_CONST;
+typedef		return IDL_TYPEDEF;
+struct		return IDL_STRUCT;
+enum		return IDL_ENUM;
+string		return IDL_STRING;
+wstring_t	return IDL_WSTRING;
+sequence	return IDL_SEQUENCE;
+union		return IDL_UNION;
+switch		return IDL_SWITCH;
+case		return IDL_CASE;
+default		return IDL_DEFAULT;
+float		return IDL_FLOAT;
+double		return IDL_DOUBLE;
+long		return IDL_LONG;
+short		return IDL_SHORT;
+unsigned	return IDL_UNSIGNED;
+char		return IDL_CHAR;
+wchar_t		return IDL_WCHAR;
+boolean		return IDL_BOOLEAN;
+octet		return IDL_OCTET;
+void		return IDL_VOID;
 
-TRUE		return TRUETOK;
-FALSE		return FALSETOK;
+TRUE		return IDL_TRUETOK;
+FALSE		return IDL_FALSETOK;
 
-inout		return INOUT;
-in		return IN;
-out		return OUT;
-oneway		return ONEWAY;
+inout		return IDL_INOUT;
+in		return IDL_IN;
+out		return IDL_OUT;
+oneway		return IDL_ONEWAY;
 
-\<\<		return LEFT_SHIFT;
-\>\>		return RIGHT_SHIFT;
+\<\<		return IDL_LEFT_SHIFT;
+\>\>		return IDL_RIGHT_SHIFT;
 \:\:		{
 		  yylval.strval = "::";
-		  return SCOPE_DELIMITOR;
+		  return IDL_SCOPE_DELIMITOR;
 		}
 
 [a-zA-Z][a-zA-Z0-9_]*	{
@@ -149,43 +149,43 @@ oneway		return ONEWAY;
 
 -?[0-9]+"."[0-9]*([eE][+-]?[0-9]+)?[lLfF]?      {
                   yylval.dval = idl_atof(__yytext);
-                  return FLOATING_PT_LITERAL;
+                  return IDL_FLOATING_PT_LITERAL;
                 }
 -?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
                   yylval.dval = idl_atof(__yytext);
-                  return FLOATING_PT_LITERAL;
+                  return IDL_FLOATING_PT_LITERAL;
                 }
 
 -?[1-9][0-9]*	{
 		  yylval.ival = idl_atoi(__yytext, 10);
-		  return INTEGER_LITERAL;
+		  return IDL_INTEGER_LITERAL;
 	        }
 -?0[xX][a-fA-F0-9]+ {
 		  yylval.ival = idl_atoi(__yytext, 16);
-		  return INTEGER_LITERAL;
+		  return IDL_INTEGER_LITERAL;
 	        }
 -?0[0-7]*	{
 		  yylval.ival = idl_atoi(__yytext, 8);
-		  return INTEGER_LITERAL;
+		  return IDL_INTEGER_LITERAL;
 	      	}
 
 "\""[^\"]*"\""	{
 		  __yytext[strlen(__yytext)-1] = '\0';
 		  yylval.sval = new String(__yytext + 1);
-		  return STRING_LITERAL;
+		  return IDL_STRING_LITERAL;
 	      	}
 "'"."'"		{
 		  yylval.cval = __yytext[1];
-		  return CHARACTER_LITERAL;
+		  return IDL_CHARACTER_LITERAL;
 	      	}
 "'"\\([0-7]{1,3})"'"	{
 		  // octal character constant
 		  yylval.cval = idl_escape_reader(__yytext + 1);
-		  return CHARACTER_LITERAL;
+		  return IDL_CHARACTER_LITERAL;
 		}
 "'"\\."'"	{
 		  yylval.cval = idl_escape_reader(__yytext + 1);
-		  return CHARACTER_LITERAL;
+		  return IDL_CHARACTER_LITERAL;
 		}
 ^#[ \t]*pragma[ \t].*\n	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
