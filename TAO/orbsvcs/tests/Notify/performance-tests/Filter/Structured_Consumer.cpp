@@ -12,6 +12,7 @@
 #include "goC.h"
 #include "tao/debug.h"
 #include "Notify_Test_Client.h"
+#include "ace/OS_NS_sys_time.h"
 
 // ******************************************************************
 // Data Section

@@ -15,6 +15,8 @@ ACE_RCSID(TAO,
 # include "IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/os_include/os_netdb.h"
+
 static const char prefix_[] = "iiop";
 
 const char TAO_IIOP_Profile::object_key_delimiter_ = '/';

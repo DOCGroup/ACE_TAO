@@ -22,6 +22,8 @@
 #include "local_server.h"
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(MT_Client_Test, client, "$Id$")
 

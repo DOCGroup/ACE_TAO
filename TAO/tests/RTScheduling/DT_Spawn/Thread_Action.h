@@ -3,6 +3,7 @@
 #define Thread_Action_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "ace/Log_Msg.h"
 
 class Data
 {

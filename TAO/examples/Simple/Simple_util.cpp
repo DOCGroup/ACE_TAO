@@ -7,6 +7,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 // Constructor.
 
