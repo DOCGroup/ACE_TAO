@@ -1,3 +1,11 @@
+Mon May 12 14:48:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/run_simple_test.pl:
+	* examples/handcrafted/Hello/simple_client.cpp:
+	* examples/handcrafted/Hello/hello.mpc: Added a test client
+	  program and perl script to test the HelloWorld component using
+	  Simple_Component_Server.
+
 Mon May 12 14:00:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/BasicSP.idl
@@ -12,7 +20,7 @@ Mon May 12 14:00:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* examples/handcrafted/BasicSP/EC/EC.idl
 	* examples/handcrafted/BasicSP/EC/README
 
-	  A framework on which the new BasicSP would be developed. 
+	  A framework on which the new BasicSP would be developed.
 
 Mon May 12 13:34:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
