@@ -49,7 +49,6 @@ int be_visitor_union_ch::visit_union (be_union *node)
       // Generate the ifdefined macro for the union type.
       os->gen_ifdef_macro (node->flat_name ());
 
-      *os << "class " << node->local_name () << ";" << be_nl;
       *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
       *os << "class " << be_global->stub_export_macro () << " "
@@ -207,7 +206,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
       // A class is generated for an out defn only for a variable
       // length struct.
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         {
           if (node->gen_out_defn () == -1)
             {

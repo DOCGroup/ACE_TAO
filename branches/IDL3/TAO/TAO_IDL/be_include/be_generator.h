@@ -116,6 +116,8 @@ public:
                                            idl_bool local,
                                            idl_bool abstract);
 
+  virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
+
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
                                  idl_bool local,
                                  idl_bool abstract);
@@ -140,10 +142,12 @@ public:
                                            idl_bool local,
                                            idl_bool abstract);
 
-  virtual AST_Union *create_union(AST_ConcreteType *dt,
-                                  UTL_ScopedName *n,
-                                  idl_bool local,
-                                  idl_bool abstract);
+  virtual AST_Union *create_union (AST_ConcreteType *dt,
+                                   UTL_ScopedName *n,
+                                   idl_bool local,
+                                   idl_bool abstract);
+
+  virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
 
   virtual AST_UnionBranch *create_union_branch (UTL_LabelList *ll,
                                                 AST_Type *ft,

@@ -78,7 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
 #include "be_union.h"
+#include "be_union_fwd.h"
 #include "be_structure.h"
+#include "be_structure_fwd.h"
 #include "be_exception.h"
 #include "be_operation.h"
 #include "be_enum.h"
@@ -302,6 +304,17 @@ be_generator::create_structure (UTL_ScopedName *n,
   return retval;
 }
 
+AST_StructureFwd *
+be_generator::create_structure_fwd (UTL_ScopedName *n)
+{
+  be_structure_fwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_structure_fwd (n),
+                  0);
+
+  return retval;
+}
+
 AST_Enum *
 be_generator::create_enum (UTL_ScopedName *n,
                            idl_bool local,
@@ -397,6 +410,17 @@ be_generator::create_union (AST_ConcreteType *dt,
                             n,
                             local,
                             abstract),
+                  0);
+
+  return retval;
+}
+
+AST_UnionFwd *
+be_generator::create_union_fwd (UTL_ScopedName *n)
+{
+  be_union_fwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_union_fwd (n),
                   0);
 
   return retval;

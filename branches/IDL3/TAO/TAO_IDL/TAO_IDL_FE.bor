@@ -31,9 +31,11 @@ OBJFILES = \
 	$(OBJDIR)\ast_sequence.obj \
 	$(OBJDIR)\ast_string.obj \
 	$(OBJDIR)\ast_structure.obj \
+	$(OBJDIR)\ast_structure_fwd.obj \
 	$(OBJDIR)\ast_type.obj \
 	$(OBJDIR)\ast_typedef.obj \
 	$(OBJDIR)\ast_union.obj \
+	$(OBJDIR)\ast_union_fwd.obj \
 	$(OBJDIR)\ast_union_branch.obj \
 	$(OBJDIR)\ast_union_label.obj \
 	$(OBJDIR)\ast_visitor.obj \

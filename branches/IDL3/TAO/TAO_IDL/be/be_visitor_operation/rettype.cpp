@@ -248,7 +248,7 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << " *";
     }
@@ -295,7 +295,7 @@ be_visitor_operation_rettype::visit_union (be_union *node)
 
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
-  if (node->size_type () == be_decl::VARIABLE)
+  if (node->size_type () == AST_Type::VARIABLE)
     {
       *os << " *";
     }

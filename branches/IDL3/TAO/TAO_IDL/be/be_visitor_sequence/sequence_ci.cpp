@@ -260,7 +260,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "}" << be_nl << be_nl;
 
   // Fixed-size base types only.
-  if (bt->size_type () == be_decl::FIXED)
+  if (bt->size_type () == AST_Type::FIXED)
     {
       *os << "// fixed-size base types only" << be_nl;
       *os << "ACE_INLINE" << be_nl;
@@ -319,7 +319,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
       << "}\n\n";
 
   // Fixed-size base types only.
-  if (bt->size_type () == be_decl::FIXED)
+  if (bt->size_type () == AST_Type::FIXED)
     {
       *os << "// fixed-size types only" << be_nl;
       *os << "ACE_INLINE ::" << fname << " &" << be_nl;
@@ -372,7 +372,7 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "}" << be_nl << be_nl;
 
   // Variable-size base types only.
-  if (bt->size_type () == be_decl::VARIABLE)
+  if (bt->size_type () == AST_Type::VARIABLE)
     {
       *os << "// variable-size types only" << be_nl;
       *os << "ACE_INLINE" << be_nl;

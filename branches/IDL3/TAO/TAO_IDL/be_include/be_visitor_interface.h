@@ -23,7 +23,6 @@
 
 #include "ace/SString.h"
 
-#include "be_visitor_decl.h"
 #include "be_visitor_scope.h"
 #include "be_visitor_interface/interface.h"
 #include "be_visitor_interface/interface_ch.h"

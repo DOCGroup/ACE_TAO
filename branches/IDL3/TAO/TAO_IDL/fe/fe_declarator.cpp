@@ -89,12 +89,22 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
 AST_Type *
 FE_Declarator::compose (AST_Decl *d)
 {
+  AST_Decl::NodeType nt = d->node_type ();
+
+  if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
+                                  d);
+
+      return 0;
+    }
+
   AST_Array	*arr = 0;
   AST_Type *ct = 0;
 
   ct = AST_Type::narrow_from_decl (d);
 
-  // All uses of forward declared interfaces, structs and unions must
+  // All uses of forward declared interfaces must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {

@@ -64,33 +64,29 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// The check ensures that for every forward declared interface we also
-// saw a full definition of that interface.
+// The check ensures that for every forward declared struct or union we also
+// saw a full definition.
 
-#include "ast_extern.h"
-#include "ast_interface.h"
-#include "ast_interface_fwd.h"
 #include "global_extern.h"
 #include "utl_err.h"
-#include "ace/config-all.h"
 
 ACE_RCSID (ast, 
            ast_check, 
            "$Id$")
 
 // Static storage for remembering nodes.
-static AST_InterfaceFwd	**ast_fwds = 0;
+static AST_Type	**ast_fwds = 0;
 static long	ast_n_fwds_used = 0;
 static long	ast_n_fwds_alloc = 0;
 
 #undef	INCREMENT
 #define	INCREMENT	64
 
-// Store a node representing a forward declared interface.
+// Store a node representing a forward declared struct or union.
 void
-AST_record_fwd_interface (AST_InterfaceFwd *n)
+AST_record_fwd_decl (AST_Type *n)
 {
-  AST_InterfaceFwd **o_ast_fwds = 0;
+  AST_Type **o_ast_fwds = 0;
   long o_ast_n_fwds_alloc = 0;
 
   // Make sure there's space to store one more.
@@ -100,7 +96,7 @@ AST_record_fwd_interface (AST_InterfaceFwd *n)
         {
           ast_n_fwds_alloc = INCREMENT;
           ACE_NEW (ast_fwds,
-                   AST_InterfaceFwd *[ast_n_fwds_alloc]);
+                   AST_Type *[ast_n_fwds_alloc]);
         }
       else
         {
@@ -109,7 +105,7 @@ AST_record_fwd_interface (AST_InterfaceFwd *n)
 
           ast_n_fwds_alloc += INCREMENT;
           ACE_NEW (ast_fwds,
-                   AST_InterfaceFwd *[ast_n_fwds_alloc]);
+                   AST_Type *[ast_n_fwds_alloc]);
 
           for (long i = 0; i < o_ast_n_fwds_alloc; i++)
             {
@@ -124,24 +120,19 @@ AST_record_fwd_interface (AST_InterfaceFwd *n)
   ast_fwds[ast_n_fwds_used++] = n;
 }
 
-// Check that all forward declared interfaces were also defined.
-void
-AST_check_fwd_interface (void)
+// Check that all forward declared structs and unions were also defined.
+TAO_IDL_FE_Export void
+AST_check_fwd_decls (void)
 {
-  AST_InterfaceFwd *d = 0;
-  AST_Interface	*itf = 0;
+  AST_Type *d = 0;
 
-  for (long i = 0; i < ast_n_fwds_used; i++)
+  for (long i = 0; i < ast_n_fwds_used; ++i)
     {
       d = ast_fwds[i];
-      itf = d->full_definition ();
 
-      if (!itf->is_defined ())
+      if (!d->is_defined ())
         {
-          // The old pointer may now be garbage.
-          itf->set_file_name (idl_global->filename ());
-
-          idl_global->err ()->fwd_decl_not_defined (itf);
+          idl_global->err ()->fwd_decl_not_defined (d);
         }
     }
 }

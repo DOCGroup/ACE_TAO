@@ -236,7 +236,7 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
       if (!this->void_return_type (bt))
         {
           // Now generate the normal successful return statement.
-          if (bt->size_type () == be_decl::VARIABLE
+          if (bt->size_type () == AST_Type::VARIABLE
               || bt->base_node_type () == AST_Decl::NT_array)
             {
               *os << "return _tao_retval._retn ();";
@@ -809,7 +809,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
           );
         }
 
-      if (bt->size_type () == be_decl::VARIABLE
+      if (bt->size_type () == AST_Type::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
           *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl
@@ -967,7 +967,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (
     }
   else
     {
-      if (bt->size_type () == be_decl::VARIABLE
+      if (bt->size_type () == AST_Type::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
           *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt_nl

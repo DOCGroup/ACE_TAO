@@ -126,8 +126,10 @@ public:
       , NT_op                       // Denotes an operation
       , NT_argument                 // Denotes an op. argument
       , NT_union                    // Denotes a union
+      , NT_union_fwd                // Fwd declared union
       , NT_union_branch             // Denotes a union branch
       , NT_struct                   // Denotes a structure
+      , NT_struct_fwd               // Fwd declared struct
       , NT_field                    // Denotes a field in structure
       , NT_enum                     // Denotes an enumeration
       , NT_enum_val                 // Denotes an enum. value

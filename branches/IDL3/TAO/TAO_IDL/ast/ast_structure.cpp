@@ -492,10 +492,6 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
     {
       o << "(local) ";
     }
-  else
-    {
-      o << "(abstract) ";
-    }
 
   o << "struct ";
   AST_Decl::dump (o);

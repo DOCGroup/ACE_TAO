@@ -369,7 +369,7 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // If we are variable sized, we need a pointer type.
-  if (node->size_type () == be_decl::VARIABLE
+  if (node->size_type () == AST_Type::VARIABLE
       || node->has_constructor ())
     {
       *os << bt->nested_type_name (bu) << " *" << ub->local_name ()

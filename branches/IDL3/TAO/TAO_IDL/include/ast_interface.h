@@ -157,10 +157,6 @@ protected:
   //
 
 private:
-  // Helper function for fwd_redefinition_helper.
-  static idl_bool compare_names (AST_Interface *that,
-                                 AST_Interface *other);
-
   // Data.
 
   // Immediate ancestors.
@@ -187,6 +183,10 @@ private:
   virtual AST_Union *fe_add_union (AST_Union *u);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
+
+  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+
+  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 

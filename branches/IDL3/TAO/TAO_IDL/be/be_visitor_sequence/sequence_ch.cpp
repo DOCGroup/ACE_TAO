@@ -47,9 +47,6 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
                         -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
   os->gen_ifdef_AHETI ();
 
   // This is the instantiation branch.
@@ -369,6 +366,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << "// *************************************************************"
       << be_nl << be_nl;
 
+  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate a typedef to a parametrized sequence.
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name () << " : public ";
@@ -565,7 +565,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << namebuf << " (const " << namebuf <<  " &);" << be_nl;
 
   // Fixed-size base types only.
-  if (bt->size_type () == be_decl::FIXED)
+  if (bt->size_type () == AST_Type::FIXED)
     {
       *os << "// Fixed-size base types only." << be_nl;
       *os << namebuf << " (const " << node->local_name ()
@@ -584,7 +584,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << namebuf << " &operator= (const " << namebuf << " &);" << be_nl;
 
   // Fixed-size base types only.
-  if (bt->size_type () == be_decl::FIXED)
+  if (bt->size_type () == AST_Type::FIXED)
     {
       *os << "// Fixed-size base types only." << be_nl;
       *os << namebuf << " &operator= (const " << node->local_name ()
@@ -604,7 +604,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   *os << "operator " << node->local_name () << " &();" << be_nl;
   *os << "operator " << node->local_name () << " &() const;" << be_nl;
 
-  if (bt->size_type () == be_decl::VARIABLE)
+  if (bt->size_type () == AST_Type::VARIABLE)
     {
       *os << "operator " << node->local_name ()
           << " *&(); // variable-size base types only" << be_nl;

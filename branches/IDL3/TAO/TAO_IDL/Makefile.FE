@@ -53,9 +53,11 @@ FILES = fe/fe_declarator \
         ast/ast_sequence \
         ast/ast_string \
         ast/ast_structure \
+        ast/ast_structure_fwd \
         ast/ast_type \
         ast/ast_typedef \
         ast/ast_union \
+        ast/ast_union_fwd \
         ast/ast_union_branch \
         ast/ast_union_label \
         ast/ast_generator \

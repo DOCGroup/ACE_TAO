@@ -30,7 +30,7 @@ ACE_RCSID (be,
 be_string::be_string (void)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 }
 
 be_string::be_string (AST_Decl::NodeType nt,
@@ -46,7 +46,7 @@ be_string::be_string (AST_Decl::NodeType nt,
               I_TRUE)
 {
   // Always the case.
-  this->size_type (be_decl::VARIABLE);
+  this->size_type (AST_Type::VARIABLE);
 }
 
 // Overriden method.

@@ -451,6 +451,9 @@ public:
       TAO_STRUCT_CDR_OP_CI,
       TAO_STRUCT_CDR_OP_CS,
 
+      // Emitting code for a forward declared struct.
+      TAO_STRUCT_FWD_CH,
+
       // Emitting code for typedefs.
       TAO_TYPEDEF_CH,
       TAO_TYPEDEF_CI,
@@ -470,6 +473,9 @@ public:
       TAO_UNION_CDR_OP_CH,
       TAO_UNION_CDR_OP_CI,
       TAO_UNION_CDR_OP_CS,
+
+      // Emitting code for a forward declared union.
+      TAO_UNION_FWD_CH,
 
       // Emitting code for the discriminant.
       TAO_UNION_DISCTYPEDEFN_CH,

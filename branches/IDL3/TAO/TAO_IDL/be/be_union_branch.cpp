@@ -51,27 +51,6 @@ be_union_branch::be_union_branch (UTL_LabelList *ll,
 {
 }
 
-// Compute the size type of the node in question.
-int
-be_union_branch::compute_size_type (void)
-{
-  be_type *type = be_type::narrow_from_decl (this->field_type ());
-
-  if (type == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_field::compute_size_type - "
-                         "bad field type\n"),
-                        -1);
-    }
-
-  // Our size type is the same as our type.
-  // As a side effect will also update the size type of parent.
-  this->size_type (type->size_type ());
-
-  return 0;
-}
-
 int
 be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 {

@@ -70,7 +70,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of the AST nodes. It contains an operation for every constructor
 // of every AST class.
 
-#include "ast_generator.h"
 #include "ast_root.h"
 #include "ast_interface.h"
 #include "ast_interface_fwd.h"
@@ -78,15 +77,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum.h"
 #include "ast_attribute.h"
 #include "ast_union.h"
+#include "ast_union_fwd.h"
 #include "ast_union_branch.h"
 #include "ast_enum_val.h"
 #include "ast_array.h"
 #include "ast_sequence.h"
 #include "ast_string.h"
+#include "ast_structure_fwd.h"
 #include "ast_native.h"
 #include "ast_factory.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
+
+#include "ast_generator.h"
 
 ACE_RCSID (ast, 
            ast_generator, 
@@ -320,6 +323,17 @@ AST_Generator::create_structure (UTL_ScopedName *n,
   return retval;
 }
 
+AST_StructureFwd *
+AST_Generator::create_structure_fwd (UTL_ScopedName *n)
+{
+  AST_StructureFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_StructureFwd (n),
+                  0);
+
+  return retval;
+}
+
 AST_Enum *
 AST_Generator::create_enum (UTL_ScopedName *n,
                             idl_bool local,
@@ -415,6 +429,17 @@ AST_Generator::create_union (AST_ConcreteType *dt,
                              n,
                              local,
                              abstract),
+                  0);
+
+  return retval;
+}
+
+AST_UnionFwd *
+AST_Generator::create_union_fwd (UTL_ScopedName *n)
+{
+  AST_UnionFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_UnionFwd (n),
                   0);
 
   return retval;

@@ -87,38 +87,6 @@ be_operation::add_argument_to_scope (be_argument *arg)
   return arg;
 }
 
-// Compute the size type of the node in question.
-int
-be_operation::compute_size_type (void)
-{
-
-  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      // Get the next AST decl node
-      AST_Decl *d = si.item ();
-      be_decl *bd = be_decl::narrow_from_decl (d);
-
-      if (bd != 0)
-        {
-          // Our sizetype depends on the sizetype of our members. Although
-          // previous value of sizetype may get overwritten, we are
-          // guaranteed by the "size_type" call that once the value reached
-          // be_decl::VARIABLE, nothing else can overwrite it.
-          this->size_type (bd->size_type ());
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "WARNING (%N:%l) be_operation::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
-        }
-    }
-
-  return 0;
-}
-
 void
 be_operation::destroy (void)
 {

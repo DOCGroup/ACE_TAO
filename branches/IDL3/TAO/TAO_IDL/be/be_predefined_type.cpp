@@ -159,11 +159,11 @@ be_predefined_type::compute_size_type (void)
   if (this->pt () == AST_PredefinedType::PT_any
       || this->pt () == AST_PredefinedType::PT_pseudo)
     {
-      this->size_type (be_decl::VARIABLE);
+      this->size_type (AST_Type::VARIABLE);
     }
   else
     {
-      this->size_type (be_decl::FIXED);
+      this->size_type (AST_Type::FIXED);
     }
 
   return 0;

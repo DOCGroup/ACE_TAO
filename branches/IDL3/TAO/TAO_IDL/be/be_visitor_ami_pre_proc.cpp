@@ -397,9 +397,11 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                 0);
 
             }
-          be_decl *op = be_decl::narrow_from_decl (d);
 
-          if (d->node_type () == AST_Decl::NT_attr)
+          be_decl *op = be_decl::narrow_from_decl (d);
+          AST_Decl::NodeType nt = d->node_type ();
+
+          if (nt == AST_Decl::NT_attr)
             {
               AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
 
@@ -420,11 +422,15 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                 }
 
             }
-          else
+          else if (nt == AST_Decl::NT_op)
             {
               this->create_raise_operation (op,
                                             excep_holder,
                                             NORMAL);
+            }
+          else
+            {
+              continue;
             }
         } // end of while loop
     } // end of if

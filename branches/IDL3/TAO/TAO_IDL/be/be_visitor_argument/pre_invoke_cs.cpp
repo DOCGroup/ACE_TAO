@@ -76,7 +76,7 @@ be_visitor_args_pre_invoke_cs::cannot_return_zero (void)
       return 1;
     }
   else if (bt->base_node_type () == AST_Decl::NT_struct
-           && bt->size_type () == be_decl::FIXED)
+           && bt->size_type () == AST_Type::FIXED)
     {
       return 1;
     }
@@ -137,7 +137,7 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_OUT:
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         {
           os->indent ();
 

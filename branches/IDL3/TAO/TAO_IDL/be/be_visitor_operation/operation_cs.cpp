@@ -177,9 +177,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
       else if (bnt == AST_Decl::NT_struct || bnt == AST_Decl::NT_union)
         {
-          be_decl *bd = be_decl::narrow_from_decl (bt);
-
-          if (bd->size_type () == be_decl::FIXED)
+          if (bt->size_type () == AST_Type::FIXED)
             {
               // For a fixed size struct or union the return value
               // is not a pointer, so we call the default constructor

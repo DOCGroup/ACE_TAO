@@ -38,14 +38,6 @@ be_module::be_module (UTL_ScopedName *n)
 {
 }
 
-// Compute the size type of the node in question.
-int
-be_module::compute_size_type (void)
-{
-  // Our size does not matter.
-  return 0;
-}
-
 void
 be_module::destroy (void)
 {

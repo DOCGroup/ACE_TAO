@@ -132,6 +132,37 @@ UTL_IdList::last_component (void)
   return ((UTL_IdList *) this->tail ())->last_component ();
 }
 
+int
+UTL_IdList::compare (UTL_IdList *other)
+{
+  long this_length = this->length ();
+
+  if (this_length != other->length ())
+    {
+      return 1;
+    }
+
+  Identifier *this_id = 0;
+  Identifier *other_id = 0;
+
+  for (UTL_IdListActiveIterator this_iter (this), other_iter (other);
+       !this_iter.is_done ();
+       this_iter.next (), other_iter.next ())
+    {
+      this_id = this_iter.item ();
+      other_id = other_iter.item ();
+
+      if (ACE_OS::strcmp (this_id->get_string (),
+                          other_id->get_string ())
+            != 0)
+        {
+          return 1;
+        }
+    }
+
+  return 0;
+}
+
 // AST Dumping.
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)

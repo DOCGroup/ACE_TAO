@@ -64,7 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// AST_InterfaceFwd nodes denote forward declarations of IDL interfaces
+// AST_InterfaceFwd nodes denote forward declarations of IDL interfaces.
 // AST_InterfaceFwd nodes have a field containing the full declaration
 // of the interface, which is initialized when that declaration is
 // encountered.
@@ -91,7 +91,7 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations
   // will fail.
-  pd_full_definition = dummy;
+  this->pd_full_definition = dummy;
 }
 
 AST_InterfaceFwd::~AST_InterfaceFwd (void)
@@ -186,6 +186,14 @@ idl_bool
 AST_InterfaceFwd::is_defined (void)
 {
   return this->pd_full_definition->is_defined ();
+}
+
+void
+AST_InterfaceFwd::destroy (void)
+{
+  this->pd_full_definition->destroy ();
+  delete this->pd_full_definition;
+  this->pd_full_definition = 0;
 }
 
 // Narrowing methods.

@@ -434,14 +434,14 @@ int be_visitor_operation_rettype_marshal_ss::visit_structure (be_structure *node
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         *os << "_tao_retval.in ()";
       else
         *os << "_tao_retval";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         *os << "_tao_retval.inout ()";
       else
         *os << "_tao_retval";
@@ -463,14 +463,14 @@ int be_visitor_operation_rettype_marshal_ss::visit_union (be_union *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         *os << "_tao_retval.in ()";
       else
         *os << "_tao_retval";
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         *os << "_tao_retval.inout ()";
       else
         *os << "_tao_retval";

@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "fe_extern.h"
 #include "ast_root.h"
+#include "ast_extern.h"
 #include "utl_string.h"
 #include "drv_extern.h"
 #include "ace/Process.h"
@@ -310,7 +311,20 @@ DRV_drive (const char *s)
                   s));
     }
 
-  BE_produce ();
+  // Make sure all forward declared structs and unions are defined
+  // before proceeding to code generation.
+  AST_check_fwd_decls ();
+  long error_count = idl_global->err_count ();
+
+  if (error_count == 0)
+    {
+      BE_produce ();
+    }
+  else
+    {
+      ACE_OS::exit (ACE_static_cast (int, 
+                                     error_count));
+    }
 
   // Exit cleanly.
   ACE_OS::exit (0);

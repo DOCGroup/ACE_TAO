@@ -230,7 +230,7 @@ public:
                   AST_Decl *d);
 
   // Report a forward declared interface which was never defined
-  void fwd_decl_not_defined (AST_Interface *d);
+  void fwd_decl_not_defined (AST_Type *d);
 
   // Report attempt to lookup in forward declared interface
   void fwd_decl_lookup (AST_Interface *d,

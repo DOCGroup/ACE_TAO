@@ -30,6 +30,7 @@
 #include "be_visitor_interface/interface_ch.h"
 #include "be_visitor_interface/ami_interface_ch.h"
 #include "be_visitor_valuetype/valuetype.h"
+#include "be_visitor_valuetype/valuetype_ch.h"
 #include "be_visitor_valuetype/valuetype_obv_ch.h"
 #include "be_visitor_valuetype/valuetype_obv_cs.h"
 #include "be_visitor_valuetype/ami_exception_holder_ch.h"

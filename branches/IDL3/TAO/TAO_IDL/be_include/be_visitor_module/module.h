@@ -30,7 +30,7 @@ class be_visitor_module : public be_visitor_scope
   //   be_visitor_module
   //
   // = DESCRIPTION
-  //   This is a concrete visitor for module that abstracts all common tasks
+  //   This is a concrete visitor for module that abstracts all common tasks.
   //
 
 public:
@@ -69,7 +69,13 @@ public:
   virtual int visit_structure (be_structure *node);
   // visit a structure
 
+  virtual int visit_structure_fwd (be_structure_fwd *node);
+  // visit a structure
+
   virtual int visit_union (be_union *node);
+  // visit a union
+
+  virtual int visit_union_fwd (be_union_fwd *node);
   // visit a union
 
   virtual int visit_typedef (be_typedef *node);

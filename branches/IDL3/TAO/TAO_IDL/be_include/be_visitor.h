@@ -36,6 +36,7 @@ class be_valuetype;
 class be_valuetype_fwd;
 class be_factory;
 class be_structure;
+class be_structure_fwd;
 class be_exception;
 class be_expression;
 class be_enum;
@@ -44,6 +45,7 @@ class be_field;
 class be_argument;
 class be_attribute;
 class be_union;
+class be_union_fwd;
 class be_union_branch;
 class be_union_label;
 class be_constant;
@@ -106,6 +108,9 @@ public:
   virtual int visit_structure (be_structure *node);
   // visit a structure
 
+  virtual int visit_structure_fwd (be_structure_fwd *node);
+  // visit a structure
+
   virtual int visit_exception (be_exception *node);
   // visit exception
 
@@ -128,6 +133,9 @@ public:
   // visit an attribute
 
   virtual int visit_union (be_union *node);
+  // visit union
+
+  virtual int visit_union_fwd (be_union_fwd *node);
   // visit union
 
   virtual int visit_union_branch (be_union_branch *node);

@@ -43,7 +43,7 @@ be_interface::be_interface (void)
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
-  this->size_type (be_decl::VARIABLE); // Always the case.
+  this->size_type (AST_Type::VARIABLE); // Always the case.
   this->has_constructor (I_TRUE);      // Always the case.
 }
 
@@ -73,7 +73,7 @@ be_interface::be_interface (UTL_ScopedName *n,
 {
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
-  this->size_type (be_decl::VARIABLE); // always the case
+  this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (I_TRUE);      // always the case
 }
 
