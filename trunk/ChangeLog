@@ -1,3 +1,13 @@
+Mon Feb 02 10:00:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/config-win32-msvc-6.h: 
+
+	  Looks like VC6 has a non-const swab.
+	
+	* ace/OS_NS_unistd.inl:
+
+	  Fixed the non-const part of the swab () to compile with vc6. 
+
 Mon Feb  2 08:18:41 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/CbxProjectCreator.pm:

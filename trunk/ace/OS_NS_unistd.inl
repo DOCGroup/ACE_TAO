@@ -1060,7 +1060,7 @@ ACE_OS::swab (const void *src,
 {
 #if defined (ACE_LACKS_SWAB)
   const char *from = ACE_static_cast (const char*,
-		                      src);
+		                              src);
   char *to = ACE_static_cast (char *,
 		              dest);
   ssize_t ptr = 0;
@@ -1074,7 +1074,13 @@ ACE_OS::swab (const void *src,
   if (ptr == length) /* I.e., if length is odd, */
     to[ptr-1] = 0;   /* then pad with a NUL. */
 #elif defined (ACE_HAS_NONCONST_SWAB)
-  ::swab (ACE_const_cast (unsigned char *, src), dest, length);
+  const char *tmp = ACE_static_cast (const char*,
+		                             src);
+  char *from = ACE_const_cast (char *,
+	                           tmp);
+  char *to = ACE_static_cast (char *,
+	                          dest);
+  ::swab (from, to, length);
 #else
   ::swab (src, dest, length);
 #endif /* ACE_LACKS_SWAB */
