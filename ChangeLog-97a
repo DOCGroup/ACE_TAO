@@ -1,22 +1,8 @@
-Wed Apr 16 21:34:53 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* tests/Process_Strategy_Test.cpp: added template specializations.
-
-Wed Apr 16 15:46:58 1997    <irfan@TWOSTEP>
-
-	* tests/Process_Strategy_Test: Added test to batch files and
- 	  MSVC++ Makefiles.
-
-	* tests/Process_Strategy_Test.cpp (open): Added UNICODE support.
-
-	* ace/OS.h: Added SIGCHLD to Win32 section.
-
-	* ace/config-win32-common.h: UNICODE should not be automatically
- 	  defined if ACE_HAS_UNICODE is defined. ACE_HAS_UNICODE signifies
- 	  that the OS has UNICODE support. It does not mean that your code
- 	  must be UNICODE. UNICODE must be defined at the project level.
-
 Wed Apr 16 17:05:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp (acquire): Added code to enable a minimum
+ 	  bytes field with the Shared_Memory_Pool.  Thanks to Fred LaBar
+ 	  <flabar@fallschurch.esys.com> for these enhancements.
 
 	* tests/Process_Strategy_Test.cpp: Only compile this test if
  	  ACE_LACKS_EXEC is *not* defined since ACE_Process_Strategy
@@ -47,6 +33,24 @@ Wed Apr 16 17:05:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	  Thanks to Michael Newton <michaeln@in.ot.com.au> for
 	  reporting this.
+
+Wed Apr 16 21:34:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp: added template specializations.
+
+Wed Apr 16 15:46:58 1997    <irfan@TWOSTEP>
+
+	* tests/Process_Strategy_Test: Added test to batch files and
+ 	  MSVC++ Makefiles.
+
+	* tests/Process_Strategy_Test.cpp (open): Added UNICODE support.
+
+	* ace/OS.h: Added SIGCHLD to Win32 section.
+
+	* ace/config-win32-common.h: UNICODE should not be automatically
+ 	  defined if ACE_HAS_UNICODE is defined. ACE_HAS_UNICODE signifies
+ 	  that the OS has UNICODE support. It does not mean that your code
+ 	  must be UNICODE. UNICODE must be defined at the project level.
 
 Wed Apr 16 16:55:47 1997  David L. Levine  <levine@cs.wustl.edu>
 

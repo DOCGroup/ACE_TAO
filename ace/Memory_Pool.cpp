@@ -425,9 +425,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 
 ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (char *base_addr,
 								size_t max_segments,
-								size_t file_perms)
+								size_t file_perms,
+								off_t minimum_bytes)
   : base_addr_ (base_addr),
     max_segments_ (max_segments),
+    minimum_bytes_ (minimum_bytes)
     file_perms_ (file_perms)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options");
@@ -457,6 +459,39 @@ ACE_Shared_Memory_Pool::in_use (off_t &offset,
       // ACE_DEBUG ((LM_DEBUG, "(%P|%t) segment size = %d, offset = %d\n", buf.shm_segsz, offset));
     }
 
+  return 0;
+}
+
+int 
+ACE_Shared_Memory_Pool::find_seg (const void*const searchPtr,
+                                  off_t &offset, 
+                                  size_t &counter)
+{
+  offset = 0;
+  SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
+  shmid_ds buf;
+    
+  for (counter = 0; 
+       counter < this->max_segments_
+	 && st[counter].used_ == 1;
+       counter++)
+    {
+      if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "shmctl"), -1);
+      offset += buf.shm_segsz;
+
+      // If segment 'counter' starts at a location greater than the
+      // place we are searching for. We then decrement the offset to
+      // the start of counter-1. (flabar@vais.net)
+      if ((offset + (off_t)(this->base_addr_) ) > (off_t)searchPtr)
+        {
+	  --counter;
+	  offset -= buf.shm_segsz;
+	  return 0;
+        }
+      // ACE_DEBUG ((LM_DEBUG, "(%P|%t) segment size = %d, offset = %d\n", buf.shm_segsz, offset));
+    }
+    
   return 0;
 }
 
@@ -522,10 +557,29 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) address %u out of range\n", 
 			   siginfo->si_addr), -1);
     }
+
+  // The above if case will check to see that the address is in the
+  // proper range.  Therefore there is a segment out there that the
+  // pointer wants to point into.  Find the segment that someone else
+  // has used and attach to it (flabar@vais.net)
+
+  size_t counter; // ret value to get shmid from the st table.
+
+  if (this->find_seg (siginfo->si_addr, offset, counter) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "in_use"), -1);
+
+  void *address = (void *) (((char *) this->base_addr_) + offset);
+  SHM_TABLE *st = (SHM_TABLE *) this->base_addr_;
+
+  void *shmem = ACE_OS::shmat (st[counter].shmid_, (char *) address, 0);
+
+  if (shmem != address)
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p, shmem = %u, address = %u\n", 
+                         "shmat", shmem, address), 0);
+	
+  // NOTE: this won't work if we dont have SIGINFO_T or SI_ADDR
 #endif /* ACE_HAS_SIGINFO_T && !defined (ACE_LACKS_SI_ADDR) */
 
-  this->commit_backing_store_name (this->round_up (ACE_DEFAULT_SEGMENT_SIZE), 
-				   offset);
   return 0;
 }
 
@@ -543,6 +597,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
       this->base_addr_ = (void *) options->base_addr_;
       this->max_segments_ = options->max_segments_;
       this->file_perms_ = options->file_perms_;
+      this->minimum_bytes_ = options->minimum_bytes_;
     }
 
   if (backing_store_name)
@@ -587,7 +642,9 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
   size_t counter;
   off_t shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
-  rounded_bytes = this->round_up (nbytes);
+  rounded_bytes = this->round_up (nbytes > this->minimum_bytes_ 
+				  ? nbytes 
+				  : this->minimum_bytes_);
 
   // Acquire the semaphore to serialize initialization and prevent
   // race conditions.
