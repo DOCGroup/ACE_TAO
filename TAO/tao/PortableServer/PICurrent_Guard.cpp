@@ -57,7 +57,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
 TAO::PICurrent_Guard::~PICurrent_Guard (void)
 {
   if (this->src_ != 0 && this->dest_ != 0
-      & this->src_ != this->dest_)
+      && this->src_ != this->dest_)
     {
       // This copy better be exception-safe!
       this->dest_->lc_slot_table (this->src_);
