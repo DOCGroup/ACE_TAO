@@ -1,3 +1,13 @@
+Wed Aug 11 10:21:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/Simple/client.cpp:
+	  Removed unused variable
+
+	* tao/Tagged_Components.cpp:
+	  Use CORBA::Boolean with to_boolean() helper classes, not
+	  CORBA::Octet.  Unfortunately only a few platform catches those,
+	  thanks to David for pointing it out.
+
 Wed Aug 11 10:04:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Event_Comm/Consumer_Handler.cpp:

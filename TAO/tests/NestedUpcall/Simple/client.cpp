@@ -18,9 +18,6 @@ static CORBA::UShort call_count = 5;
 static int quiet = 0;
 // The test is quiet...
 
-static int number_of_threads = 1;
-// Number of client threads.
-
 class Client_Task
 {
 public:
@@ -70,7 +67,7 @@ static int
 parse_args (int argc,
             char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "qxn:k:t:");
+  ACE_Get_Opt get_opts (argc, argv, "qxn:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -86,10 +83,6 @@ parse_args (int argc,
 
       case 'n':
         call_count = ACE_OS::atoi (get_opts.optarg);
-        break;
-
-      case 't':
-        number_of_threads = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'k':
@@ -169,7 +162,7 @@ main (int argc,
 
       Client_Task client_tasks (client_object.in (),
                                 server.in ());
-      
+
       client_tasks.svc ();
 
       if (shutdown_server)
