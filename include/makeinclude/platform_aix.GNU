@@ -10,6 +10,9 @@
 # system.
 
 debug = 1
+# xlC builds the shared lib from the static lib, so need to build both.
+shared_libs_only = 0
+static_libs = 1
 
 CC	    = xlC
 CXX	    = xlC_r
