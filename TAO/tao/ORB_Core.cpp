@@ -1481,7 +1481,10 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                                   TAO_POA_Manager);
             }
 
-          TAO_POA_Policies root_poa_policies;
+          TAO_POA_Policies root_poa_policies (*this,
+                                              ACE_TRY_ENV);
+          ACE_CHECK;
+
           if (policies == 0)
             {
               // RootPOA policies defined in spec
@@ -1582,7 +1585,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   // First we create a profile list, well actually the empty container
   TAO_MProfile mp (pfile_count);
 
-  if (this->acceptor_registry ()->make_mprofile (key, mp) == -1) 
+  if (this->acceptor_registry ()->make_mprofile (key, mp) == -1)
   {
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
@@ -1590,16 +1593,16 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                         CORBA::COMPLETED_NO ),
                       0);
   }
-   
+
 
   //  Add the Polices contained in "policy_list" to each profile
   //  so that those policies will be exposed to the client in the IOR.
-  //  In particular each CORBA::Policy has to be converted in to  
+  //  In particular each CORBA::Policy has to be converted in to
   //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
   //  should be embedded inside a Messaging::PolicyValueSeq which became
-  //  in turns the "body" of the IOP::TaggedComponent. This conversion 
+  //  in turns the "body" of the IOP::TaggedComponent. This conversion
   //  is a responsability of the CORBA::Profile class.
-  //  (See orbos\98-05-05.pdf Section 5.4) 
+  //  (See orbos\98-05-05.pdf Section 5.4)
 
   if (policy_list.length() != 0)
   {
@@ -1612,7 +1615,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
       profile = mp.get_next();
       profile->set_policies(&policy_list);
     }
-    
+
   }
 
   ACE_NEW_THROW_EX (stub,
@@ -2183,6 +2186,32 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 }
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+TAO_PriorityModelPolicy *
+TAO_ORB_Core::priority_model (void)
+{
+  TAO_PriorityModelPolicy *result = 0;
+
+  // @@ Must lock, but is is harder to implement than just modifying
+  //    this call: the ORB does take a lock to modify the policy
+  //    manager
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->priority_model ();
+    }
+
+  if (result == 0)
+    result = this->default_priority_model ();
+
+  return result;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
 

@@ -173,6 +173,16 @@ TAO_ORB_Core::default_buffering_constraint (void) const
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE TAO_PriorityModelPolicy *
+TAO_ORB_Core::default_priority_model (void) const
+{
+  return this->default_policies_->priority_model ();
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources (void)
 {
@@ -218,13 +228,13 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
   this->implrepo_service_ = ir;
 }
 
-ACE_INLINE CORBA::Object_ptr 
+ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::typecode_factory (void)
 {
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
 {
   this->typecode_factory_ = tf;
