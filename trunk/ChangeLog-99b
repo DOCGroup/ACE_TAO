@@ -1,3 +1,7 @@
+Tue Oct 12 11:37:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.sh: export ACE_ROOT if setting it.
+
 Tue Oct 12 11:32:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.pl,run_tests.sh: don't print "Skipping test
