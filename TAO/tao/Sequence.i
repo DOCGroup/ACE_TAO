@@ -214,10 +214,10 @@ TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
 {
 }
 
-ACE_INLINE TAO_Unbounded_String_Sequence::Manager
+ACE_INLINE TAO_String_Manager
 TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
   char ** const tmp = ACE_reinterpret_cast (char ** const, this->buffer_);
-  return Manager (tmp + index, this->release_);
+  return TAO_String_Manager (tmp + index, this->release_);
 }

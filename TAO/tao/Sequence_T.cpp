@@ -387,7 +387,7 @@ template <class T, CORBA::ULong MAX>
 TAO_Bounded_Object_Sequence<T, MAX>::
 TAO_Bounded_Object_Sequence (void)
   :  TAO_Bounded_Base_Sequence (MAX,
-                                TAO_Bounded_Sequence<T, MAX>::allocbuf (MAX))
+                                TAO_Bounded_Object_Sequence<T, MAX>::allocbuf (MAX))
 {
 }
 
