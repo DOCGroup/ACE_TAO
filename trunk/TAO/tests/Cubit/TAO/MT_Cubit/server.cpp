@@ -337,10 +337,8 @@ int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 {
   int result;
-  // The problem is num of objs is not set here but only after high
-  // priority servant is activated.
 
-  // Do the preliminary argument processing for options -p and -h.  
+  // Do the preliminary argument processing for options -p,-h and -t.
   this->prelim_args_process ();
 
   // Find the priority for the high priority servant.
