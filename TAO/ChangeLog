@@ -1,3 +1,16 @@
+Fri Feb 25 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ServerObject{C,A,S}.{h,cpp,inl}:
+        * tao/ImR_Client/ImplRepo{C,A,S}.{h,cpp,inl}:
+        * tao/PortableServer/PolicyS.{h,cpp,inl}:
+        * tao/PortableServer/PolicyS_T.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S_T.{h,cpp,inl}:
+        * tao/Messaging/*C.{h,cpp,inl}:
+        * tao/Messaging/*A.cpp:
+        * tao/Messaging/*S.{h,cpp,inl}:
+          Regenerated
+
 Thu Feb 24 23:29:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
