@@ -70,7 +70,7 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    if (CORBA::is_nil(poa_))
+    if (CORBA::is_nil(poa_.in()))
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
     TAO_POA* tao_poa = poa_->_tao_poa_downcast ();
