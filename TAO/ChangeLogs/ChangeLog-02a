@@ -267,6 +267,18 @@ Sat May  5 16:24:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           the ACE_HAS_USING_KEYWORD macros. This should prevent compile
           errors in the two Lynx builds.
 
+Sat May  5 15:23:56 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: Added
+  
+          #if ! defined (TAO_MIN_CRITICAL_PRIORITY)
+	  #define TAO_MIN_CRITICAL_PRIORITY 0
+	  #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */  
+  
+          to fix a compile problem with TAO_USES_RMS_SCHEDULING is
+ 	  defined.  Thanks to Alexandre Cervieri
+ 	  <alexandre.cervieri@terra.com.br> for reporting this.
+  
 Sat May  5 13:27:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/Component_Switching/Makefile:

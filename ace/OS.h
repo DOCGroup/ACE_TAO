@@ -3394,10 +3394,10 @@ typedef pace_gid_t gid_t;
 #     else /* !ACE_HAS_PACE */
 typedef DWORD nlink_t;
 #       if !defined(__MINGW32__)
-typedef int mode_t;
+typedef u_short mode_t;
 #       endif /* !__MINGW32__ */
-typedef int uid_t;
-typedef int gid_t;
+typedef long uid_t;
+typedef long gid_t;
 #     endif /* ACE_HAS_PACE */
 #   endif /* __BORLANDC__ */
 typedef char *caddr_t;

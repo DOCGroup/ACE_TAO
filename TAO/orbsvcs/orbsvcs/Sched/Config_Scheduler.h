@@ -131,31 +131,28 @@ private:
   typedef ACE_MUF_Scheduler_Strategy Scheduler_Strategy;
 
 #elif defined (TAO_USES_MLF_SCHEDULING)
-
-  #if ! defined (TAO_MIN_CRITICAL_PRIORITY)
-    #define TAO_MIN_CRITICAL_PRIORITY 0
-  #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
-
+#  if ! defined (TAO_MIN_CRITICAL_PRIORITY)
+#    define TAO_MIN_CRITICAL_PRIORITY 0
+#  endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
   typedef ACE_MLF_Scheduler_Strategy Scheduler_Strategy;
 
 #elif defined (TAO_USES_EDF_SCHEDULING)
 
-  #if ! defined (TAO_MIN_CRITICAL_PRIORITY)
-    #define TAO_MIN_CRITICAL_PRIORITY 0
-  #endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
-
+#  if ! defined (TAO_MIN_CRITICAL_PRIORITY)
+#    define TAO_MIN_CRITICAL_PRIORITY 0
+#  endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
   typedef ACE_EDF_Scheduler_Strategy Scheduler_Strategy;
 
 #elif defined (TAO_USES_RMS_SCHEDULING)
-
+#  if ! defined (TAO_MIN_CRITICAL_PRIORITY)
+#    define TAO_MIN_CRITICAL_PRIORITY 0
+#  endif /* ! defined (TAO_MIN_CRITICAL_PRIORITY) */
   typedef ACE_RMS_Scheduler_Strategy Scheduler_Strategy;
 
 #elif defined (TAO_USES_CRITICALITY_SCHEDULING)
-
   typedef ACE_Criticality_Scheduler_Strategy Scheduler_Strategy;
 
 #else
-
   #error scheduling strategy must be defined
 
 #endif /* defined (TAO_USES_MUF_SCHEDULING) */
