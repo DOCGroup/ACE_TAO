@@ -4,6 +4,10 @@ Fri Jun 11 13:01:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Modified to use the new timeouts, just an example for other test 
 	  developers.
 
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
+	  It was missing the ACEutils package. Updated to use the process
+	  timeouts.
+
 Fri Jun 11 11:42:07 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/DynAny_Test/test_wrapper.cpp: Added #include "ace/OS.h" so
