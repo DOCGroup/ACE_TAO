@@ -2,6 +2,7 @@
 
 #include "RT_Acceptor_Filters.h"
 #include "tao/Pluggable.h"
+#include "tao/MProfile.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_Acceptor_Filters.i"
@@ -41,7 +42,7 @@ fill_mprofile (const TAO_ObjectKey &object_key,
     }
 
   // Encode endpoints.
-  for (TAO_PHandle i = 0;
+  for (CORBA::ULong i = 0;
        i < mprofile.profile_count ();
        ++i)
     {

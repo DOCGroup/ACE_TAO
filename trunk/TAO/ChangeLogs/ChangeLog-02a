@@ -1,11 +1,51 @@
+Wed Oct 18 20:26:55 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp
+	* tao/PortableServer/POA.h
+	* tao/PortableServer/POA.i:
+
+	  - Added TAO_PriorityBandedConnectionsPolicy data member to
+	  TAO_POA_Policies.  We need to keep track of this policy
+	  separately so that we can perform error checking and use it in
+	  acceptor filters.
+
+	  - Added <make_filter> method to TAO_POA_Policies.  It creates
+	  an appropriate acceptor filter based on POA's policies.
+
+	  - Added <acceptor_filter_> data member to TAO_POA.  Rather than
+	  allocating new acceptor filter in each <key_to_stub_i> call, an
+	  appropriate filter is allocated once, during POA creation, and
+	  reused.
+
+        * tao/PortableServer/Default_Acceptor_Filter.h
+	* tao/PortableServer/RT_Acceptor_Filters.cpp
+	* tao/PortableServer/RT_Acceptor_Filters.h
+	* tao/PortableServer/RT_Acceptor_Filters.i:
+
+	  Moved Acceptor_Filter classes from POA.cpp into their own file.
+	  Added two new filters to deal with
+	  RTCORBA::PriorityBandedConnectionPolicy and
+	  RTCORBA::SERVER_DECLARED priority model.
+
+	* tao/PortableServer/Makefile
+	* tao/PortableServer/Makefile.bor:
+	* tao/PortableServer/TAO_PortableServer.dsp
+	* tao/PortableServer/TAO_PortableServer_Static.dsp
+
+	  Updated to include new filter files.
+
+	* tests/RTCORBA/RTCORBA_tests.dsw:
+
+	  Added MT_Client_Protocol_Priority.dsw projects.
+
 Wed Oct 18 10:20:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Exception.cpp (TAO_SYSTEM_EXCEPTION): 
+	* tao/Exception.cpp (TAO_SYSTEM_EXCEPTION):
 	  Added helper functions for the insertion and extraction
 	  operators. This would help reduce the Foot Print since instead
 	  of the same code repeated for each of the 30 or so exceptions,
 	  there will be 30 or so invocations of these helper methods.
-	
+
 Wed Oct 18 10:49:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
@@ -27,11 +67,11 @@ Tue Oct 17 16:08:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Replaced the several checks for the necessity of using
 	  the ACE_NESTED_CLASS macro in portable interceptor
 	  generated code with a single check: whether or not the
-	  scope of the declaration of the argument type in question 
+	  scope of the declaration of the argument type in question
 	  is the same the scope of the visitor's context. This change
 	  also eliminates the need for the extra context sub-state
 	  added recently, so that was removed, along with the code to
-	  set and unset it. Thanks to Francois Bernier 
+	  set and unset it. Thanks to Francois Bernier
 	  <fbernier@gel.ulaval.ca> for reporting the bug that led to
 	  these changes.
 
