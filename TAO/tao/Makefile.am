@@ -792,9 +792,9 @@ nobase_include_HEADERS += \
   Policy_ForwardC.i \
   Policy_Manager.i \
   Policy_Set.i \
-  PollableC.i \
-  PollableS.i \
-  PollableS_T.i \
+  PollableC.inl \
+  PollableS.inl \
+  PollableS_T.inl \
   PortableInterceptorC.i \
   Principal.i \
   Profile.i \
