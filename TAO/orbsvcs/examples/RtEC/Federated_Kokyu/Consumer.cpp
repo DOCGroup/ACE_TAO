@@ -9,11 +9,11 @@
 #include "orbsvcs/orbsvcs/Time_Utilities.h" //ORBSVCS_Time
 #include <ace/Counter.h>
 
-#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#if defined (ACE_HAS_DSUI)
 #include <dsui.h>
 #include "federated_config.h"
 #include "federated_dsui_families.h"
-#endif /* ! ACE_WIN32 & ACE_HAS_DSUI */
+#endif /* ACE_HAS_DSUI */
 
 ACE_RCSID(EC_Examples, Consumer, "$Id$")
 
@@ -50,12 +50,12 @@ Consumer::push (const RtecEventComm::EventSet& events
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer in thread %t START_SERVICE at %u\n",tv.msec()));
 
-  ACE_Object_Counter::object_id oid;
+  Object_ID oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
   oid.queue_id = events[0].header.eid.queue_id;
 
-  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (TEST_ONE_FAM, START_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   //TODO: do work on push()
   ACE_High_Res_Timer timer;
@@ -106,7 +106,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   recording the finishing time on the server side. please also record the deadline_missed_ variable.
 */
   char* format = "Deadline missed: %d";
-  char* extra_info = (char*) ACE_Allocator::instance()->malloc(strlen(format) + sizeof(this->deadline_missed_) - 2);
+  char* extra_info = (char*) ACE_Allocator::instance()->malloc(strlen(format) + sizeof(this->deadline_missed_) - 1);
   if (extra_info != 0)
     {
       ACE_OS::sprintf(extra_info, "Deadline missed: %d", this->deadline_missed_);
@@ -116,7 +116,7 @@ Consumer::push (const RtecEventComm::EventSet& events
       //DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, guid, strlen(extra_info), extra_info);
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MISSED) at %u\n",tv.msec()));
-      DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (TEST_ONE_FAM, DEADLINE_MISSED, 0, sizeof(Object_ID), (char*)&oid);
 
     }
   ACE_Allocator::instance()->free(extra_info);
@@ -126,7 +126,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   //DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, guid,0,NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Consumer in thread %t STOP_SERVICE (DEADLINE_MADE) at %u\n",tv.msec()));
-  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
 
   //now, trigger the next subtask if any
   if (this->fwddest_ != 0)

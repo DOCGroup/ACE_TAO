@@ -7,11 +7,11 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include <ace/Counter.h>
 
-#if ! defined (ACE_WIN32) & defined (ACE_HAS_DSUI)
+#if defined (ACE_HAS_DSUI)
 #include <dsui.h>
 #include "federated_config.h"
 #include "federated_dsui_families.h"
-#endif /* ! ACE_WIN32 & ACE_HAS_DSUI */
+#endif /* ACE_HAS_DSUI */
 
 ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
@@ -34,7 +34,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.source = id_;
   event[0].header.ttl    = 1;
 
-  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
   event[0].header.eid.id = oid.id;
   event[0].header.eid.tid = oid.tid;
   event[0].header.eid.queue_id = oid.queue_id;
@@ -45,13 +45,13 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
   ACE_Time_Value tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
@@ -92,12 +92,12 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),tv.msec()));
 
-  ACE_Object_Counter::object_id oid;
+  Object_ID oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
   oid.queue_id = events[0].header.eid.queue_id;
 
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
 
@@ -106,7 +106,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   tv = ACE_OS::gettimeofday();
   ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),tv.msec()));
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
 }
 
 void
