@@ -237,8 +237,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport_Connector::connect, "
-                      "got an existing Transport[%d]\n",
+                      ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")
+                      ACE_TEXT("got an existing %s Transport[%d]\n"),
+                      base_transport->is_connected() ? "connected" : "not connected",
                       base_transport->id ()));
         }
 
@@ -271,7 +272,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                               result));
                 }
 
+// todo, how to do this in a generic way?
 //             this->check_connection_closure (base_transport->connection_handler(), result);
+// handle failure
+              return base_transport;
             }
           else
             {
@@ -297,7 +301,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                       // Purge from the connection cache.
                       base_transport->purge_entry ();
 
-    // is this right, see iiop_connector
                       // Close the handler.
                       base_transport->connection_handler()->close_connection ();
 
@@ -315,7 +318,6 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                    // we need a connected one we will block later one to make sure
                    // it is connected
                    return base_transport;
- // check for closure?
                 }
             }
 

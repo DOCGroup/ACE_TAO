@@ -1,5 +1,10 @@
-Thu Jul 21 15:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Jul 22 09:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tao/Transport_Connector.cpp (connect):
+          When getting a transport out of the cache, print out whether it is
+          connected or not
+
+Thu Jul 21 15:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp (make_connection):
           Use timeout to change the sync_options, this way we don't change
