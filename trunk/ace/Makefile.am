@@ -162,6 +162,7 @@ libACE_Utils_la_SOURCES = \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
   ARGV.cpp \
+  Argv_Type_Converter.cpp \
   Capabilities.cpp \
   Configuration.cpp \
   Configuration_Import_Export.cpp \
@@ -516,6 +517,7 @@ HEADER_FILES = \
   ACE.h \
   ACE_export.h \
   ARGV.h \
+  Argv_Type_Converter.h \
   ATM_Acceptor.h \
   ATM_Addr.h \
   ATM_Connector.h \
@@ -820,6 +822,7 @@ HEADER_FILES = \
 INLINE_FILES = \
   ACE.i \
   ARGV.i \
+  Argv_Type_Converter.inl \
   ATM_Acceptor.i \
   ATM_Addr.i \
   ATM_Connector.i \
