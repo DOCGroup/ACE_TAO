@@ -191,10 +191,6 @@ extern int t_errno;
 #  define ECOMM ECONNABORTED
 #endif /* ECOMM */
 
-#if !defined (WNOHANG)
-#  define WNOHANG 0100
-#endif /* !WNOHANG */
-
 #if !defined (EDEADLK)
 #  define EDEADLK 1000 /* Some large number.... */
 #endif /* !EDEADLK */
@@ -202,10 +198,6 @@ extern int t_errno;
 #if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
 #   define ENXIO  6
 #endif /* ENXIO */
-
-#if !defined (PIPE_BUF)
-#  define PIPE_BUF 5120
-#endif /* PIPE_BUF */
 
 #define LOCALNAME 0
 #define REMOTENAME 1

@@ -1,3 +1,17 @@
+Tue Aug  5 15:16:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/os_errno.h:
+        * ace/os_include/os_limit.h:
+          Moved define for PIPE_BUF from os_errno.h, where it have been
+          moved by mistake (see Mon Aug  4 13:08:29 UTC 2003  Don Hinton
+          <dhinton@dresystems.com>) to os_limit.h.
+
+        * ace/os_include/os_errno.h:
+        * ace/os_include/sys/os_wait.h:
+          Moved define for WNOHANG from os_errno.h, where it have been
+          moved by mistake (see Mon Aug  4 13:08:29 UTC 2003  Don Hinton
+          <dhinton@dresystems.com>) to sys/os_wait.h.
+
 Tue Aug  5 01:17:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/TSS_T.cpp:
