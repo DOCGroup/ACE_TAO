@@ -170,7 +170,7 @@ TAO_UIOP_Transport::send_request (TAO_Stub *stub,
 int
 TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
                                   TAO_Stub *stub,
-                                  int twoway,
+                                  int write_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
   // Format the message in the stream first
@@ -183,7 +183,7 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_message_shared (stub,
-                                         twoway,
+                                         write_semantics,
                                          stream.begin (),
                                          max_wait_time);
 

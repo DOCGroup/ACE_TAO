@@ -8,8 +8,10 @@ ACE_RCSID (tao,
 
 
 TAO_Synch_Queued_Message::
-    TAO_Synch_Queued_Message (const ACE_Message_Block *contents)
-  : contents_ (ACE_const_cast (ACE_Message_Block*,contents))
+    TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
+                              ACE_Allocator *alloc)
+  : TAO_Queued_Message (alloc)
+  , contents_ (ACE_const_cast (ACE_Message_Block*,contents))
   , current_block_ (contents_)
 {
 }

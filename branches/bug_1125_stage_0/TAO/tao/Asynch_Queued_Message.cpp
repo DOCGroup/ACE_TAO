@@ -9,8 +9,10 @@ ACE_RCSID (tao,
 
 
 TAO_Asynch_Queued_Message::
-    TAO_Asynch_Queued_Message (const ACE_Message_Block *contents)
-  : offset_ (0)
+    TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
+                               ACE_Allocator *alloc)
+  : TAO_Queued_Message (alloc)
+  , offset_ (0)
 {
   this->size_ = contents->total_length ();
   // @@ Use a pool for these guys!!
