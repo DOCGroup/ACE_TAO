@@ -2260,7 +2260,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -2611,7 +2612,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -2815,8 +2817,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/SecurityLevel2S.o .obj/SecurityLevel2S.so .shobj/SecurityLevel2S.o .shobj/SecurityLevel2S.so: SecurityLevel2S.cpp SecurityLevel2S.h \
- $(ACE_ROOT)/ace/pre.h SecurityLevel1S.h \
- SecurityS.h $(TAO_ROOT)/tao/TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ SecurityLevel1S.h SecurityS.h \
+ $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2964,7 +2967,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3170,7 +3174,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/SecurityReplaceableS.o .obj/SecurityReplaceableS.so .shobj/SecurityReplaceableS.o .shobj/SecurityReplaceableS.so: SecurityReplaceableS.cpp \
- SecurityReplaceableS.h $(ACE_ROOT)/ace/pre.h \
+ SecurityReplaceableS.h \
+ $(ACE_ROOT)/ace/pre.h \
  SecurityLevel2S.h SecurityLevel1S.h SecurityS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -3320,7 +3325,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3729,7 +3735,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -4036,8 +4043,9 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
- SecurityLevel1C.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i SecurityLevel1C.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
@@ -4343,8 +4351,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
- SecurityLevel1C.i SecurityLevel2C.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i SecurityLevel1C.i SecurityLevel2C.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
@@ -4456,7 +4464,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/SecurityReplaceableC.o .obj/SecurityReplaceableC.so .shobj/SecurityReplaceableC.o .shobj/SecurityReplaceableC.so: SecurityReplaceableC.cpp \
- SecurityReplaceableC.h $(ACE_ROOT)/ace/pre.h \
+ SecurityReplaceableC.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -4637,7 +4646,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Security/security_export.h SecurityLevel2C.h SecurityLevel1C.h \
- SecurityC.h $(TAO_ROOT)/tao/TimeBaseC.h \
+ SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
@@ -4651,8 +4661,9 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
- SecurityLevel1C.i SecurityLevel2C.i SecurityReplaceableC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i SecurityLevel1C.i SecurityLevel2C.i \
+ SecurityReplaceableC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
