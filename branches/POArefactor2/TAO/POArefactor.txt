@@ -1,3 +1,23 @@
+Wed Dec  8 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Regular_POA.cpp:
+        * tao/PortableServer/Root_POA.{h,cpp}:
+          Fixed construction and parsing of object keys, the id of the poa is
+          set in a helper method which is called from the constructor and then
+          virtual functions don't work.
+
+Tue Dec  7 14:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.{h,cpp,inl}:
+        * tao/PortableServer/Regular_POA.{h,cpp,inl}:
+          Removed the parent_ member from the Root POA, a root POA has no
+          parent. Added parent_ as member to RegularPOA. Added root(),
+          root_key_type() and remove_from_parent_i() as virtual to RootPOA and
+          override them in RegularPOA. One thing to remember is that the RTPOA
+          is derived from RegularPOA and then the RegularPOA is created in the
+          role of RootPOA, so, in the new methods above, check if parent_ !=
+          0, if it is 0, we are Regular POA in the role of root poa.
+
 Tue Dec  7 14:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
