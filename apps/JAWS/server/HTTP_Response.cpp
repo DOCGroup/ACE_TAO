@@ -261,7 +261,7 @@ HTTP_Response::cgi_response (void)
 
 
   // Exec the cgi program
-  ACE_ProcessEx cgi_process;
+  ACE_Process cgi_process;
   cgi_process.start (cgi_options);
 }
 
