@@ -1,3 +1,10 @@
+Sat Jul 5 08:17:54 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * rules.tao.GNU:
+          With cygwin we could have used cygpath -w, but this doesn't work.
+          Removed cygwin specific part completely because it doesn't work
+          and is not needed.
+
 Sat Jul 5 06:55:12 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
         * tao/RTScheduling/Makefile.bor:
