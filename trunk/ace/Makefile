@@ -195,6 +195,7 @@ MEMORY_FILES = \
   Malloc_Instantiations \
   Mem_Map \
   Memory_Pool \
+  Obchunk \
   Obstack \
   Read_Buffer \
   Shared_Memory \
@@ -269,6 +270,7 @@ TEMPLATE_FILES = \
            Message_Block_T \
            Message_Queue_T \
            Module \
+	   Obstack_T \
            Pair_T \
            Refcounted_Auto_Ptr \
            RB_Tree \

@@ -663,7 +663,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
                               0,
                               REG_SZ,
                               (BYTE *) value.fast_rep (),
-                              value.length () + 1) != ERROR_SUCCESS)
+                              (value.length () + 1) * sizeof (ACE_TCHAR)) != ERROR_SUCCESS)
     return -2;
 
   return 0;

@@ -368,10 +368,10 @@ ACE_Service_Config::process_directives_i (void)
   ace_yyerrno = 0;
   ace_yylineno = 1;
 
-  ACE_Obstack *oldstack = ace_obstack;
+  ACE_Obstack_T<ACE_TCHAR> *oldstack = ace_obstack;
 
   ACE_NEW_RETURN (ace_obstack,
-                  ACE_Obstack,
+                  ACE_Obstack_T<ACE_TCHAR>,
                   -1);
 
   ace_yyparse ();
