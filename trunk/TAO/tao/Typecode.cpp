@@ -1,5 +1,6 @@
 // $Id$
 
+
 // Typecodes essentially consist of just the CDR octets that get
 // marshaled and unmarshaled, and this code knows how to parse those
 // octets and answer questions CORBA's TypeCode APIs require.
@@ -25,6 +26,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Typecode, "$Id$")
+
 
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException ("IDL:omg.orb/CORBA/TypeCode/Bounds:1.0")
@@ -1399,7 +1401,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
           return this->private_state_->tc_id_;
 
         this->private_state_->tc_id_known_ = 1;
-        this->private_state_->tc_id_ = (ACE_const_cast(char *, buffer_)
+        this->private_state_->tc_id_ = (ACE_const_cast (char *, buffer_)
                                         + 4    // skip byte order
                                         // flag and padding
                                         + 4);  // skip (strlen + 1)

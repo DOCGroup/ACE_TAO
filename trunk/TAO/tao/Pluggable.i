@@ -3,9 +3,19 @@
 
 
 // ****************************************************************
+ACE_INLINE ssize_t
+TAO_Transport::read (char *buf,
+                     size_t len,
+                     const ACE_Time_Value * /*max_wait_time*/)
+{
+  return ACE::recv (this->handle (),
+                    (void *) buf,
+                    len);
+}
 
 // @@ One of the orb_core () methods should be done away. Will visit
 // @@ this later -- Bala
+
 ACE_INLINE TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
 {

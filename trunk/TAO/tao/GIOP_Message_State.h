@@ -95,7 +95,7 @@ public:
 
   /// Check if the current message is complete, adjusting the fragments
   /// if required...
-  int is_complete (void);
+  int is_complete (ACE_Message_Block &current_buf);
 
   /// Version info
   TAO_GIOP_Version giop_version;
@@ -112,19 +112,17 @@ public:
   /// in byte_order!
   CORBA::ULong message_size;
 
-  /// How much of the payload has been received
-  CORBA::ULong current_offset;
-
-  /// This is the InputCDR that will be used to decode the message.
-  TAO_InputCDR cdr;
+  /// Request Id from the Fragment header
+  CORBA::ULong request_id;
 
   /**
    * The fragments are collected in a chain of message blocks (using
    * the cont() field).  When the complete message is received the
-   * chain is reassembled into <cdr>
+   * chain is reassembled into the main message block that is sent
+   * along
    */
-  ACE_Message_Block* fragments_begin;
-  ACE_Message_Block* fragments_end;
+  ACE_Message_Block fragmented_messages;
+
 
   /**
    * The byte order for the the first fragment
@@ -155,7 +153,7 @@ public:
 private:
   /// Append <current> to the list of fragments
   /// Also resets the state, because the current message was consumed.
-  int append_fragment (ACE_Message_Block* current);
+  int append_fragment (ACE_Message_Block &current);
 
 };
 
