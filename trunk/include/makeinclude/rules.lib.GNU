@@ -7,6 +7,30 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
+#---------------------------------------------------------------------------
+#       Library versioning
+#---------------------------------------------------------------------------
+
+ifeq ($(versioned_so),1)
+  # Turn on symbol versioning. The scheme that we follow is to allow
+  # applications dependent on libraries, with same version numbers (major,
+  # minor and beta) to run, but applications with dependencies on libraries
+  # with different minor or major or beta versions to fail.
+  #
+  # Version number of the libraries
+  #
+  ifeq ($(SOVERSION),)
+    SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+  endif # SOVERSION
+
+  # Name that will be written into the dynamic library
+  #
+  ifeq ($(SONAME),)
+    SONAME = $(SHLIB)$(SOVERSION)
+  endif # SONAME
+endif # versioned_so
+
+
 #----------------------------------------------------------------------------
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
@@ -54,11 +78,6 @@ ifeq ($(VLIBS),)
   endif # LIB_WARNING
 endif # !VLIBS
 
-# Libraries always depend on idl_stubs, if they exist.
-ifdef IDL_SRC
-  $(VLIBS): $(IDL_SRC)
-endif
-
 VLOBJS   += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(LSRC)))))
 ifdef LSRC2
   LSRC += $(LSRC2)
@@ -82,12 +101,6 @@ ifdef shared_libs
   endif
 endif # shared_libs
 
-# Alzays add LIB_INSTALL to INSTALL, so libs will get installed even no BIN
-# is built.  LIB_INSTALL is a dependency for BIN, so libs are installed prior
-# to use.  Also, make LIB_INSTALL depend on VLIB, so libs get built prior to
-# installation.
-INSTALL += $(LIB_INSTALL)
-$(LIB_INSTALL): $(VLIBS)
 
 ifndef ace_lib_prelink
   ace_lib_prelink = 0
