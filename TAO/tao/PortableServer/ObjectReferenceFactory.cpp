@@ -41,7 +41,7 @@ TAO_ObjectReferenceFactory::make_object (const char *intf,
   CORBA::Object_var object =
     this->poa_->invoke_key_to_object (intf,
                                       *user_id
-                                      TAO_ENV_ARG_DECL);
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();

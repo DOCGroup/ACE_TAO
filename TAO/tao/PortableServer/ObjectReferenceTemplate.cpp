@@ -68,19 +68,19 @@ TAO_ObjectReferenceTemplate::make_object (const char * intf,
   CORBA::Object_var object =
     this->poa_->invoke_key_to_object (intf,
                                       *user_id
-                                      TAO_ENV_ARG_DECL);
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::String_var ior =
     this->poa_->orb_core ().orb ()->object_to_string (object.in ()
-                                                      TAO_ENV_ARG_DECL);
-  ACE_TRY_CHECK;
+                                                      TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();
 }
 
 void
-TAO_ObjectReferenceTemplate::destroy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ObjectReferenceTemplate::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   delete this;
 }
