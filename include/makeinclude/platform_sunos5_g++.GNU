@@ -59,7 +59,6 @@ RANLIB          = @true
 SOFLAGS         += -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
-STATIC_LINK_FLAG ?=
 
 # Test for template instantiation, add to SOFLAGS if SONAME set, 
 # add -E to LDFLAGS if using GNU ld

@@ -32,11 +32,6 @@ CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
 
 CHORUSLINK ?=
 using_aix_vacpp ?=
-STATIC_LINK_FLAG ?=
-
-ifeq ($(static_libs_only),1)
-  LDFLAGS += $(STATIC_LINK_FLAG)
-endif # static_libs_only=1
 
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
