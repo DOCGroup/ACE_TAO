@@ -122,13 +122,13 @@ Event_Transceiver::Event_Transceiver (void)
 
 #if !defined (ACE_WIN32)
 
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 
 #else
 
-  if (ACE_Reactor::instance()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler 
       (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 
@@ -138,7 +138,7 @@ Event_Transceiver::Event_Transceiver (void)
   // otherwise <get_handle> will return the connection socket handle
   // for the peer.
   else if (ACE::register_stdin_handler (this,
-					ACE_Reactor::instance(),
+					ACE_Reactor::instance (),
 					ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, 
 		"%p\n", 
@@ -150,7 +150,7 @@ Event_Transceiver::open (void *)
 {
   // Register ourselves to be notified when there's data on the
   // socket.
-  if (ACE_Reactor::instance()->register_handler
+  if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "%p\n", 
@@ -224,7 +224,7 @@ main (int argc, char *argv[])
 
   // Run event loop until either the event server shuts down or we get
   // a SIGINT.
-  ACE_Reactor::run_event_loop();
+  ACE_Reactor::run_event_loop ();
   return 0;
 }
 

@@ -157,7 +157,7 @@ worker (void *args)
 int 
 main (void)
 {
-  ACE_Reactor *react1 = ACE_Reactor::instance();
+  ACE_Reactor *react1 = ACE_Reactor::instance ();
   ACE_Reactor *react2 = new ACE_Reactor ();
   Test_Task tt1[MAX_TASKS];
   Test_Task tt2[MAX_TASKS];

@@ -28,7 +28,7 @@ Peer_Handler::open (void *)
     {
       this->display_menu ();
       if (ACE::register_stdin_handler (this,
-				      ACE_Reactor::instance(),
+				      ACE_Reactor::instance (),
 					  ACE_Thread_Manager::instance ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
       else 
@@ -115,7 +115,7 @@ IPC_Client::init (int argc, char *argv[])
   if (this->parse_args (argc, argv) == -1)
     return -1;
   // Handle signals through the ACE_Reactor.
-  else if (ACE_Reactor::instance()->register_handler
+  else if (ACE_Reactor::instance ()->register_handler
 	   (SIGINT, &this->done_handler_) == -1)
     return -1;
 
@@ -147,7 +147,7 @@ IPC_Client::fini (void)
 int 
 IPC_Client::svc (void)
 {
-  ACE_Reactor::run_event_loop();
+  ACE_Reactor::run_event_loop ();
   return 0;
 }
 

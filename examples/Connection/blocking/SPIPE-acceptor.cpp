@@ -70,7 +70,7 @@ IPC_Server::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
 
   // Register to receive shutdowns.
-  else if (ACE_Reactor::instance()->register_handler
+  else if (ACE_Reactor::instance ()->register_handler
       (SIGINT, &this->done_handler_) == -1)
     return -1;
   else
@@ -126,7 +126,7 @@ run_reactor_event_loop (void *)
 	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_DEBUG ((LM_DEBUG, "(%t) worker thread starting\n"));
 
-  ACE_Proactor::run_event_loop();
+  ACE_Proactor::run_event_loop ();
   return 0;
 }
 

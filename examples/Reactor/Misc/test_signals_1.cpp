@@ -73,7 +73,7 @@ main (int, char *argv[])
   ACE_DEBUG ((LM_DEBUG, 
 	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
-  int result = ACE_Reactor::run_event_loop();
+  int result = ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG, "result = %d\n", result));
 

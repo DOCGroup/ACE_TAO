@@ -37,7 +37,7 @@ public:
     : event_number_ (event_number),
       close_down_ (close_down)
     {
-      if (ACE_ReactorEx::instance()->register_handler (this,
+      if (ACE_ReactorEx::instance ()->register_handler (this,
 							      this->event_.handle ()) == -1)
 	ACE_ERROR ((LM_ERROR, "%p\tevent handler %d cannot be added to ReactorEx\n", "", event_number_));
       this->event_.signal ();
@@ -88,7 +88,7 @@ main (int argc, char *argv[])
   ACE_Time_Value time (1);
   while (1)
     {
-      result = ACE_ReactorEx::instance()->handle_events (time);
+      result = ACE_ReactorEx::instance ()->handle_events (time);
       if (result == 0 && errno == ETIME)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "No more work left: timing out\n"));
