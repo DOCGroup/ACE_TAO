@@ -1,3 +1,8 @@
+Wed May  7 14:00:31 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: In ACE_LONGLONG_TO_PTR macro, replace use
+	  of ptr_arith_t with ptrdiff_t. Thanks to Ossama for noticing this.
+
 Wed May  7 12:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
