@@ -1,3 +1,13 @@
+Fri Mar 16 13:53:04 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	  Made several cosmetic fixes, but also re-enabled the ec_mt.conf
+	  file test.  It works for me on my workspace, can't tell why it
+	  fails in the nightly builds yet.
+
+	* orbsvcs/tests/EC_Throughput/ec_mt.conf:
+	  Minor cosmetic fixes.
+
 Fri Mar 16 14:10:25 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
