@@ -101,7 +101,7 @@ public:
   virtual int handle_output (ACE_HANDLE);
 
   /// Doumented in ACE_Event_Handler
-  virtual int resume_handle (void);
+  virtual int resume_handler (void);
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);

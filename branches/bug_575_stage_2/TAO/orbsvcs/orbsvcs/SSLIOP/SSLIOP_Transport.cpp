@@ -77,7 +77,7 @@ TAO_SSLIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
   int result = 0;
 
   // Set up the SSLIOP::Current object.
-  TAO_SSL_State_Guard ssl_state_guard (this,
+  TAO_SSL_State_Guard ssl_state_guard (this->connection_handler_,
                                        this->orb_core (),
                                        result);
   if (result == -1)
@@ -144,42 +144,6 @@ TAO_SSLIOP_Transport::recv_i (char *buf,
 }
 
 
-int
-TAO_SSLIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
-                                            int block)
-{
-  // Read the message of the socket
-  int result =  this->messaging_object_->read_message (this,
-                                                       block,
-                                                       max_wait_time);
-
-  if (result == -1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("SSLIOP_Transport::read_message, failure in read_message ()")));
-
-      this->tms_->connection_closed ();
-      return -1;
-    }
-  if (result < 2)
-    return result;
-
-  // Now we know that we have been able to read the complete message
-  // here.. We loop here to see whether we have read more than one
-  // message in our read.
-  // Set the result state
-  result = 1;
-
-  // See we use the reactor semantics again
-  while (result > 0)
-    {
-      result = this->process_message ();
-    }
-
-  return result;
-}
 
 
 int
