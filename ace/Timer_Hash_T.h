@@ -35,7 +35,7 @@ class ACE_Timer_Hash_Upcall
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *, 
                             ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
-                            ACE_Null_Mutex> 
+                            ACE_Null_Mutex>
           TIMER_QUEUE;
   
   ACE_Timer_Hash_Upcall (void);
