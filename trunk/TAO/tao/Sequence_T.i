@@ -135,8 +135,8 @@ TAO_Bounded_Sequence<T, MAX>::freebuf (T *buffer)
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
 TAO_Bounded_Sequence<T, MAX>::TAO_Bounded_Sequence (void)
+  : TAO_Bounded_Base_Sequence (MAX, 0, allocbuf (MAX), CORBA::B_FALSE)
 {
-  this->_allocate_buffer (MAX);
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE

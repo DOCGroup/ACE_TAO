@@ -37,6 +37,7 @@ Test_Bounded_Short_Sequence::Test_Bounded_Short_Sequence (void)
 
 Test_Bounded_Short_Sequence::~Test_Bounded_Short_Sequence (void)
 {
+  CORBA::string_free (this->opname_);
 }
 
 const char *
@@ -47,12 +48,12 @@ Test_Bounded_Short_Sequence::opname (void) const
 
 int
 Test_Bounded_Short_Sequence::init_parameters (Param_Test_ptr objref,
-                                                                                          CORBA::Environment &env)
+                                              CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (objref);
   ACE_UNUSED_ARG (env);
 
-  // get some sequence length (not more than 10)
+  // get some sequence length (not more than 32)
   CORBA::ULong len = this->in_->maximum ();
 
   // set the length of the sequence
@@ -85,7 +86,7 @@ Test_Bounded_Short_Sequence::run_sii_test (Param_Test_ptr objref,
   this->ret_ = objref->test_bounded_short_sequence (this->in_.in (),
                                                     this->inout_.inout (),
                                                     out,
-                                                            env);
+                                                    env);
   return (env.exception () ? -1:0);
 }
 
@@ -94,39 +95,50 @@ Test_Bounded_Short_Sequence::add_args (CORBA::NVList_ptr param_list,
                                        CORBA::NVList_ptr retval,
                                        CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Bounded_Short_Seq, (void *) &this->in_.in (), 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Bounded_Short_Seq, &this->inout_.inout (), 0);
-  // ORB will allocate
-  CORBA::Any out_arg (Param_Test::_tc_Bounded_Short_Seq, 0, 0);
+  CORBA::Any in_arg (Param_Test::_tc_Bounded_Short_Seq, 
+                     (void *) &this->in_.in (),
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Bounded_Short_Seq,
+                        &this->inout_.inout (),
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Bounded_Short_Seq,
+                      &this->dii_out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value type
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_Short_Seq,
-                                                  0,
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_Short_Seq,
+                                            &this->dii_ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Bounded_Short_Sequence::check_validity (void)
+Test_Bounded_Short_Sequence::check_validity_engine 
+                (const Param_Test::Bounded_Short_Seq &the_in,
+                 const Param_Test::Bounded_Short_Seq &the_inout,
+                 const Param_Test::Bounded_Short_Seq &the_out,
+                 const Param_Test::Bounded_Short_Seq &the_ret)
 {
   CORBA::Boolean flag = 0;
-  if ((this->in_->length () == this->inout_->length ()) &&
-      (this->in_->length () == this->out_->length ()) &&
-      (this->in_->length () == this->ret_->length ()))
+  if ((the_in.length () == the_inout.length ()) &&
+      (the_in.length () == the_out.length ()) &&
+      (the_in.length () == the_ret.length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < the_in.length () && flag; i++)
         {
-          if ((this->in_[i] != this->inout_[i]) ||
-              (this->in_[i] != this->out_[i]) ||
-              (this->in_[i] != this->ret_[i]))
+          if ((the_in[i] != the_inout[i]) ||
+              (the_in[i] != the_out[i]) ||
+              (the_in[i] != the_ret[i]))
             // not equal
             flag = 0;
         }
@@ -135,14 +147,21 @@ Test_Bounded_Short_Sequence::check_validity (void)
 }
 
 CORBA::Boolean
+Test_Bounded_Short_Sequence::check_validity (void)
+{
+  return this->check_validity_engine (this->in_.in (),
+                                      this->inout_.in (),
+                                      this->out_.in (),
+                                      this->ret_.in ());
+}
+
+CORBA::Boolean
 Test_Bounded_Short_Sequence::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
-
-  *req->arguments ()->item (2, env)->value () >>= this->out_.out ();
-  *req->result ()->value () >>= this->ret_.out ();
-
-  return this->check_validity ();
+  return this->check_validity_engine (this->in_.in (),
+                                      this->inout_.in (),
+                                      this->dii_out_,
+                                      this->dii_ret_);
 }
 
 void
