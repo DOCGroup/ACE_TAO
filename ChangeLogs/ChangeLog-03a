@@ -1,3 +1,18 @@
+Sun Apr 23 19:51:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+
+          Just tried the ACE_USES_WCHAR build and there were a couple
+          of things that needed updating.  Mainly some missing ACE_TEXT's
+          or char's used instead of ACE_TCHAR's.
+
+        * tests/Process_Mutex_Test.cpp
+          
+          Was still using an old ACE_DEFAULT_MUTEX_A macro (updated to
+          ACE_DEFAULT_MUTEX).
+
 Sun Apr 23 18:14:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.h:
