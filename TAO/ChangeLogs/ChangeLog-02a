@@ -1,3 +1,16 @@
+Wed Mar 22 14:11:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_struct/struct_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Changed the code generated for the body of 
+	  _tao_any_destructor() to generate the datatype's local
+	  name instead of its scoped name. Thanks to Carlos for
+	  reporting this bug.
+
 Wed Mar 22 13:32:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.h:
