@@ -22,13 +22,14 @@ $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 unlink $daemon_ior;
 unlink $am_ior;
 
+#$DEBUG="-ORBdebuglevel 4";
 
 # CIAO Daemon command line arguments
-$daemon_args = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
+$daemon_args = "$DEBUG -ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
 
-$assembly_manager_args = "-o $am_ior -c test.dat";
+$assembly_manager_args = "$DEBUG -o $am_ior -c test.dat";
 
-$ad_args = "-k file://$am_ior -a RoundTripClient.cad";
+$ad_args = "$DEBUG -k file://$am_ior -a RoundTripClient.cad";
 
 # CIAO daemon process definition
 $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
@@ -56,7 +57,7 @@ $AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer
 $AD->Spawn ();
 
 #Start the client to send the trigger message
-$CL = new PerlACE::Process ("../RoundTripClient/client", "");
+$CL = new PerlACE::Process ("../RoundTripClient/client", "-k file://test.ior");
 $CL->Spawn();
 
 
