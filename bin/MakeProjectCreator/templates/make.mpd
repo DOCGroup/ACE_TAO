@@ -27,7 +27,13 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
 <%if(libs)%>
-LDLIBS        =<%foreach(libs defaultlibs lit_libs)%> -l<%lib%><%endfor%>
+LDLIBS       +=<%foreach(libs)%> -l<%lib%><%endfor%>
+<%endif%>
+<%if(defaultlibs)%>
+LDLIBS       +=<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+<%endif%>
+<%if(lit_libs)%>
+LDLIBS       +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
 <%if(ssl)%>
 LDLIBS       +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
