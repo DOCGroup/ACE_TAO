@@ -26,7 +26,6 @@
 
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
-class TAO_EC_Event_Channel;
 class TAO_EC_QOS_Info;
 
 /**

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Kokyu_Dispatching.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_ProxySupplier.h"
 #include "EC_QOS_Info.h"
 
@@ -18,7 +18,7 @@
 
 ACE_RCSID(Event, EC_Kokyu_Dispatching, "$Id$")
 
-TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel *ec)
+TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec)
   :dispatcher_ (0)
 {
   CORBA::Object_var tmp = ec->scheduler ();

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Reactive_SupplierControl.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h" // @@ MSVC 6 bug
@@ -20,7 +20,7 @@ ACE_RCSID(Event, EC_Reactive_SupplierControl, "$Id$")
 TAO_EC_Reactive_SupplierControl::
      TAO_EC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                       const ACE_Time_Value &timeout,
-                                      TAO_EC_Event_Channel *ec,
+                                      TAO_EC_Event_Channel_Base *ec,
                                       CORBA::ORB_ptr orb)
   : rate_ (rate),
     timeout_ (timeout),
@@ -41,8 +41,8 @@ TAO_EC_Reactive_SupplierControl::query_suppliers (
       ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_EC_Ping_Supplier worker (this);
-  this->event_channel_->supplier_admin ()->for_each (&worker
-                                                      ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->for_each_supplier (&worker
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

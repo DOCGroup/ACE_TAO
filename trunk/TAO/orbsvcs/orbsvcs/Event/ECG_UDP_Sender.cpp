@@ -11,6 +11,7 @@
 
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/ECG_UDP_Protocol.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
 
 #include "ace/Unbounded_Set.h"

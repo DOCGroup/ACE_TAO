@@ -2,7 +2,7 @@
 
 #include "EC_Priority_Dispatching.h"
 #include "EC_Dispatching_Task.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_QOS_Info.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
@@ -16,7 +16,7 @@
 
 ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
 
-TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel *ec)
+TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)
   :  ntasks_ (0),
      tasks_ (0)
 {

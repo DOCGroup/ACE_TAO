@@ -34,6 +34,13 @@ TAO_EC_SupplierControl::supplier_not_exist (TAO_EC_ProxyPushConsumer *
 {
 }
 
+void
+TAO_EC_SupplierControl::system_exception (TAO_EC_ProxyPushConsumer *,
+                                          CORBA::SystemException &
+                                          ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

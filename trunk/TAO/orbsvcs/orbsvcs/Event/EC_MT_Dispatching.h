@@ -24,8 +24,6 @@
 
 #include "EC_Dispatching_Task.h"
 
-class TAO_EC_Event_Channel;
-
 /**
  * @class TAO_EC_MT_Dispatching
  *

@@ -26,7 +26,7 @@
 #include "tao/corba.h"
 #include "ace/Event_Handler.h"
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 
 class TAO_EC_Reactive_ConsumerControl;
 
@@ -69,7 +69,7 @@ public:
   /// parameter.
   TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
                                    const ACE_Time_Value &timeout,
-                                   TAO_EC_Event_Channel *event_channel,
+                                   TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
   /// destructor...
@@ -104,7 +104,7 @@ private:
   TAO_EC_ConsumerControl_Adapter adapter_;
 
   /// The event channel
-  TAO_EC_Event_Channel *event_channel_;
+  TAO_EC_Event_Channel_Base *event_channel_;
 
   /// The ORB
   CORBA::ORB_var orb_;

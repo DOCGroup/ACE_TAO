@@ -6,7 +6,7 @@
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
- * @author and Don Hinton <dhinton@ieee.org>
+ * @author Don Hinton <dhinton@ieee.org>
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
  *
@@ -38,7 +38,7 @@
  * This class is a simple refcounted wrapper around ACE_SOCK_Dgram_Mcast that
  * makes takes care of deleting itself if the refcount drops to zero.
  */
-class TAO_RTEvent_Export TAO_ECG_Mcast_Socket : 
+class TAO_RTEvent_Export TAO_ECG_Mcast_Socket :
   public ACE_SOCK_Dgram_Mcast, private TAO_Synch_Refcountable
 {
 public:
@@ -126,7 +126,7 @@ public:
    * compilers.
    */
 
-  class Observer 
+  class Observer
     : public POA_RtecEventChannelAdmin::Observer
   {
   public:
@@ -241,6 +241,15 @@ private:
   ACE_Lock *lock_;
 
   /// We callback to this object when a message arrives.
+  /*
+   * We can keep a raw pointer to the receiver (even though it may
+   * be a refcounted object) because receiver guarantees
+   * to notify us (by calling shutdown ()) before going away.
+   *
+   * We have to use raw pointer instead of a refcounting mechanism
+   * here to avoid a circular refcounting dependency between
+   * receiver and handler.
+   */
   TAO_ECG_UDP_Receiver* receiver_;
 
   /// This object will call us back when the subscription list

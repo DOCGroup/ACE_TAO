@@ -50,13 +50,13 @@ public:
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
-      create_dispatching (TAO_EC_Event_Channel*);
+      create_dispatching (TAO_EC_Event_Channel_Base*);
   virtual TAO_EC_Filter_Builder*
-      create_filter_builder (TAO_EC_Event_Channel*);
+      create_filter_builder (TAO_EC_Event_Channel_Base*);
   virtual TAO_EC_Timeout_Generator*
-      create_timeout_generator (TAO_EC_Event_Channel*);
+      create_timeout_generator (TAO_EC_Event_Channel_Base*);
   virtual TAO_EC_Scheduling_Strategy*
-      create_scheduling_strategy (TAO_EC_Event_Channel*);
+      create_scheduling_strategy (TAO_EC_Event_Channel_Base*);
 
 private:
 };

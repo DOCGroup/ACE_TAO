@@ -1,19 +1,19 @@
 // $Id$
 
 #include "EC_Null_Factory.h"
-#include "EC_Dispatching.h"
+#include "EC_Reactive_Dispatching.h"
 #include "EC_Filter_Builder.h"
 #include "EC_Trivial_Supplier_Filter.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
-#include "EC_ProxyConsumer.h"
-#include "EC_ProxySupplier.h"
+#include "EC_Default_ProxyConsumer.h"
+#include "EC_Default_ProxySupplier.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_ConsumerControl.h"
 #include "EC_SupplierControl.h"
-#include "EC_Event_Channel.h" // @@ MSVC 6 bug
+#include "EC_Event_Channel_Base.h" // @@ MSVC 6 bug
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
@@ -25,12 +25,16 @@
 
 ACE_RCSID(Event, EC_Null_Factory, "$Id$")
 
+TAO_EC_Null_Factory::TAO_EC_Null_Factory (void)
+{
+}
+
 TAO_EC_Null_Factory::~TAO_EC_Null_Factory (void)
 {
 }
 
 TAO_EC_Dispatching*
-TAO_EC_Null_Factory::create_dispatching (TAO_EC_Event_Channel *)
+TAO_EC_Null_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
   return new TAO_EC_Reactive_Dispatching ();
 }
@@ -42,7 +46,7 @@ TAO_EC_Null_Factory::destroy_dispatching (TAO_EC_Dispatching *x)
 }
 
 TAO_EC_Filter_Builder*
-TAO_EC_Null_Factory::create_filter_builder (TAO_EC_Event_Channel *)
+TAO_EC_Null_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *)
 {
   return new TAO_EC_Null_Filter_Builder;
 }
@@ -54,7 +58,7 @@ TAO_EC_Null_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
 }
 
 TAO_EC_Supplier_Filter_Builder*
-TAO_EC_Null_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel *ec)
+TAO_EC_Null_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
 }
@@ -66,7 +70,7 @@ TAO_EC_Null_Factory::destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Bui
 }
 
 TAO_EC_ConsumerAdmin*
-TAO_EC_Null_Factory::create_consumer_admin (TAO_EC_Event_Channel *ec)
+TAO_EC_Null_Factory::create_consumer_admin (TAO_EC_Event_Channel_Base *ec)
 {
   return new TAO_EC_ConsumerAdmin (ec);
 }
@@ -78,7 +82,7 @@ TAO_EC_Null_Factory::destroy_consumer_admin (TAO_EC_ConsumerAdmin *x)
 }
 
 TAO_EC_SupplierAdmin*
-TAO_EC_Null_Factory::create_supplier_admin (TAO_EC_Event_Channel *ec)
+TAO_EC_Null_Factory::create_supplier_admin (TAO_EC_Event_Channel_Base *ec)
 {
   return new TAO_EC_SupplierAdmin (ec);
 }
@@ -90,9 +94,9 @@ TAO_EC_Null_Factory::destroy_supplier_admin (TAO_EC_SupplierAdmin *x)
 }
 
 TAO_EC_ProxyPushSupplier*
-TAO_EC_Null_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel *ec)
+TAO_EC_Null_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 {
-  return new TAO_EC_ProxyPushSupplier (ec, TAO_EC_DEFAULT_CONSUMER_VALIDATE_CONNECTION);
+  return new TAO_EC_Default_ProxyPushSupplier (ec, TAO_EC_DEFAULT_CONSUMER_VALIDATE_CONNECTION);
 }
 
 void
@@ -102,9 +106,9 @@ TAO_EC_Null_Factory::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier *x)
 }
 
 TAO_EC_ProxyPushConsumer*
-TAO_EC_Null_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel *ec)
+TAO_EC_Null_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
 {
-  return new TAO_EC_ProxyPushConsumer (ec);
+  return new TAO_EC_Default_ProxyPushConsumer (ec);
 }
 
 void
@@ -114,7 +118,7 @@ TAO_EC_Null_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 }
 
 TAO_EC_Timeout_Generator*
-TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel *)
+TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
   int argc = 0;
   char **argv = 0;
@@ -131,7 +135,7 @@ TAO_EC_Null_Factory::destroy_timeout_generator (TAO_EC_Timeout_Generator *x)
 }
 
 TAO_EC_ObserverStrategy*
-TAO_EC_Null_Factory::create_observer_strategy (TAO_EC_Event_Channel *)
+TAO_EC_Null_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *)
 {
   return new TAO_EC_Null_ObserverStrategy;
 }
@@ -143,7 +147,7 @@ TAO_EC_Null_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
 }
 
 TAO_EC_Scheduling_Strategy*
-TAO_EC_Null_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
+TAO_EC_Null_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base*)
 {
   return new TAO_EC_Null_Scheduling;
 }
@@ -155,7 +159,7 @@ TAO_EC_Null_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
 }
 
 TAO_EC_ProxyPushConsumer_Collection*
-TAO_EC_Null_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel *)
+TAO_EC_Null_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base *)
 {
   // This typedef is a workaround for a SunCC 4.2 bug
   typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator TAO_EC_Consumer_List_Iterator;
@@ -172,7 +176,7 @@ TAO_EC_Null_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushCon
 }
 
 TAO_EC_ProxyPushSupplier_Collection*
-TAO_EC_Null_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel *)
+TAO_EC_Null_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel_Base *)
 {
   // This typedef is a workaround for a SunCC 4.2 bug
   typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator TAO_EC_Supplier_List_Iterator;
@@ -213,7 +217,7 @@ TAO_EC_Null_Factory::destroy_supplier_lock (ACE_Lock* x)
 }
 
 TAO_EC_ConsumerControl*
-TAO_EC_Null_Factory::create_consumer_control (TAO_EC_Event_Channel*)
+TAO_EC_Null_Factory::create_consumer_control (TAO_EC_Event_Channel_Base*)
 {
   return new TAO_EC_ConsumerControl ();
 }
@@ -225,7 +229,7 @@ TAO_EC_Null_Factory::destroy_consumer_control (TAO_EC_ConsumerControl* x)
 }
 
 TAO_EC_SupplierControl*
-TAO_EC_Null_Factory::create_supplier_control (TAO_EC_Event_Channel*)
+TAO_EC_Null_Factory::create_supplier_control (TAO_EC_Event_Channel_Base*)
 {
   return new TAO_EC_SupplierControl ();
 }

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_ObserverStrategy.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ConsumerAdmin.h"
@@ -139,46 +139,44 @@ TAO_EC_Basic_ObserverStrategy::remove_observer (
         RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER());
 }
 
+int
+TAO_EC_Basic_ObserverStrategy::create_observer_list (
+                                RtecEventChannelAdmin::Observer_var *&lst
+                                ACE_ENV_ARG_DECL)
+{
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                 RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+  ACE_CHECK_RETURN (0);
+
+  int size = ACE_static_cast (int, this->observers_.current_size ());
+  RtecEventChannelAdmin::Observer_var *tmp;
+  ACE_NEW_RETURN (tmp,
+                  RtecEventChannelAdmin::Observer_var[size],
+                  0);
+  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
+
+  Observer_Map_Iterator end = this->observers_.end ();
+  int j = 0;
+  for (Observer_Map_Iterator i  = this->observers_.begin ();
+       i != end;
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      copy[j++] =
+        RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
+    }
+
+  lst = copy.release ();
+  return size;
+}
+
 void
 TAO_EC_Basic_ObserverStrategy::connected (
     TAO_EC_ProxyPushConsumer *consumer
     ACE_ENV_ARG_DECL)
 {
-  if (consumer->publications ().is_gateway)
-    return;
-
-  RtecEventChannelAdmin::SupplierQOS s_qos;
-  this->fill_qos (s_qos ACE_ENV_ARG_PARAMETER);
+  this->supplier_qos_update (consumer ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  int size = 0;
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy;
-  {
-    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-    ACE_CHECK;
-    size = ACE_static_cast (int, this->observers_.current_size ());
-    RtecEventChannelAdmin::Observer_var *tmp;
-    ACE_NEW (tmp, RtecEventChannelAdmin::Observer_var[size]);
-    copy.reset (tmp);
-
-    Observer_Map_Iterator end = this->observers_.end ();
-    int j = 0;
-    for (Observer_Map_Iterator i  = this->observers_.begin ();
-         i != end;
-         ++i)
-      {
-        Observer_Entry& entry = (*i).int_id_;
-        copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
-      }
-  }
-
-  for (int i = 0; i != size; ++i)
-    {
-      copy[i]->update_supplier (s_qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
 }
 
 void
@@ -186,6 +184,15 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
     TAO_EC_ProxyPushConsumer* consumer
     ACE_ENV_ARG_DECL)
 {
+  this->supplier_qos_update (consumer ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
+                                        TAO_EC_ProxyPushConsumer *consumer
+                                        ACE_ENV_ARG_DECL)
+{
   if (consumer->publications ().is_gateway)
     return;
 
@@ -193,28 +200,10 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
   this->fill_qos (s_qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  int size = 0;
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy;
-  {
-    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-    ACE_CHECK;
-    size = ACE_static_cast (int, this->observers_.current_size ());
-    RtecEventChannelAdmin::Observer_var *tmp;
-    ACE_NEW (tmp, RtecEventChannelAdmin::Observer_var[size]);
-    copy.reset (tmp);
-
-    Observer_Map_Iterator end = this->observers_.end ();
-    int j = 0;
-    for (Observer_Map_Iterator i  = this->observers_.begin ();
-         i != end;
-         ++i)
-      {
-        Observer_Entry& entry = (*i).int_id_;
-        copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
-      }
-  }
+  RtecEventChannelAdmin::Observer_var *tmp = 0;
+  int size = this->create_observer_list (tmp ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
 
   for (int i = 0; i != size; ++i)
     {
@@ -228,47 +217,23 @@ TAO_EC_Basic_ObserverStrategy::connected (
     TAO_EC_ProxyPushSupplier* supplier
     ACE_ENV_ARG_DECL)
 {
-  if (supplier->subscriptions ().is_gateway)
-    return;
-
-  RtecEventChannelAdmin::ConsumerQOS c_qos;
-  this->fill_qos (c_qos ACE_ENV_ARG_PARAMETER);
+  this->consumer_qos_update (supplier ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  int size = 0;
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy;
-  {
-    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-    ACE_CHECK;
-    size = ACE_static_cast (int, this->observers_.current_size ());
-    RtecEventChannelAdmin::Observer_var *tmp;
-    ACE_NEW (tmp, RtecEventChannelAdmin::Observer_var[size]);
-    copy.reset (tmp);
-
-    Observer_Map_Iterator end = this->observers_.end ();
-    int j = 0;
-    for (Observer_Map_Iterator i  = this->observers_.begin ();
-         i != end;
-         ++i)
-      {
-        Observer_Entry& entry = (*i).int_id_;
-        copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
-      }
-  }
-
-  for (int i = 0; i != size; ++i)
-    {
-      copy[i]->update_consumer (c_qos ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::disconnected (
     TAO_EC_ProxyPushSupplier* supplier
     ACE_ENV_ARG_DECL)
+{
+  this->consumer_qos_update (supplier ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
+                                        TAO_EC_ProxyPushSupplier *supplier
+                                        ACE_ENV_ARG_DECL)
 {
   if (supplier->subscriptions ().is_gateway)
     return;
@@ -277,28 +242,10 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
   this->fill_qos (c_qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  int size = 0;
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy;
-  {
-    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
-    ACE_CHECK;
-    size = ACE_static_cast (int, this->observers_.current_size ());
-    RtecEventChannelAdmin::Observer_var *tmp;
-    ACE_NEW (tmp, RtecEventChannelAdmin::Observer_var[size]);
-    copy.reset (tmp);
-
-    Observer_Map_Iterator end = this->observers_.end ();
-    int j = 0;
-    for (Observer_Map_Iterator i  = this->observers_.begin ();
-         i != end;
-         ++i)
-      {
-        Observer_Entry& entry = (*i).int_id_;
-        copy[j++] =
-          RtecEventChannelAdmin::Observer::_duplicate (entry.observer.in ());
-      }
-  }
+  RtecEventChannelAdmin::Observer_var *tmp = 0;
+  int size = this->create_observer_list (tmp ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
 
   for (int i = 0; i != size; ++i)
     {
@@ -315,7 +262,8 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   Headers headers;
 
   TAO_EC_Accumulate_Supplier_Headers worker (headers);
-  this->event_channel_->consumer_admin ()->for_each (&worker ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->for_each_consumer (&worker
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::DependencySet& dep = qos.dependencies;
@@ -343,8 +291,8 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   Headers headers;
 
   TAO_EC_Accumulate_Consumer_Headers worker (headers);
-  this->event_channel_->supplier_admin ()->for_each (&worker
-                                                      ACE_ENV_ARG_PARAMETER);
+  this->event_channel_->for_each_supplier (&worker
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   qos.publications.length (ACE_static_cast (CORBA::ULong,

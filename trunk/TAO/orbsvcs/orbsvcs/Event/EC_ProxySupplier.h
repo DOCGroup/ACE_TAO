@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
 
 /**
@@ -49,23 +49,32 @@ class TAO_EC_ProxyPushConsumer;
  * could short-circuit the filter() ---> push() cycle when the EC
  * is properly configured, we need to explore this...
  */
-class TAO_RTEvent_Export TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupplier, public TAO_EC_Filter
+class TAO_RTEvent_Export TAO_EC_ProxyPushSupplier : public TAO_EC_Filter
 {
 public:
   typedef RtecEventChannelAdmin::ProxyPushSupplier Interface;
   typedef RtecEventChannelAdmin::ProxyPushSupplier_var _var_type;
+  typedef RtecEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;
 
-  /// constructor...
-  TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* event_channel, int validate_connection);
+  /// Constructor...
+  TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
-  /// destructor...
+  /// Destructor...
   virtual ~TAO_EC_ProxyPushSupplier (void);
 
   /// Activate in the POA
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr activate (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
+ virtual void activate (
+       RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy
+       ACE_ENV_ARG_DECL)
+   ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC (());
+  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC (());
+
+  /// Disconnect this from
+  virtual void disconnect_push_supplier (
+            ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected (void) const;
@@ -105,6 +114,11 @@ public:
 
   /// Pushes to the consumer, verifies that it is connected and that it
   /// is not suspended.
+  /**
+   * These methods take <consumer> argument  because during the time
+   * the filters have been processing the event, this proxy's consumer
+   * may have changed.
+   */
   void push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
                          const RtecEventComm::EventSet &event
                          ACE_ENV_ARG_DECL);
@@ -119,21 +133,6 @@ public:
    */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
                                         ACE_ENV_ARG_DECL);
-
-  // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
-                RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       RtecEventChannelAdmin::AlreadyConnected,
-                       RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
@@ -159,16 +158,20 @@ public:
                                 const TAO_EC_QOS_Info &qos_info
                                 ACE_ENV_ARG_DECL);
 
-  // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
-
 protected:
   /// Set the consumer, used by some implementations to change the
   /// policies used when invoking operations on the consumer.
   void consumer (RtecEventComm::PushConsumer_ptr consumer);
   void consumer_i (RtecEventComm::PushConsumer_ptr consumer);
+
+  void suspend_connection_i (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void resume_connection_i (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void suspend_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  void resume_connection_locked (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i (void) const;
@@ -176,9 +179,8 @@ protected:
   /// Release the child and the consumer
   void cleanup_i (void);
 
-private:
   /// The Event Channel that owns this object.
-  TAO_EC_Event_Channel* event_channel_;
+  TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -203,6 +205,15 @@ private:
 
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;
+private:
+
+  /// Template method hooks.
+  virtual void refcount_zero_hook (void);
+  virtual void pre_dispatch_hook (RtecEventComm::EventSet&
+                                  ACE_ENV_ARG_DECL);
+  virtual PortableServer::ObjectId
+            object_id (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 #if defined (__ACE_INLINE__)

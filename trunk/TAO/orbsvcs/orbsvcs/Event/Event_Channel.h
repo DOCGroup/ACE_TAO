@@ -28,7 +28,6 @@
 #define ACE_EVENT_CHANNEL_H
 #include "ace/pre.h"
 
-#include "ace/Containers.h"
 #include "ace/Unbounded_Set_Ex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

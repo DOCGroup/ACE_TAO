@@ -24,7 +24,7 @@
 
 #include "EC_QOS_Info.h"
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
 
 /**
@@ -39,7 +39,7 @@ class TAO_RTEvent_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
 public:
   /// Constructor.
-  TAO_EC_Timeout_Filter (TAO_EC_Event_Channel *event_channel,
+  TAO_EC_Timeout_Filter (TAO_EC_Event_Channel_Base *event_channel,
                          TAO_EC_ProxyPushSupplier *supplier,
                          const TAO_EC_QOS_Info& qos_info,
                          RtecEventComm::EventType type,
@@ -88,7 +88,7 @@ private:
 
 private:
   /// The event channel.
-  TAO_EC_Event_Channel* event_channel_;
+  TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The supplier that finally receives the timeout event.
   TAO_EC_ProxyPushSupplier *supplier_;

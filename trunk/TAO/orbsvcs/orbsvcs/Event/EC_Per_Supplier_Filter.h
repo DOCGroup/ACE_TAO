@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template<class PROXY> class TAO_ESF_Proxy_Collection;
+class TAO_EC_Event_Channel_Base;
 
 /**
  * @class TAO_EC_Per_Supplier_Filter
@@ -42,7 +43,7 @@ class TAO_RTEvent_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_Supplier_Fil
 {
 public:
   /// Constructor
-  TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel* ec);
+  TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   /// Destructor
   virtual ~TAO_EC_Per_Supplier_Filter (void);
@@ -68,7 +69,7 @@ public:
 
 private:
   /// The event channel, used to locate the set of consumers.
-  TAO_EC_Event_Channel *event_channel_;
+  TAO_EC_Event_Channel_Base *event_channel_;
 
   /// The proxy for the supplier we are bound to.
   TAO_EC_ProxyPushConsumer* consumer_;
@@ -96,7 +97,7 @@ class TAO_RTEvent_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC_Supp
 {
 public:
   /// constructor....
-  TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel* ec);
+  TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
   virtual TAO_EC_Supplier_Filter*
@@ -106,7 +107,7 @@ public:
 
 private:
   /// The event channel
-  TAO_EC_Event_Channel* event_channel_;
+  TAO_EC_Event_Channel_Base* event_channel_;
 };
 
 #if defined (__ACE_INLINE__)

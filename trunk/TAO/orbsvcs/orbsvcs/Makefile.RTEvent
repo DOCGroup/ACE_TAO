@@ -40,17 +40,21 @@ IDL_FILES += \
     RtecUDPAdmin
 
 CPP_SRCS += \
+        Event/EC_Event_Channel_Base \
         Event/EC_Event_Channel \
         Event/EC_ConsumerAdmin \
         Event/EC_SupplierAdmin \
         Event/EC_ProxyConsumer \
         Event/EC_ProxySupplier \
+        Event/EC_Default_ProxyConsumer \
+        Event/EC_Default_ProxySupplier \
         Event/EC_Supplier_Filter \
         Event/EC_Supplier_Filter_Builder \
         Event/EC_Trivial_Supplier_Filter \
         Event/EC_Filter \
         Event/EC_Filter_Builder \
         Event/EC_Dispatching \
+        Event/EC_Reactive_Dispatching \
         Event/EC_Factory \
         Event/EC_QOS_Info \
         Event/EC_Null_Factory \
@@ -83,6 +87,7 @@ CPP_SRCS += \
 CPP_SRCS += \
         Event_Utilities \
         Event/EC_Gateway \
+        Event/ECG_UDP_Out_Endpoint \
         Event/EC_Gateway_UDP \
         Event/ECG_Mcast_EH \
         Event/ECG_UDP_Sender \

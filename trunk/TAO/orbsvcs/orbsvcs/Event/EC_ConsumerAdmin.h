@@ -25,7 +25,7 @@
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "event_export.h"
 
-class TAO_EC_Event_Channel;
+class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
 
 
@@ -36,7 +36,7 @@ class TAO_EC_ProxyPushConsumer;
  * TAO_EC_ProxyPushSupplier objects.
  *
  * <H2> Memory Management</H2>
- * It does not assume ownership of the TAO_EC_Event_Channel object;
+ * It does not assume ownership of the TAO_EC_Event_Channel_Base object;
  * but it *does* assume ownership of the TAO_EC_ProxyPushSupplier_Set
  * object.
  *
@@ -45,7 +45,7 @@ class TAO_EC_ProxyPushConsumer;
  */
 class TAO_RTEvent_Export TAO_EC_ConsumerAdmin
   : public POA_RtecEventChannelAdmin::ConsumerAdmin
-  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushSupplier,RtecEventChannelAdmin::ProxyPushSupplier,TAO_EC_ProxyPushConsumer>
+  , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushSupplier,RtecEventChannelAdmin::ProxyPushSupplier,TAO_EC_ProxyPushConsumer>
 {
 public:
   /**
@@ -53,7 +53,7 @@ public:
    * the <event_channel> argument.
    * In any case it assumes ownership.
    */
-  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel* event_channel);
+  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
   virtual ~TAO_EC_ConsumerAdmin (void);

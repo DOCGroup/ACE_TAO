@@ -31,20 +31,25 @@ libTAO_Event_la_SOURCES = \
         EC_ConsumerAdmin.cpp \
         EC_Disjunction_Filter.cpp \
         EC_Dispatching.cpp \
+        EC_Reactive_Dispatching.cpp \
         EC_Event_Channel.cpp \
+        EC_Event_Channel_Base.cpp \
         EC_Factory.cpp \
         EC_Filter.cpp \
         EC_Filter_Builder.cpp \
         EC_Gateway.cpp \
         EC_Gateway_UDP.cpp \
+        EC_UDP_Out_Endpoint.cpp \
         ECG_Mcast_EH.cpp \
         EC_Null_Factory.cpp \
         EC_ObserverStrategy.cpp \
         EC_Per_Supplier_Filter.cpp \
         EC_ProxyConsumer.cpp \
+        EC_Default_ProxyConsumer.cpp \
         EC_ProxyPushSupplier_Set.cpp \
         EC_ProxyPushSupplier_Set_T.cpp \
         EC_ProxySupplier.cpp \
+        EC_Default_ProxySupplier.cpp \
         EC_QOS_Info.cpp \
         EC_Reactive_Timeout_Generator.cpp \
         EC_SupplierAdmin.cpp \
@@ -85,7 +90,9 @@ noinst_HEADERS = \
         EC_Dispatching.h \
         EC_Dispatching.i \
         EC_Event_Channel.h \
+        EC_Event_Channel_Base.h \
         EC_Event_Channel.i \
+        EC_Event_Channel_Base.i \
         EC_Factory.h \
         EC_Factory.i \
         EC_Filter.h \
@@ -95,6 +102,8 @@ noinst_HEADERS = \
         EC_Gateway.h \
         EC_Gateway_UDP.h \
         EC_Gateway_UDP.i \
+        EC_UDP_Out_Endpoint.h \
+        EC_UDP_Out_Endpoint.i \
         EC_Null_Factory.h \
         EC_Null_Factory.i \
         EC_ObserverStrategy.h \
@@ -103,12 +112,16 @@ noinst_HEADERS = \
         EC_Per_Supplier_Filter.i \
         EC_ProxyConsumer.h \
         EC_ProxyConsumer.i \
+        EC_Default_ProxyConsumer.h \
+        EC_Default_ProxyConsumer.i \
         EC_ProxyPushSupplier_Set.h \
         EC_ProxyPushSupplier_Set.i \
         EC_ProxyPushSupplier_Set_T.h \
         EC_ProxyPushSupplier_Set_T.i \
         EC_ProxySupplier.h \
         EC_ProxySupplier.i \
+        EC_Default_ProxySupplier.h \
+        EC_Default_ProxySupplier.i \
         EC_QOS_Info.h \
         EC_QOS_Info.i \
         EC_Reactive_Timeout_Generator.h \

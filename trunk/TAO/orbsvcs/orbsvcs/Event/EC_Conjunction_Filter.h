@@ -93,10 +93,13 @@ private:
 
   /**
    * The number of words in the bit vector
+   */
+  size_t nwords_;
+
+  /**
    * The bit vector to keep track of the children that have received
    * their events.
    */
-  size_t nwords_;
   Word* bitvec_;
 
   /// The current child in the iteration, used in the push() method...

@@ -73,55 +73,6 @@ class TAO_ECG_UDP_Out_Endpoint;
 // ****************************************************************
 
 /**
- * @class TAO_ECG_UDP_Out_Endpoint
- *
- * @brief Maintains information about an outgoing endpoint.
- *
- * UDP senders can share a single endpoint to send UDP packets,
- * but there is more state associated with this endpoint than its
- * datagram SAP; for instance we need to keep track of the request
- * id.
- */
-class TAO_RTEvent_Export TAO_ECG_UDP_Out_Endpoint
-{
-public:
-  /// Constructor
-  TAO_ECG_UDP_Out_Endpoint (void);
-
-  /// Constructor
-  ~TAO_ECG_UDP_Out_Endpoint (void);
-
-  /// Obtain the datagram associated with this endpoint. Clients of
-  /// this class must open, and register (if necessary) this datagram.
-  ACE_SOCK_Dgram& dgram (void);
-
-  /// Obtain the next request id.
-  CORBA::ULong next_request_id (void);
-
-  /// The endpoint can detect if a data-gram was sent by itself, this
-  /// is useful to ignore or remove messages sent by the same process.
-  CORBA::Boolean is_loopback (const ACE_INET_Addr& from);
-
-private:
-  /// The request id....
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong> request_id_generator_;
-
-  /// The datagram....
-  ACE_SOCK_Dgram dgram_;
-
-  /// cache the port-number so we can quickly determine if an event is
-  /// coming from another endpoint.
-  u_short port_number_;
-
-  /// Keep the list of local interfaces, needed for the is_loopback
-  /// method.
-  size_t if_count_;
-  ACE_INET_Addr* ifs_;
-};
-
-// ****************************************************************
-
-/**
  * @class TAO_ECG_UDP_Request_Index
  *
  * @brief Index to the request map.

@@ -4,7 +4,7 @@
 #include "EC_Kokyu_Dispatching.h"
 #include "EC_Kokyu_Scheduling.h"
 #include "EC_Kokyu_Filter_Builder.h"
-#include "EC_Event_Channel.h"
+#include "EC_Event_Channel_Base.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Arg_Shifter.h"
@@ -175,7 +175,7 @@ TAO_EC_Kokyu_Factory::fini (void)
 // ****************************************************************
 
 TAO_EC_Dispatching*
-TAO_EC_Kokyu_Factory::create_dispatching (TAO_EC_Event_Channel *ec)
+TAO_EC_Kokyu_Factory::create_dispatching (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->dispatching_ == 2)
     return new TAO_EC_Kokyu_Dispatching (ec);
@@ -183,7 +183,7 @@ TAO_EC_Kokyu_Factory::create_dispatching (TAO_EC_Event_Channel *ec)
 }
 
 TAO_EC_Filter_Builder*
-TAO_EC_Kokyu_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
+TAO_EC_Kokyu_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
 {
   if (this->filtering_ == 3)
     return new TAO_EC_Kokyu_Filter_Builder (ec);
@@ -193,7 +193,7 @@ TAO_EC_Kokyu_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
 
 
 TAO_EC_Timeout_Generator*
-TAO_EC_Kokyu_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
+TAO_EC_Kokyu_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *ec)
 {
 #if 0
   if (this->timeout_ == 1)
@@ -205,7 +205,7 @@ TAO_EC_Kokyu_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
 }
 
 TAO_EC_Scheduling_Strategy*
-TAO_EC_Kokyu_Factory::create_scheduling_strategy (TAO_EC_Event_Channel* ec)
+TAO_EC_Kokyu_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base* ec)
 {
   if (this->scheduling_ == 2)
     {
