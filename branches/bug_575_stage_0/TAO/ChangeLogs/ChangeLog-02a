@@ -1,3 +1,385 @@
+Thu May 24 12:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h: Added some design forces for the input data
+	  path.  
+
+Thu May 24 10:30:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+          Removed generation of "_var_type" typedef for
+          anonymous sequences, since the _var class for
+          anonymous sequences is not generated. Thanks to
+          Lothar Werzinger <Werzinger.Lothar@krones.de> for
+          reporting this bug.
+
+Thu May 24 09:47:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp:
+        * TAO_IDL/be_include/be_predefined_type.h:
+        * TAO_IDL/be_include/be_string.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/util/utl_identifier.cpp:
+
+          Fixed a problem, with the changes below, that was
+          causing an incorrent typecode name to be generated
+          in the client header file. Also removed unused
+          default arguments from be_visitor_typecode_defn::tc_name(),
+          and unused functions from be_visitor_typecode_defn,
+          be_type, be_predefined_type, and be_string.
+
+Wed May 23 21:27:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_identifier.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Moved the stripping of the leading underscore (if any)
+          of an identifier from the lexer to the Identifier
+          constructor, and added a flag to the Identifier class
+          to indicate that the name had been 'escaped' in the IDL
+          file. Escaping is the workaround described in the spec
+          for legacy IDL files containing names that have since
+          become IDL keywords. Escaping turns off keyword checking,
+          but the generated name must be stripped of the underscore.
+          Previously, checking for a clash with an IDL keyword in
+          the IDL compiler was case-sensitive. That part is still
+          there, since an exact match causes the lexer to return
+          a token of the wrong type, leading to a 'syntax error'
+          message. Case-insensitive checking has now been added,
+          just before the node is added to the AST, and it is 
+          turned off by a check of the new 'escaped' flag in class
+          Identifier. Note that a case-sensitive match with a C++
+          keyword will, as defined by the spec, cause '_cxx_' to
+          be prepended to the generated name - this is unchanged
+          in the IDL compiler. Thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for discovering and reporting
+          this bug.
+
+          Also removed three default arguments from the Identifier
+          class constructor that have never been used.
+
+        * tao/orb.idl:
+
+          Removed forward declarations of interface Object and
+          interface Exception from the file. They are unused
+          and undefined, and they also cause problems with the
+          new case-insensitive checking for IDL keyword class
+          described above, if orb.idl is included in another
+          IDL file. The spec does not require anything in
+          particular to be in orb.idl - it only requires that
+          it be there.
+
+        * orbsvcs/orbsvcs/CosLifeCycle.idl:
+
+          Placed a leading underscore in front of the name "Factory",
+          now an IDL keyword.
+
+        * orbsvcs/orbsvcs/FT_CORBA.idl
+
+          Placed a leading underscore in front of the name "factory",
+          now an IDL keyword.
+
+Wed May 23 18:53:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTPOA.pidl:
+          Removed file, since it is not used anymore and is replaced by
+          tao/PortableServer/RTPortableServer.pidl.  Thanks to Steve
+          Totten <totten_s@ociweb.com> for pointing this out.
+
+Wed May 23 15:11:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Makefile:
+        * performance-tests/README:
+        * performance-tests/Latency/Latency.dsw:
+        * performance-tests/Latency/Makefile:
+        * performance-tests/Latency/Makefile.bor:
+        * performance-tests/Latency/README:
+        * performance-tests/Latency/TestImpl.java:
+        * performance-tests/Latency/ami-latency-client.bor:
+        * performance-tests/Latency/ami-latency-client.cpp:
+        * performance-tests/Latency/ami-throughput-client.bor:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * performance-tests/Latency/client-mt-exclusive.conf:
+        * performance-tests/Latency/client-st-exclusive.conf:
+        * performance-tests/Latency/client-st-muxed.conf:
+        * performance-tests/Latency/client.bor:
+        * performance-tests/Latency/client.conf:
+        * performance-tests/Latency/client.cpp:
+        * performance-tests/Latency/client.dsp:
+        * performance-tests/Latency/deferred_synch_client.dsp:
+        * performance-tests/Latency/dii_client.bor:
+        * performance-tests/Latency/dii_client.cpp:
+        * performance-tests/Latency/java_client.java:
+        * performance-tests/Latency/java_server.java:
+        * performance-tests/Latency/multi_threaded.pl:
+        * performance-tests/Latency/run_test.pl:
+        * performance-tests/Latency/scalability.pl:
+        * performance-tests/Latency/server.bor:
+        * performance-tests/Latency/server.conf:
+        * performance-tests/Latency/server.cpp:
+        * performance-tests/Latency/server.dsp:
+        * performance-tests/Latency/single_threaded.pl:
+        * performance-tests/Latency/st_client.bor:
+        * performance-tests/Latency/st_client.conf:
+        * performance-tests/Latency/st_client.cpp:
+        * performance-tests/Latency/st_client.dsp:
+        * performance-tests/Latency/st_server.bor:
+        * performance-tests/Latency/st_server.conf:
+        * performance-tests/Latency/st_server.cpp:
+        * performance-tests/Latency/st_server.dsp:
+        * performance-tests/Latency/test.idl:
+        * performance-tests/Latency/test_i.cpp:
+        * performance-tests/Latency/test_i.h:
+        * performance-tests/Latency/test_i.i:
+          Removed the Latency test(s).  The test has been superseeded by:
+          Single_Threaded_Latency, AMI_Latency, DII_Latency, DSI_Latency,
+          Deferred_Latency and Thread_Pool_Latency.
+          I didn't remove this stuff before because I was making sure that
+          the new tests were useful for the nightly regression testsuite.
+          This completes the fixes for [BUGID:324]
+
+Wed May 23 15:55:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * examples/Simple/squareit/README
+        * examples/Simple/fullname/README:
+        * examples/Simple/invert_string/README:
+        * examples/Simple/palindrome/README: A simple set of examples that
+          will be implemented by our summer interns. The README files
+          specify what they are expected to do.
+
+Wed May 23 15:09:21 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * tao/iiop_endpoints.pidl:
+
+          Fix comment.
+
+Wed May 23 14:26:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/include/drv_private.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Applied patches sent in by Craig Rodrigues <rodrigc@mediaone.net>
+          to enable the IDL compiler to process multiple files. The
+          code that was there worked on Solaris, but not on Linux or Win32.
+          These changes have made it work portably. Also moved some
+          global declarations to allow their use by more than one file,
+          and made the usual ACE-ification and cosmetic changes.
+
+Wed May 23 13:01:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tests/RTCORBA/Thread_Pool/client.cpp: Changed the default number
+          of iterations.
+
+Wed May 23 11:53:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+
+          Fixed tao_ifr's handling of forward declared interfaces.
+          The fix also required the addition of code in the IDL
+          compiler to copy some IFR-specific flags in class
+          AST_Interface when a forward declared interface's
+          full-definition node is redefined. Thanks to
+          Philippe Merle <Philippe.Merle@lifl.fr> for discovering
+          this bug in his testing of TAO with CorbaScript.
+
+Wed May 23 11:45:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          Added code to pad the end of a string inserted into the
+          typecode, to keep the total length a multiple of 4 bytes,
+          as it is done with typecode generation in the IDL compiler.
+
+          Also added code to consolidate the message block before
+          calling the typecode constructor. Typecodes constructed
+          from a message block large enough to be chained were returning
+          garbage values from some accessors. Thanks to Arturo Josè
+          Montes Sinning <mitosys@colomsat.net.co> and to Philippe
+          Merle <Philippe.Merle@lifl.fr> for simultaneously discovering
+          this bug, and to Carlos for seeing the fix right away.
+
+Wed May 23 11:37:02 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * docs/Options.html:
+
+          Added the -ORBLogFile option.  Removed the -ORBCollocation
+          yes option (it is deprecated).  Did some minor reformatting.
+
+Wed May 23 09:36:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+
+          Updated static release settings to avoid using anything or
+          having any dependencies on things that aren't built in the
+          static release automatic build.  This should fix the problems
+          of not being able to find tao_idl.exe in the automatic builds.
+
+Wed May 23 09:04:35 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Cache_Entries.cpp:
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.inl:
+        * tao/Connection_Purging_Strategy.h:
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/LRU_Connection_Purging_Strategy.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Cache_Manager.inl:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.h:
+
+          Performance enhancement and race condition fix for the connection
+          purging strategy change.  This version has far less allocations and
+          locking in the main line of execution.
+
+Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.h:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+
+          Provided a mechanism to modify QoS when there is a change in
+ 	  QoS. Also added the QoS negotiator mechanism as a means of
+ 	  notifying change in QoS.
+
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+
+         Enhanced the test to test the notification and modification of change in QoS.
+
+Tue May 22 15:34:20 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
+	* tao/tests/Big_Oneways/Session.{h,cpp}:
+	* tao/tests/AMI_Buffering/test_i.{h,cpp}:
+	* tao/examples/Logging/Logger_i.{h,cpp}:
+	* tao/examples/Buffered_Oneways/test_i.{h,cpp}:
+	* tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
+	  Fixed compile errors in Forte update 1.
+
+Tue May 22 21:21:10 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: When the IFR and Name
+	  Service initialize the multicast server they check if the
+ 	  ORBMulticastDiscoveryEndpoint option was specified and use that
+ 	  address instead of the default one, however, the Trading Service
+ 	  did not. It just uses the hard coded default no matter
+ 	  what. This meant we can't programmatically change the multicast
+ 	  endpoint.  The fix was to add the little bit of code in the Name
+ 	  Service and IFR implementation to
+ 	  TAO_Trading_Loader::init_multicast_server() that checks for the
+ 	  multicast endpoint.  Thanks to Mike Pyle
+ 	  <mike.pyle@burning-glass.com> for this fix.	
+  
+Mon May 21 18:43:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/QtTests: Fixed the Makefile so that it handles the
+	  PLATFORM_QT_* flags correctly.  Thanks to Hans Utz
+ 	  <hans.utz@informatik.uni-ulm.de> for reporting this.
+
+Mon May 21 23:22:20 2001  Ossama Othman  <ossama@uci.edu>
+
+        * tao/TAO_Internal.cpp (open_services):
+
+          Fixed seg faults that occured due to brain damaged compilers
+          that still treat string literals as "char *" instead of "const
+          char *".  This compiler problem caused the wrong (shallow)
+          assignment operator to be used instead of the correct (deep)
+          assignment operator.  When the string sequence went out of
+          scope, it attempted to delete a string that was not dynamically
+          allocated.  To get around deficiencies in such compilers,
+          duplicate the string literal using CORBA::string_dup().
+
+Mon May 21 16:54:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+          Add missing forward declaration for ACE_Command_Base.  Thanks to
+          the SAIC guys for pointing this out: Frank J. Hodum
+          <fhodum@dctd.saic.com> and J. Russell Noseworthy
+          <rnosewor@objectsciences.com>
+
+Mon May 21 15:39:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * tests/Native_Exceptions/test_i.{h,cpp}:
+        * tests/DSI_Gateway/test_i.{h,cpp}:
+        * tests/Timed_Buffered_Oneways/test_i.{h,cpp}:
+        * tests/Portable_Interceptors/Dynamic/test_i.{h,cpp}:
+        * tests/Endpoint_Per_Priority/test_i.{h,cpp}:
+        * tests/Forwarding/test_i.{h,cpp}:
+
+        Fixed compilation errors in Forte Update 1.
+
+Sun May 20 12:30:52 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * performance-tests/Callback/Server_i.{h,cpp}:
+        * performance-tests/Callback/Callback_i.{h,cpp}:
+        * performance-tests/Latency/test_i.{h,cpp}:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.{h,cpp}:
+          Fixed compile errors in Forte update 1.
+
+Sun May 20 10:43:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tests/OctetSeq/test_i.{h,cpp}:
+        * tests/MT_Server/test_i.{h,cpp}:
+        * tests/Nested_Event_Loop/test_i.{h,cpp}:
+        * tests/Leader_Followers/test_i.{h,cpp}
+        * tests/Object_Loader/Test_i.{h,cpp}:
+        * tests/Single_Read/test_i.{h,cpp}: Fixed compile errors in Forte
+          update 1.
+
 Sat May 19 20:37:00 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* tests/Connection_Purging/server.dsp: Fixed an error on Win32
