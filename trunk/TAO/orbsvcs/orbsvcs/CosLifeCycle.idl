@@ -105,10 +105,11 @@ module CosLifeCycle{
 
 
 // Criteria, page 6-17:
-
+/*
 typedef struct NVP {
   CosNaming::Istring name;	
   any value;
 } NameValuePair;
 
 typedef sequence <NameValuePair> Criteria;
+*/
