@@ -8,7 +8,6 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
 ACE_INLINE
 CORBA::IRObject::CORBA_IRObject (void) // default constructor
 {}
@@ -14853,4 +14852,4 @@ operator>> (
   return 0;
 }
 
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
+
