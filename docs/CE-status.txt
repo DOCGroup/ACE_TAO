@@ -2,30 +2,6 @@
 
 [Current difficulties]
 
-  [FILETIME]
-     Win32's FILETIME format can be converted to struct timeval thru a
-     simple conversion.  However, the tricky part here is, FILETIME is
-     the total 100ns elapse since _1601_ (why the heck did Microsoft
-     choose this time?) whereas POSIX timeval gives you the
-     accumulated time in us since 1970.  This leads to data overflow
-     in timeval struture which ACE uses internally for its
-     ACE_Time_Value.  This also confuses ACE_OS::ctime, which, under
-     CE, is a home-brewed implementation, and corrupt the whole
-     program image.  I don't know of a way to deal with this yet
-     except adjusting for the time difference between the two
-     everytime a conversion is necessary.  This, of course, doesn't
-     seem to be a good choice.
-
-  [ARGV]
-     Is kind of falky.  I use it to pass in command line arguments.
-
-  [CE Toolkit]
-     Using CE toolkit for C++ is simply a pain in the ass.  It takes
-     around 30 seconds to start up a debug session and 5+ seconds to
-     single step thru a statement.  It only allows remote debugging
-     using the serial link but not the network.  (BTW, currently, CE
-     only support NE2000 compatible PCMCIA ethernet card.)  
-
 [Hints on writing portable code using ACE]
 
   [Testing Non-Window based ACE programs]
@@ -88,6 +64,14 @@
 
 
 [CE Toolkit issues]
+
+  [CE Toolkit]
+     Using CE toolkit for C++ is simply a pain in the ass.  It takes
+     around 30 seconds to start up a debug session and 5+ seconds to
+     single step thru a statement.  It only allows remote debugging
+     using the serial link but not the network.  (BTW, currently, CE
+     only support NE2000 compatible PCMCIA ethernet card.)  
+
   [SH3 compiler]
      * The SH3 compiler does not generate string literals when they
        are used inside a function and when a precompiled header is
@@ -105,6 +89,24 @@
        __declspec(dllimport) is used for a class with a virtual
        function in it. To avoid the internal error, change the
        imported class to not use any virtual functions.  
+
+
+[Tidbits]
+
+  [FILETIME]
+     Win32's FILETIME format can be converted to struct timeval thru a
+     simple conversion.  However, the tricky part here is, FILETIME is
+     the total 100ns elapse since _1601_ (why the heck did Microsoft
+     choose this time?) whereas POSIX timeval gives you the
+     accumulated time in us since 1970.  This leads to data overflow
+     in timeval struture which ACE uses internally for its
+     ACE_Time_Value.  This also confuses ACE_OS::ctime, which, under
+     CE, is a home-brewed implementation, and corrupt the whole
+     program image.  I don't know of a way to deal with this yet
+     except adjusting for the time difference between the two
+     everytime a conversion is necessary.  This, of course, doesn't
+     seem to be a good choice.
+
 
 
 [ACE File list]
