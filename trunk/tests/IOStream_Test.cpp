@@ -327,6 +327,8 @@ server (void *arg = 0)
               && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)
               && (d >= -45e+9 && d <= 47e+9));
 
+  client_handler.close ();
+
   return 0;
 }
 
@@ -378,6 +380,9 @@ spawn (void)
                      "threads *and* processes not supported on this platform\n"),
                     -1);
 #endif /* ACE_HAS_THREADS */
+
+  acceptor.close ();
+
   return 0;
 }
 #endif /* !ACE_LACKS_ACE_IOSTREAM */

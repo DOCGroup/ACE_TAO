@@ -1653,6 +1653,9 @@ ACE_Thread_Adapter::invoke (void)
 
   void *status = 0;
 
+#if 1
+  status = (void*) (*func) (arg);  // Call thread entry point.
+#else
   ACE_SEH_TRY {
     status = (void*) (*func) (arg);  // Call thread entry point.
   }
@@ -1663,6 +1666,7 @@ ACE_Thread_Adapter::invoke (void)
     // so that we can make sure to clean up correctly when the thread
     // exits.
   }
+#endif /* 0 */
 
   // Call the Task->close () hook.
   if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)

@@ -72,7 +72,7 @@ Supplier_Task::open (void *)
 {
   if (this->pipe_.open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "open failed"), -1);
-  else if (this->activate (THR_BOUND))
+  else if (this->activate (THR_DETACHED))
     // Make this an Active Object.
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "activate failed"), -1);
   else if (ACE_Reactor::instance()->register_handler 

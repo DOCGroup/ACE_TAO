@@ -1,3 +1,43 @@
+Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
+
+	* tests/Future_Test.cpp (open): Added THR_DETACHED since we don't
+ 	  wait for this thread.
+
+	* tests/Reactor_Notify_Test.cpp (open): Changed THR_BOUND to
+ 	  THR_DETACHED since we don't wait for this thread.
+	
+	* tests/IOStream_Test.cpp (server): Make sure to close the socket
+ 	  in ACE_SOCK_Acceptor and ACE_SOCK_IOStream.
+
+	* ace/WFMO_Reactor.cpp (open): When I changed open() last, I
+ 	  ignored the order of the registeration of notify_handler_ and
+ 	  wakeup_all_threads_handler_.  Unfortunately, the order of the
+ 	  two registrations is very important since the optimization for
+ 	  owner thread takes advantage of this ordering.  Therefore,
+ 	  revert the order of register to notify_handler_ followed by
+ 	  wakeup_all_threads_handler_.
+
+	* tests/version_tests/run_all_tests.bat: Added new bat file to
+ 	  make the running of all the different configurations easier.
+
+	* tests/version_tests/version_tests.{mak,mdp}: Added a mammoth
+ 	  testing scheme that is used to test all 8 configurations of the
+ 	  tests under Win32.  These 8 configurations are:
+
+	  DLL Debug
+	  DLL Release
+	  DLL Unicode Debug
+	  DLL Unicode Release
+	  static Debug
+	  static Release
+	  static Unicode Debug
+	  static Unicode Release
+
+	  run_tests.bat from the test directory can then be used to run
+ 	  these various configurations.  run_tests.bat was also extended
+ 	  to allow the user to purify the tests.  Simply execute
+ 	  run_tests.bat with the purify command line option.
+
 Thu Nov 20 17:43:15 1997    <nw1@COYOTE>
 
 	* ace/Thread_Manager.cpp (kill_thr): Changed to prevent thread
