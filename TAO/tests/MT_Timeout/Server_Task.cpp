@@ -18,7 +18,6 @@ Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,
 int
 Server_Task::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -30,6 +29,5 @@ Server_Task::svc (void)
       return -1;
     }
   ACE_ENDTRY;
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server task finished\n"));
   return 0;
 }

@@ -30,9 +30,6 @@ Session::~Session (void)
 int
 Session::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Session::svc, start\n"));
-
   this->barrier_.wait ();
 
   /// Automatically decrease the reference count at the end of the
@@ -83,8 +80,6 @@ Session::svc (void)
         this->active_thread_count_--;
         if (this->more_work ())
           {
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Session::svc, end\n"));
             return 0;
           }
       }
@@ -98,8 +93,6 @@ Session::svc (void)
     }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Session::svc, end\n"));
   return 0;
 }
 
@@ -203,14 +196,13 @@ Session::receive_payload (const Test::Payload &the_payload,
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->expected_messages_--;
 
-    int verbose = 0;
 #if 0
+    int verbose = 0;
     verbose = this->expected_messages_ % 500 == 0;
     if (this->expected_messages_ < 500)
       verbose = (this->expected_messages_ % 100 == 0);
     if (this->expected_messages_ < 100)
       verbose = (this->expected_messages_ % 10 == 0);
-#endif /* 0 */
     if (this->expected_messages_ < 5)
       verbose = 1;
 
@@ -221,6 +213,8 @@ Session::receive_payload (const Test::Payload &the_payload,
                     "%d messages to go\n",
                     this->expected_messages_));
       }
+#endif /* 0 */
+
     if (this->more_work ())
       return;
   }
