@@ -93,7 +93,7 @@ module Stock
       void register_factory (in string name, 
 			     in string location,
 			     in string description,
-			     in Object object);
+			     in Object _object);
       // provide an method for registering factories with their properties
     };
 
