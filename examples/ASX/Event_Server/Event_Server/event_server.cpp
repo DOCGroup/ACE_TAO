@@ -38,12 +38,18 @@ Quit_Handler::Quit_Handler (void)
 int
 Quit_Handler::handle_input (ACE_HANDLE)
 {
+  // This code here will make sure we actually wait for the user to
+  // type something. On platforms like Win32, handle_input() is called
+  // prematurely (even when there is no data).
+  char temp_buffer [BUFSIZ];
+  ACE_OS::read (ACE_STDIN, temp_buffer, sizeof (temp_buffer));
+
   Options::instance ()->stop_timer ();
   ACE_DEBUG ((LM_INFO, "(%t) closing down the test\n"));
   Options::instance ()->print_results ();
 
   ACE_Service_Config::end_reactor_event_loop ();
-  return 0;
+  return -1;
 }
 
 int
