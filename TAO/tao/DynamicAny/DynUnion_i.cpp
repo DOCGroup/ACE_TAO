@@ -103,29 +103,38 @@ TAO_DynUnion_i::init (CORBA_TypeCode_ptr tc,
 
 TAO_DynUnion_i *
 TAO_DynUnion_i::_narrow (CORBA::Object_ptr obj,
-                       CORBA::Environment &)
+                         CORBA::Environment &)
 {
   if (CORBA::is_nil (obj))
-    return 0;
+    {
+      return 0;
+    }
 
-  return ACE_reinterpret_cast (TAO_DynUnion_i*,
-             obj->_tao_QueryInterface (ACE_reinterpret_cast(ptr_arith_t,
-                                           &TAO_DynUnion_i::_narrow))
-             );
+  return ACE_reinterpret_cast (
+             TAO_DynUnion_i*,
+             obj->_tao_QueryInterface (
+                      ACE_reinterpret_cast (
+                          ptr_arith_t,
+                          &TAO_DynUnion_i::_narrow
+                        )
+                    )
+           );
 }
 
 void*
 TAO_DynUnion_i::_tao_QueryInterface (ptr_arith_t type)
 {
   ptr_arith_t mytype =
-    ACE_reinterpret_cast(ptr_arith_t,
-                         &TAO_DynUnion_i::_narrow);
+    ACE_reinterpret_cast (ptr_arith_t,
+                          &TAO_DynUnion_i::_narrow);
   if (type == mytype)
     {
       this->_add_ref ();
       return this;
     }
-  return this->ACE_NESTED_CLASS (DynamicAny, DynAny::_tao_QueryInterface) (type);
+
+  return 
+    this->ACE_NESTED_CLASS (DynamicAny, DynUnion::_tao_QueryInterface) (type);
 }
 
 // Private functions
