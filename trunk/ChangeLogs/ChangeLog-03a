@@ -1,3 +1,15 @@
+Sat Aug 25 10:16:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Svc_Handler_Test.cpp (main): The destructor of svc_handler
+	  will close file_io, so we don't need to do it explicitly!
+
+	* ace/Log_Msg.h (ACE_Log_Msg): Increased the size of the buffer
+	  used to store log records to account for the NUL-terminator.
+
+	* tests/Svc_Handler_Test.cpp (main): Changed the buffer size
+	  and NUL-terminated the buffer so that things print correctly.
+  	  Thanks to Nanbor for finding this.
+
 Sat Aug 25 09:00:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp:
