@@ -1,8 +1,26 @@
+Thu Jun 17 18:04:30 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* tests/test-[1-5].exp: Fixed all the tests to account for the new
+ 	  EBCDIC output.
+
+Thu Jun 17 17:25:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp (output_hash_function): Generate an asso_values
+ 	  table that will have the appropriate values for both EBCDIC or
+ 	  ASCII, depending on the platform.
+
+	* src/Key_List.cpp (output_hash_function),
+	  src/Gen_Perf.cpp (Gen_Perf),
+	  src/Vectors.h: Replaced the use of ALPHA_SIZE with
+	  ACE_STANDARD_CHARACTER_SET_SIZE, which works correctly for
+	  EBCDIC platforms, as well as ASCII ones.  Thanks to
+	  Jim Rogers  <jrogers@viasoft.com> for this suggestion.
+
 Wed Jun 16 19:08:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Key_List.cpp: Fixed the key_word table generation so that it
-	generates the "default fill" string for the null entries in the
-	table. Thanks to Irfan and Naga for helping in this. 
+ 	  generates the "default fill" string for the null entries in the
+ 	  table. Thanks to Irfan and Naga for helping in this.
 
 Sun Jun  6 15:47:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 

@@ -39,7 +39,7 @@ const char *const Key_List::default_return_type = "char *";
 // How wide the printed field width must be to contain the maximum
 // hash value.
 int Key_List::field_width = 0;
-int Key_List::determined_[Vectors::ALPHA_SIZE];
+int Key_List::determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
 
 // Destructor dumps diagnostics during debugging.
 
@@ -1066,6 +1066,32 @@ Key_List::output_hash_function (void)
   const int max_column = 10;
   int count = max_hash_value;
 
+  // Lookup table for converting ASCII to EBCDIC.
+  static const int ascii_to_ebcdic[ACE_ASCII_SIZE] = 
+  {
+    0x00, 0x01, 0x02, 0x03, 0x37, 0x2D, 0x2E, 0x2F,
+    0x16, 0x05, 0x15, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+    0x10, 0x11, 0x12, 0x13, 0x3C, 0x3D, 0x32, 0x26,
+    0x18, 0x19, 0x3F, 0x27, 0x22, 0x1D, 0x1E, 0x1F,
+ 
+    0x40, 0x5A, 0x7F, 0x7B, 0x5B, 0x6C, 0x50, 0x7D,
+    0x4D, 0x5D, 0x5C, 0x4E, 0x6B, 0x60, 0x4B, 0x61,
+    0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7,
+    0xF8, 0xF9, 0x7A, 0x5E, 0x4C, 0x7E, 0x6E, 0x6F,
+ 
+    0x7C, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7,
+    0xC8, 0xC9, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6,
+    0xD7, 0xD8, 0xD9, 0xE2, 0xE3, 0xE4, 0xE5, 0xE6,
+    0xE7, 0xE8, 0xE9, 0xAD, 0xE0, 0xBD, 0x5F, 0x6D,
+ 
+    0x79, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
+    0x88, 0x89, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96,
+    0x97, 0x98, 0x99, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6,
+    0xA7, 0xA8, 0xA9, 0xC0, 0x6A, 0xD0, 0xA1, 0x07};
+ 
+   int ebcdic_to_ascii[ACE_EBCDIC_SIZE];
+   int target;
+
   // Calculate maximum number of digits required for MAX_HASH_VALUE.
 
   for (Key_List::field_width = 2;
@@ -1082,21 +1108,78 @@ Key_List::output_hash_function (void)
   if (option[CPLUSPLUS])
     ACE_OS::printf ("%s::", option.class_name ());
 
-  ACE_OS::printf (option[ANSI]
-          ? "%s (const char *str, unsigned int len)\n{\n  static %sunsigned %s asso_values[] =\n    {"
-          : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n  static %sunsigned %s asso_values[] =\n    {",
-          option.hash_name (), option[CONSTANT] ? "const " : "",
-          max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
-
-  for (count = 0; count < Vectors::ALPHA_SIZE; ++count)
+  ACE_OS::printf (option[ANSI] 
+                  ? "%s (const char *str, unsigned int len)\n{\n"
+                  : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
+                  option.hash_name ());
+   
+  // Generate the asso_values table.
+  ACE_OS::printf ("  static %sunsigned %s asso_values[] =\n    {",
+                  option[CONSTANT] ? "const " : "",
+                  max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
+   
+  ACE_OS::printf ("\n#if defined (ACE_MVS)");
+  if (ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE) 
     {
-      if (!(count % max_column))
-        ACE_OS::printf ("\n    ");
+      // We are running in EBCDIC environment.
+      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
+        {
+          if (!(count % max_column))
+            ACE_OS::printf ("\n    ");
+  
+          ACE_OS::printf ("%*d,",
+ 			  Key_List::field_width,
+ 			  Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
+        }
 
-      ACE_OS::printf ("%*d,",
-              Key_List::field_width,
-              Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
+      ACE_OS::printf ("\n#else");
+
+      for (count = 0; count < ACE_ASCII_SIZE; ++count)
+        {
+          if (!(count % max_column))
+            ACE_OS::printf ("\n    ");
+   
+          target = ascii_to_ebcdic[count];
+          ACE_OS::printf ("%*d,",
+			  Key_List::field_width,
+ 			  Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
+        }
     }
+  else 
+    {
+      // We are running in ASCII environment.
+      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
+        ebcdic_to_ascii[count] = 0;
+
+      for (count = 0; count < ACE_ASCII_SIZE; ++count) 
+        {
+          target = ascii_to_ebcdic[count];
+          ebcdic_to_ascii[target] = count;
+        }
+
+      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
+        {
+          if (!(count % max_column))
+            ACE_OS::printf ("\n    ");
+   
+          target = ebcdic_to_ascii[count];
+          ACE_OS::printf ("%*d,",
+ 			  Key_List::field_width,
+ 			  Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
+        }
+      ACE_OS::printf ("\n#else");
+
+      for (count = 0; count < ACE_ASCII_SIZE; ++count)
+        {
+          if (!(count % max_column))
+            ACE_OS::printf ("\n    ");
+   
+          ACE_OS::printf ("%*d,",
+ 			  Key_List::field_width, 
+ 			  Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
+        }
+    }
+   ACE_OS::printf ("\n#endif /* ACE_MVS */");
 
   // Optimize special case of ``-k 1,$''
   if (option[DEFAULTCHARS])
