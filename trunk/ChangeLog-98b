@@ -1,3 +1,12 @@
+Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers_T.{h,cpp}
+
+          Fixed memory leaks uncovered by Purify, added large high water mark
+	  for packet relay's underlying message queue.
+	
 Wed Sep 23 11:28:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/Process_Unix.pm: 
@@ -28,7 +37,7 @@ Tue Sep 22 21:00:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
           examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
-          examples/Bounded_Packet_Relay/BPR_Drivers_T.{h,cpp} (new)
+          examples/Bounded_Packet_Relay/BPR_Drivers_T.{h,cpp}
           examples/Bounded_Packet_Relay/bpr_thread.cpp:
 
           More fixes from testing on NT, added more logging features.

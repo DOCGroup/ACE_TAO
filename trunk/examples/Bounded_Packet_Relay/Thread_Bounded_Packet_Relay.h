@@ -169,6 +169,9 @@ public:
 	           Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
   // Constructor.
 
+  ~User_Input_Task (void);
+  // Destructor.
+
   virtual int svc (void);
   // This method runs the event loop in the new thread.
 
