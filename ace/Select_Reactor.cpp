@@ -113,12 +113,14 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
       errno = ERANGE;
       return -1;
     }
-  // Increase the number of handles if <size> is greater than the
-  // current limit.
-  if (size > (size_t) ACE::max_handles ())
-    return ACE::set_handle_limit (size);
   else
-    return 0;
+    {
+      // Try to increase the number of handles if <size> is greater than
+      // the current limit.  We ignore the return value here because this
+      // is more of a "warning" not an error.
+      (void) ACE::set_handle_limit (size);
+      return 0;
+    }
 }
 
 // Initialize a repository of the appropriate <size>.
