@@ -48,6 +48,13 @@ CORBA_Request::_decr_refcnt (void)
   return 0;
 }
 
+// The pseudo-object _nil method.
+CORBA_Request_ptr
+CORBA_Request::_nil (void)
+{
+  return (CORBA_Request_ptr)0;
+}
+
 // DII Request class implementation
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
@@ -133,7 +140,7 @@ CORBA_Request::~CORBA_Request (void)
 void
 CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean argument_flag = this->args_->count () ? 1 : 0;
+  CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
 
   TAO_GIOP_DII_Invocation call (this->target_->_stubobj (),
                                 this->opname_,
