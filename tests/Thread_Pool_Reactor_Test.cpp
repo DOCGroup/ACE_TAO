@@ -132,10 +132,10 @@ Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
 int
 Request_Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_TCHAR buffer[BUFSIZ];
+  char buffer[BUFSIZ];
   ACE_TCHAR len = 0;
   ssize_t result = this->peer ().recv (&len,
-                                       sizeof (ACE_TCHAR));
+                                       sizeof (char));
 
   if (result > 0
       && this->peer ().recv_n (buffer, len) == len)
@@ -146,8 +146,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   ACE_TEXT ("(%t) svr input; fd: 0x%x; input: %s\n"),
                   fd,
                   buffer));
-      if (ACE_OS::strcmp (buffer,
-                          ACE_TEXT ("shutdown")) == 0)
+      if (ACE_OS::strcmp (buffer, "shutdown") == 0)
           ACE_Reactor::end_event_loop ();
       return 0;
     }
@@ -289,7 +288,7 @@ worker (void *)
 int
 main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
+//  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
   parse_arg (argc, argv);
 
   // Changed the default
@@ -315,7 +314,7 @@ main (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_END_TEST;
+  //ACE_END_TEST;
   return 0;
 }
 

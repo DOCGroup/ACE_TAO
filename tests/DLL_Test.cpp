@@ -80,7 +80,7 @@ main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ACE_TEXT ("DLL_Test"));
+//ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
@@ -123,7 +123,7 @@ main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
 
-  ACE_END_TEST;
+//  ACE_END_TEST;
   return 0;
 }
 
