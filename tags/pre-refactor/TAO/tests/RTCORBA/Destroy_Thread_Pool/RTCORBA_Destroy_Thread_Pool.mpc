@@ -1,0 +1,5 @@
+project(Destroy Thread Pool): rt_server {
+  exename = Destroy_Thread_Pool
+}
+
+

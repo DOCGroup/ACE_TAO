@@ -1,0 +1,292 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO_IFR_Client
+//
+// = FILENAME
+//   IFR_Components.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in IFR_ComponentsC.{h,i,cpp}.
+//   The original file Interface.idl was split into four pieces, to
+//   keep the generated files to a manageable size and reduce build
+//   time. This IDL file contains all the interfaces and other data
+//   types related to CORBA components.
+//
+//   The command used to generate code from this IDL file is:
+//
+//     tao_idl -Ge 1 -I.. \
+//          -Wb,export_macro=TAO_IFR_Client_Export \
+//          -Wb,export_include=ifr_client_export.h \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IFR_Components.pidl
+//
+//   Only the stub files are used in the TAO_IFR_Client library. The
+//   skeleton files can be deleted from this directory.
+//
+//   No patching of the generated stub files is necessary.
+//
+//   To generate the skeleton files for the IFR Service, the command is:
+//
+//     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IFR_Components.pidl
+//
+//   The only modification necessary to the skelton files is to 
+//   change
+//
+//   #include "IFR_ComponentsC.h"
+//
+//   to
+//
+//   #include "tao/IFR_Client/IFR_ComponentsC.h"
+//
+//   in IFR_ComponentsS.h. The stub files may be deleted from the IFRService
+//   directory.
+//
+// ================================================================
+
+#ifndef _IFR_COMPONENTS_IDL_
+#define _IFR_COMPONENTS_IDL_
+
+#include "IFR_Extended.pidl"
+
+module CORBA
+{
+  module ComponentIR
+  {
+    typeprefix ComponentIR "omg.org";
+
+    interface ComponentDef;
+    interface HomeDef;
+
+    interface EventDef : ExtValueDef 
+    {
+    };
+
+    interface Container
+    {
+      ComponentDef create_component (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in ComponentDef base_component,
+	  in InterfaceDefSeq supports_interfaces
+	);
+
+      HomeDef create_home (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in HomeDef base_home,
+	  in ComponentDef managed_component,
+	  in InterfaceDefSeq supports_interfaces,
+	  in ValueDef primary_key
+	);
+
+      EventDef create_event (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in boolean is_custom,
+	  in boolean is_abstract,
+	  in ValueDef base_value,
+	  in boolean is_truncatable,
+	  in ValueDefSeq abstract_base_values,
+	  in InterfaceDefSeq supported_interfaces,
+	in ExtInitializerSeq initializers
+	);
+    };
+
+    interface ModuleDef : CORBA::ModuleDef, 
+			  Container
+    {
+    };
+
+    interface Repository : CORBA::Repository, 
+			   Container
+    {
+    };
+
+    interface ProvidesDef : Contained 
+    {
+      attribute InterfaceDef interface_type;
+    };
+
+    struct ProvidesDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId interface_type;
+    };
+
+    interface UsesDef : Contained 
+    {
+      attribute InterfaceDef interface_type;
+      attribute boolean is_multiple;
+    };
+
+    struct UsesDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId interface_type;
+      boolean is_multiple;
+    };
+
+    interface EventPortDef : Contained 
+    {
+      // read/write interface
+      attribute EventDef event;
+      // read interface
+      boolean is_a (in RepositoryId event_id);
+    };
+
+    struct EventPortDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId event;
+    };
+
+    interface EmitsDef : EventPortDef 
+    {
+    };
+
+    interface PublishesDef : EventPortDef 
+    {
+    };
+
+    interface ConsumesDef : EventPortDef 
+    {
+    };
+
+    interface ComponentDef : ExtInterfaceDef 
+    {
+      // read/write interface
+      attribute ComponentDef base_component;
+      attribute InterfaceDefSeq supported_interfaces;
+
+      // write interface
+      ProvidesDef create_provides (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in InterfaceDef interface_type
+	);
+
+      UsesDef create_uses (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in InterfaceDef interface_type,
+	  in boolean is_multiple
+	);
+
+      EmitsDef create_emits (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in EventDef event
+	);
+
+      PublishesDef create_publishes (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in EventDef event
+	);
+
+      ConsumesDef create_consumes (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in EventDef event
+	);
+    };
+
+    typedef sequence<ProvidesDescription> ProvidesDescriptionSeq;
+    typedef sequence<UsesDescription> UsesDescriptionSeq;
+    typedef sequence<EventPortDescription> EventPortDescriptionSeq;
+
+    struct ComponentDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId base_component;
+      RepositoryIdSeq supported_interfaces;
+      ProvidesDescriptionSeq provided_interfaces;
+      UsesDescriptionSeq used_interfaces;
+      EventPortDescriptionSeq emits_events;
+      EventPortDescriptionSeq publishes_events;
+      EventPortDescriptionSeq consumes_events;
+      ExtAttrDescriptionSeq attributes;
+      TypeCode type;
+    };
+
+    interface FactoryDef : OperationDef 
+    {
+    };
+
+    interface FinderDef : OperationDef 
+    {
+    };
+
+    interface HomeDef : ExtInterfaceDef 
+    {
+      // read/write interface
+      attribute HomeDef base_home;
+      attribute InterfaceDefSeq supported_interfaces;
+      attribute ComponentDef managed_component;
+      attribute ValueDef primary_key;
+
+      // write interface
+      FactoryDef create_factory (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in ParDescriptionSeq params,
+	  in ExceptionDefSeq exceptions
+	);
+
+      FinderDef create_finder (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in ParDescriptionSeq params,
+	  in ExceptionDefSeq exceptions
+	);
+    };
+
+    struct HomeDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId base_home;
+      RepositoryId managed_component;
+      ValueDescription primary_key;
+      OpDescriptionSeq factories;
+      OpDescriptionSeq finders;
+      OpDescriptionSeq operations;
+      ExtAttrDescriptionSeq attributes;
+      TypeCode type;
+    };
+  };
+};
+
+#endif /* _IFR_COMPONENTS_IDL_ */

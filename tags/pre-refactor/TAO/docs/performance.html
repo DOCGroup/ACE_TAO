@@ -1,0 +1,624 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <!-- $Id$ -->
+    <title>TAO Performance Tuning</title>
+    <LINK href="tao.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+  <hr><p>
+    <h3>TAO Compile-time and Run-time Performance Tuning</h3>
+
+    <a name="overview"></a>
+    <h3>Overview</h3>
+
+    <p>
+<!-- We talk of real-time here and throughout this document I dont -->
+<!-- see where we have talked about lower latencies one of the -->
+<!-- important aspects of RT systems. I understand the term -->
+<!-- "throughput" is used for latencies. My understanding is that -->
+<!-- improved latencies can give better throughtput, but better -->
+<!-- throughput doesnt necessarily mean lower latencies. Please -->
+<!-- correct me if I am wrong -->
+      TAO is increasingly being used to support high-performance
+      distributed real-time and embedded (DRE) applications.  DRE
+      applications constitute an important class of distributed
+      systems where predictability and efficiency are essential for
+      success.  This document describes how to configure <a href
+      ="index.html">TAO</a> to enhance its throughput, scalability,
+    <!-- Ossama, let me know if I am offtrack. Would it be better if -->
+    <!-- we mention this as "reduced latencies" instead of improved -->
+    <!-- latencies. I can make the change but thought would discuss -->
+    <!-- with you before jumping on to it. - Bala -->
+    <!-- Bala, aren't they the same? In any case Doug wrote -->
+    <!-- this. ;-) -->
+
+    <!-- Shouldnt be an issue though :-) -->
+      and latency for a variety of applications.  We also explain
+      various ways to speedup the compilation of ACE+TAO and
+      applications that use ACE+TAO.</p>
+
+     <p>
+      As with most applications, including compilers, enabling
+      optimizations can often introduce side-effects that may not be
+      desirable for all use-cases.  TAO's default configuration
+      therefore emphasizes programming simplicity rather than top
+      speed or scalability.  Our goal is to assure that CORBA
+      applications work correctly ``out-of-the-box,'' while also
+      enabling developers to further optimize their CORBA applications
+      to meet stringent performance requirements. </P>
+
+    <p>
+      TAO's performance tuning philosophy reflects the fact that there
+      are trade-offs between speed, size, scalability, and programming
+      simplicity.  For example, certain ORB configurations work well
+      for a large number of clients, whereas others work better for a
+      small number.  Likewise, certain configurations minimize
+      internal ORB synchronization and memory allocation overhead by
+      making assumptions about how applications are designed.
+    </p>
+
+    <p>
+      This document is organized as follows:
+    </p>
+    <ul>
+      <li>
+          <!-- Ossama, do we call it optimizing throughput? Shouldnt -->
+          <!-- we mention it as Improving throughput? Because the -->
+          <!-- suggestions that we give seems to show only that. -->
+	<!--
+           Bala, by optimizing throughput aren't we improving it?  I
+           prefer "optimizing" but if the general consensus is that
+           "improving" is better than I won't debate the issue.
+        -->
+          <!-- Neither am I :-). I dont know why the term Optimizing -->
+          <!-- looks odd to me. I think this way -- the user can -->
+          <!-- apply different optimization strategies that we have -->
+          <!-- offered through different ORB options. Using the -->
+          <!-- strategies that TAO offers the user, can optimize -->
+          <!-- applications to get better throughput or reduced -->
+          <!-- latencies, as the case  may be. For the application -->
+          <!-- developer this could involve rewriting portions of his -->
+          <!-- code. He actually optimizes his application -->
+          <!-- constrained by the strategies that TAO offers.
+
+          <!-- Honestly, I dont think its a matter worth loosing sleep -->
+          <!-- over. Why did I start that in the first place. Late -->
+          <!-- realisation :-)-->
+
+	<a href="#throughput">Optimizing Run-time Throughput</a>
+	<ul>
+	  <li>
+	    <a href="#client_throughput">Optimizing Client Throughput</a>
+	  </li>
+	  <li>
+	    <a href="#server_throughput">Optimizing Server Throughput</a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="#scalability">Optimizing Run-time Scalability</a>
+	<ul>
+	  <li>
+	    <a href="#client_scalability">Optimizing Client Scalability</a>
+	  </li>
+	  <li>
+	    <a href="#server_scalability">Optimizing Server Scalability</a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="#compile">Reducing Compilation Time</a>
+	<ul>
+	  <li>
+	    <a href="#compile_optimization">Compilation Optimization</a>
+	  </li>
+	  <li>
+	    <a href="#compile_inlinling">Compilation Inlining</a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="#footprint">Reducing Memory Footprint</a>
+	<ul>
+	  <li>
+	    <a href="#compile_footprint">Compile-time Footprint</a>
+	  </li>
+	  <li>
+	    <a href="#runtime_footprint">Run-time Footprint</a>
+	  </li>
+	</ul>
+      </li>
+    </ul>
+
+    <p><hr><p>
+    <a name="throughput"></a>
+    <h3>Optimizing Throughput</h3>
+
+    <p>
+    In this context, ``throughput'' refers to the number of events
+    occurring per unit time, where ``events'' can refer to
+    ORB-mediated operation invocations, for example.  This section
+    describes how to optimize client and server throughput.
+    </p>
+
+    <p>
+      It is important to understand that enabling throughput
+      optimizations for the client may not affect the server
+      performance and vice versa.  In particular, the client and
+      server ORBs may be designed by different ORB suppliers.
+    </p>
+
+    <a name="client_throughput"></a>
+    <h4>Optimizing Client Throughput</h4>
+
+    <p>
+      Client ORB throughput optimizations improve the rate at which
+      CORBA requests (operation invocations) are sent to the target
+      server.  Depending on the application, various techniques can be
+      employed to improve the rate at which CORBA requests are sent
+      and/or the amount of work the client can perform as requests are
+      sent or replies received.  These techniques consist of:
+    </p>
+    <ul>
+      <li>
+          <!-- Ossama, I have my jitters on putting this here for the -->
+          <!-- following reasons -->
+          <!-- 1. AMI doesnt have many optimizations built in. Most of -->
+          <!-- the configurations that we mention below wouldnt work -->
+          <!-- with AMI. Say for instance we dont have a RW handler -->
+          <!-- for AMI -->
+
+	<!--
+          Yes, I know that.  No claim was made that the ORB
+          configurations mentioned below should be or could be used
+          with AMI.  AMI was only given as an example of how to
+          potentially improve throughput using programmatical means,
+          as opposed to using static ORB configurations.
+        -->
+
+          <!-- Agreed. With the little I know of users, they try to -->
+          <!-- mix and match. They tend to assume that programming -->
+          <!-- considerations can be mixed and matched with  ORB -->
+          <!-- configurations. Hence my jitters. If we split things as -->
+          <!-- Dr.Schmidt suggests, I guess things could be better -->
+
+
+          <!-- 2.For long we have been interchanging the terms, -->
+          <!-- "Throughput" and "Latency". AMI is good for -->
+          <!-- "Throughput", you could keep the client thread busy by -->
+          <!-- making more invocations. I doubt whether that leads to -->
+          <!-- better latencies. I dont know. Further the ORB -->
+
+	<!--
+	     No such claim was made, so what's the issue here?  This
+	     section is after all about improving throughput not
+	     latency. :-)
+         -->
+          <!-- Aahn!! See we interchange the usage of Latency and -->
+          <!-- Throughput which doesnt sound like a good idea. The ORB -->
+          <!-- configuration options that we suggest are mainly for -->
+          <!-- getting low latencies. Throughput is an after effect of -->
+          <!-- it.  -->
+
+          <!-- configuration section talks about options that improve -->
+          <!-- latencies. IMHO, lower latencies can lead to improved -->
+
+	<!-- If the options I wrote about improve latency and not
+	throughput that should certainly be corrected. -->
+
+       <!-- I guess that is where we need to start working. The -->
+       <!-- strategies that we talk gives lower latencies and hence -->
+       <!-- better throughput. They have been -->
+       <!-- implemented/designed/thought about as options that will -->
+       <!-- give low latencies. Making that change should help a lot. -->
+
+          <!-- throughput, but vice-versa may not apply. -->
+          <!-- Please correct me if I am wrong. I am willing to stand -->
+          <!-- corrected.  -->
+	<b>Run-time features</b> offered by the ORB, such as
+	Asynchronous Method Invocations (AMI)
+        <!-- Ossama, are there other examples you can list here? -->
+	<!-- ADD BUFFERED ONEWAYS -->
+      </li>
+      <li>
+	<b>ORB configurations</b>, such as disabling synchronization
+	of various parts of the ORB in a single-threaded application
+      </li>
+    </ul>
+
+    <p>
+      We explore these techniques below.
+    </p>
+
+    <h4>Run-time Client Optimizations</h4>
+
+    <p>
+      For two-way invocations, i.e., those that expect a reply
+      (including ``<CODE>void</CODE>'' replies), Asynchronous method
+      invocations (AMI) can be used to give the client the opportunity
+      to perform other work as a CORBA request is sent to the target,
+      handled by the target, and the reply is received.
+    </p>
+
+    <h4>Client Optimizations via ORB Configuration</h4>
+
+    <p>
+      A TAO client ORB can be optimized for various types of
+      applications:
+    </p>
+
+    <ul>
+      <li>
+	<b>Single-Threaded</b>
+	<ul>
+	  <li>
+	    <p>
+	      A single-threaded client application may not require
+	      the internal thread synchronization performed by TAO.
+	      It may therefore be useful to add the following line to your
+	      <code>svc.conf</code> file:
+	    </p>
+
+	    <blockquote>
+	      <code>static <a href = "Options.html#DefaultClient">Client_Strategy_Factory</a> "<a href="Options.html#-ORBProfileLock">-ORBProfileLock</a> null"</code>
+	    </blockquote>
+
+	    <p>
+	      If such an entry already exists in your
+	      <code>svc.conf</code> file, then just add
+	      <code>-ORBProfileLock null</code> to the list options
+	      between the quotes found after
+	      <code>Client_Strategy_Factory</code>.
+	    </p>
+
+	    <p>
+	      Other options include disabling synchronization in the
+	      components of TAO responsible for constructing and sending
+	      requests to the target and for receiving replies.  These
+	      components are called ``connection handlers.''  To disable
+	      synchronization in the client connection handlers, simply
+	      add:
+	    </p>
+              <!-- Ossama, if we are going to ask people to use ST, -->
+              <!-- they could as well use ST reactor too. TAO uses a -->
+              <!-- reactor for ST and it would be better to use ST -->
+
+	    <!-- Sure, but this particular section is about the
+	    -ORBClientConnectionHandler section.  We can certainly
+	    mention that it is better to use the ST reactor. -->
+
+              <!-- reactor instead of TP. BTW, shouldnt we interchange -->
+
+	    <!-- The TP reactor was never mentioned here, so what the
+                 issue? -->
+
+              <!-- things here for example tell about RW and then go -->
+              <!-- to ST handlers? -->
+
+	    <!-- Fine with me Bala.  You know more about the this
+                 option than I do.  Go for it!  :-)  -->
+
+              <!-- No problem. I will start changing this once you -->
+              <!-- make your next pass -->
+	    <blockquote>
+	      <code>
+		<a href="Options.html#-ORBClientConnectionHandler">
+		  -ORBClientConnectionHandler</a> ST
+	      </code>
+	    </blockquote>
+
+	    <p>
+	      to the list of <code>Client_Strategy_Factory</code>
+	      options.  Other values for this option, such as
+	      <code>RW</code>, are more appropriate for "pure"
+	      synchronous clients.  See the <code>
+		<a href="Options.html#-ORBClientConnectionHandler">
+		  -ORBClientConnectionHandler</a></code> option
+	      documentation for details.
+	    </p>
+
+	  </li>
+	</ul>
+      </li>
+
+      <li>
+	<b>Low Client Scalability Requirements</b>
+	<ul>
+	  <li>
+	    <p>
+	      Clients with lower scalability requirements can dedicate a
+	      connection to one request at a time, which means that no
+              other requests or replies will be sent or received,
+	      respectively, over that connection while a request is
+              pending.  The connection is <i>exclusive</i> to a given
+              request, thus reducing contention on a connection.
+              However, that exclusivity
+              <!-- Ossama, I am not sure I understand that using -->
+              <!-- exclusive connections could lead to reduced -->
+              <!-- throughput. As a matter of fact we have a cache map -->
+              <!-- lookup on the client side for muxed and that would -->
+              <!-- increase the latencies a bit :-). Exclusive takes -->
+              <!-- more resources and that could leade reduced -->
+              <!-- scalability, right?-->
+
+	      <!-- Bala, isn't that what I said?  Paraphrasing what I
+                   said, if the client has low scalability
+                   requirements then exclusive connections can be used
+                   to improve throughput.  Isn't that incorrect? -->
+
+	      comes at the cost of a smaller number of requests that
+	      may be issued at a given point in time.
+
+              <!-- May be I am confused :-). The above statement that -->
+              <!-- says "smaller number of requests"  tries to convey -->
+              <!-- that we will have reduced throughput. What am I -->
+              <!-- missing here? -->
+              To enable this
+	      behaviour, add the following option to the
+	      <code>Client_Strategy_Factory</code> line of your
+	      <code>svc.conf</code> file:
+	    </p>
+
+	    <blockquote>
+	      <code>
+		<a href="Options.html#-ORBTransportMuxStrategy">
+		  -ORBTransportMuxStrategy</a> EXCLUSIVE
+	      </code>
+	    </blockquote>
+
+	  </li>
+	</ul>
+      </li>
+    </ul>
+
+    <a name="server_throughput"></a>
+    <h4>Optimizing Server Throughput</h4>
+
+    <p>
+      Throughput on the server side can be improved by configuring TAO
+      to use a <i>thread-per-connection</i> concurrency model.  With
+      this concurrency model, a single thread is assigned to service
+      each connection.  That same thread is used to dispatch the
+      request to the appropriate servant, meaning that thread context
+      switching is kept to minimum.  To enable this concurrency model
+      in TAO, add the following option to the
+      <code>
+	<a href="Options.html#DefaultServer">Server_Strategy_Factory</a>
+      </code>
+      entry in your <code>svc.conf</code> file:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#orb_concurrency">
+	  -ORBConcurrency</a> thread-per-connection
+      </code>
+    </blockquote>
+
+    <p>
+      While the <i>thread-per-connection</i> concurrency model may
+      improve throughput, it generally does not scale well due to
+      limitations of the platform the application is running.  In
+      particular, most operating systems cannot efficiently handle
+      more than <code>100</code> or <code>200</code> threads running
+      concurrently.  Hence performance often degrades sharply as the
+      number of connections increases over those numbers.
+    </p>
+
+    <p>
+      Other concurrency models are further discussed in the
+      <i><a href="#server_scalability">Optimizing Server
+	  Scalability</a></i> section below.
+    </p>
+
+    <p><hr><p>
+
+    <a name="scalability"></a>
+    <h3>Optimizing Scalability</h3>
+
+    <p>
+      In this context, ``scalability'' refers to how well an ORB
+      performs as the number of CORBA requests increases.  For
+      example, a non-scalable configuration will perform poorly as the
+      number of pending CORBA requests on the client increases from
+      <code>10</code> to <code>1,000</code>, and similarly on the
+      server.  ORB scalability is particularly important on the server
+      since it must often handle many requests from multiple clients.
+    </p>
+
+    <a name="client_scalability"></a>
+    <h4>Optimizing Client Scalability</h4>
+
+    <p>
+      In order to optimize TAO for scalability on the client side,
+      connection multiplexing must be enabled.  Specifically, multiple
+      requests may be issued and pending over the same connection.
+      Sharing a connection in this manner reduces the amount of
+      resources required by the ORB, which in turn makes more
+      resources available to the application.  To enable this behavior
+      use the following <code>Client_Strategy_Factory</code> option:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#-ORBTransportMuxStrategy">
+	  -ORBTransportMuxStrategy</a> MUXED
+      </code>
+    </blockquote>
+
+    <p>
+      This is the default setting used by TAO.
+    </p>
+
+    <a name="server_scalability"></a>
+    <h4>Optimizing Server Scalability</h4>
+
+    <p>
+      Scalability on the server side depends greatly on the
+      <i>concurrency model</i> in use.  TAO supports two concurrency
+      models:
+    </p>
+
+    <ol>
+      <li>Reactive, and</li>
+      <li>Thread-per-connection</li>
+    </ol>
+
+    <p>
+      The thread-per-connection concurrency model is described above
+      in the
+      <i><a href="#server_throughput">Optimizing Server
+	  Throughput</a></i>
+      section.
+    </p>
+
+    <p>
+      A <i>reactive</i> concurrency model employs the Reactor design
+      pattern to demultiplex incoming CORBA requests.  The underlying
+      event demultiplexing mechanism is typically one of the
+      mechanisms provided by the operating system, such as the
+      <code>select(2)</code> system call.  To enable this concurrency
+      model, add the following option to the
+      <code>
+	<a href="Options.html#DefaultServer">Server_Strategy_Factory</a>
+      </code>
+      entry in your <code>svc.conf</code> file:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#orb_concurrency">
+	  -ORBConcurrency</a> reactive
+      </code>
+    </blockquote>
+
+    <p>
+      This is the default setting used by TAO.
+    </p>
+
+    <p>
+      The reactive concurrency model provides improved scalability on
+      the server side due to the fact that less resources are used,
+      which in turn allows a very large number of requests to be
+      handled by the server side ORB.  This concurrency model provides
+      much better scalability than the thread-per-connection model
+      described above.
+    </p>
+
+    <p>
+      Further scalability tuning can be achieved by choosing a Reactor
+      appropriate for your application.  For example, if your
+      application is single-threaded then a reactor optimized for
+      single-threaded use may be appropriate.  To select a
+      single-threaded <code>select(2)</code> based reactor, add the
+      following option to the
+      <code>
+	<a href="Options.html#AdvancedResourceFactory">Advanced_Resource_Factory</a>
+      </code>
+      entry in your <code>svc.conf</code> file:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#-ORBReactorType">
+	  -ORBReactorType</a> select_st
+      </code>
+    </blockquote>
+
+    <p>
+      If your application uses thread pools, then the thread pool
+      reactor may be a better choice.  To use it, add the following
+      option instead:
+    </p>
+
+    <blockquote>
+      <code>
+	<a href="Options.html#-ORBReactorType">
+	  -ORBReactorType</a> tp_reactor
+      </code>
+    </blockquote>
+
+    <p>
+      This is TAO's default reactor.  See the
+      <code>
+	<a href="Options.html#-ORBReactorType">-ORBReactorType</a>
+      </code>
+      documentation for other reactor choices.
+    </p>
+
+    <p>
+      Note that may have to link the <code>TAO_Strategies</code>
+      library into your application in order to take advantage of the
+      <code>
+	<a href="Options.html#AdvancedResourceFactory">Advanced_Resource_Factory</a>
+      </code>
+      features, such as alternate reactor choices.
+    </p>
+
+    <p>
+      A third concurrency model, <i>un</i>supported by TAO, is
+      <i>thread-per-request</i>.  In this case, a single thread is
+      used to service each request as it arrives.  This concurrency
+      model generally provides neither scalability nor speed, which is
+      the reason why it is often not used in practice.
+    </p>
+
+    <p><hr><p>
+    <a name="compile"></a>
+    <h3>Reducing Compilation Time</h3>
+
+    <a name="compile_optimization"></a>
+    <h4>Compilation Optimization</h4>
+
+When developing software that uses ACE+TAO you can reduce the time it
+takes to compile your software by not enabling you compiler's optimizer
+flags. These often take the form -O&lt;n&gt;.<P>
+
+Disabling optimization for your application will come at the cost of run
+time performance, so you should normally only do this during
+development, keeping your test and release build optimized. <P>
+
+    <a name="compile_inlinling"></a>
+    <h4>Compilation Inlining</h4>
+
+When compiler optimization is disabled, it is frequently the case that
+no inlining will be performed. In this case the ACE inlining will be
+adding to your compile time without any appreciable benefit. You can
+therefore decrease compile times further by build building your
+application with the -DACE_NO_INLINE C++ flag. <P>
+
+In order for code built with -DACE_NO_INLINE to link, you will need to
+be using a version of ACE+TAO built with the "inline=0" make flag. <P>
+
+In order to accommodate both inline and non-inline builds of your
+application it will be necessary to build two copies of your ACE+TAO
+libraries, one with inlining and one without. You can then use your
+ACE_ROOT and TAO_ROOT variables to point at the appropriate
+installation.<P>
+
+    <p><hr><p>
+    <a name="footprint"></a>
+    <h3>Reducing Memory Footprint</h3>
+
+    <a name="compile_footprint"></a>
+    <h4>Compile-time Footprint</h4>
+
+It has also been observed recently that using -xO3 with -xspace on SUN
+CC 5.3 compiler gives a big footprint reduction of the order of 40%.
+
+    <a name="runtime_footprint"></a>
+    <h4>Run-time Footprint</h4>
+
+<!-- Doug, put information about how to reduce the size of the -->
+<!-- connection blocks, etc. -->
+
+    <hr><P>
+    <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
+<!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
+<!-- hhmts start -->
+Last modified: Wed Dec 25 06:23:55 CST 2002
+<!-- hhmts end -->
+  </body>
+</html>

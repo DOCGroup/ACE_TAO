@@ -1,0 +1,5 @@
+project(Collocation): rt_server {
+  exename = Collocation
+}
+
+
