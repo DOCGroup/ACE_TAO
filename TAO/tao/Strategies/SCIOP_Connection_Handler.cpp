@@ -140,7 +140,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
   if (this->peer ().set_option (IPPROTO_SCTP,
                                 SCTP_NODELAY,
                                 (void *) &protocol_properties.no_delay_,
-                                sizeof (int)) == -1)
+                                sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
