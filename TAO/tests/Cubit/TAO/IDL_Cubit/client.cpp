@@ -540,34 +540,32 @@ Cubit_Client::print_stats (const char *call_name,
   if (this->call_count_ > 0 && this->error_count_ == 0)
     {
 #if defined (ACE_LACKS_FLOATING_POINT)
+      // elapsed_time.real_time is in units of microseconds.
       const u_int calls_per_sec =
         this->call_count_ * 1000000u / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\treal_time\t= %u usec, \n\t"
+                  "\treal_time\t= %u ms,\n"
                   "\t%u calls/second\n",
-                  elapsed_time.real_time < 0 ? 0 : elapsed_time.real_time,
+                  elapsed_time.real_time < 0 ? 0 :
+                    elapsed_time.real_time / 1000u,
                   calls_per_sec));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
-      double tmp = this->call_count_ / elapsed_time.real_time;
-
-      elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
-      elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
-      elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
-
-      elapsed_time.real_time /= this->call_count_;
-      elapsed_time.user_time /= this->call_count_;
-      elapsed_time.system_time /= this->call_count_;
+      // elapsed_time.real_time is in units of seconds.
+      double calls_per_sec = this->call_count_ / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\treal_time\t= %0.06f ms, \n\t"
                   "user_time\t= %0.06f ms, \n\t"
                   "system_time\t= %0.06f ms\n"
                   "\t%0.00f calls/second\n",
-                  elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-                  elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-                  elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
-                  tmp < 0.0? 0.0 : tmp));
+                  elapsed_time.real_time < 0.0 ? 0.0
+                    : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
+                  elapsed_time.user_time < 0.0 ? 0.0
+                    : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
+                  elapsed_time.system_time < 0.0 ? 0.0
+                    : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
+                  calls_per_sec < 0.0 ? 0.0 : calls_per_sec));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
     }
   else
@@ -615,11 +613,10 @@ Cubit_Client::run (void)
   // Simple test for DII: call "cube_struct". (It's not timed since
   // the copious mallocation of DII would bias numbers against typical
   // stub-based calls).
-
-  timer.start ();
-
   this->call_count_ = 0;
   this->error_count_ = 0;
+
+  timer.start ();
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
@@ -634,11 +631,11 @@ Cubit_Client::run (void)
   // ------------------>
   // Two more tests, using the "cube_union" function
 
-  // unions using stubs
-  timer.start ();
-
   this->call_count_ = 0;
   this->error_count_ = 0;
+
+  // unions using stubs
+  timer.start ();
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
@@ -650,11 +647,11 @@ Cubit_Client::run (void)
   // compute call average call time.
   this->print_stats ("cube_union_stub call", elapsed_time);
 
-  // union DII
-  timer.start ();
-
   this->call_count_ = 0;
   this->error_count_ = 0;
+
+  // union DII
+  timer.start ();
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
@@ -666,10 +663,11 @@ Cubit_Client::run (void)
   // compute call average call time.
   this->print_stats ("cube_union_dii call", elapsed_time);
 
-  // Sequences
-  timer.start ();
   this->call_count_ = 0;
   this->error_count_ = 0;
+
+  // Sequences
+  timer.start ();
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
