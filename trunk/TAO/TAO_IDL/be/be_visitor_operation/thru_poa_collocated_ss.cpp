@@ -35,7 +35,7 @@ ACE_RCSID(be_visitor_operation, thru_poa_collocated_ss, "$Id$")
 
 be_visitor_operation_thru_poa_collocated_ss::be_visitor_operation_thru_poa_collocated_ss
 (be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+  : be_visitor_operation (ctx)
 {
 }
 
@@ -248,33 +248,6 @@ int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (
   // End the upcall
   *os << be_uidt_nl
       << ");\n";
-
-  return 0;
-}
-
-int
-be_visitor_operation_thru_poa_collocated_ss::gen_check_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-  // check if there is an exception
-  if (!this->void_return_type (bt))
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "ACE_CHECK_RETURN (0);\n";
-        }
-      else
-        {
-          *os << "ACE_CHECK_RETURN  (_tao_retval);\n";
-        }
-    }
-  else
-    {
-      *os << "ACE_CHECK;\n";
-    }
 
   return 0;
 }

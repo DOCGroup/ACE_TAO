@@ -44,9 +44,6 @@ public:
   virtual int gen_invoke (be_visitor_context &ctx, be_operation *node);
   // A helper method to generate operation invocation code.
 
-  virtual int gen_check_exception (be_type *bt);
-  // ACE_CHECK macros generator.
-
   virtual int void_return_type (be_type *bt);
   // is my return type void?
 };
