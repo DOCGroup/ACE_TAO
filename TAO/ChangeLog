@@ -1,3 +1,11 @@
+Wed Jul 31 09:45:01 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/PSS/PSDL_String.h: 
+	* orbsvcs/PSS/PSDL_String.cpp: 
+	  Added an operator equality and inequality comparison operator 
+	  methods. Fixes the Lynx_PPC build with explicit template
+	  instantiations
+	
 Wed Jul 31 11:34:02 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Added a place holder for CIAO,
