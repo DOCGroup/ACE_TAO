@@ -17,7 +17,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 // Platform specific directives
-#define FreeBSD
+// gcc defines __FreeBSD__ automatically for us.
 #define _THREAD_SAFE
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
