@@ -764,7 +764,7 @@ be_interface::gen_server_inline (void)
     {
       // the POA_ prefix is prepended to our outermost module name
       *si << this->full_skel_name () << "::~" << this->local_name () <<
-        " (const char *obj_name)" << nl;
+        " (void)" << nl;
     }
 
   *si << "{" << nl;
