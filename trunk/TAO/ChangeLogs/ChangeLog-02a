@@ -1,3 +1,9 @@
+Fri Sep 01 13:47:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAOACE.dsw:
+          Add the TAO_PortableServer project.
+          Updated depedencies
+
 Fri Sep  1 14:18:35 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/PortableServer/Object_Adapter.h:
