@@ -341,22 +341,23 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                 ACE_LIB_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
 
-  if (ACE_Service_Repository::instance ()->insert (sr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("insertion failed, %p\n"),
-                       sr->name ()),
-                      -1);
-  else if (sr->type ()->init (args.argc (),
-                              args.argv ()) == -1)
+  if (sr->type ()->init (args.argc (),
+                         args.argv ()) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("dynamic initialization failed for %s\n"),
                   sr->name ()));
-      ACE_Service_Repository::instance ()->remove (sr->name ());
       return -1;
     }
   else
-    return 0;
+    {
+      if (ACE_Service_Repository::instance ()->insert (sr) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT ("insertion failed, %p\n"),
+                           sr->name ()),
+                          -1);
+      return 0;
+    }
 }
 
 int
