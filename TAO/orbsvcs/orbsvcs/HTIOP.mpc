@@ -6,7 +6,7 @@ project : orbsvcslib, core {
   sharedname   = TAO_HTIOP
   libs += ACE_HTBP
   idlflags    += -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h
-  dynamicflags = TAO_HTIOP_BUILD_DLL
+  dynamicflags = HTIOP_BUILD_DLL
   tagchecks += HTIOP
   pch_header =
   pch_source =
