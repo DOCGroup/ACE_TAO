@@ -23,6 +23,15 @@ schedule (Guid_t guid,
 template <class DSRT_Scheduler_Traits>
 ACE_INLINE int
 DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
+release_guard (Guid_t guid,
+          const DSRT_QoSDescriptor& qos)
+{
+  return this->release_guard_i (guid, qos);
+}
+
+template <class DSRT_Scheduler_Traits>
+ACE_INLINE int
+DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule (Guid_t guid,
                  const DSRT_QoSDescriptor& qos)
 {

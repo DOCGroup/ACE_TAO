@@ -31,6 +31,8 @@ namespace Kokyu
   typedef long Priority_t;
   typedef ACE_Time_Value Deadline_t; //absolute deadline
   typedef ACE_Time_Value Execution_Time_t; //execution time
+  typedef ACE_Time_Value Period_t;
+  typedef int Task_Id_t;
   //typedef int Guid_t;
 
   enum Dispatching_Type_t
@@ -119,6 +121,8 @@ namespace Kokyu
   {
     Priority_t preemption_priority_;
     Deadline_t deadline_;
+    Period_t period_;
+    Task_Id_t task_id_;
     Execution_Time_t execution_time_;
     Importance_t importance_;
   };

@@ -48,7 +48,7 @@ DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                          int sched_scope)
   :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> (sched_policy, sched_scope),
-   run_cond_ (run_cond_lock_)
+   run_cond_ (run_cond_lock_), release_cond_ (release_cond_lock_)
 {
 }
 
@@ -179,6 +179,80 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
               "(%t|%T):schedule_i exit\n"));
 #endif
   DSUI_EVENT_LOG (DSRT_CV_DISPATCH_FAM, SCHEDULE_EXIT, 0,0,NULL);
+  return 0;
+}
+
+template <class DSRT_Scheduler_Traits>
+int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
+release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
+{
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id_,qos.period_));
+#endif
+
+      ACE_Time_Value cur_time;
+      TimeBase::TimeT tv, cur_v;
+
+//Need a period information. Hope I can get it from QoS.
+      TimeBase::TimeT period = qos.period_;
+      cur_time = ACE_OS::gettimeofday ();
+      cur_v = cur_time.sec()*10000000+cur_time.usec()*10 ;
+
+//If I change the guid to Task ID, will it work?
+      if(this->release_map_.find(qos.task_id_, tv)==0)
+      {
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Get the previous release time is %d and current time is %d\n",tv, cur_v));
+#endif
+        if( tv + period >= cur_v )
+           {
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Over the proper release time\n"));
+#endif
+             this->release_map_.rebind(qos.task_id_, cur_v);
+             this->schedule_i (guid, qos);
+           }
+        else
+           {
+           ACE_Time_Value left_time;
+//           left_time.sec = (cur_v-tv-period)/10000000;
+//           left_time.usec = (cur_v-tv-period)/10;
+           left_time.set (ACE_static_cast(ACE_UINT32, (cur_v-tv-period) / 10000000),
+           ACE_static_cast(ACE_UINT32, ((cur_v-tv-period) % 10000000) / 1000));
+
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): About to block on release guard cond\n"));
+#endif
+           if (this->release_cond_.wait (&left_time) == -1)
+             {
+             ACE_ERROR ((LM_ERROR,
+                      "(%t|%T): release_cond.wait timed out \n"));
+             cur_time = ACE_OS::gettimeofday ();
+             cur_v = cur_time.sec()*10000000+cur_time.usec()*10 ;
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): And Current time %d is set in the map.\n",cur_v));
+#endif
+
+             this->release_map_.rebind(qos.task_id_, cur_v);
+             this->schedule_i (guid, qos);
+             }
+           }
+      }
+      else
+      {
+#ifdef KOKYU_DSRT_LOGGING
+           ACE_DEBUG ((LM_DEBUG,
+                  "(%t|%T): Can not find release information in map\n"));
+#endif
+
+             this->release_map_.bind(qos.task_id_, cur_v);
+             this->schedule_i (guid, qos);
+      }
+
   return 0;
 }
 

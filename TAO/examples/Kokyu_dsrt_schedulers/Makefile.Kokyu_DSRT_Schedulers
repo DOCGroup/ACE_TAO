@@ -22,17 +22,11 @@ ifndef CIAO_ROOT
 endif
 
 FILES = \
-  FP_Scheduler \
-  MUF_Scheduler \
   EDF_Scheduler \
-  MIF_Scheduler \
   Task_Stats \
   utils \
   Kokyu_qosC \
-  FP_SchedulingC \
-  MUF_SchedulingC \
-  EDF_SchedulingC \
-  MIF_SchedulingC
+  EDF_SchedulingC 
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -122,7 +116,8 @@ ifeq ($(static_libs),1)
   endif
 endif
 
-# CPPFLAGS += -DKOKYU_DSRT_LOGGING
+CPPFLAGS += -DKOKYU_DSRT_LOGGING
+CPPFLAGS += -DKOKYU_HAS_RELEASE_GUARD
 CPPFLAGS += -I$(DATASTREAM_ROOT)/include
 LDFLAGS	+= -L../../../lib -L$(DATASTREAM_ROOT)/lib
 

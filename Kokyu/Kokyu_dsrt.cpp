@@ -38,6 +38,13 @@ DSRT_Dispatcher<DSRT_Scheduler_Traits>::schedule (Guid_t guid, const DSRT_QoSDes
 
 template <class DSRT_Scheduler_Traits>
 int
+DSRT_Dispatcher<DSRT_Scheduler_Traits>::release_guard (Guid_t guid, const DSRT_QoSDescriptor& qos)
+{
+  return dispatcher_impl_->release_guard (guid, qos);
+}
+
+template <class DSRT_Scheduler_Traits>
+int
 DSRT_Dispatcher<DSRT_Scheduler_Traits>::update_schedule (Guid_t guid, const DSRT_QoSDescriptor& qos)
 {
   return dispatcher_impl_->update_schedule (guid, qos);

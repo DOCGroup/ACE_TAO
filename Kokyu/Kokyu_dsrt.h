@@ -50,6 +50,9 @@ namespace Kokyu
     /// Schedule a thread dynamically based on the qos info supplied.
     int schedule (Guid_t guid, const DSRT_QoSDescriptor&);
 
+    /// Release a thread on its proper release time.
+    int release_guard (Guid_t guid, const DSRT_QoSDescriptor&);
+
     /// Update the schedule for a thread. This could alter the current schedule.
     int update_schedule (Guid_t guid, const DSRT_QoSDescriptor&);
 
