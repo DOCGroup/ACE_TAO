@@ -52,6 +52,8 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
                       ACE_TRY_ENV);
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 ACE_INLINE PortableServer::POAManager::State
 TAO_POA_Manager::get_state_i (void)
 {
@@ -66,5 +68,3 @@ TAO_POA_Manager::get_state (CORBA::Environment &ACE_TRY_ENV)
 
   return this->get_state_i ();
 }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */

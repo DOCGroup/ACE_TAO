@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 
 #include "ace/Env_Value_T.h"
 #include "ace/Arg_Shifter.h"

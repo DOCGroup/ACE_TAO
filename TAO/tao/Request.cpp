@@ -1,7 +1,7 @@
 // $Id$
 
 #include "tao/Request.h"
-#include "tao/Sequence_T.h"
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #include "tao/Object.h"

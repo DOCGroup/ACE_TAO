@@ -1,4 +1,23 @@
-Fri May 21 20:58:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri May 21 22:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Modified the following files to make minimum CORBA work
+	  again.
+
+          - Connect.cpp
+          - DomainC.cpp
+          - DomainS.cpp
+          - ORB_Core.cpp
+          - POA.cpp
+          - POAC.h
+          - POAManager.h
+          - POAManager.i
+          - POAS.cpp
+          - PolicyS.cpp
+          - Request.cpp
+          - WrongTransactionC.cpp
+          - WrongTransactionC.h
+          - corbafwd.h
+          - orbconf.h
 
 	* examples/Simple/Simple_util.cpp (test_for_ins): Removed
 	  unnecessary bank dependencies that Vishal had added to this
