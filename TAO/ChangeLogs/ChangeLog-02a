@@ -1,3 +1,18 @@
+Tue Feb  1 14:14:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be/be_union_branch.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Prevented multiple generations of typecode for a 
+	  union member with multiple case labels. The CORBA
+	  spec requires that the limit for an index supplied
+	  to member_label, member_type, etc. not exceed the
+	  member count, otherwise a Bounds exception is thrown.
+	  The TAO CDR_Interpreter operates on the same assumption,
+	  and it was crashing on unions with members having
+	  multiple case labels. Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for reporting this bug.
+
 Tue Feb  1 11:25:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
