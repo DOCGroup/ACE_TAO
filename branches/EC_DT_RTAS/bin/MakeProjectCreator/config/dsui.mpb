@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : {
+project {
   libs     += dsui
   libpaths += $(DATASTREAM_ROOT)/lib
   includes += $(DATASTREAM_ROOT)/include
