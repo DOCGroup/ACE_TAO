@@ -1,3 +1,8 @@
+Mon Jun 25 06:58:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Oneways_Invoking_Twoways/Receiever_i.cpp: Fixed a compile
+	  error in Static minimum builds.
+
 Mon Jun 25 13:46:05 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor: Added Oneways_Invoking_Twoways
