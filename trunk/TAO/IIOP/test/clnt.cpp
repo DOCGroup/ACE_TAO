@@ -23,10 +23,6 @@
 #include	<corba/debug.hh>
 
 
-#if !defined (DECLARED_GETTIMEOFDAY)
-extern "C" int gettimeofday (struct timeval *, struct timezone *);
-#endif
-
 #if !defined (_WIN32)
 extern char 	*optarg;	// missing on some platforms
 #endif
