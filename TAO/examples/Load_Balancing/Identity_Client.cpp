@@ -121,7 +121,7 @@ Identity_Client::run (CORBA::Environment &ACE_TRY_ENV)
   else
     group_name = "Round Robin group";
 
-  Object_Group_var object_group =
+  Load_Balancer::Object_Group_var object_group =
     factory->resolve (group_name,
                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
