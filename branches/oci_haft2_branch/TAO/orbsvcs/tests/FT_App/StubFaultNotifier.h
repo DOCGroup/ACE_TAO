@@ -17,8 +17,6 @@
 
 //////////////////////
 // Forward references
-class TAO_ORB_Manager;
-
 
 /////////////////////
 // Class declarations

@@ -21,14 +21,16 @@
 
 
 FTAPP::FT_Creator::FT_Creator ()
-  : registry_ior_ (0)
+  : orb_ (0)
+  , registry_ior_ (0)
   , registry_ (0)
+  , naming_context_ ()
   , replication_manager_ (0)
   , have_replication_manager_ (0)
   , write_iors_ (0)
   , write_iogr_ (0)
-  , iogr_seq_ (0)
   , ns_register_ (1)
+  , iogr_seq_ (0)
   , prefix_ ("")
 {
 }
@@ -181,7 +183,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 
     if (this->write_iogr_)
     {
-      CORBA::String_var iogr = this->orb_->object_to_string (group ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var iogr = this->orb_->object_to_string (group.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (1);
 
       char iogr_filename[1000];
@@ -225,9 +227,9 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   typeCount = this->unregister_roles_.size();
-  for ( nType = 0; result == 0 && nType < typeCount; ++nType)
+  for ( size_t nUnreg = 0; result == 0 && nUnreg < typeCount; ++nUnreg)
   {
-    const char * role = this->unregister_roles_[nType].c_str();
+    const char * role = this->unregister_roles_[nUnreg].c_str();
     result = this->creator_.unregister_role (role);
   }
 
