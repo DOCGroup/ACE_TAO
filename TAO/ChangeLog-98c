@@ -54,6 +54,13 @@ Mon Jun 22 11:12:54 1998  David L. Levine  <levine@cs.wustl.edu>
           J. Russell Noteworthy <rnosewor@objectsciences.com> for
           reporting this.
 
+        * test/Cubit/TAO/IDL_Cubit/collocation_test (main):
+          changed the static_cast of svr_worker to a reinterpret_cast,
+          and added a & in front of it for good measure.  Thanks to
+          J. Russell Noteworthy <rnosewor@objectsciences.com> for
+          reporting this, and to Carlos for recommending the use of
+          reinterpret cast.
+
 Mon Jun 22 09:19:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: The typecode
