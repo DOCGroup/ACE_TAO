@@ -28,6 +28,9 @@ Thu Jun 24 14:53:32 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  transport. If the caller was the client-side, it will have to do
 	  the correct cleanup.
 
+	  Thanks to Gildo Medeiros Junior <gildo@siemens.com.br> for
+	  pointing out this problem.
+
 	* tao/POAS.cpp:
 	* tao/POAS.i:
 	* tao/Forwarding_Servant.cpp:
