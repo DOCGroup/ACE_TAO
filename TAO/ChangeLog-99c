@@ -1,3 +1,31 @@
+Mon Aug 16 20:16:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	  Use a pre-allocated mutex to synchronize access into the input
+	  data block reference count. This reduces the number of memory
+	  allocations in the critical path (by one), and consequently the
+	  number of locks.
+
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Invocation.i:
+	* tao/Transport_Mux_Strategy.cpp:
+	  For the Exclusive transport strategy we can use the
+	  pre-allocated CDR stream in the reply dispatcher end-to-end,
+	  without requiring any transfers to the message state object for
+	  the transport.  This reduces the locking overhead.
+
+	* tao/CDR.h:
+	* tao/CDR.i:
+	  As in the ACE_InputCDR class we implement a new method to
+	  transfer the contents of one CDR stream into another.
+
+	* tao/IIOP_Connect.cpp:
+	* tao/UIOP_Connect.cpp:
+	  Use the new method to transfer the contents of one CDR stream
+	  into another, two locks were eliminated thanks to that.
+
 Mon Aug 16 17:08:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:

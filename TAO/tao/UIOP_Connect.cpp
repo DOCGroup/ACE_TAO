@@ -278,16 +278,18 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   // same Event_Handler in two threads at the same time.
 
   // Copy message type.
-  CORBA::Octet message_type = this->transport_.message_state_.message_type;
+  TAO_GIOP_Message_State &ms = this->transport_.message_state_;
+  CORBA::Octet message_type = ms.message_type;
 
   // Copy version.
-  TAO_GIOP_Version giop_version = this->transport_.message_state_.giop_version;
+  TAO_GIOP_Version giop_version = ms.giop_version;
 
   // Steal the input CDR from the message state.
-  TAO_InputCDR input_cdr (this->transport_.message_state_.cdr);
+  TAO_InputCDR input_cdr (ACE_InputCDR::Transfer_Contents (ms.cdr),
+                          this->orb_core_);
 
   // Reset the message state.
-  this->transport_.message_state_.reset ();
+  this->transport_.message_state_.reset (0);
 
   result = TAO_GIOP::process_server_message (this->transport (),
                                              this->orb_core_,

@@ -53,7 +53,7 @@ public:
                               TAO_GIOP_Message_State* message_state) = 0;
   // Dispatch the reply. Return 1 on sucess, -1 on error.
 
-  virtual TAO_GIOP_Message_State *message_state (void) const;
+  virtual TAO_GIOP_Message_State *message_state (void);
   // Get the Message State into which the reply has been read.
 
   const IOP::ServiceContextList& reply_service_info () const;
@@ -102,7 +102,7 @@ public:
   // stack.
   // Return 1 on sucess, -1 on error.
 
-  virtual TAO_GIOP_Message_State *message_state (void) const;
+  virtual TAO_GIOP_Message_State *message_state (void);
   // Return the message state of this invocation.
 
   virtual TAO_InputCDR &reply_cdr (void);
@@ -125,13 +125,8 @@ private:
   TAO_GIOP_Version version_;
   // The version
 
-  TAO_GIOP_Message_State *message_state_;
-  // CDR stream for reading the input.
-  // @@ Carlos : message_state should go away. All we need is the
-  //    reply cdr. Is that rite? (Alex).
-
-  TAO_InputCDR reply_cdr_;
-  // CDR where the reply message is placed.
+  TAO_GIOP_Message_State message_state_;
+  // All the state required to receive the input...
 
   int reply_received_;
   // Flag that indicates the reply  has been received.
@@ -178,7 +173,7 @@ public:
   // handler.
   // Return 1 on sucess, -1 on error.
 
-  virtual TAO_GIOP_Message_State *message_state (void) const;
+  virtual TAO_GIOP_Message_State *message_state (void);
   // Return the message state.
 
 private:

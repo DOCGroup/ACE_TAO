@@ -1564,6 +1564,18 @@ TAO_Leader_Follower::get_next_follower (void)
 // ****************************************************************
 
 ACE_Allocator*
+TAO_ORB_Core::input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
+{
+  if (tss->input_cdr_dblock_allocator_ == 0)
+    {
+      tss->input_cdr_dblock_allocator_ =
+        this->resource_factory ()->input_cdr_dblock_allocator ();
+      tss->owns_resources_ = 1;
+    }
+  return tss->input_cdr_dblock_allocator_;
+}
+
+ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
   if (this->use_tss_resources_)
@@ -1575,13 +1587,7 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
                            "TAO_ORB_Core::input_cdr_dblock_allocator (); "
                              "no more TSS keys"),
                           0);
-
-      if (tss->input_cdr_dblock_allocator_ == 0)
-        {
-          tss->input_cdr_dblock_allocator_ = this->resource_factory ()->input_cdr_dblock_allocator ();
-          tss->owns_resources_ = 1;
-        }
-      return tss->input_cdr_dblock_allocator_;
+      return this->input_cdr_dblock_allocator_i (tss);
     }
 
   if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
@@ -1599,6 +1605,18 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
 }
 
 ACE_Allocator*
+TAO_ORB_Core::input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
+{
+  if (tss->input_cdr_buffer_allocator_ == 0)
+    {
+      tss->input_cdr_buffer_allocator_ =
+        this->resource_factory ()->input_cdr_buffer_allocator ();
+      tss->owns_resources_ = 1;
+    }
+  return tss->input_cdr_buffer_allocator_;
+}
+
+ACE_Allocator*
 TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
   if (this->use_tss_resources_)
@@ -1611,12 +1629,7 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
                              "no more TSS keys"),
                           0);
 
-      if (tss->input_cdr_buffer_allocator_ == 0)
-        {
-          tss->input_cdr_buffer_allocator_ = this->resource_factory ()->input_cdr_buffer_allocator ();
-          tss->owns_resources_ = 1;
-        }
-      return tss->input_cdr_buffer_allocator_;
+      return this->input_cdr_buffer_allocator_i (tss);
     }
 
   if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
@@ -1716,44 +1729,50 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
   ACE_Data_Block *nb = 0;
 
-  ACE_Allocator *dblock_allocator =
-    this->input_cdr_dblock_allocator ();
-  ACE_Allocator *buffer_allocator =
-    this->input_cdr_buffer_allocator ();
+  ACE_Allocator *dblock_allocator;
+  ACE_Allocator *buffer_allocator;
 
-  if (this->resource_factory ()->use_locked_data_blocks ())
+  if (this->use_tss_resources_)
     {
-      typedef
-        ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
-        Locked_Data_Block;
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+      if (tss == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) %p\n",
+                           "TAO_ORB_Core::create_input_cdr_data_block (); "
+                             "no more TSS keys"),
+                          0);
 
-      ACE_NEW_MALLOC_RETURN (
-            nb,
-            ACE_static_cast (Locked_Data_Block *,
-                             dblock_allocator->malloc (sizeof (Locked_Data_Block))),
-            Locked_Data_Block (size,
-                               ACE_Message_Block::MB_DATA,
-                               0,
-                               buffer_allocator,
-                               0,
-                               dblock_allocator),
-            0);
+      dblock_allocator = 
+        this->input_cdr_dblock_allocator_i (tss);
+      buffer_allocator =
+        this->input_cdr_buffer_allocator_i (tss);
     }
   else
     {
-      ACE_NEW_MALLOC_RETURN (
-            nb,
-            ACE_static_cast(ACE_Data_Block*,
-                            dblock_allocator->malloc (sizeof (ACE_Data_Block))),
-            ACE_Data_Block (size,
-                            ACE_Message_Block::MB_DATA,
-                            0,
-                            buffer_allocator,
-                            0,
-                            0,
-                            dblock_allocator),
-            0);
+      dblock_allocator = 
+        this->input_cdr_dblock_allocator ();
+      buffer_allocator =
+        this->input_cdr_buffer_allocator ();
     }
+
+  ACE_Lock* lock_strategy = 0;
+  if (this->resource_factory ()->use_locked_data_blocks ())
+    {
+      lock_strategy = &this->data_block_lock_;
+    }
+
+  ACE_NEW_MALLOC_RETURN (
+      nb,
+      ACE_static_cast(ACE_Data_Block*,
+                      dblock_allocator->malloc (sizeof (ACE_Data_Block))),
+      ACE_Data_Block (size,
+                      ACE_Message_Block::MB_DATA,
+                      0,
+                      buffer_allocator,
+                      lock_strategy,
+                      0,
+                      dblock_allocator),
+      0);
 
   return nb;
 }
