@@ -1,3 +1,9 @@
+Tue Nov 23 07:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp (event):
+          Removed ACE_INLINE, that shouldn't be used in a cpp file, this also
+          fixes a fuzz error
+
 Mon Nov 22 20:15:47 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
