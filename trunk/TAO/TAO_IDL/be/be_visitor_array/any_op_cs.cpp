@@ -102,15 +102,15 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "_tao_elem = (" << node->name () << "_slice *)_tao_any.value ();"
       << be_nl
       << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "return 0;" << be_uidt_nl
       << "}" << be_nl
       << "TAO_CATCHANY" << be_nl
       << "{" << be_idt_nl
       << node->name () << "_free (_tao_elem._retn ());" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_uidt_nl
       << "}\n\n";
 
   node->cli_stub_any_op_gen (1);
