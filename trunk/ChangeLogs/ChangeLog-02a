@@ -1,4 +1,12 @@
-Sun Apr 28 08:19:37 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
+Sun Apr 28 11:50:17 2002  Edan Ayal <edanayal@yahoo.com>
+
+	* ace/WIN32_Asynch_IO.cpp:
+	  ACE_WIN32_Asynch_Read/Write_Stream/File_Result::complete -
+	  corrected the updates to the chained message blocks (rd_ptr and
+	  wr_ptr) in case of scatter-gather IO. This was apparently a
+	  cut-n-paste bug. 
+
+Sun Apr 28 08:19:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Proactor_Test.cpp: Added code to test async scatter-gather
 	  IO on Win32. Thanks Edan Ayal <edanayal@yahoo.com> for donating
