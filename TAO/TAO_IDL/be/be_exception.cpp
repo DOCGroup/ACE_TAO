@@ -352,7 +352,7 @@ be_exception::gen_client_stubs (void)
       *cs << "\treturn ACE_dynamic_cast (" << this->name () << "_ptr, exc);" <<
         nl;
       *cs << "else" << nl;
-      *cs << "\treturn ACE_dynamic_cast (" << this->name () << "_ptr, 0);\n";
+      *cs << "\treturn 0;\n";
       cs->decr_indent ();
       *cs << "}\n\n";
 
