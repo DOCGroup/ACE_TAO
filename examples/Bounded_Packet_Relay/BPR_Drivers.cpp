@@ -124,10 +124,10 @@ Input_Device_Wrapper_Base::svc (void)
       // Make sure there is a send command object.
       if (send_input_msg_cmd_ == 0)
         {
+          delete message;
           if (is_active_)
             {
               is_active_ = 0;
-              delete message;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
                                  "send message command object not instantiated"), 
                                 -1);
@@ -139,10 +139,10 @@ Input_Device_Wrapper_Base::svc (void)
       // Send the input message.
       if (send_input_msg_cmd_->execute ((void *) message) < 0)
         {
+          delete message;
           if (is_active_)
             {
               is_active_ = 0;
-              delete message;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
                                  "Failed executing send message command object"), 
                                 -1);
@@ -195,6 +195,10 @@ Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
     input_task_mgr_ (input_task_mgr),
     input_wrapper_ (input_wrapper),
     output_wrapper_ (output_wrapper),
+    queue_ (Bounded_Packet_Relay::DEFAULT_HWM,
+            Bounded_Packet_Relay::DEFAULT_LWM),
+    queue_hwm_ (Bounded_Packet_Relay::DEFAULT_HWM),
+    queue_lwm_ (Bounded_Packet_Relay::DEFAULT_LWM),
     transmission_number_ (0),
     packets_sent_ (0),
     status_ (Bounded_Packet_Relay::UN_INITIALIZED),
@@ -209,6 +213,15 @@ Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
 
 Bounded_Packet_Relay::~Bounded_Packet_Relay (void)
 {
+  // Reactivate the queue, and then clear it.
+  queue_.activate ();
+  while (! queue_.is_empty ())
+    {
+      ACE_Message_Block *msg;
+      queue_.dequeue_head (msg);
+      delete msg;
+    }
+
 }
 
 // Requests output be sent to output device.
@@ -447,6 +460,41 @@ Bounded_Packet_Relay::receive_input (void * arg)
 
   return 0;
 }
+
+// Get high water mark for relay queue.
+
+ACE_UINT32 
+Bounded_Packet_Relay::queue_hwm (void)
+{
+  return queue_lwm_;
+}
+
+
+// Set high water mark for relay queue.
+
+void 
+Bounded_Packet_Relay::queue_hwm (ACE_UINT32 hwm)
+{
+  queue_hwm_ = hwm;
+}
+
+// Get low water mark for relay queue.
+
+ACE_UINT32 
+Bounded_Packet_Relay::queue_lwm (void)
+{
+  return queue_lwm_;
+}
+
+// Set low water mark for relay queue.
+
+void 
+Bounded_Packet_Relay::queue_lwm (ACE_UINT32 lwm)
+{
+  queue_lwm_ = lwm;
+}
+
+
 
 // Returns string corresponding to current status.
 

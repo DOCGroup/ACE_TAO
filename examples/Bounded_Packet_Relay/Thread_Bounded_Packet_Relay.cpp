@@ -182,6 +182,13 @@ User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
 {
 }
 
+// Destructor.
+
+User_Input_Task::~User_Input_Task (void)
+{
+  this->clear_all_timers ();
+}
+
 // Runs the main event loop.
 
 int 
@@ -198,6 +205,7 @@ User_Input_Task::svc (void)
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG,
               "terminating user input thread\n"));
+  this->clear_all_timers ();
   return 0;
 } 
 
@@ -293,7 +301,7 @@ User_Input_Task::run_transmission (void *)
           case 1:
             ACE_DEBUG ((LM_DEBUG, 
                        "\nRun transmission: "
-                       "transmission already in progress\n"));
+                       " Transmission already in progress\n"));
             return 0;
             /* NOTREACHED */
           case 0:
@@ -311,10 +319,13 @@ User_Input_Task::run_transmission (void *)
                                             driver_), 
                               -1);
               if (queue_->schedule (send_handler, 0, send_at) < 0)
-                ACE_ERROR_RETURN ((LM_ERROR, 
-                                   "User_Input_Task::run_transmission: "
-                                   "failed to schedule send handler"), 
-                                  -1);
+                {
+                  delete send_handler;
+                  ACE_ERROR_RETURN ((LM_ERROR, 
+                                     "User_Input_Task::run_transmission: "
+                                     "failed to schedule send handler"), 
+                                    -1);
+                }
               if (driver_.duration_limit ())
                 {
                   ACE_Time_Value terminate_at (0, driver_.duration_limit ());
@@ -322,18 +333,31 @@ User_Input_Task::run_transmission (void *)
 
                   Termination_Handler *termination_handler;
 
-                  ACE_NEW_RETURN (termination_handler, 
-                                  Termination_Handler (*relay_,
-                                                       *queue_, 
-                                                       driver_), 
-                                  -1);
+                  termination_handler =
+                    new Termination_Handler (*relay_,
+                                             *queue_, 
+                                             driver_);
+       
+                  if (! termination_handler)
+                    {
+                      this->clear_all_timers ();
+                      ACE_ERROR_RETURN ((LM_ERROR, 
+                                         "User_Input_Task::run_transmission: "
+                                         "failed to allocate termination "
+                                         "handler"), 
+                                        -1);
+                    }
                   if (queue_->schedule (termination_handler, 
                                         0, terminate_at) < 0)
-                    ACE_ERROR_RETURN ((LM_ERROR, 
-                                       "User_Input_Task::run_transmission: "
-                                       "failed to schedule termination "
-                                       "handler"), 
-                                      -1);
+                    {
+                      delete termination_handler;
+                      this->clear_all_timers ();
+                      ACE_ERROR_RETURN ((LM_ERROR, 
+                                         "User_Input_Task::run_transmission: "
+                                         "failed to schedule termination "
+                                         "handler"), 
+                                        -1);
+                    }
                 }
               return 0;
             }
@@ -362,8 +386,7 @@ User_Input_Task::end_transmission (void *)
             ACE_DEBUG ((LM_DEBUG, 
                         "\nEnd transmission: "
                         "no transmission in progress\n"));
-            return 0;
-            /* NOTREACHED */
+            /* Fall through to next case */
           case 0: 
             // Cancel any remaining timers.
             this->clear_all_timers ();
@@ -394,9 +417,11 @@ User_Input_Task::report_stats (void *)
             ACE_DEBUG ((LM_DEBUG, 
                         "\nRun transmission: "
                         "\transmission already in progress\n"));
-             /* fall through to next case */
+            return 0;
+             /* NOTREACHED */
 
           case 0:
+            this->clear_all_timers ();
             return 0;
              /* NOTREACHED */
 
@@ -416,6 +441,9 @@ User_Input_Task::report_stats (void *)
 int 
 User_Input_Task::shutdown (void *)
 {
+  // Clear any outstanding timers.
+  this->clear_all_timers ();
+
 #if !defined (ACE_LACKS_PTHREAD_CANCEL)
   // Cancel the thread timer queue task "preemptively."
   ACE_Thread::cancel (this->queue_->thr_id ());
@@ -437,7 +465,7 @@ User_Input_Task::clear_all_timers (void)
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
        (node = queue_->timer_queue ().get_first ()) != 0;
        )
-    queue_->cancel (node->get_timer_id (), 0);
+    queue_->timer_queue ().cancel (node->get_timer_id (), 0, 0);
 
   return 0;
 }
@@ -467,7 +495,8 @@ BPR_Handler_Base::clear_all_timers (void)
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
        (node = queue_.timer_queue ().get_first ()) != 0;
        )
-    queue_.cancel (node->get_timer_id (), 0);
+    queue_.timer_queue ().cancel (node->get_timer_id (), 0, 0);
+  //    queue_.cancel (node->get_timer_id (), 0);
 
   return 0;
 }

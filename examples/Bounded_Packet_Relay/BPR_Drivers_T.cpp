@@ -55,12 +55,38 @@ Command<RECEIVER, ACTION>::execute (void *arg)
 
 template <class TQ>
 Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver (void)
-  : packet_count_ (1000),
-    arrival_period_ (500),
-    send_period_ (1000),
-    duration_limit_ (1500000),
+  : packet_count_cmd_ (0),
+    arrival_period_cmd_ (0),
+    transmit_period_cmd_ (0),
+    duration_limit_cmd_ (0),
+    logging_level_cmd_ (0),
+    run_transmission_cmd_ (0),
+    cancel_transmission_cmd_ (0),
+    report_stats_cmd_ (0),
+    shutdown_cmd_ (0),
+    packet_count_ (1000),
+    arrival_period_ (10000),
+    send_period_ (10000),
+    duration_limit_ (20000000),
     logging_level_ (0)
 {
+}
+
+// Destructor.
+
+template <class TQ>
+Bounded_Packet_Relay_Driver<TQ>::~Bounded_Packet_Relay_Driver (void)
+{
+  // delete all instantiated command objects
+  delete packet_count_cmd_;
+  delete arrival_period_cmd_;
+  delete transmit_period_cmd_;
+  delete duration_limit_cmd_;
+  delete logging_level_cmd_;
+  delete run_transmission_cmd_;
+  delete cancel_transmission_cmd_;
+  delete report_stats_cmd_;
+  delete shutdown_cmd_;
 }
 
 // Parse the input and execute the corresponding command.

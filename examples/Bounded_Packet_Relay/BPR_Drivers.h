@@ -77,6 +77,12 @@ public:
     ERROR_DETECTED
   };
 
+  enum Queue_Defaults
+  {
+    DEFAULT_HWM = 0x7FFFFFFF,
+    DEFAULT_LWM = 0x7FFFFFFF
+  };
+
   typedef int (Bounded_Packet_Relay::*ACTION) (void *);
   // Command entry point type definition.
 
@@ -104,10 +110,24 @@ public:
   int report_statistics (void);
   // Requests a report of statistics from the last transmission.
 
-  // = Command Accessible Entry Points.
+  // = Command accessible entry points.
 
   int receive_input (void *);
   // Public entry point to which to push input.
+
+  // = Accessors and mutators for relay settings
+
+  ACE_UINT32 queue_hwm (void);
+  // Get high water mark for relay queue.
+
+  void queue_hwm (ACE_UINT32 hwm);
+  // Set high water mark for relay queue.
+
+  ACE_UINT32 queue_lwm (void);
+  // Get low water mark for relay queue.
+
+  void queue_lwm (ACE_UINT32 lwm);
+  // Set low water mark for relay queue.
 
 private:
   // = Concurrency Management.
@@ -126,6 +146,12 @@ private:
 
   ACE_Message_Queue<ACE_SYNCH> queue_;
   // Queue used to buffer input messages.
+
+  ACE_UINT32 queue_hwm_;
+  // High water mark for relay queue.
+
+  ACE_UINT32 queue_lwm_;
+  // Low water mark for relay queue.
 
   ACE_SYNCH_MUTEX transmission_lock_;
   // Lock for thread-safe synchronization of transmission startup and
@@ -150,6 +176,7 @@ private:
 
   ACE_Time_Value transmission_end_;
   // Ending time of the most recent transmission.
+
 };
 
 class Input_Device_Wrapper_Base : public ACE_Task_Base
