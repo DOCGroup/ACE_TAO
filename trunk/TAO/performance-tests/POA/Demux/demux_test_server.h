@@ -79,7 +79,7 @@ private:
   // An instance of the name client used for resolving the factory
   // objects.
 
-  Demux_Test_i demux_test_[TAO_DEMUX_TEST_MAX_POAS][TAO_DEMUX_TEST_MAX_OBJS];
+  //  Demux_Test_i demux_test_[TAO_DEMUX_TEST_MAX_POAS * TAO_DEMUX_TEST_MAX_OBJS];
   // The actual demux_test objects
 
   CORBA::ULong num_POAs_;
