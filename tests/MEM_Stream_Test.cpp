@@ -476,6 +476,7 @@ main (int argc, ACE_TCHAR *argv[])
 template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_SYNCH>;
 template class ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>;
+template class ACE_Atomic_Op_Ex<ACE_SYNCH_MUTEX, u_short>;
 template class ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Creation_Strategy<Echo_Handler>;
@@ -490,6 +491,7 @@ template class ACE_Thread_Strategy<Echo_Handler>;
 #pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_SYNCH>
 #pragma instantiate ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_SYNCH_MUTEX, u_short>
 #pragma instantiate ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<Echo_Handler>

@@ -21,8 +21,8 @@ ACE_RCSID(Event, Event_Channel, "$Id$")
 #include "tao/Timeprobe.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class ACE_Atomic_Op<ACE_ES_MUTEX, int>;
+template class ACE_Atomic_Op_Ex<ACE_ES_MUTEX, int>;
 template class ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>;
 template class ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>;
 template class ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry>;
@@ -58,8 +58,8 @@ template class ACE_Array_Base<TAO_EC_Event>;
 template class ACE_Array_Iterator<TAO_EC_Event>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Atomic_Op<ACE_ES_MUTEX, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_ES_MUTEX, int>
 #pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>
 #pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>
 #pragma instantiate ACE_Map_Entry<RtecEventChannelAdmin::Observer_Handle, ACE_EventChannel::Observer_Entry>

@@ -157,14 +157,6 @@ ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
 }
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-/*
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>
-#endif *//* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-//#endif /* ACE_HAS_MALLOC_STATS */
-
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Based_Pointer_Basic<ACE_PI_Control_Block::ACE_Malloc_Header>;

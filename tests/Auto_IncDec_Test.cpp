@@ -66,9 +66,11 @@ worker (void *)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
