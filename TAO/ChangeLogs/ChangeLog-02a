@@ -1,3 +1,13 @@
+Thu Mar 16 13:22:02 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Acceptor.cpp (open_default):
+
+	  Do not return with error if ACE::get_ip_interfaces() sets errno
+	  to ENOTSUP.  Simply use the default interface instead,
+	  since ACE::get_ip_interfaces() is not supported on some
+	  platforms.  This should correct a problem experienced on
+	  VxWorks.
+
 Thu Mar 16 14:20:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
