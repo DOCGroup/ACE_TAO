@@ -1,3 +1,10 @@
+Fri Jun 22 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+
+          Change usage message to reflect the multicast discovery
+          of the Naming Serivce is OFF by default.
+
 Fri Jun 22 18:31:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Event_Channel.cpp (dump_event):

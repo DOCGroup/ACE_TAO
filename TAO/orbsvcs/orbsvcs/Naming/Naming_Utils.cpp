@@ -187,7 +187,7 @@ TAO_Naming_Server::parse_args (int argc,
                            "-p <pid_file_name> "
                            "-f <persistence_file_name> "
                            "-b <base_address> "
-                           "-m <1=enable multicast(default), 0=disable multicast "
+                           "-m <1=enable multicast, 0=disable multicast(default) "
                            "\n",
                            argv [0]),
                           -1);
