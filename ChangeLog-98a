@@ -1,3 +1,9 @@
+Wed Dec 24 19:59:15 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/IOStream_Test.cpp (client): changed stream error message
+          from "timeout" to "timed out", so that run_tests.check won't
+          complain about it.
+
 Wed Dec 24 18:37:49 1997    <nw1@JIG>
 
 	* ace/Synch.i (get_thread_id,get_nesting_level): Added ACE_INLINE.
