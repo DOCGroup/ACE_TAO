@@ -2067,7 +2067,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
     return bytes_transferred;
 }
 
-ASYS_INLINE ssize_t
+ssize_t
 ACE::write_n (ACE_HANDLE handle,
               const ACE_Message_Block *message_block,
               size_t *bt)
