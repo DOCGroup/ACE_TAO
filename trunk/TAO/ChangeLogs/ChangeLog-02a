@@ -1,3 +1,8 @@
+Tue Aug 22 16:41:02 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	  moved variable declaration of "for loop" to fix compile warning. 
+
 Tue Aug 22 12:05:40 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CosNaming.dsp:
