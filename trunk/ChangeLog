@@ -1,3 +1,9 @@
+Tue Dec  7 18:38:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/aio.m4: In the check for POSIX Realtime signals, do the
+	  #include <signal.h> first, enclosed in extern "C", else HP-UX
+	  gets a bad definition for an internal function call (___sysconf()).
+
 Tue Dec  7 17:48:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/ThreadManagement/Priorities.cpp: Fixed message block

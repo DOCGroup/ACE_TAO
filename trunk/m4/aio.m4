@@ -315,6 +315,9 @@ EOF
 
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
+extern "C" {
+#include <signal.h>
+}
 #ifndef ACE_LACKS_UNISTD_H
 #include <unistd.h>
 #endif
@@ -324,7 +327,6 @@ EOF
 #endif
 #include <sys/stat.h>
 #include <pthread.h>
-#include <signal.h>
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
