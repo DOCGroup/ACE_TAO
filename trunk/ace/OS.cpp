@@ -6863,6 +6863,7 @@ ACE_OS::getenvstrings (void)
 #endif /* ACE_WIN32 */
 }
 
+#if defined (ACE_HAS_STRPTIME)
 char *
 ACE_OS::strptime (char *buf, const char *format, struct tm *tm)
 {
@@ -7104,7 +7105,6 @@ ACE_OS::strptime (char *buf, const char *format, struct tm *tm)
 #endif /* ! ACE_HAS_WINCE */
 }
 
-#if defined (ACE_HAS_STRPTIME)
 # if defined (ACE_LACKS_NATIVE_STRPTIME)
 int
 ACE_OS::strptime_getnum (char *buf,
