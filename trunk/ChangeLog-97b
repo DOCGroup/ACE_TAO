@@ -1,3 +1,9 @@
+Mon Oct 27 22:17:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* OS.h: Added the ACE_NESTED_CLASS macro to deal with those
+	compilers that do not allow a fully scoped type name appearing
+	inside a scope in which it was defined.
+
 Mon Oct 27 22:17:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp (exit): don't use the cache when finding
