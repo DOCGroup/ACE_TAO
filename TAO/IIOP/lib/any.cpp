@@ -40,16 +40,6 @@
 
 #include	<initguid.h>
 
-
-#ifdef	_POSIX_THREADS
-//
-// If POSIX threads are available, set up lock covering refcounts.
-//
-static pthread_mutex_t		any_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
-
-
-
 CORBA_TypeCode_ptr
 CORBA_Any::type () const
 {
@@ -521,30 +511,24 @@ ULONG
 __stdcall
 CORBA_Any::AddRef ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&any_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    return ++_refcnt;
+  return ++_refcnt;
 }
 
 ULONG
 __stdcall
 CORBA_Any::Release ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&any_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    if (--_refcnt != 0)
-	return _refcnt;
+  if (--_refcnt != 0)
+    return _refcnt;
 
-#ifdef	_POSIX_THREADS
-    region.leave ();
-#endif
+  guard.release();
 
-    delete this;
-    return 0;
+  delete this;
+  return 0;
 }
 
 HRESULT
@@ -554,16 +538,16 @@ CORBA_Any::QueryInterface (
     void	**ppv
 )
 {
-    *ppv = 0;
+  *ppv = 0;
 
-    if (IID_CORBA_Any == riid || IID_IUnknown == riid)
-	*ppv = this;
+  if (IID_CORBA_Any == riid || IID_IUnknown == riid)
+    *ppv = this;
 
-    if (*ppv == 0)
-	return ResultFromScode (E_NOINTERFACE);
+  if (*ppv == 0)
+    return ResultFromScode (E_NOINTERFACE);
 
-    (void) AddRef ();
-    return NOERROR;
+  (void) AddRef ();
+  return NOERROR;
 }
 
 

@@ -13,16 +13,6 @@
 #include        <initguid.h>
 
 #include	"debug.hh"
-#include	"thread.hh"
-
-
-#ifdef	_POSIX_THREADS
-//
-// If POSIX threads are available, set up lock covering refcounts.
-//
-static pthread_mutex_t		nvlist_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
-
 
 
 //
@@ -38,28 +28,24 @@ ULONG
 __stdcall
 CORBA_NamedValue::AddRef ()
 {
-#ifdef  _POSIX_THREADS
-    Critical            region (&nvlist_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
  
-    return _refcount++;
+  return _refcount++;
 }
  
 ULONG
 __stdcall
 CORBA_NamedValue::Release ()
 {
-#ifdef  _POSIX_THREADS
-    Critical            region (&nvlist_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
  
-    assert (this != 0);
+  assert (this != 0);
  
-    if (--_refcount != 0)
-        return _refcount;
+  if (--_refcount != 0)
+    return _refcount;
 
-    delete this;
-    return 0;
+  delete this;
+  return 0;
 }
  
 HRESULT
@@ -117,28 +103,24 @@ ULONG
 __stdcall
 CORBA_NVList::AddRef ()
 {
-#ifdef  _POSIX_THREADS
-    Critical            region (&nvlist_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
  
-    return _refcount++;
+  return _refcount++;
 }
  
 ULONG
 __stdcall
 CORBA_NVList::Release ()
 {
-#ifdef  _POSIX_THREADS
-    Critical            region (&nvlist_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
  
-    assert (this != 0);
+  assert (this != 0);
  
-    if (--_refcount != 0)
-        return _refcount;
+  if (--_refcount != 0)
+    return _refcount;
 
-    delete this;
-    return 0;
+  delete this;
+  return 0;
 }
  
 HRESULT

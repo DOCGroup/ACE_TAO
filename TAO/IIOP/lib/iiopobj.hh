@@ -12,6 +12,10 @@
 #ifndef	_iiopobj_hh
 #define	_iiopobj_hh
 
+#  if !defined(ACE_HAS_THREADS)
+typedef ACE_Null_Mutex ACE_Thread_Mutex;
+#  endif
+
 typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
 
 class _EXPCLASS IIOP
@@ -60,94 +64,95 @@ extern "C" const IID		IID_IIOP_Object;
 
 class _EXPCLASS IIOP_Object : public STUB_Object
 {
-  public:
-    //
-    // stub-based invocation
-    //
-    void		do_call (
-			    CORBA_Environment		&env,
-			    const calldata		*info,
-			    ...
-			);
+public:
+  //
+  // stub-based invocation
+  //
+  void		do_call (
+			 CORBA_Environment		&env,
+			 const calldata		*info,
+			 ...
+			 );
 
-    //
-    // DII based invocation
-    //
-    void		do_dynamic_call (
-			    const char			*opname,
-			    CORBA_Boolean		is_roundtrip,
-			    CORBA_NVList_ptr		args,
-			    CORBA_NamedValue_ptr	result,
-			    CORBA_Flags			flags,
-			    CORBA_ExceptionList		&exceptions,
-			    CORBA_Environment		&env
-			);
+  //
+  // DII based invocation
+  //
+  void		do_dynamic_call (
+				 const char			*opname,
+				 CORBA_Boolean		is_roundtrip,
+				 CORBA_NVList_ptr		args,
+				 CORBA_NamedValue_ptr	result,
+				 CORBA_Flags			flags,
+				 CORBA_ExceptionList		&exceptions,
+				 CORBA_Environment		&env
+				 );
 
-    //
-    // Support for tables keyed by objrefs.
-    //
-    CORBA_ULong		hash (
-			    CORBA_ULong		maximum,
-			    CORBA_Environment	&env
-			);
-    CORBA_Boolean	is_equivalent (
-			    CORBA_Object_ptr	other_obj,
-			    CORBA_Environment	&env
-			);
+  //
+  // Support for tables keyed by objrefs.
+  //
+  CORBA_ULong		hash (
+			      CORBA_ULong		maximum,
+			      CORBA_Environment	&env
+			      );
+  CORBA_Boolean	is_equivalent (
+			       CORBA_Object_ptr	other_obj,
+			       CORBA_Environment	&env
+			       );
 
-    //
-    // XXX All objref representations should know how to marshal themselves.
-    // That will involve ensuring that the IOR that gets marshaled talks a
-    // specific protocol, otherwise the target of a message would not be
-    // invoke using the objref it receives (compromising functionality in
-    // a very basic and mysterious mannter).  So for example an objref might
-    // need to create a proxy for itself rather than marshaling its own
-    // representation.  [ The IIOP engine does not need to worry about such
-    // issues since it only supports one protocol -- the problem won't show
-    // up.  "Multiprotocol ORBs" will need to solve that problem though.  ]
-    //
+  //
+  // XXX All objref representations should know how to marshal themselves.
+  // That will involve ensuring that the IOR that gets marshaled talks a
+  // specific protocol, otherwise the target of a message would not be
+  // invoke using the objref it receives (compromising functionality in
+  // a very basic and mysterious mannter).  So for example an objref might
+  // need to create a proxy for itself rather than marshaling its own
+  // representation.  [ The IIOP engine does not need to worry about such
+  // issues since it only supports one protocol -- the problem won't show
+  // up.  "Multiprotocol ORBs" will need to solve that problem though.  ]
+  //
 
-    IIOP::ProfileBody		profile;
-    IIOP::ProfileBody		*fwd_profile;
+  IIOP::ProfileBody		profile;
+  IIOP::ProfileBody		*fwd_profile;
 
-				IIOP_Object (char *repository_id)
-				    : fwd_profile (0), base (this),
-					STUB_Object (repository_id),
-					_refcount (1)
-				    { }
+  IIOP_Object (char *repository_id)
+    : fwd_profile (0), base (this),
+      STUB_Object (repository_id),
+      _refcount (1)
+  { }
 
-    //
-    // COM stuff
-    //
-    ULONG __stdcall		AddRef ();
-    ULONG __stdcall		Release ();
-    HRESULT __stdcall		QueryInterface (
-				    REFIID	type_id,
-				    void	**ppv
-				);
+  //
+  // COM stuff
+  //
+  ULONG __stdcall		AddRef ();
+  ULONG __stdcall		Release ();
+  HRESULT __stdcall		QueryInterface (
+						REFIID	type_id,
+						void	**ppv
+						);
 
-  private:
-    CORBA_Object		base;
-    unsigned			_refcount;
+private:
+  CORBA_Object		base;
+  ACE_Thread_Mutex lock_;
+  unsigned			_refcount;
 
-    //
-    // Destructor is to be called only through Release()
-    //
-				~IIOP_Object ()
-				    { assert (_refcount == 0);
-				    delete fwd_profile; }
+  //
+  // Destructor is to be called only through Release()
+  //
+  ~IIOP_Object ()
+  { assert (_refcount == 0);
+  delete fwd_profile; }
 
-    //
-    // Disallow copy constructor and assignment operator
-    //
-				IIOP_Object (const IIOP_Object &);
-				operator = (const IIOP_Object &);
+  //
+  // Disallow copy constructor and assignment operator
+  //
+  IIOP_Object (const IIOP_Object &);
+  operator = (const IIOP_Object &);
 #if	defined (__GNUG__)
-    //
-    // G++ (even 2.6.3) stupidly thinks instances can't be
-    // created.  This de-warns.
-    //
-    friend class everyone_needs_a_friend;
+  //
+  // G++ (even 2.6.3) stupidly thinks instances can't be
+  // created.  This de-warns.
+  //
+  friend class everyone_needs_a_friend;
 #endif
 };
 

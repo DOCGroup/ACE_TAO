@@ -1,5 +1,19 @@
 Tue Apr 22 16:15:52 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* IIOP/lib/roa.cpp: Removed more POSIX thread calls.
+
+	* IIOP/lib/invoke.cpp: Changed ForceSynchronousCancellation to
+ 	ACE_Synchronous_Cancellation_Required and made it use the ACE_OS
+ 	calls.
+
+	* IIOP/lib/{typecode,svrrqst,request,principa,orbobj,nvlist,iiopobj,giop,except,any}.*:
+ 	Removed all vestiges of pthread mutexes...they are now
+ 	ACE_Thread_Mutexes.  This will likely have to change if we want to
+ 	compile something completely devoid of threads, but that's another
+ 	day.  Also, the mutexes have moved from being globals to being
+ 	members on the respective classes.  No files should be dependent
+ 	on thread.hh any longer.
+
 	* IIOP/lib/connect.cpp (open): Removed code obsoleted by use of
  	the Strategy_Acceptor.
 

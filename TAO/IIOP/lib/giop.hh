@@ -110,171 +110,162 @@ class IOP {				// namespace
 };
 
 
-class GIOP {				// namespace
+class GIOP				// namespace
+{
+public:
+  struct Version { CORBA_Octet	major, minor; };
 
+  //
+  // GIOP protocol version information
+  //
+  enum { MY_MAJOR = 1, MY_MINOR = 0 };	// 1.0
+
+  //
+  // All GIOP messages include a header and message type.
+  //
+  enum MsgType {
+    Request = 0,		// sent by client
+    Reply = 1,		// by server
+    CancelRequest = 2,	// by client
+    LocateRequest = 3,	// by client
+    LocateReply = 4,	// by server
+    CloseConnection = 5,	// by server
+    MessageError = 6,	// by both
+    EndOfFile = 7		// "discovered" by either
+  };
+
+  struct MessageHeader {
+    CORBA_Char		magic [4];		// "GIOP"
+    Version			giop_version;
+    CORBA_Octet		byte_order;		// 0 = big, 1 = little
+    CORBA_Octet		message_type;		// MsgType above
+    CORBA_ULong		message_size;		// in byte_order!
+  };
+
+  //
+  // Support for Implicit ORB Service Context
+  //
+  typedef CORBA_ULong 	ServiceID;
+  enum {
+    TransactionService = 0
+    //
+    // more service IDs may be defined by OMG
+    //
+  };
+  struct ServiceContext {
+    ServiceID		context_id;
+    opaque			context_data;
+  };
+  typedef CORBA_SEQUENCE <ServiceContext>	ServiceContextList;
+
+  //
+  // Request, Reply headers
+  //
+  struct RequestHeader {
+    ServiceContextList	service_info;
+    CORBA_ULong		request_id;
+    CORBA_Boolean		response_expected;
+    opaque			object_key;
+    CORBA_String		operation;
+    CORBA_Principal_ptr	requesting_principal;
+  };
+
+  enum ReplyStatusType {
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION,
+    LOCATION_FORWARD
+  };
+
+  struct ReplyHeader {
+    ServiceContextList	service_info;
+    CORBA_ULong		request_id;
+    ReplyStatusType		reply_status;
+  };
+
+  //
+  // Cancellation -- applies both to Requests and LocateRequests.
+  //
+  struct CancelRequestHeader {
+    CORBA_ULong		request_id;
+  };
+
+  //
+  // Location service support
+  //
+  struct LocateRequestHeader {
+    CORBA_ULong		request_id;
+    opaque			object_key;
+  };
+
+  enum LocateStatusType {
+    UNKNOWN_OBJECT,
+    OBJECT_HERE,
+    OBJECT_FORWARD
+  };
+
+  struct LocateReplyHeader {
+    CORBA_ULong		request_id;
+    LocateStatusType	locate_status;
+  };
+
+
+  //
+  // Invocation:  Sends a Request, optionally reads associated Reply.
+  // Uses transport info passed in, doesn't locate anything.
+  //
+  class Invocation 
+  {
   public:
-    struct Version { CORBA_Octet	major, minor; };
+    Invocation (IIOP_Object* data, 
+		const char* operation,
+		CORBA_Boolean is_roundtrip);
+    ~Invocation ();
 
     //
-    // GIOP protocol version information
+    // "start" goes beyond initialising data structures, and 
+    // makes calls that may fail -- and thus throw exceptions.
     //
-    enum { MY_MAJOR = 1, MY_MINOR = 0 };	// 1.0
+    void start(CORBA_Environment& env);
 
-    //
-    // All GIOP messages include a header and message type.
-    //
-    enum MsgType {
-	Request = 0,		// sent by client
-	Reply = 1,		// by server
-	CancelRequest = 2,	// by client
-	LocateRequest = 3,	// by client
-	LocateReply = 4,	// by server
-	CloseConnection = 5,	// by server
-	MessageError = 6,	// by both
-	EndOfFile = 7		// "discovered" by either
-    };
+    void put_param(CORBA_TypeCode_ptr tc, void* value, CORBA_Environment& env)
+    {
+      (void) CDR::encoder (tc, value, 0, &stream, env);
+    }
 
-    struct MessageHeader {
-	CORBA_Char		magic [4];		// "GIOP"
-	Version			giop_version;
-	CORBA_Octet		byte_order;		// 0 = big, 1 = little
-	CORBA_Octet		message_type;		// MsgType above
-	CORBA_ULong		message_size;		// in byte_order!
-    };
+    ReplyStatusType invoke(CORBA_ExceptionList& exceptions,
+			   CORBA_Environment& env);
 
-    //
-    // Support for Implicit ORB Service Context
-    //
-    typedef CORBA_ULong 	ServiceID;
-    enum {
-	TransactionService = 0
-	//
-	// more service IDs may be defined by OMG
-	//
-    };
-    struct ServiceContext {
-	ServiceID		context_id;
-	opaque			context_data;
-    };
-    typedef CORBA_SEQUENCE <ServiceContext>	ServiceContextList;
+    void get_value(CORBA_TypeCode_ptr tc,
+		   void* value,
+		   CORBA_Environment& env)
+    {
+      (void) CDR::decoder (tc, value, 0, &stream, env);
+    }
 
-    //
-    // Request, Reply headers
-    //
-    struct RequestHeader {
-	ServiceContextList	service_info;
-	CORBA_ULong		request_id;
-	CORBA_Boolean		response_expected;
-	opaque			object_key;
-	CORBA_String		operation;
-	CORBA_Principal_ptr	requesting_principal;
-    };
+    // no CORBA_Context support (deprecated)
 
-    enum ReplyStatusType {
-	NO_EXCEPTION,
-	USER_EXCEPTION,
-	SYSTEM_EXCEPTION,
-	LOCATION_FORWARD
-    };
-
-    struct ReplyHeader {
-	ServiceContextList	service_info;
-	CORBA_ULong		request_id;
-	ReplyStatusType		reply_status;
-    };
-
-    //
-    // Cancellation -- applies both to Requests and LocateRequests.
-    //
-    struct CancelRequestHeader {
-	CORBA_ULong		request_id;
-    };
-
-    //
-    // Location service support
-    //
-    struct LocateRequestHeader {
-	CORBA_ULong		request_id;
-	opaque			object_key;
-    };
-
-    enum LocateStatusType {
-	UNKNOWN_OBJECT,
-	OBJECT_HERE,
-	OBJECT_FORWARD
-    };
-
-    struct LocateReplyHeader {
-	CORBA_ULong		request_id;
-	LocateStatusType	locate_status;
-    };
+  private:
+    IIOP_Object*	_data;
+    const char*		opname;
+    CORBA_Boolean	do_rsvp;
+    CORBA_ULong		my_request_id;
+    ACE_Thread_Mutex    lock_;
 
 
-    //
-    // Invocation:  Sends a Request, optionally reads associated Reply.
-    // Uses transport info passed in, doesn't locate anything.
-    //
-    class Invocation {
-      public:
-			Invocation (
-			    IIOP_Object			*data,
-			    const char			*operation,
-			    CORBA_Boolean		is_roundtrip
-			);
-			~Invocation ();
+    unsigned char	buffer [CDR::DEFAULT_BUFSIZE];
+    CDR			stream;
 
-	//
-	// "start" goes beyond initialising data structures, and 
-	// makes calls that may fail -- and thus throw exceptions.
-	//
-	void		start (
-			    CORBA_Environment		&env
-			);
+    autorelease <client_endpoint>	endpoint;
+  };
 
-	void		put_param (
-			    CORBA_TypeCode_ptr	tc,
-			    void			*value,
-			    CORBA_Environment		&env
-			)
-			{
-			    (void) CDR::encoder (tc, value, 0, &stream, env);
-			}
+  //
+  // Close a connection, first sending GIOP::CloseConnection
+  //
+  static void		close_connection (ACE_SOCK_Stream &fd, void *ctx);
+  static void		close_connection (ACE_HANDLE &fd, void *ctx);
 
-	ReplyStatusType	invoke (
-			    CORBA_ExceptionList	&exceptions,
-			    CORBA_Environment		&env
-			);
-
-	void		get_value (
-			    CORBA_TypeCode_ptr	tc,
-			    void			*value,
-			    CORBA_Environment		&env
-			)
-			{
-			    (void) CDR::decoder (tc, value, 0, &stream, env);
-			}
-
-	// no CORBA_Context support (deprecated)
-
-      private:
-	IIOP_Object		*_data;
-	const char		*opname;
-	CORBA_Boolean		do_rsvp;
-	CORBA_ULong		my_request_id;
-
-	unsigned char		buffer [CDR::DEFAULT_BUFSIZE];
-	CDR			stream;
-
-	autorelease <client_endpoint>	endpoint;
-    };
-
-    //
-    // Close a connection, first sending GIOP::CloseConnection
-    //
-    static void		close_connection (ACE_SOCK_Stream &fd, void *ctx);
-    static void		close_connection (ACE_HANDLE &fd, void *ctx);
-
-    //
+  //
   // Generic server side data dispatch -- called for all file descriptors
   // on which incoming messages are expected.
   //
@@ -308,9 +299,9 @@ class GIOP {				// namespace
   static CORBA_Boolean send_message (CDR& stream, ACE_SOCK_Stream& peer);
   static CORBA_Boolean send_message (CDR& stream, ACE_HANDLE& connection);
 
-    //
-    // Reads message, returns message type from header
-    //
+  //
+  // Reads message, returns message type from header
+  //
   static MsgType read_message (ACE_SOCK_Stream& peer, CDR& msg, CORBA_Environment& env);
   static MsgType read_message (ACE_HANDLE& connection, CDR& msg, CORBA_Environment& env);
 };

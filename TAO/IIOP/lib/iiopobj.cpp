@@ -18,18 +18,7 @@
 
 #include	<stub.hh>
 
-#include	"thread.hh"
-
 #include	"iiopobj.hh"
-
-
-#ifdef	_POSIX_THREADS
-//
-// If POSIX threads are available, set up lock covering refcounts.
-//
-static pthread_mutex_t		iiopobj_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// _POSIX_THREADS
-
 
 
 IIOP::ProfileBody::ProfileBody (
@@ -152,30 +141,24 @@ ULONG
 __stdcall
 IIOP_Object::AddRef ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&iiopobj_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    return ++_refcount;
+  return ++_refcount;
 }
 
 ULONG
 __stdcall
 IIOP_Object::Release ()
 {
-#ifdef	_POSIX_THREADS
-    Critical		region (&iiopobj_lock);
-#endif
+  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
 
-    if (--_refcount != 0)
-	return _refcount;
+  if (--_refcount != 0)
+    return _refcount;
 
-#ifdef	_POSIX_THREADS
-    region.leave ();
-#endif
+  guard.release();
 
-    delete this;
-    return 0;
+  delete this;
+  return 0;
 }
 
 
