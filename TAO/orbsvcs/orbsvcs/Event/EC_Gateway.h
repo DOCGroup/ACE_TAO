@@ -143,6 +143,25 @@ public:
                                 CORBA::Environment& env);
 
 private:
+  void close_i (CORBA::Environment& );
+
+  void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub,
+                          CORBA::Environment& env);
+
+private:
+  ACE_SYNCH_MUTEX lock_;
+  // Lock to synchronize internal changes
+
+  CORBA::ULong busy_count_;
+  // How many threads are running push() we cannot make changes until
+  // that reaches 0
+
+  int update_posted_;
+  RtecEventChannelAdmin::ConsumerQOS c_qos_;
+  // An update_consumer() message arrived *while* we were doing a
+  // push() the modification is stored <pub_>, if multiple
+  // update_consumer messages arrive only the last one is executed.
+
   RtecEventChannelAdmin::EventChannel_var rmt_ec_;
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the list changes.
@@ -153,9 +172,13 @@ private:
 
   ACE_PushConsumer_Adapter<TAO_EC_Gateway_IIOP> consumer_;
   // Our consumer personality....
+  int consumer_is_active_;
+  // If it is not 0 then we must deactivate the supplier
 
   ACE_PushSupplier_Adapter<TAO_EC_Gateway_IIOP> supplier_;
   // Our supplier personality....
+  int supplier_is_active_;
+  // If it is not 0 then we must deactivate the supplier
 
   // We use a different Consumer_Proxy
   typedef ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex> Consumer_Map;

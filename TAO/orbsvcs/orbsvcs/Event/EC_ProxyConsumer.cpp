@@ -35,16 +35,58 @@ void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->is_connected ())
-    this->filter_->connected (supplier, ACE_TRY_ENV);
+  TAO_EC_SupplierFiltering* filter = 0;
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    filter = this->filter_;
+    filter->_incr_refcnt ();
+  }
+
+  filter->connected (supplier, ACE_TRY_ENV);
+
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+    filter->_decr_refcnt ();
+  }
 }
 
 void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->is_connected ())
-    this->filter_->disconnected (supplier, ACE_TRY_ENV);
+  TAO_EC_SupplierFiltering* filter = 0;
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return;
+
+    filter = this->filter_;
+    filter->_incr_refcnt ();
+  }
+
+  filter->disconnected (supplier, ACE_TRY_ENV);
+
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+    filter->_decr_refcnt ();
+  }
 }
 
 void
@@ -94,7 +136,7 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
     RtecEventComm::PushSupplier::_nil ();
 
   this->filter_->unbind (this);
-  this->event_channel_->supplier_filter_builder ()->destroy (this->filter_);
+  this->filter_->_decr_refcnt ();
   this->filter_ = 0;
 }
 
@@ -189,12 +231,37 @@ void
 TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->is_connected () == 0)
-    return; // @@ THROW something???
+  TAO_EC_SupplierFiltering* filter = 0;
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return; // @@ THROW something???
+
+    filter = this->filter_;
+    filter->_incr_refcnt ();
+
+    this->refcount_++;
+  }
 
   // No need to keep the lock, the filter_ class is supposed to be
   // thread safe....
-  this->filter_->push (event, ACE_TRY_ENV);
+  filter->push (event, ACE_TRY_ENV);
+
+  {
+    ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+    filter->_decr_refcnt ();
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return;
+  }
+  this->event_channel_->destroy_proxy_push_consumer (this);
 }
 
 void
