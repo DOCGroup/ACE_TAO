@@ -1,3 +1,12 @@
+Sat Oct 11 11:17:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp: 
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp: 
+	* orbsvcs/orbsvcs/Metrics.dsp: 
+
+	  Added xxxx_BUILD_DLL macro definition to the release
+	  configurations to fix Win32 MSVC release builds.
+
 Sat Oct 11 05:57:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
