@@ -22,7 +22,7 @@ Barrier_Test
 Basic_Types_Test
 Buffer_Stream_Test
 Cache_Map_Manager_Test
-Cached_Conn_Test: !LynxOS
+Cached_Conn_Test: !LynxOS !VxWorks
 Cached_Accept_Conn_Test: !VxWorks
 Capabilities_Test
 CDR_Test
@@ -30,7 +30,7 @@ CDR_File_Test
 CDR_Array_Test
 Collection_Test
 Config_Test
-Conn_Test: !chorus !VxWorks
+Conn_Test: !chorus
 Dirent_Test
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
