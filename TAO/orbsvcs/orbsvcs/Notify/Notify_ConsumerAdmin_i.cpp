@@ -150,8 +150,9 @@ TAO_Notify_ConsumerAdmin_i::evaluate_filter (TAO_Notify_Event &event, CORBA::Boo
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID /*proxyID*/)
+TAO_Notify_ConsumerAdmin_i::proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID)
 {
+  this->proxy_pushsupplier_ids_.put (proxyID); // This id is no longer in use.
 }
 
 void
@@ -510,6 +511,7 @@ TAO_Notify_ConsumerAdmin_i::obtain_notification_push_supplier (CosNotifyChannelA
                         CosNotifyChannelAdmin::ProxySupplier::_nil ());
     }
 
+  this->proxy_pushsupplier_ids_.next (); // commit this id to the pool
   return CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
 }
