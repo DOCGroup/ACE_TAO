@@ -1,3 +1,37 @@
+Thu Apr 22 16:51:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_Thread.h:
+	* ace/OS_NS_Thread.inl:
+	  Reverted this change:
+	  Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+	  which confused the lock scope (process vs. thread) with lock type
+	  (recursive, non-recursive, etc.). Panagiotis sent a revised patch
+	  to separately specify the lock type as an optional argument,
+	  lock_type, to ACE_OS::mutex_init(). This allows Pthreads recursive
+	  mutexes where they are available.
+	  I also renamed the 'type' argument to lock_scope to differentiate
+	  this further and avoid confusion in the future.
+	  On ACE_OS::thread_mutex_init(), the meaning of the old 'type'
+	  argument is changed. It previously combined the scope and type.
+	  Now it is just the type (e.g. recursive), as the scope is inherent
+	  in the method used.
+	  For clarification on ACE_HAS_RECURSIVE_MUTEXES, it means that the
+	  platform is capable of them, not that they always are, as one would
+	  expect. However, before Pthreads had recursion added, it was
+	  never optional. Now it is.
+
+	* ace/config-linux.h: Only set ACE_HAS_RECURSIVE_MUTEXES if
+	  ACE_HAS_PTHREADS_UNIX98_EXT is set.
+
+	* ace/config-aix4.x.h:
+	* ace/config-hpux-11.00.h: Added ACE_HAS_RECURSIVE_MUTEXES. This is
+	  predicated on ACE_HAS_PTHREADS_UNIX98_EXT, which is already set.
+	  Some other configs have ACE_HAS_PTHREADS_UNIX98_EXT also, but I
+	  don't have access to them for testing, so didn't add it to those.
+
+	* ace/Thread_Mutex.cpp (ctor): Pass 0 for lock_type to
+	  ACE_OS::thread_mutex_init(), not USYNC_THREAD.
+
 Thu Apr 22 11:53:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl (check_for_non_bool_operators):

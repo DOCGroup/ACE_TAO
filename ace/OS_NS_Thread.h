@@ -1301,18 +1301,20 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_init (ACE_mutex_t *m,
-                  int type = ACE_DEFAULT_SYNCH_TYPE,
+                  int lock_scope = ACE_DEFAULT_SYNCH_TYPE,
                   const char *name = 0,
                   ACE_mutexattr_t *arg = 0,
-                  LPSECURITY_ATTRIBUTES sa = 0);
+                  LPSECURITY_ATTRIBUTES sa = 0,
+                  int lock_type = 0);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_init (ACE_mutex_t *m,
-                  int type,
+                  int lock_scope,
                   const wchar_t *name,
                   ACE_mutexattr_t *arg = 0,
-                  LPSECURITY_ATTRIBUTES sa = 0);
+                  LPSECURITY_ATTRIBUTES sa = 0,
+                  int lock_type = 0);
 #endif /* ACE_HAS_WCHAR */
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
@@ -1737,14 +1739,14 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
-                         int type = ACE_DEFAULT_SYNCH_TYPE,
+                         int lock_type = 0,
                          const char *name = 0,
                          ACE_mutexattr_t *arg = 0);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
-                         int type,
+                         int lock_type,
                          const wchar_t *name,
                          ACE_mutexattr_t *arg = 0);
 #endif /* ACE_HAS_WCHAR */

@@ -64,7 +64,7 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
   if (ACE_OS::thread_mutex_init (&this->lock_,
-                                 USYNC_THREAD,
+                                 0,
                                  name,
                                  arg) != 0)
     ACE_ERROR ((LM_ERROR,
