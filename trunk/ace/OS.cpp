@@ -761,39 +761,6 @@ ACE_OS::ACE_OS (void)
 // Keeps track of whether we've initialized the WinSock DLL.
 int ACE_OS::socket_initialized_;
 
-// We need this to initialize the WinSock DLL.
-
-BOOL WINAPI
-DllMain (HINSTANCE, // DLL module handle
-         DWORD fdwReason, // Reason called
-         LPVOID) // Reserved
-{
-  switch (fdwReason)
-    {
-    case DLL_PROCESS_ATTACH:
-      if (ACE_OS::socket_init (ACE_WSOCK_VERSION) != 0)
-        return FALSE;
-      break;
-
-    case DLL_PROCESS_DETACH:
-      if (ACE_OS::socket_fini () != 0)
-        return FALSE;
-      break;
-
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-      break;
-
-    default:
-      ACE_ERROR_RETURN ((LM_ERROR, 
-                         "Sock.DLL DllMain called with unknown fdwReason = %u\n.", 
-                         fdwReason), FALSE);
-      /* NOTREACHED */
-    }
-
-  return TRUE;
-}
-
 #endif /* WIN32 */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
