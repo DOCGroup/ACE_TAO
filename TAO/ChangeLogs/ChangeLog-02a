@@ -1,3 +1,36 @@
+Tue Jun 12 18:28:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/Policy.pidl:
+        * tao/diffs/PolicyC.cpp.diff:
+        * tao/diffs/PolicyC.h.diff:
+        * tao/diffs/PolicyC.i.diff:
+        * tao/diffs/PolicyS.h.diff:
+          Regenerated diff files and added information to the  
+          instructions in Policy.pidl to make regeneration easier 
+          for the next person.
+
+        * tao/TAO.pidl:
+        * tao/diffs/TAOC.cpp.diff:
+        * tao/diffs/TAOC.h.diff:
+        * tao/diffs/TAOC.i.diff:
+          Regenerated diff files and added instructions to the pidl
+          file since it wasn't specified how this was being done 
+          before.
+
+        * tao/RTCORBA/RTCORBA.pidl:
+        * tao/RTCORBA/diffs/RTCORBAC.cpp.diff:
+        * tao/RTCORBA/diffs/RTCORBAC.h.diff:
+        * tao/RTCORBA/diffs/RTCORBAC.i.diff:
+          Updated instructions in the pidl file.  Also moved the
+          diff files from tao/diffs to under RTCORBA.
+
+        * tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/RTPortableServer/diffs/RTPortableServerC.cpp.diff:
+        * tao/RTPortableServer/diffs/RTPortableServerC.h.diff:
+        * tao/RTPortableServer/diffs/RTPortableServerC.i.diff:
+          Updated instructions in the pidl file.  Also moved the
+          diff files from tao/diffs to under RTPortableServer.
+
 Tue Jun 12 18:21:06 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tao/TAO_Internal.cpp (open_services): Added a missing call to
