@@ -44,7 +44,7 @@ endif
 #CXX := purify $(CXX)
 ##DCFLAGS = -g
 OCFLAGS =
-LDFLAGS += -L$(TAO_ROOT)/tao
+LDFLAGS += -L$(TAO_ROOT)/tao -lposix4
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
 
 $(IDL_SRC): cubit.idl
