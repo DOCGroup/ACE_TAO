@@ -320,14 +320,14 @@ namespace TAO
   ACE_TEMPLATE_SPECIALIZATION
   struct  Objref_Traits<MIF_Scheduling::MIF_Scheduler>
   {
-    static MIF_Scheduling::MIF_Scheduler_ptr tao_duplicate (
+    static MIF_Scheduling::MIF_Scheduler_ptr duplicate (
         MIF_Scheduling::MIF_Scheduler_ptr
       );
-    static void tao_release (
+    static void release (
         MIF_Scheduling::MIF_Scheduler_ptr
       );
-    static MIF_Scheduling::MIF_Scheduler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
+    static MIF_Scheduling::MIF_Scheduler_ptr nil (void);
+    static CORBA::Boolean marshal (
         MIF_Scheduling::MIF_Scheduler_ptr p,
         TAO_OutputCDR & cdr
       );
