@@ -33,11 +33,13 @@
  * and asynchronously through a Reactor in the single-threaded case.
  * @par
  * The goal of this signal handler is to ensure proper cleanup of
- * remote objects and resources created by the LoadManager upon
- * interruption by signals.  For example, suppose a user sends a
- * SIGINT (e.g. types CTRL-C) signal to the LoadManager service, the
- * LoadManager should be shutdown gracefully so that all remote
- * resources handled by the LoadManager are cleaned up.
+ * resources created by servants upon interruption by signals.  For
+ * example, suppose a user sends a
+ * SIGINT (e.g. types CTRL-C) signal to an application.  The servants
+ * in that application should be shutdown gracefully so that all
+ * resources handled by those servants are cleaned up.  This is
+ * particularly important for resources that are not cleaned up
+ * automatically.
  */
 class TAO_LB_Signal_Handler : public ACE_Task_Base
 {
@@ -71,10 +73,10 @@ public:
   /// when a Win32 object becomes signaled).
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
-private:
+protected:
 
-  /// Initiate the cleanup process.
-  int perform_cleanup (int signum);
+  /// Template method that initiates the cleanup process.
+  virtual int perform_cleanup (int signum);
 
 private:
 
