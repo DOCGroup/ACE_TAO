@@ -14,22 +14,22 @@ namespace TAO
   {
   }
 
-  PortableServer::Id_AssignmentPolicy_ptr
+  PortableServer::IdAssignmentPolicy_ptr
   Loadable_Id_Assignment_Policy::create (
-    PortableServer::Id_AssignmentPolicyValue value)
+    PortableServer::IdAssignmentPolicyValue value)
   {
     POA_Id_AssignmentPolicy* policy = 0;
 
     ACE_NEW_RETURN (policy,
                     POA_Id_AssignmentPolicy,
-                    PortableServer::Id_AssignmentPolicy::_nil ());
+                    PortableServer::IdAssignmentPolicy::_nil ());
 
     (void) policy->init (value);
 
     return policy;
   }
 
-  PortableServer::Id_AssignmentPolicy_ptr
+  PortableServer::IdAssignmentPolicy_ptr
   Loadable_Id_Assignment_Policy::create (
     const CORBA::Any &value
     ACE_ENV_ARG_DECL)
@@ -39,10 +39,10 @@ namespace TAO
 
     ACE_NEW_RETURN (policy,
                     POA_Id_AssignmentPolicy,
-                    PortableServer::Id_AssignmentPolicy::_nil ());
+                    PortableServer::IdAssignmentPolicy::_nil ());
 
     (void) policy->init (value ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PortableServer::Id_AssignmentPolicy::_nil ());
+    ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
 
     return policy;
   }

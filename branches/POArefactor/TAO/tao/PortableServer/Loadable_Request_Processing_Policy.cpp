@@ -20,10 +20,10 @@ namespace TAO
   Loadable_Request_Processing_Policy::create (
     PortableServer::RequestProcessingPolicyValue value)
   {
-    POA_Request_ProcessingPolicy* policy = 0;
+    POA_Request_Processing_Policy* policy = 0;
 
     ACE_NEW_RETURN (policy,
-                    POA_Request_ProcessingPolicy,
+                    POA_Request_Processing_Policy,
                     PortableServer::RequestProcessingPolicy::_nil ());
 
     (void) policy->init (value);
@@ -37,10 +37,10 @@ namespace TAO
     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::PolicyError))
   {
-    POA_Request_ProcessingPolicy* policy = 0;
+    POA_Request_Processing_Policy* policy = 0;
 
     ACE_NEW_RETURN (policy,
-                    POA_Request_ProcessingPolicy,
+                    POA_Request_Processing_Policy,
                     PortableServer::RequestProcessingPolicy::_nil ());
 
     (void) policy->init (value ACE_ENV_ARG_PARAMETER);

@@ -14,22 +14,22 @@ namespace TAO
   {
   }
 
-  PortableServer::Id_UniquenessPolicy_ptr
+  PortableServer::IdUniquenessPolicy_ptr
   Loadable_Id_Uniqueness_Policy::create (
-    PortableServer::Id_UniquenessPolicyValue value)
+    PortableServer::IdUniquenessPolicyValue value)
   {
     POA_Id_UniquenessPolicy* policy = 0;
 
     ACE_NEW_RETURN (policy,
                     POA_Id_UniquenessPolicy,
-                    PortableServer::Id_UniquenessPolicy::_nil ());
+                    PortableServer::IdUniquenessPolicy::_nil ());
 
     (void) policy->init (value);
 
     return policy;
   }
 
-  PortableServer::Id_UniquenessPolicy_ptr
+  PortableServer::IdUniquenessPolicy_ptr
   Loadable_Id_Uniqueness_Policy::create (
     const CORBA::Any &value
     ACE_ENV_ARG_DECL)
@@ -39,10 +39,10 @@ namespace TAO
 
     ACE_NEW_RETURN (policy,
                     POA_Id_UniquenessPolicy,
-                    PortableServer::Id_UniquenessPolicy::_nil ());
+                    PortableServer::IdUniquenessPolicy::_nil ());
 
     (void) policy->init (value ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (PortableServer::Id_UniquenessPolicy::_nil ());
+    ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
 
     return policy;
   }

@@ -2,7 +2,7 @@
 
 #include "Loadable_Implicit_Activation_Policy.h"
 #include "ace/Dynamic_Service.h"
-#include "POA_ImplicitActivationPolicy.h"
+#include "POA_Implicit_ActivationPolicy.h"
 
 ACE_RCSID (PortableServer,
            Loadable_Implicit_Activation_Policy,

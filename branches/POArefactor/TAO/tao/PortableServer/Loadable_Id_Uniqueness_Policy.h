@@ -48,11 +48,11 @@ namespace TAO
      * change this to a CORBA::Policy_ptr create() call, which is defined
      * as pure virtual in the base. This is something for the future.
      */
-    PortableServer::Id_UniquenessPolicy_ptr create (
-      PortableServer::Id_UniquenessPolicyValue value);
+    PortableServer::IdUniquenessPolicy_ptr create (
+      PortableServer::IdUniquenessPolicyValue value);
 
     /// Create a new id uniqueness policy
-    PortableServer::Id_UniquenessPolicy_ptr create (
+    PortableServer::IdUniquenessPolicy_ptr create (
       const CORBA::Any &value ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::PolicyError));
   };

@@ -2,7 +2,7 @@
 
 #include "Loadable_Servant_Retention_Policy.h"
 #include "ace/Dynamic_Service.h"
-#include "POA_ServantRetentionPolicy.h"
+#include "POA_Servant_Retention_Policy.h"
 
 ACE_RCSID (PortableServer,
            Loadable_Servant_Retention_Policy,
@@ -20,10 +20,10 @@ namespace TAO
   Loadable_Servant_Retention_Policy::create (
     PortableServer::ServantRetentionPolicyValue value)
   {
-    POA_Servant_RetentionPolicy* policy = 0;
+    POA_Servant_Retention_Policy* policy = 0;
 
     ACE_NEW_RETURN (policy,
-                    POA_Servant_RetentionPolicy,
+                    POA_Servant_Retention_Policy,
                     PortableServer::ServantRetentionPolicy::_nil ());
 
     (void) policy->init (value);
@@ -37,10 +37,10 @@ namespace TAO
     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::PolicyError))
   {
-    POA_Servant_RetentionPolicy* policy = 0;
+    POA_Servant_Retention_Policy* policy = 0;
 
     ACE_NEW_RETURN (policy,
-                    POA_Servant_RetentionPolicy,
+                    POA_Servant_Retention_Policy,
                     PortableServer::ServantRetentionPolicy::_nil ());
 
     (void) policy->init (value ACE_ENV_ARG_PARAMETER);
