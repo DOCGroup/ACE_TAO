@@ -1,3 +1,17 @@
+Wed Dec 18 17:12:04 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_RT.cpp:
+	* ace/Hash_Map_Manager_RT.h:
+	* ace/Hash_Map_Manager_RT_T.cpp:
+	* ace/Hash_Map_Manager_RT_T.h:
+	* ace/Hash_Map_Manager_RT_T.inl:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	* tests/Hash_Map_Manager_RT_Test.cpp:
+	* tests/Hash_Map_Manager_RT_Test.dsp:
+	* tests/tests.dsw: Added the new Hash_Map_Manager_RT stuff into
+	  the branch RT_Hash.
+
 Wed Dec 18 15:03:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Get_Opt.cpp (long_option): For MSVC 7.x compiler, we need to

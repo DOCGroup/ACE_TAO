@@ -414,6 +414,10 @@ SOURCE=.\Hash_Map_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_Manager_RT.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Hashable.cpp
 # End Source File
 # Begin Source File
@@ -1459,6 +1463,10 @@ SOURCE=.\Hash_Map_Manager.h
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager_rt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_Manager_RT_T.h
 # End Source File
 # Begin Source File
 
@@ -2570,7 +2578,7 @@ SOURCE=.\Hash_Map_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Hash_Map_Manager_rt.i
+SOURCE=.\Hash_Map_Manager_RT_T.inl
 # End Source File
 # Begin Source File
 
@@ -3257,6 +3265,11 @@ SOURCE=.\Future.cpp
 # Begin Source File
 
 SOURCE=.\Hash_Cache_Map_Manager_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_Manager_RT_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
