@@ -31,7 +31,7 @@ public:
 };
 
 // @@ Will this work, changing ACE_INET_Addr to ACE_Addr??
-typedef ACE_Hash_Map_Manager<ACE_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
+typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_POA *, TAO_Collocation_Table_Lock>
         TAO_GLOBAL_Collocation_Table;
 
 class TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
@@ -177,7 +177,7 @@ public:
   int add_to_collocation_table (void);
   // Added this ORB into collocation table.
 
-  TAO_POA *get_collocated_poa (ACE_Addr &addr);
+  TAO_POA *get_collocated_poa (ACE_INET_Addr &addr);
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
