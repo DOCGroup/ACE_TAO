@@ -156,9 +156,9 @@ CORBA::Boolean TAO_find (SEQ& sequence, const OPERAND_TYPE operand);
 
 #ifdef ACE_HAS_TEMPLATE_SPECIALIZATION
 template<> 
-CORBA::Boolean TAO_find (StringSeq& sequence, const char* element);
+CORBA::Boolean TAO_find (TAO_Sequences::StringSeq& sequence, const char* element);
 #else
-CORBA::Boolean TAO_find_string (StringSeq& sequence, const char* element);
+CORBA::Boolean TAO_find_string (TAO_Sequences::StringSeq& sequence, const char* element);
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 #endif /* CONSTRAINT_EVALUATOR_H */

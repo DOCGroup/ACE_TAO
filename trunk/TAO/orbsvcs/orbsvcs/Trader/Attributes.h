@@ -22,7 +22,7 @@
 #include "orbsvcs/CosTradingS.h"
 #include "Monitor.h"
  
-class TAO_Export TAO_Support_Attributes_Impl
+class TAO_ORBSVCS_Export TAO_Support_Attributes_Impl
   // = TITLE
   //     This class stores, allows access to and modification of 
   //     trader's support attributes.
@@ -67,7 +67,7 @@ private:
   // A reference to the TypeRepostitory used by the trader.
 };
 
-class TAO_Export TAO_Link_Attributes_Impl
+class TAO_ORBSVCS_Export TAO_Link_Attributes_Impl
   // = TITLE
   //     This class stores, allows access to and modification of 
   //     trader's link attributes.
@@ -96,7 +96,7 @@ private:
   // 
 };
 
-class TAO_Export TAO_Import_Attributes_Impl
+class TAO_ORBSVCS_Export TAO_Import_Attributes_Impl
   // = TITLE
   //     This class stores, allows access to and modification of 
   //     trader's import attributes.
@@ -190,7 +190,7 @@ private:
   // overrides both link and importer policies.
 };
 
-class TAO_Export TAO_Trading_Components_Impl
+class TAO_ORBSVCS_Export TAO_Trading_Components_Impl
   //
   // = TITLE
   //     Set/get methods for references to various
@@ -258,7 +258,7 @@ private:
 
 
 template <class IF>
-class TAO_Trader_Components : public virtual IF
+class TAO_ORBSVCS_Export TAO_Trader_Components : public virtual IF
 {
 public:
 
@@ -296,7 +296,7 @@ private:
 };
 
 template <class IF>
-class TAO_Support_Attributes : public virtual IF
+class TAO_ORBSVCS_Export TAO_Support_Attributes : public virtual IF
 {
 public:
 
@@ -322,7 +322,7 @@ private:
 };
 
 template <class IF>
-class TAO_Import_Attributes : public virtual IF
+class TAO_ORBSVCS_Export TAO_Import_Attributes : public virtual IF
 {
 public:
 
@@ -380,7 +380,7 @@ private:
 };
 
 template <class IF>
-class TAO_Link_Attributes : public virtual IF
+class TAO_ORBSVCS_Export TAO_Link_Attributes : public virtual IF
 {
 public:
 

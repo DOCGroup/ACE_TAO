@@ -171,7 +171,7 @@ private:
 		       CosTradingRepos::ServiceTypeRepository_ptr rep,
 		       TAO_Policies& policies,
 		       LOOKUP_OFFER_LIST& ordered_offers,
-		       PolicyNameSeq_out returned_limits_applied,
+           CosTrading::PolicyNameSeq_out returned_limits_applied,
 		       CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
 		    CosTrading::Lookup::IllegalPreference,
