@@ -1,3 +1,21 @@
+Thu Nov  6 04:53:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_NS_dlfcn.inl:
+          Removed ACE_OS from strerror call in an HP #ifdef that I had
+          erroneously added during subsetting--it was obviously like that
+          for a reason...
+
+        * ace/OS_TLI.h:
+          Add #include of os_tcp.h before #include of sys/xti.h if
+          ACE_HAS_BROKEN_XTI_MACROS is defined.  This error arose due to
+          the different order of includes after subsetting.
+
+        * ace/SString.h:
+          Changed #include streams.h to iosfwd.h.  Due to the change in
+          the order of includes, we are now getting errors on SuSE due to
+          ceil and floor already being declared.  This is not a final fix,
+          but is necessary to keep the stats builds running.
+
 Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/CDR_Stream.cpp (clone_from):
