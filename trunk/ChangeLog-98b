@@ -1,6 +1,10 @@
+Sat Sep 19 10:43:41 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Asynch_IO.cpp (open): Fixed the build errors with WIN32.
+
 Sat Sep 19 00:42:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp (open): Fixed NT warnings (hopefully :-)
+	* ace/Asynch_IO.cpp: Fixed NT warnings (hopefully :-)
 
 Fri Sep 18 22:50:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
