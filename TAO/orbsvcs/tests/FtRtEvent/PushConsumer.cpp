@@ -16,7 +16,7 @@ PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 
 void
 PushConsumer_impl::push (const RtecEventComm::EventSet & event
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS
+             ACE_ENV_ARG_DECL_NOT_USED
              )
              ACE_THROW_SPEC ((
              CORBA::SystemException
@@ -29,14 +29,13 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
     TimeBase::TimeT elaps =
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
-    printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<long>(elaps/10));
+    printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<int>(elaps/10));
   }
 }
 
 
 void
-PushConsumer_impl::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-                       )
+PushConsumer_impl::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
                        ACE_THROW_SPEC ((
                        CORBA::SystemException
                        ))

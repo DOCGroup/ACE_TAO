@@ -50,7 +50,7 @@ public:
    *
    */
   FtRtecEventChannelAdmin::EventChannel_ptr
-    activate(MEMBERSHIP membership ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    activate(MEMBERSHIP membership ACE_ENV_ARG_DECL);
 
   /**
    * Registers a listener to accept the notication when this object
@@ -86,88 +86,88 @@ public:
       virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
         const RtecEventChannelAdmin::ConsumerQOS & qos
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( CORBA::SystemException, RtecEventChannelAdmin::TypeError)) ;
 
 
     virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
         const RtecEventChannelAdmin::SupplierQOS & qos
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
     virtual void disconnect_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void disconnect_push_consumer (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
     virtual void suspend_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID));
 
     virtual void resume_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID)) ;
 
     virtual void push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
         const RtecEventComm::EventSet & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID));
 
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
   void set_state (
-    const FTRT::State & s ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    const FTRT::State & s ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidState));
 
-  virtual void set_update (const FTRT::State & s ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void set_update (const FTRT::State & s ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidUpdate, FTRT::OutOfSequence));
 
-  virtual void oneway_set_update (const FTRT::State & s ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void oneway_set_update (const FTRT::State & s ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
   virtual CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out cur
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void create_group (
         const FTRT::ManagerInfoList & info_list,
         CORBA::ULong object_group_ref_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException, FTRT::PredecessorUnreachable)) ;
 
     virtual void join_group (
         const FTRT::ManagerInfo & info
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL
       )ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
     virtual void add_member (
         const FTRT::ManagerInfo & info,
         CORBA::ULong object_group_ref_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
     virtual void remove_member (
         const FTRT::Location & crashed_location,
         CORBA::ULong object_group_ref_version
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void replica_crashed (
         const FTRT::Location & location
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
 

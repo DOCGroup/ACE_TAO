@@ -5,6 +5,6 @@ namespace TAO_FTRTEC {
     FTEC_Gateway::_this(ACE_ENV_SINGLE_ARG_DECL)
   {
     PortableServer::POA_var poa = _default_POA();
-    return activate(poa.in());
+    return activate(poa.in() ACE_ENV_ARG_PARAMETER);
   }
 }

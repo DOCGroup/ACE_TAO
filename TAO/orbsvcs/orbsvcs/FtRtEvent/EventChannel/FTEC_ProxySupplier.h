@@ -40,24 +40,25 @@ public:
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
-                ACE_ENV_ARG_DECL_NOT_USED)
+                ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   const PortableServer::ObjectId& id() const;
 
   void get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
-  void set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
+  void set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state
+                 ACE_ENV_ARG_DECL);
 
   typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
-    (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL);
 
   static const RollbackOperation rollback_obtain;
 private:

@@ -51,7 +51,7 @@ int AMI_Primary_Replication_Strategy::svc()
   ACE_TRY_NEW_ENV {
     int argc = 0;
     char** argv = 0;
-    orb_ = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+    orb_ = CORBA::ORB_init (argc, argv);
     ACE_TRY_CHECK;
 
     PortableServer::POA_var
@@ -131,21 +131,21 @@ AMI_Primary_Replication_Strategy::replicate_request(
    ACE_CHECK;
 
    for (size_t i = 0; i < num_backups; ++i)  {
-       ACE_TRY_NEW_ENV {
+       ACE_TRY_EX(block1) {
          PortableServer::ObjectId oid;
           FTRT::AMI_UpdateableHandler_ptr handler = handler_.activate(manager, i, oid
                                                                    ACE_ENV_ARG_PARAMETER);
 
           ScopeGuard guard = MakeObjGuard(*poa_.in(),
                                           &PortableServer::POA::deactivate_object,
-                                          oid)
-          ACE_TRY_CHECK;
+                                          oid);
+          ACE_TRY_CHECK_EX(block1);
           FtRtecEventChannelAdmin::EventChannel_ptr obj = backups[i];
           // send set_update request to all the backup replicas
 
           obj->sendc_set_update(handler, state
                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX(block1);
           guard.Dismiss();
        }
        ACE_CATCHANY {
@@ -159,9 +159,9 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
    if (!success) { // replication failed, transaction depth too high
      for (size_t i =0; i < num_backups; ++i)  {
-       ACE_TRY_NEW_ENV {
+       ACE_TRY_EX(block2) {
          (backups[i]->*rollback)(oid ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
+         ACE_TRY_CHECK_EX(block2);
        }
        ACE_CATCHALL {
        }

@@ -22,7 +22,7 @@ UpdateableHandler::~UpdateableHandler()
 FTRT::AMI_UpdateableHandler_ptr UpdateableHandler::activate(
   Update_Manager* mgr, int id,
   PortableServer::ObjectId& object_id
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_ENV_ARG_DECL)
 {
   object_id.length(sizeof(mgr) + sizeof(id));
   memcpy(object_id.get_buffer(), &mgr, sizeof(mgr));
@@ -65,18 +65,18 @@ void UpdateableHandler::dispatch(UpdateableHandler::Handler handler ACE_ENV_ARG_
 }
 
 void UpdateableHandler::set_update (
-                                    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+                                    ACE_ENV_SINGLE_ARG_DECL
                                     )
                                     ACE_THROW_SPEC ((
                                     CORBA::SystemException
                                     ))
 {
   ACE_DEBUG((LM_DEBUG,"Received reply from "));
-  dispatch(&Update_Manager::handle_reply);
+  dispatch(&Update_Manager::handle_reply ACE_ENV_ARG_PARAMETER);
 }
 void UpdateableHandler::set_update_excep (
   FTRT::AMI_UpdateableExceptionHolder * excep_holder
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -85,11 +85,12 @@ void UpdateableHandler::set_update_excep (
   ACE_DEBUG((LM_DEBUG, "Received Exception from"));
   ACE_TRY {
     excep_holder->raise_set_update();
+    ACE_TRY_CHECK;
   }
   ACE_CATCHANY {
     ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A corba exception\n");
   }
   ACE_ENDTRY;
 
-  dispatch(&Update_Manager::handle_exception);
+  dispatch(&Update_Manager::handle_exception ACE_ENV_ARG_PARAMETER);
 }

@@ -42,7 +42,7 @@ public:
 
   void update(const FTRT::ManagerInfoList & info_list,
               int my_position
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+              ACE_ENV_ARG_DECL);
 
   const PortableServer::ObjectId& object_id() const;
   const CosNaming::Name& name() const;

@@ -25,7 +25,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   const char * type_id,
   const FT::Criteria & the_criteria,
   FT::GenericFactory::FactoryCreationId_out factory_creation_id
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -69,7 +69,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
 void EventChannelFactory_i::delete_object (
   const FT::GenericFactory::FactoryCreationId & factory_creation_id
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
@@ -165,37 +165,38 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_SOCK_Stream stream;
 
   ACE_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
-  if (acceptor.accept(stream, &client_addr, &timeout) != -1)
-  {
-    ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
-      client_addr.get_host_name(), client_addr.get_port_number() ));
-
-    // receive the ior string from the created object
-
-    char ior[5000] = {'0'};
-    int n = 0;
-    int byteRead=0;
-    while ((n = stream.recv(ior+byteRead, 5000-byteRead)))  {
-      byteRead += n;
-    }
-
-    if (strlen(ior)  ==0)
-      return result;
+  if (acceptor.accept(stream, &client_addr, &timeout) == -1)
+     ACE_ERROR_RETURN((LM_ERROR, "accept fail\n"), 0);
 
 
-    CORBA::Object_var result = orb->string_to_object(ior
+  ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
+    client_addr.get_host_name(), client_addr.get_port_number() ));
+
+  // receive the ior string from the created object
+
+  char ior[5000] = {'0'};
+  int n = 0;
+  int byteRead=0;
+  while ((n = stream.recv(ior+byteRead, 5000-byteRead)))  {
+    byteRead += n;
+  }
+
+  if (strlen(ior)  ==0)
+    return result;
+
+  ACE_TRY_NEW_ENV {
+    CORBA::Object_var result  = orb->string_to_object(ior
       ACE_ENV_ARG_PARAMETER);
-
-    ACE_CHECK_RETURN(result);
+    ACE_TRY_CHECK;
 
     if (objects.bind(id, result) ==0){
       return result._retn();
     }
   }
-  else {
-    ACE_DEBUG((LM_DEBUG,"accept fail\n"));
+  ACE_CATCHALL {
   }
+  ACE_ENDTRY;
 
-  return result;
+  return 0;
 }
 

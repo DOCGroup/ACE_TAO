@@ -32,7 +32,7 @@ public:
   int init(RtecEventChannelAdmin::EventChannel_ptr ACE_ENV_ARG_DECL);
 
     virtual void  disconnect_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -84,8 +84,8 @@ namespace FTRTEC
   {
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
-    if (strategy == 0)
-      ACE_THROW(CORBA::NO_MEMORY());
+
+    ACE_ASSERT(strategy);
 
     if (replication_strategy.get() != strategy) {
       replication_strategy.reset(strategy);

@@ -98,21 +98,22 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
       ec.activate(membership_
-        ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (report_factory(orb_.in(), ec_ior.in())==-1)
+    if (report_factory(orb_.in(), ec_ior.in() )==-1)
       return -1;
 
     orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    return -1;
   }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN(-1);
 
   ACE_Thread_Manager::instance()->wait();
   return 0;
@@ -201,7 +202,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
 
 void
 FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL)
 {
     RtecScheduler::Scheduler_var scheduler;
     if (CORBA::is_nil(naming_context)) {
@@ -210,7 +211,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
             CORBA::NO_MEMORY());
 
         scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_CHECK;
 
         if (ACE_Scheduler_Factory::server(scheduler.in()) == -1)
             ACE_ERROR((LM_ERROR,"Unable to install scheduler\n"));
@@ -259,6 +260,7 @@ int
 FT_EventService::report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec)
 {
+  ACE_TRY_NEW_ENV {
     char* addr = ACE_OS::getenv("EventChannelFactoryAddr");
 
     if (addr != NULL) {
@@ -283,7 +285,12 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
 
       stream.close();
     }
-    return 0;
+  }
+  ACE_CATCHALL {
+    return -1;
+  }
+  ACE_ENDTRY;
+  return 0;
 }
 
 void FT_EventService::become_primary()

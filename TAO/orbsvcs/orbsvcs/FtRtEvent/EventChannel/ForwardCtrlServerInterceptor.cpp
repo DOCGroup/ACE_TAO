@@ -12,7 +12,7 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL)
 {
   CORBA::String_var orb_id = ri->orb_id(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(CORBA::Object::_nil());
@@ -51,7 +51,7 @@ CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri
 }
 
 CORBA::Object_ptr get_forward(PortableInterceptor::ServerRequestInfo_ptr ri
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                             ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var target =
     get_target(ri ACE_ENV_ARG_PARAMETER);
@@ -81,19 +81,19 @@ ForwardCtrlServerInterceptor::~ForwardCtrlServerInterceptor()
 {
 }
 
-char * ForwardCtrlServerInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+char * ForwardCtrlServerInterceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup("ForwardCtrlServerInterceptor");
 }
 
-void ForwardCtrlServerInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+void ForwardCtrlServerInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                    ACE_ENV_ARG_DECL)
                                                     ACE_THROW_SPEC ((CORBA::SystemException,
                                                     PortableInterceptor::ForwardRequest))
 {
@@ -122,14 +122,14 @@ void ForwardCtrlServerInterceptor::receive_request (PortableInterceptor::ServerR
 
 void ForwardCtrlServerInterceptor::receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
 }
 
 FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_context
-                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                               ACE_ENV_ARG_DECL)
 {
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                             service_context->context_data.get_buffer ()
@@ -139,16 +139,15 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
   CORBA::Boolean byte_order;
 
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-    CORBA::COMPLETED_NO));
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO), 0);
 
   cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
   FT::FTGroupVersionServiceContext fgvsc;
 
   if ((cdr >> fgvsc) == 0)
-    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
-    CORBA::COMPLETED_NO));
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
+    CORBA::COMPLETED_NO), 0);
 
   return fgvsc.object_group_ref_version;
 }
@@ -156,48 +155,47 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
 
 
 void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IOP::ServiceContext_var service_context;
   FT::ObjectGroupRefVersion version;
 
-  ACE_TRY {
-
+  ACE_TRY_EX(block1)
+  {
     if (!ri->response_expected(ACE_ENV_SINGLE_ARG_PARAMETER))
       return;
-    ACE_TRY_CHECK;
-
-
+    ACE_TRY_CHECK_EX(block1);
 
     service_context =
       ri->get_request_service_context(IOP::FT_GROUP_VERSION
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_TRY_CHECK_EX(block1);
     // get the ref version service context
     version =
       get_ft_group_version(service_context
       ACE_ENV_ARG_PARAMETER);
-
-    ACE_TRY_CHECK;
+    ACE_TRY_CHECK_EX(block1);
   }
   ACE_CATCHALL {
     // not an FT call , continue to reply the request
     return;
   }
   ACE_ENDTRY;
+
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d, received version = %d\n", 
+  ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d, received version = %d\n",
     maker->get_ref_version(), version));
 
   if (version < maker->get_ref_version()) {
     ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
-    ACE_TRY {
+
+    ACE_TRY_EX(block2) {
       CORBA::Object_var forward = get_forward(ri
                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX(block2);
 
       IOP::ServiceContext sc;
       sc.context_id = FTRT::FT_FORWARD;
@@ -214,7 +212,7 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
       sc.context_data.replace(mb.length(), &mb);
 
       ri->add_reply_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK_EX(block2);
 
       ACE_DEBUG((LM_DEBUG, "reply_service_context added\n"));
     }
@@ -226,14 +224,14 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 }
 
 void ForwardCtrlServerInterceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
 }
 
 void ForwardCtrlServerInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest))
 {
