@@ -1,3 +1,10 @@
+Sat Nov 11 21:01:31 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+
+          Added some Win32 libraries to the release configuration link
+          settings for the NT Service system calls.
+
 Sat Nov 11 11:33:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/client.cpp:
@@ -17,7 +24,7 @@ Sat Nov 11 11:33:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/QtTest/Makefile: Updated the library names against which
 	  they are linked.
 
-	  Thanks to Wei Zheng <weizheng@uiuc.edu> for reportig these
+	  Thanks to Wei Zheng <weizheng@uiuc.edu> for reporting these
 	  problems.  
 
 Sat Nov 11 10:19:06 2000  Carlos O'Ryan  <coryan@uci.edu>
