@@ -1,3 +1,8 @@
+Wed Apr 18 11:33:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the BiDirectional tests to the
+	  nightly builds. There is no reason why it did not go in so far. 
+
 Wed Apr 18 10:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Changed the name of the -config option
