@@ -1,3 +1,33 @@
+Mon Jun 22 20:32:25 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Attributes.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Attributes_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_l.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Constraint_y.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Dynamic_Property.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+	* orbsvcs/orbsvcs/Makefile:
+	By having related classes share a file, reduced the number of
+	files in the Trading Service by half. Updated the Makefile to
+	reflect the changes.
+
+	* orbsvcs/tests/Trading/Makefile:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp: 
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+	* orbsvcs/tests/Trading/export_test.cpp:
+	Updated the Trading tests to use the new header file scheme.	
+
 Mon Jun 22 11:54:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Makefile: 
