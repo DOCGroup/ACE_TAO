@@ -1,3 +1,11 @@
+Fri May 25 10:52:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_visitor_interface/collocated_ami_handler_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/ami_exception_holder_operation_ch.h:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp:
+
+          Removed these unused files from the repository.
+
 Fri May 25 09:13:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/ifr_visitor.cpp:
