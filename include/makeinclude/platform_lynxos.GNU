@@ -1,4 +1,4 @@
-# $Id$
+# platform_lynxos.GNU,v 4.40 2005/01/23 01:30:32 mbrudka Exp
 #
 # LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 3.1.0,
 # for example, add "VERSION=3.1.0" to your make invocation.
@@ -28,9 +28,12 @@ ifeq ($(static_libs_only),1)
   static_libs = 1
 endif
 
-#### optimize is defined below because it is version-dependent.
+optimize ?= 1
+pipes ?= 1
 
-ifneq ($(shell uname -s),LynxOS)
+ifeq ($(shell uname -s),LynxOS)
+  export VERSION=$(shell uname -r)
+else
   CROSS-COMPILE = 1
 
   PACE_SYSNAME = LynxOS
@@ -82,20 +85,8 @@ $(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$
   endif # PATH
 endif # ! LynxOS
 
-ifeq (2.5.0,$(VERSION))
-  # NOTE: On LynxOS Version 2.5.0, optimization causes these warnings:
-  #       warning: internal compiler error: debugging info corrupted
-  optimize = 0
-  ACE_HAS_GNUG_PRE_2_8 = 1
-else
-  ifeq ($(optimize),)
-    optimize = 1
-  endif
-
-  #### Even though the g++ version is 2.7-97r1, it supports nested
-  #### classes, so it can build the TAO tests.
-  ACE_HAS_GNUG_PRE_2_8 = 0
-endif # VERSION
+LYNXOS_MAJOR = $(shell uname -r | awk -F. '{print $$1;}')
+LYNXOS_MINOR = $(shell uname -r | awk -F. '{print $$2;}')
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
@@ -113,14 +104,10 @@ PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_INC_
 PLATFORM_TK_LIBS=$(shell . /usr/lib/tk8.4/tkConfig.sh && echo -n $$TK_LIB_FLAG)
 PLATFORM_TK_LDFLAGS=
 
-pipes ?= 1
-
 CC              = gcc
 CXX             = g++
 CFLAGS          += -mthreads -Wpointer-arith -Wall
-#### -Winline complains a lot with -O2.
-#### CFLAGS          += -Winline
-
+CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 PIC             = -fPIC
 DLD             = $(CXX)
