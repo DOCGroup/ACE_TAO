@@ -17,7 +17,8 @@ Tue Nov 11 18:02:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  The double checked locking optimization in ts_init () was the
 	  culprit. After grabbing the lock, if the check for null pointer
 	  fails, meaning it was already allocated, just return 0 instead
-	  of a -1. 
+	  of a -1. This should fix most of the runtime problems that we
+	  saw in the builds today.
 
 Tue Nov 11 17:25:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
