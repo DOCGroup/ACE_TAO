@@ -1,3 +1,15 @@
+Mon Jul  2 16:23:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        *  examples/Reactor/Proactor/test_multiple_loops.dsp:
+        *  examples/Reactor/Proactor/test_proactor.dsp:
+        *  examples/Reactor/Proactor/test_proactor.dsw:
+        *  examples/Reactor/Proactor/test_timeout.dsp:
+        *  examples/Reactor/Proactor/test_udp_proactor.dsp:
+
+          Fixed settings on release version of test_udp_proactor.dsp,
+          added it to the workspace, and removed unused file folders
+          from the FileViews of the other projects.
+
 Mon Jul  2 15:26:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-sunos5.6.h: Removed ACE_HAS_POSIX_SEM and
