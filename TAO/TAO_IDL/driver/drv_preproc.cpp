@@ -487,11 +487,11 @@ DRV_pre_proc (const char *myfile)
     }
   else
     {
-      FILE *fd = fopen (myfile, "r");
+      FILE *fd = ACE_OS::fopen (myfile, "r");
       DRV_copy_input (fd,
                       tmp_ifile,
                       myfile);
-      fclose (fd);
+      ACE_OS::fclose (fd);
 
       idl_global->set_read_from_stdin (I_FALSE);
 
