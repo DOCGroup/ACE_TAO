@@ -646,6 +646,24 @@ bgcolor="#ffffff">
         in most of their APIs.  On these platforms, ACE also uses
         UNICODE as its system string type.<p>
 
+        <p>Notice that when spaning a string literal across several lines,
+        you must apply <CODE>ASYS_TEXT</CODE> to <b>every</b> line.
+        For example, it is <font color=red>illegal</font> to do this:
+        <pre>
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%p\n"),
+                    ASYS_TEXT ("\nerror: x is a null pointer in "
+                               "ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+        </pre></p>
+
+        <p>Instead, this should be written like this:
+        <pre>
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%p\n"),
+                    ASYS_TEXT ("\nerror: x is a null pointer in ")
+                    ASYS_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::RB_rotate_left\n")));
+        </pre></p>
+
     <li><strong><code>ACE_TRACE</code></strong> handles conversion
         between char strings and UNICODE strings automatically.<p>
 
