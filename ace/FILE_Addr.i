@@ -84,17 +84,15 @@ ACE_FILE_Addr::get_addr (void) const
 // Compare two addresses for equality.
 
 ACE_INLINE int
-ACE_FILE_Addr::operator == (const ACE_Addr &sap) const
+ACE_FILE_Addr::operator == (const ACE_FILE_Addr &sap) const
 {
-  return this->ACE_Addr::operator== (sap)
-    && ACE_OS::strcmp (this->filename_,
-                       ((ACE_FILE_Addr &) sap).filename_) == 0;
+  return ACE_OS::strcmp (this->filename_, sap.filename_) == 0;
 }
 
 // Compare two addresses for inequality.
 
 ACE_INLINE int
-ACE_FILE_Addr::operator != (const ACE_Addr &sap) const
+ACE_FILE_Addr::operator != (const ACE_FILE_Addr &sap) const
 {
   return !((*this) == sap);	// This is lazy, of course... ;-)
 }

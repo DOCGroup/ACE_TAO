@@ -59,10 +59,10 @@ public:
   virtual int string_to_addr (const char addr[]);
   // Transform the string into the current addressing format.
 
-  virtual int  operator == (const ACE_Addr &SAP) const;
+  int  operator == (const ACE_UNIX_Addr &SAP) const;
   // Compare two addresses for equality.
 
-  virtual int  operator != (const ACE_Addr &SAP) const;
+  int  operator != (const ACE_UNIX_Addr &SAP) const;
   // Compare two addresses for inequality.
 
   const char *get_path_name (void) const; 
