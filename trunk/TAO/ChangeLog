@@ -1,3 +1,12 @@
+Tue Sep 26 05:32:22 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Object.h:
+        * tao/TAO_Internal.h:
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+          Fixed doxygen warnings
+
 Wed Sep 25 19:02:21 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
@@ -39,7 +48,7 @@ Wed Sep 25 17:12:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
 	  This file tests the acceptance of C++ keywords used as identifiers,
 	  which is legal (the IDL compiler prepends '_cxx_'). However, two of
 	  these, 'private' and 'public' are now IDL keywords as well, and so
-	  are no longer legal identifiers. They have been commented out of the 
+	  are no longer legal identifiers. They have been commented out of the
 	  test IDL file.
 
 Wed Sep 25 17:05:32 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -63,7 +72,7 @@ Wed Sep 25 16:12:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 	* TAO_IDL/Makefile.dependencies:
 
 	  Add MAKEFILE=Makefile.dependencies so
-	  that recursive makes will work properly. 
+	  that recursive makes will work properly.
 
 	  Patches and comments sent in by Craig Rodrigues <crodrigu@bbn.com>.
 
@@ -203,7 +212,7 @@ Wed Sep 25 11:12:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/include/ast_eventtype.h:
         * TAO_IDL/include/ast_eventtype_fwd.h:
 
-          New files to complete the support of CORBA Components and related 
+          New files to complete the support of CORBA Components and related
           types in the IDL compiler.
 
         * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:

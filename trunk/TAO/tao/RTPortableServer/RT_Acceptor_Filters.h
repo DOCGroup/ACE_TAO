@@ -46,7 +46,7 @@
 class TAO_Acceptor;
 
 /**
- * @class RTCORBA::ServerProtocolPolicy Acceptor_Filter.
+ * @class TAO_Server_Protocol_Acceptor_Filter
  *
  * @brief Populates mprofile with endpoints selected based on the
  * RTCORBA::ServerProtocolPolicy.

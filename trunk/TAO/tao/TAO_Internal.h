@@ -69,11 +69,11 @@ private:
    * called (see open_services()).  It is fully thread-safe.  Return 0
    * if successful, -1 with errno set if failure.  You can provide
    * your program a set of default `svc.conf' entries by setting
-   * \param ignore_default_svc_conf_file to non-zero and use
-   * \param default_svc_conf_entries before calling open_services().
-   * In addition, you can \param skip_service_config_open altogether,
+   * @a ignore_default_svc_conf_file to non-zero and use
+   * default_svc_conf_entries() before calling open_services().
+   * In addition, you can @a skip_service_config_open altogether,
    * which is important if the ORB is linked in via the \param
-   * ACE_Service_Configuator, which is non-reentrant.
+   * ACE_Service_Configurator, which is non-reentrant.
    */
   static int open_services_i (int &argc,
                               char **argv,
