@@ -903,14 +903,14 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && !defined(ACE_USES_WCHAR)) || defined (__IBMCPP__)))
+#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && !defined(ACE_USES_WCHAR) && (__BORLANDC__ < 0x600)) || defined (__IBMCPP__)))
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#elif defined(ACE_WIN32) && defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#elif defined(ACE_WIN32) && (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
-  ACE_OSCALL_RETURN (::tempnam (dir, pfx), char *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
 #endif /* VXWORKS */
 }
 
@@ -925,7 +925,11 @@ ACE_INLINE int
 ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if defined (ACE_HAS_VSWPRINTF)
+#  if defined (ACE_HAS_DINKUM_STL)
+  return ACE_STD_NAMESPACE::vswprintf (buffer, ULONG_MAX, format, argptr);
+#else
   return ::vswprintf (buffer, format, argptr);
+#  endif /* ACE_HAS_DINKUM_STL */
 
 # else
   ACE_UNUSED_ARG (buffer);
