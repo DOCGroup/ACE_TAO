@@ -14,6 +14,10 @@ const char *COMPONENT_ID = "IDL:mod/test_component:1.0";
 const char *COMPONENT_SCOPED_NAME = "::mod::test_component";
 const char *COMP_BASE_ID = "IDL:help/c_base:1.0";
 
+const char *VALUETYPE_ID = "IDL:mod/test_valuetype:1.0";
+const char *VALUETYPE_SCOPED_NAME = "::mod::test_valuetype";
+const char *VT_BASE_ID = "IDL:help/v_base:1.0";
+
 const CORBA::ULong ATTRS_LEN = 1;
 
 const char *ATTR_LOCAL_NAMES[] = 
@@ -78,6 +82,36 @@ const CORBA::Boolean USES_MULTIPLE_FLAGS[] =
     1
   };
 
+const char *EMITS_NAMES[] =
+  {
+    "test_emits1"
+  };
+
+const char *PUBLISHES_NAMES[] =
+  {
+    "test_publishes1"
+  };
+
+const char *CONSUMES_NAMES[] =
+  {
+    "test_consumes1"
+  };
+
+const char *EMITS_IDS[] =
+  {
+    "IDL:help/c_emits1:1.0"
+  };
+
+const char *PUBLISHES_IDS[] =
+  {
+    "IDL:help/c_publishes1:1.0"
+  };
+
+const char *CONSUMES_IDS[] =
+  {
+    "IDL:help/c_consumes1:1.0"
+  };
+
 IDL3_Client::IDL3_Client (void)
   : debug_ (0)
 {
@@ -134,6 +168,14 @@ int
 IDL3_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int status = this->component_test (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return status;
+    }
+
+  status = this->valuetype_test (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -309,6 +351,22 @@ IDL3_Client::home_test (ACE_ENV_SINGLE_ARG_DECL)
 int
 IDL3_Client::valuetype_test (ACE_ENV_SINGLE_ARG_DECL)
 {
+  CORBA::Contained_var result =
+    this->repo_->lookup_id (VALUETYPE_ID
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (result.in ()))
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_test: lookup by id failed\n"));
+        }
+
+      return -1;
+    }
+
   return 0;
 }
 
@@ -525,7 +583,10 @@ IDL3_Client::component_port_test (
     }
 
   status = this->event_port_test (cd->emits_events,
-                                  EMITS_LEN
+                                  EMITS_LEN,
+                                  "emits",
+                                  EMITS_NAMES,
+                                  EMITS_IDS
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -535,7 +596,10 @@ IDL3_Client::component_port_test (
     }
 
   status = this->event_port_test (cd->publishes_events,
-                                  PUBLISHES_LEN
+                                  PUBLISHES_LEN,
+                                  "publishes",
+                                  PUBLISHES_NAMES,
+                                  PUBLISHES_IDS
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -545,7 +609,10 @@ IDL3_Client::component_port_test (
     }
 
   status = this->event_port_test (cd->consumes_events,
-                                  CONSUMES_LEN
+                                  CONSUMES_LEN,
+                                  "consumes",
+                                  CONSUMES_NAMES,
+                                  CONSUMES_IDS
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -683,8 +750,63 @@ IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds
 
 int
 IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
-                              CORBA::ULong seq_length
+                              CORBA::ULong seq_length,
+                              const char *port_type,
+                              const char **names,
+                              const char **ids
                               ACE_ENV_ARG_DECL)
 {
+  if (eds.length () != seq_length)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "event_port_test: "
+                      "wrong number of event %s ports\n",
+                      port_type));
+        }
+
+      return -1;
+    }
+
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < seq_length; ++i)
+    {
+      tmp = eds[i].name.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, names[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "event_port_test: "
+                          "wrong local name for %s port #%d\n",
+                          port_type,
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      tmp = eds[i].event.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, ids[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "event_port_test: "
+                          "wrong base event type id for %s port #%d\n",
+                          port_type,
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
   return 0;
 }
+
+

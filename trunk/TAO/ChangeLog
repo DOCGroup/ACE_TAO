@@ -1,3 +1,18 @@
+Thu Jul 31 22:39:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp
+
+	  More debugging of IFR IDL3 support.
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl
+
+	  Extended test so that it now covers component attributes,
+	  inheritance, supported interfaces, facets, receptacles,
+	  event sources and sinks.
+
 Fri Aug  1 01:16:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/mfc/client.mpc:

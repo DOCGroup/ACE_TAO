@@ -36,7 +36,18 @@ module mod
     provides help::c_provides1 test_provides1;
 
     uses help::c_uses1 test_uses1;
+
     uses multiple help::c_uses2 test_uses2;
+
+    emits help::c_emits1 test_emits1;
+
+    publishes help::c_publishes1 test_publishes1;
+
+    consumes help::c_consumes1 test_consumes1;
+  };
+
+  valuetype test_valuetype
+  {
   };
 };
 
