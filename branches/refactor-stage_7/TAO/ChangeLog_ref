@@ -1,3 +1,13 @@
+Mon Sep 15 22:54:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp: This
+	  change "Tue Sep  9 20:00:12 2003  Balachandran Natarajan
+	  <bala@dre.vanderbilt.edu>" did not do a good job. Hence
+	  correcting the mistakes. 
+
+	* tao/Utils/Servant_Var.inl: Removed the environment parameter. 
+
 Mon Sep 15 21:04:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Makefile.dirs: Added the DynamicInterface only if the
