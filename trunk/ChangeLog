@@ -1,3 +1,9 @@
+Tue Jan 22 15:19:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/DLL.cpp:  Changed to invoke this->open() in the
+	  constructor.  Thanks to Eugene Alterman
+	  <Alterman@bremer-inc.com> for motivating this.
+
 Mon Jan 21 23:27:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Reordered main redefinition macros so that it actually
