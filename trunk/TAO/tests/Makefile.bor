@@ -85,6 +85,7 @@ DIRS = \
         Queued_Message_Test \
 	Reliable_Oneways \
 	RTCORBA \
+   RTScheduling \
 	Server_Leaks \
         Single_Read \
         Smart_Proxies \
