@@ -24,11 +24,17 @@
 #include "ace/streams.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Env_Value_T.h"
+#include "ace/Read_Buffer.h"
+#include "orbsvcs/CosNamingC.h"
 
 // Since we don't yet have an interface repository or dynamic-Any, we
 // just get the info from the IDL-generated files, since we're mainly
 // interested in timing comparisons anyway.
 #include "../IDL_Cubit/cubitC.h"
+
+// # of timed tests in DI_Cubit::run.
+const int NUMBER_OF_TESTS = 10;
 
 class DII_Cubit_Client 
 {
@@ -51,8 +57,14 @@ public:
   int init (int argc, char **argv);
   // Initialize the ORB and gets the Cubit objref from the Cubit factory.
 private:
+  int init_naming_service (void);
+  // Gets objref through naming service
+
   int parse_args (void);
   // Parses the arguments passed on the command line.
+
+  int read_ior (char *filename);
+  // Function to read the cubit factory IOR from a file.
 
   void print_stats (const char *call_name,
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
@@ -74,6 +86,25 @@ private:
 
   void cube_long_seq_dii (int length);
 
+  // Wrappers for cubing small and large sequences w/o args.
+
+  void cube_small_long_seq (void);
+  
+  void cube_large_long_seq (void);
+
+  void cube_small_octet_seq (void);
+
+  void cube_large_octet_seq (void);
+
+  void cube_mixin (void);
+  // Wrapper for the mixin call, just to be neat.
+
+  void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])(void);
+  // Array of pointers to the operation functions.
+
+  static char *stats_messages_[];
+  // Array of labels for passing to print_stats.
+  
   int argc_;
   // # of arguments on the command line.
 
@@ -83,8 +114,11 @@ private:
   CORBA::ULong loop_count_;
   // # of calls in test loop.
 
-  int exit_later_;
-  // Flag to tell server to not exit immediately.
+  int shutdown_;
+  // Flag to tell server to exit.
+
+  int use_naming_service_;
+  // Flag toggling use of naming service to get IOR.
 
   CORBA::Environment env_;
   // Environment variable.
@@ -107,14 +141,11 @@ private:
   char *factory_IOR_;
   // IOR of the factory used to make a Cubit object.
 
-  char *factory_key_;
-  // Key of server factory.
+  FILE *cubit_factory_ior_file_;
+  // File from which to obtain the IOR.
 
-  char *hostname_;
-  // Hostname of server.
-
-  CORBA::ULong portnum_;
-  // Default port number of server.
+  ACE_HANDLE f_handle_;
+  // File handle to read the IOR.
 };
 
 #endif /* _DII_C_CLIENT_H */

@@ -21,7 +21,6 @@
 // Some magic numbers used below.
 const CORBA::ULong DEFAULT_LOOP_COUNT = 250;
 #define DEFAULT_FACTORY_IOR "ior00"
-#define DEFAULT_FACTORY_KEY "key00"
 const int SMALL_OCTET_SEQ_LENGTH = 16;
 const int LARGE_OCTET_SEQ_LENGTH = 4096;
 const int SMALL_LONG_SEQ_LENGTH = 4;
@@ -58,26 +57,48 @@ const int LARGE_LONG_SEQ_LENGTH = 1024;
 DII_Cubit_Client::DII_Cubit_Client (void)
   : 
     loop_count_ (DEFAULT_LOOP_COUNT),			
-		exit_later_ (0),
+    shutdown_ (0),
+    use_naming_service_ (1),
     orb_var_ (0),
-		factory_var_ (CORBA::Object::_nil ()),
+    factory_var_ (CORBA::Object::_nil ()),
     obj_var_ (CORBA::Object::_nil ()),
     call_count_ (0),
     error_count_ (0),
-    factory_IOR_ (DEFAULT_FACTORY_IOR),
-    // Either the previous one or the following three must be set
-    // (if not using the naming service). It is redundant at best to
-    // set both groups.
-    factory_key_ (DEFAULT_FACTORY_KEY),
-    hostname_ (ACE_DEFAULT_SERVER_HOST),	
-    portnum_ (TAO_DEFAULT_SERVER_PORT)
+    factory_IOR_ (DEFAULT_FACTORY_IOR)
 {
+  // Initialize the array of pointers-to-member-functions.
+  this->op_array_[0] = cube_short_dii;
+  this->op_array_[1] = cube_octet_dii;
+  this->op_array_[2] = cube_long_dii;
+  this->op_array_[3] = cube_struct_dii;
+  this->op_array_[4] = cube_union_dii;
+  this->op_array_[5] = cube_small_long_seq;
+  this->op_array_[6] = cube_large_long_seq;
+  this->op_array_[7] = cube_small_octet_seq;
+  this->op_array_[8] = cube_large_octet_seq;
+  this->op_array_[9] = cube_mixin;
 }
 
 // Destructor
 DII_Cubit_Client::~DII_Cubit_Client (void)
 {
 }
+
+// An array of messages to pass to print_stats, so we can
+// step through this along with op_array_.
+char *DII_Cubit_Client::stats_messages_[] =
+  {
+    "DII cube_short",
+    "DII cube_octet",
+    "DII cube_long",
+    "DII cube_struct",
+    "DII cube_union",
+    "DII cube_small_sequence<long>",
+    "DII cube_large_sequence<long>",
+    "DII cube_small_sequence<octet>",
+    "DII cube_large_sequence<octet>",
+    "DII cube mixin (short/octet/long)"
+  };
 
 int
 DII_Cubit_Client::init (int argc, char **argv)
@@ -87,27 +108,20 @@ DII_Cubit_Client::init (int argc, char **argv)
   this->argv_ = argv;
 
   // Parse command line and verify parameters.
-  if (this->parse_args () == -1)
-    return -1;
-
-  // Construct the IOR from the component args, if necessary.
-  if (ACE_OS::strcmp (this->factory_key_,
-                      DEFAULT_FACTORY_KEY) 
-      && !ACE_OS::strcmp (this->factory_IOR_,
-                          DEFAULT_FACTORY_IOR))
-    {
-      ACE_OS::sprintf (this->factory_IOR_, 
-                       "iiop:1.0//%s:%d/%s", 
-                       this->hostname_, 
-                       this->portnum_, 
-                       this->factory_key_);
-    }
-
-  // Quick fix to exit gracefully when no IOR or key args are provided.
-  if (!ACE_OS::strcmp (this->factory_IOR_,
-		       DEFAULT_FACTORY_IOR))
-    {
+    if (this->parse_args () == -1)
       return -1;
+
+  // Exits gracefully when no IOR is provided and 
+  // use_naming_service_ is toggled off.
+  if (!ACE_OS::strcmp (this->factory_IOR_,
+		       DEFAULT_FACTORY_IOR) 
+      && !this->use_naming_service_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: Must supply IOR, read it from a file, or use naming service."
+                         "\n",
+                         this->argv_ [0]),
+                         -1);
     }
 
   TAO_TRY
@@ -115,14 +129,24 @@ DII_Cubit_Client::init (int argc, char **argv)
       // Initialize the ORB.
       this->orb_var_ = CORBA::ORB_init (this->argc_,
                                         this->argv_,
-                                        0,
+                                        "internet",
                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Get a factory object reference from the factory IOR.
-      this->factory_var_ = this->orb_var_->string_to_object (this->factory_IOR_, 
-                                                             TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      if (this->use_naming_service_)
+        {
+          // Get a factory object reference from the naming service.
+          if (this->init_naming_service () == -1)
+            return -1;
+        }
+      else
+        {
+          // Get a factory object reference from the factory IOR.
+          this->factory_var_ = 
+            this->orb_var_->string_to_object (this->factory_IOR_, 
+                                              TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
 
       // Get a Cubit object with a DII request on the Cubit factory.
       CORBA::Request_ptr mc_req;
@@ -142,11 +166,12 @@ DII_Cubit_Client::init (int argc, char **argv)
       mc_req->arguments ()->add_value (0,
 				       string_arg,
 				       CORBA::ARG_IN,
-				       this->env_);
+				       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Insert the result-holding variable into the request.
       mc_req->result ()->value ()->replace (CORBA::_tc_Object, 
-                                            &obj_var_,
+                                            &this->obj_var_,
                                             CORBA::B_FALSE, 
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -156,6 +181,10 @@ DII_Cubit_Client::init (int argc, char **argv)
 
       CORBA::release (mc_req);
 
+      if (CORBA::is_nil (this->obj_var_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not obtain Cubit object from Cubit factory <%s>\n"),
+                          -1);
     }
   TAO_CATCHANY
     {
@@ -167,54 +196,139 @@ DII_Cubit_Client::init (int argc, char **argv)
   return 0;
 }
 
+// Get the factory IOR via a DII request on the naming service.
+int
+DII_Cubit_Client::init_naming_service (void)
+{
+  TAO_TRY
+    {
+      // Get the naming service from the orb.
+      CORBA::Object_var naming_obj =
+        this->orb_var_->resolve_initial_references ("NameService");
+
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                          -1);
+
+      // Build a Name object.
+      CosNaming::Name cubit_factory_name (2);
+      cubit_factory_name.length (2);
+      cubit_factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
+      cubit_factory_name[1].id = CORBA::string_dup ("cubit_factory");
+
+      CORBA::Request_ptr req;
+      req = naming_obj->_request ("resolve",
+                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::Any name_arg (CosNaming::_tc_Name,
+                           &cubit_factory_name,
+                           CORBA::B_FALSE);
+  
+      req->arguments ()->add_value (0,
+				    name_arg,
+				    CORBA::ARG_IN,
+				    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      req->result ()->value ()->replace (CORBA::_tc_Object, 
+                                         &this->factory_var_,
+                                         CORBA::B_FALSE, 
+                                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      req->invoke ();
+      CORBA::release (req);
+
+      if (CORBA::is_nil (this->factory_var_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve cubit factory in Naming service <%s>\n"),
+                          -1);
+   }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("DII_Cubit_Client::init_naming_service");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  return 0;
+}
+
+// Sort out the args in the command line.
 int
 DII_Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt opts (argc_, argv_, "dn:i:h:p:k:x");
+  ACE_Get_Opt opts (argc_, argv_, "dn:i:f:xs");
   int c;
+  int result;
    
   while ((c = opts ()) != -1)
     switch (c) 
       {
-      case 'd':  // debug flag
+      case 'd':   // debug flag
         TAO_debug_level++;
         break;
-      case 'n':			// loop count
+      case 'n':	  // loop count
         this->loop_count_ = ACE_OS::atoi (opts.optarg);
-        break;
-        // The next 3 are for building the IOR from pieces.
-      case 'h':
-        this->hostname_ = opts.optarg;
-        break;
-      case 'p':
-        this->portnum_ = ACE_OS::atoi (opts.optarg);
-        break;
-      case 'k':
-        this->factory_key_ = opts.optarg;
-        break;
-        // and if the whole IOR is in one arg...
-      case 'i':			
+        break;        
+      case 'i':	  // Get the IOR from the command line.	
+	this->use_naming_service_ = 0;
         this->factory_IOR_ = opts.optarg;
         break;
-      case 'x':
-        this->exit_later_++;
+      case 'f':   // read the IOR from the file.
+	this->use_naming_service_ = 0;
+        result = this->read_ior (opts.optarg);
+        if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to read ior from %s : %p\n",
+                             opts.optarg),
+                            -1);
+        break;
+      case 'x':   // Shut down server after test run. 
+        this->shutdown_ = 1;
+        break;
+      case 's':   // Don't use the TAO naming service.
+        this->use_naming_service_ = 0;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage: %s"
                            " [-d]"
-                           " [-n loopcount]"
+                           " [-n calls/loop]"
                            " [-i cubit-factory-IOR]"
-                           " [-h hostname]"
-                           " [-p port]"
-                           " [-k cubit-factory-key]"
+                           " [-f filename]"
                            " [-x]"
+                           " [-s]"
                            "\n",
-                           argv_ [0]),
+                           this->argv_ [0]),
                           -1);
       }
   return 0;  // Indicates successful parsing of command line.
+}
+
+// Get the factory IOR from the file created by the server.
+int
+DII_Cubit_Client::read_ior (char *filename)
+{
+  // Open the file for reading.
+  this->f_handle_ = ACE_OS::open (filename,0);
+
+  if (this->f_handle_ == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open %s for writing: %p\n",
+                       filename),
+                      -1);
+  ACE_Read_Buffer ior_buffer (this->f_handle_);
+  this->factory_IOR_ = ior_buffer.read ();
+
+  if (this->factory_IOR_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to allocate memory to read ior: %p\n"),
+                      -1);
+  return 0;
 }
 
 // Formats and prints time statistics.  Identical to function in
@@ -665,11 +779,50 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
   CORBA::release (req);
 }
 
+// Wrappers for operations with non-void arg lists
+// and the 3-in-1 mixin test, so an array of pointers
+// to functions can be stepped through in run ().
+
+void
+DII_Cubit_Client::cube_small_long_seq (void)
+{
+  this->cube_long_seq_dii (SMALL_LONG_SEQ_LENGTH);
+}
+
+void
+DII_Cubit_Client::cube_large_long_seq (void)
+{
+  this->cube_long_seq_dii (LARGE_LONG_SEQ_LENGTH);
+}
+
+void
+DII_Cubit_Client::cube_small_octet_seq (void)
+{
+  this->cube_octet_seq_dii (SMALL_OCTET_SEQ_LENGTH);
+}
+
+void
+DII_Cubit_Client::cube_large_octet_seq (void)
+{
+  this->cube_octet_seq_dii (LARGE_OCTET_SEQ_LENGTH);
+}
+
+void
+DII_Cubit_Client::cube_mixin (void)
+{
+  this->cube_short_dii ();
+  this->cube_octet_dii ();
+  this->cube_long_dii ();
+}
+
 int
 DII_Cubit_Client::run (void)
 {
   // loop counter.
-  u_int i;
+  CORBA::ULong i;
+
+  // op_array_ cursor.
+  CORBA::ULong j;
 
   // Make a timer and an elapsed time holder.
   ACE_Profile_Timer dii_timer;
@@ -678,119 +831,39 @@ DII_Cubit_Client::run (void)
   // Order and format of test calls matches that of SII (IDL) tests
   // for easy comparison.
 
-  //	short
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_short_dii ();
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_short", dii_elapsed_time);
-
-  //	octet
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_octet_dii ();
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_octet", dii_elapsed_time);
-
-  //	long
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_long_dii ();
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_long", dii_elapsed_time);
-
-  //	struct
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < 1; i++)
-    this->cube_struct_dii ();
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_struct", dii_elapsed_time);
-
-  //	union
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_union_dii ();
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_union", dii_elapsed_time);
-
-  //	small long sequence
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_long_seq_dii (SMALL_LONG_SEQ_LENGTH);
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_small_sequence<long>", dii_elapsed_time);
-
-  //	large long sequence
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_long_seq_dii (LARGE_LONG_SEQ_LENGTH);
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_large_sequence<long>", dii_elapsed_time);
-
-  //	small octet sequence
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_long_seq_dii (SMALL_OCTET_SEQ_LENGTH);
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_small_sequence<octet>", dii_elapsed_time);
-
-  //	large octet sequence
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
-    this->cube_long_seq_dii (LARGE_OCTET_SEQ_LENGTH);
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube_large_sequence<octet>", dii_elapsed_time);
-
-  //	mixin
-
-  this->call_count_ = 0;
-  this->error_count_ = 0;
-  dii_timer.start ();
-  for (i = 0; i < this->loop_count_; i++)
+  for (j = 0; j < NUMBER_OF_TESTS; j++)
     {
-      this->cube_short_dii ();
-      this->cube_octet_dii ();
-      this->cube_long_dii ();
+      this->call_count_ = 0;
+      this->error_count_ = 0;
+      dii_timer.start ();
+      for (i = 0; i < this->loop_count_; i++)
+        (this->*op_array_[j])();
+      dii_timer.stop ();
+      dii_timer.elapsed_time (dii_elapsed_time);  
+      this->print_stats (this->stats_messages_[j], dii_elapsed_time);
     }
-  dii_timer.stop ();
-  dii_timer.elapsed_time (dii_elapsed_time);  
-  this->print_stats ("DII cube mixin (short/octet/long)", dii_elapsed_time);
+
+  TAO_TRY
+    {
+      if (this->shutdown_)
+        {
+          Cubit_var specific = Cubit::_narrow (this->obj_var_.in (),
+                                               TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          specific->shutdown (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n \t Shutting down IDL_Cubit server \n\n"));
+        }
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("DII_Cubit_Client: server shutdown");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return this->error_count_ == 0 ? 0 : 1;
 }
@@ -800,6 +873,9 @@ DII_Cubit_Client::run (void)
 int main (int argc, char *argv[])
 {
   DII_Cubit_Client cubit_client;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n \t DII_Cubit::CLIENT \n\n"));
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
