@@ -1,3 +1,11 @@
+Wed Jan  7 18:37:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Makefile.bor:
+	  Added special rule to install the os_include directory and its
+	  subdirectories. Thanks to Chris Kohlhoff for coming up with the
+	  solution and to Cyrille Chépélov <cyrille@softek.fr> for reporting
+	  this. This fixes [BUGID 1669].
+
 Wed Jan  7 12:13:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/orbsvcs_output.mpb:
@@ -7,15 +15,15 @@ Wed Jan  7 12:13:12 2004  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/config/taoexe.mpb:
         * bin/MakeProjectCreator/config/taolib.mpb:
 
-          Factored staticflags, includes and libpaths common to TAO based   
-          projects into a taodefaults base project and modified other base  
+          Factored staticflags, includes and libpaths common to TAO based
+          projects into a taodefaults base project and modified other base
           projects in accordance.
 
         * bin/MakeProjectCreator/config/orbsvcslib.mpb:
-        * bin/MakeProjectCreator/config/taoidldefaults.mpb: 
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
         * bin/MakeProjectCreator/config/taolib_with_idl.mpb:
 
-          Factored common idlflags and after settings into a taoidldefaults 
+          Factored common idlflags and after settings into a taoidldefaults
           base project and modified other base projects in accordance.
 
 Wed Jan  7 17:50:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
