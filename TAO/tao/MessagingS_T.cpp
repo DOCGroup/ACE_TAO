@@ -11,10 +11,6 @@
 #ifndef _TAO_IDL_MESSAGINGS_T_CPP_
 #define _TAO_IDL_MESSAGINGS_T_CPP_
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "MessagingS_T.h"
 #include "tao/POA.h"
 #include "tao/ORB_Core.h"
