@@ -1,3 +1,12 @@
+Sat Mar 21 17:55:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
+	
+	* orbsvcs/test/Simulator/NavWeap.idl: removed typo
+
+	* orbsvcs/test/Simulator/DOVEBrowser: New Demo using Java Beans
+	  as visualization components added. This will replace the old
+	  demo under orbsvcs/test/Simulator/Sim_Display. See the readme
+	  file under orbsvcs/test/Simulator for further details.  
+	
 Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/sequence_T.i (replace): Fixed some typos in the template
