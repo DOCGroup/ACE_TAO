@@ -1,3 +1,8 @@
+Thu Dec  5 14:42:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Server_Connection_Purging/client.cpp: Fixed a warning in
+	  gcc 32 builds. 
+
 Thu Dec  5 11:16:40 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Server_Connection_Purging/run_test.pl: Missed this in my
