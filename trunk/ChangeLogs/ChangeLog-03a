@@ -1,3 +1,11 @@
+Sat Aug 05 11:26:08 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/generate_export_file.pl:
+
+	  Changed "#if !defined (...)" include guard to "#ifndef ..."
+	  since some preprocessors enable "process once" optimizations if
+	  the latter form is used.
+
 Sat Aug  5 01:13:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.cpp:
@@ -288,6 +296,7 @@ Mon Jul 24 20:02:03 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           Amiaz <Tomer@bandwiz.com> for contributing this.
 
 Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
+
         * include/makeinclude/platform_vxworks5.x_g++.GNU
 
           Added the PENTIUM and PENTIUMPRO CPU's for x86 VxWorks.
