@@ -31,7 +31,7 @@ project(CosNaming) : orbsvcslib, core {
 }
 
 
-project(CosNaming_Skel) : orbsvcslib, core, naming {
+project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
   sharedname   = TAO_CosNaming_Skel
   dynamicflags = TAO_NAMING_BUILD_DLL
 
