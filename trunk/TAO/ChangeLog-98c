@@ -1,56 +1,61 @@
+Tue Nov 17 10:25:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: removed
+          obsolete -s option.
+
 Mon Nov 16 20:22:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Added
-	  static Debug/Release version settings.
+        * performance-tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Added
+          static Debug/Release version settings.
 
-	* tao/TAO_Static.dsp: A bunch of files were missing in the static
- 	  library project.
+        * tao/TAO_Static.dsp: A bunch of files were missing in the static
+          library project.
 
 Mon Nov 16 17:54:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Fixed Subscription_Module::unsubscribe, the consumer was added
-	  to the type_subscriber list only when it subscribed with
-	  source==0, hence it should be removed from the list in the same
-	  circumstances.
-	  Also fixed the generation of the observers QoS info (in
-	  Consumer_Module::fill_qos), the source only susbscription case
-	  was not working properly.
-	  Thanks to Thomas Venturella <tventurell@mdc.com>
-	  for pointing this out.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed Subscription_Module::unsubscribe, the consumer was added
+          to the type_subscriber list only when it subscribed with
+          source==0, hence it should be removed from the list in the same
+          circumstances.
+          Also fixed the generation of the observers QoS info (in
+          Consumer_Module::fill_qos), the source only susbscription case
+          was not working properly.
+          Thanks to Thomas Venturella <tventurell@mdc.com>
+          for pointing this out.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  We also had problems with source only subscriptions here.
-	  Thanks to Thomas Venturella <tventurell@mdc.com>
-	  for pointing this out.
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          We also had problems with source only subscriptions here.
+          Thanks to Thomas Venturella <tventurell@mdc.com>
+          for pointing this out.
 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	  Fixed debug message.
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+          Fixed debug message.
 
 Sun Nov 15 09:52:14 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/TypeCode.cpp:
+        * tao/TypeCode.cpp:
 
-	  Added a default clause to a switch statement in the TypeCode
-	  constructor to prevent g++ warnings. Thanks to David Levine for
-	  pointing this out to me.
+          Added a default clause to a switch statement in the TypeCode
+          constructor to prevent g++ warnings. Thanks to David Levine for
+          pointing this out to me.
 
-	* TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
 
-	  Modifications to allow reopening of modules. Thanks to Hamish
-	  Friedlander (hamishf@usa.net) for providing this fix.
+          Modifications to allow reopening of modules. Thanks to Hamish
+          Friedlander (hamishf@usa.net) for providing this fix.
 
 Sat Nov 14 18:31:57 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/new_run_test: new perl version of
-	the previous shell script (run_test)
+        * performance-tests/Thruput/TAO/new_run_test: new perl version of
+        the previous shell script (run_test)
 
-	* performance-tests/Thruput/TAO/new_server_test: new perl version
-	of the previous shell script (run_server)
+        * performance-tests/Thruput/TAO/new_server_test: new perl version
+        of the previous shell script (run_server)
 
-	* performance-tests/Thruput/TAO/new_client_test: new perl version
-	of the previous shell script (run_client)
-	
+        * performance-tests/Thruput/TAO/new_client_test: new perl version
+        of the previous shell script (run_client)
+
 
 Sat Nov 14 14:29:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -58,36 +63,36 @@ Sat Nov 14 14:29:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov 13 18:26:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp (init): Qualified CompletionStatus to
- 	  CORBA::CompletionStatus.
+        * tao/Typecode_Constants.cpp (init): Qualified CompletionStatus to
+          CORBA::CompletionStatus.
 
 Fri Nov 13 16:59:20 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
 
-	  We now generate the size information for the typecodes by passing
-	  the compiled time knowledge of the size of the data type and
-	  storing it in the typecode. This will (hopefully) solve our
-	  problems of trying to calculate the size of complex data
-	  structures in an interpreted manner.
+          We now generate the size information for the typecodes by passing
+          the compiled time knowledge of the size of the data type and
+          storing it in the typecode. This will (hopefully) solve our
+          problems of trying to calculate the size of complex data
+          structures in an interpreted manner.
 
-	* tao/Any.cpp
-	  tao/DynAnyC.cpp
-	  tao/Exception.cpp
-	  tao/ORB.cpp
-	  tao/Object_KeyC.cpp
-	  tao/POAC.cpp
-	  tao/TypeCode.{h, cpp}
-	  tao/Typecode_Constants.cpp
-	  tao/decode.cpp:
+        * tao/Any.cpp
+          tao/DynAnyC.cpp
+          tao/Exception.cpp
+          tao/ORB.cpp
+          tao/Object_KeyC.cpp
+          tao/POAC.cpp
+          tao/TypeCode.{h, cpp}
+          tao/Typecode_Constants.cpp
+          tao/decode.cpp:
 
-	  The TypeCode constructor for complex types now takes an
-	  additional parameter which is the size in bytes of the data
-	  type. This statically known value is stored in the private_tc_
-	  section of the TypeCode. This will save us the size calculation
-	  using the code in IIOP_Interpreter.cpp. Once we have verified
-	  that everything works fine, we can start cleaning up the
-	  unwanted code from IIOP_Interpreter.* files.
+          The TypeCode constructor for complex types now takes an
+          additional parameter which is the size in bytes of the data
+          type. This statically known value is stored in the private_tc_
+          section of the TypeCode. This will save us the size calculation
+          using the code in IIOP_Interpreter.cpp. Once we have verified
+          that everything works fine, we can start cleaning up the
+          unwanted code from IIOP_Interpreter.* files.
 
 Fri Nov 13 15:09:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
