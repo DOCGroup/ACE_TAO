@@ -17,61 +17,66 @@
 //
 // ============================================================================
 
-#if ! defined (SCHEDULING_PARAMS_H)
-#define SCHEDULING_PARAMS_H
+#if !defined (ACE_SCHEDULING_PARAMS_H)
+#define ACE_SCHEDULING_PARAMS_H
 
 #include "ace/Thread_Priority.h"
-#include "ace/OS.h"  // for ACE_Time_Value and ACE_SCOPE_PROCESS
+// for ACE_Time_Value and ACE_SCOPE_PROCESS
+#include "ace/OS.h"  
 
 class ACE_Scheduling_Params
+  // = TITLE
+  //
+  // = DESCRIPTION
 {
 public:
-  ACE_Scheduling_Params (
-    const ACE_Thread_Priority &priority = ACE_Thread_Priority (),
-    const int scope = ACE_SCOPE_PROCESS,
-    const ACE_Time_Value &quantum = ACE_Time_Value::zero);
-  // default priority:  sets the priority to be used for newly spawned threads.
-  // It is intended that this function be called from main () before
-  // any threads have been spawned.  If spawned threads inherit their
-  // parent's priority (I think that's the case for all of our platforms),
-  // then this sets the default base priority.  Individual thread
-  // priorities can be adjusted as usual.
-  //
-  // "scope" must be either ACE_SCOPE_PROCESS or ACE_SCOPE_LWP (which is
-  // only used on Solaris, and ignored on Win32 and VxWorks)
-  //
-  // The "quantum" is for time slicing.  An ACE_Time_Value of 0 has
-  // special significance:  it means time-slicing is disabled; with
-  // that, a thread that is running on a CPU will continue to run until
-  // it blocks or is preempted.  Currently ignored if the OS doesn't
-  // directly support time slicing, such as on VxWorks, or setting the
-  // quantum (can that be done on Win32?).
+  // = Initialization and termination methods.
+  ACE_Scheduling_Params (const ACE_Thread_Priority &priority = ACE_Thread_Priority (),
+			 const int scope = ACE_SCOPE_PROCESS,
+			 const ACE_Time_Value &quantum = ACE_Time_Value::zero);
+  // Constructor.
 
-  ~ACE_Scheduling_Params ();
+  ~ACE_Scheduling_Params (void);
+  // Termination.
 
-  // get/set accessors:
+  // = Get/Set methods:
 
-  const ACE_Thread_Priority &priority () const;
+  // = Get/Set priority.
+  const ACE_Thread_Priority &priority (void) const;
   void set_priority (const ACE_Thread_Priority &);
 
-  int scope () const;
+  // = Get/Set scope.
+  int scope (void) const;
   void set_scope(const int);
 
-  const ACE_Time_Value &quantum () const;
+  // = Get/Set quantum.
+  const ACE_Time_Value &quantum (void) const;
   void set_quantum (const ACE_Time_Value &);
 
 private:
   ACE_Thread_Priority priority_;
-  int scope_;
-  ACE_Time_Value quantum_;
-};
+  // Default <priority_>: sets the priority to be used for newly
+  // spawned threads.  It is intended that this function be called
+  // from main () before any threads have been spawned.  If spawned
+  // threads inherit their parent's priority (I think that's the case
+  // for all of our platforms), then this sets the default base
+  // priority.  Individual thread priorities can be adjusted as usual.
 
+  int scope_;
+  // <scope_> must be either ACE_SCOPE_PROCESS or ACE_SCOPE_LWP (which
+  // is only used on Solaris, and ignored on Win32 and VxWorks)
+
+  ACE_Time_Value quantum_;
+  // The <quantum_> is for time slicing.  An ACE_Time_Value of 0 has
+  // special significance: it means time-slicing is disabled; with
+  // that, a thread that is running on a CPU will continue to run
+  // until it blocks or is preempted.  Currently ignored if the OS
+  // doesn't directly support time slicing, such as on VxWorks, or
+  // setting the quantum (can that be done on Win32?).
+};
 
 #if defined (__ACE_INLINE__)
 #include "ace/Scheduling_Params.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* SCHEDULING_PARAMS_H */
-
-
-// EOF
+#endif /* ACE_SCHEDULING_PARAMS_H */
