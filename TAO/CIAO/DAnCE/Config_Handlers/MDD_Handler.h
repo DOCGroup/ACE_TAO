@@ -47,7 +47,7 @@ namespace CIAO
     class Config_Handlers_Export MDD_Handler
     {
     public:
-      static void mono_deployment_description (
+      static bool mono_deployment_description (
           const MonolithicDeploymentDescription& desc,
           Deployment::MonolithicDeploymentDescription& toconfig);
     };
