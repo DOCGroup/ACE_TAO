@@ -144,7 +144,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("TAO(%P|%t) - IIOP_Connection_Handler::open, ")
+                ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
                 ACE_TEXT("The local addr is (%s) \n"),
                 local_addr. get_host_addr ()));
 
