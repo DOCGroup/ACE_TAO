@@ -13,18 +13,17 @@ Tue Oct 12 16:32:16 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/MProfile_Forwarding/README:
 	* tests/MProfile_Forwarding/Makefile: Added a test case to
 	  replicate the problem that Shalini Yajnik
-	  <shalini@research.bell-labs.com> has reported and that was fixed
-	  by Fred Kuhns. {Tue Oct 12 15:46:41 1999  Fred Kuhns
-	  <fredk@cs.wustl.edu>}This could serve as a test that would help us
-	  verify this feature again. This test is basically an extension
-	  of tests/MProfile. For more details, please refer to the README.
+ 	  <shalini@research.bell-labs.com> has reported and that was fixed
+ 	  by Fred Kuhns.  This could serve as a test that would help us
+ 	  verify this feature again. This test is basically an extension
+ 	  of tests/MProfile. For more details, please refer to the README.
 
 Tue Oct 12 15:46:41 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
         * tao/Stub.cpp fixed a bug with location forwarding which caused
-          all forwading information to be discarded if a connect failed
-          on any of the forwarding profiles.  Thanks to Shalini Yajnik
-          shalini@research.bell-labs.com, for reporting this bug.
+          all forwarding information to be discarded if a connect failed
+ 	  on any of the forwarding profiles.  Thanks to Shalini Yajnik
+ 	  <shalini@research.bell-labs.com> for reporting this bug.
 
 Tue Oct 12 14:23:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
