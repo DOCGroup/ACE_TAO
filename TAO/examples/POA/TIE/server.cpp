@@ -102,11 +102,10 @@ main (int argc, char **argv)
       // Create C_i
       Outer_i::Inner_i::C_i c_impl (29, first_poa.in ());
 
+#if defined (ACE_HAS_USING_KEYWORD)
       // Create A tie
       Tie_i a_tie_i (30);
       POA_A_tie <Tie_i> a_tie_impl (a_tie_i, first_poa.in ());
-
-#if defined (ACE_HAS_USING_KEYWORD)
 
       // Create B tie
       Tie_i b_tie_i (31);
@@ -134,18 +133,16 @@ main (int argc, char **argv)
       Outer::Inner::C_var c = c_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+#if defined (ACE_HAS_USING_KEYWORD)
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_tie_impl object.
       A_var a_tie = a_tie_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-
-#if defined (ACE_HAS_USING_KEYWORD)
       ACE_OS::strcpy (str, "POA_Outer::B::_this");
       // Get Object Reference for the a_tie_impl object.
       Outer::B_var b_tie = b_tie_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
 
       ACE_OS::strcpy (str, "POA_Outer::C::_this");
       // Get Object Reference for the c_tie_impl object.
@@ -170,6 +167,7 @@ main (int argc, char **argv)
         orb->object_to_string (c.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+#if defined (ACE_HAS_USING_KEYWORD)
       // Stringyfy all the object references and print them out.
       CORBA::String_var forth_ior =
         orb->object_to_string (a_tie.in (), ACE_TRY_ENV);
@@ -202,7 +200,6 @@ main (int argc, char **argv)
       ACE_OS::fclose (output_file_3);
       ACE_OS::fclose (output_file_4);
 
-#if defined (ACE_HAS_USING_KEYWORD)
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var fifth_ior =
@@ -232,6 +229,7 @@ main (int argc, char **argv)
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#if defined (ACE_HAS_USING_KEYWORD)
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n%s\n%s\n",
                   first_ior.in (),
@@ -239,7 +237,6 @@ main (int argc, char **argv)
                   third_ior.in (),
                   forth_ior.in ()));
 
-#if defined (ACE_HAS_USING_KEYWORD)
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n%s\n",
@@ -266,8 +263,8 @@ main (int argc, char **argv)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class POA_A_tie<Tie_i>;
 #if defined (ACE_HAS_USING_KEYWORD)
+template class POA_A_tie<Tie_i>;
 template class POA_Outer::B_tie <Tie_i>;
 template class POA_Outer::Inner::C_tie <Tie_i>;
 #endif /* ACE_HAS_USING_KEYWORD */
