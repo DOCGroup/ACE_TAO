@@ -97,12 +97,22 @@ public:
         }
     };
 
-  void foo_excep (A::AMI_AMI_TestExceptionHolder_out excep_holder,
+  void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder,
                   CORBA::Environment &ACE_TRY_ENV)
     {
 
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"));
+      ACE_TRY
+        {
+          excep_holder->raise_foo ();
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Catched exception:");
+        }
+      ACE_ENDTRY;
     };
 
   
@@ -183,7 +193,17 @@ main (int argc, char *argv[])
       A::AMI_AMI_TestHandler_var the_handler_var =
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
+      // Trigger the DidNotWork exception on the server side
+      // by sending 0 to it.
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sending asynch message\n"));
+                
+      ami_test_var->sendc_foo (the_handler_var.in (),
+                               0,
+                               "Let's talk AMI.",
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Long l = 931247;
  
@@ -194,7 +214,7 @@ main (int argc, char *argv[])
                       ni));
                     
           ami_test_var->sendc_foo (the_handler_var.in (),
-                                   0,
+                                   l,
                                    "Let's talk AMI.",
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;

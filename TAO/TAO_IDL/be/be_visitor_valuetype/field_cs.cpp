@@ -671,19 +671,12 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->" << bu->field_pd_prefix() << ub->local_name ()
-      << bu->field_pd_postfix() << "," << be_nl
-      << bt->name () << " (val)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
+  *os << "this->" 
+      << bu->field_pd_prefix() << ub->local_name () 
+                               << bu->field_pd_postfix() 
+      << " = val;" << be_uidt_nl;
 
-// This was replaced by the above output statement, but this doesn't work
-//      *os << "this->"
-//      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-//          << " = new "
-//          << bt->name () << " (val);" << be_uidt_nl;
-
-  *os << "}" << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   // readonly get method
   *os << "// readonly get method " << be_nl
@@ -695,7 +688,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << "return this->"   // %! *this (seq_var, not seq member)
       << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
       << ";" << be_uidt_nl
-      << "}" << be_nl;
+      << "}" << be_nl << be_nl;
 
   // read/write get method
   *os << "// read/write get method " << be_nl

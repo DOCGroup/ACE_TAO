@@ -134,7 +134,7 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       // the get method
       *os << pre_op() << "const _" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void)" << post_op() << be_nl;
+          << " (void) const" << post_op() << be_nl;
       *os << pre_op() << "_" << bt->local_name ()
           << "_slice * " << ub->local_name ()
           << " (void)" << post_op();

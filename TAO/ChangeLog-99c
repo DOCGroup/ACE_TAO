@@ -1,3 +1,30 @@
+Thu Sep 30 05:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
+	  Getting exceptions to work correctly.
+
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	  Added missing const in readonly accessor of sequence.
+	  Thanks to Torsten Kuepper <kuepper2@uni-wuppertal.de> 
+	  for sending this fix.
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	  Changed set accessor of sequence member. 
+	  Thanks to Torsten Kuepper <kuepper2@uni-wuppertal.de> 
+	  for sending this fix.
+	
+	* docs/releasenotes/index.html: Documented the current
+	  status of AMI.
+
+	* examples/Simple/time-date/Time_Date.dsp:
+	  Added the Time_Date.h file to the project file.
+
+	* tests/AMI/client.cpp,
+	  tests/AMI/simple_client.cpp:
+	  Enhanced the test to do proper exception handling
+	  testing, which works now again!
+
 Thu Sep 30 02:04:37 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Object.cpp:

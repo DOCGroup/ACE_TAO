@@ -215,11 +215,6 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   if (original->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       be_decl *scope = be_scope::narrow_from_scope (original->defined_in ())->decl ();
-#if 0
-      *os << "ACE_NESTED_CLASS (OBV_"
-          << scope->name() << ","
-          << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder") << ")";
-#endif /* 0 */ 
       *os << "OBV_" << scope->name() << "::" 
           << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
     }
@@ -236,7 +231,11 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
       << "exception_holder_var->marshaled_exception (marshaled_exception_var.in ());" << be_nl;
 
   *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
-      << " exception_holder_var->is_system_exception (1);" << be_uidt_nl << be_nl
+      << "exception_holder_var->is_system_exception (1);" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "exception_holder_var->is_system_exception (0);" << be_uidt_nl
+      << "exception_holder_var->byte_order (ACE_CDR_BYTE_ORDER);" << be_nl
+      << be_nl
       << "_tao_reply_handler_object->foo_excep (exception_holder_var," << be_nl
       << " ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_uidt_nl
