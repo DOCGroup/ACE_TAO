@@ -1,3 +1,17 @@
+Thu Dec  2 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategy.h:
+        * tao/PortableServer/LifespanStrategyPersistent.{h,cpp}:
+        * tao/PortableServer/LifespanStrategyTransient.{h,cpp}:
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/Servant_Upcall.cpp:
+          Implemented section 11.3.8.2 of the corba spec, when the transient
+          lifespan policy is set, and the POAManager is inactive, a
+          object_not_exist with minor code 4 must be thrown. The
+          Servant_Upcall just calls now check_state on the POA, this calls the
+          lifespan strategy, which uses the POAManager. The Servant_Upcall now
+          just doesn't use the POAManager anymore, just the POA.
+
 Thu Dec  2 10:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp (find_servant):
