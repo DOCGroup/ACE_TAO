@@ -1,3 +1,9 @@
+Thu Jun 24 15:34:53 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIAOTAO.mwc
+	  Reversed the change to avoid trouble for people who don't use
+	  the new DnC framework.
+
 Thu Jun 24 15:17:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DnC/Config_Handlers/Config_Handlers.mpc
@@ -11,7 +17,7 @@ Thu Jun 24 15:17:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DnC/ExecutionManager/ExecutionManager.mpc
 	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 	* DnC/NodeManager/NodeDaemon.mpc
-	
+
 	  Checked in some changes to make DnC compile under VC6.
 
 Thu Jun 24 14:49:44 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
