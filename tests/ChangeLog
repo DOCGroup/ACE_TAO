@@ -1,3 +1,7 @@
+Mon Aug  5 22:37:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Makefile: Added the new test to the Makefile.
+
 Mon Aug 05 22:41:43 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Select_Reactor_Notify_Stress_Test.cpp: A stress test for
