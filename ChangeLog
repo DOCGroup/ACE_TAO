@@ -1,3 +1,56 @@
+Mon Feb 14 08:43:31 2000  Ossama Othman  <ossama@uci.edu>
+
+	* acconfig.h:
+
+	  Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC macro to
+	  ACE_HAS_POSITION_INDEPENDENT_POINTERS since the name changed in
+	  ACE as well.
+
+	* configure.in (AC_LANG_CPLUSPLUS):
+
+	  Set the test language to C++ earlier in the configure script to
+	  make sure all tests are done using the C++ compiler.
+
+	  (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
+
+	  Moved configure script option macros to new `m4/ace.m4' M4
+	  macros file.
+
+	  (ACE_TEMPLATES_REQUIRE_SOURCE,
+	   ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
+	   ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA):
+
+	  Overhauled the tests for these macros.  Since there may be a
+	  tight dependency between some of these macros, the
+	  ACE_TEMPLATES_REQUIRE_SOURCE test also tests if either of the
+	  other two macros are required.  This fixes a problem that was
+	  occurring with Sun C++ 5.0.
+
+	  Corrected a syntax error in the previous
+	  ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA test, which is now part of
+	  the ACE_TEMPLATES_REQUIRE_SOURCE test.
+
+	  (ACE_TEMPLATES_REQUIRE_PRAGMA):
+
+	  Added a test for this macro.  It is only run if the
+	  ACE_TEMPLATES_REQUIRE_SOURCE test failed.  This should improve
+	  AIX support.
+
+	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS, ACE_COMPILATION_OPTIONS):
+
+	  Moved all configure script command line option macros to this
+	  file and placed them in the above M4 macros.  This makes things
+	  a bit cleaner, and it also allows other macros to AC_REQUIRE the
+	  above macros.
+
+	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+
+	  Made this macro depend on ACE_COMPILATION_OPTIONS
+	  (i.e. AC_REQUIRE it).
+
+	  Moved more compiler specific variable settings from configure.in
+	  to this macro.
+
 Sun Feb 13 11:17:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Shared_Malloc/test_multiple_mallocs.cpp:
