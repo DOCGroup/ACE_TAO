@@ -636,7 +636,7 @@ ACE_INLINE pid_t
 ACE_OS::setsid (void)
 {
   // ACE_TRACE ("ACE_OS::setsid");
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined (CHORUS)
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::setsid (), int, -1);
@@ -942,8 +942,12 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (user);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-  BOOL result = ::GetUserName (user, (unsigned long *) &maxlen); 
+  BOOL result = ::GetUserName (user, (u_long *) &maxlen); 
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
@@ -4033,7 +4037,10 @@ ACE_INLINE int
 ACE_OS::system (const char *s)
 {
   // ACE_TRACE ("ACE_OS::system");
-  ACE_OSCALL_RETURN (::system (s), int, -1);
+#if !defined (CHORUS)
+    // ACE_TRACE ("ACE_OS::system");
+    ACE_OSCALL_RETURN (::system (s), int, -1);
+#endif /* !CHORUS */
 }
 
 ACE_INLINE int 
@@ -4528,7 +4535,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-#if defined (__FreeBSD__)
+#if defined (__FreeBSD__) || defined (CHORUS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_FSU_PTHREADS)
   *sig = ::sigwait (set);
@@ -5373,7 +5380,7 @@ ACE_OS::creat (LPCTSTR filename, mode_t mode)
 #endif /* ACE_WIN32 */
 }
 
-#if ! defined (ACE_WIN32) && ! defined (VXWORKS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (CHORUS)
 // Don't inline on those platforms because this function contains
 // string literals, and some compilers, e.g., g++, don't handle those
 // efficiently in unused inline functions.
@@ -5383,7 +5390,7 @@ ACE_OS::uname (struct utsname *name)
   // ACE_TRACE ("ACE_OS::uname");
   ACE_OSCALL_RETURN (::uname (name), int, -1);
 }
-#endif /* ! ACE_WIN32 && ! VXWORKS */
+#endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
 
 ACE_INLINE int 
 ACE_OS::hostname (char name[], size_t maxnamelen)
@@ -5485,13 +5492,13 @@ ACE_OS::alarm (u_int secs)
 {
   // ACE_TRACE ("ACE_OS::alarm");
 
-#if defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS)
   ACE_UNUSED_ARG (secs);
   
   ACE_NOTSUP_RETURN (0);
 #else
   return ::alarm (secs);
-#endif /* ACE_WIN32 || VXWORKS */
+#endif /* ACE_WIN32 || VXWORKS || CHORUS */
 }
 
 ACE_INLINE u_int 

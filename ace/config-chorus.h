@@ -34,9 +34,9 @@
 #define ACE_LACKS_KEY_T
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_FORK
-#define ACE_LACKS_SIGACTION
 #define ACE_LACKS_SIGSET
 // #define ACE_LACKS_FILELOCKS
+#define ACE_LACKS_RLIMIT
 
 // got struct timespec
 #define ACE_HAS_POSIX_TIME

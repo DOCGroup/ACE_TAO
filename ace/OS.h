@@ -2225,6 +2225,15 @@ extern "C"
 #include /**/ <time.h>
 #include /**/ <stdfileio.h>
 #include /**/ <am/afexec.h>
+#include /**/ <sys/types.h>
+#include /**/ <sys/signal.h>
+#include /**/ <sys/wait.h>
+#include /**/ <pwd.h>
+#include /**/ <unistd.h>
+extern_C int      getgid          __((void));
+extern_C int      getuid          __((void));
+extern_C char*    getcwd          __((char* buf, size_t size));
+extern_C int      pipe            __((int* fildes)); 
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX
