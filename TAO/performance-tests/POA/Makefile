@@ -10,13 +10,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Cubit \
-	POA \
-	Pluggable \
-	Thruput
-
-# The following tests have not been updated yet
-# 	Demux
+DIRS  = Object_Creation_And_Registration
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
