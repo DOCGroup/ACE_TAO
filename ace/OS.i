@@ -3315,13 +3315,13 @@ ACE_OS::mmap (void *addr,
         {
           // On Win9x, we first try to OpenFileMapping to
           // file_mapping_name. Only if there is no mapping object
-          // with that name we try CreateFileMapping.
+          // with that name, and the desired name is valid, do we try
+          // CreateFileMapping.
 
           *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
                                                     0,
                                                     file_mapping_name);
-          if (*file_mapping != 0
-              || ::GetLastError () != ERROR_INVALID_NAME)
+          if (*file_mapping != 0 || ::GetLastError () == ERROR_INVALID_NAME)
             try_create = 0;
         }
 
