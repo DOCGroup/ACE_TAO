@@ -1,3 +1,11 @@
+Thu Feb  4 14:34:43 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/mpeg_server/Globals.cpp: 
+	  Added the initialization of a missing member variable.
+	  Thanks to Phil Ruelle" <Phil.Ruelle@adv.sonybpe.com> for the
+	  fix.	 
+		
+
 Thu Feb 04 10:55:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Strategies_T.cpp (activate_svc_handler): Fixed unmatched
