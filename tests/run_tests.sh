@@ -40,18 +40,28 @@ for arg in "$@"; do
   esac
 done
 
+if [ ! "$ACE_ROOT" ]; then
+  ACE_ROOT=..
+fi
+
 IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
 LD_LIBRARY_PATH=$ACE_ROOT/ace:${LD_LIBRARY_PATH:-/usr/lib}
 export LD_LIBRARY_PATH
 
-if [ -x /bin/uname -a `uname -s` = 'HP-UX' ]; then
+if [ -x /bin/uname  -o  -x /usr/nto/x86/bin/uname ]; then
+  sysname=`uname -s`
+else
+  sysname='unknown'
+fi
+
+if [ $sysname = 'HP-UX' ]; then
   SHLIB_PATH=$ACE_ROOT/ace:${SHLIB_PATH:-/usr/lib}
   export SHLIB_PATH
 fi
 
-if [ -x /bin/uname -a `uname -s` = 'AIX' ]; then
+if [ $sysname = 'AIX' ]; then
   LIBPATH=$ACE_ROOT/ace:${LIBPATH:-/usr/lib:/lib}
   export LIBPATH
 fi
@@ -125,12 +135,12 @@ run()
 }
 
 LynxOS=1
-if [ -x /bin/uname -a `uname -s` = 'LynxOS' ]; then
+if [ $sysname = 'LynxOS' ]; then
   LynxOS=
 fi
 
 Unicos=1
-if [ -x /bin/uname -a `uname -s` = 'unicos' ]; then
+if [ $sysname = 'unicos' ]; then
   Unicos=
 fi
 
@@ -162,8 +172,10 @@ echo "Starting ACE version $ace_version tests . . ."
 
 mv -f "$compilation_log" "$compilation_log.bak" > /dev/null 2>&1
 
-# Limit the amount of memory required by the tests to 64Mb
-ulimit -d 65536
+if [ $sysname != 'procnto' ]; then
+  # Limit the amount of memory required by the tests to 64Mb.
+  ulimit -d 65536
+fi # ! procnto
 
 while read i; do
 
@@ -182,11 +194,13 @@ while read i; do
 #  echo =****= $precond ===== $test;
 
   if test -z "$precond"; then
-    run $test;
+    run $test
   elif eval test $precond; then
-    run $test;
+    run $test
   else
-    echo Skipping $test on this platform;
+    if echo $precond | egrep '(DISABLED)|(OTHER)' > /dev/null; then :; else
+      echo Skipping $test on this platform
+    fi
   fi
 
 done <run_tests.lst

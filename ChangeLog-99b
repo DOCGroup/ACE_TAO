@@ -1,47 +1,56 @@
+Tue Oct 12 11:32:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.pl,run_tests.sh: don't print "Skipping test
+          on this platform" message for DISABLED tests.  Set
+          ACE_ROOT to .. if it wasn't set.
+
+        * tests/run_tests.sh: don't invoke uname command on
+          Neutrino, because it's not supported.
+
 Tue Oct 12 08:53:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Message_Queue.cpp (enqueue): <cur_bytes_> and <cur_length_>
-	  should increase by total_size() and total_length() respectively.
-	  And in dequeue(), <cur_length_> should decrease by
-	  total_length().  Thanks to Christopher Kohlhoff
-	  <chris@kohlhoff.com> for pointing this out.
+        * ace/Message_Queue.cpp (enqueue): <cur_bytes_> and <cur_length_>
+          should increase by total_size() and total_length() respectively.
+          And in dequeue(), <cur_length_> should decrease by
+          total_length().  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for pointing this out.
 
 Tue Oct 12 10:00:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Memory_Pool: Added a new memory pool that uses the Win32
-	  page file.  Thanks to Dieter Quehl for contributing this.
+        * ace/Memory_Pool: Added a new memory pool that uses the Win32
+          page file.  Thanks to Dieter Quehl for contributing this.
 
 Mon Oct 11 17:07:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Queue.cpp (enqueue): ACE fails to compile because of
-	  a for-loop scoping problem in the method
- 	  ACE_Message_Queue_NT::enqueue.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * ace/Message_Queue.cpp (enqueue): ACE fails to compile because of
+          a for-loop scoping problem in the method
+          ACE_Message_Queue_NT::enqueue.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
-	* ace/Activation_Queue.cpp (enqueue): Changed the
-	  creation of the ACE_Message_Block so that it uses the sizeof
- 	  (ACE_Method_Request) to ensure the queue's flow control
- 	  mechanism works properly.  Thanks to Dan Gilboa
- 	  <dgilboa@qualcomm.com> for reporting this.
+        * ace/Activation_Queue.cpp (enqueue): Changed the
+          creation of the ACE_Message_Block so that it uses the sizeof
+          (ACE_Method_Request) to ensure the queue's flow control
+          mechanism works properly.  Thanks to Dan Gilboa
+          <dgilboa@qualcomm.com> for reporting this.
 
 Mon Oct 11 17:36:15 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  Thanks to Wei Chiang <wei.chiang@nokia.com> for the following
-	  patches.
+          Thanks to Wei Chiang <wei.chiang@nokia.com> for the following
+          patches.
 
-	* ace/Thread_Manager.cpp (kill_thr):  Chorus only supports
-	  SIGTHREADKILL here.  Made sure we remove the killed thread from
-	  the managed thread list.
+        * ace/Thread_Manager.cpp (kill_thr):  Chorus only supports
+          SIGTHREADKILL here.  Made sure we remove the killed thread from
+          the managed thread list.
 
-	* tests/Thread_Manager_Test.cpp: Changed the test to check for
-	  cooperative cancellation even if the platform doesn't support
-	  sending signaling to a specific thread.  On Chorus, this signal
-	  has to be SIGTHREADKILL.
+        * tests/Thread_Manager_Test.cpp: Changed the test to check for
+          cooperative cancellation even if the platform doesn't support
+          sending signaling to a specific thread.  On Chorus, this signal
+          has to be SIGTHREADKILL.
 
 Mon Oct 11 17:35:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-kcc-common.h: Added
-	  ACE_HAS_STD_TEMPLATE_SPECIALIZATION for KCC.
+        * ace/config-kcc-common.h: Added
+          ACE_HAS_STD_TEMPLATE_SPECIALIZATION for KCC.
 
 Mon Oct 11 12:05:31 1999  Wei Chiang <wei.chiang@nokia.com>
 
