@@ -1,3 +1,9 @@
+Wed Feb 24 05:30:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Queue_T.i (dequeue): Replaced the improper
+ 	  self-recursive call to dequeue() with dequeue_head().  Thanks to
+ 	  Marc Engel <engelm@tlse.sofreavia.fr> for reporting this.
+
 Tue Feb 23 20:58:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Make sure to do the right thang if we're compiling the
