@@ -1,10 +1,10 @@
-// file      : CIDLC/ServantGenerator.cpp
+// file      : CIDLC/ExecImplGenerator.cpp
 // author    : Jeff Parsons <j.parsons@vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include "ServantGenerator.hpp"
-#include "ServantHeaderGenerator.hpp"
-#include "ServantSourceGenerator.hpp"
+#include "ExecImplGenerator.hpp"
+#include "ExecImplHeaderGenerator.hpp"
+#include "ExecImplSourceGenerator.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 #include "CCF/CodeGenerationKit/IndentationCxx.hpp"
@@ -29,74 +29,74 @@ namespace
   }
 }
 
-ServantGenerator::ServantGenerator (CommandLine const& cl)
+ExecImplGenerator::ExecImplGenerator (CommandLine const& cl)
     : cl_ (cl),
       file_name_ (""),
       export_macro_ ("")
 {
 }
 
-void ServantGenerator::options (CL::Description& d)
+void ExecImplGenerator::options (CL::Description& d)
 {
   d.add_option (CL::OptionDescription (
-                  "svnt-hdr-file-suffix",
+                  "exec-hdr-file-suffix",
                   "suffix",
-                  "Use provided suffix instead of default \'_svnt.h\' "
-                  "when constructing name of servant file.",
+                  "Use provided suffix instead of default \'_exec.h\' "
+                  "when constructing name of executor implementation file.",
                   true));
 
   d.add_option (CL::OptionDescription (
-                  "svnt-hdr-file-regex",
+                  "exec-hdr-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
-                  "name of servant file.",
+                  "name of executor implementation file.",
                   true));
   d.add_option (CL::OptionDescription (
-                  "svnt-src-file-suffix",
+                  "exec-src-file-suffix",
                   "suffix",
-                  "Use provided suffix instead of default \'_svnt.cpp\' "
-                  "when constructing name of servant file.",
+                  "Use provided suffix instead of default \'_exec.cpp\' "
+                  "when constructing name of executor implementation file.",
                   true));
 
   d.add_option (CL::OptionDescription (
-                  "svnt-src-file-regex",
+                  "exec-src-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
-                  "name of servant file.",
+                  "name of executor implementation file.",
                   true));
   d.add_option (CL::OptionDescription (
-                  "svnt-export-macro",
+                  "exec-export-macro",
                   "macro",
-                  "Replace default servant DLL export macro "
-                  "with provided ,acro.",
+                  "Replace default executor DLL export macro "
+                  "with provided macro.",
                   true));
   d.add_option (CL::OptionDescription (
-                  "svnt-export-include",
+                  "exec-export-include",
                   "file",
-                  "Replace default servant export include file "
+                  "Replace default executor export include file "
                   "with provided file.",
                   true));
 }
 
 
-void ServantGenerator::generate (SemanticGraph::TranslationUnit& u,
-                                 fs::path const& file)
+void ExecImplGenerator::generate (SemanticGraph::TranslationUnit& u,
+                                  fs::path const& file)
 {
   // Generate files
   compute_export_macro (file);
 
   {
     fs::ofstream hdr_ofs;
-    ostream& hdr_os = configure_stream ("svnt-hdr-file-suffix",
-                                        "_svnt.h",
-                                        "svnt-hdr-file-regex",
+    ostream& hdr_os = configure_stream ("exec-hdr-file-suffix",
+                                        "_exec.h",
+                                        "exec-hdr-file-regex",
                                         hdr_ofs);
 
     Indentation::Implanter<Indentation::Cxx> header_guard (hdr_os);
 
 
-    ServantHeaderEmitter hdr_emitter (hdr_os,
-                                      cl_,
+    ExecImplHeaderEmitter hdr_emitter (hdr_os,
+                                       cl_,
                                       export_macro_,
                                       file);
     hdr_emitter.generate (u);
@@ -104,30 +104,30 @@ void ServantGenerator::generate (SemanticGraph::TranslationUnit& u,
 
   {
     fs::ofstream src_ofs;
-    ostream& src_os = configure_stream ("svnt-src-file-suffix",
-                                        "_svnt.cpp",
-                                        "svnt-src-file-regex",
+    ostream& src_os = configure_stream ("exec-src-file-suffix",
+                                        "_exec.cpp",
+                                        "exec-src-file-regex",
                                         src_ofs);
 
     Indentation::Implanter<Indentation::Cxx> header_guard (src_os);
 
-    ServantSourceEmitter src_emitter (src_os,
-                                      cl_,
-                                      export_macro_,
-                                      file);
+    ExecImplSourceEmitter src_emitter (src_os,
+                                       cl_,
+                                       export_macro_,
+                                       file);
     src_emitter.generate (u);
   }
 }
 
 void
-ServantGenerator::compute_export_macro (const fs::path& file_path)
+ExecImplGenerator::compute_export_macro (const fs::path& file_path)
 {
   if (!file_path.empty ())
   {
     file_name_ = file_path.leaf ();
   }
 
-  export_macro_ = cl_.get_value ("svnt-export-macro", "");
+  export_macro_ = cl_.get_value ("exec-export-macro", "");
 
   if (export_macro_.empty () && !file_name_.empty ())
   {
@@ -143,7 +143,7 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
     // Replace the suffix.
     export_macro_ =
       regex::perl_s (export_macro_,
-                     "/(\\.(IDL|CIDL))?$/_SVNT_Export/");
+                     "/(\\.(IDL|CIDL))?$/_EXEC_Export/");
 
     // Replace any remaining '.' in the string with '_'.
     export_macro_ = regex::perl_s (export_macro_,
@@ -151,13 +151,11 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
   }
 }
 
-
-
 ostream&
-ServantGenerator::configure_stream (string const& suffix_option,
-                                    string const& default_suffix,
-                                    string const& regex_option,
-                                    fs::ofstream& ofs)
+ExecImplGenerator::configure_stream (string const& suffix_option,
+                                     string const& default_suffix,
+                                     string const& regex_option,
+                                     fs::ofstream& ofs)
 {
   if (! file_name_.empty ())
   {
@@ -186,10 +184,3 @@ ServantGenerator::configure_stream (string const& suffix_option,
     : static_cast<ostream&> (std::cout);
 }
 
-
-/*
- * Local Variables:
- * mode: C++
- * c-basic-offset: 2
- * End:
- */
