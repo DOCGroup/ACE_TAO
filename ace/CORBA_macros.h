@@ -23,6 +23,13 @@
 
 // Macros for handling CORBA exceptions.
 
+#ifndef ACE_CORBA_MACROS_H
+#define ACE_CORBA_MACROS_H
+
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // All these macros assume the CORBA::Environment variable used to pass
 // in/out the exception is call ACE_TRY_ENV.  Below is the name we use
 // in TAO (The ACE ORB.)  Most other ORB's have their own naming
@@ -32,6 +39,11 @@
 #if !defined (ACE_TRY_ENV)
 # define ACE_TRY_ENV _ACE_CORBA_Environment_variable
 #endif /* ACE_TRY_ENV */
+
+// This is the exception caught by ACE_CATCHANY.
+#if !defined (ACE_ANY_EXCEPTION)
+# define ACE_ANY_EXCEPTION ex
+#endif /* ACE_ANY_EXCEPTION */
 
 // By default, if the compiler support native exception handling, assume
 // CORBA also support native exception handling.  But it can be disabled
@@ -113,7 +125,7 @@
          { \
            ACE_UNUSED_ARG (VAR);
 # define ACE_CATCHANY \
-       ACE_CATCH(CORBA::Exception, ex)
+       ACE_CATCH(CORBA::Exception, ACE_ANY_EXCEPTION)
 # define ACE_CATCHALL \
          } \
        catch (...) \
@@ -264,7 +276,7 @@
          ACE_TRY_ENV.clear ();
 
 // ACE_CATCHANY uses ACE_CATCH to catch all CORBA exceptions.
-# define ACE_CATCHANY ACE_CATCH (CORBA::Exception, ex)
+# define ACE_CATCHANY ACE_CATCH (CORBA::Exception, ACE_ANY_EXCEPTION)
 
 // Since there's no other exception for compilers without exception
 // support, we simply catch all CORBA exceptions for ACE_CATCHALL.
@@ -287,3 +299,5 @@
     } while (0)
 
 #endif /* ! ACE_CORBA_HAS_EXCEPTIONS */
+
+#endif /* ACE_CORBA_MACROS_H */
