@@ -28,7 +28,7 @@ Mon Mar  8 19:02:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
 	  Added the new typedefs for _ptr_type and _var_type
-	  (see Advnaced CORBA Programming with C++, section 7.6.1).
+	  (see Advanced CORBA Programming with C++, section 7.6.1).
 	  I couldn't find anywhere that the IDL compiler
 	  generates code for template member functions - everything
 	  like that in orbsvcs seems to be handwritten. If anyone
