@@ -150,25 +150,32 @@ RELEASE_LIB_FILES = \
         ACE_wrappers/tests \
         ACE_wrappers/websvcs
 
-.PHONY: release releasetao releaseall
+.PHONY: release releasetao releaseall tag
 
 REL = beta
 CHECK =
-GENERATE_MAN_PAGES = $(ACE_ROOT)/bin/generate_man_pages
+GENERATE_MAN_PAGES = -g
 
 #### The release target creates the ACE (only) kit.
-release: ACE-INSTALL
-	@$(GENERATE_MAN_PAGES)
-	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
-           -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
-           -l "$(RELEASE_LIB_FILES)" -u
+release: tag
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -i -k ace -v $(REL) \
+          $(GENERATE_MAN_PAGES) \
+	  -ta `head -1 VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";'`
+
+tag:
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -v $(REL) -u
 
 #### The following target is for use by the TAO Makefile.  It should not
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
-	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace+tao -t $(REL) \
-           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)" -u
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -i -k ace+tao -v $(REL) \
+          $(GENERATE_MAN_PAGES) \
+	  -ta `head -1 VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "ACE-$$_";'` \
+	  -tt `head -1 TAO/VERSION | perl -ne \
+               's/.* ([\d\.]+),.*\n/$$1/; tr/./_/; print "TAO-$$_";'`
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.
@@ -176,8 +183,19 @@ releasetao:
 ####      recursively invoking make release in the TAO directory.
 ####      The make then recursively invokes make releasetao in this
 ####      directory to create the combined ACE-TAO kit.
-releaseall: release
-	@cd TAO  &&  $(MAKE) release REL=$(REL)
+releaseall: tag
+	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
+
+.PHONY: show_controlled_files show_release_files show_release_lib_files
+
+show_controlled_files:
+	@echo $(CONTROLLED_FILES)
+
+show_release_files:
+	@echo $(RELEASE_FILES)
+
+show_release_lib_files:
+	@echo $(RELEASE_LIB_FILES)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@

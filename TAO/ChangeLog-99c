@@ -1,9 +1,14 @@
+Thu Aug 12 15:49:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile,bin/make_release: build kits in /tmp staging
+          area, and copy to ace's ftp pub/ACE directory.
+
 Thu Aug 12 11:45:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/IDL_Test/Makefile:
-	  Sometimes the canonical rule for reopened_modules.idl was
-	  invoked, and not our special one, this resulted in some annoying 
-	  warnings that we want to silence.
+        * tests/IDL_Test/Makefile:
+          Sometimes the canonical rule for reopened_modules.idl was
+          invoked, and not our special one, this resulted in some annoying
+          warnings that we want to silence.
 
 Wed Aug 11 13:35:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
