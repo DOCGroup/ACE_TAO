@@ -3267,7 +3267,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
           //    instead of checking for success by comparing to zero.
           //        -Ossama
           // Only initialize it if we're the one who created it.
-          && ::sem_init (s->sema_, USYNC_THREAD, count) == -1)
+          && ::sem_init (s->sema_, type == USYNC_PROCESS, count) == -1)
         return -1;
       return 0;
     }
