@@ -70,25 +70,25 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 //
-//	 For portability reasons we have decided to provide both this and
-//	 an implementation of the list classes in terms of templates. If
-//	 your compiler supports templates, please use the files in the
-//	 include/utl_tmpl and util/utl_tmpl directories instead of the
-//	 files by the same names in the include and util directories.
+//       For portability reasons we have decided to provide both this and
+//       an implementation of the list classes in terms of templates. If
+//       your compiler supports templates, please use the files in the
+//       include/utl_tmpl and util/utl_tmpl directories instead of the
+//       files by the same names in the include and util directories.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(util, utl_strlist, "$Id$")
 
 // Constructor
 UTL_StrList::UTL_StrList(UTL_String *s, UTL_StrList *cdr)
-	   : UTL_List(cdr),
-	     pd_car_data(s)
+           : UTL_List(cdr),
+             pd_car_data(s)
 {
 }
 
@@ -153,12 +153,12 @@ UTL_StrList::destroy (void)
 
 // AST Dumping
 void
-UTL_StrList::dump(ostream &o)
+UTL_StrList::dump(ACE_OSTREAM_TYPE &o)
 {
-  char			      *s;
+  char                        *s;
   UTL_StrlistActiveIterator *i = new UTL_StrlistActiveIterator(this);
-  idl_bool		       first = I_TRUE;
-  idl_bool		       second = I_FALSE;
+  idl_bool                     first = I_TRUE;
+  idl_bool                     second = I_FALSE;
 
   while (!(i->is_done())) {
     if (!first)
@@ -169,9 +169,9 @@ UTL_StrList::dump(ostream &o)
     o << s;
     if (first) {
       if (strcmp(s, "::") != 0)
-	first = I_FALSE;
+        first = I_FALSE;
       else
-	second = I_TRUE;
+        second = I_TRUE;
     }
     i->next();
   }
@@ -188,7 +188,7 @@ UTL_StrList::dump(ostream &o)
  */
 
 UTL_StrlistActiveIterator::UTL_StrlistActiveIterator(UTL_StrList *s)
-			   : UTL_ListActiveIterator(s)
+                           : UTL_ListActiveIterator(s)
 {
 }
 

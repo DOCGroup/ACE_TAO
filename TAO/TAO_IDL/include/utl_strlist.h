@@ -101,7 +101,7 @@ public:
   virtual ~UTL_StrList (void);
 
   // AST Dumping
-  virtual void          dump(ostream &o);
+  virtual void          dump(ACE_OSTREAM_TYPE &o);
 
   // Other Operations
 
@@ -126,7 +126,7 @@ private:
 };
 
 // Active iterator for  UTL_StrList
-class TAO_IDL_FE_Export UTL_StrlistActiveIterator 
+class TAO_IDL_FE_Export UTL_StrlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:

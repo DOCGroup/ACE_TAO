@@ -1,3 +1,23 @@
+Fri Oct  5 17:42:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/include/utl_identifier.h:
+	* TAO_IDL/include/utl_idlist.h:
+	* TAO_IDL/include/utl_indenter.h:
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/include/utl_string.h:
+	* TAO_IDL/include/utl_strlist.h:
+	* TAO_IDL/include/utl_tmpl/utl_idlist.h:
+	* TAO_IDL/include/utl_tmpl/utl_strlist.h:
+	* TAO_IDL/util/utl_identifier.cpp:
+	* TAO_IDL/util/utl_idlist.cpp:
+	* TAO_IDL/util/utl_indenter.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/util/utl_string.cpp:
+	* TAO_IDL/util/utl_strlist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_strlist.cpp: Some more changes of
+	  ostream to ACE_OSTREAM_TYPE
+
 Fri Oct  5 16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:

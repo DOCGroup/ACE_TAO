@@ -98,7 +98,7 @@ public:
 
   // =AST Dumping.
 
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
   // =Other Operations

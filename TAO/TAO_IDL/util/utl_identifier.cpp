@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -66,8 +66,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // utl_identifier - Implementation of identifiers
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(util, utl_identifier, "$Id$")
 
@@ -101,7 +101,7 @@ Identifier::Identifier (const char *s)
                        0,
                        0);
 
-      if (str.find ("_cxx_") == 0 
+      if (str.find ("_cxx_") == 0
           || str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
         {
@@ -119,7 +119,7 @@ Identifier::Identifier (const char *s)
     }
 }
 
-Identifier::~Identifier (void) 
+Identifier::~Identifier (void)
 {
 }
 
@@ -146,7 +146,7 @@ Identifier::replace_string (const char * s)
 long
 Identifier::compare (Identifier *o)
 {
-  if (o == 0) 
+  if (o == 0)
     {
       return I_FALSE;
     };
@@ -210,9 +210,9 @@ Identifier::escaped (void) const
 
 // Dumping.
 void
-Identifier::dump (ostream &o)
+Identifier::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (this->pv_string == 0) 
+  if (this->pv_string == 0)
     {
       return;
     }
@@ -229,4 +229,3 @@ Identifier::destroy (void)
       this->pv_string = 0;
     }
 }
-

@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -56,8 +56,8 @@
 //
 // Implementation of a list of utl_string nodes
 
-#include	<idl.hh>
-#include	<idl_extern.hh>
+#include        <idl.hh>
+#include        <idl_extern.hh>
 
 ACE_RCSID(utl_tmpl, utl_idlist, "$Id$")
 
@@ -66,7 +66,7 @@ ACE_RCSID(utl_tmpl, utl_idlist, "$Id$")
  */
 
 UTL_IdList::UTL_IdList(Identifier *s, UTL_IdList *cdr)
-	  : UTL_List<UTL_IdList, Identifier>(s, cdr)
+          : UTL_List<UTL_IdList, Identifier>(s, cdr)
 {
 }
 
@@ -89,11 +89,11 @@ UTL_IdList::last_component()
 
 // AST Dumping
 void
-UTL_IdList::dump(ostream &o)
+UTL_IdList::dump(ACE_OSTREAM_TYPE &o)
 {
-  UTL_IdListActiveIterator	*i = new UTL_IdListActiveIterator(this);
-  long				first = I_TRUE;
-  long				second = I_FALSE;
+  UTL_IdListActiveIterator      *i = new UTL_IdListActiveIterator(this);
+  long                          first = I_TRUE;
+  long                          second = I_FALSE;
 
   while (!(i->is_done())) {
     if (!first)
@@ -103,9 +103,9 @@ UTL_IdList::dump(ostream &o)
     i->item()->dump(o);
     if (first) {
       if (strcmp(i->item()->get_string(), "::") != 0)
-	first = I_FALSE;
+        first = I_FALSE;
       else
-	second = I_TRUE;
+        second = I_TRUE;
     }
     i->next();
   }
@@ -122,7 +122,7 @@ UTL_IdList::dump(ostream &o)
  */
 
 UTL_IdListActiveIterator::UTL_IdListActiveIterator(UTL_IdList *s)
-			: UTL_ListActiveIterator<UTL_IdList, Identifier>(s)
+                        : UTL_ListActiveIterator<UTL_IdList, Identifier>(s)
 {
 }
 
