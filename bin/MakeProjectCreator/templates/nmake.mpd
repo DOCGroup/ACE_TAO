@@ -38,7 +38,7 @@ NULL=nul
 
 <%if(exename)%>
 OUTDIR=<%output_dir(".")%>
-INSTALLDIR=<%if(install)%><%install%>\<%endif%><%output_dir%>
+INSTALLDIR=<%if(install)%><%install%><%else%><%output_dir%><%endif%>
 <%endif%>
 <%if(type_is_static)%>
 OUTDIR=<%output_dir(".")%>
@@ -86,7 +86,6 @@ REALCLEAN : CLEAN
 <%if(install)%>
 "$(INSTALLDIR)" :
     if not exist "<%install%>/$(NULL)" mkdir "<%install%>"
-    if not exist "<%install%>/<%output_dir%>/$(NULL)" mkdir "<%install%>/<%output_dir%>"
 
 <%endif%>
 "$(OUTDIR)" :
