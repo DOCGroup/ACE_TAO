@@ -69,53 +69,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   os->gen_ifdef_macro (node->flat_name (), "");
 
-  // Global functions to allow non-defined forward declared interfaces
-  // access to some methods in the full definition.
-  *os << "ACE_INLINE " << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name () << "_duplicate (" << be_idt << be_idt_nl
-      << node->full_name () << "_ptr p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->full_name () << "::_duplicate (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << "ACE_INLINE void" << be_nl
-      << "tao_" << node->flat_name () << "_release (" << be_idt << be_idt_nl
-      << node->full_name () << "_ptr p" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "CORBA::release (p);" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << "ACE_INLINE " << node->full_name () <<  "_ptr" << be_nl
-      << "tao_" << node->flat_name () << "_nil (" << be_idt << be_idt_nl
-      << "void" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << "ACE_INLINE " << node->full_name () << "_ptr" << be_nl
-      << "tao_" << node->flat_name () << "_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object *p," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return " << node->full_name () << "::_narrow (p, ACE_TRY_ENV);" 
-      << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  *os << "ACE_INLINE CORBA::Object *" << be_nl
-      << "tao_" << node->flat_name () << "_upcast (" << be_idt << be_idt_nl
-      << "void *src" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << node->full_name () << " **tmp =" << be_idt_nl
-      << "ACE_static_cast (" << node->full_name () << " **, src);" 
-      << be_uidt_nl
-      << "return *tmp;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   // Generate the constructor from stub and servant.
   node->gen_stub_ctor (os);
 

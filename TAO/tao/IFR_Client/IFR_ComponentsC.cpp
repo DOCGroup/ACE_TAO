@@ -2027,6 +2027,49 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FinderDefSeq, &_tc_TAO_tc_IR_FinderDefSeq)
 TAO_NAMESPACE_END
 
+IR::ComponentRepository_ptr
+tao_IR_ComponentRepository_duplicate (
+    IR::ComponentRepository_ptr p
+  )
+{
+  return IR::ComponentRepository::_duplicate (p);
+}
+
+void
+tao_IR_ComponentRepository_release (
+    IR::ComponentRepository_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::ComponentRepository_ptr
+tao_IR_ComponentRepository_nil (
+    void
+  )
+{
+  return IR::ComponentRepository::_nil ();
+}
+
+IR::ComponentRepository_ptr
+tao_IR_ComponentRepository_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::ComponentRepository::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_ComponentRepository_upcast (
+    void *src
+  )
+{
+  IR::ComponentRepository **tmp =
+    ACE_static_cast (IR::ComponentRepository **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::ComponentRepository_var
 // *************************************************************
@@ -3207,6 +3250,49 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ComponentRepository, &_tc_TAO_tc_IR_ComponentRepository)
 TAO_NAMESPACE_END
 
+IR::ProvidesDef_ptr
+tao_IR_ProvidesDef_duplicate (
+    IR::ProvidesDef_ptr p
+  )
+{
+  return IR::ProvidesDef::_duplicate (p);
+}
+
+void
+tao_IR_ProvidesDef_release (
+    IR::ProvidesDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::ProvidesDef_ptr
+tao_IR_ProvidesDef_nil (
+    void
+  )
+{
+  return IR::ProvidesDef::_nil ();
+}
+
+IR::ProvidesDef_ptr
+tao_IR_ProvidesDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::ProvidesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_ProvidesDef_upcast (
+    void *src
+  )
+{
+  IR::ProvidesDef **tmp =
+    ACE_static_cast (IR::ProvidesDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::ProvidesDef_var
 // *************************************************************
@@ -4074,6 +4160,49 @@ void IR::ProvidesDescription::_tao_any_destructor (void *x)
 {
   ProvidesDescription *tmp = ACE_static_cast (ProvidesDescription*,x);
   delete tmp;
+}
+
+IR::UsesDef_ptr
+tao_IR_UsesDef_duplicate (
+    IR::UsesDef_ptr p
+  )
+{
+  return IR::UsesDef::_duplicate (p);
+}
+
+void
+tao_IR_UsesDef_release (
+    IR::UsesDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::UsesDef_ptr
+tao_IR_UsesDef_nil (
+    void
+  )
+{
+  return IR::UsesDef::_nil ();
+}
+
+IR::UsesDef_ptr
+tao_IR_UsesDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::UsesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_UsesDef_upcast (
+    void *src
+  )
+{
+  IR::UsesDef **tmp =
+    ACE_static_cast (IR::UsesDef **, src);
+  return *tmp;
 }
 
 // *************************************************************
@@ -5759,6 +5888,49 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UsesDescSeq, &_tc_TAO_tc_IR_UsesDescSeq)
 TAO_NAMESPACE_END
 
+IR::EventDef_ptr
+tao_IR_EventDef_duplicate (
+    IR::EventDef_ptr p
+  )
+{
+  return IR::EventDef::_duplicate (p);
+}
+
+void
+tao_IR_EventDef_release (
+    IR::EventDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::EventDef_ptr
+tao_IR_EventDef_nil (
+    void
+  )
+{
+  return IR::EventDef::_nil ();
+}
+
+IR::EventDef_ptr
+tao_IR_EventDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::EventDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_EventDef_upcast (
+    void *src
+  )
+{
+  IR::EventDef **tmp =
+    ACE_static_cast (IR::EventDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::EventDef_var
 // *************************************************************
@@ -6915,6 +7087,49 @@ void IR::EventDescription::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+IR::EmitsDef_ptr
+tao_IR_EmitsDef_duplicate (
+    IR::EmitsDef_ptr p
+  )
+{
+  return IR::EmitsDef::_duplicate (p);
+}
+
+void
+tao_IR_EmitsDef_release (
+    IR::EmitsDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::EmitsDef_ptr
+tao_IR_EmitsDef_nil (
+    void
+  )
+{
+  return IR::EmitsDef::_nil ();
+}
+
+IR::EmitsDef_ptr
+tao_IR_EmitsDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::EmitsDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_EmitsDef_upcast (
+    void *src
+  )
+{
+  IR::EmitsDef **tmp =
+    ACE_static_cast (IR::EmitsDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::EmitsDef_var
 // *************************************************************
@@ -7368,6 +7583,49 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_EmitsDef, &_tc_TAO_tc_IR_EmitsDef)
 TAO_NAMESPACE_END
+
+IR::PublishesDef_ptr
+tao_IR_PublishesDef_duplicate (
+    IR::PublishesDef_ptr p
+  )
+{
+  return IR::PublishesDef::_duplicate (p);
+}
+
+void
+tao_IR_PublishesDef_release (
+    IR::PublishesDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::PublishesDef_ptr
+tao_IR_PublishesDef_nil (
+    void
+  )
+{
+  return IR::PublishesDef::_nil ();
+}
+
+IR::PublishesDef_ptr
+tao_IR_PublishesDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::PublishesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_PublishesDef_upcast (
+    void *src
+  )
+{
+  IR::PublishesDef **tmp =
+    ACE_static_cast (IR::PublishesDef **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class IR::PublishesDef_var
@@ -7825,6 +8083,49 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PublishesDef, &_tc_TAO_tc_IR_PublishesDef)
 TAO_NAMESPACE_END
 
+IR::ConsumesDef_ptr
+tao_IR_ConsumesDef_duplicate (
+    IR::ConsumesDef_ptr p
+  )
+{
+  return IR::ConsumesDef::_duplicate (p);
+}
+
+void
+tao_IR_ConsumesDef_release (
+    IR::ConsumesDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::ConsumesDef_ptr
+tao_IR_ConsumesDef_nil (
+    void
+  )
+{
+  return IR::ConsumesDef::_nil ();
+}
+
+IR::ConsumesDef_ptr
+tao_IR_ConsumesDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::ConsumesDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_ConsumesDef_upcast (
+    void *src
+  )
+{
+  IR::ConsumesDef **tmp =
+    ACE_static_cast (IR::ConsumesDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::ConsumesDef_var
 // *************************************************************
@@ -8279,6 +8580,49 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ConsumesDef, &_tc_TAO_tc_IR_ConsumesDef)
 TAO_NAMESPACE_END
+
+IR::ComponentDef_ptr
+tao_IR_ComponentDef_duplicate (
+    IR::ComponentDef_ptr p
+  )
+{
+  return IR::ComponentDef::_duplicate (p);
+}
+
+void
+tao_IR_ComponentDef_release (
+    IR::ComponentDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::ComponentDef_ptr
+tao_IR_ComponentDef_nil (
+    void
+  )
+{
+  return IR::ComponentDef::_nil ();
+}
+
+IR::ComponentDef_ptr
+tao_IR_ComponentDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::ComponentDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_ComponentDef_upcast (
+    void *src
+  )
+{
+  IR::ComponentDef **tmp =
+    ACE_static_cast (IR::ComponentDef **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class IR::ComponentDef_var
@@ -13450,6 +13794,49 @@ void IR::ComponentDescription::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+IR::PrimaryKeyDef_ptr
+tao_IR_PrimaryKeyDef_duplicate (
+    IR::PrimaryKeyDef_ptr p
+  )
+{
+  return IR::PrimaryKeyDef::_duplicate (p);
+}
+
+void
+tao_IR_PrimaryKeyDef_release (
+    IR::PrimaryKeyDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::PrimaryKeyDef_ptr
+tao_IR_PrimaryKeyDef_nil (
+    void
+  )
+{
+  return IR::PrimaryKeyDef::_nil ();
+}
+
+IR::PrimaryKeyDef_ptr
+tao_IR_PrimaryKeyDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::PrimaryKeyDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_PrimaryKeyDef_upcast (
+    void *src
+  )
+{
+  IR::PrimaryKeyDef **tmp =
+    ACE_static_cast (IR::PrimaryKeyDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::PrimaryKeyDef_var
 // *************************************************************
@@ -14613,6 +15000,49 @@ void IR::PrimaryKeyDescription::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+IR::FactoryDef_ptr
+tao_IR_FactoryDef_duplicate (
+    IR::FactoryDef_ptr p
+  )
+{
+  return IR::FactoryDef::_duplicate (p);
+}
+
+void
+tao_IR_FactoryDef_release (
+    IR::FactoryDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::FactoryDef_ptr
+tao_IR_FactoryDef_nil (
+    void
+  )
+{
+  return IR::FactoryDef::_nil ();
+}
+
+IR::FactoryDef_ptr
+tao_IR_FactoryDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::FactoryDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_FactoryDef_upcast (
+    void *src
+  )
+{
+  IR::FactoryDef **tmp =
+    ACE_static_cast (IR::FactoryDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::FactoryDef_var
 // *************************************************************
@@ -15068,6 +15498,49 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FactoryDef, &_tc_TAO_tc_IR_FactoryDef)
 TAO_NAMESPACE_END
 
+IR::FinderDef_ptr
+tao_IR_FinderDef_duplicate (
+    IR::FinderDef_ptr p
+  )
+{
+  return IR::FinderDef::_duplicate (p);
+}
+
+void
+tao_IR_FinderDef_release (
+    IR::FinderDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::FinderDef_ptr
+tao_IR_FinderDef_nil (
+    void
+  )
+{
+  return IR::FinderDef::_nil ();
+}
+
+IR::FinderDef_ptr
+tao_IR_FinderDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::FinderDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_FinderDef_upcast (
+    void *src
+  )
+{
+  IR::FinderDef **tmp =
+    ACE_static_cast (IR::FinderDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class IR::FinderDef_var
 // *************************************************************
@@ -15522,6 +15995,49 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FinderDef, &_tc_TAO_tc_IR_FinderDef)
 TAO_NAMESPACE_END
+
+IR::HomeDef_ptr
+tao_IR_HomeDef_duplicate (
+    IR::HomeDef_ptr p
+  )
+{
+  return IR::HomeDef::_duplicate (p);
+}
+
+void
+tao_IR_HomeDef_release (
+    IR::HomeDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IR::HomeDef_ptr
+tao_IR_HomeDef_nil (
+    void
+  )
+{
+  return IR::HomeDef::_nil ();
+}
+
+IR::HomeDef_ptr
+tao_IR_HomeDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IR::HomeDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IR_HomeDef_upcast (
+    void *src
+  )
+{
+  IR::HomeDef **tmp =
+    ACE_static_cast (IR::HomeDef **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class IR::HomeDef_var

@@ -1,5 +1,5 @@
---- orig/IFR_BaseC.i	Mon Apr 23 20:19:29 2001
-+++ IFR_BaseC.i	Mon Apr 23 19:58:19 2001
+--- orig/IFR_BaseC.i	Tue Apr 24 23:25:42 2001
++++ IFR_BaseC.i	Tue Apr 24 22:48:27 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //

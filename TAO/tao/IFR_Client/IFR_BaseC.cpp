@@ -35,6 +35,49 @@
 #include "IFR_BaseC.i"
 #endif /* !defined INLINE */
 
+CORBA_IRObject_ptr
+tao_CORBA_IRObject_duplicate (
+    CORBA_IRObject_ptr p
+  )
+{
+  return CORBA_IRObject::_duplicate (p);
+}
+
+void
+tao_CORBA_IRObject_release (
+    CORBA_IRObject_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_IRObject_ptr
+tao_CORBA_IRObject_nil (
+    void
+  )
+{
+  return CORBA_IRObject::_nil ();
+}
+
+CORBA_IRObject_ptr
+tao_CORBA_IRObject_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_IRObject::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_IRObject_upcast (
+    void *src
+  )
+{
+  CORBA_IRObject **tmp =
+    ACE_static_cast (CORBA_IRObject **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class CORBA_IRObject_var
 // *************************************************************
@@ -923,6 +966,49 @@ void CORBA_IRObject::destroy (
       this,
       ACE_TRY_ENV
     );
+}
+
+CORBA_Contained_ptr
+tao_CORBA_Contained_duplicate (
+    CORBA_Contained_ptr p
+  )
+{
+  return CORBA_Contained::_duplicate (p);
+}
+
+void
+tao_CORBA_Contained_release (
+    CORBA_Contained_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_Contained_ptr
+tao_CORBA_Contained_nil (
+    void
+  )
+{
+  return CORBA_Contained::_nil ();
+}
+
+CORBA_Contained_ptr
+tao_CORBA_Contained_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_Contained::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_Contained_upcast (
+    void *src
+  )
+{
+  CORBA_Contained **tmp =
+    ACE_static_cast (CORBA_Contained **, src);
+  return *tmp;
 }
 
 // *************************************************************
@@ -5519,6 +5605,49 @@ void CORBA_EnumMemberSeq::_tao_any_destructor (void *x)
 
 
 #endif /* end #if !defined */
+
+CORBA_Container_ptr
+tao_CORBA_Container_duplicate (
+    CORBA_Container_ptr p
+  )
+{
+  return CORBA_Container::_duplicate (p);
+}
+
+void
+tao_CORBA_Container_release (
+    CORBA_Container_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_Container_ptr
+tao_CORBA_Container_nil (
+    void
+  )
+{
+  return CORBA_Container::_nil ();
+}
+
+CORBA_Container_ptr
+tao_CORBA_Container_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_Container::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_Container_upcast (
+    void *src
+  )
+{
+  CORBA_Container **tmp =
+    ACE_static_cast (CORBA_Container **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class CORBA_Container_var
@@ -12193,6 +12322,49 @@ CORBA_LocalInterfaceDef_ptr CORBA_Container::create_local_interface (
     );
 }
 
+CORBA_IDLType_ptr
+tao_CORBA_IDLType_duplicate (
+    CORBA_IDLType_ptr p
+  )
+{
+  return CORBA_IDLType::_duplicate (p);
+}
+
+void
+tao_CORBA_IDLType_release (
+    CORBA_IDLType_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_IDLType_ptr
+tao_CORBA_IDLType_nil (
+    void
+  )
+{
+  return CORBA_IDLType::_nil ();
+}
+
+CORBA_IDLType_ptr
+tao_CORBA_IDLType_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_IDLType::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_IDLType_upcast (
+    void *src
+  )
+{
+  CORBA_IDLType **tmp =
+    ACE_static_cast (CORBA_IDLType **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class CORBA_IDLType_var
 // *************************************************************
@@ -12859,6 +13031,49 @@ CORBA::TypeCode_ptr CORBA_IDLType::type (
       this,
       ACE_TRY_ENV
     );
+}
+
+CORBA_TypedefDef_ptr
+tao_CORBA_TypedefDef_duplicate (
+    CORBA_TypedefDef_ptr p
+  )
+{
+  return CORBA_TypedefDef::_duplicate (p);
+}
+
+void
+tao_CORBA_TypedefDef_release (
+    CORBA_TypedefDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_TypedefDef_ptr
+tao_CORBA_TypedefDef_nil (
+    void
+  )
+{
+  return CORBA_TypedefDef::_nil ();
+}
+
+CORBA_TypedefDef_ptr
+tao_CORBA_TypedefDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_TypedefDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_TypedefDef_upcast (
+    void *src
+  )
+{
+  CORBA_TypedefDef **tmp =
+    ACE_static_cast (CORBA_TypedefDef **, src);
+  return *tmp;
 }
 
 // *************************************************************

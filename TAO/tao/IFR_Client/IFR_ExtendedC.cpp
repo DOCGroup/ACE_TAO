@@ -34,6 +34,49 @@
 #include "IFR_ExtendedC.i"
 #endif /* !defined INLINE */
 
+CORBA_FixedDef_ptr
+tao_CORBA_FixedDef_duplicate (
+    CORBA_FixedDef_ptr p
+  )
+{
+  return CORBA_FixedDef::_duplicate (p);
+}
+
+void
+tao_CORBA_FixedDef_release (
+    CORBA_FixedDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_FixedDef_ptr
+tao_CORBA_FixedDef_nil (
+    void
+  )
+{
+  return CORBA_FixedDef::_nil ();
+}
+
+CORBA_FixedDef_ptr
+tao_CORBA_FixedDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_FixedDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_FixedDef_upcast (
+    void *src
+  )
+{
+  CORBA_FixedDef **tmp =
+    ACE_static_cast (CORBA_FixedDef **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Operations for class CORBA_FixedDef_var
 // *************************************************************
@@ -1608,6 +1651,49 @@ void CORBA_ValueMemberSeq::_tao_any_destructor (void *x)
 
 
 #endif /* end #if !defined */
+
+CORBA_ValueMemberDef_ptr
+tao_CORBA_ValueMemberDef_duplicate (
+    CORBA_ValueMemberDef_ptr p
+  )
+{
+  return CORBA_ValueMemberDef::_duplicate (p);
+}
+
+void
+tao_CORBA_ValueMemberDef_release (
+    CORBA_ValueMemberDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_ValueMemberDef_ptr
+tao_CORBA_ValueMemberDef_nil (
+    void
+  )
+{
+  return CORBA_ValueMemberDef::_nil ();
+}
+
+CORBA_ValueMemberDef_ptr
+tao_CORBA_ValueMemberDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_ValueMemberDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_ValueMemberDef_upcast (
+    void *src
+  )
+{
+  CORBA_ValueMemberDef **tmp =
+    ACE_static_cast (CORBA_ValueMemberDef **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class CORBA_ValueMemberDef_var
@@ -3353,6 +3439,49 @@ void CORBA_ValueMemberDef::access (
       access,
       ACE_TRY_ENV
     );
+}
+
+CORBA_ValueDef_ptr
+tao_CORBA_ValueDef_duplicate (
+    CORBA_ValueDef_ptr p
+  )
+{
+  return CORBA_ValueDef::_duplicate (p);
+}
+
+void
+tao_CORBA_ValueDef_release (
+    CORBA_ValueDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_ValueDef_ptr
+tao_CORBA_ValueDef_nil (
+    void
+  )
+{
+  return CORBA_ValueDef::_nil ();
+}
+
+CORBA_ValueDef_ptr
+tao_CORBA_ValueDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_ValueDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_ValueDef_upcast (
+    void *src
+  )
+{
+  CORBA_ValueDef **tmp =
+    ACE_static_cast (CORBA_ValueDef **, src);
+  return *tmp;
 }
 
 // *************************************************************
@@ -10577,6 +10706,49 @@ void CORBA_ValueDescription::_tao_any_destructor (void *x)
 {
   CORBA_ValueDescription *tmp = ACE_static_cast (CORBA_ValueDescription*,x);
   delete tmp;
+}
+
+CORBA_ValueBoxDef_ptr
+tao_CORBA_ValueBoxDef_duplicate (
+    CORBA_ValueBoxDef_ptr p
+  )
+{
+  return CORBA_ValueBoxDef::_duplicate (p);
+}
+
+void
+tao_CORBA_ValueBoxDef_release (
+    CORBA_ValueBoxDef_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_ValueBoxDef_ptr
+tao_CORBA_ValueBoxDef_nil (
+    void
+  )
+{
+  return CORBA_ValueBoxDef::_nil ();
+}
+
+CORBA_ValueBoxDef_ptr
+tao_CORBA_ValueBoxDef_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_ValueBoxDef::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_ValueBoxDef_upcast (
+    void *src
+  )
+{
+  CORBA_ValueBoxDef **tmp =
+    ACE_static_cast (CORBA_ValueBoxDef **, src);
+  return *tmp;
 }
 
 // *************************************************************

@@ -46,9 +46,9 @@
 //   If this fails for some reason, the files must be patched
 //   by hand, and the diff files regenerated with
 //
-//      diff -wbu orig/IFR_BaseC.h IRR_BaseC.h > diffs/IFR_BaseC.h.diff
-//      diff -wbu orig/IFR_BaseC.i IRR_BaseC.i > diffs/IFR_BaseC.i.diff
-//      diff -wbu orig/IFR_BaseC.cpp IRR_BaseC.cpp > diffs/IFR_BaseC.cpp.diff
+//      diff -wbu orig/IFR_BaseC.h IFR_BaseC.h > diffs/IFR_BaseC.h.diff
+//      diff -wbu orig/IFR_BaseC.i IFR_BaseC.i > diffs/IFR_BaseC.i.diff
+//      diff -wbu orig/IFR_BaseC.cpp IFR_BaseC.cpp > diffs/IFR_BaseC.cpp.diff
 //
 //   5. Restore IFR_Base.pidl.
 //

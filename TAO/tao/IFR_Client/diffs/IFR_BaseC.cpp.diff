@@ -1,5 +1,5 @@
---- orig/IFR_BaseC.cpp	Mon Apr 23 20:19:29 2001
-+++ IFR_BaseC.cpp	Mon Apr 23 19:56:56 2001
+--- orig/IFR_BaseC.cpp	Tue Apr 24 23:25:42 2001
++++ IFR_BaseC.cpp	Tue Apr 24 22:49:23 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -173,10 +173,10 @@
 -TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DefinitionKind, &_tc_TAO_tc_CORBA_DefinitionKind)
 -TAO_NAMESPACE_END
 -
- // *************************************************************
- // Operations for class CORBA_IRObject_var
- // *************************************************************
-@@ -944,7 +795,7 @@
+ CORBA_IRObject_ptr
+ tao_CORBA_IRObject_duplicate (
+     CORBA_IRObject_ptr p
+@@ -987,7 +838,7 @@
      return CORBA_IRObject::_nil ();
    if (! obj->_is_local ())
      {
@@ -185,7 +185,7 @@
        ACE_CHECK_RETURN (CORBA_IRObject::_nil ());
        if (is_a == 0)
          return CORBA_IRObject::_nil ();
-@@ -1012,7 +863,7 @@
+@@ -1055,7 +906,7 @@
  CORBA::Boolean CORBA_IRObject::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
  {
    if (
@@ -194,7 +194,7 @@
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
    return 1; // success using local knowledge
    else
-@@ -1037,7 +888,7 @@
+@@ -1080,7 +931,7 @@
  
  const char* CORBA_IRObject::_interface_repository_id (void) const
  {
@@ -203,7 +203,7 @@
  }
  
  CORBA::DefinitionKind CORBA_IRObject::def_kind (
-@@ -1074,36 +925,6 @@
+@@ -1117,36 +968,6 @@
      );
  }
  
@@ -237,10 +237,10 @@
 -CORBA::TypeCode_ptr _tc_CORBA_IRObject =
 -  &_tc_TAO_tc_CORBA_IRObject;
 -
- // *************************************************************
- // Operations for class CORBA_Contained_var
- // *************************************************************
-@@ -4161,7 +3982,7 @@
+ CORBA_Contained_ptr
+ tao_CORBA_Contained_duplicate (
+     CORBA_Contained_ptr p
+@@ -4247,7 +4068,7 @@
      return CORBA_Contained::_nil ();
    if (! obj->_is_local ())
      {
@@ -249,7 +249,7 @@
        ACE_CHECK_RETURN (CORBA_Contained::_nil ());
        if (is_a == 0)
          return CORBA_Contained::_nil ();
-@@ -4229,8 +4050,8 @@
+@@ -4315,8 +4136,8 @@
  CORBA::Boolean CORBA_Contained::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
  {
    if (
@@ -260,7 +260,7 @@
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
    return 1; // success using local knowledge
    else
-@@ -4267,7 +4088,7 @@
+@@ -4353,7 +4174,7 @@
  
  const char* CORBA_Contained::_interface_repository_id (void) const
  {
@@ -269,7 +269,7 @@
  }
  
  char * CORBA_Contained::id (
-@@ -4437,13 +4258,13 @@
+@@ -4523,13 +4344,13 @@
    ACE_NTOHL (0x6f6d672e), 
    ACE_NTOHL (0x6f72672f), 
    ACE_NTOHL (0x434f5242), 
@@ -285,7 +285,7 @@
    12,
    ACE_NTOHL (0x44657363), 
    ACE_NTOHL (0x72697074), 
-@@ -4650,37 +4471,6 @@
+@@ -4736,37 +4557,6 @@
      );
  }
  
@@ -323,7 +323,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    
  #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CS_)
-@@ -4821,62 +4611,6 @@
+@@ -4907,62 +4697,6 @@
  
  #endif /* end #if !defined */
  
@@ -386,7 +386,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    
  #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CS_)
-@@ -5016,66 +4750,6 @@
+@@ -5102,66 +4836,6 @@
  
  #endif /* end #if !defined */
  
@@ -453,7 +453,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    
  #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CS_)
-@@ -5215,62 +4889,6 @@
+@@ -5301,62 +4975,6 @@
  
  #endif /* end #if !defined */
  
@@ -516,7 +516,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    
  #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CS_)
-@@ -5410,74 +5028,6 @@
+@@ -5496,74 +5114,6 @@
  
  #endif /* end #if !defined */
  
@@ -591,7 +591,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    
  #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CS_)
-@@ -5617,134 +5167,6 @@
+@@ -5703,134 +5253,6 @@
  
  #endif /* end #if !defined */
  
@@ -726,18 +726,10 @@
  void CORBA_StructMember::_tao_any_destructor (void *x)
  {
    CORBA_StructMember *tmp = ACE_static_cast (CORBA_StructMember*,x);
-@@ -5834,231 +5256,18 @@
- #else /* TAO_USE_SEQUENCE_TEMPLATES */
-   TAO_Unbounded_Sequence<CORBA_StructMember>
- #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-- (seq)
--{}
--CORBA_StructMemberSeq::~CORBA_StructMemberSeq (void) // dtor
--{}
--void CORBA_StructMemberSeq::_tao_any_destructor (void *x)
--{
--  CORBA_StructMemberSeq *tmp = ACE_static_cast (CORBA_StructMemberSeq*,x);
--  delete tmp;
+@@ -5928,223 +5350,10 @@
+ {
+   CORBA_StructMemberSeq *tmp = ACE_static_cast (CORBA_StructMemberSeq*,x);
+   delete tmp;
 -}
 -
 -
@@ -944,16 +936,7 @@
 -  CORBA::tk_string, 
 -  0U, // string length
 -};
-+ (seq)
-+{}
-+CORBA_StructMemberSeq::~CORBA_StructMemberSeq (void) // dtor
-+{}
-+void CORBA_StructMemberSeq::_tao_any_destructor (void *x)
-+{
-+  CORBA_StructMemberSeq *tmp = ACE_static_cast (CORBA_StructMemberSeq*,x);
-+  delete tmp;
-+}
- 
+-
 -static CORBA::TypeCode _tc_TAO_tc_CORBA_Initializer (
 -    CORBA::tk_struct,
 -    sizeof (_oc_CORBA_Initializer),
@@ -961,6 +944,8 @@
 -    0,
 -    sizeof (CORBA_Initializer)
 -  );
++}
++
  
 -CORBA::TypeCode_ptr _tc_CORBA_Initializer =
 -  &_tc_TAO_tc_CORBA_Initializer;
@@ -968,7 +953,7 @@
  
  void CORBA_Initializer::_tao_any_destructor (void *x)
  {
-@@ -6162,224 +5371,6 @@
+@@ -6248,224 +5457,6 @@
  
  #endif /* end #if !defined */
  
@@ -1193,7 +1178,7 @@
  void CORBA_UnionMember::_tao_any_destructor (void *x)
  {
    CORBA_UnionMember *tmp = ACE_static_cast (CORBA_UnionMember*,x);
-@@ -6482,104 +5473,6 @@
+@@ -6568,104 +5559,6 @@
  
  #endif /* end #if !defined */
  
@@ -1298,7 +1283,7 @@
  #if !defined (_CORBA_ENUMMEMBERSEQ_CS_)
  #define _CORBA_ENUMMEMBERSEQ_CS_
  
-@@ -6627,45 +5520,6 @@
+@@ -6713,45 +5606,6 @@
  
  #endif /* end #if !defined */
  
@@ -1341,10 +1326,10 @@
 -CORBA::TypeCode_ptr _tc_CORBA_EnumMemberSeq =
 -  &_tc_TAO_tc_CORBA_EnumMemberSeq;
 -
- // *************************************************************
- // Operations for class CORBA_Container_var
- // *************************************************************
-@@ -12280,7 +11134,7 @@
+ CORBA_Container_ptr
+ tao_CORBA_Container_duplicate (
+     CORBA_Container_ptr p
+@@ -12409,7 +11263,7 @@
      return CORBA_Container::_nil ();
    if (! obj->_is_local ())
      {
@@ -1353,7 +1338,7 @@
        ACE_CHECK_RETURN (CORBA_Container::_nil ());
        if (is_a == 0)
          return CORBA_Container::_nil ();
-@@ -12348,8 +11202,8 @@
+@@ -12477,8 +11331,8 @@
  CORBA::Boolean CORBA_Container::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
  {
    if (
@@ -1364,7 +1349,7 @@
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
    return 1; // success using local knowledge
    else
-@@ -12386,7 +11240,7 @@
+@@ -12515,7 +11369,7 @@
  
  const char* CORBA_Container::_interface_repository_id (void) const
  {
@@ -1373,7 +1358,7 @@
  }
  
  CORBA_Contained_ptr CORBA_Container::lookup (
-@@ -12462,13 +11316,13 @@
+@@ -12591,13 +11445,13 @@
    ACE_NTOHL (0x6f6d672e), 
    ACE_NTOHL (0x6f72672f), 
    ACE_NTOHL (0x434f5242), 
@@ -1389,7 +1374,7 @@
    12,
    ACE_NTOHL (0x44657363), 
    ACE_NTOHL (0x72697074), 
-@@ -12481,22 +11335,21 @@
+@@ -12610,22 +11464,21 @@
    ACE_NTOHL (0x6a656374), 
    ACE_NTOHL (0x0),  // name = contained_object
    CORBA::tk_objref, // typecode kind
@@ -1419,7 +1404,7 @@
  
    5,
    ACE_NTOHL (0x6b696e64), 
-@@ -12763,37 +11616,37 @@
+@@ -12892,37 +11745,37 @@
    ACE_NTOHL (0x6f6d672e), 
    ACE_NTOHL (0x6f72672f), 
    ACE_NTOHL (0x434f5242), 
@@ -1463,7 +1448,7 @@
        12,
        ACE_NTOHL (0x44657363), 
        ACE_NTOHL (0x72697074), 
-@@ -12806,22 +11659,21 @@
+@@ -12935,22 +11788,21 @@
        ACE_NTOHL (0x6a656374), 
        ACE_NTOHL (0x0),  // name = contained_object
        CORBA::tk_objref, // typecode kind
@@ -1493,7 +1478,7 @@
  
        5,
        ACE_NTOHL (0x6b696e64), 
-@@ -13341,36 +12193,6 @@
+@@ -13470,36 +12322,6 @@
      );
  }
  
@@ -1527,10 +1512,10 @@
 -CORBA::TypeCode_ptr _tc_CORBA_Container =
 -  &_tc_TAO_tc_CORBA_Container;
 -
- // *************************************************************
- // Operations for class CORBA_IDLType_var
- // *************************************************************
-@@ -13913,7 +12735,7 @@
+ CORBA_IDLType_ptr
+ tao_CORBA_IDLType_duplicate (
+     CORBA_IDLType_ptr p
+@@ -14085,7 +12907,7 @@
      return CORBA_IDLType::_nil ();
    if (! obj->_is_local ())
      {
@@ -1539,7 +1524,7 @@
        ACE_CHECK_RETURN (CORBA_IDLType::_nil ());
        if (is_a == 0)
          return CORBA_IDLType::_nil ();
-@@ -13981,8 +12803,8 @@
+@@ -14153,8 +12975,8 @@
  CORBA::Boolean CORBA_IDLType::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
  {
    if (
@@ -1550,7 +1535,7 @@
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
    return 1; // success using local knowledge
    else
-@@ -14019,7 +12841,7 @@
+@@ -14191,7 +13013,7 @@
  
  const char* CORBA_IDLType::_interface_repository_id (void) const
  {
@@ -1559,7 +1544,7 @@
  }
  
  CORBA::TypeCode_ptr CORBA_IDLType::type (
-@@ -14039,36 +12861,6 @@
+@@ -14211,36 +13033,6 @@
      );
  }
  
@@ -1593,10 +1578,10 @@
 -CORBA::TypeCode_ptr _tc_CORBA_IDLType =
 -  &_tc_TAO_tc_CORBA_IDLType;
 -
- // *************************************************************
- // Operations for class CORBA_TypedefDef_var
- // *************************************************************
-@@ -14360,7 +13152,7 @@
+ CORBA_TypedefDef_ptr
+ tao_CORBA_TypedefDef_duplicate (
+     CORBA_TypedefDef_ptr p
+@@ -14575,7 +13367,7 @@
      return CORBA_TypedefDef::_nil ();
    if (! obj->_is_local ())
      {
@@ -1605,7 +1590,7 @@
        ACE_CHECK_RETURN (CORBA_TypedefDef::_nil ());
        if (is_a == 0)
          return CORBA_TypedefDef::_nil ();
-@@ -14428,10 +13220,10 @@
+@@ -14643,10 +13435,10 @@
  CORBA::Boolean CORBA_TypedefDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
  {
    if (
@@ -1620,7 +1605,7 @@
      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
    return 1; // success using local knowledge
    else
-@@ -14492,101 +13284,9 @@
+@@ -14707,101 +13499,9 @@
  
  const char* CORBA_TypedefDef::_interface_repository_id (void) const
  {
@@ -1723,7 +1708,7 @@
  void CORBA_TypeDescription::_tao_any_destructor (void *x)
  {
    CORBA_TypeDescription *tmp = ACE_static_cast (CORBA_TypeDescription*,x);
-@@ -14639,7 +13339,7 @@
+@@ -14854,7 +13554,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1732,7 +1717,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin (),
          1,
-@@ -14656,7 +13356,7 @@
+@@ -14871,7 +13571,7 @@
      _tao_elem = CORBA_IRObject::_nil ();
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1741,7 +1726,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -14669,7 +13369,7 @@
+@@ -14884,7 +13584,7 @@
      if (stream >> _tao_elem)
      {
        ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1750,7 +1735,7 @@
            1,
            _tao_elem,
            CORBA_IRObject::_tao_any_destructor
-@@ -14700,7 +13400,7 @@
+@@ -14915,7 +13615,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1759,7 +1744,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin (),
          1,
-@@ -14717,7 +13417,7 @@
+@@ -14932,7 +13632,7 @@
      _tao_elem = CORBA_Contained::_nil ();
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1768,7 +1753,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -14730,7 +13430,7 @@
+@@ -14945,7 +13645,7 @@
      if (stream >> _tao_elem)
      {
        ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1777,7 +1762,7 @@
            1,
            _tao_elem,
            CORBA_Contained::_tao_any_destructor
-@@ -14847,7 +13547,7 @@
+@@ -15062,7 +13762,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1786,7 +1771,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -14859,7 +13559,7 @@
+@@ -15074,7 +13774,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -1795,7 +1780,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -14883,7 +13583,7 @@
+@@ -15098,7 +13798,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1804,7 +1789,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -14908,7 +13608,7 @@
+@@ -15123,7 +13823,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1813,7 +1798,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_ContainedSeq::_tao_any_destructor
-@@ -14938,7 +13638,7 @@
+@@ -15153,7 +13853,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1822,7 +1807,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -14950,7 +13650,7 @@
+@@ -15165,7 +13865,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -1831,7 +1816,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -14974,7 +13674,7 @@
+@@ -15189,7 +13889,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1840,7 +1825,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -14999,7 +13699,7 @@
+@@ -15214,7 +13914,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1849,7 +1834,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_InterfaceDefSeq::_tao_any_destructor
-@@ -15029,7 +13729,7 @@
+@@ -15244,7 +13944,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1858,7 +1843,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15041,7 +13741,7 @@
+@@ -15256,7 +13956,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -1867,7 +1852,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15065,7 +13765,7 @@
+@@ -15280,7 +13980,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1876,7 +1861,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15090,7 +13790,7 @@
+@@ -15305,7 +14005,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1885,7 +1870,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_ValueDefSeq::_tao_any_destructor
-@@ -15120,7 +13820,7 @@
+@@ -15335,7 +14035,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1894,7 +1879,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15132,7 +13832,7 @@
+@@ -15347,7 +14047,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -1903,7 +1888,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15156,7 +13856,7 @@
+@@ -15371,7 +14071,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1912,7 +1897,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15181,7 +13881,7 @@
+@@ -15396,7 +14096,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1921,7 +1906,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_AbstractInterfaceDefSeq::_tao_any_destructor
-@@ -15211,7 +13911,7 @@
+@@ -15426,7 +14126,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -1930,7 +1915,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15223,7 +13923,7 @@
+@@ -15438,7 +14138,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -1939,7 +1924,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15247,7 +13947,7 @@
+@@ -15462,7 +14162,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1948,7 +1933,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15272,7 +13972,7 @@
+@@ -15487,7 +14187,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1957,7 +1942,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_LocalInterfaceDefSeq::_tao_any_destructor
-@@ -15298,7 +13998,7 @@
+@@ -15513,7 +14213,7 @@
    TAO_OutputCDR stream;
    stream << _tao_elem;
    _tao_any._tao_replace (
@@ -1966,7 +1951,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin ()
      );
-@@ -15309,7 +14009,7 @@
+@@ -15524,7 +14224,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -1975,7 +1960,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15330,7 +14030,7 @@
+@@ -15545,7 +14245,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -1984,7 +1969,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15355,7 +14055,7 @@
+@@ -15570,7 +14270,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -1993,7 +1978,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_StructMember::_tao_any_destructor
-@@ -15385,7 +14085,7 @@
+@@ -15600,7 +14300,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2002,7 +1987,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15397,7 +14097,7 @@
+@@ -15612,7 +14312,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2011,7 +1996,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15421,7 +14121,7 @@
+@@ -15636,7 +14336,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2020,7 +2005,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15446,7 +14146,7 @@
+@@ -15661,7 +14361,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2029,7 +2014,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_StructMemberSeq::_tao_any_destructor
-@@ -15472,7 +14172,7 @@
+@@ -15687,7 +14387,7 @@
    TAO_OutputCDR stream;
    stream << _tao_elem;
    _tao_any._tao_replace (
@@ -2038,7 +2023,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin ()
      );
-@@ -15483,7 +14183,7 @@
+@@ -15698,7 +14398,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2047,7 +2032,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15504,7 +14204,7 @@
+@@ -15719,7 +14419,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2056,7 +2041,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15529,7 +14229,7 @@
+@@ -15744,7 +14444,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2065,7 +2050,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_Initializer::_tao_any_destructor
-@@ -15559,7 +14259,7 @@
+@@ -15774,7 +14474,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2074,7 +2059,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15571,7 +14271,7 @@
+@@ -15786,7 +14486,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2083,7 +2068,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15595,7 +14295,7 @@
+@@ -15810,7 +14510,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2092,7 +2077,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15620,7 +14320,7 @@
+@@ -15835,7 +14535,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2101,7 +2086,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_InitializerSeq::_tao_any_destructor
-@@ -15646,7 +14346,7 @@
+@@ -15861,7 +14561,7 @@
    TAO_OutputCDR stream;
    stream << _tao_elem;
    _tao_any._tao_replace (
@@ -2110,7 +2095,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin ()
      );
-@@ -15657,7 +14357,7 @@
+@@ -15872,7 +14572,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2119,7 +2104,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15678,7 +14378,7 @@
+@@ -15893,7 +14593,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2128,7 +2113,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15703,7 +14403,7 @@
+@@ -15918,7 +14618,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2137,7 +2122,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_UnionMember::_tao_any_destructor
-@@ -15733,7 +14433,7 @@
+@@ -15948,7 +14648,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2146,7 +2131,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15745,7 +14445,7 @@
+@@ -15960,7 +14660,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2155,7 +2140,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15769,7 +14469,7 @@
+@@ -15984,7 +14684,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2164,7 +2149,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15794,7 +14494,7 @@
+@@ -16009,7 +14709,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2173,7 +2158,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_UnionMemberSeq::_tao_any_destructor
-@@ -15824,7 +14524,7 @@
+@@ -16039,7 +14739,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2182,7 +2167,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin ()
        );
-@@ -15836,7 +14536,7 @@
+@@ -16051,7 +14751,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2191,7 +2176,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -15860,7 +14560,7 @@
+@@ -16075,7 +14775,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2200,7 +2185,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15885,7 +14585,7 @@
+@@ -16100,7 +14800,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2209,7 +2194,7 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_EnumMemberSeq::_tao_any_destructor
-@@ -15912,7 +14612,7 @@
+@@ -16127,7 +14827,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2218,7 +2203,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin (),
          1,
-@@ -15929,7 +14629,7 @@
+@@ -16144,7 +14844,7 @@
      _tao_elem = CORBA_Container::_nil ();
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2227,7 +2212,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -15942,7 +14642,7 @@
+@@ -16157,7 +14857,7 @@
      if (stream >> _tao_elem)
      {
        ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2236,7 +2221,7 @@
            1,
            _tao_elem,
            CORBA_Container::_tao_any_destructor
-@@ -16147,7 +14847,7 @@
+@@ -16362,7 +15062,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2245,7 +2230,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin (),
          1,
-@@ -16164,7 +14864,7 @@
+@@ -16379,7 +15079,7 @@
      _tao_elem = CORBA_IDLType::_nil ();
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2254,7 +2239,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -16177,7 +14877,7 @@
+@@ -16392,7 +15092,7 @@
      if (stream >> _tao_elem)
      {
        ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2263,7 +2248,7 @@
            1,
            _tao_elem,
            CORBA_IDLType::_tao_any_destructor
-@@ -16208,7 +14908,7 @@
+@@ -16423,7 +15123,7 @@
    if (stream << _tao_elem)
    {
      _tao_any._tao_replace (
@@ -2272,7 +2257,7 @@
          TAO_ENCAP_BYTE_ORDER,
          stream.begin (),
          1,
-@@ -16225,7 +14925,7 @@
+@@ -16440,7 +15140,7 @@
      _tao_elem = CORBA_TypedefDef::_nil ();
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2281,7 +2266,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -16238,7 +14938,7 @@
+@@ -16453,7 +15153,7 @@
      if (stream >> _tao_elem)
      {
        ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2290,7 +2275,7 @@
            1,
            _tao_elem,
            CORBA_TypedefDef::_tao_any_destructor
-@@ -16268,7 +14968,7 @@
+@@ -16483,7 +15183,7 @@
    TAO_OutputCDR stream;
    stream << _tao_elem;
    _tao_any._tao_replace (
@@ -2299,7 +2284,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin ()
      );
-@@ -16279,7 +14979,7 @@
+@@ -16494,7 +15194,7 @@
    TAO_OutputCDR stream;
    stream << *_tao_elem;
    _tao_any._tao_replace (
@@ -2308,7 +2293,7 @@
        TAO_ENCAP_BYTE_ORDER,
        stream.begin (),
        1,
-@@ -16300,7 +15000,7 @@
+@@ -16515,7 +15215,7 @@
    {
      CORBA::TypeCode_var type = _tao_any.type ();
      
@@ -2317,7 +2302,7 @@
      ACE_TRY_CHECK;
      
      if (!result)
-@@ -16325,7 +15025,7 @@
+@@ -16540,7 +15240,7 @@
        if (stream >> *tmp)
        {
          ((CORBA::Any *)&_tao_any)->_tao_replace (
@@ -2326,3 +2311,123 @@
              1,
              ACE_static_cast (void *, tmp),
              CORBA_TypeDescription::_tao_any_destructor
+@@ -16664,11 +15364,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16711,11 +15406,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16758,11 +15448,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16805,11 +15490,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16852,11 +15532,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16899,11 +15574,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16946,11 +15616,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -16993,11 +15658,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -17040,11 +15700,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -17087,11 +15742,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
