@@ -11,9 +11,7 @@ ALL_IN_ONE_GNU = 1
 # Include wrapper macros to all user defines, etc.
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
+TAO_ROOT ?= $(ACE_ROOT)/TAO
 
 ifneq ($(ADDITIONAL_INCLUDE),)
   include $(ADDITIONAL_INCLUDE)
@@ -29,22 +27,16 @@ include $(ACE_ROOT)/include/makeinclude/component_check.GNU
 # If no required components are missing, set the real targets
 ifeq ($(MISSING_COMPONENTS),)
   ifdef BIN_UNCHECKED
-    ifndef BIN
-      BIN = $(BIN_UNCHECKED)
-    endif # !BIN
+    BIN += $(BIN_UNCHECKED)
   endif # !BIN_UNCHECKED
   ifdef static_libs
     ifdef LIB_UNCHECKED
-      ifndef LIB
-        LIB = $(LIB_UNCHECKED)
-      endif # !LIB
+      LIB += $(LIB_UNCHECKED)
     endif # !LIB_UNCHECKED
   endif # static_libs
   ifdef shared_libs
     ifdef SHLIB_UNCHECKED
-      ifndef SHLIB
-        SHLIB = $(SHLIB_UNCHECKED)
-      endif # !SHLIB
+      SHLIB += $(SHLIB_UNCHECKED)
     endif # !SHLIB_UNCHECKED
   endif # !shared_libs
 endif # COMPILE_COMPONENT
@@ -76,9 +68,7 @@ endif # BIN
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # Remove the -g option if requested.
-ifndef SUPPRESS_DASH_G
-  SUPPRESS_DASH_G ?=
-endif
+SUPPRESS_DASH_G ?=
 ifeq ($(SUPPRESS_DASH_G),1)
   DCFLAGS := $(filter-out -g, $DCFLAGS)
 endif

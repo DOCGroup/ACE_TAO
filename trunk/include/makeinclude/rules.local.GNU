@@ -50,23 +50,12 @@ all.local: makefile_name.local $(split_target) build.objdirs build.local install
 #----------------------------------------------------------------------------
 
 
-ifndef IDL_SRC
-  IDL_SRC ?=
-endif
-ifndef VLIBS
-  VLIBS ?=
-endif
-ifndef BUILD
-  BUILD ?=
-endif
-ifndef VBIN
-  ifdef BIN
-    VBIN = $(BIN:%=%$(VAR))
-    $(VBIN): $(VLIBS)
-  else
-    VBIN ?=
-  endif
-endif
+IDL_SRC ?=
+VLIBS ?=
+BUILD ?=
+BIN ?=
+VBIN ?= $(BIN:%=%$(VAR))
+$(VBIN): $(VLIBS)
 
 # Always build the V* targets in this order.  We control assignment to them
 # elsewhere. We add the existing $(BUILD) targets to the end to allow the
@@ -82,9 +71,7 @@ build.local: $(VBUILD)
 
 # C++ related targets
 
-ifndef OS
-  OS ?=
-endif
+OS ?=
 ifeq ($(OS),"Windows_NT")
 $(VDIR)%.obj: %.c
 	$(COMPILE.c) $(CC_OUTPUT_FLAG) $@ $<
@@ -207,20 +194,15 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
-ifndef INSTALL
-  INSTALL ?=
-endif # INSTALL
-# Libraries always depend on idl_stubs, if they exist.
-ifdef IDL_SRC
-  $(VLIBS): $(IDL_SRC)
-endif
-
+INSTALL ?=
 # Always add LIB_INSTALL to INSTALL, so libs will get installed even no BIN
 # is built.  LIB_INSTALL is a dependency for BIN, so libs are installed prior
-# to use.  Also, make LIB_INSTALL depend on VLIB, so libs get built prior to
+# to use.  Also, make LIB_INSTALL depend on VLIBS, so libs get built prior to
 # installation.
-INSTALL += $(LIB_INSTALL)
-$(LIB_INSTALL): $(VLIBS)
+ifdef LIB_INSTALL
+  INSTALL += $(LIB_INSTALL)
+  $(LIB_INSTALL): $(VLIBS)
+endif
 
 install.local: $(INSTALL)
 
@@ -347,23 +329,14 @@ endif # DO_CLEANUP
 #       Dependency generation target
 #----------------------------------------------------------------------------
 
-ifndef MAKEFILE
-  MAKEFILE = Makefile
-endif # ! MAKEFILE
+MAKEFILE ?= Makefile
+DEPENDENCY_FILE ?= $(MAKEFILE)
 
-ifndef DEPENDENCY_FILE
-  DEPENDENCY_FILE = $(MAKEFILE)
-endif
-
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif # TAO_ROOT
+TAO_ROOT ?= $(ACE_ROOT)/TAO
 
 # If no libraries are build in the current directory (actually, if
 # rules.lib.GNU isn't included), then SOEXT might not be set.
-ifndef SOEXT
-  SOEXT=so
-endif # SOEXT
+SOEXT ?= so
 
 ORIGdepend.local: $(MAKEFILE)
 	@$(RM) $(MAKEFILE).old
@@ -415,12 +388,9 @@ depend.local: $(MAKEFILE) idl_stubs.local
 #       RCS info target
 #----------------------------------------------------------------------------
 
-ifndef IDL_FILES
-  IDL_FILES ?=
-endif
-ifndef IDL_CLIENT_HDR_EXT
-  IDL_CLIENT_HDR_EXT ?=
-endif
+IDL_FILES ?=
+IDL_CLIENT_HDR_EXT ?=
+
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
 
 ifdef $(TAO_IDL_DEP)
