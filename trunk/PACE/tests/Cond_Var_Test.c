@@ -78,7 +78,6 @@ void *inc_count(void *idp)
 
 void *watch_count(void *idp)
 {
-  int i = 0;
   int *my_id = idp;
   pace_pthread_t pthread;
 
@@ -106,7 +105,7 @@ void *watch_count(void *idp)
 }
 
 int
-main(unsigned int argc, char *argv[])
+main(int argc, char *argv[])
 {
   unsigned int i;
   pace_pthread_t threads[3];

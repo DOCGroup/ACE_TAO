@@ -36,7 +36,7 @@ ifdef VXWORKS
   ACELIB += -lPACE
   LDFLAGS += -L$(PACE_ROOT)/pace/
 else
-  BIN += BIN2
+  BIN += $(BIN2)
 endif
 INCLDIRS += -I$(PACE_ROOT)
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
