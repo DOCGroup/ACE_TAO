@@ -932,7 +932,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
 }
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-ACE_INLINE void
+void
 TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
                                                const ACE_Message_Block * mb)
 {
@@ -1042,7 +1042,7 @@ void TAO_Unbounded_Sequence<CORBA::Octet>::_deallocate_buffer (void)
   this->buffer_ = 0;
 }
 
-ACE_INLINE 
+
 void
 TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
                                                CORBA::ULong length,
