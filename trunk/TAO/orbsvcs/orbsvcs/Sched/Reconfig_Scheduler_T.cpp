@@ -2727,6 +2727,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
                       RtecScheduler::INTERNAL,
                       RtecScheduler::DUPLICATE_NAME))
 {
+  int i;
 #if defined (SCHEDULER_LOGGING)
   ACE_DEBUG ((LM_TRACE,
               " TAO_Reconfig_Scheduler::assign_priorities_i.\n"));
@@ -2758,7 +2759,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
 
 #ifdef SCHEDULER_LOGGING
   ACE_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));
-  for (int i = 0; i < this->rt_info_count_; ++i)
+  for (i = 0; i < this->rt_info_count_; ++i)
     {
       RtecScheduler::RT_Info* rt_info_ptr = 
         this->entry_ptr_array_[i]->actual_rt_info ();
@@ -2795,7 +2796,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
   TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
     prio_visitor (this->rt_info_count_, this->entry_ptr_array_);
   auto_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
-  for (int i = 0; i <= this->rt_info_count_; ++i)
+  for (i = 0; i <= this->rt_info_count_; ++i)
     {
       int result;
 
