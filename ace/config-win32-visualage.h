@@ -89,9 +89,9 @@
 
 //Error codes that are in MS Visual C++
 #define EFAULT 99 /* Error code (should be in errno.h) */
-#define ENODEV		19
-#define EPIPE		32
-#define ENAMETOOLONG	38
+#define ENODEV          19
+#define EPIPE           32
+#define ENAMETOOLONG    38
 
 #define ACE_ENDTHREADEX(STATUS) ::_endthread ()
 

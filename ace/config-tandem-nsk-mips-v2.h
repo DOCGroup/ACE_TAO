@@ -63,7 +63,7 @@ typedef enum CMA_T_SCHED_POLICY {
     cma_c_sched_throughput = 2,
     cma_c_sched_background = 3,
     cma_c_sched_ada_low = 4
-    }				cma_t_sched_policy;
+    }                           cma_t_sched_policy;
 #endif
 
 
