@@ -11,6 +11,10 @@ Fri Jan 26 10:42:07 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Added explicit include of ace/WFMO_Reactor.h.
 
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+
+          Updated to use the new run_test style.
+
 Fri Jan 26 13:54:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
