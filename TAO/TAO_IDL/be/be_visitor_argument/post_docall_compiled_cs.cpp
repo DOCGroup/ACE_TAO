@@ -83,13 +83,14 @@ be_visitor_args_post_docall_compiled_cs::visit_interface (be_interface *)
   switch (this->direction ())
     {
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       {
         os->indent ();
         // assign the narrowed obj reference
         *os << "CORBA::release (" << arg->local_name ()
             << ");\n";
       }
+      break;
+    default:
       break;
     }
   return 0;
@@ -106,13 +107,14 @@ be_visitor_args_post_docall_compiled_cs::visit_interface_fwd (be_interface_fwd *
   switch (this->direction ())
     {
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       {
         os->indent ();
         // assign the narrowed obj reference
         *os << "CORBA::release (" << arg->local_name ()
             << ");\n";
       }
+      break;
+    default:
       break;
     }
   return 0;
@@ -133,7 +135,6 @@ be_visitor_args_post_docall_compiled_cs::visit_string (be_string *)
       *os << "CORBA::string_free (" << arg->local_name () << ");" << be_nl;
       break;
     case AST_Argument::dir_OUT:
-      *os << "CORBA::string_free (" << arg->local_name () << ".ptr ());\n";
       break;
     }
   return 0;
