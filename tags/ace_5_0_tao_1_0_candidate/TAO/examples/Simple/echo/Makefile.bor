@@ -1,0 +1,11 @@
+
+#
+# Makefile for building the Echo example
+# 
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	$(MAKE) -f Echo_Client.bor $(MAKE_FLAGS)
+	$(MAKE) -f Echo_Server.bor $(MAKE_FLAGS)
+

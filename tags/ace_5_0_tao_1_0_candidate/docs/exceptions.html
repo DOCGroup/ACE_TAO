@@ -1,0 +1,523 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!-- $Id$ -->
+<html> <head>
+<title>Using ACE try macros for CORBA programming</title>
+</head>
+
+<body text="#000000" link="#0000ff" vlink="#cc0000" bgcolor="#ffffff">
+<h1>Using ACE try macros for CORBA programming</h1>
+
+<p>ACE try macros will completely replace TAO try macros soon.  If you
+are still using TAO try macros in your code, you should replace them
+with ACE try macros to avoid possible breakage when we remove TAO try
+macros.<\p>
+
+<P>It would be useful if the reader can go through the book, "Advanced
+Corba Programming with C++" by Michi & Steve, from pages 307 through
+to 322.
+</P>
+
+<P>CORBA::Environment provides a way to handle exceptions when
+native c++ exception handling is unavailable or undesirable.
+However, writing portable code for both (with and without) native
+exception handling capability is very hairy.
+</P>
+
+<P>ACE provides a set of macros to help dealing with the chaos,
+but please keep in mind that no amount of macros is going to
+solve the problem perfectly.
+</P>
+
+<h3>What's in here?</h3>
+<ul>
+  <li><a href="#nutshell">ACE Try Macros in a Nutshell</a>
+  <li><a href="#examples">Examples</a>
+  <li><a href="#general">General Guidelines for Exception Handling</a>
+  <li><a href="#transition">Transition from TAO try macros to ACE try
+      macros</a>
+  <li><a href="#caveats">Some Caveats</a>
+</ul>
+
+<h3><a name="nutshell">ACE Try Macros in a Nutshell</h3>
+
+<P>This section explains some simple rules of writing programs for
+platforms with and without native exception support using ACE's
+try macros.
+</P>
+
+<ol>
+  <li><p>ACE try macros are modelled like C++ language  exceptions and
+      can be used like them, but with a small difference. These macros
+      rely on  the CORBA::Environment variable to handle exceptions
+      on platforms that do not support exception
+      handling. (Please note that native exceptions can be turned on
+      or off at COMPILE time as an option to your make)
+      The exception macros  have been modelled with some extra rules to ensure it works even on
+      platforms without native exception support.  See some <a
+      href="#examples">quick examples</a> on  how to use ACE try
+      macros.
+      </p>
+  </li>
+
+  <li><P><em>Name of CORBA::Environment variable</em><br>
+      A function that may throw a CORBA::Exception needs a
+      CORBA::Environment variable to pass up exceptions (to throw in
+      the C++ sense) and to gather (catch () in the C++ sense)
+      exceptions from functions it called.  By default, ACE try macros
+      assumes that the variable is named <code>ACE_TRY_ENV</code>.
+      <code>ACE_TRY_ENV</code> itself is also a macro which can be
+      redefined.
+      </pre>
+
+      <P>
+      You can redefine the name of the variable to
+      something else to avoid name clashing.  Alternatively, there's
+      another macro (<code>ACE_ADOPT_CORBA_ENV</code>) that allow you
+      to use another variable name as the default CORBA::Environment
+      <em>within</em> a function.
+      </P>
+  </LI>
+
+  <li><P><em>Definition of the CORBA::Environment variable </em><br>
+      If you are using TAO for writing application programs and you
+      are interested in using exceptions (which is a pretty neat way
+      to go about), the environmnet variable can be brought in to your
+      scope by the adding a statement <code>ACE_DECLARE_NEW_CORBA_ENV;</code>
+      You can then invoke the methods on the servant from the client
+      side as
+      <pre>
+      object_reference->func_name (x, y, ACE_TRY_ENV);
+      </pre>
+
+
+      Even if you are interested in making calls within the client
+      side, you can define your method like this
+      <pre>
+      int AN_OBJ::foobar (int a, int b, CORBA_Environment &ACE_TRY_ENV);
+      </pre>
+  <li><P><em>Throwing exceptions:</em><br>
+      Use <code>ACE_THROW</code> and <code>ACE_THROW_RETURN</code> to
+      throw exceptions.  They should never be used within a try
+      block; please use <code>ACE_TRY_THROW</code> instead.
+      </P>
+  </LI>
+
+  <li><P><em>Propagating exceptions:</em><br>
+      To simulate native exceptions on platforms without native
+      exception handling, <em>every</em>  function call that may
+      throw exceptions must be followed by <code>ACE_CHECK</code> or
+      <code>ACE_CHECK_RETURN</code>.</p>
+
+      <p><a name="exc-func">Exception-throwing functions include the
+      following categories:</p>
+
+      <ol>
+        <li><p>Any function that takes a
+            <code>CORBA_Environment</code> argument.</p>
+        </li>
+
+        <li><p><code>ACE_NEW_THROW_EX</code>.  Notice that you
+            <em>should not</em> use <code>ACE_NEW_THROW</code>,
+            <code>ACE_NEW_THROW_RETURN</code>,
+            <code>ACE_NEW_TRY_THROW</code> anymore because they don't
+            work right with ACE try macros.  Instead, use
+            <code>ACE_NEW_THROW</code> with appropriate ACE_CHECK*
+            macros.</p>
+        </li>
+
+        <li><P><code>ACE_GUARD_THROW_EX</code>,
+            <code>ACE_READ_GURAD_THROW_EX</code>, and
+            <code>ACE_WRITE_THROW_EX</code>.
+
+        <li><p><code>ACE_TRY</code> blocks.  Follow every
+            <code>ACE_ENDTRY</code> with appropriate ACE_CHECK*
+            macros.</p>
+        <li>
+      </ol>
+
+      <P>You should pass <code>ACE_TRY_ENV</code> to these
+      functions.
+      </p>
+
+      <P>Be very careful not to combine exception throwing functions
+      in one statement like this:
+      </P>
+      <pre>
+          x = obj1->callme (ACE_TRY_ENV) + obj2->dare_me (ACE_TRY_ENV);
+          ACE_CHECK;
+      </pre>
+      <P>This example may work differently when native exception
+      handling is enabled/disabled.
+      </p>
+  </LI>
+
+  <li><P><em>Catching exceptions:</em><br>
+      Use <code>ACE_TRY</code> to catch exceptions if there's an
+      <code>ACE_TRY_ENV</code> available.  Otherwise, you should use
+      <code>ACE_DECLARE_NEW_CORBA_ENV</code> to create one at
+      <em>proper</em> scope.  The use of
+      <code>ACE_TRY_NEW_ENV</code> is considered depricated because it
+      can't deal with the case when you have multiple <code>TRY</code>
+      blocks in the scope of <code>ACE_TRY_NEW_ENV</code>.  If there are
+      more than one try blocks in a function, use <code>ACE_TRY_EX</code>
+      for all subsequence try blocks to avoid name clashing of labels.
+      </p>
+      <ul>
+        <li><P>Within a <code>ACE_TRY</code> block, use the variable
+            <code>ACE_TRY_ENV</code> to pass down the
+            <code>CORBA_Environment</code> (see <a
+            href="#try_env">this</a> example.)
+            </p>
+        </LI>
+
+        <li><P>Follow <em>every</em> exception throwing function with
+            <code>ACE_TRY_CHECK</code>. If you are using a TRY block
+            within another try block add a <code>ACE_TRY_CHECK</code>
+            at the end of this TRY block ie. after
+            <code>ACE_ENDTRY</code>.
+            </p>
+        </LI>
+
+        <li><P>Use <code>ACE_CATCH</code> to catch exceptions of certain
+            type.
+            </p>
+        </LI>
+
+        <li><P><code>ACE_CATCHANY</code> catches <em>any</em> exceptions
+            of type <code>CORBA_Exception</code>.  The caught
+            exception is stored in a variable call
+            <code>ACE_ANY_EXCEPTION</code>.
+            </p>
+        </LI>
+
+        <li><p><code>ACE_CATCHALL</code> emulate the <code>catch
+            (...)</code> c++ statement.  It is identical to
+            <code>ACE_CATCHANY</code> on platforms without native
+            exception support.  You can not access the caught
+            exception within the <code>ACE_CATCHALL</code> block.</p>
+
+        <li><P>Use <code>ACE_RETHROW</code> to rethrow the same exception
+            within a <code>ACE_CATCH</code> or
+            <code>ACE_CATCHANY</code> block.
+            </p>
+        </LI>
+
+        <li><P>A <code>ACE_TRY</code> block must be terminated with
+            a <code>ACE_ENDTRY</code> statement.
+            </p>
+        </LI>
+
+        <li><P>Throw an exception within a <code>ACE_TRY</code>
+            block or <code>ACE_CATCH</code> block using
+            <a href="#ace_try"><code>ACE_TRY_THROW</code></a>.
+            </p>
+        </LI>
+      </ul>
+  </li>
+
+  <li><p><em>Printing out exceptions.</em>  Use <code>ACE_PRINT_EXCEPTION
+      (EX,INFO)</code> to print out an exception.  The macro takes two
+      arguments, a reference to an exception (EX) and a <code>char
+      *</code> string (INFO) which provides more information on the
+      exception.  Since there's no portable way to print out
+      exceptions, you can redefine ACE_PRINT_EXCEPTION to fit your
+      need (or define it to null.)  <em>You should always print out
+      the exception itself, not the CORBA_Environment that carries the
+      exception.</em></p>
+  </li>
+</ol>
+
+<h3>Examples</h3><a name="examples">
+
+Refer to <a href="../ace/CORBA_macros.h"><code>
+$ACE_ROOT/ace/CORBA_macros.h</code></a> for complete definitions of
+macros discussed here.
+
+<ul>Examples on using ACE try macros:
+  <li><p>
+      <pre>
+      <a name="try_env">
+      ACE_TRY  // Use ACE_DECLARE_NEW_CORBA_ENV to create ACE_TRY_ENV
+               // if you got undefined symbol warning here.
+        {
+          some_operation (arg1, arg2, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          .
+          .
+          if (whatever)
+            ACE_TRY_THROW (CORBA::BadParam);
+
+          some_other_operation (arg1, arg2, arg3, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      <a name="ace_try">
+      ACE_CATCH (CORBA_some_exception, ex)
+        {
+          // error handling.
+          if (still_has_error)
+            ACE_TRY_THROW (CORBA::NOWAY);
+        }
+      ACE_CATCHANY
+        {
+          // error handling.
+          // then rethow the exception.
+          ACE_RETHROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+      </pre>
+      </p>
+  </li>
+
+  <li><p><code>ACE_TRY</code> and also declares a label for internal
+      use.  To avoid defining the same label multiple times within a
+      function, use <code>ACE_TRY_EX</code> with different labels for
+      different try blocks instead.  For example,<br>
+
+      <pre>
+      ACE_TRY_EX (block_1)
+        {
+          some_operation (arg1, arg2, ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (block_1);
+
+          some_other_operation (arg1, arg2, arg3, ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (block_1);
+        }
+      ACE_CATCH (CORBA_some_exception, ex)
+        {
+          // error handling.
+        }
+      ACE_CATCHANY
+        {
+          // error handling.
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
+
+      // Some other operation here
+      //       .
+      //       .
+      //       .
+      //       .
+
+      ACE_TRY_EX (block_2)
+        {
+          foo (arg, ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (block_2);
+
+          bar (arg1, arg2, ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (block_2);
+        }
+      ACE_CATCH (CORBA_some_exception, ex)
+        {
+          // error handling.
+        }
+      ACE_CATCHANY
+        {
+          // error handling.
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
+      </pre>
+      </p>
+
+  <li><p>You may want to make a different series of calls after you
+      encounter/catch  an exception. Here is what we recommend.
+
+      <pre>
+      ACE_TRY
+        {
+          // Calls that can raise an exception
+          some_call1 (arg1, arg2, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          .
+          .
+          .
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA_some_exception, ex)
+        {
+          // Caught an exception, so we need to make some other calls
+          // to continue..
+
+          ACE_TRY_EX (block1) // basically a label
+            {
+              some_other_call1 (arg1,.. , ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX (block1);
+            }
+          ACE_CATCH (CORBA_some_other_exception, ex1)
+            {
+              // Handle the exception here..
+            }
+          ACE_ENDTRY;
+          ACE_CHECK_RETURN (-1); // Needed to catch uncaught exceptions
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
+      </pre>
+      </p>
+
+  <li><p>Be <em>VERY</em> wary of <code>ACE_CATCHALL</code>.  It catches
+      exceptions of any type.  If your program depends on it, then,
+      more often than not, there're something wrong with it.
+      </P>
+  </li>
+
+  <li><p>Instead of depending on <code>ACE_CATCHALL</code>, use
+      <code>auto_ptr</code> style mechanism to prevent memory leaks
+      from exceptions.
+      </p>
+  </li>
+</ul>
+
+<h3><a name="general">General Guidelines for Exception Handling</h3>
+<ul>
+  <li><p>Don't catch an exception just to rethrow it.  Exceptions cost
+      you performance.
+      </p>
+  </li>
+
+  <li><p>When exceptions occur, make sure an object's is still in
+      a valid state or change to a state that can be safely
+      destructed.
+      </p>
+  </li>
+
+  <li><p>Watch out for side effect in the expression which may cause
+      exceptions.  In the following example, what should
+      <code>i</code> be if an exception does occur?<br>
+<pre>
+      ACE_TRY
+        {
+            obj[i++] = foo_bar_method (a, b, ACE_TRY_ENV);
+        }
+</pre></p>
+  </li>
+
+  <li><p>Make sure an exception doesn't cause resource leak (memory,
+      socket, ...) (hint: Use auto_ptr to avoid memory leak,
+      and ACE_Guard for locks.)
+      </p>
+  </li>
+
+  <li><p>Don't catch any exception that you don't know how to handle.</p>
+  </li>
+
+  <li><p>Never throw an exception from destructor (unless you know what
+      it implies.)</p>
+  </li>
+
+  <li><p>Use exceptions to provide more information about the error.</p>
+  </li>
+
+  <li><p>Rethrow a different exception only to provide <em>more</em>
+      information.  Do not catch an exception just to rethrow, say,
+      <code>unknow_exception</code>.</p>
+  </li>
+</ul>
+
+<H3><a name="transition">Transition from TAO try macros to ACE try macros</h3>
+
+This list tries to give a comprehensive list of mapping between TAO
+try macros and ACE try macros.  It's sole purpose is to provide hints
+in the converting the use of TAO try macros to ACE try macros and is
+by no mean complete.
+
+<OL>
+  <li><P>Rename all <code>CORBA_Environment</code> variables to
+      <code>ACE_TRY_ENV</code>. </P>
+  </li>
+
+  <li><P>Replace <code>TAO_TRY</code> <code>TAO_TRY_VAR</code> with
+      <code>ACE_TRY</code>.  Added
+      <code>ACE_DECLARE_NEW_CORBA_ENV</code> if necessary.</p>
+  </li>
+
+  <li><p>Replace <code>TAO_TRY_EX</code> <code>TAO_TRY_VAR_EX</code>
+      with <code>ACE_TRY_EX</code>.</p>
+  </li>
+
+  <li><p>Replace <code>TAO_CHECK_RETURN</code> and
+      <code>TAO_CHECK_RETURN_VOID</code> with <code>ACE_CHECK_RETURN</code>
+      and <code>ACE_CHECK</code>. These macros are used
+      <em>outside</em> of TRY/CATCH blocks.</P>
+  </li>
+
+  <li><P>Replace <code>TAO_THROW</code>, <code>TAO_THROW_ENV</code>,
+      <code>TAO_THROW_RETURN</code>, <code>TAO_THROW_ENV_RETURN</code>
+      with <code>ACE_THROW</code> and
+      <code>ACE_THROW_RETURN</code>. </p>
+  </li>
+
+  <li><P>Replace <code>ACE_NEW_THROW</code>,
+      <code>ACE_NEW_THROW_RETURN</code>,
+      <code>ACE_TRY_NEW_THROW</code> with
+      <code>ACE_NEW_THROW_EX</code> and appropriate
+      <code>ACE_CHECK*</code> macros. aformention</P>
+
+  <li><p>Replace <code>TAO_CHECK_ENV</code> and
+      <code>TAO_CHECK_ENV_EX</code> with <code>ACE_TRY_CHECK</code>
+      and <code>ACE_TRY_CHECK_EX</code>.</p>
+  </li>
+
+  <li><p>Replace <code>TAO_TRY_THOW</code> and
+      <code>TAO_TRY_THROW_EX</code> with <code>ACE_TRY_THROW</code>
+      and <code>ACE_TRY_THROW_EX</code>.  Notice that you can also use
+      <code>ACE_TRY_THROW*</code> within CATCH blocks.</p>
+  </li>
+
+  <li><p>Replace <code>TAO_RETHROW</code>,
+      <code>TAO_RETHROW_RETURN</code>,
+      <code>TAO_RETHROW_RETURN_VOID</code> with
+      <code>ACE_RETHROW</code>.</p>
+  </li>
+
+  <li><p>Replace <code>TAO_CATCH</code>, <code>TAO_CATCHANY</code>,
+      and <code>TAO_CATCHALL</code> with <code>ACE_CATCH</code>,
+      <code>ACE_CATCHANY</code> and <code>ACE_CATCHALL</code>
+      respectively. </p>
+  </li>
+
+  <li><p>Replace <code>TAO_ENDTRY</code> with <code>ACE_ENDTRY</code>
+      followed by an appropriate CHECK macro (<code>ACE_CHECK</code>,
+      <code>ACE_CHECK_RETURN</code>, <code>ACE_TRY_CHECK</code>, or
+      <code>ACE_TRY_CHECK_EX</code>.)</P>
+  </li>
+</ol>
+
+<H3><a name="caveats">Caveats</H3>
+
+<P>As we already mentioned no set of macros can cover all cases
+and preserve the semantics between native C++ exceptions and the
+<CODE>CORBA::Environment</CODE> based mapping.
+Some of the problems that our macros are described below:
+<P>
+
+<UL>
+  <LI><P>Using the macros in loops can produce problems with
+      <CODE>break</CODE> and <CODE>continue</CODE> statements, for
+      example:
+      </P>
+      <PRE>
+    for (int i = 0; i < 10; ++i)
+    {
+      ACE_TRY
+        {
+          if (x[i] == 0)
+            continue; // will *not* work
+          if (x[i] == -1)
+            break; // will *not* work either
+        }
+      ACE_CATCH (CORBA::Exception, ex)
+        {
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+      </PRE>
+  </LI>
+</UL>
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</body></HTML>
