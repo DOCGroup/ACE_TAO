@@ -74,11 +74,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // This cannot be an enum since more than one value may be active at
 // a given time, hence bitflags are #define'd instead
 
-#define IDL_CF_VERSION          (1 << 0)
-#define IDL_CF_DUMP_AST         (1 << 1)
-#define IDL_CF_ONLY_PREPROC     (1 << 2)
-#define IDL_CF_ONLY_USAGE       (1 << 3)
-#define IDL_CF_INFORMATIVE      (1 << 4)
-#define IDL_CF_NOWARNINGS       (1 << 5)
+// HP-UX 64-bit warns that the result of '<<' is widened from an int to long.
+// They are assumed to be of type long within the tao_idl and IFR code.
+
+#define IDL_CF_VERSION          (long)(1 << 0)
+#define IDL_CF_DUMP_AST         (long)(1 << 1)
+#define IDL_CF_ONLY_PREPROC     (long)(1 << 2)
+#define IDL_CF_ONLY_USAGE       (long)(1 << 3)
+#define IDL_CF_INFORMATIVE      (long)(1 << 4)
+#define IDL_CF_NOWARNINGS       (long)(1 << 5)
 
 #endif  // _IDL_DEFINES_IDL_DEFINES_HH

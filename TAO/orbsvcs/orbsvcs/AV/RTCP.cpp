@@ -908,7 +908,7 @@ TAO_AV_RTCP_Callback::demux (TAO_AV_RTP::rtphdr* rh,
   s->lts_data (now);
   s->sts_data (rh->rh_ts);
 
-  int cnt = (flags >> 8) & 0xf;
+  long cnt = (flags >> 8) & 0xf;
   if (cnt > 0)
     {
       u_char* nh = (u_char*)rh + (cnt << 2);
