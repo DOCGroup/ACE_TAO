@@ -18,6 +18,7 @@
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"
 
+// @@ Bala: Why is this not part of the RequestHeader?!
 class TAO_Operation_Details
 {
   // = TITLE

@@ -15,7 +15,20 @@ TAO_GIOP_Message_Connectors::
   parse_reply (TAO_Message_State_Factory &mesg_state,
                TAO_Pluggable_Connector_Params &params)
 {
-  
+  // @@ Bala: See how the message state is a per-protocol thing?
+  //    Wouldn't it be better to have each protocol define its own
+  //    message state and just use that type directly (i.e no
+  //    message_state base class).  As far as i can see (but i may be
+  //    wrong), only very tightly related messaging protocols and
+  //    transport protocols can use the same message state (for
+  //    example GIOP 1.x and GIOP Lite).  Furthermore, if i'm proven
+  //    wrong and there is common functionality among different
+  //    pluggable messaging protocols, we can simply re-factor at that
+  //    point.
+  //    IMHO the right approach is to factor out common functionality
+  //    and interfaces 'a posteriori', otherwise we will define
+  //    ackward interfaces that will have to be changed anyway!
+
   // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = ACE_dynamic_cast (TAO_GIOP_Message_State *,
                                                     &mesg_state);
@@ -43,7 +56,9 @@ TAO_GIOP_Message_Connectors::
                     "extracting reply status\n"));
       return -1;
     }
-  
+
+  // @@ Bala: More silly translations!
+
   // Pass the right Pluggable interface code to the transport layer
   switch (rep_stat)
     {
@@ -291,5 +306,7 @@ CORBA::Octet
 TAO_GIOP_Message_Connector_10:: minor_version (void)
 {
   // Any harm in hardcoding??
+  // @@ Bala: of course not...  but don't cast stuff that doen't need
+  // casting! return 0 is enough.
   return (CORBA::Octet) 0;
 }

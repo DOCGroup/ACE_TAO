@@ -16,8 +16,12 @@
 // = AUTHOR
 //     Balachandran  Natarajan <bala@cs.wustl.edu>
 // ============================================================================
+
+// @@ Bala: Please don't start global macros with _ and an uppercase
+// character. Those names are reserved for the implementation.
 #ifndef _TAO_TARGET_SPECIFICATION_H_
 #define _TAO_TARGET_SPECIFICATION_H_
+
 #include "tao/Object_KeyC.h"
 #include "tao/IOPC.h"
 
@@ -28,9 +32,17 @@ class TAO_Target_Specification
   //   A class to encapsulate all the ways of specifying targets.
   //
   // = DESCRIPTION
-  //   This is a sort of auxillary class. The motivation behind this
+  //   @@ Bala: This is too colloquial for a coment, don't you think?
+  //   This is a sort of auxillary class.
+
+  //   @@ Bala: do we have examples of how other protocols map object
+  //      keys?  What if they pass something around that does not fit
+  //      this model?
+  //   The motivation behind this
   //   is GIOP 1.2 althought I foresee other messaging protocols doing
-  //   something similar. The Invocation classes (client side) were
+  //   something similar.
+
+  //   The Invocation classes (client side) were
   //   passing the object key that they had extracted from the
   //   profiles with every invocation. This extraction would be done
   //   based on the policies that are specified for the client side
@@ -56,6 +68,11 @@ public:
   void target_specifier (IOP::IOR *ior, 
                          CORBA::ULong prof_index);
   // Specification of targets
+  // @@ Bala: I think i know what these methods use, but other users
+  // may not!
+  // @@ Bala: please document the life-cycle constraint in this class
+  // they are very counter-intuitive.  In fact it may be better just
+  // to make a copy of the class!
 
   const TAO_ObjectKey* object_key (void);
   // Returns the object key after a check of the stored specifier. If
