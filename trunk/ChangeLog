@@ -1,3 +1,18 @@
+Sun Jun 20 22:09:58 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
+	* tests/Makefile.am:
+
+	  Added support for conditionally building IPv6 tests.
+
+	* tests/Dirent_Test.cpp (TEST_ENTRY):
+
+	  Changed filename detected in test to one that always exists in
+	  configure-based VPATH builds (run_test.lst).  Addresses a
+	  problem where the test would fail since the file in question
+	  only existed in the source directory.  Thanks to J.T. Conklin
+	  for reporting this problem.
+
 Sun Jun 20 23:35:05 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * doc/ACE-subsetting.html:
