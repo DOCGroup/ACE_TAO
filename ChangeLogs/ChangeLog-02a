@@ -1,3 +1,9 @@
+Mon Apr  2 15:17:13 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-chorus.h:
+
+          Chorus 4.x supports unsigned long long's.
+
 Mon Apr  2 14:23:31 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * ace/Makefile:
