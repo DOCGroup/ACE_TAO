@@ -1,3 +1,11 @@
+Wed Mar 24 07:18:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+
+	  Fixed compilation errors when exceptions is set to zero. 
+
 Tue Mar 23 21:59:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (shutdown, destroy):
