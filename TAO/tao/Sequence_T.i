@@ -491,18 +491,14 @@ template <class T, class T_var> ACE_INLINE T &
 TAO_Unbounded_Array_Sequence<T, T_var>::operator[] (CORBA::ULong i)
 {
   ACE_ASSERT (i < this->maximum_);
-  T *tmp = ACE_reinterpret_cast (T*,
-                                 this->buffer_);
-  return tmp[i];
+  return (ACE_reinterpret_cast (T*, this->buffer_))[i];
 }
 
 template <class T, class T_var> ACE_INLINE const T &
 TAO_Unbounded_Array_Sequence<T, T_var>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
-  const T* tmp = ACE_reinterpret_cast (const T* ACE_CAST_CONST,
-                                       this->buffer_);
-  return tmp[i];
+  return (ACE_reinterpret_cast (const T* ACE_CAST_CONST, this->buffer_))[i];
 }
 
 template <class T, class T_var> ACE_INLINE T *
@@ -613,18 +609,14 @@ template <class T, class T_var, size_t MAX> ACE_INLINE T &
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator[] (CORBA::ULong i)
 {
   ACE_ASSERT (i < this->maximum_);
-  T *tmp = ACE_reinterpret_cast (T*,
-                                 this->buffer_);
-  return tmp[i];
+  return (ACE_reinterpret_cast (T*, this->buffer_))[i];
 }
 
 template <class T, class T_var, size_t MAX> ACE_INLINE const T &
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
-  const T* tmp = ACE_reinterpret_cast (const T* ACE_CAST_CONST,
-                                       this->buffer_);
-  return tmp[i];
+  return (ACE_reinterpret_cast (const T* ACE_CAST_CONST, this->buffer_))[i];
 }
 
 template <class T, class T_var, size_t MAX> ACE_INLINE T *
