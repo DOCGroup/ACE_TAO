@@ -126,9 +126,12 @@ public:
   /// @@Bala: Documentation please...
   virtual int is_message_complete (ACE_Message_Block &message_block) = 0;
 
-  virtual size_t missing_data (ACE_Message_Block &incoming) = 0;
+  virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
 
   virtual CORBA::Octet byte_order (void) = 0;
+
+  virtual int extract_next_message (ACE_Message_Block &incoming,
+                                    TAO_Queued_Data *qd) = 0;
 
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"

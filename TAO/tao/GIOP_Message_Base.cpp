@@ -318,7 +318,6 @@ int
 TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
 {
 
-
   if (this->message_state_.parse_message_header (incoming) == -1)
     {
       return -1;
@@ -330,24 +329,73 @@ TAO_GIOP_Message_Base::parse_incoming_messages (ACE_Message_Block &incoming)
   return 0;
 }
 
-size_t
+ssize_t
 TAO_GIOP_Message_Base::missing_data (ACE_Message_Block &incoming)
 {
-  // @@Bala: Look for fragmentation here..
-  // If we had recd. fragmented messages and if the GIOP minor version
-  // is greater than 1, then include the FRAGMENT HEADER to calculate
-  // the effective length of the message
-  /*if (this->message_state_.more_fragments_ &&
-      this->message_state_.giop_version_.minor > 1)
-      len -= TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
-  */
+  //Actual message size including the header..
+  CORBA::ULong msg_size =
+    this->message_state_.message_size ();
 
-  size_t len = incoming.length ();
+  ssize_t len = incoming.length ();
 
-  if (len >= this->message_state_.message_size ())
-    return 0;
+  if (len > msg_size)
+    {
+      // Move the rd_ptr so that we can extract the next message.
+      incoming.rd_ptr (msg_size);
+      return -1;
+     }
+  else if (len == msg_size)
+     return 0;
 
-  return this->message_state_.message_size () - len;
+   return msg_size - len;
+}
+
+
+int
+TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
+                                             TAO_Queued_Data *qd)
+{
+  TAO_GIOP_Message_State msg_state;
+
+  if (incoming.length () < TAO_GIOP_MESSAGE_HEADER_LEN)
+    {
+      if (incoming.length () > 0)
+        {
+          qd =
+            this->make_queued_data (incoming.length ());
+
+          qd.missing_data_ = -1;
+        }
+      return 0;
+    }
+
+
+  if (msg_state.parse_message_header (incoming) == -1)
+    {
+      return -1;
+    }
+
+  size_t copying_len = msg_state.message_size ();
+
+  qd = this->make_queued_data (copying_len);
+
+  if (copying_len > incoming.length ())
+    {
+      qd.missing_data_ =
+        copying_len - incoming.length ();
+
+      copying_len -= incoming.length ();
+    }
+
+  new_mb.copy (incoming.rd_ptr (),
+               copying_len);
+
+  incoming.rd_ptr (copying_len);
+  qd.byte_order_ = msg_state.byte_order_;
+  qd.major_version_ = msg_state.giop_version_.major_version;
+  qd.minor_version_ = msg_state.giop_version_.minor_version;
+
+  return 1;
 }
 
 CORBA::Octet

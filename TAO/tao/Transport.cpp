@@ -738,37 +738,7 @@ TAO_Transport::recv (char *buffer,
     return -1;
 
   // now call the template method
-  ssize_t n =
-    this->recv_i (buffer, len, timeout);
-
-  // Most of the errors handling is common for
-  // Now the message has been read
-  if (n == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
-                  ACE_TEXT ("TAO - read message failure \n")
-                  ACE_TEXT ("TAO - handle_input () \n")));
-    }
-
-  // Error handling
-  if (n == -1)
-    {
-      if (errno == EWOULDBLOCK)
-        return 0;
-
-      // Close the connection
-      this->tms_->connection_closed ();
-
-      return -1;
-    }
-  // @@ What are the other error handling here??
-  else if (n == 0)
-    {
-      return -1;
-    }
-
-  return n;
+  return this->recv_i (buffer, len, timeout);
 }
 
 
@@ -867,15 +837,19 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
     return -1;
 
   // Check whether we have a complete message for processing
-  size_t missing_data =
+  ssize_t missing_data =
     this->missing_data (message_block);
 
-  if (missing_data)
+  if (missing_data < 0)
     {
-      return this->consolidate_message (message_block,
-                                        missing_data,
-                                        h,
-                                        max_wait_time);
+      this->consolidate_extra_messages (message_block);
+    }
+  else if (missing_data > 0)
+    {
+      return this->consolidate_process_message (message_block,
+                                                missing_data,
+                                                h,
+                                                max_wait_time);
     }
 
 
@@ -891,6 +865,9 @@ TAO_Transport::handle_input_i (ACE_HANDLE h,
 int
 TAO_Transport::parse_incoming_messages (ACE_Message_Block &message_block)
 {
+  // @@Bala:What about requests whose headers have been completely
+  // read in the last read????
+
   // If we have a queue and if the last message is not complete a
   // complete one, then this read will get us the remaining data. So
   // do not try to parse the header if we have an incomplete message
@@ -920,9 +897,9 @@ TAO_Transport::parse_incoming_messages (ACE_Message_Block &message_block)
 size_t
 TAO_Transport::missing_data (ACE_Message_Block &incoming)
 {
-  // If we have message in the queue then find out how much of data
-  // is required to get a complete message
-  if (this->incoming_message_queue_.queue_length ())
+  // If we have a incomplete message in the queue then find out how
+  // much of data is required to get a complete message
+  if (!this->incoming_message_queue_.is_complete_message ())
     {
       return this->incoming_message_queue_.missing_data ();
     }
@@ -932,10 +909,10 @@ TAO_Transport::missing_data (ACE_Message_Block &incoming)
 
 
 int
-TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
-                                    size_t missing_data,
-                                    ACE_HANDLE h,
-                                    ACE_Time_Value *max_wait_time)
+TAO_Transport::consolidate_process_message (ACE_Message_Block &incoming,
+                                            ssize_t missing_data,
+                                            ACE_HANDLE h,
+                                            ACE_Time_Value *max_wait_time)
 {
   // The write pointer which will be used for reading data from the
   // socket.
@@ -1000,7 +977,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
 
 int
 TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
-                                          size_t missing_data,
+                                          ssize_t missing_data,
                                           ACE_HANDLE h,
                                           ACE_Time_Value *max_wait_time)
 {
@@ -1050,6 +1027,29 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
   return 0;
 }
+
+
+int
+TAO_Transport::consolidate_extra_messages (ACE_Message_Block &incoming)
+{
+  int retval = 1;
+  while (retval == 1)
+    {
+      TAO_Queued_Data *q_data = 0;
+
+      retval =
+        this->messaging_object ()->extract_next_message (incoming,
+                                                         q_data);
+      if (q_data)
+        this->incoming_message_queue_.add_node (qd);
+    }
+
+  if (retval == -1)
+    return retval;
+
+  return 0;
+}
+
 int
 TAO_Transport::process_parsed_messages (ACE_Message_Block &message_block,
                                         CORBA::Octet byte_order,

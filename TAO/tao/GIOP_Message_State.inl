@@ -5,7 +5,14 @@
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::message_size (void) const
 {
-  return this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
+  CORBA::ULong len =
+    this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
+
+  if (this->more_fragments_ &&
+      this->giop_version_.minor > 1)
+       len += TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
+
+  return len;
 }
 
 ACE_INLINE CORBA::ULong
