@@ -61,16 +61,13 @@
 #  if defined (TAO_BUILD_DLL)
 #    define TAO_Export ACE_Proper_Export_Flag
 #    define TAO_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#    define TAO_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
 #  else
 #    define TAO_Export ACE_Proper_Import_Flag
 #    define TAO_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#    define TAO_SINGLETON_INSTANTIATION(T)
 #  endif /* TAO_BUILD_DLL */
 #else /* TAO_HAS_DLL */
 #  define TAO_Export
 #  define TAO_SINGLETON_DECLARATION(T)
-#  define TAO_SINGLETON_INSTANTIATION(T)
 #endif /* TAO_HAS_DLL */
 
 // COM stuff

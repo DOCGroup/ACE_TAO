@@ -372,7 +372,6 @@
 #     define ACE_Proper_Import_Flag __declspec (dllimport)
 #     define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
 #     define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
-#     define ACE_PROPER_SINGLETON_INSTANTIATION(T) template class T
 #   else /* defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
 /* Non-Microsoft, other versions of Borland: */
 #     define ACE_Proper_Export_Flag _export
@@ -380,14 +379,12 @@
 //   @@ Don't know how to handle this when using Borland's compilers.
 #     define ACE_EXPORT_SINGLETON_DECLARATION(T)
 #     define ACE_IMPORT_SINGLETON_DECLARATION(T)
-#     define ACE_PROPER_SINGLETON_INSTANTIATION(T)
 #   endif /* defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
 # else  /* ! ACE_WIN32 */
 #   define ACE_Proper_Export_Flag
 #   define ACE_Proper_Import_Flag
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T)
 #   define ACE_IMPORT_SINGLETON_DECLARATION(T)
-#   define ACE_PROPER_SINGLETON_INSTANTIATION(T)
 # endif /* ACE_WIN32 */
 
 // Here are definition for ACE library.
@@ -395,16 +392,13 @@
 #   if defined (ACE_BUILD_DLL)
 #     define ACE_Export ACE_Proper_Export_Flag
 #     define ACE_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#     define ACE_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
 #   else
 #     define ACE_Export ACE_Proper_Import_Flag
 #     define ACE_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#     define ACE_SINGLETON_INSTANTIATION(T)
 #   endif /* ACE_BUILD_DLL */
 # else /* ! ACE_HAS_DLL */
 #   define ACE_Export
 #   define ACE_SINGLETON_DECLARATION(T)
-#   define ACE_SINGLETON_INSTANTIATION(T)
 # endif /* ACE_HAS_DLL */
 
 // Here are definition for ACE_Svc library.
@@ -412,16 +406,13 @@
 #   if defined (ACE_BUILD_SVC_DLL)
 #     define ACE_Svc_Export ACE_Proper_Export_Flag
 #     define ACE_SVC_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#     define ACE_SVC_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
 #   else
 #     define ACE_Svc_Export ACE_Proper_Import_Flag
 #     define ACE_SVC_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#     define ACE_SVC_SINGLETON_INSTANTIATION(T)
 #   endif /* ACE_BUILD_SVC_DLL */
 # else /* ACE_HAS_SVC_DLL */
 #   define ACE_Svc_Export
 #   define ACE_SVC_SINGLETON_DECLARATION(T)
-#   define ACE_SVC_SINGLETON_INSTANTIATION(T)
 # endif /* ACE_HAS_SVC_DLL */
 
 // This is a whim of mine -- that instead of annotating a class with
