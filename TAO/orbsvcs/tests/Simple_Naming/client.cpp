@@ -28,7 +28,6 @@ class My_Test_Object : public POA_Test_Object
 {
 public:
   // = Initialization and termination methods.
-
   My_Test_Object (CORBA::Short id = 0);
   // Constructor.
 
