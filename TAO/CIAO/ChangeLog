@@ -1,3 +1,13 @@
+Wed Aug 20 14:48:15 2003  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
+	* CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc:
+	* CCF/Example/CodeGenerationKit/Indentation/XML/indent_xml.cpp:
+	  Added example of usage for the XML indenter.
+
+	* CCF/CCF/CodeGenerationKit/IndentationXML.hpp: Added XML
+	  indenter.
+
 Tue Aug 19 16:06:01 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIDLC/cidlc.mpc: Some cleaning of the MPC file: Removed unneeded
