@@ -6,10 +6,11 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/DefaultHandler.h"
 
-#include "tao/ORB.h"
+// #include "tao/ORB.h"
 
 #include "Configurator_ParseHandler.h"
 #include "Configurator_SyntaxHandler.h"
+#include "ECDriver.h"
 
 struct Arguments
 {
@@ -85,6 +86,10 @@ main (int argc, char *argv[])
       cfgtor.parse();
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished configuring\n")));
+
+      ECDriver *drv = cfgtor.getDriver();
+      drv->run();
+
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
     {
