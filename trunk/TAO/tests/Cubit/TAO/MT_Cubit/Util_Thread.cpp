@@ -54,7 +54,12 @@ Util_Thread::run_computations (void)
       u_long original = CUBIT_ARBIT_NUMBER;
       u_long n = original;
       u_long test_done = 1;
+// @@ This is a *hack*, we need to implement sqrt and ceil without double's.
+#if defined (ACE_LACKS_FLOATING_POINT)
+      u_long sqrt_n = n/10;
+#else  /* ! ACE_LACKS_FLOATING_POINT */
       u_long sqrt_n = (u_long) ceil (sqrt (n));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
       u_long i;
 
       for (i = 2; i <= sqrt_n; i++)

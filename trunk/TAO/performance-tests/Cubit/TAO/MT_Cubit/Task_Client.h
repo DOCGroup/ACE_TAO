@@ -137,6 +137,9 @@ public:
 
   u_int oneway_;
   // flag that indicates if we are going to use oneway calls instead of two-way
+
+  u_int use_name_service_;
+  // flag that say if we are using the or not the name service.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>

@@ -45,15 +45,19 @@ Task_State::Task_State (int argc, char **argv)
     global_jitter_array_ (0),
     factory_ior_ (0),
     shutdown_ (0),
-    oneway_ (0)
+    oneway_ (0),
+    use_name_service_ (1)
 {
   ACE_OS::strcpy (server_host_, "localhost");
-  ACE_Get_Opt opts (argc, argv, "h:n:t:p:d:rk:xo");
+  ACE_Get_Opt opts (argc, argv, "sh:n:t:p:d:rk:xo");
   int c;
   int datatype;
 
   while ((c = opts ()) != -1)
     switch (c) {
+    case 's':
+      use_name_service_ = 0;
+      break; 
     case 'k':
       factory_ior_ = ACE_OS::strdup (opts.optarg);
       break;
@@ -112,6 +116,7 @@ Task_State::Task_State (int argc, char **argv)
                   " [-k factory_ior_key]"
                   " [-x] // makes a call to servant to shutdown"
                   " [-o] // makes client use oneway calls instead"
+                  " [-s] // makes client *NOT* use the name service"
                   "\n", argv [0]));
     }
   // thread_count_ + 1 because there is one utilization thread also
@@ -193,7 +198,12 @@ Client::get_high_priority_jitter () {
       double difference = ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
     }
+// @@ This is a *hack*, we need to implement sqrt without double's.
+#if defined (ACE_LACKS_FLOATING_POINT)
+  return 1; 
+#else  /* ! ACE_LACKS_FLOATING_POINT */
   return sqrt (jitter / (double) (ts_->loop_count_ - 1));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
 double
@@ -247,6 +257,8 @@ Client::svc (void)
       return -1;
     }
 
+if (ts_->use_name_service_ != 0)
+{
   naming_obj =
     orb->resolve_initial_references ("NameService");
 
@@ -258,6 +270,7 @@ Client::svc (void)
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in (), env);
     }
+ }
 
   {
 #if defined (ACE_HAS_THREADS)
@@ -475,6 +488,12 @@ Client::run_tests (Cubit_ptr cb,
   double latency = 0;
   double sleep_time = (1/frequency) * (1000 * 1000);
   double delta = 0;
+
+#if defined (USE_QUANTIFY)
+  quantify_stop_recording_data();
+  quantify_clear_data ();
+#endif
+
   // Make the calls in a loop.
 
   for (i = 0; i < loop_count; i++)
@@ -493,7 +512,17 @@ Client::run_tests (Cubit_ptr cb,
 		// Cube an octet.
 		CORBA::Octet arg_octet = func (i), ret_octet = 0;
 
+#if defined (USE_QUANTIFY)
+	    /* start recording quantify data from here */
+	    quantify_start_recording_data ();
+#endif
+
 		ret_octet = cb->cube_octet (arg_octet, env);
+
+#if defined (USE_QUANTIFY)
+	    quantify_stop_recording_data();
+#endif
+
 		if (env.exception () != 0)
 		  {
 		    env.print_exception ("call to cube_octet()\n");
@@ -518,7 +547,16 @@ Client::run_tests (Cubit_ptr cb,
 
 		CORBA::Short arg_short = func (i), ret_short;
 
+#if defined (USE_QUANTIFY)
+	    /* start recording quantify data from here */
+	    quantify_start_recording_data ();
+#endif
+
 		ret_short = cb->cube_short (arg_short, env);
+
+#if defined (USE_QUANTIFY)
+	    quantify_stop_recording_data();
+#endif
 
 		if (env.exception () != 0)
 		  {
@@ -546,7 +584,16 @@ Client::run_tests (Cubit_ptr cb,
 
 		CORBA::Long arg_long = func (i), ret_long;
 
+#if defined (USE_QUANTIFY)
+	    /* start recording quantify data from here */
+	    quantify_start_recording_data ();
+#endif
+
 		ret_long = cb->cube_long (arg_long, env);
+
+#if defined (USE_QUANTIFY)
+	    quantify_stop_recording_data();
+#endif
 
 		if (env.exception () != 0)
 		  {
@@ -575,7 +622,16 @@ Client::run_tests (Cubit_ptr cb,
 		arg_struct.s = func (i);
 		arg_struct.o = func (i);
 
+#if defined (USE_QUANTIFY)
+	    /* start recording quantify data from here */
+	    quantify_start_recording_data ();
+#endif
+
 		ret_struct = cb->cube_struct (arg_struct, env);
+
+#if defined (USE_QUANTIFY)
+	    quantify_stop_recording_data();
+#endif
 
 		if (env.exception () != 0)
 		  {
@@ -602,7 +658,14 @@ Client::run_tests (Cubit_ptr cb,
       else
 	{
 	  call_count++;
+#if defined (USE_QUANTIFY)
+	    /* start recording quantify data from here */
+	    quantify_start_recording_data ();
+#endif
 	  cb->noop (env);
+#if defined (USE_QUANTIFY)
+	    quantify_stop_recording_data();
+#endif
 	  if (env.exception () != 0)
 	    {
 	      env.print_exception ("oneway call noop()\n");

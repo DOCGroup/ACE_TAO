@@ -15,6 +15,12 @@
 
 #include "server.h"
 
+// Global options used to configure various parameters.
+static char *hostname = NULL;
+static int base_port = 0;
+static int num_of_objs = 1;
+static u_int use_name_service = 1;
+
 Cubit_Task::Cubit_Task (void)
 {
   // No-op.
@@ -152,32 +158,35 @@ Cubit_Task::initialize_orb (void)
         }
       TAO_CHECK_ENV;
 
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          1);
+      if (use_name_service == 0)
+	return 0;
 
+      CORBA::Object_var naming_obj =
+	this->orb_->resolve_initial_references ("NameService");
+      if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to resolve the Name Service.\n"),
+			  1);
+	  
       this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+	CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
 
       // Check the environment and return 1 if exception occurred or nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
-          CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
-        {
-          return 1;
-        }
-
+	  CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
+	{
+	  return 1;
+	}
+	  
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
       cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
-
+	  
       TAO_TRY_ENV.clear ();
       CORBA::Object_var objref =
-        this->naming_context_->bind_new_context (cubit_context_name, TAO_TRY_ENV);
-
+	this->naming_context_->bind_new_context (cubit_context_name, TAO_TRY_ENV);
+	  
       if (TAO_TRY_ENV.exception() != 0)
         {
 #if 0  // un comment when Andy fixes exception marshalling bug.
@@ -487,22 +496,20 @@ Cubit_Factory_Task::initialize_orb (void)
   return 0;
 }
 
-// Global options used to configure various parameters.
-static char *hostname = NULL;
-static int base_port = 0;
-static int num_of_objs = 1;
-
 // Parses the command line arguments and returns an error status.
 
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "h:p:t:");
+  ACE_Get_Opt opts (argc, argv, "sh:p:t:");
   int c;
 
   while ((c = opts ()) != -1)
     switch (c)
       {
+      case 's':
+        use_name_service = 0;
+        break;
       case 'h':
         hostname = opts.optarg;
         ACE_DEBUG ((LM_DEBUG, "h\n"));
@@ -518,9 +525,10 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " -p port"
-                           " -h my_hostname"
-                           " -t num_objects"
+                           " [-s Means NOT to use the name service] "
+                           " [-p <port>]"
+                           " [-h <my_hostname>]"
+                           " [-t <num_objects>]"
                            "\n", argv [0]),
                           1);
       }
