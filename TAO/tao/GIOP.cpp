@@ -64,35 +64,35 @@ ACE_RCSID(tao, GIOP, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_GIOP_Timeprobe_Description[] =
-{
-  "GIOP::send_request - start",
-  "GIOP::send_request - end",
+  {
+    "GIOP::send_request - start",
+    "GIOP::send_request - end",
 
-  "GIOP::recv_request - start",
-  "GIOP::recv_request - end",
+    "GIOP::recv_request - start",
+    "GIOP::recv_request - end",
 
-  "GIOP::read_buffer - start",
-  "GIOP::read_buffer - end",
+    "GIOP::read_buffer - start"
+    "GIOP::read_buffer - end",
 
-  "GIOP::LocateRequestHeader_init - start",
-  "GIOP::LocateRequestHeader_init - end"
-};
+    "GIOP::LocateRequestHeader_init - start",
+    "GIOP::LocateRequestHeader_init - end"
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_GIOP_SEND_REQUEST_START = 100,
-  TAO_GIOP_SEND_REQUEST_END,
+  {
+    // Timeprobe description table start key
+    TAO_GIOP_SEND_REQUEST_START = 100,
+    TAO_GIOP_SEND_REQUEST_END,
 
-  TAO_GIOP_RECV_REQUEST_START,
-  TAO_GIOP_RECV_REQUEST_END,
+    TAO_GIOP_RECV_REQUEST_START,
+    TAO_GIOP_RECV_REQUEST_END,
 
-  TAO_GIOP_READ_BUFFER_START,
-  TAO_GIOP_READ_BUFFER_END,
+    TAO_GIOP_READ_BUFFER_START,
+    TAO_GIOP_READ_BUFFER_END,
 
-  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
-  TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
-};
+    TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START,
+    TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_GIOP_Timeprobe_Description,
@@ -201,7 +201,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
                         TAO_ORB_Core *orb_core)
 {
 
-  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_SEND_REQUEST_START);
 
   char *buf = (char *) stream.buffer (); // ptr to first buffer
   size_t total_len = stream.total_length ();  // length of all buffers
@@ -439,7 +439,7 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
                         TAO_InputCDR &msg,
                         TAO_ORB_Core* orb_core)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
 
   TAO_GIOP::Message_Type retval;
   CORBA::ULong message_size;

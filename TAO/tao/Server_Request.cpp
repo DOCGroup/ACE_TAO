@@ -22,17 +22,17 @@ ACE_RCSID(tao, Server_Request, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Server_Request_Timeprobe_Description[] =
-{
-  "Server_Request::Server_Request - start",
-  "Server_Request::Server_Request - end",
-};
+  {
+    "Server_Request::Server_Request - start",
+    "Server_Request::Server_Request - end",
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_SERVER_REQUEST_START = 400,
-  TAO_SERVER_REQUEST_END
-};
+  {
+    // Timeprobe description table start key
+    TAO_SERVER_REQUEST_START = 400,
+    TAO_SERVER_REQUEST_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
@@ -358,18 +358,18 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
       }
     // Normal exception
     else
-     {
-       this->exception_ = new CORBA::Any (value);
+      {
+        this->exception_ = new CORBA::Any (value);
 
-       // @@ This cast is not safe, but we haven't implemented the >>=
-       // and <<= operators for base exceptions (yet).
-       CORBA_Exception* x = (CORBA_Exception*)value.value ();
-       if (CORBA_UserException::_narrow (x) != 0)
-         this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
-       else
-        this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
-    }
-  }
+        // @@ This cast is not safe, but we haven't implemented the >>=
+        // and <<= operators for base exceptions (yet).
+        CORBA_Exception* x = (CORBA_Exception*)value.value ();
+        if (CORBA_UserException::_narrow (x) != 0)
+          this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+        else
+          this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+      }
+   }
 }
 
 // this method will be utilized by the DSI servant to marshal outgoing

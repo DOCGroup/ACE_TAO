@@ -14,32 +14,34 @@ ACE_RCSID(tao, Invocation, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-  static const char *TAO_Invocation_Timeprobe_Description[] =
-{
-  "GIOP_Invocation::start - enter",
-  "GIOP_Invocation::start - leave",
-  "GIOP_Invocation::start - connect",
-  "GIOP_Invocation::start - start_msg",
-  "GIOP_Invocation::start - request_hdr",
-  "GIOP_Invocation::invoke - start",
-  "GIOP_Invocation::invoke - end"
-};
+static const char *TAO_Invocation_Timeprobe_Description[] =
+  {
+    "GIOP_Invocation::invoke - start",
+    "GIOP_Invocation::invoke - end",
+
+    "GIOP_Invocation::start - enter",
+    "GIOP_Invocation::start - leave",
+    "GIOP_Invocation::start - connect",
+    "GIOP_Invocation::start - start_msg",
+    "GIOP_Invocation::start - request_hdr"
+  };
 
 enum
-{
-  TAO_GIOP_INVOCATION_START_ENTER = 1000,
-  TAO_GIOP_INVOCATION_START_LEAVE,
-  TAO_GIOP_INVOCATION_START_CONNECT,
-  TAO_GIOP_INVOCATION_START_START_MSG,
-  TAO_GIOP_INVOCATION_START_REQUEST_HDR,
-  TAO_GIOP_INVOCATION_INVOKE_START,
-  TAO_GIOP_INVOCATION_INVOKE_END
-};
+  {
+    TAO_GIOP_INVOCATION_INVOKE_START = 1000,
+    TAO_GIOP_INVOCATION_INVOKE_END,
+
+    TAO_GIOP_INVOCATION_START_ENTER,
+    TAO_GIOP_INVOCATION_START_LEAVE,
+    TAO_GIOP_INVOCATION_START_CONNECT,
+    TAO_GIOP_INVOCATION_START_START_MSG,
+    TAO_GIOP_INVOCATION_START_REQUEST_HDR
+  };
 
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
-                                  TAO_GIOP_INVOCATION_START_ENTER);
+                                  TAO_GIOP_INVOCATION_INVOKE_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
@@ -288,7 +290,7 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
   // Send Request, return on error or if we're done
 
@@ -433,7 +435,7 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
   TAO_Profile   *profile   = this->data_->profile_in_use ();
   TAO_Transport *transport = profile->transport ();
@@ -718,7 +720,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     CORBA::ULong except_count,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
 
   TAO_Profile *profile = this->data_->profile_in_use ();
   TAO_Transport *transport = profile->transport ();

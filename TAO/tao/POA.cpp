@@ -24,47 +24,47 @@ ACE_RCSID(tao, POA, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_POA_Timeprobe_Description[] =
-{
-  "POA::locate_poa_i - start",
-  "POA::locate_poa_i - end",
+  {
+    "POA::locate_poa_i - start",
+    "POA::locate_poa_i - end",
 
-  "POA::locate_poa_and_servant_i - start",
-  "POA::locate_poa_and_servant_i - end",
+    "POA::locate_poa_and_servant_i - start",
+    "POA::locate_poa_and_servant_i - end",
 
-  "POA::find_servant - start",
-  "POA::find_servant - end",
+    "POA::find_servant - start",
+    "POA::find_servant - end",
 
-  "POA::dispatch_servant - start",
-  "POA::dispatch_servant - end",
+    "POA::dispatch_servant - start",
+    "POA::dispatch_servant - end",
 
-  "POA::parse_key - start",
-  "POA::parse_key - end",
+    "POA::parse_key - start",
+    "POA::parse_key - end",
 
-  "Servant::_dispatch - start",
-  "Servant::_dispatch - end",
-};
+    "Servant::_dispatch - start",
+    "Servant::_dispatch - end",
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_POA_LOCATE_POA_I_START = 200,
-  TAO_POA_LOCATE_POA_I_END,
+  {
+    // Timeprobe description table start key
+    TAO_POA_LOCATE_POA_I_START = 200,
+    TAO_POA_LOCATE_POA_I_END,
 
-  TAO_POA_LOCATE_POA_AND_SERVANT_I_START,
-  TAO_POA_LOCATE_POA_AND_SERVANT_I_END,
+    TAO_POA_LOCATE_POA_AND_SERVANT_I_START,
+    TAO_POA_LOCATE_POA_AND_SERVANT_I_END,
 
-  TAO_POA_FIND_SERVANT_START,
-  TAO_POA_FIND_SERVANT_END,
+    TAO_POA_FIND_SERVANT_START,
+    TAO_POA_FIND_SERVANT_END,
 
-  TAO_POA_DISPATCH_SERVANT_START,
-  TAO_POA_DISPATCH_SERVANT_END,
+    TAO_POA_DISPATCH_SERVANT_START,
+    TAO_POA_DISPATCH_SERVANT_END,
 
-  TAO_POA_PARSE_KEY_START,
-  TAO_POA_PARSE_KEY_END,
+    TAO_POA_PARSE_KEY_START,
+    TAO_POA_PARSE_KEY_END,
 
-  TAO_SERVANT_DISPATCH_START,
-  TAO_SERVANT_DISPATCH_END
-};
+    TAO_SERVANT_DISPATCH_START,
+    TAO_SERVANT_DISPATCH_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description,
