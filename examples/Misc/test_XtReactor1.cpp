@@ -29,7 +29,7 @@ public:
     int flags = ACE_OS::fcntl (ACE_STDOUT, F_GETFL);
 
     if (flags != -1
-	&& ACE_OS::fcntl (ACE_STDOUT,
+        && ACE_OS::fcntl (ACE_STDOUT,
                           F_SETFL, flags | O_NONBLOCK) != -1)
       return;
     else
@@ -45,18 +45,18 @@ public:
 
     if (ACE_OS::write (ACE_STDOUT, s, 1) == 1)
       {
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "wrote output '%d'\n",
                     (int) *s));
-	msg_.rd_ptr (1);
+        msg_.rd_ptr (1);
       }
 
     if (msg_.length () == 0)
       {
-	reactor_->remove_handler (this,
+        reactor_->remove_handler (this,
                                   ACE_Event_Handler::WRITE_MASK);
-	msg_.rd_ptr (msg_.base ());
-	msg_.wr_ptr (msg_.base ());
+        msg_.rd_ptr (msg_.base ());
+        msg_.wr_ptr (msg_.base ());
       }
     return 0;
   }
@@ -69,8 +69,8 @@ public:
 
     if (msg_.wr_ptr () < msg_.end ())
       {
-	*msg_.wr_ptr () = c;
-	msg_.wr_ptr (1);
+        *msg_.wr_ptr () = c;
+        msg_.wr_ptr (1);
       }
     else
       ACE_DEBUG ((LM_DEBUG,
@@ -127,7 +127,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
                                         "buttontest",
                                         NULL,
                                         0,
-					&argc,
+                                        &argc,
                                         argv,
                                         NULL,
                                         NULL);
@@ -157,8 +157,8 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   // Print a message every 10 seconds.
   if (reactor.schedule_timer (stdin_, 0,
-			      ACE_Time_Value (10),
-			      ACE_Time_Value (10)) == -1)
+                              ACE_Time_Value (10),
+                              ACE_Time_Value (10)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "schedule_timer"),
