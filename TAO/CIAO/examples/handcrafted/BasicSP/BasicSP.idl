@@ -12,7 +12,7 @@
 #ifndef CIAO_BASIC_SP_IDL
 #define CIAO_BASIC_SP_IDL
 
-#include "CCM_Component.idl"
+#include "ciao/CCM_Component.idl"
 
 // @@NOTE: Do we need a pragma prefix. Anyway its broken now in TAO..
 // #pragma prefix ""
