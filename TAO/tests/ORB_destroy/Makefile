@@ -12,8 +12,6 @@ LSRC = 	$(addsuffix .cpp,$(BIN))
 
 CPPFLAGS += -I$(TAO_ROOT)
 
-LDLIBS     = -lTAO_PortableServer -lTAO
-LDFLAGS += -L$(TAO_ROOT)/tao
 
 INSTALL =
 
@@ -29,6 +27,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+LDLIBS     = $(TAO_SRVR_LIBS)
+LDFLAGS += -L$(TAO_ROOT)/tao
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------

@@ -109,7 +109,7 @@ nested_scopeC.h: nested_scope.idl $(TAO_IDL)
 	$(TAO_IDL) -w $(TAO_IDLFLAGS) nested_scope.idl
 
 main:	$(addprefix $(VDIR),$(TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean:	clean
 	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))

@@ -10,7 +10,6 @@ SRC = CosEvent_Service.cpp
 
 ES_OBJS=$(SRC:.cpp=.o)
 
-LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO
 
 BIN_UNCHECKED = CosEvent_Service
 
@@ -36,6 +35,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
+LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging $(TAO_SRVR_LIBS)
 
 #----------------------------------------------------------------------------
 #       Local targets

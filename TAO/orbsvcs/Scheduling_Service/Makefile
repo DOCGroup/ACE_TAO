@@ -9,7 +9,6 @@ LSRC =  $(SCHEDULE_SRCS)
 
 SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Scheduling_Service
 
@@ -35,6 +34,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched -I$(TAO_ROOT)/orbsvcs \
             -I$(TAO_ROOT)
+LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 Scheduling_Service: $(addprefix $(VDIR),$(SCHEDULE_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
