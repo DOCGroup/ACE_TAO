@@ -1,3 +1,11 @@
+Thu Mar 20 07:09:54 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp: The wrong remove_handler() method was
+	  being used in the ACE_Process_Manager::close() method.  Changed
+ 	  this to use the remove_handler() that removes the SIGCHLD
+ 	  handler.  Thanks to Carsten Prescher
+	  <carsten.prescher@sysde.eads.net> for this fix.
+
 Wed Mar 19 18:27:08 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu:
