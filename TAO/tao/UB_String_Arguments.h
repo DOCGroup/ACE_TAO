@@ -33,13 +33,17 @@ namespace TAO
 
   template<>
   class Arg_Traits<ACE_InputCDR::to_string> 
-    : public UB_String_Arg_Traits_T<CORBA::Char, CORBA::String_out>
+    : public UB_String_Arg_Traits_T<CORBA::Char, 
+                                    CORBA::String_var,
+                                    CORBA::String_out>
   {
   };
 
   template<>
   class Arg_Traits<ACE_InputCDR::to_wstring> 
-    : public UB_String_Arg_Traits_T<CORBA::WChar, CORBA::WString_out>
+    : public UB_String_Arg_Traits_T<CORBA::WChar, 
+                                    CORBA::WString_var,
+                                    CORBA::WString_out>
   {
   };
 };

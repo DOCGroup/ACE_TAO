@@ -8,6 +8,13 @@ ACE_RCSID (tao,
 
 template<>
 CORBA::Boolean
+TAO::Ret_Basic_Argument_T<void>::marshal (TAO_OutputCDR &)
+{
+  return 1;
+}
+
+template<>
+CORBA::Boolean
 TAO::Ret_Basic_Argument_T<void>::demarshal (TAO_InputCDR &)
 {
   return 1;
@@ -27,6 +34,13 @@ TAO::Ret_Basic_Argument_T<void>::operator void () const
 template<>
 CORBA::Boolean
 TAO::Ret_Basic_SArgument_T<void>::marshal (TAO_OutputCDR &)
+{
+  return 1;
+}
+
+template<>
+CORBA::Boolean
+TAO::Ret_Basic_SArgument_T<void>::demarshal (TAO_InputCDR &)
 {
   return 1;
 }

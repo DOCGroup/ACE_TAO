@@ -34,14 +34,15 @@ namespace TAO
   class In_UB_String_Argument_T : public Argument
   {
   public:
-    In_UB_String_Argument_T (S * const & x);
+    In_UB_String_Argument_T (const S * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
   private:
-    S * const & x_;
+    const S * x_;
   };
 
   /**
@@ -58,7 +59,9 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
   private:
     mutable S *& x_;
@@ -70,15 +73,13 @@ namespace TAO
    * @brief Template class for INOUT unbounded (w)string argument.
    *
    */
-  template<typename S>
+  template<typename S, typename S_out>
   class Out_UB_String_Argument_T : public Argument
   {
   public:
-    Out_UB_String_Argument_T (S *& x);
+    Out_UB_String_Argument_T (S_out & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
   private:
     mutable S *& x_;
@@ -90,19 +91,22 @@ namespace TAO
    * @brief Template class for return stub value of ub (w)string argument.
    *
    */
-  template<typename S>
-  class Ret_UB_String_Argument_T : public Stub_Retval
+  template<typename S, typename S_var>
+  class Ret_UB_String_Argument_T : public Argument
   {
   public:
     Ret_UB_String_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S * () const;
+    virtual void interceptor_result (CORBA::Any *);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S * excp (void);
+    S * retn (void);
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -111,20 +115,21 @@ namespace TAO
    * @brief Template class for IN skeleton UB (w)string argument.
    *
    */
-  template<typename S>
+  template<typename S, typename S_var>
   class In_UB_String_SArgument_T : public Argument
   {
   public:
     In_UB_String_SArgument_T (void);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S * () const;
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    const S * arg (void) const;
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -133,7 +138,7 @@ namespace TAO
    * @brief Template class for INOUT skeleton UB (w)string argument.
    *
    */
-  template<typename S>
+  template<typename S, typename S_var>
   class Inout_UB_String_SArgument_T : public Argument
   {
   public:
@@ -141,12 +146,14 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S *& ();
+    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S *& arg (void);
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -155,20 +162,18 @@ namespace TAO
    * @brief Template class for INOUT skeleton UB (w)string argument.
    *
    */
-  template<typename S>
+  template<typename S, typename S_var, typename S_out>
   class Out_UB_String_SArgument_T : public Argument
   {
   public:
     Out_UB_String_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S *& ();
+    S_out arg (void);
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -177,20 +182,21 @@ namespace TAO
    * @brief Template class for return skeleton value of UB (w)string.
    *
    */
-  template<typename S>
-  class Ret_UB_String_SArgument_T : public Skel_Retval
+  template<typename S, typename S_var>
+  class Ret_UB_String_SArgument_T : public Argument
   {
   public:
     Ret_UB_String_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S * () const;
-    operator S *& ();
+    virtual void interceptor_result (CORBA::Any *);
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
+
+    S *& arg (void);
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -207,25 +213,25 @@ namespace TAO
    * @brief Template class for argument traits of unbounded (w)strings.
    *
    */
-  template<typename T, typename T_out>
+  template<typename T, typename T_var, typename T_out>
   struct UB_String_Arg_Traits_T
   {
-    typedef T *                             ret_type;
-    typedef const T *                       in_type;
-    typedef T *&                            inout_type;
-    typedef T_out                           out_type;
+    typedef T *                                         ret_type;
+    typedef const T *                                   in_type;
+    typedef T *&                                        inout_type;
+    typedef T_out                                       out_type;
 
-    typedef In_UB_String_Argument_T<T>      in_arg_val;
-    typedef Inout_UB_String_Argument_T<T>   inout_arg_val;
-    typedef Out_UB_String_Argument_T<T>     out_arg_val;
-    typedef Ret_UB_String_Argument_T<T>     stub_ret_val;
+    typedef In_UB_String_Argument_T<T>                  in_arg_val;
+    typedef Inout_UB_String_Argument_T<T>               inout_arg_val;
+    typedef Out_UB_String_Argument_T<T,T_out>           out_arg_val;
+    typedef Ret_UB_String_Argument_T<T,T_var>           stub_ret_val;
 
-    typedef In_UB_String_SArgument_T<T>     in_sarg_val;
-    typedef Inout_UB_String_SArgument_T<T>  inout_sarg_val;
-    typedef Out_UB_String_SArgument_T<T>    out_sarg_val;
-    typedef Ret_UB_String_SArgument_T<T>    skel_ret_val;
+    typedef In_UB_String_SArgument_T<T,T_var>           in_sarg_val;
+    typedef Inout_UB_String_SArgument_T<T,T_var>        inout_sarg_val;
+    typedef Out_UB_String_SArgument_T<T,T_var,T_out>    out_sarg_val;
+    typedef Ret_UB_String_SArgument_T<T,T_var>          skel_ret_val;
 
-    typedef UB_String_Tag                   idl_tag;
+    typedef UB_String_Tag                               idl_tag;
   };
 };
 

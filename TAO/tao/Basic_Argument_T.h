@@ -38,7 +38,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &s);
 
   private:
     S const & x_;
@@ -58,7 +58,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &s);
 
   private:
     mutable S & x_;
@@ -78,7 +78,6 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
 
   private:
     mutable S & x_;
@@ -91,15 +90,17 @@ namespace TAO
    *
    */
   template<typename S>
-  class Ret_Basic_Argument_T : public Stub_Retval
+  class Ret_Basic_Argument_T : public Argument
   {
   public:
     Ret_Basic_Argument_T (void);
 
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
+    virtual void interceptor_result (CORBA::Any *);
 
     operator S () const;
+    S retn (void);
 
   private:
     S x_;
@@ -119,7 +120,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &s);
 
     operator S () const;
 
@@ -141,7 +142,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &s);
 
     operator S & ();
 
@@ -163,7 +164,7 @@ namespace TAO
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-    virtual void add_to_interceptor (Dynamic::Parameter &);
+    virtual void add_to_interceptor (CORBA::Any &);
 
     operator S & ();
 
@@ -178,16 +179,17 @@ namespace TAO
    *
    */
   template<typename S>
-  class Ret_Basic_SArgument_T : public Skel_Retval
+  class Ret_Basic_SArgument_T : public Argument
   {
   public:
     Ret_Basic_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual void add_to_interceptor (CORBA::Any *);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    virtual void interceptor_result (CORBA::Any *);
 
+    Ret_Basic_SArgument_T<S> & operator= (const S & rhs);
     operator S () const;
-    operator S & ();
 
   private:
     S x_;
