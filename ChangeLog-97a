@@ -1,3 +1,15 @@
+Mon Apr 14 23:08:27 1997    <irfan@TWOSTEP>
+
+	* ace/SPIPE_Stream: Changed the use of ACE::send_n to ACE::write_n
+ 	  and ACE::recv_n to ACE::read_n.
+
+	* ace/OS.h (WNOHANG): Added WNOHANG to OS.h for Win32.
+
+	* ace/OS.i (getpgid): Fixed extra return.
+
+	* examples/Connection/blocking/SPIPE-acceptor: Updated the code to
+ 	  use the new Proactor and the new asynchronous IO.	
+
 Mon Apr 14 21:32:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp (handle_client):

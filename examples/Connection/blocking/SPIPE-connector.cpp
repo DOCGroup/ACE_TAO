@@ -31,6 +31,8 @@ Peer_Handler::open (void *)
 				      ACE_Service_Config::reactor (),
 				      ACE_Service_Config::thr_mgr ()) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_stdin_handler"), -1);
+      else 
+	return 0;
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
@@ -46,8 +48,11 @@ Peer_Handler::open (void *)
       while (iterations_-- > 0
 	     && this->peer ().send_n (buffer, length) == length)
 	continue;
+      
+      this->peer ().close ();
+      ACE_Service_Config::end_reactor_event_loop ();
+      return 0;
     }
-  return this->peer ().close ();
 }
 
 int 
