@@ -18,11 +18,12 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
+#include "be_visitor_argument.h"
 
 ACE_RCSID(be_visitor_operation, operation_ss, "$Id$")
 
@@ -134,7 +135,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   // get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
-      << intf->full_skel_name () << " *)_tao_object_reference;\n";
+      << intf->full_skel_name () << " *)_tao_object_reference;\n\n";
 
   // declare a return type variable
   be_visitor_context ctx = *this->ctx_;
@@ -715,16 +716,48 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   // We still need the following check because we maybe 2way and yet have no
   // parameters and a void return type
-  if (!this->void_return_type (bt) ||
-      this->has_param_type (node, AST_Argument::dir_INOUT) ||
-      this->has_param_type (node, AST_Argument::dir_OUT))
+  if (this->void_return_type (bt) &&
+      !this->has_param_type (node, AST_Argument::dir_INOUT) &&
+      !this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      // grab the incoming stream
-      os->indent ();
-      *os << "ACE_CHECK;" << be_nl;
-      *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-      *os << "if (!(\n" << be_idt;
+      return 0;
     }
+
+  // grab the incoming stream
+  os->indent ();
+  *os << "ACE_CHECK;" << be_nl;
+
+  // Create temporary variables for the out and return parameters..
+  if (!this->void_return_type (bt))
+    {
+      ctx = *this->ctx_;
+      be_visitor_context *new_ctx =
+        new be_visitor_context (ctx);
+      be_visitor_operation_compiled_rettype_post_upcall visitor (new_ctx);
+      if (bt->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_compiled_visitor_operation_ss::"
+                             "gen_marshal_params - "
+                             "codegen for return var [post upcall] failed\n"),
+                            -1);
+        }
+    }
+
+  // Generate any temporary variables to demarshal the arguments
+  ctx = *this->ctx_;
+  be_visitor_compiled_args_post_upcall vis1 (new be_visitor_context (ctx));
+  if (node->accept (&vis1) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_pre_stub_info - "
+                         "codegen for pre args failed\n"),
+                        -1);
+    }
+
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
+  *os << "if (!(\n" << be_idt;
 
   if (!this->void_return_type (bt))
     {
@@ -768,25 +801,19 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  if (!this->void_return_type (bt) ||
-      this->has_param_type (node, AST_Argument::dir_INOUT) ||
-      this->has_param_type (node, AST_Argument::dir_OUT))
+  *os << be_uidt_nl << "))\n" << be_idt;
+  // if marshaling fails, raise exception
+  if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
+                                 "",
+                                 "ACE_TRY_ENV") == -1)
     {
-
-      *os << be_uidt_nl << "))\n" << be_idt;
-      // if marshaling fails, raise exception
-      if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "",
-                                     "ACE_TRY_ENV") == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ss::"
-                             "gen_marshal_params - "
-                             "codegen for raising exception failed\n"),
-                            -1);
-        }
-      *os << be_uidt << be_uidt << "\n";
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_ss::"
+                         "gen_marshal_params - "
+                         "codegen for raising exception failed\n"),
+                        -1);
     }
+  *os << be_uidt << be_uidt << "\n";
 
   return 0;
 }

@@ -120,12 +120,16 @@ int be_visitor_operation_rettype_compiled_marshal::visit_array (be_array *node)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
+#if 0
       *os << node->name () << "_forany (";
       if (node->size_type () == be_decl::VARIABLE)
         *os << "(" << node->name () << "_slice *)"
             << "_tao_retval.in ()" << ")";
       else
         *os << "_tao_retval" << ")";
+#else
+      *os << "_tao_retval_forany";
+#endif
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {

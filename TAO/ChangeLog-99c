@@ -1,3 +1,29 @@
+Sat May 15 14:11:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/argument.cpp:
+	* TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_argument.h:
+	* TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h:
+	  Fixed warnings in generated code if the arguments of an
+	  operation where arrays.  The changes have been tested for both
+	  fixed sized and variable sized arrays in Param_Test.
+	  This should also fix the compilation problem on HP-UX and other
+	  platforms.
+
 Sat May 15 11:38:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp (TAO_YY_BREAK): Reapplied my old change

@@ -79,4 +79,36 @@ public:
 
 };
 
+// ****************************************************************
+
+// ************************************************************
+// class be_visitor_compiled_args_post_upcall
+// ************************************************************
+
+class be_visitor_compiled_args_post_upcall : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_compiled_args_post_upcall
+  //
+  // = DESCRIPTION
+  //   Visitor for post processing after upcall
+  //
+public:
+  be_visitor_compiled_args_post_upcall (be_visitor_context *ctx);
+  // constructor
+
+  virtual ~be_visitor_compiled_args_post_upcall (void);
+  // destructor
+
+  virtual int visit_argument (be_argument *node);
+  // visit the argument node
+
+  // =visit all the nodes that can be the types for the argument
+
+  virtual int visit_operation (be_operation *node);
+  virtual int visit_array (be_array *node);
+  virtual int visit_typedef (be_typedef *node);
+};
+
 #endif  /* _BE_VISITOR_ARGUMENT_POST_UPCALL_SS_H_ */
