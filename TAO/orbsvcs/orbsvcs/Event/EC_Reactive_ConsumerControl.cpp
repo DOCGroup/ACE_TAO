@@ -127,6 +127,7 @@ TAO_EC_Reactive_ConsumerControl::handle_timeout (
 int
 TAO_EC_Reactive_ConsumerControl::activate (void)
 {
+#if defined (TAO_HAS_CORBA_MESSAGING)
   long id = this->reactor_->schedule_timer (&this->adapter_,
                                             0,
                                             this->rate_,
@@ -167,6 +168,7 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
       return -1;
     }
   ACE_ENDTRY;
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
   return 0;
 }
@@ -190,7 +192,7 @@ TAO_EC_Reactive_ConsumerControl::consumer_not_exist (
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Reactive_ConsumerControl::consumer_not_exist");
       // Ignore all exceptions..
     }
