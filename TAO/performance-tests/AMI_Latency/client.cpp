@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
+#include "ace/Stats.h"
 
 ACE_RCSID(AMI_Latency, client, "$Id$")
 
@@ -132,6 +133,8 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+
       for (int i = 0; i != niterations; ++i)
         {
           // Invoke asynchronous operation....
@@ -144,11 +147,17 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
+      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+
       ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       roundtrip_handler_impl->dump_results (gsf);
+
+      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                             test_end - test_start,
+                                             stats.samples_count ());
 
       roundtrip->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
