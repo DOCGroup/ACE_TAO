@@ -975,6 +975,32 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // determined.
 
   this->orb_params ()->service_port (NAMESERVICE, ns_port);
+
+  char ns_port_char[33];
+
+  ACE_OS_String::itoa (ns_port,
+                       ns_port_char,
+                       10);
+
+  const char *ns_port_ptr =
+    CORBA::string_alloc (ACE_OS::strlen
+                         ((const char *)
+                          ns_port_char));
+
+  ns_port_ptr = (const char *) ns_port_char;
+
+  char prefix [] = "mcast://:";
+
+  char *def_init_ref = CORBA::string_alloc (sizeof (prefix) +
+                                            sizeof (ns_port_ptr) +
+                                            3);
+
+  def_init_ref = ACE_OS::strcpy (def_init_ref, prefix);
+  def_init_ref = ACE_OS::strcat (def_init_ref, ns_port_ptr);
+  def_init_ref = ACE_OS::strcat (def_init_ref, ":::");
+
+  this->orb_params ()->default_init_ref (def_init_ref);
+
   this->orb_params ()->service_port (TRADINGSERVICE, ts_port);
   this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
 
