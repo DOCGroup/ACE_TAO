@@ -539,7 +539,7 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   else
     {
-      this->destroyed_ = 1;
+      this->destroyed_ = 2;
 
       // Remove self from POA.  Because of reference counting, the POA
       // will automatically delete the servant when all pending requests
