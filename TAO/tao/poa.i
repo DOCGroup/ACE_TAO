@@ -7,11 +7,13 @@ CORBA::release (CORBA::POA_ptr obj)
     obj->Release ();
 }
 
+#if 0
 ACE_INLINE CORBA::Boolean
 CORBA_POA::shutting_down (void)
 {
   return do_exit_;
 }
+#endif /* 0 */
 
 ACE_INLINE CORBA::ORB_ptr
 CORBA_POA::orb (void) const

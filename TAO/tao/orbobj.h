@@ -94,16 +94,14 @@ public:
   // calling run() in the main thread is useful to ensure that the
   // process does not exit until the ORB has been shut down.
 
-  void shutdown (CORBA::Boolean wait_for_completion);
-  // @@ Provide a default as soon as we determine what the current
-  // modus operandi is!  (I think it's CORBA::B_TRUE.)
-  //
+  void shutdown (CORBA::Boolean wait_for_completion = CORBA::B_FALSE);
   // This operation instructs the ORB to shut down. Shutting down the
-  // ORB causes all Object Adapters to be shut down. If the
-  // wait_for_completion parameter is TRUE, this operation blocks
+  // ORB causes all Object Adapters to be shut down. If
+  // <wait_for_completion> parameter is TRUE, this operation blocks
   // until all ORB processing (including request processing and object
   // deactivation or other operations associated with object adapters)
-  // has completed.
+  // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
+  // currently supported.
 
   // = <IUnknown> Support
   //
@@ -162,7 +160,7 @@ private:
   TAO_ACCEPTOR peer_acceptor_;
   // The acceptor passively listening for connection requests.
 
-  CORBA::Boolean should_shutdown_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.
 

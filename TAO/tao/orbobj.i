@@ -61,6 +61,7 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
   ACE_UNUSED_ARG (wait_for_completion);
   
   this->should_shutdown_ = CORBA::B_TRUE;
+  TAO_ORB_Core_instance ()->reactor ()->wakeup_all_threads ();
   return;
 }
 
