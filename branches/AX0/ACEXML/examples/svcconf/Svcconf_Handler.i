@@ -4,6 +4,7 @@ ACE_INLINE
 ACE_Parsed_Info::ACE_Parsed_Info ()
   : name_ (0),
     service_type_ (INVALID_TYPE),
+    active_ (1),
     path_ (0),
     init_func_ (0),
     init_params_ (0)
@@ -51,6 +52,19 @@ ACE_INLINE ACE_Parsed_Info::Service_Type
 ACE_Parsed_Info::service_type (void)
 {
   return this->service_type_;
+}
+
+ACE_INLINE int
+ACE_Parsed_Info::active (int a)
+{
+  this->active_ = a;
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Parsed_Info::active (void)
+{
+  return this->active_;
 }
 
 ACE_INLINE int

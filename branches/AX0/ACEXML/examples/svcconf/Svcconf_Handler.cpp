@@ -109,49 +109,49 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 {
   if (ACE_OS_String::strcmp (qName, "dynamic") == 0)
     {
-
+      this->get_dynamic_attrs (alist, xmlenv);
     }
   else if (ACE_OS_String::strcmp (qName, "initializer") == 0)
     {
-
+      this->get_initializer_attrs (alist, xmlenv);
     }
   else if (ACE_OS_String::strcmp (qName, "static") == 0)
     {
-
+      this->get_static_attrs (alist, xmlenv);
     }
   else if (ACE_OS_String::strcmp (qName, "stream") == 0)
     {
       this->get_stream_id (alist, xmlenv);
-      // @@ retrieve stream from Service_Repository here.
-      return;
+      // @@ retrieve stream service object from Service_Repository here.
     }
   else if (ACE_OS_String::strcmp (qName, "streamdef") == 0)
     {
       this->in_stream_def_ = 1;
       this->get_stream_id (alist, xmlenv);
-      return;
+      // @@ Set up stream service object
     }
   else if (ACE_OS_String::strcmp (qName, "module") == 0)
     {
       this->in_module_ = 1;
-
     }
   else if (ACE_OS_String::strcmp (qName, "resume") == 0)
     {
-
+      this->get_id (alist, xmlenv);
     }
   else if (ACE_OS_String::strcmp (qName, "suspend") == 0)
     {
-
+      this->get_id (alist, xmlenv);
     }
   else if (ACE_OS_String::strcmp (qName, "remove") == 0)
     {
-
+      this->get_id (alist, xmlenv);
     }
   else
     {
-
+      // @@ Error.  Perhaps we should relay to user event handler here, if available.
     }
+
+  return;
 
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
@@ -253,5 +253,144 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist,
             return -1;
           }
       }
+  return 0;
+}
+
+int
+ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist,
+                                ACEXML_Env &xmlenv)
+{
+  if (alist != 0)
+    for (size_t i = 0; i < alist->getLength (); ++i)
+      {
+        if (ACE_OS_String::strcmp (alist->getQName (i), "id") == 0)
+          {
+            this->parsed_info_.name (alist->getValue (i));
+          }
+        else
+          {
+            // @@ Exception...
+            return -1;
+          }
+      }
+  return 0;
+}
+
+int
+ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist,
+                                           ACEXML_Env &xmlenv)
+{
+  if (alist != 0)
+    {
+      ACE_Parsed_Info &info = (this->in_stream_def_ == 0 ?
+                               this->parsed_info_ :
+                               this->stream_info_);
+    for (size_t i = 0; i < alist->getLength (); ++i)
+      {
+        if (ACE_OS_String::strcmp (alist->getQName (i), "id") == 0)
+          {
+            info.name (alist->getValue (i));
+          }
+        else if (ACE_OS_String::strcmp (alist->getQName (i), "status") == 0)
+          {
+            if (ACE_OS_String::strcmp (alist->getValue (i), "inactive") == 0)
+              {
+              }
+            else if (ACE_OS_String::strcmp (alist->getValue (i), "active") == 0)
+              {
+              }
+            else
+              {
+                // @@ error, invalid 'status' value.
+              }
+          }
+        else if (ACE_OS_String::strcmp (alist->getQName (i), "type") == 0)
+          {
+            if (ACE_OS_String::strcmp (alist->getValue (i), "service_object") == 0)
+              {
+                info.service_type (ACE_Parsed_Info::SERVICE_OBJECT_TYPE);
+              }
+            else if (ACE_OS_String::strcmp (alist->getValue (i), "stream") == 0)
+              {
+                info.service_type (ACE_Parsed_Info::STREAM_TYPE);
+              }
+            else if (ACE_OS_String::strcmp (alist->getValue (i), "module") == 0)
+              {
+                info.service_type (ACE_Parsed_Info::MODULE_TYPE);
+              }
+            else
+              {
+                // @@ error, invalid 'type' value.
+              }
+          }
+        else
+          {
+            // @@ Exception...
+            return -1;
+          }
+      }
+    }
+  return 0;
+}
+
+int
+ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist,
+                                               ACEXML_Env &xmlenv)
+{
+  if (alist != 0)
+    {
+      ACE_Parsed_Info &info = (this->in_stream_def_ == 0 ?
+                               this->parsed_info_ :
+                               this->stream_info_);
+    for (size_t i = 0; i < alist->getLength (); ++i)
+      {
+        if (ACE_OS_String::strcmp (alist->getQName (i), "init") == 0)
+          {
+            info.init_func (alist->getValue (i));
+          }
+        else if (ACE_OS_String::strcmp (alist->getQName (i), "path") == 0)
+          {
+            info.path (alist->getValue (i));
+          }
+        else if (ACE_OS_String::strcmp (alist->getQName (i), "params") == 0)
+          {
+            info.init_params (alist->getValue (i));
+          }
+        else
+          {
+            // @@ Exception...
+            return -1;
+          }
+      }
+    }
+  return 0;
+}
+
+int
+ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist,
+                                          ACEXML_Env &xmlenv)
+{
+  if (alist != 0)
+    {
+      ACE_Parsed_Info &info = (this->in_stream_def_ == 0 ?
+                               this->parsed_info_ :
+                               this->stream_info_);
+    for (size_t i = 0; i < alist->getLength (); ++i)
+      {
+        if (ACE_OS_String::strcmp (alist->getQName (i), "id") == 0)
+          {
+            info.name (alist->getValue (i));
+          }
+        else if (ACE_OS_String::strcmp (alist->getQName (i), "params") == 0)
+          {
+            info.init_params (alist->getValue (i));
+          }
+        else
+          {
+            // @@ Exception...
+            return -1;
+          }
+      }
+    }
   return 0;
 }
