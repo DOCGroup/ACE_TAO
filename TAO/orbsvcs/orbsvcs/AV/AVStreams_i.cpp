@@ -1245,7 +1245,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       ACE_CATCHANY
                         {
                           //Yamuna : Recheck this
-                          ACE_RETHROW;//_EX (producer_check);
+                          ACE_RE_THROW;//_EX (producer_check);
                         }
                       ACE_ENDTRY;
                       ACE_CHECK_RETURN (0);
@@ -4367,7 +4367,7 @@ TAO_FlowEndPoint::set_Mcast_peer (AVStreams::FlowConnection_ptr /* the_fc */,
 char *
 TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                   AVStreams::QoS & /*the_qos*/,
-                                  CORBA::Boolean is_mcast,
+                                  CORBA::Boolean /*is_mcast*/,
                                   AVStreams::FlowEndPoint_ptr peer_fep,
                                   char *& flowProtocol,
                                   CORBA::Environment &ACE_TRY_ENV)
