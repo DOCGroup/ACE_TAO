@@ -265,9 +265,12 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
       // If the length of the buffer is greater than the size of the
       // message that we received then process that message. If not
       // just return allowing the reactor to call us back.
-      if (this->current_buffer_.length () < (this->message_state_.message_size +
-                                             TAO_GIOP_MESSAGE_HEADER_LEN))
-        return 0;
+      if (this->current_buffer_.length () <
+          (this->message_state_.message_size))
+
+        {
+          return 0;
+        }
     }
 
   this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
