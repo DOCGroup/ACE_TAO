@@ -1,3 +1,51 @@
+Thu Aug 23 11:50:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor_Impl.h: Added two new methods notify_handle () and
+	  dispatch_notify () to the ACE_Reactor_Impl class.
+
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.cpp: Implemented the above two
+	  methods in the ACE_Select_Reactor_Notify class. The
+	  notify_handle () method returns the handle of the pipe on which
+	  it is listening. The dispatch_notify () call does a dispatch of
+	  just one notify () call in the notify pipe. The handle_input ()
+	  call that used to process all the notify calls now calls the
+	  dispatch_notify () in a loop.  The change essentially allows
+	  some extrenal client of this class to just process one notify at
+	  a time if needed.
+
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.i:
+	* ace/TP_Reactor.cpp (handle_events): Fixed a bug with
+	  handle_events (ACE_Time_Value &). This should be calling the
+	  handle_events () of the TP_Reactor and not the select reactor. 
+	 
+	  Added a whole slew of new methods that basically allows us to do
+	  this 
+	    - handle one event at a time
+	   
+	    - once the thread knows the event that needs handling it should
+	      release the token before dispatching the events
+	   
+	  The new methods that have been added are
+	  
+	    - handle_signals (), which handle signals that interrupted the
+	      select (). The implementation of this method is busted. The
+	      implementation has been copied from the existing setup
+	    
+	    - handle_notify_events (), which handles one notify on the
+	      notify_pipe at a time
+
+	    - handle_socket_events (), which handles socket events.
+
+	  Quite a few helper methods have also been added. They are
+	  get_notify_handle (), get_socket_event_info (), and
+	  dispatch_socket_events (). Removed the methods dispatch_i (),
+	  dispatch_i_protected () and notify_handle (). This checkin fixes
+	  the problem in 1002. But we still have to add handling timeouts
+	  into the TP_Reactor.
+
+
 Tue Aug 21 17:21:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.i:

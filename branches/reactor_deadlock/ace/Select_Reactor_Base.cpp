@@ -766,23 +766,30 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
     return 0;
 }
 
+
+ACE_HANDLE
+ACE_Select_Reactor_Notify::notify_handle (void)
+{
+  ACE_TRACE ("ACE_Select_Reactor_Notify::notify_handle");
+
+  return this->notification_pipe_.read_handle ();
+}
+
+
 // Special trick to unblock <select> when updates occur in somewhere
 // other than the main <ACE_Select_Reactor> thread.  All we do is
 // write data to a pipe that the <ACE_Select_Reactor> is listening on.
 // Thanks to Paul Stephenson for suggesting this approach.
 
 int
-ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
+ACE_Select_Reactor_Notify::dispatch_notify (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Notify::handle_input");
-  // Precondition: this->select_reactor_.token_.current_owner () ==
-  // ACE_Thread::self ();
+  ACE_TRACE ("ACE_Select_Reactor_Notify::dispatch_notify");
 
   ACE_Notification_Buffer buffer;
-  ssize_t n;
-  int number_dispatched = 0;
+  ssize_t n = 0;
 
-  while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
+  if ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
     {
       // Check to see if we've got a short read.
       if (n != sizeof buffer)
@@ -895,6 +902,28 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
         }
 
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+      return 1;
+    }
+
+  // Return -1 if things have gone seriously  wrong.
+  if (n <= 0 && (errno != EWOULDBLOCK && errno != EAGAIN))
+    return -1;
+
+  return 0;
+}
+
+
+int
+ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_Select_Reactor_Notify::handle_input");
+  // Precondition: this->select_reactor_.token_.current_owner () ==
+  // ACE_Thread::self ();
+
+  int number_dispatched = 0;
+  int result = 0;
+  while ((result = this->dispatch_notify (handle) > 0))
+    {
       number_dispatched++;
 
       // Bail out if we've reached the <notify_threshold_>.  Note that
@@ -906,7 +935,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
   // Reassign number_dispatched to -1 if things have gone seriously
   // wrong.
-  if (n <= 0 && (errno != EWOULDBLOCK && errno != EAGAIN))
+  if (result < 0)
     number_dispatched = -1;
 
   // Enqueue ourselves into the list of waiting threads.  When we
