@@ -1,3 +1,8 @@
+Sat May 25 17:45:21 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Proactor_Scatter_Gather_Test.dsp:
+	* tests/tests.dsw: Added Proactor_Scatter_Gather_Test.
+
 Sat May 25 16:42:46 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/run_test.lst,
@@ -5,7 +10,7 @@ Sat May 25 16:42:46 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* tests/Makefile: Added Proactor_Scatter_Gather_Test.
 
 Sat May 25 16:30:00 2002  Edan Ayal <edanayal@yahoo.com>
-  
+
         * tests/Proactor_Scatter_Gather_Test.cpp:
           Added a new test for the asynch scatter/gather I/O
  	  functionality. It is currently supported (as the feature itself)
@@ -21,8 +26,8 @@ Sat May 25 16:30:00 2002  Edan Ayal <edanayal@yahoo.com>
  	  (gathered). Finally, the reconstructed file is compared to the
  	  original file to determine test success.  The test therefore
  	  covers both async scatter/gather stream I/O and async
- 	  scatter/gather file I/O.	
-  
+ 	  scatter/gather file I/O.
+
 Sat May 25 14:52:06 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Strategies_T.cpp (make_svc_handler): Fixed a typo where
