@@ -1,3 +1,12 @@
+Mon May 22 21:10:24 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * CM_Server.cpp (receive): changed type of local sin_len
+          from int to size_t, to avoid warning from g++ on Linux
+          about "change of signedness".  Note that it would be
+          better to use ACE_SOCKET_LEN, but that's defined in
+          ace/OS.i.  So, it wouldn't be visible with inlining
+          disabled.
+
 Mon May 22 21:07:57 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * BS_Server.cpp (insert): initialize local cmp to 0, to
