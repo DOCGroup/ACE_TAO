@@ -232,14 +232,8 @@ private:
   typedef ACE_CString EXT;
   typedef RT_Info **INT;
 
-#if defined (ACE_HAS_THREADS)
-  typedef ACE_Thread_Mutex SYNCH;
-#else
-  typedef ACE_Null_Mutex SYNCH;
-#endif /* ACE_HAS_THREADS */
-
-  typedef ACE_Map_Manager<EXT, INT, SYNCH> Info_Collection;
-  typedef ACE_Map_Iterator<EXT, INT, SYNCH> Info_Collection_Iterator;
+  typedef ACE_Map_Manager<EXT, INT, ACE_SYNCH_MUTEX> Info_Collection;
+  typedef ACE_Map_Iterator<EXT, INT, ACE_SYNCH_MUTEX> Info_Collection_Iterator;
   typedef ACE_Map_Entry<EXT, INT> Info_Collection_Entry;
 
   Info_Collection info_collection_;

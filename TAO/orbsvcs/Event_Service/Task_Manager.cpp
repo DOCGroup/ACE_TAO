@@ -33,5 +33,5 @@ void ACE_Task_Manager::initialize()
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<ACE_Task_Manager,ACE_SYNCH_MUTEX>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate class ACE_Singleton<ACE_Task_Manager,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<ACE_Task_Manager,ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
