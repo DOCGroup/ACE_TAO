@@ -88,10 +88,11 @@ CFLAGS = \
 # For example, any place that uses ACE_LIB_TEXT().
 #PCH_HEADER=<%pch_header%>
 <%endif%>
+<%if(cppdir)%>
 
 CPPDIR = <%cppdir%>
 CDIR   = <%cppdir%>
-
+<%endif%>
 <%if(header_files || template_files || inline_files || idl_files)%>
 
 INCDIR_NAME = <%relwd%>
