@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ttcp_i.h"
-#include <iostream.h>
 
 ACE_RCSID(Thruput_test, ttcp_i, "$Id$")
 
@@ -30,10 +29,10 @@ ttcp_sequence_i::stop_timer (CORBA_Environment &IT_env)
 	// reset
 	this->nbytes_ = 0;
 	numCalls = 0;
-#if defined (USE_QUANTIFY)
+#if defined (ACE_HAS_QUANTIFY)
     quantify_stop_recording_data();
     ACE_Reactor::end_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_DEBUG ((LM_DEBUG, "*********** just before exiting\n"));
 #endif
 }
 
@@ -78,15 +77,8 @@ ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq, CORBA_E
     numCalls++;
     this->nbytes_ += ttcp_seq.length()*sizeof(PerfStruct) ;
 #ifdef DEBUG
-    //    cout << "Bytes received so far = " << this->nbytes_ << endl;
+    ACE_DEBUG ((LM_DEBUG, "Bytes received so far = %u\n", this->nbytes_));
 #endif
 }
-
-
-
-
-
-
-
 
 
