@@ -1,3 +1,13 @@
+Fri Oct  5 16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	* TAO_IDL/driver/drv_preproc.cpp:
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.cpp: Patches from Russ Noseworthy that were
+	  needed to compile with GCC  2.95.3 which properly supported
+	  namespace std (Apparently Russ seems to modified the compiler to
+	  do this)
+
 Fri Oct  5 16:03:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* TAO_IDL/include/ast_argument.h:

@@ -1,6 +1,6 @@
 // $Id$
 #ifndef lint
-char tao_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
+char tao_yysccsid[] = "@(#)yaccpar      1.4 (Berkeley) 02/25/90 \n\
  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
 #endif
 #line 74 "fe/idl.tao_yy"
@@ -12,6 +12,10 @@ char tao_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 extern  "C" int tao_yywrap();
 #endif  /* (defined(apollo) || defined(hpux)) && defined(__cplusplus)*/
+
+#if defined(ACE_GCC_HONORS_STD_NAMESPACE) && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
+using std::cerr;
+#endif
 
 void tao_yyerror (const char *);
 int tao_yylex (void);
@@ -1264,7 +1268,7 @@ tao_yyinrecovery:
             if (5 < tao_yydebug)
                 printf("tao_yydebug: state %d, error recovery discards token %d (%s)\n",
                     tao_yystate, tao_yychar, tao_yys);
-            else 
+            else
                 TAO_YYDEBUG_DISCARD_TOKEN(tao_yystate, tao_yychar, tao_yys, tao_yyssp-tao_yyss);
         }
 #endif
@@ -2216,9 +2220,9 @@ case 133:
 
           /*
            * If the scoped name is an IDL constant, it may be used in an
-           * array dim, a string bound, or a sequence bound. If so, it 
+           * array dim, a string bound, or a sequence bound. If so, it
            * must be unsigned and > 0. We assign the constant's value
-           * and type to the expression created here so we can check 
+           * and type to the expression created here so we can check
            * them later.
            */
           if (d != 0 && d->node_type () == AST_Decl::NT_const)
@@ -2352,8 +2356,8 @@ case 145:
 
           if (good_expression)
             {
-              tao_yyval.exval = 
-                idl_global->gen()->create_expr (tao_yyvsp[0].exval, 
+              tao_yyval.exval =
+                idl_global->gen()->create_expr (tao_yyvsp[0].exval,
                                                 AST_Expression::EV_ulong);
             }
           else
