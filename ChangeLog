@@ -27,6 +27,14 @@ Mon Jan  5 10:47:51 2004  Chad Elliott  <elliott_c@ociweb.com>
           absolute paths in MPC files (which isn't recommended for
           portability reasons).
 
+Mon Jan  5 11:02:55 2004  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_NS_Thread.inl: Fixed ACE_OS::event_timedwait() and
+	  ACE_OS::event_wait() so that they use a while loop around the
+ 	  ACE_OS::cond_[timed]wait() calls to avoid problems with spurious
+ 	  wakeups, etc.  Thanks to John Bossom <John.Bossom@Cognos.COM>
+ 	  for motivating this fix.
+
 Sun Jan  4 20:40:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * */Makefile*:
@@ -404,6 +412,11 @@ Thu Jan  1 00:35:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fixed a warning in Solaris 8 builds.
 
+Thu Jan  1 00:00:00 2004  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Happy New Year!  Let's hope that 2004 is a safe and prosperous
+	  year for everyone.
+  
 Wed Dec 31 21:57:08 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
         * ace/Base_Thread_Adapter.h:
@@ -951,6 +964,10 @@ Thu Dec 25 18:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Removed the dependency on CosNaming.
 
+Thu Dec 25 00:00:00 2003  Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+
+        * Merry Christmas!!!
+  
 Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
@@ -1702,7 +1719,12 @@ Sun Dec 14 15:26:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           will work properly if ACE_Process_Semaphore is used with
           ACE_Malloc<>.  Thanks to John Glynn <jglynn@bjc.org> for
           motivating this.
-
+  
+Sun Dec 13 20:00:00 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+  
+        * Saddam Hussein captured in a "spider hole" in Iraq.  Sic Semper
+	  Tyrannis.  
+  
 Sat Dec 13 23:29:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * bin/tao_orb_tests.lst:
