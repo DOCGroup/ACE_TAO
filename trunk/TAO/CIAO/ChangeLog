@@ -1,3 +1,9 @@
+Mon Apr 28 21:43:01 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Added missing
+	  library path dependencies.  I'm not sure what has changed
+	  because they used to work just fine. :)
+
 Mon Apr 28 21:33:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/CIAO_Glue_Session_Template.cpp:
