@@ -876,7 +876,7 @@ int
 ACE_recursive_mutex_state::reset (ACE_recursive_thread_mutex_t &m)
 {
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
   // On Windows NT && 2000 the recursive mutex is a CriticalSection.
   m.RecursionCount = 0;
   m.OwningThread = 0;
@@ -897,7 +897,7 @@ int
 ACE_recursive_mutex_state::save (ACE_recursive_thread_mutex_t &m)
 {
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
   // On Windows NT && 2000 the recurisive mutex is a CriticalSection.
   this->recursion_count_ = m.RecursionCount;
   this->lock_count_ = m.LockCount;
@@ -919,7 +919,7 @@ int
 ACE_recursive_mutex_state::restore (ACE_recursive_thread_mutex_t &m)
 {
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
   // On Windows NT && 2000 the recurisive mutex is a CriticalSection.
   m.RecursionCount = this->recursion_count_;
   m.LockCount = this->lock_count_;
@@ -988,7 +988,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, mutex, -1);
   ACE_recursive_mutex_state mutex_state_holder (mutex);
 
-#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES) && defined (ACE_WIN32)
   // Windows automagically increments the count by one in
   // <ACE_OS::cond_*wait()>.
   const int mutex_released = 1;
