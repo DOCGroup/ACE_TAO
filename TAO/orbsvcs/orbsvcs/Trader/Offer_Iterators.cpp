@@ -372,11 +372,17 @@ TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node <CosTrading::Offer*>;
 template class ACE_Unbounded_Queue <CosTrading::Offer*>;
+template class ACE_Unbounded_Queue_Iterator <CosTrading::Offer*>;
+template class ACE_Node <CosTrading::OfferIterator*>;
 template class ACE_Unbounded_Queue <CosTrading::OfferIterator*>;
-template class ACE_Unbounded_Queue <CosTrading::OfferId>;
+template class ACE_Unbounded_Queue_Iterator <CosTrading::OfferIterator*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node <CosTrading::Offer*>
 #pragma instantiate ACE_Unbounded_Queue <CosTrading::Offer*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator <CosTrading::Offer*>
+#pragma instantiate ACE_Node <CosTrading::OfferIterator*>
 #pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferIterator*>
-#pragma instantiate ACE_Unbounded_Queue <CosTrading::OfferId>
+#pragma instantiate ACE_Unbounded_Queue_Iterator <CosTrading::OfferIterator*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

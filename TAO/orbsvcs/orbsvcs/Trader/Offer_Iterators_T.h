@@ -19,8 +19,9 @@
 #define TAO_REGISTER_OFFER_ITERATOR_H
 
 #include "Offer_Iterators.h"
+#include "Offer_Database.h"
 
-template <class TRADER>
+template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
   // = TITLE
   //     An implementation of CosTrading::OfferIterator IDL interface
@@ -35,7 +36,7 @@ public:
 
   // = Initialization and termination methods.
 
-  TAO_Register_Offer_Iterator (TRADER &trader,
+  TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
 			       const TAO_Property_Filter& pfilter);
   // Takes service type and trader reference in order to 
   // later locate offers using their ids.
@@ -64,10 +65,10 @@ public:
 
 private:
 
-  TRADER &trader_;
+  TAO_Offer_Database<MAP_LOCK_TYPE> &db_;
   // A reference to the trader is needed for access to the map of offers.
 
-  ACE_Unbounded_Queue <CosTrading::OfferId> offer_ids_;
+  TAO_String_Queue offer_ids_;
   // Offer ids of offers to iterate over.
 };
 

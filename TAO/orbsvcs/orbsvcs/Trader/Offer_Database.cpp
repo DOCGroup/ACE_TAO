@@ -3,7 +3,6 @@
 #define TAO_OFFER_DATABASE_C
 
 #include "Offer_Database.h"
-#include "Offer_Iterators.h"
 
 template <class LOCK_TYPE>
 TAO_Offer_Database<LOCK_TYPE>::TAO_Offer_Database (void)
@@ -26,7 +25,7 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
         // we delete the lock along with the offer_map_entry.
         ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, offer_map_entry->lock_);
         
-        for (Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
+        for (TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
              ! offer_iter.done ();
              offer_iter++)
           {
@@ -58,7 +57,7 @@ insert_offer (const char* type, CosTrading::Offer* offer)
 
       Offer_Map_Entry* new_offer_map_entry = 0;
       ACE_NEW_RETURN (new_offer_map_entry, Offer_Map_Entry, 0);
-      ACE_NEW_RETURN (new_offer_map_entry->offer_map_, Offer_Map, 0);
+      ACE_NEW_RETURN (new_offer_map_entry->offer_map_, TAO_Offer_Map, 0);
       new_offer_map_entry->counter_ = 1;
 
       this->db_lock_.release ();
@@ -179,7 +178,7 @@ lookup_offer (const char* type, CORBA::ULong id)
       Offer_Map_Entry* offer_map_entry = db_entry->int_id_;      
       ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);
 
-      Offer_Map::ENTRY* offer_entry_ptr = 0;
+      TAO_Offer_Map::ENTRY* offer_entry_ptr = 0;
       offer_map_entry->offer_map_->find (id, offer_entry_ptr);
 
       return_value = offer_entry_ptr->int_id_;
@@ -207,7 +206,7 @@ TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
 
       ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);
       
-      for (Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
+      for (TAO_Offer_Map::iterator offer_iter (*offer_map_entry->offer_map_);
 	   ! offer_iter.done ();
 	   offer_iter++)
 	{
@@ -279,17 +278,15 @@ TAO_Service_Offer_Iterator (const char* type,
   if (this->stm_.db_lock_.acquire_read () == -1)
     ;
 
-  Offer_Database::Offer_Database::ENTRY* db_entry;
-  if (this->stm_.offer_db_.find (service_type, db_entry) == -1)
+  if (this->stm_.offer_db_.find (service_type, this->entry_) == -1)
     return;
   else
     {  
-      this->entry_ = db_entry->int_id_;
       if (this->entry_->lock_.acquire_read () == -1)
 	;
       
       ACE_NEW (offer_iter_,
-	       Offer_Database::Offer_Map::iterator (*this->entry_->offer_map_));
+	       TAO_Offer_Map::iterator (*this->entry_->offer_map_));
     }
 }
 

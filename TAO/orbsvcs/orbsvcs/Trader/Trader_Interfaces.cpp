@@ -19,27 +19,28 @@
 #define TAO_TRADER_INTERFACES_C
 
 #include "Trader_Interfaces.h"
-
+#include "Trader_T.h"
   // *************************************************************
   // TAO_Lookup
   // *************************************************************
 
-template <class TRADER, class TRADER_LOCK_TYPE>
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::TAO_Lookup (TRADER &trader)
-  : trader_ (trader),
-    TAO_Trader_Components<POA_CosTrading::Lookup> (trader.trading_components ()),
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
+  : TAO_Trader_Components<POA_CosTrading::Lookup> (trader.trading_components ()),
     TAO_Support_Attributes<POA_CosTrading::Lookup> (trader.support_attributes ()),
-    TAO_Import_Attributes<POA_CosTrading::Lookup> (trader.import_attributes ())
+    TAO_Import_Attributes<POA_CosTrading::Lookup> (trader.import_attributes ()),
+    trader_ (trader)
 {
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE>
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::~TAO_Lookup (void)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup (void)
 {
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> void
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 query (const char *type,
        const char *constraint,
        const char *preferences,
@@ -110,11 +111,8 @@ query (const char *type,
   // Retrieve the type description struct from the Service Type Repos.
   const TAO_Support_Attributes_Impl& support_attrs =
     this->trader_.support_attributes ();
-  CosTrading::TypeRepository_ptr type_repos =
-    support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_var rep = 
-    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, env);
-  TAO_CHECK_ENV_RETURN_VOID (env);
+  CosTradingRepos::ServiceTypeRepository_ptr rep =
+    support_attrs.service_type_repos ();
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var
     type_struct (rep->fully_describe_type (type, env));
   TAO_CHECK_ENV_RETURN_VOID (env);
@@ -134,15 +132,16 @@ query (const char *type,
   // determines whether an offer meets those constraints.
   // TAO_Preference_Interpreter -- parses the preference string and
   // orders offers according to those constraints.  
-  TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
+  TAO_Offer_Filter offer_filter (policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
-  TAO_Constraint_Validator validator (type_struct.ptr ());
+  TAO_Constraint_Validator validator (type_struct.in ());
   TAO_Constraint_Interpreter constr_inter (validator, constraint, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Preference_Interpreter pref_inter (validator, preferences, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
 
   // Try to find the map of offers of desired service type.
+  offer_filter.configure_type (type_struct.ptr ());
   this->lookup_one_type (type,
                          offer_database,
 			 constr_inter,
@@ -236,8 +235,9 @@ query (const char *type,
     }
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 lookup_one_type (const char* type,
 		 Offer_Database& offer_database,
 		 TAO_Constraint_Interpreter& constr_inter,
@@ -245,7 +245,11 @@ lookup_one_type (const char* type,
 		 TAO_Offer_Filter& offer_filter)
 {
   // Retrieve an iterator over the offers for a given type.
-  Offer_Database::offer_iterator offer_iter (type, offer_database);
+  // @@ Would have used Offer_Database::offer_iterator for less
+  // coupling between TAO_Lookup and Offer_Database, but g++ barfs on
+  // that.
+  TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
+    offer_iter (type, offer_database);
 
   while (offer_filter.ok_to_consider_more () &&
 	 offer_iter.has_more_offers ())
@@ -274,8 +278,9 @@ lookup_one_type (const char* type,
     }
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 lookup_all_subtypes (const char* type,
 		     CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
 		     Offer_Database& offer_database,
@@ -337,11 +342,12 @@ lookup_all_subtypes (const char* type,
               if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
                 {
                   // Egads, a subtype!
+                  offer_filter.configure_type (type_struct.ptr ());
                   this->lookup_one_type (all_types[i],
                                          offer_database,
                                          constr_inter,
                                          pref_inter,
-				     offer_filter);
+                                         offer_filter);
                   break;
                 }
             }
@@ -354,8 +360,9 @@ lookup_all_subtypes (const char* type,
 }
 
 
-template <class TRADER, class TRADER_LOCK_TYPE> int
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+int
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 fill_receptacles (const char* type,
 		  CORBA::ULong how_many,
                   const CosTrading::Lookup::SpecifiedProps& desired_props,
@@ -452,9 +459,9 @@ fill_receptacles (const char* type,
   return total_offers;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE>
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Offer_Iterator *
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 create_offer_iterator (const TAO_Property_Filter& pfilter)
 {
   // This is the factory method that creates the appropriate type of
@@ -473,18 +480,20 @@ create_offer_iterator (const TAO_Property_Filter& pfilter)
   TAO_Offer_Iterator* iterator = 0;
   
   if (CORBA::is_nil (this->trader_.trading_components ().register_if ()))
-    iterator =  new TAO_Query_Only_Offer_Iterator (pfilter);
+    iterator = new TAO_Query_Only_Offer_Iterator (pfilter);
   else
     {
       iterator =
-	new TAO_Register_Offer_Iterator<TRADER> (this->trader_, pfilter);
+        new TAO_Register_Offer_Iterator<MAP_LOCK_TYPE> (this->trader_.offer_database (),
+                                                        pfilter);
     }
 
   return iterator;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::Boolean
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::Boolean
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 retrieve_links (TAO_Policies& policies,
                 CORBA::ULong offers_returned,
                 CosTrading::LinkNameSeq_out links,
@@ -551,8 +560,9 @@ retrieve_links (TAO_Policies& policies,
 }
 
 
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 federated_query (const CosTrading::LinkNameSeq& links,
                  const TAO_Policies& policies,
                  const CosTrading::Admin::OctetSeq& request_id,
@@ -687,8 +697,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
   offer_iter = offer_iter_collection->_this (_env);
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
                        CosTrading::OfferSeq& offers)
 {
@@ -717,8 +728,9 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   CosTrading::OfferSeq::freebuf (target_buf);
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void
-TAO_Lookup<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 forward_query (const char* next_hop,
                const char *type,
                const char *constr,
@@ -814,21 +826,22 @@ forward_query (const char* next_hop,
   // TAO_Register
   // *************************************************************
 
-template <class TRADER>
-TAO_Register<TRADER>::TAO_Register (TRADER &trader)
-  : trader_ (trader),
-    TAO_Trader_Components<POA_CosTrading::Register> (trader.trading_components ()),
-    TAO_Support_Attributes<POA_CosTrading::Register> (trader.support_attributes ())
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
+  : TAO_Trader_Components<POA_CosTrading::Register> (trader.trading_components ()),
+    TAO_Support_Attributes<POA_CosTrading::Register> (trader.support_attributes ()),
+    trader_ (trader)
 {
 }
 
-template <class TRADER>
-TAO_Register<TRADER>::~TAO_Register (void)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register (void)
 {
 }
 
-template <class TRADER> CosTrading::OfferId 
-TAO_Register<TRADER>::export (CORBA::Object_ptr reference, 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::OfferId 
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::export (CORBA::Object_ptr reference, 
 			      const char *type, 
 			      const CosTrading::PropertySeq &properties,
 			      CORBA::Environment& _env) 
@@ -851,11 +864,10 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   Offer_Database &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = 0;
-  TAO_Support_Attributes_Impl& support_attrs = this->trader_.support_attributes ();
-  CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_var rep = 
-    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
-  TAO_CHECK_ENV_RETURN (_env, 0);
+  TAO_Support_Attributes_Impl& support_attrs =
+    this->trader_.support_attributes ();
+  CosTradingRepos::ServiceTypeRepository_ptr rep =
+    support_attrs.service_type_repos ();
   
   // Yank our friend, the type struct, and confirm that the given
   // properties match the type definition.
@@ -895,8 +907,9 @@ TAO_Register<TRADER>::export (CORBA::Object_ptr reference,
   return id;
 }
 
-template <class TRADER> void 
-TAO_Register<TRADER>::withdraw (const char *id,
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void 
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::withdraw (const char *id,
 				CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		   CosTrading::IllegalOfferId, 
@@ -908,9 +921,11 @@ TAO_Register<TRADER>::withdraw (const char *id,
   offer_database.remove_offer ((CosTrading::OfferId) id, _env);
 }
 
-template <class TRADER> CosTrading::Register::OfferInfo * 
-TAO_Register<TRADER>::describe (const char *id,
-				CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::Register::OfferInfo * 
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+describe (const char *id,
+          CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::IllegalOfferId, 
 		  CosTrading::UnknownOfferId, 
@@ -939,11 +954,13 @@ TAO_Register<TRADER>::describe (const char *id,
   return offer_info;
 }
 
-template <class TRADER> void 
-TAO_Register<TRADER>::modify (const char *id, 
-			      const CosTrading::PropertyNameSeq& del_list, 
-			      const CosTrading::PropertySeq& modify_list,
-			      CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void 
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+modify (const char *id, 
+        const CosTrading::PropertyNameSeq& del_list, 
+        const CosTrading::PropertySeq& modify_list,
+        CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::NotImplemented, 
 		  CosTrading::IllegalOfferId, 
@@ -965,41 +982,45 @@ TAO_Register<TRADER>::modify (const char *id,
   char* type = 0;
   TAO_Support_Attributes_Impl& support_attrs =
     this->trader_.support_attributes ();  
-  CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_var rep = 
-    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosTradingRepos::ServiceTypeRepository_ptr rep =
+    support_attrs.service_type_repos ();
   Offer_Database &offer_database = this->trader_.offer_database ();
-      
-  CosTrading::Offer* offer =
-    offer_database.lookup_offer ((CosTrading::OfferId) id, type, _env);
+
+  CosTrading::Offer* offer = offer_database.
+    lookup_offer (ACE_const_cast (CosTrading::OfferId, id), type, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
-  
+
   if (offer != 0)
     {
       // Yank our friend, the type struct.
-      CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct = rep->describe_type (type, _env);
+      CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct
+        = rep->fully_describe_type (type, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      TAO_Offer_Modifier offer_mod (type, type_struct, *offer);
+      TAO_Offer_Modifier offer_mod (type, type_struct.in (), offer);
       
+      CosTrading::PropertySeq* prop_seq =
+        ACE_const_cast (CosTrading::PropertySeq*, &modify_list);
+
       // Delete, add, and change properties of the offer.
-      this->validate_properties (type, type_struct,
-				 (CosTrading::PropertySeq) modify_list, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
       offer_mod.delete_properties (del_list, _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
-      offer_mod.merge_properties (modify_list, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
       
-      // Alter our reference to the offer. 
+      offer_mod.merge_properties (*prop_seq, _env);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
+
+      // Alter our reference to the offer. We do this last, since the
+      // spec says: modify either suceeds completely or fails
+      // completely. 
       offer_mod.affect_change ();
     }
 }
 
-template <class TRADER> void 
-TAO_Register<TRADER>::withdraw_using_constraint (const char *type, 
-						 const char *constr,
-						 CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void 
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+withdraw_using_constraint (const char *type, 
+                           const char *constr,
+                           CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
                    CosTrading::IllegalServiceType, 
                    CosTrading::UnknownServiceType, 
@@ -1008,21 +1029,22 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
 {
   TAO_Support_Attributes_Impl&
     support_attrs = this->trader_.support_attributes ();
-  CosTrading::TypeRepository_ptr type_repos = support_attrs.type_repos ();
-  CosTradingRepos::ServiceTypeRepository_var rep = 
-    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, _env);
+  CosTradingRepos::ServiceTypeRepository_ptr rep =
+    support_attrs.service_type_repos ();
   Offer_Database &offer_database =  this->trader_.offer_database ();
   CORBA::Boolean dp_support = support_attrs.supports_dynamic_properties ();
-  ACE_Unbounded_Queue<CosTrading::OfferId_var> ids;
+  TAO_String_Queue ids;
   
   // Retrieve the type struct
-  CosTradingRepos::ServiceTypeRepository::TypeStruct*
-    type_struct = rep->describe_type (type, _env);
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
+    type_struct = rep->fully_describe_type (type, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Try to find the map of offers of desired service type.
-  Offer_Database::offer_iterator offer_iter (type, offer_database);
-  TAO_Constraint_Validator validator (type_struct);
+  // @@ Again, should be Offer_Database::offer_iterator
+  TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
+    offer_iter (type, offer_database);
+  TAO_Constraint_Validator validator (type_struct.in ());
   TAO_Constraint_Interpreter constr_inter (validator, constr, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   
@@ -1038,23 +1060,26 @@ TAO_Register<TRADER>::withdraw_using_constraint (const char *type,
       offer_iter.next_offer ();
     }      
   
-  if (ids.size () == 0)
-    TAO_THROW (CosTrading::Register::NoMatchingOffers (constr));
-  else
+  if (ids.size () != 0)
     {      
       while (! ids.is_empty ())
 	{
-	  CosTrading::OfferId_var offer_id;
+	  char* offer_id = 0;
 	  
 	  ids.dequeue_head (offer_id);
 	  offer_database.remove_offer (offer_id, _env);
+          CORBA::string_free (offer_id);
 	}
     }
+  else
+    TAO_THROW (CosTrading::Register::NoMatchingOffers (constr));
 }
            
-template <class TRADER> CosTrading::Register_ptr 
-TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
-			       CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::Register_ptr 
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+resolve (const CosTrading::TraderName &name,
+         CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::Register::IllegalTraderName, 
 		  CosTrading::Register::UnknownTraderName, 
@@ -1121,8 +1146,9 @@ TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
   return return_value;
 }
 
-template <class TRADER> void
-TAO_Register<TRADER>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 validate_properties (const char* type, 
 		     const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
 		     const CosTrading::PropertySeq& properties,
@@ -1177,13 +1203,14 @@ validate_properties (const char* type,
   // TAO_Admin
   // *************************************************************
 
-template <class TRADER, class TRADER_LOCK_TYPE>  
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::TAO_Admin (TRADER &trader)
-  : trader_ (trader),
-    TAO_Trader_Components <POA_CosTrading::Admin> (trader.trading_components ()),
-    TAO_Import_Attributes <POA_CosTrading::Admin> (trader.import_attributes ()),
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
+  : TAO_Trader_Components <POA_CosTrading::Admin> (trader.trading_components ()),    
     TAO_Support_Attributes <POA_CosTrading::Admin> (trader.support_attributes ()),
+    TAO_Import_Attributes <POA_CosTrading::Admin> (trader.import_attributes ()),
     TAO_Link_Attributes <POA_CosTrading::Admin> (trader.link_attributes ()),
+    trader_ (trader),
     sequence_number_ (0)
 {
   // A random 4-bytes will prefix the sequence number space for each
@@ -1205,13 +1232,14 @@ TAO_Admin<TRADER,TRADER_LOCK_TYPE>::TAO_Admin (TRADER &trader)
     this->stem_id_[i] = (CORBA::Octet) (ACE_OS::rand_r (seed) %  256);
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE>
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::~TAO_Admin (void)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin (void)
 {
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CosTrading::Admin::OctetSeq * 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::request_id_stem (CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::Admin::OctetSeq * 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 0);
@@ -1225,8 +1253,9 @@ TAO_Admin<TRADER,TRADER_LOCK_TYPE>::request_id_stem (CORBA::Environment& _env)
   return new CosTrading::Admin::OctetSeq (this->stem_id_);
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_search_card (CORBA::ULong value,
                      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException)) 
@@ -1238,8 +1267,9 @@ set_def_search_card (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_search_card (CORBA::ULong value,
                      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1251,8 +1281,9 @@ set_max_search_card (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_match_card (CORBA::ULong value,
                     CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1264,8 +1295,9 @@ set_def_match_card (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_match_card (CORBA::ULong value,
                     CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1277,8 +1309,9 @@ set_max_match_card (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_return_card (CORBA::ULong value,
                      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1290,8 +1323,9 @@ set_def_return_card (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_return_card (CORBA::ULong value,
                      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1303,9 +1337,11 @@ set_max_return_card (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::set_max_list (CORBA::ULong value,
-                                                  CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+set_max_list (CORBA::ULong value,
+              CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong return_value =
@@ -1315,8 +1351,9 @@ TAO_Admin<TRADER,TRADER_LOCK_TYPE>::set_max_list (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::Boolean 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::Boolean 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_supports_modifiable_properties (CORBA::Boolean value,
 				    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1328,8 +1365,9 @@ set_supports_modifiable_properties (CORBA::Boolean value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::Boolean 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::Boolean 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_supports_dynamic_properties (CORBA::Boolean value,
 				 CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1341,8 +1379,9 @@ set_supports_dynamic_properties (CORBA::Boolean value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::Boolean 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::Boolean 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_supports_proxy_offers (CORBA::Boolean value,
                            CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1354,8 +1393,9 @@ set_supports_proxy_offers (CORBA::Boolean value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_hop_count (CORBA::ULong value,
                    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1367,8 +1407,9 @@ set_def_hop_count (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CORBA::ULong 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CORBA::ULong 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_hop_count (CORBA::ULong value,
                    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1380,8 +1421,9 @@ set_max_hop_count (CORBA::ULong value,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CosTrading::FollowOption 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::FollowOption 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_def_follow_policy (CosTrading::FollowOption policy,
                        CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1393,8 +1435,9 @@ set_def_follow_policy (CosTrading::FollowOption policy,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CosTrading::FollowOption 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::FollowOption 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_follow_policy (CosTrading::FollowOption policy,
                        CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1406,8 +1449,9 @@ set_max_follow_policy (CosTrading::FollowOption policy,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CosTrading::FollowOption 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::FollowOption 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_max_link_follow_policy (CosTrading::FollowOption policy,
 			    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1419,8 +1463,9 @@ set_max_link_follow_policy (CosTrading::FollowOption policy,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CosTrading::TypeRepository_ptr 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::TypeRepository_ptr 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_type_repos (CosTrading::TypeRepository_ptr repository,
 		CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1432,8 +1477,9 @@ set_type_repos (CosTrading::TypeRepository_ptr repository,
   return return_value;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> CosTrading::Admin::OctetSeq* 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::Admin::OctetSeq* 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 set_request_id_stem (const CosTrading::Admin::OctetSeq& stem,
                        CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
@@ -1443,8 +1489,9 @@ set_request_id_stem (const CosTrading::Admin::OctetSeq& stem,
   return &this->stem_id_;
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_offers (CORBA::ULong how_many, 
              CosTrading::OfferIdSeq_out ids,
              CosTrading::OfferIdIterator_out id_itr,
@@ -1455,8 +1502,8 @@ list_offers (CORBA::ULong how_many,
   // This method only applies when the register interface is implemented
   if (CORBA::is_nil(this->trader_.trading_components().register_if()))
     TAO_THROW (CosTrading::NotImplemented());
-
-  TRADER::Offer_Database& type_map = this->trader_.offer_database ();
+  
+  TAO_Offer_Database<MAP_LOCK_TYPE>& type_map = this->trader_.offer_database ();
   TAO_Offer_Id_Iterator* offer_id_iter = type_map.retrieve_all_offer_ids ();
       
   id_itr = CosTrading::OfferIdIterator::_nil ();
@@ -1474,8 +1521,9 @@ list_offers (CORBA::ULong how_many,
     ids = new CosTrading::OfferIdSeq (0);
 }
 
-template <class TRADER, class TRADER_LOCK_TYPE> void 
-TAO_Admin<TRADER,TRADER_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void 
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_proxies (CORBA::ULong how_many, 
               CosTrading::OfferIdSeq_out ids, 
               CosTrading::OfferIdIterator_out id_itr,
@@ -1490,23 +1538,23 @@ list_proxies (CORBA::ULong how_many,
   // TAO_Link
   // *************************************************************
 
-
-template <class TRADER, class MAP_LOCK_TYPE>  
-TAO_Link<TRADER,MAP_LOCK_TYPE>::TAO_Link (TRADER &trader)
-  : trader_ (trader),
-    TAO_Trader_Components <POA_CosTrading::Link> (trader.trading_components ()),
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
+  : TAO_Trader_Components <POA_CosTrading::Link> (trader.trading_components ()),
+    TAO_Support_Attributes <POA_CosTrading::Link> (trader.support_attributes ()),
     TAO_Link_Attributes <POA_CosTrading::Link> (trader.link_attributes ()),
-    TAO_Support_Attributes <POA_CosTrading::Link> (trader.support_attributes ())
+    trader_ (trader)
 {
 }
 
-template <class TRADER, class MAP_LOCK_TYPE>
-TAO_Link<TRADER,MAP_LOCK_TYPE>::~TAO_Link (void)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link (void)
 {
 }
 
-template <class TRADER, class MAP_LOCK_TYPE> void
-TAO_Link<TRADER, MAP_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 add_link (const char *name, 
 	  CosTrading::Lookup_ptr target, 
 	  CosTrading::FollowOption def_pass_on_follow_rule, 
@@ -1563,9 +1611,11 @@ add_link (const char *name,
   this->links_.bind (link_name, link_info);
 }
 
-template <class TRADER, class MAP_LOCK_TYPE> void
-TAO_Link<TRADER,MAP_LOCK_TYPE>::remove_link (const char *name,
-			       CORBA::Environment& _env) 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+remove_link (const char *name,
+             CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException, 
 		  CosTrading::Link::IllegalLinkName, 
 		  CosTrading::Link::UnknownLinkName))
@@ -1583,8 +1633,9 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::remove_link (const char *name,
   this->links_.unbind (link_name);
 }
 
-template <class TRADER, class MAP_LOCK_TYPE> CosTrading::Link::LinkInfo * 
-TAO_Link<TRADER,MAP_LOCK_TYPE>::describe_link (const char *name,
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::Link::LinkInfo * 
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name,
 					       CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CosTrading::SystemException,
 		  CosTrading::Link::IllegalLinkName, 
@@ -1640,8 +1691,9 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::describe_link (const char *name,
   return new_link_info;
 }
 
-template <class TRADER, class MAP_LOCK_TYPE> CosTrading::LinkNameSeq* 
-TAO_Link<TRADER,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::LinkNameSeq* 
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Allocate space for the link names.
@@ -1659,8 +1711,9 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
   return new CosTrading::LinkNameSeq (i, i, link_seq, CORBA::B_TRUE);
 }
 
-template <class TRADER, class MAP_LOCK_TYPE> void
-TAO_Link<TRADER,MAP_LOCK_TYPE>::
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 modify_link (const char *name, 
 	     CosTrading::FollowOption def_pass_on_follow_rule, 
 	     CosTrading::FollowOption limiting_follow_rule,
@@ -1703,27 +1756,30 @@ modify_link (const char *name,
   // TAO_Proxy
   // *************************************************************
 
-template <class TRADER>  
-TAO_Proxy<TRADER>::TAO_Proxy (TRADER &trader)
-  : trader_ (trader),
-    TAO_Trader_Components <POA_CosTrading::Proxy> (trader.trading_components ()),
-    TAO_Support_Attributes <POA_CosTrading::Proxy> (trader.support_attributes ())
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
+  : TAO_Trader_Components <POA_CosTrading::Proxy> (trader.trading_components ()),
+    TAO_Support_Attributes <POA_CosTrading::Proxy> (trader.support_attributes ()),
+    trader_ (trader)
 {
 }
 
-template <class TRADER>
-TAO_Proxy<TRADER>::~TAO_Proxy (void)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy (void)
 {
 }
 
-template <class TRADER> CosTrading::OfferId 
-TAO_Proxy<TRADER>::export_proxy (CosTrading::Lookup_ptr target, 
-				 const char *type, 
-				 const CosTrading::PropertySeq& properties, 
-				 CORBA::Boolean if_match_all, 
-				 const char * recipe, 
-				 const CosTrading::PolicySeq& policies_to_pass_on,
-				 CORBA::Environment& _env) 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::OfferId 
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+export_proxy (CosTrading::Lookup_ptr target, 
+              const char *type, 
+              const CosTrading::PropertySeq& properties, 
+              CORBA::Boolean if_match_all, 
+              const char * recipe, 
+              const CosTrading::PolicySeq& policies_to_pass_on,
+              CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
@@ -1739,9 +1795,11 @@ TAO_Proxy<TRADER>::export_proxy (CosTrading::Lookup_ptr target,
   TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), 0);
 }
 
-template <class TRADER> void
-TAO_Proxy<TRADER>::withdraw_proxy (const char *id,
-				   CORBA::Environment& _env) 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+withdraw_proxy (const char *id,
+                CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalOfferId, 
 		  CosTrading::UnknownOfferId, 
@@ -1750,9 +1808,11 @@ TAO_Proxy<TRADER>::withdraw_proxy (const char *id,
   TAO_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_NO));
 }
 
-template <class TRADER> CosTrading::Proxy::ProxyInfo *
-TAO_Proxy<TRADER>::describe_proxy (const char *id,
-				   CORBA::Environment& _env) 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+CosTrading::Proxy::ProxyInfo *
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+describe_proxy (const char *id,
+                CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalOfferId, 
 		  CosTrading::UnknownOfferId, 
@@ -1761,11 +1821,13 @@ TAO_Proxy<TRADER>::describe_proxy (const char *id,
   TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), 0);
 }
 
-template <class TRADER> void
-TAO_Proxy<TRADER>::list_proxies (CORBA::ULong how_many,
-				 CosTrading::OfferIdSeq*& ids,
-				 CosTrading::OfferIdIterator_ptr& id_itr,
-				 CORBA::Environment& _env)
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
+void
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+list_proxies (CORBA::ULong how_many,
+                CosTrading::OfferIdSeq*& ids,
+                CosTrading::OfferIdIterator_ptr& id_itr,
+                CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::NotImplemented))
 {
