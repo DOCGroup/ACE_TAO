@@ -1,3 +1,8 @@
+Tue Nov 15 06:11:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h: Added the
+	  missing export macro.
+
 Wed Nov 15 03:57:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.cpp (add_tagged_component):
@@ -148,7 +153,7 @@ Wed Nov 15 01:48:29 2000  Ossama Othman  <ossama@uci.edu>
 	  (verify_orb_configuration):
 
 	  New internal method that verifies that the ORB configuration
-	  will not prevent tagged components from being used.  
+	  will not prevent tagged components from being used.
 
 	  (verify_profile_version):
 
