@@ -4,9 +4,9 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  const ACEXML_Char* test = "http://www.cs.wustl.edu/~nanbor/";
+  const ACEXML_Char* test = ACE_TEXT("http://www.cs.wustl.edu/~nanbor/");
 
-  const ACEXML_Char* simple = "http://www.cs.wustl.edu/~kitty/";
+  const ACEXML_Char* simple = ACE_TEXT("http://www.cs.wustl.edu/~kitty/");
 
   ACEXML_HttpCharStream stream;
   ACEXML_Char ch;

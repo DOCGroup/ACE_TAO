@@ -1,3 +1,8 @@
+Thu Jun 27 07:47:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/tests/HttpCharStream_Test.cpp:
+          Fixed BCB Unicode build errors
+
 Wed Jun 26 09:56:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/msvc_auto_compile.pl: Changed the list of XML related
