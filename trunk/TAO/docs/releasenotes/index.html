@@ -1,7 +1,7 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
-  
+
    <title>TAO Release Information and TODO List</title>
 </head>
 <body text="#000000" bgcolor="#FFFFFF">
@@ -757,7 +757,7 @@ InterOperable Naming Service. (.pdf)</a>
 <a NAME="ec"></a>CORBA Event Service</h3>
 
 <h4>
-Last updated: Wed Jan 13 20:01:27 CST 1999</h4>
+Last updated: Fri Mar  5 20:38:26 CST 1999</h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <p>The COS compliant Event Service implements the Event Service Specification:
 <a href="http://www.omg.org/docs/formal/97-12-11.pdf">(.pdf)</a>,
@@ -780,17 +780,23 @@ Event Service (<tt>$TAO_ROOT/orbsvcs/CosEvent_Service</tt>)The Event Service
 creates a COS compliant event channel and registers it with the naming
 service with the default name "CosEventChannel".</li>
 
-<br>Please read the associated README for more details.</ul>
+<br>Please read the associated README for more details.
 
-<h3>
-Current Work:</h3>
-
-<ul>
 <li>
 CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:&nbsp;
 This test demonstrates how multiple CosEC's connect to one RtEC and how
 multiple consumers and producers exchange events in this configuration.</li>
 </ul>
+<h3>
+Known bugs:</h3>
+<ul>
+<li>
+CosEC_Multiple: <tt>($TAO_ROOT/orbsvcs/tests/CosEC_Multiple)</tt>:&nbsp;
+Once the tests are done, the control doesn't return to the shell,
+you have to say CTRL-C to get back to the prompt.
+</li>
+</ul>
+
 <!--#include virtual="ec.html" -->
 <p>
 <hr>

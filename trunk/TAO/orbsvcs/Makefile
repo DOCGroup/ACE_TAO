@@ -19,6 +19,7 @@ DIRS  =	orbsvcs \
 	Logging_Service \
 	Time_Service \
 	ImplRepo_Service \
+	CosEvent_Service \
 	tests
 
 #----------------------------------------------------------------------------
