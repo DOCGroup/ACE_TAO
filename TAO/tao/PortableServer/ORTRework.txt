@@ -1,3 +1,9 @@
+Fri Aug 20 12:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          Removed some commented out code and removed comment after include of
+          IORInfoC.h, no good idea yet how to prevent this
+
 Fri Aug 20 12:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POAManager.cpp:

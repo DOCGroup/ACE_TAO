@@ -14,7 +14,7 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
-#include "tao/IORInterceptor/IORInfoC.h" // needed for the HOLDING and other state constants, would like to zap this
+#include "tao/IORInterceptor/IORInfoC.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
 #include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
@@ -745,8 +745,6 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       // Get the adapter template related to the ChildPOA
       PortableInterceptor::ObjectReferenceTemplate *child_at =
         child_poa->get_adapter_template ();
-
-      //CORBA::add_ref (child_at);
 
       // Add it to the sequence of object reference templates that
       // will be destroyed.
