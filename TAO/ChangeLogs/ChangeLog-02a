@@ -1,3 +1,9 @@
+Mon Feb  5 12:17:02 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp (TAO_Trading_Loader):
+
+	  Corrected typo.
+
 Mon Feb 05 11:53:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.pidl:
