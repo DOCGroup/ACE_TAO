@@ -1153,7 +1153,79 @@ CORBA_ORB::create_exception_tc (const char *id,
 
   return interface_typecode;
 }
-                                   
+  
+
+CORBA_TypeCode_ptr 
+CORBA_ORB::create_alias_tc (const char *id,
+                            const char *name,
+                            const CORBA::TypeCode_ptr original_type,
+                            CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << id;
+
+  cdr << name;
+
+  cdr << original_type;
+  
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
+  
+  ACE_NEW_THROW_EX (interface_typecode,
+                    CORBA_TypeCode (CORBA::tk_alias,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  
+  return interface_typecode;
+}                             
+
+CORBA_TypeCode_ptr 
+CORBA_ORB::create_struct_tc (const char *id,
+                            const char *name,
+                            CORBA_StructMemberSeq &members,
+                            CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_OutputCDR cdr;
+
+  cdr << TAO_ENCAP_BYTE_ORDER;
+
+  cdr << id;
+
+  cdr << name;
+
+  // Number of members..
+  CORBA::ULong len = members.length ();
+  cdr << len;
+  
+  for (CORBA::ULong index = 0; index < len; index++)
+    {
+      // Get the first member which is a string.. 
+      CORBA_StructMember struct_member = members[index];
+      
+      cdr << struct_member.name.in ();
+      
+      cdr << struct_member.type.in ();
+    }
+
+  CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
+  ACE_NEW_THROW_EX (interface_typecode,
+                    CORBA_TypeCode (CORBA::tk_struct,
+                                    cdr.total_length (),
+                                    cdr.buffer (),
+                                    0,
+                                    0),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  
+  return interface_typecode;
+}
+    
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
