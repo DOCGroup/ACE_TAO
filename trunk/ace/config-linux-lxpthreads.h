@@ -12,8 +12,8 @@
    the tarball of 0.5 can be found, but I suspect that
    Xavier's site has it...
 
-	* RPM == Redhat Package Management 
-	
+	* RPM == Redhat Package Management
+
 	My system is a Caldera-based distribution with many upgraded
 	packages.  If you don't use RPM, there is a program (rpm2cpio)
 	which will extract the files for "normal consumption".
@@ -67,7 +67,7 @@
 #define ACE_LACKS_STRRECVFD
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
@@ -138,7 +138,6 @@
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES

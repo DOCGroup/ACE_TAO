@@ -34,18 +34,17 @@
 #define ACE_LACKS_THREAD_STACK_ADDR
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_HAS_SIN_LEN
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 #define ACE_HAS_STRUCT_NETDB_DATA
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_LONGLONG_T
-#define ACE_HAS_REENTRANT_FUNCTIONS 
+#define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SYSV_IPC
 #define ACE_HAS_THREAD_SELF
 #define ACE_HAS_TLI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_TIUSER_H
 #define ACE_TEMPLATES_REQUIRE_PRAGMA
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CHARPTR_DL
@@ -133,7 +132,7 @@
 #undef msg_control
 #define msg_accrights msg_control
 #endif /* msg_accrights */
- 
+
 #if !defined (msg_accrightslen)
 #undef msg_controllen
 #define msg_accrightslen msg_controllen

@@ -18,12 +18,11 @@
 //
 // The following lines are copied from the sunos5.5-g+configuration.
 // (This is the GNU-specific part.)
-// 
+//
 // Must specialize templates due to G++'s lame parameterized type
 // support...
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_HAS_UALARM
 // Optimize ACE_Handle_Set for select().
@@ -46,10 +45,10 @@
 // definitions of timestruc_t and tid_t in procfs.h not sure what
 // functionality is lost?  Platform supports <sys/procfs.h>
 //#define ACE_HAS_PROC_FS
- 
+
 // Platform defines MAP_FAILED as a long constant.
 #define ACE_HAS_LONG_MAP_FAILED
- 
+
 // DJT 6/10/96 All these broken macro's can now be removed with the
 // approporiate ordering of the include files. The Platinum release
 // now temporarily supports both forms.  Platform's implementation of
@@ -77,7 +76,7 @@
 
 // Platform supports System V IPC (most versions of UNIX, but not
 // Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
@@ -119,7 +118,7 @@
 #define ACE_HAS_POSIX_TIME
 
 // Platform defines struct timespec in <sys/timers.h>
-// #define ACE_HAS_BROKEN_POSIX_TIME 
+// #define ACE_HAS_BROKEN_POSIX_TIME
 // DJT added 6/5/96
 // #define ACE_HAS_SVR4_TIME
 //#define ACE_HAS_SVR4_TIME
@@ -127,7 +126,7 @@
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
-// DJT modified 6/5/96 
+// DJT modified 6/5/96
 // ACE supports POSIX Pthreads.
 //#define ACE_HAS_DCETHREADS
 #define ACE_HAS_PTHREADS
@@ -162,7 +161,7 @@
 // Compiler/platform supports SVR4 dynamic linking semantics.
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 
-// Platform support OSF1 gettimeofday 
+// Platform support OSF1 gettimeofday
 #define ACE_HAS_OSF1_GETTIMEOFDAY
 
 // Compiler/platform supports SVR4 signal typedef.

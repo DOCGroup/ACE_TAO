@@ -57,7 +57,7 @@
 #define ACE_LACKS_STRRECVFD
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
@@ -120,7 +120,6 @@
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
