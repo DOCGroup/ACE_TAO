@@ -109,6 +109,9 @@ public:
   // Return the count of members
   virtual int member_count (void);
 
+  // Convert a numeric value to the enum's string name for it.
+  virtual UTL_ScopedName *value_to_name (const unsigned long v);
+
   // Cleanup function.
   virtual void destroy (void);
 
