@@ -1,0 +1,14 @@
+# $Id$
+
+	This directory containts possibly the most simple example of
+the real-time event service.  It contains three executables; a
+consumer, supplier and a program to create the event channel itself.
+
+	Run using the run_test.pl script or:
+
+$ ./Service -o ec.ior
+$ ./Consumer file://ec.ior
+$ ./Supplier file://ec.ior
+
+	more advanced tests are available in
+$TAO_ROOT/orbsvcs/tests/Event and $TAO_ROOT/orbsvcs/EC_*

@@ -1,0 +1,13 @@
+$Id$
+
+This utility lists the current entries in the Naming Service in a
+nicely formatted manner.  To run it, just type 
+
+% nslist
+
+and it'll print the contents of the default "NameService" returned by
+resolve_initial_references().  You can select the IOR of this
+NameService via the options described in
+
+$TAO_ROOT/docs/Options.html
+

@@ -1,0 +1,41 @@
+// $Id$
+
+  interface Cubit {
+    octet	cube_octet (in octet o);
+    short	cube_short (in short s);
+    long	cube_long (in long l);
+    
+    struct Many {
+      octet	o;		// + 3 bytes padding (normally) ...
+      long	l;
+      short	s;		// + 2 bytes padding (normally) ...
+    };
+    
+    Many	cube_struct (in Many values);
+    
+    /*    enum discrim {e_0th, e_1st, e_2nd, e_3rd, e_4th, e_5th};
+    
+    union oneof
+      switch (discrim) {
+	// this is an easy union to interpret; no padding
+	// is needed between discriminant and value.
+      case e_0th:
+        octet		o;
+      case e_1st:
+        short		s;
+      case e_2nd:
+        long		l;
+      case e_3rd:
+        Many            cm;
+      };
+    
+      oneof	cube_union (in oneof values); */
+    
+    oneway void	please_exit ();
+  };
+
+
+  interface Cubit_Factory {
+    Cubit create_cubit (in short priority);
+  };
+
