@@ -556,7 +556,7 @@ TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
               this->object_ref_table ().resolve_initial_references (
               TAO_OBJID_RTORB,
               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
     }
 
@@ -577,7 +577,7 @@ TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
               this->object_ref_table ().resolve_initial_references (
               TAO_OBJID_RTCURRENT,
               ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
     }
   return CORBA::Object::_duplicate (this->rt_current_.in ());
