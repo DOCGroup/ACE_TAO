@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO
 
 PROG_SRCS = \
 	InterOp_test.cpp \
