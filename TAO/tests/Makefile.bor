@@ -25,6 +25,7 @@ DIRS = \
 	ORB_init \
 	OctetSeq \
 	Param_Test \
+        POA \
 	Policies \
 	RTCORBA \
 	Timed_Buffered_Oneways \
