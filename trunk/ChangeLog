@@ -16,7 +16,7 @@ Tue Dec  9 13:00:30 2003  Chad Elliott  <elliott_c@ociweb.com>
           Performance optimizations that decrease dependency generation
           times by up to 10%.
 
-Tue Dec  9 17:49:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+Tue Dec  9 17:49:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
           Added #include of ace/OS_NS_strings.h to get ACE_OS::strcasecmp
