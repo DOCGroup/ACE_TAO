@@ -1,3 +1,10 @@
+Mon Mar  8 11:38:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Time_Value.inl (set): Make sure to roundup the
+	  double value properly.  Thanks to James Hu for suggesting the
+	  fix and for Mikael Lundqvist <programmer_71@hotmail.com>
+	  for reporting it.
+
 Mon Mar  8 15:52:33 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/POSIX_Asynch_IO.{h cpp}: Added ACE_POSIX_Asynch_Read_Dgram and
