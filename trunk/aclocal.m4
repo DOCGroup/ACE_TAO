@@ -889,8 +889,28 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
          ;;
      esac
      ;;
-   *irix*)
-
+   *irix5*)
+     case "$CXX" in
+       CC)
+         CXXFLAGS="$CXXFLAGS -ptused -prelink +pp -woff 3203,3209,3161,3262,3665"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS "
+         DCXXFLAGS="-g"
+         OCXXFLAGS=""
+         ;;
+       *)
+         ;;
+     esac
+     ;;
+   *irix6*)
+     case "$CXX" in
+       CC)
+         CPPFLAGS="$CPPFLAGS -D_SGI_MP_SOURCE"
+         CXXFLAGS="$CXXFLAGS -exceptions -ptnone -no_prelink -Wl,-woff,15 -Wl,-woff,84 -Wl,-woff,85 -Wl,-woff,133"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS "
+         DCXXFLAGS="-g"
+         OCXXFLAGS="-O -OPT:Olimit=0"
+       ;;
+     esac
      ;;
    *linux*)
      case "$CXX" in
@@ -1999,6 +2019,40 @@ dnl Check if compiler accepts specific flag to enable threads
       [
        ace_has_pthreads=yes
        AC_DEFINE(ACE_HAS_PTHREADS)
+
+       dnl This is ugly but some platforms appear to implement stubs
+       dnl in the C library, so it is possible that a no-op function
+       dnl may be found.  Here we check for a few more functions in
+       dnl case this is so.  This may not be fool proof since the
+       dnl additional functions themselves may be implemented as
+       dnl stubs, in which case the same problem will occur!
+       dnl Another solution is to check for the function using
+       dnl AC_CHECK_LIB but that will force the library to be added
+       dnl to the LIBS variable, which may not even be necessary.  In
+       dnl any case, it may be the better solution.  If problems arise
+       dnl in the future regarding this issue, then we should probably
+       dnl switch to doing an AC_CHECK_LIB before each ACE_SEARCH_LIBS
+       dnl below.
+
+       dnl Search for functions in more recent standards first.
+
+       dnl Note that the functions were chosen since they appear to be
+       dnl more "exotic" than the less "interesting" functions such as
+       dnl pthread_mutexattr_init.
+
+       dnl Draft 7 and Standard
+       ACE_SEARCH_LIBS([pthread_setschedparam],
+                       [pthread pthreads c_r gthreads],,
+          [
+           dnl Draft 6
+           ACE_SEARCH_LIBS([pthread_attr_setprio],
+                           [pthread pthreads c_r gthreads],,
+              [
+               dnl Draft 4
+               ACE_SEARCH_LIBS([pthread_setprio],
+                               [pthread pthreads c_r gthreads],,)
+              ])
+          ])
       ],
       [
        ace_has_pthreads=no
