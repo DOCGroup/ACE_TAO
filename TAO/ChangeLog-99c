@@ -1,3 +1,18 @@
+Tue Aug 24 19:09:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Latency/client.cpp:
+	  The user can specify a period for all the threads, in
+	  milliseconds, the option is now consistent with the st_client
+	  test
+
+	* performance-tests/Latency/Makefile:
+	* performance-tests/Latency/TestImpl.java:
+	* performance-tests/Latency/java_client.java:
+	* performance-tests/Latency/java_server.java:
+	  Added a Java version of the latency test, we should move it to
+	  some other place (like a separate VisiJava directory), but not
+	  right now.
+
 Tue Aug 24 18:14:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
