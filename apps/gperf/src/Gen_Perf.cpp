@@ -38,101 +38,46 @@ extern char *version_string;
 // often helpful, though not as deterministic, of course!
 
 Gen_Perf::Gen_Perf (void)
+  : fewest_collisions (0),
+    num_done (1)
 {
-  int asso_value_max;
-  int non_linked_length;
-
-  this->key_list.read_keys ();
-
-  if (option[ORDER])
-    this->key_list.reorder ();
-
-  asso_value_max = option.get_asso_max ();
-  non_linked_length = this->key_list.keyword_list_length ();
-  num_done = 1;
-  fewest_collisions = 0;
-
-  if (asso_value_max == 0)
-    asso_value_max = non_linked_length;
-  else if (asso_value_max > 0)
-    asso_value_max *= non_linked_length;
-  else // if (asso_value_max < 0)
-    asso_value_max = non_linked_length / -asso_value_max;
-
-  option.set_asso_max (ACE_POW (asso_value_max));
-  
-  if (option[RANDOM])
-    {
-      srand (time (0));
-      
-      for (int i = 0; i < ALPHA_SIZE; i++)
-        Vectors::asso_values[i] = (rand () & asso_value_max - 1);
-    }
-  else
-    {
-      int asso_value = option.initial_value ();
-      
-      if (asso_value)           // Initialize array if user requests non-zero default.
-        for (int i = ALPHA_SIZE - 1; i >= 0; i--)
-          Vectors::asso_values[i] = asso_value & option.get_asso_max () - 1;
-    }
-  max_hash_value = this->key_list.max_key_length () 
-    + option.get_asso_max () 
-    * option.get_max_keysig_size ();
-  
-  printf ("/* ");
-
-  if (option[C])
-    printf ("C");
-
-  else if (option[CPLUSPLUS])
-    printf ("C++");
-
-  printf (" code produced by gperf version %s */\n",
-          version_string);
-  Options::print_options ();
-
-  if (option[DEBUG])
-    ACE_DEBUG ((LM_DEBUG,
-                "total non-linked keys = %d\nmaximum associated value is %d"
-                "\nmaximum size of generated hash table is %d\n",
-                non_linked_length,
-                asso_value_max,
-                max_hash_value));
 }
 
 // Merge two disjoint hash key multisets to form the ordered disjoint
 // union of the sets.  (In a multiset, an element can occur multiple
-// times).  Precondition: both set_1 and set_2 must be
+// times).  Precondition: both set1 and set2 must be
 // ordered. Returns the length of the combined set.
 
-inline int 
-Gen_Perf::compute_disjoint_union (char *set_1, char *set_2, char *set_3)
+int 
+Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 {
-  char *base = set_3;
+  char *base = set3;
   
-  while (*set_1 && *set_2)
-    if (*set_1 == *set_2)
-      set_1++, set_2++; 
+  while (*set1 && *set2)
+    if (*set1 == *set2)
+      set1++, set2++; 
     else
       {
-        *set_3 = *set_1 < *set_2 ? *set_1++ : *set_2++;
-        if (set_3 == base || *set_3 != *(set_3-1)) set_3++;
+        *set3 = *set1 < *set2 ? *set1++ : *set2++;
+        if (set3 == base || *set3 != *(set3 - 1)) 
+          set3++;
       }
    
-  while (*set_1)
+  while (*set1)
     {
-      *set_3 = *set_1++; 
-      if (set_3 == base || *set_3 != *(set_3-1)) set_3++;
+      *set3 = *set1++; 
+      if (set3 == base || *set3 != *(set3 - 1)) 
+        set3++;
     }
    
-  while (*set_2)
+  while (*set2)
     {
-      *set_3 = *set_2++; 
-      if (set_3 == base || *set_3 != *(set_3-1)) set_3++;
+      *set3 = *set2++; 
+      if (set3 == base || *set3 != *(set3 - 1))
+        set3++;
     }
-  *set_3 = '\0';
-  return set_3 - base;
+  *set3 = '\0';
+  return set3 - base;
 }
 
 // Sort the UNION_SET in increasing frequency of occurrence.  This
@@ -140,17 +85,16 @@ Gen_Perf::compute_disjoint_union (char *set_1, char *set_2, char *set_3)
 // (Set_3, in this case), is ordered. Uses insertion sort, since the
 // UNION_SET is typically short.
   
-inline void 
+void 
 Gen_Perf::sort_set (char *union_set, int len)
 {
-  int i, j;
-  
-  for (i = 0, j = len - 1; i < j; i++)
+  for (int i = 0, j = len - 1; i < j; i++)
     {
       char curr, tmp;
 
       for (curr = i + 1, tmp = union_set[curr]; 
-           curr > 0 && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr-1]]; 
+           curr > 0 
+           && Vectors::occurrences[tmp] < Vectors::occurrences[union_set[curr-1]]; 
            curr--)
         union_set[curr] = union_set[curr - 1];
       
@@ -158,9 +102,9 @@ Gen_Perf::sort_set (char *union_set, int len)
     }
 }
 
-// Generate a key set's hash value.
+// Generate a keysig's hash value.
 
-inline int 
+int 
 Gen_Perf::hash (List_Node *key_node) 
 {                             
   int sum = option[NOLENGTH] ? 0 : key_node->length;
@@ -168,7 +112,8 @@ Gen_Perf::hash (List_Node *key_node)
   for (char *ptr = key_node->keysig; *ptr; ptr++)
       sum += Vectors::asso_values[*ptr];
   
-  return key_node->hash_value = sum;
+  key_node->hash_value = sum;
+  return sum;
 }
 
 // Find out how character value change affects successfully hash
@@ -176,7 +121,7 @@ Gen_Perf::hash (List_Node *key_node)
 // returns TRUE.  Note that because Option.Get_Asso_Max is a power of
 // two we can guarantee that all legal Vectors::Asso_Values are
 // visited without repetition since Option.Get_Jump was forced to be
-// an odd value! 
+// an odd value!
 
 inline int  
 Gen_Perf::affects_prev (char c, List_Node *curr)
@@ -185,10 +130,10 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
   int total_iterations;
   
   if (!option[FAST])
-    total_iterations = option.get_asso_max ();
+    total_iterations = option.asso_max ();
   else 
     {
-      total_iterations = option.get_iterations ();
+      total_iterations = option.iterations ();
 
       if (total_iterations == 0)
         total_iterations = this->key_list.keyword_list_length ();
@@ -201,7 +146,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
       int collisions = 0;
 
       Vectors::asso_values[c] = Vectors::asso_values[c] + 
-        (option.get_jump () ? option.get_jump () : rand ()) & option.get_asso_max () - 1;
+        (option.jump () ? option.jump () : ACE_OS::rand ()) & option.asso_max () - 1;
 
       // Iteration Number array is a win, O(1) intialization time!
       this->char_search.reset ();     
@@ -210,7 +155,8 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
       // it does better than before we'll take it!
 
       for (List_Node *ptr = this->key_list.head;
-           !this->char_search.find (hash (ptr)) || ++collisions < fewest_collisions;
+           this->char_search.find (this->hash (ptr)) == 0
+             || ++collisions < fewest_collisions;
            ptr = ptr->next)
         if (ptr == curr)
           {
@@ -231,14 +177,9 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
 // Change a character value, try least-used characters first.
 
-void 
+int
 Gen_Perf::change (List_Node *prior, List_Node *curr)
 {
-  static char *union_set;
-
-  if (!union_set)
-    union_set = new char [2 * option.get_max_keysig_size () + 1];
-
   if (option[DEBUG])
     ACE_DEBUG ((LM_DEBUG, 
                 "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
@@ -246,17 +187,17 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
                 prior->key,
                 curr->key,
                 curr->hash_value));
-  sort_set (union_set,
-            compute_disjoint_union (prior->keysig,
-                                    curr->keysig,
-                                    union_set));
+  Gen_Perf::sort_set (this->union_set,
+                      compute_disjoint_union (prior->keysig,
+                                              curr->keysig,
+                                              this->union_set));
 
   // Try changing some values, if change doesn't alter other values
   // continue normal action.
   fewest_collisions++;
   
-  for (char *temp = union_set; *temp; temp++)
-    if (!affects_prev (*temp, curr))
+  for (char *temp = union_set; *temp != '\0'; temp++)
+    if (affects_prev (*temp, curr) == 0)
       {
         if (option[DEBUG])
           ACE_DEBUG ((LM_DEBUG,
@@ -264,85 +205,161 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
                       *temp,
                       temp - union_set + 1,
                       Vectors::asso_values[*temp]));
-        return; // Good, doesn't affect previous hash values, we'll take it.
+        // Good, doesn't affect previous hash values, we'll take it.
+        return 0;
       }
 
-  for (List_Node *ptr = this->key_list.head; ptr != curr; ptr = ptr->next)
-    hash (ptr);
+  for (List_Node *ptr = this->key_list.head;
+       ptr != curr;
+       ptr = ptr->next)
+    this->hash (ptr);
   
-  hash (curr);
-
+  this->hash (curr);
+  
   if (option[DEBUG])
     ACE_DEBUG ((LM_DEBUG, 
                 "** collision not resolved after %d iterations, %d duplicates remain, continuing...\n", 
-               !option[FAST] ? option.get_asso_max () : option.get_iterations () ? option.get_iterations () : this->key_list.keyword_list_length (),
-               fewest_collisions + this->key_list.total_duplicates));
+               !option[FAST] ? option.asso_max () : option.iterations () ? option.iterations () : this->key_list.keyword_list_length (),
+                fewest_collisions + this->key_list.total_duplicates));
+  return 0;
 }
 
-// Does the hard stuff....  Initializes the Iteration Number array,
-// and attempts to find a perfect function that will hash all the key
-// words without getting any duplications.  This is made much easier
-// since we aren't attempting to generate *minimum* functions, only
-// perfect ones.  If we can't generate a perfect function in one pass
-// *and* the user hasn't enabled the DUP option, we'll inform the user
-// to try the randomization option, use -D, or choose alternative key
-// positions.  The alternatives (e.g., back-tracking) are too
-// time-consuming, i.e, exponential in the number of keys.
+int
+Gen_Perf::open (void)
+{
+  if (this->key_list.read_keys () == -1)
+    return -1;
+
+  if (option[ORDER])
+    this->key_list.reorder ();
+
+  int asso_value_max = option.asso_max ();
+  int non_linked_length = this->key_list.keyword_list_length ();
+
+  if (asso_value_max == 0)
+    asso_value_max = non_linked_length;
+  else if (asso_value_max > 0)
+    asso_value_max *= non_linked_length;
+  else // if (asso_value_max < 0)
+    asso_value_max = non_linked_length / -asso_value_max;
+
+  option.asso_max (ACE_POW (asso_value_max));
+  
+  if (option[RANDOM])
+    {
+      ACE_OS::srand (ACE_OS::time (0));
+      
+      for (int i = 0; i < Vectors::ALPHA_SIZE; i++)
+        Vectors::asso_values[i] = (ACE_OS::rand () & asso_value_max - 1);
+    }
+  else
+    {
+      int asso_value = option.initial_value ();
+      
+      // Initialize array if user requests non-zero default.
+      if (asso_value)           
+        for (int i = Vectors::ALPHA_SIZE - 1; i >= 0; i--)
+          Vectors::asso_values[i] = asso_value & option.asso_max () - 1;
+    }
+
+  this->max_hash_value = this->key_list.max_key_length () 
+    + option.asso_max () 
+    * option.max_keysig_size ();
+  
+  ACE_NEW_RETURN (this->union_set,
+                  char[2 * option.max_keysig_size () + 1],
+                  -1);
+  printf ("/* ");
+
+  if (option[C])
+    printf ("C");
+
+  else if (option[CPLUSPLUS])
+    printf ("C++");
+
+  printf (" code produced by gperf version %s */\n",
+          version_string);
+  Options::print_options ();
+
+  if (option[DEBUG])
+    ACE_DEBUG ((LM_DEBUG,
+                "total non-linked keys = %d\n"
+                "total duplicates = %d\n"
+                "maximum associated value is %d\n"
+                "maximum size of generated hash table is %d\n",
+                non_linked_length,
+                this->key_list.total_duplicates,
+                asso_value_max,
+                max_hash_value));
+  if (this->char_search.open (max_hash_value + 1) == -1)
+    return -1;
+  return 0;
+}
+
+// Does the hard stuff....  Initializes the Bool Array, and attempts
+// to find a perfect function that will hash all the key words without
+// getting any duplications.  This is made much easier since we aren't
+// attempting to generate *minimum* functions, only perfect ones.  If
+// we can't generate a perfect function in one pass *and* the user
+// hasn't enabled the DUP option, we'll inform the user to try the
+// randomization option, use -D, or choose alternative key positions.
+// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
+// exponential in the number of keys.
 
 int
-Gen_Perf::generate (void)
+Gen_Perf::run (void)
 {
-  STORAGE_TYPE *buffer = new STORAGE_TYPE[max_hash_value + 1];
-  if (buffer == NULL)
-    abort ();
+  if (this->open () == -1)
+    return 1;
 
-  this->char_search.init (buffer, max_hash_value + 1);
-  
   List_Node *curr;
 
   for (curr = this->key_list.head; 
-       curr; 
+       curr != 0; 
        curr = curr->next)
     {
-      hash (curr);
+      this->hash (curr);
       
       for (List_Node *ptr = this->key_list.head; 
 	   ptr != curr; 
 	   ptr = ptr->next)
         if (ptr->hash_value == curr->hash_value)
           {
-            change (ptr, curr);
+            if (this->change (ptr, curr) == -1)
+              return 1;
             break;
           }
       num_done++;
     } 
   
-  // Make one final check, just to make sure nothing weird
-  // happened....
+  // Make one final check, just to make sure nothing weird happened...
   
   this->char_search.reset ();
 
   for (curr = this->key_list.head; 
        curr; 
        curr = curr->next)
-    if (this->char_search.find (hash (curr)))
-      if (option[DUP]) // Keep track of this number...
+    if (this->char_search.find (this->hash (curr)) != 0)
+      if (option[DUP]) 
+        // Keep track of the number of "dynamic" links (i.e., keys
+        // that hash to the same value) so that we can use it later
+        // when generating the output.
         this->key_list.total_duplicates++;
-      else // Yow, big problems.  we're outta here!
+      else 
         { 
-          ACE_ERROR ((LM_ERROR, "\nInternal error, duplicate value %d:\n"
-                        "try options -D or -r, or use new key positions.\n\n", hash (curr)));
-	  free (buffer);
+          // Yow, big problems.  we're outta here!
+          ACE_ERROR ((LM_ERROR,
+                      "\nInternal error, duplicate value %d:\n"
+                      "try options -D or -r, or use new key positions.\n\n",
+                      this->hash (curr)));
           return 1;
         }
 
   // Sorts the key word list by hash value, and then outputs the list.
   // The generated hash table code is only output if the early stage
   // of processing turned out O.K.
-
   this->key_list.sort ();
   this->key_list.output ();
-  free (buffer);
   return 0;
 }
 
@@ -354,7 +371,7 @@ Gen_Perf::~Gen_Perf (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
-      for (int i = 0; i < ALPHA_SIZE; i++)
+      for (int i = 0; i < Vectors::ALPHA_SIZE; i++)
         if (Vectors::occurrences[i])
           ACE_DEBUG ((LM_DEBUG, 
                       "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",
@@ -365,6 +382,8 @@ Gen_Perf::~Gen_Perf (void)
       ACE_DEBUG ((LM_DEBUG, 
                   "end table dumping\n"));
     }
+
+  delete [] this->union_set;
 }
 
 #endif /* ACE_HAS_GPERF */

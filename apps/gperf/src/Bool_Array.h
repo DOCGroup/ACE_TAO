@@ -29,14 +29,6 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA
 
 #if defined (ACE_HAS_GPERF)
 
-#if defined (LO_CAL)
-// If we are on a memory diet then we'll only make these use a limited
-// amount of storage space.
-typedef u_short STORAGE_TYPE;
-#else
-typedef int STORAGE_TYPE;
-#endif /* LO_CAL */
-
 class Bool_Array 
 {
   // = TITLE
@@ -49,29 +41,28 @@ class Bool_Array
 public:
   // = Initialization and termination methods.
   Bool_Array (void);
-  // Constructor.
+  // Constructor
+
+  int open (u_long);
+  // Initialize the array (requires O(n) time).
 
   ~Bool_Array (void);
   // Destructor.
 
-  void init (STORAGE_TYPE *buffer,
-             STORAGE_TYPE s);
-  // Initialize the array (requires O(n) time).
-
-  int find (int value);
+  int find (u_long value);
   // Locate the <value> in the array (requires O(1) time).
 
   void reset (void);
   // Reinitializes the array (requires O(1) time).
 
 private:
-  STORAGE_TYPE *storage_array_;    
+  u_long *storage_array_;    
   // Initialization of the index space.
 
-  STORAGE_TYPE  generation_number_; 
-  // Keep track of the current Generation. 
+  u_long generation_number_; 
+  // Keep track of the current Generation.
 
-  int size_;
+  u_long size_;
   // Keep track of array size. 
 };
 

@@ -44,8 +44,8 @@ all:
 	$(CXX) $(CCFLAGS) -o aout adainset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	-diff -b $(srcdir)/ada-res.exp ada-res.out
-	$(GPERF) -a -k1,2,'$$' $(srcdir)/c++.gperf > c++inset.cpp
-	$(CXX) $(CCFLAGS) -o c++inset c++inset.cpp test.o $(LDFLAGS) $(VLDLIBS)
+	$(GPERF) -a -D $(srcdir)/c++.gperf > c++inset.cpp
+	$(CXX) $(CCFLAGS) -o c++out c++inset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./c++out -v < $(srcdir)/c++.gperf > c++-res.out
 	-diff -b $(srcdir)/c++-res.exp c++-res.out
 	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.cpp
@@ -68,7 +68,7 @@ all:
 	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./iout -v < $(srcdir)/idl.gperf > idl.out
 	-diff -b $(srcdir)/idl.exp idl.out
-	$(GPERF) -a -D -o < $(srcdir)/corba.gperf > tinset.cpp
+	$(GPERF) -a -o < $(srcdir)/corba.gperf > tinset.cpp
 	$(CXX) $(CCFLAGS) -o tout tinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./tout -v < $(srcdir)/corba.gperf > corba.out
 	-diff -b $(srcdir)/corba.exp corba.out

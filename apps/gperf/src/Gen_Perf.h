@@ -23,7 +23,6 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111, USA. */
 #if !defined (GEN_PERF_H)
 #define GEN_PERF_H 
 
-#include "ace/OS.h"
 #include "Options.h"
 #include "Key_List.h"
 #include "Bool_Array.h"
@@ -36,15 +35,22 @@ class Gen_Perf
   //   Provides high-level routines to manipulate the keyword list
   //   structures the code generation output.  
 public:
+  // = Initialization and termination methods.
   Gen_Perf (void);
-  ~Gen_Perf (void);
-  int generate (void);
+  // Constructor.
 
+  ~Gen_Perf (void);
+  // Destructor
+
+  int run (void);
+  // Attempt to generate a perfect hash function.
+ 
 private:
-  void change (List_Node *prior, List_Node *curr);
+  int open (void);
+  int change (List_Node *prior, List_Node *curr);
   int affects_prev (char c, List_Node *curr);
   static int hash (List_Node *key_node);
-  static int compute_disjoint_union (char *set_1, char *set_2, char *set_3);
+  static int compute_disjoint_union (char *s1, char *s2, char *s3);
   static void sort_set (char *union_set, int len);
   
   int max_hash_value;    
@@ -56,14 +62,16 @@ private:
   int num_done;          
   // Number of keywords processed without a collision.
 
-  Bool_Array char_search;
-  // Table that keeps track of key collisions.
-  
+  char *union_set;
+  // Disjoint union.
+
   Key_List key_list;
   // List of the keys we're trying to map into a perfect hash
   // function.
+
+  Bool_Array char_search;
+  // Table that keeps track of key collisions.
 };
 
 #endif /* ACE_HAS_GPERF */
-
 #endif /* GEN_PERF_H */

@@ -28,53 +28,55 @@ ACE_RCSID(src, Hash_Table, "$Id$")
 
 #include "ace/ACE.h"
 
-#define NIL(TYPE) (TYPE *)0
-
 // The size of the hash table is always the smallest power of 2 >= the
 // size indicated by the user.  This allows several optimizations,
 // including the use of double hashing and elimination of the mod
 // instruction.  Note that the size had better be larger than the
-// number of items in the hash table, else there's trouble!!!  Note
-// that the memory for the hash table is allocated *outside* the
-// intialization routine.  This compromises information hiding
-// somewhat, but greatly reduces memory fragmentation, since we can
-// now use alloca!
+// number of items in the hash table, else there's trouble!!!
 
-Hash_Table::Hash_Table (List_Node **table_ptr, int s)
-  : table (table_ptr),
-    size (s),
-    collisions (0)
+Hash_Table::Hash_Table (size_t s)
+  : size_ (ACE_POW (s)),
+    collisions_ (0)
 {
-  memset ((char *) table, 0, size * sizeof *table);
+  if (this->size_ == 0)
+    this->size_ = 1;
+  ACE_NEW (this->table_,
+           List_Node*[this->size_]);
+  ACE_OS::memset ((char *) this->table_,
+                  0,
+                  this->size_ * sizeof *this->table_);
 }
 
 Hash_Table::~Hash_Table (void)
 {
   if (option[DEBUG])
     {
-      int field_width = option.get_max_keysig_size ();
+      int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
+        ? option.max_keysig_size () 
+        : ACE_OS::strlen ("keysig");
 
-      fprintf (stderr,
-               "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
-               "location, %*s, keyword\n",
-               size,
-               size * (int) sizeof *table,
-               collisions,
-               field_width,
-               "keysig");
+      ACE_DEBUG ((LM_DEBUG,
+                  "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
+                  "location, %*s, keyword\n",
+                  this->size_,
+                  this->size_ * (int) sizeof *this->table_,
+                  this->collisions_,
+                  keysig_width,
+                  "keysig"));
 
-      for (int i = size - 1; i >= 0; i--)
-        if (table[i])
-          fprintf (stderr,
-                   "%8d, %*s, %s\n",
-                   i,
-                   field_width,
-                   table[i]->keysig,
-                   table[i]->key);
-
-      fprintf (stderr,
-               "\nend dumping hash table\n\n");
+      for (int i = this->size_ - 1; i >= 0; i--)
+        if (this->table_[i])
+          ACE_DEBUG ((LM_DEBUG,
+                      "%8d, %*s, %s\n",
+                      i,
+                      keysig_width,
+                      this->table_[i]->keysig,
+                      this->table_[i]->key));
+      ACE_DEBUG ((LM_DEBUG,
+                  "end dumping hash table\n\n"));
     }
+
+  delete [] this->table_;
 }
 
 // If the ITEM is already in the hash table return the item found in
@@ -82,26 +84,29 @@ Hash_Table::~Hash_Table (void)
 // double hashing.
 
 List_Node *
-Hash_Table::find (List_Node *item, int ignore_length)
+Hash_Table::find (List_Node *item,
+                  int ignore_length)
 {
   u_int hash_val = ACE::hash_pjw (item->keysig);
-  int probe = hash_val & size - 1;
-  int increment = (hash_val ^ item->length | 1) & size - 1;
+  // The following works since the hash table size_ is always a power
+  // of 2...
+  size_t size = this->size_ - 1;
+  int probe;
+  int increment = (hash_val ^ (ignore_length == 0 ? item->length : 0) | 1) & size;
 
-  while (table[probe]
-         && (strcmp (table[probe]->keysig, item->keysig) != 0
-             || (!ignore_length && table[probe]->length != item->length)))
-    {
-      collisions++;
-      probe = probe + increment & size - 1;
-    }
+  for (probe = hash_val & size;
+       this->table_[probe]
+         && (ACE_OS::strcmp (this->table_[probe]->keysig, item->keysig) != 0
+             || (ignore_length == 0 && this->table_[probe]->length != item->length));
+       probe = probe + increment & size)
+    this->collisions_++;
 
-  if (table[probe])
-    return table[probe];
+  if (this->table_[probe])
+    return this->table_[probe];
   else
     {
-      table[probe] = item;
-      return NIL (List_Node);
+      this->table_[probe] = item;
+      return 0;
     }
 }
 

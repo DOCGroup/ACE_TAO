@@ -40,21 +40,20 @@ class Hash_Table
   // = DESCRIPTION
   //   This implementation uses "double hashing."
 public:
-  Hash_Table (List_Node **t,
-              int s);
+  Hash_Table (size_t s);
 
   ~Hash_Table (void);
 
   List_Node *find (List_Node *item, int ignore_length);
 
 private:
-  List_Node **table;
+  List_Node **table_;
   // Vector of pointers to linked lists of List_Node's. 
 
-  int size;
+  size_t size_;
   // Size of the vector. 
 
-  int collisions; 
+  int collisions_; 
   // Find out how well our double hashing is working!
 };
 
