@@ -1,3 +1,10 @@
+Tue Nov 13 11:46:11 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print 
+	statements that were accessing the element of the unbounded set as 
+	an int rather than an UglyThing.  Thanks to Ossama for pointing
+	this out.
+
 Mon Nov 12 11:41:35 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
