@@ -70,6 +70,13 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
         }
 
       *cp = 0;
+      IIOP_Object *iiopobj;
+       if (obj->QueryInterface (IID_IIOP_Object, (void **) &iiopobj) != TAO_NOERROR)
+        {
+          env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+          return 0;
+        }
+       this->_register_collocation (iiopobj->profile.object_addr ());
       return string;
     }
   else
@@ -121,6 +128,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
                        obj2->profile.host, obj2->profile.port,
                        key.in ());
 
+      this->_register_collocation (obj2->profile.object_addr ());
       return buf;
     }
 }
@@ -268,7 +276,8 @@ iiop_string_to_object (CORBA::String string,
                                       string);
 
   // Create the CORBA level proxy.
-  CORBA_Object *obj = new CORBA_Object (data);
+  TAO_ServantBase *servant = TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
+  CORBA_Object *obj = new CORBA_Object (data, servant, servant != 0);
 
   // Clean up in case of error
   if (obj == 0)
@@ -301,8 +310,60 @@ IIOP_ORB::string_to_object (CORBA::String str,
   return obj;
 }
 
+int
+IIOP_ORB::_register_collocation (ACE_Addr &addr)
+{
+  return this->collocation_record_.insert ((ACE_INET_Addr&) addr);
+}
+
+TAO_ServantBase *
+IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
+{
+
+  if (sobj != 0)
+    {
+      IIOP_Object *iiopobj;
+      // Make sure users passed in an IIOP_Object otherwise, we don't know what to do next.
+      if (sobj->QueryInterface (IID_IIOP_Object, (void **) &iiopobj) != TAO_NOERROR)
+        {
+          ACE_ERROR ((LM_ERROR, "%p: Passing IIOP ORB and non-IIOP object\n", "_get_collocated_object"));
+          return 0;               // Something must be wrong!
+        }
+
+      if (this->collocation_record_.find (iiopobj->profile.object_addr ()) == 0)
+          // Check if the object requested is a collocated object.
+        {
+          CORBA::Environment env;
+          TAO_ObjectKey *objkey = iiopobj->key (env);
+
+          if (env.exception ())
+            {
+              delete objkey;
+              return 0;
+            }
+          TAO_POA *poa = (TAO_POA *) this->resolve_poa ();
+
+          if (poa != 0)
+            {
+              PortableServer::Servant servant = poa->find_servant (*objkey,
+                                                                      env);
+              if (env.exception ())
+                {
+                  delete objkey;
+                  return 0;
+                }
+              return servant;
+            }
+        }
+    }
+
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<IIOP_ORB, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Unbounded_Set<ACE_INET_Addr>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<IIOP_ORB, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Unbounded_Set<ACE_INET_Addr>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
