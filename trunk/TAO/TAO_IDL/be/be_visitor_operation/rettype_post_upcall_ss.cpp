@@ -49,31 +49,31 @@ be_visitor_operation_rettype_post_upcall_ss::visit_array (be_array *)
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_enum (be_enum *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_enum (be_enum *)
 {
   return 0;
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_interface (be_interface *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_interface (be_interface *)
 {
   return 0;
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_interface_fwd (be_interface_fwd *)
 {
   return 0;
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_predefined_type (be_predefined_type *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_predefined_type (be_predefined_type *)
 {
   return 0;
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_sequence (be_sequence *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_sequence (be_sequence *)
 {
   return 0;
 }
@@ -85,7 +85,7 @@ be_visitor_operation_rettype_post_upcall_ss::visit_string (be_string * /* node*/
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_structure (be_structure *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_structure (be_structure *)
 {
   return 0;
 }
@@ -107,7 +107,7 @@ be_visitor_operation_rettype_post_upcall_ss::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_operation_rettype_post_upcall_ss::visit_union (be_union *node)
+be_visitor_operation_rettype_post_upcall_ss::visit_union (be_union *)
 {
   return 0;
 }

@@ -42,7 +42,7 @@ be_visitor_interface::~be_visitor_interface (void)
 
 // this method must be overridden by the derived interface visitors
 int
-be_visitor_interface::visit_interface (be_interface *node)
+be_visitor_interface::visit_interface (be_interface *)
 {
   return -1;
 }

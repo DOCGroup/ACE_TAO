@@ -166,7 +166,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_enum (be_enum *)
   return 0;
 }
 
-int be_visitor_operation_rettype_compiled_marshal::visit_interface (be_interface *node)
+int be_visitor_operation_rettype_compiled_marshal::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
@@ -189,7 +189,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_interface (be_interface
   return 0;
 }
 
-int be_visitor_operation_rettype_compiled_marshal::visit_interface_fwd (be_interface_fwd *node)
+int be_visitor_operation_rettype_compiled_marshal::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
@@ -309,7 +309,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
   return 0;
 }
 
-int be_visitor_operation_rettype_compiled_marshal::visit_sequence (be_sequence *node)
+int be_visitor_operation_rettype_compiled_marshal::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 

@@ -314,7 +314,7 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 }
 
 int
-be_visitor_typedef_ch::visit_string (be_string *node)
+be_visitor_typedef_ch::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
   be_typedef *tdef = this->ctx_->tdef (); // typedef node

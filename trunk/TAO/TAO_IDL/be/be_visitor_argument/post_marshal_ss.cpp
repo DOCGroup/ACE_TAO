@@ -69,7 +69,7 @@ int be_visitor_args_post_marshal_ss::visit_argument (be_argument *node)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_array (be_array *node)
+int be_visitor_args_post_marshal_ss::visit_array (be_array *)
 {
   switch (this->direction ())
     {
@@ -83,7 +83,7 @@ int be_visitor_args_post_marshal_ss::visit_array (be_array *node)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_enum (be_enum *node)
+int be_visitor_args_post_marshal_ss::visit_enum (be_enum *)
 {
   switch (this->direction ())
     {
@@ -97,7 +97,7 @@ int be_visitor_args_post_marshal_ss::visit_enum (be_enum *node)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_interface (be_interface *node)
+int be_visitor_args_post_marshal_ss::visit_interface (be_interface *)
 {
   switch (this->direction ())
     {
@@ -109,7 +109,7 @@ int be_visitor_args_post_marshal_ss::visit_interface (be_interface *node)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *node)
+int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *)
 {
   switch (this->direction ())
     {
@@ -164,7 +164,7 @@ int be_visitor_args_post_marshal_ss::visit_predefined_type (be_predefined_type *
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_sequence (be_sequence *node)
+int be_visitor_args_post_marshal_ss::visit_sequence (be_sequence *)
 {
   switch (this->direction ())
     {
@@ -192,7 +192,7 @@ int be_visitor_args_post_marshal_ss::visit_string (be_string *)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_structure (be_structure *node)
+int be_visitor_args_post_marshal_ss::visit_structure (be_structure *)
 {
   switch (this->direction ())
     {
@@ -206,7 +206,7 @@ int be_visitor_args_post_marshal_ss::visit_structure (be_structure *node)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_union (be_union *node)
+int be_visitor_args_post_marshal_ss::visit_union (be_union *)
 {
   switch (this->direction ())
     {

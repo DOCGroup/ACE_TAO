@@ -39,7 +39,7 @@ be_visitor_exception::~be_visitor_exception (void)
 
 // visit the Exception node and its scope
 int
-be_visitor_exception::visit_exception (be_exception *node)
+be_visitor_exception::visit_exception (be_exception *)
 {
   return -1; // must be overriden
 }

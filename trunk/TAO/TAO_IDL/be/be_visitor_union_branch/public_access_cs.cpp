@@ -155,7 +155,7 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
 }
 
 int
-be_visitor_union_branch_public_access_cs::visit_enum (be_enum *node)
+be_visitor_union_branch_public_access_cs::visit_enum (be_enum *)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
@@ -177,7 +177,7 @@ be_visitor_union_branch_public_access_cs::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
+be_visitor_union_branch_public_access_cs::visit_interface (be_interface *)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
@@ -200,7 +200,7 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_union_branch_public_access_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_union_branch_public_access_cs::visit_interface_fwd (be_interface_fwd *)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
@@ -301,7 +301,7 @@ be_visitor_union_branch_public_access_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_union_branch_public_access_cs::visit_string (be_string *node)
+be_visitor_union_branch_public_access_cs::visit_string (be_string *)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch

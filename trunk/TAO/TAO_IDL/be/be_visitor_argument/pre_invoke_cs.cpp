@@ -44,14 +44,14 @@ be_visitor_args_pre_invoke_cs::~be_visitor_args_pre_invoke_cs (void)
 }
 
 int
-be_visitor_args_pre_invoke_cs::visit_interface (be_interface *node)
+be_visitor_args_pre_invoke_cs::visit_interface (be_interface *)
 {
   // overriding action
   return 0;
 }
 
 int
-be_visitor_args_pre_invoke_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_args_pre_invoke_cs::visit_interface_fwd (be_interface_fwd *)
 {
   return 0;
 }

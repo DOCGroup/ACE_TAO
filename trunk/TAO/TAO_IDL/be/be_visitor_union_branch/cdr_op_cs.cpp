@@ -221,7 +221,7 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 
 // visit interface type
 int
-be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
+be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -264,7 +264,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
 
 // visit interface forward type
 int
-be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();
@@ -433,7 +433,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
+be_visitor_union_branch_cdr_op_cs::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   os = this->ctx_->stream ();

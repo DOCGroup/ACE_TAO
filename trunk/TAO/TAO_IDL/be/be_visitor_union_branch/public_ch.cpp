@@ -431,7 +431,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_union_branch_public_ch::visit_string (be_string *node)
+be_visitor_union_branch_public_ch::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get union branch

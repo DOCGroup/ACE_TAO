@@ -239,7 +239,7 @@ int be_visitor_args_compiled_marshal_cs::visit_enum (be_enum *)
   return 0;
 }
 
-int be_visitor_args_compiled_marshal_cs::visit_interface (be_interface *node)
+int be_visitor_args_compiled_marshal_cs::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -282,7 +282,7 @@ int be_visitor_args_compiled_marshal_cs::visit_interface (be_interface *node)
   return 0;
 }
 
-int be_visitor_args_compiled_marshal_cs::visit_interface_fwd (be_interface_fwd *node)
+int be_visitor_args_compiled_marshal_cs::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
@@ -437,7 +437,7 @@ int be_visitor_args_compiled_marshal_cs::visit_predefined_type (be_predefined_ty
   return 0;
 }
 
-int be_visitor_args_compiled_marshal_cs::visit_sequence (be_sequence *node)
+int be_visitor_args_compiled_marshal_cs::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument

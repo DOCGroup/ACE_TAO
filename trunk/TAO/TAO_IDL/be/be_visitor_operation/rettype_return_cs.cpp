@@ -66,7 +66,7 @@ be_visitor_operation_rettype_return_cs::visit_enum (be_enum *)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_interface (be_interface *node)
+be_visitor_operation_rettype_return_cs::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
@@ -77,7 +77,7 @@ be_visitor_operation_rettype_return_cs::visit_interface (be_interface *node)
 }
 
 int
-be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 

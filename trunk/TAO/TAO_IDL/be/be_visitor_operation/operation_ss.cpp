@@ -336,7 +336,7 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
 }
 
 int
-be_visitor_operation_ss::gen_raise_exception (be_type *bt,
+be_visitor_operation_ss::gen_raise_exception (be_type *,
                                               const char *excep,
                                               const char *completion_status,
                                               const char *env)
@@ -351,7 +351,7 @@ be_visitor_operation_ss::gen_raise_exception (be_type *bt,
 }
 
 int
-be_visitor_operation_ss::gen_check_exception (be_type *bt, const char *env)
+be_visitor_operation_ss::gen_check_exception (be_type *, const char *env)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   
@@ -627,7 +627,7 @@ be_compiled_visitor_operation_ss::
 
 int
 be_compiled_visitor_operation_ss::gen_pre_skel_info (be_operation *node,
-                                                         be_type *bt)
+                                                         be_type *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

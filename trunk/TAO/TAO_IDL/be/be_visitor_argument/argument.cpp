@@ -33,7 +33,7 @@ be_visitor_args::~be_visitor_args (void)
 {
 }
 
-int be_visitor_args::visit_argument (be_argument *node)
+int be_visitor_args::visit_argument (be_argument *)
 {
   return -1;
 }
