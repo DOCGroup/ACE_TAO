@@ -466,8 +466,8 @@ Wed Sep 25 11:12:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/util/utl_scope.cpp:
 
-          -- Modified files to complete the support of CORBA Components and related
-             types in the IDL compiler.
+          -- Modified files to complete the support of CORBA Components
+	     and related types in the IDL compiler.
 
           -- Fixed a bug in the redefinition of forward declared structs and 
              unions. Thanks to Ken Sedgwick <ken@xvros.org> for sending in the
@@ -476,8 +476,8 @@ Wed Sep 25 11:12:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
           -- Changed addition of newlines to generated code to make it more 
              consistent and readable.
 
-          -- Added file and line number annotation to generated code wherever it
-             was found to be missing.
+          -- Added file and line number annotation to generated code
+	     wherever it was found to be missing.
 
           -- Fixed several bugs in the code generation for valuetypes.
 
@@ -488,11 +488,12 @@ Wed Sep 25 11:12:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Sep 25 11:07:21 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * tao/TypeCodeFactory_Adapter.cpp:
+	* tao/TypeCodeFactory_Adapter.cpp:
 	* tao/IFR_Client_Adapter.cpp:
 
-	  Replaced an #include whose removal was causing build errors on LynxOS and SunCC.
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for pointing it out.
+	  Replaced an #include whose removal was causing build errors on
+	  LynxOS and SunCC.  Thanks to Craig Rodrigues <crodrigu@bbn.com>
+	  for pointing it out.
 
 Wed Sep 25 13:15:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
