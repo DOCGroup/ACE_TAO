@@ -64,8 +64,8 @@ public:
   void msg_type (ACE_UINT32);
 
   // = Set/get the time
-  const ACE_UINT32 time (void) const;
-  void time (const ACE_UINT32 t);
+  ACE_UINT32 time (void) const;
+  void time (ACE_UINT32 t);
 
   // = Set/get the blocking semantics.
   ACE_UINT32 block_forever (void) const;

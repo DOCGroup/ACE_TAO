@@ -16,6 +16,9 @@
 // Compiler/platform uses macro for ctime
 #define ACE_HAS_BROKEN_CTIME
 
+// Compiler requires extern "C" functions for signals.
+#define ACE_HAS_SIG_C_FUNC
+
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -27,6 +30,9 @@
 
 // The pthread_create() routine *must* take extern C functions.
 #define ACE_HAS_THR_C_FUNC
+
+// The pthread_keycreate() routine *must* take extern C functions.
+#define ACE_HAS_THR_C_DEST
 
 // The rusage_t structure has only two fields
 #define ACE_HAS_LIMITED_RUSAGE_T

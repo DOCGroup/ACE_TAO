@@ -1,7 +1,7 @@
-// This program tests ACE_Process_Semaphore.  To run it, open 3 
 // $Id$
 
-// or 4 windows and run this program in each window...
+// This program tests ACE_Process_Semaphore.  To run it, open 3 or 4
+// windows and run this program in each window...
 
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
@@ -9,7 +9,7 @@
 
 static sig_atomic_t done;
 
-static void 
+extern "C" void
 handler (int)
 {
   done = 1;
@@ -22,7 +22,7 @@ main (int argc, char *argv[])
 
   ACE_Process_Semaphore pm (1, name);
 
-  ACE_Sig_Action handle ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (ACE_SignalHandler (handler), SIGINT);
 
   for (int i = 0; i < 100 && !done; i++)
     {

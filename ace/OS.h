@@ -184,12 +184,6 @@
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (VXWORKS)
-#if defined (ghs)
-// horrible hacks to get around inconsistency between ansi and VxWorks
-// stdarg.h with Green Hills 1.8.8 compiler
-#define __INCstdargh
-#include /**/ <stdarg.h>
-#endif /* ghs */
 
 typedef int key_t;
 #include /**/ <vxWorks.h>
@@ -891,8 +885,14 @@ typedef void *ACE_MALLOC_T;
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" {
+#endif /* ACE_HAS_SIG_C_FUNC */
 typedef void (*ACE_SignalHandler)(int);
 typedef void (*ACE_SignalHandlerV)(int);
+#if defined (ACE_HAS_SIG_C_FUNC)
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
 #elif defined (ACE_HAS_IRIX_53_SIGNALS)
 typedef void (*ACE_SignalHandler)(...);
 typedef void (*ACE_SignalHandlerV)(...);
@@ -1768,17 +1768,31 @@ union semun
 
 // Create some useful typedefs.
 typedef const char **SYS_SIGLIST;
+// This is for C++ static methods.
+#if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+#else
 typedef void *(*ACE_THR_FUNC)(void *);
+#endif /* VXWORKS */
+
+#if defined (ACE_HAS_THR_C_DEST)
+// Needed for frigging MVS C++...
+extern "C" {
+typedef void (*ACE_THR_DEST)(void *);
+}
+#else
+typedef void (*ACE_THR_DEST)(void *);
+#endif /* ACE_HAS_THR_C_DEST */
 
 extern "C"
 {
-#if defined (VXWORKS)
-typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 typedef unsigned (__stdcall *ACE_THR_C_FUNC) (void*);
+#elif defined (VXWORKS)
+typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 #else
 typedef void *(*ACE_THR_C_FUNC)(void *);
-#endif /* ! VXWORKS */
+#endif /* ACE_WIN32 */
 }
 
 #if !defined (MAP_FAILED)
@@ -2295,7 +2309,7 @@ public:
   static int thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status); 
   static int thr_keyfree (ACE_thread_key_t key);
   static int thr_key_detach (void *inst);
-  static int thr_keycreate (ACE_thread_key_t *key, void (*dest)(void *), void *inst = 0);
+  static int thr_keycreate (ACE_thread_key_t *key, ACE_THR_DEST, void *inst = 0);
   static int thr_key_used (ACE_thread_key_t key);
   static int thr_kill (ACE_thread_t thr_id, int signum);
   static size_t thr_min_stack (void);

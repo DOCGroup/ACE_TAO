@@ -1,14 +1,14 @@
-#include "ace/Signal.h"
 // $Id$
 
+#include "ace/Signal.h"
 #include "ace/SV_Message_Queue.h"
 #include "test.h"
 
-/* Must be global for signal Message... */
-ACE_SV_Message_Queue msgque (SRV_KEY, ACE_SV_Message_Queue::ACE_CREATE);
+// Must be global for signal Message...
+static ACE_SV_Message_Queue msgque (SRV_KEY, ACE_SV_Message_Queue::ACE_CREATE);
 
-void
-SIGNAL_handler (int)
+extern "C" void
+handler (int)
 {
   if (msgque.remove () < 0)
     ACE_OS::perror ("msgque.close"), ACE_OS::exit (1);
@@ -23,7 +23,8 @@ main (void)
   ACE_Message_Block send_msg (0, pid, ACE_OS::cuserid (0), 
 			      "I received your message.");
 
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIGNAL_handler, SIGINT);
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   for (;;)
     {

@@ -103,7 +103,7 @@ ACE_Time_Request::timeout (const ACE_Time_Value timeout)
 }
 
 // = Set/get the time
-const ACE_UINT32
+ACE_UINT32
 ACE_Time_Request::time (void) const
 {
   ACE_TRACE ("ACE_Time_Request::time");
@@ -111,7 +111,7 @@ ACE_Time_Request::time (void) const
 }
 
 void 
-ACE_Time_Request::time (const ACE_UINT32 t)
+ACE_Time_Request::time (ACE_UINT32 t)
 {
   ACE_TRACE ("ACE_Time_Request::time");
   this->time_ = t;

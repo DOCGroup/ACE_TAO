@@ -400,6 +400,7 @@ ACE_INET_Addr::get_host_name (void) const
   static char buf[MAXHOSTNAMELEN + 1];
 
   ::gethostname (buf, MAXHOSTNAMELEN + 1);
+  return buf;
 #else
   int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
 

@@ -119,7 +119,7 @@ public:
   // Change and/or examine calling thread's signal mask.
 
   static int keycreate (ACE_thread_key_t *keyp,
-			void (*destructor)(void *value),
+			ACE_THR_DEST destructor,
 			void * = 0);
   // Allocates a <keyp> that is used to identify data that is specific
   // to each thread in the process.  The key is global to all threads

@@ -199,6 +199,11 @@ public:
   // Set a new <ACE_Event_Handler> that is associated with <signum>.
   // Return the existing handler.
 
+  static void dispatch (int, siginfo_t *, ucontext_t *);
+  // Callback routine registered with sigaction(2) that dispatches the
+  // handle_signal() method of the appropriate pre-registered
+  // ACE_Event_Handler.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -219,11 +224,6 @@ protected:
 #endif /* ACE_MT_SAFE */
 
 private:
-  static void dispatch (int, siginfo_t *, ucontext_t *);
-  // Callback routine registered with sigaction(2) that dispatches the
-  // handle_signal() method of the appropriate pre-registered
-  // ACE_Event_Handler.
-
   static ACE_Event_Handler *signal_handlers_[NSIG];
   // Array used to store one user-defined Event_Handler for every
   // signal.
@@ -319,6 +319,11 @@ public:
   // head of the list of signals.  Return the existing handler that
   // was at the head.
 
+  static void dispatch (int signum, siginfo_t *, ucontext_t *);
+  // Callback routine registered with sigaction(2) that dispatches the
+  // handle_signal() method of all the pre-registered
+  // ACE_Event_Handlers for <signum>
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -326,11 +331,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  static void dispatch (int signum, siginfo_t *, ucontext_t *);
-  // Callback routine registered with sigaction(2) that dispatches the
-  // handle_signal() method of all the pre-registered
-  // ACE_Event_Handlers for <signum>
-
   static int sigkey_;
   // Keeps track of the id that uniquely identifies each registered
   // signal handler.  This id can be used to cancel a timer via the

@@ -14,7 +14,7 @@
 
 static sig_atomic_t finished = 0;
 
-static void
+extern "C" void
 handler (int)
 {
   finished = 1;
@@ -26,11 +26,13 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 int
 main (int argc, char *argv[])
 {
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+
   Logging_Acceptor peer_acceptor;
   ACE_INET_Addr addr (PORT);
-  ACE_Get_Opt get_opt (argc, argv, "p:");
 
-  ACE_Sig_Action sig ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Get_Opt get_opt (argc, argv, "p:");
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
