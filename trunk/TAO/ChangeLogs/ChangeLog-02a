@@ -1,3 +1,10 @@
+Wed Apr 18 08:49:42 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/RTCORBA/Thread_Pool/server.cpp (main): 
+	* tests/RTCORBA/Thread_Pool/client.cpp (main): 
+
+	  Couple of minor warning fixes.
+
 Wed Apr 18 03:43:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* examples/PluggableUDP/tests/Basic/client.dsp:
