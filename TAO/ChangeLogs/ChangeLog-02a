@@ -107,12 +107,13 @@ Thu Jul  6 13:18:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* orbsvcs/IFR_Service/Servant_Locator.cpp:
 	* orbsvcs/IFR_Service/Servant_Locator.h:
 
-	  Servant_Factory produces new IFR servants for internal use
-	  when the type is not known. Servant_Locator contains a
-	  subclass of the servant locator base class. This method is used
-	  for all calls on IFR object references, except those on the
-	  Repository itself, which had a different POA than the rest of
-	  the IFR objects.
+	  Servant_Factory produces _i servants for internal use
+	  when the type is not known, _tie servants for the servant
+	  locator, and object references for request return values. 
+	  Servant_Locator contains a subclass of the servant locator 
+	  base class. The servant locator is used for all calls on IFR object 
+	  references, except those on the Repository itself, which has 
+	  a different POA (and policy list) than the IFR objects it contains.
 
 	* orbsvcs/IFR_Service/IFR_Server.cpp:
 	* orbsvcs/IFR_Service/IFR_Service.cpp:
