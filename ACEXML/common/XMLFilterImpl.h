@@ -11,6 +11,7 @@
 //=============================================================================
 #ifndef ACEXML_XMLFILTERIMPL_H
 #define ACEXML_XMLFILTERIMPL_H
+#include "ace/pre.h"
 
 #include "ACEXML/common/XMLFilter.h"
 #include "ACEXML/common/XMLReader.h"

@@ -1,3 +1,7 @@
+Tue Jul 02 21:43:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/XMLFilterImpl.h: One more pre/post mismatch.
+
 Tue Jul  2 16:58:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/XML_Types.h:
