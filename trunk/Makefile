@@ -71,12 +71,15 @@ CORE_DIRS= \
 	TAO/orbsvcs/orbsvcs \
 	TAO/orbsvcs/Naming_Service
 
-.PHONY: Core
+.PHONY: Core reverseclean
 Core:
 	@for dir in $(CORE_DIRS); \
 	do \
 		$(MAKE) -C $$dir; \
 	done
+
+reverseclean:
+	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
 
 #### NOTE:  The following comments describe how to create kits.
 ####        It's intended for use by ACE+TAO developers and
