@@ -62,7 +62,7 @@ AccountManager_i::open (const char *name,
           ACE_NEW_THROW_EX (result,
                             Account_i (name,
                                        initial_balance),
-                            CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                            CORBA::NO_MEMORY ());
           ACE_CHECK_RETURN (Bank::Account::_nil ());
 
           // Enter the new Account in the hash map. If the <bind>
@@ -73,7 +73,7 @@ AccountManager_i::open (const char *name,
           if (hash_map_.bind (name, result) == -1)
             {
               delete result;
-              TAO_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+              TAO_THROW_RETURN (CORBA::UNKNOWN (),
                                 Bank::Account::_nil ());
             }
         }

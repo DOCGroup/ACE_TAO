@@ -202,7 +202,7 @@ TAO_PropertySet<IF>::define_property (const char *property_name,
 
       // Is the pointer valid?
       if (entry_ptr == 0)
-        TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+        TAO_THROW (CORBA::UNKNOWN ());
 
       // If type is not the same, raise exception.
       if (entry_ptr->int_id_.pvalue_->type () != property_value.type ())
@@ -227,7 +227,7 @@ TAO_PropertySet<IF>::define_property (const char *property_name,
         }
     default:
       // Error. ret is -1 or rebid returned other than 1.
-      TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      TAO_THROW (CORBA::UNKNOWN ());
     }
 
   return;
@@ -693,7 +693,7 @@ TAO_PropertySet<IF>::delete_property (const char *property_name,
     {
       ACE_ERROR ((LM_ERROR,
                   "Unbind failed\n"));
-      TAO_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      TAO_THROW (CORBA::UNKNOWN ());
     }
 
   // @@ Purify this and check. Deallocate the memory.

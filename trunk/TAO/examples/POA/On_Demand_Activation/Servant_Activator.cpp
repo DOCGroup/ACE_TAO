@@ -44,7 +44,7 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
   else
     {
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
-      //CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO);
+      //CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST ();
       //env.exception (exception);
       //return 0;
     }

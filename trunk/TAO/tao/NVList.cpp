@@ -226,7 +226,7 @@ CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
-      env.exception (new CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      env.exception (new CORBA::BAD_PARAM ());
       return 0;
     }
 

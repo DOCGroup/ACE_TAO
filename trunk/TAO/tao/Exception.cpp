@@ -318,7 +318,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
                         &CORBA::_tc_any, 0,
                         TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA_INITIALIZE ());
 
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
@@ -374,7 +374,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
                         &TC_completion_status, 0,
                         TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    TAO_THROW (CORBA_INITIALIZE ());
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return

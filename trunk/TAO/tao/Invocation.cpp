@@ -135,14 +135,14 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // assert (this->stub_ != 0);
 
   if (this->stub_ == 0)
-    ACE_THROW (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INV_OBJREF ());
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
   TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
 
   if (conn_reg == 0)
-    ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INTERNAL ());
 
   // @@ It seems like this is the right spot to re-order the profiles
   // based on the policies in the ORB.
@@ -171,7 +171,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       // Try moving to the next profile and starting over, if that
       // fails then we must raise the TRANSIENT exception.
       if (this->stub_->next_profile_retry () == 0)
-        ACE_THROW (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::TRANSIENT ());
     }
 
   const TAO_ObjectKey& key = this->profile_->object_key();
@@ -201,7 +201,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   if (TAO_GIOP::start_message (message_type,
                                this->out_stream_,
                                this->orb_core_) == 0)
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::MARSHAL ());
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_START_MSG);
 
@@ -243,11 +243,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       break;
 
     default:
-      ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::INTERNAL ());
     }
 
   if (!this->out_stream_.good_bit ())
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::MARSHAL ());
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
@@ -322,7 +322,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 {
 
   if (this->transport_ == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
                       TAO_INVOKE_EXCEPTION);
 
   int result =
@@ -417,7 +417,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
       // @@ If a forward exception or a LOCATION_FORWARD reply is sent
       //    then the request couldn't have completed. But we need to
       //    re-validate this to ensure "at most once" semantics.
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::MARSHAL (),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -434,7 +434,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
       // @@ If a forward exception or a LOCATION_FORWARD reply is sent
       //    then the request couldn't have completed. But we need to
       //    re-validate this to ensure "at most once" semantics.
-      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
                         TAO_INVOKE_EXCEPTION);
     }
 
@@ -464,7 +464,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // get created on a per-call basis. For now we'll play it safe.
 
   if (this->stub_->next_profile () == 0)
-    ACE_THROW_RETURN (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::TRANSIENT (),
                       TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
@@ -903,7 +903,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   //    to refactor them.
 
   if (this->transport_ == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::INTERNAL (),
                       TAO_INVOKE_EXCEPTION);
 
   int result =

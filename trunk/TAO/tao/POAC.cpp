@@ -268,33 +268,39 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (Porta
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
                                                                         CORBA::Object_ptr obj,
-                                                                        CORBA::Environment &env
+                                                                        CORBA::Environment &ACE_TRY_ENV
                                                                         )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ThreadPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/ThreadPolicy:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ThreadPolicy:1.0", ACE_TRY_ENV))
     return PortableServer::ThreadPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ThreadPolicy:1.0");
+#if 0                           // ongoing
+  else
+    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ThreadPolicy::_nil ());
+#else
   if (servant == 0)
     return new PortableServer::ThreadPolicy(stub);
+#endif
   return new POA_PortableServer::_tao_collocated_ThreadPolicy(
       ACE_reinterpret_cast(POA_PortableServer::ThreadPolicy_ptr, servant),
       stub
     );
 }
 
+#if 1                           // ongoing
 PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::ThreadPolicyValue _tao_retval = (PortableServer::ThreadPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -331,6 +337,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
     ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
+#endif
 
 CORBA::Boolean PortableServer::ThreadPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -422,7 +429,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -550,7 +557,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -677,7 +684,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -807,7 +814,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -935,7 +942,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1063,7 +1070,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1156,7 +1163,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
     return PortableServer::POAManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::POAManager::_nil ());
+      ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POAManager::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1343,7 +1350,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
     return PortableServer::AdapterActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::AdapterActivator::_nil ());
+      ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::AdapterActivator::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1404,7 +1411,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
     return PortableServer::ServantManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::ServantManager::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantManager::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1465,7 +1472,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
     return PortableServer::ServantActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::ServantActivator::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantActivator::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1527,7 +1534,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
     return PortableServer::ServantLocator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::ServantLocator::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantLocator::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1591,7 +1598,7 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
     return PortableServer::POA::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::POA::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POA::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -3175,7 +3182,7 @@ CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc_TAO_tc_Portabl
 
 PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), PortableServer::POA::_nil ());
+  ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POA::_nil ());
 }
 
 PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
@@ -3189,7 +3196,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   ACE_NEW_RETURN (_tao_retval, PortableServer::ObjectId, _tao_retval);

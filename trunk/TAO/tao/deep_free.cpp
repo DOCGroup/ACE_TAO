@@ -379,7 +379,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
             discrim_matched = 1;
           break;
         default:
-          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 
+          TAO_THROW_ENV_RETURN (CORBA::BAD_TYPECODE (), 
                                 env, 
                                 CORBA::TypeCode::TRAVERSE_STOP);
         }// end of switch
@@ -638,7 +638,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_Marshal_Sequence::deep_free detected error\n"));
       // error exit
-      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), env, CORBA::TypeCode::TRAVERSE_STOP);
+      TAO_THROW_ENV_RETURN (CORBA::MARSHAL (), env, CORBA::TypeCode::TRAVERSE_STOP);
     }
   ACE_NOTREACHED (return CORBA::TypeCode::TRAVERSE_STOP);
 }

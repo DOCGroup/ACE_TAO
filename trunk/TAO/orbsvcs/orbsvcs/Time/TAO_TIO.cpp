@@ -257,7 +257,7 @@ TAO_TIO::time (CORBA::Environment &ACE_TRY_ENV)
 			     this->time_interval (ACE_TRY_ENV).upper_bound -
 			     this->time_interval (ACE_TRY_ENV).lower_bound,
 			     0),
-		    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+		    CORBA::NO_MEMORY ());
   
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   

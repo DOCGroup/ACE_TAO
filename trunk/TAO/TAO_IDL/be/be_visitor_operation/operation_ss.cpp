@@ -680,7 +680,7 @@ be_compiled_visitor_operation_ss::gen_demarshal_params (be_operation *node,
 
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
-                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO",
+                                     "",
                                      "ACE_TRY_ENV") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -776,7 +776,7 @@ be_compiled_visitor_operation_ss::gen_marshal_params (be_operation *node,
       *os << be_uidt_nl << "))\n" << be_idt;
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL", 
-                                     "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO",
+                                     "",
                                      "ACE_TRY_ENV") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

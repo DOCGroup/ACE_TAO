@@ -78,7 +78,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
         }
     }
   else // now forward, in throwing the ForwardRequest Exception

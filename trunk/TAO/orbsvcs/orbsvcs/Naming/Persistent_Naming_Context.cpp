@@ -161,7 +161,7 @@ TAO_Persistent_Naming_Context::bind (const CosNaming::Name& n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK;
 
   // Get the length of the name.
@@ -200,7 +200,7 @@ TAO_Persistent_Naming_Context::bind (const CosNaming::Name& n,
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
@@ -211,7 +211,7 @@ TAO_Persistent_Naming_Context::rebind (const CosNaming::Name& n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK;
 
   // Get the length of the name.
@@ -248,7 +248,7 @@ TAO_Persistent_Naming_Context::rebind (const CosNaming::Name& n,
                                           CosNaming::nobject);
       // Something went wrong with the internal structure
       if (result == -1)
-        ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
@@ -259,7 +259,7 @@ TAO_Persistent_Naming_Context::bind_context (const CosNaming::Name &n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK;
 
   // Get the length of the name.
@@ -297,7 +297,7 @@ TAO_Persistent_Naming_Context::bind_context (const CosNaming::Name &n,
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+        ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
@@ -308,7 +308,7 @@ TAO_Persistent_Naming_Context::rebind_context (const CosNaming::Name &n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK;
 
   // Get the length of the name.
@@ -342,7 +342,7 @@ TAO_Persistent_Naming_Context::rebind_context (const CosNaming::Name &n,
                                n[0].kind,
                                nc,
                                CosNaming::ncontext) < 0)
-      ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::INTERNAL ());
 }
 
 CORBA::Object_ptr
@@ -353,7 +353,7 @@ TAO_Persistent_Naming_Context::resolve (const CosNaming::Name& n,
   CosNaming::BindingType type;
 
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK_RETURN (result);
 
   // Get the length of the name.
@@ -427,7 +427,7 @@ TAO_Persistent_Naming_Context::unbind (const CosNaming::Name& n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK;
 
   // Get the length of the name.
@@ -468,7 +468,7 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   TAO_Persistent_Naming_Context *c_impl = 0;
@@ -488,7 +488,7 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_NEW_THROW_EX (c,
                     TAO_Naming_Context,
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (result._retn ());
 
   // Put c into the auto pointer temporarily, in case next
@@ -501,7 +501,7 @@ TAO_Persistent_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
                                                    poa_.in (),
                                                    poa_id,
                                                    this->hash_table_size_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (result._retn ());
 
   // Allocation succeeded, get rid of auto pointer.
@@ -549,7 +549,7 @@ TAO_Persistent_Naming_Context::bind_new_context (const CosNaming::Name& n,
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   CosNaming::NamingContext_var result =
@@ -586,7 +586,7 @@ TAO_Persistent_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_GUARD_THROW_EX (ACE_Lock,
                         ace_mon,
                         *this->lock_,
-                        CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                        CORBA::INTERNAL ());
     ACE_CHECK;
 
     if (this->context_.current_size () != 0)
@@ -626,14 +626,14 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   bi = CosNaming::BindingIterator::_nil ();
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   // Obtain a lock before we proceed with the operation.
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK;
 
   // Dynamically allocate hash map iterator.
@@ -641,7 +641,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   ACE_NEW_THROW_EX (hash_iter,
                     TAO_Persistent_Naming_Context::HASH_MAP::ITERATOR
                     (*(context_.map ())),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   // Number of bindings that will go into the BindingList.
@@ -669,7 +669,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       if (populate_binding (hash_entry, bl[i]) == 0)
         {
           delete hash_iter;
-          ACE_THROW (CORBA::NO_MEMORY(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+          ACE_THROW (CORBA::NO_MEMORY());
         }
     }
 
@@ -687,7 +687,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       if (bind_iter == 0)
         {
           delete hash_iter;
-          ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+          ACE_THROW (CORBA::NO_MEMORY ());
         }
 
       ACE_TRY
@@ -752,7 +752,7 @@ TAO_Persistent_Binding_Iterator::next_one (CosNaming::Binding_out b,
   // bindings, we need to allocate an out parameter.)
   ACE_NEW_THROW_EX (binding,
                     CosNaming::Binding,
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   b = binding;
@@ -760,7 +760,7 @@ TAO_Persistent_Binding_Iterator::next_one (CosNaming::Binding_out b,
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
   // If there are no more bindings.
   if (hash_iter_->done ())
@@ -771,7 +771,7 @@ TAO_Persistent_Binding_Iterator::next_one (CosNaming::Binding_out b,
       hash_iter_->next (hash_entry);
 
       if (TAO_Persistent_Naming_Context::populate_binding (hash_entry, *binding) == 0)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+        ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
 
       hash_iter_->advance ();
       return 1;
@@ -814,14 +814,14 @@ TAO_Persistent_Binding_Iterator::next_n (CORBA::ULong how_many,
   // parameter is allocated in case we fail to obtain the lock.
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   // Obtain a lock.
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                      CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
   // If there are no more bindings...
@@ -842,7 +842,7 @@ TAO_Persistent_Binding_Iterator::next_n (CORBA::ULong how_many,
           hash_iter_->next (hash_entry);
 
           if (TAO_Persistent_Naming_Context::populate_binding (hash_entry, bl[i]) == 0)
-            ACE_THROW_RETURN (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+            ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
 
           if (hash_iter_->advance () == 0)
             {
@@ -863,7 +863,7 @@ TAO_Persistent_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_GUARD_THROW_EX (ACE_Lock,
                         ace_mon,
                         *this->lock_,
-                        CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                        CORBA::INTERNAL ());
     ACE_CHECK;
 
     PortableServer::POA_var poa =

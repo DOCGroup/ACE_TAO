@@ -42,7 +42,7 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
                     TAO_UTO (this->get_time (),
                              this->inaccuracy (),
                              this->time_displacement_factor ()),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   // Return the global time as a UTO.
 
@@ -56,7 +56,7 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &ACE_TRY_ENV)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &env)
 {
-  env.exception (new CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::NO_IMPLEMENT ());
   return 0;
 }
 
@@ -74,7 +74,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                     TAO_UTO (time,
                              inaccuracy,
                              tdf),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   return uto->_this ();
 }
@@ -98,7 +98,7 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc,
                     TAO_UTO (utc.time,
                              inaccuracy,
                              utc.tdf),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   return uto->_this ();
 }
@@ -115,7 +115,7 @@ TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
   ACE_NEW_THROW_EX (tio,
                     TAO_TIO (lower,
                              upper),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
   return tio->_this ();
 }

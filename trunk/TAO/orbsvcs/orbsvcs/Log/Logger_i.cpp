@@ -44,7 +44,7 @@ Logger_Factory_i::make_logger (const char *name,
       // exception and returns a null value if it fails
       ACE_NEW_THROW_EX (result,
                         Logger_i (name),
-                        CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                        CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (Logger::_nil ());
     }
 
@@ -55,7 +55,7 @@ Logger_Factory_i::make_logger (const char *name,
   if (hash_map_.bind (name, result) == -1)
     {
       delete result;
-      TAO_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+      TAO_THROW_RETURN (CORBA::UNKNOWN (),
                         Logger::_nil ());
     }
   else

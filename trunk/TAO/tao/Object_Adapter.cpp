@@ -362,7 +362,7 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
 
   if (result != 0)
     {
-      ACE_THROW (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 }
 

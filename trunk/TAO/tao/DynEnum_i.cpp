@@ -218,202 +218,202 @@ void
 TAO_DynEnum_i::insert_boolean (CORBA::Boolean,
                                CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_octet (CORBA::Octet,
                              CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_char (CORBA::Char,
                             CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_short (CORBA::Short,
                              CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_ushort (CORBA::UShort,
                               CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_long (CORBA::Long,
                             CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_ulong (CORBA::ULong,
                              CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_float (CORBA::Float,
                              CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_double (CORBA::Double,
                               CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_string (const char *,
                               CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_reference (CORBA::Object_ptr,
                                  CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_typecode (CORBA::TypeCode_ptr,
                                 CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_longlong (CORBA::LongLong,
                                CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_ulonglong (CORBA::ULongLong,
                                  CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_wchar (CORBA::WChar,
                              CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 void
 TAO_DynEnum_i::insert_any (const CORBA::Any&,
                            CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 }
 
 CORBA::Boolean
 TAO_DynEnum_i::get_boolean (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Octet
 TAO_DynEnum_i::get_octet (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Char
 TAO_DynEnum_i::get_char (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Short
 TAO_DynEnum_i::get_short (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::UShort
 TAO_DynEnum_i::get_ushort (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Long
 TAO_DynEnum_i::get_long (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::ULong
 TAO_DynEnum_i::get_ulong (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Float
 TAO_DynEnum_i::get_float (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Double
 TAO_DynEnum_i::get_double (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 char *
 TAO_DynEnum_i::get_string (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Object_ptr
 TAO_DynEnum_i::get_reference (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::TypeCode_ptr
 TAO_DynEnum_i::get_typecode (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::LongLong
 TAO_DynEnum_i::get_longlong (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
 
 #if defined (ACE_LACKS_LONGLONG_T)
   CORBA::LongLong tmp = {0, 0};
@@ -426,21 +426,21 @@ TAO_DynEnum_i::get_longlong (CORBA::Environment &env)
 CORBA::ULongLong
 TAO_DynEnum_i::get_ulonglong (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::WChar
 TAO_DynEnum_i::get_wchar (CORBA::Environment &env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 
 CORBA::Any_ptr
 TAO_DynEnum_i::get_any (CORBA::Environment& env)
 {
-  env.exception (new CORBA::BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION ());
   return 0;
 }
 

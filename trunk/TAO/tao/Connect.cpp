@@ -301,7 +301,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
       // If ObjectID not in table or reference is nil raise OBJECT_NOT_EXIST.
 
       if (CORBA::is_nil (object_reference) || status == -1)
-	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
+	ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), -1);
 
       // ObjectID present in the table with an associated NON-NULL reference.
       // Throw a forward request exception.
@@ -699,7 +699,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
             default:                                    // Unknown message
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) Illegal message received by server\n"));
-              ACE_TRY_THROW (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+              ACE_TRY_THROW (CORBA::COMM_FAILURE ());
               // NOTREACHED
 
             case TAO_GIOP::CommunicationError:

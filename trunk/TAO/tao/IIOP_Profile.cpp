@@ -407,12 +407,12 @@ TAO_IIOP_Profile::parse_string (const char *string,
       string += 5;
     }
   else
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), 0);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
   if (this->version_.major != TAO_IIOP_Profile::DEF_IIOP_MAJOR
       || this->version_.minor  > TAO_IIOP_Profile::DEF_IIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
+      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
 
   // Pull off the "hostname:port/" part of the objref
@@ -424,7 +424,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
+      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
 
   if (this->host_)
@@ -453,7 +453,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   if (cp == 0)
     {
       CORBA::string_free (this->host_);
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), -1);
+      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
 
   this->port_ = (CORBA::UShort) ACE_OS::atoi (start);

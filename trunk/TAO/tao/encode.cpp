@@ -581,7 +581,7 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                 "Union::encode - failed. "
                 "No match and no default case\n"));
 
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::MARSHAL (),
                     CORBA::TypeCode::TRAVERSE_STOP);
 }
 
@@ -822,7 +822,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
   // If an error was detected but no exception was raised then raise a
   // marshal exception.
   if (env.exception () == 0)
-    env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    env.exception (new CORBA::MARSHAL ());
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -972,7 +972,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::encode detected error\n"));
-  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::MARSHAL ());
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 

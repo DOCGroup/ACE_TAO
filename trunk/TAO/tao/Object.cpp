@@ -82,7 +82,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -103,7 +103,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       if (!(
           (_tao_out << type_id)
       ))
-        ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
       int _invoke_status =
         _tao_call.invoke (0, 0, ACE_TRY_ENV);
@@ -161,7 +161,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -198,7 +198,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   if (!(
         (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
   return _tao_retval;
 }
 
@@ -268,7 +268,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
   // is a no-no.
   if (ctx)
     {
-      TAO_THROW(CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      TAO_THROW(CORBA::NO_IMPLEMENT ());
     }
   request = new CORBA::Request (this, operation, arg_list, result, req_flags);
 }
@@ -293,7 +293,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -331,10 +331,10 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 #else
     ACE_UNUSED_ARG (_tao_retval);
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 #endif
 }
 

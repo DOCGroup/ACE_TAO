@@ -70,7 +70,7 @@ TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
 				 CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->all_consumers_.insert (consumer) != 0)
-    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::NO_MEMORY ());
 }
 
 void

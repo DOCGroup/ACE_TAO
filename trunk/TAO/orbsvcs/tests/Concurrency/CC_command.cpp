@@ -63,7 +63,7 @@ CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &TAO_IN_ENV)
           if(cc_lockset_.in()==0)
             {
               TAO_TRY_ENV.clear();
-              TAO_TRY_ENV.exception (new CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+              TAO_TRY_ENV.exception (new CORBA::UNKNOWN ());
             }
           else
             return cc_lockset_;

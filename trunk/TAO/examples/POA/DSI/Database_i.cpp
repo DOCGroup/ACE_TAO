@@ -52,7 +52,7 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
 
       else
         {
-          ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+          ACE_THROW (CORBA::NO_IMPLEMENT ());
         }
       ACE_TRY_CHECK;
     }
