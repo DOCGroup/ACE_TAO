@@ -1,3 +1,13 @@
+Mon Apr  2 13:33:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+
+          Added some TAO_HAS_INTERCEPTORS guards that were overlooked
+          when moving some interceptor functions from one generated
+          file to another. This was cauing compile errors in the
+          Debian NoInterceptors build.
+
 Mon Apr  2 13:25:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/MT_Timeout/MT_Timeout.dsw:
