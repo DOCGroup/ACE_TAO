@@ -1,3 +1,26 @@
+Sat Aug 19 19:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp
+	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp
+	  Added ");\n\n" here and removed it from
+	  be_visitor_operation/interceptors_arglist.cpp
+	  since else for void methods w.o. exceptions
+	  the closing bracs werent there. Thanks to Bala
+	  for discovering this bug.
+	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+	  Changed the predefined to not have a default case.
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  TAO_OPERATION_INTERCEPTORS_RESULT is now in
+	  be_visitor_operation itself, also at this point
+	  now we use bt and not node as the visited type.
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_result.h:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	  Added a new visitor which derives from be_visitor_decl.
+
 Sat Aug 19 16:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* docs/Smart_Proxies.html: Updated the documentation to remind
