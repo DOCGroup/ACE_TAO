@@ -1,3 +1,7 @@
+Mon Jul 10 21:11:19 2000  marina  <@cs.wustl.edu>
+
+        * TAO version 1.1.5 released.
+
 Mon Jul 10 18:59:49 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.idl (SecurityORBServiceReady):
