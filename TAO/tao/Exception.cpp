@@ -267,12 +267,6 @@ CORBA_SystemException::_narrow (CORBA_Exception* exception)
 }
 
 void
-CORBA_SystemException::_raise (void)
-{
-  TAO_RAISE (*this);
-}
-
-void
 CORBA_SystemException::_tao_encode (TAO_OutputCDR &cdr,
                                     CORBA::Environment &ACE_TRY_ENV) const
 {
