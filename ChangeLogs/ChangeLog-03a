@@ -1,3 +1,14 @@
+Mon Aug 28 17:43:00 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ace/config-win32.h:
+
+	  Added support for PACE and win32.
+
+	* ace/OS.h::2283
+
+	  Altered code to support
+	  #define ACE_HAS_PACE && #define WTHREADS.
+
 Mon Aug 28 15:05:27 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* ace/OS_Dirent.cpp: Changed a condition in readdir_emulation ()

@@ -9,6 +9,19 @@
 #define ACE_CONFIG_H
 #include "ace/pre.h"
 
+// If you wish to build ACE using PACE, you must uncomment
+// the following lines or include the following syntax in your
+// config file #included before this one!
+//# if !defined (ACE_HAS_PACE)
+//#  define ACE_HAS_PACE
+//# endif // ACE_HAS_PACE
+
+# if defined (ACE_HAS_PACE)
+#  ifndef PACE_HAS_ALL_POSIX_FUNCS
+#   define PACE_HAS_ALL_POSIX_FUNCS 1
+#  endif /* PACE_HAS_ALL_POSIX_FUNCS */
+# endif /* ACE_HAS_PACE */
+
 #if defined (ACE_HAS_WINCE) || defined (UNDER_CE)
 # include "ace/config-WinCE.h"
 #endif /* ACE_HAS_WINCE */
