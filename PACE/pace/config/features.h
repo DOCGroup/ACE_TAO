@@ -18,8 +18,6 @@
 
 /* Features: Can be customized by the developer. */
 
-#define PACE_HAS_INLINE
-
 #endif /* PACE_CONFIG_FEATURES_H */
 
 

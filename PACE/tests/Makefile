@@ -19,6 +19,15 @@ ifeq ($(PACE_SYSNAME),)
   PACE_SYSNAME = $(shell uname -s)
 endif # ! PACE_SYSNAME
 
+# If we are inlining the PACE functions then we don't want to include
+# the PACE library. If we're not inlining then we need to include the
+# PACE library.
+ifeq (1,$(inline))
+  CFLAGS += -DPACE_HAS_INLINE
+else # ! inline
+  LIBS += -L$(PACE_ROOT)/pace -lPACE
+endif # ! inline
+
 VPATH:=common:arpa:config:netinet:sys
 
 # List of platforms and uname -s values
@@ -89,8 +98,6 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-
-VLDLIBS += -L$(PACE_ROOT)/pace -lPACE
 
 ifndef SOEXT
   SOEXT=so

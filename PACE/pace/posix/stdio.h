@@ -134,7 +134,13 @@ extern "C" {
 
   PACE_INLINE void pace_rewind (FILE * stream);
 
-  PACE_INLINE int pace_sprintf (char * buf, const char * format, ... );
+  #define pace_sprintf(X) sprintf X
+  /* int sprintf (char *s, const char *format, (*//* args*//*) ... );
+   *
+   * PLEASE PAY SPECIAL ATTENTION HERE!
+   * This is a macro and requires an additional set of parenthesis
+   * surrounding the arguments.
+   */
 
   #define pace_scanf(X) scanf X
   /* int scanf (const char *format, ... );
