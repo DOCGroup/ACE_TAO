@@ -138,7 +138,11 @@ IDL_GlobalData::IDL_GlobalData (void)
       gen_impl_files_ (I_FALSE),
       gen_copy_ctor_ (I_FALSE),
       gen_assign_op_ (I_FALSE),
+#ifdef ACE_HAS_EXCEPTIONS
+      exception_support_ (I_TRUE),
+#else
       exception_support_ (I_FALSE),
+#endif
       opt_tc_ (I_FALSE),
       case_diff_error_ (I_TRUE),
       ami_call_back_ (I_FALSE)
