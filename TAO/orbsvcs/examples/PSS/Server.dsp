@@ -145,6 +145,32 @@ SOURCE=.\Server.idl
 
 !IF  "$(CFG)" == "Server - Win32 Release"
 
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Server.idl
+InputName=Server
+
+BuildCmds= \
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "Server - Win32 Debug"
 
 # Begin Custom Build - Invoking TAO_IDL Compiler
