@@ -9,6 +9,9 @@ Tue Oct 27 08:39:38 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO/examples/Quoter/Quoter_i.cpp (copy): wrapped
           final return 0 statement with ACE_NOTREACHED.
 
+        * TAO/tests/Param_Test/ub_objref_seq.cpp (check_validity): wrapped
+          final return 0 statement with ACE_NOTREACHED.
+
         * TAO_IDL/driver/drv_preproc.cpp: reverted to version 1.29
           because 1.30 doesn't work.
 
