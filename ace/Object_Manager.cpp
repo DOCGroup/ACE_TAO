@@ -242,10 +242,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   , internal_lock_ (new ACE_Recursive_Thread_Mutex)
   , singleton_null_lock_ (0)
-  , singleton_thread_locks_ (0)
-  , singleton_mutex_locks_ (0)
   , singleton_recursive_lock_ (0)
-  , singleton_rw_locks_ (0)
 # endif /* ACE_MT_SAFE */
 {
   if (instance_ == 0)
@@ -393,51 +390,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
           // threaded at this point.  Or, the ACE_Object_Manager
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
-          // locking.
+          // locking.  So, we'll leak the lock.
 
           ACE_NEW_RETURN (lock, ACE_Thread_Mutex, -1);
-
-          // Add the new lock to the array of locks to be deleted
-          // at program termination.
-          if (ACE_Object_Manager::instance ()->singleton_thread_locks_ == 0)
-            {
-              // Create the array, then insert the new lock.
-              ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                                singleton_thread_locks_,
-                              ACE_Array<ACE_Thread_Mutex *> (
-                                (size_t) 1,
-                                (ACE_Thread_Mutex *) 0),
-                              -1);
-              (*ACE_Object_Manager::instance ()->singleton_thread_locks_)[0] =
-                 lock;
-            }
-          else
-            {
-              // Grow the array, then insert the new lock.
-
-              // Copy the array pointer.
-              ACE_Array<ACE_Thread_Mutex *> *tmp =
-                ACE_Object_Manager::instance ()->singleton_thread_locks_;
-
-              // Create a new array with one more slot than the current one.
-              ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                                singleton_thread_locks_,
-                              ACE_Array<ACE_Thread_Mutex *> (
-                                tmp->size () + (size_t) 1,
-                                (ACE_Thread_Mutex *) 0),
-                              -1);
-
-              // Copy the old array to the new array.
-              for (u_int i = 0; i < tmp->size (); ++i)
-                (*ACE_Object_Manager::instance ()->
-                   singleton_thread_locks_)[i] = (*tmp) [i];
-
-              // Insert the new lock at the end of the array.
-              (*ACE_Object_Manager::instance ()->singleton_thread_locks_)
-                 [tmp->size ()] = lock;
-
-              delete tmp;
-            }
         }
       else
         {
@@ -481,51 +436,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
           // threaded at this point.  Or, the ACE_Object_Manager
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
-          // locking.
+          // locking.  So, we'll leak the lock.
 
           ACE_NEW_RETURN (lock, ACE_Mutex, -1);
-
-          // Add the new lock to the array of locks to be deleted
-          // at program termination.
-          if (ACE_Object_Manager::instance ()->singleton_mutex_locks_ == 0)
-            {
-              // Create the array, then insert the new lock.
-              ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                                singleton_mutex_locks_,
-                              ACE_Array<ACE_Mutex *> (
-                                (size_t) 1,
-                                (ACE_Mutex *) 0),
-                              -1);
-              (*ACE_Object_Manager::instance ()->singleton_mutex_locks_)[0] =
-                 lock;
-            }
-          else
-            {
-              // Grow the array, then insert the new lock.
-
-              // Copy the array pointer.
-              ACE_Array<ACE_Mutex *> *tmp =
-                ACE_Object_Manager::instance ()->singleton_mutex_locks_;
-
-              // Create a new array with one more slot than the current one.
-              ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                                singleton_mutex_locks_,
-                              ACE_Array<ACE_Mutex *> (
-                                tmp->size () + (size_t) 1,
-                                (ACE_Mutex *) 0),
-                              -1);
-
-              // Copy the old array to the new array.
-              for (u_int i = 0; i < tmp->size (); ++i)
-                (*ACE_Object_Manager::instance ()->singleton_mutex_locks_)[i] =
-                   (*tmp) [i];
-
-              // Insert the new lock at the end of the array.
-              (*ACE_Object_Manager::instance ()->singleton_mutex_locks_)
-                 [tmp->size ()] = lock;
-
-              delete tmp;
-            }
         }
       else
         {
@@ -583,10 +496,12 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
           object ();
     }
   else
-    // Use the Object_Manager's preallocated lock.
-    lock = ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
-    get_preallocated_object (ACE_Object_Manager::
-                             ACE_SINGLETON_RECURSIVE_THREAD_LOCK);
+    {
+      // Use the Object_Manager's preallocated lock.
+      lock = ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
+        get_preallocated_object (ACE_Object_Manager::
+                                 ACE_SINGLETON_RECURSIVE_THREAD_LOCK);
+    }
 
   return 0;
 }
@@ -603,51 +518,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
           // threaded at this point.  Or, the ACE_Object_Manager
           // instance has been destroyed, so the internal lock is not
           // available.  Either way, we can not use double-checked
-          // locking.
+          // locking.  So, we'll leak the lock.
 
           ACE_NEW_RETURN (lock, ACE_RW_Thread_Mutex, -1);
-
-          // Add the new lock to the array of locks to be deleted
-          // at program termination.
-          if (ACE_Object_Manager::instance ()->singleton_rw_locks_ == 0)
-            {
-              // Create the array, then insert the new lock.
-              ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                                singleton_rw_locks_,
-                              ACE_Array<ACE_RW_Thread_Mutex *> (
-                                (size_t) 1,
-                                (ACE_RW_Thread_Mutex *) 0),
-                              -1);
-              (*ACE_Object_Manager::instance ()->singleton_rw_locks_)[0] =
-                 lock;
-            }
-          else
-            {
-              // Grow the array, then insert the new lock.
-
-              // Copy the array pointer.
-              ACE_Array<ACE_RW_Thread_Mutex *> *tmp =
-                ACE_Object_Manager::instance ()->singleton_rw_locks_;
-
-              // Create a new array with one more slot than the current one.
-              ACE_NEW_RETURN (ACE_Object_Manager::instance ()->
-                                singleton_rw_locks_,
-                              ACE_Array<ACE_RW_Thread_Mutex *> (
-                                tmp->size () + (size_t) 1,
-                                (ACE_RW_Thread_Mutex *) 0),
-                              -1);
-
-              // Copy the old array to the new array.
-              for (u_int i = 0; i < tmp->size (); ++i)
-                (*ACE_Object_Manager::instance ()->singleton_rw_locks_)[i] =
-                   (*tmp) [i];
-
-              // Insert the new lock at the end of the array.
-              (*ACE_Object_Manager::instance ()->singleton_rw_locks_)
-                 [tmp->size ()] = lock;
-
-              delete tmp;
-            }
         }
       else
         {
@@ -790,17 +663,8 @@ ACE_Object_Manager::fini (void)
   delete singleton_null_lock_;
   singleton_null_lock_ = 0;
 
-  delete singleton_thread_locks_;
-  singleton_thread_locks_ = 0;
-
-  delete singleton_mutex_locks_;
-  singleton_mutex_locks_ = 0;
-
   delete singleton_recursive_lock_;
   singleton_recursive_lock_ = 0;
-
-  delete singleton_rw_locks_;
-  singleton_rw_locks_ = 0;
 #endif /* ACE_MT_SAFE */
 
   // Indicate that the ACE_Object_Manager instance has been shut down.
@@ -915,12 +779,6 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    template class ACE_Array<ACE_Thread_Mutex *>;
-    template class ACE_Array_Base<ACE_Thread_Mutex *>;
-    template class ACE_Array<ACE_Mutex *>;
-    template class ACE_Array_Base<ACE_Mutex *>;
-    template class ACE_Array<ACE_RW_Thread_Mutex *>;
-    template class ACE_Array_Base<ACE_RW_Thread_Mutex *>;
     template class ACE_Cleanup_Adapter<ACE_Null_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
@@ -937,12 +795,6 @@ ACE_Static_Object_Lock::cleanup_lock (void)
   template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   pragma instantiate ACE_Array<ACE_Thread_Mutex *>
-#   pragma instantiate ACE_Array_Base<ACE_Thread_Mutex *>
-#   pragma instantiate ACE_Array<ACE_Mutex *>
-#   pragma instantiate ACE_Array_Base<ACE_Mutex *>
-#   pragma instantiate ACE_Array<ACE_RW_Thread_Mutex *>
-#   pragma instantiate ACE_Array_Base<ACE_RW_Thread_Mutex *>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
