@@ -1,3 +1,17 @@
+Sat Apr 27 11:16:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+        Thanks to Boris Temkin <borist@allcharge.com> for motivating the 
+	following fixes:
+  
+	* ace/Svc_Handler.cpp: Updated the flush_i() method to call the
+	  message queue's flush_i() method to avoid deadlocks on platforms
+ 	  that lack recursive mutexes.
+
+	* ace/Message_Queue_T.{h,cpp}: Added the flush() and flush_i()
+	  methods to the ACE_Message_Queue in order to remove messages
+ 	  without deactivating the queue.  Also refactored the close()
+ 	  method to use flush_i().
+
 Sat Apr 27 09:26:43 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp:
