@@ -1,20 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   EventLogNotification_i.h
-//
-// = DESCRIPTION
-//   Implementation of Log generated events for EventLog.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   EventLogNotification.h
+ *
+ *  $Id$
+ *
+ *  Methods to enable log-generated events.
+ *
+ *
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
+ *   
+ *  
+ */
+//=============================================================================
 
 #ifndef TLS_EVENT_LOG_NOTIFICATION_H
 #define TLS_EVENT_LOG_NOTIFICATION_H
@@ -48,7 +47,7 @@ public:
   ~EventLogNotification (void);
   // Destructor.
 
-  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

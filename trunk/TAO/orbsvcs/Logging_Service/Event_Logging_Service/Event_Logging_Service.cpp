@@ -1,9 +1,12 @@
-/* -*- C++ -*- $Id$ */
-
 #include "ace/Get_Opt.h"
 #include "Event_Logging_Service.h"
 #include "orbsvcs/Log/EventLogFactory_i.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+
+ACE_RCSID (Event_Logging_Service,
+           Event_Logging_Service,
+           "$Id$")
+
 
 Event_Logging_Service::Event_Logging_Service (void)
   : event_log_factory_name_ ("EventLogFactory")
@@ -93,7 +96,7 @@ Event_Logging_Service::startup (int argc, char *argv[]
 }
 
 void
-Event_Logging_Service::resolve_naming_service (ACE_ENV_ARG_DECL)
+Event_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
@@ -162,32 +165,23 @@ main (int argc, char *argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   Event_Logging_Service service;
 
-  ACE_TRY_NEW_ENV
-    {
-      service.startup (argc,
-                       argv//,
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  service.startup (argc,
+                   argv
+                   ACE_ENV_ARG_PARAMETER);
 
-      if (service.run () == -1)
-        {
-          service.shutdown ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Failed to run the Telecom EventLog Service.\n"),
-                            1);
-        }
-    }
-  ACE_CATCHANY
+  if (service.run () == -1)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start the Telecom EventLog Service\n");
-      return 1;
+      service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failed to run the Telecom EventLog Service.\n"),
+                        1);
     }
-  ACE_ENDTRY;
 
-  service.shutdown ();
+  service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   return 0;
 }

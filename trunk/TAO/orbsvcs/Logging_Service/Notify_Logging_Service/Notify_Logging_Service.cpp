@@ -1,11 +1,14 @@
-/* -*- C++ -*- $Id$ */
-
 #include "Notify_Logging_Service.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID (Notify_Logging_Service,
+           Notify_Logging_Service,
+           "$Id$")
+
 
 Notify_Logging_Service::Notify_Logging_Service (void)
 : notify_factory_name_ (NOTIFY_KEY)

@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Logging Service examples
-//
-// = FILENAME
-//   RTEvent_Supplier
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   RTEvent_Supplier.h
+ *
+ *  $Id$
+ *
+ *  An example of using the RTEvent_Logging_Service.
+ *  
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef RTEVENT_SUPPLIER_H

@@ -1,9 +1,10 @@
-/* -*- C++ -*- $Id$ */
-
 #include "Log_Constraint_Interpreter.h"
 #include "Log_Constraint_Visitors.h"
 
-ACE_RCSID(Log, Log_Constraint_Interpreter, "$Id$")
+ACE_RCSID (Log,
+           Log_Constraint_Interpreter,
+           "$Id$")
+
 
 TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     const char *constraints

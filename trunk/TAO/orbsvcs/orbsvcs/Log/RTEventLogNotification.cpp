@@ -1,5 +1,3 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/RTEventLogNotification.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -20,10 +18,17 @@
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
+ACE_RCSID (Log,
+           RTEventLogNotification,
+           "$Id$")
+
+
 RTEventLogNotification::RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr ec)
 : LogNotification (), event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec))
 {
-  obtainProxyConsumer ();
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  obtainProxyConsumer (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 RTEventLogNotification::~RTEventLogNotification (void)
@@ -39,7 +44,7 @@ RTEventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_US
 }
 
 void
-RTEventLogNotification::obtainProxyConsumer()
+RTEventLogNotification::obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL)
 {  
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin = 
     event_channel_->for_suppliers();

@@ -1,3 +1,97 @@
+Fri Oct  4 14:01:05 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp: 
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h: 
+	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp: 
+
+	  Native exceptions fixed.
+
+Fri Oct  4 13:56:19 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp: 
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+
+	  Native exceptions fixed.
+
+Fri Oct  4 13:51:22 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/examples/Log/Basic/main.cpp: 
+	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+	* orbsvcs/examples/Log/Basic/TLS_Client.h:	
+
+	* orbsvcs/examples/Log/Event/Event_Consumer.cpp: 
+	* orbsvcs/examples/Log/Event/Event_Consumer.h: 
+	* orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+	* orbsvcs/examples/Log/Event/Event_Supplier.h:
+
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.cpp: 
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.h: 
+	* orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+	* orbsvcs/examples/Log/Notify/Notify_Supplier.h:
+
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp: 
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h: 
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
+
+	  Native exceptions fixed.	
+
+Fri Oct  4 13:41:44 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp: 
+	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogNotification.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h: 
+	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogNotification.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogNotification.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+	* orbsvcs/orbsvcs/Log/Iterator_i.h:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/LogNotification.h:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+	* orbsvcs/orbsvcs/Log/PersistStore.h:
+
+	  Native exception fixes.
+
 Thu Oct  3 18:26:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/run_test.pl:

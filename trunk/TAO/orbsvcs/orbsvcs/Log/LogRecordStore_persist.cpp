@@ -1,9 +1,12 @@
-/* -*- C++ -*- $Id$ */
-
-#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/LogRecordStore.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
+
+ACE_RCSID (Log,
+           LogRecordStore_persist,
+           "$Id$")
+
 
 LogRecordStore::LogRecordStore (CORBA::ULongLong max_size,
                                 DsLogAdmin::LogId logid,

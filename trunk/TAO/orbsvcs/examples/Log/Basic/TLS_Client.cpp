@@ -1,5 +1,8 @@
-/* -*- C++ -*- $Id$ */
 #include "TLS_Client.h"
+
+ACE_RCSID (Basic,
+           TLS_Client,
+           "$Id$")
 
 #define NAMING_SERVICE_NAME "NameService"
 #define BASIC_TLS_LOG_FACTORY_NAME "BasicLogFactory"

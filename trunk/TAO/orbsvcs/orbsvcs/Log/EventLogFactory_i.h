@@ -1,21 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   EventLogFactory_i.h
-//
-// = DESCRIPTION
-//   Implements the Factory for EventLog Objects.
-//
-// = AUTHOR
-//   Rob Ruff <rruff@scires.com>
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   EventLogFactory_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsEventLogAdmin::EventLogFactory interface.
+ *
+ *
+ *  @author Rob Ruff <rruff@scires.com>
+ *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  
+ */
+//=============================================================================
 
 #ifndef TLS_EVENTLOGFACTORY_I_H
 #define TLS_EVENTLOGFACTORY_I_H

@@ -1,5 +1,3 @@
-/* -*- C++ -*- $Id$ */
-
 #include "Basic_Log_Test.h"
 
 #include "orbsvcs/Time_Utilities.h"
@@ -12,7 +10,9 @@
 
 #include <assert.h>
 
-ACE_RCSID(Logger, BasicLog_Test, "BasicLog_Test.cpp,v 1.10 2001/06/25 19:54:32 oci Exp")
+ACE_RCSID (Basic_Log_Test,
+           Basic_Log_Test,
+           "$Id$")
 
 const char* BasicLog_Test::basic_log_factory_name_="BasicLogFactory";
 const char* BasicLog_Test::naming_sevice_name_="NameService";
@@ -273,7 +273,7 @@ int BasicLog_Test::display_records ()
 
 }
 */
-int BasicLog_Test::write_records(CORBA::ULongLong numberOfRecords ACE_ENV_ARG_DECL)
+int BasicLog_Test::write_records(CORBA::ULongLong numberOfRecords ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::ULongLong numOfRecs = numberOfRecords;
   if (numOfRecs == 0)
@@ -637,6 +637,8 @@ BasicLog_Test::test_week_mask()
 int BasicLog_Test::delete_records (CORBA::ULongLong numberOfRecords)
 {
   ACE_UNUSED_ARG (numberOfRecords);
+
+  ACE_DECLARE_NEW_CORBA_ENV;
 
 #ifndef ACE_LACKS_LONGLONG_T
   ACE_DEBUG((LM_INFO," before delete -- curr size %Q, max %Q\n",

@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = FILENAME
-//   RTEvent_Logging_Service.h
-//
-// = AUTHORS
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// = DESCRIPTION
-//   RTEvent Log Service front end.
-//
+/**
+ *  @file   RTEvent_Logging_Service.h
+ *
+ *  $Id$
+ *
+ *  Front End of the Telecom Log Service 
+ *  RTEvent_Logging_Service
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef RTEVENT_LOGGING_SERVICE_H

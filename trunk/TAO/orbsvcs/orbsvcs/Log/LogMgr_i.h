@@ -1,22 +1,18 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   LogMgr_i.h
-//
-// = DESCRIPTION
-//   Implementation of the LogManager i,e DsLogAdmin::LogMgr interface.
-//
-// = AUTHOR
-//    Matthew Braun <mjb2@cs.wustl.edu>
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//    D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   LogMgr_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsLogAdmin::LogMgr interface.
+ *
+ *  @author Matthew Braun <mjb2@cs.wustl.edu>
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef TLS_LOGMGR_I_H
 #define TLS_LOGMGR_I_H

@@ -1,24 +1,19 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   LogRecordStore.h
-//
-// = DESCRIPTION
-//   This file declares the tools used to provide the store of
-//   DsLogAdmin::LogRecords for the Telecom Logging_Service
-//
-// = AUTHORS
-//   Matthew Braun <mjb2@cs.wustl.edu>
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   LogRecordStore.h
+ *
+ *  $Id$
+ *
+ *  This file declares the tools used to provide the store of
+ *  DsLogAdmin::LogRecords for the Telecom Logging_Service
+ *
+ *  @author Matthew Braun <mjb2@cs.wustl.edu>
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef LOG_RECORD_STORE_H
 #define LOG_RECORD_STORE_H

@@ -1,11 +1,13 @@
-/* -*- C++ -*- $Id$ */
-
 #include "Notify_Logging_Service.h"
 #include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
 #include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_Collection_Factory.h"
 #include "orbsvcs/Notify/Notify_Default_EMO_Factory.h"
+
+ACE_RCSID (Notify_Logging_Service,
+           Notify_Logging_Server,
+           "$Id$")
 
 // Driver function for the TAO Notify Service.
 

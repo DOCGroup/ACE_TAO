@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = FILENAME
-//   Basic_Logging_Service.h
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// = DESCRIPTION
-//   Telecom Log Service front end.
-//
+/**
+ *  @file   Basic_Logging_Service.h
+ *
+ *  $Id$
+ *
+ *  Front End of the Telecom Log Service 
+ *  Basic_Logging_Service
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef BASIC_LOGGING_SERVICE_H

@@ -1,7 +1,11 @@
-/* -*- C++ -*- $Id$ */
 #include "Basic_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"
+
+ACE_RCSID (Basic_Logging_Service,
+           Basic_Logging_Service,
+           "$Id$")
+
 
 Basic_Logging_Service::Basic_Logging_Service (void)
   : basic_log_factory_name_ ("BasicLogFactory")
@@ -52,23 +56,23 @@ Basic_Logging_Service::startup (int argc, char *argv[]
   // initalize the ORB.
   this->init_ORB (argc, argv
                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Resolve the naming service.
   this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Activate the basic log factory
   // CORBA::Object_var obj =
   DsLogAdmin::BasicLogFactory_var obj =
     this->basic_log_factory_.activate (this->poa_.in ()
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
   CORBA::String_var str =
     this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "The Basic Log Factory IOR is <%s>\n", str.in ()));
@@ -83,7 +87,7 @@ Basic_Logging_Service::startup (int argc, char *argv[]
   this->naming_->rebind (name,
                          obj.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "Registered with the naming service as: %s\n",
@@ -159,6 +163,8 @@ Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   Basic_Logging_Service service;
 
   if (service.startup (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
@@ -166,23 +172,13 @@ main (int argc, char *argv[])
                        "Failed to start the Basic Logging Service.\n"),
                       1);
 
-  ACE_TRY_NEW_ENV
+  if (service.run () == -1)
     {
-      if (service.run () == -1)
-        {
-          service.shutdown ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Failed to run the Telecom Log Service.\n"),
-                            1);
-        }
+      service.shutdown ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Failed to run the Telecom Log Service.\n"),
+                        1);
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start the Telecom Log Service\n");
-      return 1;
-    }
-  ACE_ENDTRY;
 
   service.shutdown ();
 

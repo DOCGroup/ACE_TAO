@@ -1,19 +1,17 @@
-/* -*- C++ -*- $Id$ */
-
 #include "RTEvent_Logging_Service.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
-
 #include "orbsvcs/CosNamingC.h"
-
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/Event_Channel.h"
-
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
+
+ACE_RCSID (RTEvent_Logging_Service,
+           RTEvent_Logging_Service,
+           "$Id$")
 
 int main (int argc, char *argv[])
 {

@@ -1,20 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
 // ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   EventLog_i.h
-//
-// = DESCRIPTION
-//   Implementation of the DsLogAdmin::EventLog interface.
-//
-// = AUTHOR
-//   Rob Ruff <rruff@scires.com>
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
+/**
+ *  @file   EventLog_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsLogAdmin::EventLog interface.
+ *
+ * 
+ *
+ *  @author Rob Ruff <rruff@scires.com>
+ *  @D A Hanvey <d.hanvey@qub.ac.uk>
+ */
 // ============================================================================
 
 #ifndef TLS_EVENTLOG_I_H
@@ -73,16 +71,17 @@ class LogConsumer : public virtual POA_CosEventComm::PushConsumer
     EventLog_i *log_;
 };
 
-
+/**
+ * @class EventLog_i
+ *
+ * @brief EventLog_i
+ *
+ * The class supports the @c destroy> method to destroy the Log.
+ */ 
 class EventLog_i : public Log_i,
                    public POA_DsEventLogAdmin::EventLog,
                    public virtual PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //   EventLog_i
-  // = DESCRIPTION
-  //   The class supports the <destroy> method to destroy the Log.
-  //
 public:
   // = Initialization and Termination.
   EventLog_i (LogMgr_i &logmgr_i,
@@ -95,14 +94,13 @@ public:
               ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Constructor
 
-  ~EventLog_i ();
-  // Destructor.
-
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id)
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
+                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Duplicate the log.
 
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id)
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id
+                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Duplicate the log specifying an id.
 
@@ -112,7 +110,7 @@ public:
   // Destroy the log object and all contained records.
 
   void
-  activate (void);
+  activate (ACE_ENV_SINGLE_ARG_DECL);
 
   CosEventChannelAdmin::ConsumerAdmin_ptr
   for_consumers (ACE_ENV_SINGLE_ARG_DECL)
@@ -138,7 +136,15 @@ public:
       ));
   // Used to write records to the log.
 
-
+ protected:
+   
+   /// Destructor
+   /**
+    * Protected destructor to enforce proper memory management through
+    * reference counting.
+    */
+  ~EventLog_i ();
+ 
  protected:
   LogMgr_i &logmgr_i_;
   // Used to access the hash map that holds all the Logs created.

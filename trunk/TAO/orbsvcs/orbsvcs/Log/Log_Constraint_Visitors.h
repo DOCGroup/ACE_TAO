@@ -1,23 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ==========================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Log_Constraint_Visitors.h
-//
-// = DESCRIPTION
-//
-//
-// = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//   Jeff Parsons <parsons@cs.wustl.edu>
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Log_Constraint_Visitors.h
+ *
+ *  $Id$
+ *
+ *  
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
+
 
 #ifndef LOG_CONSTRAINT_VISITORS_H
 #define LOG_CONSTRAINT_VISITORS_H
