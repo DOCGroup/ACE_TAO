@@ -1,3 +1,12 @@
+Thu Dec 18 13:13:57 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * common/Transcode.h (ACEXML_Transcoder):
+        * common/Transcode.cpp (ACEXML_Transcoder):
+
+          Renamed the ACEXML_Transcoder::STATUS enum to use ACEXML
+          prefixes. Thanks to Johnny Willemsen  <jwillemsen@remedy.nl> for
+          reporting the clash with native #defines on Tru64.
+
 Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ACEXML/apps/svcconf/Svcconf.h:
