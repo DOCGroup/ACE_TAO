@@ -19,7 +19,7 @@
 #include "FooS.h"
 #include "Servant_Locator.h"
 
-class MyFirstFooServant : public POA_Foo
+class MyFirstFooServant : public POA_Foo, public ACE_Event_Handler
 {
   // = TITLE
   // @@ Michael, please comment me.
@@ -45,11 +45,16 @@ public:
   virtual void shutdown (CORBA::Environment &env);
 
 protected:
+  int handle_input (ACE_HANDLE);
+
   // Default poa associated with this servant
-  CORBA::ORB_var orb_var_;
-  PortableServer::POA_var poa_var_;
+  CORBA::ORB_var orb_;
+  PortableServer::POA_var poa_;
   CORBA::Long value_;
   CORBA::Object_var forward_to_var_;
+
+  ACE_HANDLE handle_;
+  // Handle to dev null.
 };
 
 class MySecondFooServant : public POA_Foo
@@ -75,10 +80,9 @@ public:
 
 protected:
   // Default poa associated with this servant
-  CORBA::ORB_var orb_var_;
+  CORBA::ORB_var orb_;
   MyFooServantLocator *locator_ptr_;
   CORBA::Long value_;
 };
 
 #endif /* MYFOOSERVANT_H */
-

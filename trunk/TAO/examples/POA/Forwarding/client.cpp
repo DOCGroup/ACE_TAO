@@ -37,14 +37,16 @@ read_ior (char *filename)
   if (f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Unable to open %s for reading: %p\n",
-		       filename),
+		       filename,
+                       "ACE_OS::open"),
 		      -1);
   ACE_Read_Buffer ior_buffer (f_handle_);
   server_IOR_ = ior_buffer.read ();
 
   if (server_IOR_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
+                       "Unable to allocate memory to read ior: %p\n",
+                       "ACE_Read_Buffer::read"),
                       -1);
   return 0;
 }
@@ -64,7 +66,8 @@ parse_args (int argc, char **argv)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
 			     "Unable to read ior from %s : %p\n",
-			     get_opts.optarg),
+			     get_opts.optarg,
+                             "read_ior"),
 			    -1);
         break;
       case 'k':
