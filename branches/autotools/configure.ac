@@ -63,6 +63,10 @@ dnl     autoconf support.  For more details see the file
 dnl     \`ACE-configuration.txt'.])
 dnl fi  dnl  test $USE_MAINTAINER_MODE != yes
 
+dnl Should we use "egrep" or "grep -E"?  This sets the "$EGREP" shell
+dnl variable.
+AC_PROG_EGREP
+
 dnl If we are configuring in a CVS controlled directory then don't
 dnl continue any further.  The idea is to prevent automatically
 dnl generated files from being checked into the repository.  This
