@@ -27,7 +27,7 @@ ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core,
-                                            CORBA::Boolean flag)
+                                            CORBA::Boolean /*flag*/)
   : TAO_Transport (TAO_TAG_SHMEM_PROFILE,
                    orb_core),
     connection_handler_ (handler),

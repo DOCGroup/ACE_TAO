@@ -1,3 +1,25 @@
+Tue Jul  3 16:29:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Transport.cpp: Fixed warnings and errors
+	  in g++.  
+
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnungs and
+	  errors in g++.
+
+	* tao/IIOP_Connection_Handler.cpp: Used fetch_handle () to get the
+	  handle instead of the handle passed as an argument of the
+	  handle_input () call.
+
+	* tao/Connection_Handler.h: Added a new #define and changed
+	  TAO_CONNECTION_HANDLER_BUF_SIZE as
+	  TAO_CONNECTION_HANDLER_STACK_BUF_SIZE. 
+
+
 Tue Jul 03 15:45:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Transport.h:
