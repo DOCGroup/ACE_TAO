@@ -679,9 +679,9 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
           information.
 
         * tao/Acceptor_Registry.cpp:
-        * tao/Acceptor_Registry.h: Added a new method, that would return
-          the right acceptor by taking a tag value. This is similar to the
-          method in Connector_Registry.{h,cpp}.
+        * tao/Acceptor_Registry.h: Added a new method, get_acceptor (),
+	  that would return the right acceptor by taking a tag value. This
+	  is similar to the method in Connector_Registry.{h,cpp}.
 
         * tao/Pluggable_Messaging_Utils.h:
         * tao/operation_details.h:
@@ -707,8 +707,8 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
           use any data other than ObjectKey, we need to do the processing
           to extract ObjectKey from IOP::IOR and IOP::TaggedProfile.
 
-        * tao/Pluggable.h: Added a virtual function that would extract an
-          ObjectKey from an IOP::TaggedProfile.
+        * tao/Pluggable.h: Added a virtual function, object_key (), that
+	  would extract an ObjectKey from an IOP::TaggedProfile. 
 
         * tao/IIOP_Acceptor.cpp:
         * tao/IIOP_Acceptor.h:
@@ -718,11 +718,12 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/UIOP_Acceptor.h: Concrete implementations for the above.
 
         * tao/Profile.cpp:
-        * tao/Profile.h: Added a virtual function that would create a
-          IOP::TaggedProfile info from the profile info that is being
-          stored. This is necessary as different protocol implementations
-          could encapsulate different types of info in its profile which
-          is a part of the server exhibited IOR.
+        * tao/Profile.h: Added a virtual function, create_tagged_profile
+	  (),that would create a IOP::TaggedProfile info from the profile
+	  info that is being stored. This is necessary as different
+	  protocol implementations could encapsulate different types of
+	  info in its profile which is a part of the server exhibited
+	  IOR. 
 
         * tao/IIOP_Profile.cpp:
         * tao/IIOP_Profile.h:
@@ -734,12 +735,12 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Stub.cpp:
         * tao/Stub.h:
-        * tao/Stub.i: Added a method to store and retrieve information
-          about the GIOP 1.2 specific exception thrown. If we have
-          received a LOC_NEEDS_ADDRESSING, we need to change the
-          addressing mode and restart the request. This is something
-          similar to LOCATION_FORWARD, but here we store only a flag to
-          indicate what addressing mode to use so that subsequent
+        * tao/Stub.i: Added a method, addressing_mode (), to store and
+	  retrieve information about the GIOP 1.2 specific exception
+	  thrown. If we have received a LOC_NEEDS_ADDRESSING, we need to
+	  change the addressing mode and restart the request. This is
+	  something similar to LOCATION_FORWARD, but here we store only a
+	  flag to indicate what addressing mode to use so that subsequent 
           invocations would use the right addressing mode.
 
         * tao/MProfile.h:
