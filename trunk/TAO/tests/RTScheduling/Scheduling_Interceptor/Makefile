@@ -13,14 +13,14 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = test
-IDL_SRC = testC.cpp testS.cpp 
+IDL_SRC = testC.cpp testS.cpp
 LIBS = -lTAO_RTScheduler
 BIN_UNCHECKED = Scheduler_Interceptor_Client Scheduler_Interceptor_Server
 
 SRC = $(IDL_SRC) ../Scheduler.cpp
 
-CLIENT_OBJS = test_client.o testC.o  ../Scheduler.o
-SERVER_OBJS = test_server.o testC.o testS.o   ../Scheduler.o
+CLIENT_OBJS =  testC.o test_client.o ../Scheduler.o
+SERVER_OBJS = testC.o testS.o test_server.o ../Scheduler.o
 
 BUILD = $(BIN)
 VBIN = $(BIN:%=%$(VAR))
