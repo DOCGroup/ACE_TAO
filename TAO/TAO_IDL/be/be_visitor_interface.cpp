@@ -1330,15 +1330,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // generate code for the _is_a skeleton
   os->indent ();
-  *os << "static const TAO_Param_Data_Skel " << node->flatname ()
-      << "_is_a_paramdata [] = " << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "{CORBA::_tc_boolean, 0, 0}," << be_nl;
-  *os << "{CORBA::_tc_string, CORBA::ARG_IN, 0}" << be_uidt_nl;
-  *os << "};" << be_nl;
-  *os << "static const TAO_Call_Data_Skel " << node->flatname ()
-      << "_is_a_calldata = " << be_nl;
-  *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};" << be_nl;
   *os << "void " << node->full_skel_name ()
       << "::_is_a_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &_tao_server_request, " << be_nl
@@ -1348,6 +1339,15 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ")" << be_uidt_nl;
   *os << "{\n";
   os->incr_indent ();
+  *os << "static const TAO_Param_Data_Skel " << node->flatname ()
+      << "_is_a_paramdata [] = " << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "{CORBA::_tc_boolean, 0, 0}," << be_nl;
+  *os << "{CORBA::_tc_string, CORBA::ARG_IN, 0}" << be_uidt_nl;
+  *os << "};" << be_nl;
+  *os << "static const TAO_Call_Data_Skel " << node->flatname ()
+      << "_is_a_calldata = " << be_nl;
+  *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};" << be_nl;
   *os << node->full_skel_name () << "_ptr  _tao_impl = ("
       << node->full_skel_name () << "_ptr) _tao_object_reference;"
       << be_nl;
