@@ -78,6 +78,12 @@ suppress miu malloc; *; _nsw_getoneconfig; do_getconfig
 suppress miu malloc; add_concell; do_getconfig; __nsw_getconfig
 
 ####
+#### Allocations during OS accept call. Can be seen in the
+#### Cached_Accept_Conn_Test and Cached_Conn_Test
+####
+suppress mlk malloc; setnetconfig; _s_match_netconf; _s_socreate; __accept; accept
+
+####
 #### With Sun C++ 4.2, there's an FMR within the ostream deletion.
 ####
 suppress fmr unsafe_ostream::flush(void); unsafe_ostream::~unsafe_ostream(void); ostream::~ostream(void); iostream::~iostream(void)
