@@ -383,8 +383,8 @@ public:
   // 1 if locked, 0 if couldn't acquire the lock
   // (errno will contain the reason for this).
 
-  int remove (void) { return this->release (); }
-  // Explicitly release the lock.
+  int remove (void) { return this->lock_->remove (); }
+  // Explicitly remove the lock.
 
   void dump (void) const;
   // Dump the state of an object.
