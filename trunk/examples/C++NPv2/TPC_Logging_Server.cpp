@@ -6,6 +6,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/OS_NS_string.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/os_include/os_netdb.h"

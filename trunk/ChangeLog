@@ -1,3 +1,30 @@
+Thu May  6 12:43:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
+	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+	* examples/C++NPv2/TPC_Logging_Server.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+	  Added missing #includes so Visual Age C++ can see ACE_OS methods.
+
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Moved the declarations
+	  of AC_Input_Handler and AC_Output_Handler to a new file,
+	  AC_Client_Logging_Daemon.h, so Visual Age C++ can see them when
+	  instantiating templates.
+
+	* examples/C++NPv2/AIO_Client_Logging_Daaemon.cpp: Moved the
+	  declarations of AIO_Input_handler, AIO_Output_Handler, and
+	  AIO_CLD_Connector to a new file, AIO_Client_Logging_Daemon.h,
+	  so Visual Age C++ can see them when instantiating templates.
+
+	* examples/Reactor/Proactor/test_cancel.cpp:
+	* examples/Reactor/Proactor/test_proactor.cpp: Moved the declaration
+	  of the Receiver class to a new file, test_cancel.h and
+	  test_proactor.h respectively, so Visual Age C++ can see it when
+	  instantiating templates.
+
 Thu May  6 11:04:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/DLL/Today.{h cpp}:
