@@ -242,7 +242,7 @@ called MYDATABSE located in directory /tmp:
 
 <PRE> <CODE>
 dynamic Naming_Service Service_Object * 
-  ../lib/libnetsvcs.so:_make_ACE_Name_Acceptor() 
+  ../lib/netsvcs:_make_ACE_Name_Acceptor() 
   "-p 20222 -c NET_LOCAL -l /tmp -s MYDATABASE"
 </PRE> </CODE>
 
@@ -252,7 +252,7 @@ tango.cs.wustl.edu at port 20222:
 
 <PRE> <CODE>
 dynamic Naming_Service_Client Service_Object * 
-  ../lib/libnetsvcs.so:_make_Client_Test() 
+  ../lib/netsvcs:_make_Client_Test() 
   "-h tango.cs.wustl.edu -p 20222"
 </PRE> </CODE>
 </OL>
@@ -390,7 +390,7 @@ server at port 20202:
 
 <PRE> <CODE>
 dynamic Time_Service Service_Object * 
-  ../lib/libnetsvcs.so:_make_ACE_TS_Server_Acceptor() 
+  ../lib/netsvcs:_make_ACE_TS_Server_Acceptor() 
   "-p 20202"
 </PRE> </CODE>
 
@@ -400,7 +400,7 @@ lambada:
 
 <PRE> <CODE>
 dynamic Time_Server_test Service_Object *
-  ../lib/libnetsvcs.so:_make_ACE_TS_Clerk_Connector () 
+  ../lib/netsvcs:_make_ACE_TS_Clerk_Connector () 
   "-h tango:20202 -h lambada:20202 -t 4"
 </PRE> </CODE>
 </OL>
@@ -544,7 +544,7 @@ The following describes how to configure the Token Server:<P>
 
        <code><pre>
         dynamic Token_Service Service_Object * 
-          ../../ace/libnet_svcs.dll:_make_ACE_Token_Acceptor() 
+          ../lib/netsvcs:_make_ACE_Token_Acceptor() 
           "-p 10202"
        </code></pre>
        <P>
@@ -556,7 +556,7 @@ The following describes how to configure the Token Server:<P>
 
        <code><pre>
           dynamic Token_Service Service_Object * 
-            ../../ace/netsvcs.so:_make_ACE_Token_Acceptor() 
+            ../lib/netsvcs:_make_ACE_Token_Acceptor() 
             "-p 10202"
       </code></pre>
 </UL>
@@ -624,7 +624,7 @@ The following describes how to configure the Logging Server:<P>
 
       <PRE> <CODE>
       dynamic Server_Logging_Service Service_Object * 
-        ../../ace/libnet_svcs.dll:_make_ACE_Server_Logging_Acceptor() 
+        ../lib/netsvcs:_make_ACE_Server_Logging_Acceptor() 
         "-p 10202"
       </PRE></CODE>
       <P>
@@ -636,7 +636,7 @@ The following describes how to configure the Logging Server:<P>
 
       <PRE> <CODE>
       dynamic Server_Logging_Service Service_Object * 
-        ../../ace/netsvcs.so:_make_ACE_Server_Logging_Acceptor() 
+        ../lib/netsvcs:_make_ACE_Server_Logging_Acceptor() 
         "-p 10202"
       </PRE></CODE>
 </UL>
@@ -743,7 +743,7 @@ ACE_DEFAULT_RENDEZVOUS
 
       <PRE> <CODE>
       dynamic Client_Logging_Service Service_Object * 
-        ../../ace/libnet_svcs.dll:_make_ACE_Client_Logging_Connector() 
+        ../lib/netsvcs:_make_ACE_Client_Logging_Connector() 
         "-h tango.cs.wustl.edu -p 10202"
       </PRE></CODE>
       <P>
@@ -755,7 +755,7 @@ ACE_DEFAULT_RENDEZVOUS
 
       <PRE> <CODE>
       dynamic Client_Logging_Service Service_Object * 
-        ../../ace/netsvcs.so:_make_ACE_Client_Logging_Connector() 
+        ../lib/netsvcs:_make_ACE_Client_Logging_Connector() 
         "-h tango.cs.wustl.edu -p 10202"
       </PRE></CODE>
 </UL>
