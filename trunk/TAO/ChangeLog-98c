@@ -1,3 +1,19 @@
+Fri Jun 19 09:56:55 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/README:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	(1) Minor aesthetic changes and code cleanup.
+	(2) Changes to the utilization tests of the server and client.  We
+ 	now make the utilization "scavenger" thread run for a determined
+ 	period of time and report the number of computations performed.
+  	The client thread that performs CORBA calls also reports the
+ 	number of calls performed.
+
 Fri Jun 19 07:25:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp (Next): removed
