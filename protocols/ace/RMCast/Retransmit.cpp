@@ -4,7 +4,7 @@
 
 #include <ace/OS.h>
 
-#include <ace/RMCast/Retransmit.h>
+#include "Retransmit.h"
 
 namespace ACE_RMCast
 {

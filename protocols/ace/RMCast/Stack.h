@@ -5,7 +5,7 @@
 #ifndef ACE_RMCAST_STACK_H
 #define ACE_RMCAST_STACK_H
 
-#include <ace/RMCast/Protocol.h>
+#include "Protocol.h"
 
 namespace ACE_RMCast
 {

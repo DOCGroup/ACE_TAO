@@ -8,9 +8,9 @@
 #include <ace/Hash_Map_Manager.h>
 #include <ace/Thread_Manager.h>
 
-#include <ace/RMCast/Stack.h>
-#include <ace/RMCast/Protocol.h>
-#include <ace/RMCast/Bits.h>
+#include "Stack.h"
+#include "Protocol.h"
+#include "Bits.h"
 
 namespace ACE_RMCast
 {
