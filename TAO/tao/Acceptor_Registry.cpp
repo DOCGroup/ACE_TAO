@@ -103,7 +103,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // All TAO pluggable protocols are expected to have the ability
       // to create a default endpoint.
       if (this->open_default (orb_core, 0) == -1)
-        ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                              0),
+                            CORBA::COMPLETED_NO),
+                          -1);
     }
 
   // The array containing the TAO_Acceptors will never contain more
@@ -112,7 +117,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
     {
       ACE_NEW_THROW_EX (this->acceptors_,
                         TAO_Acceptor *[endpoint_set.size ()],
-                        CORBA::NO_MEMORY ());
+                        CORBA::NO_MEMORY (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (-1);
     }
 
@@ -136,7 +145,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                         ASYS_TEXT ("<%s>.\n"),
                         iop.c_str ()));
 
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+            CORBA_SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO),
+            -1);
         }
 
       ACE_CString prefix = iop.substring (0, slot);
@@ -196,7 +210,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                            ? 0 : options.c_str ())) == 0)
                     continue;
                   else
-                    ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
+                    ACE_THROW_RETURN (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                        0),
+                      CORBA::COMPLETED_NO),
+                      -1);
                 }
 
               char *last_addr = 0;
@@ -246,7 +265,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                         ASYS_TEXT ("for <%s>%p\n"),
                                         iop.c_str (),""));
 
-                          ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+                          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                            -1);
                         }
 
                       // add acceptor to list
@@ -260,7 +284,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                                     ASYS_TEXT ("an acceptor for <%s>.\n"),
                                     iop.c_str ()));
 
-                      ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
+                      ACE_THROW_RETURN (CORBA::NO_MEMORY (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                          ENOMEM),
+                        CORBA::COMPLETED_NO),
+                        -1);
                     }
                 }
             }
@@ -273,7 +302,13 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("TAO (%P|%t) no usable transport protocol ")
                       ASYS_TEXT ("was found.\n")));
-          ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
+
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+            CORBA_SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO),
+            -1);
         }
     }
 
@@ -298,21 +333,41 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
   TAO_ProtocolFactorySetItor end = pfs->end ();
 
-  // loop through all the loaded protocols...
+  // Flag that indicates at least one endpoint was opened.  If one
+  // wasn't opened then there is a problem.
+  int opened_endpoint = 0;
+
+  // Loop through all the loaded protocols...
   for (TAO_ProtocolFactorySetItor i = pfs->begin ();
        i != end;
        ++i)
     {
-      // if the protocol requires an explicit -ORBEndpoint option then
+      // If the protocol requires an explicit -ORBEndpoint option then
       // don't use it, otherwise open a default endpoint for that
       // protocol, this solves the problem with persistent endpoints
-      // (such as UNIX domain rendesvouz points), that are not cleaned
+      // (such as UNIX domain rendesvouz points) that are not cleaned
       // up if the server crashes.
       if (!(*i)->factory ()->requires_explicit_endpoint ())
         {
           if (this->open_default (orb_core, i, options) != 0)
             return -1;
+
+          opened_endpoint = 1;
         }
+    }
+
+  if (!opened_endpoint)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("TAO (%P|%t) No default endpoints ")
+                      ASYS_TEXT ("opened.\n")
+                      ASYS_TEXT ("Please specify one or more using ")
+                      ASYS_TEXT ("the \"-ORBEndpoint\" option.\n")));
+        }
+
+      return -1;
     }
 
   return 0;
