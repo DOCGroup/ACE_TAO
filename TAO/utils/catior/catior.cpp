@@ -855,13 +855,13 @@ cat_sciop_profile (TAO_InputCDR& stream)
   for (unsigned int i=0; i< addresses; i++) {
     if ((str >> hostname) == 0)
       {
-	ACE_DEBUG ((LM_DEBUG,
-		    "%I problem decoding hostname\n"));
-	return 1;
+        ACE_DEBUG ((LM_DEBUG,
+                    "%I problem decoding hostname\n"));
+        return 1;
       }
     ACE_DEBUG ((LM_DEBUG,
-		"%I Host Name:\t%s\n",
-		hostname));
+                "%I Host Name:\t%s\n",
+                hostname));
     CORBA::string_free (hostname);
   }
 
