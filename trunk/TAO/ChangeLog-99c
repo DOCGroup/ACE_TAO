@@ -1,3 +1,14 @@
+Sun Jan 10 22:43:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Removed TAO_THROW_ENV_RETURN_VOID.  It's
+	  identical to TAO_THROW_ENV.
+	  Changed to use TAO_CHECK_ENV_RETURN and
+	  TAO_CHECK_ENV_RETURN_VOID to define TAO_CHECK_RETURN and
+	  TAO_CHECK_RETURN_VOID.
+
+	* docs/exceptions.html: Added a section "In a nutshell" which
+	  covers 99% of the use case of TAO try macros.
+
 Sun Jan 10 16:36:24 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Added the following to the Time Service.

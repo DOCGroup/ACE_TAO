@@ -36,7 +36,7 @@
 
 #if defined (TAO_HAS_EXCEPTIONS)
 
-// The first "do" scope is for the env.
+// The first "do" scope is for the TAO_TRY_ENV.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 // These are all on one line so the keywords don't confuse compilers.
 #define TAO_TRY do { CORBA_Environment TAO_TRY_ENV; try {
@@ -67,6 +67,7 @@
 #define TAO_CHECK_ENV
 #define TAO_CHECK_ENV_EX(LABEL)
 #define TAO_CHECK_ENV_RETURN(X, Y)
+#define TAO_CHECK_ENV_RETURN_VOID(X)
 
 #define TAO_TRY_THROW(EXCEPTION) throw EXCEPTION
 #define TAO_TRY_THROW_EX(EXCEPTION,LABEL) throw EXCEPTION
@@ -89,9 +90,6 @@
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) do { \
   throw EXCEPTION; \
   return RETURN; } while (0)
-#define TAO_THROW_ENV_RETURN_VOID(EXCEPTION, ENV) do { \
-  throw EXCEPTION; \
-  return; } while (0)
 #define TAO_RETHROW_RETURN(RETURN) throw; \
   return RETURN
 #define TAO_RETHROW_RETURN_VOID throw; \
@@ -101,11 +99,12 @@
 
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) throw EXCEPTION
-#define TAO_THROW_ENV_RETURN_VOID(EXCEPTION, ENV) throw EXCEPTION
 #define TAO_RETHROW_RETURN(RETURN) throw
 #define TAO_RETHROW_RETURN_VOID throw
 
 #endif /* ACE_WIN32 */
+
+#define TAO_THROW_RETURN(EXCEPTION,RETURN) TAO_THROW_ENV_RETURN(EXCEPTION,TAO_IN_ENV,RETURN)
 
 #define TAO_RETHROW_SAME_ENV_RETURN(RETURN) TAO_RETHROW_RETURN (RETURN)
 #define TAO_RETHROW_SAME_ENV_RETURN_VOID TAO_RETHROW_RETURN_VOID
@@ -131,7 +130,7 @@ TAO_TRY_LABEL: \
 if (TAO_TRY_FLAG) \
 do {
 
-// The first "do" scope is for the env.
+// The first "do" scope is for the TAO_TRY_ENV.
 // The second "do" scope is for the TAO_CHECK_ENV continues.
 #define TAO_TRY \
 do { CORBA_Environment TAO_TRY_ENV; \
@@ -226,6 +225,9 @@ if (TAO_TRY_ENV.exception () != 0) \
 #define TAO_CHECK_ENV_RETURN(X, Y) \
  if ( X . exception () != 0) return Y
 
+#define TAO_CHECK_ENV_RETURN_VOID(X) \
+ if ( X . exception () != 0) return
+
 #define TAO_THROW(EXCEPTION) \
 do {\
  TAO_IN_ENV.exception (new EXCEPTION); \
@@ -245,11 +247,6 @@ do {\
 do {\
  ENV.exception (new EXCEPTION); \
  return RETURN; } while (0)
-
-#define TAO_THROW_ENV_RETURN_VOID(EXCEPTION, ENV) \
-do {\
- ENV.exception (new EXCEPTION); \
- return; } while (0)
 
 #define TAO_RETHROW \
 TAO_IN_ENV.exception (TAO_TRY_ENV.exception ()); \
@@ -277,11 +274,11 @@ return
 
 #define TAO_CATCHANY TAO_CATCH(CORBA_Exception, ex)
 
+#define TAO_CHECK_RETURN(Y) TAO_CHECK_ENV_RETURN (TAO_IN_ENV, Y)
+#define TAO_CHECK_RETURN_VOID TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV)
+
 // This macros can be used even outside the TAO_TRY blocks, in fact
 // some are designed for that purpose.
-
-#define TAO_CHECK_ENV_RETURN_VOID(X) \
- if ( X . exception () != 0) return
 
 #define TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) \
  if (ENV . exception () != 0) \
