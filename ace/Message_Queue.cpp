@@ -4,6 +4,7 @@
 #define ACE_MESSAGE_QUEUE_C
 
 #include "ace/Message_Queue.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Queue.i"
@@ -22,18 +23,18 @@ ACE_Message_Queue_Vx::dump (void) const
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  switch (this->state_) 
+  switch (this->state_)
     {
     case ACE_Message_Queue_Base::ACTIVATED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = ACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::DEACTIVATED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = DEACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::PULSED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = PULSED\n")));
       break;
     }
@@ -472,18 +473,18 @@ ACE_Message_Queue_NT::dump (void) const
   ACE_TRACE ("ACE_Message_Queue_NT::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  switch (this->state_) 
+  switch (this->state_)
     {
     case ACE_Message_Queue_Base::ACTIVATED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = ACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::DEACTIVATED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = DEACTIVATED\n")));
       break;
     case ACE_Message_Queue_Base::PULSED:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("state = PULSED\n")));
       break;
     }

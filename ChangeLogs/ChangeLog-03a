@@ -1,75 +1,99 @@
+Tue Dec 17 07:03:40 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Array_Base.h:
+        * ace/Atomic_Op_T.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/OS.h:
+
+          Added #include's for various files for the Green Hills compiler
+          for VxWorks.
+
+        * ace/OS.cpp:
+
+          Added a call to ::inet_aton() with a non-const char* for VxWorks.
+
+        * ace/Thread_Adapter.cpp:
+
+          Changed the pointer type from ACE_THR_FUNC_INTERNAL to
+          ACE_THR_FUNC.
+
+        * ace/config-vxworks5.x.h:
+
+          Added a #define for ACE_LACKS_CLEARERR for the Green Hills
+          compiler.
+
 Mon Dec 16 12:28:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Fixed some broken links.  Thanks to 
-	  Jonathan Wackley <jwackley@legato.com> for reporting this.
+        * ACE-INSTALL.html: Fixed some broken links.  Thanks to
+          Jonathan Wackley <jwackley@legato.com> for reporting this.
 
 Sat Dec 14 13:06:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* docs/ACE-categories.html: Removed all mention of the
-	  ACE_Multiplexor class.  Thanks to Marc Tardif <marc@sitepak.com>
- 	  for reporting this.
+        * docs/ACE-categories.html: Removed all mention of the
+          ACE_Multiplexor class.  Thanks to Marc Tardif <marc@sitepak.com>
+          for reporting this.
 
 Tue Dec 17 07:37:40 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/README: Fixed typos.
+        * tests/README: Fixed typos.
 
 Mon Dec 16 23:31:25 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Guan Joe to the hall of fame.
+        * THANKS: Added Guan Joe to the hall of fame.
 
 Mon Dec 16 18:11:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/CDR_Stream.h: Moved the destructor of
-	  ACE_Char_Codeset_Translator to be public. 
+        * ace/CDR_Stream.h: Moved the destructor of
+          ACE_Char_Codeset_Translator to be public.
 
 Mon Dec 16 13:14:34 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ace/CDR_Stream.cpp:
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	Preparing for codeset negotiation. The ACE input/output CDR streams'
-	support for wide character IO is enhanced by adding a flag to allow
-	or disallow wchar i/o regardless of whether a translator is present.
-	There are times when wchar is not allowed, such as GIOP 1.0, or when
-	a native codeset for wchar was not specified. In CORBA, a native wchar
-	codeset must be specified, it may not be defaulted. Within the ACE
-	CDR streams, wchar i/o is allowed by default, to ensure backwards 
-	compatibility.
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        Preparing for codeset negotiation. The ACE input/output CDR streams'
+        support for wide character IO is enhanced by adding a flag to allow
+        or disallow wchar i/o regardless of whether a translator is present.
+        There are times when wchar is not allowed, such as GIOP 1.0, or when
+        a native codeset for wchar was not specified. In CORBA, a native wchar
+        codeset must be specified, it may not be defaulted. Within the ACE
+        CDR streams, wchar i/o is allowed by default, to ensure backwards
+        compatibility.
 
-	I fixed a few of the reading and writing methods to ensure that the
-	good_bit_ flag is cleared if an error occurs. This was not happening in
-	all cases, leading to errors elsewhere.
+        I fixed a few of the reading and writing methods to ensure that the
+        good_bit_ flag is cleared if an error occurs. This was not happening in
+        all cases, leading to errors elsewhere.
 
-	I have extended the definition of the ACE_[W]Char_Codeset_Translator
-	classes to make them reference counted objects. There are some codesets
-	that support shifting and may be stateful. By using reference counting,
-	the CDR streams don't have to worry about ownership of stateful 
-	translators.
+        I have extended the definition of the ACE_[W]Char_Codeset_Translator
+        classes to make them reference counted objects. There are some codesets
+        that support shifting and may be stateful. By using reference counting,
+        the CDR streams don't have to worry about ownership of stateful
+        translators.
 
-	Finally, the translators now have pure virtual methods that return the
-	native and translated codeset ID values. These values refer to entries
-	in the DCE Code and Character Set Registry, which is the reference for
-	CORBA codeset ids. Anyone implementing a char or wchar codeset will 
-	have to supply a numeric value for the native codeset (ncs) and the 
-	translated codeset (tcs). NCS refers to the codeset of the text on the
-	application side of the stream, and TCS refers to the codset of the 
-	text on the "wire" side of the stream.
+        Finally, the translators now have pure virtual methods that return the
+        native and translated codeset ID values. These values refer to entries
+        in the DCE Code and Character Set Registry, which is the reference for
+        CORBA codeset ids. Anyone implementing a char or wchar codeset will
+        have to supply a numeric value for the native codeset (ncs) and the
+        translated codeset (tcs). NCS refers to the codeset of the text on the
+        application side of the stream, and TCS refers to the codset of the
+        text on the "wire" side of the stream.
 
-	These changes are not everything that is required to support codeset
-	negotiation, but it is all the changes required to the CDR streams.
-	
+        These changes are not everything that is required to support codeset
+        negotiation, but it is all the changes required to the CDR streams.
+
 Sat Dec 14 08:56:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Timer_Queue_T.cpp (timeout): Commented out the change below
-	  until we figure out how to break the dependencies on the
- 	  Reactor.  Thanks to Bala for reporting this.
+        * ace/Timer_Queue_T.cpp (timeout): Commented out the change below
+          until we figure out how to break the dependencies on the
+          Reactor.  Thanks to Bala for reporting this.
 
 Fri Dec 13 16:05:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Timer_Queue_T.cpp (timeout): Optimize Steve's patch below
-	  for the case where the upcall is coming from a reactor.  Thanks
- 	  to Irfan for pointing this out.
-  
+        * ace/Timer_Queue_T.cpp (timeout): Optimize Steve's patch below
+          for the case where the upcall is coming from a reactor.  Thanks
+          to Irfan for pointing this out.
+
 Fri Dec 13 21:12:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/test_config.h: Add __hpux to the conditions needed to instantiate
@@ -106,9 +130,9 @@ Thu Dec 12 20:11:39 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Dec 12 12:50:34 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.cpp: Changed a cast of unique_name to &unique_name to
-	  fix a bug on pSoS.  Thanks to Dieter Knueppel
- 	  <dknueppel@datus.com> for reporting this.
+        * ace/OS.cpp: Changed a cast of unique_name to &unique_name to
+          fix a bug on pSoS.  Thanks to Dieter Knueppel
+          <dknueppel@datus.com> for reporting this.
 
 Thu Dec 12 12:55:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -116,7 +140,7 @@ Thu Dec 12 12:55:41 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Dec 12 08:49:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Log_Msg.cpp: Fixed a warning in LynxOS builds.
+        * ace/Log_Msg.cpp: Fixed a warning in LynxOS builds.
 
 Thu Dec 12 06:18:02 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -128,15 +152,15 @@ Thu Dec 12 06:18:02 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Dec 12 00:01:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* netsvcs/clients/Naming/Client/Makefile: Fixed a small problem in
-	  static builds. Hopefully they should be fine in the next round
-	  of builds.
+        * netsvcs/clients/Naming/Client/Makefile: Fixed a small problem in
+          static builds. Hopefully they should be fine in the next round
+          of builds.
 
 Wed Dec 11 23:11:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/clean_sems.sh: A shell script to remove
-	  semaphores. Integrating the script that Ossama used to the
-	  daily build system.
+        * bin/clean_sems.sh: A shell script to remove
+          semaphores. Integrating the script that Ossama used to the
+          daily build system.
 
 Wed Dec 11 21:05:49 2002  Steve Huston  <shuston@riverace.com>
 
@@ -180,12 +204,12 @@ Wed Dec 11 19:33:19 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 11 17:05:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* examples/Reactor/WFMO_Reactor/Talker.cpp: Fixed a warning in
-	  Borland builds. 
+        * examples/Reactor/WFMO_Reactor/Talker.cpp: Fixed a warning in
+          Borland builds.
 
 Wed Dec 11 17:00:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/WIN32_Asynch_IO.cpp: Fixed a warning in Borland builds.
+        * ace/WIN32_Asynch_IO.cpp: Fixed a warning in Borland builds.
 
 Tue Dec 10 19:42:29 2002  Steve Huston  <shuston@riverace.com>
 
@@ -227,10 +251,10 @@ Tue Dec 10 18:10:41 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Dec 10 17:19:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/OS_Test.cpp (ACE_TMAIN): Integrated the latest tests from
-	  Alain for string_strsncpy_test (). The test is more robust and
-	  tests things better. It also has comments on what it is testing
-	  :-).
+        * tests/OS_Test.cpp (ACE_TMAIN): Integrated the latest tests from
+          Alain for string_strsncpy_test (). The test is more robust and
+          tests things better. It also has comments on what it is testing
+          :-).
 
 Tue Dec 10 16:53:29 2002  Steve Huston  <shuston@riverace.com>
 
@@ -239,52 +263,52 @@ Tue Dec 10 16:53:29 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Dec 10 16:05:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* Makefile: Added a target 'reverseclean'
-	* bin/reverse_clean: Added a small perl script that does a
-	  realclean in the reverse order on the directories passed to
-	  it.
+        * Makefile: Added a target 'reverseclean'
+        * bin/reverse_clean: Added a small perl script that does a
+          realclean in the reverse order on the directories passed to
+          it.
 
-	  The motivation for this is that some of our builds dont clean up
-	  properly due to the dependencies. The reason for this is that
-	  ace/ACE_COMPONENTS.list gets wiped out first, preventing things 
-	  that examine the components list (like netsvcs) from getting
-	  cleaned. Hence we need to do a 'realclean' in reverse order of
-	  the builds.
+          The motivation for this is that some of our builds dont clean up
+          properly due to the dependencies. The reason for this is that
+          ace/ACE_COMPONENTS.list gets wiped out first, preventing things
+          that examine the components list (like netsvcs) from getting
+          cleaned. Hence we need to do a 'realclean' in reverse order of
+          the builds.
 
 Tue Dec 10 13:23:37 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/PerlACE/Process.pm:
-	* bin/PerlACE/Process_Win32.pm:
-	* bin/PerlACE/Process_Unix.pm:  Changed WAIT_DELAY_FACTORY from a
-	  data member in Process_Win32 to a global data in
-	  PerlACE::Process.  You can now define an environment variable
-	  "ACE_RUNTEST_DELAY" on both Win32 and UNIX to multiply the wait
-	  time with the number.  The same trick that I added last time
-	  into Process_Win32 to invoke tests with purify should also work
-	  with valgrind.
+        * bin/PerlACE/Process.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/Process_Unix.pm:  Changed WAIT_DELAY_FACTORY from a
+          data member in Process_Win32 to a global data in
+          PerlACE::Process.  You can now define an environment variable
+          "ACE_RUNTEST_DELAY" on both Win32 and UNIX to multiply the wait
+          time with the number.  The same trick that I added last time
+          into Process_Win32 to invoke tests with purify should also work
+          with valgrind.
 
-	* bin/PerlACE/Run_Test.pm (waitforfile): Changed to multiply the
-	  wait time with the PerlACE::Process::WAIT_DELAY_FACTOR .
+        * bin/PerlACE/Run_Test.pm (waitforfile): Changed to multiply the
+          wait time with the PerlACE::Process::WAIT_DELAY_FACTOR .
 
 Tue Dec 10 10:20:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Synch.cpp: Commented out the dump () call on ACE_cond_t,
-	  which caused build errors from the checkin "Mon Dec 9 18:54:09
-	  2002  Douglas C. Schmidt <schmidt@ace.cs.wustl.edu>". There is
-	  no dump method on ACE_cond_t.
+        * ace/Synch.cpp: Commented out the dump () call on ACE_cond_t,
+          which caused build errors from the checkin "Mon Dec 9 18:54:09
+          2002  Douglas C. Schmidt <schmidt@ace.cs.wustl.edu>". There is
+          no dump method on ACE_cond_t.
 
-	  Fixed the return type of the implementation to match the
-	  declaration.
+          Fixed the return type of the implementation to match the
+          declaration.
 
 Mon Dec  9 18:54:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Synch.{h,cpp}: Added a dump() method to the template
-	  specialization of ACE_Condition<ACE_Recursive_Thread_Mutex>.
-  	  Thanks to Mathias Waack <mathias.waack@schlund.de> for reporting
- 	  this.
+        * ace/Synch.{h,cpp}: Added a dump() method to the template
+          specialization of ACE_Condition<ACE_Recursive_Thread_Mutex>.
+          Thanks to Mathias Waack <mathias.waack@schlund.de> for reporting
+          this.
 
-	* ace/Get_Opt.{h,i} Added a new argc() accessor.  Thanks to
-	  Volker Boerchers <vboerchers@tecon.de> for contributing this.
+        * ace/Get_Opt.{h,i} Added a new argc() accessor.  Thanks to
+          Volker Boerchers <vboerchers@tecon.de> for contributing this.
 
 Mon Dec  9 17:58:31 2002  Steve Huston  <shuston@riverace.com>
 
@@ -312,33 +336,33 @@ Mon Dec  9 17:02:41 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Dec  9 15:42:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:  Removed
-	  duplicate template specialization for ACE_Hash<ACE_HANDLE> on
-	  Windows that's no longer needed.
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:  Removed
+          duplicate template specialization for ACE_Hash<ACE_HANDLE> on
+          Windows that's no longer needed.
 
 Mon Dec  9 07:41:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/OS_Test.cpp:
-	* ace/OS_String.cpp (strsncpy): Fixed a cut and paste error.
+        * tests/OS_Test.cpp:
+        * ace/OS_String.cpp (strsncpy): Fixed a cut and paste error.
 
 Mon Dec  9 00:09:55 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/INET_Addr.cpp (get_host_addr): Changed the usage of strncpy
-	  () to strsncpy (). Thanks to Alain Decamps for donating this patch.
+        * ace/INET_Addr.cpp (get_host_addr): Changed the usage of strncpy
+          () to strsncpy (). Thanks to Alain Decamps for donating this patch.
 
 Sun Dec  8 23:56:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/OS_String.cpp: Applied patches from Alain Decamps to make
-	  strsncpy () more robust.  If dst == src, the return string will
-	  have utmost 'maxlen'.
+        * ace/OS_String.cpp: Applied patches from Alain Decamps to make
+          strsncpy () more robust.  If dst == src, the return string will
+          have utmost 'maxlen'.
 
-	* tests/OS_Test.cpp: Added a test case for strsncpy (). Thanks to
-	  Alain Decamps for donating the patch.
+        * tests/OS_Test.cpp: Added a test case for strsncpy (). Thanks to
+          Alain Decamps for donating the patch.
 
 Sun Dec 08 22:44:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Functor.h (void *):
-	* ace/Functor.i: Added a template specialization for ACE_Hash <void *>.
+        * ace/Functor.h (void *):
+        * ace/Functor.i: Added a template specialization for ACE_Hash <void *>.
 
 Sun Dec 08 09:45:34 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -356,18 +380,18 @@ Sun Dec 08 09:37:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 08 01:17:26 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Event_Handler.cpp: Fixed a typo.
+        * ace/Event_Handler.cpp: Fixed a typo.
 
 Thu Dec  5 20:30:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Event_Handler.cpp: Updated the implementation of ACE_Event_Handler::read_adapter()
-	  so that the code is consistent with the stated semantics.  Thanks to
-	  Ron Muck <rlm@sdiusa.com> for the fix.
+        * ace/Event_Handler.cpp: Updated the implementation of ACE_Event_Handler::read_adapter()
+          so that the code is consistent with the stated semantics.  Thanks to
+          Ron Muck <rlm@sdiusa.com> for the fix.
 
-	* ace/OS_Dirent.inl (readdir_r): Enhanced the ACE_OS_Directn::readdir_r()
-	  wrapper facade so that it returns 1 (i.e., "done") when an error
- 	  occurs.  Thanks to Abhay Kulkarni <Abhay.Kulkarni@veritas.com>
- 	  for reporting this.
+        * ace/OS_Dirent.inl (readdir_r): Enhanced the ACE_OS_Directn::readdir_r()
+          wrapper facade so that it returns 1 (i.e., "done") when an error
+          occurs.  Thanks to Abhay Kulkarni <Abhay.Kulkarni@veritas.com>
+          for reporting this.
 
 Sat Dec  7 19:54:12 2002  Steve Huston  <shuston@riverace.com>
 
@@ -375,22 +399,22 @@ Sat Dec  7 19:54:12 2002  Steve Huston  <shuston@riverace.com>
 
 Sat Dec 07 14:29:47 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE.cpp (format_hexdump): This change fixed the problem that
-	  a character is missing when the last line has less than 16 bytes
-	  or less to display.  Thanks to Terry Lao <terry@ec-tone.com> for
-	  submitting the patch, and Johnny Willemsen
-	  <jwillemsen@remedy.nl> for reviewing the change.
+        * ace/ACE.cpp (format_hexdump): This change fixed the problem that
+          a character is missing when the last line has less than 16 bytes
+          or less to display.  Thanks to Terry Lao <terry@ec-tone.com> for
+          submitting the patch, and Johnny Willemsen
+          <jwillemsen@remedy.nl> for reviewing the change.
 
 Fri Dec  6 23:58:47 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/CDR_Stream.cpp:
-	* ace/CDR_Stream.i: Set good_bit_ to zero whenever the sanity
-	  check for remaining length in the stream fails. Thanks to Jerry
-	  D. De Master <jdemaste@rite-solutions.com> for pointing out the
-	  problem.
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.i: Set good_bit_ to zero whenever the sanity
+          check for remaining length in the stream fails. Thanks to Jerry
+          D. De Master <jdemaste@rite-solutions.com> for pointing out the
+          problem.
 
-	* ace/CDR_Array_Test.cpp: Extended the test to include test for
-	  checking the value of good_bit () by forcing an erroneous read.
+        * ace/CDR_Array_Test.cpp: Extended the test to include test for
+          checking the value of good_bit () by forcing an erroneous read.
 
 Fri Dec  6 16:26:49 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -425,25 +449,25 @@ Thu Dec  5 20:33:18 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Dec  5 14:35:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* netsvcs/clients/Naming/Client/Makefile: Do not build in static
-	  builds.
+        * netsvcs/clients/Naming/Client/Makefile: Do not build in static
+          builds.
 
 Thu Dec  5 09:45:25 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Synch/proc_sema.cpp: Fixed some typos.  Thanks to
-	  Andy King <andyking@vernon.com> for reporting this.
+        * examples/Synch/proc_sema.cpp: Fixed some typos.  Thanks to
+          Andy King <andyking@vernon.com> for reporting this.
 
 Thu Dec  5 07:39:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Removed Bug_1020_Regression from the
-	  nightly regression test on Win32.
+        * bin/auto_run_tests.lst: Removed Bug_1020_Regression from the
+          nightly regression test on Win32.
 
 Thu Dec  5 09:58:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/config-openbsd-pthread.h:  Added
-	  ACE_LACKS_PERFECT_MULTICAST_FILTERING 1.  This should
-	  fix the errors in the test/Multicast_Test in the
-	  nightly autobuilds.
+        * ace/config-openbsd-pthread.h:  Added
+          ACE_LACKS_PERFECT_MULTICAST_FILTERING 1.  This should
+          fix the errors in the test/Multicast_Test in the
+          nightly autobuilds.
 
 Wed Dec  4 21:53:28 2002  Steve Huston  <shuston@riverace.com>
 
@@ -467,8 +491,8 @@ Wed Dec  4 21:11:41 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Dec  4 18:37:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added a Server_Connection_Purging to the
-	  nightly regression tests.
+        * bin/auto_run_tests.lst: Added a Server_Connection_Purging to the
+          nightly regression tests.
 
 Wed Dec  4 17:47:49 2002  Steve Huston  <shuston@riverace.com>
 
@@ -478,8 +502,8 @@ Wed Dec  4 17:47:49 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Dec  4 11:41:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added a Bug_1020_Regression to the
-	  nightly regression test on Win32.
+        * bin/auto_run_tests.lst: Added a Bug_1020_Regression to the
+          nightly regression test on Win32.
 
 Tue Dec  3 20:47:39 2002  Steve Huston  <shuston@riverace.com>
 
@@ -528,15 +552,15 @@ Mon Dec  2 19:41:27 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Dec  2 17:58:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/ACE.cpp: Fixed a compile error with g++.
+        * ace/ACE.cpp: Fixed a compile error with g++.
 
 Sat Nov 30 09:18:51 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/ACE.{h,cpp}: Added a new crc32() method that works on
-	  an iovec.  Thanks to Tufan Oruk <toruk@usa.net> for contributing
- 	  this.
+        * ace/ACE.{h,cpp}: Added a new crc32() method that works on
+          an iovec.  Thanks to Tufan Oruk <toruk@usa.net> for contributing
+          this.
 
-	* THANKS: Just added our 1,600 contributor to ACE+TAO!
+        * THANKS: Just added our 1,600 contributor to ACE+TAO!
 
 Mon Dec 02 18:59:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -559,36 +583,36 @@ Sun Dec 01 10:16:45 2002  Balachandran  <bala@cs.wustl.edu>
 
 Sat Nov 30 22:46:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Christophe Vedel to the hall of fame.
+        * THANKS: Added Christophe Vedel to the hall of fame.
 
 Fri Nov 29 12:23:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.h (ACE_Thread_Manager): Changed all the
-	  accessors to the Thread_Descriptor to be protected.
+        * ace/Thread_Manager.h (ACE_Thread_Manager): Changed all the
+          accessors to the Thread_Descriptor to be protected.
 
-	* ace/Thread_Manager.i: Removed assertion test for null
-	  Thread_Descriptor pointer.  This can happen when calling
-	  thread_desc_self() from a thread not spawned by the
-	  Thread_Manager, e.g., the main thread.
+        * ace/Thread_Manager.i: Removed assertion test for null
+          Thread_Descriptor pointer.  This can happen when calling
+          thread_desc_self() from a thread not spawned by the
+          Thread_Manager, e.g., the main thread.
 
-	  Added checks in all ACE_Thread_Manager::at_exit for null
-	  thread_desc_self to avoid crash.
+          Added checks in all ACE_Thread_Manager::at_exit for null
+          thread_desc_self to avoid crash.
 
-	  Thanks to Mathias Waack <mathias.waack@schlund.de> for reporting
-	  the bug.
+          Thanks to Mathias Waack <mathias.waack@schlund.de> for reporting
+          the bug.
 
 Thu Nov 28 06:36:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* apps/soreduce/Makefile: Changed INSBIN from $ACE_ROOT/bin/soreduce/
-	  to $ACE_ROOT/bin/.  Thanks to Jaroslaw Nozderko
- 	  <jaroslaw.nozderko@polkomtel.com.pl> for reporting this.
+        * apps/soreduce/Makefile: Changed INSBIN from $ACE_ROOT/bin/soreduce/
+          to $ACE_ROOT/bin/.  Thanks to Jaroslaw Nozderko
+          <jaroslaw.nozderko@polkomtel.com.pl> for reporting this.
 
 Thu Nov 28 07:54:28 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* docs/tutorials/022/Acceptor_Service.h: Add include of svc_export.h
+        * docs/tutorials/022/Acceptor_Service.h: Add include of svc_export.h
           to fix compilation errors.  Thanks to Viktor Ransmayr
-	  <viktor.ransmayr@t-online.de> for reporting the problem. Not
-	  sure whether this example would still compile fine.
+          <viktor.ransmayr@t-online.de> for reporting the problem. Not
+          sure whether this example would still compile fine.
 
 Thu Nov 28 09:04:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -608,19 +632,19 @@ Thu Nov 28 07:23:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 27 22:38:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Connector.h:
-	* ace/Connector.cpp: Fix for BUG 1361. Please see
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 for
-	  more details on the problem.
+        * ace/Connector.h:
+        * ace/Connector.cpp: Fix for BUG 1361. Please see
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 for
+          more details on the problem.
 
-	  The fix is based on the assumption that ACE_Connector need not
-	  be resumed by the TP_Reactor when used for asynch connects.
-	  The supporting reason for this assumption is that during
-	  connection completion or connection closure, the  handler
-	  ie. the ACE_Connector in this case is removed from the
-	  Reactor. Hence this fix, which essentially implements the
-	  virtual function resume_handler () and prevents itself from
-	  being resumed. Thaks to Irfan for reviewing the fix.
+          The fix is based on the assumption that ACE_Connector need not
+          be resumed by the TP_Reactor when used for asynch connects.
+          The supporting reason for this assumption is that during
+          connection completion or connection closure, the  handler
+          ie. the ACE_Connector in this case is removed from the
+          Reactor. Hence this fix, which essentially implements the
+          virtual function resume_handler () and prevents itself from
+          being resumed. Thaks to Irfan for reviewing the fix.
 
 Wed Nov 27 20:35:49 2002  Steve Huston  <shuston@riverace.com>
 
@@ -666,8 +690,8 @@ Wed Nov 27 15:47:41 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Nov 27 07:23:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Two new tests cannot run in single
-	  threaded builds.
+        * bin/auto_run_tests.lst: Two new tests cannot run in single
+          threaded builds.
 
 Wed Nov 27 09:30:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -688,23 +712,23 @@ Tue Nov 26 20:04:38 2002  Steve Huston  <shuston@riverace.com>
 
 Tue Nov 26 16:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added two new tests to our daily builds.
+        * bin/auto_run_tests.lst: Added two new tests to our daily builds.
 
 Tue Nov 26 15:10:57 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ACE-INSTALL.html: Updated the file to have the right GNU make
-	  version. Our make's dont work well with 3.78 and lower.
+        * ACE-INSTALL.html: Updated the file to have the right GNU make
+          version. Our make's dont work well with 3.78 and lower.
 
 Mon Nov 25 23:49:38 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/config-macosx.h: Updates for pthread configuration, provided
-	  by John Zorko <j.zorko@att.net> and Rich Seibel
-	  <seibel_r@ociweb.com>.
+        * ace/config-macosx.h: Updates for pthread configuration, provided
+          by John Zorko <j.zorko@att.net> and Rich Seibel
+          <seibel_r@ociweb.com>.
 
         * ace/OS.i:
         * ace/Sock_Connect.cpp: Remove unnecessary __MACOSX__ macros.
-	  See: Thu Oct 17 19:18:02 UTC 2002  Craig Rodrigues
-	  <crodrigu@bbn.com>
+          See: Thu Oct 17 19:18:02 UTC 2002  Craig Rodrigues
+          <crodrigu@bbn.com>
 
 Mon Nov 25 18:20:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -718,7 +742,7 @@ Mon Nov 25 18:20:41 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Nov 25 20:32:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/README:  Added ACE_LACKS_PERFECT_MULTICAST_FILTERING.
+        * ace/README:  Added ACE_LACKS_PERFECT_MULTICAST_FILTERING.
 
 Mon Nov 25 18:58:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -734,8 +758,8 @@ Mon Nov 25 18:58:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Nov 23 20:01:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* apps/*/Makefile: Updated dependecies. Thanks to Erwin Rol for
-	  pointing out the problem.
+        * apps/*/Makefile: Updated dependecies. Thanks to Erwin Rol for
+          pointing out the problem.
 
 Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
 
@@ -829,21 +853,21 @@ Sat Nov 23 16:55:39 2002  Steve Huston  <shuston@riverace.com>
 
 Sat Nov 23 00:16:59 2002  Craig Rodrigues <crodrigu@bbn.com>
 
-	* ace/config-posix.h: Define ACE_HAS_PTHREADS_STD
-	  if platform defines _POSIX_THREADS.
+        * ace/config-posix.h: Define ACE_HAS_PTHREADS_STD
+          if platform defines _POSIX_THREADS.
 
 Fri Nov 22 13:48:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Containers_T.cpp (init_head): Broke up the cascading pointer
-	  assignments to avoid a problem when using position independent
-	  pointer.  Thanks to Eugene Alterman <eugalt@myrealbox.com> for
-	  reporting this.
+        * ace/Containers_T.cpp (init_head): Broke up the cascading pointer
+          assignments to avoid a problem when using position independent
+          pointer.  Thanks to Eugene Alterman <eugalt@myrealbox.com> for
+          reporting this.
 
-	* ace/Svc_Conf.l:
-	* ace/Svc_Conf_l.cpp: Changed to always remove the matching quote
-	  character (' or ") instead of first search for double quote,
-	  then single quote.  Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for sumitting the patch.
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf_l.cpp: Changed to always remove the matching quote
+          character (' or ") instead of first search for double quote,
+          then single quote.  Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for sumitting the patch.
 
 Fri Nov 22 04:52:16 2002  Bala  <bala@cs.wustl.edu>
 
@@ -851,96 +875,96 @@ Fri Nov 22 04:52:16 2002  Bala  <bala@cs.wustl.edu>
 
 Tue Nov 19 22:36:38 2002  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Time_Value.h (sec, usec, msec):
+        * ace/Time_Value.h (sec, usec, msec):
 
-	  Documentation updates/clarifications.
+          Documentation updates/clarifications.
 
-	* ace/Time_Value.cpp (operator++, operator--):
+        * ace/Time_Value.cpp (operator++, operator--):
 
-	  Fixed postfix increment and decrement operators.  Previously
-	  they had the same implementation as their prefix increment and
-	  decrement operator counterparts.  A copy of the ACE_Time_Value
-	  is now done prior to in/decrementing it via the corresponding
-	  prefix operator.  That copy is returned.  A copy is only
-	  performed for the postfix case.
+          Fixed postfix increment and decrement operators.  Previously
+          they had the same implementation as their prefix increment and
+          decrement operator counterparts.  A copy of the ACE_Time_Value
+          is now done prior to in/decrementing it via the corresponding
+          prefix operator.  That copy is returned.  A copy is only
+          performed for the postfix case.
 
 Tue Nov 19 18:14:10 2002  Pradeep Gore  <pradeep@oomworks.com>
 
-	* bin/auto_run_tests.lst:
-	  Modified Notify configurations.
+        * bin/auto_run_tests.lst:
+          Modified Notify configurations.
 
-	* bin/auto_run_tests.pl:
-	  Checkin on behalf of Irfan - Changed logic so that it checks for
-	  the existence of the executable and not of the parameters passed
-	  to the executable.
+        * bin/auto_run_tests.pl:
+          Checkin on behalf of Irfan - Changed logic so that it checks for
+          the existence of the executable and not of the parameters passed
+          to the executable.
 
 Tue Nov 19 07:09:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Tests not runnable in minimum
-	  configuration were being run. Hence prevented them from
-	  running.
+        * bin/auto_run_tests.lst: Tests not runnable in minimum
+          configuration were being run. Hence prevented them from
+          running.
 
 Mon Nov 18 20:49:33 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/IPC_SAP/FILE_SAP/client.cpp (ACE_TMAIN): Changed to use
-	  predefined ACE_DEFAULT_FILE_PERMS instead of the non-portable 0666.
+        * examples/IPC_SAP/FILE_SAP/client.cpp (ACE_TMAIN): Changed to use
+          predefined ACE_DEFAULT_FILE_PERMS instead of the non-portable 0666.
 
 Mon Nov 18 12:27:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.cpp (handler):
-	* ace/WFMO_Reactor.i (handler):
-	* ace/Select_Reactor_Base_T.cpp (handler_i): The methods that
-	  returns a signal handler associated with a certain type of
-	  signal, does restrictive sanity checks. One of the checks that
-	  it performs is to see whether a pointer to an event_handler is 0
-	  just before assigning a new event handler pointer. This check
-	  was not required at all and hence it is now removed. Thanks to
-	  Edan Ayal for reporting this.
+        * ace/Dev_Poll_Reactor.cpp (handler):
+        * ace/WFMO_Reactor.i (handler):
+        * ace/Select_Reactor_Base_T.cpp (handler_i): The methods that
+          returns a signal handler associated with a certain type of
+          signal, does restrictive sanity checks. One of the checks that
+          it performs is to see whether a pointer to an event_handler is 0
+          just before assigning a new event handler pointer. This check
+          was not required at all and hence it is now removed. Thanks to
+          Edan Ayal for reporting this.
 
 Sat Nov 16 09:38:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/*/Makefile:
-	* tests/Makefile:
-	* examples/*/Makefile:
-	* performance-tests/*/Makefile:
-	* ACEXML/*/Makefile: Updated dependencies.
+        * ace/*/Makefile:
+        * tests/Makefile:
+        * examples/*/Makefile:
+        * performance-tests/*/Makefile:
+        * ACEXML/*/Makefile: Updated dependencies.
 
 Fri Nov 15 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/SOCK_Dgram_Mcast.h:
-	* ace/config-all.h: Added new macro for platforms that don't yet
-	  implement the new IGMPv3, perfect multicast filtering, and
-	  replaced the #ifdef linux in the ACE_SOCK_Dgram_Mcast::ctor
-	  with the new macro, since this isn't just a linux thing.
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/config-all.h: Added new macro for platforms that don't yet
+          implement the new IGMPv3, perfect multicast filtering, and
+          replaced the #ifdef linux in the ACE_SOCK_Dgram_Mcast::ctor
+          with the new macro, since this isn't just a linux thing.
 
-	* ace/config-aix-4.x.h:
-	* ace/config-freebsd.h:
-	* ace/config-linux-common.h:
-	* ace/config-netbsd.h:
-	* ace/config-openbsd.h:
-	  Defined ACE_LACKS_PERFECT_MULTICAST_FILTERING for these platforms.
+        * ace/config-aix-4.x.h:
+        * ace/config-freebsd.h:
+        * ace/config-linux-common.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+          Defined ACE_LACKS_PERFECT_MULTICAST_FILTERING for these platforms.
 
-	* ace/SOCK_Dgram_Mcast.cpp (open_i): Removed redundant call to
-	  ACE_SOCK::set_option() to set SO_REUSEADDR, since it's set in
-	  the call to ACE_SOCK::open().  This fixes [bug 1111].
+        * ace/SOCK_Dgram_Mcast.cpp (open_i): Removed redundant call to
+          ACE_SOCK::set_option() to set SO_REUSEADDR, since it's set in
+          the call to ACE_SOCK::open().  This fixes [bug 1111].
 
-	* tests/Multicast_Test.cpp: Enhanced test by adding new options
-	  control the wait time when running test as a CONSUMER only,
-	  and contol the TTL so the test could be used over routers.
-	  Also cleaned up the code a bit to make it more readable.  Thanks
-	  to Bill Fulton for motivating these enhancements.
+        * tests/Multicast_Test.cpp: Enhanced test by adding new options
+          control the wait time when running test as a CONSUMER only,
+          and contol the TTL so the test could be used over routers.
+          Also cleaned up the code a bit to make it more readable.  Thanks
+          to Bill Fulton for motivating these enhancements.
 
 Fri Nov 15 14:16:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Exit.h:
-	* ace/Thread_Exit.cpp (cleanup): Changed the type of the argument
-	  <cleanup> takes to the generic (void*) and avoid including
-	  <Synch.h> in Thread_Exit.h.  This eliminated the circular header
-	  dependencies when ACE_LEGACY_MODE is define.
+        * ace/Thread_Exit.h:
+        * ace/Thread_Exit.cpp (cleanup): Changed the type of the argument
+          <cleanup> takes to the generic (void*) and avoid including
+          <Synch.h> in Thread_Exit.h.  This eliminated the circular header
+          dependencies when ACE_LEGACY_MODE is define.
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Removed some template files from the build
-	  lists and make sure all template files are not being built.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Removed some template files from the build
+          lists and make sure all template files are not being built.
 
 Fri Nov 15 13:22:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -949,31 +973,31 @@ Fri Nov 15 13:22:41 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Nov 15 16:51:11 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/POSIX_CB_Proactor.h:
-	* ace/POSIX_CB_Proactor.cpp:
-	  Do not build on Lynx.
+        * ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_CB_Proactor.cpp:
+          Do not build on Lynx.
 
 Fri Nov 15 14:14:39 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/POSIX_CB_Proactor.h:
-	* ace/POSIX_CB_Proactor.cpp:
-	  Do not build on Sun.
+        * ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_CB_Proactor.cpp:
+          Do not build on Sun.
 
 Fri Nov 15 14:08:11 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_linux.GNU:
-	  Linux glibc has aio_ and pthread_ calls in librt.so.
-	  Add fix so that librt.so is linked in if threads=0.
+        * include/makeinclude/platform_linux.GNU:
+          Linux glibc has aio_ and pthread_ calls in librt.so.
+          Add fix so that librt.so is linked in if threads=0.
 
 Fri Nov 15 07:48:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/OS_Test.cpp: Added the test cases for itoa from
-	  Joseph Sarbak <joseph.sarbak@csfb.com>.
+        * tests/OS_Test.cpp: Added the test cases for itoa from
+          Joseph Sarbak <joseph.sarbak@csfb.com>.
 
 Fri Nov 15 07:08:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Fixed a few minor problems that showed
-	  up in the daily builds.
+        * bin/auto_run_tests.lst: Fixed a few minor problems that showed
+          up in the daily builds.
 
 Thu Nov 14 22:08:49 2002  Steve Huston  <shuston@riverace.com>
 
@@ -989,52 +1013,52 @@ Thu Nov 14 22:08:49 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Nov 14 23:10:32 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/POSIX_CB_Proactor.cpp:
-	* ace/POSIX_CB_Proactor.h:
-	* ace/POSIX_CB_Proactor.i:
-	* ace/POSIX_Proactor.cpp:
-	* ace/POSIX_Proactor.h:
-	* ace/POSIX_Proactor.i:
-	* ace/Proactor.cpp:
-	* tests/Proactor_Test.cpp:
-	  Fixed Proactor so that on platforms that support POSIX IO,
-	  but not POSIX RT signals, it will compile.  Use the new
-	  ACE_HAS_POSIX_REALTIME_SIGNALS macro.
+        * ace/POSIX_CB_Proactor.cpp:
+        * ace/POSIX_CB_Proactor.h:
+        * ace/POSIX_CB_Proactor.i:
+        * ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Proactor.h:
+        * ace/POSIX_Proactor.i:
+        * ace/Proactor.cpp:
+        * tests/Proactor_Test.cpp:
+          Fixed Proactor so that on platforms that support POSIX IO,
+          but not POSIX RT signals, it will compile.  Use the new
+          ACE_HAS_POSIX_REALTIME_SIGNALS macro.
 
 Thu Nov 14 22:47:45 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_freebsd.GNU: Merged with the
-	  pthread version of this file.  To compile without threads,
-	  set, do make threads=0, or set threads=0 in this file.
-	* include/makeinclude/platform_freebsd_pthread.GNU: Removed.
-	* ace/config-freebsd.h: Merge with pthread version of this file.
-	* ace/config-freebsd-pthread.h: Removed.
-	* ace/OS.h: Use new ACE_HAS_POSIX_REALTIME_SIGNALS macro for
-	  POSIX RT signals stuff, instead of ACE_HAS_AIO_CALLS.
-	  FreeBSD has POSIX AIO, but not POSIX RT signals.
-	* ace/config-sunos5.6.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
-	  ACE_HAS_POSIX_MESSAGE_PASSING.
-	* ace/config-linux-common.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
-	  ACE_HAS_AIO_CALLS.
+        * include/makeinclude/platform_freebsd.GNU: Merged with the
+          pthread version of this file.  To compile without threads,
+          set, do make threads=0, or set threads=0 in this file.
+        * include/makeinclude/platform_freebsd_pthread.GNU: Removed.
+        * ace/config-freebsd.h: Merge with pthread version of this file.
+        * ace/config-freebsd-pthread.h: Removed.
+        * ace/OS.h: Use new ACE_HAS_POSIX_REALTIME_SIGNALS macro for
+          POSIX RT signals stuff, instead of ACE_HAS_AIO_CALLS.
+          FreeBSD has POSIX AIO, but not POSIX RT signals.
+        * ace/config-sunos5.6.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
+          ACE_HAS_POSIX_MESSAGE_PASSING.
+        * ace/config-linux-common.h: Define ACE_HAS_POSIX_REALTIME_SIGNALS,
+          ACE_HAS_AIO_CALLS.
 
 Thu Nov 14 16:19:57 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added two tests, Bug_1269_Regression and
-	  Bug_1270_Regression into the daily regression suite. They will
-	  not run on Win32.
+        * bin/auto_run_tests.lst: Added two tests, Bug_1269_Regression and
+          Bug_1270_Regression into the daily regression suite. They will
+          not run on Win32.
 
 Thu Nov 14 13:35:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Containers_T.cpp: Changed to deallocate internal nodes in
-	  ACE_Double_Linked_List with the allocator.  Thanks to Eugene
-	  Alterman <EugeneA@bremer-inc.com> for reporting the problem.
+        * ace/Containers_T.cpp: Changed to deallocate internal nodes in
+          ACE_Double_Linked_List with the allocator.  Thanks to Eugene
+          Alterman <EugeneA@bremer-inc.com> for reporting the problem.
 
 Thu Nov 14 10:57:47 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/OS.h (ace_timezone):
+        * ace/OS.h (ace_timezone):
 
-	  Fixed broken implementation for Linux.  Call tzset() and then
-	  return the global "timezone" variable instead.  [Bug 1359]
+          Fixed broken implementation for Linux.  Call tzset() and then
+          return the global "timezone" variable instead.  [Bug 1359]
 
 Thu Nov 14 12:19:51 2002  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1570,7 +1594,7 @@ Tue Oct 29 15:45:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
           and destroyed itself.
 
           Thanks to Patrick McNerthney <pat@mcnerthney.com> and
-	  Daniel Bell <Daniel.Bell@colorbus.com.au> for reporting
+          Daniel Bell <Daniel.Bell@colorbus.com.au> for reporting
           the problem.
 
 Tue Oct 29 16:19:54 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>

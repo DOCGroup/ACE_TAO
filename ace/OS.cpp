@@ -4752,6 +4752,10 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       addr->s_addr = ip_addr;  // Network byte ordered
       return 1;
     }
+#elif defined (VXWORKS)
+  // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
+  // address (255.255.255.255).
+  ACE_OSCALL_RETURN (::inet_aton ((char*)host_name, addr), int, 0);
 #else
   // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
   // address (255.255.255.255).

@@ -1855,7 +1855,7 @@ typedef u_int ACE_thread_key_t;
 #     include /**/ <sysLib.h>
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
-
+#     include /**/ <inetLib.h>
 extern "C"
 struct sockaddr_un {
   short sun_family;    // AF_UNIX.
