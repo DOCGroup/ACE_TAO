@@ -125,7 +125,10 @@
 # if __GNUG__ > 2  ||  __GNUC_MINOR__ >= 9
     // g++ >= 2.9, assume LynxOS 3.1.0 or greater
 #   define ACE_HAS_PTHREADS_STD
-#   define ACE_LACKS_PTHREAD_SIGMASK
+    // Though there's a pthread_sigmask man page, there isn't a
+    // declaration in a system header file.
+#   include <signal.h>
+    extern "C" int pthread_sigmask (int, const sigset_t *, sigset_t *);
 # else  /* LynxOS < 3.1.0 */
 #   define ACE_HAS_PTHREADS_DRAFT4
 #   define ACE_HAS_STDARG_THR_DEST
