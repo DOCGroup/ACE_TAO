@@ -163,7 +163,8 @@ client (void *arg = 0)
   // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
   // Linux, so the code seems fine.)  If we manage the
   // storage ourselves, we _will_ destroy it at the end of this function.
-  ACE_SOCK_IOStream *server_p = new ACE_SOCK_IOStream;
+  ACE_SOCK_IOStream *server_p;
+  ACE_NEW_RETURN (server_p, ACE_SOCK_IOStream, 0);
   ACE_SOCK_IOStream &server = *server_p;
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
@@ -253,7 +254,8 @@ server (void *arg = 0)
   // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
   // Linux, so the code seems fine.)  If we manage the
   // storage ourselves, we _will_ destroy it at the end of this function.
-  ACE_SOCK_IOStream *client_handler_p = new ACE_SOCK_IOStream;
+  ACE_SOCK_IOStream *client_handler_p;
+  ACE_NEW_RETURN (client_handler_p, ACE_SOCK_IOStream, 0);
   ACE_SOCK_IOStream &client_handler = *client_handler_p;
 
   ACE_INET_Addr server_addr;
