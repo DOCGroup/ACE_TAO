@@ -32,12 +32,12 @@
 #if !defined _TAO_CDR_OP_CORBA_OctetSeq_I_
 #define _TAO_CDR_OP_CORBA_OctetSeq_I_
 
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const CORBA::OctetSeq &
   );
 
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     CORBA::OctetSeq &
   );
