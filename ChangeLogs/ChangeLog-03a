@@ -1,5 +1,22 @@
-Tue Jun 19 08:13:52 2001 
+Tue Jun 19 08:13:52 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Max_Default_Port_Test.h:
+        * tests/Max_Default_Port_Test.dsp:
+	
+          Added a test to verify if ACE_MAX_DEFAULT_PORT value is
+          set correctly.
+
+        * tests/Makefile:
+        * tests/tests.dsw:
+	
+          Added Max_Default_Port_Test.
+
+        * tests/run_test.lst:
+        * tests/run_tests.bat:
+	
+          Added Max_Default_Port_Test.
+	
 Tue Jun 19 08:03:38 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
         * ace/OS.h:
