@@ -2316,10 +2316,10 @@ static const TAO_operation_db_entry PortableServer_ServantLocator_operations [] 
   {"_is_a", &POA_PortableServer::ServantLocator::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_ServantLocator_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (24);
+static const CORBA::Long _tao_PortableServer_ServantLocator_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
 static char _tao_PortableServer_ServantLocator_optable_pool [_tao_PortableServer_ServantLocator_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_ServantLocator_allocator (_tao_PortableServer_ServantLocator_optable_pool, _tao_PortableServer_ServantLocator_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantLocator_optable (PortableServer_ServantLocator_operations, 8, 16, &_tao_PortableServer_ServantLocator_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantLocator_optable (PortableServer_ServantLocator_operations, 1, 1, &_tao_PortableServer_ServantLocator_allocator);
 
 // skeleton constructor
 POA_PortableServer::ServantLocator::ServantLocator (void)
