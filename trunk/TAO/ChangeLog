@@ -1,3 +1,11 @@
+Sat Jul 10 12:43:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+	* tao/DynamicInterface/DII_Invocation_Adapter.h:
+
+	  Fixed a improper use of Object_var which showed up as test
+	  failures in the deffered synchronous tests.
+
 Sat Jul 10 10:23:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO-INSTALL.html:
