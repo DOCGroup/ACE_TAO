@@ -5050,7 +5050,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte,
 #endif /* ACE_WIN32 */
 }
 
-ssize_t 
+ACE_INLINE ssize_t 
 ACE_OS::pwrite (ACE_HANDLE handle, 
 		const void *buf,  
 		size_t nbyte,
@@ -5114,7 +5114,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
 #endif /* ACE_WIN32 */
 }
 
-ssize_t 
+ACE_INLINE ssize_t 
 ACE_OS::pread (ACE_HANDLE handle, 
 	       void *buf,  
 	       size_t nbyte,
