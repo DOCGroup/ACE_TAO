@@ -373,7 +373,7 @@ ACE_Location_Node::open_handle (void)
     {
       ace_yyerrno++;
 
-      ACE_ERROR ((LM_ERROR, "dlopen failed for %s\n", dl_pathname));
+      ACE_ERROR ((LM_ERROR, "dlopen failed for %s", dl_pathname));
 
       char *errmsg = ACE_OS::dlerror ();
 
