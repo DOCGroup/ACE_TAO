@@ -1,3 +1,9 @@
+Fri Apr 20 08:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+
+          Fixed template instantiation problems.
+
 Thu Apr 19 23:30:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Acceptor.h:
