@@ -1,3 +1,10 @@
+Tue Mar 08 08:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Server_Request.{h,cpp,i}:
+          Shallow copy the request service context from the operation details
+          so that we share the buffer, we can't do this for the reply service
+          context because it is allocated later in the process.
+
 Tue Mar  8 06:54:56 2005  Olli Savia  <ops@iki.fi>
 
         * tao/ORBInitializer_Registry.h:
