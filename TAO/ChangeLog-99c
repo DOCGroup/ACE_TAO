@@ -1,3 +1,10 @@
+Wed Jul 21 12:31:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/Repository.cpp:
+	  Added template instantiation for SunCC 5.0, the template is
+	  already instantiated in libTAO.so, but the compiler is broken
+	  and doesn't seem to find it.
+
 Wed Jul 21 12:05:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_union_branch.h:
