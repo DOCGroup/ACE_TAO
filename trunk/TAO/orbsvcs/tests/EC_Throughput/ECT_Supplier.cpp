@@ -187,7 +187,7 @@ ECTS_Driver::run (int argc, char* argv[])
 
 int
 ECTS_Driver::supplier_task (Test_Supplier *supplier,
-			    void* cookie)
+                            void* cookie)
 {
   TAO_TRY
     {
@@ -207,7 +207,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
           event[0].ec_recv_time_ = ORBSVCS_Time::zero;
           event[0].ec_send_time_ = ORBSVCS_Time::zero;
 
-          if (i == ACE_static_cast (CORBA::ULong, this->event_count_) - 1)
+          if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
             event[0].type_ = ACE_ES_EVENT_SHUTDOWN;
           else if (i % 2 == 0)
             event[0].type_ = this->event_a_;
@@ -220,7 +220,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
           // We use replace to minimize the copies, this should result
           // in just one memory allocation;
           event[0].data_.payload.replace (this->event_size_,
-					  &mb);
+                                          &mb);
 
           supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -304,9 +304,9 @@ ECTS_Driver::parse_args (int argc, char *argv [])
           this->event_period_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
-	case 'b':
-	  this->event_size_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'b':
+          this->event_size_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
         case 'h':
           {
@@ -331,7 +331,7 @@ ECTS_Driver::parse_args (int argc, char *argv [])
                       "-s <nsuppliers> "
                       "-n <event count> "
                       "-t <event period (usecs)> "
-		      "-b <event payload size> "
+                      "-b <event payload size> "
                       "-h <eventa,eventb> "
                       "-p <pid file name> "
                       "\n",
@@ -353,10 +353,10 @@ ECTS_Driver::parse_args (int argc, char *argv [])
   if (this->event_size_ < 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "%s: event size (%d) is out of range, "
-		  "reseting to default (%d)\n",
-		  argv[0], this->event_size_,
-		  128));
+                  "%s: event size (%d) is out of range, "
+                  "reseting to default (%d)\n",
+                  argv[0], this->event_size_,
+                  128));
       this->event_size_ = 128;
     }
 
