@@ -83,6 +83,9 @@ CPPDIR = .;Event
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Event
+INCLUDES = Event\*.h Event\*.i
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_NAMING_LIB) \
 	$(TAO_RTSCHED_LIB)
 

@@ -38,6 +38,9 @@ CPPDIR = .;Log
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Log
+INCLUDES = Log\*.h
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_TRADING_LIB)
 
 all: idl_src_files log_lib

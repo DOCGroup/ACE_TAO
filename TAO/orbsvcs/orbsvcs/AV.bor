@@ -50,6 +50,9 @@ CPPDIR = .;AV
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\AV
+INCLUDES = AV\*.h AV\*.i AV\*_T.cpp
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_NAMING_LIB) $(TAO_PROPERTY_LIB)
 
 all: idl_src_files av_lib
@@ -72,4 +75,4 @@ $(IDLDIR)\Null_MediaCtrlC.cpp $(IDLDIR)\Null_MediaCtrlS.cpp: $(IDLDIR)\Null_Medi
 	$(TAO_IDL) $**
 
 $(IDLDIR)\sfpC.cpp $(IDLDIR)\sfpS.cpp: $(IDLDIR)\sfp.idl
-	$(TAO_IDL) $**
+       @$(TAO_IDL) $**

@@ -36,6 +36,9 @@ CPPDIR = .;Naming
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Naming
+INCLUDES = Naming\*.h Naming\*_T.cpp
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB)
 
 all: idl_src_files naming_lib

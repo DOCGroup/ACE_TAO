@@ -29,6 +29,9 @@ CPPDIR = .;Property
 
 IDLDIR = .
 
+INCDIR_NAME = orbsvcs\Property
+INCLUDES = Property\*.h
+
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
 all: idl_src_files property_lib

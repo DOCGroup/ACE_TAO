@@ -1,3 +1,12 @@
+Tue Jul 11 14:51:13 2000  Chris Kohlhoff <chris@kohlhoff.com>
+
+	* orbsvcs/orbsvcs/*.bor:
+	* tao/Makefile.bor:
+	  Added support for 'make install'.
+
+	* orbsvcs/IFR_Service/*.bor:
+	  Added makefiles for the interface repository service.
+
 Tue Jul 11 13:39:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
@@ -54,12 +63,12 @@ Tue Jul 11 11:51:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
 
 	  Added #if defined (_FOO__CI_) guards to the object constructor
-	  from stub, since it is generated at the forward declaration and 
+	  from stub, since it is generated at the forward declaration and
 	  at the definition.
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  In _unchecked_narrow(), when the proxy is created with 
+	  In _unchecked_narrow(), when the proxy is created with
 	  ACE_NEW_RETURN, changed the proxy constructor to use the
 	  fully scoped class name. In certain cases of reopened modules,
 	  some compilers were having problems with the name that the

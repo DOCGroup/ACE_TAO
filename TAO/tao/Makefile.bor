@@ -181,6 +181,9 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DTAO_BUILD_DLL
 
 CPPDIR = .
 
+INCDIR_NAME = tao
+INCLUDES = *.h *.i *_T.cpp
+
 LIBFILES = $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
