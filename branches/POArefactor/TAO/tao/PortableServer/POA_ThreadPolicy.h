@@ -36,6 +36,20 @@
 
 namespace TAO
 {
+  class Thread_Policy_Value : public virtual ACE_Service_Object
+  {
+    PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  };
+
+
+  class ORB_CTRL_MODEL_Policy : public Thread_Policy_Value
+  {
+    PortableServer::ThreadPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  };
+
+
   class TAO_PortableServer_Export POA_ThreadPolicy :
     public virtual PortableServer::ThreadPolicy,
     public virtual CORBA::LocalObject
@@ -64,10 +78,15 @@ namespace TAO
 
      // todo
      private:
-       Loadable_Thread_Policy *value_;
+       Thread_Policy_Value *value_;
     };
-
 }
+
+
+// Define SVC configurator stuff for ORB_CTRL_MODEL_Policy so that we
+//can only one instance of ORB_CTRL_MODEL_Policy. Theoretically it is a
+//*const class* just shared among multiple instances of
+//POA_ThreadID_Policy.
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

@@ -1,3 +1,9 @@
+Tue Sep 14 11:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_ThreadPolicy.h:
+          Added empty Thread_Policy_Value, just getting the complete picture
+          together.
+
 Tue Sep 14 08:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableGroup_Hooks.{h,cpp}:
