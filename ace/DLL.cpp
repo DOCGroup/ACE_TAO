@@ -11,9 +11,12 @@ ACE_RCSID(ace, DLL, "$Id$")
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
+sig_atomic_t ACE_DLL::open_called_ = 0;
+
 ACE_DLL::ACE_DLL (int close_on_destruction)
   : handle_ (ACE_SHLIB_INVALID_HANDLE),
-    close_on_destruction_ (close_on_destruction)
+    close_on_destruction_ (close_on_destruction),
+    last_error_ (0)
 {
 }
 
@@ -24,7 +27,8 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   int close_on_destruction)
   : handle_ (ACE_SHLIB_INVALID_HANDLE),
-    close_on_destruction_ (close_on_destruction)
+    close_on_destruction_ (close_on_destruction),
+    last_error_ (0)
 {
   if (this->open (dll_name, open_mode, close_on_destruction) != 0)
     ACE_ERROR ((LM_ERROR,
@@ -40,6 +44,8 @@ ACE_DLL::~ACE_DLL (void)
 {
   // CLose the library only if it hasn't been already.
   this->close ();
+
+  ACE::strdelete (this->last_error_);
 }
 
 // This method opens the library based on the mode specified using the
@@ -58,6 +64,9 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
                int close_on_destruction)
 {
+  // Recored that open has been called, use by error().
+  this->open_called_ = 1;
+
   // This check is necessary as the library could be opened more than
   // once without closing it which would cause handle memory leaks.
   this->close ();
@@ -74,40 +83,35 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
                                      dll_pathname,
                                      (sizeof dll_pathname / sizeof (ACE_TCHAR)));
 
-  // Check for errors
-  if (result != 0)
-    return result;
-
   // The ACE_SHLIB_HANDLE object is obtained.
   this->handle_ = ACE_OS::dlopen (dll_pathname,
                                   open_mode);
 
+#if defined (AIX)
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     {
-#if defined (AIX)
-      do
+      // AIX often puts the shared library file (most often named shr.o)
+      // inside an archive library. If this is an archive library
+      // name, then try appending [shr.o] and retry.
+      if (0 != ACE_OS_String::strstr (dll_pathname, ACE_LIB_TEXT (".a")))
         {
-          // AIX often puts the shared library file (most often named shr.o)
-          // inside an archive library. If this is an archive library
-          // name, then try appending [shr.o] and retry.
-          if (0 != ACE_OS_String::strstr (dll_pathname, ACE_LIB_TEXT (".a")))
-            {
-              ACE_OS_String::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
-              open_mode |= RTLD_MEMBER;
-              this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
-              if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-                break;  // end up returning 0
-            }
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("%s\n"), this->error ()),
-                            -1);
+          ACE_OS_String::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
+          open_mode |= RTLD_MEMBER;
+          this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
+          if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+            break;  // end up returning 0
         }
-      while (0);
-#else
+    }        
+#endif /* AIX */
+
+  // Always set last error.
+  this->save_last_error();
+      
+  if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%s\n"), this->error ()),
                         -1);
-#endif /* AIX */
     }
 
   return 0;
@@ -118,7 +122,12 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 void *
 ACE_DLL::symbol (const ACE_TCHAR *sym_name)
 {
-  return ACE_OS::dlsym (this->handle_, sym_name);
+  void *sym =  ACE_OS::dlsym (this->handle_, sym_name);
+
+  // Always set last error.
+  this->save_last_error ();
+
+  return sym;
 }
 
 // The library is closed using the ACE_SHLIB_HANDLE obejct.  i.e. The
@@ -137,18 +146,33 @@ ACE_DLL::close (void)
       this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
       retval = ACE_OS::dlclose (this->handle_);
-    }
+
+      // Always set last error.
+      this->save_last_error ();
+   }
 
   this->handle_ = ACE_SHLIB_INVALID_HANDLE;
   return retval;
 }
 
-// This method is used on error in an library operation.
+// This method is used to save the last error of a library operation.
+
+void
+ACE_DLL::save_last_error (void)
+{
+  if (this->open_called_)
+    {
+      ACE::strdelete (this->last_error_);
+      this->last_error_ = ACE_OS::dlerror ();
+    }
+}
+
+// This method is used return the last error of a library operation.
 
 ACE_TCHAR *
-ACE_DLL::error (void)
+ACE_DLL::error (void) const
 {
-  return ACE_OS::dlerror ();
+  return this->last_error_;
 }
 
 // Return the handle to the user either temporarily or forever, thus

@@ -1,3 +1,29 @@
+Wed May 15 15:58:07 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/DLL_Test.cpp:
+
+	  Modified test to make calles to ACE_DLL::error () in order to test 
+	  changes below.
+	
+	* ace/DLL.{h,cpp}:
+
+	  Added new static flag, open_called_, to keep track of whether or not
+	  a library function (specifically dlopen) has been called.  This is 
+	  used internally to make sure that dlerror() isn't called unless the 
+	  library has been initialized with a call to dlopen first.  Otherwise
+	  it seg-faults on Linux (and perhaps others).
+
+	  Also added a last_error_ variable and save_last_error() method and 
+	  placed a call to save_last_error() after each library call.  Then 
+	  changed error() so it just returns last_erro_.  This solves a few 
+	  problems, since open() made calls to error() which returned the 
+	  appropriate error but cleared the value for the next call.  So for 
+	  instance, when the ctor failed and tried to call error() to report 
+	  the error, it didn't return anything since open() had already called 
+	  it.  Also, if open() failed, and the called tried to call error() to 
+	  find out why, they got a blank error message since error() had
+	  already been called by open().
+
 Tue May 14 19:40:11 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Proactor_Test.cpp (initiate_write_stream): 

@@ -50,6 +50,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
 
+  // This is just to make sure that it's safe to call error() at any time, i.e.,
+  // it shouldn't seg-fault.
+  ACE_TCHAR *dll_error = dll.error ();
+
 #if defined (__KCC)
   /* With KCC, turning on close-on-destruction will cause problems
      when libKCC tries to call dtors. */
@@ -65,9 +69,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 #endif /* __KCC */
 
   if (retval != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in DLL Open\n")),
-                      -1);
+    {
+      dll_error = dll.error ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error in DLL Open: %s\n"), 
+                         dll_error ? dll_error : ACE_TEXT ("unknown error")),
+                        -1);
+    }
 
   // Just because the ANSI C++ spec says you can no longer cast a
   // void* to a function pointer. Doesn't allow:
