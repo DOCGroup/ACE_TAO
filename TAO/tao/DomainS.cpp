@@ -370,9 +370,8 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_CORBA::ConstructionPolicy *_tao_impl = (POA_CORBA::ConstructionPolicy *)_tao_object_reference;
 
-// @@ Needs implementation of InterfaceDef_var and >> operator
-#if 0
-  CORBA::InterfaceDef_var object_type;
+#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
+  IR::InterfaceDef_var object_type;
 
   CORBA::Boolean constr_policy;
   if (!(
@@ -388,11 +387,11 @@ void POA_CORBA::ConstructionPolicy::make_domain_manager_skel (
   );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
-#else /* 0 */
+#else /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
   ACE_UNUSED_ARG (_tao_in);
   ACE_UNUSED_ARG (_tao_impl);
   ACE_THROW (CORBA::MARSHAL ());
-#endif /* 0 */
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 }
 
 void POA_CORBA::ConstructionPolicy::_is_a_skel (
@@ -518,7 +517,7 @@ POA_CORBA::ConstructionPolicy_ptr POA_CORBA::_tao_collocated_ConstructionPolicy:
 }
 
 void POA_CORBA::_tao_collocated_ConstructionPolicy::make_domain_manager  (
-    CORBA::InterfaceDef_ptr object_type,
+    IR_InterfaceDef *object_type,
     CORBA::Boolean constr_policy,
     CORBA::Environment &ACE_TRY_ENV
   )

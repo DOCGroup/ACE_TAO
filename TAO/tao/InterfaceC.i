@@ -196,116 +196,116 @@ CORBA_IRObject_out::operator-> (void)
 #endif /* end #if !defined */
 
 ACE_INLINE
-CORBA_Contained::CORBA_Contained (void) // default constructor
+IR_Contained::IR_Contained (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_Contained::CORBA_Contained (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+IR_Contained::IR_Contained (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
 ACE_INLINE
-CORBA_Contained::~CORBA_Contained (void) // destructor
+IR_Contained::~IR_Contained (void) // destructor
 {}
 
 
-#if !defined (_CORBA_CONTAINED___VAR_CI_)
-#define _CORBA_CONTAINED___VAR_CI_
+#if !defined (_IR_CONTAINED___VAR_CI_)
+#define _IR_CONTAINED___VAR_CI_
 
 // *************************************************************
-// Inline operations for class CORBA::Contained_var
+// Inline operations for class IR_Contained_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_Contained_var::CORBA_Contained_var (void) // default constructor
-  : ptr_ (CORBA::Contained::_nil ())
+IR_Contained_var::IR_Contained_var (void) // default constructor
+  : ptr_ (IR_Contained::_nil ())
 {}
 
 ACE_INLINE
-CORBA_Contained_var::CORBA_Contained_var (CORBA::Contained_ptr p)
+IR_Contained_var::IR_Contained_var (IR_Contained_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE CORBA_Contained_ptr 
-CORBA_Contained_var::ptr (void) const
+ACE_INLINE ::IR_Contained_ptr
+IR_Contained_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_Contained_var::CORBA_Contained_var (const CORBA::Contained_var &p) // copy constructor
-  : ptr_ (CORBA::Contained::_duplicate (p.ptr ()))
+IR_Contained_var::IR_Contained_var (const ::IR_Contained_var &p) // copy constructor
+  : ptr_ (IR_Contained::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-CORBA_Contained_var::~CORBA_Contained_var (void) // destructor
+IR_Contained_var::~IR_Contained_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_Contained_var &
-CORBA_Contained_var::operator= (CORBA::Contained_ptr p)
+ACE_INLINE IR_Contained_var &
+IR_Contained_var::operator= (IR_Contained_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_Contained_var &
-CORBA_Contained_var::operator= (const CORBA::Contained_var &p)
+ACE_INLINE IR_Contained_var &
+IR_Contained_var::operator= (const ::IR_Contained_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA::Contained::_duplicate (p.ptr ());
+    this->ptr_ = ::IR_Contained::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE 
-CORBA_Contained_var::operator const CORBA::Contained_ptr &() const // cast
+IR_Contained_var::operator const ::IR_Contained_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_Contained_var::operator CORBA_Contained_ptr &() // cast 
+IR_Contained_var::operator ::IR_Contained_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr 
-CORBA_Contained_var::operator-> (void) const
+ACE_INLINE ::IR_Contained_ptr
+IR_Contained_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr
-CORBA_Contained_var::in (void) const
+ACE_INLINE ::IR_Contained_ptr
+IR_Contained_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr &
-CORBA_Contained_var::inout (void)
+ACE_INLINE ::IR_Contained_ptr &
+IR_Contained_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr &
-CORBA_Contained_var::out (void)
+ACE_INLINE ::IR_Contained_ptr &
+IR_Contained_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA::Contained::_nil ();
+  this->ptr_ = ::IR_Contained::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr 
-CORBA_Contained_var::_retn (void)
+ACE_INLINE ::IR_Contained_ptr
+IR_Contained_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  CORBA::Contained_ptr val = this->ptr_;
-  this->ptr_ = CORBA::Contained::_nil ();
+  ::IR_Contained_ptr val = this->ptr_;
+  this->ptr_ = ::IR_Contained::_nil ();
   return val;
 }
 
@@ -313,68 +313,68 @@ CORBA_Contained_var::_retn (void)
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_CONTAINED___OUT_CI_)
-#define _CORBA_CONTAINED___OUT_CI_
+#if !defined (_IR_CONTAINED___OUT_CI_)
+#define _IR_CONTAINED___OUT_CI_
 
 // *************************************************************
-// Inline operations for class CORBA::Contained_out
+// Inline operations for class IR_Contained_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_Contained_out::CORBA_Contained_out (CORBA_Contained_ptr &p)
+IR_Contained_out::IR_Contained_out (IR_Contained_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = CORBA::Contained::_nil ();
+  this->ptr_ = ::IR_Contained::_nil ();
 }
 
 ACE_INLINE
-CORBA_Contained_out::CORBA_Contained_out (CORBA_Contained_var &p) // constructor from _var
+IR_Contained_out::IR_Contained_out (IR_Contained_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA::Contained::_nil ();
+  this->ptr_ = ::IR_Contained::_nil ();
 }
 
 ACE_INLINE
-CORBA_Contained_out::CORBA_Contained_out (const CORBA_Contained_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA::Contained_out&,p).ptr_)
+IR_Contained_out::IR_Contained_out (const ::IR_Contained_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_Contained_out &, p).ptr_)
 {}
 
-ACE_INLINE CORBA_Contained_out &
-CORBA_Contained_out::operator= (const CORBA_Contained_out &p)
+ACE_INLINE ::IR_Contained_out &
+IR_Contained_out::operator= (const ::IR_Contained_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_Contained_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_Contained_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_Contained_out &
-CORBA_Contained_out::operator= (const CORBA_Contained_var &p)
+ACE_INLINE IR_Contained_out &
+IR_Contained_out::operator= (const ::IR_Contained_var &p)
 {
-  this->ptr_ = CORBA_Contained::_duplicate (p.ptr ());
+  this->ptr_ = ::IR_Contained::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_Contained_out &
-CORBA_Contained_out::operator= (CORBA_Contained_ptr p)
+ACE_INLINE IR_Contained_out &
+IR_Contained_out::operator= (IR_Contained_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_Contained_out::operator CORBA_Contained_ptr &() // cast
+IR_Contained_out::operator ::IR_Contained_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr &
-CORBA_Contained_out::ptr (void) // ptr
+ACE_INLINE ::IR_Contained_ptr &
+IR_Contained_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained_ptr 
-CORBA_Contained_out::operator-> (void)
+ACE_INLINE ::IR_Contained_ptr
+IR_Contained_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -383,134 +383,138 @@ CORBA_Contained_out::operator-> (void)
 #endif /* end #if !defined */
 
 // *************************************************************
-// Inline operations for class CORBA::Contained::Description_var
+// Inline operations for class IR_Contained::Description_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_Contained::Description_var::Description_var (void) // default constructor
+IR_Contained::Description_var::Description_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_Contained::Description_var::Description_var (CORBA_Contained::Description *p)
+IR_Contained::Description_var::Description_var (Description *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_Contained::Description_var::Description_var (const CORBA_Contained::Description_var &p) // copy constructor
+IR_Contained::Description_var::Description_var (const ::IR_Contained::Description_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_Contained::Description(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_Contained::Description (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_Contained::Description_var::~Description_var (void) // destructor
+IR_Contained::Description_var::~Description_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained::Description_var &
-CORBA_Contained::Description_var::operator= (CORBA_Contained::Description *p)
+ACE_INLINE IR_Contained::Description_var &
+IR_Contained::Description_var::operator= (Description *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_Contained::Description_var &
-CORBA_Contained::Description_var::operator= (const CORBA_Contained::Description_var &p)
+ACE_INLINE ::IR_Contained::Description_var &
+IR_Contained::Description_var::operator= (const ::IR_Contained::Description_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_Contained::Description (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_Contained::Description (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_Contained::Description *
-CORBA_Contained::Description_var::operator-> (void) const
+ACE_INLINE const ::IR_Contained::Description *
+IR_Contained::Description_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained::Description *
-CORBA_Contained::Description_var::operator-> (void)
+ACE_INLINE ::IR_Contained::Description *
+IR_Contained::Description_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_Contained::Description_var::operator const CORBA_Contained::Description &() const // cast
+ACE_INLINE
+IR_Contained::Description_var::operator const ::IR_Contained::Description &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_Contained::Description_var::operator CORBA_Contained::Description &() // cast 
+ACE_INLINE
+IR_Contained::Description_var::operator ::IR_Contained::Description &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_Contained::Description_var::operator CORBA_Contained::Description &() const// cast 
+ACE_INLINE
+IR_Contained::Description_var::operator ::IR_Contained::Description &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const CORBA_Contained::Description &
-CORBA_Contained::Description_var::in (void) const
+// variable-size types only
+ACE_INLINE
+IR_Contained::Description_var::operator ::IR_Contained::Description *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_Contained::Description &
+IR_Contained::Description_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained::Description &
-CORBA_Contained::Description_var::inout (void)
+ACE_INLINE ::IR_Contained::Description &
+IR_Contained::Description_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_Contained::Description *&
-CORBA_Contained::Description_var::out (void)
+ACE_INLINE ::IR_Contained::Description *&
+IR_Contained::Description_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained::Description *
-CORBA_Contained::Description_var::_retn (void)
+ACE_INLINE ::IR_Contained::Description *
+IR_Contained::Description_var::_retn (void)
 {
-  CORBA_Contained::Description *tmp = this->ptr_;
+  ::IR_Contained::Description *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_Contained::Description *
-CORBA_Contained::Description_var::ptr (void) const
+ACE_INLINE ::IR_Contained::Description *
+IR_Contained::Description_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA::Contained::Description_out
+// Inline operations for class IR_Contained::Description_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_Contained::Description_out::Description_out (CORBA_Contained::Description *&p)
+IR_Contained::Description_out::Description_out (::IR_Contained::Description *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_Contained::Description_out::Description_out (CORBA_Contained::Description_var &p) // constructor from _var
+IR_Contained::Description_out::Description_out (Description_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -518,38 +522,38 @@ CORBA_Contained::Description_out::Description_out (CORBA_Contained::Description_
 }
 
 ACE_INLINE
-CORBA_Contained::Description_out::Description_out (const CORBA_Contained::Description_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Contained::Description_out&,p).ptr_)
+IR_Contained::Description_out::Description_out (const ::IR_Contained::Description_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Description_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_Contained::Description_out &
-CORBA_Contained::Description_out::operator= (const CORBA_Contained::Description_out &p)
+ACE_INLINE IR_Contained::Description_out &
+IR_Contained::Description_out::operator= (const ::IR_Contained::Description_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_Contained::Description_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (Description_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_Contained::Description_out &
-CORBA_Contained::Description_out::operator= (CORBA_Contained::Description *p)
+ACE_INLINE IR_Contained::Description_out &
+IR_Contained::Description_out::operator= (Description *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_Contained::Description_out::operator CORBA_Contained::Description *&() // cast
+IR_Contained::Description_out::operator ::IR_Contained::Description *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained::Description *&
-CORBA_Contained::Description_out::ptr (void) // ptr
+ACE_INLINE ::IR_Contained::Description *&
+IR_Contained::Description_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Contained::Description *
-CORBA_Contained::Description_out::operator-> (void)
+ACE_INLINE ::IR_Contained::Description *
+IR_Contained::Description_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -557,26 +561,24 @@ CORBA_Contained::Description_out::operator-> (void)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_INTERFACEDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_INTERFACEDEFSEQ_CI_
 
-  ACE_INLINE CORBA_InterfaceDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+  ACE_INLINE IR_InterfaceDef **
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
   {
-    CORBA::InterfaceDef **buf = 0;
+    IR_InterfaceDef **buf = 0;
     
-    ACE_NEW_RETURN (buf, 
-                    CORBA::InterfaceDef*[nelems], 
-		    0);
+    ACE_NEW_RETURN (buf, IR_InterfaceDef*[nelems], 0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
-      buf[i] = CORBA::InterfaceDef::_nil ();
+      buf[i] = IR_InterfaceDef::_nil ();
     
     return buf;
   }
   
   ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (CORBA::InterfaceDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::freebuf (IR_InterfaceDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -584,97 +586,104 @@ CORBA_Contained::Description_out::operator-> (void)
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (void)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (maximum))
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA::InterfaceDef* *value,
+    IR_InterfaceDef* *value,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA::InterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (this->maximum_);
-    CORBA::InterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA::InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::InterfaceDef::_duplicate (tmp2[i]);
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_InterfaceDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (this->maximum_);
+      IR_InterfaceDef ** const tmp2 = ACE_reinterpret_cast (IR_InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_InterfaceDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
     
     if (this->release_)
     {
-      CORBA::InterfaceDef **tmp = ACE_reinterpret_cast (CORBA::InterfaceDef **, this->buffer_);
+      IR_InterfaceDef **tmp = ACE_reinterpret_cast (IR_InterfaceDef **, this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
-        tmp[i] = CORBA::InterfaceDef::_nil ();
+        tmp[i] = IR_InterfaceDef::_nil ();
       }
       if (this->maximum_ < rhs.maximum_)
       {
-        _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (rhs.maximum_);
+        _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA::InterfaceDef **tmp1 = ACE_reinterpret_cast (CORBA::InterfaceDef **, this->buffer_);
-    CORBA::InterfaceDef ** const tmp2 = ACE_reinterpret_cast (CORBA::InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
+    IR_InterfaceDef **tmp1 = ACE_reinterpret_cast (IR_InterfaceDef **, this->buffer_);
+    IR_InterfaceDef ** const tmp2 = ACE_reinterpret_cast (IR_InterfaceDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::InterfaceDef::_duplicate (tmp2[i]);
+      tmp1[i] = IR_InterfaceDef::_duplicate (tmp2[i]);
     
     return *this;
   }
   
-  ACE_INLINE TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::operator[] (CORBA::ULong index) const
+  ACE_INLINE TAO_Object_Manager<IR_InterfaceDef,IR_InterfaceDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
-    CORBA::InterfaceDef ** const tmp = ACE_reinterpret_cast (CORBA::InterfaceDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var> (tmp + index, this->release_);
+    IR_InterfaceDef ** const tmp = ACE_reinterpret_cast (IR_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_InterfaceDef,IR_InterfaceDef_var> (tmp + index, this->release_);
   }
   
-  ACE_INLINE CORBA::InterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_InterfaceDef* *
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA::InterfaceDef **result = 0;
+    IR_InterfaceDef **result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::allocbuf (this->maximum_);
+        result = _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA::InterfaceDef**, this->buffer_);
+        result = ACE_reinterpret_cast (IR_InterfaceDef**, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -683,7 +692,7 @@ CORBA_Contained::Description_out::operator-> (void)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA::InterfaceDef**,this->buffer_);
+        result = ACE_reinterpret_cast(IR_InterfaceDef**,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -693,10 +702,10 @@ CORBA_Contained::Description_out::operator-> (void)
     return result;
   }
   
-  ACE_INLINE const CORBA::InterfaceDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq::get_buffer (void) const
+  ACE_INLINE const IR_InterfaceDef* *
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA::InterfaceDef ** ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
   }
   
   
@@ -705,144 +714,148 @@ CORBA_Contained::Description_out::operator-> (void)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_INTERFACEDEFSEQ_CI_)
-#define _CORBA_INTERFACEDEFSEQ_CI_
+#if !defined (_IR_INTERFACEDEFSEQ_CI_)
+#define _IR_INTERFACEDEFSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA::InterfaceDefSeq_var
+// Inline operations for class IR_InterfaceDefSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_var::CORBA_InterfaceDefSeq_var (void) // default constructor
+IR_InterfaceDefSeq_var::IR_InterfaceDefSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_var::CORBA_InterfaceDefSeq_var (CORBA::InterfaceDefSeq *p)
+IR_InterfaceDefSeq_var::IR_InterfaceDefSeq_var (IR_InterfaceDefSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_var::CORBA_InterfaceDefSeq_var (const CORBA_InterfaceDefSeq_var &p) // copy constructor
+IR_InterfaceDefSeq_var::IR_InterfaceDefSeq_var (const ::IR_InterfaceDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA::InterfaceDefSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_InterfaceDefSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_var::~CORBA_InterfaceDefSeq_var (void) // destructor
+IR_InterfaceDefSeq_var::~IR_InterfaceDefSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq_var &
-CORBA_InterfaceDefSeq_var::operator= (CORBA::InterfaceDefSeq *p)
+ACE_INLINE IR_InterfaceDefSeq_var &
+IR_InterfaceDefSeq_var::operator= (IR_InterfaceDefSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq_var &
-CORBA_InterfaceDefSeq_var::operator= (const CORBA::InterfaceDefSeq_var &p) // deep copy
+ACE_INLINE IR_InterfaceDefSeq_var &
+IR_InterfaceDefSeq_var::operator= (const ::IR_InterfaceDefSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA::InterfaceDefSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_InterfaceDefSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_InterfaceDefSeq *
-CORBA_InterfaceDefSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_InterfaceDefSeq *
+IR_InterfaceDefSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq *
-CORBA_InterfaceDefSeq_var::operator-> (void)
+ACE_INLINE ::IR_InterfaceDefSeq *
+IR_InterfaceDefSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDefSeq_var::operator const CORBA::InterfaceDefSeq &() const // cast
+IR_InterfaceDefSeq_var::operator const ::IR_InterfaceDefSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDefSeq_var::operator CORBA_InterfaceDefSeq &() // cast 
+IR_InterfaceDefSeq_var::operator ::IR_InterfaceDefSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDefSeq_var::operator CORBA::InterfaceDefSeq &() const// cast 
+IR_InterfaceDefSeq_var::operator ::IR_InterfaceDefSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var> 
-CORBA_InterfaceDefSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_InterfaceDefSeq_var::operator ::IR_InterfaceDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_InterfaceDef, IR_InterfaceDef_var> 
+IR_InterfaceDefSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_InterfaceDefSeq &
-CORBA_InterfaceDefSeq_var::in (void) const
+ACE_INLINE const ::IR_InterfaceDefSeq &
+IR_InterfaceDefSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq &
-CORBA_InterfaceDefSeq_var::inout (void)
+ACE_INLINE ::IR_InterfaceDefSeq &
+IR_InterfaceDefSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_InterfaceDefSeq *&
-CORBA_InterfaceDefSeq_var::out (void)
+ACE_INLINE ::IR_InterfaceDefSeq *&
+IR_InterfaceDefSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq *
-CORBA_InterfaceDefSeq_var::_retn (void)
+ACE_INLINE ::IR_InterfaceDefSeq *
+IR_InterfaceDefSeq_var::_retn (void)
 {
-  CORBA::InterfaceDefSeq *tmp = this->ptr_;
+  ::IR_InterfaceDefSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq *
-CORBA_InterfaceDefSeq_var::ptr (void) const
+ACE_INLINE ::IR_InterfaceDefSeq *
+IR_InterfaceDefSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA::InterfaceDefSeq_out
+// Inline operations for class IR_InterfaceDefSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_out::CORBA_InterfaceDefSeq_out (CORBA::InterfaceDefSeq *&p)
+IR_InterfaceDefSeq_out::IR_InterfaceDefSeq_out (IR_InterfaceDefSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_out::CORBA_InterfaceDefSeq_out (CORBA::InterfaceDefSeq_var &p) // constructor from _var
+IR_InterfaceDefSeq_out::IR_InterfaceDefSeq_out (IR_InterfaceDefSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -850,44 +863,44 @@ CORBA_InterfaceDefSeq_out::CORBA_InterfaceDefSeq_out (CORBA::InterfaceDefSeq_var
 }
 
 ACE_INLINE
-CORBA_InterfaceDefSeq_out::CORBA_InterfaceDefSeq_out (const CORBA_InterfaceDefSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA::InterfaceDefSeq_out&,p).ptr_)
+IR_InterfaceDefSeq_out::IR_InterfaceDefSeq_out (const ::IR_InterfaceDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_InterfaceDefSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_InterfaceDefSeq_out &
-CORBA_InterfaceDefSeq_out::operator= (const CORBA_InterfaceDefSeq_out &p)
+ACE_INLINE ::IR_InterfaceDefSeq_out &
+IR_InterfaceDefSeq_out::operator= (const ::IR_InterfaceDefSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA::InterfaceDefSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_InterfaceDefSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq_out &
-CORBA_InterfaceDefSeq_out::operator= (CORBA_InterfaceDefSeq *p)
+ACE_INLINE ::IR_InterfaceDefSeq_out &
+IR_InterfaceDefSeq_out::operator= (IR_InterfaceDefSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDefSeq_out::operator CORBA_InterfaceDefSeq *&() // cast
+IR_InterfaceDefSeq_out::operator ::IR_InterfaceDefSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq *&
-CORBA_InterfaceDefSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_InterfaceDefSeq *&
+IR_InterfaceDefSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDefSeq *
-CORBA_InterfaceDefSeq_out::operator-> (void)
+ACE_INLINE ::IR_InterfaceDefSeq *
+IR_InterfaceDefSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var> 
-CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE TAO_Object_Manager<IR_InterfaceDef, IR_InterfaceDef_var> 
+IR_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -898,26 +911,24 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_VALUEDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_VALUEDEFSEQ_CI_
 
-  ACE_INLINE CORBA::ValueDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (CORBA::ULong nelems)
+  ACE_INLINE IR_ValueDef **
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (CORBA::ULong nelems)
   {
-    CORBA::ValueDef **buf = 0;
+    IR_ValueDef **buf = 0;
     
-    ACE_NEW_RETURN (buf, 
-                    CORBA::ValueDef*[nelems], 
-		    0);
+    ACE_NEW_RETURN (buf, IR_ValueDef*[nelems], 0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
-      buf[i] = CORBA::ValueDef::_nil ();
+      buf[i] = IR_ValueDef::_nil ();
     
     return buf;
   }
   
   ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (CORBA::ValueDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::freebuf (IR_ValueDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -925,97 +936,104 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (void)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (maximum))
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA::ValueDef* *value,
+    IR_ValueDef* *value,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA::ValueDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (this->maximum_);
-    CORBA::ValueDef ** const tmp2 = ACE_reinterpret_cast (CORBA::ValueDef ** ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::ValueDef::_duplicate (tmp2[i]);
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_ValueDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (this->maximum_);
+      IR_ValueDef ** const tmp2 = ACE_reinterpret_cast (IR_ValueDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_ValueDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
     
     if (this->release_)
     {
-      CORBA::ValueDef **tmp = ACE_reinterpret_cast (CORBA::ValueDef **, this->buffer_);
+      IR_ValueDef **tmp = ACE_reinterpret_cast (IR_ValueDef **, this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
-        tmp[i] = CORBA::ValueDef::_nil ();
+        tmp[i] = IR_ValueDef::_nil ();
       }
       if (this->maximum_ < rhs.maximum_)
       {
-        _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (rhs.maximum_);
+        _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA::ValueDef **tmp1 = ACE_reinterpret_cast (CORBA::ValueDef **, this->buffer_);
-    CORBA::ValueDef ** const tmp2 = ACE_reinterpret_cast (CORBA::ValueDef ** ACE_CAST_CONST, rhs.buffer_);
+    IR_ValueDef **tmp1 = ACE_reinterpret_cast (IR_ValueDef **, this->buffer_);
+    IR_ValueDef ** const tmp2 = ACE_reinterpret_cast (IR_ValueDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::ValueDef::_duplicate (tmp2[i]);
+      tmp1[i] = IR_ValueDef::_duplicate (tmp2[i]);
     
     return *this;
   }
   
-  ACE_INLINE TAO_Object_Manager<CORBA::ValueDef,CORBA::ValueDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::operator[] (CORBA::ULong index) const
+  ACE_INLINE TAO_Object_Manager<IR_ValueDef,IR_ValueDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
-    CORBA::ValueDef ** const tmp = ACE_reinterpret_cast (CORBA::ValueDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA::ValueDef,CORBA::ValueDef_var> (tmp + index, this->release_);
+    IR_ValueDef ** const tmp = ACE_reinterpret_cast (IR_ValueDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_ValueDef,IR_ValueDef_var> (tmp + index, this->release_);
   }
   
-  ACE_INLINE CORBA::ValueDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_ValueDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA::ValueDef **result = 0;
+    IR_ValueDef **result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::allocbuf (this->maximum_);
+        result = _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA::ValueDef**, this->buffer_);
+        result = ACE_reinterpret_cast (IR_ValueDef**, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -1024,7 +1042,7 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA::ValueDef**,this->buffer_);
+        result = ACE_reinterpret_cast(IR_ValueDef**,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -1034,10 +1052,10 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
     return result;
   }
   
-  ACE_INLINE const CORBA::ValueDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq::get_buffer (void) const
+  ACE_INLINE const IR_ValueDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA::ValueDef ** ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_ValueDef ** ACE_CAST_CONST, this->buffer_);
   }
   
   
@@ -1046,144 +1064,148 @@ CORBA_InterfaceDefSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_VALUEDEFSEQ_CI_)
-#define _CORBA_VALUEDEFSEQ_CI_
+#if !defined (_IR_VALUEDEFSEQ_CI_)
+#define _IR_VALUEDEFSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA::ValueDefSeq_var
+// Inline operations for class IR_ValueDefSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueDefSeq_var::CORBA_ValueDefSeq_var (void) // default constructor
+IR_ValueDefSeq_var::IR_ValueDefSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ValueDefSeq_var::CORBA_ValueDefSeq_var (CORBA::ValueDefSeq *p)
+IR_ValueDefSeq_var::IR_ValueDefSeq_var (IR_ValueDefSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ValueDefSeq_var::CORBA_ValueDefSeq_var (const CORBA::ValueDefSeq_var &p) // copy constructor
+IR_ValueDefSeq_var::IR_ValueDefSeq_var (const ::IR_ValueDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA::ValueDefSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_ValueDefSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueDefSeq_var::~CORBA_ValueDefSeq_var (void) // destructor
+IR_ValueDefSeq_var::~IR_ValueDefSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDefSeq_var &
-CORBA_ValueDefSeq_var::operator= (CORBA::ValueDefSeq *p)
+ACE_INLINE IR_ValueDefSeq_var &
+IR_ValueDefSeq_var::operator= (IR_ValueDefSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueDefSeq_var &
-CORBA_ValueDefSeq_var::operator= (const CORBA::ValueDefSeq_var &p) // deep copy
+ACE_INLINE IR_ValueDefSeq_var &
+IR_ValueDefSeq_var::operator= (const ::IR_ValueDefSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA::ValueDefSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueDefSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ValueDefSeq *
-CORBA_ValueDefSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_ValueDefSeq *
+IR_ValueDefSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDefSeq *
-CORBA_ValueDefSeq_var::operator-> (void)
+ACE_INLINE ::IR_ValueDefSeq *
+IR_ValueDefSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueDefSeq_var::operator const CORBA::ValueDefSeq &() const // cast
+IR_ValueDefSeq_var::operator const ::IR_ValueDefSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueDefSeq_var::operator CORBA::ValueDefSeq &() // cast 
+IR_ValueDefSeq_var::operator ::IR_ValueDefSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueDefSeq_var::operator CORBA::ValueDefSeq &() const// cast 
+IR_ValueDefSeq_var::operator ::IR_ValueDefSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA::ValueDef,CORBA::ValueDef_var> 
-CORBA_ValueDefSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_ValueDefSeq_var::operator ::IR_ValueDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ValueDef, IR_ValueDef_var> 
+IR_ValueDefSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_ValueDefSeq &
-CORBA_ValueDefSeq_var::in (void) const
+ACE_INLINE const ::IR_ValueDefSeq &
+IR_ValueDefSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDefSeq &
-CORBA_ValueDefSeq_var::inout (void)
+ACE_INLINE ::IR_ValueDefSeq &
+IR_ValueDefSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_ValueDefSeq *&
-CORBA_ValueDefSeq_var::out (void)
+ACE_INLINE ::IR_ValueDefSeq *&
+IR_ValueDefSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDefSeq *
-CORBA_ValueDefSeq_var::_retn (void)
+ACE_INLINE ::IR_ValueDefSeq *
+IR_ValueDefSeq_var::_retn (void)
 {
-  CORBA::ValueDefSeq *tmp = this->ptr_;
+  ::IR_ValueDefSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_ValueDefSeq *
-CORBA_ValueDefSeq_var::ptr (void) const
+ACE_INLINE ::IR_ValueDefSeq *
+IR_ValueDefSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA::ValueDefSeq_out
+// Inline operations for class IR_ValueDefSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueDefSeq_out::CORBA_ValueDefSeq_out (CORBA::ValueDefSeq *&p)
+IR_ValueDefSeq_out::IR_ValueDefSeq_out (IR_ValueDefSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueDefSeq_out::CORBA_ValueDefSeq_out (CORBA::ValueDefSeq_var &p) // constructor from _var
+IR_ValueDefSeq_out::IR_ValueDefSeq_out (IR_ValueDefSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -1191,44 +1213,44 @@ CORBA_ValueDefSeq_out::CORBA_ValueDefSeq_out (CORBA::ValueDefSeq_var &p) // cons
 }
 
 ACE_INLINE
-CORBA_ValueDefSeq_out::CORBA_ValueDefSeq_out (const CORBA::ValueDefSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueDefSeq_out&,p).ptr_)
+IR_ValueDefSeq_out::IR_ValueDefSeq_out (const ::IR_ValueDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueDefSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ValueDefSeq_out &
-CORBA_ValueDefSeq_out::operator= (const CORBA_ValueDefSeq_out &p)
+ACE_INLINE ::IR_ValueDefSeq_out &
+IR_ValueDefSeq_out::operator= (const ::IR_ValueDefSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ValueDefSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_ValueDefSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueDefSeq_out &
-CORBA_ValueDefSeq_out::operator= (CORBA_ValueDefSeq *p)
+ACE_INLINE ::IR_ValueDefSeq_out &
+IR_ValueDefSeq_out::operator= (IR_ValueDefSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueDefSeq_out::operator CORBA_ValueDefSeq *&() // cast
+IR_ValueDefSeq_out::operator ::IR_ValueDefSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDefSeq *&
-CORBA_ValueDefSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_ValueDefSeq *&
+IR_ValueDefSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDefSeq *
-CORBA_ValueDefSeq_out::operator-> (void)
+ACE_INLINE ::IR_ValueDefSeq *
+IR_ValueDefSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_ValueDef,CORBA_ValueDef_var> 
-CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE TAO_Object_Manager<IR_ValueDef, IR_ValueDef_var> 
+IR_ValueDefSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -1239,26 +1261,24 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_COMPONENTDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_COMPONENTDEFSEQ_CI_
 
-  ACE_INLINE CORBA_Contained **
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (CORBA::ULong nelems)
+  ACE_INLINE IR_ComponentDef **
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (CORBA::ULong nelems)
   {
-    CORBA::Contained **buf = 0;
+    IR_ComponentDef **buf = 0;
     
-    ACE_NEW_RETURN (buf, 
-                    CORBA::Contained*[nelems], 
-		    0);
+    ACE_NEW_RETURN (buf, IR_ComponentDef*[nelems], 0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
-      buf[i] = CORBA::Contained::_nil ();
+      buf[i] = IR_ComponentDef::_nil ();
     
     return buf;
   }
   
   ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (CORBA::Contained **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (IR_ComponentDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -1266,97 +1286,104 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (maximum))
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA::Contained* *value,
+    IR_ComponentDef* *value,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::_TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA::Contained **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (this->maximum_);
-    CORBA::Contained ** const tmp2 = ACE_reinterpret_cast (CORBA::Contained ** ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::Contained::_duplicate (tmp2[i]);
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_ComponentDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (this->maximum_);
+      IR_ComponentDef ** const tmp2 = ACE_reinterpret_cast (IR_ComponentDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_ComponentDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
     
     if (this->release_)
     {
-      CORBA::Contained **tmp = ACE_reinterpret_cast (CORBA::Contained **, this->buffer_);
+      IR_ComponentDef **tmp = ACE_reinterpret_cast (IR_ComponentDef **, this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
-        tmp[i] = CORBA::Contained::_nil ();
+        tmp[i] = IR_ComponentDef::_nil ();
       }
       if (this->maximum_ < rhs.maximum_)
       {
-        _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (rhs.maximum_);
+        _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA::Contained **tmp1 = ACE_reinterpret_cast (CORBA::Contained **, this->buffer_);
-    CORBA::Contained ** const tmp2 = ACE_reinterpret_cast (CORBA::Contained ** ACE_CAST_CONST, rhs.buffer_);
+    IR_ComponentDef **tmp1 = ACE_reinterpret_cast (IR_ComponentDef **, this->buffer_);
+    IR_ComponentDef ** const tmp2 = ACE_reinterpret_cast (IR_ComponentDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA::Contained::_duplicate (tmp2[i]);
+      tmp1[i] = IR_ComponentDef::_duplicate (tmp2[i]);
     
     return *this;
   }
   
-  ACE_INLINE TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::operator[] (CORBA::ULong index) const
+  ACE_INLINE TAO_Object_Manager<IR_ComponentDef,IR_ComponentDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
-    CORBA::Contained ** const tmp = ACE_reinterpret_cast (CORBA::Contained ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var> (tmp + index, this->release_);
+    IR_ComponentDef ** const tmp = ACE_reinterpret_cast (IR_ComponentDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_ComponentDef,IR_ComponentDef_var> (tmp + index, this->release_);
   }
   
-  ACE_INLINE CORBA::Contained* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_ComponentDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA::Contained **result = 0;
+    IR_ComponentDef **result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::allocbuf (this->maximum_);
+        result = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA::Contained**, this->buffer_);
+        result = ACE_reinterpret_cast (IR_ComponentDef**, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -1365,7 +1392,7 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA::Contained**,this->buffer_);
+        result = ACE_reinterpret_cast(IR_ComponentDef**,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -1375,10 +1402,10 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
     return result;
   }
   
-  ACE_INLINE const CORBA::Contained* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq::get_buffer (void) const
+  ACE_INLINE const IR_ComponentDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA::Contained ** ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_ComponentDef ** ACE_CAST_CONST, this->buffer_);
   }
   
   
@@ -1387,677 +1414,148 @@ CORBA_ValueDefSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_CONTAINEDSEQ_CI_)
-#define _CORBA_CONTAINEDSEQ_CI_
+#if !defined (_IR_COMPONENTDEFSEQ_CI_)
+#define _IR_COMPONENTDEFSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA::ContainedSeq_var
+// Inline operations for class IR_ComponentDefSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ContainedSeq_var::CORBA_ContainedSeq_var (void) // default constructor
+IR_ComponentDefSeq_var::IR_ComponentDefSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ContainedSeq_var::CORBA_ContainedSeq_var (CORBA::ContainedSeq *p)
+IR_ComponentDefSeq_var::IR_ComponentDefSeq_var (IR_ComponentDefSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ContainedSeq_var::CORBA_ContainedSeq_var (const CORBA_ContainedSeq_var &p) // copy constructor
+IR_ComponentDefSeq_var::IR_ComponentDefSeq_var (const ::IR_ComponentDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ContainedSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_ComponentDefSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ContainedSeq_var::~CORBA_ContainedSeq_var (void) // destructor
+IR_ComponentDefSeq_var::~IR_ComponentDefSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ContainedSeq_var &
-CORBA_ContainedSeq_var::operator= (CORBA_ContainedSeq *p)
+ACE_INLINE IR_ComponentDefSeq_var &
+IR_ComponentDefSeq_var::operator= (IR_ComponentDefSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ContainedSeq_var &
-CORBA_ContainedSeq_var::operator= (const CORBA_ContainedSeq_var &p) // deep copy
+ACE_INLINE IR_ComponentDefSeq_var &
+IR_ComponentDefSeq_var::operator= (const ::IR_ComponentDefSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ContainedSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_ComponentDefSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ContainedSeq *
-CORBA_ContainedSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_ComponentDefSeq *
+IR_ComponentDefSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ContainedSeq *
-CORBA_ContainedSeq_var::operator-> (void)
+ACE_INLINE ::IR_ComponentDefSeq *
+IR_ComponentDefSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ContainedSeq_var::operator const CORBA_ContainedSeq &() const // cast
+IR_ComponentDefSeq_var::operator const ::IR_ComponentDefSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ContainedSeq_var::operator CORBA_ContainedSeq &() // cast 
+IR_ComponentDefSeq_var::operator ::IR_ComponentDefSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ContainedSeq_var::operator CORBA_ContainedSeq &() const// cast 
+IR_ComponentDefSeq_var::operator ::IR_ComponentDefSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var> 
-CORBA_ContainedSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_ComponentDefSeq_var::operator ::IR_ComponentDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ComponentDef, IR_ComponentDef_var> 
+IR_ComponentDefSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_ContainedSeq &
-CORBA_ContainedSeq_var::in (void) const
+ACE_INLINE const ::IR_ComponentDefSeq &
+IR_ComponentDefSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ContainedSeq &
-CORBA_ContainedSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ContainedSeq *&
-CORBA_ContainedSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContainedSeq *
-CORBA_ContainedSeq_var::_retn (void)
-{
-  CORBA_ContainedSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ContainedSeq *
-CORBA_ContainedSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA::ContainedSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ContainedSeq_out::CORBA_ContainedSeq_out (CORBA_ContainedSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ContainedSeq_out::CORBA_ContainedSeq_out (CORBA_ContainedSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ContainedSeq_out::CORBA_ContainedSeq_out (const CORBA_ContainedSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA::ContainedSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ContainedSeq_out &
-CORBA_ContainedSeq_out::operator= (const CORBA_ContainedSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ContainedSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ContainedSeq_out &
-CORBA_ContainedSeq_out::operator= (CORBA_ContainedSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ContainedSeq_out::operator CORBA_ContainedSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContainedSeq *&
-CORBA_ContainedSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContainedSeq *
-CORBA_ContainedSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var> 
-CORBA_ContainedSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA::StructMember_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_StructMember_var::CORBA_StructMember_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_StructMember_var::CORBA_StructMember_var (CORBA_StructMember *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_StructMember_var::CORBA_StructMember_var (const CORBA_StructMember_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA::StructMember(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_StructMember_var::~CORBA_StructMember_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMember_var &
-CORBA_StructMember_var::operator= (CORBA::StructMember *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_StructMember_var &
-CORBA_StructMember_var::operator= (const CORBA_StructMember_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA::StructMember (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_StructMember *
-CORBA_StructMember_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMember *
-CORBA_StructMember_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructMember_var::operator const CORBA::StructMember &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructMember_var::operator CORBA_StructMember &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructMember_var::operator CORBA_StructMember &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_StructMember &
-CORBA_StructMember_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMember &
-CORBA_StructMember_var::inout (void)
+ACE_INLINE ::IR_ComponentDefSeq &
+IR_ComponentDefSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_StructMember *&
-CORBA_StructMember_var::out (void)
+ACE_INLINE ::IR_ComponentDefSeq *&
+IR_ComponentDefSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_StructMember *
-CORBA_StructMember_var::_retn (void)
+ACE_INLINE ::IR_ComponentDefSeq *
+IR_ComponentDefSeq_var::_retn (void)
 {
-  CORBA_StructMember *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_StructMember *
-CORBA_StructMember_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_StructMember_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_StructMember_out::CORBA_StructMember_out (CORBA_StructMember *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_StructMember_out::CORBA_StructMember_out (CORBA_StructMember_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_StructMember_out::CORBA_StructMember_out (const CORBA_StructMember_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_StructMember_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_StructMember_out &
-CORBA_StructMember_out::operator= (const CORBA_StructMember_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_StructMember_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_StructMember_out &
-CORBA_StructMember_out::operator= (CORBA_StructMember *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_StructMember_out::operator CORBA_StructMember *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMember *&
-CORBA_StructMember_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMember *
-CORBA_StructMember_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_STRUCTMEMBERSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_STRUCTMEMBERSEQ_CI_
-
-  // = Static operations.
-  ACE_INLINE CORBA_StructMember *
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    CORBA_StructMember *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_StructMember[size],
-		    0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (CORBA_StructMember *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_StructMember *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::_TAO_Unbounded_Sequence_CORBA_StructMemberSeq (const _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    CORBA_StructMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (this->maximum_);
-    CORBA_StructMember * const tmp2 = ACE_reinterpret_cast (CORBA_StructMember * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_StructMemberSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_StructMember *tmp = ACE_reinterpret_cast (CORBA_StructMember *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_StructMember *tmp1 = ACE_reinterpret_cast (CORBA_StructMember *, this->buffer_);
-    CORBA_StructMember * const tmp2 = ACE_reinterpret_cast (CORBA_StructMember * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
-  
-  // = Accessors.
-  ACE_INLINE CORBA_StructMember &
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_StructMember* tmp = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_StructMember &
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_StructMember * const tmp = ACE_reinterpret_cast (CORBA_StructMember* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_StructMember *
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_StructMember *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_StructMember*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_StructMember *
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_StructMember * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_StructMember *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_StructMember *tmp = ACE_reinterpret_cast(CORBA_StructMember*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_StructMemberSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
-  
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_STRUCTMEMBERSEQ_CI_)
-#define _CORBA_STRUCTMEMBERSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_StructMemberSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_StructMemberSeq_var::CORBA_StructMemberSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_StructMemberSeq_var::CORBA_StructMemberSeq_var (CORBA_StructMemberSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_StructMemberSeq_var::CORBA_StructMemberSeq_var (const CORBA_StructMemberSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_StructMemberSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_StructMemberSeq_var::~CORBA_StructMemberSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMemberSeq_var &
-CORBA_StructMemberSeq_var::operator= (CORBA_StructMemberSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_StructMemberSeq_var &
-CORBA_StructMemberSeq_var::operator= (const CORBA_StructMemberSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_StructMemberSeq (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_StructMemberSeq *
-CORBA_StructMemberSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMemberSeq *
-CORBA_StructMemberSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructMemberSeq_var::operator const CORBA_StructMemberSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructMemberSeq_var::operator CORBA_StructMemberSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructMemberSeq_var::operator CORBA_StructMemberSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMember &
-CORBA_StructMemberSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_StructMemberSeq &
-CORBA_StructMemberSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMemberSeq &
-CORBA_StructMemberSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_StructMemberSeq *&
-CORBA_StructMemberSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructMemberSeq *
-CORBA_StructMemberSeq_var::_retn (void)
-{
-  CORBA_StructMemberSeq *tmp = this->ptr_;
+  ::IR_ComponentDefSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_StructMemberSeq *
-CORBA_StructMemberSeq_var::ptr (void) const
+ACE_INLINE ::IR_ComponentDefSeq *
+IR_ComponentDefSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_StructMemberSeq_out
+// Inline operations for class IR_ComponentDefSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_StructMemberSeq_out::CORBA_StructMemberSeq_out (CORBA_StructMemberSeq *&p)
+IR_ComponentDefSeq_out::IR_ComponentDefSeq_out (IR_ComponentDefSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_StructMemberSeq_out::CORBA_StructMemberSeq_out (CORBA_StructMemberSeq_var &p) // constructor from _var
+IR_ComponentDefSeq_out::IR_ComponentDefSeq_out (IR_ComponentDefSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -2065,6784 +1563,44 @@ CORBA_StructMemberSeq_out::CORBA_StructMemberSeq_out (CORBA_StructMemberSeq_var 
 }
 
 ACE_INLINE
-CORBA_StructMemberSeq_out::CORBA_StructMemberSeq_out (const CORBA_StructMemberSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_StructMemberSeq_out&,p).ptr_)
+IR_ComponentDefSeq_out::IR_ComponentDefSeq_out (const ::IR_ComponentDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ComponentDefSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_StructMemberSeq_out &
-CORBA_StructMemberSeq_out::operator= (const CORBA_StructMemberSeq_out &p)
+ACE_INLINE ::IR_ComponentDefSeq_out &
+IR_ComponentDefSeq_out::operator= (const ::IR_ComponentDefSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_StructMemberSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_ComponentDefSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_StructMemberSeq_out &
-CORBA_StructMemberSeq_out::operator= (CORBA_StructMemberSeq *p)
+ACE_INLINE ::IR_ComponentDefSeq_out &
+IR_ComponentDefSeq_out::operator= (IR_ComponentDefSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_StructMemberSeq_out::operator CORBA_StructMemberSeq *&() // cast
+IR_ComponentDefSeq_out::operator ::IR_ComponentDefSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_StructMemberSeq *&
-CORBA_StructMemberSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_ComponentDefSeq *&
+IR_ComponentDefSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_StructMemberSeq *
-CORBA_StructMemberSeq_out::operator-> (void)
+ACE_INLINE ::IR_ComponentDefSeq *
+IR_ComponentDefSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_StructMember &
-CORBA_StructMemberSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_Initializer_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_Initializer_var::CORBA_Initializer_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_Initializer_var::CORBA_Initializer_var (CORBA_Initializer *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_Initializer_var::CORBA_Initializer_var (const CORBA_Initializer_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_Initializer(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Initializer_var::~CORBA_Initializer_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer_var &
-CORBA_Initializer_var::operator= (CORBA_Initializer *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_Initializer_var &
-CORBA_Initializer_var::operator= (const CORBA_Initializer_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_Initializer (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_Initializer *
-CORBA_Initializer_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer *
-CORBA_Initializer_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Initializer_var::operator const CORBA_Initializer &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Initializer_var::operator CORBA_Initializer &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Initializer_var::operator CORBA_Initializer &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_Initializer &
-CORBA_Initializer_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer &
-CORBA_Initializer_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_Initializer *&
-CORBA_Initializer_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer *
-CORBA_Initializer_var::_retn (void)
-{
-  CORBA_Initializer *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_Initializer *
-CORBA_Initializer_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_Initializer_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_Initializer_out::CORBA_Initializer_out (CORBA_Initializer *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Initializer_out::CORBA_Initializer_out (CORBA_Initializer_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Initializer_out::CORBA_Initializer_out (const CORBA_Initializer_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Initializer_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_Initializer_out &
-CORBA_Initializer_out::operator= (const CORBA_Initializer_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_Initializer_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_Initializer_out &
-CORBA_Initializer_out::operator= (CORBA_Initializer *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Initializer_out::operator CORBA_Initializer *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer *&
-CORBA_Initializer_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer *
-CORBA_Initializer_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_INITIALIZERSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_INITIALIZERSEQ_CI_
-
-  // = Static operations.
-  ACE_INLINE CORBA_Initializer *
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    CORBA_Initializer *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_Initializer[size],
-		    0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (CORBA_Initializer *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_Initializer *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::_TAO_Unbounded_Sequence_CORBA_InitializerSeq (const _TAO_Unbounded_Sequence_CORBA_InitializerSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    CORBA_Initializer *tmp1 = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (this->maximum_);
-    CORBA_Initializer * const tmp2 = ACE_reinterpret_cast (CORBA_Initializer * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_InitializerSeq &
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_InitializerSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_Initializer *tmp = ACE_reinterpret_cast (CORBA_Initializer *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_Initializer *tmp1 = ACE_reinterpret_cast (CORBA_Initializer *, this->buffer_);
-    CORBA_Initializer * const tmp2 = ACE_reinterpret_cast (CORBA_Initializer * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
-  
-  // = Accessors.
-  ACE_INLINE CORBA_Initializer &
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Initializer* tmp = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_Initializer &
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Initializer * const tmp = ACE_reinterpret_cast (CORBA_Initializer* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_Initializer *
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_Initializer *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_InitializerSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_Initializer*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_Initializer *
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_Initializer * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_InitializerSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_Initializer *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_Initializer *tmp = ACE_reinterpret_cast(CORBA_Initializer*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_InitializerSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
-  
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_INITIALIZERSEQ_CI_)
-#define _CORBA_INITIALIZERSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_InitializerSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_InitializerSeq_var::CORBA_InitializerSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_InitializerSeq_var::CORBA_InitializerSeq_var (CORBA_InitializerSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_InitializerSeq_var::CORBA_InitializerSeq_var (const CORBA_InitializerSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_InitializerSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_InitializerSeq_var::~CORBA_InitializerSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_InitializerSeq_var &
-CORBA_InitializerSeq_var::operator= (CORBA_InitializerSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_InitializerSeq_var &
-CORBA_InitializerSeq_var::operator= (const CORBA_InitializerSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_InitializerSeq (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_InitializerSeq *
-CORBA_InitializerSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_InitializerSeq *
-CORBA_InitializerSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_InitializerSeq_var::operator const CORBA_InitializerSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_InitializerSeq_var::operator CORBA_InitializerSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_InitializerSeq_var::operator CORBA_InitializerSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer &
-CORBA_InitializerSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_InitializerSeq &
-CORBA_InitializerSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_InitializerSeq &
-CORBA_InitializerSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_InitializerSeq *&
-CORBA_InitializerSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_InitializerSeq *
-CORBA_InitializerSeq_var::_retn (void)
-{
-  CORBA_InitializerSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_InitializerSeq *
-CORBA_InitializerSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_InitializerSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_InitializerSeq_out::CORBA_InitializerSeq_out (CORBA_InitializerSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_InitializerSeq_out::CORBA_InitializerSeq_out (CORBA_InitializerSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_InitializerSeq_out::CORBA_InitializerSeq_out (const CORBA_InitializerSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_InitializerSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_InitializerSeq_out &
-CORBA_InitializerSeq_out::operator= (const CORBA_InitializerSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_InitializerSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_InitializerSeq_out &
-CORBA_InitializerSeq_out::operator= (CORBA_InitializerSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_InitializerSeq_out::operator CORBA_InitializerSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_InitializerSeq *&
-CORBA_InitializerSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_InitializerSeq *
-CORBA_InitializerSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Initializer &
-CORBA_InitializerSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_UnionMember_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_UnionMember_var::CORBA_UnionMember_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_UnionMember_var::CORBA_UnionMember_var (CORBA_UnionMember *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_UnionMember_var::CORBA_UnionMember_var (const CORBA_UnionMember_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_UnionMember(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_UnionMember_var::~CORBA_UnionMember_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember_var &
-CORBA_UnionMember_var::operator= (CORBA_UnionMember *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionMember_var &
-CORBA_UnionMember_var::operator= (const CORBA_UnionMember_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_UnionMember (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_UnionMember *
-CORBA_UnionMember_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember *
-CORBA_UnionMember_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionMember_var::operator const CORBA_UnionMember &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionMember_var::operator CORBA_UnionMember &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionMember_var::operator CORBA_UnionMember &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_UnionMember &
-CORBA_UnionMember_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember &
-CORBA_UnionMember_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_UnionMember *&
-CORBA_UnionMember_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember *
-CORBA_UnionMember_var::_retn (void)
-{
-  CORBA_UnionMember *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_UnionMember *
-CORBA_UnionMember_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_UnionMember_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_UnionMember_out::CORBA_UnionMember_out (CORBA_UnionMember *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_UnionMember_out::CORBA_UnionMember_out (CORBA_UnionMember_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_UnionMember_out::CORBA_UnionMember_out (const CORBA_UnionMember_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_UnionMember_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_UnionMember_out &
-CORBA_UnionMember_out::operator= (const CORBA_UnionMember_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_UnionMember_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionMember_out &
-CORBA_UnionMember_out::operator= (CORBA_UnionMember *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_UnionMember_out::operator CORBA_UnionMember *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember *&
-CORBA_UnionMember_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember *
-CORBA_UnionMember_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_UNIONMEMBERSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_UNIONMEMBERSEQ_CI_
-
-  // = Static operations.
-  ACE_INLINE CORBA_UnionMember *
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    CORBA_UnionMember *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_UnionMember[size],
-		    0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (CORBA_UnionMember *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_UnionMember *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::_TAO_Unbounded_Sequence_CORBA_UnionMemberSeq (const _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    CORBA_UnionMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (this->maximum_);
-    CORBA_UnionMember * const tmp2 = ACE_reinterpret_cast (CORBA_UnionMember * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_UnionMember *tmp = ACE_reinterpret_cast (CORBA_UnionMember *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_UnionMember *tmp1 = ACE_reinterpret_cast (CORBA_UnionMember *, this->buffer_);
-    CORBA_UnionMember * const tmp2 = ACE_reinterpret_cast (CORBA_UnionMember * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
-  
-  // = Accessors.
-  ACE_INLINE CORBA_UnionMember &
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_UnionMember* tmp = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_UnionMember &
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_UnionMember * const tmp = ACE_reinterpret_cast (CORBA_UnionMember* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_UnionMember *
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_UnionMember *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_UnionMember*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_UnionMember *
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_UnionMember * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_UnionMember *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_UnionMember *tmp = ACE_reinterpret_cast(CORBA_UnionMember*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_UnionMemberSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
-  
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_UNIONMEMBERSEQ_CI_)
-#define _CORBA_UNIONMEMBERSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_UnionMemberSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_UnionMemberSeq_var::CORBA_UnionMemberSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_UnionMemberSeq_var::CORBA_UnionMemberSeq_var (CORBA_UnionMemberSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_UnionMemberSeq_var::CORBA_UnionMemberSeq_var (const CORBA_UnionMemberSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_UnionMemberSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_UnionMemberSeq_var::~CORBA_UnionMemberSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq_var &
-CORBA_UnionMemberSeq_var::operator= (CORBA_UnionMemberSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq_var &
-CORBA_UnionMemberSeq_var::operator= (const CORBA_UnionMemberSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_UnionMemberSeq (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_UnionMemberSeq *
-CORBA_UnionMemberSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq *
-CORBA_UnionMemberSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionMemberSeq_var::operator const CORBA_UnionMemberSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionMemberSeq_var::operator CORBA_UnionMemberSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionMemberSeq_var::operator CORBA_UnionMemberSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember &
-CORBA_UnionMemberSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_UnionMemberSeq &
-CORBA_UnionMemberSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq &
-CORBA_UnionMemberSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_UnionMemberSeq *&
-CORBA_UnionMemberSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq *
-CORBA_UnionMemberSeq_var::_retn (void)
-{
-  CORBA_UnionMemberSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq *
-CORBA_UnionMemberSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_UnionMemberSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_UnionMemberSeq_out::CORBA_UnionMemberSeq_out (CORBA_UnionMemberSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_UnionMemberSeq_out::CORBA_UnionMemberSeq_out (CORBA_UnionMemberSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_UnionMemberSeq_out::CORBA_UnionMemberSeq_out (const CORBA_UnionMemberSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_UnionMemberSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_UnionMemberSeq_out &
-CORBA_UnionMemberSeq_out::operator= (const CORBA_UnionMemberSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_UnionMemberSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq_out &
-CORBA_UnionMemberSeq_out::operator= (CORBA_UnionMemberSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_UnionMemberSeq_out::operator CORBA_UnionMemberSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq *&
-CORBA_UnionMemberSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMemberSeq *
-CORBA_UnionMemberSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionMember &
-CORBA_UnionMemberSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ENUMMEMBERSEQ_CI_)
-#define _CORBA_ENUMMEMBERSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_EnumMemberSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_EnumMemberSeq_var::CORBA_EnumMemberSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_EnumMemberSeq_var::CORBA_EnumMemberSeq_var (CORBA_EnumMemberSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_EnumMemberSeq_var::CORBA_EnumMemberSeq_var (const CORBA_EnumMemberSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_EnumMemberSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_EnumMemberSeq_var::~CORBA_EnumMemberSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq_var &
-CORBA_EnumMemberSeq_var::operator= (CORBA_EnumMemberSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq_var &
-CORBA_EnumMemberSeq_var::operator= (const CORBA_EnumMemberSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_EnumMemberSeq (*p.ptr_), 
-	            *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_EnumMemberSeq *
-CORBA_EnumMemberSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq *
-CORBA_EnumMemberSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_EnumMemberSeq_var::operator const CORBA_EnumMemberSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_EnumMemberSeq_var::operator CORBA_EnumMemberSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_EnumMemberSeq_var::operator CORBA_EnumMemberSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA_EnumMemberSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_EnumMemberSeq &
-CORBA_EnumMemberSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq &
-CORBA_EnumMemberSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_EnumMemberSeq *&
-CORBA_EnumMemberSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq *
-CORBA_EnumMemberSeq_var::_retn (void)
-{
-  CORBA_EnumMemberSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq *
-CORBA_EnumMemberSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_EnumMemberSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_EnumMemberSeq_out::CORBA_EnumMemberSeq_out (CORBA_EnumMemberSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_EnumMemberSeq_out::CORBA_EnumMemberSeq_out (CORBA_EnumMemberSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_EnumMemberSeq_out::CORBA_EnumMemberSeq_out (const CORBA_EnumMemberSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_EnumMemberSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_EnumMemberSeq_out &
-CORBA_EnumMemberSeq_out::operator= (const CORBA_EnumMemberSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_EnumMemberSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq_out &
-CORBA_EnumMemberSeq_out::operator= (CORBA_EnumMemberSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_EnumMemberSeq_out::operator CORBA_EnumMemberSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq *&
-CORBA_EnumMemberSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumMemberSeq *
-CORBA_EnumMemberSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA_EnumMemberSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_Container::CORBA_Container (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_Container::CORBA_Container (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_Container::~CORBA_Container (void) // destructor
-{}
-
-
-#if !defined (_CORBA_CONTAINER___VAR_CI_)
-#define _CORBA_CONTAINER___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_Container_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_Container_var::CORBA_Container_var (void) // default constructor
-  : ptr_ (CORBA_Container::_nil ())
-{}
-
-ACE_INLINE
-CORBA_Container_var::CORBA_Container_var (CORBA_Container_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_Container_ptr 
-CORBA_Container_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_Container_var::CORBA_Container_var (const CORBA_Container_var &p) // copy constructor
-  : ptr_ (CORBA_Container::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_Container_var::~CORBA_Container_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_Container_var &
-CORBA_Container_var::operator= (CORBA_Container_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_Container_var &
-CORBA_Container_var::operator= (const CORBA_Container_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_Container::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Container_var::operator const CORBA_Container_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container_var::operator CORBA_Container_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr 
-CORBA_Container_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr
-CORBA_Container_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr &
-CORBA_Container_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr &
-CORBA_Container_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_Container::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr 
-CORBA_Container_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_Container_ptr val = this->ptr_;
-  this->ptr_ = CORBA_Container::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONTAINER___OUT_CI_)
-#define _CORBA_CONTAINER___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_Container_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_Container_out::CORBA_Container_out (CORBA_Container_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_Container::_nil ();
-}
-
-ACE_INLINE
-CORBA_Container_out::CORBA_Container_out (CORBA_Container_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_Container::_nil ();
-}
-
-ACE_INLINE
-CORBA_Container_out::CORBA_Container_out (const CORBA_Container_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Container_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_Container_out &
-CORBA_Container_out::operator= (const CORBA_Container_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_Container_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_Container_out &
-CORBA_Container_out::operator= (const CORBA_Container_var &p)
-{
-  this->ptr_ = CORBA_Container::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_Container_out &
-CORBA_Container_out::operator= (CORBA_Container_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Container_out::operator CORBA_Container_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr &
-CORBA_Container_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container_ptr 
-CORBA_Container_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_Container::Description_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_Container::Description_var::Description_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_Container::Description_var::Description_var (CORBA_Container::Description *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_Container::Description_var::Description_var (const CORBA_Container::Description_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_Container::Description(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Container::Description_var::~Description_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description_var &
-CORBA_Container::Description_var::operator= (CORBA_Container::Description *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_Container::Description_var &
-CORBA_Container::Description_var::operator= (const CORBA_Container::Description_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_Container::Description (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_Container::Description *
-CORBA_Container::Description_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description *
-CORBA_Container::Description_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container::Description_var::operator const CORBA_Container::Description &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container::Description_var::operator CORBA_Container::Description &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container::Description_var::operator CORBA_Container::Description &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_Container::Description &
-CORBA_Container::Description_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description &
-CORBA_Container::Description_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_Container::Description *&
-CORBA_Container::Description_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description *
-CORBA_Container::Description_var::_retn (void)
-{
-  CORBA_Container::Description *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_Container::Description *
-CORBA_Container::Description_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_Container::Description_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_Container::Description_out::Description_out (CORBA_Container::Description *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Container::Description_out::Description_out (CORBA_Container::Description_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Container::Description_out::Description_out (const CORBA_Container::Description_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Container::Description_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_Container::Description_out &
-CORBA_Container::Description_out::operator= (const CORBA_Container::Description_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_Container::Description_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_Container::Description_out &
-CORBA_Container::Description_out::operator= (CORBA_Container::Description *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Container::Description_out::operator CORBA_Container::Description *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description *&
-CORBA_Container::Description_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description *
-CORBA_Container::Description_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_CONTAINER_DESCRIPTIONSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_CONTAINER_DESCRIPTIONSEQ_CI_
-
-  // = Static operations.
-  ACE_INLINE CORBA_Container::Description *
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    CORBA_Container::Description *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_Container::Description[size],
-		    0);
-    return retval;
-  }
-  
-  ACE_INLINE void CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (CORBA_Container::Description *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_Container::Description *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq (const CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    CORBA_Container::Description *tmp1 = CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (this->maximum_);
-    CORBA_Container::Description * const tmp2 = ACE_reinterpret_cast (CORBA_Container::Description * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
-  }
-  
-  ACE_INLINE CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator= (const CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_Container::Description *tmp = ACE_reinterpret_cast (CORBA_Container::Description *, this->buffer_);
-        CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
-        this->buffer_ = CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_Container::Description *tmp1 = ACE_reinterpret_cast (CORBA_Container::Description *, this->buffer_);
-    CORBA_Container::Description * const tmp2 = ACE_reinterpret_cast (CORBA_Container::Description * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
-  
-  // = Accessors.
-  ACE_INLINE CORBA_Container::Description &
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Container::Description* tmp = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_Container::Description &
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_Container::Description * const tmp = ACE_reinterpret_cast (CORBA_Container::Description* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_Container::Description *
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_Container::Description *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_Container::Description*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_Container::Description *
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_Container::Description * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_Container::Description *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_Container::Description *tmp = ACE_reinterpret_cast(CORBA_Container::Description*,this->buffer_);
-      CORBA_Container::_TAO_Unbounded_Sequence_CORBA_Container_DescriptionSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
-  
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_CONTAINER_DESCRIPTIONSEQ_CI_)
-#define _CORBA_CONTAINER_DESCRIPTIONSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_Container::DescriptionSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_var::DescriptionSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_var::DescriptionSeq_var (CORBA_Container::DescriptionSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_var::DescriptionSeq_var (const CORBA_Container::DescriptionSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_Container::DescriptionSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_var::~DescriptionSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq_var &
-CORBA_Container::DescriptionSeq_var::operator= (CORBA_Container::DescriptionSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq_var &
-CORBA_Container::DescriptionSeq_var::operator= (const CORBA_Container::DescriptionSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_Container::DescriptionSeq (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_Container::DescriptionSeq *
-CORBA_Container::DescriptionSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq *
-CORBA_Container::DescriptionSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container::DescriptionSeq_var::operator const CORBA_Container::DescriptionSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container::DescriptionSeq_var::operator CORBA_Container::DescriptionSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Container::DescriptionSeq_var::operator CORBA_Container::DescriptionSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description &
-CORBA_Container::DescriptionSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_Container::DescriptionSeq &
-CORBA_Container::DescriptionSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq &
-CORBA_Container::DescriptionSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_Container::DescriptionSeq *&
-CORBA_Container::DescriptionSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq *
-CORBA_Container::DescriptionSeq_var::_retn (void)
-{
-  CORBA_Container::DescriptionSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq *
-CORBA_Container::DescriptionSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_Container::DescriptionSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_out::DescriptionSeq_out (CORBA_Container::DescriptionSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_out::DescriptionSeq_out (CORBA_Container::DescriptionSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_Container::DescriptionSeq_out::DescriptionSeq_out (const CORBA_Container::DescriptionSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Container::DescriptionSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_Container::DescriptionSeq_out &
-CORBA_Container::DescriptionSeq_out::operator= (const CORBA_Container::DescriptionSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_Container::DescriptionSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq_out &
-CORBA_Container::DescriptionSeq_out::operator= (CORBA_Container::DescriptionSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Container::DescriptionSeq_out::operator CORBA_Container::DescriptionSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq *&
-CORBA_Container::DescriptionSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::DescriptionSeq *
-CORBA_Container::DescriptionSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Container::Description &
-CORBA_Container::DescriptionSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_IDLType::CORBA_IDLType (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_IDLType::CORBA_IDLType (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_IDLType::~CORBA_IDLType (void) // destructor
-{}
-
-
-#if !defined (_CORBA_IDLTYPE___VAR_CI_)
-#define _CORBA_IDLTYPE___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_IDLType_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_IDLType_var::CORBA_IDLType_var (void) // default constructor
-  : ptr_ (CORBA_IDLType::_nil ())
-{}
-
-ACE_INLINE
-CORBA_IDLType_var::CORBA_IDLType_var (CORBA_IDLType_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_IDLType_ptr 
-CORBA_IDLType_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_IDLType_var::CORBA_IDLType_var (const CORBA_IDLType_var &p) // copy constructor
-  : ptr_ (CORBA_IDLType::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_IDLType_var::~CORBA_IDLType_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_IDLType_var &
-CORBA_IDLType_var::operator= (CORBA_IDLType_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_IDLType_var &
-CORBA_IDLType_var::operator= (const CORBA_IDLType_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_IDLType::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_IDLType_var::operator const CORBA_IDLType_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_IDLType_var::operator CORBA_IDLType_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr 
-CORBA_IDLType_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr
-CORBA_IDLType_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr &
-CORBA_IDLType_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr &
-CORBA_IDLType_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_IDLType::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr 
-CORBA_IDLType_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_IDLType_ptr val = this->ptr_;
-  this->ptr_ = CORBA_IDLType::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_IDLTYPE___OUT_CI_)
-#define _CORBA_IDLTYPE___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_IDLType_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_IDLType_out::CORBA_IDLType_out (CORBA_IDLType_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_IDLType::_nil ();
-}
-
-ACE_INLINE
-CORBA_IDLType_out::CORBA_IDLType_out (CORBA_IDLType_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_IDLType::_nil ();
-}
-
-ACE_INLINE
-CORBA_IDLType_out::CORBA_IDLType_out (const CORBA_IDLType_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_IDLType_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_IDLType_out &
-CORBA_IDLType_out::operator= (const CORBA_IDLType_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_IDLType_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_IDLType_out &
-CORBA_IDLType_out::operator= (const CORBA_IDLType_var &p)
-{
-  this->ptr_ = CORBA_IDLType::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_IDLType_out &
-CORBA_IDLType_out::operator= (CORBA_IDLType_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_IDLType_out::operator CORBA_IDLType_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr &
-CORBA_IDLType_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_IDLType_ptr 
-CORBA_IDLType_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_Repository::CORBA_Repository (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_Repository::CORBA_Repository (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_Repository::~CORBA_Repository (void) // destructor
-{}
-
-
-#if !defined (_CORBA_REPOSITORY___VAR_CI_)
-#define _CORBA_REPOSITORY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_Repository_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_Repository_var::CORBA_Repository_var (void) // default constructor
-  : ptr_ (CORBA_Repository::_nil ())
-{}
-
-ACE_INLINE
-CORBA_Repository_var::CORBA_Repository_var (CORBA_Repository_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_Repository_ptr 
-CORBA_Repository_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_Repository_var::CORBA_Repository_var (const CORBA_Repository_var &p) // copy constructor
-  : ptr_ (CORBA_Repository::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_Repository_var::~CORBA_Repository_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_Repository_var &
-CORBA_Repository_var::operator= (CORBA_Repository_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_Repository_var &
-CORBA_Repository_var::operator= (const CORBA_Repository_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_Repository::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Repository_var::operator const CORBA_Repository_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_Repository_var::operator CORBA_Repository_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr 
-CORBA_Repository_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr
-CORBA_Repository_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr &
-CORBA_Repository_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr &
-CORBA_Repository_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_Repository::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr 
-CORBA_Repository_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_Repository_ptr val = this->ptr_;
-  this->ptr_ = CORBA_Repository::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_REPOSITORY___OUT_CI_)
-#define _CORBA_REPOSITORY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_Repository_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_Repository_out::CORBA_Repository_out (CORBA_Repository_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_Repository::_nil ();
-}
-
-ACE_INLINE
-CORBA_Repository_out::CORBA_Repository_out (CORBA_Repository_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_Repository::_nil ();
-}
-
-ACE_INLINE
-CORBA_Repository_out::CORBA_Repository_out (const CORBA_Repository_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_Repository_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_Repository_out &
-CORBA_Repository_out::operator= (const CORBA_Repository_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_Repository_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_Repository_out &
-CORBA_Repository_out::operator= (const CORBA_Repository_var &p)
-{
-  this->ptr_ = CORBA_Repository::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_Repository_out &
-CORBA_Repository_out::operator= (CORBA_Repository_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_Repository_out::operator CORBA_Repository_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr &
-CORBA_Repository_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_Repository_ptr 
-CORBA_Repository_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_ModuleDef::CORBA_ModuleDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_ModuleDef::CORBA_ModuleDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_ModuleDef::~CORBA_ModuleDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_MODULEDEF___VAR_CI_)
-#define _CORBA_MODULEDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ModuleDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ModuleDef_var::CORBA_ModuleDef_var (void) // default constructor
-  : ptr_ (CORBA_ModuleDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_ModuleDef_var::CORBA_ModuleDef_var (CORBA_ModuleDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_ModuleDef_ptr 
-CORBA_ModuleDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ModuleDef_var::CORBA_ModuleDef_var (const CORBA_ModuleDef_var &p) // copy constructor
-  : ptr_ (CORBA_ModuleDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_ModuleDef_var::~CORBA_ModuleDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_ModuleDef_var &
-CORBA_ModuleDef_var::operator= (CORBA_ModuleDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ModuleDef_var &
-CORBA_ModuleDef_var::operator= (const CORBA_ModuleDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ModuleDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ModuleDef_var::operator const CORBA_ModuleDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ModuleDef_var::operator CORBA_ModuleDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr 
-CORBA_ModuleDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr
-CORBA_ModuleDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr &
-CORBA_ModuleDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr &
-CORBA_ModuleDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ModuleDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr 
-CORBA_ModuleDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_ModuleDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ModuleDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_MODULEDEF___OUT_CI_)
-#define _CORBA_MODULEDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ModuleDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ModuleDef_out::CORBA_ModuleDef_out (CORBA_ModuleDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_ModuleDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ModuleDef_out::CORBA_ModuleDef_out (CORBA_ModuleDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ModuleDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ModuleDef_out::CORBA_ModuleDef_out (const CORBA_ModuleDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ModuleDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ModuleDef_out &
-CORBA_ModuleDef_out::operator= (const CORBA_ModuleDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ModuleDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ModuleDef_out &
-CORBA_ModuleDef_out::operator= (const CORBA_ModuleDef_var &p)
-{
-  this->ptr_ = CORBA_ModuleDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_ModuleDef_out &
-CORBA_ModuleDef_out::operator= (CORBA_ModuleDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ModuleDef_out::operator CORBA_ModuleDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr &
-CORBA_ModuleDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDef_ptr 
-CORBA_ModuleDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_ModuleDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ModuleDescription_var::CORBA_ModuleDescription_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ModuleDescription_var::CORBA_ModuleDescription_var (CORBA_ModuleDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ModuleDescription_var::CORBA_ModuleDescription_var (const CORBA_ModuleDescription_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ModuleDescription(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ModuleDescription_var::~CORBA_ModuleDescription_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDescription_var &
-CORBA_ModuleDescription_var::operator= (CORBA_ModuleDescription *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ModuleDescription_var &
-CORBA_ModuleDescription_var::operator= (const CORBA_ModuleDescription_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ModuleDescription (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ModuleDescription *
-CORBA_ModuleDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDescription *
-CORBA_ModuleDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ModuleDescription_var::operator const CORBA_ModuleDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ModuleDescription_var::operator CORBA_ModuleDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ModuleDescription_var::operator CORBA_ModuleDescription &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_ModuleDescription &
-CORBA_ModuleDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDescription &
-CORBA_ModuleDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ModuleDescription *&
-CORBA_ModuleDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDescription *
-CORBA_ModuleDescription_var::_retn (void)
-{
-  CORBA_ModuleDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ModuleDescription *
-CORBA_ModuleDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ModuleDescription_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ModuleDescription_out::CORBA_ModuleDescription_out (CORBA_ModuleDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ModuleDescription_out::CORBA_ModuleDescription_out (CORBA_ModuleDescription_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ModuleDescription_out::CORBA_ModuleDescription_out (const CORBA_ModuleDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ModuleDescription_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ModuleDescription_out &
-CORBA_ModuleDescription_out::operator= (const CORBA_ModuleDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ModuleDescription_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ModuleDescription_out &
-CORBA_ModuleDescription_out::operator= (CORBA_ModuleDescription *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ModuleDescription_out::operator CORBA_ModuleDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDescription *&
-CORBA_ModuleDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ModuleDescription *
-CORBA_ModuleDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ConstantDef::CORBA_ConstantDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_ConstantDef::CORBA_ConstantDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_ConstantDef::~CORBA_ConstantDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_CONSTANTDEF___VAR_CI_)
-#define _CORBA_CONSTANTDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ConstantDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ConstantDef_var::CORBA_ConstantDef_var (void) // default constructor
-  : ptr_ (CORBA_ConstantDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_ConstantDef_var::CORBA_ConstantDef_var (CORBA_ConstantDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_ConstantDef_ptr 
-CORBA_ConstantDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ConstantDef_var::CORBA_ConstantDef_var (const CORBA_ConstantDef_var &p) // copy constructor
-  : ptr_ (CORBA_ConstantDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_ConstantDef_var::~CORBA_ConstantDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_ConstantDef_var &
-CORBA_ConstantDef_var::operator= (CORBA_ConstantDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstantDef_var &
-CORBA_ConstantDef_var::operator= (const CORBA_ConstantDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ConstantDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ConstantDef_var::operator const CORBA_ConstantDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ConstantDef_var::operator CORBA_ConstantDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr 
-CORBA_ConstantDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr
-CORBA_ConstantDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr &
-CORBA_ConstantDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr &
-CORBA_ConstantDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ConstantDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr 
-CORBA_ConstantDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_ConstantDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ConstantDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTANTDEF___OUT_CI_)
-#define _CORBA_CONSTANTDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ConstantDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ConstantDef_out::CORBA_ConstantDef_out (CORBA_ConstantDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_ConstantDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ConstantDef_out::CORBA_ConstantDef_out (CORBA_ConstantDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ConstantDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ConstantDef_out::CORBA_ConstantDef_out (const CORBA_ConstantDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ConstantDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ConstantDef_out &
-CORBA_ConstantDef_out::operator= (const CORBA_ConstantDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ConstantDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstantDef_out &
-CORBA_ConstantDef_out::operator= (const CORBA_ConstantDef_var &p)
-{
-  this->ptr_ = CORBA_ConstantDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstantDef_out &
-CORBA_ConstantDef_out::operator= (CORBA_ConstantDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ConstantDef_out::operator CORBA_ConstantDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr &
-CORBA_ConstantDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDef_ptr 
-CORBA_ConstantDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_ConstantDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ConstantDescription_var::CORBA_ConstantDescription_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ConstantDescription_var::CORBA_ConstantDescription_var (CORBA_ConstantDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ConstantDescription_var::CORBA_ConstantDescription_var (const CORBA_ConstantDescription_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ConstantDescription(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ConstantDescription_var::~CORBA_ConstantDescription_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDescription_var &
-CORBA_ConstantDescription_var::operator= (CORBA_ConstantDescription *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstantDescription_var &
-CORBA_ConstantDescription_var::operator= (const CORBA_ConstantDescription_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ConstantDescription (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ConstantDescription *
-CORBA_ConstantDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDescription *
-CORBA_ConstantDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ConstantDescription_var::operator const CORBA_ConstantDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ConstantDescription_var::operator CORBA_ConstantDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ConstantDescription_var::operator CORBA_ConstantDescription &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_ConstantDescription &
-CORBA_ConstantDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDescription &
-CORBA_ConstantDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ConstantDescription *&
-CORBA_ConstantDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDescription *
-CORBA_ConstantDescription_var::_retn (void)
-{
-  CORBA_ConstantDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ConstantDescription *
-CORBA_ConstantDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ConstantDescription_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ConstantDescription_out::CORBA_ConstantDescription_out (CORBA_ConstantDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ConstantDescription_out::CORBA_ConstantDescription_out (CORBA_ConstantDescription_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ConstantDescription_out::CORBA_ConstantDescription_out (const CORBA_ConstantDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ConstantDescription_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ConstantDescription_out &
-CORBA_ConstantDescription_out::operator= (const CORBA_ConstantDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ConstantDescription_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstantDescription_out &
-CORBA_ConstantDescription_out::operator= (CORBA_ConstantDescription *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ConstantDescription_out::operator CORBA_ConstantDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDescription *&
-CORBA_ConstantDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ConstantDescription *
-CORBA_ConstantDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_TypedefDef::CORBA_TypedefDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_TypedefDef::CORBA_TypedefDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_TypedefDef::~CORBA_TypedefDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_TYPEDEFDEF___VAR_CI_)
-#define _CORBA_TYPEDEFDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_TypedefDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_TypedefDef_var::CORBA_TypedefDef_var (void) // default constructor
-  : ptr_ (CORBA_TypedefDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_TypedefDef_var::CORBA_TypedefDef_var (CORBA_TypedefDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_TypedefDef_ptr 
-CORBA_TypedefDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_TypedefDef_var::CORBA_TypedefDef_var (const CORBA_TypedefDef_var &p) // copy constructor
-  : ptr_ (CORBA_TypedefDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_TypedefDef_var::~CORBA_TypedefDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_TypedefDef_var &
-CORBA_TypedefDef_var::operator= (CORBA_TypedefDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_TypedefDef_var &
-CORBA_TypedefDef_var::operator= (const CORBA_TypedefDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_TypedefDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_TypedefDef_var::operator const CORBA_TypedefDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_TypedefDef_var::operator CORBA_TypedefDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr 
-CORBA_TypedefDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr
-CORBA_TypedefDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr &
-CORBA_TypedefDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr &
-CORBA_TypedefDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_TypedefDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr 
-CORBA_TypedefDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_TypedefDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_TypedefDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_TYPEDEFDEF___OUT_CI_)
-#define _CORBA_TYPEDEFDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_TypedefDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_TypedefDef_out::CORBA_TypedefDef_out (CORBA_TypedefDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_TypedefDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_TypedefDef_out::CORBA_TypedefDef_out (CORBA_TypedefDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_TypedefDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_TypedefDef_out::CORBA_TypedefDef_out (const CORBA_TypedefDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_TypedefDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_TypedefDef_out &
-CORBA_TypedefDef_out::operator= (const CORBA_TypedefDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_TypedefDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_TypedefDef_out &
-CORBA_TypedefDef_out::operator= (const CORBA_TypedefDef_var &p)
-{
-  this->ptr_ = CORBA_TypedefDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_TypedefDef_out &
-CORBA_TypedefDef_out::operator= (CORBA_TypedefDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_TypedefDef_out::operator CORBA_TypedefDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr &
-CORBA_TypedefDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypedefDef_ptr 
-CORBA_TypedefDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_TypeDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_TypeDescription_var::CORBA_TypeDescription_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_TypeDescription_var::CORBA_TypeDescription_var (CORBA_TypeDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_TypeDescription_var::CORBA_TypeDescription_var (const CORBA_TypeDescription_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_TypeDescription(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_TypeDescription_var::~CORBA_TypeDescription_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_TypeDescription_var &
-CORBA_TypeDescription_var::operator= (CORBA_TypeDescription *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_TypeDescription_var &
-CORBA_TypeDescription_var::operator= (const CORBA_TypeDescription_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_TypeDescription (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_TypeDescription *
-CORBA_TypeDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypeDescription *
-CORBA_TypeDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_TypeDescription_var::operator const CORBA_TypeDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_TypeDescription_var::operator CORBA_TypeDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_TypeDescription_var::operator CORBA_TypeDescription &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_TypeDescription &
-CORBA_TypeDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_TypeDescription &
-CORBA_TypeDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_TypeDescription *&
-CORBA_TypeDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypeDescription *
-CORBA_TypeDescription_var::_retn (void)
-{
-  CORBA_TypeDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_TypeDescription *
-CORBA_TypeDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_TypeDescription_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_TypeDescription_out::CORBA_TypeDescription_out (CORBA_TypeDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_TypeDescription_out::CORBA_TypeDescription_out (CORBA_TypeDescription_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_TypeDescription_out::CORBA_TypeDescription_out (const CORBA_TypeDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_TypeDescription_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_TypeDescription_out &
-CORBA_TypeDescription_out::operator= (const CORBA_TypeDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_TypeDescription_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_TypeDescription_out &
-CORBA_TypeDescription_out::operator= (CORBA_TypeDescription *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_TypeDescription_out::operator CORBA_TypeDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypeDescription *&
-CORBA_TypeDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_TypeDescription *
-CORBA_TypeDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_StructDef::CORBA_StructDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_StructDef::CORBA_StructDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_StructDef::~CORBA_StructDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_STRUCTDEF___VAR_CI_)
-#define _CORBA_STRUCTDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_StructDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_StructDef_var::CORBA_StructDef_var (void) // default constructor
-  : ptr_ (CORBA_StructDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_StructDef_var::CORBA_StructDef_var (CORBA_StructDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_StructDef_ptr 
-CORBA_StructDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_StructDef_var::CORBA_StructDef_var (const CORBA_StructDef_var &p) // copy constructor
-  : ptr_ (CORBA_StructDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_StructDef_var::~CORBA_StructDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_StructDef_var &
-CORBA_StructDef_var::operator= (CORBA_StructDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_StructDef_var &
-CORBA_StructDef_var::operator= (const CORBA_StructDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_StructDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_StructDef_var::operator const CORBA_StructDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StructDef_var::operator CORBA_StructDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr 
-CORBA_StructDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr
-CORBA_StructDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr &
-CORBA_StructDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr &
-CORBA_StructDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_StructDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr 
-CORBA_StructDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_StructDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_StructDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_STRUCTDEF___OUT_CI_)
-#define _CORBA_STRUCTDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_StructDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_StructDef_out::CORBA_StructDef_out (CORBA_StructDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_StructDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_StructDef_out::CORBA_StructDef_out (CORBA_StructDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_StructDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_StructDef_out::CORBA_StructDef_out (const CORBA_StructDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_StructDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_StructDef_out &
-CORBA_StructDef_out::operator= (const CORBA_StructDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_StructDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_StructDef_out &
-CORBA_StructDef_out::operator= (const CORBA_StructDef_var &p)
-{
-  this->ptr_ = CORBA_StructDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_StructDef_out &
-CORBA_StructDef_out::operator= (CORBA_StructDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_StructDef_out::operator CORBA_StructDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr &
-CORBA_StructDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StructDef_ptr 
-CORBA_StructDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_UnionDef::CORBA_UnionDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_UnionDef::CORBA_UnionDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_UnionDef::~CORBA_UnionDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_UNIONDEF___VAR_CI_)
-#define _CORBA_UNIONDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_UnionDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_UnionDef_var::CORBA_UnionDef_var (void) // default constructor
-  : ptr_ (CORBA_UnionDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_UnionDef_var::CORBA_UnionDef_var (CORBA_UnionDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_UnionDef_ptr 
-CORBA_UnionDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_UnionDef_var::CORBA_UnionDef_var (const CORBA_UnionDef_var &p) // copy constructor
-  : ptr_ (CORBA_UnionDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_UnionDef_var::~CORBA_UnionDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_UnionDef_var &
-CORBA_UnionDef_var::operator= (CORBA_UnionDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionDef_var &
-CORBA_UnionDef_var::operator= (const CORBA_UnionDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_UnionDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_UnionDef_var::operator const CORBA_UnionDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_UnionDef_var::operator CORBA_UnionDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr 
-CORBA_UnionDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr
-CORBA_UnionDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr &
-CORBA_UnionDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr &
-CORBA_UnionDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_UnionDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr 
-CORBA_UnionDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_UnionDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_UnionDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_UNIONDEF___OUT_CI_)
-#define _CORBA_UNIONDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_UnionDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_UnionDef_out::CORBA_UnionDef_out (CORBA_UnionDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_UnionDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_UnionDef_out::CORBA_UnionDef_out (CORBA_UnionDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_UnionDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_UnionDef_out::CORBA_UnionDef_out (const CORBA_UnionDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_UnionDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_UnionDef_out &
-CORBA_UnionDef_out::operator= (const CORBA_UnionDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_UnionDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionDef_out &
-CORBA_UnionDef_out::operator= (const CORBA_UnionDef_var &p)
-{
-  this->ptr_ = CORBA_UnionDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_UnionDef_out &
-CORBA_UnionDef_out::operator= (CORBA_UnionDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_UnionDef_out::operator CORBA_UnionDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr &
-CORBA_UnionDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_UnionDef_ptr 
-CORBA_UnionDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_EnumDef::CORBA_EnumDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_EnumDef::CORBA_EnumDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_EnumDef::~CORBA_EnumDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_ENUMDEF___VAR_CI_)
-#define _CORBA_ENUMDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_EnumDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_EnumDef_var::CORBA_EnumDef_var (void) // default constructor
-  : ptr_ (CORBA_EnumDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_EnumDef_var::CORBA_EnumDef_var (CORBA_EnumDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_EnumDef_ptr 
-CORBA_EnumDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_EnumDef_var::CORBA_EnumDef_var (const CORBA_EnumDef_var &p) // copy constructor
-  : ptr_ (CORBA_EnumDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_EnumDef_var::~CORBA_EnumDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_EnumDef_var &
-CORBA_EnumDef_var::operator= (CORBA_EnumDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_EnumDef_var &
-CORBA_EnumDef_var::operator= (const CORBA_EnumDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_EnumDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_EnumDef_var::operator const CORBA_EnumDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_EnumDef_var::operator CORBA_EnumDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr 
-CORBA_EnumDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr
-CORBA_EnumDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr &
-CORBA_EnumDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr &
-CORBA_EnumDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_EnumDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr 
-CORBA_EnumDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_EnumDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_EnumDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ENUMDEF___OUT_CI_)
-#define _CORBA_ENUMDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_EnumDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_EnumDef_out::CORBA_EnumDef_out (CORBA_EnumDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_EnumDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_EnumDef_out::CORBA_EnumDef_out (CORBA_EnumDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_EnumDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_EnumDef_out::CORBA_EnumDef_out (const CORBA_EnumDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_EnumDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_EnumDef_out &
-CORBA_EnumDef_out::operator= (const CORBA_EnumDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_EnumDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_EnumDef_out &
-CORBA_EnumDef_out::operator= (const CORBA_EnumDef_var &p)
-{
-  this->ptr_ = CORBA_EnumDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_EnumDef_out &
-CORBA_EnumDef_out::operator= (CORBA_EnumDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_EnumDef_out::operator CORBA_EnumDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr &
-CORBA_EnumDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_EnumDef_ptr 
-CORBA_EnumDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_AliasDef::CORBA_AliasDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_AliasDef::CORBA_AliasDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_AliasDef::~CORBA_AliasDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_ALIASDEF___VAR_CI_)
-#define _CORBA_ALIASDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_AliasDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_AliasDef_var::CORBA_AliasDef_var (void) // default constructor
-  : ptr_ (CORBA_AliasDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_AliasDef_var::CORBA_AliasDef_var (CORBA_AliasDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_AliasDef_ptr 
-CORBA_AliasDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_AliasDef_var::CORBA_AliasDef_var (const CORBA_AliasDef_var &p) // copy constructor
-  : ptr_ (CORBA_AliasDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_AliasDef_var::~CORBA_AliasDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_AliasDef_var &
-CORBA_AliasDef_var::operator= (CORBA_AliasDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_AliasDef_var &
-CORBA_AliasDef_var::operator= (const CORBA_AliasDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_AliasDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_AliasDef_var::operator const CORBA_AliasDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_AliasDef_var::operator CORBA_AliasDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr 
-CORBA_AliasDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr
-CORBA_AliasDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr &
-CORBA_AliasDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr &
-CORBA_AliasDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_AliasDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr 
-CORBA_AliasDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_AliasDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_AliasDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ALIASDEF___OUT_CI_)
-#define _CORBA_ALIASDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_AliasDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_AliasDef_out::CORBA_AliasDef_out (CORBA_AliasDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_AliasDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_AliasDef_out::CORBA_AliasDef_out (CORBA_AliasDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_AliasDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_AliasDef_out::CORBA_AliasDef_out (const CORBA_AliasDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_AliasDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_AliasDef_out &
-CORBA_AliasDef_out::operator= (const CORBA_AliasDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_AliasDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_AliasDef_out &
-CORBA_AliasDef_out::operator= (const CORBA_AliasDef_var &p)
-{
-  this->ptr_ = CORBA_AliasDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_AliasDef_out &
-CORBA_AliasDef_out::operator= (CORBA_AliasDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_AliasDef_out::operator CORBA_AliasDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr &
-CORBA_AliasDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AliasDef_ptr 
-CORBA_AliasDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_PrimitiveDef::CORBA_PrimitiveDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_PrimitiveDef::CORBA_PrimitiveDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_PrimitiveDef::~CORBA_PrimitiveDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_PRIMITIVEDEF___VAR_CI_)
-#define _CORBA_PRIMITIVEDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_PrimitiveDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_PrimitiveDef_var::CORBA_PrimitiveDef_var (void) // default constructor
-  : ptr_ (CORBA_PrimitiveDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_PrimitiveDef_var::CORBA_PrimitiveDef_var (CORBA_PrimitiveDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr 
-CORBA_PrimitiveDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_PrimitiveDef_var::CORBA_PrimitiveDef_var (const CORBA_PrimitiveDef_var &p) // copy constructor
-  : ptr_ (CORBA_PrimitiveDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_PrimitiveDef_var::~CORBA_PrimitiveDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_PrimitiveDef_var &
-CORBA_PrimitiveDef_var::operator= (CORBA_PrimitiveDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_var &
-CORBA_PrimitiveDef_var::operator= (const CORBA_PrimitiveDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_PrimitiveDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_PrimitiveDef_var::operator const CORBA_PrimitiveDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_PrimitiveDef_var::operator CORBA_PrimitiveDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr 
-CORBA_PrimitiveDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr
-CORBA_PrimitiveDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr &
-CORBA_PrimitiveDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr &
-CORBA_PrimitiveDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_PrimitiveDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr 
-CORBA_PrimitiveDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_PrimitiveDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_PrimitiveDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_PRIMITIVEDEF___OUT_CI_)
-#define _CORBA_PRIMITIVEDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_PrimitiveDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_PrimitiveDef_out::CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_PrimitiveDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_PrimitiveDef_out::CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_PrimitiveDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_PrimitiveDef_out::CORBA_PrimitiveDef_out (const CORBA_PrimitiveDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_PrimitiveDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_PrimitiveDef_out &
-CORBA_PrimitiveDef_out::operator= (const CORBA_PrimitiveDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_PrimitiveDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_out &
-CORBA_PrimitiveDef_out::operator= (const CORBA_PrimitiveDef_var &p)
-{
-  this->ptr_ = CORBA_PrimitiveDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_out &
-CORBA_PrimitiveDef_out::operator= (CORBA_PrimitiveDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_PrimitiveDef_out::operator CORBA_PrimitiveDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr &
-CORBA_PrimitiveDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_PrimitiveDef_ptr 
-CORBA_PrimitiveDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_StringDef::CORBA_StringDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_StringDef::CORBA_StringDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_StringDef::~CORBA_StringDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_STRINGDEF___VAR_CI_)
-#define _CORBA_STRINGDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_StringDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_StringDef_var::CORBA_StringDef_var (void) // default constructor
-  : ptr_ (CORBA_StringDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_StringDef_var::CORBA_StringDef_var (CORBA_StringDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_StringDef_ptr 
-CORBA_StringDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_StringDef_var::CORBA_StringDef_var (const CORBA_StringDef_var &p) // copy constructor
-  : ptr_ (CORBA_StringDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_StringDef_var::~CORBA_StringDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_StringDef_var &
-CORBA_StringDef_var::operator= (CORBA_StringDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_StringDef_var &
-CORBA_StringDef_var::operator= (const CORBA_StringDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_StringDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_StringDef_var::operator const CORBA_StringDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_StringDef_var::operator CORBA_StringDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr 
-CORBA_StringDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr
-CORBA_StringDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr &
-CORBA_StringDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr &
-CORBA_StringDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_StringDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr 
-CORBA_StringDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_StringDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_StringDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_STRINGDEF___OUT_CI_)
-#define _CORBA_STRINGDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_StringDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_StringDef_out::CORBA_StringDef_out (CORBA_StringDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_StringDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_StringDef_out::CORBA_StringDef_out (CORBA_StringDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_StringDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_StringDef_out::CORBA_StringDef_out (const CORBA_StringDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_StringDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_StringDef_out &
-CORBA_StringDef_out::operator= (const CORBA_StringDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_StringDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_StringDef_out &
-CORBA_StringDef_out::operator= (const CORBA_StringDef_var &p)
-{
-  this->ptr_ = CORBA_StringDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_StringDef_out &
-CORBA_StringDef_out::operator= (CORBA_StringDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_StringDef_out::operator CORBA_StringDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr &
-CORBA_StringDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_StringDef_ptr 
-CORBA_StringDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_WstringDef::CORBA_WstringDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_WstringDef::CORBA_WstringDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_WstringDef::~CORBA_WstringDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_WSTRINGDEF___VAR_CI_)
-#define _CORBA_WSTRINGDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_WstringDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_WstringDef_var::CORBA_WstringDef_var (void) // default constructor
-  : ptr_ (CORBA_WstringDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_WstringDef_var::CORBA_WstringDef_var (CORBA_WstringDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_WstringDef_ptr 
-CORBA_WstringDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_WstringDef_var::CORBA_WstringDef_var (const CORBA_WstringDef_var &p) // copy constructor
-  : ptr_ (CORBA_WstringDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_WstringDef_var::~CORBA_WstringDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_WstringDef_var &
-CORBA_WstringDef_var::operator= (CORBA_WstringDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_WstringDef_var &
-CORBA_WstringDef_var::operator= (const CORBA_WstringDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_WstringDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_WstringDef_var::operator const CORBA_WstringDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_WstringDef_var::operator CORBA_WstringDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr 
-CORBA_WstringDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr
-CORBA_WstringDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr &
-CORBA_WstringDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr &
-CORBA_WstringDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_WstringDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr 
-CORBA_WstringDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_WstringDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_WstringDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_WSTRINGDEF___OUT_CI_)
-#define _CORBA_WSTRINGDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_WstringDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_WstringDef_out::CORBA_WstringDef_out (CORBA_WstringDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_WstringDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_WstringDef_out::CORBA_WstringDef_out (CORBA_WstringDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_WstringDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_WstringDef_out::CORBA_WstringDef_out (const CORBA_WstringDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_WstringDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_WstringDef_out &
-CORBA_WstringDef_out::operator= (const CORBA_WstringDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_WstringDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_WstringDef_out &
-CORBA_WstringDef_out::operator= (const CORBA_WstringDef_var &p)
-{
-  this->ptr_ = CORBA_WstringDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_WstringDef_out &
-CORBA_WstringDef_out::operator= (CORBA_WstringDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_WstringDef_out::operator CORBA_WstringDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr &
-CORBA_WstringDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_WstringDef_ptr 
-CORBA_WstringDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_FixedDef::CORBA_FixedDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_FixedDef::CORBA_FixedDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_FixedDef::~CORBA_FixedDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_FIXEDDEF___VAR_CI_)
-#define _CORBA_FIXEDDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_FixedDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_FixedDef_var::CORBA_FixedDef_var (void) // default constructor
-  : ptr_ (CORBA_FixedDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_FixedDef_var::CORBA_FixedDef_var (CORBA_FixedDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_FixedDef_ptr 
-CORBA_FixedDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_FixedDef_var::CORBA_FixedDef_var (const CORBA_FixedDef_var &p) // copy constructor
-  : ptr_ (CORBA_FixedDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_FixedDef_var::~CORBA_FixedDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_FixedDef_var &
-CORBA_FixedDef_var::operator= (CORBA_FixedDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_FixedDef_var &
-CORBA_FixedDef_var::operator= (const CORBA_FixedDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_FixedDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_FixedDef_var::operator const CORBA_FixedDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_FixedDef_var::operator CORBA_FixedDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr 
-CORBA_FixedDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr
-CORBA_FixedDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr &
-CORBA_FixedDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr &
-CORBA_FixedDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_FixedDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr 
-CORBA_FixedDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_FixedDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_FixedDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_FIXEDDEF___OUT_CI_)
-#define _CORBA_FIXEDDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_FixedDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_FixedDef_out::CORBA_FixedDef_out (CORBA_FixedDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_FixedDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_FixedDef_out::CORBA_FixedDef_out (CORBA_FixedDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_FixedDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_FixedDef_out::CORBA_FixedDef_out (const CORBA_FixedDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_FixedDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_FixedDef_out &
-CORBA_FixedDef_out::operator= (const CORBA_FixedDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_FixedDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_FixedDef_out &
-CORBA_FixedDef_out::operator= (const CORBA_FixedDef_var &p)
-{
-  this->ptr_ = CORBA_FixedDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_FixedDef_out &
-CORBA_FixedDef_out::operator= (CORBA_FixedDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_FixedDef_out::operator CORBA_FixedDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr &
-CORBA_FixedDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_FixedDef_ptr 
-CORBA_FixedDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_SequenceDef::CORBA_SequenceDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_SequenceDef::CORBA_SequenceDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_SequenceDef::~CORBA_SequenceDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_SEQUENCEDEF___VAR_CI_)
-#define _CORBA_SEQUENCEDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_SequenceDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_SequenceDef_var::CORBA_SequenceDef_var (void) // default constructor
-  : ptr_ (CORBA_SequenceDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_SequenceDef_var::CORBA_SequenceDef_var (CORBA_SequenceDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_SequenceDef_ptr 
-CORBA_SequenceDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_SequenceDef_var::CORBA_SequenceDef_var (const CORBA_SequenceDef_var &p) // copy constructor
-  : ptr_ (CORBA_SequenceDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_SequenceDef_var::~CORBA_SequenceDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_SequenceDef_var &
-CORBA_SequenceDef_var::operator= (CORBA_SequenceDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_SequenceDef_var &
-CORBA_SequenceDef_var::operator= (const CORBA_SequenceDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_SequenceDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_SequenceDef_var::operator const CORBA_SequenceDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_SequenceDef_var::operator CORBA_SequenceDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr 
-CORBA_SequenceDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr
-CORBA_SequenceDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr &
-CORBA_SequenceDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr &
-CORBA_SequenceDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_SequenceDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr 
-CORBA_SequenceDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_SequenceDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_SequenceDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_SEQUENCEDEF___OUT_CI_)
-#define _CORBA_SEQUENCEDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_SequenceDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_SequenceDef_out::CORBA_SequenceDef_out (CORBA_SequenceDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_SequenceDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_SequenceDef_out::CORBA_SequenceDef_out (CORBA_SequenceDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_SequenceDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_SequenceDef_out::CORBA_SequenceDef_out (const CORBA_SequenceDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_SequenceDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_SequenceDef_out &
-CORBA_SequenceDef_out::operator= (const CORBA_SequenceDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_SequenceDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_SequenceDef_out &
-CORBA_SequenceDef_out::operator= (const CORBA_SequenceDef_var &p)
-{
-  this->ptr_ = CORBA_SequenceDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_SequenceDef_out &
-CORBA_SequenceDef_out::operator= (CORBA_SequenceDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_SequenceDef_out::operator CORBA_SequenceDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr &
-CORBA_SequenceDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_SequenceDef_ptr 
-CORBA_SequenceDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_ArrayDef::CORBA_ArrayDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_ArrayDef::CORBA_ArrayDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_ArrayDef::~CORBA_ArrayDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_ARRAYDEF___VAR_CI_)
-#define _CORBA_ARRAYDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ArrayDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ArrayDef_var::CORBA_ArrayDef_var (void) // default constructor
-  : ptr_ (CORBA_ArrayDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_ArrayDef_var::CORBA_ArrayDef_var (CORBA_ArrayDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_ArrayDef_ptr 
-CORBA_ArrayDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ArrayDef_var::CORBA_ArrayDef_var (const CORBA_ArrayDef_var &p) // copy constructor
-  : ptr_ (CORBA_ArrayDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_ArrayDef_var::~CORBA_ArrayDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_ArrayDef_var &
-CORBA_ArrayDef_var::operator= (CORBA_ArrayDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ArrayDef_var &
-CORBA_ArrayDef_var::operator= (const CORBA_ArrayDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ArrayDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ArrayDef_var::operator const CORBA_ArrayDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ArrayDef_var::operator CORBA_ArrayDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr 
-CORBA_ArrayDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr
-CORBA_ArrayDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr &
-CORBA_ArrayDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr &
-CORBA_ArrayDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ArrayDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr 
-CORBA_ArrayDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_ArrayDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ArrayDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ARRAYDEF___OUT_CI_)
-#define _CORBA_ARRAYDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ArrayDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ArrayDef_out::CORBA_ArrayDef_out (CORBA_ArrayDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_ArrayDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ArrayDef_out::CORBA_ArrayDef_out (CORBA_ArrayDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ArrayDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ArrayDef_out::CORBA_ArrayDef_out (const CORBA_ArrayDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ArrayDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ArrayDef_out &
-CORBA_ArrayDef_out::operator= (const CORBA_ArrayDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ArrayDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ArrayDef_out &
-CORBA_ArrayDef_out::operator= (const CORBA_ArrayDef_var &p)
-{
-  this->ptr_ = CORBA_ArrayDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_ArrayDef_out &
-CORBA_ArrayDef_out::operator= (CORBA_ArrayDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ArrayDef_out::operator CORBA_ArrayDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr &
-CORBA_ArrayDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ArrayDef_ptr 
-CORBA_ArrayDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_ExceptionDef::CORBA_ExceptionDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_ExceptionDef::CORBA_ExceptionDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_ExceptionDef::~CORBA_ExceptionDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_EXCEPTIONDEF___VAR_CI_)
-#define _CORBA_EXCEPTIONDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ExceptionDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ExceptionDef_var::CORBA_ExceptionDef_var (void) // default constructor
-  : ptr_ (CORBA_ExceptionDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_ExceptionDef_var::CORBA_ExceptionDef_var (CORBA_ExceptionDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_ExceptionDef_ptr 
-CORBA_ExceptionDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ExceptionDef_var::CORBA_ExceptionDef_var (const CORBA_ExceptionDef_var &p) // copy constructor
-  : ptr_ (CORBA_ExceptionDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_ExceptionDef_var::~CORBA_ExceptionDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_ExceptionDef_var &
-CORBA_ExceptionDef_var::operator= (CORBA_ExceptionDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ExceptionDef_var &
-CORBA_ExceptionDef_var::operator= (const CORBA_ExceptionDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ExceptionDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDef_var::operator const CORBA_ExceptionDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDef_var::operator CORBA_ExceptionDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr 
-CORBA_ExceptionDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr
-CORBA_ExceptionDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr &
-CORBA_ExceptionDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr &
-CORBA_ExceptionDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ExceptionDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr 
-CORBA_ExceptionDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_ExceptionDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ExceptionDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_EXCEPTIONDEF___OUT_CI_)
-#define _CORBA_EXCEPTIONDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ExceptionDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ExceptionDef_out::CORBA_ExceptionDef_out (CORBA_ExceptionDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_ExceptionDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ExceptionDef_out::CORBA_ExceptionDef_out (CORBA_ExceptionDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ExceptionDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ExceptionDef_out::CORBA_ExceptionDef_out (const CORBA_ExceptionDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ExceptionDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ExceptionDef_out &
-CORBA_ExceptionDef_out::operator= (const CORBA_ExceptionDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ExceptionDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ExceptionDef_out &
-CORBA_ExceptionDef_out::operator= (const CORBA_ExceptionDef_var &p)
-{
-  this->ptr_ = CORBA_ExceptionDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_ExceptionDef_out &
-CORBA_ExceptionDef_out::operator= (CORBA_ExceptionDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDef_out::operator CORBA_ExceptionDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr &
-CORBA_ExceptionDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDef_ptr 
-CORBA_ExceptionDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_ExceptionDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ExceptionDescription_var::CORBA_ExceptionDescription_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ExceptionDescription_var::CORBA_ExceptionDescription_var (CORBA_ExceptionDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ExceptionDescription_var::CORBA_ExceptionDescription_var (const CORBA_ExceptionDescription_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ExceptionDescription(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ExceptionDescription_var::~CORBA_ExceptionDescription_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDescription_var &
-CORBA_ExceptionDescription_var::operator= (CORBA_ExceptionDescription *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ExceptionDescription_var &
-CORBA_ExceptionDescription_var::operator= (const CORBA_ExceptionDescription_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ExceptionDescription (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ExceptionDescription *
-CORBA_ExceptionDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDescription *
-CORBA_ExceptionDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDescription_var::operator const CORBA_ExceptionDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDescription_var::operator CORBA_ExceptionDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDescription_var::operator CORBA_ExceptionDescription &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_ExceptionDescription &
-CORBA_ExceptionDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDescription &
-CORBA_ExceptionDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ExceptionDescription *&
-CORBA_ExceptionDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDescription *
-CORBA_ExceptionDescription_var::_retn (void)
-{
-  CORBA_ExceptionDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ExceptionDescription *
-CORBA_ExceptionDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ExceptionDescription_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ExceptionDescription_out::CORBA_ExceptionDescription_out (CORBA_ExceptionDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ExceptionDescription_out::CORBA_ExceptionDescription_out (CORBA_ExceptionDescription_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ExceptionDescription_out::CORBA_ExceptionDescription_out (const CORBA_ExceptionDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ExceptionDescription_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ExceptionDescription_out &
-CORBA_ExceptionDescription_out::operator= (const CORBA_ExceptionDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ExceptionDescription_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ExceptionDescription_out &
-CORBA_ExceptionDescription_out::operator= (CORBA_ExceptionDescription *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ExceptionDescription_out::operator CORBA_ExceptionDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDescription *&
-CORBA_ExceptionDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ExceptionDescription *
-CORBA_ExceptionDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_AttributeDef::CORBA_AttributeDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_AttributeDef::CORBA_AttributeDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_AttributeDef::~CORBA_AttributeDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_ATTRIBUTEDEF___VAR_CI_)
-#define _CORBA_ATTRIBUTEDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_AttributeDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_AttributeDef_var::CORBA_AttributeDef_var (void) // default constructor
-  : ptr_ (CORBA_AttributeDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_AttributeDef_var::CORBA_AttributeDef_var (CORBA_AttributeDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_AttributeDef_ptr 
-CORBA_AttributeDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_AttributeDef_var::CORBA_AttributeDef_var (const CORBA_AttributeDef_var &p) // copy constructor
-  : ptr_ (CORBA_AttributeDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_AttributeDef_var::~CORBA_AttributeDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_AttributeDef_var &
-CORBA_AttributeDef_var::operator= (CORBA_AttributeDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_AttributeDef_var &
-CORBA_AttributeDef_var::operator= (const CORBA_AttributeDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_AttributeDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_AttributeDef_var::operator const CORBA_AttributeDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_AttributeDef_var::operator CORBA_AttributeDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr 
-CORBA_AttributeDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr
-CORBA_AttributeDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr &
-CORBA_AttributeDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr &
-CORBA_AttributeDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_AttributeDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr 
-CORBA_AttributeDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_AttributeDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_AttributeDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ATTRIBUTEDEF___OUT_CI_)
-#define _CORBA_ATTRIBUTEDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_AttributeDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_AttributeDef_out::CORBA_AttributeDef_out (CORBA_AttributeDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_AttributeDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_AttributeDef_out::CORBA_AttributeDef_out (CORBA_AttributeDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_AttributeDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_AttributeDef_out::CORBA_AttributeDef_out (const CORBA_AttributeDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_AttributeDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_AttributeDef_out &
-CORBA_AttributeDef_out::operator= (const CORBA_AttributeDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_AttributeDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_AttributeDef_out &
-CORBA_AttributeDef_out::operator= (const CORBA_AttributeDef_var &p)
-{
-  this->ptr_ = CORBA_AttributeDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_AttributeDef_out &
-CORBA_AttributeDef_out::operator= (CORBA_AttributeDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_AttributeDef_out::operator CORBA_AttributeDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr &
-CORBA_AttributeDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDef_ptr 
-CORBA_AttributeDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_AttributeDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_AttributeDescription_var::CORBA_AttributeDescription_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_AttributeDescription_var::CORBA_AttributeDescription_var (CORBA_AttributeDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_AttributeDescription_var::CORBA_AttributeDescription_var (const CORBA_AttributeDescription_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_AttributeDescription(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_AttributeDescription_var::~CORBA_AttributeDescription_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDescription_var &
-CORBA_AttributeDescription_var::operator= (CORBA_AttributeDescription *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_AttributeDescription_var &
-CORBA_AttributeDescription_var::operator= (const CORBA_AttributeDescription_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_AttributeDescription (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_AttributeDescription *
-CORBA_AttributeDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDescription *
-CORBA_AttributeDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_AttributeDescription_var::operator const CORBA_AttributeDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_AttributeDescription_var::operator CORBA_AttributeDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_AttributeDescription_var::operator CORBA_AttributeDescription &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_AttributeDescription &
-CORBA_AttributeDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDescription &
-CORBA_AttributeDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_AttributeDescription *&
-CORBA_AttributeDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDescription *
-CORBA_AttributeDescription_var::_retn (void)
-{
-  CORBA_AttributeDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_AttributeDescription *
-CORBA_AttributeDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_AttributeDescription_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_AttributeDescription_out::CORBA_AttributeDescription_out (CORBA_AttributeDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_AttributeDescription_out::CORBA_AttributeDescription_out (CORBA_AttributeDescription_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_AttributeDescription_out::CORBA_AttributeDescription_out (const CORBA_AttributeDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_AttributeDescription_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_AttributeDescription_out &
-CORBA_AttributeDescription_out::operator= (const CORBA_AttributeDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_AttributeDescription_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_AttributeDescription_out &
-CORBA_AttributeDescription_out::operator= (CORBA_AttributeDescription *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_AttributeDescription_out::operator CORBA_AttributeDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDescription *&
-CORBA_AttributeDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_AttributeDescription *
-CORBA_AttributeDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ParameterDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ParameterDescription_var::CORBA_ParameterDescription_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ParameterDescription_var::CORBA_ParameterDescription_var (CORBA_ParameterDescription *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ParameterDescription_var::CORBA_ParameterDescription_var (const CORBA_ParameterDescription_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ParameterDescription(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ParameterDescription_var::~CORBA_ParameterDescription_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription_var &
-CORBA_ParameterDescription_var::operator= (CORBA_ParameterDescription *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ParameterDescription_var &
-CORBA_ParameterDescription_var::operator= (const CORBA_ParameterDescription_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ParameterDescription (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ParameterDescription *
-CORBA_ParameterDescription_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription *
-CORBA_ParameterDescription_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ParameterDescription_var::operator const CORBA_ParameterDescription &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ParameterDescription_var::operator CORBA_ParameterDescription &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ParameterDescription_var::operator CORBA_ParameterDescription &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_ParameterDescription &
-CORBA_ParameterDescription_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription &
-CORBA_ParameterDescription_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ParameterDescription *&
-CORBA_ParameterDescription_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription *
-CORBA_ParameterDescription_var::_retn (void)
-{
-  CORBA_ParameterDescription *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ParameterDescription *
-CORBA_ParameterDescription_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ParameterDescription_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ParameterDescription_out::CORBA_ParameterDescription_out (CORBA_ParameterDescription *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ParameterDescription_out::CORBA_ParameterDescription_out (CORBA_ParameterDescription_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ParameterDescription_out::CORBA_ParameterDescription_out (const CORBA_ParameterDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ParameterDescription_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ParameterDescription_out &
-CORBA_ParameterDescription_out::operator= (const CORBA_ParameterDescription_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ParameterDescription_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ParameterDescription_out &
-CORBA_ParameterDescription_out::operator= (CORBA_ParameterDescription *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ParameterDescription_out::operator CORBA_ParameterDescription *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription *&
-CORBA_ParameterDescription_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription *
-CORBA_ParameterDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_PARDESCRIPTIONSEQ_CI_
-
-  // = Static operations.
-  ACE_INLINE CORBA_ParameterDescription *
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    CORBA_ParameterDescription *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_ParameterDescription[size],
-		    0);
-    return retval;
-  }
-  
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (CORBA_ParameterDescription *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA_ParameterDescription *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    CORBA_ParameterDescription *tmp1 = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (this->maximum_);
-    CORBA_ParameterDescription * const tmp2 = ACE_reinterpret_cast (CORBA_ParameterDescription * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
-  }
-  
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA_ParameterDescription *tmp = ACE_reinterpret_cast (CORBA_ParameterDescription *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    CORBA_ParameterDescription *tmp1 = ACE_reinterpret_cast (CORBA_ParameterDescription *, this->buffer_);
-    CORBA_ParameterDescription * const tmp2 = ACE_reinterpret_cast (CORBA_ParameterDescription * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
-  
-  // = Accessors.
-  ACE_INLINE CORBA_ParameterDescription &
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_ParameterDescription* tmp = ACE_reinterpret_cast(CORBA_ParameterDescription*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const CORBA_ParameterDescription &
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA_ParameterDescription * const tmp = ACE_reinterpret_cast (CORBA_ParameterDescription* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE CORBA_ParameterDescription *
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA_ParameterDescription *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA_ParameterDescription*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA_ParameterDescription*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const CORBA_ParameterDescription *
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA_ParameterDescription * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  CORBA_ParameterDescription *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA_ParameterDescription *tmp = ACE_reinterpret_cast(CORBA_ParameterDescription*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_ParDescriptionSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
-  
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_PARDESCRIPTIONSEQ_CI_)
-#define _CORBA_PARDESCRIPTIONSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ParDescriptionSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_var::CORBA_ParDescriptionSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_var::CORBA_ParDescriptionSeq_var (CORBA_ParDescriptionSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_var::CORBA_ParDescriptionSeq_var (const CORBA_ParDescriptionSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ParDescriptionSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_var::~CORBA_ParDescriptionSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq_var &
-CORBA_ParDescriptionSeq_var::operator= (CORBA_ParDescriptionSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq_var &
-CORBA_ParDescriptionSeq_var::operator= (const CORBA_ParDescriptionSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ParDescriptionSeq (*p.ptr_),
-	            *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ParDescriptionSeq *
-CORBA_ParDescriptionSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq *
-CORBA_ParDescriptionSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ParDescriptionSeq_var::operator const CORBA_ParDescriptionSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ParDescriptionSeq_var::operator CORBA_ParDescriptionSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ParDescriptionSeq_var::operator CORBA_ParDescriptionSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription &
-CORBA_ParDescriptionSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_ParDescriptionSeq &
-CORBA_ParDescriptionSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq &
-CORBA_ParDescriptionSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ParDescriptionSeq *&
-CORBA_ParDescriptionSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq *
-CORBA_ParDescriptionSeq_var::_retn (void)
-{
-  CORBA_ParDescriptionSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq *
-CORBA_ParDescriptionSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ParDescriptionSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_out::CORBA_ParDescriptionSeq_out (CORBA_ParDescriptionSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_out::CORBA_ParDescriptionSeq_out (CORBA_ParDescriptionSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ParDescriptionSeq_out::CORBA_ParDescriptionSeq_out (const CORBA_ParDescriptionSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ParDescriptionSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ParDescriptionSeq_out &
-CORBA_ParDescriptionSeq_out::operator= (const CORBA_ParDescriptionSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ParDescriptionSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq_out &
-CORBA_ParDescriptionSeq_out::operator= (CORBA_ParDescriptionSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ParDescriptionSeq_out::operator CORBA_ParDescriptionSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq *&
-CORBA_ParDescriptionSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParDescriptionSeq *
-CORBA_ParDescriptionSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ParameterDescription &
-CORBA_ParDescriptionSeq_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONTEXTIDSEQ_CI_)
-#define _CORBA_CONTEXTIDSEQ_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ContextIdSeq_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ContextIdSeq_var::CORBA_ContextIdSeq_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ContextIdSeq_var::CORBA_ContextIdSeq_var (CORBA_ContextIdSeq *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ContextIdSeq_var::CORBA_ContextIdSeq_var (const CORBA_ContextIdSeq_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ContextIdSeq(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ContextIdSeq_var::~CORBA_ContextIdSeq_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ContextIdSeq_var &
-CORBA_ContextIdSeq_var::operator= (CORBA_ContextIdSeq *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ContextIdSeq_var &
-CORBA_ContextIdSeq_var::operator= (const CORBA_ContextIdSeq_var &p) // deep copy
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ContextIdSeq (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ContextIdSeq *
-CORBA_ContextIdSeq_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContextIdSeq *
-CORBA_ContextIdSeq_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ContextIdSeq_var::operator const CORBA_ContextIdSeq &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ContextIdSeq_var::operator CORBA_ContextIdSeq &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ContextIdSeq_var::operator CORBA_ContextIdSeq &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA_ContextIdSeq_var::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-ACE_INLINE const CORBA_ContextIdSeq &
-CORBA_ContextIdSeq_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ContextIdSeq &
-CORBA_ContextIdSeq_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ContextIdSeq *&
-CORBA_ContextIdSeq_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContextIdSeq *
-CORBA_ContextIdSeq_var::_retn (void)
-{
-  CORBA_ContextIdSeq *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ContextIdSeq *
-CORBA_ContextIdSeq_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ContextIdSeq_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ContextIdSeq_out::CORBA_ContextIdSeq_out (CORBA_ContextIdSeq *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ContextIdSeq_out::CORBA_ContextIdSeq_out (CORBA_ContextIdSeq_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ContextIdSeq_out::CORBA_ContextIdSeq_out (const CORBA_ContextIdSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ContextIdSeq_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ContextIdSeq_out &
-CORBA_ContextIdSeq_out::operator= (const CORBA_ContextIdSeq_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ContextIdSeq_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ContextIdSeq_out &
-CORBA_ContextIdSeq_out::operator= (CORBA_ContextIdSeq *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ContextIdSeq_out::operator CORBA_ContextIdSeq *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContextIdSeq *&
-CORBA_ContextIdSeq_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ContextIdSeq *
-CORBA_ContextIdSeq_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA_ContextIdSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE TAO_Object_Manager<IR_ComponentDef, IR_ComponentDef_var> 
+IR_ComponentDefSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -8853,24 +1611,24 @@ CORBA_ContextIdSeq_out::operator[] (CORBA::ULong index)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_EXCEPTIONDEFSEQ_CI_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_EXCEPTIONDEFSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PROVIDESDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PROVIDESDEFSEQ_CI_
 
-  ACE_INLINE CORBA_ExceptionDef **
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (CORBA::ULong nelems)
+  ACE_INLINE IR_ProvidesDef **
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (CORBA::ULong nelems)
   {
-    CORBA_ExceptionDef **buf = 0;
+    IR_ProvidesDef **buf = 0;
     
-    ACE_NEW_RETURN (buf, CORBA_ExceptionDef*[nelems], 0);
+    ACE_NEW_RETURN (buf, IR_ProvidesDef*[nelems], 0);
     
     for (CORBA::ULong i = 0; i < nelems; i++)
-      buf[i] = CORBA_ExceptionDef::_nil ();
+      buf[i] = IR_ProvidesDef::_nil ();
     
     return buf;
   }
   
   ACE_INLINE void 
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::freebuf (CORBA_ExceptionDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (IR_ProvidesDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -8878,97 +1636,104 @@ CORBA_ContextIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (maximum))
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA_ExceptionDef* *value,
+    IR_ProvidesDef* *value,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA_ExceptionDef **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (this->maximum_);
-    CORBA_ExceptionDef ** const tmp2 = ACE_reinterpret_cast (CORBA_ExceptionDef ** ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA_ExceptionDef::_duplicate (tmp2[i]);
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_ProvidesDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (this->maximum_);
+      IR_ProvidesDef ** const tmp2 = ACE_reinterpret_cast (IR_ProvidesDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_ProvidesDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
     
     if (this->release_)
     {
-      CORBA_ExceptionDef **tmp = ACE_reinterpret_cast (CORBA_ExceptionDef **, this->buffer_);
+      IR_ProvidesDef **tmp = ACE_reinterpret_cast (IR_ProvidesDef **, this->buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
-        tmp[i] = CORBA_ExceptionDef::_nil ();
+        tmp[i] = IR_ProvidesDef::_nil ();
       }
       if (this->maximum_ < rhs.maximum_)
       {
-        _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (rhs.maximum_);
+        _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA_ExceptionDef **tmp1 = ACE_reinterpret_cast (CORBA_ExceptionDef **, this->buffer_);
-    CORBA_ExceptionDef ** const tmp2 = ACE_reinterpret_cast (CORBA_ExceptionDef ** ACE_CAST_CONST, rhs.buffer_);
+    IR_ProvidesDef **tmp1 = ACE_reinterpret_cast (IR_ProvidesDef **, this->buffer_);
+    IR_ProvidesDef ** const tmp2 = ACE_reinterpret_cast (IR_ProvidesDef ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA_ExceptionDef::_duplicate (tmp2[i]);
+      tmp1[i] = IR_ProvidesDef::_duplicate (tmp2[i]);
     
     return *this;
   }
   
-  ACE_INLINE TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var>
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::operator[] (CORBA::ULong index) const
+  ACE_INLINE TAO_Object_Manager<IR_ProvidesDef,IR_ProvidesDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
-    CORBA_ExceptionDef ** const tmp = ACE_reinterpret_cast (CORBA_ExceptionDef ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var> (tmp + index, this->release_);
+    IR_ProvidesDef ** const tmp = ACE_reinterpret_cast (IR_ProvidesDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_ProvidesDef,IR_ProvidesDef_var> (tmp + index, this->release_);
   }
   
-  ACE_INLINE CORBA_ExceptionDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_ProvidesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA_ExceptionDef **result = 0;
+    IR_ProvidesDef **result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::allocbuf (this->maximum_);
+        result = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (this->maximum_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA_ExceptionDef**, this->buffer_);
+        result = ACE_reinterpret_cast (IR_ProvidesDef**, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -8977,7 +1742,7 @@ CORBA_ContextIdSeq_out::operator[] (CORBA::ULong index)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA_ExceptionDef**,this->buffer_);
+        result = ACE_reinterpret_cast(IR_ProvidesDef**,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -8987,10 +1752,10 @@ CORBA_ContextIdSeq_out::operator[] (CORBA::ULong index)
     return result;
   }
   
-  ACE_INLINE const CORBA_ExceptionDef* *
-  _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq::get_buffer (void) const
+  ACE_INLINE const IR_ProvidesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA_ExceptionDef ** ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_ProvidesDef ** ACE_CAST_CONST, this->buffer_);
   }
   
   
@@ -8999,144 +1764,148 @@ CORBA_ContextIdSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_EXCEPTIONDEFSEQ_CI_)
-#define _CORBA_EXCEPTIONDEFSEQ_CI_
+#if !defined (_IR_PROVIDESDEFSEQ_CI_)
+#define _IR_PROVIDESDEFSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ExceptionDefSeq_var
+// Inline operations for class IR_ProvidesDefSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_var::CORBA_ExceptionDefSeq_var (void) // default constructor
+IR_ProvidesDefSeq_var::IR_ProvidesDefSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_var::CORBA_ExceptionDefSeq_var (CORBA_ExceptionDefSeq *p)
+IR_ProvidesDefSeq_var::IR_ProvidesDefSeq_var (IR_ProvidesDefSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_var::CORBA_ExceptionDefSeq_var (const CORBA_ExceptionDefSeq_var &p) // copy constructor
+IR_ProvidesDefSeq_var::IR_ProvidesDefSeq_var (const ::IR_ProvidesDefSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ExceptionDefSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_ProvidesDefSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_var::~CORBA_ExceptionDefSeq_var (void) // destructor
+IR_ProvidesDefSeq_var::~IR_ProvidesDefSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq_var &
-CORBA_ExceptionDefSeq_var::operator= (CORBA_ExceptionDefSeq *p)
+ACE_INLINE IR_ProvidesDefSeq_var &
+IR_ProvidesDefSeq_var::operator= (IR_ProvidesDefSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq_var &
-CORBA_ExceptionDefSeq_var::operator= (const CORBA_ExceptionDefSeq_var &p) // deep copy
+ACE_INLINE IR_ProvidesDefSeq_var &
+IR_ProvidesDefSeq_var::operator= (const ::IR_ProvidesDefSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ExceptionDefSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDefSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ExceptionDefSeq *
-CORBA_ExceptionDefSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_ProvidesDefSeq *
+IR_ProvidesDefSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq *
-CORBA_ExceptionDefSeq_var::operator-> (void)
+ACE_INLINE ::IR_ProvidesDefSeq *
+IR_ProvidesDefSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ExceptionDefSeq_var::operator const CORBA_ExceptionDefSeq &() const // cast
+IR_ProvidesDefSeq_var::operator const ::IR_ProvidesDefSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ExceptionDefSeq_var::operator CORBA_ExceptionDefSeq &() // cast 
+IR_ProvidesDefSeq_var::operator ::IR_ProvidesDefSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ExceptionDefSeq_var::operator CORBA_ExceptionDefSeq &() const// cast 
+IR_ProvidesDefSeq_var::operator ::IR_ProvidesDefSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var> 
-CORBA_ExceptionDefSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_ProvidesDefSeq_var::operator ::IR_ProvidesDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ProvidesDef, IR_ProvidesDef_var> 
+IR_ProvidesDefSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_ExceptionDefSeq &
-CORBA_ExceptionDefSeq_var::in (void) const
+ACE_INLINE const ::IR_ProvidesDefSeq &
+IR_ProvidesDefSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq &
-CORBA_ExceptionDefSeq_var::inout (void)
+ACE_INLINE ::IR_ProvidesDefSeq &
+IR_ProvidesDefSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_ExceptionDefSeq *&
-CORBA_ExceptionDefSeq_var::out (void)
+ACE_INLINE ::IR_ProvidesDefSeq *&
+IR_ProvidesDefSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq *
-CORBA_ExceptionDefSeq_var::_retn (void)
+ACE_INLINE ::IR_ProvidesDefSeq *
+IR_ProvidesDefSeq_var::_retn (void)
 {
-  CORBA_ExceptionDefSeq *tmp = this->ptr_;
+  ::IR_ProvidesDefSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq *
-CORBA_ExceptionDefSeq_var::ptr (void) const
+ACE_INLINE ::IR_ProvidesDefSeq *
+IR_ProvidesDefSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_ExceptionDefSeq_out
+// Inline operations for class IR_ProvidesDefSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_out::CORBA_ExceptionDefSeq_out (CORBA_ExceptionDefSeq *&p)
+IR_ProvidesDefSeq_out::IR_ProvidesDefSeq_out (IR_ProvidesDefSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_out::CORBA_ExceptionDefSeq_out (CORBA_ExceptionDefSeq_var &p) // constructor from _var
+IR_ProvidesDefSeq_out::IR_ProvidesDefSeq_out (IR_ProvidesDefSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -9144,44 +1913,44 @@ CORBA_ExceptionDefSeq_out::CORBA_ExceptionDefSeq_out (CORBA_ExceptionDefSeq_var 
 }
 
 ACE_INLINE
-CORBA_ExceptionDefSeq_out::CORBA_ExceptionDefSeq_out (const CORBA_ExceptionDefSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ExceptionDefSeq_out&,p).ptr_)
+IR_ProvidesDefSeq_out::IR_ProvidesDefSeq_out (const ::IR_ProvidesDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ProvidesDefSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ExceptionDefSeq_out &
-CORBA_ExceptionDefSeq_out::operator= (const CORBA_ExceptionDefSeq_out &p)
+ACE_INLINE ::IR_ProvidesDefSeq_out &
+IR_ProvidesDefSeq_out::operator= (const ::IR_ProvidesDefSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ExceptionDefSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_ProvidesDefSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq_out &
-CORBA_ExceptionDefSeq_out::operator= (CORBA_ExceptionDefSeq *p)
+ACE_INLINE ::IR_ProvidesDefSeq_out &
+IR_ProvidesDefSeq_out::operator= (IR_ProvidesDefSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ExceptionDefSeq_out::operator CORBA_ExceptionDefSeq *&() // cast
+IR_ProvidesDefSeq_out::operator ::IR_ProvidesDefSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq *&
-CORBA_ExceptionDefSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_ProvidesDefSeq *&
+IR_ProvidesDefSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDefSeq *
-CORBA_ExceptionDefSeq_out::operator-> (void)
+ACE_INLINE ::IR_ProvidesDefSeq *
+IR_ProvidesDefSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var> 
-CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE TAO_Object_Manager<IR_ProvidesDef, IR_ProvidesDef_var> 
+IR_ProvidesDefSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -9192,63 +1961,3044 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_EXCDESCRIPTIONSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_EXCDESCRIPTIONSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_USESDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_USESDEFSEQ_CI_
+
+  ACE_INLINE IR_UsesDef **
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_UsesDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_UsesDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_UsesDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (IR_UsesDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_UsesDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_UsesDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (this->maximum_);
+      IR_UsesDef ** const tmp2 = ACE_reinterpret_cast (IR_UsesDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_UsesDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_UsesDef **tmp = ACE_reinterpret_cast (IR_UsesDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_UsesDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_UsesDef **tmp1 = ACE_reinterpret_cast (IR_UsesDef **, this->buffer_);
+    IR_UsesDef ** const tmp2 = ACE_reinterpret_cast (IR_UsesDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_UsesDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_UsesDef,IR_UsesDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_UsesDef ** const tmp = ACE_reinterpret_cast (IR_UsesDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_UsesDef,IR_UsesDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_UsesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_UsesDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_UsesDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_UsesDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_UsesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_UsesDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_USESDEFSEQ_CI_)
+#define _IR_USESDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_UsesDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDefSeq_var::IR_UsesDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_UsesDefSeq_var::IR_UsesDefSeq_var (IR_UsesDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_UsesDefSeq_var::IR_UsesDefSeq_var (const ::IR_UsesDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_UsesDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDefSeq_var::~IR_UsesDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_UsesDefSeq_var &
+IR_UsesDefSeq_var::operator= (IR_UsesDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_UsesDefSeq_var &
+IR_UsesDefSeq_var::operator= (const ::IR_UsesDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_UsesDefSeq *
+IR_UsesDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDefSeq *
+IR_UsesDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDefSeq_var::operator const ::IR_UsesDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDefSeq_var::operator ::IR_UsesDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDefSeq_var::operator ::IR_UsesDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_UsesDefSeq_var::operator ::IR_UsesDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_UsesDef, IR_UsesDef_var> 
+IR_UsesDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_UsesDefSeq &
+IR_UsesDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDefSeq &
+IR_UsesDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_UsesDefSeq *&
+IR_UsesDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDefSeq *
+IR_UsesDefSeq_var::_retn (void)
+{
+  ::IR_UsesDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_UsesDefSeq *
+IR_UsesDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_UsesDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDefSeq_out::IR_UsesDefSeq_out (IR_UsesDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDefSeq_out::IR_UsesDefSeq_out (IR_UsesDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDefSeq_out::IR_UsesDefSeq_out (const ::IR_UsesDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UsesDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_UsesDefSeq_out &
+IR_UsesDefSeq_out::operator= (const ::IR_UsesDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UsesDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_UsesDefSeq_out &
+IR_UsesDefSeq_out::operator= (IR_UsesDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UsesDefSeq_out::operator ::IR_UsesDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDefSeq *&
+IR_UsesDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDefSeq *
+IR_UsesDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_UsesDef, IR_UsesDef_var> 
+IR_UsesDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_HOMEDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_HOMEDEFSEQ_CI_
+
+  ACE_INLINE IR_HomeDef **
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_HomeDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_HomeDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_HomeDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (IR_HomeDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_HomeDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq(const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_HomeDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (this->maximum_);
+      IR_HomeDef ** const tmp2 = ACE_reinterpret_cast (IR_HomeDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_HomeDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_HomeDef **tmp = ACE_reinterpret_cast (IR_HomeDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_HomeDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_HomeDef **tmp1 = ACE_reinterpret_cast (IR_HomeDef **, this->buffer_);
+    IR_HomeDef ** const tmp2 = ACE_reinterpret_cast (IR_HomeDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_HomeDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_HomeDef,IR_HomeDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_HomeDef ** const tmp = ACE_reinterpret_cast (IR_HomeDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_HomeDef,IR_HomeDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_HomeDef* *
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_HomeDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_HomeDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_HomeDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_HomeDef* *
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_HomeDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_HOMEDEFSEQ_CI_)
+#define _IR_HOMEDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_HomeDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_HomeDefSeq_var::IR_HomeDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_HomeDefSeq_var::IR_HomeDefSeq_var (IR_HomeDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_HomeDefSeq_var::IR_HomeDefSeq_var (const ::IR_HomeDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_HomeDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_HomeDefSeq_var::~IR_HomeDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_HomeDefSeq_var &
+IR_HomeDefSeq_var::operator= (IR_HomeDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_HomeDefSeq_var &
+IR_HomeDefSeq_var::operator= (const ::IR_HomeDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_HomeDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_HomeDefSeq *
+IR_HomeDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDefSeq *
+IR_HomeDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_HomeDefSeq_var::operator const ::IR_HomeDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_HomeDefSeq_var::operator ::IR_HomeDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_HomeDefSeq_var::operator ::IR_HomeDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_HomeDefSeq_var::operator ::IR_HomeDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_HomeDef, IR_HomeDef_var> 
+IR_HomeDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_HomeDefSeq &
+IR_HomeDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDefSeq &
+IR_HomeDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_HomeDefSeq *&
+IR_HomeDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDefSeq *
+IR_HomeDefSeq_var::_retn (void)
+{
+  ::IR_HomeDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_HomeDefSeq *
+IR_HomeDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_HomeDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_HomeDefSeq_out::IR_HomeDefSeq_out (IR_HomeDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_HomeDefSeq_out::IR_HomeDefSeq_out (IR_HomeDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_HomeDefSeq_out::IR_HomeDefSeq_out (const ::IR_HomeDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_HomeDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_HomeDefSeq_out &
+IR_HomeDefSeq_out::operator= (const ::IR_HomeDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_HomeDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_HomeDefSeq_out &
+IR_HomeDefSeq_out::operator= (IR_HomeDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_HomeDefSeq_out::operator ::IR_HomeDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDefSeq *&
+IR_HomeDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDefSeq *
+IR_HomeDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_HomeDef, IR_HomeDef_var> 
+IR_HomeDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EMITSDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EMITSDEFSEQ_CI_
+
+  ACE_INLINE IR_EmitsDef **
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_EmitsDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_EmitsDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_EmitsDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (IR_EmitsDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_EmitsDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq(const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_EmitsDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (this->maximum_);
+      IR_EmitsDef ** const tmp2 = ACE_reinterpret_cast (IR_EmitsDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_EmitsDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_EmitsDef **tmp = ACE_reinterpret_cast (IR_EmitsDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_EmitsDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_EmitsDef **tmp1 = ACE_reinterpret_cast (IR_EmitsDef **, this->buffer_);
+    IR_EmitsDef ** const tmp2 = ACE_reinterpret_cast (IR_EmitsDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_EmitsDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_EmitsDef,IR_EmitsDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_EmitsDef ** const tmp = ACE_reinterpret_cast (IR_EmitsDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_EmitsDef,IR_EmitsDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_EmitsDef* *
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_EmitsDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_EmitsDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_EmitsDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_EmitsDef* *
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_EmitsDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_EMITSDEFSEQ_CI_)
+#define _IR_EMITSDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_EmitsDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_EmitsDefSeq_var::IR_EmitsDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_EmitsDefSeq_var::IR_EmitsDefSeq_var (IR_EmitsDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_EmitsDefSeq_var::IR_EmitsDefSeq_var (const ::IR_EmitsDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_EmitsDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EmitsDefSeq_var::~IR_EmitsDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_EmitsDefSeq_var &
+IR_EmitsDefSeq_var::operator= (IR_EmitsDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_EmitsDefSeq_var &
+IR_EmitsDefSeq_var::operator= (const ::IR_EmitsDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_EmitsDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_EmitsDefSeq *
+IR_EmitsDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq *
+IR_EmitsDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_EmitsDefSeq_var::operator const ::IR_EmitsDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_EmitsDefSeq_var::operator ::IR_EmitsDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_EmitsDefSeq_var::operator ::IR_EmitsDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_EmitsDefSeq_var::operator ::IR_EmitsDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_EmitsDef, IR_EmitsDef_var> 
+IR_EmitsDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_EmitsDefSeq &
+IR_EmitsDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq &
+IR_EmitsDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_EmitsDefSeq *&
+IR_EmitsDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq *
+IR_EmitsDefSeq_var::_retn (void)
+{
+  ::IR_EmitsDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq *
+IR_EmitsDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_EmitsDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_EmitsDefSeq_out::IR_EmitsDefSeq_out (IR_EmitsDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EmitsDefSeq_out::IR_EmitsDefSeq_out (IR_EmitsDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EmitsDefSeq_out::IR_EmitsDefSeq_out (const ::IR_EmitsDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_EmitsDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_EmitsDefSeq_out &
+IR_EmitsDefSeq_out::operator= (const ::IR_EmitsDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_EmitsDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq_out &
+IR_EmitsDefSeq_out::operator= (IR_EmitsDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_EmitsDefSeq_out::operator ::IR_EmitsDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq *&
+IR_EmitsDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDefSeq *
+IR_EmitsDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_EmitsDef, IR_EmitsDef_var> 
+IR_EmitsDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PUBLISHESDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PUBLISHESDEFSEQ_CI_
+
+  ACE_INLINE IR_PublishesDef **
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_PublishesDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_PublishesDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_PublishesDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (IR_PublishesDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_PublishesDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_PublishesDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (this->maximum_);
+      IR_PublishesDef ** const tmp2 = ACE_reinterpret_cast (IR_PublishesDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_PublishesDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_PublishesDef **tmp = ACE_reinterpret_cast (IR_PublishesDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_PublishesDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_PublishesDef **tmp1 = ACE_reinterpret_cast (IR_PublishesDef **, this->buffer_);
+    IR_PublishesDef ** const tmp2 = ACE_reinterpret_cast (IR_PublishesDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_PublishesDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_PublishesDef,IR_PublishesDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_PublishesDef ** const tmp = ACE_reinterpret_cast (IR_PublishesDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_PublishesDef,IR_PublishesDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_PublishesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_PublishesDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_PublishesDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_PublishesDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_PublishesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_PublishesDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_PUBLISHESDEFSEQ_CI_)
+#define _IR_PUBLISHESDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_PublishesDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_PublishesDefSeq_var::IR_PublishesDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_PublishesDefSeq_var::IR_PublishesDefSeq_var (IR_PublishesDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_PublishesDefSeq_var::IR_PublishesDefSeq_var (const ::IR_PublishesDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_PublishesDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_PublishesDefSeq_var::~IR_PublishesDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_PublishesDefSeq_var &
+IR_PublishesDefSeq_var::operator= (IR_PublishesDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_PublishesDefSeq_var &
+IR_PublishesDefSeq_var::operator= (const ::IR_PublishesDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_PublishesDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_PublishesDefSeq *
+IR_PublishesDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq *
+IR_PublishesDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_PublishesDefSeq_var::operator const ::IR_PublishesDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_PublishesDefSeq_var::operator ::IR_PublishesDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_PublishesDefSeq_var::operator ::IR_PublishesDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_PublishesDefSeq_var::operator ::IR_PublishesDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_PublishesDef, IR_PublishesDef_var> 
+IR_PublishesDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_PublishesDefSeq &
+IR_PublishesDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq &
+IR_PublishesDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_PublishesDefSeq *&
+IR_PublishesDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq *
+IR_PublishesDefSeq_var::_retn (void)
+{
+  ::IR_PublishesDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq *
+IR_PublishesDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_PublishesDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_PublishesDefSeq_out::IR_PublishesDefSeq_out (IR_PublishesDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_PublishesDefSeq_out::IR_PublishesDefSeq_out (IR_PublishesDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_PublishesDefSeq_out::IR_PublishesDefSeq_out (const ::IR_PublishesDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_PublishesDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_PublishesDefSeq_out &
+IR_PublishesDefSeq_out::operator= (const ::IR_PublishesDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_PublishesDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq_out &
+IR_PublishesDefSeq_out::operator= (IR_PublishesDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_PublishesDefSeq_out::operator ::IR_PublishesDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq *&
+IR_PublishesDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDefSeq *
+IR_PublishesDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_PublishesDef, IR_PublishesDef_var> 
+IR_PublishesDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONSUMESDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONSUMESDEFSEQ_CI_
+
+  ACE_INLINE IR_ConsumesDef **
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_ConsumesDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_ConsumesDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_ConsumesDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (IR_ConsumesDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_ConsumesDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_ConsumesDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (this->maximum_);
+      IR_ConsumesDef ** const tmp2 = ACE_reinterpret_cast (IR_ConsumesDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_ConsumesDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_ConsumesDef **tmp = ACE_reinterpret_cast (IR_ConsumesDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_ConsumesDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_ConsumesDef **tmp1 = ACE_reinterpret_cast (IR_ConsumesDef **, this->buffer_);
+    IR_ConsumesDef ** const tmp2 = ACE_reinterpret_cast (IR_ConsumesDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_ConsumesDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_ConsumesDef,IR_ConsumesDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_ConsumesDef ** const tmp = ACE_reinterpret_cast (IR_ConsumesDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_ConsumesDef,IR_ConsumesDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_ConsumesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_ConsumesDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_ConsumesDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_ConsumesDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_ConsumesDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_ConsumesDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_CONSUMESDEFSEQ_CI_)
+#define _IR_CONSUMESDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_ConsumesDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_ConsumesDefSeq_var::IR_ConsumesDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ConsumesDefSeq_var::IR_ConsumesDefSeq_var (IR_ConsumesDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ConsumesDefSeq_var::IR_ConsumesDefSeq_var (const ::IR_ConsumesDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ConsumesDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ConsumesDefSeq_var::~IR_ConsumesDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ConsumesDefSeq_var &
+IR_ConsumesDefSeq_var::operator= (IR_ConsumesDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ConsumesDefSeq_var &
+IR_ConsumesDefSeq_var::operator= (const ::IR_ConsumesDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ConsumesDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ConsumesDefSeq *
+IR_ConsumesDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq *
+IR_ConsumesDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ConsumesDefSeq_var::operator const ::IR_ConsumesDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ConsumesDefSeq_var::operator ::IR_ConsumesDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ConsumesDefSeq_var::operator ::IR_ConsumesDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ConsumesDefSeq_var::operator ::IR_ConsumesDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ConsumesDef, IR_ConsumesDef_var> 
+IR_ConsumesDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_ConsumesDefSeq &
+IR_ConsumesDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq &
+IR_ConsumesDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ConsumesDefSeq *&
+IR_ConsumesDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq *
+IR_ConsumesDefSeq_var::_retn (void)
+{
+  ::IR_ConsumesDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq *
+IR_ConsumesDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ConsumesDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_ConsumesDefSeq_out::IR_ConsumesDefSeq_out (IR_ConsumesDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ConsumesDefSeq_out::IR_ConsumesDefSeq_out (IR_ConsumesDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ConsumesDefSeq_out::IR_ConsumesDefSeq_out (const ::IR_ConsumesDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ConsumesDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ConsumesDefSeq_out &
+IR_ConsumesDefSeq_out::operator= (const ::IR_ConsumesDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ConsumesDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq_out &
+IR_ConsumesDefSeq_out::operator= (IR_ConsumesDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ConsumesDefSeq_out::operator ::IR_ConsumesDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq *&
+IR_ConsumesDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDefSeq *
+IR_ConsumesDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ConsumesDef, IR_ConsumesDef_var> 
+IR_ConsumesDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FACTORYDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FACTORYDEFSEQ_CI_
+
+  ACE_INLINE IR_FactoryDef **
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_FactoryDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_FactoryDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_FactoryDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (IR_FactoryDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_FactoryDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq(const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_FactoryDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (this->maximum_);
+      IR_FactoryDef ** const tmp2 = ACE_reinterpret_cast (IR_FactoryDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_FactoryDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_FactoryDef **tmp = ACE_reinterpret_cast (IR_FactoryDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_FactoryDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_FactoryDef **tmp1 = ACE_reinterpret_cast (IR_FactoryDef **, this->buffer_);
+    IR_FactoryDef ** const tmp2 = ACE_reinterpret_cast (IR_FactoryDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_FactoryDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_FactoryDef,IR_FactoryDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_FactoryDef ** const tmp = ACE_reinterpret_cast (IR_FactoryDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_FactoryDef,IR_FactoryDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_FactoryDef* *
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_FactoryDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_FactoryDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_FactoryDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_FactoryDef* *
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_FactoryDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_FACTORYDEFSEQ_CI_)
+#define _IR_FACTORYDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_FactoryDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_FactoryDefSeq_var::IR_FactoryDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_FactoryDefSeq_var::IR_FactoryDefSeq_var (IR_FactoryDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_FactoryDefSeq_var::IR_FactoryDefSeq_var (const ::IR_FactoryDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_FactoryDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_FactoryDefSeq_var::~IR_FactoryDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_FactoryDefSeq_var &
+IR_FactoryDefSeq_var::operator= (IR_FactoryDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_FactoryDefSeq_var &
+IR_FactoryDefSeq_var::operator= (const ::IR_FactoryDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_FactoryDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_FactoryDefSeq *
+IR_FactoryDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq *
+IR_FactoryDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_FactoryDefSeq_var::operator const ::IR_FactoryDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_FactoryDefSeq_var::operator ::IR_FactoryDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_FactoryDefSeq_var::operator ::IR_FactoryDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_FactoryDefSeq_var::operator ::IR_FactoryDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_FactoryDef, IR_FactoryDef_var> 
+IR_FactoryDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_FactoryDefSeq &
+IR_FactoryDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq &
+IR_FactoryDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_FactoryDefSeq *&
+IR_FactoryDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq *
+IR_FactoryDefSeq_var::_retn (void)
+{
+  ::IR_FactoryDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq *
+IR_FactoryDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_FactoryDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_FactoryDefSeq_out::IR_FactoryDefSeq_out (IR_FactoryDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_FactoryDefSeq_out::IR_FactoryDefSeq_out (IR_FactoryDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_FactoryDefSeq_out::IR_FactoryDefSeq_out (const ::IR_FactoryDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_FactoryDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_FactoryDefSeq_out &
+IR_FactoryDefSeq_out::operator= (const ::IR_FactoryDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_FactoryDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq_out &
+IR_FactoryDefSeq_out::operator= (IR_FactoryDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_FactoryDefSeq_out::operator ::IR_FactoryDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq *&
+IR_FactoryDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDefSeq *
+IR_FactoryDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_FactoryDef, IR_FactoryDef_var> 
+IR_FactoryDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FINDERDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FINDERDEFSEQ_CI_
+
+  ACE_INLINE IR_FinderDef **
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_FinderDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_FinderDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_FinderDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (IR_FinderDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_FinderDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq(const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_FinderDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (this->maximum_);
+      IR_FinderDef ** const tmp2 = ACE_reinterpret_cast (IR_FinderDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_FinderDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_FinderDef **tmp = ACE_reinterpret_cast (IR_FinderDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_FinderDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_FinderDef **tmp1 = ACE_reinterpret_cast (IR_FinderDef **, this->buffer_);
+    IR_FinderDef ** const tmp2 = ACE_reinterpret_cast (IR_FinderDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_FinderDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_FinderDef,IR_FinderDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_FinderDef ** const tmp = ACE_reinterpret_cast (IR_FinderDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_FinderDef,IR_FinderDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_FinderDef* *
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_FinderDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_FinderDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_FinderDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_FinderDef* *
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_FinderDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_FINDERDEFSEQ_CI_)
+#define _IR_FINDERDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_FinderDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_FinderDefSeq_var::IR_FinderDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_FinderDefSeq_var::IR_FinderDefSeq_var (IR_FinderDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_FinderDefSeq_var::IR_FinderDefSeq_var (const ::IR_FinderDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_FinderDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_FinderDefSeq_var::~IR_FinderDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_FinderDefSeq_var &
+IR_FinderDefSeq_var::operator= (IR_FinderDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_FinderDefSeq_var &
+IR_FinderDefSeq_var::operator= (const ::IR_FinderDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_FinderDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_FinderDefSeq *
+IR_FinderDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDefSeq *
+IR_FinderDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_FinderDefSeq_var::operator const ::IR_FinderDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_FinderDefSeq_var::operator ::IR_FinderDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_FinderDefSeq_var::operator ::IR_FinderDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_FinderDefSeq_var::operator ::IR_FinderDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_FinderDef, IR_FinderDef_var> 
+IR_FinderDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_FinderDefSeq &
+IR_FinderDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDefSeq &
+IR_FinderDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_FinderDefSeq *&
+IR_FinderDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDefSeq *
+IR_FinderDefSeq_var::_retn (void)
+{
+  ::IR_FinderDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_FinderDefSeq *
+IR_FinderDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_FinderDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_FinderDefSeq_out::IR_FinderDefSeq_out (IR_FinderDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_FinderDefSeq_out::IR_FinderDefSeq_out (IR_FinderDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_FinderDefSeq_out::IR_FinderDefSeq_out (const ::IR_FinderDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_FinderDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_FinderDefSeq_out &
+IR_FinderDefSeq_out::operator= (const ::IR_FinderDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_FinderDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_FinderDefSeq_out &
+IR_FinderDefSeq_out::operator= (IR_FinderDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_FinderDefSeq_out::operator ::IR_FinderDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDefSeq *&
+IR_FinderDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDefSeq *
+IR_FinderDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_FinderDef, IR_FinderDef_var> 
+IR_FinderDefSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONTAINEDSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONTAINEDSEQ_CI_
+
+  ACE_INLINE IR_Contained **
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_Contained **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_Contained*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_Contained::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::freebuf (IR_Contained **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_Contained* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq(const _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_Contained **tmp1 = _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (this->maximum_);
+      IR_Contained ** const tmp2 = ACE_reinterpret_cast (IR_Contained ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_Contained::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_Contained **tmp = ACE_reinterpret_cast (IR_Contained **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_Contained::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_Contained **tmp1 = ACE_reinterpret_cast (IR_Contained **, this->buffer_);
+    IR_Contained ** const tmp2 = ACE_reinterpret_cast (IR_Contained ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_Contained::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_Contained,IR_Contained_var>
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_Contained ** const tmp = ACE_reinterpret_cast (IR_Contained ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_Contained,IR_Contained_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_Contained* *
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_Contained **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_Contained**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_Contained**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_Contained* *
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_Contained ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_CONTAINEDSEQ_CI_)
+#define _IR_CONTAINEDSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_ContainedSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_ContainedSeq_var::IR_ContainedSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ContainedSeq_var::IR_ContainedSeq_var (IR_ContainedSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ContainedSeq_var::IR_ContainedSeq_var (const ::IR_ContainedSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ContainedSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ContainedSeq_var::~IR_ContainedSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ContainedSeq_var &
+IR_ContainedSeq_var::operator= (IR_ContainedSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ContainedSeq_var &
+IR_ContainedSeq_var::operator= (const ::IR_ContainedSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ContainedSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ContainedSeq *
+IR_ContainedSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContainedSeq *
+IR_ContainedSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ContainedSeq_var::operator const ::IR_ContainedSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ContainedSeq_var::operator ::IR_ContainedSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ContainedSeq_var::operator ::IR_ContainedSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ContainedSeq_var::operator ::IR_ContainedSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_Contained, IR_Contained_var> 
+IR_ContainedSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_ContainedSeq &
+IR_ContainedSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ContainedSeq &
+IR_ContainedSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ContainedSeq *&
+IR_ContainedSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContainedSeq *
+IR_ContainedSeq_var::_retn (void)
+{
+  ::IR_ContainedSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ContainedSeq *
+IR_ContainedSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ContainedSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_ContainedSeq_out::IR_ContainedSeq_out (IR_ContainedSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ContainedSeq_out::IR_ContainedSeq_out (IR_ContainedSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ContainedSeq_out::IR_ContainedSeq_out (const ::IR_ContainedSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ContainedSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ContainedSeq_out &
+IR_ContainedSeq_out::operator= (const ::IR_ContainedSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ContainedSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_ContainedSeq_out &
+IR_ContainedSeq_out::operator= (IR_ContainedSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ContainedSeq_out::operator ::IR_ContainedSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContainedSeq *&
+IR_ContainedSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContainedSeq *
+IR_ContainedSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_Contained, IR_Contained_var> 
+IR_ContainedSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_StructMember_var
+// *************************************************************
+
+ACE_INLINE
+IR_StructMember_var::IR_StructMember_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_StructMember_var::IR_StructMember_var (IR_StructMember *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_StructMember_var::IR_StructMember_var (const ::IR_StructMember_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_StructMember (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_StructMember_var::~IR_StructMember_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_StructMember_var &
+IR_StructMember_var::operator= (IR_StructMember *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_StructMember_var &
+IR_StructMember_var::operator= (const ::IR_StructMember_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_StructMember (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_StructMember *
+IR_StructMember_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructMember *
+IR_StructMember_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_StructMember_var::operator const ::IR_StructMember &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_StructMember_var::operator ::IR_StructMember &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_StructMember_var::operator ::IR_StructMember &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_StructMember_var::operator ::IR_StructMember *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_StructMember &
+IR_StructMember_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_StructMember &
+IR_StructMember_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_StructMember *&
+IR_StructMember_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructMember *
+IR_StructMember_var::_retn (void)
+{
+  ::IR_StructMember *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_StructMember *
+IR_StructMember_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_StructMember_out
+// *************************************************************
+
+ACE_INLINE
+IR_StructMember_out::IR_StructMember_out (::IR_StructMember *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_StructMember_out::IR_StructMember_out (IR_StructMember_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_StructMember_out::IR_StructMember_out (const ::IR_StructMember_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_StructMember_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_StructMember_out &
+IR_StructMember_out::operator= (const ::IR_StructMember_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_StructMember_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_StructMember_out &
+IR_StructMember_out::operator= (IR_StructMember *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_StructMember_out::operator ::IR_StructMember *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructMember *&
+IR_StructMember_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructMember *
+IR_StructMember_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_STRUCTMEMBERSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_STRUCTMEMBERSEQ_CI_
 
   // = Static operations.
-  ACE_INLINE CORBA_ExceptionDescription *
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
+  ACE_INLINE IR_StructMember *
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    CORBA_ExceptionDescription *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_ExceptionDescription[size],
-		    0);
+    IR_StructMember *retval = 0;
+    ACE_NEW_RETURN (retval, IR_StructMember[size], 0);
     return retval;
   }
   
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (CORBA_ExceptionDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_StructMemberSeq::freebuf (IR_StructMember *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (maximum))
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA_ExceptionDescription *data,
+    IR_StructMember *data,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (const _TAO_Unbounded_Sequence_IR_StructMemberSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA_ExceptionDescription *tmp1 = _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (this->maximum_);
-    CORBA_ExceptionDescription * const tmp2 = ACE_reinterpret_cast (CORBA_ExceptionDescription * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_StructMember *tmp1 = _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (this->maximum_);
+      IR_StructMember * const tmp2 = ACE_reinterpret_cast (IR_StructMember * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_StructMemberSeq &
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_StructMemberSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -9259,18 +5009,18 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
-        CORBA_ExceptionDescription *tmp = ACE_reinterpret_cast (CORBA_ExceptionDescription *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (rhs.maximum_);
+        IR_StructMember *tmp = ACE_reinterpret_cast (IR_StructMember *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_StructMemberSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA_ExceptionDescription *tmp1 = ACE_reinterpret_cast (CORBA_ExceptionDescription *, this->buffer_);
-    CORBA_ExceptionDescription * const tmp2 = ACE_reinterpret_cast (CORBA_ExceptionDescription * ACE_CAST_CONST, rhs.buffer_);
+    IR_StructMember *tmp1 = ACE_reinterpret_cast (IR_StructMember *, this->buffer_);
+    IR_StructMember * const tmp2 = ACE_reinterpret_cast (IR_StructMember * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
@@ -9279,41 +5029,41 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   // = Accessors.
-  ACE_INLINE CORBA_ExceptionDescription &
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator[] (CORBA::ULong i)
+  ACE_INLINE IR_StructMember &
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_ExceptionDescription* tmp = ACE_reinterpret_cast(CORBA_ExceptionDescription*,this->buffer_);
+    IR_StructMember* tmp = ACE_reinterpret_cast(IR_StructMember*,this->buffer_);
     return tmp[i];
   }
   
-  ACE_INLINE const CORBA_ExceptionDescription &
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::operator[] (CORBA::ULong i) const
+  ACE_INLINE const IR_StructMember &
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_ExceptionDescription * const tmp = ACE_reinterpret_cast (CORBA_ExceptionDescription* ACE_CAST_CONST, this->buffer_);
+    IR_StructMember * const tmp = ACE_reinterpret_cast (IR_StructMember* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
   
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
-  ACE_INLINE CORBA_ExceptionDescription *
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_StructMember *
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA_ExceptionDescription *result = 0;
+    IR_StructMember *result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::allocbuf (this->length_);
+        result = _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (this->length_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA_ExceptionDescription*, this->buffer_);
+        result = ACE_reinterpret_cast (IR_StructMember*, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -9322,7 +5072,7 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA_ExceptionDescription*,this->buffer_);
+        result = ACE_reinterpret_cast(IR_StructMember*,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -9332,24 +5082,24 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
     return result;
   }
   
-  ACE_INLINE const CORBA_ExceptionDescription *
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::get_buffer (void) const
+  ACE_INLINE const IR_StructMember *
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA_ExceptionDescription * ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_StructMember * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
-  CORBA_ExceptionDescription *data,
+  IR_StructMember *data,
   CORBA::Boolean release)
   {
     this->maximum_ = max;
     this->length_ = length;
     if (this->buffer_ && this->release_ == 1)
     {
-      CORBA_ExceptionDescription *tmp = ACE_reinterpret_cast(CORBA_ExceptionDescription*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_ExcDescriptionSeq::freebuf (tmp);
+      IR_StructMember *tmp = ACE_reinterpret_cast(IR_StructMember*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_StructMemberSeq::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
@@ -9360,144 +5110,148 @@ CORBA_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_EXCDESCRIPTIONSEQ_CI_)
-#define _CORBA_EXCDESCRIPTIONSEQ_CI_
+#if !defined (_IR_STRUCTMEMBERSEQ_CI_)
+#define _IR_STRUCTMEMBERSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ExcDescriptionSeq_var
+// Inline operations for class IR_StructMemberSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_var::CORBA_ExcDescriptionSeq_var (void) // default constructor
+IR_StructMemberSeq_var::IR_StructMemberSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_var::CORBA_ExcDescriptionSeq_var (CORBA_ExcDescriptionSeq *p)
+IR_StructMemberSeq_var::IR_StructMemberSeq_var (IR_StructMemberSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_var::CORBA_ExcDescriptionSeq_var (const CORBA_ExcDescriptionSeq_var &p) // copy constructor
+IR_StructMemberSeq_var::IR_StructMemberSeq_var (const ::IR_StructMemberSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ExcDescriptionSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_StructMemberSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_var::~CORBA_ExcDescriptionSeq_var (void) // destructor
+IR_StructMemberSeq_var::~IR_StructMemberSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq_var &
-CORBA_ExcDescriptionSeq_var::operator= (CORBA_ExcDescriptionSeq *p)
+ACE_INLINE IR_StructMemberSeq_var &
+IR_StructMemberSeq_var::operator= (IR_StructMemberSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq_var &
-CORBA_ExcDescriptionSeq_var::operator= (const CORBA_ExcDescriptionSeq_var &p) // deep copy
+ACE_INLINE IR_StructMemberSeq_var &
+IR_StructMemberSeq_var::operator= (const ::IR_StructMemberSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ExcDescriptionSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_StructMemberSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ExcDescriptionSeq *
-CORBA_ExcDescriptionSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_StructMemberSeq *
+IR_StructMemberSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq *
-CORBA_ExcDescriptionSeq_var::operator-> (void)
+ACE_INLINE ::IR_StructMemberSeq *
+IR_StructMemberSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ExcDescriptionSeq_var::operator const CORBA_ExcDescriptionSeq &() const // cast
+IR_StructMemberSeq_var::operator const ::IR_StructMemberSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ExcDescriptionSeq_var::operator CORBA_ExcDescriptionSeq &() // cast 
+IR_StructMemberSeq_var::operator ::IR_StructMemberSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ExcDescriptionSeq_var::operator CORBA_ExcDescriptionSeq &() const// cast 
+IR_StructMemberSeq_var::operator ::IR_StructMemberSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDescription &
-CORBA_ExcDescriptionSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_StructMemberSeq_var::operator ::IR_StructMemberSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_StructMember &
+IR_StructMemberSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_ExcDescriptionSeq &
-CORBA_ExcDescriptionSeq_var::in (void) const
+ACE_INLINE const ::IR_StructMemberSeq &
+IR_StructMemberSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq &
-CORBA_ExcDescriptionSeq_var::inout (void)
+ACE_INLINE ::IR_StructMemberSeq &
+IR_StructMemberSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_ExcDescriptionSeq *&
-CORBA_ExcDescriptionSeq_var::out (void)
+ACE_INLINE ::IR_StructMemberSeq *&
+IR_StructMemberSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq *
-CORBA_ExcDescriptionSeq_var::_retn (void)
+ACE_INLINE ::IR_StructMemberSeq *
+IR_StructMemberSeq_var::_retn (void)
 {
-  CORBA_ExcDescriptionSeq *tmp = this->ptr_;
+  ::IR_StructMemberSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq *
-CORBA_ExcDescriptionSeq_var::ptr (void) const
+ACE_INLINE ::IR_StructMemberSeq *
+IR_StructMemberSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_ExcDescriptionSeq_out
+// Inline operations for class IR_StructMemberSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_out::CORBA_ExcDescriptionSeq_out (CORBA_ExcDescriptionSeq *&p)
+IR_StructMemberSeq_out::IR_StructMemberSeq_out (IR_StructMemberSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_out::CORBA_ExcDescriptionSeq_out (CORBA_ExcDescriptionSeq_var &p) // constructor from _var
+IR_StructMemberSeq_out::IR_StructMemberSeq_out (IR_StructMemberSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -9505,44 +5259,44 @@ CORBA_ExcDescriptionSeq_out::CORBA_ExcDescriptionSeq_out (CORBA_ExcDescriptionSe
 }
 
 ACE_INLINE
-CORBA_ExcDescriptionSeq_out::CORBA_ExcDescriptionSeq_out (const CORBA_ExcDescriptionSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ExcDescriptionSeq_out&,p).ptr_)
+IR_StructMemberSeq_out::IR_StructMemberSeq_out (const ::IR_StructMemberSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_StructMemberSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ExcDescriptionSeq_out &
-CORBA_ExcDescriptionSeq_out::operator= (const CORBA_ExcDescriptionSeq_out &p)
+ACE_INLINE ::IR_StructMemberSeq_out &
+IR_StructMemberSeq_out::operator= (const ::IR_StructMemberSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ExcDescriptionSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_StructMemberSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq_out &
-CORBA_ExcDescriptionSeq_out::operator= (CORBA_ExcDescriptionSeq *p)
+ACE_INLINE ::IR_StructMemberSeq_out &
+IR_StructMemberSeq_out::operator= (IR_StructMemberSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ExcDescriptionSeq_out::operator CORBA_ExcDescriptionSeq *&() // cast
+IR_StructMemberSeq_out::operator ::IR_StructMemberSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq *&
-CORBA_ExcDescriptionSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_StructMemberSeq *&
+IR_StructMemberSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExcDescriptionSeq *
-CORBA_ExcDescriptionSeq_out::operator-> (void)
+ACE_INLINE ::IR_StructMemberSeq *
+IR_StructMemberSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ExceptionDescription &
-CORBA_ExcDescriptionSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE IR_StructMember &
+IR_StructMemberSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -9550,322 +5304,139 @@ CORBA_ExcDescriptionSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
-ACE_INLINE
-CORBA_OperationDef::CORBA_OperationDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_OperationDef::CORBA_OperationDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_OperationDef::~CORBA_OperationDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_OPERATIONDEF___VAR_CI_)
-#define _CORBA_OPERATIONDEF___VAR_CI_
-
 // *************************************************************
-// Inline operations for class CORBA_OperationDef_var
+// Inline operations for class IR_Initializer_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_OperationDef_var::CORBA_OperationDef_var (void) // default constructor
-  : ptr_ (CORBA_OperationDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_OperationDef_var::CORBA_OperationDef_var (CORBA_OperationDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_OperationDef_ptr 
-CORBA_OperationDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_OperationDef_var::CORBA_OperationDef_var (const CORBA_OperationDef_var &p) // copy constructor
-  : ptr_ (CORBA_OperationDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_OperationDef_var::~CORBA_OperationDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_OperationDef_var &
-CORBA_OperationDef_var::operator= (CORBA_OperationDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_OperationDef_var &
-CORBA_OperationDef_var::operator= (const CORBA_OperationDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_OperationDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_OperationDef_var::operator const CORBA_OperationDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_OperationDef_var::operator CORBA_OperationDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr 
-CORBA_OperationDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr
-CORBA_OperationDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr &
-CORBA_OperationDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr &
-CORBA_OperationDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_OperationDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr 
-CORBA_OperationDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_OperationDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_OperationDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_OPERATIONDEF___OUT_CI_)
-#define _CORBA_OPERATIONDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_OperationDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_OperationDef_out::CORBA_OperationDef_out (CORBA_OperationDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_OperationDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_OperationDef_out::CORBA_OperationDef_out (CORBA_OperationDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_OperationDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_OperationDef_out::CORBA_OperationDef_out (const CORBA_OperationDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_OperationDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_OperationDef_out &
-CORBA_OperationDef_out::operator= (const CORBA_OperationDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_OperationDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_OperationDef_out &
-CORBA_OperationDef_out::operator= (const CORBA_OperationDef_var &p)
-{
-  this->ptr_ = CORBA_OperationDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_OperationDef_out &
-CORBA_OperationDef_out::operator= (CORBA_OperationDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_OperationDef_out::operator CORBA_OperationDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr &
-CORBA_OperationDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_OperationDef_ptr 
-CORBA_OperationDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-// *************************************************************
-// Inline operations for class CORBA_OperationDescription_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_OperationDescription_var::CORBA_OperationDescription_var (void) // default constructor
+IR_Initializer_var::IR_Initializer_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_OperationDescription_var::CORBA_OperationDescription_var (CORBA_OperationDescription *p)
+IR_Initializer_var::IR_Initializer_var (IR_Initializer *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_OperationDescription_var::CORBA_OperationDescription_var (const CORBA_OperationDescription_var &p) // copy constructor
+IR_Initializer_var::IR_Initializer_var (const ::IR_Initializer_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_OperationDescription(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_Initializer (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_OperationDescription_var::~CORBA_OperationDescription_var (void) // destructor
+IR_Initializer_var::~IR_Initializer_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription_var &
-CORBA_OperationDescription_var::operator= (CORBA_OperationDescription *p)
+ACE_INLINE IR_Initializer_var &
+IR_Initializer_var::operator= (IR_Initializer *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_OperationDescription_var &
-CORBA_OperationDescription_var::operator= (const CORBA_OperationDescription_var &p)
+ACE_INLINE ::IR_Initializer_var &
+IR_Initializer_var::operator= (const ::IR_Initializer_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_OperationDescription (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_Initializer (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_OperationDescription *
-CORBA_OperationDescription_var::operator-> (void) const
+ACE_INLINE const ::IR_Initializer *
+IR_Initializer_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription *
-CORBA_OperationDescription_var::operator-> (void)
+ACE_INLINE ::IR_Initializer *
+IR_Initializer_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_OperationDescription_var::operator const CORBA_OperationDescription &() const // cast
+ACE_INLINE
+IR_Initializer_var::operator const ::IR_Initializer &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_OperationDescription_var::operator CORBA_OperationDescription &() // cast 
+ACE_INLINE
+IR_Initializer_var::operator ::IR_Initializer &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_OperationDescription_var::operator CORBA_OperationDescription &() const// cast 
+ACE_INLINE
+IR_Initializer_var::operator ::IR_Initializer &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const CORBA_OperationDescription &
-CORBA_OperationDescription_var::in (void) const
+// variable-size types only
+ACE_INLINE
+IR_Initializer_var::operator ::IR_Initializer *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_Initializer &
+IR_Initializer_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription &
-CORBA_OperationDescription_var::inout (void)
+ACE_INLINE ::IR_Initializer &
+IR_Initializer_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_OperationDescription *&
-CORBA_OperationDescription_var::out (void)
+ACE_INLINE ::IR_Initializer *&
+IR_Initializer_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription *
-CORBA_OperationDescription_var::_retn (void)
+ACE_INLINE ::IR_Initializer *
+IR_Initializer_var::_retn (void)
 {
-  CORBA_OperationDescription *tmp = this->ptr_;
+  ::IR_Initializer *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_OperationDescription *
-CORBA_OperationDescription_var::ptr (void) const
+ACE_INLINE ::IR_Initializer *
+IR_Initializer_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_OperationDescription_out
+// Inline operations for class IR_Initializer_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_OperationDescription_out::CORBA_OperationDescription_out (CORBA_OperationDescription *&p)
+IR_Initializer_out::IR_Initializer_out (::IR_Initializer *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_OperationDescription_out::CORBA_OperationDescription_out (CORBA_OperationDescription_var &p) // constructor from _var
+IR_Initializer_out::IR_Initializer_out (IR_Initializer_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -9873,181 +5444,1101 @@ CORBA_OperationDescription_out::CORBA_OperationDescription_out (CORBA_OperationD
 }
 
 ACE_INLINE
-CORBA_OperationDescription_out::CORBA_OperationDescription_out (const CORBA_OperationDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_OperationDescription_out&,p).ptr_)
+IR_Initializer_out::IR_Initializer_out (const ::IR_Initializer_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_Initializer_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_OperationDescription_out &
-CORBA_OperationDescription_out::operator= (const CORBA_OperationDescription_out &p)
+ACE_INLINE IR_Initializer_out &
+IR_Initializer_out::operator= (const ::IR_Initializer_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_OperationDescription_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_Initializer_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_OperationDescription_out &
-CORBA_OperationDescription_out::operator= (CORBA_OperationDescription *p)
+ACE_INLINE IR_Initializer_out &
+IR_Initializer_out::operator= (IR_Initializer *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_OperationDescription_out::operator CORBA_OperationDescription *&() // cast
+IR_Initializer_out::operator ::IR_Initializer *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription *&
-CORBA_OperationDescription_out::ptr (void) // ptr
+ACE_INLINE ::IR_Initializer *&
+IR_Initializer_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription *
-CORBA_OperationDescription_out::operator-> (void)
+ACE_INLINE ::IR_Initializer *
+IR_Initializer_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 
-#if !defined (_CORBA_REPOSITORYIDSEQ_CI_)
-#define _CORBA_REPOSITORYIDSEQ_CI_
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_INITIALIZERSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_INITIALIZERSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_Initializer *
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_Initializer *retval = 0;
+    ACE_NEW_RETURN (retval, IR_Initializer[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_InitializerSeq::freebuf (IR_Initializer *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_Initializer *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (const _TAO_Unbounded_Sequence_IR_InitializerSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_Initializer *tmp1 = _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (this->maximum_);
+      IR_Initializer * const tmp2 = ACE_reinterpret_cast (IR_Initializer * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_InitializerSeq &
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::operator= (const _TAO_Unbounded_Sequence_IR_InitializerSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_Initializer *tmp = ACE_reinterpret_cast (IR_Initializer *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_InitializerSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_Initializer *tmp1 = ACE_reinterpret_cast (IR_Initializer *, this->buffer_);
+    IR_Initializer * const tmp2 = ACE_reinterpret_cast (IR_Initializer * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_Initializer &
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_Initializer* tmp = ACE_reinterpret_cast(IR_Initializer*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_Initializer &
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_Initializer * const tmp = ACE_reinterpret_cast (IR_Initializer* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_Initializer *
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_Initializer *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_Initializer*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_Initializer*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_Initializer *
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_Initializer * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_Initializer *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_Initializer *tmp = ACE_reinterpret_cast(IR_Initializer*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_InitializerSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_INITIALIZERSEQ_CI_)
+#define _IR_INITIALIZERSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_RepositoryIdSeq_var
+// Inline operations for class IR_InitializerSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_var::CORBA_RepositoryIdSeq_var (void) // default constructor
+IR_InitializerSeq_var::IR_InitializerSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_var::CORBA_RepositoryIdSeq_var (CORBA_RepositoryIdSeq *p)
+IR_InitializerSeq_var::IR_InitializerSeq_var (IR_InitializerSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_var::CORBA_RepositoryIdSeq_var (const CORBA_RepositoryIdSeq_var &p) // copy constructor
+IR_InitializerSeq_var::IR_InitializerSeq_var (const ::IR_InitializerSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_RepositoryIdSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_InitializerSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_var::~CORBA_RepositoryIdSeq_var (void) // destructor
+IR_InitializerSeq_var::~IR_InitializerSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq_var &
-CORBA_RepositoryIdSeq_var::operator= (CORBA_RepositoryIdSeq *p)
+ACE_INLINE IR_InitializerSeq_var &
+IR_InitializerSeq_var::operator= (IR_InitializerSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq_var &
-CORBA_RepositoryIdSeq_var::operator= (const CORBA_RepositoryIdSeq_var &p) // deep copy
+ACE_INLINE IR_InitializerSeq_var &
+IR_InitializerSeq_var::operator= (const ::IR_InitializerSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_RepositoryIdSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_InitializerSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_RepositoryIdSeq *
-CORBA_RepositoryIdSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_InitializerSeq *
+IR_InitializerSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq *
-CORBA_RepositoryIdSeq_var::operator-> (void)
+ACE_INLINE ::IR_InitializerSeq *
+IR_InitializerSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_RepositoryIdSeq_var::operator const CORBA_RepositoryIdSeq &() const // cast
+IR_InitializerSeq_var::operator const ::IR_InitializerSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_RepositoryIdSeq_var::operator CORBA_RepositoryIdSeq &() // cast 
+IR_InitializerSeq_var::operator ::IR_InitializerSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_RepositoryIdSeq_var::operator CORBA_RepositoryIdSeq &() const// cast 
+IR_InitializerSeq_var::operator ::IR_InitializerSeq &() const // cast 
 {
   return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_InitializerSeq_var::operator ::IR_InitializerSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_Initializer &
+IR_InitializerSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_InitializerSeq &
+IR_InitializerSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_InitializerSeq &
+IR_InitializerSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_InitializerSeq *&
+IR_InitializerSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InitializerSeq *
+IR_InitializerSeq_var::_retn (void)
+{
+  ::IR_InitializerSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_InitializerSeq *
+IR_InitializerSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_InitializerSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_InitializerSeq_out::IR_InitializerSeq_out (IR_InitializerSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_InitializerSeq_out::IR_InitializerSeq_out (IR_InitializerSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_InitializerSeq_out::IR_InitializerSeq_out (const ::IR_InitializerSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_InitializerSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_InitializerSeq_out &
+IR_InitializerSeq_out::operator= (const ::IR_InitializerSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_InitializerSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_InitializerSeq_out &
+IR_InitializerSeq_out::operator= (IR_InitializerSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_InitializerSeq_out::operator ::IR_InitializerSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InitializerSeq *&
+IR_InitializerSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InitializerSeq *
+IR_InitializerSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_Initializer &
+IR_InitializerSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_UnionMember_var
+// *************************************************************
+
+ACE_INLINE
+IR_UnionMember_var::IR_UnionMember_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_UnionMember_var::IR_UnionMember_var (IR_UnionMember *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_UnionMember_var::IR_UnionMember_var (const ::IR_UnionMember_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_UnionMember (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UnionMember_var::~IR_UnionMember_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_UnionMember_var &
+IR_UnionMember_var::operator= (IR_UnionMember *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_UnionMember_var &
+IR_UnionMember_var::operator= (const ::IR_UnionMember_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_UnionMember (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_UnionMember *
+IR_UnionMember_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMember *
+IR_UnionMember_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_UnionMember_var::operator const ::IR_UnionMember &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_UnionMember_var::operator ::IR_UnionMember &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_UnionMember_var::operator ::IR_UnionMember &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_UnionMember_var::operator ::IR_UnionMember *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_UnionMember &
+IR_UnionMember_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMember &
+IR_UnionMember_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_UnionMember *&
+IR_UnionMember_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMember *
+IR_UnionMember_var::_retn (void)
+{
+  ::IR_UnionMember *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_UnionMember *
+IR_UnionMember_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_UnionMember_out
+// *************************************************************
+
+ACE_INLINE
+IR_UnionMember_out::IR_UnionMember_out (::IR_UnionMember *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UnionMember_out::IR_UnionMember_out (IR_UnionMember_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UnionMember_out::IR_UnionMember_out (const ::IR_UnionMember_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UnionMember_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_UnionMember_out &
+IR_UnionMember_out::operator= (const ::IR_UnionMember_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UnionMember_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_UnionMember_out &
+IR_UnionMember_out::operator= (IR_UnionMember *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UnionMember_out::operator ::IR_UnionMember *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMember *&
+IR_UnionMember_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMember *
+IR_UnionMember_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_UNIONMEMBERSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_UNIONMEMBERSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_UnionMember *
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_UnionMember *retval = 0;
+    ACE_NEW_RETURN (retval, IR_UnionMember[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_UnionMemberSeq::freebuf (IR_UnionMember *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_UnionMember *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (const _TAO_Unbounded_Sequence_IR_UnionMemberSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_UnionMember *tmp1 = _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (this->maximum_);
+      IR_UnionMember * const tmp2 = ACE_reinterpret_cast (IR_UnionMember * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_UnionMemberSeq &
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_UnionMemberSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_UnionMember *tmp = ACE_reinterpret_cast (IR_UnionMember *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_UnionMemberSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_UnionMember *tmp1 = ACE_reinterpret_cast (IR_UnionMember *, this->buffer_);
+    IR_UnionMember * const tmp2 = ACE_reinterpret_cast (IR_UnionMember * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_UnionMember &
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_UnionMember* tmp = ACE_reinterpret_cast(IR_UnionMember*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_UnionMember &
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_UnionMember * const tmp = ACE_reinterpret_cast (IR_UnionMember* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_UnionMember *
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_UnionMember *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_UnionMember*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_UnionMember*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_UnionMember *
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_UnionMember * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_UnionMember *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_UnionMember *tmp = ACE_reinterpret_cast(IR_UnionMember*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_UnionMemberSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_UNIONMEMBERSEQ_CI_)
+#define _IR_UNIONMEMBERSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_UnionMemberSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_UnionMemberSeq_var::IR_UnionMemberSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_UnionMemberSeq_var::IR_UnionMemberSeq_var (IR_UnionMemberSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_UnionMemberSeq_var::IR_UnionMemberSeq_var (const ::IR_UnionMemberSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_UnionMemberSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UnionMemberSeq_var::~IR_UnionMemberSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_UnionMemberSeq_var &
+IR_UnionMemberSeq_var::operator= (IR_UnionMemberSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_UnionMemberSeq_var &
+IR_UnionMemberSeq_var::operator= (const ::IR_UnionMemberSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_UnionMemberSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_UnionMemberSeq *
+IR_UnionMemberSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq *
+IR_UnionMemberSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_UnionMemberSeq_var::operator const ::IR_UnionMemberSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_UnionMemberSeq_var::operator ::IR_UnionMemberSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_UnionMemberSeq_var::operator ::IR_UnionMemberSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_UnionMemberSeq_var::operator ::IR_UnionMemberSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_UnionMember &
+IR_UnionMemberSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_UnionMemberSeq &
+IR_UnionMemberSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq &
+IR_UnionMemberSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_UnionMemberSeq *&
+IR_UnionMemberSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq *
+IR_UnionMemberSeq_var::_retn (void)
+{
+  ::IR_UnionMemberSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq *
+IR_UnionMemberSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_UnionMemberSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_UnionMemberSeq_out::IR_UnionMemberSeq_out (IR_UnionMemberSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UnionMemberSeq_out::IR_UnionMemberSeq_out (IR_UnionMemberSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UnionMemberSeq_out::IR_UnionMemberSeq_out (const ::IR_UnionMemberSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UnionMemberSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_UnionMemberSeq_out &
+IR_UnionMemberSeq_out::operator= (const ::IR_UnionMemberSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UnionMemberSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq_out &
+IR_UnionMemberSeq_out::operator= (IR_UnionMemberSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UnionMemberSeq_out::operator ::IR_UnionMemberSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq *&
+IR_UnionMemberSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionMemberSeq *
+IR_UnionMemberSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_UnionMember &
+IR_UnionMemberSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_ENUMMEMBERSEQ_CI_)
+#define _IR_ENUMMEMBERSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_EnumMemberSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_EnumMemberSeq_var::IR_EnumMemberSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_EnumMemberSeq_var::IR_EnumMemberSeq_var (IR_EnumMemberSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_EnumMemberSeq_var::IR_EnumMemberSeq_var (const ::IR_EnumMemberSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_EnumMemberSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EnumMemberSeq_var::~IR_EnumMemberSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_EnumMemberSeq_var &
+IR_EnumMemberSeq_var::operator= (IR_EnumMemberSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_EnumMemberSeq_var &
+IR_EnumMemberSeq_var::operator= (const ::IR_EnumMemberSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_EnumMemberSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_EnumMemberSeq *
+IR_EnumMemberSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumMemberSeq *
+IR_EnumMemberSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_EnumMemberSeq_var::operator const ::IR_EnumMemberSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_EnumMemberSeq_var::operator ::IR_EnumMemberSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_EnumMemberSeq_var::operator ::IR_EnumMemberSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_EnumMemberSeq_var::operator ::IR_EnumMemberSeq *&() // cast 
+{
+  return this->ptr_;
 }
 
 ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA_RepositoryIdSeq_var::operator[] (CORBA::ULong index)
+IR_EnumMemberSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_RepositoryIdSeq &
-CORBA_RepositoryIdSeq_var::in (void) const
+ACE_INLINE const ::IR_EnumMemberSeq &
+IR_EnumMemberSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq &
-CORBA_RepositoryIdSeq_var::inout (void)
+ACE_INLINE ::IR_EnumMemberSeq &
+IR_EnumMemberSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_RepositoryIdSeq *&
-CORBA_RepositoryIdSeq_var::out (void)
+ACE_INLINE ::IR_EnumMemberSeq *&
+IR_EnumMemberSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq *
-CORBA_RepositoryIdSeq_var::_retn (void)
+ACE_INLINE ::IR_EnumMemberSeq *
+IR_EnumMemberSeq_var::_retn (void)
 {
-  CORBA_RepositoryIdSeq *tmp = this->ptr_;
+  ::IR_EnumMemberSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq *
-CORBA_RepositoryIdSeq_var::ptr (void) const
+ACE_INLINE ::IR_EnumMemberSeq *
+IR_EnumMemberSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_RepositoryIdSeq_out
+// Inline operations for class IR_EnumMemberSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_out::CORBA_RepositoryIdSeq_out (CORBA_RepositoryIdSeq *&p)
+IR_EnumMemberSeq_out::IR_EnumMemberSeq_out (IR_EnumMemberSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_out::CORBA_RepositoryIdSeq_out (CORBA_RepositoryIdSeq_var &p) // constructor from _var
+IR_EnumMemberSeq_out::IR_EnumMemberSeq_out (IR_EnumMemberSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -10055,44 +6546,44 @@ CORBA_RepositoryIdSeq_out::CORBA_RepositoryIdSeq_out (CORBA_RepositoryIdSeq_var 
 }
 
 ACE_INLINE
-CORBA_RepositoryIdSeq_out::CORBA_RepositoryIdSeq_out (const CORBA_RepositoryIdSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_RepositoryIdSeq_out&,p).ptr_)
+IR_EnumMemberSeq_out::IR_EnumMemberSeq_out (const ::IR_EnumMemberSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_EnumMemberSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_RepositoryIdSeq_out &
-CORBA_RepositoryIdSeq_out::operator= (const CORBA_RepositoryIdSeq_out &p)
+ACE_INLINE ::IR_EnumMemberSeq_out &
+IR_EnumMemberSeq_out::operator= (const ::IR_EnumMemberSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_RepositoryIdSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_EnumMemberSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq_out &
-CORBA_RepositoryIdSeq_out::operator= (CORBA_RepositoryIdSeq *p)
+ACE_INLINE ::IR_EnumMemberSeq_out &
+IR_EnumMemberSeq_out::operator= (IR_EnumMemberSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_RepositoryIdSeq_out::operator CORBA_RepositoryIdSeq *&() // cast
+IR_EnumMemberSeq_out::operator ::IR_EnumMemberSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq *&
-CORBA_RepositoryIdSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_EnumMemberSeq *&
+IR_EnumMemberSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_RepositoryIdSeq *
-CORBA_RepositoryIdSeq_out::operator-> (void)
+ACE_INLINE ::IR_EnumMemberSeq *
+IR_EnumMemberSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
+IR_EnumMemberSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -10100,66 +6591,434 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+ACE_INLINE
+IR_Container::IR_Container (void) // default constructor
+{}
+
+ACE_INLINE
+IR_Container::IR_Container (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_Container::~IR_Container (void) // destructor
+{}
+
+
+#if !defined (_IR_CONTAINER___VAR_CI_)
+#define _IR_CONTAINER___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_Container_var
+// *************************************************************
+
+ACE_INLINE
+IR_Container_var::IR_Container_var (void) // default constructor
+  : ptr_ (IR_Container::_nil ())
+{}
+
+ACE_INLINE
+IR_Container_var::IR_Container_var (IR_Container_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_Container_ptr
+IR_Container_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_Container_var::IR_Container_var (const ::IR_Container_var &p) // copy constructor
+  : ptr_ (IR_Container::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_Container_var::~IR_Container_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_Container_var &
+IR_Container_var::operator= (IR_Container_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_Container_var &
+IR_Container_var::operator= (const ::IR_Container_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_Container::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_Container_var::operator const ::IR_Container_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_Container_var::operator ::IR_Container_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr
+IR_Container_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr
+IR_Container_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr &
+IR_Container_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr &
+IR_Container_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_Container::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr
+IR_Container_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_Container_ptr val = this->ptr_;
+  this->ptr_ = ::IR_Container::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_CONTAINER___OUT_CI_)
+#define _IR_CONTAINER___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_Container_out
+// *************************************************************
+
+ACE_INLINE
+IR_Container_out::IR_Container_out (IR_Container_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_Container::_nil ();
+}
+
+ACE_INLINE
+IR_Container_out::IR_Container_out (IR_Container_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_Container::_nil ();
+}
+
+ACE_INLINE
+IR_Container_out::IR_Container_out (const ::IR_Container_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_Container_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_Container_out &
+IR_Container_out::operator= (const ::IR_Container_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_Container_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_Container_out &
+IR_Container_out::operator= (const ::IR_Container_var &p)
+{
+  this->ptr_ = ::IR_Container::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_Container_out &
+IR_Container_out::operator= (IR_Container_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_Container_out::operator ::IR_Container_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr &
+IR_Container_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container_ptr
+IR_Container_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_Container::Description_var
+// *************************************************************
+
+ACE_INLINE
+IR_Container::Description_var::Description_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_Container::Description_var::Description_var (Description *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_Container::Description_var::Description_var (const ::IR_Container::Description_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_Container::Description (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_Container::Description_var::~Description_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_Container::Description_var &
+IR_Container::Description_var::operator= (Description *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_Container::Description_var &
+IR_Container::Description_var::operator= (const ::IR_Container::Description_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_Container::Description (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_Container::Description *
+IR_Container::Description_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container::Description *
+IR_Container::Description_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_Container::Description_var::operator const ::IR_Container::Description &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_Container::Description_var::operator ::IR_Container::Description &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_Container::Description_var::operator ::IR_Container::Description &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_Container::Description_var::operator ::IR_Container::Description *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_Container::Description &
+IR_Container::Description_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_Container::Description &
+IR_Container::Description_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_Container::Description *&
+IR_Container::Description_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container::Description *
+IR_Container::Description_var::_retn (void)
+{
+  ::IR_Container::Description *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_Container::Description *
+IR_Container::Description_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_Container::Description_out
+// *************************************************************
+
+ACE_INLINE
+IR_Container::Description_out::Description_out (::IR_Container::Description *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_Container::Description_out::Description_out (Description_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_Container::Description_out::Description_out (const ::IR_Container::Description_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (Description_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_Container::Description_out &
+IR_Container::Description_out::operator= (const ::IR_Container::Description_out &p)
+{
+  this->ptr_ = ACE_const_cast (Description_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_Container::Description_out &
+IR_Container::Description_out::operator= (Description *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_Container::Description_out::operator ::IR_Container::Description *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container::Description *&
+IR_Container::Description_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Container::Description *
+IR_Container::Description_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_OPDESCRIPTIONSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_CONTAINER_DESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_CONTAINER_DESCRIPTIONSEQ_CI_
 
   // = Static operations.
-  ACE_INLINE CORBA_OperationDescription *
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (CORBA::ULong size)
+  ACE_INLINE IR_Container::Description *
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    CORBA_OperationDescription *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_OperationDescription[size],
-		    0);
+    IR_Container::Description *retval = 0;
+    ACE_NEW_RETURN (retval, IR_Container::Description[size], 0);
     return retval;
   }
   
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (CORBA_OperationDescription *buffer)
+  ACE_INLINE void IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::freebuf (IR_Container::Description *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (void) // Default constructor.
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (maximum))
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (CORBA::ULong maximum,
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA_OperationDescription *data,
+    IR_Container::Description *data,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &rhs)
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq (const _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA_OperationDescription *tmp1 = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (this->maximum_);
-    CORBA_OperationDescription * const tmp2 = ACE_reinterpret_cast (CORBA_OperationDescription * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_Container::Description *tmp1 = _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (this->maximum_);
+      IR_Container::Description * const tmp2 = ACE_reinterpret_cast (IR_Container::Description * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq &rhs)
+  ACE_INLINE IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq &
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -10170,18 +7029,18 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
-        CORBA_OperationDescription *tmp = ACE_reinterpret_cast (CORBA_OperationDescription *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (rhs.maximum_);
+        IR_Container::Description *tmp = ACE_reinterpret_cast (IR_Container::Description *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA_OperationDescription *tmp1 = ACE_reinterpret_cast (CORBA_OperationDescription *, this->buffer_);
-    CORBA_OperationDescription * const tmp2 = ACE_reinterpret_cast (CORBA_OperationDescription * ACE_CAST_CONST, rhs.buffer_);
+    IR_Container::Description *tmp1 = ACE_reinterpret_cast (IR_Container::Description *, this->buffer_);
+    IR_Container::Description * const tmp2 = ACE_reinterpret_cast (IR_Container::Description * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
@@ -10190,41 +7049,41 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   // = Accessors.
-  ACE_INLINE CORBA_OperationDescription &
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator[] (CORBA::ULong i)
+  ACE_INLINE IR_Container::Description &
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_OperationDescription* tmp = ACE_reinterpret_cast(CORBA_OperationDescription*,this->buffer_);
+    IR_Container::Description* tmp = ACE_reinterpret_cast(IR_Container::Description*,this->buffer_);
     return tmp[i];
   }
   
-  ACE_INLINE const CORBA_OperationDescription &
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::operator[] (CORBA::ULong i) const
+  ACE_INLINE const IR_Container::Description &
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_OperationDescription * const tmp = ACE_reinterpret_cast (CORBA_OperationDescription* ACE_CAST_CONST, this->buffer_);
+    IR_Container::Description * const tmp = ACE_reinterpret_cast (IR_Container::Description* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
   
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
-  ACE_INLINE CORBA_OperationDescription *
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_Container::Description *
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA_OperationDescription *result = 0;
+    IR_Container::Description *result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::allocbuf (this->length_);
+        result = _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA_OperationDescription*, this->buffer_);
+        result = ACE_reinterpret_cast (IR_Container::Description*, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -10233,7 +7092,7 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA_OperationDescription*,this->buffer_);
+        result = ACE_reinterpret_cast(IR_Container::Description*,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -10243,24 +7102,24 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
     return result;
   }
   
-  ACE_INLINE const CORBA_OperationDescription *
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::get_buffer (void) const
+  ACE_INLINE const IR_Container::Description *
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA_OperationDescription * ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_Container::Description * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::replace (CORBA::ULong max,
+  IR_Container::_TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
-  CORBA_OperationDescription *data,
+  IR_Container::Description *data,
   CORBA::Boolean release)
   {
     this->maximum_ = max;
     this->length_ = length;
     if (this->buffer_ && this->release_ == 1)
     {
-      CORBA_OperationDescription *tmp = ACE_reinterpret_cast(CORBA_OperationDescription*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_OpDescriptionSeq::freebuf (tmp);
+      IR_Container::Description *tmp = ACE_reinterpret_cast(IR_Container::Description*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
@@ -10271,144 +7130,148 @@ CORBA_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_OPDESCRIPTIONSEQ_CI_)
-#define _CORBA_OPDESCRIPTIONSEQ_CI_
+#if !defined (_IR_CONTAINER_DESCRIPTIONSEQ_CI_)
+#define _IR_CONTAINER_DESCRIPTIONSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_OpDescriptionSeq_var
+// Inline operations for class IR_Container::DescriptionSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_var::CORBA_OpDescriptionSeq_var (void) // default constructor
+IR_Container::DescriptionSeq_var::DescriptionSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_var::CORBA_OpDescriptionSeq_var (CORBA_OpDescriptionSeq *p)
+IR_Container::DescriptionSeq_var::DescriptionSeq_var (DescriptionSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_var::CORBA_OpDescriptionSeq_var (const CORBA_OpDescriptionSeq_var &p) // copy constructor
+IR_Container::DescriptionSeq_var::DescriptionSeq_var (const ::IR_Container::DescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_OpDescriptionSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_Container::DescriptionSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_var::~CORBA_OpDescriptionSeq_var (void) // destructor
+IR_Container::DescriptionSeq_var::~DescriptionSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq_var &
-CORBA_OpDescriptionSeq_var::operator= (CORBA_OpDescriptionSeq *p)
+ACE_INLINE IR_Container::DescriptionSeq_var &
+IR_Container::DescriptionSeq_var::operator= (DescriptionSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq_var &
-CORBA_OpDescriptionSeq_var::operator= (const CORBA_OpDescriptionSeq_var &p) // deep copy
+ACE_INLINE IR_Container::DescriptionSeq_var &
+IR_Container::DescriptionSeq_var::operator= (const ::IR_Container::DescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_OpDescriptionSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_Container::DescriptionSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_OpDescriptionSeq *
-CORBA_OpDescriptionSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_Container::DescriptionSeq *
+IR_Container::DescriptionSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq *
-CORBA_OpDescriptionSeq_var::operator-> (void)
+ACE_INLINE ::IR_Container::DescriptionSeq *
+IR_Container::DescriptionSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_OpDescriptionSeq_var::operator const CORBA_OpDescriptionSeq &() const // cast
+IR_Container::DescriptionSeq_var::operator const ::IR_Container::DescriptionSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_OpDescriptionSeq_var::operator CORBA_OpDescriptionSeq &() // cast 
+IR_Container::DescriptionSeq_var::operator ::IR_Container::DescriptionSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_OpDescriptionSeq_var::operator CORBA_OpDescriptionSeq &() const// cast 
+IR_Container::DescriptionSeq_var::operator ::IR_Container::DescriptionSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription &
-CORBA_OpDescriptionSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_Container::DescriptionSeq_var::operator ::IR_Container::DescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_Container::Description &
+IR_Container::DescriptionSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_OpDescriptionSeq &
-CORBA_OpDescriptionSeq_var::in (void) const
+ACE_INLINE const ::IR_Container::DescriptionSeq &
+IR_Container::DescriptionSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq &
-CORBA_OpDescriptionSeq_var::inout (void)
+ACE_INLINE ::IR_Container::DescriptionSeq &
+IR_Container::DescriptionSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_OpDescriptionSeq *&
-CORBA_OpDescriptionSeq_var::out (void)
+ACE_INLINE ::IR_Container::DescriptionSeq *&
+IR_Container::DescriptionSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq *
-CORBA_OpDescriptionSeq_var::_retn (void)
+ACE_INLINE ::IR_Container::DescriptionSeq *
+IR_Container::DescriptionSeq_var::_retn (void)
 {
-  CORBA_OpDescriptionSeq *tmp = this->ptr_;
+  ::IR_Container::DescriptionSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq *
-CORBA_OpDescriptionSeq_var::ptr (void) const
+ACE_INLINE ::IR_Container::DescriptionSeq *
+IR_Container::DescriptionSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_OpDescriptionSeq_out
+// Inline operations for class IR_Container::DescriptionSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_out::CORBA_OpDescriptionSeq_out (CORBA_OpDescriptionSeq *&p)
+IR_Container::DescriptionSeq_out::DescriptionSeq_out (DescriptionSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_out::CORBA_OpDescriptionSeq_out (CORBA_OpDescriptionSeq_var &p) // constructor from _var
+IR_Container::DescriptionSeq_out::DescriptionSeq_out (DescriptionSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -10416,44 +7279,4464 @@ CORBA_OpDescriptionSeq_out::CORBA_OpDescriptionSeq_out (CORBA_OpDescriptionSeq_v
 }
 
 ACE_INLINE
-CORBA_OpDescriptionSeq_out::CORBA_OpDescriptionSeq_out (const CORBA_OpDescriptionSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_OpDescriptionSeq_out&,p).ptr_)
+IR_Container::DescriptionSeq_out::DescriptionSeq_out (const ::IR_Container::DescriptionSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (DescriptionSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_OpDescriptionSeq_out &
-CORBA_OpDescriptionSeq_out::operator= (const CORBA_OpDescriptionSeq_out &p)
+ACE_INLINE ::IR_Container::DescriptionSeq_out &
+IR_Container::DescriptionSeq_out::operator= (const ::IR_Container::DescriptionSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_OpDescriptionSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (DescriptionSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq_out &
-CORBA_OpDescriptionSeq_out::operator= (CORBA_OpDescriptionSeq *p)
+ACE_INLINE ::IR_Container::DescriptionSeq_out &
+IR_Container::DescriptionSeq_out::operator= (DescriptionSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_OpDescriptionSeq_out::operator CORBA_OpDescriptionSeq *&() // cast
+IR_Container::DescriptionSeq_out::operator ::IR_Container::DescriptionSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq *&
-CORBA_OpDescriptionSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_Container::DescriptionSeq *&
+IR_Container::DescriptionSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OpDescriptionSeq *
-CORBA_OpDescriptionSeq_out::operator-> (void)
+ACE_INLINE ::IR_Container::DescriptionSeq *
+IR_Container::DescriptionSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_OperationDescription &
-CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE IR_Container::Description &
+IR_Container::DescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_IDLType::IR_IDLType (void) // default constructor
+{}
+
+ACE_INLINE
+IR_IDLType::IR_IDLType (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_IDLType::~IR_IDLType (void) // destructor
+{}
+
+
+#if !defined (_IR_IDLTYPE___VAR_CI_)
+#define _IR_IDLTYPE___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_IDLType_var
+// *************************************************************
+
+ACE_INLINE
+IR_IDLType_var::IR_IDLType_var (void) // default constructor
+  : ptr_ (IR_IDLType::_nil ())
+{}
+
+ACE_INLINE
+IR_IDLType_var::IR_IDLType_var (IR_IDLType_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_IDLType_var::IR_IDLType_var (const ::IR_IDLType_var &p) // copy constructor
+  : ptr_ (IR_IDLType::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_IDLType_var::~IR_IDLType_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_IDLType_var &
+IR_IDLType_var::operator= (IR_IDLType_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_IDLType_var &
+IR_IDLType_var::operator= (const ::IR_IDLType_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_IDLType::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_IDLType_var::operator const ::IR_IDLType_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_IDLType_var::operator ::IR_IDLType_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr &
+IR_IDLType_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr &
+IR_IDLType_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_IDLType::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_IDLType_ptr val = this->ptr_;
+  this->ptr_ = ::IR_IDLType::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_IDLTYPE___OUT_CI_)
+#define _IR_IDLTYPE___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_IDLType_out
+// *************************************************************
+
+ACE_INLINE
+IR_IDLType_out::IR_IDLType_out (IR_IDLType_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_IDLType::_nil ();
+}
+
+ACE_INLINE
+IR_IDLType_out::IR_IDLType_out (IR_IDLType_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_IDLType::_nil ();
+}
+
+ACE_INLINE
+IR_IDLType_out::IR_IDLType_out (const ::IR_IDLType_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_IDLType_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_IDLType_out &
+IR_IDLType_out::operator= (const ::IR_IDLType_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_IDLType_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_IDLType_out &
+IR_IDLType_out::operator= (const ::IR_IDLType_var &p)
+{
+  this->ptr_ = ::IR_IDLType::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_IDLType_out &
+IR_IDLType_out::operator= (IR_IDLType_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_IDLType_out::operator ::IR_IDLType_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr &
+IR_IDLType_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_IDLType_ptr
+IR_IDLType_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_Repository::IR_Repository (void) // default constructor
+{}
+
+ACE_INLINE
+IR_Repository::IR_Repository (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_Repository::~IR_Repository (void) // destructor
+{}
+
+
+#if !defined (_IR_REPOSITORY___VAR_CI_)
+#define _IR_REPOSITORY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_Repository_var
+// *************************************************************
+
+ACE_INLINE
+IR_Repository_var::IR_Repository_var (void) // default constructor
+  : ptr_ (IR_Repository::_nil ())
+{}
+
+ACE_INLINE
+IR_Repository_var::IR_Repository_var (IR_Repository_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_Repository_ptr
+IR_Repository_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_Repository_var::IR_Repository_var (const ::IR_Repository_var &p) // copy constructor
+  : ptr_ (IR_Repository::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_Repository_var::~IR_Repository_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_Repository_var &
+IR_Repository_var::operator= (IR_Repository_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_Repository_var &
+IR_Repository_var::operator= (const ::IR_Repository_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_Repository::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_Repository_var::operator const ::IR_Repository_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_Repository_var::operator ::IR_Repository_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr
+IR_Repository_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr
+IR_Repository_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr &
+IR_Repository_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr &
+IR_Repository_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_Repository::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr
+IR_Repository_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_Repository_ptr val = this->ptr_;
+  this->ptr_ = ::IR_Repository::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_REPOSITORY___OUT_CI_)
+#define _IR_REPOSITORY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_Repository_out
+// *************************************************************
+
+ACE_INLINE
+IR_Repository_out::IR_Repository_out (IR_Repository_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_Repository::_nil ();
+}
+
+ACE_INLINE
+IR_Repository_out::IR_Repository_out (IR_Repository_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_Repository::_nil ();
+}
+
+ACE_INLINE
+IR_Repository_out::IR_Repository_out (const ::IR_Repository_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_Repository_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_Repository_out &
+IR_Repository_out::operator= (const ::IR_Repository_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_Repository_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_Repository_out &
+IR_Repository_out::operator= (const ::IR_Repository_var &p)
+{
+  this->ptr_ = ::IR_Repository::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_Repository_out &
+IR_Repository_out::operator= (IR_Repository_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_Repository_out::operator ::IR_Repository_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr &
+IR_Repository_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_Repository_ptr
+IR_Repository_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ComponentRepository::IR_ComponentRepository (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ComponentRepository::IR_ComponentRepository (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ComponentRepository::~IR_ComponentRepository (void) // destructor
+{}
+
+
+#if !defined (_IR_COMPONENTREPOSITORY___VAR_CI_)
+#define _IR_COMPONENTREPOSITORY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ComponentRepository_var
+// *************************************************************
+
+ACE_INLINE
+IR_ComponentRepository_var::IR_ComponentRepository_var (void) // default constructor
+  : ptr_ (IR_ComponentRepository::_nil ())
+{}
+
+ACE_INLINE
+IR_ComponentRepository_var::IR_ComponentRepository_var (IR_ComponentRepository_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ComponentRepository_ptr
+IR_ComponentRepository_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ComponentRepository_var::IR_ComponentRepository_var (const ::IR_ComponentRepository_var &p) // copy constructor
+  : ptr_ (IR_ComponentRepository::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ComponentRepository_var::~IR_ComponentRepository_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ComponentRepository_var &
+IR_ComponentRepository_var::operator= (IR_ComponentRepository_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ComponentRepository_var &
+IR_ComponentRepository_var::operator= (const ::IR_ComponentRepository_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ComponentRepository::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ComponentRepository_var::operator const ::IR_ComponentRepository_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ComponentRepository_var::operator ::IR_ComponentRepository_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr
+IR_ComponentRepository_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr
+IR_ComponentRepository_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr &
+IR_ComponentRepository_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr &
+IR_ComponentRepository_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ComponentRepository::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr
+IR_ComponentRepository_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ComponentRepository_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ComponentRepository::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_COMPONENTREPOSITORY___OUT_CI_)
+#define _IR_COMPONENTREPOSITORY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ComponentRepository_out
+// *************************************************************
+
+ACE_INLINE
+IR_ComponentRepository_out::IR_ComponentRepository_out (IR_ComponentRepository_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ComponentRepository::_nil ();
+}
+
+ACE_INLINE
+IR_ComponentRepository_out::IR_ComponentRepository_out (IR_ComponentRepository_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ComponentRepository::_nil ();
+}
+
+ACE_INLINE
+IR_ComponentRepository_out::IR_ComponentRepository_out (const ::IR_ComponentRepository_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ComponentRepository_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ComponentRepository_out &
+IR_ComponentRepository_out::operator= (const ::IR_ComponentRepository_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ComponentRepository_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ComponentRepository_out &
+IR_ComponentRepository_out::operator= (const ::IR_ComponentRepository_var &p)
+{
+  this->ptr_ = ::IR_ComponentRepository::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ComponentRepository_out &
+IR_ComponentRepository_out::operator= (IR_ComponentRepository_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ComponentRepository_out::operator ::IR_ComponentRepository_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr &
+IR_ComponentRepository_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentRepository_ptr
+IR_ComponentRepository_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ModuleDef::IR_ModuleDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ModuleDef::IR_ModuleDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ModuleDef::~IR_ModuleDef (void) // destructor
+{}
+
+
+#if !defined (_IR_MODULEDEF___VAR_CI_)
+#define _IR_MODULEDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ModuleDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ModuleDef_var::IR_ModuleDef_var (void) // default constructor
+  : ptr_ (IR_ModuleDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ModuleDef_var::IR_ModuleDef_var (IR_ModuleDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ModuleDef_ptr
+IR_ModuleDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ModuleDef_var::IR_ModuleDef_var (const ::IR_ModuleDef_var &p) // copy constructor
+  : ptr_ (IR_ModuleDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ModuleDef_var::~IR_ModuleDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ModuleDef_var &
+IR_ModuleDef_var::operator= (IR_ModuleDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ModuleDef_var &
+IR_ModuleDef_var::operator= (const ::IR_ModuleDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ModuleDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ModuleDef_var::operator const ::IR_ModuleDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ModuleDef_var::operator ::IR_ModuleDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr
+IR_ModuleDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr
+IR_ModuleDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr &
+IR_ModuleDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr &
+IR_ModuleDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ModuleDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr
+IR_ModuleDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ModuleDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ModuleDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_MODULEDEF___OUT_CI_)
+#define _IR_MODULEDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ModuleDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ModuleDef_out::IR_ModuleDef_out (IR_ModuleDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ModuleDef::_nil ();
+}
+
+ACE_INLINE
+IR_ModuleDef_out::IR_ModuleDef_out (IR_ModuleDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ModuleDef::_nil ();
+}
+
+ACE_INLINE
+IR_ModuleDef_out::IR_ModuleDef_out (const ::IR_ModuleDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ModuleDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ModuleDef_out &
+IR_ModuleDef_out::operator= (const ::IR_ModuleDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ModuleDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ModuleDef_out &
+IR_ModuleDef_out::operator= (const ::IR_ModuleDef_var &p)
+{
+  this->ptr_ = ::IR_ModuleDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ModuleDef_out &
+IR_ModuleDef_out::operator= (IR_ModuleDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ModuleDef_out::operator ::IR_ModuleDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr &
+IR_ModuleDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDef_ptr
+IR_ModuleDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_ModuleDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_ModuleDescription_var::IR_ModuleDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ModuleDescription_var::IR_ModuleDescription_var (IR_ModuleDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ModuleDescription_var::IR_ModuleDescription_var (const ::IR_ModuleDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ModuleDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ModuleDescription_var::~IR_ModuleDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ModuleDescription_var &
+IR_ModuleDescription_var::operator= (IR_ModuleDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ModuleDescription_var &
+IR_ModuleDescription_var::operator= (const ::IR_ModuleDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ModuleDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ModuleDescription *
+IR_ModuleDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDescription *
+IR_ModuleDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ModuleDescription_var::operator const ::IR_ModuleDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ModuleDescription_var::operator ::IR_ModuleDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ModuleDescription_var::operator ::IR_ModuleDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ModuleDescription_var::operator ::IR_ModuleDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ModuleDescription &
+IR_ModuleDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDescription &
+IR_ModuleDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ModuleDescription *&
+IR_ModuleDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDescription *
+IR_ModuleDescription_var::_retn (void)
+{
+  ::IR_ModuleDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ModuleDescription *
+IR_ModuleDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ModuleDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_ModuleDescription_out::IR_ModuleDescription_out (::IR_ModuleDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ModuleDescription_out::IR_ModuleDescription_out (IR_ModuleDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ModuleDescription_out::IR_ModuleDescription_out (const ::IR_ModuleDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ModuleDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ModuleDescription_out &
+IR_ModuleDescription_out::operator= (const ::IR_ModuleDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ModuleDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ModuleDescription_out &
+IR_ModuleDescription_out::operator= (IR_ModuleDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ModuleDescription_out::operator ::IR_ModuleDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDescription *&
+IR_ModuleDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ModuleDescription *
+IR_ModuleDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ConstantDef::IR_ConstantDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ConstantDef::IR_ConstantDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ConstantDef::~IR_ConstantDef (void) // destructor
+{}
+
+
+#if !defined (_IR_CONSTANTDEF___VAR_CI_)
+#define _IR_CONSTANTDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ConstantDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ConstantDef_var::IR_ConstantDef_var (void) // default constructor
+  : ptr_ (IR_ConstantDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ConstantDef_var::IR_ConstantDef_var (IR_ConstantDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ConstantDef_ptr
+IR_ConstantDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ConstantDef_var::IR_ConstantDef_var (const ::IR_ConstantDef_var &p) // copy constructor
+  : ptr_ (IR_ConstantDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ConstantDef_var::~IR_ConstantDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ConstantDef_var &
+IR_ConstantDef_var::operator= (IR_ConstantDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ConstantDef_var &
+IR_ConstantDef_var::operator= (const ::IR_ConstantDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ConstantDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ConstantDef_var::operator const ::IR_ConstantDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ConstantDef_var::operator ::IR_ConstantDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr
+IR_ConstantDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr
+IR_ConstantDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr &
+IR_ConstantDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr &
+IR_ConstantDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ConstantDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr
+IR_ConstantDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ConstantDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ConstantDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_CONSTANTDEF___OUT_CI_)
+#define _IR_CONSTANTDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ConstantDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ConstantDef_out::IR_ConstantDef_out (IR_ConstantDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ConstantDef::_nil ();
+}
+
+ACE_INLINE
+IR_ConstantDef_out::IR_ConstantDef_out (IR_ConstantDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ConstantDef::_nil ();
+}
+
+ACE_INLINE
+IR_ConstantDef_out::IR_ConstantDef_out (const ::IR_ConstantDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ConstantDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ConstantDef_out &
+IR_ConstantDef_out::operator= (const ::IR_ConstantDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ConstantDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ConstantDef_out &
+IR_ConstantDef_out::operator= (const ::IR_ConstantDef_var &p)
+{
+  this->ptr_ = ::IR_ConstantDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ConstantDef_out &
+IR_ConstantDef_out::operator= (IR_ConstantDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ConstantDef_out::operator ::IR_ConstantDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr &
+IR_ConstantDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDef_ptr
+IR_ConstantDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_ConstantDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_ConstantDescription_var::IR_ConstantDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ConstantDescription_var::IR_ConstantDescription_var (IR_ConstantDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ConstantDescription_var::IR_ConstantDescription_var (const ::IR_ConstantDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ConstantDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ConstantDescription_var::~IR_ConstantDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ConstantDescription_var &
+IR_ConstantDescription_var::operator= (IR_ConstantDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ConstantDescription_var &
+IR_ConstantDescription_var::operator= (const ::IR_ConstantDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ConstantDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ConstantDescription *
+IR_ConstantDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDescription *
+IR_ConstantDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ConstantDescription_var::operator const ::IR_ConstantDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ConstantDescription_var::operator ::IR_ConstantDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ConstantDescription_var::operator ::IR_ConstantDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ConstantDescription_var::operator ::IR_ConstantDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ConstantDescription &
+IR_ConstantDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDescription &
+IR_ConstantDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ConstantDescription *&
+IR_ConstantDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDescription *
+IR_ConstantDescription_var::_retn (void)
+{
+  ::IR_ConstantDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ConstantDescription *
+IR_ConstantDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ConstantDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_ConstantDescription_out::IR_ConstantDescription_out (::IR_ConstantDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ConstantDescription_out::IR_ConstantDescription_out (IR_ConstantDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ConstantDescription_out::IR_ConstantDescription_out (const ::IR_ConstantDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ConstantDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ConstantDescription_out &
+IR_ConstantDescription_out::operator= (const ::IR_ConstantDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ConstantDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ConstantDescription_out &
+IR_ConstantDescription_out::operator= (IR_ConstantDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ConstantDescription_out::operator ::IR_ConstantDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDescription *&
+IR_ConstantDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConstantDescription *
+IR_ConstantDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_TypedefDef::IR_TypedefDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_TypedefDef::IR_TypedefDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_TypedefDef::~IR_TypedefDef (void) // destructor
+{}
+
+
+#if !defined (_IR_TYPEDEFDEF___VAR_CI_)
+#define _IR_TYPEDEFDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_TypedefDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_TypedefDef_var::IR_TypedefDef_var (void) // default constructor
+  : ptr_ (IR_TypedefDef::_nil ())
+{}
+
+ACE_INLINE
+IR_TypedefDef_var::IR_TypedefDef_var (IR_TypedefDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_TypedefDef_ptr
+IR_TypedefDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_TypedefDef_var::IR_TypedefDef_var (const ::IR_TypedefDef_var &p) // copy constructor
+  : ptr_ (IR_TypedefDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_TypedefDef_var::~IR_TypedefDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_TypedefDef_var &
+IR_TypedefDef_var::operator= (IR_TypedefDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_TypedefDef_var &
+IR_TypedefDef_var::operator= (const ::IR_TypedefDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_TypedefDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_TypedefDef_var::operator const ::IR_TypedefDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_TypedefDef_var::operator ::IR_TypedefDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr
+IR_TypedefDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr
+IR_TypedefDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr &
+IR_TypedefDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr &
+IR_TypedefDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_TypedefDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr
+IR_TypedefDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_TypedefDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_TypedefDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_TYPEDEFDEF___OUT_CI_)
+#define _IR_TYPEDEFDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_TypedefDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_TypedefDef_out::IR_TypedefDef_out (IR_TypedefDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_TypedefDef::_nil ();
+}
+
+ACE_INLINE
+IR_TypedefDef_out::IR_TypedefDef_out (IR_TypedefDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_TypedefDef::_nil ();
+}
+
+ACE_INLINE
+IR_TypedefDef_out::IR_TypedefDef_out (const ::IR_TypedefDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_TypedefDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_TypedefDef_out &
+IR_TypedefDef_out::operator= (const ::IR_TypedefDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_TypedefDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_TypedefDef_out &
+IR_TypedefDef_out::operator= (const ::IR_TypedefDef_var &p)
+{
+  this->ptr_ = ::IR_TypedefDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_TypedefDef_out &
+IR_TypedefDef_out::operator= (IR_TypedefDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_TypedefDef_out::operator ::IR_TypedefDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr &
+IR_TypedefDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypedefDef_ptr
+IR_TypedefDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_TypeDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_TypeDescription_var::IR_TypeDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_TypeDescription_var::IR_TypeDescription_var (IR_TypeDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_TypeDescription_var::IR_TypeDescription_var (const ::IR_TypeDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_TypeDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_TypeDescription_var::~IR_TypeDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_TypeDescription_var &
+IR_TypeDescription_var::operator= (IR_TypeDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_TypeDescription_var &
+IR_TypeDescription_var::operator= (const ::IR_TypeDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_TypeDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_TypeDescription *
+IR_TypeDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypeDescription *
+IR_TypeDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_TypeDescription_var::operator const ::IR_TypeDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_TypeDescription_var::operator ::IR_TypeDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_TypeDescription_var::operator ::IR_TypeDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_TypeDescription_var::operator ::IR_TypeDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_TypeDescription &
+IR_TypeDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_TypeDescription &
+IR_TypeDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_TypeDescription *&
+IR_TypeDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypeDescription *
+IR_TypeDescription_var::_retn (void)
+{
+  ::IR_TypeDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_TypeDescription *
+IR_TypeDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_TypeDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_TypeDescription_out::IR_TypeDescription_out (::IR_TypeDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_TypeDescription_out::IR_TypeDescription_out (IR_TypeDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_TypeDescription_out::IR_TypeDescription_out (const ::IR_TypeDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_TypeDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_TypeDescription_out &
+IR_TypeDescription_out::operator= (const ::IR_TypeDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_TypeDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_TypeDescription_out &
+IR_TypeDescription_out::operator= (IR_TypeDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_TypeDescription_out::operator ::IR_TypeDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypeDescription *&
+IR_TypeDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_TypeDescription *
+IR_TypeDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_StructDef::IR_StructDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_StructDef::IR_StructDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_StructDef::~IR_StructDef (void) // destructor
+{}
+
+
+#if !defined (_IR_STRUCTDEF___VAR_CI_)
+#define _IR_STRUCTDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_StructDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_StructDef_var::IR_StructDef_var (void) // default constructor
+  : ptr_ (IR_StructDef::_nil ())
+{}
+
+ACE_INLINE
+IR_StructDef_var::IR_StructDef_var (IR_StructDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_StructDef_ptr
+IR_StructDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_StructDef_var::IR_StructDef_var (const ::IR_StructDef_var &p) // copy constructor
+  : ptr_ (IR_StructDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_StructDef_var::~IR_StructDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_StructDef_var &
+IR_StructDef_var::operator= (IR_StructDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_StructDef_var &
+IR_StructDef_var::operator= (const ::IR_StructDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_StructDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_StructDef_var::operator const ::IR_StructDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_StructDef_var::operator ::IR_StructDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr
+IR_StructDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr
+IR_StructDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr &
+IR_StructDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr &
+IR_StructDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_StructDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr
+IR_StructDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_StructDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_StructDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_STRUCTDEF___OUT_CI_)
+#define _IR_STRUCTDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_StructDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_StructDef_out::IR_StructDef_out (IR_StructDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_StructDef::_nil ();
+}
+
+ACE_INLINE
+IR_StructDef_out::IR_StructDef_out (IR_StructDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_StructDef::_nil ();
+}
+
+ACE_INLINE
+IR_StructDef_out::IR_StructDef_out (const ::IR_StructDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_StructDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_StructDef_out &
+IR_StructDef_out::operator= (const ::IR_StructDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_StructDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_StructDef_out &
+IR_StructDef_out::operator= (const ::IR_StructDef_var &p)
+{
+  this->ptr_ = ::IR_StructDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_StructDef_out &
+IR_StructDef_out::operator= (IR_StructDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_StructDef_out::operator ::IR_StructDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr &
+IR_StructDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StructDef_ptr
+IR_StructDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_UnionDef::IR_UnionDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_UnionDef::IR_UnionDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_UnionDef::~IR_UnionDef (void) // destructor
+{}
+
+
+#if !defined (_IR_UNIONDEF___VAR_CI_)
+#define _IR_UNIONDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_UnionDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_UnionDef_var::IR_UnionDef_var (void) // default constructor
+  : ptr_ (IR_UnionDef::_nil ())
+{}
+
+ACE_INLINE
+IR_UnionDef_var::IR_UnionDef_var (IR_UnionDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_UnionDef_ptr
+IR_UnionDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_UnionDef_var::IR_UnionDef_var (const ::IR_UnionDef_var &p) // copy constructor
+  : ptr_ (IR_UnionDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_UnionDef_var::~IR_UnionDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_UnionDef_var &
+IR_UnionDef_var::operator= (IR_UnionDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_UnionDef_var &
+IR_UnionDef_var::operator= (const ::IR_UnionDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_UnionDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_UnionDef_var::operator const ::IR_UnionDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_UnionDef_var::operator ::IR_UnionDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr
+IR_UnionDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr
+IR_UnionDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr &
+IR_UnionDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr &
+IR_UnionDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_UnionDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr
+IR_UnionDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_UnionDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_UnionDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_UNIONDEF___OUT_CI_)
+#define _IR_UNIONDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_UnionDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_UnionDef_out::IR_UnionDef_out (IR_UnionDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_UnionDef::_nil ();
+}
+
+ACE_INLINE
+IR_UnionDef_out::IR_UnionDef_out (IR_UnionDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_UnionDef::_nil ();
+}
+
+ACE_INLINE
+IR_UnionDef_out::IR_UnionDef_out (const ::IR_UnionDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UnionDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_UnionDef_out &
+IR_UnionDef_out::operator= (const ::IR_UnionDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UnionDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_UnionDef_out &
+IR_UnionDef_out::operator= (const ::IR_UnionDef_var &p)
+{
+  this->ptr_ = ::IR_UnionDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_UnionDef_out &
+IR_UnionDef_out::operator= (IR_UnionDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UnionDef_out::operator ::IR_UnionDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr &
+IR_UnionDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UnionDef_ptr
+IR_UnionDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_EnumDef::IR_EnumDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_EnumDef::IR_EnumDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_EnumDef::~IR_EnumDef (void) // destructor
+{}
+
+
+#if !defined (_IR_ENUMDEF___VAR_CI_)
+#define _IR_ENUMDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_EnumDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_EnumDef_var::IR_EnumDef_var (void) // default constructor
+  : ptr_ (IR_EnumDef::_nil ())
+{}
+
+ACE_INLINE
+IR_EnumDef_var::IR_EnumDef_var (IR_EnumDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_EnumDef_ptr
+IR_EnumDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_EnumDef_var::IR_EnumDef_var (const ::IR_EnumDef_var &p) // copy constructor
+  : ptr_ (IR_EnumDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_EnumDef_var::~IR_EnumDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_EnumDef_var &
+IR_EnumDef_var::operator= (IR_EnumDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_EnumDef_var &
+IR_EnumDef_var::operator= (const ::IR_EnumDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_EnumDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_EnumDef_var::operator const ::IR_EnumDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_EnumDef_var::operator ::IR_EnumDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr
+IR_EnumDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr
+IR_EnumDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr &
+IR_EnumDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr &
+IR_EnumDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_EnumDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr
+IR_EnumDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_EnumDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_EnumDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_ENUMDEF___OUT_CI_)
+#define _IR_ENUMDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_EnumDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_EnumDef_out::IR_EnumDef_out (IR_EnumDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_EnumDef::_nil ();
+}
+
+ACE_INLINE
+IR_EnumDef_out::IR_EnumDef_out (IR_EnumDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_EnumDef::_nil ();
+}
+
+ACE_INLINE
+IR_EnumDef_out::IR_EnumDef_out (const ::IR_EnumDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_EnumDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_EnumDef_out &
+IR_EnumDef_out::operator= (const ::IR_EnumDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_EnumDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_EnumDef_out &
+IR_EnumDef_out::operator= (const ::IR_EnumDef_var &p)
+{
+  this->ptr_ = ::IR_EnumDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_EnumDef_out &
+IR_EnumDef_out::operator= (IR_EnumDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_EnumDef_out::operator ::IR_EnumDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr &
+IR_EnumDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EnumDef_ptr
+IR_EnumDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_AliasDef::IR_AliasDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_AliasDef::IR_AliasDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_AliasDef::~IR_AliasDef (void) // destructor
+{}
+
+
+#if !defined (_IR_ALIASDEF___VAR_CI_)
+#define _IR_ALIASDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_AliasDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_AliasDef_var::IR_AliasDef_var (void) // default constructor
+  : ptr_ (IR_AliasDef::_nil ())
+{}
+
+ACE_INLINE
+IR_AliasDef_var::IR_AliasDef_var (IR_AliasDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_AliasDef_ptr
+IR_AliasDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_AliasDef_var::IR_AliasDef_var (const ::IR_AliasDef_var &p) // copy constructor
+  : ptr_ (IR_AliasDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_AliasDef_var::~IR_AliasDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_AliasDef_var &
+IR_AliasDef_var::operator= (IR_AliasDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_AliasDef_var &
+IR_AliasDef_var::operator= (const ::IR_AliasDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_AliasDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_AliasDef_var::operator const ::IR_AliasDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_AliasDef_var::operator ::IR_AliasDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr
+IR_AliasDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr
+IR_AliasDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr &
+IR_AliasDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr &
+IR_AliasDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_AliasDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr
+IR_AliasDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_AliasDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_AliasDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_ALIASDEF___OUT_CI_)
+#define _IR_ALIASDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_AliasDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_AliasDef_out::IR_AliasDef_out (IR_AliasDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_AliasDef::_nil ();
+}
+
+ACE_INLINE
+IR_AliasDef_out::IR_AliasDef_out (IR_AliasDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_AliasDef::_nil ();
+}
+
+ACE_INLINE
+IR_AliasDef_out::IR_AliasDef_out (const ::IR_AliasDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_AliasDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_AliasDef_out &
+IR_AliasDef_out::operator= (const ::IR_AliasDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_AliasDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_AliasDef_out &
+IR_AliasDef_out::operator= (const ::IR_AliasDef_var &p)
+{
+  this->ptr_ = ::IR_AliasDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_AliasDef_out &
+IR_AliasDef_out::operator= (IR_AliasDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_AliasDef_out::operator ::IR_AliasDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr &
+IR_AliasDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AliasDef_ptr
+IR_AliasDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_NativeDef::IR_NativeDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_NativeDef::IR_NativeDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_NativeDef::~IR_NativeDef (void) // destructor
+{}
+
+
+#if !defined (_IR_NATIVEDEF___VAR_CI_)
+#define _IR_NATIVEDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_NativeDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_NativeDef_var::IR_NativeDef_var (void) // default constructor
+  : ptr_ (IR_NativeDef::_nil ())
+{}
+
+ACE_INLINE
+IR_NativeDef_var::IR_NativeDef_var (IR_NativeDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_NativeDef_ptr
+IR_NativeDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_NativeDef_var::IR_NativeDef_var (const ::IR_NativeDef_var &p) // copy constructor
+  : ptr_ (IR_NativeDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_NativeDef_var::~IR_NativeDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_NativeDef_var &
+IR_NativeDef_var::operator= (IR_NativeDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_NativeDef_var &
+IR_NativeDef_var::operator= (const ::IR_NativeDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_NativeDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_NativeDef_var::operator const ::IR_NativeDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_NativeDef_var::operator ::IR_NativeDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr
+IR_NativeDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr
+IR_NativeDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr &
+IR_NativeDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr &
+IR_NativeDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_NativeDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr
+IR_NativeDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_NativeDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_NativeDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_NATIVEDEF___OUT_CI_)
+#define _IR_NATIVEDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_NativeDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_NativeDef_out::IR_NativeDef_out (IR_NativeDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_NativeDef::_nil ();
+}
+
+ACE_INLINE
+IR_NativeDef_out::IR_NativeDef_out (IR_NativeDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_NativeDef::_nil ();
+}
+
+ACE_INLINE
+IR_NativeDef_out::IR_NativeDef_out (const ::IR_NativeDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_NativeDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_NativeDef_out &
+IR_NativeDef_out::operator= (const ::IR_NativeDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_NativeDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_NativeDef_out &
+IR_NativeDef_out::operator= (const ::IR_NativeDef_var &p)
+{
+  this->ptr_ = ::IR_NativeDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_NativeDef_out &
+IR_NativeDef_out::operator= (IR_NativeDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_NativeDef_out::operator ::IR_NativeDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr &
+IR_NativeDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_NativeDef_ptr
+IR_NativeDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_PrimitiveDef::IR_PrimitiveDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_PrimitiveDef::IR_PrimitiveDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_PrimitiveDef::~IR_PrimitiveDef (void) // destructor
+{}
+
+
+#if !defined (_IR_PRIMITIVEDEF___VAR_CI_)
+#define _IR_PRIMITIVEDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_PrimitiveDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_PrimitiveDef_var::IR_PrimitiveDef_var (void) // default constructor
+  : ptr_ (IR_PrimitiveDef::_nil ())
+{}
+
+ACE_INLINE
+IR_PrimitiveDef_var::IR_PrimitiveDef_var (IR_PrimitiveDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr
+IR_PrimitiveDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_PrimitiveDef_var::IR_PrimitiveDef_var (const ::IR_PrimitiveDef_var &p) // copy constructor
+  : ptr_ (IR_PrimitiveDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_PrimitiveDef_var::~IR_PrimitiveDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_PrimitiveDef_var &
+IR_PrimitiveDef_var::operator= (IR_PrimitiveDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_PrimitiveDef_var &
+IR_PrimitiveDef_var::operator= (const ::IR_PrimitiveDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_PrimitiveDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_PrimitiveDef_var::operator const ::IR_PrimitiveDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_PrimitiveDef_var::operator ::IR_PrimitiveDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr
+IR_PrimitiveDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr
+IR_PrimitiveDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr &
+IR_PrimitiveDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr &
+IR_PrimitiveDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_PrimitiveDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr
+IR_PrimitiveDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_PrimitiveDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_PrimitiveDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_PRIMITIVEDEF___OUT_CI_)
+#define _IR_PRIMITIVEDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_PrimitiveDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_PrimitiveDef_out::IR_PrimitiveDef_out (IR_PrimitiveDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_PrimitiveDef::_nil ();
+}
+
+ACE_INLINE
+IR_PrimitiveDef_out::IR_PrimitiveDef_out (IR_PrimitiveDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_PrimitiveDef::_nil ();
+}
+
+ACE_INLINE
+IR_PrimitiveDef_out::IR_PrimitiveDef_out (const ::IR_PrimitiveDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_PrimitiveDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_PrimitiveDef_out &
+IR_PrimitiveDef_out::operator= (const ::IR_PrimitiveDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_PrimitiveDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_PrimitiveDef_out &
+IR_PrimitiveDef_out::operator= (const ::IR_PrimitiveDef_var &p)
+{
+  this->ptr_ = ::IR_PrimitiveDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_PrimitiveDef_out &
+IR_PrimitiveDef_out::operator= (IR_PrimitiveDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_PrimitiveDef_out::operator ::IR_PrimitiveDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr &
+IR_PrimitiveDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimitiveDef_ptr
+IR_PrimitiveDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_StringDef::IR_StringDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_StringDef::IR_StringDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_StringDef::~IR_StringDef (void) // destructor
+{}
+
+
+#if !defined (_IR_STRINGDEF___VAR_CI_)
+#define _IR_STRINGDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_StringDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_StringDef_var::IR_StringDef_var (void) // default constructor
+  : ptr_ (IR_StringDef::_nil ())
+{}
+
+ACE_INLINE
+IR_StringDef_var::IR_StringDef_var (IR_StringDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_StringDef_ptr
+IR_StringDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_StringDef_var::IR_StringDef_var (const ::IR_StringDef_var &p) // copy constructor
+  : ptr_ (IR_StringDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_StringDef_var::~IR_StringDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_StringDef_var &
+IR_StringDef_var::operator= (IR_StringDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_StringDef_var &
+IR_StringDef_var::operator= (const ::IR_StringDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_StringDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_StringDef_var::operator const ::IR_StringDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_StringDef_var::operator ::IR_StringDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr
+IR_StringDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr
+IR_StringDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr &
+IR_StringDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr &
+IR_StringDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_StringDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr
+IR_StringDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_StringDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_StringDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_STRINGDEF___OUT_CI_)
+#define _IR_STRINGDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_StringDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_StringDef_out::IR_StringDef_out (IR_StringDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_StringDef::_nil ();
+}
+
+ACE_INLINE
+IR_StringDef_out::IR_StringDef_out (IR_StringDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_StringDef::_nil ();
+}
+
+ACE_INLINE
+IR_StringDef_out::IR_StringDef_out (const ::IR_StringDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_StringDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_StringDef_out &
+IR_StringDef_out::operator= (const ::IR_StringDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_StringDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_StringDef_out &
+IR_StringDef_out::operator= (const ::IR_StringDef_var &p)
+{
+  this->ptr_ = ::IR_StringDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_StringDef_out &
+IR_StringDef_out::operator= (IR_StringDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_StringDef_out::operator ::IR_StringDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr &
+IR_StringDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_StringDef_ptr
+IR_StringDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_WstringDef::IR_WstringDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_WstringDef::IR_WstringDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_WstringDef::~IR_WstringDef (void) // destructor
+{}
+
+
+#if !defined (_IR_WSTRINGDEF___VAR_CI_)
+#define _IR_WSTRINGDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_WstringDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_WstringDef_var::IR_WstringDef_var (void) // default constructor
+  : ptr_ (IR_WstringDef::_nil ())
+{}
+
+ACE_INLINE
+IR_WstringDef_var::IR_WstringDef_var (IR_WstringDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_WstringDef_ptr
+IR_WstringDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_WstringDef_var::IR_WstringDef_var (const ::IR_WstringDef_var &p) // copy constructor
+  : ptr_ (IR_WstringDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_WstringDef_var::~IR_WstringDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_WstringDef_var &
+IR_WstringDef_var::operator= (IR_WstringDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_WstringDef_var &
+IR_WstringDef_var::operator= (const ::IR_WstringDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_WstringDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_WstringDef_var::operator const ::IR_WstringDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_WstringDef_var::operator ::IR_WstringDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr
+IR_WstringDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr
+IR_WstringDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr &
+IR_WstringDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr &
+IR_WstringDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_WstringDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr
+IR_WstringDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_WstringDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_WstringDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_WSTRINGDEF___OUT_CI_)
+#define _IR_WSTRINGDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_WstringDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_WstringDef_out::IR_WstringDef_out (IR_WstringDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_WstringDef::_nil ();
+}
+
+ACE_INLINE
+IR_WstringDef_out::IR_WstringDef_out (IR_WstringDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_WstringDef::_nil ();
+}
+
+ACE_INLINE
+IR_WstringDef_out::IR_WstringDef_out (const ::IR_WstringDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_WstringDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_WstringDef_out &
+IR_WstringDef_out::operator= (const ::IR_WstringDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_WstringDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_WstringDef_out &
+IR_WstringDef_out::operator= (const ::IR_WstringDef_var &p)
+{
+  this->ptr_ = ::IR_WstringDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_WstringDef_out &
+IR_WstringDef_out::operator= (IR_WstringDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_WstringDef_out::operator ::IR_WstringDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr &
+IR_WstringDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_WstringDef_ptr
+IR_WstringDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_FixedDef::IR_FixedDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_FixedDef::IR_FixedDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_FixedDef::~IR_FixedDef (void) // destructor
+{}
+
+
+#if !defined (_IR_FIXEDDEF___VAR_CI_)
+#define _IR_FIXEDDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_FixedDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_FixedDef_var::IR_FixedDef_var (void) // default constructor
+  : ptr_ (IR_FixedDef::_nil ())
+{}
+
+ACE_INLINE
+IR_FixedDef_var::IR_FixedDef_var (IR_FixedDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_FixedDef_ptr
+IR_FixedDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_FixedDef_var::IR_FixedDef_var (const ::IR_FixedDef_var &p) // copy constructor
+  : ptr_ (IR_FixedDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_FixedDef_var::~IR_FixedDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_FixedDef_var &
+IR_FixedDef_var::operator= (IR_FixedDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_FixedDef_var &
+IR_FixedDef_var::operator= (const ::IR_FixedDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_FixedDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_FixedDef_var::operator const ::IR_FixedDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_FixedDef_var::operator ::IR_FixedDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr
+IR_FixedDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr
+IR_FixedDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr &
+IR_FixedDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr &
+IR_FixedDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_FixedDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr
+IR_FixedDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_FixedDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_FixedDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_FIXEDDEF___OUT_CI_)
+#define _IR_FIXEDDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_FixedDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_FixedDef_out::IR_FixedDef_out (IR_FixedDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_FixedDef::_nil ();
+}
+
+ACE_INLINE
+IR_FixedDef_out::IR_FixedDef_out (IR_FixedDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_FixedDef::_nil ();
+}
+
+ACE_INLINE
+IR_FixedDef_out::IR_FixedDef_out (const ::IR_FixedDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_FixedDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_FixedDef_out &
+IR_FixedDef_out::operator= (const ::IR_FixedDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_FixedDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_FixedDef_out &
+IR_FixedDef_out::operator= (const ::IR_FixedDef_var &p)
+{
+  this->ptr_ = ::IR_FixedDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_FixedDef_out &
+IR_FixedDef_out::operator= (IR_FixedDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_FixedDef_out::operator ::IR_FixedDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr &
+IR_FixedDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FixedDef_ptr
+IR_FixedDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_SequenceDef::IR_SequenceDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_SequenceDef::IR_SequenceDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_SequenceDef::~IR_SequenceDef (void) // destructor
+{}
+
+
+#if !defined (_IR_SEQUENCEDEF___VAR_CI_)
+#define _IR_SEQUENCEDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_SequenceDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_SequenceDef_var::IR_SequenceDef_var (void) // default constructor
+  : ptr_ (IR_SequenceDef::_nil ())
+{}
+
+ACE_INLINE
+IR_SequenceDef_var::IR_SequenceDef_var (IR_SequenceDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_SequenceDef_ptr
+IR_SequenceDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_SequenceDef_var::IR_SequenceDef_var (const ::IR_SequenceDef_var &p) // copy constructor
+  : ptr_ (IR_SequenceDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_SequenceDef_var::~IR_SequenceDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_SequenceDef_var &
+IR_SequenceDef_var::operator= (IR_SequenceDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_SequenceDef_var &
+IR_SequenceDef_var::operator= (const ::IR_SequenceDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_SequenceDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_SequenceDef_var::operator const ::IR_SequenceDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_SequenceDef_var::operator ::IR_SequenceDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr
+IR_SequenceDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr
+IR_SequenceDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr &
+IR_SequenceDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr &
+IR_SequenceDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_SequenceDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr
+IR_SequenceDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_SequenceDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_SequenceDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_SEQUENCEDEF___OUT_CI_)
+#define _IR_SEQUENCEDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_SequenceDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_SequenceDef_out::IR_SequenceDef_out (IR_SequenceDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_SequenceDef::_nil ();
+}
+
+ACE_INLINE
+IR_SequenceDef_out::IR_SequenceDef_out (IR_SequenceDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_SequenceDef::_nil ();
+}
+
+ACE_INLINE
+IR_SequenceDef_out::IR_SequenceDef_out (const ::IR_SequenceDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_SequenceDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_SequenceDef_out &
+IR_SequenceDef_out::operator= (const ::IR_SequenceDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_SequenceDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_SequenceDef_out &
+IR_SequenceDef_out::operator= (const ::IR_SequenceDef_var &p)
+{
+  this->ptr_ = ::IR_SequenceDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_SequenceDef_out &
+IR_SequenceDef_out::operator= (IR_SequenceDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_SequenceDef_out::operator ::IR_SequenceDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr &
+IR_SequenceDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_SequenceDef_ptr
+IR_SequenceDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ArrayDef::IR_ArrayDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ArrayDef::IR_ArrayDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ArrayDef::~IR_ArrayDef (void) // destructor
+{}
+
+
+#if !defined (_IR_ARRAYDEF___VAR_CI_)
+#define _IR_ARRAYDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ArrayDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ArrayDef_var::IR_ArrayDef_var (void) // default constructor
+  : ptr_ (IR_ArrayDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ArrayDef_var::IR_ArrayDef_var (IR_ArrayDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ArrayDef_ptr
+IR_ArrayDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ArrayDef_var::IR_ArrayDef_var (const ::IR_ArrayDef_var &p) // copy constructor
+  : ptr_ (IR_ArrayDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ArrayDef_var::~IR_ArrayDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ArrayDef_var &
+IR_ArrayDef_var::operator= (IR_ArrayDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ArrayDef_var &
+IR_ArrayDef_var::operator= (const ::IR_ArrayDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ArrayDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ArrayDef_var::operator const ::IR_ArrayDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ArrayDef_var::operator ::IR_ArrayDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr
+IR_ArrayDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr
+IR_ArrayDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr &
+IR_ArrayDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr &
+IR_ArrayDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ArrayDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr
+IR_ArrayDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ArrayDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ArrayDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_ARRAYDEF___OUT_CI_)
+#define _IR_ARRAYDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ArrayDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ArrayDef_out::IR_ArrayDef_out (IR_ArrayDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ArrayDef::_nil ();
+}
+
+ACE_INLINE
+IR_ArrayDef_out::IR_ArrayDef_out (IR_ArrayDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ArrayDef::_nil ();
+}
+
+ACE_INLINE
+IR_ArrayDef_out::IR_ArrayDef_out (const ::IR_ArrayDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ArrayDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ArrayDef_out &
+IR_ArrayDef_out::operator= (const ::IR_ArrayDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ArrayDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ArrayDef_out &
+IR_ArrayDef_out::operator= (const ::IR_ArrayDef_var &p)
+{
+  this->ptr_ = ::IR_ArrayDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ArrayDef_out &
+IR_ArrayDef_out::operator= (IR_ArrayDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ArrayDef_out::operator ::IR_ArrayDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr &
+IR_ArrayDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ArrayDef_ptr
+IR_ArrayDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ExceptionDef::IR_ExceptionDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ExceptionDef::IR_ExceptionDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ExceptionDef::~IR_ExceptionDef (void) // destructor
+{}
+
+
+#if !defined (_IR_EXCEPTIONDEF___VAR_CI_)
+#define _IR_EXCEPTIONDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ExceptionDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ExceptionDef_var::IR_ExceptionDef_var (void) // default constructor
+  : ptr_ (IR_ExceptionDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ExceptionDef_var::IR_ExceptionDef_var (IR_ExceptionDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ExceptionDef_ptr
+IR_ExceptionDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ExceptionDef_var::IR_ExceptionDef_var (const ::IR_ExceptionDef_var &p) // copy constructor
+  : ptr_ (IR_ExceptionDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ExceptionDef_var::~IR_ExceptionDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ExceptionDef_var &
+IR_ExceptionDef_var::operator= (IR_ExceptionDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ExceptionDef_var &
+IR_ExceptionDef_var::operator= (const ::IR_ExceptionDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ExceptionDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ExceptionDef_var::operator const ::IR_ExceptionDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ExceptionDef_var::operator ::IR_ExceptionDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr
+IR_ExceptionDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr
+IR_ExceptionDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr &
+IR_ExceptionDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr &
+IR_ExceptionDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ExceptionDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr
+IR_ExceptionDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ExceptionDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ExceptionDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_EXCEPTIONDEF___OUT_CI_)
+#define _IR_EXCEPTIONDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ExceptionDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ExceptionDef_out::IR_ExceptionDef_out (IR_ExceptionDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ExceptionDef::_nil ();
+}
+
+ACE_INLINE
+IR_ExceptionDef_out::IR_ExceptionDef_out (IR_ExceptionDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ExceptionDef::_nil ();
+}
+
+ACE_INLINE
+IR_ExceptionDef_out::IR_ExceptionDef_out (const ::IR_ExceptionDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ExceptionDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ExceptionDef_out &
+IR_ExceptionDef_out::operator= (const ::IR_ExceptionDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ExceptionDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ExceptionDef_out &
+IR_ExceptionDef_out::operator= (const ::IR_ExceptionDef_var &p)
+{
+  this->ptr_ = ::IR_ExceptionDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ExceptionDef_out &
+IR_ExceptionDef_out::operator= (IR_ExceptionDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ExceptionDef_out::operator ::IR_ExceptionDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr &
+IR_ExceptionDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDef_ptr
+IR_ExceptionDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_ExceptionDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_ExceptionDescription_var::IR_ExceptionDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ExceptionDescription_var::IR_ExceptionDescription_var (IR_ExceptionDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ExceptionDescription_var::IR_ExceptionDescription_var (const ::IR_ExceptionDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ExceptionDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ExceptionDescription_var::~IR_ExceptionDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ExceptionDescription_var &
+IR_ExceptionDescription_var::operator= (IR_ExceptionDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ExceptionDescription_var &
+IR_ExceptionDescription_var::operator= (const ::IR_ExceptionDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ExceptionDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ExceptionDescription *
+IR_ExceptionDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDescription *
+IR_ExceptionDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ExceptionDescription_var::operator const ::IR_ExceptionDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ExceptionDescription_var::operator ::IR_ExceptionDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ExceptionDescription_var::operator ::IR_ExceptionDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ExceptionDescription_var::operator ::IR_ExceptionDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ExceptionDescription &
+IR_ExceptionDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDescription &
+IR_ExceptionDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ExceptionDescription *&
+IR_ExceptionDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDescription *
+IR_ExceptionDescription_var::_retn (void)
+{
+  ::IR_ExceptionDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ExceptionDescription *
+IR_ExceptionDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ExceptionDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_ExceptionDescription_out::IR_ExceptionDescription_out (::IR_ExceptionDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ExceptionDescription_out::IR_ExceptionDescription_out (IR_ExceptionDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ExceptionDescription_out::IR_ExceptionDescription_out (const ::IR_ExceptionDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ExceptionDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ExceptionDescription_out &
+IR_ExceptionDescription_out::operator= (const ::IR_ExceptionDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ExceptionDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ExceptionDescription_out &
+IR_ExceptionDescription_out::operator= (IR_ExceptionDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ExceptionDescription_out::operator ::IR_ExceptionDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDescription *&
+IR_ExceptionDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDescription *
+IR_ExceptionDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EXCEPTIONDEFSEQ_CI_)
+#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EXCEPTIONDEFSEQ_CI_
+
+  ACE_INLINE IR_ExceptionDef **
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (CORBA::ULong nelems)
+  {
+    IR_ExceptionDef **buf = 0;
+    
+    ACE_NEW_RETURN (buf, IR_ExceptionDef*[nelems], 0);
+    
+    for (CORBA::ULong i = 0; i < nelems; i++)
+      buf[i] = IR_ExceptionDef::_nil ();
+    
+    return buf;
+  }
+  
+  ACE_INLINE void 
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::freebuf (IR_ExceptionDef **buffer)
+  {
+    if (buffer == 0)
+      return;
+    delete[] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (void)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum)
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_ExceptionDef* *value,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &rhs)
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_ExceptionDef **tmp1 = _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (this->maximum_);
+      IR_ExceptionDef ** const tmp2 = ACE_reinterpret_cast (IR_ExceptionDef ** ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+        tmp1[i] = IR_ExceptionDef::_duplicate (tmp2[i]);
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &rhs)
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      IR_ExceptionDef **tmp = ACE_reinterpret_cast (IR_ExceptionDef **, this->buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+      {
+        CORBA::release (tmp[i]);
+        tmp[i] = IR_ExceptionDef::_nil ();
+      }
+      if (this->maximum_ < rhs.maximum_)
+      {
+        _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_ExceptionDef **tmp1 = ACE_reinterpret_cast (IR_ExceptionDef **, this->buffer_);
+    IR_ExceptionDef ** const tmp2 = ACE_reinterpret_cast (IR_ExceptionDef ** ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+      tmp1[i] = IR_ExceptionDef::_duplicate (tmp2[i]);
+    
+    return *this;
+  }
+  
+  ACE_INLINE TAO_Object_Manager<IR_ExceptionDef,IR_ExceptionDef_var>
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::operator[] (CORBA::ULong index) const
+  // read-write accessor
+  {
+    ACE_ASSERT (index < this->maximum_);
+    IR_ExceptionDef ** const tmp = ACE_reinterpret_cast (IR_ExceptionDef ** ACE_CAST_CONST, this->buffer_);
+    return TAO_Object_Manager<IR_ExceptionDef,IR_ExceptionDef_var> (tmp + index, this->release_);
+  }
+  
+  ACE_INLINE IR_ExceptionDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_ExceptionDef **result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (this->maximum_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_ExceptionDef**, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_ExceptionDef**,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_ExceptionDef* *
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_ExceptionDef ** ACE_CAST_CONST, this->buffer_);
+  }
+  
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_EXCEPTIONDEFSEQ_CI_)
+#define _IR_EXCEPTIONDEFSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_ExceptionDefSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_ExceptionDefSeq_var::IR_ExceptionDefSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ExceptionDefSeq_var::IR_ExceptionDefSeq_var (IR_ExceptionDefSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ExceptionDefSeq_var::IR_ExceptionDefSeq_var (const ::IR_ExceptionDefSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ExceptionDefSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ExceptionDefSeq_var::~IR_ExceptionDefSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ExceptionDefSeq_var &
+IR_ExceptionDefSeq_var::operator= (IR_ExceptionDefSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ExceptionDefSeq_var &
+IR_ExceptionDefSeq_var::operator= (const ::IR_ExceptionDefSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ExceptionDefSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ExceptionDefSeq *
+IR_ExceptionDefSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq *
+IR_ExceptionDefSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ExceptionDefSeq_var::operator const ::IR_ExceptionDefSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ExceptionDefSeq_var::operator ::IR_ExceptionDefSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ExceptionDefSeq_var::operator ::IR_ExceptionDefSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ExceptionDefSeq_var::operator ::IR_ExceptionDefSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ExceptionDef, IR_ExceptionDef_var> 
+IR_ExceptionDefSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_ExceptionDefSeq &
+IR_ExceptionDefSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq &
+IR_ExceptionDefSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ExceptionDefSeq *&
+IR_ExceptionDefSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq *
+IR_ExceptionDefSeq_var::_retn (void)
+{
+  ::IR_ExceptionDefSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq *
+IR_ExceptionDefSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ExceptionDefSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_ExceptionDefSeq_out::IR_ExceptionDefSeq_out (IR_ExceptionDefSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ExceptionDefSeq_out::IR_ExceptionDefSeq_out (IR_ExceptionDefSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ExceptionDefSeq_out::IR_ExceptionDefSeq_out (const ::IR_ExceptionDefSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ExceptionDefSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ExceptionDefSeq_out &
+IR_ExceptionDefSeq_out::operator= (const ::IR_ExceptionDefSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ExceptionDefSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq_out &
+IR_ExceptionDefSeq_out::operator= (IR_ExceptionDefSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ExceptionDefSeq_out::operator ::IR_ExceptionDefSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq *&
+IR_ExceptionDefSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ExceptionDefSeq *
+IR_ExceptionDefSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_Object_Manager<IR_ExceptionDef, IR_ExceptionDef_var> 
+IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -10464,63 +11747,68 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_ATTRDESCRIPTIONSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_ATTRDESCRIPTIONSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_EXCDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_EXCDESCRIPTIONSEQ_CI_
 
   // = Static operations.
-  ACE_INLINE CORBA_AttributeDescription *
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
+  ACE_INLINE IR_ExceptionDescription *
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    CORBA_AttributeDescription *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_AttributeDescription[size],
-		    0);
+    IR_ExceptionDescription *retval = 0;
+    ACE_NEW_RETURN (retval, IR_ExceptionDescription[size], 0);
     return retval;
   }
   
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (CORBA_AttributeDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::freebuf (IR_ExceptionDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (maximum))
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA_AttributeDescription *data,
+    IR_ExceptionDescription *data,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::_TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq (const _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (const _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA_AttributeDescription *tmp1 = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (this->maximum_);
-    CORBA_AttributeDescription * const tmp2 = ACE_reinterpret_cast (CORBA_AttributeDescription * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_ExceptionDescription *tmp1 = _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (this->maximum_);
+      IR_ExceptionDescription * const tmp2 = ACE_reinterpret_cast (IR_ExceptionDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -10531,18 +11819,18 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
-        CORBA_AttributeDescription *tmp = ACE_reinterpret_cast (CORBA_AttributeDescription *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (rhs.maximum_);
+        IR_ExceptionDescription *tmp = ACE_reinterpret_cast (IR_ExceptionDescription *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA_AttributeDescription *tmp1 = ACE_reinterpret_cast (CORBA_AttributeDescription *, this->buffer_);
-    CORBA_AttributeDescription * const tmp2 = ACE_reinterpret_cast (CORBA_AttributeDescription * ACE_CAST_CONST, rhs.buffer_);
+    IR_ExceptionDescription *tmp1 = ACE_reinterpret_cast (IR_ExceptionDescription *, this->buffer_);
+    IR_ExceptionDescription * const tmp2 = ACE_reinterpret_cast (IR_ExceptionDescription * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
@@ -10551,41 +11839,41 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   // = Accessors.
-  ACE_INLINE CORBA_AttributeDescription &
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator[] (CORBA::ULong i)
+  ACE_INLINE IR_ExceptionDescription &
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_AttributeDescription* tmp = ACE_reinterpret_cast(CORBA_AttributeDescription*,this->buffer_);
+    IR_ExceptionDescription* tmp = ACE_reinterpret_cast(IR_ExceptionDescription*,this->buffer_);
     return tmp[i];
   }
   
-  ACE_INLINE const CORBA_AttributeDescription &
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::operator[] (CORBA::ULong i) const
+  ACE_INLINE const IR_ExceptionDescription &
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_AttributeDescription * const tmp = ACE_reinterpret_cast (CORBA_AttributeDescription* ACE_CAST_CONST, this->buffer_);
+    IR_ExceptionDescription * const tmp = ACE_reinterpret_cast (IR_ExceptionDescription* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
   
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
-  ACE_INLINE CORBA_AttributeDescription *
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_ExceptionDescription *
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA_AttributeDescription *result = 0;
+    IR_ExceptionDescription *result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::allocbuf (this->length_);
+        result = _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA_AttributeDescription*, this->buffer_);
+        result = ACE_reinterpret_cast (IR_ExceptionDescription*, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -10594,7 +11882,7 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA_AttributeDescription*,this->buffer_);
+        result = ACE_reinterpret_cast(IR_ExceptionDescription*,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -10604,24 +11892,24 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
     return result;
   }
   
-  ACE_INLINE const CORBA_AttributeDescription *
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::get_buffer (void) const
+  ACE_INLINE const IR_ExceptionDescription *
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA_AttributeDescription * ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_ExceptionDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
-  CORBA_AttributeDescription *data,
+  IR_ExceptionDescription *data,
   CORBA::Boolean release)
   {
     this->maximum_ = max;
     this->length_ = length;
     if (this->buffer_ && this->release_ == 1)
     {
-      CORBA_AttributeDescription *tmp = ACE_reinterpret_cast(CORBA_AttributeDescription*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_AttrDescriptionSeq::freebuf (tmp);
+      IR_ExceptionDescription *tmp = ACE_reinterpret_cast(IR_ExceptionDescription*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
@@ -10632,144 +11920,148 @@ CORBA_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_ATTRDESCRIPTIONSEQ_CI_)
-#define _CORBA_ATTRDESCRIPTIONSEQ_CI_
+#if !defined (_IR_EXCDESCRIPTIONSEQ_CI_)
+#define _IR_EXCDESCRIPTIONSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_AttrDescriptionSeq_var
+// Inline operations for class IR_ExcDescriptionSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_var::CORBA_AttrDescriptionSeq_var (void) // default constructor
+IR_ExcDescriptionSeq_var::IR_ExcDescriptionSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_var::CORBA_AttrDescriptionSeq_var (CORBA_AttrDescriptionSeq *p)
+IR_ExcDescriptionSeq_var::IR_ExcDescriptionSeq_var (IR_ExcDescriptionSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_var::CORBA_AttrDescriptionSeq_var (const CORBA_AttrDescriptionSeq_var &p) // copy constructor
+IR_ExcDescriptionSeq_var::IR_ExcDescriptionSeq_var (const ::IR_ExcDescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_AttrDescriptionSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_ExcDescriptionSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_var::~CORBA_AttrDescriptionSeq_var (void) // destructor
+IR_ExcDescriptionSeq_var::~IR_ExcDescriptionSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq_var &
-CORBA_AttrDescriptionSeq_var::operator= (CORBA_AttrDescriptionSeq *p)
+ACE_INLINE IR_ExcDescriptionSeq_var &
+IR_ExcDescriptionSeq_var::operator= (IR_ExcDescriptionSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq_var &
-CORBA_AttrDescriptionSeq_var::operator= (const CORBA_AttrDescriptionSeq_var &p) // deep copy
+ACE_INLINE IR_ExcDescriptionSeq_var &
+IR_ExcDescriptionSeq_var::operator= (const ::IR_ExcDescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_AttrDescriptionSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_ExcDescriptionSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_AttrDescriptionSeq *
-CORBA_AttrDescriptionSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_ExcDescriptionSeq *
+IR_ExcDescriptionSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq *
-CORBA_AttrDescriptionSeq_var::operator-> (void)
+ACE_INLINE ::IR_ExcDescriptionSeq *
+IR_ExcDescriptionSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_AttrDescriptionSeq_var::operator const CORBA_AttrDescriptionSeq &() const // cast
+IR_ExcDescriptionSeq_var::operator const ::IR_ExcDescriptionSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_AttrDescriptionSeq_var::operator CORBA_AttrDescriptionSeq &() // cast 
+IR_ExcDescriptionSeq_var::operator ::IR_ExcDescriptionSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_AttrDescriptionSeq_var::operator CORBA_AttrDescriptionSeq &() const// cast 
+IR_ExcDescriptionSeq_var::operator ::IR_ExcDescriptionSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_AttributeDescription &
-CORBA_AttrDescriptionSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_ExcDescriptionSeq_var::operator ::IR_ExcDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_ExceptionDescription &
+IR_ExcDescriptionSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_AttrDescriptionSeq &
-CORBA_AttrDescriptionSeq_var::in (void) const
+ACE_INLINE const ::IR_ExcDescriptionSeq &
+IR_ExcDescriptionSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq &
-CORBA_AttrDescriptionSeq_var::inout (void)
+ACE_INLINE ::IR_ExcDescriptionSeq &
+IR_ExcDescriptionSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_AttrDescriptionSeq *&
-CORBA_AttrDescriptionSeq_var::out (void)
+ACE_INLINE ::IR_ExcDescriptionSeq *&
+IR_ExcDescriptionSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq *
-CORBA_AttrDescriptionSeq_var::_retn (void)
+ACE_INLINE ::IR_ExcDescriptionSeq *
+IR_ExcDescriptionSeq_var::_retn (void)
 {
-  CORBA_AttrDescriptionSeq *tmp = this->ptr_;
+  ::IR_ExcDescriptionSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq *
-CORBA_AttrDescriptionSeq_var::ptr (void) const
+ACE_INLINE ::IR_ExcDescriptionSeq *
+IR_ExcDescriptionSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_AttrDescriptionSeq_out
+// Inline operations for class IR_ExcDescriptionSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_out::CORBA_AttrDescriptionSeq_out (CORBA_AttrDescriptionSeq *&p)
+IR_ExcDescriptionSeq_out::IR_ExcDescriptionSeq_out (IR_ExcDescriptionSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_out::CORBA_AttrDescriptionSeq_out (CORBA_AttrDescriptionSeq_var &p) // constructor from _var
+IR_ExcDescriptionSeq_out::IR_ExcDescriptionSeq_out (IR_ExcDescriptionSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -10777,44 +12069,44 @@ CORBA_AttrDescriptionSeq_out::CORBA_AttrDescriptionSeq_out (CORBA_AttrDescriptio
 }
 
 ACE_INLINE
-CORBA_AttrDescriptionSeq_out::CORBA_AttrDescriptionSeq_out (const CORBA_AttrDescriptionSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_AttrDescriptionSeq_out&,p).ptr_)
+IR_ExcDescriptionSeq_out::IR_ExcDescriptionSeq_out (const ::IR_ExcDescriptionSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ExcDescriptionSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_AttrDescriptionSeq_out &
-CORBA_AttrDescriptionSeq_out::operator= (const CORBA_AttrDescriptionSeq_out &p)
+ACE_INLINE ::IR_ExcDescriptionSeq_out &
+IR_ExcDescriptionSeq_out::operator= (const ::IR_ExcDescriptionSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_AttrDescriptionSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_ExcDescriptionSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq_out &
-CORBA_AttrDescriptionSeq_out::operator= (CORBA_AttrDescriptionSeq *p)
+ACE_INLINE ::IR_ExcDescriptionSeq_out &
+IR_ExcDescriptionSeq_out::operator= (IR_ExcDescriptionSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_AttrDescriptionSeq_out::operator CORBA_AttrDescriptionSeq *&() // cast
+IR_ExcDescriptionSeq_out::operator ::IR_ExcDescriptionSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq *&
-CORBA_AttrDescriptionSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_ExcDescriptionSeq *&
+IR_ExcDescriptionSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_AttrDescriptionSeq *
-CORBA_AttrDescriptionSeq_out::operator-> (void)
+ACE_INLINE ::IR_ExcDescriptionSeq *
+IR_ExcDescriptionSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_AttributeDescription &
-CORBA_AttrDescriptionSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE IR_ExceptionDescription &
+IR_ExcDescriptionSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -10823,116 +12115,116 @@ CORBA_AttrDescriptionSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 ACE_INLINE
-CORBA_InterfaceDef::CORBA_InterfaceDef (void) // default constructor
+IR_AttributeDef::IR_AttributeDef (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_InterfaceDef::CORBA_InterfaceDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+IR_AttributeDef::IR_AttributeDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDef::~CORBA_InterfaceDef (void) // destructor
+IR_AttributeDef::~IR_AttributeDef (void) // destructor
 {}
 
 
-#if !defined (_CORBA_INTERFACEDEF___VAR_CI_)
-#define _CORBA_INTERFACEDEF___VAR_CI_
+#if !defined (_IR_ATTRIBUTEDEF___VAR_CI_)
+#define _IR_ATTRIBUTEDEF___VAR_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_InterfaceDef_var
+// Inline operations for class IR_AttributeDef_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDef_var::CORBA_InterfaceDef_var (void) // default constructor
-  : ptr_ (CORBA_InterfaceDef::_nil ())
+IR_AttributeDef_var::IR_AttributeDef_var (void) // default constructor
+  : ptr_ (IR_AttributeDef::_nil ())
 {}
 
 ACE_INLINE
-CORBA_InterfaceDef_var::CORBA_InterfaceDef_var (CORBA_InterfaceDef_ptr p)
+IR_AttributeDef_var::IR_AttributeDef_var (IR_AttributeDef_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE CORBA_InterfaceDef_ptr 
-CORBA_InterfaceDef_var::ptr (void) const
+ACE_INLINE ::IR_AttributeDef_ptr
+IR_AttributeDef_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_InterfaceDef_var::CORBA_InterfaceDef_var (const CORBA_InterfaceDef_var &p) // copy constructor
-  : ptr_ (CORBA_InterfaceDef::_duplicate (p.ptr ()))
+IR_AttributeDef_var::IR_AttributeDef_var (const ::IR_AttributeDef_var &p) // copy constructor
+  : ptr_ (IR_AttributeDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-CORBA_InterfaceDef_var::~CORBA_InterfaceDef_var (void) // destructor
+IR_AttributeDef_var::~IR_AttributeDef_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_InterfaceDef_var &
-CORBA_InterfaceDef_var::operator= (CORBA_InterfaceDef_ptr p)
+ACE_INLINE IR_AttributeDef_var &
+IR_AttributeDef_var::operator= (IR_AttributeDef_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDef_var &
-CORBA_InterfaceDef_var::operator= (const CORBA_InterfaceDef_var &p)
+ACE_INLINE IR_AttributeDef_var &
+IR_AttributeDef_var::operator= (const ::IR_AttributeDef_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_InterfaceDef::_duplicate (p.ptr ());
+    this->ptr_ = ::IR_AttributeDef::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDef_var::operator const CORBA_InterfaceDef_ptr &() const // cast
+IR_AttributeDef_var::operator const ::IR_AttributeDef_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDef_var::operator CORBA_InterfaceDef_ptr &() // cast 
+IR_AttributeDef_var::operator ::IR_AttributeDef_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr 
-CORBA_InterfaceDef_var::operator-> (void) const
+ACE_INLINE ::IR_AttributeDef_ptr
+IR_AttributeDef_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr
-CORBA_InterfaceDef_var::in (void) const
+ACE_INLINE ::IR_AttributeDef_ptr
+IR_AttributeDef_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr &
-CORBA_InterfaceDef_var::inout (void)
+ACE_INLINE ::IR_AttributeDef_ptr &
+IR_AttributeDef_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr &
-CORBA_InterfaceDef_var::out (void)
+ACE_INLINE ::IR_AttributeDef_ptr &
+IR_AttributeDef_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_InterfaceDef::_nil ();
+  this->ptr_ = ::IR_AttributeDef::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr 
-CORBA_InterfaceDef_var::_retn (void)
+ACE_INLINE ::IR_AttributeDef_ptr
+IR_AttributeDef_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  CORBA_InterfaceDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_InterfaceDef::_nil ();
+  ::IR_AttributeDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_AttributeDef::_nil ();
   return val;
 }
 
@@ -10940,68 +12232,68 @@ CORBA_InterfaceDef_var::_retn (void)
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_INTERFACEDEF___OUT_CI_)
-#define _CORBA_INTERFACEDEF___OUT_CI_
+#if !defined (_IR_ATTRIBUTEDEF___OUT_CI_)
+#define _IR_ATTRIBUTEDEF___OUT_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_InterfaceDef_out
+// Inline operations for class IR_AttributeDef_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDef_out::CORBA_InterfaceDef_out (CORBA_InterfaceDef_ptr &p)
+IR_AttributeDef_out::IR_AttributeDef_out (IR_AttributeDef_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = CORBA_InterfaceDef::_nil ();
+  this->ptr_ = ::IR_AttributeDef::_nil ();
 }
 
 ACE_INLINE
-CORBA_InterfaceDef_out::CORBA_InterfaceDef_out (CORBA_InterfaceDef_var &p) // constructor from _var
+IR_AttributeDef_out::IR_AttributeDef_out (IR_AttributeDef_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_InterfaceDef::_nil ();
+  this->ptr_ = ::IR_AttributeDef::_nil ();
 }
 
 ACE_INLINE
-CORBA_InterfaceDef_out::CORBA_InterfaceDef_out (const CORBA_InterfaceDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_InterfaceDef_out&,p).ptr_)
+IR_AttributeDef_out::IR_AttributeDef_out (const ::IR_AttributeDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_AttributeDef_out &, p).ptr_)
 {}
 
-ACE_INLINE CORBA_InterfaceDef_out &
-CORBA_InterfaceDef_out::operator= (const CORBA_InterfaceDef_out &p)
+ACE_INLINE ::IR_AttributeDef_out &
+IR_AttributeDef_out::operator= (const ::IR_AttributeDef_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_InterfaceDef_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_AttributeDef_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDef_out &
-CORBA_InterfaceDef_out::operator= (const CORBA_InterfaceDef_var &p)
+ACE_INLINE IR_AttributeDef_out &
+IR_AttributeDef_out::operator= (const ::IR_AttributeDef_var &p)
 {
-  this->ptr_ = CORBA_InterfaceDef::_duplicate (p.ptr ());
+  this->ptr_ = ::IR_AttributeDef::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDef_out &
-CORBA_InterfaceDef_out::operator= (CORBA_InterfaceDef_ptr p)
+ACE_INLINE IR_AttributeDef_out &
+IR_AttributeDef_out::operator= (IR_AttributeDef_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDef_out::operator CORBA_InterfaceDef_ptr &() // cast
+IR_AttributeDef_out::operator ::IR_AttributeDef_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr &
-CORBA_InterfaceDef_out::ptr (void) // ptr
+ACE_INLINE ::IR_AttributeDef_ptr &
+IR_AttributeDef_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef_ptr 
-CORBA_InterfaceDef_out::operator-> (void)
+ACE_INLINE ::IR_AttributeDef_ptr
+IR_AttributeDef_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -11010,134 +12302,138 @@ CORBA_InterfaceDef_out::operator-> (void)
 #endif /* end #if !defined */
 
 // *************************************************************
-// Inline operations for class CORBA_InterfaceDef::FullInterfaceDescription_var
+// Inline operations for class IR_AttributeDescription_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_var::FullInterfaceDescription_var (void) // default constructor
+IR_AttributeDescription_var::IR_AttributeDescription_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_var::FullInterfaceDescription_var (CORBA_InterfaceDef::FullInterfaceDescription *p)
+IR_AttributeDescription_var::IR_AttributeDescription_var (IR_AttributeDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_var::FullInterfaceDescription_var (const CORBA_InterfaceDef::FullInterfaceDescription_var &p) // copy constructor
+IR_AttributeDescription_var::IR_AttributeDescription_var (const ::IR_AttributeDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_InterfaceDef::FullInterfaceDescription(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_AttributeDescription (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_var::~FullInterfaceDescription_var (void) // destructor
+IR_AttributeDescription_var::~IR_AttributeDescription_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription_var &
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator= (CORBA_InterfaceDef::FullInterfaceDescription *p)
+ACE_INLINE IR_AttributeDescription_var &
+IR_AttributeDescription_var::operator= (IR_AttributeDescription *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription_var &
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator= (const CORBA_InterfaceDef::FullInterfaceDescription_var &p)
+ACE_INLINE ::IR_AttributeDescription_var &
+IR_AttributeDescription_var::operator= (const ::IR_AttributeDescription_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_InterfaceDef::FullInterfaceDescription (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_AttributeDescription (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_InterfaceDef::FullInterfaceDescription *
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator-> (void) const
+ACE_INLINE const ::IR_AttributeDescription *
+IR_AttributeDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription *
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator-> (void)
+ACE_INLINE ::IR_AttributeDescription *
+IR_AttributeDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator const CORBA_InterfaceDef::FullInterfaceDescription &() const // cast
+ACE_INLINE
+IR_AttributeDescription_var::operator const ::IR_AttributeDescription &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator CORBA_InterfaceDef::FullInterfaceDescription &() // cast 
+ACE_INLINE
+IR_AttributeDescription_var::operator ::IR_AttributeDescription &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_InterfaceDef::FullInterfaceDescription_var::operator CORBA_InterfaceDef::FullInterfaceDescription &() const// cast 
+ACE_INLINE
+IR_AttributeDescription_var::operator ::IR_AttributeDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const CORBA_InterfaceDef::FullInterfaceDescription &
-CORBA_InterfaceDef::FullInterfaceDescription_var::in (void) const
+// variable-size types only
+ACE_INLINE
+IR_AttributeDescription_var::operator ::IR_AttributeDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_AttributeDescription &
+IR_AttributeDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription &
-CORBA_InterfaceDef::FullInterfaceDescription_var::inout (void)
+ACE_INLINE ::IR_AttributeDescription &
+IR_AttributeDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription *&
-CORBA_InterfaceDef::FullInterfaceDescription_var::out (void)
+ACE_INLINE ::IR_AttributeDescription *&
+IR_AttributeDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription *
-CORBA_InterfaceDef::FullInterfaceDescription_var::_retn (void)
+ACE_INLINE ::IR_AttributeDescription *
+IR_AttributeDescription_var::_retn (void)
 {
-  CORBA_InterfaceDef::FullInterfaceDescription *tmp = this->ptr_;
+  ::IR_AttributeDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription *
-CORBA_InterfaceDef::FullInterfaceDescription_var::ptr (void) const
+ACE_INLINE ::IR_AttributeDescription *
+IR_AttributeDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_InterfaceDef::FullInterfaceDescription_out
+// Inline operations for class IR_AttributeDescription_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_out::FullInterfaceDescription_out (CORBA_InterfaceDef::FullInterfaceDescription *&p)
+IR_AttributeDescription_out::IR_AttributeDescription_out (::IR_AttributeDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_out::FullInterfaceDescription_out (CORBA_InterfaceDef::FullInterfaceDescription_var &p) // constructor from _var
+IR_AttributeDescription_out::IR_AttributeDescription_out (IR_AttributeDescription_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -11145,171 +12441,175 @@ CORBA_InterfaceDef::FullInterfaceDescription_out::FullInterfaceDescription_out (
 }
 
 ACE_INLINE
-CORBA_InterfaceDef::FullInterfaceDescription_out::FullInterfaceDescription_out (const CORBA_InterfaceDef::FullInterfaceDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_InterfaceDef::FullInterfaceDescription_out&,p).ptr_)
+IR_AttributeDescription_out::IR_AttributeDescription_out (const ::IR_AttributeDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_AttributeDescription_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription_out &
-CORBA_InterfaceDef::FullInterfaceDescription_out::operator= (const CORBA_InterfaceDef::FullInterfaceDescription_out &p)
+ACE_INLINE IR_AttributeDescription_out &
+IR_AttributeDescription_out::operator= (const ::IR_AttributeDescription_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_InterfaceDef::FullInterfaceDescription_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_AttributeDescription_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription_out &
-CORBA_InterfaceDef::FullInterfaceDescription_out::operator= (CORBA_InterfaceDef::FullInterfaceDescription *p)
+ACE_INLINE IR_AttributeDescription_out &
+IR_AttributeDescription_out::operator= (IR_AttributeDescription *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDef::FullInterfaceDescription_out::operator CORBA_InterfaceDef::FullInterfaceDescription *&() // cast
+IR_AttributeDescription_out::operator ::IR_AttributeDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription *&
-CORBA_InterfaceDef::FullInterfaceDescription_out::ptr (void) // ptr
+ACE_INLINE ::IR_AttributeDescription *&
+IR_AttributeDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDef::FullInterfaceDescription *
-CORBA_InterfaceDef::FullInterfaceDescription_out::operator-> (void)
+ACE_INLINE ::IR_AttributeDescription *
+IR_AttributeDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_InterfaceDescription_var
+// Inline operations for class IR_ParameterDescription_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDescription_var::CORBA_InterfaceDescription_var (void) // default constructor
+IR_ParameterDescription_var::IR_ParameterDescription_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDescription_var::CORBA_InterfaceDescription_var (CORBA_InterfaceDescription *p)
+IR_ParameterDescription_var::IR_ParameterDescription_var (IR_ParameterDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_InterfaceDescription_var::CORBA_InterfaceDescription_var (const CORBA_InterfaceDescription_var &p) // copy constructor
+IR_ParameterDescription_var::IR_ParameterDescription_var (const ::IR_ParameterDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_InterfaceDescription(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_ParameterDescription (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_InterfaceDescription_var::~CORBA_InterfaceDescription_var (void) // destructor
+IR_ParameterDescription_var::~IR_ParameterDescription_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDescription_var &
-CORBA_InterfaceDescription_var::operator= (CORBA_InterfaceDescription *p)
+ACE_INLINE IR_ParameterDescription_var &
+IR_ParameterDescription_var::operator= (IR_ParameterDescription *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDescription_var &
-CORBA_InterfaceDescription_var::operator= (const CORBA_InterfaceDescription_var &p)
+ACE_INLINE ::IR_ParameterDescription_var &
+IR_ParameterDescription_var::operator= (const ::IR_ParameterDescription_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_InterfaceDescription (*p.ptr_),
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_ParameterDescription (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_InterfaceDescription *
-CORBA_InterfaceDescription_var::operator-> (void) const
+ACE_INLINE const ::IR_ParameterDescription *
+IR_ParameterDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDescription *
-CORBA_InterfaceDescription_var::operator-> (void)
+ACE_INLINE ::IR_ParameterDescription *
+IR_ParameterDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_InterfaceDescription_var::operator const CORBA_InterfaceDescription &() const // cast
+ACE_INLINE
+IR_ParameterDescription_var::operator const ::IR_ParameterDescription &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_InterfaceDescription_var::operator CORBA_InterfaceDescription &() // cast 
+ACE_INLINE
+IR_ParameterDescription_var::operator ::IR_ParameterDescription &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_InterfaceDescription_var::operator CORBA_InterfaceDescription &() const// cast 
+ACE_INLINE
+IR_ParameterDescription_var::operator ::IR_ParameterDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const CORBA_InterfaceDescription &
-CORBA_InterfaceDescription_var::in (void) const
+// variable-size types only
+ACE_INLINE
+IR_ParameterDescription_var::operator ::IR_ParameterDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ParameterDescription &
+IR_ParameterDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDescription &
-CORBA_InterfaceDescription_var::inout (void)
+ACE_INLINE ::IR_ParameterDescription &
+IR_ParameterDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_InterfaceDescription *&
-CORBA_InterfaceDescription_var::out (void)
+ACE_INLINE ::IR_ParameterDescription *&
+IR_ParameterDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDescription *
-CORBA_InterfaceDescription_var::_retn (void)
+ACE_INLINE ::IR_ParameterDescription *
+IR_ParameterDescription_var::_retn (void)
 {
-  CORBA_InterfaceDescription *tmp = this->ptr_;
+  ::IR_ParameterDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_InterfaceDescription *
-CORBA_InterfaceDescription_var::ptr (void) const
+ACE_INLINE ::IR_ParameterDescription *
+IR_ParameterDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_InterfaceDescription_out
+// Inline operations for class IR_ParameterDescription_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_InterfaceDescription_out::CORBA_InterfaceDescription_out (CORBA_InterfaceDescription *&p)
+IR_ParameterDescription_out::IR_ParameterDescription_out (::IR_ParameterDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_InterfaceDescription_out::CORBA_InterfaceDescription_out (CORBA_InterfaceDescription_var &p) // constructor from _var
+IR_ParameterDescription_out::IR_ParameterDescription_out (IR_ParameterDescription_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -11317,210 +12617,38 @@ CORBA_InterfaceDescription_out::CORBA_InterfaceDescription_out (CORBA_InterfaceD
 }
 
 ACE_INLINE
-CORBA_InterfaceDescription_out::CORBA_InterfaceDescription_out (const CORBA_InterfaceDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_InterfaceDescription_out&,p).ptr_)
+IR_ParameterDescription_out::IR_ParameterDescription_out (const ::IR_ParameterDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ParameterDescription_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_InterfaceDescription_out &
-CORBA_InterfaceDescription_out::operator= (const CORBA_InterfaceDescription_out &p)
+ACE_INLINE IR_ParameterDescription_out &
+IR_ParameterDescription_out::operator= (const ::IR_ParameterDescription_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_InterfaceDescription_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_ParameterDescription_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_InterfaceDescription_out &
-CORBA_InterfaceDescription_out::operator= (CORBA_InterfaceDescription *p)
+ACE_INLINE IR_ParameterDescription_out &
+IR_ParameterDescription_out::operator= (IR_ParameterDescription *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_InterfaceDescription_out::operator CORBA_InterfaceDescription *&() // cast
+IR_ParameterDescription_out::operator ::IR_ParameterDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDescription *&
-CORBA_InterfaceDescription_out::ptr (void) // ptr
+ACE_INLINE ::IR_ParameterDescription *&
+IR_ParameterDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_InterfaceDescription *
-CORBA_InterfaceDescription_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ValueMember_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ValueMember_var::CORBA_ValueMember_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-CORBA_ValueMember_var::CORBA_ValueMember_var (CORBA_ValueMember *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-CORBA_ValueMember_var::CORBA_ValueMember_var (const CORBA_ValueMember_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ValueMember(*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ValueMember_var::~CORBA_ValueMember_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueMember_var &
-CORBA_ValueMember_var::operator= (CORBA_ValueMember *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ValueMember_var &
-CORBA_ValueMember_var::operator= (const CORBA_ValueMember_var &p)
-{
-  if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ValueMember (*p.ptr_), 
-		    *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const CORBA_ValueMember *
-CORBA_ValueMember_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueMember *
-CORBA_ValueMember_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ValueMember_var::operator const CORBA_ValueMember &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ValueMember_var::operator CORBA_ValueMember &() // cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ValueMember_var::operator CORBA_ValueMember &() const// cast 
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const CORBA_ValueMember &
-CORBA_ValueMember_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueMember &
-CORBA_ValueMember_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for variable size 
-ACE_INLINE CORBA_ValueMember *&
-CORBA_ValueMember_var::out (void)
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueMember *
-CORBA_ValueMember_var::_retn (void)
-{
-  CORBA_ValueMember *tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-ACE_INLINE CORBA_ValueMember *
-CORBA_ValueMember_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-// Inline operations for class CORBA_ValueMember_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ValueMember_out::CORBA_ValueMember_out (CORBA_ValueMember *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ValueMember_out::CORBA_ValueMember_out (CORBA_ValueMember_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA_ValueMember_out::CORBA_ValueMember_out (const CORBA_ValueMember_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueMember_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ValueMember_out &
-CORBA_ValueMember_out::operator= (const CORBA_ValueMember_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ValueMember_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ValueMember_out &
-CORBA_ValueMember_out::operator= (CORBA_ValueMember *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ValueMember_out::operator CORBA_ValueMember *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueMember *&
-CORBA_ValueMember_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueMember *
-CORBA_ValueMember_out::operator-> (void)
+ACE_INLINE ::IR_ParameterDescription *
+IR_ParameterDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -11528,63 +12656,68 @@ CORBA_ValueMember_out::operator-> (void)
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_VALUEMEMBERSEQ_CI_)
-#define __TAO_UNBOUNDED_SEQUENCE_CORBA_VALUEMEMBERSEQ_CI_
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_PARDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_PARDESCRIPTIONSEQ_CI_
 
   // = Static operations.
-  ACE_INLINE CORBA_ValueMember *
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (CORBA::ULong size)
+  ACE_INLINE IR_ParameterDescription *
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
-    CORBA_ValueMember *retval = 0;
-    ACE_NEW_RETURN (retval,
-                    CORBA_ValueMember[size],
-		    0);
+    IR_ParameterDescription *retval = 0;
+    ACE_NEW_RETURN (retval, IR_ParameterDescription[size], 0);
     return retval;
   }
   
-  ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (CORBA_ValueMember *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::freebuf (IR_ParameterDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (maximum))
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
-    CORBA_ValueMember *data,
+    IR_ParameterDescription *data,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
   
   ACE_INLINE
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::_TAO_Unbounded_Sequence_CORBA_ValueMemberSeq (const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (const _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA_ValueMember *tmp1 = _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (this->maximum_);
-    CORBA_ValueMember * const tmp2 = ACE_reinterpret_cast (CORBA_ValueMember * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-    
-    this->buffer_ = tmp1;
+    if (rhs.buffer_ != 0)
+    {
+      IR_ParameterDescription *tmp1 = _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (this->maximum_);
+      IR_ParameterDescription * const tmp2 = ACE_reinterpret_cast (IR_ParameterDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
   }
   
-  ACE_INLINE _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -11595,18 +12728,18 @@ CORBA_ValueMember_out::operator-> (void)
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
-        CORBA_ValueMember *tmp = ACE_reinterpret_cast (CORBA_ValueMember *, this->buffer_);
-        _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (rhs.maximum_);
+        IR_ParameterDescription *tmp = ACE_reinterpret_cast (IR_ParameterDescription *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (rhs.maximum_);
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (rhs.maximum_);
     
     TAO_Unbounded_Base_Sequence::operator= (rhs);
     
-    CORBA_ValueMember *tmp1 = ACE_reinterpret_cast (CORBA_ValueMember *, this->buffer_);
-    CORBA_ValueMember * const tmp2 = ACE_reinterpret_cast (CORBA_ValueMember * ACE_CAST_CONST, rhs.buffer_);
+    IR_ParameterDescription *tmp1 = ACE_reinterpret_cast (IR_ParameterDescription *, this->buffer_);
+    IR_ParameterDescription * const tmp2 = ACE_reinterpret_cast (IR_ParameterDescription * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
@@ -11615,41 +12748,41 @@ CORBA_ValueMember_out::operator-> (void)
   }
   
   // = Accessors.
-  ACE_INLINE CORBA_ValueMember &
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator[] (CORBA::ULong i)
+  ACE_INLINE IR_ParameterDescription &
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_ValueMember* tmp = ACE_reinterpret_cast(CORBA_ValueMember*,this->buffer_);
+    IR_ParameterDescription* tmp = ACE_reinterpret_cast(IR_ParameterDescription*,this->buffer_);
     return tmp[i];
   }
   
-  ACE_INLINE const CORBA_ValueMember &
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::operator[] (CORBA::ULong i) const
+  ACE_INLINE const IR_ParameterDescription &
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
-    CORBA_ValueMember * const tmp = ACE_reinterpret_cast (CORBA_ValueMember* ACE_CAST_CONST, this->buffer_);
+    IR_ParameterDescription * const tmp = ACE_reinterpret_cast (IR_ParameterDescription* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
   
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
-  ACE_INLINE CORBA_ValueMember *
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::get_buffer (CORBA::Boolean orphan)
+  ACE_INLINE IR_ParameterDescription *
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
-    CORBA_ValueMember *result = 0;
+    IR_ParameterDescription *result = 0;
     if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::allocbuf (this->length_);
+        result = _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (this->length_);
         this->buffer_ = result;
       }
       else
       {
-        result = ACE_reinterpret_cast (CORBA_ValueMember*, this->buffer_);
+        result = ACE_reinterpret_cast (IR_ParameterDescription*, this->buffer_);
       }
     }
     else // if (orphan == 1)
@@ -11658,7 +12791,7 @@ CORBA_ValueMember_out::operator-> (void)
       {
         // We set the state back to default and relinquish
         // ownership.
-        result = ACE_reinterpret_cast(CORBA_ValueMember*,this->buffer_);
+        result = ACE_reinterpret_cast(IR_ParameterDescription*,this->buffer_);
         this->maximum_ = 0;
         this->length_ = 0;
         this->buffer_ = 0;
@@ -11668,24 +12801,24 @@ CORBA_ValueMember_out::operator-> (void)
     return result;
   }
   
-  ACE_INLINE const CORBA_ValueMember *
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::get_buffer (void) const
+  ACE_INLINE const IR_ParameterDescription *
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::get_buffer (void) const
   {
-    return ACE_reinterpret_cast(const CORBA_ValueMember * ACE_CAST_CONST, this->buffer_);
+    return ACE_reinterpret_cast(const IR_ParameterDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
-  CORBA_ValueMember *data,
+  IR_ParameterDescription *data,
   CORBA::Boolean release)
   {
     this->maximum_ = max;
     this->length_ = length;
     if (this->buffer_ && this->release_ == 1)
     {
-      CORBA_ValueMember *tmp = ACE_reinterpret_cast(CORBA_ValueMember*,this->buffer_);
-      _TAO_Unbounded_Sequence_CORBA_ValueMemberSeq::freebuf (tmp);
+      IR_ParameterDescription *tmp = ACE_reinterpret_cast(IR_ParameterDescription*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
@@ -11696,144 +12829,148 @@ CORBA_ValueMember_out::operator-> (void)
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
-#if !defined (_CORBA_VALUEMEMBERSEQ_CI_)
-#define _CORBA_VALUEMEMBERSEQ_CI_
+#if !defined (_IR_PARDESCRIPTIONSEQ_CI_)
+#define _IR_PARDESCRIPTIONSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ValueMemberSeq_var
+// Inline operations for class IR_ParDescriptionSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueMemberSeq_var::CORBA_ValueMemberSeq_var (void) // default constructor
+IR_ParDescriptionSeq_var::IR_ParDescriptionSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ValueMemberSeq_var::CORBA_ValueMemberSeq_var (CORBA_ValueMemberSeq *p)
+IR_ParDescriptionSeq_var::IR_ParDescriptionSeq_var (IR_ParDescriptionSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ValueMemberSeq_var::CORBA_ValueMemberSeq_var (const CORBA_ValueMemberSeq_var &p) // copy constructor
+IR_ParDescriptionSeq_var::IR_ParDescriptionSeq_var (const ::IR_ParDescriptionSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ValueMemberSeq(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_ParDescriptionSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueMemberSeq_var::~CORBA_ValueMemberSeq_var (void) // destructor
+IR_ParDescriptionSeq_var::~IR_ParDescriptionSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq_var &
-CORBA_ValueMemberSeq_var::operator= (CORBA_ValueMemberSeq *p)
+ACE_INLINE IR_ParDescriptionSeq_var &
+IR_ParDescriptionSeq_var::operator= (IR_ParDescriptionSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq_var &
-CORBA_ValueMemberSeq_var::operator= (const CORBA_ValueMemberSeq_var &p) // deep copy
+ACE_INLINE IR_ParDescriptionSeq_var &
+IR_ParDescriptionSeq_var::operator= (const ::IR_ParDescriptionSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ValueMemberSeq (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_ParDescriptionSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ValueMemberSeq *
-CORBA_ValueMemberSeq_var::operator-> (void) const
+ACE_INLINE const ::IR_ParDescriptionSeq *
+IR_ParDescriptionSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq *
-CORBA_ValueMemberSeq_var::operator-> (void)
+ACE_INLINE ::IR_ParDescriptionSeq *
+IR_ParDescriptionSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberSeq_var::operator const CORBA_ValueMemberSeq &() const // cast
+IR_ParDescriptionSeq_var::operator const ::IR_ParDescriptionSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberSeq_var::operator CORBA_ValueMemberSeq &() // cast 
+IR_ParDescriptionSeq_var::operator ::IR_ParDescriptionSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberSeq_var::operator CORBA_ValueMemberSeq &() const// cast 
+IR_ParDescriptionSeq_var::operator ::IR_ParDescriptionSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMember &
-CORBA_ValueMemberSeq_var::operator[] (CORBA::ULong index)
+// variable-size types only
+ACE_INLINE
+IR_ParDescriptionSeq_var::operator ::IR_ParDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_ParameterDescription &
+IR_ParDescriptionSeq_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA_ValueMemberSeq &
-CORBA_ValueMemberSeq_var::in (void) const
+ACE_INLINE const ::IR_ParDescriptionSeq &
+IR_ParDescriptionSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq &
-CORBA_ValueMemberSeq_var::inout (void)
+ACE_INLINE ::IR_ParDescriptionSeq &
+IR_ParDescriptionSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_ValueMemberSeq *&
-CORBA_ValueMemberSeq_var::out (void)
+ACE_INLINE ::IR_ParDescriptionSeq *&
+IR_ParDescriptionSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq *
-CORBA_ValueMemberSeq_var::_retn (void)
+ACE_INLINE ::IR_ParDescriptionSeq *
+IR_ParDescriptionSeq_var::_retn (void)
 {
-  CORBA_ValueMemberSeq *tmp = this->ptr_;
+  ::IR_ParDescriptionSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq *
-CORBA_ValueMemberSeq_var::ptr (void) const
+ACE_INLINE ::IR_ParDescriptionSeq *
+IR_ParDescriptionSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_ValueMemberSeq_out
+// Inline operations for class IR_ParDescriptionSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueMemberSeq_out::CORBA_ValueMemberSeq_out (CORBA_ValueMemberSeq *&p)
+IR_ParDescriptionSeq_out::IR_ParDescriptionSeq_out (IR_ParDescriptionSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueMemberSeq_out::CORBA_ValueMemberSeq_out (CORBA_ValueMemberSeq_var &p) // constructor from _var
+IR_ParDescriptionSeq_out::IR_ParDescriptionSeq_out (IR_ParDescriptionSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -11841,44 +12978,239 @@ CORBA_ValueMemberSeq_out::CORBA_ValueMemberSeq_out (CORBA_ValueMemberSeq_var &p)
 }
 
 ACE_INLINE
-CORBA_ValueMemberSeq_out::CORBA_ValueMemberSeq_out (const CORBA_ValueMemberSeq_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueMemberSeq_out&,p).ptr_)
+IR_ParDescriptionSeq_out::IR_ParDescriptionSeq_out (const ::IR_ParDescriptionSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ParDescriptionSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ValueMemberSeq_out &
-CORBA_ValueMemberSeq_out::operator= (const CORBA_ValueMemberSeq_out &p)
+ACE_INLINE ::IR_ParDescriptionSeq_out &
+IR_ParDescriptionSeq_out::operator= (const ::IR_ParDescriptionSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ValueMemberSeq_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_ParDescriptionSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq_out &
-CORBA_ValueMemberSeq_out::operator= (CORBA_ValueMemberSeq *p)
+ACE_INLINE ::IR_ParDescriptionSeq_out &
+IR_ParDescriptionSeq_out::operator= (IR_ParDescriptionSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberSeq_out::operator CORBA_ValueMemberSeq *&() // cast
+IR_ParDescriptionSeq_out::operator ::IR_ParDescriptionSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq *&
-CORBA_ValueMemberSeq_out::ptr (void) // ptr
+ACE_INLINE ::IR_ParDescriptionSeq *&
+IR_ParDescriptionSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberSeq *
-CORBA_ValueMemberSeq_out::operator-> (void)
+ACE_INLINE ::IR_ParDescriptionSeq *
+IR_ParDescriptionSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMember &
-CORBA_ValueMemberSeq_out::operator[] (CORBA::ULong index)
+ACE_INLINE IR_ParameterDescription &
+IR_ParDescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_CONTEXTIDSEQ_CI_)
+#define _IR_CONTEXTIDSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_ContextIdSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_ContextIdSeq_var::IR_ContextIdSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ContextIdSeq_var::IR_ContextIdSeq_var (IR_ContextIdSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ContextIdSeq_var::IR_ContextIdSeq_var (const ::IR_ContextIdSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ContextIdSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ContextIdSeq_var::~IR_ContextIdSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ContextIdSeq_var &
+IR_ContextIdSeq_var::operator= (IR_ContextIdSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ContextIdSeq_var &
+IR_ContextIdSeq_var::operator= (const ::IR_ContextIdSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ContextIdSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ContextIdSeq *
+IR_ContextIdSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContextIdSeq *
+IR_ContextIdSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ContextIdSeq_var::operator const ::IR_ContextIdSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ContextIdSeq_var::operator ::IR_ContextIdSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ContextIdSeq_var::operator ::IR_ContextIdSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ContextIdSeq_var::operator ::IR_ContextIdSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+IR_ContextIdSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_ContextIdSeq &
+IR_ContextIdSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ContextIdSeq &
+IR_ContextIdSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ContextIdSeq *&
+IR_ContextIdSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContextIdSeq *
+IR_ContextIdSeq_var::_retn (void)
+{
+  ::IR_ContextIdSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ContextIdSeq *
+IR_ContextIdSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ContextIdSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_ContextIdSeq_out::IR_ContextIdSeq_out (IR_ContextIdSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ContextIdSeq_out::IR_ContextIdSeq_out (IR_ContextIdSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ContextIdSeq_out::IR_ContextIdSeq_out (const ::IR_ContextIdSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ContextIdSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ContextIdSeq_out &
+IR_ContextIdSeq_out::operator= (const ::IR_ContextIdSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ContextIdSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_ContextIdSeq_out &
+IR_ContextIdSeq_out::operator= (IR_ContextIdSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ContextIdSeq_out::operator ::IR_ContextIdSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContextIdSeq *&
+IR_ContextIdSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ContextIdSeq *
+IR_ContextIdSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+IR_ContextIdSeq_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -11887,116 +13219,116 @@ CORBA_ValueMemberSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 ACE_INLINE
-CORBA_ValueMemberDef::CORBA_ValueMemberDef (void) // default constructor
+IR_OperationDef::IR_OperationDef (void) // default constructor
 {}
 
 ACE_INLINE
-CORBA_ValueMemberDef::CORBA_ValueMemberDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+IR_OperationDef::IR_OperationDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
 ACE_INLINE
-CORBA_ValueMemberDef::~CORBA_ValueMemberDef (void) // destructor
+IR_OperationDef::~IR_OperationDef (void) // destructor
 {}
 
 
-#if !defined (_CORBA_VALUEMEMBERDEF___VAR_CI_)
-#define _CORBA_VALUEMEMBERDEF___VAR_CI_
+#if !defined (_IR_OPERATIONDEF___VAR_CI_)
+#define _IR_OPERATIONDEF___VAR_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ValueMemberDef_var
+// Inline operations for class IR_OperationDef_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueMemberDef_var::CORBA_ValueMemberDef_var (void) // default constructor
-  : ptr_ (CORBA_ValueMemberDef::_nil ())
+IR_OperationDef_var::IR_OperationDef_var (void) // default constructor
+  : ptr_ (IR_OperationDef::_nil ())
 {}
 
 ACE_INLINE
-CORBA_ValueMemberDef_var::CORBA_ValueMemberDef_var (CORBA_ValueMemberDef_ptr p)
+IR_OperationDef_var::IR_OperationDef_var (IR_OperationDef_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE CORBA_ValueMemberDef_ptr 
-CORBA_ValueMemberDef_var::ptr (void) const
+ACE_INLINE ::IR_OperationDef_ptr
+IR_OperationDef_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_ValueMemberDef_var::CORBA_ValueMemberDef_var (const CORBA_ValueMemberDef_var &p) // copy constructor
-  : ptr_ (CORBA_ValueMemberDef::_duplicate (p.ptr ()))
+IR_OperationDef_var::IR_OperationDef_var (const ::IR_OperationDef_var &p) // copy constructor
+  : ptr_ (IR_OperationDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-CORBA_ValueMemberDef_var::~CORBA_ValueMemberDef_var (void) // destructor
+IR_OperationDef_var::~IR_OperationDef_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_ValueMemberDef_var &
-CORBA_ValueMemberDef_var::operator= (CORBA_ValueMemberDef_ptr p)
+ACE_INLINE IR_OperationDef_var &
+IR_OperationDef_var::operator= (IR_OperationDef_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_var &
-CORBA_ValueMemberDef_var::operator= (const CORBA_ValueMemberDef_var &p)
+ACE_INLINE IR_OperationDef_var &
+IR_OperationDef_var::operator= (const ::IR_OperationDef_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ValueMemberDef::_duplicate (p.ptr ());
+    this->ptr_ = ::IR_OperationDef::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberDef_var::operator const CORBA_ValueMemberDef_ptr &() const // cast
+IR_OperationDef_var::operator const ::IR_OperationDef_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberDef_var::operator CORBA_ValueMemberDef_ptr &() // cast 
+IR_OperationDef_var::operator ::IR_OperationDef_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr 
-CORBA_ValueMemberDef_var::operator-> (void) const
+ACE_INLINE ::IR_OperationDef_ptr
+IR_OperationDef_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr
-CORBA_ValueMemberDef_var::in (void) const
+ACE_INLINE ::IR_OperationDef_ptr
+IR_OperationDef_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr &
-CORBA_ValueMemberDef_var::inout (void)
+ACE_INLINE ::IR_OperationDef_ptr &
+IR_OperationDef_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr &
-CORBA_ValueMemberDef_var::out (void)
+ACE_INLINE ::IR_OperationDef_ptr &
+IR_OperationDef_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ValueMemberDef::_nil ();
+  this->ptr_ = ::IR_OperationDef::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr 
-CORBA_ValueMemberDef_var::_retn (void)
+ACE_INLINE ::IR_OperationDef_ptr
+IR_OperationDef_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  CORBA_ValueMemberDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ValueMemberDef::_nil ();
+  ::IR_OperationDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_OperationDef::_nil ();
   return val;
 }
 
@@ -12004,255 +13336,68 @@ CORBA_ValueMemberDef_var::_retn (void)
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_VALUEMEMBERDEF___OUT_CI_)
-#define _CORBA_VALUEMEMBERDEF___OUT_CI_
+#if !defined (_IR_OPERATIONDEF___OUT_CI_)
+#define _IR_OPERATIONDEF___OUT_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ValueMemberDef_out
+// Inline operations for class IR_OperationDef_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueMemberDef_out::CORBA_ValueMemberDef_out (CORBA_ValueMemberDef_ptr &p)
+IR_OperationDef_out::IR_OperationDef_out (IR_OperationDef_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = CORBA_ValueMemberDef::_nil ();
+  this->ptr_ = ::IR_OperationDef::_nil ();
 }
 
 ACE_INLINE
-CORBA_ValueMemberDef_out::CORBA_ValueMemberDef_out (CORBA_ValueMemberDef_var &p) // constructor from _var
+IR_OperationDef_out::IR_OperationDef_out (IR_OperationDef_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ValueMemberDef::_nil ();
+  this->ptr_ = ::IR_OperationDef::_nil ();
 }
 
 ACE_INLINE
-CORBA_ValueMemberDef_out::CORBA_ValueMemberDef_out (const CORBA_ValueMemberDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueMemberDef_out&,p).ptr_)
+IR_OperationDef_out::IR_OperationDef_out (const ::IR_OperationDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_OperationDef_out &, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ValueMemberDef_out &
-CORBA_ValueMemberDef_out::operator= (const CORBA_ValueMemberDef_out &p)
+ACE_INLINE ::IR_OperationDef_out &
+IR_OperationDef_out::operator= (const ::IR_OperationDef_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ValueMemberDef_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_OperationDef_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_out &
-CORBA_ValueMemberDef_out::operator= (const CORBA_ValueMemberDef_var &p)
+ACE_INLINE IR_OperationDef_out &
+IR_OperationDef_out::operator= (const ::IR_OperationDef_var &p)
 {
-  this->ptr_ = CORBA_ValueMemberDef::_duplicate (p.ptr ());
+  this->ptr_ = ::IR_OperationDef::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_out &
-CORBA_ValueMemberDef_out::operator= (CORBA_ValueMemberDef_ptr p)
+ACE_INLINE IR_OperationDef_out &
+IR_OperationDef_out::operator= (IR_OperationDef_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueMemberDef_out::operator CORBA_ValueMemberDef_ptr &() // cast
+IR_OperationDef_out::operator ::IR_OperationDef_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr &
-CORBA_ValueMemberDef_out::ptr (void) // ptr
+ACE_INLINE ::IR_OperationDef_ptr &
+IR_OperationDef_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueMemberDef_ptr 
-CORBA_ValueMemberDef_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE
-CORBA_ValueDef::CORBA_ValueDef (void) // default constructor
-{}
-
-ACE_INLINE
-CORBA_ValueDef::CORBA_ValueDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
-{}
-
-ACE_INLINE
-CORBA_ValueDef::~CORBA_ValueDef (void) // destructor
-{}
-
-
-#if !defined (_CORBA_VALUEDEF___VAR_CI_)
-#define _CORBA_VALUEDEF___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ValueDef_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ValueDef_var::CORBA_ValueDef_var (void) // default constructor
-  : ptr_ (CORBA_ValueDef::_nil ())
-{}
-
-ACE_INLINE
-CORBA_ValueDef_var::CORBA_ValueDef_var (CORBA_ValueDef_ptr p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE CORBA_ValueDef_ptr 
-CORBA_ValueDef_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ValueDef_var::CORBA_ValueDef_var (const CORBA_ValueDef_var &p) // copy constructor
-  : ptr_ (CORBA_ValueDef::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_ValueDef_var::~CORBA_ValueDef_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_ValueDef_var &
-CORBA_ValueDef_var::operator= (CORBA_ValueDef_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ValueDef_var &
-CORBA_ValueDef_var::operator= (const CORBA_ValueDef_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ValueDef::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ValueDef_var::operator const CORBA_ValueDef_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE 
-CORBA_ValueDef_var::operator CORBA_ValueDef_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr 
-CORBA_ValueDef_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr
-CORBA_ValueDef_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr &
-CORBA_ValueDef_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr &
-CORBA_ValueDef_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ValueDef::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr 
-CORBA_ValueDef_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  CORBA_ValueDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ValueDef::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_VALUEDEF___OUT_CI_)
-#define _CORBA_VALUEDEF___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ValueDef_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ValueDef_out::CORBA_ValueDef_out (CORBA_ValueDef_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = CORBA_ValueDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ValueDef_out::CORBA_ValueDef_out (CORBA_ValueDef_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ValueDef::_nil ();
-}
-
-ACE_INLINE
-CORBA_ValueDef_out::CORBA_ValueDef_out (const CORBA_ValueDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueDef_out&,p).ptr_)
-{}
-
-ACE_INLINE CORBA_ValueDef_out &
-CORBA_ValueDef_out::operator= (const CORBA_ValueDef_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ValueDef_out&,p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ValueDef_out &
-CORBA_ValueDef_out::operator= (const CORBA_ValueDef_var &p)
-{
-  this->ptr_ = CORBA_ValueDef::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_ValueDef_out &
-CORBA_ValueDef_out::operator= (CORBA_ValueDef_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-CORBA_ValueDef_out::operator CORBA_ValueDef_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr &
-CORBA_ValueDef_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA_ValueDef_ptr 
-CORBA_ValueDef_out::operator-> (void)
+ACE_INLINE ::IR_OperationDef_ptr
+IR_OperationDef_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -12261,134 +13406,138 @@ CORBA_ValueDef_out::operator-> (void)
 #endif /* end #if !defined */
 
 // *************************************************************
-// Inline operations for class CORBA_ValueDef::FullValueDescription_var
+// Inline operations for class IR_OperationDescription_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_var::FullValueDescription_var (void) // default constructor
+IR_OperationDescription_var::IR_OperationDescription_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_var::FullValueDescription_var (CORBA_ValueDef::FullValueDescription *p)
+IR_OperationDescription_var::IR_OperationDescription_var (IR_OperationDescription *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_var::FullValueDescription_var (const CORBA_ValueDef::FullValueDescription_var &p) // copy constructor
+IR_OperationDescription_var::IR_OperationDescription_var (const ::IR_OperationDescription_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ValueDef::FullValueDescription(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_OperationDescription (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_var::~FullValueDescription_var (void) // destructor
+IR_OperationDescription_var::~IR_OperationDescription_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription_var &
-CORBA_ValueDef::FullValueDescription_var::operator= (CORBA_ValueDef::FullValueDescription *p)
+ACE_INLINE IR_OperationDescription_var &
+IR_OperationDescription_var::operator= (IR_OperationDescription *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription_var &
-CORBA_ValueDef::FullValueDescription_var::operator= (const CORBA_ValueDef::FullValueDescription_var &p)
+ACE_INLINE ::IR_OperationDescription_var &
+IR_OperationDescription_var::operator= (const ::IR_OperationDescription_var &p)
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ValueDef::FullValueDescription (*p.ptr_), 
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_OperationDescription (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ValueDef::FullValueDescription *
-CORBA_ValueDef::FullValueDescription_var::operator-> (void) const
+ACE_INLINE const ::IR_OperationDescription *
+IR_OperationDescription_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription *
-CORBA_ValueDef::FullValueDescription_var::operator-> (void)
+ACE_INLINE ::IR_OperationDescription *
+IR_OperationDescription_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_ValueDef::FullValueDescription_var::operator const CORBA_ValueDef::FullValueDescription &() const // cast
+ACE_INLINE
+IR_OperationDescription_var::operator const ::IR_OperationDescription &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_ValueDef::FullValueDescription_var::operator CORBA_ValueDef::FullValueDescription &() // cast 
+ACE_INLINE
+IR_OperationDescription_var::operator ::IR_OperationDescription &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_ValueDef::FullValueDescription_var::operator CORBA_ValueDef::FullValueDescription &() const// cast 
+ACE_INLINE
+IR_OperationDescription_var::operator ::IR_OperationDescription &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const CORBA_ValueDef::FullValueDescription &
-CORBA_ValueDef::FullValueDescription_var::in (void) const
+// variable-size types only
+ACE_INLINE
+IR_OperationDescription_var::operator ::IR_OperationDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_OperationDescription &
+IR_OperationDescription_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription &
-CORBA_ValueDef::FullValueDescription_var::inout (void)
+ACE_INLINE ::IR_OperationDescription &
+IR_OperationDescription_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_ValueDef::FullValueDescription *&
-CORBA_ValueDef::FullValueDescription_var::out (void)
+ACE_INLINE ::IR_OperationDescription *&
+IR_OperationDescription_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription *
-CORBA_ValueDef::FullValueDescription_var::_retn (void)
+ACE_INLINE ::IR_OperationDescription *
+IR_OperationDescription_var::_retn (void)
 {
-  CORBA_ValueDef::FullValueDescription *tmp = this->ptr_;
+  ::IR_OperationDescription *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription *
-CORBA_ValueDef::FullValueDescription_var::ptr (void) const
+ACE_INLINE ::IR_OperationDescription *
+IR_OperationDescription_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_ValueDef::FullValueDescription_out
+// Inline operations for class IR_OperationDescription_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_out::FullValueDescription_out (CORBA_ValueDef::FullValueDescription *&p)
+IR_OperationDescription_out::IR_OperationDescription_out (::IR_OperationDescription *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_out::FullValueDescription_out (CORBA_ValueDef::FullValueDescription_var &p) // constructor from _var
+IR_OperationDescription_out::IR_OperationDescription_out (IR_OperationDescription_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -12396,171 +13545,185 @@ CORBA_ValueDef::FullValueDescription_out::FullValueDescription_out (CORBA_ValueD
 }
 
 ACE_INLINE
-CORBA_ValueDef::FullValueDescription_out::FullValueDescription_out (const CORBA_ValueDef::FullValueDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueDef::FullValueDescription_out&,p).ptr_)
+IR_OperationDescription_out::IR_OperationDescription_out (const ::IR_OperationDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_OperationDescription_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription_out &
-CORBA_ValueDef::FullValueDescription_out::operator= (const CORBA_ValueDef::FullValueDescription_out &p)
+ACE_INLINE IR_OperationDescription_out &
+IR_OperationDescription_out::operator= (const ::IR_OperationDescription_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ValueDef::FullValueDescription_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_OperationDescription_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription_out &
-CORBA_ValueDef::FullValueDescription_out::operator= (CORBA_ValueDef::FullValueDescription *p)
+ACE_INLINE IR_OperationDescription_out &
+IR_OperationDescription_out::operator= (IR_OperationDescription *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueDef::FullValueDescription_out::operator CORBA_ValueDef::FullValueDescription *&() // cast
+IR_OperationDescription_out::operator ::IR_OperationDescription *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription *&
-CORBA_ValueDef::FullValueDescription_out::ptr (void) // ptr
+ACE_INLINE ::IR_OperationDescription *&
+IR_OperationDescription_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDef::FullValueDescription *
-CORBA_ValueDef::FullValueDescription_out::operator-> (void)
+ACE_INLINE ::IR_OperationDescription *
+IR_OperationDescription_out::operator-> (void)
 {
   return this->ptr_;
 }
+
+
+#if !defined (_IR_REPOSITORYIDSEQ_CI_)
+#define _IR_REPOSITORYIDSEQ_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ValueDescription_var
+// Inline operations for class IR_RepositoryIdSeq_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueDescription_var::CORBA_ValueDescription_var (void) // default constructor
+IR_RepositoryIdSeq_var::IR_RepositoryIdSeq_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ValueDescription_var::CORBA_ValueDescription_var (CORBA_ValueDescription *p)
+IR_RepositoryIdSeq_var::IR_RepositoryIdSeq_var (IR_RepositoryIdSeq *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_ValueDescription_var::CORBA_ValueDescription_var (const CORBA_ValueDescription_var &p) // copy constructor
+IR_RepositoryIdSeq_var::IR_RepositoryIdSeq_var (const ::IR_RepositoryIdSeq_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_ValueDescription(*p.ptr_));
+    ACE_NEW (this->ptr_, ::IR_RepositoryIdSeq (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueDescription_var::~CORBA_ValueDescription_var (void) // destructor
+IR_RepositoryIdSeq_var::~IR_RepositoryIdSeq_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDescription_var &
-CORBA_ValueDescription_var::operator= (CORBA_ValueDescription *p)
+ACE_INLINE IR_RepositoryIdSeq_var &
+IR_RepositoryIdSeq_var::operator= (IR_RepositoryIdSeq *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueDescription_var &
-CORBA_ValueDescription_var::operator= (const CORBA_ValueDescription_var &p)
+ACE_INLINE IR_RepositoryIdSeq_var &
+IR_RepositoryIdSeq_var::operator= (const ::IR_RepositoryIdSeq_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_ValueDescription (*p.ptr_),
-		    *this);
+    ACE_NEW_RETURN (this->ptr_, ::IR_RepositoryIdSeq (*p.ptr_), *this);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA_ValueDescription *
-CORBA_ValueDescription_var::operator-> (void) const
+ACE_INLINE const ::IR_RepositoryIdSeq *
+IR_RepositoryIdSeq_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDescription *
-CORBA_ValueDescription_var::operator-> (void)
+ACE_INLINE ::IR_RepositoryIdSeq *
+IR_RepositoryIdSeq_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueDescription_var::operator const CORBA_ValueDescription &() const // cast
+IR_RepositoryIdSeq_var::operator const ::IR_RepositoryIdSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueDescription_var::operator CORBA_ValueDescription &() // cast 
+IR_RepositoryIdSeq_var::operator ::IR_RepositoryIdSeq &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueDescription_var::operator CORBA_ValueDescription &() const// cast 
+IR_RepositoryIdSeq_var::operator ::IR_RepositoryIdSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE const CORBA_ValueDescription &
-CORBA_ValueDescription_var::in (void) const
+// variable-size types only
+ACE_INLINE
+IR_RepositoryIdSeq_var::operator ::IR_RepositoryIdSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+IR_RepositoryIdSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_RepositoryIdSeq &
+IR_RepositoryIdSeq_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDescription &
-CORBA_ValueDescription_var::inout (void)
+ACE_INLINE ::IR_RepositoryIdSeq &
+IR_RepositoryIdSeq_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA_ValueDescription *&
-CORBA_ValueDescription_var::out (void)
+ACE_INLINE ::IR_RepositoryIdSeq *&
+IR_RepositoryIdSeq_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDescription *
-CORBA_ValueDescription_var::_retn (void)
+ACE_INLINE ::IR_RepositoryIdSeq *
+IR_RepositoryIdSeq_var::_retn (void)
 {
-  CORBA_ValueDescription *tmp = this->ptr_;
+  ::IR_RepositoryIdSeq *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA_ValueDescription *
-CORBA_ValueDescription_var::ptr (void) const
+ACE_INLINE ::IR_RepositoryIdSeq *
+IR_RepositoryIdSeq_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_ValueDescription_out
+// Inline operations for class IR_RepositoryIdSeq_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueDescription_out::CORBA_ValueDescription_out (CORBA_ValueDescription *&p)
+IR_RepositoryIdSeq_out::IR_RepositoryIdSeq_out (IR_RepositoryIdSeq *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_ValueDescription_out::CORBA_ValueDescription_out (CORBA_ValueDescription_var &p) // constructor from _var
+IR_RepositoryIdSeq_out::IR_RepositoryIdSeq_out (IR_RepositoryIdSeq_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -12568,153 +13731,902 @@ CORBA_ValueDescription_out::CORBA_ValueDescription_out (CORBA_ValueDescription_v
 }
 
 ACE_INLINE
-CORBA_ValueDescription_out::CORBA_ValueDescription_out (const CORBA_ValueDescription_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueDescription_out&,p).ptr_)
+IR_RepositoryIdSeq_out::IR_RepositoryIdSeq_out (const ::IR_RepositoryIdSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_RepositoryIdSeq_out&, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ValueDescription_out &
-CORBA_ValueDescription_out::operator= (const CORBA_ValueDescription_out &p)
+ACE_INLINE ::IR_RepositoryIdSeq_out &
+IR_RepositoryIdSeq_out::operator= (const ::IR_RepositoryIdSeq_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ValueDescription_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_RepositoryIdSeq_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueDescription_out &
-CORBA_ValueDescription_out::operator= (CORBA_ValueDescription *p)
+ACE_INLINE ::IR_RepositoryIdSeq_out &
+IR_RepositoryIdSeq_out::operator= (IR_RepositoryIdSeq *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueDescription_out::operator CORBA_ValueDescription *&() // cast
+IR_RepositoryIdSeq_out::operator ::IR_RepositoryIdSeq *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDescription *&
-CORBA_ValueDescription_out::ptr (void) // ptr
+ACE_INLINE ::IR_RepositoryIdSeq *&
+IR_RepositoryIdSeq_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueDescription *
-CORBA_ValueDescription_out::operator-> (void)
+ACE_INLINE ::IR_RepositoryIdSeq *
+IR_RepositoryIdSeq_out::operator-> (void)
 {
   return this->ptr_;
 }
+
+ACE_INLINE TAO_SeqElem_String_Manager 
+IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_OPDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_OPDESCRIPTIONSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_OperationDescription *
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_OperationDescription *retval = 0;
+    ACE_NEW_RETURN (retval, IR_OperationDescription[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::freebuf (IR_OperationDescription *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_OperationDescription *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (const _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_OperationDescription *tmp1 = _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (this->maximum_);
+      IR_OperationDescription * const tmp2 = ACE_reinterpret_cast (IR_OperationDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_OperationDescription *tmp = ACE_reinterpret_cast (IR_OperationDescription *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_OperationDescription *tmp1 = ACE_reinterpret_cast (IR_OperationDescription *, this->buffer_);
+    IR_OperationDescription * const tmp2 = ACE_reinterpret_cast (IR_OperationDescription * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_OperationDescription &
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_OperationDescription* tmp = ACE_reinterpret_cast(IR_OperationDescription*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_OperationDescription &
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_OperationDescription * const tmp = ACE_reinterpret_cast (IR_OperationDescription* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_OperationDescription *
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_OperationDescription *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_OperationDescription*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_OperationDescription*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_OperationDescription *
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_OperationDescription * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_OperationDescription *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_OperationDescription *tmp = ACE_reinterpret_cast(IR_OperationDescription*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_OPDESCRIPTIONSEQ_CI_)
+#define _IR_OPDESCRIPTIONSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_OpDescriptionSeq_var
+// *************************************************************
 
 ACE_INLINE
-CORBA_ValueBoxDef::CORBA_ValueBoxDef (void) // default constructor
+IR_OpDescriptionSeq_var::IR_OpDescriptionSeq_var (void) // default constructor
+  : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_ValueBoxDef::CORBA_ValueBoxDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+IR_OpDescriptionSeq_var::IR_OpDescriptionSeq_var (IR_OpDescriptionSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_OpDescriptionSeq_var::IR_OpDescriptionSeq_var (const ::IR_OpDescriptionSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_OpDescriptionSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_OpDescriptionSeq_var::~IR_OpDescriptionSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_OpDescriptionSeq_var &
+IR_OpDescriptionSeq_var::operator= (IR_OpDescriptionSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_OpDescriptionSeq_var &
+IR_OpDescriptionSeq_var::operator= (const ::IR_OpDescriptionSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_OpDescriptionSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_OpDescriptionSeq *
+IR_OpDescriptionSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq *
+IR_OpDescriptionSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_OpDescriptionSeq_var::operator const ::IR_OpDescriptionSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_OpDescriptionSeq_var::operator ::IR_OpDescriptionSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_OpDescriptionSeq_var::operator ::IR_OpDescriptionSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_OpDescriptionSeq_var::operator ::IR_OpDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_OperationDescription &
+IR_OpDescriptionSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_OpDescriptionSeq &
+IR_OpDescriptionSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq &
+IR_OpDescriptionSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_OpDescriptionSeq *&
+IR_OpDescriptionSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq *
+IR_OpDescriptionSeq_var::_retn (void)
+{
+  ::IR_OpDescriptionSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq *
+IR_OpDescriptionSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_OpDescriptionSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_OpDescriptionSeq_out::IR_OpDescriptionSeq_out (IR_OpDescriptionSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_OpDescriptionSeq_out::IR_OpDescriptionSeq_out (IR_OpDescriptionSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_OpDescriptionSeq_out::IR_OpDescriptionSeq_out (const ::IR_OpDescriptionSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_OpDescriptionSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_OpDescriptionSeq_out &
+IR_OpDescriptionSeq_out::operator= (const ::IR_OpDescriptionSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_OpDescriptionSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq_out &
+IR_OpDescriptionSeq_out::operator= (IR_OpDescriptionSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_OpDescriptionSeq_out::operator ::IR_OpDescriptionSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq *&
+IR_OpDescriptionSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_OpDescriptionSeq *
+IR_OpDescriptionSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_OperationDescription &
+IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_ATTRDESCRIPTIONSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_ATTRDESCRIPTIONSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_AttributeDescription *
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_AttributeDescription *retval = 0;
+    ACE_NEW_RETURN (retval, IR_AttributeDescription[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::freebuf (IR_AttributeDescription *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_AttributeDescription *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (const _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_AttributeDescription *tmp1 = _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (this->maximum_);
+      IR_AttributeDescription * const tmp2 = ACE_reinterpret_cast (IR_AttributeDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_AttributeDescription *tmp = ACE_reinterpret_cast (IR_AttributeDescription *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_AttributeDescription *tmp1 = ACE_reinterpret_cast (IR_AttributeDescription *, this->buffer_);
+    IR_AttributeDescription * const tmp2 = ACE_reinterpret_cast (IR_AttributeDescription * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_AttributeDescription &
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_AttributeDescription* tmp = ACE_reinterpret_cast(IR_AttributeDescription*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_AttributeDescription &
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_AttributeDescription * const tmp = ACE_reinterpret_cast (IR_AttributeDescription* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_AttributeDescription *
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_AttributeDescription *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_AttributeDescription*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_AttributeDescription*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_AttributeDescription *
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_AttributeDescription * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_AttributeDescription *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_AttributeDescription *tmp = ACE_reinterpret_cast(IR_AttributeDescription*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_ATTRDESCRIPTIONSEQ_CI_)
+#define _IR_ATTRDESCRIPTIONSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_AttrDescriptionSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_AttrDescriptionSeq_var::IR_AttrDescriptionSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_AttrDescriptionSeq_var::IR_AttrDescriptionSeq_var (IR_AttrDescriptionSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_AttrDescriptionSeq_var::IR_AttrDescriptionSeq_var (const ::IR_AttrDescriptionSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_AttrDescriptionSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_AttrDescriptionSeq_var::~IR_AttrDescriptionSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_AttrDescriptionSeq_var &
+IR_AttrDescriptionSeq_var::operator= (IR_AttrDescriptionSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_AttrDescriptionSeq_var &
+IR_AttrDescriptionSeq_var::operator= (const ::IR_AttrDescriptionSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_AttrDescriptionSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_AttrDescriptionSeq *
+IR_AttrDescriptionSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq *
+IR_AttrDescriptionSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_AttrDescriptionSeq_var::operator const ::IR_AttrDescriptionSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_AttrDescriptionSeq_var::operator ::IR_AttrDescriptionSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_AttrDescriptionSeq_var::operator ::IR_AttrDescriptionSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_AttrDescriptionSeq_var::operator ::IR_AttrDescriptionSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_AttributeDescription &
+IR_AttrDescriptionSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_AttrDescriptionSeq &
+IR_AttrDescriptionSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq &
+IR_AttrDescriptionSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_AttrDescriptionSeq *&
+IR_AttrDescriptionSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq *
+IR_AttrDescriptionSeq_var::_retn (void)
+{
+  ::IR_AttrDescriptionSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq *
+IR_AttrDescriptionSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_AttrDescriptionSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_AttrDescriptionSeq_out::IR_AttrDescriptionSeq_out (IR_AttrDescriptionSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_AttrDescriptionSeq_out::IR_AttrDescriptionSeq_out (IR_AttrDescriptionSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_AttrDescriptionSeq_out::IR_AttrDescriptionSeq_out (const ::IR_AttrDescriptionSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_AttrDescriptionSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_AttrDescriptionSeq_out &
+IR_AttrDescriptionSeq_out::operator= (const ::IR_AttrDescriptionSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_AttrDescriptionSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq_out &
+IR_AttrDescriptionSeq_out::operator= (IR_AttrDescriptionSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_AttrDescriptionSeq_out::operator ::IR_AttrDescriptionSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq *&
+IR_AttrDescriptionSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_AttrDescriptionSeq *
+IR_AttrDescriptionSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_AttributeDescription &
+IR_AttrDescriptionSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_InterfaceDef::IR_InterfaceDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_InterfaceDef::IR_InterfaceDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_servant, _tao_collocated)
 {}
 
 ACE_INLINE
-CORBA_ValueBoxDef::~CORBA_ValueBoxDef (void) // destructor
+IR_InterfaceDef::~IR_InterfaceDef (void) // destructor
 {}
 
 
-#if !defined (_CORBA_VALUEBOXDEF___VAR_CI_)
-#define _CORBA_VALUEBOXDEF___VAR_CI_
+#if !defined (_IR_INTERFACEDEF___VAR_CI_)
+#define _IR_INTERFACEDEF___VAR_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ValueBoxDef_var
+// Inline operations for class IR_InterfaceDef_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueBoxDef_var::CORBA_ValueBoxDef_var (void) // default constructor
-  : ptr_ (CORBA_ValueBoxDef::_nil ())
+IR_InterfaceDef_var::IR_InterfaceDef_var (void) // default constructor
+  : ptr_ (IR_InterfaceDef::_nil ())
 {}
 
 ACE_INLINE
-CORBA_ValueBoxDef_var::CORBA_ValueBoxDef_var (CORBA_ValueBoxDef_ptr p)
+IR_InterfaceDef_var::IR_InterfaceDef_var (IR_InterfaceDef_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE CORBA_ValueBoxDef_ptr 
-CORBA_ValueBoxDef_var::ptr (void) const
+ACE_INLINE ::IR_InterfaceDef_ptr
+IR_InterfaceDef_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_ValueBoxDef_var::CORBA_ValueBoxDef_var (const CORBA_ValueBoxDef_var &p) // copy constructor
-  : ptr_ (CORBA_ValueBoxDef::_duplicate (p.ptr ()))
+IR_InterfaceDef_var::IR_InterfaceDef_var (const ::IR_InterfaceDef_var &p) // copy constructor
+  : ptr_ (IR_InterfaceDef::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-CORBA_ValueBoxDef_var::~CORBA_ValueBoxDef_var (void) // destructor
+IR_InterfaceDef_var::~IR_InterfaceDef_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_ValueBoxDef_var &
-CORBA_ValueBoxDef_var::operator= (CORBA_ValueBoxDef_ptr p)
+ACE_INLINE IR_InterfaceDef_var &
+IR_InterfaceDef_var::operator= (IR_InterfaceDef_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_var &
-CORBA_ValueBoxDef_var::operator= (const CORBA_ValueBoxDef_var &p)
+ACE_INLINE IR_InterfaceDef_var &
+IR_InterfaceDef_var::operator= (const ::IR_InterfaceDef_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ValueBoxDef::_duplicate (p.ptr ());
+    this->ptr_ = ::IR_InterfaceDef::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueBoxDef_var::operator const CORBA_ValueBoxDef_ptr &() const // cast
+IR_InterfaceDef_var::operator const ::IR_InterfaceDef_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_ValueBoxDef_var::operator CORBA_ValueBoxDef_ptr &() // cast 
+IR_InterfaceDef_var::operator ::IR_InterfaceDef_ptr &() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr 
-CORBA_ValueBoxDef_var::operator-> (void) const
+ACE_INLINE ::IR_InterfaceDef_ptr
+IR_InterfaceDef_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr
-CORBA_ValueBoxDef_var::in (void) const
+ACE_INLINE ::IR_InterfaceDef_ptr
+IR_InterfaceDef_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr &
-CORBA_ValueBoxDef_var::inout (void)
+ACE_INLINE ::IR_InterfaceDef_ptr &
+IR_InterfaceDef_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr &
-CORBA_ValueBoxDef_var::out (void)
+ACE_INLINE ::IR_InterfaceDef_ptr &
+IR_InterfaceDef_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ValueBoxDef::_nil ();
+  this->ptr_ = ::IR_InterfaceDef::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr 
-CORBA_ValueBoxDef_var::_retn (void)
+ACE_INLINE ::IR_InterfaceDef_ptr
+IR_InterfaceDef_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  CORBA_ValueBoxDef_ptr val = this->ptr_;
-  this->ptr_ = CORBA_ValueBoxDef::_nil ();
+  ::IR_InterfaceDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_InterfaceDef::_nil ();
   return val;
 }
 
@@ -12722,68 +14634,68 @@ CORBA_ValueBoxDef_var::_retn (void)
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_VALUEBOXDEF___OUT_CI_)
-#define _CORBA_VALUEBOXDEF___OUT_CI_
+#if !defined (_IR_INTERFACEDEF___OUT_CI_)
+#define _IR_INTERFACEDEF___OUT_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_ValueBoxDef_out
+// Inline operations for class IR_InterfaceDef_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_ValueBoxDef_out::CORBA_ValueBoxDef_out (CORBA_ValueBoxDef_ptr &p)
+IR_InterfaceDef_out::IR_InterfaceDef_out (IR_InterfaceDef_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = CORBA_ValueBoxDef::_nil ();
+  this->ptr_ = ::IR_InterfaceDef::_nil ();
 }
 
 ACE_INLINE
-CORBA_ValueBoxDef_out::CORBA_ValueBoxDef_out (CORBA_ValueBoxDef_var &p) // constructor from _var
+IR_InterfaceDef_out::IR_InterfaceDef_out (IR_InterfaceDef_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_ValueBoxDef::_nil ();
+  this->ptr_ = ::IR_InterfaceDef::_nil ();
 }
 
 ACE_INLINE
-CORBA_ValueBoxDef_out::CORBA_ValueBoxDef_out (const CORBA_ValueBoxDef_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ValueBoxDef_out&,p).ptr_)
+IR_InterfaceDef_out::IR_InterfaceDef_out (const ::IR_InterfaceDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_InterfaceDef_out &, p).ptr_)
 {}
 
-ACE_INLINE CORBA_ValueBoxDef_out &
-CORBA_ValueBoxDef_out::operator= (const CORBA_ValueBoxDef_out &p)
+ACE_INLINE ::IR_InterfaceDef_out &
+IR_InterfaceDef_out::operator= (const ::IR_InterfaceDef_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_ValueBoxDef_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (IR_InterfaceDef_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_out &
-CORBA_ValueBoxDef_out::operator= (const CORBA_ValueBoxDef_var &p)
+ACE_INLINE IR_InterfaceDef_out &
+IR_InterfaceDef_out::operator= (const ::IR_InterfaceDef_var &p)
 {
-  this->ptr_ = CORBA_ValueBoxDef::_duplicate (p.ptr ());
+  this->ptr_ = ::IR_InterfaceDef::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_out &
-CORBA_ValueBoxDef_out::operator= (CORBA_ValueBoxDef_ptr p)
+ACE_INLINE IR_InterfaceDef_out &
+IR_InterfaceDef_out::operator= (IR_InterfaceDef_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_ValueBoxDef_out::operator CORBA_ValueBoxDef_ptr &() // cast
+IR_InterfaceDef_out::operator ::IR_InterfaceDef_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr &
-CORBA_ValueBoxDef_out::ptr (void) // ptr
+ACE_INLINE ::IR_InterfaceDef_ptr &
+IR_InterfaceDef_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_ValueBoxDef_ptr 
-CORBA_ValueBoxDef_out::operator-> (void)
+ACE_INLINE ::IR_InterfaceDef_ptr
+IR_InterfaceDef_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -12791,12 +14703,5511 @@ CORBA_ValueBoxDef_out::operator-> (void)
 
 #endif /* end #if !defined */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::DefinitionKind &_tao_enumval)
+// *************************************************************
+// Inline operations for class IR_InterfaceDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_InterfaceDescription_var::IR_InterfaceDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_InterfaceDescription_var::IR_InterfaceDescription_var (IR_InterfaceDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_InterfaceDescription_var::IR_InterfaceDescription_var (const ::IR_InterfaceDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_InterfaceDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_InterfaceDescription_var::~IR_InterfaceDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_InterfaceDescription_var &
+IR_InterfaceDescription_var::operator= (IR_InterfaceDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_InterfaceDescription_var &
+IR_InterfaceDescription_var::operator= (const ::IR_InterfaceDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_InterfaceDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_InterfaceDescription *
+IR_InterfaceDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InterfaceDescription *
+IR_InterfaceDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_InterfaceDescription_var::operator const ::IR_InterfaceDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_InterfaceDescription_var::operator ::IR_InterfaceDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_InterfaceDescription_var::operator ::IR_InterfaceDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_InterfaceDescription_var::operator ::IR_InterfaceDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_InterfaceDescription &
+IR_InterfaceDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_InterfaceDescription &
+IR_InterfaceDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_InterfaceDescription *&
+IR_InterfaceDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InterfaceDescription *
+IR_InterfaceDescription_var::_retn (void)
+{
+  ::IR_InterfaceDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_InterfaceDescription *
+IR_InterfaceDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_InterfaceDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_InterfaceDescription_out::IR_InterfaceDescription_out (::IR_InterfaceDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_InterfaceDescription_out::IR_InterfaceDescription_out (IR_InterfaceDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_InterfaceDescription_out::IR_InterfaceDescription_out (const ::IR_InterfaceDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_InterfaceDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_InterfaceDescription_out &
+IR_InterfaceDescription_out::operator= (const ::IR_InterfaceDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_InterfaceDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_InterfaceDescription_out &
+IR_InterfaceDescription_out::operator= (IR_InterfaceDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_InterfaceDescription_out::operator ::IR_InterfaceDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InterfaceDescription *&
+IR_InterfaceDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_InterfaceDescription *
+IR_InterfaceDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ValueMember_var
+// *************************************************************
+
+ACE_INLINE
+IR_ValueMember_var::IR_ValueMember_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ValueMember_var::IR_ValueMember_var (IR_ValueMember *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ValueMember_var::IR_ValueMember_var (const ::IR_ValueMember_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ValueMember (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueMember_var::~IR_ValueMember_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ValueMember_var &
+IR_ValueMember_var::operator= (IR_ValueMember *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ValueMember_var &
+IR_ValueMember_var::operator= (const ::IR_ValueMember_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueMember (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ValueMember *
+IR_ValueMember_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMember *
+IR_ValueMember_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueMember_var::operator const ::IR_ValueMember &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueMember_var::operator ::IR_ValueMember &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueMember_var::operator ::IR_ValueMember &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ValueMember_var::operator ::IR_ValueMember *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ValueMember &
+IR_ValueMember_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMember &
+IR_ValueMember_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ValueMember *&
+IR_ValueMember_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMember *
+IR_ValueMember_var::_retn (void)
+{
+  ::IR_ValueMember *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ValueMember *
+IR_ValueMember_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ValueMember_out
+// *************************************************************
+
+ACE_INLINE
+IR_ValueMember_out::IR_ValueMember_out (::IR_ValueMember *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueMember_out::IR_ValueMember_out (IR_ValueMember_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueMember_out::IR_ValueMember_out (const ::IR_ValueMember_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueMember_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ValueMember_out &
+IR_ValueMember_out::operator= (const ::IR_ValueMember_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ValueMember_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ValueMember_out &
+IR_ValueMember_out::operator= (IR_ValueMember *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueMember_out::operator ::IR_ValueMember *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMember *&
+IR_ValueMember_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMember *
+IR_ValueMember_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_VALUEMEMBERSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_VALUEMEMBERSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_ValueMember *
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_ValueMember *retval = 0;
+    ACE_NEW_RETURN (retval, IR_ValueMember[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ValueMemberSeq::freebuf (IR_ValueMember *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_ValueMember *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (const _TAO_Unbounded_Sequence_IR_ValueMemberSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_ValueMember *tmp1 = _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (this->maximum_);
+      IR_ValueMember * const tmp2 = ACE_reinterpret_cast (IR_ValueMember * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ValueMemberSeq &
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_ValueMemberSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_ValueMember *tmp = ACE_reinterpret_cast (IR_ValueMember *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_ValueMemberSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_ValueMember *tmp1 = ACE_reinterpret_cast (IR_ValueMember *, this->buffer_);
+    IR_ValueMember * const tmp2 = ACE_reinterpret_cast (IR_ValueMember * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_ValueMember &
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_ValueMember* tmp = ACE_reinterpret_cast(IR_ValueMember*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_ValueMember &
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_ValueMember * const tmp = ACE_reinterpret_cast (IR_ValueMember* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_ValueMember *
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_ValueMember *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_ValueMember*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_ValueMember*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_ValueMember *
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_ValueMember * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_ValueMember *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_ValueMember *tmp = ACE_reinterpret_cast(IR_ValueMember*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_ValueMemberSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_VALUEMEMBERSEQ_CI_)
+#define _IR_VALUEMEMBERSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueMemberSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_ValueMemberSeq_var::IR_ValueMemberSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ValueMemberSeq_var::IR_ValueMemberSeq_var (IR_ValueMemberSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ValueMemberSeq_var::IR_ValueMemberSeq_var (const ::IR_ValueMemberSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ValueMemberSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueMemberSeq_var::~IR_ValueMemberSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ValueMemberSeq_var &
+IR_ValueMemberSeq_var::operator= (IR_ValueMemberSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ValueMemberSeq_var &
+IR_ValueMemberSeq_var::operator= (const ::IR_ValueMemberSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueMemberSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ValueMemberSeq *
+IR_ValueMemberSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq *
+IR_ValueMemberSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ValueMemberSeq_var::operator const ::IR_ValueMemberSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ValueMemberSeq_var::operator ::IR_ValueMemberSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ValueMemberSeq_var::operator ::IR_ValueMemberSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ValueMemberSeq_var::operator ::IR_ValueMemberSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_ValueMember &
+IR_ValueMemberSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_ValueMemberSeq &
+IR_ValueMemberSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq &
+IR_ValueMemberSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ValueMemberSeq *&
+IR_ValueMemberSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq *
+IR_ValueMemberSeq_var::_retn (void)
+{
+  ::IR_ValueMemberSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq *
+IR_ValueMemberSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ValueMemberSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_ValueMemberSeq_out::IR_ValueMemberSeq_out (IR_ValueMemberSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueMemberSeq_out::IR_ValueMemberSeq_out (IR_ValueMemberSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueMemberSeq_out::IR_ValueMemberSeq_out (const ::IR_ValueMemberSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueMemberSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ValueMemberSeq_out &
+IR_ValueMemberSeq_out::operator= (const ::IR_ValueMemberSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ValueMemberSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq_out &
+IR_ValueMemberSeq_out::operator= (IR_ValueMemberSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueMemberSeq_out::operator ::IR_ValueMemberSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq *&
+IR_ValueMemberSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberSeq *
+IR_ValueMemberSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_ValueMember &
+IR_ValueMemberSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ValueMemberDef::IR_ValueMemberDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ValueMemberDef::IR_ValueMemberDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ValueMemberDef::~IR_ValueMemberDef (void) // destructor
+{}
+
+
+#if !defined (_IR_VALUEMEMBERDEF___VAR_CI_)
+#define _IR_VALUEMEMBERDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueMemberDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ValueMemberDef_var::IR_ValueMemberDef_var (void) // default constructor
+  : ptr_ (IR_ValueMemberDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ValueMemberDef_var::IR_ValueMemberDef_var (IR_ValueMemberDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr
+IR_ValueMemberDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueMemberDef_var::IR_ValueMemberDef_var (const ::IR_ValueMemberDef_var &p) // copy constructor
+  : ptr_ (IR_ValueMemberDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ValueMemberDef_var::~IR_ValueMemberDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ValueMemberDef_var &
+IR_ValueMemberDef_var::operator= (IR_ValueMemberDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ValueMemberDef_var &
+IR_ValueMemberDef_var::operator= (const ::IR_ValueMemberDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ValueMemberDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueMemberDef_var::operator const ::IR_ValueMemberDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ValueMemberDef_var::operator ::IR_ValueMemberDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr
+IR_ValueMemberDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr
+IR_ValueMemberDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr &
+IR_ValueMemberDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr &
+IR_ValueMemberDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ValueMemberDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr
+IR_ValueMemberDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ValueMemberDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ValueMemberDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_VALUEMEMBERDEF___OUT_CI_)
+#define _IR_VALUEMEMBERDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueMemberDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ValueMemberDef_out::IR_ValueMemberDef_out (IR_ValueMemberDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ValueMemberDef::_nil ();
+}
+
+ACE_INLINE
+IR_ValueMemberDef_out::IR_ValueMemberDef_out (IR_ValueMemberDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ValueMemberDef::_nil ();
+}
+
+ACE_INLINE
+IR_ValueMemberDef_out::IR_ValueMemberDef_out (const ::IR_ValueMemberDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueMemberDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ValueMemberDef_out &
+IR_ValueMemberDef_out::operator= (const ::IR_ValueMemberDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ValueMemberDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ValueMemberDef_out &
+IR_ValueMemberDef_out::operator= (const ::IR_ValueMemberDef_var &p)
+{
+  this->ptr_ = ::IR_ValueMemberDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ValueMemberDef_out &
+IR_ValueMemberDef_out::operator= (IR_ValueMemberDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueMemberDef_out::operator ::IR_ValueMemberDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr &
+IR_ValueMemberDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueMemberDef_ptr
+IR_ValueMemberDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ValueDef::IR_ValueDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ValueDef::IR_ValueDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ValueDef::~IR_ValueDef (void) // destructor
+{}
+
+
+#if !defined (_IR_VALUEDEF___VAR_CI_)
+#define _IR_VALUEDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ValueDef_var::IR_ValueDef_var (void) // default constructor
+  : ptr_ (IR_ValueDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ValueDef_var::IR_ValueDef_var (IR_ValueDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ValueDef_ptr
+IR_ValueDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueDef_var::IR_ValueDef_var (const ::IR_ValueDef_var &p) // copy constructor
+  : ptr_ (IR_ValueDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ValueDef_var::~IR_ValueDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ValueDef_var &
+IR_ValueDef_var::operator= (IR_ValueDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ValueDef_var &
+IR_ValueDef_var::operator= (const ::IR_ValueDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ValueDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueDef_var::operator const ::IR_ValueDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ValueDef_var::operator ::IR_ValueDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr
+IR_ValueDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr
+IR_ValueDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr &
+IR_ValueDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr &
+IR_ValueDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ValueDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr
+IR_ValueDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ValueDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ValueDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_VALUEDEF___OUT_CI_)
+#define _IR_VALUEDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ValueDef_out::IR_ValueDef_out (IR_ValueDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ValueDef::_nil ();
+}
+
+ACE_INLINE
+IR_ValueDef_out::IR_ValueDef_out (IR_ValueDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ValueDef::_nil ();
+}
+
+ACE_INLINE
+IR_ValueDef_out::IR_ValueDef_out (const ::IR_ValueDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ValueDef_out &
+IR_ValueDef_out::operator= (const ::IR_ValueDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ValueDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ValueDef_out &
+IR_ValueDef_out::operator= (const ::IR_ValueDef_var &p)
+{
+  this->ptr_ = ::IR_ValueDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ValueDef_out &
+IR_ValueDef_out::operator= (IR_ValueDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueDef_out::operator ::IR_ValueDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr &
+IR_ValueDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDef_ptr
+IR_ValueDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_ValueDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_ValueDescription_var::IR_ValueDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ValueDescription_var::IR_ValueDescription_var (IR_ValueDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ValueDescription_var::IR_ValueDescription_var (const ::IR_ValueDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ValueDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueDescription_var::~IR_ValueDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ValueDescription_var &
+IR_ValueDescription_var::operator= (IR_ValueDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ValueDescription_var &
+IR_ValueDescription_var::operator= (const ::IR_ValueDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ValueDescription *
+IR_ValueDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDescription *
+IR_ValueDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueDescription_var::operator const ::IR_ValueDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueDescription_var::operator ::IR_ValueDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueDescription_var::operator ::IR_ValueDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ValueDescription_var::operator ::IR_ValueDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ValueDescription &
+IR_ValueDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDescription &
+IR_ValueDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ValueDescription *&
+IR_ValueDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDescription *
+IR_ValueDescription_var::_retn (void)
+{
+  ::IR_ValueDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ValueDescription *
+IR_ValueDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ValueDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_ValueDescription_out::IR_ValueDescription_out (::IR_ValueDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueDescription_out::IR_ValueDescription_out (IR_ValueDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ValueDescription_out::IR_ValueDescription_out (const ::IR_ValueDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ValueDescription_out &
+IR_ValueDescription_out::operator= (const ::IR_ValueDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ValueDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ValueDescription_out &
+IR_ValueDescription_out::operator= (IR_ValueDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueDescription_out::operator ::IR_ValueDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDescription *&
+IR_ValueDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueDescription *
+IR_ValueDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueBoxDef::IR_ValueBoxDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ValueBoxDef::IR_ValueBoxDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ValueBoxDef::~IR_ValueBoxDef (void) // destructor
+{}
+
+
+#if !defined (_IR_VALUEBOXDEF___VAR_CI_)
+#define _IR_VALUEBOXDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueBoxDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ValueBoxDef_var::IR_ValueBoxDef_var (void) // default constructor
+  : ptr_ (IR_ValueBoxDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ValueBoxDef_var::IR_ValueBoxDef_var (IR_ValueBoxDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr
+IR_ValueBoxDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ValueBoxDef_var::IR_ValueBoxDef_var (const ::IR_ValueBoxDef_var &p) // copy constructor
+  : ptr_ (IR_ValueBoxDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ValueBoxDef_var::~IR_ValueBoxDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ValueBoxDef_var &
+IR_ValueBoxDef_var::operator= (IR_ValueBoxDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ValueBoxDef_var &
+IR_ValueBoxDef_var::operator= (const ::IR_ValueBoxDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ValueBoxDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueBoxDef_var::operator const ::IR_ValueBoxDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ValueBoxDef_var::operator ::IR_ValueBoxDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr
+IR_ValueBoxDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr
+IR_ValueBoxDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr &
+IR_ValueBoxDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr &
+IR_ValueBoxDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ValueBoxDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr
+IR_ValueBoxDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ValueBoxDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ValueBoxDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_VALUEBOXDEF___OUT_CI_)
+#define _IR_VALUEBOXDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ValueBoxDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ValueBoxDef_out::IR_ValueBoxDef_out (IR_ValueBoxDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ValueBoxDef::_nil ();
+}
+
+ACE_INLINE
+IR_ValueBoxDef_out::IR_ValueBoxDef_out (IR_ValueBoxDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ValueBoxDef::_nil ();
+}
+
+ACE_INLINE
+IR_ValueBoxDef_out::IR_ValueBoxDef_out (const ::IR_ValueBoxDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ValueBoxDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ValueBoxDef_out &
+IR_ValueBoxDef_out::operator= (const ::IR_ValueBoxDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ValueBoxDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ValueBoxDef_out &
+IR_ValueBoxDef_out::operator= (const ::IR_ValueBoxDef_var &p)
+{
+  this->ptr_ = ::IR_ValueBoxDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ValueBoxDef_out &
+IR_ValueBoxDef_out::operator= (IR_ValueBoxDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ValueBoxDef_out::operator ::IR_ValueBoxDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr &
+IR_ValueBoxDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ValueBoxDef_ptr
+IR_ValueBoxDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ProvidesDef::IR_ProvidesDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ProvidesDef::IR_ProvidesDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ProvidesDef::~IR_ProvidesDef (void) // destructor
+{}
+
+
+#if !defined (_IR_PROVIDESDEF___VAR_CI_)
+#define _IR_PROVIDESDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ProvidesDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ProvidesDef_var::IR_ProvidesDef_var (void) // default constructor
+  : ptr_ (IR_ProvidesDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ProvidesDef_var::IR_ProvidesDef_var (IR_ProvidesDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ProvidesDef_ptr
+IR_ProvidesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ProvidesDef_var::IR_ProvidesDef_var (const ::IR_ProvidesDef_var &p) // copy constructor
+  : ptr_ (IR_ProvidesDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ProvidesDef_var::~IR_ProvidesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ProvidesDef_var &
+IR_ProvidesDef_var::operator= (IR_ProvidesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ProvidesDef_var &
+IR_ProvidesDef_var::operator= (const ::IR_ProvidesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ProvidesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ProvidesDef_var::operator const ::IR_ProvidesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ProvidesDef_var::operator ::IR_ProvidesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr
+IR_ProvidesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr
+IR_ProvidesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr &
+IR_ProvidesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr &
+IR_ProvidesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ProvidesDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr
+IR_ProvidesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ProvidesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ProvidesDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_PROVIDESDEF___OUT_CI_)
+#define _IR_PROVIDESDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ProvidesDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ProvidesDef_out::IR_ProvidesDef_out (IR_ProvidesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ProvidesDef::_nil ();
+}
+
+ACE_INLINE
+IR_ProvidesDef_out::IR_ProvidesDef_out (IR_ProvidesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ProvidesDef::_nil ();
+}
+
+ACE_INLINE
+IR_ProvidesDef_out::IR_ProvidesDef_out (const ::IR_ProvidesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ProvidesDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ProvidesDef_out &
+IR_ProvidesDef_out::operator= (const ::IR_ProvidesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ProvidesDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ProvidesDef_out &
+IR_ProvidesDef_out::operator= (const ::IR_ProvidesDef_var &p)
+{
+  this->ptr_ = ::IR_ProvidesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ProvidesDef_out &
+IR_ProvidesDef_out::operator= (IR_ProvidesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ProvidesDef_out::operator ::IR_ProvidesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr &
+IR_ProvidesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDef_ptr
+IR_ProvidesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_ProvidesDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_ProvidesDescription_var::IR_ProvidesDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ProvidesDescription_var::IR_ProvidesDescription_var (IR_ProvidesDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ProvidesDescription_var::IR_ProvidesDescription_var (const ::IR_ProvidesDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ProvidesDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ProvidesDescription_var::~IR_ProvidesDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ProvidesDescription_var &
+IR_ProvidesDescription_var::operator= (IR_ProvidesDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ProvidesDescription_var &
+IR_ProvidesDescription_var::operator= (const ::IR_ProvidesDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ProvidesDescription *
+IR_ProvidesDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescription *
+IR_ProvidesDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ProvidesDescription_var::operator const ::IR_ProvidesDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ProvidesDescription_var::operator ::IR_ProvidesDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ProvidesDescription_var::operator ::IR_ProvidesDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ProvidesDescription_var::operator ::IR_ProvidesDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ProvidesDescription &
+IR_ProvidesDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescription &
+IR_ProvidesDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ProvidesDescription *&
+IR_ProvidesDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescription *
+IR_ProvidesDescription_var::_retn (void)
+{
+  ::IR_ProvidesDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ProvidesDescription *
+IR_ProvidesDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ProvidesDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_ProvidesDescription_out::IR_ProvidesDescription_out (::IR_ProvidesDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ProvidesDescription_out::IR_ProvidesDescription_out (IR_ProvidesDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ProvidesDescription_out::IR_ProvidesDescription_out (const ::IR_ProvidesDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ProvidesDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ProvidesDescription_out &
+IR_ProvidesDescription_out::operator= (const ::IR_ProvidesDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ProvidesDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ProvidesDescription_out &
+IR_ProvidesDescription_out::operator= (IR_ProvidesDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ProvidesDescription_out::operator ::IR_ProvidesDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescription *&
+IR_ProvidesDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescription *
+IR_ProvidesDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_UsesDef::IR_UsesDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_UsesDef::IR_UsesDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_UsesDef::~IR_UsesDef (void) // destructor
+{}
+
+
+#if !defined (_IR_USESDEF___VAR_CI_)
+#define _IR_USESDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_UsesDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDef_var::IR_UsesDef_var (void) // default constructor
+  : ptr_ (IR_UsesDef::_nil ())
+{}
+
+ACE_INLINE
+IR_UsesDef_var::IR_UsesDef_var (IR_UsesDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_UsesDef_ptr
+IR_UsesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_UsesDef_var::IR_UsesDef_var (const ::IR_UsesDef_var &p) // copy constructor
+  : ptr_ (IR_UsesDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_UsesDef_var::~IR_UsesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_UsesDef_var &
+IR_UsesDef_var::operator= (IR_UsesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_UsesDef_var &
+IR_UsesDef_var::operator= (const ::IR_UsesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_UsesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_UsesDef_var::operator const ::IR_UsesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDef_var::operator ::IR_UsesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr
+IR_UsesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr
+IR_UsesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr &
+IR_UsesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr &
+IR_UsesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_UsesDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr
+IR_UsesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_UsesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_UsesDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_USESDEF___OUT_CI_)
+#define _IR_USESDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_UsesDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDef_out::IR_UsesDef_out (IR_UsesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_UsesDef::_nil ();
+}
+
+ACE_INLINE
+IR_UsesDef_out::IR_UsesDef_out (IR_UsesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_UsesDef::_nil ();
+}
+
+ACE_INLINE
+IR_UsesDef_out::IR_UsesDef_out (const ::IR_UsesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UsesDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_UsesDef_out &
+IR_UsesDef_out::operator= (const ::IR_UsesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UsesDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_UsesDef_out &
+IR_UsesDef_out::operator= (const ::IR_UsesDef_var &p)
+{
+  this->ptr_ = ::IR_UsesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_UsesDef_out &
+IR_UsesDef_out::operator= (IR_UsesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UsesDef_out::operator ::IR_UsesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr &
+IR_UsesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDef_ptr
+IR_UsesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_UsesDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDescription_var::IR_UsesDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_UsesDescription_var::IR_UsesDescription_var (IR_UsesDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_UsesDescription_var::IR_UsesDescription_var (const ::IR_UsesDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_UsesDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDescription_var::~IR_UsesDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_UsesDescription_var &
+IR_UsesDescription_var::operator= (IR_UsesDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_UsesDescription_var &
+IR_UsesDescription_var::operator= (const ::IR_UsesDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_UsesDescription *
+IR_UsesDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescription *
+IR_UsesDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_UsesDescription_var::operator const ::IR_UsesDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_UsesDescription_var::operator ::IR_UsesDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_UsesDescription_var::operator ::IR_UsesDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_UsesDescription_var::operator ::IR_UsesDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_UsesDescription &
+IR_UsesDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescription &
+IR_UsesDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_UsesDescription *&
+IR_UsesDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescription *
+IR_UsesDescription_var::_retn (void)
+{
+  ::IR_UsesDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_UsesDescription *
+IR_UsesDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_UsesDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDescription_out::IR_UsesDescription_out (::IR_UsesDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDescription_out::IR_UsesDescription_out (IR_UsesDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDescription_out::IR_UsesDescription_out (const ::IR_UsesDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UsesDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_UsesDescription_out &
+IR_UsesDescription_out::operator= (const ::IR_UsesDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UsesDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_UsesDescription_out &
+IR_UsesDescription_out::operator= (IR_UsesDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UsesDescription_out::operator ::IR_UsesDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescription *&
+IR_UsesDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescription *
+IR_UsesDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_PROVIDESDESCSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_PROVIDESDESCSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_ProvidesDescription *
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_ProvidesDescription *retval = 0;
+    ACE_NEW_RETURN (retval, IR_ProvidesDescription[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (IR_ProvidesDescription *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_ProvidesDescription *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_ProvidesDescription *tmp1 = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (this->maximum_);
+      IR_ProvidesDescription * const tmp2 = ACE_reinterpret_cast (IR_ProvidesDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator= (const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_ProvidesDescription *tmp = ACE_reinterpret_cast (IR_ProvidesDescription *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_ProvidesDescription *tmp1 = ACE_reinterpret_cast (IR_ProvidesDescription *, this->buffer_);
+    IR_ProvidesDescription * const tmp2 = ACE_reinterpret_cast (IR_ProvidesDescription * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_ProvidesDescription &
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_ProvidesDescription* tmp = ACE_reinterpret_cast(IR_ProvidesDescription*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_ProvidesDescription &
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_ProvidesDescription * const tmp = ACE_reinterpret_cast (IR_ProvidesDescription* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_ProvidesDescription *
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_ProvidesDescription *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_ProvidesDescription*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_ProvidesDescription*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_ProvidesDescription *
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_ProvidesDescription * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_ProvidesDescription *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_ProvidesDescription *tmp = ACE_reinterpret_cast(IR_ProvidesDescription*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_PROVIDESDESCSEQ_CI_)
+#define _IR_PROVIDESDESCSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_ProvidesDescSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_ProvidesDescSeq_var::IR_ProvidesDescSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ProvidesDescSeq_var::IR_ProvidesDescSeq_var (IR_ProvidesDescSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ProvidesDescSeq_var::IR_ProvidesDescSeq_var (const ::IR_ProvidesDescSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ProvidesDescSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ProvidesDescSeq_var::~IR_ProvidesDescSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ProvidesDescSeq_var &
+IR_ProvidesDescSeq_var::operator= (IR_ProvidesDescSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ProvidesDescSeq_var &
+IR_ProvidesDescSeq_var::operator= (const ::IR_ProvidesDescSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDescSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ProvidesDescSeq *
+IR_ProvidesDescSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq *
+IR_ProvidesDescSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ProvidesDescSeq_var::operator const ::IR_ProvidesDescSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ProvidesDescSeq_var::operator ::IR_ProvidesDescSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_ProvidesDescSeq_var::operator ::IR_ProvidesDescSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ProvidesDescSeq_var::operator ::IR_ProvidesDescSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_ProvidesDescription &
+IR_ProvidesDescSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_ProvidesDescSeq &
+IR_ProvidesDescSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq &
+IR_ProvidesDescSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ProvidesDescSeq *&
+IR_ProvidesDescSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq *
+IR_ProvidesDescSeq_var::_retn (void)
+{
+  ::IR_ProvidesDescSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq *
+IR_ProvidesDescSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ProvidesDescSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_ProvidesDescSeq_out::IR_ProvidesDescSeq_out (IR_ProvidesDescSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ProvidesDescSeq_out::IR_ProvidesDescSeq_out (IR_ProvidesDescSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ProvidesDescSeq_out::IR_ProvidesDescSeq_out (const ::IR_ProvidesDescSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ProvidesDescSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ProvidesDescSeq_out &
+IR_ProvidesDescSeq_out::operator= (const ::IR_ProvidesDescSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ProvidesDescSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq_out &
+IR_ProvidesDescSeq_out::operator= (IR_ProvidesDescSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ProvidesDescSeq_out::operator ::IR_ProvidesDescSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq *&
+IR_ProvidesDescSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ProvidesDescSeq *
+IR_ProvidesDescSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_ProvidesDescription &
+IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_USESDESCSEQ_CI_)
+#define __TAO_UNBOUNDED_SEQUENCE_IR_USESDESCSEQ_CI_
+
+  // = Static operations.
+  ACE_INLINE IR_UsesDescription *
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (CORBA::ULong size)
+  // Allocate storage for the sequence.
+  {
+    IR_UsesDescription *retval = 0;
+    ACE_NEW_RETURN (retval, IR_UsesDescription[size], 0);
+    return retval;
+  }
+  
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (IR_UsesDescription *buffer)
+  // Free the sequence.
+  {
+    delete [] buffer;
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (void) // Default constructor.
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (maximum))
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum,
+    CORBA::ULong length,
+    IR_UsesDescription *data,
+    CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+  {
+  }
+  
+  ACE_INLINE
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs)
+  // Copy constructor.
+    : TAO_Unbounded_Base_Sequence (rhs)
+  {
+    if (rhs.buffer_ != 0)
+    {
+      IR_UsesDescription *tmp1 = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (this->maximum_);
+      IR_UsesDescription * const tmp2 = ACE_reinterpret_cast (IR_UsesDescription * ACE_CAST_CONST, rhs.buffer_);
+      
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp1[i] = tmp2[i];
+      
+      this->buffer_ = tmp1;
+    }
+    else
+    {
+      this->buffer_ = 0;
+    }
+  }
+  
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_UsesDescSeq &
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::operator= (const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs)
+  // Assignment operator.
+  {
+    if (this == &rhs)
+      return *this;
+    
+    if (this->release_)
+    {
+      if (this->maximum_ < rhs.maximum_)
+      {
+        // free the old buffer
+        IR_UsesDescription *tmp = ACE_reinterpret_cast (IR_UsesDescription *, this->buffer_);
+        _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
+        this->buffer_ = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (rhs.maximum_);
+      }
+    }
+    else
+      this->buffer_ = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (rhs.maximum_);
+    
+    TAO_Unbounded_Base_Sequence::operator= (rhs);
+    
+    IR_UsesDescription *tmp1 = ACE_reinterpret_cast (IR_UsesDescription *, this->buffer_);
+    IR_UsesDescription * const tmp2 = ACE_reinterpret_cast (IR_UsesDescription * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    return *this;
+  }
+  
+  // = Accessors.
+  ACE_INLINE IR_UsesDescription &
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i)
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_UsesDescription* tmp = ACE_reinterpret_cast(IR_UsesDescription*,this->buffer_);
+    return tmp[i];
+  }
+  
+  ACE_INLINE const IR_UsesDescription &
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i) const
+  // operator []
+  {
+    ACE_ASSERT (i < this->maximum_);
+    IR_UsesDescription * const tmp = ACE_reinterpret_cast (IR_UsesDescription* ACE_CAST_CONST, this->buffer_);
+    return tmp[i];
+  }
+  
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  
+  ACE_INLINE IR_UsesDescription *
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (CORBA::Boolean orphan)
+  {
+    IR_UsesDescription *result = 0;
+    if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+      {
+        result = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (this->length_);
+        this->buffer_ = result;
+      }
+      else
+      {
+        result = ACE_reinterpret_cast (IR_UsesDescription*, this->buffer_);
+      }
+    }
+    else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+      {
+        // We set the state back to default and relinquish
+        // ownership.
+        result = ACE_reinterpret_cast(IR_UsesDescription*,this->buffer_);
+        this->maximum_ = 0;
+        this->length_ = 0;
+        this->buffer_ = 0;
+        this->release_ = 0;
+      }
+    }
+    return result;
+  }
+  
+  ACE_INLINE const IR_UsesDescription *
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (void) const
+  {
+    return ACE_reinterpret_cast(const IR_UsesDescription * ACE_CAST_CONST, this->buffer_);
+  }
+  
+  ACE_INLINE void
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::replace (CORBA::ULong max,
+  CORBA::ULong length,
+  IR_UsesDescription *data,
+  CORBA::Boolean release)
+  {
+    this->maximum_ = max;
+    this->length_ = length;
+    if (this->buffer_ && this->release_ == 1)
+    {
+      IR_UsesDescription *tmp = ACE_reinterpret_cast(IR_UsesDescription*,this->buffer_);
+      _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
+    }
+    this->buffer_ = data;
+    this->release_ = release;
+  }
+  
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+
+#if !defined (_IR_USESDESCSEQ_CI_)
+#define _IR_USESDESCSEQ_CI_
+
+// *************************************************************
+// Inline operations for class IR_UsesDescSeq_var
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDescSeq_var::IR_UsesDescSeq_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_UsesDescSeq_var::IR_UsesDescSeq_var (IR_UsesDescSeq *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_UsesDescSeq_var::IR_UsesDescSeq_var (const ::IR_UsesDescSeq_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_UsesDescSeq (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDescSeq_var::~IR_UsesDescSeq_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_UsesDescSeq_var &
+IR_UsesDescSeq_var::operator= (IR_UsesDescSeq *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_UsesDescSeq_var &
+IR_UsesDescSeq_var::operator= (const ::IR_UsesDescSeq_var &p) // deep copy
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDescSeq (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_UsesDescSeq *
+IR_UsesDescSeq_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescSeq *
+IR_UsesDescSeq_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDescSeq_var::operator const ::IR_UsesDescSeq &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDescSeq_var::operator ::IR_UsesDescSeq &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE 
+IR_UsesDescSeq_var::operator ::IR_UsesDescSeq &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_UsesDescSeq_var::operator ::IR_UsesDescSeq *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_UsesDescription &
+IR_UsesDescSeq_var::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+ACE_INLINE const ::IR_UsesDescSeq &
+IR_UsesDescSeq_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescSeq &
+IR_UsesDescSeq_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_UsesDescSeq *&
+IR_UsesDescSeq_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescSeq *
+IR_UsesDescSeq_var::_retn (void)
+{
+  ::IR_UsesDescSeq *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_UsesDescSeq *
+IR_UsesDescSeq_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_UsesDescSeq_out
+// *************************************************************
+
+ACE_INLINE
+IR_UsesDescSeq_out::IR_UsesDescSeq_out (IR_UsesDescSeq *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDescSeq_out::IR_UsesDescSeq_out (IR_UsesDescSeq_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_UsesDescSeq_out::IR_UsesDescSeq_out (const ::IR_UsesDescSeq_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_UsesDescSeq_out&, p).ptr_)
+{}
+
+ACE_INLINE ::IR_UsesDescSeq_out &
+IR_UsesDescSeq_out::operator= (const ::IR_UsesDescSeq_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_UsesDescSeq_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE ::IR_UsesDescSeq_out &
+IR_UsesDescSeq_out::operator= (IR_UsesDescSeq *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_UsesDescSeq_out::operator ::IR_UsesDescSeq *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescSeq *&
+IR_UsesDescSeq_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_UsesDescSeq *
+IR_UsesDescSeq_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE IR_UsesDescription &
+IR_UsesDescSeq_out::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_EventDef::IR_EventDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_EventDef::IR_EventDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_EventDef::~IR_EventDef (void) // destructor
+{}
+
+
+#if !defined (_IR_EVENTDEF___VAR_CI_)
+#define _IR_EVENTDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_EventDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_EventDef_var::IR_EventDef_var (void) // default constructor
+  : ptr_ (IR_EventDef::_nil ())
+{}
+
+ACE_INLINE
+IR_EventDef_var::IR_EventDef_var (IR_EventDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_EventDef_ptr
+IR_EventDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_EventDef_var::IR_EventDef_var (const ::IR_EventDef_var &p) // copy constructor
+  : ptr_ (IR_EventDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_EventDef_var::~IR_EventDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_EventDef_var &
+IR_EventDef_var::operator= (IR_EventDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_EventDef_var &
+IR_EventDef_var::operator= (const ::IR_EventDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_EventDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_EventDef_var::operator const ::IR_EventDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_EventDef_var::operator ::IR_EventDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr
+IR_EventDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr
+IR_EventDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr &
+IR_EventDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr &
+IR_EventDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_EventDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr
+IR_EventDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_EventDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_EventDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_EVENTDEF___OUT_CI_)
+#define _IR_EVENTDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_EventDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_EventDef_out::IR_EventDef_out (IR_EventDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_EventDef::_nil ();
+}
+
+ACE_INLINE
+IR_EventDef_out::IR_EventDef_out (IR_EventDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_EventDef::_nil ();
+}
+
+ACE_INLINE
+IR_EventDef_out::IR_EventDef_out (const ::IR_EventDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_EventDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_EventDef_out &
+IR_EventDef_out::operator= (const ::IR_EventDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_EventDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_EventDef_out &
+IR_EventDef_out::operator= (const ::IR_EventDef_var &p)
+{
+  this->ptr_ = ::IR_EventDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_EventDef_out &
+IR_EventDef_out::operator= (IR_EventDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_EventDef_out::operator ::IR_EventDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr &
+IR_EventDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDef_ptr
+IR_EventDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_EventDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_EventDescription_var::IR_EventDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_EventDescription_var::IR_EventDescription_var (IR_EventDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_EventDescription_var::IR_EventDescription_var (const ::IR_EventDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_EventDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EventDescription_var::~IR_EventDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_EventDescription_var &
+IR_EventDescription_var::operator= (IR_EventDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_EventDescription_var &
+IR_EventDescription_var::operator= (const ::IR_EventDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_EventDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_EventDescription *
+IR_EventDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDescription *
+IR_EventDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_EventDescription_var::operator const ::IR_EventDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_EventDescription_var::operator ::IR_EventDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_EventDescription_var::operator ::IR_EventDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_EventDescription_var::operator ::IR_EventDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_EventDescription &
+IR_EventDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDescription &
+IR_EventDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_EventDescription *&
+IR_EventDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDescription *
+IR_EventDescription_var::_retn (void)
+{
+  ::IR_EventDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_EventDescription *
+IR_EventDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_EventDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_EventDescription_out::IR_EventDescription_out (::IR_EventDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EventDescription_out::IR_EventDescription_out (IR_EventDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_EventDescription_out::IR_EventDescription_out (const ::IR_EventDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_EventDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_EventDescription_out &
+IR_EventDescription_out::operator= (const ::IR_EventDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_EventDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_EventDescription_out &
+IR_EventDescription_out::operator= (IR_EventDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_EventDescription_out::operator ::IR_EventDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDescription *&
+IR_EventDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EventDescription *
+IR_EventDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_EmitsDef::IR_EmitsDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_EmitsDef::IR_EmitsDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_EmitsDef::~IR_EmitsDef (void) // destructor
+{}
+
+
+#if !defined (_IR_EMITSDEF___VAR_CI_)
+#define _IR_EMITSDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_EmitsDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_EmitsDef_var::IR_EmitsDef_var (void) // default constructor
+  : ptr_ (IR_EmitsDef::_nil ())
+{}
+
+ACE_INLINE
+IR_EmitsDef_var::IR_EmitsDef_var (IR_EmitsDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_EmitsDef_ptr
+IR_EmitsDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_EmitsDef_var::IR_EmitsDef_var (const ::IR_EmitsDef_var &p) // copy constructor
+  : ptr_ (IR_EmitsDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_EmitsDef_var::~IR_EmitsDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_EmitsDef_var &
+IR_EmitsDef_var::operator= (IR_EmitsDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_EmitsDef_var &
+IR_EmitsDef_var::operator= (const ::IR_EmitsDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_EmitsDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_EmitsDef_var::operator const ::IR_EmitsDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_EmitsDef_var::operator ::IR_EmitsDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr
+IR_EmitsDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr
+IR_EmitsDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr &
+IR_EmitsDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr &
+IR_EmitsDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_EmitsDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr
+IR_EmitsDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_EmitsDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_EmitsDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_EMITSDEF___OUT_CI_)
+#define _IR_EMITSDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_EmitsDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_EmitsDef_out::IR_EmitsDef_out (IR_EmitsDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_EmitsDef::_nil ();
+}
+
+ACE_INLINE
+IR_EmitsDef_out::IR_EmitsDef_out (IR_EmitsDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_EmitsDef::_nil ();
+}
+
+ACE_INLINE
+IR_EmitsDef_out::IR_EmitsDef_out (const ::IR_EmitsDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_EmitsDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_EmitsDef_out &
+IR_EmitsDef_out::operator= (const ::IR_EmitsDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_EmitsDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_EmitsDef_out &
+IR_EmitsDef_out::operator= (const ::IR_EmitsDef_var &p)
+{
+  this->ptr_ = ::IR_EmitsDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_EmitsDef_out &
+IR_EmitsDef_out::operator= (IR_EmitsDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_EmitsDef_out::operator ::IR_EmitsDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr &
+IR_EmitsDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_EmitsDef_ptr
+IR_EmitsDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_PublishesDef::IR_PublishesDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_PublishesDef::IR_PublishesDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_PublishesDef::~IR_PublishesDef (void) // destructor
+{}
+
+
+#if !defined (_IR_PUBLISHESDEF___VAR_CI_)
+#define _IR_PUBLISHESDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_PublishesDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_PublishesDef_var::IR_PublishesDef_var (void) // default constructor
+  : ptr_ (IR_PublishesDef::_nil ())
+{}
+
+ACE_INLINE
+IR_PublishesDef_var::IR_PublishesDef_var (IR_PublishesDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_PublishesDef_ptr
+IR_PublishesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_PublishesDef_var::IR_PublishesDef_var (const ::IR_PublishesDef_var &p) // copy constructor
+  : ptr_ (IR_PublishesDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_PublishesDef_var::~IR_PublishesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_PublishesDef_var &
+IR_PublishesDef_var::operator= (IR_PublishesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_PublishesDef_var &
+IR_PublishesDef_var::operator= (const ::IR_PublishesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_PublishesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_PublishesDef_var::operator const ::IR_PublishesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_PublishesDef_var::operator ::IR_PublishesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr
+IR_PublishesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr
+IR_PublishesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr &
+IR_PublishesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr &
+IR_PublishesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_PublishesDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr
+IR_PublishesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_PublishesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_PublishesDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_PUBLISHESDEF___OUT_CI_)
+#define _IR_PUBLISHESDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_PublishesDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_PublishesDef_out::IR_PublishesDef_out (IR_PublishesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_PublishesDef::_nil ();
+}
+
+ACE_INLINE
+IR_PublishesDef_out::IR_PublishesDef_out (IR_PublishesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_PublishesDef::_nil ();
+}
+
+ACE_INLINE
+IR_PublishesDef_out::IR_PublishesDef_out (const ::IR_PublishesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_PublishesDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_PublishesDef_out &
+IR_PublishesDef_out::operator= (const ::IR_PublishesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_PublishesDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_PublishesDef_out &
+IR_PublishesDef_out::operator= (const ::IR_PublishesDef_var &p)
+{
+  this->ptr_ = ::IR_PublishesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_PublishesDef_out &
+IR_PublishesDef_out::operator= (IR_PublishesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_PublishesDef_out::operator ::IR_PublishesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr &
+IR_PublishesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PublishesDef_ptr
+IR_PublishesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ConsumesDef::IR_ConsumesDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ConsumesDef::IR_ConsumesDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ConsumesDef::~IR_ConsumesDef (void) // destructor
+{}
+
+
+#if !defined (_IR_CONSUMESDEF___VAR_CI_)
+#define _IR_CONSUMESDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ConsumesDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ConsumesDef_var::IR_ConsumesDef_var (void) // default constructor
+  : ptr_ (IR_ConsumesDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ConsumesDef_var::IR_ConsumesDef_var (IR_ConsumesDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ConsumesDef_ptr
+IR_ConsumesDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ConsumesDef_var::IR_ConsumesDef_var (const ::IR_ConsumesDef_var &p) // copy constructor
+  : ptr_ (IR_ConsumesDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ConsumesDef_var::~IR_ConsumesDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ConsumesDef_var &
+IR_ConsumesDef_var::operator= (IR_ConsumesDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ConsumesDef_var &
+IR_ConsumesDef_var::operator= (const ::IR_ConsumesDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ConsumesDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ConsumesDef_var::operator const ::IR_ConsumesDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ConsumesDef_var::operator ::IR_ConsumesDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr
+IR_ConsumesDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr
+IR_ConsumesDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr &
+IR_ConsumesDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr &
+IR_ConsumesDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ConsumesDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr
+IR_ConsumesDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ConsumesDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ConsumesDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_CONSUMESDEF___OUT_CI_)
+#define _IR_CONSUMESDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ConsumesDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ConsumesDef_out::IR_ConsumesDef_out (IR_ConsumesDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ConsumesDef::_nil ();
+}
+
+ACE_INLINE
+IR_ConsumesDef_out::IR_ConsumesDef_out (IR_ConsumesDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ConsumesDef::_nil ();
+}
+
+ACE_INLINE
+IR_ConsumesDef_out::IR_ConsumesDef_out (const ::IR_ConsumesDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ConsumesDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ConsumesDef_out &
+IR_ConsumesDef_out::operator= (const ::IR_ConsumesDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ConsumesDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ConsumesDef_out &
+IR_ConsumesDef_out::operator= (const ::IR_ConsumesDef_var &p)
+{
+  this->ptr_ = ::IR_ConsumesDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ConsumesDef_out &
+IR_ConsumesDef_out::operator= (IR_ConsumesDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ConsumesDef_out::operator ::IR_ConsumesDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr &
+IR_ConsumesDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ConsumesDef_ptr
+IR_ConsumesDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_ComponentDef::IR_ComponentDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_ComponentDef::IR_ComponentDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_ComponentDef::~IR_ComponentDef (void) // destructor
+{}
+
+
+#if !defined (_IR_COMPONENTDEF___VAR_CI_)
+#define _IR_COMPONENTDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_ComponentDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_ComponentDef_var::IR_ComponentDef_var (void) // default constructor
+  : ptr_ (IR_ComponentDef::_nil ())
+{}
+
+ACE_INLINE
+IR_ComponentDef_var::IR_ComponentDef_var (IR_ComponentDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_ComponentDef_ptr
+IR_ComponentDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ComponentDef_var::IR_ComponentDef_var (const ::IR_ComponentDef_var &p) // copy constructor
+  : ptr_ (IR_ComponentDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_ComponentDef_var::~IR_ComponentDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_ComponentDef_var &
+IR_ComponentDef_var::operator= (IR_ComponentDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_ComponentDef_var &
+IR_ComponentDef_var::operator= (const ::IR_ComponentDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_ComponentDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_ComponentDef_var::operator const ::IR_ComponentDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_ComponentDef_var::operator ::IR_ComponentDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr
+IR_ComponentDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr
+IR_ComponentDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr &
+IR_ComponentDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr &
+IR_ComponentDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ComponentDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr
+IR_ComponentDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_ComponentDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_ComponentDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_COMPONENTDEF___OUT_CI_)
+#define _IR_COMPONENTDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_ComponentDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_ComponentDef_out::IR_ComponentDef_out (IR_ComponentDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_ComponentDef::_nil ();
+}
+
+ACE_INLINE
+IR_ComponentDef_out::IR_ComponentDef_out (IR_ComponentDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_ComponentDef::_nil ();
+}
+
+ACE_INLINE
+IR_ComponentDef_out::IR_ComponentDef_out (const ::IR_ComponentDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ComponentDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_ComponentDef_out &
+IR_ComponentDef_out::operator= (const ::IR_ComponentDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ComponentDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ComponentDef_out &
+IR_ComponentDef_out::operator= (const ::IR_ComponentDef_var &p)
+{
+  this->ptr_ = ::IR_ComponentDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_ComponentDef_out &
+IR_ComponentDef_out::operator= (IR_ComponentDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ComponentDef_out::operator ::IR_ComponentDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr &
+IR_ComponentDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDef_ptr
+IR_ComponentDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_ComponentDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_ComponentDescription_var::IR_ComponentDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_ComponentDescription_var::IR_ComponentDescription_var (IR_ComponentDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_ComponentDescription_var::IR_ComponentDescription_var (const ::IR_ComponentDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_ComponentDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ComponentDescription_var::~IR_ComponentDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_ComponentDescription_var &
+IR_ComponentDescription_var::operator= (IR_ComponentDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_ComponentDescription_var &
+IR_ComponentDescription_var::operator= (const ::IR_ComponentDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_ComponentDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_ComponentDescription *
+IR_ComponentDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDescription *
+IR_ComponentDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_ComponentDescription_var::operator const ::IR_ComponentDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ComponentDescription_var::operator ::IR_ComponentDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_ComponentDescription_var::operator ::IR_ComponentDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_ComponentDescription_var::operator ::IR_ComponentDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_ComponentDescription &
+IR_ComponentDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDescription &
+IR_ComponentDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_ComponentDescription *&
+IR_ComponentDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDescription *
+IR_ComponentDescription_var::_retn (void)
+{
+  ::IR_ComponentDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_ComponentDescription *
+IR_ComponentDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_ComponentDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_ComponentDescription_out::IR_ComponentDescription_out (::IR_ComponentDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ComponentDescription_out::IR_ComponentDescription_out (IR_ComponentDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_ComponentDescription_out::IR_ComponentDescription_out (const ::IR_ComponentDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_ComponentDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_ComponentDescription_out &
+IR_ComponentDescription_out::operator= (const ::IR_ComponentDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_ComponentDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_ComponentDescription_out &
+IR_ComponentDescription_out::operator= (IR_ComponentDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_ComponentDescription_out::operator ::IR_ComponentDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDescription *&
+IR_ComponentDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_ComponentDescription *
+IR_ComponentDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDef::IR_PrimaryKeyDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_PrimaryKeyDef::IR_PrimaryKeyDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_PrimaryKeyDef::~IR_PrimaryKeyDef (void) // destructor
+{}
+
+
+#if !defined (_IR_PRIMARYKEYDEF___VAR_CI_)
+#define _IR_PRIMARYKEYDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_PrimaryKeyDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_PrimaryKeyDef_var::IR_PrimaryKeyDef_var (void) // default constructor
+  : ptr_ (IR_PrimaryKeyDef::_nil ())
+{}
+
+ACE_INLINE
+IR_PrimaryKeyDef_var::IR_PrimaryKeyDef_var (IR_PrimaryKeyDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr
+IR_PrimaryKeyDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDef_var::IR_PrimaryKeyDef_var (const ::IR_PrimaryKeyDef_var &p) // copy constructor
+  : ptr_ (IR_PrimaryKeyDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_PrimaryKeyDef_var::~IR_PrimaryKeyDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_PrimaryKeyDef_var &
+IR_PrimaryKeyDef_var::operator= (IR_PrimaryKeyDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_PrimaryKeyDef_var &
+IR_PrimaryKeyDef_var::operator= (const ::IR_PrimaryKeyDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_PrimaryKeyDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_PrimaryKeyDef_var::operator const ::IR_PrimaryKeyDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_PrimaryKeyDef_var::operator ::IR_PrimaryKeyDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr
+IR_PrimaryKeyDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr
+IR_PrimaryKeyDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr &
+IR_PrimaryKeyDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr &
+IR_PrimaryKeyDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_PrimaryKeyDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr
+IR_PrimaryKeyDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_PrimaryKeyDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_PrimaryKeyDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_PRIMARYKEYDEF___OUT_CI_)
+#define _IR_PRIMARYKEYDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_PrimaryKeyDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_PrimaryKeyDef_out::IR_PrimaryKeyDef_out (IR_PrimaryKeyDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_PrimaryKeyDef::_nil ();
+}
+
+ACE_INLINE
+IR_PrimaryKeyDef_out::IR_PrimaryKeyDef_out (IR_PrimaryKeyDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_PrimaryKeyDef::_nil ();
+}
+
+ACE_INLINE
+IR_PrimaryKeyDef_out::IR_PrimaryKeyDef_out (const ::IR_PrimaryKeyDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_PrimaryKeyDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_PrimaryKeyDef_out &
+IR_PrimaryKeyDef_out::operator= (const ::IR_PrimaryKeyDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_PrimaryKeyDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_PrimaryKeyDef_out &
+IR_PrimaryKeyDef_out::operator= (const ::IR_PrimaryKeyDef_var &p)
+{
+  this->ptr_ = ::IR_PrimaryKeyDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_PrimaryKeyDef_out &
+IR_PrimaryKeyDef_out::operator= (IR_PrimaryKeyDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_PrimaryKeyDef_out::operator ::IR_PrimaryKeyDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr &
+IR_PrimaryKeyDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDef_ptr
+IR_PrimaryKeyDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_PrimaryKeyDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::IR_PrimaryKeyDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::IR_PrimaryKeyDescription_var (IR_PrimaryKeyDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::IR_PrimaryKeyDescription_var (const ::IR_PrimaryKeyDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_PrimaryKeyDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::~IR_PrimaryKeyDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_PrimaryKeyDescription_var &
+IR_PrimaryKeyDescription_var::operator= (IR_PrimaryKeyDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription_var &
+IR_PrimaryKeyDescription_var::operator= (const ::IR_PrimaryKeyDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_PrimaryKeyDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_PrimaryKeyDescription *
+IR_PrimaryKeyDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription *
+IR_PrimaryKeyDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::operator const ::IR_PrimaryKeyDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::operator ::IR_PrimaryKeyDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_var::operator ::IR_PrimaryKeyDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_PrimaryKeyDescription_var::operator ::IR_PrimaryKeyDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_PrimaryKeyDescription &
+IR_PrimaryKeyDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription &
+IR_PrimaryKeyDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_PrimaryKeyDescription *&
+IR_PrimaryKeyDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription *
+IR_PrimaryKeyDescription_var::_retn (void)
+{
+  ::IR_PrimaryKeyDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription *
+IR_PrimaryKeyDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_PrimaryKeyDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_PrimaryKeyDescription_out::IR_PrimaryKeyDescription_out (::IR_PrimaryKeyDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_out::IR_PrimaryKeyDescription_out (IR_PrimaryKeyDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_PrimaryKeyDescription_out::IR_PrimaryKeyDescription_out (const ::IR_PrimaryKeyDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_PrimaryKeyDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_PrimaryKeyDescription_out &
+IR_PrimaryKeyDescription_out::operator= (const ::IR_PrimaryKeyDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_PrimaryKeyDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_PrimaryKeyDescription_out &
+IR_PrimaryKeyDescription_out::operator= (IR_PrimaryKeyDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_PrimaryKeyDescription_out::operator ::IR_PrimaryKeyDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription *&
+IR_PrimaryKeyDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_PrimaryKeyDescription *
+IR_PrimaryKeyDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_FactoryDef::IR_FactoryDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_FactoryDef::IR_FactoryDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_FactoryDef::~IR_FactoryDef (void) // destructor
+{}
+
+
+#if !defined (_IR_FACTORYDEF___VAR_CI_)
+#define _IR_FACTORYDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_FactoryDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_FactoryDef_var::IR_FactoryDef_var (void) // default constructor
+  : ptr_ (IR_FactoryDef::_nil ())
+{}
+
+ACE_INLINE
+IR_FactoryDef_var::IR_FactoryDef_var (IR_FactoryDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_FactoryDef_ptr
+IR_FactoryDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_FactoryDef_var::IR_FactoryDef_var (const ::IR_FactoryDef_var &p) // copy constructor
+  : ptr_ (IR_FactoryDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_FactoryDef_var::~IR_FactoryDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_FactoryDef_var &
+IR_FactoryDef_var::operator= (IR_FactoryDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_FactoryDef_var &
+IR_FactoryDef_var::operator= (const ::IR_FactoryDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_FactoryDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_FactoryDef_var::operator const ::IR_FactoryDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_FactoryDef_var::operator ::IR_FactoryDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr
+IR_FactoryDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr
+IR_FactoryDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr &
+IR_FactoryDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr &
+IR_FactoryDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_FactoryDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr
+IR_FactoryDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_FactoryDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_FactoryDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_FACTORYDEF___OUT_CI_)
+#define _IR_FACTORYDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_FactoryDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_FactoryDef_out::IR_FactoryDef_out (IR_FactoryDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_FactoryDef::_nil ();
+}
+
+ACE_INLINE
+IR_FactoryDef_out::IR_FactoryDef_out (IR_FactoryDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_FactoryDef::_nil ();
+}
+
+ACE_INLINE
+IR_FactoryDef_out::IR_FactoryDef_out (const ::IR_FactoryDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_FactoryDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_FactoryDef_out &
+IR_FactoryDef_out::operator= (const ::IR_FactoryDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_FactoryDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_FactoryDef_out &
+IR_FactoryDef_out::operator= (const ::IR_FactoryDef_var &p)
+{
+  this->ptr_ = ::IR_FactoryDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_FactoryDef_out &
+IR_FactoryDef_out::operator= (IR_FactoryDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_FactoryDef_out::operator ::IR_FactoryDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr &
+IR_FactoryDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FactoryDef_ptr
+IR_FactoryDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_FinderDef::IR_FinderDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_FinderDef::IR_FinderDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_FinderDef::~IR_FinderDef (void) // destructor
+{}
+
+
+#if !defined (_IR_FINDERDEF___VAR_CI_)
+#define _IR_FINDERDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_FinderDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_FinderDef_var::IR_FinderDef_var (void) // default constructor
+  : ptr_ (IR_FinderDef::_nil ())
+{}
+
+ACE_INLINE
+IR_FinderDef_var::IR_FinderDef_var (IR_FinderDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_FinderDef_ptr
+IR_FinderDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_FinderDef_var::IR_FinderDef_var (const ::IR_FinderDef_var &p) // copy constructor
+  : ptr_ (IR_FinderDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_FinderDef_var::~IR_FinderDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_FinderDef_var &
+IR_FinderDef_var::operator= (IR_FinderDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_FinderDef_var &
+IR_FinderDef_var::operator= (const ::IR_FinderDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_FinderDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_FinderDef_var::operator const ::IR_FinderDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_FinderDef_var::operator ::IR_FinderDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr
+IR_FinderDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr
+IR_FinderDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr &
+IR_FinderDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr &
+IR_FinderDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_FinderDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr
+IR_FinderDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_FinderDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_FinderDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_FINDERDEF___OUT_CI_)
+#define _IR_FINDERDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_FinderDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_FinderDef_out::IR_FinderDef_out (IR_FinderDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_FinderDef::_nil ();
+}
+
+ACE_INLINE
+IR_FinderDef_out::IR_FinderDef_out (IR_FinderDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_FinderDef::_nil ();
+}
+
+ACE_INLINE
+IR_FinderDef_out::IR_FinderDef_out (const ::IR_FinderDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_FinderDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_FinderDef_out &
+IR_FinderDef_out::operator= (const ::IR_FinderDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_FinderDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_FinderDef_out &
+IR_FinderDef_out::operator= (const ::IR_FinderDef_var &p)
+{
+  this->ptr_ = ::IR_FinderDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_FinderDef_out &
+IR_FinderDef_out::operator= (IR_FinderDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_FinderDef_out::operator ::IR_FinderDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr &
+IR_FinderDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_FinderDef_ptr
+IR_FinderDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE
+IR_HomeDef::IR_HomeDef (void) // default constructor
+{}
+
+ACE_INLINE
+IR_HomeDef::IR_HomeDef (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+IR_HomeDef::~IR_HomeDef (void) // destructor
+{}
+
+
+#if !defined (_IR_HOMEDEF___VAR_CI_)
+#define _IR_HOMEDEF___VAR_CI_
+
+// *************************************************************
+// Inline operations for class IR_HomeDef_var
+// *************************************************************
+
+ACE_INLINE
+IR_HomeDef_var::IR_HomeDef_var (void) // default constructor
+  : ptr_ (IR_HomeDef::_nil ())
+{}
+
+ACE_INLINE
+IR_HomeDef_var::IR_HomeDef_var (IR_HomeDef_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::IR_HomeDef_ptr
+IR_HomeDef_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_HomeDef_var::IR_HomeDef_var (const ::IR_HomeDef_var &p) // copy constructor
+  : ptr_ (IR_HomeDef::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+IR_HomeDef_var::~IR_HomeDef_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE IR_HomeDef_var &
+IR_HomeDef_var::operator= (IR_HomeDef_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE IR_HomeDef_var &
+IR_HomeDef_var::operator= (const ::IR_HomeDef_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::IR_HomeDef::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+IR_HomeDef_var::operator const ::IR_HomeDef_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+IR_HomeDef_var::operator ::IR_HomeDef_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr
+IR_HomeDef_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr
+IR_HomeDef_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr &
+IR_HomeDef_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr &
+IR_HomeDef_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_HomeDef::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr
+IR_HomeDef_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::IR_HomeDef_ptr val = this->ptr_;
+  this->ptr_ = ::IR_HomeDef::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_IR_HOMEDEF___OUT_CI_)
+#define _IR_HOMEDEF___OUT_CI_
+
+// *************************************************************
+// Inline operations for class IR_HomeDef_out
+// *************************************************************
+
+ACE_INLINE
+IR_HomeDef_out::IR_HomeDef_out (IR_HomeDef_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::IR_HomeDef::_nil ();
+}
+
+ACE_INLINE
+IR_HomeDef_out::IR_HomeDef_out (IR_HomeDef_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::IR_HomeDef::_nil ();
+}
+
+ACE_INLINE
+IR_HomeDef_out::IR_HomeDef_out (const ::IR_HomeDef_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_HomeDef_out &, p).ptr_)
+{}
+
+ACE_INLINE ::IR_HomeDef_out &
+IR_HomeDef_out::operator= (const ::IR_HomeDef_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_HomeDef_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_HomeDef_out &
+IR_HomeDef_out::operator= (const ::IR_HomeDef_var &p)
+{
+  this->ptr_ = ::IR_HomeDef::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE IR_HomeDef_out &
+IR_HomeDef_out::operator= (IR_HomeDef_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_HomeDef_out::operator ::IR_HomeDef_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr &
+IR_HomeDef_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDef_ptr
+IR_HomeDef_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+// *************************************************************
+// Inline operations for class IR_HomeDescription_var
+// *************************************************************
+
+ACE_INLINE
+IR_HomeDescription_var::IR_HomeDescription_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+IR_HomeDescription_var::IR_HomeDescription_var (IR_HomeDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+IR_HomeDescription_var::IR_HomeDescription_var (const ::IR_HomeDescription_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::IR_HomeDescription (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_HomeDescription_var::~IR_HomeDescription_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE IR_HomeDescription_var &
+IR_HomeDescription_var::operator= (IR_HomeDescription *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::IR_HomeDescription_var &
+IR_HomeDescription_var::operator= (const ::IR_HomeDescription_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::IR_HomeDescription (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::IR_HomeDescription *
+IR_HomeDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDescription *
+IR_HomeDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+IR_HomeDescription_var::operator const ::IR_HomeDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_HomeDescription_var::operator ::IR_HomeDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+IR_HomeDescription_var::operator ::IR_HomeDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// variable-size types only
+ACE_INLINE
+IR_HomeDescription_var::operator ::IR_HomeDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::IR_HomeDescription &
+IR_HomeDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDescription &
+IR_HomeDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for variable size 
+ACE_INLINE ::IR_HomeDescription *&
+IR_HomeDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDescription *
+IR_HomeDescription_var::_retn (void)
+{
+  ::IR_HomeDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::IR_HomeDescription *
+IR_HomeDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// *************************************************************
+// Inline operations for class IR_HomeDescription_out
+// *************************************************************
+
+ACE_INLINE
+IR_HomeDescription_out::IR_HomeDescription_out (::IR_HomeDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_HomeDescription_out::IR_HomeDescription_out (IR_HomeDescription_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+IR_HomeDescription_out::IR_HomeDescription_out (const ::IR_HomeDescription_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (IR_HomeDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE IR_HomeDescription_out &
+IR_HomeDescription_out::operator= (const ::IR_HomeDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (IR_HomeDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE IR_HomeDescription_out &
+IR_HomeDescription_out::operator= (IR_HomeDescription *p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+IR_HomeDescription_out::operator ::IR_HomeDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDescription *&
+IR_HomeDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::IR_HomeDescription *
+IR_HomeDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_TypeCodeFactory::CORBA_TypeCodeFactory (void) // default constructor
+{}
+
+ACE_INLINE
+CORBA_TypeCodeFactory::CORBA_TypeCodeFactory (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+CORBA_TypeCodeFactory::~CORBA_TypeCodeFactory (void) // destructor
+{}
+
+
+#if !defined (_CORBA_TYPECODEFACTORY___VAR_CI_)
+#define _CORBA_TYPECODEFACTORY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class CORBA_TypeCodeFactory_var
+// *************************************************************
+
+ACE_INLINE
+CORBA_TypeCodeFactory_var::CORBA_TypeCodeFactory_var (void) // default constructor
+  : ptr_ (CORBA_TypeCodeFactory::_nil ())
+{}
+
+ACE_INLINE
+CORBA_TypeCodeFactory_var::CORBA_TypeCodeFactory_var (CORBA_TypeCodeFactory_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_TypeCodeFactory_var::CORBA_TypeCodeFactory_var (const ::CORBA_TypeCodeFactory_var &p) // copy constructor
+  : ptr_ (CORBA_TypeCodeFactory::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+CORBA_TypeCodeFactory_var::~CORBA_TypeCodeFactory_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE CORBA_TypeCodeFactory_var &
+CORBA_TypeCodeFactory_var::operator= (CORBA_TypeCodeFactory_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE CORBA_TypeCodeFactory_var &
+CORBA_TypeCodeFactory_var::operator= (const ::CORBA_TypeCodeFactory_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::CORBA_TypeCodeFactory::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE 
+CORBA_TypeCodeFactory_var::operator const ::CORBA_TypeCodeFactory_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE 
+CORBA_TypeCodeFactory_var::operator ::CORBA_TypeCodeFactory_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr &
+CORBA_TypeCodeFactory_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr &
+CORBA_TypeCodeFactory_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::CORBA_TypeCodeFactory_ptr val = this->ptr_;
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_TYPECODEFACTORY___OUT_CI_)
+#define _CORBA_TYPECODEFACTORY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class CORBA_TypeCodeFactory_out
+// *************************************************************
+
+ACE_INLINE
+CORBA_TypeCodeFactory_out::CORBA_TypeCodeFactory_out (CORBA_TypeCodeFactory_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+}
+
+ACE_INLINE
+CORBA_TypeCodeFactory_out::CORBA_TypeCodeFactory_out (CORBA_TypeCodeFactory_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::CORBA_TypeCodeFactory::_nil ();
+}
+
+ACE_INLINE
+CORBA_TypeCodeFactory_out::CORBA_TypeCodeFactory_out (const ::CORBA_TypeCodeFactory_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_TypeCodeFactory_out &, p).ptr_)
+{}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_out &
+CORBA_TypeCodeFactory_out::operator= (const ::CORBA_TypeCodeFactory_out &p)
+{
+  this->ptr_ = ACE_const_cast (CORBA_TypeCodeFactory_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE CORBA_TypeCodeFactory_out &
+CORBA_TypeCodeFactory_out::operator= (const ::CORBA_TypeCodeFactory_var &p)
+{
+  this->ptr_ = ::CORBA_TypeCodeFactory::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE CORBA_TypeCodeFactory_out &
+CORBA_TypeCodeFactory_out::operator= (CORBA_TypeCodeFactory_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE 
+CORBA_TypeCodeFactory_out::operator ::CORBA_TypeCodeFactory_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr &
+CORBA_TypeCodeFactory_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA_TypeCodeFactory_ptr
+CORBA_TypeCodeFactory_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::DefinitionKind &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::DefinitionKind &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::DefinitionKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp;
   if (strm.read_ulong (_tao_temp))
@@ -12807,17 +20218,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::DefinitionKind 
   else
     return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const CORBA_IRObject_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    CORBA_IRObject_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -12860,45 +20260,45 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_Contained_ptr
+    const IR_Contained_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_Contained_ptr &
+    IR_Contained_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_Repository_ptr
+    const IR_Repository_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_Repository_ptr &
+    IR_Repository_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_Container_ptr
+    const IR_Container_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_Container_ptr &
+    IR_Container_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_Contained_ptr
+    const IR_Contained_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_Contained_ptr &
+    IR_Contained_ptr &
   );
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Contained::Description &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_Contained::Description &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.kind) &&
@@ -12910,7 +20310,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Contained
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_Contained::Description &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Contained::Description &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.kind) &&
@@ -12925,27 +20325,27 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_Contained::Descr
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_Contained_ptr _tao_objref
+    const IR_Contained_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_Contained_ptr &_tao_objref
+    IR_Contained_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_Contained::_narrow (
+      IR_Contained::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -12963,151 +20363,414 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ModuleDef_ptr
+    const IR_ModuleDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ModuleDef_ptr &
+    IR_ModuleDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ConstantDef_ptr
+    const IR_ConstantDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ConstantDef_ptr &
+    IR_ConstantDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_IDLType_ptr
+    const IR_IDLType_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_IDLType_ptr &
+    IR_IDLType_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_StructDef_ptr
+    const IR_StructDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_StructDef_ptr &
+    IR_StructDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_UnionDef_ptr
+    const IR_UnionDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_UnionDef_ptr &
+    IR_UnionDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_EnumDef_ptr
+    const IR_EnumDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_EnumDef_ptr &
+    IR_EnumDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_AliasDef_ptr
+    const IR_AliasDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_AliasDef_ptr &
+    IR_AliasDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_InterfaceDef_ptr
+    const IR_InterfaceDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_InterfaceDef_ptr &
+    IR_InterfaceDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ExceptionDef_ptr
+    const IR_ExceptionDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ExceptionDef_ptr &
+    IR_ExceptionDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_NativeDef_ptr
+    const IR_NativeDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_NativeDef_ptr &
+    IR_NativeDef_ptr &
   );
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_InterfaceDefSeq_I_
+#define _TAO_CDR_OP_IR_InterfaceDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_InterfaceDefSeq &
+    const IR_InterfaceDefSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_InterfaceDefSeq &
+    IR_InterfaceDefSeq &
   );
+
+#endif /* _TAO_CDR_OP_IR_InterfaceDefSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueDef_ptr
+    const IR_ValueDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ValueDef_ptr &
+    IR_ValueDef_ptr &
   );
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_ValueDefSeq_I_
+#define _TAO_CDR_OP_IR_ValueDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueDefSeq &
+    const IR_ValueDefSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_ValueDefSeq &
+    IR_ValueDefSeq &
   );
+
+#endif /* _TAO_CDR_OP_IR_ValueDefSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueBoxDef_ptr
+    const IR_ValueBoxDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ValueBoxDef_ptr &
+    IR_ValueBoxDef_ptr &
   );
-CORBA::Boolean  operator<< (
+ACE_INLINE CORBA::Boolean
+operator<< (
     TAO_OutputCDR &,
-    const CORBA_ContainedSeq &
+    const IR_ComponentDef_ptr
   );
-CORBA::Boolean  operator>> (
+ACE_INLINE CORBA::Boolean
+operator>> (
     TAO_InputCDR &,
-    CORBA_ContainedSeq &
+    IR_ComponentDef_ptr &
   );
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_StructMember &_tao_aggregate)
+#if !defined _TAO_CDR_OP_IR_ComponentDefSeq_I_
+#define _TAO_CDR_OP_IR_ComponentDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ComponentDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ComponentDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ComponentDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ProvidesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ProvidesDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_ProvidesDefSeq_I_
+#define _TAO_CDR_OP_IR_ProvidesDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ProvidesDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ProvidesDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ProvidesDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_UsesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_UsesDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_UsesDefSeq_I_
+#define _TAO_CDR_OP_IR_UsesDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_UsesDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_UsesDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_UsesDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_HomeDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_HomeDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_HomeDefSeq_I_
+#define _TAO_CDR_OP_IR_HomeDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_HomeDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_HomeDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_HomeDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_EventDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_EventDef_ptr &
+  );
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_EmitsDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_EmitsDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_EmitsDefSeq_I_
+#define _TAO_CDR_OP_IR_EmitsDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_EmitsDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_EmitsDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_EmitsDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_PublishesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_PublishesDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_PublishesDefSeq_I_
+#define _TAO_CDR_OP_IR_PublishesDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_PublishesDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_PublishesDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_PublishesDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ConsumesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ConsumesDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_ConsumesDefSeq_I_
+#define _TAO_CDR_OP_IR_ConsumesDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ConsumesDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ConsumesDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ConsumesDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_FactoryDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_FactoryDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_FactoryDefSeq_I_
+#define _TAO_CDR_OP_IR_FactoryDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_FactoryDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_FactoryDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_FactoryDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_FinderDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_FinderDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_FinderDefSeq_I_
+#define _TAO_CDR_OP_IR_FinderDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_FinderDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_FinderDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_FinderDefSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_PrimaryKeyDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_PrimaryKeyDef_ptr &
+  );
+
+#if !defined _TAO_CDR_OP_IR_ContainedSeq_I_
+#define _TAO_CDR_OP_IR_ContainedSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ContainedSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ContainedSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ContainedSeq_I_ */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_StructMember &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -13120,7 +20783,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_StructMem
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_StructMember &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_StructMember &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -13133,19 +20796,26 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_StructMember &_t
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_StructMemberSeq_I_
+#define _TAO_CDR_OP_IR_StructMemberSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_StructMemberSeq &
+    const IR_StructMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_StructMemberSeq &
+    IR_StructMemberSeq &
   );
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Initializer &_tao_aggregate)
+#endif /* _TAO_CDR_OP_IR_StructMemberSeq_I_ */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_Initializer &_tao_aggregate)
 {
   if (
-    (strm << _tao_aggregate.members)
+    (strm << _tao_aggregate.members) &&
+    (strm << _tao_aggregate.name.in ())
   )
     return 1;
   else
@@ -13153,10 +20823,11 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Initializ
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_Initializer &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Initializer &_tao_aggregate)
 {
   if (
-    (strm >> _tao_aggregate.members)
+    (strm >> _tao_aggregate.members) &&
+    (strm >> _tao_aggregate.name.out ())
   )
     return 1;
   else
@@ -13164,16 +20835,22 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_Initializer &_ta
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_InitializerSeq_I_
+#define _TAO_CDR_OP_IR_InitializerSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_InitializerSeq &
+    const IR_InitializerSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_InitializerSeq &
+    IR_InitializerSeq &
   );
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_UnionMember &_tao_aggregate)
+#endif /* _TAO_CDR_OP_IR_InitializerSeq_I_ */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_UnionMember &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -13187,7 +20864,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_UnionMemb
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_UnionMember &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_UnionMember &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -13201,36 +20878,48 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_UnionMember &_ta
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_UnionMemberSeq_I_
+#define _TAO_CDR_OP_IR_UnionMemberSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_UnionMemberSeq &
+    const IR_UnionMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_UnionMemberSeq &
+    IR_UnionMemberSeq &
   );
 
-CORBA::Boolean  operator<< (
+#endif /* _TAO_CDR_OP_IR_UnionMemberSeq_I_ */
+
+
+#if !defined _TAO_CDR_OP_IR_EnumMemberSeq_I_
+#define _TAO_CDR_OP_IR_EnumMemberSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_EnumMemberSeq &
+    const IR_EnumMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_EnumMemberSeq &
+    IR_EnumMemberSeq &
   );
+
+#endif /* _TAO_CDR_OP_IR_EnumMemberSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_Container_ptr
+    const IR_Container_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_Container_ptr &
+    IR_Container_ptr &
   );
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Container::Description &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_Container::Description &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.contained_object.in ()) &&
@@ -13243,7 +20932,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Container
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_Container::Description &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Container::Description &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.contained_object.out ()) &&
@@ -13256,39 +20945,45 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_Container::Descr
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_Container_DescriptionSeq_I_
+#define _TAO_CDR_OP_IR_Container_DescriptionSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_Container::DescriptionSeq &
+    const IR_Container::DescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_Container::DescriptionSeq &
+    IR_Container::DescriptionSeq &
   );
+
+#endif /* _TAO_CDR_OP_IR_Container_DescriptionSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_Container_ptr _tao_objref
+    const IR_Container_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_Container_ptr &_tao_objref
+    IR_Container_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_Container::_narrow (
+      IR_Container::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13306,38 +21001,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_IDLType_ptr
+    const IR_IDLType_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_IDLType_ptr &
+    IR_IDLType_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_IDLType_ptr _tao_objref
+    const IR_IDLType_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_IDLType_ptr &_tao_objref
+    IR_IDLType_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_IDLType::_narrow (
+      IR_IDLType::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13355,69 +21050,69 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_PrimitiveDef_ptr
+    const IR_PrimitiveDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_PrimitiveDef_ptr &
+    IR_PrimitiveDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_StringDef_ptr
+    const IR_StringDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_StringDef_ptr &
+    IR_StringDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_SequenceDef_ptr
+    const IR_SequenceDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_SequenceDef_ptr &
+    IR_SequenceDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ArrayDef_ptr
+    const IR_ArrayDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ArrayDef_ptr &
+    IR_ArrayDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_WstringDef_ptr
+    const IR_WstringDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_WstringDef_ptr &
+    IR_WstringDef_ptr &
   );
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_FixedDef_ptr
+    const IR_FixedDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_FixedDef_ptr &
+    IR_FixedDef_ptr &
   );
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::PrimitiveKind &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::PrimitiveKind &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::PrimitiveKind &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::PrimitiveKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp;
   if (strm.read_ulong (_tao_temp))
@@ -13432,38 +21127,38 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::PrimitiveKind &
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_Repository_ptr
+    const IR_Repository_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_Repository_ptr &
+    IR_Repository_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_Repository_ptr _tao_objref
+    const IR_Repository_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_Repository_ptr &_tao_objref
+    IR_Repository_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_Repository::_narrow (
+      IR_Repository::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13481,38 +21176,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ModuleDef_ptr
+    const IR_ComponentRepository_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ModuleDef_ptr &
+    IR_ComponentRepository_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ModuleDef_ptr _tao_objref
+    const IR_ComponentRepository_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_ModuleDef_ptr &_tao_objref
+    IR_ComponentRepository_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ModuleDef::_narrow (
+      IR_ComponentRepository::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13527,7 +21222,56 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ModuleDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ModuleDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ModuleDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_ModuleDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_ModuleDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_ModuleDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ModuleDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -13541,7 +21285,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ModuleDes
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ModuleDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ModuleDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -13558,38 +21302,38 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ModuleDescriptio
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ConstantDef_ptr
+    const IR_ConstantDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ConstantDef_ptr &
+    IR_ConstantDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ConstantDef_ptr _tao_objref
+    const IR_ConstantDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_ConstantDef_ptr &_tao_objref
+    IR_ConstantDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ConstantDef::_narrow (
+      IR_ConstantDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13604,7 +21348,7 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ConstantDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ConstantDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -13620,7 +21364,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ConstantD
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ConstantDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ConstantDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -13639,38 +21383,38 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ConstantDescript
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_TypedefDef_ptr
+    const IR_TypedefDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_TypedefDef_ptr &
+    IR_TypedefDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_TypedefDef_ptr _tao_objref
+    const IR_TypedefDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_TypedefDef_ptr &_tao_objref
+    IR_TypedefDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_TypedefDef::_narrow (
+      IR_TypedefDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13685,7 +21429,7 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_TypeDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_TypeDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -13700,7 +21444,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_TypeDescr
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_TypeDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_TypeDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -13718,38 +21462,38 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_TypeDescription 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_StructDef_ptr
+    const IR_StructDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_StructDef_ptr &
+    IR_StructDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_StructDef_ptr _tao_objref
+    const IR_StructDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_StructDef_ptr &_tao_objref
+    IR_StructDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_StructDef::_narrow (
+      IR_StructDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13767,38 +21511,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_UnionDef_ptr
+    const IR_UnionDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_UnionDef_ptr &
+    IR_UnionDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_UnionDef_ptr _tao_objref
+    const IR_UnionDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_UnionDef_ptr &_tao_objref
+    IR_UnionDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_UnionDef::_narrow (
+      IR_UnionDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13816,38 +21560,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_EnumDef_ptr
+    const IR_EnumDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_EnumDef_ptr &
+    IR_EnumDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_EnumDef_ptr _tao_objref
+    const IR_EnumDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_EnumDef_ptr &_tao_objref
+    IR_EnumDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_EnumDef::_narrow (
+      IR_EnumDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13865,38 +21609,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_AliasDef_ptr
+    const IR_AliasDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_AliasDef_ptr &
+    IR_AliasDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_AliasDef_ptr _tao_objref
+    const IR_AliasDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_AliasDef_ptr &_tao_objref
+    IR_AliasDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_AliasDef::_narrow (
+      IR_AliasDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13914,38 +21658,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_PrimitiveDef_ptr
+    const IR_NativeDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_PrimitiveDef_ptr &
+    IR_NativeDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_PrimitiveDef_ptr _tao_objref
+    const IR_NativeDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_PrimitiveDef_ptr &_tao_objref
+    IR_NativeDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_PrimitiveDef::_narrow (
+      IR_NativeDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -13963,38 +21707,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_StringDef_ptr
+    const IR_PrimitiveDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_StringDef_ptr &
+    IR_PrimitiveDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_StringDef_ptr _tao_objref
+    const IR_PrimitiveDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_StringDef_ptr &_tao_objref
+    IR_PrimitiveDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_StringDef::_narrow (
+      IR_PrimitiveDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14012,38 +21756,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_WstringDef_ptr
+    const IR_StringDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_WstringDef_ptr &
+    IR_StringDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_WstringDef_ptr _tao_objref
+    const IR_StringDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_WstringDef_ptr &_tao_objref
+    IR_StringDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_WstringDef::_narrow (
+      IR_StringDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14061,38 +21805,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_FixedDef_ptr
+    const IR_WstringDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_FixedDef_ptr &
+    IR_WstringDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_FixedDef_ptr _tao_objref
+    const IR_WstringDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_FixedDef_ptr &_tao_objref
+    IR_WstringDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_FixedDef::_narrow (
+      IR_WstringDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14110,38 +21854,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_SequenceDef_ptr
+    const IR_FixedDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_SequenceDef_ptr &
+    IR_FixedDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_SequenceDef_ptr _tao_objref
+    const IR_FixedDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_SequenceDef_ptr &_tao_objref
+    IR_FixedDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_SequenceDef::_narrow (
+      IR_FixedDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14159,38 +21903,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ArrayDef_ptr
+    const IR_SequenceDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ArrayDef_ptr &
+    IR_SequenceDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ArrayDef_ptr _tao_objref
+    const IR_SequenceDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_ArrayDef_ptr &_tao_objref
+    IR_SequenceDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ArrayDef::_narrow (
+      IR_SequenceDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14208,38 +21952,38 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ExceptionDef_ptr
+    const IR_ArrayDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ExceptionDef_ptr &
+    IR_ArrayDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ExceptionDef_ptr _tao_objref
+    const IR_ArrayDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_ExceptionDef_ptr &_tao_objref
+    IR_ArrayDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ExceptionDef::_narrow (
+      IR_ArrayDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14254,7 +21998,56 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ExceptionDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ExceptionDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ExceptionDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_ExceptionDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_ExceptionDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_ExceptionDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ExceptionDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -14269,7 +22062,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Exception
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::ExceptionDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ExceptionDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -14284,12 +22077,42 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::ExceptionDescri
   
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::AttributeMode &_tao_enumval)
+
+#if !defined _TAO_CDR_OP_IR_ExceptionDefSeq_I_
+#define _TAO_CDR_OP_IR_ExceptionDefSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ExceptionDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ExceptionDefSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ExceptionDefSeq_I_ */
+
+
+#if !defined _TAO_CDR_OP_IR_ExcDescriptionSeq_I_
+#define _TAO_CDR_OP_IR_ExcDescriptionSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ExcDescriptionSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ExcDescriptionSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ExcDescriptionSeq_I_ */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::AttributeMode &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::AttributeMode &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::AttributeMode &_tao_enumval)
 {
   CORBA::ULong _tao_temp;
   if (strm.read_ulong (_tao_temp))
@@ -14304,38 +22127,38 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::AttributeMode &
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_AttributeDef_ptr
+    const IR_AttributeDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_AttributeDef_ptr &
+    IR_AttributeDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_AttributeDef_ptr _tao_objref
+    const IR_AttributeDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_AttributeDef_ptr &_tao_objref
+    IR_AttributeDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_AttributeDef::_narrow (
+      IR_AttributeDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14350,7 +22173,7 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::AttributeDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_AttributeDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -14358,7 +22181,9 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::Attribut
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.type.in ()) &&
-    (strm << _tao_aggregate.mode)
+    (strm << _tao_aggregate.mode) &&
+    (strm << _tao_aggregate.get_exceptions) &&
+    (strm << _tao_aggregate.put_exceptions)
   )
     return 1;
   else
@@ -14366,7 +22191,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::Attribut
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::AttributeDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_AttributeDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -14374,7 +22199,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::AttributeDescri
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.type.out ()) &&
-    (strm >> _tao_aggregate.mode)
+    (strm >> _tao_aggregate.mode) &&
+    (strm >> _tao_aggregate.get_exceptions) &&
+    (strm >> _tao_aggregate.put_exceptions)
   )
     return 1;
   else
@@ -14382,12 +22209,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::AttributeDescri
   
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::OperationMode &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::OperationMode &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::OperationMode &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::OperationMode &_tao_enumval)
 {
   CORBA::ULong _tao_temp;
   if (strm.read_ulong (_tao_temp))
@@ -14399,12 +22226,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::OperationMode &
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA::ParameterMode &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR::ParameterMode &_tao_enumval)
 {
   return strm.write_ulong ((CORBA::ULong) _tao_enumval);
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::ParameterMode &_tao_enumval)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR::ParameterMode &_tao_enumval)
 {
   CORBA::ULong _tao_temp;
   if (strm.read_ulong (_tao_temp))
@@ -14416,7 +22243,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::ParameterMode &
     return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ParameterDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ParameterDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -14430,7 +22257,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Parameter
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ParameterDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ParameterDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -14444,77 +22271,71 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ParameterDescrip
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_ParDescriptionSeq_I_
+#define _TAO_CDR_OP_IR_ParDescriptionSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_ParDescriptionSeq &
+    const IR_ParDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_ParDescriptionSeq &
+    IR_ParDescriptionSeq &
   );
 
-CORBA::Boolean  operator<< (
+#endif /* _TAO_CDR_OP_IR_ParDescriptionSeq_I_ */
+
+
+#if !defined _TAO_CDR_OP_IR_ContextIdSeq_I_
+#define _TAO_CDR_OP_IR_ContextIdSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_ContextIdSeq &
+    const IR_ContextIdSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_ContextIdSeq &
+    IR_ContextIdSeq &
   );
 
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const CORBA_ExceptionDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    CORBA_ExceptionDefSeq &
-  );
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const CORBA_ExcDescriptionSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    CORBA_ExcDescriptionSeq &
-  );
+#endif /* _TAO_CDR_OP_IR_ContextIdSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_OperationDef_ptr
+    const IR_OperationDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_OperationDef_ptr &
+    IR_OperationDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_OperationDef_ptr _tao_objref
+    const IR_OperationDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_OperationDef_ptr &_tao_objref
+    IR_OperationDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_OperationDef::_narrow (
+      IR_OperationDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14529,7 +22350,7 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_OperationDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_OperationDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -14548,7 +22369,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Operation
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_OperationDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_OperationDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -14567,106 +22388,86 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_OperationDescrip
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_RepositoryIdSeq_I_
+#define _TAO_CDR_OP_IR_RepositoryIdSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_RepositoryIdSeq &
+    const IR_RepositoryIdSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_RepositoryIdSeq &
+    IR_RepositoryIdSeq &
   );
 
-CORBA::Boolean  operator<< (
+#endif /* _TAO_CDR_OP_IR_RepositoryIdSeq_I_ */
+
+
+#if !defined _TAO_CDR_OP_IR_OpDescriptionSeq_I_
+#define _TAO_CDR_OP_IR_OpDescriptionSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_OpDescriptionSeq &
+    const IR_OpDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_OpDescriptionSeq &
+    IR_OpDescriptionSeq &
   );
 
-CORBA::Boolean  operator<< (
+#endif /* _TAO_CDR_OP_IR_OpDescriptionSeq_I_ */
+
+
+#if !defined _TAO_CDR_OP_IR_AttrDescriptionSeq_I_
+#define _TAO_CDR_OP_IR_AttrDescriptionSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_AttrDescriptionSeq &
+    const IR_AttrDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_AttrDescriptionSeq &
+    IR_AttrDescriptionSeq &
   );
+
+#endif /* _TAO_CDR_OP_IR_AttrDescriptionSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_InterfaceDef_ptr
+    const IR_InterfaceDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_InterfaceDef_ptr &
+    IR_InterfaceDef_ptr &
   );
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_InterfaceDef::FullInterfaceDescription &_tao_aggregate)
-{
-  if (
-    (strm << _tao_aggregate.name.in ()) &&
-    (strm << _tao_aggregate.id.in ()) &&
-    (strm << _tao_aggregate.defined_in.in ()) &&
-    (strm << _tao_aggregate.version.in ()) &&
-    (strm << _tao_aggregate.operations) &&
-    (strm << _tao_aggregate.attributes) &&
-    (strm << _tao_aggregate.base_interfaces) &&
-    (strm << _tao_aggregate.type.in ()) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_abstract))
-  )
-    return 1;
-  else
-    return 0;
-  
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_InterfaceDef::FullInterfaceDescription &_tao_aggregate)
-{
-  if (
-    (strm >> _tao_aggregate.name.out ()) &&
-    (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> _tao_aggregate.defined_in.out ()) &&
-    (strm >> _tao_aggregate.version.out ()) &&
-    (strm >> _tao_aggregate.operations) &&
-    (strm >> _tao_aggregate.attributes) &&
-    (strm >> _tao_aggregate.base_interfaces) &&
-    (strm >> _tao_aggregate.type.out ()) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_abstract))
-  )
-    return 1;
-  else
-    return 0;
-  
-}
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_InterfaceDef_ptr _tao_objref
+    const IR_InterfaceDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_InterfaceDef_ptr &_tao_objref
+    IR_InterfaceDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_InterfaceDef::_narrow (
+      IR_InterfaceDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14681,15 +22482,19 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_InterfaceDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_InterfaceDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
     (strm << _tao_aggregate.id.in ()) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.operations) &&
+    (strm << _tao_aggregate.attributes) &&
     (strm << _tao_aggregate.base_interfaces) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_abstract))
+    (strm << _tao_aggregate.type.in ()) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_abstract)) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_local))
   )
     return 1;
   else
@@ -14697,15 +22502,19 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_Interface
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_InterfaceDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_InterfaceDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
     (strm >> _tao_aggregate.id.out ()) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.operations) &&
+    (strm >> _tao_aggregate.attributes) &&
     (strm >> _tao_aggregate.base_interfaces) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_abstract))
+    (strm >> _tao_aggregate.type.out ()) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_abstract)) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_local))
   )
     return 1;
   else
@@ -14713,7 +22522,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_InterfaceDescrip
   
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueMember &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ValueMember &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
@@ -14730,7 +22539,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueMemb
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueMember &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ValueMember &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
@@ -14747,50 +22556,56 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueMember &_ta
   
 }
 
-CORBA::Boolean  operator<< (
+
+#if !defined _TAO_CDR_OP_IR_ValueMemberSeq_I_
+#define _TAO_CDR_OP_IR_ValueMemberSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueMemberSeq &
+    const IR_ValueMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_ValueMemberSeq &
+    IR_ValueMemberSeq &
   );
+
+#endif /* _TAO_CDR_OP_IR_ValueMemberSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueMemberDef_ptr
+    const IR_ValueMemberDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ValueMemberDef_ptr &
+    IR_ValueMemberDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ValueMemberDef_ptr _tao_objref
+    const IR_ValueMemberDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_ValueMemberDef_ptr &_tao_objref
+    IR_ValueMemberDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ValueMemberDef::_narrow (
+      IR_ValueMemberDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14808,21 +22623,59 @@ operator>> (
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueDef_ptr
+    const IR_ValueDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ValueDef_ptr &
+    IR_ValueDef_ptr &
   );
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueDef::FullValueDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_ValueDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_ValueDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_ValueDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ValueDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
     (strm << _tao_aggregate.id.in ()) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_abstract)) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_custom)) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_abstract)) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_custom)) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.operations) &&
@@ -14831,7 +22684,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueDef:
     (strm << _tao_aggregate.initializers) &&
     (strm << _tao_aggregate.supported_interfaces) &&
     (strm << _tao_aggregate.abstract_base_values) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_truncatable)) &&
     (strm << _tao_aggregate.base_value.in ()) &&
     (strm << _tao_aggregate.type.in ())
   )
@@ -14841,13 +22694,13 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueDef:
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueDef::FullValueDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ValueDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
     (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_abstract)) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_custom)) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_abstract)) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_custom)) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.operations) &&
@@ -14856,7 +22709,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueDef::FullVa
     (strm >> _tao_aggregate.initializers) &&
     (strm >> _tao_aggregate.supported_interfaces) &&
     (strm >> _tao_aggregate.abstract_base_values) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_truncatable)) &&
     (strm >> _tao_aggregate.base_value.out ()) &&
     (strm >> _tao_aggregate.type.out ())
   )
@@ -14868,28 +22721,39 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueDef::FullVa
 
 ACE_INLINE CORBA::Boolean
 operator<< (
+    TAO_OutputCDR &,
+    const IR_ValueBoxDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ValueBoxDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
     TAO_OutputCDR &strm,
-    const CORBA_ValueDef_ptr _tao_objref
+    const IR_ValueBoxDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA_ValueDef_ptr &_tao_objref
+    IR_ValueBoxDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ValueDef::_narrow (
+      IR_ValueBoxDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14904,19 +22768,63 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ProvidesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ProvidesDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_ProvidesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_ProvidesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_ProvidesDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ProvidesDescription &_tao_aggregate)
 {
   if (
     (strm << _tao_aggregate.name.in ()) &&
     (strm << _tao_aggregate.id.in ()) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_abstract)) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_custom)) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
-    (strm << _tao_aggregate.supported_interface.in ()) &&
-    (strm << _tao_aggregate.abstract_base_values) &&
-    (strm << CORBA_Any::from_boolean (_tao_aggregate.is_truncatable)) &&
-    (strm << _tao_aggregate.base_value.in ())
+    (strm << _tao_aggregate.interface_type.in ())
   )
     return 1;
   else
@@ -14924,19 +22832,14 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_ValueDesc
   
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueDescription &_tao_aggregate)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ProvidesDescription &_tao_aggregate)
 {
   if (
     (strm >> _tao_aggregate.name.out ()) &&
     (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_abstract)) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_custom)) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
-    (strm >> _tao_aggregate.supported_interface.out ()) &&
-    (strm >> _tao_aggregate.abstract_base_values) &&
-    (strm >> CORBA_Any::to_boolean (_tao_aggregate.is_truncatable)) &&
-    (strm >> _tao_aggregate.base_value.out ())
+    (strm >> _tao_aggregate.interface_type.out ())
   )
     return 1;
   else
@@ -14947,38 +22850,38 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ValueDescription
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
-    const CORBA_ValueBoxDef_ptr
+    const IR_UsesDef_ptr
   );
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
-    CORBA_ValueBoxDef_ptr &
+    IR_UsesDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ValueBoxDef_ptr _tao_objref
+    const IR_UsesDef_ptr _tao_objref
   )
 {
-  CORBA_Object_ptr _tao_corba_obj = _tao_objref;
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
-    CORBA::ValueBoxDef_ptr &_tao_objref
+    IR_UsesDef_ptr &_tao_objref
   )
 {
   ACE_TRY_NEW_ENV
   {
-    CORBA_Object_var obj;
+    CORBA::Object_var obj;
     if ((strm >> obj.inout ()) == 0)
       return 0;
     // narrow to the right type
     _tao_objref =
-      CORBA_ValueBoxDef::_narrow (
+      IR_UsesDef::_narrow (
           obj.in (),
           ACE_TRY_ENV
         );
@@ -14993,4 +22896,705 @@ operator>> (
   return 0;
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_UsesDescription &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.id.in ()) &&
+    (strm << _tao_aggregate.defined_in.in ()) &&
+    (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.interface_type.in ()) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_multiple))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_UsesDescription &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.id.out ()) &&
+    (strm >> _tao_aggregate.defined_in.out ()) &&
+    (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.interface_type.out ()) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_multiple))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+
+#if !defined _TAO_CDR_OP_IR_ProvidesDescSeq_I_
+#define _TAO_CDR_OP_IR_ProvidesDescSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ProvidesDescSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ProvidesDescSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_ProvidesDescSeq_I_ */
+
+
+#if !defined _TAO_CDR_OP_IR_UsesDescSeq_I_
+#define _TAO_CDR_OP_IR_UsesDescSeq_I_
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_UsesDescSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_UsesDescSeq &
+  );
+
+#endif /* _TAO_CDR_OP_IR_UsesDescSeq_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_EventDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_EventDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_EventDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_EventDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_EventDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_EventDescription &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.id.in ()) &&
+    (strm << _tao_aggregate.defined_in.in ()) &&
+    (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.value.in ())
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_EventDescription &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.id.out ()) &&
+    (strm >> _tao_aggregate.defined_in.out ()) &&
+    (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.value.out ())
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_EmitsDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_EmitsDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_EmitsDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_EmitsDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_EmitsDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_PublishesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_PublishesDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_PublishesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_PublishesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_PublishesDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ConsumesDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ConsumesDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_ConsumesDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_ConsumesDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_ConsumesDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_ComponentDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_ComponentDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_ComponentDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_ComponentDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_ComponentDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_ComponentDescription &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.id.in ()) &&
+    (strm << _tao_aggregate.defined_in.in ()) &&
+    (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.base_component.in ()) &&
+    (strm << _tao_aggregate.supports_interfaces) &&
+    (strm << _tao_aggregate.provides_interfaces) &&
+    (strm << _tao_aggregate.uses_interfaces) &&
+    (strm << _tao_aggregate.attributes) &&
+    (strm << _tao_aggregate.emits_events) &&
+    (strm << _tao_aggregate.publishes_events) &&
+    (strm << _tao_aggregate.consumes_events) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_basic))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ComponentDescription &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.id.out ()) &&
+    (strm >> _tao_aggregate.defined_in.out ()) &&
+    (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.base_component.out ()) &&
+    (strm >> _tao_aggregate.supports_interfaces) &&
+    (strm >> _tao_aggregate.provides_interfaces) &&
+    (strm >> _tao_aggregate.uses_interfaces) &&
+    (strm >> _tao_aggregate.attributes) &&
+    (strm >> _tao_aggregate.emits_events) &&
+    (strm >> _tao_aggregate.publishes_events) &&
+    (strm >> _tao_aggregate.consumes_events) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_basic))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_PrimaryKeyDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_PrimaryKeyDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_PrimaryKeyDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_PrimaryKeyDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_PrimaryKeyDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_PrimaryKeyDescription &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.id.in ()) &&
+    (strm << _tao_aggregate.defined_in.in ()) &&
+    (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.primary_key.in ())
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_PrimaryKeyDescription &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.id.out ()) &&
+    (strm >> _tao_aggregate.defined_in.out ()) &&
+    (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.primary_key.out ())
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_FactoryDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_FactoryDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_FactoryDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_FactoryDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_FactoryDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_FinderDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_FinderDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_FinderDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_FinderDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_FinderDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const IR_HomeDef_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    IR_HomeDef_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const IR_HomeDef_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    IR_HomeDef_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      IR_HomeDef::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_HomeDescription &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.id.in ()) &&
+    (strm << _tao_aggregate.defined_in.in ()) &&
+    (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.base_home.in ()) &&
+    (strm << _tao_aggregate.managed_component.in ()) &&
+    (strm << _tao_aggregate.primary_key_def.in ()) &&
+    (strm << _tao_aggregate.factories) &&
+    (strm << _tao_aggregate.finders) &&
+    (strm << _tao_aggregate.operations) &&
+    (strm << _tao_aggregate.attributes) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_basic))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_HomeDescription &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.id.out ()) &&
+    (strm >> _tao_aggregate.defined_in.out ()) &&
+    (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.base_home.out ()) &&
+    (strm >> _tao_aggregate.managed_component.out ()) &&
+    (strm >> _tao_aggregate.primary_key_def.out ()) &&
+    (strm >> _tao_aggregate.factories) &&
+    (strm >> _tao_aggregate.finders) &&
+    (strm >> _tao_aggregate.operations) &&
+    (strm >> _tao_aggregate.attributes) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_basic))
+  )
+    return 1;
+  else
+    return 0;
+  
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const CORBA_TypeCodeFactory_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    CORBA_TypeCodeFactory_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA_TypeCodeFactory_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    CORBA_TypeCodeFactory_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      CORBA_TypeCodeFactory::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
 
