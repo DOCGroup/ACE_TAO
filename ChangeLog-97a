@@ -6,6 +6,11 @@ Wed Apr 23 14:27:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/Process_Strategy_Test.cpp: added ACE_Singleton template
 	  specialization.
 
+	* examples/Service_Configurator/Misc/Timer_Service.cpp (init): changed
+	  type of loop index to int to avoid signed/unsigned comparison, and
+	  initialized "interval" so that it has a value even if one isn't
+	  specified on the command line.
+
 Wed Apr 23 10:52:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.cpp (thr_create): Removed errant preprocessor conditional
