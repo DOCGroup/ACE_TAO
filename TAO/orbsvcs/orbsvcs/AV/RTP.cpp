@@ -596,7 +596,13 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
 {
   this->sequence_num_ = ACE_OS::rand ();
   this->timestamp_offset_ = ACE_OS::rand ();
-  this->ssrc_ = TAO_AV_RTCP::alloc_srcid ((unsigned int)this);
+
+  char buf [BUFSIZ];
+  int result = ACE_OS::hostname (buf, BUFSIZ);
+  unsigned long ipaddr = 0;
+  if (result == 0)
+    ipaddr = ACE_OS::inet_addr (buf);
+  this->ssrc_ = TAO_AV_RTCP::alloc_srcid (ipaddr);
 
   this->frame_.size (2 * this->transport_->mtu ());
 }
