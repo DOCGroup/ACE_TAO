@@ -18,7 +18,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-  const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  const ACE_TCHAR *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_IOStream<ACE_SOCK_Stream> server;
