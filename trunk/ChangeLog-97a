@@ -11,6 +11,10 @@ Sat Feb 22 23:03:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Thread_Priority.cpp: "linux" instead of "LINUX".
 
+	* tests/Priority_Task_Test.cpp (open): set this->priority_ because
+	  an assertion uses it.  Also, use ACE_NORMAL_PRIORITY_CLASS so that
+	  root doesn't have to run the test on Solaris.
+
 Sat Feb 22 22:07:35 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Priority_Task_Test.cpp (open): Now use
