@@ -134,6 +134,8 @@ Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Env_Value_T.cpp: added protection against multiple inclusion.
 
+        * tests/Env_Value_Test.cpp: added ACE_Env_Value<long> instantiation.
+
 Fri Jan 02 00:47:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.13, released Fri Jan 02 00:47:33 1998.
