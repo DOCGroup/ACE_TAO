@@ -1,3 +1,12 @@
+Sat Aug 14 04:20:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+	* DAnCE/ciao/ComponentsC.h:
+	* ciao/ComponentsC.h:
+
+	  Removed a trailing ; at the end of namespace closure. g++-3.4.1
+	  starts getting seizures once it locates a trailing ;.
+
 Sat Aug 14 03:29:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/tests/Config_Handlers/handler_test.mpb:
