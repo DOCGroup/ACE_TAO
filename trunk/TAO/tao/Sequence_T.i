@@ -96,7 +96,6 @@ TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
       T *tmp = ACE_reinterpret_cast(T*,this->buffer_);
       TAO_Unbounded_Sequence<T>::freebuf (tmp);
     }
-    TAO_Unbounded_Sequence<T>::freebuf ((T *) this->buffer_);
   this->buffer_ = data;
   this->release_ = release;
 }
