@@ -299,6 +299,36 @@ SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMEC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMES.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\corbafwd.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -780,6 +810,36 @@ SOURCE=.\InconsistentTypeCodeC.cpp
 # Begin Source File
 
 SOURCE=.\Invocation.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPC.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPS.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -1349,6 +1409,21 @@ SOURCE=.\Stub.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Tagged_Components.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -1584,6 +1659,14 @@ SOURCE=.\Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMEC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMES.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\corba.h
 # End Source File
 # Begin Source File
@@ -1697,6 +1780,14 @@ SOURCE=.\InconsistentTypeCodeC.h
 # Begin Source File
 
 SOURCE=.\Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPS.h
 # End Source File
 # Begin Source File
 
@@ -1864,6 +1955,10 @@ SOURCE=.\stub.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Tagged_Components.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
@@ -1932,6 +2027,14 @@ SOURCE=.\Context.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMEC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMES.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
@@ -1981,6 +2084,14 @@ SOURCE=.\IIOP_Connect.i
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPS.i
 # End Source File
 # Begin Source File
 
@@ -2077,6 +2188,10 @@ SOURCE=.\Services.i
 # Begin Source File
 
 SOURCE=.\stub.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Tagged_Components.i
 # End Source File
 # Begin Source File
 
