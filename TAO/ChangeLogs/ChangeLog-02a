@@ -11,6 +11,7 @@ Mon May 22 17:48:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* docs/compiler.html:
 	  Added -d option mentioned above and removed -Gi option
 	  (interpretive marshaling - no longer used in IDL compiler).
+	  Also added -Sv option to suppress valuetype support.
 	  Thanks to Ossama for pointing these out.
 
 Mon May 22 13:57:45 2000  Ossama Othman  <ossama@uci.edu>
