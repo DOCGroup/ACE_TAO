@@ -88,13 +88,16 @@ ACE_Token_Collection::acquire (int notify,
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("collection acquiring %s\n"),
+	ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("collection acquiring %s\n"),
 		    temp->int_id_->name ()));
-      if (temp->int_id_->acquire (notify, sleep_hook, options) == -1)
+      if (temp->int_id_->acquire (notify,
+                                  sleep_hook,
+                                  options) == -1)
 	{
-	  int error = errno;
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
 	  this->release ();
-	  errno = error;
 	  ACE_RETURN (-1);
 	}
     }

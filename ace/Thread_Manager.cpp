@@ -1157,13 +1157,12 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
       return -1; \
     } \
   int result = OP (ptr, ARG); \
-  int error = errno; \
+  ACE_Errno_Guard error (errno); \
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor *td; \
     this->thr_to_be_removed_.dequeue_head (td); \
     this->remove_thr (td, 1); \
   } \
-  errno = error; \
   return result
 
 // Suspend a single thread.
@@ -1349,12 +1348,13 @@ ACE_Thread_Manager::apply_grp (int grp_id,
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
-      // Preserve errno!
-      int error = errno;
-      ACE_Thread_Descriptor *td;
-      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
+
+      for (ACE_Thread_Descriptor *td;
+           this->thr_to_be_removed_.dequeue_head (td) != -1;
+           )
         this->remove_thr (td, 1);
-      errno = error;
     }
 
   return result;
@@ -1419,12 +1419,13 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
-      // Preserve errno!
-      int error = errno;
-      ACE_Thread_Descriptor *td;
-      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
+
+      for (ACE_Thread_Descriptor *td;
+           this->thr_to_be_removed_.dequeue_head (td) != -1;
+           )
         this->remove_thr (td, 1);
-      errno = error;
     }
 
   return result;
@@ -1864,12 +1865,13 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
-      // Preserve errno!
-      int error = errno;
-      ACE_Thread_Descriptor *td;
-      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
+
+      for (ACE_Thread_Descriptor *td;
+           this->thr_to_be_removed_.dequeue_head (td) != -1;
+           )
         this->remove_thr (td, 1);
-      errno = error;
     }
 
   return result;

@@ -97,7 +97,7 @@ Tue Jun  8 17:12:24 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* /orbsvcs/tests/Time/Client_i.h
 
 	* docs/Options.html : Updated the -ORBInitRef to include the
-		fetype IOR.
+ 	  filetype IOR.
 
 Tue Jun 08 16:10:09 1999  David L. Levine  <levine@cs.wustl.edu>
 

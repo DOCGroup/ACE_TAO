@@ -457,14 +457,11 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
         }
       else
         {
-          // Make sure to save/restore the errno since <close> may
-          // change it.
-
-          int error = errno;
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
           // Make sure to close down the Channel to avoid descriptor
           // leaks.
           new_sh->close (0);
-          errno = error;
         }
       return -1;
     }
@@ -535,7 +532,8 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
                                         const ACE_Synch_Options &synch_options)
 {
-  int error = errno;
+  // Save/restore errno.
+  ACE_Errno_Guard error (errno);
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::create_AST");
   AST *ast;
 
@@ -569,18 +567,10 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
             goto fail3;
 
           ast->cancellation_id (cancellation_id);
-          // Reset this because something might have gone wrong
-          // elsewhere...
-          errno = error;
           return 0;
         }
       else
-        {
-          // Reset this because something might have gone wrong
-          // elsewhere...
-          errno = error; // EWOULDBLOCK
-          return 0; // Ok, everything worked just fine...
-        }
+        return 0; // Ok, everything worked just fine...
     }
 
   // Undo previous actions using the ol' "goto label and fallthru"
