@@ -1,3 +1,10 @@
+Wed Aug 27 21:13:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/IFRService/Options.cpp:
+
+	  Include "ace/Null_Mutex.h" to pull ACE_Null_Mutex class
+	  declaration.
+
 Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Adapter.h:
