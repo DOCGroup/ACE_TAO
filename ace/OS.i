@@ -7773,7 +7773,8 @@ ACE_INLINE int
 ACE_OS::putenv (const char *string)
 {
   // ACE_TRACE ("ACE_OS::putenv");
-  ACE_OSCALL_RETURN (::putenv (string), int, -1);
+  // VxWorks declares ::putenv with a non-const arg.
+  ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
 }
 
 ACE_INLINE
