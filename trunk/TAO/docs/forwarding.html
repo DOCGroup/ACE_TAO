@@ -88,7 +88,17 @@
 	  where to search. Though in the situation of a home location, there
 	  is also the risk that this server might die and the object
 	  is not reachable any more.
-	  
+
+	  <h2>Optimization</h2>
+	  In the case, when the object moves several times, a chain
+	  of forwarding servers is created. But this chain might be 
+	  easily disturbed by just one server failing. A good idea
+	  is to give the servant locator more intelligence to 
+	  tell all the oter/previous servers where the object is now.
+	  This will of course increase the communication overhead
+	  in the case of a move, but we get a high reliability
+	  against dying hosts.
+ 
 	  <HR>
 	    For more details and questions,
 	    <p>
