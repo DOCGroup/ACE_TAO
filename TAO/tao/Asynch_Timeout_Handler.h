@@ -46,18 +46,18 @@ class TAO_Export TAO_Asynch_Timeout_Handler
   //
 public:
   TAO_Asynch_Timeout_Handler (TAO_Asynch_Reply_Dispatcher_Base *rd,
-                              TAO_Transport_Mux_Strategy *tms,
-                              CORBA::ULong request_id);
+                              ACE_Reactor *reactor);
 
   ~TAO_Asynch_Timeout_Handler ();
+
+  /// Schedule a timer
+  long schedule_timer (TAO_Transport_Mux_Strategy *tms,
+                       CORBA::ULong request_id,
+                       const ACE_Time_Value &max_wait_time);
 
   /// Invoked by the reactor on timeout
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *act);
-
-  /// Invoked by the reactor on unregistration
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
 
   /// Cancel this timer, remove it from the reactor
   virtual void cancel ();
@@ -71,6 +71,9 @@ public:
 
   /// Remember the ID of the request.
   CORBA::ULong request_id_;
+
+  /// Our reactor
+  ACE_Reactor *reactor_;
 };
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */

@@ -24,10 +24,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Reply_Dispatcher.h"
+#include "tao/Asynch_Timeout_Handler.h"
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core ;
-class TAO_Asynch_Timeout_Handler;
+
 
 
 
@@ -62,7 +63,8 @@ public:
   virtual void reply_timed_out (void);
 
   /// Install the timeout handler
-  virtual void timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler);
+  virtual long schedule_timer (CORBA::ULong request_id,
+                               const ACE_Time_Value &max_wait_time);
 
 protected:
   /// The service context list.
@@ -113,7 +115,8 @@ public:
   virtual void reply_timed_out (void);
 
   /// Install the timeout handler
-  virtual void timeout_handler (TAO_Asynch_Timeout_Handler *timeout_handler);
+  long schedule_timer (CORBA::ULong request_id,
+                       const ACE_Time_Value &max_wait_time);
 
 private:
   /// Skeleton for the call back method in the Reply Handler.
@@ -123,7 +126,7 @@ private:
   Messaging::ReplyHandler_var reply_handler_;
 
   /// Timeout Handler in case of AMI timeouts
-  TAO_Asynch_Timeout_Handler *timeout_handler_;
+  TAO_Asynch_Timeout_Handler timeout_handler_;
 };
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */

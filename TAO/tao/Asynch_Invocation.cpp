@@ -102,36 +102,19 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
                         TAO_INVOKE_EXCEPTION);
     }
 
+  // Lets remember the transport for later, so that we can idle the transport
+  // when the reply dispatcher goes away.
+  this->rd_->transport (this->transport_);
+
   // AMI Timeout Handling Begin
 
   if (this->max_wait_time_ != 0)
     {
-      ACE_Reactor *r = this->orb_core_->reactor ();
-
-      // @@ Michael: Optimization: The timeout handler should actually 
-      //             be allocated on the stack in the reply handler!
-      TAO_Asynch_Timeout_Handler *timeout_handler;
-      ACE_NEW_THROW_EX (timeout_handler,
-                        TAO_Asynch_Timeout_Handler (this->rd_,
-                                                    this->transport_->tms (),
-                                                    this->op_details_.request_id ()),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (TAO_DEFAULT_MINOR_CODE,
-                                                                   ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
-
-      // Let the reply dispatcher remember the timeout_handler
-      this->rd_->timeout_handler (timeout_handler);
-
-      r->schedule_timer (timeout_handler,  // handler
-                         0,                // arg
-                         *this->max_wait_time_);
+      this->rd_->schedule_timer (this->op_details_.request_id (),
+                                 *this->max_wait_time_);
     }
 
   // AMI Timeout Handling End
-
-
 
   // Just send the request, without trying to wait for the reply.
   retval = TAO_GIOP_Invocation::invoke (0,
@@ -143,8 +126,6 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       return retval;
     }
 
-  // Everything executed ok; lets remember the transport for later.
-  this->rd_->transport (this->transport_);
 
   // We do not wait for the reply. Let us return.
   return TAO_INVOKE_OK;
