@@ -4,8 +4,6 @@
 
 DIRS = \
         ace \
-        netsvcs \
-        tests \
-        apps
+        tests
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
