@@ -303,7 +303,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time_Value &,
 }
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::close (unsigned long)
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::close (u_long)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::close");
   return this->handle_close ();

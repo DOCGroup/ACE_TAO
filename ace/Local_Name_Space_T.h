@@ -26,8 +26,8 @@
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
 
-// A short-hand name for our set of name/value/type tuples passed back
-// to callers.
+/// A short-hand name for our set of name/value/type tuples passed back
+/// to callers.
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
 // Simplify later usage by defining typedefs.
@@ -64,7 +64,7 @@ public:
   ACE_Name_Space_Map (ALLOCATOR *alloc);
 
   // = The following methods are Proxies to the underlying methods
-  // provided by <ACE_Hash_Map_Manager>.  When they are called, they
+  // provided by ACE_Hash_Map_Manager.  When they are called, they
   // acquire the lock, set the allocator to the one specific to this
   // process, and then call down to perform the intended operation.
   int bind (const ACE_NS_String &,
@@ -124,7 +124,7 @@ public:
    */
   int open (ACE_Naming_Context::Context_Scope_Type scope_in);
 
-  /// destructor, do some cleanup :TBD: last dtor should "compress"
+  /// Destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
   ~ACE_Local_Name_Space (void);
 
@@ -148,7 +148,7 @@ public:
   virtual int unbind_i (const ACE_NS_WString &name);
 
   /// Get value and type of a given name binding (Wide chars).  The
-  /// caller is responsible for deleting <type>!
+  /// caller is responsible for deleting @a type!
   virtual int resolve (const ACE_NS_WString &name,
                        ACE_NS_WString &value,
                        char *&type);
@@ -221,7 +221,7 @@ private:
   int remap (EXCEPTION_POINTERS *ep);
 #endif /* ACE_WIN32 */
 
-  /// Factor out code from <bind> and <rebind>.
+  /// Factor out code from bind() and rebind().
   int shared_bind (const ACE_NS_WString &name,
                    const ACE_NS_WString &value,
                    const char *type, int rebind);
