@@ -652,9 +652,6 @@ extern "C" {
   PACE_INLINE void pace_pthread_testcancel ();
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
