@@ -119,11 +119,11 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
                                        + key_string.length ());
 
       // Copy the default <iiop> prefix.
-      ACE_OS::strcpy (end_point,
+      ACE_OS::strcpy (end_point.out (),
                       iiop_prefix);
 
       // Append '://'
-      ACE_OS::strcat (end_point,
+      ACE_OS::strcat (end_point.inout (),
                       protocol_suffix_append);
     }
   else
@@ -146,14 +146,14 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
 
       // Example:
       // prot_name.c_str () = iiop
-      ACE_OS::strcpy (end_point,
+      ACE_OS::strcpy (end_point.out (),
                       prot_name.c_str ());;
 
 
       // Example:
       // The endpoint will now be of the form 'iiop'
 
-      ACE_OS::strcat (end_point,
+      ACE_OS::strcat (end_point.inout (),
                       protocol_suffix_append);
 
       // The endpoint will now be of the form 'iiop://'
@@ -162,7 +162,7 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
   ACE_CString addr =
     cloc_name_cstring.substring (pos_colon + 1, -1);
 
-  ACE_OS::strcat (end_point,
+  ACE_OS::strcat (end_point.inout (),
                   addr.c_str ());
 
   // Check for an IIOP corbaloc IOR.  If the port number is not
@@ -171,7 +171,8 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
                        iiop_prefix,
                        sizeof (iiop_prefix) - 1) == 0
       && addr.find (':') == ACE_CString::npos)
-    ACE_OS::strcat (end_point, def_port);
+    ACE_OS::strcat (end_point.inout (), 
+                    def_port);
 
   // Example:
   // The End_point will now be of the form
@@ -184,15 +185,15 @@ TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
       // The separator for the uiop protocol is '|'. This should
       // actually be later changed so that the separator is '/' as the
       // other protocols.
-      ACE_OS::strcat (end_point, "|");
+      ACE_OS::strcat (end_point.inout (), "|");
     }
   else
     {
-      ACE_OS::strcat (end_point, "/");
+      ACE_OS::strcat (end_point.inout (), "/");
     }
 
   // Append the key string.
-  ACE_OS::strcat (end_point,
+  ACE_OS::strcat (end_point.inout (),
                   key_string.c_str ());
 
   // Example: The End_point will now be of the form:

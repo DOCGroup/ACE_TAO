@@ -962,9 +962,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                              ACE_OS::strlen (ns_port_ptr.in ()) +
                              2);
 
-      ACE_OS::strcpy (def_init_ref, prefix);
-      ACE_OS::strcat (def_init_ref, ns_port_ptr.in ());
-      ACE_OS::strcat (def_init_ref, "::");
+      ACE_OS::strcpy (def_init_ref.out (), prefix);
+      ACE_OS::strcat (def_init_ref.inout (), ns_port_ptr.in ());
+      ACE_OS::strcat (def_init_ref.inout (), "::");
 
       this->orb_params ()->default_init_ref (def_init_ref.in ());
     }

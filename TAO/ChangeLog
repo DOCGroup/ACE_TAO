@@ -1,3 +1,18 @@
+Mon Dec 16 14:27:15 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+
+          Removed the String_var non-const cast operator to char*,
+          as per http://cgi.omg.org/issues/issue3797.txt, and made
+          necessary changes to TAO where CORBA::String_var is
+          passed to strcpy, strcat, etc., without using .out()
+          or .inout().
+
 Mon Dec 16 09:29:32 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/CORBA_String.h:

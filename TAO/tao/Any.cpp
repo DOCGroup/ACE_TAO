@@ -1524,7 +1524,7 @@ CORBA_Any::operator>>= (to_string s) const
                                                    this);
       non_const_this->_tao_replace (CORBA::_tc_string,
                                     1,
-                                    ACE_static_cast (char *, tmp),
+                                    tmp.inout (),
                                     CORBA::Any::_tao_any_string_destructor);
 
       s.val_ = tmp._retn ();
