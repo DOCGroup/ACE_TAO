@@ -2,8 +2,8 @@
 //
 // Build this file with g++.  It can be linked in to a ACE application
 // that was compiled with GreenHills.  It wouldn't be necessary if I
-// knew a way to move values from registers to variables in ghs asm
-// code.  That's easy with g++ asm.
+// knew a way to correctly move values from registers to a 64-bit variable
+// in GHS asm code.  That's easy with g++ asm.
 
 #include "ace/OS.h"
 
@@ -11,7 +11,7 @@ extern "C"
 ACE_hrtime_t
 ACE_gethrtime ()
 {
-#if defined (__GNUG__) && defined (ACE_HAS_PENTIUM)
+#if defined (ACE_HAS_PENTIUM)
   // ACE_TRACE ("ACE_gethrtime");
 
 #if defined (ACE_LACKS_LONGLONG_T)
@@ -25,7 +25,16 @@ ACE_gethrtime ()
   //
   // Read the high-res tick counter directly into memory variable "now".
   // The A constraint signifies a 64-bit int.
+#if defined (__GNUG__)
   asm volatile ("rdtsc" : "=A" (now) : : "memory");
+// #elif defined (ghs)
+// The following doesn't work.  For now, this file must be compile with g++.
+//  asm ("rdtsc");
+//  asm ("movl %edx,-16(%ebp)");
+//  asm ("movl %eax,-12(%ebp)");
+#else
+# error unsupported compiler
+#endif
 
 #if defined (ACE_LACKS_LONGLONG_T)
   // ACE_U_LongLong doesn't have the same layout as now, so construct
@@ -40,7 +49,7 @@ ACE_gethrtime ()
   return now;
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
-#else  /* ! __GNUG__  ||  ! ACE_HAS_PENTIUM */
-# error This file can _only_ be compiled with g++, with ACE_HAS_PENTIUM.
-#endif /* ! __GNUG__  ||  ! ACE_HAS_PENTIUM */
+#else  /* ! ACE_HAS_PENTIUM */
+# error This file can _only_ be compiled with ACE_HAS_PENTIUM.
+#endif /* ! ACE_HAS_PENTIUM */
 }
