@@ -271,31 +271,34 @@ public:
   virtual ACE_Proactor_Impl *implementation (void) const;
   // Get the implementation class.
 
-  //
   // = Factory methods for the operations
   //
   // Note that the user does not have to use or know about these
   // methods.
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream (void);
-  // Create the correct implementation class for doing Asynch_Read_Stream.
+  // Create the correct implementation class for doing
+  // Asynch_Read_Stream.
 
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream (void);
-  // Create the correct implementation class for doing Asynch_Write_Stream.
+  // Create the correct implementation class for doing
+  // Asynch_Write_Stream.
 
   virtual ACE_Asynch_Read_File_Impl *create_asynch_read_file (void);
-  // Create the correct implementation class for doing Asynch_Read_File.
+  // Create the correct implementation class for doing
+  // Asynch_Read_File.
 
   virtual ACE_Asynch_Write_File_Impl *create_asynch_write_file (void);
-  // Create the correct implementation class for doing Asynch_Write_File.
+  // Create the correct implementation class for doing
+  // Asynch_Write_File.
 
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
   // Create the correct implementation class for doing Asynch_Accept.
 
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
-  // Create the correct implementation class for doing Asynch_Transmit_File.
+  // Create the correct implementation class for doing
+  // Asynch_Transmit_File.
 
-  //
   // = Factory methods for the results
   //
   // Note that the user does not have to use or know about these

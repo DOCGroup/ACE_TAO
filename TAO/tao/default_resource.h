@@ -29,8 +29,6 @@
 
 class TAO_Object_Adapter;
 
-// ****************************************************************
-
 class TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
   // = TITLE
