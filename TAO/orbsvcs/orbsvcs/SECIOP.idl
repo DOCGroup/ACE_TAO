@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// -*- IDL -*-
 // $Id$
 
 //File: SECIOP.idl
@@ -18,6 +18,8 @@
 #pragma prefix "omg.org"
 
 module SECIOP {
+
+#pragma version SECIOP 1.1
 
     const IOP::ComponentId TAG_GENERIC_SEC_MECH = 22;
     const IOP::ComponentId TAG_ASSOCIATION_OPTIONS = 13;
@@ -105,17 +107,6 @@ module SECIOP {
         sequence <octet> message_protection_token;
     };
 
-    // messsage_protection_token is obtained by CDR encoding
-    // the SequencingHeader followed by the octets of the
-    // frame data. Sequencingheader + Frame Data is called a
-    // SequencedDataFrame
-
-    struct SequencingHeader {
-        octet            control_state;
-        unsigned long    direct_sequence_number;
-        unsigned long    reverse_sequence_number;
-        unsigned long    reverse_window;
-    };
 
     typedef sequence <octet> SecurityName;
     typedef unsigned short   CryptographicProfile;
