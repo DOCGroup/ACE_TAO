@@ -1,12 +1,13 @@
 Tue Mar 01 21:39:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
-	* DAM_Map.h
-	* ExecutionManager.mpc
-	* Execution_Manager.cpp
-	* Execution_Manager_Impl.h
+	* ExecutionManager/DAM_Map.h
+	* ExecutionManager/ExecutionManager.mpc
+	* ExecutionManager/Execution_Manager.cpp
+	* ExecutionManager/Execution_Manager_Impl.h
+	* ExecutionManager/ExecutionManager.mpc
 
-          Fixed compilation errors due to the recent refactoring
-          work in TAO.
+	  Fixed compilation errors due to the recent refactoring
+	  work in TAO.
 
 Tue Mar 01 11:14:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
@@ -26,12 +27,12 @@ Tue Mar 01 11:14:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 	* ciao/Servant_Activator.h
 	* examples/BasicSP/BMClosedED/BMClosedED_exec.cpp
 
-          Fixed compilation errors due to the recent refactoring
-          work in TAO.
+	  Fixed compilation errors due to the recent refactoring
+	  work in TAO.
 
-          Modified to make all the DAnCE tools to work together.
-          Right now, there is still an exception when tearing down
-          the assembly, which I will look into soon.
+	  Modified to make all the DAnCE tools to work together.
+	  Right now, there is still an exception when tearing down
+	  the assembly, which I will look into soon.
 
 Tue Feb 22 20:33:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
@@ -122,12 +123,12 @@ Thu Jan 28 15:02:42 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/ciao/Container_Impl.cpp
 	* DAnCE/ciao/NodeApplication_Impl.cpp
 
-          Some minor optimization changes.
+	  Some minor optimization changes.
 
 	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
 
-          Changed this test by install a set of components in 2 different
-          containers hosted in the same NodeApplication. I worked fine.          
+	  Changed this test by install a set of components in 2 different
+	  containers hosted in the same NodeApplication. I worked fine.          
 
 Thu Jan 27 15:43:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -135,31 +136,31 @@ Thu Jan 27 15:43:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/ciao/Object_Set_T.h
 	* DAnCE/ciao/Object_Set_T.inl
 
-          Add this template class, also add a <remove_all> method on it
-          for easily remove all object reference in the set.
+	  Add this template class, also add a <remove_all> method on it
+	  for easily remove all object reference in the set.
 
 	* DAnCE/ciao/Container_Base.cpp
 	* DAnCE/ciao/Container_Base.h
           
-          When creating multiple session containers, we need to give different
-          POA names to the all POAs for ports (i.e., consumers and facets).
-          Changed the method to take an additional name argument.
+	  When creating multiple session containers, we need to give different
+	  POA names to the all POAs for ports (i.e., consumers and facets).
+	  Changed the method to take an additional name argument.
 
 	* DAnCE/ciao/Deployment_Core.idl
 
-          Changed ContainerImplementationInfo type from sequence to a struct type
-          and added a config property attribute to it.
+	  Changed ContainerImplementationInfo type from sequence to a struct type
+	  and added a config property attribute to it.
 
 	* DAnCE/ciao/Container_Impl.cpp
 	* DAnCE/ciao/NodeApplication_Impl.cpp
 	* DAnCE/ciao/NodeApplication_Impl.h
 
-          Changed container and NodeApplication implementation to reflect above 
-          changes.
+	  Changed container and NodeApplication implementation to reflect above 
+	  changes.
 
 	* tests/NodeApplicationTest/NodeApp_test_client.cpp
 
-          Changed to test to reflect the above IDL changes.
+	  Changed to test to reflect the above IDL changes.
 
 Wed Jan 26 22:53:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -169,34 +170,34 @@ Wed Jan 26 22:53:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
 	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
 
-          Fixed bugs to make sure all the above three tests running OK.
-          More tests will be written, at least one will test that multiple
-          components installed on different containers running OK.
+	  Fixed bugs to make sure all the above three tests running OK.
+	  More tests will be written, at least one will test that multiple
+	  components installed on different containers running OK.
 
 Wed Jan 26 12:02:41 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Deployment_Core.idl
 
-          Modified to have totally 3 abstraction layers of ImplementationInfo,
-          NodeImplementationInfo, ContainerImplementationInfo and
-          ComponentImplementationInfo. 
+	  Modified to have totally 3 abstraction layers of ImplementationInfo,
+	  NodeImplementationInfo, ContainerImplementationInfo and
+	  ComponentImplementationInfo. 
 
 	* DAnCE/NodeApplication/NodeApplication.cpp
 	* DAnCE/ciao/Container_Impl.cpp
 	* DAnCE/ciao/Container_Impl.h
-        * DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
 	* DAnCE/ciao/NodeApplication_Impl.h
 	* DAnCE/ciao/NodeApplication_Impl.inl
 
-          Added the abstraction layer of container interface. Reorganize
-          the functionality between NodeApplication and Container.
+	  Added the abstraction layer of container interface. Reorganize
+	  the functionality between NodeApplication and Container.
 
 	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
-        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
 
-          Modified this to test against the above change. This test
-          could run successfully when we have 1 component hosted in
-          1 container, which in turn hosted in 1 NodeApplication.
+	  Modified this to test against the above change. This test
+	  could run successfully when we have 1 component hosted in
+	  1 container, which in turn hosted in 1 NodeApplication.
 
 Wed Jan 19 21:41:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -214,7 +215,7 @@ Wed Jan 19 21:41:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
  	* DAnCE/Config_Handlers/RDD_Handler.h
  	* DAnCE/Config_Handlers/Singleton_IDREF_Map.h
 
-          Fixed compilation warnings or errors.
+	  Fixed compilation warnings or errors.
 
 Tue Jan 18 21:41:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -273,22 +274,22 @@ Tue Jan 18 21:41:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Jan 17 11:03:17 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-        * DAnCE/ciao/Deployment_Core.idl
+	* DAnCE/ciao/Deployment_Core.idl
 
-          Modified this file by adding container interface and
-          modifying NodeApplication interface.
+	  Modified this file by adding container interface and
+	  modifying NodeApplication interface.
 
-        * DAnCE/ciao/Container_Impl.h:
-        * DAnCE/ciao/Container_Impl.inl:
-        * DAnCE/ciao/Container_Impl.cpp:
+	* DAnCE/ciao/Container_Impl.h:
+	* DAnCE/ciao/Container_Impl.inl:
+	* DAnCE/ciao/Container_Impl.cpp:
 
-          Added these files which are the implementation of the container 
-          interface that was added to the Deployment_Core.idl file.
-
-        * DAnCE/ciao/CCM_Core.mpc
+	  Added these files which are the implementation of the container 
+	  interface that was added to the Deployment_Core.idl file.
+	
+	* DAnCE/ciao/CCM_Core.mpc
           
-          Modified this mpc file to add the above implementation into 
-          the project.
+	  Modified this mpc file to add the above implementation into 
+	  the project.
 
 Thu Jan 13 14:59:17 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -838,7 +839,7 @@ Wed Sep  8 17:19:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/Utils.h:
 	* DAnCE/Config_Handlers/XercesString.h:
 	  
-  	  Removed all the old files from this branch. This is simply
+	  Removed all the old files from this branch. This is simply
 	  confusing to see what is usable and what is not. 	  
 
 Wed Sep  8 17:09:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
