@@ -38,6 +38,10 @@ public:
   ~TAO_GIOP_Client_Message_1_1 (void);
   // Dtor
 
+  int parse_magic_bytes (TAO_InputCDR &input);
+    
+  int parse_header (TAO_GIOP_Message_State *mesg_state);
+
   CORBA::Boolean
   write_request_header (const IOP::ServiceContextList& svc_ctx,
                         CORBA::ULong request_id,
@@ -54,21 +58,32 @@ public:
                                               TAO_OutputCDR &msg);
   // Write the locate request header
 
-private:
+
+  CORBA::Boolean start_message (TAO_Pluggable_Message_Type t,
+                                TAO_OutputCDR &msg);
+
+  int parse_reply (TAO_Transport *transport,
+                   TAO_Message_State_Factory &mesg_state,
+                   IOP::ServiceContextList& reply_ctx,
+                   CORBA::ULong &request_id,
+                   CORBA::ULong &reply_status);
+  // Parse the reply message from the server
+  
   const size_t get_header_len (void);
   // Returns the header length 
-
+  
   const size_t get_message_size_offset (void);
   // Returns the message size offset
+  
+
+private:
+  CORBA::Octet our_major_version_;
+  CORBA::Octet our_minor_version_;
 };
 
 
-
-const size_t TAO_GIOP_1_1_HEADER_LEN = 12;
-const size_t TAO_GIOP_1_1_MESSAGE_SIZE_OFFSET = 8;
-
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_1_1.i"
+# include "tao/GIOP_Message_Invocation.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /*TAO_IIOP_ACCEPTOR_1_1_H_ */

@@ -24,12 +24,13 @@
 
 // BALA Temporrary inclusion
 #include "tao/Pluggable_Messaging.h"
+#include "tao/GIOP_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOP.h"
+
 
 # if defined (TAO_HAS_UIOP)
 
@@ -93,8 +94,7 @@ public:
                        const char* opname,
                        TAO_OutputCDR &msg);
   
-  void messaging_init (TAO_Pluggable_Message_Factory *mesg);
-  // Initialising the messaging object
+
 protected:
   TAO_UIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
@@ -135,8 +135,10 @@ public:
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             const TAO_Profile *profile,
+                             TAO_Stub *stub,
+                             const short addressing_disposition,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -152,9 +154,25 @@ public:
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
 
+  CORBA::Boolean 
+  send_request_header (const IOP::ServiceContextList &svc_ctx,  
+                       CORBA::ULong request_id,
+                       CORBA::Octet response_flags,
+                       TAO_Stub *stub,
+                       const short address_disposition,
+                       const char* opname,
+                       TAO_OutputCDR &msg);
+  
+  void messaging_init (TAO_Pluggable_Client_Message_Factory *mesg);
+  // Initialising the messaging object
+
 private:
   TAO_UIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
+
+  TAO_Pluggable_Client_Message_Factory *client_mesg_factory_;
+  // The message_factor instance specific for this particular
+  // transport protocol.
 };
 
 // ****************************************************************
@@ -184,6 +202,14 @@ public:
   TAO_GIOP_Message_State message_state_;
   // This keep the state of the current message, to enable
   // non-blocking reads, fragment reassembly, etc.
+
+    void messaging_init (TAO_Pluggable_Server_Message_Factory *mesg);
+  // Initialising the messaging object  
+
+ private:
+  
+  TAO_Pluggable_Server_Message_Factory *server_mesg_factory_;
+  // This would be server side messaging protocol  
 };
 
 # endif  /* TAO_HAS_UIOP */

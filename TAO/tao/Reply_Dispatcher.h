@@ -20,8 +20,11 @@
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
 
-#include "tao/GIOP.h"
 #include "tao/Request.h"
+
+/////Balas Include" They are not right. We need to set AMI properly 
+#include "tao/GIOP_Utils.h"
+///////////////////////////////////
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

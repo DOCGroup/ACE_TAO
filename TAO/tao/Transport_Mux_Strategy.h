@@ -20,7 +20,9 @@
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
 #define TAO_TRANSPORT_MUX_STRATEGY_H
 
-#include "tao/GIOP.h"
+// BALA should not be here But for the time being
+#include "tao/GIOP_Utils.h"
+/////////
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
