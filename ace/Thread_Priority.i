@@ -33,50 +33,39 @@ ACE_Thread_Priority::~ACE_Thread_Priority ()
 {
 }
 
-ACE_INLINE
-long
-ACE_Thread_Priority::set_priority_class (const Priority_Class priority_class)
+ACE_INLINE long
+ACE_Thread_Priority::priority_class (const Priority_Class priority_class)
 {
   priority_class_ = priority_class;
   return normalize ();
 }
 
-ACE_INLINE
-long
-ACE_Thread_Priority::set_default_thread_priority (
-  const Thread_Priority default_thread_priority)
+ACE_INLINE long ACE_Thread_Priority::default_thread_priority (const Thread_Priority default_thread_priority)
 {
   default_thread_priority_ = default_thread_priority;
   return normalize ();
 }
 
-ACE_INLINE
-ACE_Thread_Priority::Priority_Class
-ACE_Thread_Priority::priority_class () const
+ACE_INLINE ACE_Thread_Priority::Priority_Class
+ACE_Thread_Priority::priority_class (void) const
 {
   return priority_class_;
 }
 
-ACE_INLINE
-ACE_Thread_Priority::Thread_Priority
-ACE_Thread_Priority::default_thread_priority () const
+ACE_INLINE ACE_Thread_Priority::Thread_Priority
+ACE_Thread_Priority::default_thread_priority (void) const
 {
   return default_thread_priority_;
 }
 
-ACE_INLINE
-ACE_id_t
-ACE_Thread_Priority::os_priority_class () const
+ACE_INLINE ACE_id_t
+ACE_Thread_Priority::os_priority_class (void) const
 {
   return os_priority_class_;
 }
 
-ACE_INLINE
-ACE_pri_t
-ACE_Thread_Priority::os_default_thread_priority () const
+ACE_INLINE ACE_pri_t
+ACE_Thread_Priority::os_default_thread_priority (void) const
 {
   return os_default_thread_priority_;
 }
-
-
-// EOF

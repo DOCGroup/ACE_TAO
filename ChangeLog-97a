@@ -1,3 +1,15 @@
+Wed Jan 29 00:59:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/platform_linux_lxpthread.GNU (CXX): Removed
+ 	  the -D_MIT_POSIX_PTHREADS symbol since we're using Xavier's
+ 	  threads instead.  Thanks to Marius Kjeldahl <marius@funcom.com,
+ 	  mariusk@sn.no> for reporting this.
+
+	* ace/config-linux-lxpthreads.h: Removed the _MIT_POSIX_PTHREADS
+ 	  symbol since we're using Xavier's threads instead.  Thanks to
+ 	  Marius Kjeldahl <marius@funcom.com, mariusk@sn.no> for reporting
+ 	  this.
+
 Tue Jan 28 23:32:58 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SString: Added hash() methods to each ACE String class so

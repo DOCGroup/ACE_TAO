@@ -129,9 +129,6 @@
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
 
-// To use pthreads on Linux you'll need to use the MIT version, for
-// now...
-#define _MIT_POSIX_THREADS 1
 #include /**/ <pthread.h>
 
 #endif /* ACE_CONFIG_H */
