@@ -87,7 +87,7 @@ ACE_Message_Queue_Vx::message_length (void)
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
-ACE_INLINE size_t
+ACE_INLINE int
 ACE_Message_Queue_Vx::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::message_count");
@@ -161,7 +161,7 @@ ACE_Message_Queue_NT::message_length (void)
   return this->cur_length_;
 }
 
-ACE_INLINE size_t
+ACE_INLINE int
 ACE_Message_Queue_NT::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_count");

@@ -722,7 +722,7 @@ ACE_Connector<SVH, PR_CO_2>::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 template <class SVH, PR_CO_1>
