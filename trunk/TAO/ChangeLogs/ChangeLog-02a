@@ -1,3 +1,11 @@
+Fri Mar  9 16:07:55 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor
+        * tests/QtTests/*.bor
+        * tests/Strategies/*.bor
+
+          Added BCB makefiles for these tests
+
 Fri Mar  9 07:25:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Fixed a error.
@@ -41,14 +49,14 @@ Thu Mar  8 20:44:23 2001  Ossama Othman  <ossama@uci.edu>
 Thu Mar  8 21:34:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.cpp (schedule_timer): Fixed a
-	  warning with g++.  
+	  warning with g++.
 
 Thu Mar  8 19:02:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/Interface.pidl:
 
-          Added some comments to the top of the file, about how to 
-          regenerate the stub code, and how to regenerate and use 
+          Added some comments to the top of the file, about how to
+          regenerate the stub code, and how to regenerate and use
           the diff files.
 
         * tao/IFR_Client/diffs/InterfaceC.h.diff:
@@ -68,16 +76,16 @@ Thu Mar  8 15:32:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
         * tao/Asynch_Reply_Dispatcher.h:
         * tao/Asynch_Timeout_Handler.cpp:
         * tao/Asynch_Timeout_Handler.h:
-    
+
           Moved the alloaction of the timeout handler from the asynch invocation,
           where it was done dynamically, to the constructur of the asynch reply
-          dispatcher constructor, where it is allocated together with the 
+          dispatcher constructor, where it is allocated together with the
           reply dispatcher. The reply dispatcher itself is allocated on the
           heap as the invocation object will go away before the reply arrives.
 
           This change also involved some restructuring of the timeout mechanism,
           though nothing major.
-    
+
 
 Thu Mar  8 14:20:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -90,7 +98,7 @@ Thu Mar  8 14:20:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Mar  8 12:39:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/server.cpp (main): 
+	* orbsvcs/tests/FaultTolerance/IOGR/server.cpp (main):
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
 	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
 	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
@@ -103,7 +111,7 @@ Thu Mar  8 12:39:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/Simple/echo/Echo_i.cpp:
 	* examples/Simple/echo/Echo_i.cpp:
 	* examples/Simple/echo/Echo_i.cpp: Fixed some
-	  resolve_initial_reference fuzz errors.  
+	  resolve_initial_reference fuzz errors.
 
 Thu Mar  8 09:32:49 2001  Darrell Brunsch <brunsch@uci.edu>
 
