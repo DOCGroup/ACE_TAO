@@ -176,30 +176,30 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptor and do preinvoke
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-      << "TAO_ServerRequestInterceptor_Adapter" << be_idt_nl
-      << "_tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));" << be_uidt_nl
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+      << "TAO_ServerRequestInterceptor_Adapter _tao_vfr (" << be_idt_nl
+      << "_tao_server_request.orb ()->"
+      << "_get_server_interceptor (ACE_TRY_ENV));" << be_uidt_nl
       << "ACE_CHECK;" << be_nl
- << "CORBA::Object_var _tao_objref;" << be_nl;
+      << "// @@ CORBA::Object_var _tao_objref;\n" << be_nl;
 
   // Obtain the scope.
 
-  os->indent ();
   if (node->is_nested ())
     {
       be_decl *parent =
         be_scope::narrow_from_scope (node->defined_in ())->decl ();
       // But since we are at the interface level our parents full_name
-      // will include the interface name which we dont want and so we 
+      // will include the interface name which we dont want and so we
       // get our parent's parent's full name.
       //    be_interface *parent_interface = be_interface::narrow_from_decl (parent);
       // be_decl *parents_parent = be_interface::narrow_from_scope (parent_interface->scope ())->decl ();
       // Generate the scope::operation name.
       //  *os << parents_parent->full_name () << "::";
-      *os << "POA_" <<parent->full_name () << "::";
+      *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<< node->flat_name (); 
+  *os << "TAO_ServerRequest_Info_"<< node->flat_name ();
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -216,7 +216,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -225,18 +225,20 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         *os <<"_set";
     }
 
-  *os<< "  ri (" << this->compute_operation_name (node) << ",\n"
+  *os << "  ri (" << be_idt_nl
+      << this->compute_operation_name (node) << "," << be_nl
       << "_tao_server_request.service_info ()";
-  
+
   // This necesary becos: (a) a comma is needed if there are arguments
   // (b) not needed if exceptions enabled since thats done already (c)
   // not needed if there are no args and exceptions is disabled.
-  
+
   //  os->indent ();
   // if (node->argument_count () > 0)
   // *os << ",\n";
 
-  // Generate the formal argument fields which are passed to the RequestInfo object
+  // Generate the formal argument fields which are passed to the
+  // RequestInfo object
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -251,11 +253,11 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
-  *os << ");\n";
+  *os << be_uidt_nl << ");\n" << be_nl;
 
   *os << "if (_tao_vfr.valid ())" << be_idt_nl
       << "{" << be_idt_nl
-      << "_tao_objref = "
+      << "// @@ _tao_objref = "
       << "_tao_server_request.objref (ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK;" << be_uidt_nl << "}\n" << be_uidt_nl
       << "ACE_TRY" << be_idt_nl
@@ -334,7 +336,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       visitor = tao_cg->make_visitor (&ctx);
-      
+
       if ((!visitor) || (bt->accept (visitor) == -1))
         {
           delete visitor;
@@ -349,26 +351,26 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-                    *os << "_tao_retval._retn ();";
-                    *os << be_nl <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-                    *os << be_nl << " ri.result (_tao_retval_info);"
-                        << be_nl << "_tao_retval = _tao_retval_info;" <<be_nl
-                        << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
+          *os << "_tao_retval._retn ();\n";
+          *os <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+          *os << be_nl << " ri.result (_tao_retval_info);"
+              << be_nl << "_tao_retval = _tao_retval_info;\n"
+              << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
         }
       else
         {
-          *os << "_tao_retval;";
-          *os << be_nl <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-          *os << be_nl << " ri.result (_tao_retval_info);" << be_nl
+          *os << "_tao_retval;\n";
+          *os <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+              << "ri.result (_tao_retval_info);\n"
               << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
         }
-/*
+#if 0
       *os << "// Update the result" << be_nl
           << "ri.result (";
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_SS);
       // just so that primitive types are taken care of.
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT); 
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (bt->accept (visitor) == -1))
         {
@@ -379,12 +381,13 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                              "codegen for retval assignment failed\n"),
                         -1);
         }
-        *os << ");"<< be_nl;*/
+        *os << ");"<< be_nl;
+#endif /* 0 */
     }
   *os << "TAO_INTERCEPTOR_CHECK;\n\n";
 
   // do postinvoke, and check for exception.
-  *os << be_nl <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
   *os << be_uidt_nl
       << " _tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<<be_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl

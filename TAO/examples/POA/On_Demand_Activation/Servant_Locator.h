@@ -18,6 +18,7 @@
 //==================================================================================
 
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class MyFooServantLocator : public PortableServer::ServantLocator
 {

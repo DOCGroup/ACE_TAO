@@ -618,8 +618,8 @@ FT_FTRequestServiceContext_out::operator-> (void)
 
 
 ACE_INLINE
-FT_RequestDurationPolicy::FT_RequestDurationPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+FT_RequestDurationPolicy::FT_RequestDurationPolicy (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 
@@ -1038,8 +1038,8 @@ FT_HeartbeatPolicyValue_var::ptr (void) const
 
 
 ACE_INLINE
-FT_HeartbeatPolicy::FT_HeartbeatPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+FT_HeartbeatPolicy::FT_HeartbeatPolicy (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 
@@ -1202,8 +1202,8 @@ FT_HeartbeatPolicy_out::operator-> (void)
 
 
 ACE_INLINE
-FT_HeartbeatEnabledPolicy::FT_HeartbeatEnabledPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
-  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+FT_HeartbeatEnabledPolicy::FT_HeartbeatEnabledPolicy (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_collocated)
 {}
 
 

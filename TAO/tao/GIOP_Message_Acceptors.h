@@ -97,11 +97,6 @@ private:
   // <request_id> and <response_required> are set as part of the
   // message processing.
 
-  void find_ior_in_table (TAO_ObjectKey &object_key,
-                          TAO_ORB_Core *orb_core,
-                          CORBA::Environment &ACE_TRY_ENV);
-  // Check for the Object id in the IOR table if TAO_NO_IOR_TABLE == 0
-
   CORBA::Octet major_version (void);
   CORBA::Octet minor_version (void);
 

@@ -53,20 +53,10 @@ Admin_Client::init (int argc,
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (argc, 
-                                    argv, 
-                                    0, 
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    0,
                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RootPOA", 
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->root_poa_ =
-        PortableServer::POA::_narrow (object.in (), 
-                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       int retval = this->parse_args (argc,
@@ -75,7 +65,7 @@ Admin_Client::init (int argc,
       if (retval != 0)
         return retval;
 
-      object = 
+      CORBA::Object_var object =
         this->orb_->resolve_initial_references ("InterfaceRepository",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -123,7 +113,7 @@ Admin_Client::run (void)
           for (CORBA::ULong i = 0; i < NUMBER_OF_TESTS; ++i)
             {
               // Each test is run twice to make sure everything
-              // gets destroyed properly. If not, we get a 
+              // gets destroyed properly. If not, we get a
               // CORBA::BAD_PARAM exception the second time.
               for (CORBA::ULong j = 0; j < this->iterations_; ++j)
                 {
@@ -140,11 +130,6 @@ Admin_Client::run (void)
               ACE_TRY_CHECK;
             }
         }
-
-      this->root_poa_->destroy (1,
-                                1,
-                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -207,7 +192,7 @@ Admin_Client::parse_args (int argc,
   return 0;
 }
 
-void 
+void
 Admin_Client::array_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -244,7 +229,7 @@ Admin_Client::array_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ArrayDef::type::kind: %d\n"),
                 kind));
-  
+
   ACE_ASSERT (kind == CORBA::tk_array);
 
   tc = avar->element_type (ACE_TRY_ENV);
@@ -338,7 +323,7 @@ Admin_Client::array_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::enum_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -577,7 +562,7 @@ Admin_Client::enum_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::alias_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -803,7 +788,7 @@ Admin_Client::alias_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::native_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -871,7 +856,7 @@ Admin_Client::native_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -987,7 +972,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   members[1].name = CORBA::string_dup ("array_mem");
-  members[1].type_def = this->repo_->create_array (5, 
+  members[1].type_def = this->repo_->create_array (5,
                                                    members[0].type_def.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK;
@@ -1079,7 +1064,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::my_struct"));
 
-  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all, 
+  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all,
                                                          0,
                                                          ACE_TRY_ENV);
   ACE_CHECK;
@@ -1093,7 +1078,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (length == 2);
 
-  contents = svar->contents (IR::dk_all, 
+  contents = svar->contents (IR::dk_all,
                              0,
                              ACE_TRY_ENV);
   ACE_CHECK;
@@ -1128,9 +1113,9 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
         }
     }
 
-  contents = this->repo_->lookup_name ("my_enum", 
-                                       -1, 
-                                       IR::dk_all, 
+  contents = this->repo_->lookup_name ("my_enum",
+                                       -1,
+                                       IR::dk_all,
                                        0,
                                        ACE_TRY_ENV);
   ACE_CHECK;
@@ -1161,9 +1146,9 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
       // of the results of the search.
     }
 
-  IR::Container::DescriptionSeq_var cont_desc = 
-    this->repo_->describe_contents (IR::dk_all, 
-                                    0, 
+  IR::Container::DescriptionSeq_var cont_desc =
+    this->repo_->describe_contents (IR::dk_all,
+                                    0,
                                     -1,
                                     ACE_TRY_ENV);
   ACE_CHECK;
@@ -1207,7 +1192,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nStructDef::name (set)\n")));
 
-  contents = svar->contents (IR::dk_all, 
+  contents = svar->contents (IR::dk_all,
                              0,
                              ACE_TRY_ENV);
   ACE_CHECK;
@@ -1236,9 +1221,9 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
             str.in ()
           ));
 
-      // Whatever the scoped name now is, it must begin 
+      // Whatever the scoped name now is, it must begin
       // with "::your_struct".
-      ACE_ASSERT (!ACE_OS::strncmp (str.in (), 
+      ACE_ASSERT (!ACE_OS::strncmp (str.in (),
                                     tmp,
                                     ACE_OS::strlen (tmp)));
     }
@@ -1254,7 +1239,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -1286,7 +1271,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   s_members[0].type = s_members[0].type_def->type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  IR::StructDef_var s_var = 
+  IR::StructDef_var s_var =
     this->repo_->create_struct ("IDL:struct_in_union:1.0",
                                 "struct_in_union",
                                 "1.0",
@@ -1446,7 +1431,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -1490,7 +1475,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
   members[2].type = members[2].type_def->type (ACE_TRY_ENV);
   ACE_CHECK;
 
-  IR::ExceptionDef_var exvar = 
+  IR::ExceptionDef_var exvar =
     this->repo_->create_exception ("IDL:my_exception:1.0",
                                    "my_exception",
                                    "1.0",
@@ -1571,7 +1556,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   members[1].name = CORBA::string_dup ("array_mem");
-  IR::ArrayDef_ptr a_ptr = this->repo_->create_array (5, 
+  IR::ArrayDef_ptr a_ptr = this->repo_->create_array (5,
                                                       members[0].type_def.in (),
                                                       ACE_TRY_ENV);
   ACE_CHECK;
@@ -1671,7 +1656,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::my_exception::my_enum"));
 
-  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all, 
+  IR::ContainedSeq_var contents = this->repo_->contents (IR::dk_all,
                                                          0,
                                                          ACE_TRY_ENV);
   ACE_CHECK;
@@ -1685,7 +1670,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (length == 2);
 
-  contents = exvar->contents (IR::dk_all, 
+  contents = exvar->contents (IR::dk_all,
                               0,
                               ACE_TRY_ENV);
   ACE_CHECK;
@@ -1716,9 +1701,9 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::my_exception::my_enum"));
     }
 
-  contents = this->repo_->lookup_name ("my_enum", 
-                                       -1, 
-                                       IR::dk_all, 
+  contents = this->repo_->lookup_name ("my_enum",
+                                       -1,
+                                       IR::dk_all,
                                        0,
                                        ACE_TRY_ENV);
   ACE_CHECK;
@@ -1748,9 +1733,9 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
       // Can't use ACE_ASSERT here - order of search results is unknown.
     }
 
-  IR::Container::DescriptionSeq_var cont_desc = 
-    this->repo_->describe_contents (IR::dk_all, 
-                                    0, 
+  IR::Container::DescriptionSeq_var cont_desc =
+    this->repo_->describe_contents (IR::dk_all,
+                                    0,
                                     -1,
                                     ACE_TRY_ENV);
   ACE_CHECK;
@@ -1830,7 +1815,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nExceptionDef::name (set)\n\n")));
 
-  contents = exvar->contents (IR::dk_all, 
+  contents = exvar->contents (IR::dk_all,
                               0,
                               ACE_TRY_ENV);
   ACE_CHECK;
@@ -1865,7 +1850,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::constant_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -1881,7 +1866,7 @@ Admin_Client::constant_test (CORBA::Environment &ACE_TRY_ENV)
   const char *s = "hello";
   any <<= s;
 
-  IR::ConstantDef_var cvar = 
+  IR::ConstantDef_var cvar =
     this->repo_->create_constant ("IDL:my_constant:1.0",
                                   "my_constant",
                                   "1.0",
@@ -2054,7 +2039,7 @@ Admin_Client::constant_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -2067,7 +2052,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
   IR::InterfaceDefSeq in_bases (1);
   in_bases.length (0);
 
-  IR::InterfaceDef_var gp_ivar = 
+  IR::InterfaceDef_var gp_ivar =
     this->repo_->create_interface ("IDL:gp_iface:1.0",
                                    "gp_iface",
                                    "1.0",
@@ -2084,7 +2069,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
   IR::StructMemberSeq members (0);
   members.length (0);
 
-  IR::ExceptionDef_var ex_var = 
+  IR::ExceptionDef_var ex_var =
     this->repo_->create_exception ("IDL:if_exception:1.0",
                                    "if_exception",
                                    "1.0",
@@ -2099,7 +2084,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
   put_seq.length (1);
   put_seq[0] = IR::ExceptionDef::_duplicate (ex_var.in ());
 
-  IR::AttributeDef_var gp_attr = 
+  IR::AttributeDef_var gp_attr =
     gp_ivar->create_attribute ("IDL:gp_iface/gp_attr:1.0",
                                "gp_attr",
                                "1.0",
@@ -2113,7 +2098,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
   in_bases.length (1);
   in_bases[0] = IR::InterfaceDef::_duplicate (gp_ivar.in ());
 
-  IR::InterfaceDef_var p_ivar = 
+  IR::InterfaceDef_var p_ivar =
     this->repo_->create_interface ("IDL:p_iface:1.0",
                                    "p_iface",
                                    "1.0",
@@ -2127,7 +2112,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
                                                            ACE_TRY_ENV);
   ACE_CHECK;
 
-  IR::AttributeDef_var p_attr = 
+  IR::AttributeDef_var p_attr =
     p_ivar->create_attribute ("IDL:p_iface/p_attr:1.0",
                               "p_attr",
                               "1.0",
@@ -2161,7 +2146,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
       con_seq[i] = contexts[i];
     }
 
-  IR::OperationDef_var p_op = 
+  IR::OperationDef_var p_op =
     p_ivar->create_operation ("IDL:p_iface/p_op:1.0",
                               "p_op",
                               "1.0",
@@ -2405,7 +2390,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
 
   in_bases[0] = IR::InterfaceDef::_duplicate (p_ivar.in ());
 
-  IR::InterfaceDef_var ivar = 
+  IR::InterfaceDef_var ivar =
     this->repo_->create_interface ("IDL:iface:1.0",
                                    "iface",
                                    "1.0",
@@ -2441,7 +2426,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), "p_iface"));
     }
 
-  IR::ContainedSeq_var contents = ivar->contents (IR::dk_all, 
+  IR::ContainedSeq_var contents = ivar->contents (IR::dk_all,
                                                   0,
                                                   ACE_TRY_ENV);
   ACE_CHECK;
@@ -2497,7 +2482,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -2565,7 +2550,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Any any;
   any <<= label;
   u_members[0].label = any;
-  
+
   u_members[1].name = u_names[1];
   u_members[1].type_def = IR::StructDef::_duplicate (s_var.in ());
   u_members[1].type = s_var->type (ACE_TRY_ENV);
@@ -2614,7 +2599,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_ASSERT (!ACE_OS::strcmp (tmp, u_members[i].name));
     }
 
-  IR::ContainedSeq_var out_contents = u_var->contents (IR::dk_all, 
+  IR::ContainedSeq_var out_contents = u_var->contents (IR::dk_all,
                                                        1,
                                                        ACE_TRY_ENV);
   ACE_CHECK;
@@ -2628,8 +2613,8 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_ASSERT (length == 0);
 
-  e_var->move (u_var.in (), 
-               u_names[0], 
+  e_var->move (u_var.in (),
+               u_names[0],
                "1.0",
                ACE_TRY_ENV);
   ACE_CHECK;
@@ -2666,7 +2651,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
         ACE_ASSERT (!ACE_OS::strcmp (tmp, u_members[i].name));
     }
 
-  out_contents = u_var->contents (IR::dk_all, 
+  out_contents = u_var->contents (IR::dk_all,
                                   1,
                                   ACE_TRY_ENV);
   ACE_CHECK;
@@ -2697,14 +2682,14 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
         ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::the_union::u_enum"));
     }
 
-  e_var2->move (s_var.in (), 
-                s_names[1], 
+  e_var2->move (s_var.in (),
+                s_names[1],
                 "1.0",
                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  s_var->move (u_var.in (), 
-               u_names[1], 
+  s_var->move (u_var.in (),
+               u_names[1],
                "1.0",
                 ACE_TRY_ENV);
   ACE_CHECK;
@@ -2725,7 +2710,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nRepository::contents::length: %d\n"),
                 length));
- 
+
   ACE_ASSERT (length == 1);
 
   out_u_members = u_var->members (ACE_TRY_ENV);
@@ -2753,7 +2738,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_ASSERT (!ACE_OS::strcmp (tmp, u_names[i]));
     }
 
-  out_contents = u_var->contents (IR::dk_all, 
+  out_contents = u_var->contents (IR::dk_all,
                                   1,
                                   ACE_TRY_ENV);
   ACE_CHECK;
@@ -2781,7 +2766,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
                     i,
                     str.in ()));
 
-      ACE_ASSERT (!ACE_OS::strcmp (str.in (), 
+      ACE_ASSERT (!ACE_OS::strcmp (str.in (),
                                    (scoped + u_names[i]).c_str ()));
 
       if (i == 1)
@@ -2792,7 +2777,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
         }
     }
 
-  out_contents = s_tmp->contents (IR::dk_all, 
+  out_contents = s_tmp->contents (IR::dk_all,
                                   0,
                                   ACE_TRY_ENV);
   ACE_CHECK;
@@ -2819,8 +2804,8 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
                     i,
                     str.in ()));
 
-      ACE_ASSERT (!ACE_OS::strncmp (str.in (), 
-                                    base, 
+      ACE_ASSERT (!ACE_OS::strncmp (str.in (),
+                                    base,
                                     ACE_OS::strlen (base)));
     }
 
@@ -2858,7 +2843,7 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 }
 
-void 
+void
 Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((
@@ -2980,7 +2965,7 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::String_var str;
 
-  IR::Contained_var result = 
+  IR::Contained_var result =
     inner->lookup ("::outer::middle::inner::iface::op",
                    ACE_TRY_ENV);
   ACE_CHECK;
@@ -2988,14 +2973,14 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
   str = result->absolute_name (ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (this->debug_) 
+  if (this->debug_)
     ACE_DEBUG ((
         LM_DEBUG,
         ACE_TEXT ("ModuleDef::lookup (absolute)::absolute_name: %s\n"),
         str.in ()
       ));
 
-  ACE_ASSERT (!ACE_OS::strcmp (str.in (), 
+  ACE_ASSERT (!ACE_OS::strcmp (str.in (),
                                "::outer::middle::inner::iface::op"));
 
   result = middle->lookup ("inner::iface::op",
@@ -3005,19 +2990,19 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
   str = result->absolute_name (ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (this->debug_) 
+  if (this->debug_)
     ACE_DEBUG ((
         LM_DEBUG,
         ACE_TEXT ("ModuleDef::lookup (relative)::absolute_name: %s\n"),
         str.in ()
       ));
 
-  ACE_ASSERT (!ACE_OS::strcmp (str.in (), 
+  ACE_ASSERT (!ACE_OS::strcmp (str.in (),
                                "::outer::middle::inner::iface::op"));
 
-  IR::ContainedSeq_var cseq = this->repo_->lookup_name ("op", 
-                                                        -1, 
-                                                        IR::dk_all, 
+  IR::ContainedSeq_var cseq = this->repo_->lookup_name ("op",
+                                                        -1,
+                                                        IR::dk_all,
                                                         0,
                                                         ACE_TRY_ENV);
   ACE_CHECK;
@@ -3036,7 +3021,7 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
       str = cseq[i]->absolute_name (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (this->debug_) 
+      if (this->debug_)
         ACE_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
@@ -3044,13 +3029,13 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
             str.in ()
           ));
 
-      ACE_ASSERT (!ACE_OS::strcmp (str.in (), 
+      ACE_ASSERT (!ACE_OS::strcmp (str.in (),
                                    "::outer::middle::inner::iface::op"));
     }
 
-  cseq = middle->lookup_name ("attr", 
-                              3, 
-                              IR::dk_Attribute, 
+  cseq = middle->lookup_name ("attr",
+                              3,
+                              IR::dk_Attribute,
                               0,
                               ACE_TRY_ENV);
   ACE_CHECK;
@@ -3069,7 +3054,7 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
       str = cseq[i]->absolute_name (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (this->debug_) 
+      if (this->debug_)
         ACE_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
@@ -3080,8 +3065,8 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_ASSERT (!ACE_OS::strcmp (str.in (), "::outer::p_iface::attr"));
     }
 
-  iface->move (outer.in (), 
-               "iface", 
+  iface->move (outer.in (),
+               "iface",
                "1.0",
                ACE_TRY_ENV);
   ACE_CHECK;
@@ -3090,9 +3075,9 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nInterfaceDef::move (into outer module)\n")));
 
-  cseq = this->repo_->lookup_name ("op", 
-                                   -1, 
-                                   IR::dk_all, 
+  cseq = this->repo_->lookup_name ("op",
+                                   -1,
+                                   IR::dk_all,
                                    0,
                                    ACE_TRY_ENV);
   ACE_CHECK;
@@ -3111,7 +3096,7 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
       str = cseq[i]->absolute_name (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (this->debug_) 
+      if (this->debug_)
         ACE_DEBUG ((
             LM_DEBUG,
             ACE_TEXT ("Repository::lookup_name[%d]::absolute_name: %s\n"),
@@ -3125,4 +3110,3 @@ Admin_Client::module_test (CORBA::Environment &ACE_TRY_ENV)
   outer->destroy (ACE_TRY_ENV);
   ACE_CHECK;
 }
-

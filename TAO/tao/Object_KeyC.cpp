@@ -48,4 +48,83 @@ CORBA::TypeCode _tc_TAO_tc_TAO_ObjectKey (CORBA::tk_alias, sizeof
 CORBA::TypeCode_ptr TAO_tc_ObjectKey = &_tc_TAO_tc_TAO_ObjectKey;
 
 
+void
+TAO_ObjectKey::encode_sequence_to_string (char * &str,
+                                          const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
+{
+  // We must allocate a buffer which is (gag) 3 times the length
+  // of the sequence, which is the length required in the worst-case
+  // scenario of all non-printable characters.
+  //
+  // There are two strategies here...we could allocate all that space here,
+  // fill it up, then copy-allocate new space of just the right length.
+  // OR, we could just return this space.  The classic time-space tradeoff,
+  // and for now we'll let time win out, which means that we only do the
+  // allocation once.
+  u_int len = 3 * seq.length (); /* space for zero termination not needed */;
+  str = CORBA::string_alloc (len);
+
+  char *cp = str;
+
+  for (u_int i = 0;
+       cp < (cp + len) && i < seq.length();
+       ++i)
+    {
+      u_char byte = seq[i];
+      if (isprint (byte) && byte != '\\')
+        {
+          *cp++ = (char) byte;
+          continue;
+        }
+
+      *cp++ = '\\';
+      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
+      *cp++ = ACE::nibble2hex (byte & 0x0f);
+    }
+  // Zero terminate
+  *cp = '\0';
+}
+
+void
+TAO_ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+                                          const char *str)
+{
+  if (str == 0)
+    {
+      seq.length (0);
+      return;
+    }
+
+  u_int length = ACE_OS::strlen (str);
+  const char *eos = str + length;
+  const char *cp = str;
+
+  // Set the length of the sequence to be as long as
+  // we'll possibly need...we'll reset it to the actual
+  // length later.
+  seq.length (length);
+
+  u_int i = 0;
+  for (;
+       cp < eos && i < seq.length ();
+       i++)
+    {
+      if (*cp == '\\')
+        {
+          // This is an escaped non-printable,
+          // so we decode the hex values into
+          // the sequence's octet
+          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
+          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
+          cp += 3;
+        }
+      else
+        // Copy it in
+        seq[i] = *cp++;
+    }
+
+  // Set the length appropriately
+  seq.length (i);
+}
+
 // ****************************************************************

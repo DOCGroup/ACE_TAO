@@ -21,8 +21,8 @@
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
 
+#include "tao/PortableServer/ImplRepoC.h"
 #include "tao/corba.h"
-#include "tao/ImplRepoC.h"
 
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
@@ -204,27 +204,3 @@ private:
 
 
 #endif /* REPOSITORY_H */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

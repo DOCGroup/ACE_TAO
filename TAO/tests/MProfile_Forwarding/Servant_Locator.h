@@ -1,6 +1,6 @@
 // $Id$
 
-//================================================================================
+// ================================================================
 //
 // = LIBRARY
 //     TAO/tests/POA/Forwarding/Servant_Locator
@@ -15,12 +15,13 @@
 // = AUTHOR
 //     Irfan Pyarali
 //
-//==================================================================================
+// ================================================================
 
 #ifndef _SERVANT_LOCATOR_H_
 #define _SERVANT_LOCATOR_H_
 
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class Servant_Locator : public PortableServer::ServantLocator
 {

@@ -43,11 +43,11 @@
 #define RTCP_SDES_MAX 7
 
 #include "ace/OS.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 
 class TAO_AV_SourceManager;
 
-extern "C" 
+extern "C"
 {
   int compare_func (const void* v0, const void* v1);
 }

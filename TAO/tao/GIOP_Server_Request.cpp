@@ -7,7 +7,6 @@
 #include "tao/GIOP_Message_Acceptors.h"
 
 #include "tao/CDR.h"
-#include "tao/PortableServerC.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
 #include "tao/Principal.h"
@@ -18,7 +17,6 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Server_Request.i"
@@ -188,43 +186,25 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 {
   if (this->retval_ || this->exception_)
     ACE_THROW (CORBA::BAD_INV_ORDER ());
-  else
-  {
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+  ACE_NEW_THROW_EX (this->exception_,
+                    CORBA::Any (value),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
-    const PortableServer::ForwardRequest *forward_request = 0;
+  this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
 
-    // If extraction of exception succeeded
-    if ((value >>= forward_request) != 0)
-      {
-        this->forward_location_ = forward_request->forward_reference;
-        this->exception_type_ = TAO_GIOP_LOCATION_FORWARD;
-      }
-    // Normal exception
-    else
-#endif /* TAO_HAS_MINIMUM_CORBA */
-      {
-        ACE_NEW_THROW_EX (this->exception_,
-                          CORBA::Any (value),
-                          CORBA::NO_MEMORY ());
-        ACE_CHECK;
+  if (value.value ())
+    {
+      // @@ This cast is not safe, but we haven't implemented the >>=
+      // and <<= operators for base exceptions (yet).
+      CORBA_Exception* x = (CORBA_Exception*)value.value ();
 
-        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
-
-        if (value.value ())
-          {
-            // @@ This cast is not safe, but we haven't implemented the >>=
-            // and <<= operators for base exceptions (yet).
-            CORBA_Exception* x = (CORBA_Exception*)value.value ();
-
-            if (CORBA_SystemException::_downcast (x) != 0)
-              {
-                this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
-              }
-          }
-      }
-   }
+      if (CORBA_SystemException::_downcast (x) != 0)
+        {
+          this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+        }
+    }
 }
 
 // this method will be utilized by the DSI servant to marshal outgoing
@@ -485,6 +465,7 @@ TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
 
 }
 
+#if 0 // PPOA
 CORBA::Object_ptr
 TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
 {
@@ -492,3 +473,4 @@ TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
 
   return pci->poa ()->id_to_reference (pci->object_id (), ACE_TRY_ENV);
 }
+#endif /* 0 PPOA */

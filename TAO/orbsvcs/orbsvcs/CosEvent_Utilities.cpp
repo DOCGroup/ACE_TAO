@@ -108,7 +108,7 @@ CosEC_ServantBase::activate (const char* servant_id,
 
 
   PortableServer::ObjectId_var oid =
-    TAO_POA::string_to_ObjectId (servant_id);
+    PortableServer::string_to_ObjectId (servant_id);
 
   // Activate ourselves.
   // Note that the POA is <thispoa_>

@@ -143,7 +143,6 @@ class TAO_Export CORBA_IRObject : public virtual ACE_CORBA_1 (Object)
   protected:
     CORBA_IRObject (void);
     CORBA_IRObject (TAO_Stub *objref,
-        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~CORBA_IRObject (void);
@@ -560,7 +559,6 @@ class TAO_Export IR_Contained: public virtual CORBA_IRObject
   protected:
     IR_Contained (void);
     IR_Contained (TAO_Stub *objref,
-        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~IR_Contained (void);
@@ -4231,7 +4229,6 @@ virtual const char* _interface_repository_id (void) const;
 protected:
   IR_Container (void);
   IR_Container (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_Container (void);
@@ -4527,7 +4524,6 @@ public:
 protected:
   IR_IDLType (void);
   IR_IDLType (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_IDLType (void);
@@ -4986,7 +4982,6 @@ public:
 protected:
   IR_Repository (void);
   IR_Repository (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_Repository (void);
@@ -5239,7 +5234,6 @@ public:
 protected:
   IR_ComponentRepository (void);
   IR_ComponentRepository (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ComponentRepository (void);
@@ -5372,7 +5366,6 @@ public:
 protected:
   IR_ModuleDef (void);
   IR_ModuleDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ModuleDef (void);
@@ -5582,7 +5575,6 @@ public:
 protected:
   IR_ConstantDef (void);
   IR_ConstantDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ConstantDef (void);
@@ -5839,7 +5831,6 @@ public:
 protected:
   IR_TypedefDef (void);
   IR_TypedefDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_TypedefDef (void);
@@ -6025,7 +6016,6 @@ public:
 protected:
   IR_StructDef (void);
   IR_StructDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_StructDef (void);
@@ -6190,7 +6180,6 @@ public:
 protected:
   IR_UnionDef (void);
   IR_UnionDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_UnionDef (void);
@@ -6355,7 +6344,6 @@ public:
 protected:
   IR_EnumDef (void);
   IR_EnumDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_EnumDef (void);
@@ -6495,7 +6483,6 @@ public:
 protected:
   IR_AliasDef (void);
   IR_AliasDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_AliasDef (void);
@@ -6618,7 +6605,6 @@ public:
 protected:
   IR_NativeDef (void);
   IR_NativeDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_NativeDef (void);
@@ -6732,7 +6718,6 @@ public:
 protected:
   IR_PrimitiveDef (void);
   IR_PrimitiveDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_PrimitiveDef (void);
@@ -6863,7 +6848,6 @@ public:
 protected:
   IR_StringDef (void);
   IR_StringDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_StringDef (void);
@@ -7003,7 +6987,6 @@ public:
 protected:
   IR_WstringDef (void);
   IR_WstringDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_WstringDef (void);
@@ -7160,7 +7143,6 @@ public:
 protected:
   IR_FixedDef (void);
   IR_FixedDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_FixedDef (void);
@@ -7342,7 +7324,6 @@ public:
 protected:
   IR_SequenceDef (void);
   IR_SequenceDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_SequenceDef (void);
@@ -7532,7 +7513,6 @@ public:
 protected:
   IR_ArrayDef (void);
   IR_ArrayDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ArrayDef (void);
@@ -7705,7 +7685,6 @@ public:
 protected:
   IR_ExceptionDef (void);
   IR_ExceptionDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ExceptionDef (void);
@@ -8225,7 +8204,6 @@ public:
 protected:
   IR_AttributeDef (void);
   IR_AttributeDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_AttributeDef (void);
@@ -8841,7 +8819,6 @@ public:
 protected:
   IR_OperationDef (void);
   IR_OperationDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_OperationDef (void);
@@ -9519,7 +9496,6 @@ public:
 protected:
   IR_InterfaceDef (void);
   IR_InterfaceDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_InterfaceDef (void);
@@ -10055,7 +10031,6 @@ public:
 protected:
   IR_ValueMemberDef (void);
   IR_ValueMemberDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ValueMemberDef (void);
@@ -10375,7 +10350,6 @@ public:
 protected:
   IR_ValueDef (void);
   IR_ValueDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ValueDef (void);
@@ -10743,7 +10717,6 @@ public:
 protected:
   IR_ValueBoxDef (void);
   IR_ValueBoxDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ValueBoxDef (void);
@@ -10874,7 +10847,6 @@ public:
 protected:
   IR_ProvidesDef (void);
   IR_ProvidesDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ProvidesDef (void);
@@ -11067,7 +11039,6 @@ public:
 protected:
   IR_UsesDef (void);
   IR_UsesDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_UsesDef (void);
@@ -11511,7 +11482,6 @@ public:
 protected:
   IR_EventDef (void);
   IR_EventDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_EventDef (void);
@@ -11697,7 +11667,6 @@ public:
 protected:
   IR_EmitsDef (void);
   IR_EmitsDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_EmitsDef (void);
@@ -11803,7 +11772,6 @@ public:
 protected:
   IR_PublishesDef (void);
   IR_PublishesDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_PublishesDef (void);
@@ -11909,7 +11877,6 @@ public:
 protected:
   IR_ConsumesDef (void);
   IR_ConsumesDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ConsumesDef (void);
@@ -12149,7 +12116,6 @@ public:
 protected:
   IR_ComponentDef (void);
   IR_ComponentDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_ComponentDef (void);
@@ -12477,7 +12443,6 @@ public:
 protected:
   IR_PrimaryKeyDef (void);
   IR_PrimaryKeyDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_PrimaryKeyDef (void);
@@ -12663,7 +12628,6 @@ public:
 protected:
   IR_FactoryDef (void);
   IR_FactoryDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_FactoryDef (void);
@@ -12769,7 +12733,6 @@ public:
 protected:
   IR_FinderDef (void);
   IR_FinderDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_FinderDef (void);
@@ -12961,7 +12924,6 @@ public:
 protected:
   IR_HomeDef (void);
   IR_HomeDef (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~IR_HomeDef (void);
@@ -13455,7 +13417,6 @@ class TAO_Export CORBA_TypeCodeFactory : public virtual ACE_CORBA_1 (Object)
   protected:
     CORBA_TypeCodeFactory (void);
     CORBA_TypeCodeFactory (TAO_Stub *objref,
-        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~CORBA_TypeCodeFactory (void);

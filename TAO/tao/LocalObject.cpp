@@ -1,18 +1,10 @@
-// @(#) $Id$
 //
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
+// $Id$
 //
-// ORB:         CORBA_Object operations
 
 #include "tao/LocalObject.h"
-#include "tao/Object_Adapter.h"
 #include "tao/Stub.h"
-#include "tao/Servant_Base.h"
 #include "tao/Request.h"
-#include "tao/ORB_Core.h"
-#include "tao/Invocation.h"
-#include "tao/Connector_Registry.h"
 #include "tao/debug.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
@@ -25,7 +17,7 @@
 # include "tao/LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Object, "$Id$")
+ACE_RCSID(tao, LocalObject, "$Id$")
 
 CORBA::LocalObject::~LocalObject (void)
 {

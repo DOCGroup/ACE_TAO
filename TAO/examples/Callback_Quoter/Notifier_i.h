@@ -22,7 +22,7 @@
 
 #include "NotifierS.h"
 #include "ConsumerC.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -39,7 +39,7 @@ class Notifier_i : public POA_Notifier
   // = DESCRIPTION
   //   The implementation of the Notifier class, which is the servant
   //   object for the callback quoter server.
-  //   
+  //
 public:
   // = Initialization and termination methods.
   Notifier_i (void);
@@ -111,9 +111,9 @@ public:
 
   int notifier_exited_;
   //This marks the exit of the notifier. This should be taken care of
-  // before the consumer tries to unregister after the notifier quits. 
+  // before the consumer tries to unregister after the notifier quits.
 
-  
+
 };
 
 #endif /* NOTIFIER_I_H */

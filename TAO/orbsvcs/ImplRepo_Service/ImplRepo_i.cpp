@@ -2,6 +2,7 @@
 
 #include "ImplRepo_i.h"
 #include "Options.h"
+#include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "ace/Read_Buffer.h"
@@ -653,9 +654,10 @@ ImplRepo_i::server_is_running (const char *server,
 
   TAO_MProfile mp;
   TAO_ObjectKey objkey;
-  TAO_POA *poa = ACE_dynamic_cast (TAO_POA *, this->imr_poa_.in ());
 
-  registry->make_mprofile (objkey, mp, poa);
+  // Use a Null filter, all the profiles in the ImR are valid, no
+  // matter what the server has.
+  registry->make_mprofile (objkey, mp, 0);
 
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
@@ -1346,18 +1348,27 @@ void
 IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
                        CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_ORB_Core *orb_core = this->orb_var_->orb_core ();
-  TAO_POA_Current_Impl *poa_current_impl = orb_core->poa_current ().implementation ();
+  // @@ This could be optimized, the PortableServer::Current object
+  // can be cached..
+  CORBA::Object_var tmp =
+    this->orb_var_->resolve_initial_references ("POACurrent",
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::Current_var current =
+    PortableServer::Current::_narrow (tmp.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 
   // The servant determines the key associated with the database entry
   // represented by self
-  PortableServer::ObjectId_var oid = poa_current_impl->get_object_id (ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid =
+    current->get_object_id (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
 
-  PortableServer::POA_ptr poa = poa_current_impl->get_POA (ACE_TRY_ENV);
+  PortableServer::POA_ptr poa = current->get_POA (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Now activate.
@@ -1372,7 +1383,14 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   // Add the key
 
   char *key_str = 0;
-  TAO_POA::encode_sequence_to_string (key_str, poa_current_impl->object_key ());
+
+  // @@ Even if the POA Current is cached the following code will
+  //    work.  But the implementation cannot be cached!
+  TAO_POA_Current *tao_current =
+    ACE_dynamic_cast(TAO_POA_Current*, current.in ());
+  TAO_POA_Current_Impl *impl = tao_current->implementation ();
+  TAO_ObjectKey::encode_sequence_to_string (key_str,
+                                            impl->object_key ());
 
   ior += key_str;
   CORBA::string_free (key_str);
@@ -1380,7 +1398,8 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
 
-  CORBA::Object_ptr forward_obj = orb_core->orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+  CORBA::Object_ptr forward_obj =
+    this->orb_var_->string_to_object (ior.c_str (), ACE_TRY_ENV);
   ACE_CHECK;
 
   if (!CORBA::is_nil (forward_obj))

@@ -16,7 +16,7 @@
 #ifndef IFR_SERVICE_H
 #define IFR_SERVICE_H
 
-#include "tao/PortableServerC.h"
+#include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB.h"
 #include "tao/ifrfwd.h"
 

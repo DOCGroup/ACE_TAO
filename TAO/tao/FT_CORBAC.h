@@ -362,7 +362,6 @@ public:
 protected:
   FT_RequestDurationPolicy (void);
   FT_RequestDurationPolicy (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~FT_RequestDurationPolicy (void);
@@ -557,7 +556,6 @@ public:
 protected:
   FT_HeartbeatPolicy (void);
   FT_HeartbeatPolicy (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~FT_HeartbeatPolicy (void);
@@ -661,7 +659,6 @@ public:
 protected:
   FT_HeartbeatEnabledPolicy (void);
   FT_HeartbeatEnabledPolicy (TAO_Stub *objref,
-      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
     virtual ~FT_HeartbeatEnabledPolicy (void);
