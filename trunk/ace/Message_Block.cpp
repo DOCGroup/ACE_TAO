@@ -223,7 +223,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
 		    ACE_Message_Block::DONT_DELETE, // flags
 		    0, // priority
                     ACE_Time_Value::zero, // execution time
-                    ACE_Time_Value::zero, // absolute time of deadline
+                    ACE_Time_Value::max, // absolute time of deadline
 		    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -241,7 +241,7 @@ ACE_Message_Block::ACE_Message_Block (void)
 		    ACE_Message_Block::DONT_DELETE, // flags
 		    0, // priority
                     ACE_Time_Value::zero, // execution time
-                    ACE_Time_Value::zero, // absolute time of deadline
+                    ACE_Time_Value::max, // absolute time of deadline
 		    0) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -314,7 +314,7 @@ ACE_Message_Block::init (const char *data,
 		       ACE_Message_Block::DONT_DELETE,  // flags
 		       0,  // priority
                        ACE_Time_Value::zero, // execution time
-                       ACE_Time_Value::zero, // absolute time of deadline
+                       ACE_Time_Value::max, // absolute time of deadline
 		       0); // data block
 }
 
@@ -359,7 +359,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
 		    0,         // flags
 		    0,         // priority
                     ACE_Time_Value::zero, // execution time
-                    ACE_Time_Value::zero, // absolute time of deadline
+                    ACE_Time_Value::max, // absolute time of deadline
 		    data_block) == -1) // data block
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }

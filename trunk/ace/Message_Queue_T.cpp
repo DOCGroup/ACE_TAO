@@ -1611,20 +1611,26 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (
   ACE_Message_Block *new_item,
   ACE_Time_Value *timeout)
 {
-  return ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (new_item, timeout);
+  ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
+  return this->enqueue_prio (new_item, timeout);
 }
-  // private method to hide public base class method: just calls base class method
-
+  // just call priority enqueue method: tail enqueue semantics for dynamic
+  // message queues are unstable: the message may or may not be where
+  // it was placed after the queue is refreshed prior to the next
+  // enqueue or dequeue operation.
 
 template <ACE_SYNCH_DECL> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head (
   ACE_Message_Block *new_item,
   ACE_Time_Value *timeout)
 {
-  return ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head (new_item, timeout);
+  ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
+  return this->enqueue_prio (new_item, timeout);
 }
-  // private method to hide public base class method: just calls base class method
-
+  // just call priority enqueue method: head enqueue semantics for dynamic
+  // message queues are unstable: the message may or may not be where
+  // it was placed after the queue is refreshed prior to the next
+  // enqueue or dequeue operation.
 
 
 /////////////////////////////////////
