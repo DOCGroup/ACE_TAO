@@ -2705,14 +2705,15 @@ public:
 
   // = A set of wrappers for operations on time.
   static time_t time (time_t *tloc);
+  static time_t mktime (struct tm *timeptr);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock, struct tm *res);
   static struct tm *gmtime (const time_t *clock);
   static struct tm *gmtime_r (const time_t *clock, struct tm *res);
   static char *asctime (const struct tm *tm);
+  static char *asctime_r (const struct tm *tm, char *buf, int buflen);
   static char *ctime (const time_t *t);
   static char *ctime_r (const time_t *clock, char *buf, int buflen);
-  static char *asctime_r (const struct tm *tm, char *buf, int buflen);
 
   // = A set of wrappers for memory managment.
   static void *sbrk (int brk);

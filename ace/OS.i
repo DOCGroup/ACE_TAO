@@ -5619,6 +5619,13 @@ ACE_OS::open (const char *filename,
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE time_t
+ACE_OS::mktime (struct tm *t)
+{
+  // ACE_TRACE ("ACE_OS::asctime");
+  ACE_OSCALL_RETURN (::mktime (t), time_t, -1);
+}
+
 ACE_INLINE char *
 ACE_OS::ctime (const time_t *t)
 {
