@@ -1,3 +1,12 @@
+Fri Feb  6 14:59:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ExtAbstactInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAbstactInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
+        
+          Added destroy() method to disambiguate multiple inheritance.
+
 Fri Feb  6 10:48:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.cpp: 
