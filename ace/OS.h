@@ -2380,6 +2380,7 @@ public:
   static void _exit (int status = 0);
   static void exit (int status = 0);
   static pid_t fork (void);
+  static pid_t fork (const char *program_name);
   static pid_t fork_exec (char *argv[]);
   // Forks and exec's a process in a manner that works on Solaris and
   // NT.  argv[0] must be the full path name to the executable.

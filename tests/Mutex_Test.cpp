@@ -58,14 +58,13 @@ spawn (void)
   char *name = "hello";
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
-  switch (ACE_OS::fork ())
+  switch (ACE_OS::fork ("child"))
     {
     case -1:
       ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
       exit (-1);
     case 0: // In child
       {
-	ACE_LOG_MSG->sync ("child");
 	ACE_Process_Mutex pm (ACE_WIDE_STRING (name));
 	test (&pm);
 	break;

@@ -221,13 +221,12 @@ spawn (void)
 		  server_addr.get_port_number ()));
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
-      switch (ACE_OS::fork ())
+      switch (ACE_OS::fork ("child"))
 	{
 	case -1:
 	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
 	  exit (-1);
 	case 0: 
-	  ACE_LOG_MSG->sync ("child");
 	  client (&server_addr);
 	default:
 	  server ((void *) &peer_acceptor);

@@ -55,8 +55,9 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (void)
 
 ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local, 
 					    int protocol_family, 
-					    int protocol)
-  : ACE_SOCK_Dgram (local, protocol_family, protocol), 
+					    int protocol,
+					    int reuse_addr)
+  : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr), 
     if_list_ (0)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
@@ -70,11 +71,12 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
 int
 ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local, 
 			    int protocol_family, 
-			    int protocol)
+			    int protocol,
+			    int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::open");
   if (this->ACE_SOCK_Dgram::open (local, protocol_family, 
-				  protocol) == -1)
+				  protocol, reuse_addr) == -1)
     return -1;
 
   return this->mk_broadcast ();
