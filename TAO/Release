@@ -11,31 +11,31 @@
 ####
 
 CONTROLLED_FILES = TAO/COPYING* \
-	    	   TAO/ChangeLog* \
-	  	   TAO/LICENSE.sun \
-		   TAO/PROBLEM-REPORT-FORM \
-                   TAO/Release \
-		   TAO/README* \
-		   TAO/TAO-INSTALL.html \
-		   TAO/TAOACE* \
-		   TAO/TAO.mwc \
-		   TAO/TAO_IDL \
-		   TAO/VERSION \
-		   TAO/docs \
-		   TAO/NEWS \
-		   TAO/examples \
-                   TAO/interop-tests \
-		   TAO/orbsvcs \
-		   TAO/performance-tests \
-		   TAO/release.pl \
-		   TAO/rules.tao.GNU \
-		   TAO/tao \
-		   TAO/tao-config.1.in \
-		   TAO/tao-config.in \
-        	   TAO/Makefile.am \
-        	   TAO/configure.ac \ 
-		   TAO/tests \
-		   TAO/utils
+		TAO/ChangeLog* \
+		TAO/LICENSE.sun \
+		TAO/PROBLEM-REPORT-FORM \
+		TAO/Release \
+		TAO/README* \
+		TAO/TAO-INSTALL.html \
+		TAO/TAOACE* \
+		TAO/TAO.mwc \
+		TAO/TAO_IDL \
+		TAO/VERSION \
+		TAO/docs \
+		TAO/NEWS \
+		TAO/examples \
+		TAO/interop-tests \
+		TAO/orbsvcs \
+		TAO/performance-tests \
+		TAO/release.pl \
+		TAO/rules.tao.GNU \
+		TAO/tao \
+		TAO/tao-config.1.in \
+		TAO/tao-config.in \
+		TAO/Makefile.am \
+		TAO/configure.ac \ 
+		TAO/tests \
+		TAO/utils
 
 
 RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
