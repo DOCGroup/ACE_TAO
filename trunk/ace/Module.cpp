@@ -180,7 +180,7 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const char *mod_name,
   this->q_pair_[1] = 0;
 
   if (this->open (mod_name, writer_q, reader_q, args, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Module"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Module")));
 }
 		
 template <ACE_SYNCH_DECL> int

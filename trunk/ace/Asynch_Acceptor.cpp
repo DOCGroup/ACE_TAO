@@ -45,14 +45,14 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   // Create the listener socket
   this->listen_handle_ = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
   if (this->listen_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::socket"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
   
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
 				 this->listen_handle_,
 				 0,
 				 this->proactor ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Accept::open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::open")), -1);
 
   if (reuse_addr)
     {
@@ -63,14 +63,14 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 			      SO_REUSEADDR, 
 			      (const char*) &one, 
 			      sizeof one) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::setsockopt"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::setsockopt")), -1);
     }
 
   // If port is not specified, bind to any port.
   static ACE_INET_Addr sa ((const ACE_INET_Addr &) ACE_Addr::sap_any);
 
   if (address == sa && ACE::bind_port (this->listen_handle_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::bind_port"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE::bind_port")), -1);
 
   // Bind to the specified port.
   if (ACE_OS::bind (this->listen_handle_, 
@@ -113,7 +113,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read)
     {
       // Cleanup on error
       message_block->release ();
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Accept::accept"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Asynch_Accept::accept")), -1);
     }
   return 0;
 }
@@ -136,7 +136,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
 			      SO_UPDATE_ACCEPT_CONTEXT, 
 			      (char *) &this->listen_handle_, 
 			      sizeof (this->listen_handle_)) == -1)
-	ACE_ERROR ((LM_ERROR, "%p", "ACE_OS::setsockopt"));
+	ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p"),  ASYS_TEXT ("ACE_OS::setsockopt")));
       
       // The Template method
       HANDLER *new_handler = this->make_handler ();
@@ -163,7 +163,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       // Close the accept handle
       ACE_OS::closesocket (result.accept_handle ());
-      ACE_ERROR ((LM_ERROR, "%p\n", "Asynchronous Accept"));
+      ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("Asynchronous Accept")));
     }
   
   // Delete the dynamically allocated message_block

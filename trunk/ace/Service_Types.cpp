@@ -46,7 +46,7 @@ int
 ACE_Service_Type_Impl::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::fini");
-  ACE_DEBUG ((LM_DEBUG, "destroying %s, flags = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("destroying %s, flags = %d\n"), 
 	     this->name_, this->flags_));
 
   delete [] (char *) this->name_;

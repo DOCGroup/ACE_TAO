@@ -90,7 +90,7 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
   self->timeout_ = 0;
 
-  ACE_DEBUG ((LM_DEBUG, "ACE_XtReactor::Timer on id %d\n", (int) *id));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_XtReactor::Timer on id %d\n"), (int) *id));
 
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -109,7 +109,7 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
 {
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
 
-  ACE_DEBUG ((LM_DEBUG, "ACE_XtReactor::Input on fd %d\n", *source));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_XtReactor::Input on fd %d\n"), *source));
 
   ACE_Time_Value zero = ACE_Time_Value::zero; // my copy isn't const
 
@@ -189,7 +189,7 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_XtReactor::register_handler_i");
 
-  ACE_DEBUG ((LM_DEBUG, "+++%d\n", handle));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++%d\n"), handle));
 
   int result = ACE_Select_Reactor::register_handler_i (handle, handler, mask);
 
@@ -259,7 +259,7 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 				 ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_XtReactor::remove_handler_i");
-  ACE_DEBUG ((LM_DEBUG, "---%d\n", handle));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("---%d\n"), handle));
 
   int result = ACE_Select_Reactor::remove_handler_i (handle, mask);
 
@@ -268,11 +268,11 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
       if (ids_[handle].good_id_)
 	::XtRemoveInput (ids_[handle].id_);
       else
-	ACE_DEBUG ((LM_DEBUG, "Handle id is not good %d\n", handle));
+	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Handle id is not good %d\n"), handle));
       ids_[handle].good_id_ = 0;
     }
   else 
-    ACE_DEBUG ((LM_DEBUG, "Handle out of range %d\n", handle));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Handle out of range %d\n"), handle));
 
   if (result == -1)
     return result;
@@ -303,7 +303,7 @@ ACE_XtReactor::reset_timeout (void)
 
   if (max_wait_time)
     {
-      ACE_DEBUG ((LM_DEBUG, "       %ld\n", max_wait_time->msec ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("       %ld\n"), max_wait_time->msec ()));
 
       timeout_ = ::XtAppAddTimeOut (context_, 
 				    max_wait_time->msec (), 

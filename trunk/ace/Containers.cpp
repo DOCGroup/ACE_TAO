@@ -372,9 +372,9 @@ ACE_Unbounded_Queue<T>::dump (void) const
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
-  ACE_DEBUG ((LM_DEBUG, "\nhead_->next_ = %u", this->head_->next_));
-  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d\n", this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_ = %u"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
   size_t count = 1;
@@ -382,7 +382,7 @@ ACE_Unbounded_Queue<T>::dump (void) const
   for (ACE_Unbounded_Queue_Iterator<T> iter (*(ACE_Unbounded_Queue<T> *) this);
        iter.next (item) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, "count = %d\n", count++));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("count = %d\n"), count++));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -1443,9 +1443,9 @@ ACE_Unbounded_Set<T>::dump (void) const
   ACE_TRACE ("ACE_Unbounded_Set<T>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
-  ACE_DEBUG ((LM_DEBUG, "\nhead_->next_ = %u", this->head_->next_));
-  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d\n", this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_ = %u"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
   T *item = 0;
   size_t count = 1;
@@ -1453,7 +1453,7 @@ ACE_Unbounded_Set<T>::dump (void) const
   for (ACE_Unbounded_Set_Iterator<T> iter (*(ACE_Unbounded_Set<T> *) this);
        iter.next (item) != 0;
        iter.advance ())
-    ACE_DEBUG ((LM_DEBUG, "count = %d\n", count++));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("count = %d\n"), count++));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -1910,9 +1910,9 @@ ACE_Ordered_MultiSet<T>::dump (void) const
 //  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
 //
 //  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-//  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
-//  ACE_DEBUG ((LM_DEBUG, "\nhead_->next_ = %u", this->head_->next_));
-//  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d\n", this->cur_size_));
+//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_ = %u"), this->head_));
+//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
+//  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 //
 //  T *item = 0;
 //  size_t count = 1;
@@ -1920,7 +1920,7 @@ ACE_Ordered_MultiSet<T>::dump (void) const
 //  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
 //       iter.next (item) != 0;
 //       iter.advance ())
-//    ACE_DEBUG ((LM_DEBUG, "count = %d\n", count++));
+//    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("count = %d\n"), count++));
 //
 //  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

@@ -339,7 +339,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (ACE_Naming
 {  
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Local_Name_Space::ACE_Local_Name_Space"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> 
@@ -438,7 +438,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   if (this->allocator_->find (ACE_NAME_SERVER_MAP, ns_map) == 0)
     {
       this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
-      ACE_DEBUG ((LM_DEBUG, "name_space_map_ = %d, ns_map = %d\n",
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
 		  this->name_space_map_, ns_map));
     }
 
@@ -453,7 +453,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
       if (this->allocator_->find (ACE_NAME_SERVER_MAP, ns_map) == 0)
 	{
 	  this->name_space_map_ = (ACE_Name_Space_Map <ALLOCATOR> *) ns_map;
-	  ACE_DEBUG ((LM_DEBUG, "name_space_map_ = %d, ns_map = %d\n",
+	  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
 		      this->name_space_map_, ns_map));
 	}
       else
@@ -470,7 +470,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 	    ACE_ERROR_RETURN ((LM_ERROR, "create_manager\n"), -1);
 	}
 
-      ACE_DEBUG ((LM_DEBUG, "name_space_map_ = %d, ns_map = %d\n",
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("name_space_map_ = %d, ns_map = %d\n"),
 		  this->name_space_map_, ns_map));
     }
 
@@ -741,7 +741,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
       char *value = map_entry->int_id_.value ().char_rep ();
       const char *type = map_entry->int_id_.type ();
 
-      ACE_DEBUG ((LM_DEBUG, "key=%s\nvalue=%s\ntype=%s\n",
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
 		  key, value, type));
       // We need to delete key and value since char_rep allocates memory for them
       delete [] key;

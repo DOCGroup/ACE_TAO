@@ -90,7 +90,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
       return 0;
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "ACE_Priority_Reactor::dispatch_io_set\n"));
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Priority_Reactor::dispatch_io_set\n")));
 
   ACE_HANDLE handle;
 
@@ -127,7 +127,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
 	}
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "dispatching.... %d\n", number_of_active_handles));
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("dispatching.... %d\n"), number_of_active_handles));
 
   for (int i = max_priority; i >= min_priority; --i)
     {

@@ -21,8 +21,8 @@ ACE_Connector<SH, PR_CO_2>::dump (void) const
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\nclosing_ = %d", this->closing_));
-  ACE_DEBUG ((LM_DEBUG, "\nflags_ = %d", this->flags_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nclosing_ = %d"), this->closing_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nflags_ = %d"), this->flags_));
   this->handler_map_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -180,9 +180,9 @@ ACE_Svc_Tuple<SH>::dump (void) const
   ACE_TRACE ("ACE_Svc_Tuple<SH>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "svc_handler_ = %x", this->svc_handler_));
-  ACE_DEBUG ((LM_DEBUG, "\narg_ = %x", this->arg_));
-  ACE_DEBUG ((LM_DEBUG, "\ncancellation_id_ = %d", this->cancellation_id_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("svc_handler_ = %x"), this->svc_handler_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\narg_ = %x"), this->arg_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncancellation_id_ = %d"), this->cancellation_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -739,7 +739,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::ACE_Strategy_Connector
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::ACE_Connector");
 
   if (this->open (reactor, cre_s, conn_s, con_s, flags) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Strategy_Connector::ACE_Strategy_Connector"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Strategy_Connector::ACE_Strategy_Connector")));
 }
 
 template <class SH, PR_CO_1>

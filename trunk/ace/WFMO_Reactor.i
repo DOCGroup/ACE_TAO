@@ -17,7 +17,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
 
   // This will get called when <WFMO_Reactor->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
-  //  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to get updated handle set info\n"));
+  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%t) waking up to get updated handle set info\n")));
   return 0;
 }
 

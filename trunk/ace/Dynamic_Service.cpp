@@ -15,7 +15,7 @@ ACE_Dynamic_Service<SERVICE>::dump (void) const
   ACE_TRACE ("ACE_Dynamic_Service<SERVICE>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -28,12 +28,12 @@ ACE_Dynamic_Service<SERVICE>::instance (const char *name)
   const ACE_Service_Type *svc_rec;
   
   if (ACE_Service_Repository::instance ()->find (name, &svc_rec) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "svc_rep"), 0);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("svc_rep")), 0);
 
   const ACE_Service_Type_Impl *type = svc_rec->type ();
   
   if (type == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "type"), 0);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("type")), 0);
   else
     {
       const void *obj = type->object ();

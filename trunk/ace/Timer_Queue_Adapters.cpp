@@ -72,7 +72,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
   long tid = this->timer_queue_.schedule (eh, 0, delay);
 
   if (tid == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("schedule_timer")), -1);
 
   return this->schedule_ualarm ();
 }
@@ -92,7 +92,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *m
                      SA_RESTART);
 
   if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("register_handler")));
 }
 
 // This is the signal handler function for the asynchronous timer
@@ -209,7 +209,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
           // for "negative" amounts of time.
           ACE_Time_Value tv = this->timer_queue_.earliest_time ();
 
-          // ACE_DEBUG ((LM_DEBUG, "waiting until %u.%3.3u secs\n",
+          // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting until %u.%3.3u secs\n"),
           // tv.sec(), tv.msec()));
           this->condition_.wait (&tv);
         }

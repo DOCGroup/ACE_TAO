@@ -16,7 +16,7 @@ sc_main (int argc, char *argv[])
   ACE_Service_Config daemon;
 
   if (daemon.open (argc, argv) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n%a"),  ASYS_TEXT ("open"), 1));
 
   // Create an adapter to end the event loop.
   ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);

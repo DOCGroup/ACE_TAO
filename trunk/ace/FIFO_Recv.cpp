@@ -14,7 +14,7 @@ ACE_FIFO_Recv::dump (void) const
   ACE_TRACE ("ACE_FIFO_Recv::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_FIFO::dump ();
-  ACE_DEBUG ((LM_DEBUG, "aux_handle_ = %d", this->aux_handle_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("aux_handle_ = %d"), this->aux_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -74,6 +74,6 @@ ACE_FIFO_Recv::ACE_FIFO_Recv (const char *fifo_name,
 				 perms,
 				 persistent,
                                  sa) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_FIFO_Recv"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO_Recv")));
 }
 

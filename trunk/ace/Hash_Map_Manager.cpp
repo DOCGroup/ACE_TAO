@@ -49,8 +49,8 @@ template <class EXT_ID, class INT_ID> void
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "next_ = %d", this->next_));
-  ACE_DEBUG ((LM_DEBUG, "prev_ = %d", this->prev_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("next_ = %d"), this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("prev_ = %d"), this->prev_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -58,8 +58,8 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "total_size_ = %d", this->total_size_));
-  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d", this->cur_size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("total_size_ = %d"), this->total_size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncur_size_ = %d"), this->cur_size_));
   this->allocator_->dump ();
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -570,8 +570,8 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "index_ = %d ", this->index_));
-  ACE_DEBUG ((LM_DEBUG, "next_ = %x", this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("index_ = %d "), this->index_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("next_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -890,7 +890,7 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 {
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "next_ = %d", this->next_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("next_ = %d"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

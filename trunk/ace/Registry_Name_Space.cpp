@@ -14,7 +14,7 @@ ACE_Registry_Name_Space::ACE_Registry_Name_Space (void)
 ACE_Registry_Name_Space::ACE_Registry_Name_Space (ACE_Name_Options *name_options)
 {
   if (this->open (name_options) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Registry_Name_Space::open"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Registry_Name_Space::open")));
 }
 
 
@@ -33,7 +33,7 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 							HKEY_LOCAL_MACHINE,
 							ACE_WIDE_STRING (host));
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Context::connect"), result);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Predefined_Naming_Context::connect")), result);
   else
     {
       // Directory
@@ -47,7 +47,7 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
       result = predefined.bind_context (name,
 					this->context_);
       if (result != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::bind_context"), result);
+	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Registry::Naming_Context::bind_context")), result);
     }
   return 0;
 }
@@ -215,7 +215,7 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 				  value,
 				  type);	  
 	  if (result != 0)
-	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::resolve"), result);
+	    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Registry::Naming_Context::resolve")), result);
 	  
 	  // Complete binding
 	  ACE_Name_Binding binding (key, value, type);

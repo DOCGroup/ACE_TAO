@@ -17,12 +17,12 @@ ACE_Mem_Map::dump (void) const
   ACE_TRACE ("ACE_Mem_Map::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "base_addr_ = %x", this->base_addr_));
-  ACE_DEBUG ((LM_DEBUG, "\nfilename_ = %s", this->filename_));
-  ACE_DEBUG ((LM_DEBUG, "\nlength_ = %d", this->length_));
-  ACE_DEBUG ((LM_DEBUG, "\nhandle_ = %d", this->handle_));
-  ACE_DEBUG ((LM_DEBUG, "\nfile_mapping_ = %d", this->file_mapping_));
-  ACE_DEBUG ((LM_DEBUG, "\nclose_handle_ = %d", this->close_handle_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("base_addr_ = %x"), this->base_addr_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nfilename_ = %s"), this->filename_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nlength_ = %d"), this->length_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhandle_ = %d"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -186,7 +186,7 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   if (this->map (file_name, len, flags, mode, prot, share, addr, pos, sa) < 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mem_Map::ACE_Mem_Map"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
 }
 
 // Map a file from an open file descriptor HANDLE.  This function will
@@ -210,7 +210,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
   ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
 
   if (this->map (handle, len, prot, share, addr, pos, sa) < 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mem_Map::ACE_Mem_Map"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
 }
 
 // Close down and remove the file from the file system.

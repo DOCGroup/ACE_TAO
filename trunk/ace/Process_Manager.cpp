@@ -19,8 +19,8 @@ ACE_Process_Descriptor::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, "\nproc_id_ = %d", this->proc_id_));
-  ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nproc_id_ = %d"), this->proc_id_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ngrp_id_ = %d"), this->grp_id_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -32,8 +32,8 @@ ACE_Process_Manager::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, "\nmax_table_size_ = %d", this->max_table_size_));
-  ACE_DEBUG ((LM_DEBUG, "\ncurrent_count_ = %d", this->current_count_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nmax_table_size_ = %d"), this->max_table_size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
 
   for (size_t i = 0; i < this->current_count_; i++)
     this->proc_table_[i].dump ();
@@ -94,7 +94,7 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size)
   ACE_TRACE ("ACE_Process_Manager::ACE_Process_Manager");
 
   if (this->open (size) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Process_Manager"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Process_Manager")));
 }
 
 // Close up and release all resources.

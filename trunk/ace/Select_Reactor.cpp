@@ -1541,7 +1541,7 @@ ACE_Select_Reactor::dispatch_io_set (int number_of_active_handles,
          && number_dispatched < number_of_active_handles
          && this->state_changed_ == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatching\n"));
+      // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Select_Reactor::dispatching\n")));
       number_dispatched++;
       this->notify_handle (handle,
                            mask,
@@ -1568,7 +1568,7 @@ ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
   // the obscure case of piggy-backed data coming along with the
   // final handshake message of a nonblocking connection).
 
-  // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - WRITE\n"));
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Select_Reactor::dispatch - WRITE\n")));
   if (this->dispatch_io_set (number_of_active_handles,
                              number_dispatched,
                              ACE_Event_Handler::WRITE_MASK,
@@ -1581,7 +1581,7 @@ ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
     }
 
 
-  // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - EXCEPT\n"));
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Select_Reactor::dispatch - EXCEPT\n")));
   if (this->dispatch_io_set (number_of_active_handles,
                              number_dispatched,
                              ACE_Event_Handler::EXCEPT_MASK,
@@ -1593,7 +1593,7 @@ ACE_Select_Reactor::dispatch_io_handlers (int &number_of_active_handles,
       return -1;
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "ACE_Select_Reactor::dispatch - READ\n"));
+  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Select_Reactor::dispatch - READ\n")));
   if (this->dispatch_io_set (number_of_active_handles,
                              number_dispatched,
                              ACE_Event_Handler::READ_MASK,

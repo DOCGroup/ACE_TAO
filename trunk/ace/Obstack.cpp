@@ -11,9 +11,9 @@ ACE_Obstack::dump (void) const
   ACE_TRACE ("ACE_Obstack::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "size_ = %d\n", this->size_));
-  ACE_DEBUG ((LM_DEBUG, "head_ = %x\n", this->head_));
-  ACE_DEBUG ((LM_DEBUG, "curr_ = %x\n", this->curr_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("size_ = %d\n"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("head_ = %x\n"), this->head_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("curr_ = %x\n"), this->curr_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -25,8 +25,8 @@ ACE_Obchunk::dump (void) const
   ACE_TRACE ("ACE_Obchunk::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "end_ = %x\n", this->end_));
-  ACE_DEBUG ((LM_DEBUG, "cur_ = %x\n", this->cur_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("end_ = %x\n"), this->end_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("cur_ = %x\n"), this->cur_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

@@ -250,7 +250,7 @@ ACE_Service_Config::initialize (const char svc_name[],
   ACE_ARGV args (parameters);
   ACE_Service_Type  *srp = 0;
 
-  ACE_DEBUG ((LM_DEBUG, "opening static service %s\n", svc_name));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening static service %s\n"), svc_name));
 
   if (ACE_Service_Repository::instance ()->find (svc_name,
                                                  (const ACE_Service_Type **) &srp) == -1)
@@ -276,7 +276,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
 
-  ACE_DEBUG ((LM_DEBUG, "opening dynamic service %s\n", sr->name ()));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("opening dynamic service %s\n"), sr->name ()));
 
   if (ACE_Service_Repository::instance ()->insert (sr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "insertion failed, %p\n", sr->name ()), -1);
@@ -445,7 +445,7 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
                 sig, ACE_Service_Config::signum_));
 
   if (ACE_Service_Config::debug_)
-    ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", sig));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("signal %S occurred\n"), sig));
 
   ACE_Service_Config::reconfig_occurred_ = 1;
 }
@@ -462,11 +462,11 @@ ACE_Service_Config::reconfigure (void)
   if (ACE_Service_Config::debug_)
     {
       time_t t = ACE_OS::time (0);
-      ACE_DEBUG ((LM_DEBUG, "beginning reconfiguration at %s", ACE_OS::ctime (&t)));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("beginning reconfiguration at %s"), ACE_OS::ctime (&t)));
     }
 
   if (ACE_Service_Config::process_directives () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "process_directives"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("process_directives")));
 }
 
 // Run the event loop until the <ACE_Reactor::handle_events>

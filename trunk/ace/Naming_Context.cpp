@@ -132,7 +132,7 @@ ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
 
   // Initialize.
   if (this->open (scope_in, lite) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Naming_Context::ACE_Naming_Context"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
 }
 
 ACE_Name_Options *
@@ -341,7 +341,7 @@ ACE_Naming_Context::dump ()
 int
 ACE_Naming_Context::init (int argc, char *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "ACE_Naming_Context::init\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Naming_Context::init\n")));
   this->name_options_->parse_args (argc, argv);
   return this->open (this->name_options_->context ());
 }
@@ -349,7 +349,7 @@ ACE_Naming_Context::init (int argc, char *argv[])
 int
 ACE_Naming_Context::fini (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "ACE_Naming_Context::fini\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_Naming_Context::fini\n")));
 
   this->close_down ();
 

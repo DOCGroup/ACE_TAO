@@ -53,5 +53,5 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const char *fifo_name,
 				     perms, 
 				     persistent,
                                      sa) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_FIFO_Recv_Msg"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO_Recv_Msg")));
 }

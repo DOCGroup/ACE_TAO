@@ -13,10 +13,10 @@ ACE_Read_Buffer::dump (void) const
 {
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "size_ = %d", this->size_));
-  ACE_DEBUG ((LM_DEBUG, "\noccurrences_ = %d", this->occurrences_));
-  ACE_DEBUG ((LM_DEBUG, "\nstream_ = %x", this->stream_));
-  ACE_DEBUG ((LM_DEBUG, "\nallocator_ = %x", this->allocator_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("size_ = %d"), this->size_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\noccurrences_ = %d"), this->occurrences_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nstream_ = %x"), this->stream_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nallocator_ = %x"), this->allocator_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

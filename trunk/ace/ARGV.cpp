@@ -18,13 +18,13 @@ ACE_ARGV::dump (void) const
   ACE_TRACE ("ACE_ARGV::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "argc_ = %d", this->argc_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("argc_ = %d"), this->argc_));
 
   for (size_t i = 0; i < this->argc_; i++)
-    ACE_DEBUG ((LM_DEBUG, "\nargv_[%i] = %s", i, this->argv_[i]));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nargv_[%i] = %s"), i, this->argv_[i]));
 
-  ACE_DEBUG ((LM_DEBUG, "\nbuf = %s\n", this->buf_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nbuf = %s\n"), this->buf_));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

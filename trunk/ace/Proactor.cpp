@@ -124,7 +124,7 @@ ACE_Proactor_Timer_Handler::svc (void)
 	  break;
 	case WAIT_FAILED:
 	  // error
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "WaitForSingleObject"), -1);
+	  ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WaitForSingleObject")), -1);
 	}
     }
 
@@ -234,7 +234,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 						     0,
 						     this->number_of_threads_);
   if (this->completion_port_ == 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "CreateIoCompletionPort"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("CreateIoCompletionPort")));
 
   // set the timer queue
   this->timer_queue (tq);
@@ -244,7 +244,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
 
   // activate <timer_handler>
   if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, "%p Could not create thread\n", "Task::activate"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p Could not create thread\n"),  ASYS_TEXT ("Task::activate")));
 
 }
 
@@ -407,7 +407,7 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (errno != ERROR_INVALID_PARAMETER)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateIoCompletionPort"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("CreateIoCompletionPort")), -1);
     }
   return 0;
 }
@@ -554,7 +554,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
 	  return 0;
 	}
       else
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "GetQueuedCompletionStatus"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("GetQueuedCompletionStatus")), -1);
     }
   else
     {

@@ -11,9 +11,9 @@ ACE_Pipe::dump (void) const
 {
   ACE_TRACE ("ACE_Pipe::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "handles_[0] = %d", this->handles_[0]));
-  ACE_DEBUG ((LM_DEBUG, "\nhandles_[1] = %d", this->handles_[1]));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("handles_[0] = %d"), this->handles_[0]));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\nhandles_[1] = %d"), this->handles_[1]));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -65,7 +65,7 @@ ACE_Pipe::open (void)
 
 #elif defined (ACE_HAS_STREAM_PIPES)
   if (ACE_OS::pipe (this->handles_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pipe"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("pipe")), -1);
 
   int arg = RMSGN;
 
@@ -73,10 +73,10 @@ ACE_Pipe::open (void)
   // boundaries are maintained when messages are sent and received.
   if (ACE_OS::ioctl (this->handles_[0], I_SRDOPT, (void *) arg) == -1
       || ACE_OS::ioctl (this->handles_[1], I_SRDOPT, (void *) arg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ioctl"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ioctl")), -1);
 #else
   if (ACE_OS::socketpair (AF_UNIX, SOCK_DGRAM, 0, this->handles_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "socketpair"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("socketpair")), -1);
 #endif /* ACE_WIN32 */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.
