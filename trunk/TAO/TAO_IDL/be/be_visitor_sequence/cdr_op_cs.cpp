@@ -667,7 +667,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_var tmp_var (";
+          *os << "_var tmp_var (" << be_idt << be_idt_nl;
           
           if (bt->accept (visitor) == -1)
             {
@@ -678,7 +678,15 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_dup (_tao_sequence[i]));" << be_nl;
+          *os << "_dup (" << be_idt << be_idt_nl;
+
+          // Even though the following arg is declared const in the
+          // function signature, MSVC++ 5.0 needs the const cast,
+          // and it doesn't bother any of the other compilers.
+          *os << "ACE_const_cast (const " << this->ctx_->node ()->name ()
+              << ", _tao_sequence)[i]" << be_uidt_nl;
+          *os << ")" << be_uidt << be_uidt_nl;
+          *os << ");" << be_uidt_nl;
 
           if (bt->accept (visitor) == -1)
             {
