@@ -1,247 +1,255 @@
+Fri Jun 26 11:46:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_{,un}bounded_sequence_ch.cpp:
+          added ACE_CAST_CONST to get_buffer () const member functions, to
+          avoid Sun C++ warning about casting away constness.  Thanks to
+          J. Russell Noteworthy <rnosewor@objectsciences.com> for
+          reporting this.
+
 Fri Jun 26 09:48:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* VERSION: Updated this file to direct bug reports to 
-	  the ACE mailing list.
+        * VERSION: Updated this file to direct bug reports to
+          the ACE mailing list.
 
 Thu Jun 25 19:35:50 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/NestedUpcall/{Triangle_Test, Reactor}: Added the 
-	  Triangle test to examine ORB behavior doing nested upcalls.
-	  Also moved the Reactor test one level down in the hierarchy
-	  which means it is now in ../NestedUpcall/Reactor
+        * tests/NestedUpcall/{Triangle_Test, Reactor}: Added the
+          Triangle test to examine ORB behavior doing nested upcalls.
+          Also moved the Reactor test one level down in the hierarchy
+          which means it is now in ../NestedUpcall/Reactor
 
 Thu Jun 25 17:57:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/DII_Cubit/Makefile: Integrated the new DII_Cubit
- 	  test into the Makefile scheme.
+        * tests/Cubit/TAO/DII_Cubit/Makefile: Integrated the new DII_Cubit
+          test into the Makefile scheme.
 
 Thu Jun 25 17:17:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	  We disconnect all consumers and suppliers at shutdown.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          We disconnect all consumers and suppliers at shutdown.
 
-	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
-	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
-	  Once the class is shutdown it cannot start again. This last two
-	  changes make shutdown clean for the test.
+        * orbsvcs/orbsvcs/Event/Task_Manager.h:
+        * orbsvcs/orbsvcs/Event/Task_Manager.cpp:
+          Once the class is shutdown it cannot start again. This last two
+          changes make shutdown clean for the test.
 
-	* orbsvcs/orbsvcs/Event/ReactorTask.cpp: 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	  The debugging messages start with "EC" to spot (or ignore)
-	  them more easily.
+        * orbsvcs/orbsvcs/Event/ReactorTask.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+          The debugging messages start with "EC" to spot (or ignore)
+          them more easily.
 
-	* orbsvcs/orbsvcs/RtecEventComm.idl: 
-	  I added an octet sequence payload, just to make things more
-	  interesting.
+        * orbsvcs/orbsvcs/RtecEventComm.idl:
+          I added an octet sequence payload, just to make things more
+          interesting.
 
 Thu Jun 25 16:31:00 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* tao/GIOP.cpp:
-	In method TAO_GIOP_Invocation::invoke, when the method being
-	invoked threw an exception, invoke would iterate over the list of
-	possible thrown exceptions, the TAO_Exception_Data for the method, 
-	but wasn't breaking when it matched exception names. Added a break
-	statement. 
+        * tao/GIOP.cpp:
+        In method TAO_GIOP_Invocation::invoke, when the method being
+        invoked threw an exception, invoke would iterate over the list of
+        possible thrown exceptions, the TAO_Exception_Data for the method,
+        but wasn't breaking when it matched exception names. Added a break
+        statement.
 
 Thu Jun 25 12:54:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.h: 
-	* tao/Sequence.i: 
-	  For octet sequences the method to obtain the underlying messsage
-	  block was too expensive (it created a duplicate). This also
-	  solve a memory leak in the operator<< for OutputCDR and octet
-	  sequences.
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+          For octet sequences the method to obtain the underlying messsage
+          block was too expensive (it created a duplicate). This also
+          solve a memory leak in the operator<< for OutputCDR and octet
+          sequences.
 
 Thu Jun 25 11:57:27 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp
-	  (visit_union): We were "memset"ing the return value to 0. In our
-	  changed scenario where the Union class now derives from a base
-	  class, this memsetting results in the vptr becoming 0. This was
-	  causing seg faults. Thanks to Carlos for his help in the debugging
-	  efforts.
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp
+          (visit_union): We were "memset"ing the return value to 0. In our
+          changed scenario where the Union class now derives from a base
+          class, this memsetting results in the vptr becoming 0. This was
+          causing seg faults. Thanks to Carlos for his help in the debugging
+          efforts.
 
 Thu Jun 25 11:18:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.dsp:  Removed the use of CPP_PATH altogether.
-	  The location now defaults to "C:\Program Files\DevStudio\bin\cl.exe".
-	  If this is not the case, then use the environment variable
-	  CPP_LOCATION to override it.
+        * TAO_IDL/tao_idl.dsp:  Removed the use of CPP_PATH altogether.
+          The location now defaults to "C:\Program Files\DevStudio\bin\cl.exe".
+          If this is not the case, then use the environment variable
+          CPP_LOCATION to override it.
 
-	* TAO-INSTALL.html:  Changed the paragraph that talked about
-	  CPP_PATH to mention the default and CPP_LOCATION.
+        * TAO-INSTALL.html:  Changed the paragraph that talked about
+          CPP_PATH to mention the default and CPP_LOCATION.
 
 Thu Jun 25 10:53:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/NestedUpcall/NestedUpCalls_Test.cpp: Removed unnecessary
-	  Backing store code.
+        * tests/NestedUpcall/NestedUpCalls_Test.cpp: Removed unnecessary
+          Backing store code.
 
 Thu Jun 25 08:44:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  The generated _access method was missing a return statement for
-	  the default case. Thanks to David Levine for pinpointing this.
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          The generated _access method was missing a return statement for
+          the default case. Thanks to David Levine for pinpointing this.
 
-	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	  For the TIE classes, we had forgotten to generate the "set"
-	  attribute operation (for attributes that are not readonly). Again
-	  thanks to David Levine for pinpointing this.
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+          For the TIE classes, we had forgotten to generate the "set"
+          attribute operation (for attributes that are not readonly). Again
+          thanks to David Levine for pinpointing this.
 
-	* tao/IIOP_Object.i: A newline was missing at the end of the file
-	  which resulted in a huge number of compile errors from SunCC. This
-	  is now fixed.
+        * tao/IIOP_Object.i: A newline was missing at the end of the file
+          which resulted in a huge number of compile errors from SunCC. This
+          is now fixed.
 
-	* tao/append.cpp: Unused variables in Union::append removed.
+        * tao/append.cpp: Unused variables in Union::append removed.
 
 Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
-	  Added a new virtual overridden method that returns a pointer to
-	  the discriminant.
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+          Added a new virtual overridden method that returns a pointer to
+          the discriminant.
 
-	  In addition, we now name the underlying private union as u_.
+          In addition, we now name the underlying private union as u_.
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
 
-	  In the default constructor, we were setting the entire class
-	  object to 0 which was making the virtual pointers 0. We now only
-	  initialize the union and the discriminant.
+          In the default constructor, we were setting the entire class
+          object to 0 which was making the virtual pointers 0. We now only
+          initialize the union and the discriminant.
 
-	  Added the implementation of the virtual overridden _discriminant
-	  method. Also, the _reset method was moved here from the
-	  union_cs.cpp file.
+          Added the implementation of the virtual overridden _discriminant
+          method. Also, the _reset method was moved here from the
+          union_cs.cpp file.
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
- 	  Moved the _reset method to the union_ci.cpp file
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Moved the _reset method to the union_ci.cpp file
 
-	* TAO_IDL/be/be_visitor_union_branch/{public_access_cs,
-	  public_reset_cs, public_assign_cs, public_ci}.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/{public_access_cs,
+          public_reset_cs, public_assign_cs, public_ci}.cpp:
 
-	  The generated code now has to use the named underlying union. SO
-	  every field must now be accessed as u_.<field>.
+          The generated code now has to use the named underlying union. SO
+          every field must now be accessed as u_.<field>.
 
-	* tao/Union.h:
+        * tao/Union.h:
 
-	  Added a pure virtual method returning pointer to void. This will
-	  be overridden by subclasses and a pointer to the discriminant will
-	  be returned.
+          Added a pure virtual method returning pointer to void. This will
+          be overridden by subclasses and a pointer to the discriminant will
+          be returned.
 
-	* tao/{encode, decode}.cpp (TAO_Marshal_Union::{encode, decode}):
+        * tao/{encode, decode}.cpp (TAO_Marshal_Union::{encode, decode}):
 
-	  We now use the _discriminant () method on the union class to
-	  access the discriminant. This is much safer than simply casting
-	  it.
+          We now use the _discriminant () method on the union class to
+          access the discriminant. This is much safer than simply casting
+          it.
 
 Wed Jun 24 21:41:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/GIOP.cpp: Added a lock to
+        * tao/GIOP.cpp: Added a lock to
 
-	* tao/Connect.cpp: Added a lock to the access of the
-	  forwarding profile. Some overhead might be due to that,
-	  but we don't want to sacrifice stability.
+        * tao/Connect.cpp: Added a lock to the access of the
+          forwarding profile. Some overhead might be due to that,
+          but we don't want to sacrifice stability.
 
-	* tao/IIOP_Object.{h,icpp}: Added thread safe access functions
+        * tao/IIOP_Object.{h,icpp}: Added thread safe access functions
           for the forwarding profile.
 
 Wed Jun 24 18:13:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/Task_Manager.h:
-	* orbsvcs/orbsvcs/Event/Task_Manager.cpp:
-	  The multiple EC is not shutting dows cleanly, apparently it is a
- 	  synchronization problem between the two processes. These changes
- 	  try to minimize the problem by making shutdown() (and activate)
- 	  idempotent in the EC internal threads.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Task_Manager.h:
+        * orbsvcs/orbsvcs/Event/Task_Manager.cpp:
+          The multiple EC is not shutting dows cleanly, apparently it is a
+          synchronization problem between the two processes. These changes
+          try to minimize the problem by making shutdown() (and activate)
+          idempotent in the EC internal threads.
 
 Wed Jun 24 15:55:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/ORB.cpp (resolve_root_poa): Changed resolve_poa() to
- 	  resolve_root_poa().
+        * tao/ORB.cpp (resolve_root_poa): Changed resolve_poa() to
+          resolve_root_poa().
 
-	* tao/ORB.cpp (resolve_poa): Rearranged this method so that the
- 	  user can specify the name, POA Manager, policies, and active
- 	  object map of a root poa.  Use this method instead of
- 	  resolve_initial_reference("RootPOA"). This method also allows
- 	  the user the specify the policies used by the root POA - the
- 	  most common change will be to switch the lifespan policy of the
- 	  root POA from TRANSIENT to PERSISTENT. resolve_poa() is
- 	  non-standard.
+        * tao/ORB.cpp (resolve_poa): Rearranged this method so that the
+          user can specify the name, POA Manager, policies, and active
+          object map of a root poa.  Use this method instead of
+          resolve_initial_reference("RootPOA"). This method also allows
+          the user the specify the policies used by the root POA - the
+          most common change will be to switch the lifespan policy of the
+          root POA from TRANSIENT to PERSISTENT. resolve_poa() is
+          non-standard.
 
 Wed Jun 24 15:49:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/Union.{h, cpp}:
+        * tao/Union.{h, cpp}:
 
-	  Added a base sequence definition for Unions. This uses the same
-	  logic as the Base sequences. We need such a base sequence to
-	  provide us virtual methods called "_access" and "_reset". The
-	  _access method us ised to access the right union member at the
-	  right offset. The reset method is used to free the storage.
+          Added a base sequence definition for Unions. This uses the same
+          logic as the Base sequences. We need such a base sequence to
+          provide us virtual methods called "_access" and "_reset". The
+          _access method us ised to access the right union member at the
+          right offset. The reset method is used to free the storage.
 
-	  *NOTE* these are new files
+          *NOTE* these are new files
 
-	* tao/{encode, decode}.cpp: For Union::{encode, decode}, we now
-	use the Base Union class on which we invoke the virtual methods.
+        * tao/{encode, decode}.cpp: For Union::{encode, decode}, we now
+        use the Base Union class on which we invoke the virtual methods.
 
-	* TAO_IDL/be_include/be_codegen.h: Added a new enumeration for
-	generating the overloaded _access method on the union class.
+        * TAO_IDL/be_include/be_codegen.h: Added a new enumeration for
+        generating the overloaded _access method on the union class.
 
-	* TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
 
-	  Handled the case for the access method generating visitor.
+          Handled the case for the access method generating visitor.
 
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
 
-	  The union class now inherits from the TAO_Base_Union class. In
-	  addition, it defines the virtual overloaded _reset and _access
-	  methods.
+          The union class now inherits from the TAO_Base_Union class. In
+          addition, it defines the virtual overloaded _reset and _access
+          methods.
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
 
-	  Since the reset method was renamed to _reset, we now use this
-	  name.
+          Since the reset method was renamed to _reset, we now use this
+          name.
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
 
-	  Added code for the overloaded _reset and _access method.
+          Added code for the overloaded _reset and _access method.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	  All calls to reset converted to _reset.
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+          All calls to reset converted to _reset.
 
-	* TAO_IDL/be_visitor_union_branch/public_access_cs.cpp:
-	  TAO_IDL/be_include/be_visitor_union_branch/public_access_cs.h:
+        * TAO_IDL/be_visitor_union_branch/public_access_cs.cpp:
+          TAO_IDL/be_include/be_visitor_union_branch/public_access_cs.h:
 
-	  New visitor to generate the code for the access method.
-	  *NOTE* these are new files.
+          New visitor to generate the code for the access method.
+          *NOTE* these are new files.
 
-	* TAO_IDL/be_visitor_union_branch.cpp:
-	  TAO_IDL/be_include/be_visitor_union_branch.h:
+        * TAO_IDL/be_visitor_union_branch.cpp:
+          TAO_IDL/be_include/be_visitor_union_branch.h:
 
-	  Includes the new files.
+          Includes the new files.
 
-	* TAO_IDL/be/be_interpretive.cpp: Handled the case for the new
-	visitor on unions that generates the _access method.
+        * TAO_IDL/be/be_interpretive.cpp: Handled the case for the new
+        visitor on unions that generates the _access method.
 
 Wed Jun 24 14:29:56 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Updated the Trader portion of the releasnotes.
+        * docs/releasenotes/index.html:
+          Updated the Trader portion of the releasnotes.
 
 Wed Jun 24 12:02:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/POA/RootPOA/RootPOA.cpp (main): Replaced the exception
-	  checking/printing code by TAO_CHECK_ENV_PRINT_RETURN.
+        * tests/POA/RootPOA/RootPOA.cpp (main): Replaced the exception
+          checking/printing code by TAO_CHECK_ENV_PRINT_RETURN.
 
 Wed Jun 24 11:52:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/corba.h: Added the exception macros
- 	  TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) and
-	  TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING).
+        * tao/corba.h: Added the exception macros
+          TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) and
+          TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING).
 
 Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -255,117 +263,117 @@ Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Wed Jun 24 11:13:32 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_codegen.h: Added a new state for resetting
-	  the appropriate element of a union.
+        * TAO_IDL/be_include/be_codegen.h: Added a new state for resetting
+          the appropriate element of a union.
 
-	* TAO_IDL/be_include/be_visitor_union_branch/public_reset_cs.h:
-	  Added a new visitor that generates code for resetting elements of
-	  a union. This is required in 3 scenarios: (1) for destructor, (2)
-	  for union's assignment operator, and (3) individual modifier
-	  operations in which a new value is set. This will require freeing
-	  of previous value.
+        * TAO_IDL/be_include/be_visitor_union_branch/public_reset_cs.h:
+          Added a new visitor that generates code for resetting elements of
+          a union. This is required in 3 scenarios: (1) for destructor, (2)
+          for union's assignment operator, and (3) individual modifier
+          operations in which a new value is set. This will require freeing
+          of previous value.
 
-	  *NOTE* this is a new file.
+          *NOTE* this is a new file.
 
-	* TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h:
-	  Added a bunch of methods to the visitor that visit the
-	  "type". This was necessary since simple assignment is not
-	  enough. We must ensure that old values are freed and the
-	  assignment results in deep copies wherever necessary. All this is
-	  required for the assignment operator of the union.
+        * TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h:
+          Added a bunch of methods to the visitor that visit the
+          "type". This was necessary since simple assignment is not
+          enough. We must ensure that old values are freed and the
+          assignment results in deep copies wherever necessary. All this is
+          required for the assignment operator of the union.
 
-	* TAO_IDL/be/be_interpretive.cpp: Handled the newly added case for
-	  the union reset visitor.
+        * TAO_IDL/be/be_interpretive.cpp: Handled the newly added case for
+          the union reset visitor.
 
-	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
-	  TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-	  TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
-	  TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+          TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+          TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+          TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
 
-	  Added support for Arrays as in, inout, out parameters.
+          Added support for Arrays as in, inout, out parameters.
 
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
-	  TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+          TAO_IDL/be/be_visitor_array/array_ci.cpp:
 
-	  For fixed size arrays, the _out definition is simply a
-	  typedef. Whereas for arrays whopse base type is of variable
-	  size, we define the _out class.
+          For fixed size arrays, the _out definition is simply a
+          typedef. Whereas for arrays whopse base type is of variable
+          size, we define the _out class.
 
-	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
-	  the export macro for structures is always generated, even if it
-	  is nested. This is only valid for the Windows platform since for
-	  the other cases the export macro is NUL.
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+          the export macro for structures is always generated, even if it
+          is nested. This is only valid for the Windows platform since for
+          the other cases the export macro is NUL.
 
-	* TAO_IDL/be/be_visitor_union/union.cpp:
-	  The generic visitor now also handles the union reset visitor
-	  case.
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+          The generic visitor now also handles the union reset visitor
+          case.
 
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
-	  The union mapping that generates a class now uses the Export
-	  macro even if it was nested. Seth Widoff reported that this was
-	  necessary.
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+          The union mapping that generates a class now uses the Export
+          macro even if it was nested. Seth Widoff reported that this was
+          necessary.
 
-	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
 
-	  The constructor now zeros the entire union on
-	  initialization. Thus, at the start, all the fields will be 0s.
+          The constructor now zeros the entire union on
+          initialization. Thus, at the start, all the fields will be 0s.
 
-	  The destructor now calls the private "reset" method with the
-	  finalize flag=1 to indicate freeing of all allocated resources.
+          The destructor now calls the private "reset" method with the
+          finalize flag=1 to indicate freeing of all allocated resources.
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
 
-	  Added code for the reset method. In addition, the assignment
-	  operator first invokes the reset method to clean up old
-	  storage.
+          Added code for the reset method. In addition, the assignment
+          operator first invokes the reset method to clean up old
+          storage.
 
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
 
-	  Members of the private anonymous union inside the union class
-	  may either be pointers or scalar variables. They will be
-	  pointers if their types are aggregate classes or structures that
-	  have ctors. C++ does not allow using the instances of such
-	  aggregate classes.
+          Members of the private anonymous union inside the union class
+          may either be pointers or scalar variables. They will be
+          pointers if their types are aggregate classes or structures that
+          have ctors. C++ does not allow using the instances of such
+          aggregate classes.
 
-	* TAO_IDL/be/be_visitor_union_branch/private_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_assign_cs.cpp:
 
-	  Added code for all the methods that visit the type. Each method
-	  tries to free previous storage (if any) and then does the
-	  necessary deep copying.
+          Added code for all the methods that visit the type. Each method
+          tries to free previous storage (if any) and then does the
+          necessary deep copying.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
 
-	  Some modifier and access methods that were generated had
-	  errors w.r.t the parameters they take. This is now fixed.
+          Some modifier and access methods that were generated had
+          errors w.r.t the parameters they take. This is now fixed.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
 
-	  All the modifier methods now call reset to free old storage and
-	  then do the appropriate deep copying of the new value.
+          All the modifier methods now call reset to free old storage and
+          then do the appropriate deep copying of the new value.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
 
-	  Code for the reset visitor.
+          Code for the reset visitor.
 
-	  *NOTE* this is a new file.
+          *NOTE* this is a new file.
 
-	* tao/decode.cpp: Released the IIOP_Object that is created during
-	  the ObjRef::decode method. This was necessary to overcome a
-	  memory leak. Thanks to Irfan and Jeff.
+        * tao/decode.cpp: Released the IIOP_Object that is created during
+          the ObjRef::decode method. This was necessary to overcome a
+          memory leak. Thanks to Irfan and Jeff.
 
 
 Wed Jun 24 09:56:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl:
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h:
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
-	* tests/Cubit/TAO/IDL_Cubit/client_i.h:
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
-	  Removed DII test.
-	  Print clearer messages for sequences (to distinguish octet vs
-	  long sequences).
-	  Print the results for each test (long, short, octet, structs
-	  and unions) and *also* a mixin of lonng/short/octet.
+        * tests/Cubit/TAO/IDL_Cubit/cubit.idl:
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.h:
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/client_i.h:
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
+          Removed DII test.
+          Print clearer messages for sequences (to distinguish octet vs
+          long sequences).
+          Print the results for each test (long, short, octet, structs
+          and unions) and *also* a mixin of lonng/short/octet.
 
 Wed Jun 24 02:23:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -373,80 +381,80 @@ Wed Jun 24 02:23:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Jun 23 17:30:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Makefile:
-	  Updated dependencies.
+        * orbsvcs/Scheduling_Service/Makefile:
+          Updated dependencies.
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	  Improved a debug message.
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Improved a debug message.
 
-	* orbsvcs/Event_Service/svc.conf:
-	  The options are more realistic now.
+        * orbsvcs/Event_Service/svc.conf:
+          The options are more realistic now.
 
-	* orbsvcs/tests/start_services:
-	  No need to run the Scheduling Service now; the Event_Service
-	  program has a collocated one (by default).
+        * orbsvcs/tests/start_services:
+          No need to run the Scheduling Service now; the Event_Service
+          program has a collocated one (by default).
 
-	* docs/releasenotes/ec.html:
-	  Updated the release notes to reflect the latest changes.
+        * docs/releasenotes/ec.html:
+          Updated the release notes to reflect the latest changes.
 
 Tue Jun 23 16:47:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.{h,cpp} (class TAO_Collocation_Table_Lock): Rename
-	  TAO_COLTBL_Lock TO TAO_Collocation_Table_Lock.  COLTBL was a bit
-	  cryptic.  Changed its implementation to use the new
-	  ACE_Adaptive_Lock class.
+        * tao/ORB_Core.{h,cpp} (class TAO_Collocation_Table_Lock): Rename
+          TAO_COLTBL_Lock TO TAO_Collocation_Table_Lock.  COLTBL was a bit
+          cryptic.  Changed its implementation to use the new
+          ACE_Adaptive_Lock class.
 
 Tue Jun 23 12:34:23 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	  Merged Attributes(_T).{h,cpp} into the above files. Updated the
-	  Makefile.
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+          Merged Attributes(_T).{h,cpp} into the above files. Updated the
+          Makefile.
 
 Tue Jun 23 12:18:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Task_Manager.h:
-	* orbsvcs/orbsvcs/Event/Task_Manager.i:
-	* orbsvcs/orbsvcs/Event/Task_Manager.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	* orbsvcs/orbsvcs/Event/ReactorTask.cpp:
-	  The Event Channel can be shutdown cleanly using the destroy()
-	  method. The problem was that two components (the Dispatching
-	  Module and the TaskManager or the handler for Timer threads)
-	  were not waiting for their threads to shutdown.
-	  The modules keep their own Thread_Manager to wait for shutdown.
-	  Startup was also changed: the event channel constructor
-	  receives a new argument to control the creation of the internal
-	  threads; if the argument is FALSE the user must call the
-	  activate() method to start the threads.
+        * orbsvcs/orbsvcs/Event/Task_Manager.h:
+        * orbsvcs/orbsvcs/Event/Task_Manager.i:
+        * orbsvcs/orbsvcs/Event/Task_Manager.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Event/ReactorTask.cpp:
+          The Event Channel can be shutdown cleanly using the destroy()
+          method. The problem was that two components (the Dispatching
+          Module and the TaskManager or the handler for Timer threads)
+          were not waiting for their threads to shutdown.
+          The modules keep their own Thread_Manager to wait for shutdown.
+          Startup was also changed: the event channel constructor
+          receives a new argument to control the creation of the internal
+          threads; if the argument is FALSE the user must call the
+          activate() method to start the threads.
 
-	* orbsvcs/orbsvcs/RtecEventComm.idl:
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
-	  Many operations were oneways because early releases of TAO did
-	  not support nested upcalls.
+        * orbsvcs/orbsvcs/RtecEventComm.idl:
+        * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+          Many operations were oneways because early releases of TAO did
+          not support nested upcalls.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	  use the activate method to start the threads.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          use the activate method to start the threads.
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	  Added support for a collocated Scheduling Service; this is the
-	  common use case that we wish to implement, improves performance
-	  and works around some nested upcall problems in the ORB.
-	  The user can select the old behavior using the <-s global>
-	  flag.
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Added support for a collocated Scheduling Service; this is the
+          common use case that we wish to implement, improves performance
+          and works around some nested upcall problems in the ORB.
+          The user can select the old behavior using the <-s global>
+          flag.
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	  Only shutdown the EC once our event loop exits
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Only shutdown the EC once our event loop exits
 
-	* orbsvcs/tests/EC_Multiple/histo.pl:
-	  Fixed typo in a comment.
+        * orbsvcs/tests/EC_Multiple/histo.pl:
+          Fixed typo in a comment.
 
 Tue Jun 23 11:59:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
