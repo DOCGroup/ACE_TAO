@@ -1,3 +1,10 @@
+Tue Oct 27 12:31:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (cond_timedwait): Made sure the broadcaster always gets
+	  signaled no matter what the "wait" function return if this is
+ 	  the last waiter for this cv.  In any case, the calling thread is
+	  no longer waiting on the cv any more.
+
 Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-win32.h: fixed typo in comment:
