@@ -1,3 +1,18 @@
+Tue May  8 08:56:32 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object_Ref_Table.cpp (TAO_Object_Ref_Table, destroy):
+
+	  Reverted the change "Tue May  8 09:01:13 2001  Balachandran
+	  Natarajan  <bala@cs.wustl.edu>".  The call to destroy() was
+	  correct since not all applications call ORB::shutdown() (or
+	  ORB::destroy().  In such cases, memory leaks will occur since
+	  the object reference table destroy() method is not explicitly
+	  called.
+
+	  The correct fix for the problem was to call unbind_all() on the
+	  underlying hash table in the destroy() method.  Doing so makes
+	  it safe to call the destroy() method more than once.
+
 Tue May  8 10:02:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Reverted this change "Tue May  8 07:32:15 2001

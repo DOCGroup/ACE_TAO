@@ -9,7 +9,9 @@
 #include "CORBA_String.h"
 #include "debug.h"
 
-ACE_RCSID(tao, Object_Ref_Table, "$Id$")
+ACE_RCSID (tao,
+           Object_Ref_Table,
+           "$Id$")
 
 // ****************************************************************
 
@@ -20,12 +22,9 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 
 TAO_Object_Ref_Table::~TAO_Object_Ref_Table (void)
 {
-  // @@ We seem to be calling destroy () twice in normal
-  // circumstances. One from ORB_Core::shutdown () and another from
-  // here. Seems goofy in a first pass.. Bala
-  //  this->destroy ();
-
-  this->table_.close ();  // Only call close() in this destructor!
+  // Must explicitly call destroy() in the destructor since not all
+  // applications will invoke ORB::shutdown() or ORB::destroy().
+  this->destroy ();
 }
 
 void
@@ -93,6 +92,8 @@ TAO_Object_Ref_Table::destroy (void)
       // Release the Object.
       CORBA::release ((*i).int_id_);
     }
+
+  this->table_.unbind_all ();
 }
 
 TAO_Object_Ref_Table::Iterator
