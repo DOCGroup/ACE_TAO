@@ -10,6 +10,9 @@ Thu Nov 13 18:18:16 1997  Steve Huston  <shuston@riverace.com>
 	* ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_ANSI_CASTS; removed
 	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR (both for aC++ only).
 
+	* ace/README: Removed ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR, as
+	  it is no longer used.
+
 Thu Nov 13 16:51:40 1997    <nw1@CHA-CHA>
 
 	* ace/OS.h:  Added two new macros ACE_FACTORY_DECLARE and
