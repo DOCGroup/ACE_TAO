@@ -13,13 +13,13 @@ ACE_INLINE
 TAO::TypeCode::Value<StringType, FieldArrayType, Kind, RefCountPolicy>::Value (
   char const * id,
   char const * name,
-  CORBA::ValueModifier type_modifier,
-  CORBA::TypeCode_ptr * concrete_base_type,
+  CORBA::ValueModifier modifier,
+  CORBA::TypeCode_ptr * concrete_base,
   Field<StringType> const * fields,
   CORBA::ULong nfields)
   : base_attributes_ (id, name)
-  , type_modifier_ (type_modifier)
-  , concrete_base_ (concrete_base_type)
+  , type_modifier_ (modifier)
+  , concrete_base_ (concrete_base)
   , nfields_ (nfields)
   , fields_ (fields)
 {

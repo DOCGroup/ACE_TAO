@@ -48,7 +48,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     {
       be_visitor_context ctx (*this->ctx_);
       // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
-      be_visitor_valuetype_typecode tc_visitor (&ctx);
+      TAO::be_visitor_value_typecode tc_visitor (&ctx);
 
       if (tc_visitor.visit_valuetype (node) == -1)
         {
