@@ -1,3 +1,12 @@
+Tue Oct 17 23:35:33 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * Don't use ACE_TSS_EMULATION by default with LynxOS 3.1.0
+          because it's not necessary, according to
+          Jessie Ragsdale <jessie.ragsdale@latuslw.com>, and breaks
+          split=1.  Jessie was able to create upo to 118 natvie TSS keys,
+          so the 3-key limit of LynxOS 3.0.0 has been removed in 3.1.0.
+          [Bug 701]
+
 Tue Oct 17 00:21:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h,
@@ -9,7 +18,7 @@ Tue Oct 17 00:21:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h,
 	  examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i,
 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h,
-	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i: 
+	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
 	  Changed *::get_handle(), *::handle_input(), and *::handle_close() to
 	  use ACE_HANDLE and ACE_INVALID_HANDLE instead of int and -1.
 
