@@ -573,7 +573,8 @@ sub generate_project_files {
       }
 
       ## Generate the key for this project file
-      my($prkey) = $self->getcwd() . "/$file-$postkey";
+      my($prkey) = $self->getcwd() . '/' .
+                   ($file eq '' ? $dir : $file) . "-$postkey";
 
       ## We must change to the subdirectory for
       ## which this project file is intended
@@ -689,8 +690,8 @@ sub sort_dependencies {
   ## by the project dpendencies.
   for(my $i = 0; $i <= $#list; $i++) {
     my($project) = $list[$i];
-    my($pi) = $$pjs{$project};
-    my($name, $deps) = @$pi;
+    my($name) = $$pjs{$project}->[0];
+    my($deps) = $self->get_validated_ordering($project);
 
     if ($deps ne '') {
       my($darr)  = $self->create_array($deps);
@@ -894,34 +895,47 @@ sub generate_recursive_input_list {
 sub verify_build_ordering {
   my($self)     = shift;
   my($projects) = $self->get_projects();
-  my($pjs)      = $self->get_project_info();
 
   foreach my $project (@$projects) {
-    my($name, $deps) = @{$$pjs{$project}};
-    if (defined $deps && $deps ne '') {
-      my($darr) = $self->create_array($deps);
-      foreach my $dep (@$darr) {
-        my($found) = 0;
-        ## Avoid cirular dependencies
-        if ($dep ne $name && $dep ne basename($project)) {
-          foreach my $p (@$projects) {
-            if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
-              $found = 1;
-              last;
-            }
-          }
-          if (!$found) {
-            if (defined $ENV{MPC_VERBOSE_ORDERING}) {
-              print "WARNING: '$name' references '$dep' which has " .
-                    "not been processed\n";
-            }
-            $deps =~ s/\s*"$dep"\s*/ /g;
+    $self->get_validated_ordering($project);
+  }
+}
+
+
+sub get_validated_ordering {
+  my($self)     = shift;
+  my($project)  = shift;
+  my($pjs)      = $self->get_project_info();
+
+  my($name, $deps) = @{$$pjs{$project}};
+  if (defined $deps && $deps ne '') {
+    my($darr)     = $self->create_array($deps);
+    my($projects) = $self->get_projects();
+    foreach my $dep (@$darr) {
+      my($found) = 0;
+      ## Avoid cirular dependencies
+      if ($dep ne $name && $dep ne basename($project)) {
+        foreach my $p (@$projects) {
+          if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
+            $found = 1;
+            last;
           }
         }
+        if (!$found) {
+          if (defined $ENV{MPC_VERBOSE_ORDERING}) {
+            print "WARNING: '$name' references '$dep' which has " .
+                  "not been processed\n";
+          }
+          $deps =~ s/\s*"$dep"\s*/ /g;
+        }
       }
-      $$pjs{$project}->[1] = $deps;
     }
   }
+
+  $deps =~ s/^\s+//;
+  $deps =~ s/\s+$//;
+
+  return $deps;
 }
 
 # ************************************************************

@@ -57,8 +57,8 @@ sub write_comps {
   my($dupfound) = 0;
 
   foreach my $project (@$projects) {
-    my($pi) = $$pjs{$project};
-    my($name, $deps) = @$pi;
+    my($name) = $$pjs{$project}->[0];
+    my($deps) = $self->get_validated_ordering($project);
     if (defined $names{$name}) {
       ## Having duplicate project names is an error in a VC6 Workspace.
       ## We will create the project, but we will warn the user that
@@ -71,12 +71,10 @@ sub write_comps {
       $names{$name} = 1;
     }
 
-    ## Convert all /'s to \
-    $project = $self->slash_to_backslash($project);
-
     print $fh "###############################################################################$crlf" .
               $crlf .
-              "Project: \"$name\"=$project - Package Owner=<4>$crlf" .
+              "Project: \"$name\"=" . $self->slash_to_backslash($project) .
+              " - Package Owner=<4>$crlf" .
               $crlf .
               "Package=<5>$crlf" .
               "{{{$crlf" .
