@@ -1,3 +1,9 @@
+Wed Nov  5 15:09:00 2003  Justin Michel <michel_j@ociweb.com>
+
+	* apps/gperf/src/gperf.cpp:
+
+          Added missing #include "ace/OS_main.h"
+
 Wed Nov  5 19:03:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/ACE.cpp:
