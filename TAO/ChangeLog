@@ -1,3 +1,8 @@
+Sun Sep 26 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.h:
+          Added missing /**/ before include of pre/post.h
+
 Sun Sep 26 14:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
@@ -289,13 +294,13 @@ Fri Sep 24 12:58:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
         * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Roundtrip.cpp:
         * orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
-        
+
           Eliminated data conversion warnings on MSVC 7.1.
 
 Fri Sep 24 12:39:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Sequence_Unit_Tests/run_test.pl:
-        
+
           Replacement script supplied by Carlos O'Ryan that handles
           the Windows executable file extensions.
 
