@@ -1,3 +1,16 @@
+Mon Aug 16 16:54:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/ftorbutils.mpb
+	* bin/MakeProjectCreator/config/smart_proxies.mpb
+	* bin/MakeProjectCreator/config/svc_utils.mpb
+
+	  Changed to inherit from orbsvcslib instead of taolib_with_idl.
+
+	* bin/MakeProjectCreator/config/orbsvcslib.mpb:
+
+	  Added $(TAO_ROOT)/orbsvcs to includes.
+	  Added -I$(TAO_ROOT)/orbsvcs to idlflags.
+
 Mon Aug 16 15:58:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Signal.cpp: Added template instantiations for
