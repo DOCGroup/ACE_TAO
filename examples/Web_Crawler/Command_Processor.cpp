@@ -89,8 +89,7 @@ Command_Processor::execute (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "dequeue_head"),
                           -1);
-      URL_Command *url_command = ACE_dynamic_cast (URL_Command *,
-                                                   command);
+      URL_Command *url_command = dynamic_cast<URL_Command *> (command);
       Auto_Destroyer<URL_Command> url_command_ptr (url_command);
       if (url_command_ptr->execute () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

@@ -109,7 +109,7 @@ Dispatcher_Task::svc (void)
       //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
 
       Dispatch_Queue_Item *qitem =
-        ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
+        dynamic_cast<Dispatch_Queue_Item*> (mb);
 
       if (qitem == 0)
         {

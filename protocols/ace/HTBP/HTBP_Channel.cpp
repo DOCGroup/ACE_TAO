@@ -36,7 +36,7 @@ ACE::HTBP::Channel::Channel (ACE::HTBP::Session *s)
 {
   ACE_NEW (this->notifier_,ACE::HTBP::Notifier(this));
   this->filter_ = get_filter ();
-  this->request_count_ = ACE_static_cast (unsigned long,ACE_OS::time());
+  this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
 /// Constructor, takes ownership of the supplied stream
@@ -53,7 +53,7 @@ ACE::HTBP::Channel::Channel (ACE_SOCK_Stream &s)
 
 {
   filter_ = get_filter ();
-  this->request_count_ = ACE_static_cast (unsigned long,ACE_OS::time());
+  this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
 ACE::HTBP::Channel::Channel (ACE_HANDLE h)
@@ -68,7 +68,7 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
     error_buffer_ (0)
 {
   filter_ = get_filter ();
-  this->request_count_ = ACE_static_cast (unsigned long,ACE_OS::time());
+  this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
 /// Destructor.

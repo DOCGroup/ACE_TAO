@@ -496,8 +496,7 @@ client_connections (void *arg)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = ACE_reinterpret_cast (ACE_INET_Addr *,
-                                                     arg);
+  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;

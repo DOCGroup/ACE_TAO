@@ -131,15 +131,14 @@ run_event_loop (const ACE_TCHAR rendezvous[])
 
 #if defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) server,
-                                                  ACE_reinterpret_cast (void *,
-                                                      new_stream.get_handle ()),
+                                                  reinterpret_cast<void *> (new_stream.get_handle ()),
                                                   THR_DETACHED) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) %p\n"),
                            ACE_TEXT ("spawn")),
                           1);
 #else
-      server (ACE_reinterpret_cast (void *, new_stream.get_handle ()));
+      server (reinterpret_cast<void *> (new_stream.get_handle ()));
 #endif /* ACE_HAS_THREADS */
     }
 

@@ -39,10 +39,10 @@ ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char* ref,
 
   if (iter != end)
     {
-      systemId = ACE_const_cast (ACEXML_Char*, (*iter).int_id_.c_str());
+      systemId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
       ++iter;
       if (iter != end)
-        publicId = ACE_const_cast (ACEXML_Char*, (*iter).int_id_.c_str());
+        publicId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
       return 0;
     }
   return -1;

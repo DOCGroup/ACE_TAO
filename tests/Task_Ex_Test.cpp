@@ -83,7 +83,7 @@ int Consumer::svc ()
 /// producer function produces user defined messages.
 ACE_THR_FUNC_RETURN producer (void *arg)
 {
-  Consumer* c = ACE_static_cast (Consumer*, arg);
+  Consumer* c = static_cast<Consumer*> (arg);
   ACE_ASSERT(c!=0);
   if (c==0)
   {
@@ -139,7 +139,7 @@ run_main (int, ACE_TCHAR *[])
   
   int result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
                                                       ACE_THR_FUNC(producer),
-                                                      ACE_static_cast(void*,&c));
+                                                      static_cast<void*> (&c));
   if (result==-1)
   {
     ACE_ERROR_RETURN((LM_ERROR, 

@@ -157,9 +157,8 @@ Thread_Handler::Thread_Handler (int delay,
                Thread_Handler (i + 1,
                                this->iterations_));
 
-      if (ACE_Thread::spawn (ACE_reinterpret_cast (ACE_THR_FUNC,
-                                                   &Thread_Handler::svc_run),
-                             ACE_reinterpret_cast (void *, th),
+      if (ACE_Thread::spawn (reinterpret_cast<ACE_THR_FUNC> (&Thread_Handler::svc_run),
+                             reinterpret_cast<void *> (th),
                              THR_NEW_LWP | THR_DETACHED) != 0)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
@@ -338,12 +337,12 @@ void *
 Thread_Handler::svc_run (void *eh)
 {
   Thread_Handler *this_handler = 
-    ACE_reinterpret_cast (Thread_Handler *, eh);
+    reinterpret_cast<Thread_Handler *> (eh);
 
   if (this_handler->svc () == 0)
     return 0;
   else
-    return ACE_reinterpret_cast (void *, -1);
+    return reinterpret_cast<void *> (-1);
 }
 
 int 

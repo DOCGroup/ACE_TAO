@@ -42,7 +42,7 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
                       qName,
                       type,
                       value);
-  return ACE_static_cast (int, length);
+  return static_cast<int> (length);
 }
 
 int
@@ -53,7 +53,7 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
   size_t length = this->attrs_.size ();
   this->attrs_.size (length+1);
   this->attrs_[length] = att;
-  return ACE_static_cast (int, length);
+  return static_cast<int> (length);
 }
 
 int
@@ -97,7 +97,7 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); i++)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
-      return ACE_static_cast (int, i);
+      return static_cast<int> (i);
 
   return -1;
 }
@@ -109,7 +109,7 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
   for (size_t i = 0; i < this->attrs_.size (); i++)
     if (ACE_OS::strcmp (uri, this->attrs_[i].uri ()) == 0 &&
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
-      return ACE_static_cast (int, i);
+      return static_cast<int> (i);
 
   return -1;
 }

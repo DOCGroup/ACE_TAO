@@ -66,8 +66,7 @@ static void *
 worker (void *arg)
 {
   ACE_Recursive_Thread_Mutex *rm =
-    ACE_reinterpret_cast (ACE_Recursive_Thread_Mutex *,
-                          arg);
+    reinterpret_cast<ACE_Recursive_Thread_Mutex *> (arg);
   recursive_worker (0, rm);
   return 0;
 }

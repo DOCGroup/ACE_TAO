@@ -180,7 +180,7 @@ public:
       ACE_Event_Handler::EXCEPT_MASK;
 
     ACE_ASSERT (old_masks ==
-                ACE_static_cast (ACE_Reactor_Mask, result));
+                static_cast<ACE_Reactor_Mask> (result));
     ACE_UNUSED_ARG (old_masks);
 
     // Get new masks
@@ -195,7 +195,7 @@ public:
       ACE_Event_Handler::EXCEPT_MASK;
 
     ACE_ASSERT (current_masks ==
-                ACE_static_cast (ACE_Reactor_Mask, result));
+                static_cast<ACE_Reactor_Mask> (result));
     ACE_UNUSED_ARG (current_masks);
 
     // Remove for writing

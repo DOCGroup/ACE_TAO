@@ -260,7 +260,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           number_of_threads = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'd':
-          debug = ACE_static_cast (DEBUGGING_RANGE, ACE_OS::atoi (get_opt.opt_arg ()));
+          debug = static_cast<DEBUGGING_RANGE> (ACE_OS::atoi (get_opt.opt_arg ()));
           break;
         case 's':
           message_size = ACE_OS::atoi (get_opt.opt_arg ());

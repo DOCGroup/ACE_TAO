@@ -189,7 +189,7 @@ ACEXML_Debug_Attributes_Builder::insertAttribute (ACEXML_Attribute_Def_Builder *
     {
       ACEXML_String attname (def->getName (), 0, 0);
       ACEXML_Debug_Attribute_Builder *ptr =
-        ACE_dynamic_cast (ACEXML_Debug_Attribute_Builder *, def);
+        dynamic_cast<ACEXML_Debug_Attribute_Builder *> (def);
       this->attributes_.bind (attname, *ptr);
       return 0;
     }

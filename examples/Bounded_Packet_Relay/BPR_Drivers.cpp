@@ -448,8 +448,7 @@ Bounded_Packet_Relay::receive_input (void * arg)
 
       return -1;
     }
-  ACE_Message_Block *message = ACE_static_cast (ACE_Message_Block *,
-                                                arg);
+  ACE_Message_Block *message = static_cast<ACE_Message_Block *> (arg);
   if (queue_.enqueue_tail (message) < 0)
     {
       if (is_active_)

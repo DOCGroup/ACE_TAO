@@ -42,7 +42,7 @@ Performance_Test_Options::Performance_Test_Options (void)
                  : thr_wc_size (10000),
                    _service_entry (0),
                    _mapped_file (0),
-                   _pipe_addr (ACE_const_cast (ACE_TCHAR *, ACE_DEFAULT_RENDEZVOUS)),
+                   _pipe_addr (const_cast<ACE_TCHAR *> (ACE_DEFAULT_RENDEZVOUS)),
                    _sleep_time (100),
                    _n_lwps (0),
                    _thr_count (4),

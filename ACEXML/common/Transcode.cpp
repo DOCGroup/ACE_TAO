@@ -18,7 +18,7 @@ ACEXML_Transcoder::utf162utf8 (ACEXML_UTF16 src,
       if (len < 1)
         return ACEXML_DESTINATION_TOO_SHORT;
 
-      *dst = ACE_static_cast (ACEXML_UTF8, src);
+      *dst = static_cast<ACEXML_UTF8> (src);
       return 1;
     }
   else if (src < 0x800)
@@ -55,7 +55,7 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
   if (src < 0x10000)
     {
       int retv = ACEXML_Transcoder::utf162utf8
-                 (ACE_static_cast (ACEXML_UTF16, src),
+                 (static_cast<ACEXML_UTF16> (src),
                   dst, len);
       return (retv == ACEXML_IS_SURROGATE ? ACEXML_NON_UNICODE : retv);
     }
@@ -93,7 +93,7 @@ ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
       if (src >= 0xD800 && src < 0xE000)
         return ACEXML_NON_UNICODE;     // Surrogates are not valid unicode value
 
-      *dst = ACE_static_cast (ACEXML_UTF16, src);
+      *dst = static_cast<ACEXML_UTF16> (src);
       return 1;
     }
   else if (src >= 0x100000 && src < 0x110000)
@@ -151,15 +151,14 @@ ACEXML_Transcoder::utf82ucs4 (const ACEXML_UTF8 *the_src,
   if (the_src == 0)
     return ACEXML_INVALID_ARGS;
 
-  const unsigned char *src = ACE_reinterpret_cast (const unsigned char *,
-                                                   the_src);
+  const unsigned char *src = reinterpret_cast<const unsigned char *> (the_src);
 
   size_t forward = 1;
 
   if (forward > len)
     return ACEXML_END_OF_SOURCE;
 
-  if (ACE_static_cast (unsigned char, *src) < 0x80)
+  if (static_cast<unsigned char> (*src) < 0x80)
     dst = *src;
   else if ((*src & 0xE0) == 0xC0)
     {
@@ -270,7 +269,7 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
       len -= forward;
     }
 
-  return ACE_static_cast (int, total_len);
+  return static_cast<int> (total_len);
 }
 
 int
@@ -309,5 +308,5 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
       len -= forward;
     }
 
-  return ACE_static_cast (int, total_len);
+  return static_cast<int> (total_len);
 }

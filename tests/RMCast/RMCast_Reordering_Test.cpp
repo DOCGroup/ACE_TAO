@@ -168,7 +168,7 @@ run_main (int, ACE_TCHAR *[])
 // ****************************************************************
 
 Tester::Tester (void)
-  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0)))
+  : seed_ (static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0)))
   , lowest_sequence_number_ (0)
   , next_expected_ (0)
 {

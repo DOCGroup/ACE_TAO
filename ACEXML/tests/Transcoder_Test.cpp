@@ -43,7 +43,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
   for (x = 0; temp < 0x10000; x++, temp <<= 1)
     {
-      org[x] = ACE_static_cast (ACEXML_UTF16, temp);
+      org[x] = static_cast<ACEXML_UTF16> (temp);
     }
 
   ACE_DEBUG ((LM_DEBUG, "Original UTF16 string:\n"));

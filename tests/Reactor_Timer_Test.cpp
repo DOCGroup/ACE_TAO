@@ -81,8 +81,7 @@ int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
-  long current_count = ACE_static_cast (long,
-                          ACE_reinterpret_cast (size_t, arg));
+  long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
     ACE_ASSERT (current_count == count);
 

@@ -79,7 +79,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
                        "Refer HTTP/1.0 error code for details"), -1);
   }
 
-  this->size_ = ACE_static_cast (off_t, len);
+  this->size_ = static_cast<off_t> (len);
   return this->determine_encoding();
 }
 
@@ -123,8 +123,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   size_t buflen = BUFSIZ;
   for (;;)
     {
-      if ((buf = ACE_const_cast (char*,
-                                 this->stream_->recv (buflen))) == 0)
+      if ((buf = const_cast<char*> (this->stream_->recv (buflen))) == 0)
         if (buflen <= 0)
           break;
 
@@ -230,8 +229,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 
   // Get all of the data. Since this is backed by file store, we won't lose
   // any of the data.
-  while (( buf = ACE_const_cast (char*,
-                                 this->stream_->recv (buflen))) != 0)
+  while (( buf = const_cast<char*> (this->stream_->recv (buflen))) != 0)
     ;
 
   // Length of data in the URL.
@@ -287,7 +285,7 @@ ACEXML_HttpCharStream::available (void)
 {
   if (this->stream_ == 0)
     return -1;
-  return ACE_static_cast (int, this->stream_->available());
+  return static_cast<int> (this->stream_->available());
 }
 
 int
@@ -383,11 +381,11 @@ ACEXML_HttpCharStream::read (ACEXML_Char *str,
   if (this->stream_ == 0)
     return -1;
   len = len * sizeof (ACEXML_Char);
-  char* temp = ACE_const_cast (char*, this->stream_->recv (len));
+  char* temp = const_cast<char*> (this->stream_->recv (len));
   str = ACE_TEXT_CHAR_TO_TCHAR (temp);
   if (str == 0)
     return -1;
-  return ACE_static_cast (int, len);
+  return static_cast<int> (len);
 }
 
 

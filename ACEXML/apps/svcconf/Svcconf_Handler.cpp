@@ -71,9 +71,8 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
       void *symbol = 0;
 
       long temp_ptr =
-        ACE_reinterpret_cast(long, svc_dll.symbol (active_info->init_func ()));
-      func = ACE_reinterpret_cast(void *(*)(ACE_Service_Object_Exterminator *),
-                                  temp_ptr);
+        reinterpret_cast<long> (svc_dll.symbol (active_info->init_func ()));
+      func = reinterpret_cast<void *(*)(ACE_Service_Object_Exterminator *)> (temp_ptr);
 
       if (func == 0)
         {
@@ -293,9 +292,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
         }
       this->stream_ =   this->stream_svc_type_ == 0
         ? 0
-        : ACE_dynamic_cast (ACE_Stream_Type *,
-                            ACE_const_cast (ACE_Service_Type_Impl *,
-                                            this->stream_svc_type_->type ()));
+        : dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (this->stream_svc_type_->type ()));
 
 //       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Retrieve stream %s from repository\n"),
 //                   this->stream_info_.name ()));

@@ -47,9 +47,9 @@ public:
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
     ++this->nr_expirations_;
 
-    void *nc_arg = ACE_const_cast (void *, arg);
+    void *nc_arg = const_cast<void *> (arg);
     Thread_Timer_Queue *timer_queue =
-      ACE_reinterpret_cast (Thread_Timer_Queue *, nc_arg);
+      reinterpret_cast<Thread_Timer_Queue *> (nc_arg);
 
     ACE_Time_Value timeout = ACE_OS::gettimeofday () + ACE_Time_Value (1, 0);
 

@@ -50,8 +50,7 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
        }
 
   if (ACE_Reactor::instance ()->schedule_timer (this,
-                                                ACE_reinterpret_cast (void *,
-                                                                      arg),
+                                                reinterpret_cast<void *> (arg),
                                                       delta,
                                                       interval) == -1)
     return -1;

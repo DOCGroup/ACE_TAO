@@ -64,9 +64,9 @@ public:
     time_t epoch = ((timespec_t)current_time).tv_sec;
 
     const TemperatureSensor *const_sensor =
-      ACE_reinterpret_cast (const TemperatureSensor *, arg);
+      reinterpret_cast<const TemperatureSensor *> (arg);
     TemperatureSensor *sensor =
-      ACE_const_cast (TemperatureSensor *, const_sensor);
+      const_cast<TemperatureSensor *> (const_sensor);
 
     int queryCount = sensor->querySensor ();
     this->updateAverageTemperature (sensor);

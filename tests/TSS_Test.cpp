@@ -97,7 +97,7 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  int count = *(ACE_static_cast (int*, c));
+  int count = *(static_cast<int*> (c));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 

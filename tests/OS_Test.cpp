@@ -172,7 +172,7 @@ string_emulation_test (void)
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
-    ACE_ASSERT (ACE_OS::memchr (ACE_static_cast (const void *, NULL),
+    ACE_ASSERT (ACE_OS::memchr (static_cast<const void *> (NULL),
                                 'a',
                                 0) == NULL);
     ACE_ASSERT (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);

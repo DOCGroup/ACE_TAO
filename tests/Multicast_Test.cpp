@@ -121,7 +121,7 @@ public:
   int wait (void) const { return this->wait_;}
   ACE_SOCK_Dgram_Mcast::options options (void) const
   {
-    return ACE_static_cast (ACE_SOCK_Dgram_Mcast::options, this->sdm_opts_);
+    return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
   }
 
 private:

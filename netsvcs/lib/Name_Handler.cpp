@@ -560,8 +560,7 @@ ACE_Name_Handler::lists_entries (void)
   int result = -1;
 
   const ACE_Name_Request::Constants msg_type =
-    ACE_static_cast (ACE_Name_Request::Constants,
-                     this->name_request_.msg_type ());
+    static_cast<ACE_Name_Request::Constants> (this->name_request_.msg_type ());
 
   // NOTE:  This multi-branch conditional statement used to be
   // (and should be) a switch statement.  However, it caused

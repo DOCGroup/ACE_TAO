@@ -214,7 +214,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   s.release (n_release_count);
 
   if (ACE_Thread_Manager::instance ()->spawn_n
-      (ACE_static_cast (size_t, n_workers),
+      (static_cast<size_t> (n_workers),
        ACE_THR_FUNC (worker),
        0,
        THR_NEW_LWP) == -1)

@@ -111,9 +111,8 @@ ACE_RMCast_Reassembly_Tester::svc (void)
         for (size_t offset = 0; offset < n; offset += fragment_size)
           {
             if (this->put_fragment (sequence_number,
-                                    ACE_static_cast (ACE_UINT32, offset),
-                                    ACE_static_cast (ACE_UINT32,
-                                                     fragment_size),
+                                    static_cast<ACE_UINT32> (offset),
+                                    static_cast<ACE_UINT32> (fragment_size),
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -151,7 +150,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                         sizeof(received_pointer));
 
         ACE_RANDR_TYPE seed =
-          ACE_static_cast(ACE_RANDR_TYPE, ACE_OS::time (0));
+          static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
         for (int i = 0; i != 100; ++i)
           {
             size_t offset = ACE_OS::rand_r (seed) % n;
@@ -160,9 +159,8 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                 offset = n/2;
               }
             if (this->put_fragment (sequence_number,
-                                    ACE_static_cast (ACE_UINT32, offset),
-                                    ACE_static_cast (ACE_UINT32,
-                                                     fragment_size),
+                                    static_cast<ACE_UINT32> (offset),
+                                    static_cast<ACE_UINT32> (fragment_size),
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -174,9 +172,8 @@ ACE_RMCast_Reassembly_Tester::svc (void)
         for (size_t offset = 0; offset < n; offset += fragment_size)
           {
             if (this->put_fragment (sequence_number,
-                                    ACE_static_cast (ACE_UINT32, offset),
-                                    ACE_static_cast (ACE_UINT32,
-                                                     fragment_size),
+                                    static_cast<ACE_UINT32> (offset),
+                                    static_cast<ACE_UINT32> (fragment_size),
                                     &big_blob) == -1)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -291,7 +288,7 @@ ACE_RMCast_Reassembly_Tester::put_fragment (ACE_UINT32 sequence_number,
 
   ACE_RMCast::Data data;
   data.sequence_number = sequence_number;
-  data.total_size = ACE_static_cast (ACE_UINT32, total_length);
+  data.total_size = static_cast<ACE_UINT32> (total_length);
   data.fragment_offset = offset;
   data.payload = &p;
   return this->reassembly_.data (data);
