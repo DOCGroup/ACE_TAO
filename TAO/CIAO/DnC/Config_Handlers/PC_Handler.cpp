@@ -46,7 +46,7 @@ namespace CIAO
 
     /// handle the package configuration and populate it
     void PC_Handler::process_PackageConfiguration
-      (::Deployment::PackageConfiguratio &pc)
+      (::Deployment::PackageConfiguration &pc)
     {
       // This is bogus and should be replaced later.
       ACE_DECLARE_NEW_CORBA_ENV;
@@ -131,8 +131,8 @@ namespace CIAO
     }
 
     /// handle label attribute
-    void SIP_Handler::process_label
-      (const XMLCh* name, ::Deployment::PackageConfiguratio &pc)
+    void PC_Handler::process_label
+      (const XMLCh* name, ::Deployment::PackageConfiguration &pc)
     {
       if (name)
         {
@@ -141,8 +141,8 @@ namespace CIAO
     }
 
     /// handle UUID attribute
-    void SIP_Handler::process_UUID
-      (const XMLCh* name, ::Deployment::PackageConfiguratio &pc)
+    void PC_Handler::process_UUID
+      (const XMLCh* name, ::Deployment::PackageConfiguration &pc)
     {
       if (name)
         {
@@ -151,8 +151,8 @@ namespace CIAO
     }
 
     /// handle specializedConfig attribute
-    void MDD_Handler::process_specializedConfig
-      (const XMLCh* specializedConfig, ::Deployment::PackageConfiguratio &pc)
+    void PC_Handler::process_specializedConfig
+      (const XMLCh* specializedConfig, ::Deployment::PackageConfiguration &pc)
     {
       if (source)
         {
