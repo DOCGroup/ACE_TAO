@@ -16,6 +16,7 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "TP_Task.h"
 
 namespace POA_RtecScheduler
@@ -33,8 +34,10 @@ public:
 
 private:
   int parse_args (int argc, ACE_TCHAR* argv []);
-  void setup_scheduler(CosNaming::NamingContext_ptr naming_context
-                                        ACE_ENV_ARG_DECL);
+  RtecScheduler::Scheduler_var 
+    setup_scheduler(CosNaming::NamingContext_ptr naming_context
+                    ACE_ENV_ARG_DECL);
+
   int report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec);
   virtual void become_primary();
