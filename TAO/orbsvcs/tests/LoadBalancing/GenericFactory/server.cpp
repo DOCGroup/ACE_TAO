@@ -48,7 +48,7 @@ main (int argc, char *argv[])
       //    decide whether this method will report errors through
       //    CORBA exceptions or through a return value.  If you decide
       //    to use a return value, make sure you check it!
-      basic_test.destroy ();
+      basic_test.destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
