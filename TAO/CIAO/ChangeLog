@@ -1,3 +1,11 @@
+Tue Jan 13 11:24:55 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Config.rules:
+
+	  Added 'default-if-not-set' value for UTILITY_BUILD_RULES to 
+	  look into well-known location where RedHat and Debian packages
+	  are installed.
+
 Sat Jan 10 11:58:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIAO.mwc:
@@ -14,7 +22,7 @@ Sat Jan 10 11:08:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Jan  9 16:01:55 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/cidlc.cpp:
-        
+
           Changed the error return value from -1 to 1. For some reason,
           Visual Studio does not detect the -1 return value and thinks
           everything is fine.
