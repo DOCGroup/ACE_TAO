@@ -2,6 +2,10 @@ Sat May 03 06:56:10 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (dtor): removed void return (typo).
 
+	* ace/Set.cpp (ACE_Fixed_Set<T>::operator =): typo: fs instead of bs.
+
+	* ace/Set.cpp (ACE_Fixed_Set<T, SIZE>::find): typo: index instead of i.
+
 Fri May  2 14:57:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Map_Manager.cpp: Added a no-op destructor to ACE_Map_Entry
