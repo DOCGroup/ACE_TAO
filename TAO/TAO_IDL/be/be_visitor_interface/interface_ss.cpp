@@ -215,7 +215,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt;
+
+  this->generate_send_reply (os);
+
+  *os << be_uidt_nl
       << "}" << be_nl << be_nl;
 
 
@@ -254,7 +258,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt;
+
+  this->generate_send_reply (os);
+
+  *os << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Generate code for the _interface skeleton.
@@ -295,8 +303,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "if (_tao_result == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+      << "}" << be_uidt;
+
+  this->generate_send_reply (os);
+
+  *os << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generate code for the _component skeleton.
   *os << "void " << full_skel_name
@@ -333,7 +345,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt;
+
+  this->generate_send_reply (os);
+
+  *os << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Generate code for the _is_a override.
@@ -536,6 +552,12 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "}";
 }
 
+void
+be_visitor_interface_ss::generate_send_reply (TAO_OutStream *)
+{
+  // no-op for regular interfaces
+}
+ 
 void
 be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
