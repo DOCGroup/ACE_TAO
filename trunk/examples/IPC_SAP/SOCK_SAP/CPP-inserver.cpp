@@ -16,7 +16,7 @@ ACE_RCSID(SOCK_SAP, CPP_inserver, "$Id$")
 static int verbose = 0;
 
 static void
-run_server (void * (*server) (void *),
+run_server (ACE_THR_FUNC server,
             ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_THREADS)

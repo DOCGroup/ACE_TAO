@@ -1955,7 +1955,8 @@ ACE_Thread_Adapter::invoke (void)
 #endif
 
   // Extract the arguments.
-  ACE_THR_FUNC func = this->user_func_;
+  ACE_THR_FUNC_INTERNAL func = ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
+                                                     this->user_func_);
   void *arg = this->arg_;
 #if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   ACE_Thread_Descriptor *thr_desc = this->thr_desc_;
@@ -2002,7 +2003,8 @@ ACE_Thread_Adapter::invoke (void)
 // If we changed this to 1, change the respective if in Task::svc_run to 0
 #if 0
           // Call the <Task->close> hook.
-          if (func == (ACE_THR_FUNC) ACE_Task_Base::svc_run)
+          if (func == ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
+                                            ACE_Task_Base::svc_run))
             {
               ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
               ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
