@@ -1,3 +1,14 @@
+Sat Oct 11 14:00:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/ace_wchar.inl: Fix for BUG 1605. Thanks to Dmitry
+	  Botcharnikov <dimab@garant.ru> and Stephan Bettermann
+	  <sbetterm@erggroup.com> for reporting the problem and suggesting
+	  a solution.  Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605 
+
+	  for a description of the problem.
+
 Sat Oct 11 11:01:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Koku_defs.h:
