@@ -36,9 +36,6 @@ public:
   
   ~TAO_Seq_Var_Base_T (void);
   
-  TAO_Seq_Var_Base_T &operator= (T *);
-  TAO_Seq_Var_Base_T &operator= (const TAO_Seq_Var_Base_T<T,T_elem> &);
-  
   T *operator-> (void);
   const T *operator-> (void) const;
   
@@ -46,9 +43,6 @@ public:
   operator T &();
   operator T &() const;
 
-  T_elem & operator[] (CORBA::ULong index);
-  const T_elem & operator[] (CORBA::ULong index) const;
-  
   // in, inout, out, _retn 
   const T & in (void) const;
   T & inout (void);
@@ -80,8 +74,14 @@ public:
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T (const T &);
   
+  TAO_FixedSeq_Var_T & operator= (T *);
+  TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T,T_elem> &);
+  
+  T_elem & operator[] (CORBA::ULong index);
+  const T_elem & operator[] (CORBA::ULong index) const;
+  
   // Fixed-size base types only.
-  TAO_FixedSeq_Var_T &operator= (const T &);
+  TAO_FixedSeq_Var_T & operator= (const T &);
 };
 
 /**
@@ -99,8 +99,40 @@ public:
   TAO_VarSeq_Var_T (T *);
   TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T,T_elem> &);
   
+  TAO_VarSeq_Var_T & operator= (T *);
+  TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T,T_elem> &);
+  
+  T_elem & operator[] (CORBA::ULong index);
+  const T_elem & operator[] (CORBA::ULong index) const;
+  
   // Variable-size base types only.
   operator T *& ();
+};
+
+/**
+ * @class TAO_MngSeq_Var_T
+ *
+ * @brief Parametrized implementation of _var class for sequences
+ * whose element is of a managed type - string, wstring, valuetype,
+ * interface, abstract interface and pseudo object.
+ *
+ */
+template <typename T, typename T_elem>
+class TAO_MngSeq_Var_T : public TAO_Seq_Var_Base_T<T,T_elem>
+{
+public:
+  TAO_MngSeq_Var_T (void);
+  TAO_MngSeq_Var_T (T *);
+  TAO_MngSeq_Var_T (const TAO_MngSeq_Var_T<T,T_elem> &);
+  
+  TAO_MngSeq_Var_T & operator= (T *);
+  TAO_MngSeq_Var_T & operator= (const TAO_MngSeq_Var_T<T,T_elem> &);
+  
+  // Variable-size base types only.
+  operator T *& ();
+
+  // Managed base types only.
+  T_elem operator[] (CORBA::ULong index);
 };
 
 /**

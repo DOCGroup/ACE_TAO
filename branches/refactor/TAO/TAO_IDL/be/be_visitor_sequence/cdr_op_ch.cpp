@@ -48,13 +48,6 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  AST_Type *elem = node->base_type ();
-
-  if (elem->seq_cdr_hdr_gen () == I_TRUE)
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt = be_type::narrow_from_decl (node);
@@ -91,6 +84,5 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
     }
 
   node->cli_hdr_cdr_op_gen (1);
-  bt->seq_cdr_hdr_gen (I_TRUE);
   return 0;
 }

@@ -291,3 +291,4 @@ TAO_ClientRequestInfo_Guard::~TAO_ClientRequestInfo_Guard (void)
 
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
+

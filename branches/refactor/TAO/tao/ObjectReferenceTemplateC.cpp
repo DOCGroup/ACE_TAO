@@ -25,15 +25,7 @@
 
 #include "ObjectReferenceTemplateC.h"
 #include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
 #include "tao/ValueFactory.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -314,211 +306,47 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:95
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
 
 void
-tao_PortableInterceptor_ObjectReferenceFactory_add_ref (
-    PortableInterceptor::ObjectReferenceFactory *p
+PortableInterceptor::tao_ObjectReferenceFactory_life::tao_add_ref (
+    PortableInterceptor::ObjectReferenceFactory * p
   )
 {
   CORBA::add_ref (p);
 }
 
 void
-tao_PortableInterceptor_ObjectReferenceFactory_remove_ref (
-    PortableInterceptor::ObjectReferenceFactory *p
+PortableInterceptor::tao_ObjectReferenceFactory_life::tao_remove_ref (
+    PortableInterceptor::ObjectReferenceFactory * p
   )
 {
   CORBA::remove_ref (p);
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:298
-
-// *************************************************************
-// Operations for class PortableInterceptor::ObjectReferenceFactory_var
-// *************************************************************
-
-PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (void)
-  : ptr_ (0)
-{}
-
-PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (ObjectReferenceFactory* p)
-  : ptr_ (p)
-{}
-
-PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (const ObjectReferenceFactory* p)
-  : ptr_ (ACE_const_cast (ObjectReferenceFactory *, p))
-{}
-
-PortableInterceptor::ObjectReferenceFactory *
-PortableInterceptor::ObjectReferenceFactory_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (const ObjectReferenceFactory_var &p)
-{
-  CORBA::add_ref (p.ptr ());
-  this->ptr_ = p.ptr ();
-}
-
-PortableInterceptor::ObjectReferenceFactory_var::~ObjectReferenceFactory_var (void) // destructor
-{
-  CORBA::remove_ref (this->ptr_);
-}
-
-PortableInterceptor::ObjectReferenceFactory_var &
-PortableInterceptor::ObjectReferenceFactory_var::operator= (ObjectReferenceFactory *p)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceFactory_var &
-PortableInterceptor::ObjectReferenceFactory_var::operator= (const ObjectReferenceFactory_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::remove_ref (this->ptr_);
-    ObjectReferenceFactory *tmp = p.ptr ();
-    CORBA::add_ref (tmp);
-    this->ptr_ = tmp;
-  }
-  
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceFactory_var::operator const PortableInterceptor::ObjectReferenceFactory* () const // cast
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory_var::operator PortableInterceptor::ObjectReferenceFactory*& () // cast 
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *
-PortableInterceptor::ObjectReferenceFactory_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *
-PortableInterceptor::ObjectReferenceFactory_var::in (void) const
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *&
-PortableInterceptor::ObjectReferenceFactory_var::inout (void)
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *&
-PortableInterceptor::ObjectReferenceFactory_var::out (void)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *
-PortableInterceptor::ObjectReferenceFactory_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ObjectReferenceFactory* tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-void
-PortableInterceptor::ObjectReferenceFactory_var::tao_add_ref (
-    ObjectReferenceFactory *p
-  )
-{
-  CORBA::add_ref (p);
-}
-
-void
-PortableInterceptor::ObjectReferenceFactory_var::tao_remove_ref (
-    ObjectReferenceFactory *p
-  )
-{
-  CORBA::remove_ref (p);
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:568
-
-// *************************************************************
-// Operations for class PortableInterceptor::ObjectReferenceFactory_out
-// *************************************************************
-
-PortableInterceptor::ObjectReferenceFactory_out::ObjectReferenceFactory_out (ObjectReferenceFactory *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-PortableInterceptor::ObjectReferenceFactory_out::ObjectReferenceFactory_out (ObjectReferenceFactory_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-}
-
-PortableInterceptor::ObjectReferenceFactory_out::ObjectReferenceFactory_out (const ObjectReferenceFactory_out &p)
-  : ptr_ (ACE_const_cast (ObjectReferenceFactory_out&, p).ptr_)
-{}
-
-PortableInterceptor::ObjectReferenceFactory_out &
-PortableInterceptor::ObjectReferenceFactory_out::operator= (const ObjectReferenceFactory_out &p)
-{
-  this->ptr_ = ACE_const_cast (ObjectReferenceFactory_out&, p).ptr_;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceFactory_out &
-PortableInterceptor::ObjectReferenceFactory_out::operator= (const ObjectReferenceFactory_var &p)
-{
-  ObjectReferenceFactory *tmp = p.ptr ();
-  CORBA::add_ref (tmp);
-  this->ptr_ = tmp;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceFactory_out &
-PortableInterceptor::ObjectReferenceFactory_out::operator= (ObjectReferenceFactory *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceFactory_out::operator PortableInterceptor::ObjectReferenceFactory*& () // cast
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *&
-PortableInterceptor::ObjectReferenceFactory_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceFactory *
-PortableInterceptor::ObjectReferenceFactory_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:138
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Value_Var_T<
+        PortableInterceptor::ObjectReferenceFactory,
+        PortableInterceptor::tao_ObjectReferenceFactory_life
+      >;
+  template class
+    TAO_Value_Out_T<
+        PortableInterceptor::ObjectReferenceFactory,
+        PortableInterceptor::tao_ObjectReferenceFactory_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Value_Var_T< \
+        PortableInterceptor::ObjectReferenceFactory, \
+        PortableInterceptor::tao_ObjectReferenceFactory_life \
+      >
+# pragma instantiate \
+    TAO_Value_Out_T< \
+        PortableInterceptor::ObjectReferenceFactory, \
+        PortableInterceptor::tao_ObjectReferenceFactory_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 PortableInterceptor::ObjectReferenceFactory *
 PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase *v)
@@ -669,211 +497,47 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:95
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
 
 void
-PortableInterceptor::ObjectReferenceTemplate_life::tao_add_ref (
-    PortableInterceptor::ObjectReferenceTemplate *p
+PortableInterceptor::tao_ObjectReferenceTemplate_life::tao_add_ref (
+    PortableInterceptor::ObjectReferenceTemplate * p
   )
 {
   CORBA::add_ref (p);
 }
 
 void
-PortableInterceptor::ObjectReferenceTemplate_life::tao_remove_ref (
-    PortableInterceptor::ObjectReferenceTemplate *p
-  )
-{
-  CORBA::remove_ref (p);
-}
-#if 0
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:298
-
-// *************************************************************
-// Operations for class PortableInterceptor::ObjectReferenceTemplate_var
-// *************************************************************
-
-PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (void)
-  : ptr_ (0)
-{}
-
-PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (ObjectReferenceTemplate* p)
-  : ptr_ (p)
-{}
-
-PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (const ObjectReferenceTemplate* p)
-  : ptr_ (ACE_const_cast (ObjectReferenceTemplate *, p))
-{}
-
-PortableInterceptor::ObjectReferenceTemplate *
-PortableInterceptor::ObjectReferenceTemplate_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &p)
-{
-  CORBA::add_ref (p.ptr ());
-  this->ptr_ = p.ptr ();
-}
-
-PortableInterceptor::ObjectReferenceTemplate_var::~ObjectReferenceTemplate_var (void) // destructor
-{
-  CORBA::remove_ref (this->ptr_);
-}
-
-PortableInterceptor::ObjectReferenceTemplate_var &
-PortableInterceptor::ObjectReferenceTemplate_var::operator= (ObjectReferenceTemplate *p)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_var &
-PortableInterceptor::ObjectReferenceTemplate_var::operator= (const ObjectReferenceTemplate_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::remove_ref (this->ptr_);
-    ObjectReferenceTemplate *tmp = p.ptr ();
-    CORBA::add_ref (tmp);
-    this->ptr_ = tmp;
-  }
-  
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_var::operator const PortableInterceptor::ObjectReferenceTemplate* () const // cast
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_var::operator PortableInterceptor::ObjectReferenceTemplate*& () // cast 
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *
-PortableInterceptor::ObjectReferenceTemplate_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *
-PortableInterceptor::ObjectReferenceTemplate_var::in (void) const
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *&
-PortableInterceptor::ObjectReferenceTemplate_var::inout (void)
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *&
-PortableInterceptor::ObjectReferenceTemplate_var::out (void)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *
-PortableInterceptor::ObjectReferenceTemplate_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ObjectReferenceTemplate* tmp = this->ptr_;
-  this->ptr_ = 0;
-  return tmp;
-}
-
-void
-PortableInterceptor::ObjectReferenceTemplate_var::tao_add_ref (
-    ObjectReferenceTemplate *p
-  )
-{
-  CORBA::add_ref (p);
-}
-
-void
-PortableInterceptor::ObjectReferenceTemplate_var::tao_remove_ref (
-    ObjectReferenceTemplate *p
+PortableInterceptor::tao_ObjectReferenceTemplate_life::tao_remove_ref (
+    PortableInterceptor::ObjectReferenceTemplate * p
   )
 {
   CORBA::remove_ref (p);
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:568
-
-// *************************************************************
-// Operations for class PortableInterceptor::ObjectReferenceTemplate_out
-// *************************************************************
-
-PortableInterceptor::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (ObjectReferenceTemplate *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &p)
-  : ptr_ (ACE_const_cast (ObjectReferenceTemplate_out&, p).ptr_)
-{}
-
-PortableInterceptor::ObjectReferenceTemplate_out &
-PortableInterceptor::ObjectReferenceTemplate_out::operator= (const ObjectReferenceTemplate_out &p)
-{
-  this->ptr_ = ACE_const_cast (ObjectReferenceTemplate_out&, p).ptr_;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_out &
-PortableInterceptor::ObjectReferenceTemplate_out::operator= (const ObjectReferenceTemplate_var &p)
-{
-  ObjectReferenceTemplate *tmp = p.ptr ();
-  CORBA::add_ref (tmp);
-  this->ptr_ = tmp;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_out &
-PortableInterceptor::ObjectReferenceTemplate_out::operator= (ObjectReferenceTemplate *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-PortableInterceptor::ObjectReferenceTemplate_out::operator PortableInterceptor::ObjectReferenceTemplate*& () // cast
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *&
-PortableInterceptor::ObjectReferenceTemplate_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-PortableInterceptor::ObjectReferenceTemplate *
-PortableInterceptor::ObjectReferenceTemplate_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// *************************************************************
-#endif /* 0 */
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:138
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Value_Var_T<
+        PortableInterceptor::ObjectReferenceTemplate,
+        PortableInterceptor::tao_ObjectReferenceTemplate_life
+      >;
+  template class
+    TAO_Value_Out_T<
+        PortableInterceptor::ObjectReferenceTemplate,
+        PortableInterceptor::tao_ObjectReferenceTemplate_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Value_Var_T< \
+        PortableInterceptor::ObjectReferenceTemplate, \
+        PortableInterceptor::tao_ObjectReferenceTemplate_life \
+      >
+# pragma instantiate \
+    TAO_Value_Out_T< \
+        PortableInterceptor::ObjectReferenceTemplate, \
+        PortableInterceptor::tao_ObjectReferenceTemplate_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 PortableInterceptor::ObjectReferenceTemplate *
 PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
@@ -979,146 +643,46 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
   new_object = ObjectReferenceTemplate::_downcast (base);
   return retval;
 }
-#if 0
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:103
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
-#if !defined (__TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_)
-#define __TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_
-
-// The Base_Sequence functions, please see tao/Sequence.h
-void
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_allocate_buffer (CORBA::ULong length)
-{
-  PortableInterceptor::ObjectReferenceTemplate **tmp = 0;
-  tmp = _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::allocbuf (length);
-  
-  if (this->buffer_ != 0)
-    {
-      PortableInterceptor::ObjectReferenceTemplate **old = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate**, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              CORBA::add_ref (old[i]);
-              tmp[i] = old[i];
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete [] old;
-        }
-    }
-  
-  this->buffer_ = tmp;
-}
-
-void
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  PortableInterceptor::ObjectReferenceTemplate **tmp = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate**, this->buffer_);
-  
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    {
-      CORBA::remove_ref (tmp[i]);
-      tmp[i] = 0;
-    }
-  
-  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::freebuf (tmp);
-  this->buffer_ = 0;
-}
-
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::~_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void)
-{
-  this->_deallocate_buffer ();
-}
-
-void
-PortableInterceptor::_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-{
-  PortableInterceptor::ObjectReferenceTemplate **tmp = ACE_reinterpret_cast (PortableInterceptor::ObjectReferenceTemplate**, this->buffer_);
-  
-  for (CORBA::ULong i = nl; i < ol; ++i)
-    {
-      CORBA::remove_ref (tmp[i]);
-      tmp[i] = 0;
-    }
-}
-
-
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_)
-#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// PortableInterceptor::ObjectReferenceTemplateSeq
-// *************************************************************
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (void)
 {}
 
 PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Valuetype_Sequence<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_Valuetype_Sequence<
+        PortableInterceptor::ObjectReferenceTemplate,
+        PortableInterceptor::ObjectReferenceTemplate_var,
+        PortableInterceptor::tao_ObjectReferenceTemplate_life
+      >
+    (max)
 {}
 
 PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
     CORBA::ULong max,
     CORBA::ULong length,
-    PortableInterceptor::ObjectReferenceTemplate_ptr *buffer,
+    PortableInterceptor::ObjectReferenceTemplate ** buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Valuetype_Sequence<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Valuetype_Sequence<
+        PortableInterceptor::ObjectReferenceTemplate,
+        PortableInterceptor::ObjectReferenceTemplate_var,
+        PortableInterceptor::tao_ObjectReferenceTemplate_life
+      >
+    (max, length, buffer, release)
 {}
 
 PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (const ObjectReferenceTemplateSeq &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Valuetype_Sequence<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_Valuetype_Sequence<
+        PortableInterceptor::ObjectReferenceTemplate,
+        PortableInterceptor::ObjectReferenceTemplate_var,
+        PortableInterceptor::tao_ObjectReferenceTemplate_life
+      >
+    (seq)
 {}
 
-PortableInterceptor::ObjectReferenceTemplateSeq::~ObjectReferenceTemplateSeq (void) // dtor
+PortableInterceptor::ObjectReferenceTemplateSeq::~ObjectReferenceTemplateSeq (void)
 {}
 
 void PortableInterceptor::ObjectReferenceTemplateSeq::_tao_any_destructor (void *_tao_void_pointer)
@@ -1127,8 +691,54 @@ void PortableInterceptor::ObjectReferenceTemplateSeq::_tao_any_destructor (void 
   delete tmp;
 }
 
-#endif /* end #if !defined */
-#endif /* 0 */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_MngSeq_Var_T<
+      PortableInterceptor::ObjectReferenceTemplateSeq,
+      TAO_Valuetype_Manager<
+          PortableInterceptor::ObjectReferenceTemplate,
+          PortableInterceptor::ObjectReferenceTemplate_var,
+          PortableInterceptor::tao_ObjectReferenceTemplate_life
+        >
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      PortableInterceptor::ObjectReferenceTemplateSeq,
+      PortableInterceptor::ObjectReferenceTemplateSeq_var,
+      TAO_Valuetype_Manager<
+          PortableInterceptor::ObjectReferenceTemplate,
+          PortableInterceptor::ObjectReferenceTemplate_var,
+          PortableInterceptor::tao_ObjectReferenceTemplate_life
+        >
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_MngSeq_Var_T< \
+      PortableInterceptor::ObjectReferenceTemplateSeq, \
+      TAO_Valuetype_Manager< \
+          PortableInterceptor::ObjectReferenceTemplate, \
+          PortableInterceptor::ObjectReferenceTemplate_var, \
+          PortableInterceptor::tao_ObjectReferenceTemplate_life \
+        > \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      PortableInterceptor::ObjectReferenceTemplateSeq, \
+      PortableInterceptor::ObjectReferenceTemplateSeq_var, \
+      TAO_Valuetype_Manager< \
+          PortableInterceptor::ObjectReferenceTemplate, \
+          PortableInterceptor::ObjectReferenceTemplate_var, \
+          PortableInterceptor::tao_ObjectReferenceTemplate_life \
+        > \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
@@ -1495,8 +1105,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<PortableInterceptor::ObjectReferenceTemplateSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<PortableInterceptor::ObjectReferenceTemplateSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:740
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:270
 
 void
 CORBA::add_ref (PortableInterceptor::ObjectReferenceFactory * vt)
@@ -1548,7 +1165,7 @@ operator>> (
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:740
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:270
 
 void
 CORBA::add_ref (PortableInterceptor::ObjectReferenceTemplate * vt)
@@ -1600,7 +1217,7 @@ operator>> (
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

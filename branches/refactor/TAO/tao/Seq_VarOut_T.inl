@@ -21,16 +21,6 @@ TAO_Seq_Var_Base_T<T,T_elem>::~TAO_Seq_Var_Base_T (void)
 
 template<typename T, typename T_elem>
 ACE_INLINE
-TAO_Seq_Var_Base_T<T,T_elem> &
-TAO_Seq_Var_Base_T<T,T_elem>::operator= (T * p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-template<typename T, typename T_elem>
-ACE_INLINE
 const T *
 TAO_Seq_Var_Base_T<T,T_elem>::operator-> (void) const
 {
@@ -64,22 +54,6 @@ ACE_INLINE
 TAO_Seq_Var_Base_T<T,T_elem>::operator T & () const
 {
   return *this->ptr_;
-}
-
-template<typename T, typename T_elem>
-ACE_INLINE
-T_elem &
-TAO_Seq_Var_Base_T<T,T_elem>::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-template<typename T, typename T_elem>
-ACE_INLINE
-const T_elem &
-TAO_Seq_Var_Base_T<T,T_elem>::operator[] (CORBA::ULong index) const
-{
-  return ACE_const_cast (const T_elem &, this->ptr_->operator[] (index));
 }
 
 template<typename T, typename T_elem>
@@ -156,6 +130,32 @@ TAO_FixedSeq_Var_T<T,T_elem>::TAO_FixedSeq_Var_T (const T & p)
            T (p));
 }
 
+template<typename T, typename T_elem>
+ACE_INLINE
+TAO_FixedSeq_Var_T<T,T_elem> &
+TAO_FixedSeq_Var_T<T,T_elem>::operator= (T * p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+T_elem &
+TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+const T_elem &
+TAO_FixedSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const T_elem &, this->ptr_->operator[] (index));
+}
+
 // ***************************************************************
 
 template<typename T, typename T_elem>
@@ -176,12 +176,84 @@ TAO_VarSeq_Var_T<T,T_elem>::TAO_VarSeq_Var_T (
   : TAO_Seq_Var_Base_T<T,T_elem> (p)
 {}
 
+template<typename T, typename T_elem>
+ACE_INLINE
+TAO_VarSeq_Var_T<T,T_elem> &
+TAO_VarSeq_Var_T<T,T_elem>::operator= (T * p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
 // Variable-size types only.
 template<typename T, typename T_elem>
 ACE_INLINE
 TAO_VarSeq_Var_T<T,T_elem>::operator T *& ()
 {
   return this->ptr_;
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+T_elem &
+TAO_VarSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+const T_elem &
+TAO_VarSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index) const
+{
+  return ACE_const_cast (const T_elem &, this->ptr_->operator[] (index));
+}
+
+// ***************************************************************
+
+template<typename T, typename T_elem>
+ACE_INLINE
+TAO_MngSeq_Var_T<T,T_elem>::TAO_MngSeq_Var_T (void)
+{}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+TAO_MngSeq_Var_T<T,T_elem>::TAO_MngSeq_Var_T (T * p)
+  : TAO_Seq_Var_Base_T<T,T_elem> (p)
+{}
+
+template<typename T, typename T_elem>
+TAO_MngSeq_Var_T<T,T_elem>::TAO_MngSeq_Var_T (
+    const TAO_MngSeq_Var_T<T,T_elem> & p
+  )
+  : TAO_Seq_Var_Base_T<T,T_elem> (p)
+{}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+TAO_MngSeq_Var_T<T,T_elem> &
+TAO_MngSeq_Var_T<T,T_elem>::operator= (T * p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+// Variable-size types only.
+template<typename T, typename T_elem>
+ACE_INLINE
+TAO_MngSeq_Var_T<T,T_elem>::operator T *& ()
+{
+  return this->ptr_;
+}
+
+template<typename T, typename T_elem>
+ACE_INLINE
+T_elem
+TAO_MngSeq_Var_T<T,T_elem>::operator[] (CORBA::ULong index)
+{
+  return this->ptr_->operator[] (index);
 }
 
 // ****************************************************************

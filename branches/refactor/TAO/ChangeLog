@@ -1,3 +1,88 @@
+Sun Mar 30 02:50:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+        * TAO_IDL/include/ast_type.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CONV_FRAMEC.i:
+        * tao/ClientRequestInfo.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/DynamicC.i:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/Messaging_SyncScopeC.h:
+        * tao/Messaging_SyncScopeC.i:
+        * tao/ORB.h:
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectIdListC.h:
+        * tao/ObjectIdListC.i:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/ObjectReferenceTemplateC.i:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.i:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/Seq_VarOut_T.cpp:
+        * tao/Seq_VarOut_T.h:
+        * tao/Seq_VarOut_T.inl:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ServicesC.i:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/corbafwd.h:
+
+          Changed sequence generation to create a class that inherits
+          from the template class instead of just a typedef. Also 
+          regenerated hand-crafted files in the TAO library.
+
 Fri Mar 28 19:12:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CONV_FRAMEC.cpp:

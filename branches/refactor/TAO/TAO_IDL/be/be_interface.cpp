@@ -560,14 +560,18 @@ be_interface:: gen_var_out_seq_decls (void)
       return;
     }
 
+  const char *lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  const char *lname = this->local_name ();
+  // Generate the ifdefined macro for this interface.
+  os->gen_ifdef_macro (this->flat_name (),
+                       "odds_n_ends");
 
-  *os << "class " << lname << ";" << be_nl
+  *os << be_nl << be_nl
+      << "class " << lname << ";" << be_nl
       << "typedef " << lname << " *" << lname << "_ptr;" << be_nl
       << "struct tao_" << lname << "_life;" << be_nl
       << "typedef TAO_Objref_Var_T<" << lname << ", tao_" 
@@ -600,6 +604,8 @@ be_interface:: gen_var_out_seq_decls (void)
           << "static CORBA::Object_ptr tao_upcast (void *);" << be_uidt_nl
           << "};";
     }
+
+  os->gen_endif ();
 
   this->var_out_seq_decls_gen_ = 1;
 }

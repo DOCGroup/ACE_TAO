@@ -770,9 +770,6 @@ public:
    */
   static void freebuf (T **);
 
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
-
   // The Base_Sequence functions, please see "tao/Sequence.h"
   /// No default to workaround egcs problem with templates and
   /// namespaces
@@ -843,9 +840,6 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T ** buffer);
-
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
 
   // The Base_Sequence functions, please see "tao/sequence.h"
   /// No default to workaround egcs problem with templates and
@@ -920,9 +914,6 @@ public:
   /// Release all the elements.
   static void freebuf (T **);
 
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
-
   // The Base_Sequence functions, please see "tao/Sequence.h"
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -975,9 +966,6 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T ** buffer);
-
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
 
   // The Base_Sequence functions, please see "tao/sequence.h"
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -1041,9 +1029,6 @@ public:
   /// Release all the elements.
   static void freebuf (T **);
 
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
-
   // The Base_Sequence functions, please see "tao/Sequence.h"
   /// No default to workaround egcs problem with templates and
   /// namespaces
@@ -1098,9 +1083,6 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T ** buffer);
-
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
 
   // The Base_Sequence functions, please see "tao/sequence.h"
   /// No default to workaround egcs problem with templates and
@@ -1166,9 +1148,6 @@ public:
   /// Release all the elements.
   static void freebuf (T **);
 
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
-
   // The Base_Sequence functions, please see "tao/Sequence.h"
   /// No default to workaround egcs problem with templates and
   /// namespaces
@@ -1223,9 +1202,6 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T ** buffer);
-
-  static void _tao_any_destructor (void *);
-  typedef T_var _var_type;
 
   // The Base_Sequence functions, please see "tao/sequence.h"
   /// No default to workaround egcs problem with templates and

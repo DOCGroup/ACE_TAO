@@ -127,13 +127,35 @@ be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 int
 be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
 {
-  return this->visit_interface (node);
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
+    {
+      *os << node->nested_type_name (this->ctx_->scope (), " *");
+    }
+  else
+    {
+      *os << node->name () << " *";
+    }
+
+  return 0;
 }
 
 int
 be_visitor_sequence_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  return this->visit_interface_fwd (node);
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
+    {
+      *os << node->nested_type_name (this->ctx_->scope (), " *");
+    }
+  else
+    {
+      *os << node->name () << " *";
+    }
+
+  return 0;
 }
 
 int

@@ -24,16 +24,6 @@
 
 
 #include "DynamicC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -167,12 +157,45 @@ template class
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+Dynamic::ParameterList::ParameterList (void)
+{}
 
-template class
-  TAO_Unbounded_Sequence<
-      Dynamic::Parameter
-    >;
+Dynamic::ParameterList::ParameterList (CORBA::ULong max)
+  : TAO_Unbounded_Sequence<
+        Dynamic::Parameter
+      >
+    (max)
+{}
+
+Dynamic::ParameterList::ParameterList (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    Dynamic::Parameter *buffer,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Sequence<
+        Dynamic::Parameter
+      >
+    (max, length, buffer, release)
+{}
+
+Dynamic::ParameterList::ParameterList (const ParameterList &seq)
+  : TAO_Unbounded_Sequence<
+        Dynamic::Parameter
+      >
+    (seq)
+{}
+
+Dynamic::ParameterList::~ParameterList (void)
+{}
+
+void Dynamic::ParameterList::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ParameterList *tmp = ACE_static_cast (ParameterList*, _tao_void_pointer);
+  delete tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class
   TAO_VarSeq_Var_T<
@@ -188,11 +211,6 @@ template class
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Unbounded_Sequence< \
-      Dynamic::Parameter \
-    >
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
@@ -422,13 +440,48 @@ TAO_NAMESPACE_END
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+Dynamic::ExceptionList::ExceptionList (void)
+{}
 
-template class
-  TAO_Unbounded_Pseudo_Sequence<
-      Dynamic::TypeCode,
-      Dynamic::TypeCode_var
-    >;
+Dynamic::ExceptionList::ExceptionList (CORBA::ULong max)
+  : TAO_Unbounded_Pseudo_Sequence<
+        Dynamic::TypeCode,
+        Dynamic::TypeCode_var
+      >
+    (max)
+{}
+
+Dynamic::ExceptionList::ExceptionList (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::TypeCode_ptr *buffer,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Pseudo_Sequence<
+        Dynamic::TypeCode,
+        Dynamic::TypeCode_var
+      >
+    (max, length, buffer, release)
+{}
+
+Dynamic::ExceptionList::ExceptionList (const ExceptionList &seq)
+  : TAO_Unbounded_Pseudo_Sequence<
+        Dynamic::TypeCode,
+        Dynamic::TypeCode_var
+      >
+    (seq)
+{}
+
+Dynamic::ExceptionList::~ExceptionList (void)
+{}
+
+void Dynamic::ExceptionList::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ExceptionList *tmp = ACE_static_cast (ExceptionList*, _tao_void_pointer);
+  delete tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class
   TAO_VarSeq_Var_T<
@@ -450,12 +503,6 @@ template class
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Unbounded_Pseudo_Sequence< \
-      Dynamic::TypeCode, \
-      Dynamic::TypeCode_var \
-    >
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
@@ -805,7 +852,7 @@ CORBA::Boolean operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -871,7 +918,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

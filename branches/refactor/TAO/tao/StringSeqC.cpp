@@ -24,72 +24,44 @@
 
 
 #include "StringSeqC.h"
+#include "Any_T.h"
+#include "CDR.h"
 
 #if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
 #include "StringSeqC.i"
 #endif /* !defined INLINE */
 
-#include "Any_T.h"
-
-#if !defined (_CORBA_STRINGSEQ_CS_)
-#define _CORBA_STRINGSEQ_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// CORBA::StringSeq
-// *************************************************************
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 CORBA::StringSeq::StringSeq (void)
 {}
 
 CORBA::StringSeq::StringSeq (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_String_Sequence
+    (max)
 {}
 
 CORBA::StringSeq::StringSeq (
     CORBA::ULong max,
     CORBA::ULong length,
-    char * *buffer,
+    char ** buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_String_Sequence
+    (max, length, buffer, release)
 {}
 
 CORBA::StringSeq::StringSeq (const StringSeq &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_String_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_String_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_String_Sequence
+    (seq)
 {}
 
-CORBA::StringSeq::~StringSeq (void) // dtor
+CORBA::StringSeq::~StringSeq (void)
 {}
 
 void CORBA::StringSeq::_tao_any_destructor (void *_tao_void_pointer)
@@ -98,7 +70,37 @@ void CORBA::StringSeq::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_MngSeq_Var_T<
+      CORBA::StringSeq,
+      TAO_SeqElem_String_Manager
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      CORBA::StringSeq,
+      CORBA::StringSeq_var,
+      TAO_SeqElem_String_Manager
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_MngSeq_Var_T< \
+      CORBA::StringSeq, \
+      TAO_SeqElem_String_Manager \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      CORBA::StringSeq, \
+      CORBA::StringSeq_var, \
+      TAO_SeqElem_String_Manager \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -145,61 +147,33 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-#if !defined (_CORBA_WSTRINGSEQ_CS_)
-#define _CORBA_WSTRINGSEQ_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// CORBA::WStringSeq
-// *************************************************************
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 CORBA::WStringSeq::WStringSeq (void)
 {}
 
 CORBA::WStringSeq::WStringSeq (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_WString_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_WString_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_WString_Sequence
+    (max)
 {}
 
 CORBA::WStringSeq::WStringSeq (
     CORBA::ULong max,
     CORBA::ULong length,
-    CORBA::WChar * *buffer,
+    CORBA::WChar ** buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_WString_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_WString_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_WString_Sequence
+    (max, length, buffer, release)
 {}
 
 CORBA::WStringSeq::WStringSeq (const WStringSeq &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_WString_Sequence
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_WString_Sequence
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_WString_Sequence
+    (seq)
 {}
 
-CORBA::WStringSeq::~WStringSeq (void) // dtor
+CORBA::WStringSeq::~WStringSeq (void)
 {}
 
 void CORBA::WStringSeq::_tao_any_destructor (void *_tao_void_pointer)
@@ -208,7 +182,37 @@ void CORBA::WStringSeq::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_MngSeq_Var_T<
+      CORBA::WStringSeq,
+      TAO_SeqElem_WString_Manager
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      CORBA::WStringSeq,
+      CORBA::WStringSeq_var,
+      TAO_SeqElem_WString_Manager
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_MngSeq_Var_T< \
+      CORBA::WStringSeq, \
+      TAO_SeqElem_WString_Manager \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      CORBA::WStringSeq, \
+      CORBA::WStringSeq_var, \
+      TAO_SeqElem_WString_Manager \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -314,6 +318,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<CORBA::StringSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::StringSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
@@ -372,8 +383,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<CORBA::WStringSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::WStringSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -439,7 +457,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

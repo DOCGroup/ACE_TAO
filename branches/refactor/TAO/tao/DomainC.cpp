@@ -1545,19 +1545,57 @@ TAO_NAMESPACE_END
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
+CORBA::DomainManagerList::DomainManagerList (void)
+{}
+
+CORBA::DomainManagerList::DomainManagerList (CORBA::ULong max)
+  : TAO_Unbounded_Object_Sequence<
+        CORBA::DomainManager,
+        CORBA::DomainManager_var,
+        CORBA::tao_DomainManager_life,
+        CORBA::tao_DomainManager_cast
+      >
+    (max)
+{}
+
+CORBA::DomainManagerList::DomainManagerList (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::DomainManager_ptr *buffer,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Object_Sequence<
+        CORBA::DomainManager,
+        CORBA::DomainManager_var,
+        CORBA::tao_DomainManager_life,
+        CORBA::tao_DomainManager_cast
+      >
+    (max, length, buffer, release)
+{}
+
+CORBA::DomainManagerList::DomainManagerList (const DomainManagerList &seq)
+  : TAO_Unbounded_Object_Sequence<
+        CORBA::DomainManager,
+        CORBA::DomainManager_var,
+        CORBA::tao_DomainManager_life,
+        CORBA::tao_DomainManager_cast
+      >
+    (seq)
+{}
+
+CORBA::DomainManagerList::~DomainManagerList (void)
+{}
+
+void CORBA::DomainManagerList::_tao_any_destructor (void *_tao_void_pointer)
+{
+  DomainManagerList *tmp = ACE_static_cast (DomainManagerList*, _tao_void_pointer);
+  delete tmp;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class
-  TAO_Unbounded_Object_Sequence<
-      CORBA::DomainManager,
-      CORBA::DomainManager_var,
-      CORBA::tao_DomainManager_life,
-      CORBA::tao_DomainManager_cast
-    >;
-
-
-template class
-  TAO_VarSeq_Var_T<
+  TAO_MngSeq_Var_T<
       CORBA::DomainManagerList,
       TAO_Object_Manager<
           CORBA::DomainManager,
@@ -1580,15 +1618,7 @@ template class
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
-    TAO_Unbounded_Object_Sequence< \
-        CORBA::DomainManager, \
-        CORBA::DomainManager_var, \
-        CORBA::tao_DomainManager_life, \
-        CORBA::tao_DomainManager_cast, \
-      >
-
-# pragma instantiate \
-    TAO_VarSeq_Var_T< \
+    TAO_MngSeq_Var_T< \
         CORBA::DomainManagerList, \
         TAO_Object_Manager< \
             CORBA::DomainManager, \
@@ -1956,7 +1986,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

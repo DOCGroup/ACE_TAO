@@ -42,7 +42,11 @@ public:
   // destructor
 
   virtual int visit_sequence (be_sequence *node);
-  // visit sequence node
+  // visit sequence node.
+
+  void gen_varout_typedefs (be_sequence *node, 
+                            be_type *elem);
+  // Generate the typedefs for our _var and _out template classes.
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_ */

@@ -107,11 +107,28 @@ TAO_NAMESPACE  CONV_FRAME
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
     
-    typedef
-      TAO_Unbounded_Sequence<
-          CONV_FRAME::CodeSetId
-        >
-      _tao_seq_CodeSetId;
+    class TAO_Export _tao_seq_CodeSetId
+      : public
+          TAO_Unbounded_Sequence<
+              CONV_FRAME::CodeSetId
+            >
+    {
+    public:
+      _tao_seq_CodeSetId (void);
+      _tao_seq_CodeSetId (CORBA::ULong max);
+      _tao_seq_CodeSetId (
+          CORBA::ULong max,
+          CORBA::ULong length,
+          CORBA::ULong *buffer, 
+          CORBA::Boolean release = 0
+        );
+      _tao_seq_CodeSetId (const _tao_seq_CodeSetId &);
+      ~_tao_seq_CodeSetId (void);
+      
+      static void _tao_any_destructor (void *);
+      
+      
+    };
     
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_field/field_ch.cpp:447
@@ -234,7 +251,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSet
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetComponent &);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
 
 #if !defined _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_H_
 #define _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_H_

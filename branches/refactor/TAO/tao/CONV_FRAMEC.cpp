@@ -172,21 +172,43 @@ void CONV_FRAME::CodeSetComponent::_tao_any_destructor (void *_tao_void_pointer)
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (void)
+{}
 
-template class
-  TAO_Unbounded_Sequence<
-      CONV_FRAME::CodeSetId
-    >;
+CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (CORBA::ULong max)
+  : TAO_Unbounded_Sequence<
+        CONV_FRAME::CodeSetId
+      >
+    (max)
+{}
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::ULong *buffer,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Sequence<
+        CONV_FRAME::CodeSetId
+      >
+    (max, length, buffer, release)
+{}
 
-# pragma instantiate \
-  TAO_Unbounded_Sequence< \
-      CONV_FRAME::CodeSetId \
-    >
+CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_seq_CodeSetId (const _tao_seq_CodeSetId &seq)
+  : TAO_Unbounded_Sequence<
+        CONV_FRAME::CodeSetId
+      >
+    (seq)
+{}
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::~_tao_seq_CodeSetId (void)
+{}
+
+void CONV_FRAME::CodeSetComponent::_tao_seq_CodeSetId::_tao_any_destructor (void *_tao_void_pointer)
+{
+  _tao_seq_CodeSetId *tmp = ACE_static_cast (_tao_seq_CodeSetId*, _tao_void_pointer);
+  delete tmp;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
@@ -677,7 +699,7 @@ CORBA::Boolean operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:98
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 #if !defined _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_CPP_
 #define _TAO_CDR_OP_CONV_FRAME_CodeSetComponent__tao_seq_CodeSetId_CPP_
