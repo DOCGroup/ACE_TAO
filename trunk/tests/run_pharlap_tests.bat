@@ -22,6 +22,7 @@ call %0 Buffer_Stream_Test
 call %0 CDR_Test
 call %0 Collection_Test
 call %0 Conn_Test
+call %0 Cached_Conn_Test
 call %0 DLL_Test
 call %0 DLList_Test
 call %0 Enum_Interfaces_Test
