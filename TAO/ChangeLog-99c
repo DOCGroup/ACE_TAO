@@ -1,3 +1,9 @@
+Tue Jul  6 09:42:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Invocation.cpp:
+	  Cast the arguments in a call to ACE_Time_Value::set to long from
+	  CORBA::ULongLong to avert an MSVC warning.
+
 Mon Jul  5 21:20:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connector_Registry.h:
