@@ -1,3 +1,9 @@
+Wed Mar 31 14:09:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Explicit_Activation/server.cpp: 
+	Made some cosmetic changes to the ACETRY macros
+        defined inside	
+
 Wed Mar 31 09:02:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
