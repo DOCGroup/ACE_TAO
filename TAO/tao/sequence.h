@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    sequence.h
 //
@@ -12,39 +12,11 @@
 //    Copyright 1994-1995 by Sun Microsystems Inc.
 //
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_SEQUENCE_H)
 #  define TAO_SEQUENCE_H
-
-#if 0
-template <class T>
-struct CORBA_SEQUENCE 
-{
-  // = TITLE
-  //    Utility template class.
-  //
-  // = DESCRIPTION
-#if SIZEOF_LONG == 4
-  u_long maximum;
-  u_long length;
-#else
-  // = Just assume "int" is four bytes long ...
-  u_int maximum;
-  u_int length;
-#endif /* SIZEOF_LONG */
-  T *buffer;
-
-  CORBA_SEQUENCE (void)
-    : maximum (0), length (0), buffer (0) { }
-
-  // XXX destructor should free buffer, elements!!
-  ~CORBA_SEQUENCE (void) { }
-};
-
-typedef CORBA_SEQUENCE <CORBA_Octet> CORBA_OctetSeq;
-#endif
 
 // unbounded sequences
 template <class T>
