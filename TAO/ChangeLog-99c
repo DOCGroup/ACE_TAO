@@ -4,8 +4,8 @@ Wed Aug  4 12:02:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  the support in the IDL compiler, request muxing over the same
 	  connection, generation of ReplyHandlers, the AMI demo, support
 	  for multiple threads waiting for a reply on the same connection, 
-	  etc. The changes are summarized below, most of them where done
-	  by Alex and Michael, i contributed the demo.
+	  etc. The changes are summarized below, most of them were done
+	  by Alex and Michael, I contributed the demo.
 
 	* tao/Reply_Dispatcher.cpp:
 	  Optimized reply dispatching, there is no need to create a new
