@@ -1,3 +1,9 @@
+Thu Feb 17 15:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added the new CosEvent files to the orbsvcs projects.
+
 Thu Feb 17 14:44:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
