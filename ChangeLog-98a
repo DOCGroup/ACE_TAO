@@ -7,42 +7,54 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
           on WIN32.  Thanks to Ari Erev <ari_erev@icomverse.com> and
           John Neystadt <john_neystadt@icomverse.com> for suggesting this.
 
+        * ace/IOStream.cpp (underflow,overflow): moved get_mode_ and
+          put_mode_ accesses so that it now works on KAI C++.
+          Thanks to Ben Eng <ben@jetpen.com> for the patch.
+
+        * ace/config-linux-kcc.h: commented out ACE_TEMPLATES_REQUIRE_SOURCE.
+          Thanks to Ben Eng <ben@jetpen.com> for this update.
+
+        * ace/Future.cpp: removed ACE_Atomic_Op<ACE_Thread_Mutex, int>
+          instantiation, when __ACE_INLINE__ is enabled, because it no
+          longer appears to be necessary, and caused link collisions on
+          g++/VxWorks.
+
         * examples/Shared_Malloc/test_persistence.cpp: removed
           ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
           instantiation because it's in ace/System_Time.cpp.
 
 Tue Dec 02 00:18:04 1997    <irfan@TWOSTEP>
 
-	* ace/Memory_Pool.cpp (handle_signal): If guess_on_fault_ is true,
- 	  then we cannot call remap(0).  This will always put the address
- 	  out of range.  Therefore, we will shoot in the dark (user has
- 	  instructed us to do so as guess_on_fault_ is true) and try to
- 	  remap the file.  If the user does not want this behavior, the
- 	  guess_on_fault_ flag should be turned off.  Thanks to Jon
- 	  Prettyman <jonp@als.ameritech.com> for pointing this out.
+        * ace/Memory_Pool.cpp (handle_signal): If guess_on_fault_ is true,
+          then we cannot call remap(0).  This will always put the address
+          out of range.  Therefore, we will shoot in the dark (user has
+          instructed us to do so as guess_on_fault_ is true) and try to
+          remap the file.  If the user does not want this behavior, the
+          guess_on_fault_ flag should be turned off.  Thanks to Jon
+          Prettyman <jonp@als.ameritech.com> for pointing this out.
 
 Mon Dec 01 16:13:06 1997    <irfan@TWOSTEP>
 
-	* ace/config-win32-common.h: Added back ACE_LACKS_ACE_IOSTREAM to
- 	  the config file. The test is not compiling.
+        * ace/config-win32-common.h: Added back ACE_LACKS_ACE_IOSTREAM to
+          the config file. The test is not compiling.
 
-	* tests/run_tests.bat: Look for "Win32 structured exception" in
- 	  the log files.
+        * tests/run_tests.bat: Look for "Win32 structured exception" in
+          the log files.
 
 Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp,
           ace/Log_Record.h ace/OS.h, ace/stdcpp.h, tests/test_config.h:
 
-	  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
+          Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
           to include iostream when the above is #defined.  Made
           changes to other files to accommodate this change.
 
 Mon Dec 01 12:15:00 1997    <irfan@TWOSTEP>
 
-	* ace/config-win32-common.h (ACE_LACKS_ACE_IOSTREAM): James CE
- 	  Johnson claims that ACE_LACKS_ACE_IOSTREAM is no longer not
- 	  necessary when using the ACE_HAS_STANDARD_CPP_LIBRARY.
+        * ace/config-win32-common.h (ACE_LACKS_ACE_IOSTREAM): James CE
+          Johnson claims that ACE_LACKS_ACE_IOSTREAM is no longer not
+          necessary when using the ACE_HAS_STANDARD_CPP_LIBRARY.
 
         * ace/OS.h: Changed the definition of ACE_UNIMPLEMENTED_FUNC so
           that it just evaporates on platform that have
