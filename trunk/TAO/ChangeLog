@@ -1,3 +1,13 @@
+Wed Jan 29 12:15:31 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/run_test.pl: Reduced the number of
+	  iterations  that this test runs. Removed -ORBdebuglevel from teh
+	  scripts. This was used for debugging purposes long back.
+	
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Removed a
+	  debug statement where we print exceptions. This is expected in
+	  this test.
+
 Tue Jan 28 15:59:45 2003  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/Options.html: 
