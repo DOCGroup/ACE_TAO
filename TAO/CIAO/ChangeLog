@@ -1,3 +1,25 @@
+Thu Jul  1 15:47:45 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication.cpp:
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplicationManager/CIAO_NAM_Export.h:
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+        * DAnCE/NodeManager/NodeDaemon.idl:
+        * DAnCE/NodeManager/NodeDaemon.mpc:
+        * DAnCE/NodeManager/NodeDaemon_Impl.cpp:
+        * DAnCE/NodeManager/NodeDaemon_Impl.h:
+        * DAnCE/NodeManager/NodeDaemon_Impl.inl:
+        * DAnCE/NodeManager/NodeDaemon_stub_export.h:
+        * DAnCE/NodeManager/Node_Daemon.cpp:
+
+          Checked in the NodeApplication, NodeApplicationManager
+          and NodeManager code.
+
 Thu Jul  1 15:45:48 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.idl:
