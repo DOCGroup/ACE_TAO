@@ -34,8 +34,16 @@ extern "C" {
      PACE's implementation of the POSIX macro assert.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
+
+     Use a macro because assert uses __FILE__ and __LINE__, which
+     would not be useful with an inline function.
    */
-  PACE_INLINE void pace_assert (int expression);
+
+#if defined (PACE_NDEBUG)
+# define pace_assert(X)
+#else  /* ! PACE_NDEBUG */
+# define pace_assert(X) assert (X)
+#endif /* ! PACE_NDEBUG */
 
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)

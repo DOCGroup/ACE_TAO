@@ -1,3 +1,14 @@
+Fri Jul 14 14:34:43 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * pace/assert.h,pace/{posix,win32}/assert.{h,inl}:
+          changed pace_assert from an inline function to a macro.
+          That way, it will report the proper file/line number,
+          instead of those of the pace_assert inline function.
+
+          Also, moved #include <assert.h> from .inl file to .h
+          file.  Because we're now using a macro, client code
+          must #include <assert.h>.
+
 Fri Jul 14 09:26:36 2000  David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.common.GNU: if debug is disabled,
