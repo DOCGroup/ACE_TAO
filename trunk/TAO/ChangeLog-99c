@@ -1,9 +1,21 @@
+Mon Jul 19 11:26:33 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+	HP/UX compile warning fixes -
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	modified the <create> method to throw the BindFailed exception.
+	* examples/Event_Comm/Event_Comm.idl:
+	* examples/Event_Comm/Event_Comm_i.h:
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	modified the <subscribe> method to throw CannotSubscribe exception.
+	modified the <unsubscribe> method to throw CannotUnsubscribe exception.
+
 Mon Jul 19 11:05:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Added a #ifdef to check if the platform supports 64bit long
 	long. If not, used the ACE_U_LongLong class intead.
-	
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp. 
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
 
 Mon Jul 19 10:48:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -16,13 +28,13 @@ Mon Jul 19 10:48:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Repository. These files were added at the request of Phillippe
 	  <Philippe.Merle@lifl.fr> who wanted to use TAO with
 	  CorbaScript. These files will not get compiled till we release
-	  TAO 1.0.  
+	  TAO 1.0.
 
 Sun Jul 18 20:36:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp (check_prefix):
 
-	  Removed "iioploc" from check.  We only care about the first four 
+	  Removed "iioploc" from check.  We only care about the first four
 	  characters at this point, so "iiop" will suffice.
 
 	* tao/ORB.cpp (url_ior_string_to_object):
@@ -45,7 +57,7 @@ Sun Jul 18 19:41:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Fixed problem where CORBA_Any_var::out() was being passed to an
 	  ACE_NEW_THROW_EX macro, which is a problem since
-	  CORBA_Any_var::out() gets called twice, which in turn causes the 
+	  CORBA_Any_var::out() gets called twice, which in turn causes the
 	  underlying pointer to be set to zero.  Thanks to Carlos for
 	  explaining the problem.
 
@@ -53,7 +65,7 @@ Sun Jul 18 19:41:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB.{h,cpp}:
 
 	  Implemented the CORBA::ORB::list_initial_services() method.
-	
+
 	* tao/orbconf.h:
 
 	  Added a macro that defines a comma separated list of initial
