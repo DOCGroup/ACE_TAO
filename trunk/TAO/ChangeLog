@@ -1,3 +1,8 @@
+Mon Dec  9 16:33:07 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:  Added missing 
+	  ACE_INLINE's.
+
 Mon Dec  9 10:26:07 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/IIOP_Transport.cpp (recv_i): Fixed a small error in the
