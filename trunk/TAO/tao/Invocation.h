@@ -32,6 +32,8 @@
 #include "tao/GIOP.h"
 
 struct TAO_Exception_Data;
+class TAO_Profile;
+class TAO_Transport;
 
 class TAO_Export TAO_GIOP_Invocation
 {
@@ -72,6 +74,12 @@ protected:
   TAO_GIOP_ReplyStatusType invoke (CORBA::Boolean is_roundtrip,
                                    CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Sends the request, does not wait for the response.
+
+  TAO_GIOP_ReplyStatusType invoke_i (TAO_Profile *profile,
+                                     TAO_Transport *transport,
+                                     CORBA::Boolean is_roundtrip,
+                                     CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // This method implements invoke(), using a pre-determined profile and transport.
 
   TAO_GIOP_ReplyStatusType close_connection (void);
   // resets the forwarding profile and behaves like

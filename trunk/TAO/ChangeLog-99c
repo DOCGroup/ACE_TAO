@@ -1,6 +1,18 @@
+Fri Feb 19 21:52:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: The Twoway_Invocation class was re-fetching
+	  the profile and transport objects *after* sending the
+	  request. But during a nested upcall the transport hint in the
+	  current profile can change (if an invocation over the same
+	  object reference is required).  The solution is to keep a
+	  reference to the transport object in the stack and pass it down
+	  to the invoke_i() method of the GIOP_Invocation class.  Thanks
+	  to Hans Horsmann <Hans.Horsmann@icn.siemens.de> for reporting
+	  this bug.
+
 Thu Feb 18 20:07:10 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_factory.cpp: 
+	* TAO_IDL/be/be_visitor_factory.cpp:
 	  Added missing context states in the TAO_Compiled_Visitor_Factory
  	  for servant implementation files Thanks to Mason Taube
  	  <taube@westcon.prc.com> for bringing it to our notice.

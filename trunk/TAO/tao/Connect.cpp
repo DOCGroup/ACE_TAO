@@ -905,7 +905,11 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
 
       this->input_available_ = 0;
       // We can get events now, b/c we want them!
-      r->resume_handler (this);
+
+      int result = r->resume_handler (this);
+      ACE_UNUSED_ARG (result);
+      ACE_ASSERT (result == 0);
+
       // We're no longer expecting a response!
       this->expecting_response_ = 0;
     }
