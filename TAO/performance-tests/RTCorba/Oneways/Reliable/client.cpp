@@ -8,6 +8,38 @@
 
 ACE_RCSID(Reliable, client, "$Id$")
 
+#define USING_TIMERS
+//#define USING_QUANTIFY
+
+#if defined (USING_QUANTIFY)
+
+#if defined (ACE_WIN32)
+
+#include "pure.h"
+
+#else /* !ACE_WIN32 */
+
+#include "quantify.h"
+
+inline int QuantifyClearData ()
+{
+  return quantify_clear_data ();
+}
+
+inline int QuantifyStartRecordingData ()
+{
+  return quantify_start_recording_data ();
+}
+
+inline int QuantifyStopRecordingData ()
+{
+  return quantify_stop_recording_data ();
+}
+
+#endif /* ACE_WIN32 */
+
+#endif /* USING_QUANTIFY */
+
 // Default IOR
 static const char *ior = "file://test.ior";
 
@@ -95,78 +127,138 @@ static void
 twoway_work_test (Test_ptr server,
                   CORBA::Environment &ACE_TRY_ENV)
 {
+#if defined (USING_TIMERS)
   ACE_Throughput_Stats latency;
   ACE_hrtime_t base = ACE_OS::gethrtime ();
+#endif /* USING_TIMERS */
+
+#if defined (USING_QUANTIFY)
+  // Reset Quantify data recording; whatever happened in the past is
+  // not relevant to this test.
+  QuantifyClearData ();
+  QuantifyStartRecordingData ();
+#endif /* USING_QUANTIFY */
 
   for (CORBA::ULong i = 0; i != iterations; ++i)
     {
+#if defined (USING_TIMERS)
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
+#endif /* USING_TIMERS */
 
       server->twoway_work_test (work,
                                 ACE_TRY_ENV);
-
       ACE_CHECK;
 
+#if defined (USING_TIMERS)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       latency.sample (now - base,
                       now - latency_base);
+#endif /* USING_TIMERS */
     }
 
+#if defined (USING_QUANTIFY)
+  // Stop recording data here; whatever happens after this in the test
+  // is not relevant to this test.
+  QuantifyStopRecordingData ();
+#endif /* USING_QUANTIFY */
+
+#if defined (USING_TIMERS)
   latency.dump_results ("Twoway", gsf);
+#endif /* USING_TIMERS */
 }
 
 static void
 oneway_work_test (Test_ptr server,
                   CORBA::Environment &ACE_TRY_ENV)
 {
+#if defined (USING_TIMERS)
   ACE_Throughput_Stats latency;
   ACE_hrtime_t base = ACE_OS::gethrtime ();
+#endif /* USING_TIMERS */
+
+#if defined (USING_QUANTIFY)
+  // Reset Quantify data recording; whatever happened in the past is
+  // not relevant to this test.
+  QuantifyClearData ();
+  QuantifyStartRecordingData ();
+#endif /* USING_QUANTIFY */
 
   for (CORBA::ULong i = 0; i != iterations; ++i)
     {
+#if defined (USING_TIMERS)
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
+#endif /* USING_TIMERS */
 
       server->oneway_work_test (work,
                                 ACE_TRY_ENV);
-
       ACE_CHECK;
 
+#if defined (USING_TIMERS)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       latency.sample (now - base,
                       now - latency_base);
+#endif /* USING_TIMERS */
     }
 
-  latency.dump_results ("Oneway", gsf);
+#if defined (USING_QUANTIFY)
+  // Stop recording data here; whatever happens after this in the test
+  // is not relevant to this test.
+  QuantifyStopRecordingData ();
+#endif /* USING_QUANTIFY */
+
+#if defined (USING_TIMERS)
+  latency.dump_results ("Oneway (work based)", gsf);
+#endif /* USING_TIMERS */
 }
 
 static void
 oneway_payload_test (Test_ptr server,
                      CORBA::Environment &ACE_TRY_ENV)
 {
+#if defined (USING_TIMERS)
   ACE_Throughput_Stats latency;
   ACE_hrtime_t base = ACE_OS::gethrtime ();
+#endif /* USING_TIMERS */
+
+#if defined (USING_QUANTIFY)
+  // Reset Quantify data recording; whatever happened in the past is
+  // not relevant to this test.
+  QuantifyClearData ();
+  QuantifyStartRecordingData ();
+#endif /* USING_QUANTIFY */
 
   Test::data data (payload_size);
   data.length (payload_size);
 
   for (CORBA::ULong i = 0; i != iterations; ++i)
     {
+#if defined (USING_TIMERS)
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
+#endif /* USING_TIMERS */
 
       server->oneway_payload_test (data,
                                    ACE_TRY_ENV);
-
       ACE_CHECK;
 
+#if defined (USING_TIMERS)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
 
       latency.sample (now - base,
                       now - latency_base);
+#endif /* USING_TIMERS */
     }
 
-  latency.dump_results ("Oneway", gsf);
+#if defined (USING_QUANTIFY)
+  // Stop recording data here; whatever happens after this in the test
+  // is not relevant to this test.
+  QuantifyStopRecordingData ();
+#endif /* USING_QUANTIFY */
+
+#if defined (USING_TIMERS)
+  latency.dump_results ("Oneway (payload based)", gsf);
+#endif /* USING_TIMERS */
 }
 
 static int

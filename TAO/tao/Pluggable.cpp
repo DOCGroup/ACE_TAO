@@ -111,41 +111,32 @@ TAO_Transport::reset_queued_message (ACE_Message_Block *message_block,
   while (message_block != 0 &&
          bytes_delivered != 0)
     {
-      // Partial send.
-      if (message_block->length () > bytes_delivered)
+      // Our current message block chain.
+      ACE_Message_Block *current_message_block = message_block;
+
+      while (current_message_block != 0 &&
+             bytes_delivered != 0)
         {
-          // Reset so that we skip this in the next send.
-          message_block->rd_ptr (bytes_delivered);
+          size_t adjustment_size = ACE_MIN (current_message_block->length (), bytes_delivered);
+
+          // Reset according to send size.
+          current_message_block->rd_ptr (adjustment_size);
 
           // Hand adjust <message_length>.
-          this->buffering_queue_->message_length (this->buffering_queue_->message_length () - bytes_delivered);
+          this->buffering_queue_->message_length (this->buffering_queue_->message_length () - adjustment_size);
 
-          break;
+          // Adjust <bytes_delivered>.
+          bytes_delivered -= adjustment_size;
+
+          // Next message block in the continuation chain.
+          current_message_block = current_message_block->cont ();
         }
 
-      // <message_block> was completely sent.
-      bytes_delivered -= message_block->length ();
+      // Go to the next message block chain.
+      message_block = message_block->next ();
 
-      // Check continuation chain.
-      if (message_block->cont ())
-        {
-          // Reset so that we skip this message block in the next send.
-          message_block->rd_ptr (message_block->length ());
-
-          // Hand adjust <message_length>.
-          this->buffering_queue_->message_length (this->buffering_queue_->message_length () - bytes_delivered);
-
-          // Next selection.
-          message_block = message_block->cont ();
-        }
-      else
-        {
-          // Go to the next one.
-          message_block = message_block->next ();
-
-          // Release this <message_block>.
-          this->dequeue_head ();
-        }
+      // Release this <current_message_block>.
+      this->dequeue_head ();
     }
 }
 
