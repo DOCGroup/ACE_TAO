@@ -183,7 +183,7 @@ CORBA::Environment::print_exception (const char *info,
     {
       const char *id = this->exception_->_id ();
 
-      ACE_DEBUG ((LM_ERROR, "(%P|%t) EXCEPTION, %s\n", info));
+      ACE_DEBUG ((LM_ERROR, "TAO: (%P|%t) EXCEPTION, %s\n", info));
 
       CORBA::SystemException *x2 =
         CORBA_SystemException::_narrow (this->exception_);
@@ -198,10 +198,10 @@ CORBA::Environment::print_exception (const char *info,
           // directly in the exception value so it can be queried.
 
           ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) system exception, ID '%s'\n",
+                      "TAO: (%P|%t) system exception, ID '%s'\n",
                       id));
           ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) minor code = %x, completed = %s\n",
+                      "TAO: (%P|%t) minor code = %x, completed = %s\n",
                       x2->minor (),
                       (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
                       (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
@@ -213,10 +213,10 @@ CORBA::Environment::print_exception (const char *info,
         // held within it ...
 
         ACE_DEBUG ((LM_ERROR,
-                    "(%P|%t) user exception, ID '%s'\n",
+                    "TAO: (%P|%t) user exception, ID '%s'\n",
                     id));
     }
   else
     ACE_DEBUG ((LM_ERROR,
-                "(%P|%t) no exception\n"));
+                "TAO: (%P|%t) no exception\n"));
 }

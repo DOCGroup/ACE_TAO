@@ -92,76 +92,39 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
     );
 
 
-  // If we get forwarded we have to return to this point:
-_tao_start_again:
-
-  ACE_TRY_EX (_tao_START_FAILED)
-    {
-      _tao_call.start (ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (_tao_START_FAILED);
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      if (istub->next_profile_retry ())
-      {
-        ACE_TRY_ENV.clear ();
-        goto _tao_start_again;
-      }
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (_tao_retval);
-
-  TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-  if (!(
-        (_tao_out << type_id)
-    ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
-
-  TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;
-  ACE_TRY_EX (_tao_INVOKE_FAILED)
-    {
-      _invoke_status =
-        _tao_call.invoke (0, 0, ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      if (istub->next_profile_retry ())
-      {
-        ACE_TRY_ENV.clear ();
-        goto _tao_start_again;
-      }
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (_tao_retval);
-
-  if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
-  {
-    istub->set_valid_profile ();
-    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-    if (!(
-          (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
-      ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
-
-  }
-  else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
-  {
-    if (istub->next_profile ())
+  // Loop until we succeed or we raise an exception.
+  for (;;)
     {
       ACE_TRY_ENV.clear ();
-      goto _tao_start_again;
+      _tao_call.start (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (_tao_retval);
+
+      TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+      if (!(
+          (_tao_out << type_id)
+      ))
+        ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+
+      int _invoke_status =
+        _tao_call.invoke (0, 0, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (_tao_retval);
+
+      if (_invoke_status == TAO_INVOKE_RESTART)
+        continue;
+      // if (_invoke_status == TAO_INVOKE_EXCEPTION)
+        // cannot happen
+      if (_invoke_status != TAO_INVOKE_OK)
+      {
+        ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+
+      }
+      break;
     }
-    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), _tao_retval);
-
-  }
-  else
-  {
-    ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
-
-  }
+  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+  if (!(
+    (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+  ))
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 
@@ -204,70 +167,34 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     );
 
 
-  // If we get forwarded we have to return to this point:
-_tao_start_again:
-
-  ACE_TRY_EX (_tao_START_FAILED)
-    {
-      _tao_call.start (ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (_tao_START_FAILED);
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      if (istub->next_profile_retry ())
-      {
-        ACE_TRY_ENV.clear ();
-        goto _tao_start_again;
-      }
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (_tao_retval);
-
-  TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;
-  ACE_TRY_EX (_tao_INVOKE_FAILED)
-    {
-      _invoke_status =
-        _tao_call.invoke (0, 0, ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      if (istub->next_profile_retry ())
-      {
-        ACE_TRY_ENV.clear ();
-        goto _tao_start_again;
-      }
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (_tao_retval);
-
-  if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
+  for (;;)
   {
-    istub->set_valid_profile ();
-    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-    if (!(
-          (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
-      ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_TRY_ENV.clear ();
+    _tao_call.start (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    int _invoke_status =
+      _tao_call.invoke (0, 0, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    if (_invoke_status == TAO_INVOKE_RESTART)
+      continue;
+    // if (_invoke_status == TAO_INVOKE_EXCEPTION)
+      // cannot happen
+    if (_invoke_status != TAO_INVOKE_OK)
+    {
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+
+    }
+    break;
 
   }
-  else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
-  {
-    if (istub->next_profile ())
-    {
-      ACE_TRY_ENV.clear ();
-      goto _tao_start_again;
-    }
-    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), _tao_retval);
 
-  }
-  else
-  {
-    ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
-
-  }
+  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+  if (!(
+        (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+    ))
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
   return _tao_retval;
 }
 
@@ -371,81 +298,40 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
       TAO_ORB_Core_instance ()
     );
 
-
-  // If we get forwarded we have to return to this point:
-_tao_start_again:
-
-  ACE_TRY_EX (_tao_START_FAILED)
-    {
-      _tao_call.start (ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (_tao_START_FAILED);
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      if (istub->next_profile_retry ())
-      {
-        ACE_TRY_ENV.clear ();
-        goto _tao_start_again;
-      }
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (_tao_retval);
-
-  TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;
-  ACE_TRY_EX (_tao_INVOKE_FAILED)
-    {
-      _invoke_status =
-        _tao_call.invoke (0, 0, ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);
-    }
-  ACE_CATCH (CORBA_SystemException, ex)
-    {
-      if (istub->next_profile_retry ())
-      {
-        ACE_TRY_ENV.clear ();
-        goto _tao_start_again;
-      }
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (_tao_retval);
-
-  if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
+  for (;;)
   {
-    istub->set_valid_profile ();
+    _tao_call.start (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    int _invoke_status =
+      _tao_call.invoke (0, 0, ACE_TRY_ENV);
+    ACE_CHECK_RETURN (_tao_retval);
+
+    if (_invoke_status == TAO_INVOKE_RESTART)
+      continue;
+    // if (_invoke_status == TAO_INVOKE_EXCEPTION)
+      // cannot happen
+    if (_invoke_status != TAO_INVOKE_OK)
+    {
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
+
+    }
+    break;
+  }
+
 #if 0
-    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-    // @@ The extraction operation (>>) for InterfaceDef will be
-    // defined, and thus this code will work. Right now we raise a
-    // MARSHAL exception....
-    if (!(
-          (_tao_in >> _tao_retval)
-      ))
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+  // @@ The extraction operation (>>) for InterfaceDef will be
+  // defined, and thus this code will work. Right now we raise a
+  // MARSHAL exception....
+  if (!(
+        (_tao_in >> _tao_retval)
+    ))
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
 #else
-      ACE_UNUSED_ARG (_tao_retval);
-      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+    ACE_UNUSED_ARG (_tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
 #endif
-
-  }
-  else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
-  {
-    if (istub->next_profile ())
-    {
-      ACE_TRY_ENV.clear ();
-      goto _tao_start_again;
-    }
-    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), _tao_retval);
-
-  }
-  else
-  {
-    ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
-
-  }
-  // @@ This statement is not reached due to the #if 0 above...
-  ACE_NOTREACHED (return _tao_retval);
 }
 
 CORBA::ImplementationDef_ptr

@@ -86,9 +86,9 @@ TAO_Connector_Registry::preconnect (const char *the_preconnections)
   return result;
 }
 
-TAO_Transport *
+int
 TAO_Connector_Registry::connect (STUB_Object *&obj,
-                                 CORBA::Environment &env)
+                                 TAO_Transport *&transport)
 {
   CORBA::ULong req_tag = TAO_IOP_TAG_INTERNET_IOP;
   TAO_Profile *profile = obj->profile_in_use ();
@@ -96,9 +96,7 @@ TAO_Connector_Registry::connect (STUB_Object *&obj,
   // @@ And the profile selection policy is .... ONLY IIOP, and the
   // @@ first one found!
   if (profile->tag () != req_tag)
-    TAO_THROW_ENV_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
-                          env,
-                          0);
+    return -1;
 
   // here is where we get the appropriate connector object but we are
   // the Connector Registry so call get_connector(tag)
@@ -106,11 +104,7 @@ TAO_Connector_Registry::connect (STUB_Object *&obj,
   TAO_Connector *connector =
     this->get_connector (req_tag);
 
-  TAO_Transport *transport =
-    connector->connect (profile, env);
-  TAO_CHECK_ENV_RETURN (env, 0);
-
-  return transport;
+  return connector->connect (profile, transport);
 }
 
 TAO_IOP_Version::~TAO_IOP_Version (void)

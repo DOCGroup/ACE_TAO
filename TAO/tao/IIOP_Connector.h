@@ -58,8 +58,8 @@ public:
   // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
   // CORBA::ULong TAO_IOP_Profile_ID;
 
-  TAO_Transport *connect (TAO_Profile *profile,
-                          CORBA::Environment &env);
+  int connect (TAO_Profile *profile,
+               TAO_Transport *&transport);
   // Connect will be called from TAO_GIOP_Invocation::start
 
 private:

@@ -681,26 +681,11 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       << ");" << be_uidt_nl;
 
   *os << "\n" << be_nl
-      << "// If we get forwarded we have to return to this point:"
-      << be_uidt_nl
-      << "_tao_start_again:\n" << be_idt_nl;
+      << "for (;;)" << be_nl
+      << "{" << be_idt_nl;
 
-  *os << "ACE_TRY_EX (_tao_START_FAILED)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_call.start (ACE_TRY_ENV);" << be_nl
-      << "ACE_TRY_CHECK_EX (_tao_START_FAILED);" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_CATCH (CORBA_SystemException, ex)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "if (istub->next_profile_retry ())" << be_nl
-      << "{" << be_idt_nl
-      << "ACE_TRY_ENV.clear ();" << be_nl
-      << "goto _tao_start_again;" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_RETHROW;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_ENDTRY;\n";
-
+  *os << "ACE_TRY_ENV.clear ();" << be_nl
+      << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
     {
@@ -753,12 +738,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     }
 
   *os << be_nl
-      << "TAO_GIOP_ReplyStatusType _invoke_status = TAO_GIOP_NO_EXCEPTION;" << be_nl
-      << "ACE_TRY_EX (_tao_INVOKE_FAILED)" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  *os << "_invoke_status =" << be_idt_nl;
-
+      << "int _invoke_status =" << be_idt_nl;
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // oneway operation
@@ -779,20 +759,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
         }
     }
 
-  *os << be_uidt_nl
-      << "ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_CATCH (CORBA_SystemException, ex)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "if (istub->next_profile_retry ())" << be_nl
-      << "{" << be_idt_nl
-      << "ACE_TRY_ENV.clear ();" << be_nl
-      << "goto _tao_start_again;" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_RETHROW;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_ENDTRY;\n";
-
+  *os << be_uidt_nl;
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
     {
@@ -802,11 +769,30 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                          "codegen for checking exception failed\n"),
                         -1);
     }
-
+  
   *os << be_nl
-      << "if (_invoke_status == TAO_GIOP_NO_EXCEPTION)" << be_nl
-      << "{" << be_idt_nl
-      << "istub->set_valid_profile ();" << be_nl;
+      << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
+      << "continue;" << be_uidt_nl
+      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
+      << "// cannot happen" << be_uidt_nl
+      << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
+      << "{" << be_idt_nl;
+
+  if (this->gen_raise_exception (bt,
+                                 "CORBA::UNKNOWN",
+                                 "CORBA::COMPLETED_YES") == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_marshal_and invoke - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_nl
+      << "break;" << be_nl
+      << be_uidt_nl << "}" << be_nl;
 
   // the code below this is for 2way operations only
 
@@ -887,7 +873,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
           << "))" << be_nl;
       // if marshaling fails, raise exception
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "CORBA::COMPLETED_NO") == -1)
+                                     "CORBA::COMPLETED_YES") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_cs::"
@@ -897,40 +883,6 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
         }
       *os << be_uidt;
     }
-
-  *os << be_uidt_nl
-      << "}" << be_nl
-      << "else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)"
-      << be_nl
-      << "{" << be_idt_nl
-      << "if (istub->next_profile ())" << be_nl
-      << "{" << be_idt_nl
-      << "ACE_TRY_ENV.clear ();" << be_nl
-      << "goto _tao_start_again;" << be_uidt_nl
-      << "}" << be_nl;
-  if (this->gen_raise_exception (bt, "CORBA::TRANSIENT",
-                                 "CORBA::COMPLETED_NO") == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_compiled_visitor_operation_cs::"
-                         "gen_marshal_and_invoke\n"),
-                        -1);
-    }
-  *os << be_uidt_nl << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl;
-  // if this operation is not supposed to raise a user defined
-  // exception, then flag an UNKNOWN exception error
-  if (this->gen_raise_exception (bt, "CORBA::UNKNOWN",
-                                 "CORBA::COMPLETED_MAYBE") == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_compiled_visitor_operation_cs::"
-                         "gen_marshal_and invoke - "
-                         "codegen for return var failed\n"),
-                        -1);
-    }
-  *os << be_uidt_nl << "}\n";
 
   return 0;
 }

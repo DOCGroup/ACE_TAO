@@ -117,10 +117,7 @@ TAO_IIOP_Transport::_nil (void)
 void
 TAO_IIOP_Transport::resume_connection (ACE_Reactor *reactor)
 {
-  int result = reactor->resume_handler (this->handler_);
-  // @@ Are these needed!!
-  ACE_UNUSED_ARG (result);
-  ACE_ASSERT (result == 0);
+  (void) reactor->resume_handler (this->handler_);
 }
 
 void
@@ -205,8 +202,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
     {
       n = this->handler_->peer ().sendv_n ((const iovec *) iov,
                                            iovcnt);
-      if (n < 0 )
-        return 0;
+      if (n < 1)
+        return n;
 
       nbytes += n;
     }
@@ -220,7 +217,7 @@ TAO_IIOP_Transport::send (const u_char *buf,
                           ACE_Time_Value *s)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
-  
+
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().send_n (buf, len);
 }
@@ -231,7 +228,7 @@ TAO_IIOP_Transport::send (const iovec *iov,
                           ACE_Time_Value *s)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
-  
+
   ACE_UNUSED_ARG (s);
   return this->handler_->peer ().sendv_n ((const iovec *) iov,
                                           iovcnt);
