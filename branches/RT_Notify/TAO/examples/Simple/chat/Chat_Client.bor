@@ -1,0 +1,36 @@
+
+#
+# Makefile for building the Chat example
+#
+
+NAME = Chat_Client
+
+OBJFILES = \
+	$(OBJDIR)\ReceiverC.obj \
+	$(OBJDIR)\ReceiverS.obj \
+	$(OBJDIR)\BroadcasterC.obj \
+	$(OBJDIR)\BroadcasterS.obj \
+	$(OBJDIR)\Receiver_i.obj \
+	$(OBJDIR)\Client_i.obj \
+	$(OBJDIR)\client.obj
+
+IDLFILES = \
+        $(IDLDIR)\Broadcaster.idl \
+        $(IDLDIR)\Receiver.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\BroadcasterC.cpp $(IDLDIR)\BroadcasterS.cpp: $(IDLDIR)\Broadcaster.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\ReceiverC.cpp $(IDLDIR)\ReceiverS.cpp: $(IDLDIR)\Receiver.idl
+	$(TAO_IDL) $**
+

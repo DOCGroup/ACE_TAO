@@ -1,0 +1,13 @@
+project: server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    timeC.cpp
+    client.cpp
+  }
+}
+

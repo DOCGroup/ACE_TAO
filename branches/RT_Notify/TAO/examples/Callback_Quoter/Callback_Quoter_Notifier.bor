@@ -1,0 +1,36 @@
+
+#
+# Makefile for building the Callback_Quoter example
+#
+
+NAME = Callback_Quoter_Notifier
+
+OBJFILES = \
+	$(OBJDIR)\ConsumerC.obj \
+	$(OBJDIR)\ConsumerS.obj \
+	$(OBJDIR)\NotifierC.obj \
+	$(OBJDIR)\NotifierS.obj \
+	$(OBJDIR)\notifier.obj \
+	$(OBJDIR)\Notifier_i.obj \
+	$(OBJDIR)\Notifier_Input_Handler.obj
+
+CPPDIR = .
+
+IDLDIR = .
+
+IDLFILES = \
+        Consumer.idl \
+        Notifier.idl
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\ConsumerC.cpp $(IDLDIR)\ConsumerS.cpp: $(IDLDIR)\Consumer.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\NotifierC.cpp $(IDLDIR)\NotifierS.cpp: $(IDLDIR)\Notifier.idl
+	$(TAO_IDL) $**
+

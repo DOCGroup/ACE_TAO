@@ -1,0 +1,4 @@
+project : server {
+  depends += Messaging
+  libs    += TAO_Messaging
+}

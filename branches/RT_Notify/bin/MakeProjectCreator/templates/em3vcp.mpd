@@ -1,0 +1,232 @@
+# Microsoft eMbedded Visual Tools Project File - Name="<%project_name%>" - Package Owner=<4>
+# Microsoft eMbedded Visual Tools Generated Build File, Format Version 6.02
+# ** DO NOT EDIT **
+
+<%foreach(platform_longs)%>
+# TARGTYPE "<%platform("Win32")%> (<%platform_long%>) <%type_description("Dynamic-Link Library")%>" <%type_code%>
+<%endfor%>
+
+CFG=<%project_name%> - <%platform("Win32")%> (<%default_platform_long%>) <%default_configuration%>
+!MESSAGE This is not a valid makefile. To build this project using NMAKE,
+!MESSAGE run the tool that generated this project file and specify the
+!MESSAGE nmake output type.  You can then use the following command:
+!MESSAGE 
+!MESSAGE NMAKE /f "<%make_file_name%>".
+!MESSAGE 
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "<%make_file_name%>" CFG="<%project_name%> - <%platform%> (<%default_platform_long%>) <%default_configuration%>"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+<%foreach(platform_longs)%>
+<%foreach(configurations)%>
+!MESSAGE "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>" (based on "<%platform%> (<%platform_long%>) <%type_description%>")
+<%endfor%>
+<%endfor%>
+!MESSAGE 
+
+# Begin Project
+# PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
+# PROP ATL_Project <%atl_project("2")%>
+
+<%foreach(platform_longs)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+
+# PROP Use_MFC <%use_mfc("0")%>
+# PROP Use_Debug_Libraries <%use_debug_libraries("1")%>
+<%if(exename)%>
+# PROP Output_Dir "<%output_dir%>\<%machine%>"
+<%endif%>
+<%if(type_is_static)%>
+# PROP Output_Dir "<%output_dir%>\<%machine%>"
+<%endif%>
+<%if(type_is_dynamic)%>
+# PROP Output_Dir "<%libout%>\<%machine%>"
+<%endif%>
+# PROP Intermediate_Dir "<%intermediate_dir%>\<%machine%>"
+# PROP CPU_ID "{<%cpu_id%>}"
+# PROP Platform_ID "{<%platform_id%>}"
+<%if(type_is_dynamic)%>
+# PROP Ignore_Export_Lib 0
+<%endif%>
+# PROP Target_Dir ""
+<%if(type_is_static)%>
+LINK32=link.exe -lib
+<%endif%>
+RSC=rc.exe
+# ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CePlatform)"<%foreach(defines common_defines cpu_defines)%> /d <%define%>=1<%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%> /r
+CPP=<%cpp("cl.exe")%>
+# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%>/D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) <%foreach(defines common_defines cpu_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(pch_header)%>.pch" <%endif%>/FR /M$(CECrtMT) /FD /c
+<%if(compile_flags_removed)%>
+# SUBTRACT CPP <%compile_flags_removed%>
+<%endif%>
+BSC32=bscmake.exe
+# ADD BSC32 /nologo <%if(sharedname)%>/o"<%libout%>\<%sharedname%>.bsc"<%endif%>
+<%if(type_is_binary)%>
+LINK32=link.exe
+# ADD LINK32 <%systemlibs("winsock.lib commctrl.lib coredll.lib iphlpapi.lib")%> <%if(ssl)%><%foreach(ssl_libs)%><%ssl_lib%>.lib <%endfor%><%endif%>/INCREMENTAL:<%incremental("NO")%> <%foreach(libs defaultlibs)%><%lib%><%lib_modifier%>.lib <%endfor%><%foreach(libpaths)%>/libpath:"<%libpath%>\<%machine%>" <%endfor%>/nologo /base:"<%base("0x00100000")%>" /stack:<%stack("0x10000,0x1000")%> /entry:"_DllMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /version:<%version("1.0")%> /subsystem:$(CESubsystem) /align:"<%align("4096")%>" <%if(type_is_dynamic)%> /dll<%endif%> <%if(use_debug_libraries)%>/debug<%endif%> <%if(pdb)%><%if(sharedname)%>/pdb:<%sharedname%><%lib_modifier%>.pdb <%endif%><%endif%>/machine:<%machine%> /out:"<%if(sharedname)%><%dllout%>\<%machine%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%machine%>\<%exename%>.exe<%endif%>"
+<%if(link_flags_removed)%>
+# SUBTRACT LINK32 <%link_flags_removed%>
+<%endif%>
+<%endif%>
+<%if(type_is_static)%>
+LIB32=link.exe -lib
+# ADD LIB32 /nologo /out:"<%libout%>\<%machine%>\<%staticname%><%lib_modifier%>.lib"
+<%endif%>
+
+<%endfor%>
+!ENDIF 
+<%endfor%>
+
+
+# Begin Target
+
+<%foreach(platform_longs)%>
+<%foreach(configurations)%>
+# Name "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+<%endfor%>
+<%endfor%>
+# Begin Group "Source Files"
+
+# PROP Default_Filter "cpp;cxx;c"
+<%if(pch_source)%>
+<%if(pch_header)%>
+# Begin Source File
+
+SOURCE=.\<%pch_source%>
+# ADD CPP /Yc"<%pch_header%>"
+# End Source File
+<%endif%>
+<%endif%>
+<%foreach(source_files)%>
+# Begin Source File
+
+SOURCE=.\<%source_file%>
+# End Source File
+<%endfor%>
+# End Group
+<%if(header_files)%>
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hh"
+<%foreach(header_files)%>
+# Begin Source File
+
+SOURCE=.\<%header_file%>
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+<%if(inline_files)%>
+# Begin Group "Inline Files"
+
+# PROP Default_Filter "i;inl"
+<%foreach(inline_files)%>
+# Begin Source File
+
+SOURCE=.\<%inline_file%>
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+<%if(template_files)%>
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+<%foreach(template_files)%>
+# Begin Source File
+
+SOURCE=.\<%template_file%>
+# PROP Exclude_From_Build 1
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+<%if(documentation_files)%>
+# Begin Group "Documentation"
+
+# PROP Default_Filter ""
+<%foreach(documentation_files)%>
+# Begin Source File
+
+SOURCE=.\<%documentation_file%>
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+<%if(resource_files)%>
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+<%foreach(resource_files)%>
+# Begin Source File
+
+SOURCE=.\<%resource_file%>
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+<%if(idl_files)%>
+# Begin Group "IDL Files"
+
+# PROP Default_Filter "idl"
+<%foreach(idl_files)%>
+# Begin Source File
+
+SOURCE=.\<%idl_file%>
+
+<%foreach(platform_longs)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\<%idl_file%>
+InputName=<%noextension(idl_file)%>
+
+BuildCmds= \
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> $(InputPath)
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+<%endfor%>
+!ENDIF
+<%endfor%>
+
+# End Source File
+<%endfor%>
+# End Group
+<%endif%>
+# End Target
+# End Project

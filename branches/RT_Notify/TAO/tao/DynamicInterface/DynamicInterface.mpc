@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_DynamicInterface
+  libs      += TAO
+  dllflags   = TAO_DYNAMICINTERFACE_BUILD_DLL
+  libout     = ..
+}

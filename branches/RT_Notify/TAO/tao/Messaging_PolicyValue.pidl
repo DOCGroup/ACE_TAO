@@ -1,0 +1,55 @@
+// -*- IDL -*-
+/**
+ *  @file Messaging_PolicyValue.pidl
+ *
+ *  $Id$
+ *
+ * This file was used to generate the code in Messaging_PolicyValueC.{h,i,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *        -Wb,export_macro=TAO_Export
+ *        -Wb,export_include=TAO_Export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        Messaging_PolicyValue.pidl
+ *
+ * after the file is generated a patch must be applied:
+ *
+ *   cp orig/Messaging_PolicyValueC.{h,i,cpp} .
+ *   patch < diffs/Messaging_PolicyValue.diff
+ *
+ * The patch eliminates cycles in the include dependencies.
+ *
+ * Note: to update the patch file after re-generating the code use:
+ *
+ *   for i in Messaging_PolicyValueC.{h,i,cpp}; do
+ *     diff -uBbw orig/$i $i;
+ *   done > diffs/Messaging_PolicyValue.diff
+ *
+ */
+#ifndef TAO_MESSAGING_POLICYVALUE_PIDL
+#define TAO_MESSAGING_POLICYVALUE_PIDL
+
+#include <IOP.pidl>
+
+#pragma prefix "omg.org"
+
+module Messaging
+{
+  struct PolicyValue
+  {
+    CORBA::PolicyType ptype;
+    sequence<octet>   pvalue;
+  };
+  typedef sequence<PolicyValue> PolicyValueSeq;
+
+  const IOP::ComponentId TAG_POLICIES      = 2;
+  const IOP::ServiceId INVOCATION_POLICIES = 2;
+};
+
+#pragma prefix ""
+
+#endif /* TAO_MESSAGING_POLICYVALUE_PIDL */

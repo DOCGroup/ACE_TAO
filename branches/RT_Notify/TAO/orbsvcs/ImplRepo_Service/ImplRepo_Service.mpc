@@ -1,0 +1,30 @@
+project : orbsvcsexe {
+  depends += Svc_Utils IORTable PortableServer
+  exename  = ImplRepo_Service
+  libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+
+  Source_Files {
+    Adapter_Activator.cpp
+    Forwarder.cpp
+    ImplRepo.cpp
+    ImplRepo_i.cpp
+    Iterator.cpp
+    Locator.cpp
+    Options.cpp
+    Repository.cpp
+  }
+}
+
+
+project(tao_imr) : orbsvcsexe {
+  depends += Svc_Utils IORTable PortableServer
+  exename  = tao_imr
+  libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+
+  Source_Files {
+    tao_imr.cpp
+    tao_imr_i.cpp
+  }
+}
+
+

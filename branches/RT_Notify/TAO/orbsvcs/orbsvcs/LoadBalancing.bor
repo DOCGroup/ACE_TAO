@@ -1,0 +1,62 @@
+#
+# Makefile for building the TAO LoadBalancing library
+#
+
+!ifndef MINIMUM_CORBA
+NAME = TAO_LoadBalancing
+!else
+!undef NAME
+!endif
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I..\.. -Ge 1 -Wb,export_macro=TAO_LoadBalancing_Export \
+	-Wb,export_include=LoadBalancing/LoadBalancing_export.h \
+	-Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+
+IDLFILES = \
+	$(IDLDIR)\LoadBalancing.idl
+
+OBJFILES = \
+	$(OBJDIR)\LoadBalancer_i.obj \
+	$(OBJDIR)\LoadBalancing_Strategy.obj \
+	$(OBJDIR)\LoadBalancingC.obj \
+	$(OBJDIR)\LoadBalancingS.obj \
+	$(OBJDIR)\Minimum_Dispersion.obj \
+	$(OBJDIR)\ReplicaLocator.obj \
+	$(OBJDIR)\ReplicaProxy.obj \
+	$(OBJDIR)\Round_Robin_Strategy.obj
+
+RESOURCE = $(OBJDIR)\LoadBalancing.res
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_LOADBALANCING_CFLAGS) \
+	-DTAO_LOADBALANCING_BUILD_DLL
+
+CPPDIR = .;LoadBalancing
+
+IDLDIR = .
+
+INCDIR_NAME = orbsvcs\LoadBalancing
+INCLUDES = LoadBalancing\*.h LoadBalancing\*.i
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\LoadBalancingC.cpp $(IDLDIR)\LoadBalancingS.cpp: $(IDLDIR)\LoadBalancing.idl
+	$(TAO_IDL) $**

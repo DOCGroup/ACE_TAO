@@ -1,0 +1,10 @@
+#
+# Makefile for building the TAO Notify Structured_Multi_Filter test
+# $Id$
+#
+
+MAKEFILES = \
+        Structured_Filter_Consumer.bor \
+        Structured_Filter_Supplier.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
