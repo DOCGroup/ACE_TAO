@@ -85,7 +85,7 @@ parse_args (int argc, char **argv)
       return -1;
     }
   else
-    fname = argv[get_opt.opt_int ()]; // Alright.
+    fname = argv[get_opt.opt_ind ()]; // Alright.
 
   return 0;
 }
