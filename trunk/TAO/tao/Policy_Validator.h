@@ -89,6 +89,11 @@ public:
   void add_validator (TAO_Policy_Validator *validator);
 
 
+ /**
+  * Accessor for the stored ORB core reference
+  */
+ TAO_ORB_Core & orb_core() const;
+
 protected:
   virtual void validate_impl (TAO_Policy_Set &policies
                               ACE_ENV_ARG_DECL) = 0;

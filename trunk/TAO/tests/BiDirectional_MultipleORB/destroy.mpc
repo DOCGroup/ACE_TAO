@@ -1,0 +1,6 @@
+project: taoexe, portableserver, bidir_giop {
+  Source_Files {
+    destroy.cpp
+  }
+}
+

@@ -1,8 +1,66 @@
+Mon Dec  6 16:00:46 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+          This change solves a problem with the bi-dir policy
+          validators, in the context of multiple ORBs by
+          eliminating cached, ORB-specific state in the
+          TAO_BiDirGIOP_Loader singleton. Thus it also
+          eliminates the possibility for a race condition
+          between two threads that my be creating and
+          destroying ORB instances simultaneously.
+
+        * tao/BiDir_Adapter.h:
+
+          Changed the method decl to support passing up any exceptions for
+          platforms that do not support them natively.
+
+        * tao/BiDir_GIOP/BiDirGIOP.h:
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+
+          Removed state, represented by the bi-dir policy validator
+          instance, which was carried around in the Loader even
+          after the corresponding ORB was destructed. This caused
+          problems in processes with >1 ORB, where the new ORB was
+          re-using an validator instance, associated with another ORB.
+          In certain cases that validator was also already deleted.
+          Now a bi-dir policy validator gets instantiated and
+          registered during the call to
+          TAO_BiDirGIOP_Loader::load_policy_validators,
+          instead of piggy-backing on register_orb_initializer and
+          caching it.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Policy_Validator.h:
+        * tao/Policy_Validator.cpp:
+
+           Provided accessor for the ORB reference to enable the
+           bi-dir policy validator instantiation in
+           TAO_BiDirGIOP_Loader::load_policy_validators
+
+        * tao/PortableServer/POA_Policy_Set.cpp:
+
+          Changed the invocation of the method to pass up any exceptions on
+          platforms that do not support them natively.
+
+        * tests/BiDirectional_MultipleORB/README:
+        * tests/BiDirectional_MultipleORB/destroy.mpc:
+        * tests/BiDirectional_MultipleORB/destroy.cpp:
+        * tests/BiDirectional_MultipleORB/run_test.pl:
+
+          This is a test that creates a bidir GIOP policy
+          for a POA and then attempts to repeat this, after first
+          destructing and re-creating the ORB. This used to fail
+          by breaking an assertion, because the second ORB was
+          tryig to register a policy validator object instance,
+          which lingered since the time the first ORB was created.
+          In some cases it broke with SEGV, as when trying to access
+          a previously deleted bi-dir policy validator.
+          
 Mon Dec  6 13:14:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
-        
-          Removed inherited .mpb files iortable, svc_utils, and 
+
+          Removed inherited .mpb files iortable, svc_utils, and
           typecodefactory, since they are already pulled in by
           ifrservice. Also added empty IDL_Files block. Because
           of all the inherited .mpb files, any IDL file in the
