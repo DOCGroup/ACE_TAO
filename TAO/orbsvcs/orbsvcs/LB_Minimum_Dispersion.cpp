@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "LB_Minimum_Dispersion.h"
+#include "LB_ObjectGroup_Map.h"
 //#include "ReplicaProxy.h"
 
 ACE_RCSID (LoadBalancing,

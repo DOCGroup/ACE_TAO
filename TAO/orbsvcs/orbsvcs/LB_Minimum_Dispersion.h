@@ -32,10 +32,11 @@
 // the load it is deemed too loaded and the advisory is sent.
 
 // Forward declarations
-class TAO_LB_ReplicaProxy;
+// class TAO_LB_ReplicaProxy;
+class TAO_LB_ObjectGroup_Map_Entry;
 
-typedef ACE_Unbounded_Set<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySet;
-typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySetIterator;
+// typedef ACE_Unbounded_Set<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySet;
+// typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySetIterator;
 
 /**
  * @class TAO_LB_Minimum_Dispersion_Strategy
@@ -54,7 +55,8 @@ public:
   ~TAO_LB_Minimum_Dispersion_Strategy (void);
 
   // = The TAO_LB_LoadBalancing_Strategy methods
-  virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV)
+  virtual CORBA::Object_ptr replica (TAO_LB_ObjectGroup_Map_Entry *entry,
+                                     CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 //   virtual void load_changed (TAO_LB_ReplicaProxy *,
@@ -62,12 +64,12 @@ public:
 
 private:
 
-  /// Set containing the ReplicaProxy servants.
-  TAO_LB_ReplicaProxySet proxies_;
+//   /// Set containing the ReplicaProxy servants.
+//   TAO_LB_ReplicaProxySet proxies_;
 
-  /// Lock used to ensure atomic access to state retained by this
-  /// class.
-  TAO_SYNCH_MUTEX lock_;
+//   /// Lock used to ensure atomic access to state retained by this
+//   /// class.
+//   TAO_SYNCH_MUTEX lock_;
 
 };
 
