@@ -142,6 +142,16 @@ public:
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
+
+  virtual int connect (SVC_HANDLER *&svc_handler,
+                       SVC_HANDLER *&sh_copy,
+                       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+                       const ACE_PEER_CONNECTOR_ADDR &local_addr
+                         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       int reuse_addr = 0,
+                       int flags = O_RDWR,
+                       int perms = 0);
   // Initiate connection of <svc_handler> to peer at <remote_addr>
   // using <synch_options>.  If the caller wants to designate the
   // selected <local_addr> they can (and can also insist that the
@@ -180,14 +190,14 @@ public:
 protected:
   // = Helpful typedefs.
 
-  typedef ACE_Svc_Tuple<SVC_HANDLER> 
+  typedef ACE_Svc_Tuple<SVC_HANDLER>
           AST;
 
-  typedef ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX> 
+  typedef ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX>
           MAP_MANAGER;
-  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX> 
+  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX>
           MAP_ITERATOR;
-  typedef ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *> 
+  typedef ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *>
           MAP_ENTRY;
 
   // = The following two methods define the Connector's strategies for
@@ -203,6 +213,14 @@ protected:
   // else 0.
 
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
+  virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
+                                   SVC_HANDLER *&sh_copy,
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
@@ -273,6 +291,16 @@ protected:
   int cleanup_AST (ACE_HANDLE, AST *&);
   // Cleanup the <handler_map_> and returns the appropriate
   // ACE_Svc_Tuple (which is 0 if there is no associated tuple).
+
+  virtual int connect_i (SVC_HANDLER *&svc_handler,
+                         SVC_HANDLER **sh_copy,
+                         const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                         const ACE_Synch_Options &synch_options,
+                         const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                         int reuse_addr,
+                         int flags,
+                         int perms);
+  // Implementation the connect() methods
 
   MAP_MANAGER handler_map_;
   // Lookup table that maps an I/O handle to a SVC_HANDLER *.
@@ -384,6 +412,23 @@ protected:
   // Bridge method for connecting the new connection into the
   // <SVC_HANDLER>.  The default behavior delegates to the
   // <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
+
+  virtual int connect_svc_handler (SVC_HANDLER *&sh,
+                                   SVC_HANDLER *&sh_copy,
+                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_Time_Value *timeout,
+                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   int reuse_addr,
+                                   int flags,
+                                   int perms);
+  // Bridge method for connecting the new connection into the
+  // <SVC_HANDLER>.  The default behavior delegates to the
+  // <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
+  // <sh_copy> is used to obtain a copy of the <sh> pointer, but that
+  // can be kept in the stack; the motivation is a bit too long to
+  // include here, but basically we want to modify <sh> safely, using
+  // the internal locks in the Connect_Strategy, while saving a TSS
+  // copy in <sh_copy>, usually located in the stack.
 
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
   // Bridge method for activating a <SVC_HANDLER> with the appropriate

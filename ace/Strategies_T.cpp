@@ -291,6 +291,31 @@ ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
                                    perms);
 }
 
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
+  (SVC_HANDLER *&sh,
+   SVC_HANDLER *&sh_copy,
+   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+   ACE_Time_Value *timeout,
+   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+   int reuse_addr,
+   int flags,
+   int perms)
+{
+  ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler");
+
+  int result =
+    this->connector_.connect (sh->peer (),
+                              remote_addr,
+                              timeout,
+                              local_addr,
+                              reuse_addr,
+                              flags,
+                              perms);
+  sh_copy = sh;
+  return result;
+}
+
 template <class SVC_HANDLER> int
 ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
                                          ACE_Event_Handler *acceptor,
@@ -622,51 +647,22 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   // lock *before* registering the newly created handler with the
   // Reactor.
   {
-    CONNECTION_MAP_ENTRY *entry = 0;
-
     // Synchronization is required here as the setting of the
     // recyclable state must be done atomically with the finding and
     // binding of the service handler in the cache.
     ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
 
-    // Check if the user passed a hint svc_handler
-    if (sh != 0)
-      {
-        int result = this->check_hint_i (sh,
-                                         remote_addr,
-                                         timeout,
-                                         local_addr,
-                                         reuse_addr,
-                                         flags,
-                                         perms,
-                                         entry,
-                                         found);
-        if (result != 0)
-          return result;
-      }
+    int result = this->connect_svc_handler_i (sh,
+                                              remote_addr,
+                                              timeout,
+                                              local_addr,
+                                              reuse_addr,
+                                              flags,
+                                              perms,
+                                              found);
+    if (result != 0)
+      return result;
 
-    // If not found
-    if (!found)
-      {
-        int result = this->find_or_create_svc_handler_i (sh,
-                                                         remote_addr,
-                                                         timeout,
-                                                         local_addr,
-                                                         reuse_addr,
-                                                         flags,
-                                                         perms,
-                                                         entry,
-                                                         found);
-        if (result != 0)
-          return result;
-      }
-
-    // For all successful cases: mark the <svc_handler> in the cache
-    // as being <in_use>.  Therefore recyclable is BUSY.
-    entry->ext_id_.state (ACE_Recyclable::BUSY);
-
-    // And increment the refcount
-    entry->ext_id_.increment ();
   }
 
   // If it is a new connection, activate it.
@@ -681,6 +677,114 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   if (!found)
     if (this->activate_svc_handler (sh))
       return -1;
+
+  return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_svc_handler
+  (SVC_HANDLER *&sh,
+   SVC_HANDLER *&sh_copy,
+   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+   ACE_Time_Value *timeout,
+   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+   int reuse_addr,
+   int flags,
+   int perms)
+{
+  int found = 0;
+
+  // This artificial scope is required since we need to let go of the
+  // lock *before* registering the newly created handler with the
+  // Reactor.
+  {
+    // Synchronization is required here as the setting of the
+    // recyclable state must be done atomically with the finding and
+    // binding of the service handler in the cache.
+    ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+
+    int result = this->connect_svc_handler_i (sh,
+                                              remote_addr,
+                                              timeout,
+                                              local_addr,
+                                              reuse_addr,
+                                              flags,
+                                              perms,
+                                              found);
+    sh_copy = sh;
+
+    if (result != 0)
+      return result;
+
+  }
+
+  // If it is a new connection, activate it.
+  //
+  // Note: This activation is outside the scope of the lock of the
+  // cached connector.  This is necessary to avoid subtle deadlock
+  // conditions with this lock and the Reactor lock.
+  //
+  // @@ If an error occurs on activation, we should try to remove this
+  // entry from the internal table.
+
+  if (!found)
+    if (this->activate_svc_handler (sh))
+      return -1;
+
+  return 0;
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_svc_handler_i
+  (SVC_HANDLER *&sh,
+   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+   ACE_Time_Value *timeout,
+   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+   int reuse_addr,
+   int flags,
+   int perms,
+   int& found)
+{
+  CONNECTION_MAP_ENTRY *entry = 0;
+
+  // Check if the user passed a hint svc_handler
+  if (sh != 0)
+    {
+      int result = this->check_hint_i (sh,
+                                       remote_addr,
+                                       timeout,
+                                       local_addr,
+                                       reuse_addr,
+                                       flags,
+                                       perms,
+                                       entry,
+                                       found);
+      if (result != 0)
+        return result;
+    }
+
+  // If not found
+  if (!found)
+    {
+      int result = this->find_or_create_svc_handler_i (sh,
+                                                       remote_addr,
+                                                       timeout,
+                                                       local_addr,
+                                                       reuse_addr,
+                                                       flags,
+                                                       perms,
+                                                       entry,
+                                                       found);
+      if (result != 0)
+        return result;
+    }
+
+  // For all successful cases: mark the <svc_handler> in the cache
+  // as being <in_use>.  Therefore recyclable is BUSY.
+  entry->ext_id_.state (ACE_Recyclable::BUSY);
+  
+  // And increment the refcount
+  entry->ext_id_.increment ();
 
   return 0;
 }
