@@ -41,7 +41,10 @@ public:
 
   // = <Connector> hook.
   virtual int open (void *);
-  // Initialization hook.
+  // Activation template method.
+
+  virtual int close (u_long flags = 0);
+  // Termination template method.
 
   int send_request (CDR &stream, int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
@@ -59,8 +62,17 @@ public:
   // Perform appropriate closing of the connection.
 
 private:
+  typedef TAO_SVC_HANDLER BASECLASS;
+  // Trait indicating the base class.
+  
+  u_char expecting_response_;
+  // State flag which, if non-zero, indicates that this handler is
+  // looking to get input.  Otherwise, any input received is
+  // unexpected.
+  
   u_char input_available_;
-  // Flag indicating whether or not we're waiting for 
+  // Flag indicating whether or not input is available.  Only valid
+  // when <expecting_response_> is non-zero.
 };
 
 class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER

@@ -98,7 +98,9 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
-  if (poa_current->in_upcall () && this == poa_current->servant ())
+  if (poa_current
+      && poa_current->in_upcall ()
+      && this == poa_current->servant ())
     {
       stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
                               IIOP::Profile (orb_core->orb_params ()->addr (),
@@ -172,7 +174,11 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   // exception.
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
-  if (!poa_current->in_upcall () || this != poa_current->servant ())
+  // @@ Irfan, I'm not sure that I did the right thing here...please
+  // double-check my logic! (cjc)
+  if (poa_current == 0
+      || !poa_current->in_upcall ()
+      || this != poa_current->servant ())
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
       env.exception (exception);

@@ -334,37 +334,7 @@ private:
   // The handler for the client's connection.
 };
 
-// = Generic server side data dispatch methods
 
-// These methods are called for all file descriptors on which
-// incoming messages are expected.
-
-// The <handle_request> routine is used to handle request messages;
-// its <reply> parameter is null if the request is "oneway" (or the
-// client isn't waiting for the response that this request normally
-// creates).
-//
-// The optional <check_forward> routine is used to verify that the
-// request is to be delivered within this process by <handle_request>.
-// Each call to <handle_request> is preceded by a call to this routine
-// if it's provided.  It's used when handling GIOP "Request" messages
-// as well as GIOP "LocateRequest" messages, and returns an enum to
-// indicate overal status (LocateStatusType) as well as an objref in
-// the case of OBJECT_FORWARD.  That objref is released.
-// 
-// Return: 1==success,0==EOF,-1==error
-
-// deprecated
-typedef TAO_GIOP_LocateStatusType (*TAO_GIOP_ForwardFunc) (TAO_opaque &,
-                                                           CORBA::Object_ptr &,
-                                                           void *);
-
-// deprecated
-typedef void (*TAO_GIOP_RequestHandler) (TAO_GIOP_RequestHeader &,
-                                         CDR &,
-                                         CDR *,
-                                         void *,
-                                         CORBA::Environment &);
 class TAO_Export TAO_GIOP
   // = TITLE
   //   A namespace for GIOP-related operations.

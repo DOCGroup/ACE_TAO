@@ -2215,9 +2215,10 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
     return;
 
   // Setup for upcall
-  poa->pre_invoke (key,
-                   id.in (),
-                   servant,
+  TAO_POA_Current upcall_context (poa, key, id.in(), servant);
+  TAO_POA_Current *previous_context;
+  poa->pre_invoke (upcall_context,
+                   previous_context,
                    env);
 
   servant->_dispatch (req,
@@ -2227,33 +2228,29 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   // Cleanup from upcall
   poa->post_invoke (servant,
                     operation,
+                    previous_context,
                     env);
 }
 
 void
-TAO_POA::pre_invoke (const TAO_ObjectKey &key,
-                     const PortableServer::ObjectId &id,
-                     PortableServer::Servant servant,
+TAO_POA::pre_invoke (TAO_POA_Current &upcall_context,
+                     TAO_POA_Current *&previous_context,
                      CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current *poa_current = orb_core->poa_current ();
-
-  poa_current->POA_impl (this);
-  poa_current->object_key (key);
-  poa_current->object_id (id);
-  poa_current->servant (servant);
+  previous_context = orb_core->poa_current (&upcall_context);
 }
 
 void
 TAO_POA::post_invoke (PortableServer::Servant servant,
                       const char *operation,
+                      TAO_POA_Current *previous_context,
                       CORBA::Environment &env)
 {
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-  TAO_POA_Current *poa_current = orb_core->poa_current ();
+  TAO_POA_Current *poa_current = orb_core->poa_current (previous_context);
 
   PortableServer::ServantLocator::Cookie cookie = poa_current->locator_cookie ();
 
@@ -2266,8 +2263,7 @@ TAO_POA::post_invoke (PortableServer::Servant servant,
                                         cookie,
                                         servant,
                                         env);
-  // Reset current
-  poa_current->clear ();
+  //  poa_current->clear ();
 }
 
 const ACE_Time_Value &
@@ -3303,6 +3299,17 @@ TAO_POA_Current::TAO_POA_Current (void)
     servant_ (0)
 {
 }
+
+TAO_POA_Current::TAO_POA_Current (TAO_POA *impl,
+                                  const TAO_ObjectKey &key,
+                                  const PortableServer::ObjectId &id,
+                                  PortableServer::Servant servant)
+  : poa_impl_ (impl),
+    object_id_ (&id),
+    object_key_ (&key),
+    cookie_ (0),
+    servant_ (servant)
+{}
 
 TAO_POA_Current::~TAO_POA_Current (void)
 {

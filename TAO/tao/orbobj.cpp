@@ -293,7 +293,11 @@ CORBA_ORB::resolve_poa_current (void)
 
   CORBA::Environment env;
 
-  PortableServer::Current_var result = TAO_ORB_Core_instance ()->poa_current ()->_this (env);
+  TAO_POA_Current *poa_current = TAO_ORB_Core_instance ()->poa_current ();
+  if (poa_current == 0)
+    return CORBA_Object::_nil ();
+  
+  PortableServer::Current_var result = poa_current->_this (env);
   if (env.exception () != 0)
     return CORBA_Object::_nil ();
   else

@@ -1,3 +1,47 @@
+Wed Feb 25 16:52:13 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/servant_base.cpp: Updated to reflect change of poa_current_
+ 	from structure to pointer.
+
+	* tao/poa.*: Changed signature of pre_invoke() and post_invoke()
+ 	to deal with poa current storage coming from the stack.
+
+	* tao/poa.cpp (dispatch_servant_i): Changed to create POA Current
+ 	information record on the stack during the upcall, thus clearing
+ 	the way for proper operation in the face of nested upcalls.
+
+	* tao/orbobj.cpp: Updated to reflect change of poa_current_ from
+ 	structure to pointer.
+
+	* tao/orb_core.*: Changed poa_current_ to a pointer rather than
+ 	ownership.  This allows the structure holding the POA Current
+ 	information to be created in the activation record for the upcall,
+ 	thus opening the door for proper operation in the face of nested
+ 	upcalls.
+
+	* tao/giop.h: Removed cruft/unused code.
+
+	* tao/giop.cpp: Addressed some '@@' comments.
+
+	* tao/connect.*: Fixed a problem where nested upcalls would only
+ 	work every other time.  This was caused by the fact that the
+ 	servant-turned-client cached the connection to the
+ 	client-turned-servant.  However, when the client-turned-servant
+ 	terminated, the servant-turned-client was ignoring input events on
+ 	this cached connection handle.  Then, when the next instance of
+ 	the client-turned-servant came along and tried to connect, when
+ 	the servant-turned-client made the invocation back to the
+ 	client-turned-servant, the cached handle was returned.  However,
+ 	when its input was read, rather than getting the expected
+ 	response, an EOF was received and the servant-turned-client
+ 	aborted the entire original invocation.
+
+	This was fixed by having the TAO_Client_Connection_Handler always
+ 	registered to receive input events and to maintain record of its
+ 	state so that it can tell whether or not it's expecting input.  If
+ 	it receives an unexpected input event, then it will simply close
+ 	down the connection, possibly logging a warning message as well.
+
 Wed Feb 25 16:06:59 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/{client,server}.{h,cpp}: Added callback
