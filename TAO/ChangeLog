@@ -1,3 +1,11 @@
+Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+	  Converted many occurrences of a string literal arg to the typedef name
+	  'const cosPropertyService::PropertyName' since this is now what the
+	  IDL compiler generates in the method signature.
+
 Wed Oct 23 22:48:09 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/examples/Log/Basic/Client.dsp:

@@ -661,21 +661,24 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               // Define ourselves as the related_streamctrl property of the sep.
               CORBA::Any streamctrl_any;
               streamctrl_any <<= this->streamctrl_.in ();
-              this->sep_a_->define_property ("Related_StreamCtrl",
+              this->sep_a_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_StreamCtrl"),
                                              streamctrl_any
                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Any vdev_a_any;
               vdev_a_any <<= this->vdev_a_.in ();
-              this->sep_a_->define_property ("Related_VDev",
+              this->sep_a_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_VDev"),
                                              vdev_a_any
                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Any streamendpoint_a_any;
               streamendpoint_a_any <<= this->sep_a_.in ();
-              this->vdev_a_->define_property ("Related_StreamEndpoint",
+              this->vdev_a_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_StreamEndpoint"),
                                               streamendpoint_a_any
                                               ACE_ENV_ARG_PARAMETER);
 
@@ -683,7 +686,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
               CORBA::Any mmdevice_a_any;
               mmdevice_a_any <<= a_party;
-              this->vdev_a_->define_property ("Related_MMDevice",
+              this->vdev_a_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_MMDevice"),
                                               mmdevice_a_any
                                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -737,21 +741,24 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               // Define ourselves as the related_streamctrl property of the sep.
               CORBA::Any streamctrl_any;
               streamctrl_any <<= this->streamctrl_.in ();
-              this->sep_b_->define_property ("Related_StreamCtrl",
+              this->sep_b_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_StreamCtrl"),
                                              streamctrl_any
                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Any vdev_b_any;
               vdev_b_any <<= this->vdev_b_.in ();
-              this->sep_b_->define_property ("Related_VDev",
+              this->sep_b_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_VDev"),
                                              vdev_b_any
                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CORBA::Any streamendpoint_b_any;
               streamendpoint_b_any <<= this->sep_b_.in ();
-              this->vdev_b_->define_property ("Related_StreamEndpoint",
+              this->vdev_b_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_StreamEndpoint"),
                                               streamendpoint_b_any
                                               ACE_ENV_ARG_PARAMETER);
 
@@ -759,7 +766,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
               CORBA::Any mmdevice_b_any;
               mmdevice_b_any <<= b_party;
-              this->vdev_b_->define_property ("Related_MMDevice",
+              this->vdev_b_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Related_MMDevice"),
                                               mmdevice_b_any
                                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -785,12 +793,14 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
           sep_a_peer_any <<= this->sep_b_.in();
           sep_b_peer_any <<= this->sep_a_.in();
-          this->sep_a_->define_property ("PeerAdapter",
+          this->sep_a_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "PeerAdapter"),
                                           sep_a_peer_any
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          this->sep_b_->define_property ("PeerAdapter",
+          this->sep_b_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "PeerAdapter"),
                                          sep_b_peer_any
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -804,8 +814,10 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           // instead.
           ACE_TRY_EX (set_source_id)
             {
-              CORBA::Any_ptr flows_any = this->sep_a_->get_property_value ("Flows"
-                                                                           ACE_ENV_ARG_PARAMETER);
+              CORBA::Any_ptr flows_any = 
+                this->sep_a_->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                  "Flows")
+                                                  ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK_EX (set_source_id);
               AVStreams::flowSpec_var flows;
               *flows_any >>= flows.out ();
@@ -922,32 +934,33 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           // If it contains FDev objects, then we are using the
           // Full profile, and we want to call bind() instead
           // of connect() on the the streamctrl
-          if( a_party->is_property_defined("Flows") &&
-              b_party->is_property_defined("Flows") ) 
-	  {
-              if (TAO_debug_level > 0) {
-		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
-	      }
+          if (a_party->is_property_defined (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                            "Flows")) &&
+              b_party->is_property_defined (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                            "Flows"))) 
+	          {
+              if (TAO_debug_level > 0) 
+                {
+		              ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
+	              }
 
               // It is full profile
               // we have feps in the sep then dont call connect 
-	      // instead call bind on the streamctrl.
+	            // instead call bind on the streamctrl.
               this->bind (this->sep_a_.in (),
                           this->sep_b_.in (),
                           the_qos,
                           the_flows
                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
-
-
-
-	  }
-	  // This is the light profile, call connect()
-	  else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
+	          }
+	      // This is the light profile, call connect()
+	      else  if (!CORBA::is_nil (this->vdev_a_.in ()) && !CORBA::is_nil (this->vdev_b_.in ()))
           {
-              if (TAO_debug_level > 0) {
-		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Light profile, invoking connect()\n"));
-	      }
+              if (TAO_debug_level > 0) 
+                {
+		              ACE_DEBUG ((LM_DEBUG, "(%N,%l) Light profile, invoking connect()\n"));
+	              }
 
               // Tell the 2 VDev's about one another
               this->vdev_a_->set_peer (this->streamctrl_.in (),
@@ -975,7 +988,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               ACE_TRY_CHECK;
               if (result == 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "sep_a->connect (sep_b) failed\n"), 0);
-	  }
+	        }
         }
     }
   ACE_CATCHANY
@@ -1017,26 +1030,32 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       // Define each other as their peers.
       CORBA::Any sep_any;
       sep_any <<= sep_b;
-      sep_a_->define_property ("PeerAdapter",
-                              sep_any
-                              ACE_ENV_ARG_PARAMETER);
+      sep_a_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                               "PeerAdapter"),
+                               sep_any
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       sep_any <<= sep_a;
-      sep_b_->define_property ("PeerAdapter",
-                              sep_any
-                              ACE_ENV_ARG_PARAMETER);
+      sep_b_->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                               "PeerAdapter"),
+                               sep_any
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // since its full profile we do the viable stream setup algorithm.
       // get the flows for the A streamendpoint.
       // the flows spec is empty and hence we do a exhaustive match.
       AVStreams::flowSpec a_flows, b_flows;
       CORBA::Any_var flows_any;
-      flows_any = sep_a_->get_property_value ("Flows" ACE_ENV_ARG_PARAMETER);
+      flows_any = sep_a_->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                              "Flows")
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AVStreams::flowSpec *temp_flows;
       flows_any.in () >>= temp_flows;
       a_flows = *temp_flows;
-      flows_any = sep_b_->get_property_value ("Flows" ACE_ENV_ARG_PARAMETER);
+      flows_any = sep_b_->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                              "Flows")
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       flows_any.in () >>= temp_flows;
       b_flows = *temp_flows;
@@ -1175,7 +1194,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       // can use either of them.
                       CORBA::Object_var flow_connection_obj;
                       CORBA::Any_var flowname_any =
-                        fep_a->get_property_value ("FlowName"
+                        fep_a->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                   "FlowName")
                                                    ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK_EX (flow_connect);
                       const char *flowname = 0;
@@ -1255,13 +1275,17 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       ACE_ENDTRY;
                       ACE_CHECK_RETURN (0);
                       CORBA::String_var fep_a_name, fep_b_name;
-                      flowname_any = fep_a->get_property_value ("FlowName"
-                                                                ACE_ENV_ARG_PARAMETER);
+                      flowname_any = 
+                        fep_a->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                   "FlowName")
+                                                   ACE_ENV_ARG_PARAMETER);
                       const char *temp_name;
                       flowname_any.in () >>= temp_name;
                       fep_a_name = CORBA::string_dup (temp_name);
-                      flowname_any = fep_b->get_property_value ("FlowName"
-                                                                ACE_ENV_ARG_PARAMETER);
+                      flowname_any = 
+                        fep_b->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                   "FlowName")
+                                                   ACE_ENV_ARG_PARAMETER);
                       flowname_any.in () >>= temp_name;
                       fep_b_name = CORBA::string_dup (temp_name);
                       AVStreams::QoS flow_qos;
@@ -2123,14 +2147,16 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow))
 {
-  CORBA::Any_var vdev_any = this->get_property_value ("Related_VDev"
+  CORBA::Any_var vdev_any = this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                      "Related_VDev")
                                                       ACE_ENV_ARG_PARAMETER);
   
   AVStreams::VDev_ptr vdev;
 
   vdev_any.in() >>= vdev;
-  CORBA::Any_var mc_any = vdev->get_property_value ("Related_MediaCtrl"
-                                         ACE_ENV_ARG_PARAMETER);
+  CORBA::Any_var mc_any = vdev->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                    "Related_MediaCtrl")
+                                                    ACE_ENV_ARG_PARAMETER);
 
   // The Related_MediaCtrl property was inserted as a CORBA::Object, so we
   // must extract it as the same type.
@@ -2411,7 +2437,8 @@ TAO_StreamEndPoint::set_protocol_restriction (const AVStreams::protocolSpec &pro
       CORBA::Any protocol_restriction_any;
 
       protocol_restriction_any <<= protocols;
-      this->define_property ("ProtocolRestriction",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "ProtocolRestriction"),
                              protocol_restriction_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -2490,7 +2517,8 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep
 
       CORBA::Any flowname_any;
       flowname_any <<= flow_name.c_str ();
-      fep->define_property ("Flow",
+      fep->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                            "Flow"),
                             flowname_any
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -2516,7 +2544,9 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep
   ACE_TRY
     {
       CORBA::Any_var flow_name_any =
-        fep->get_property_value ("FlowName" ACE_ENV_ARG_PARAMETER);
+        fep->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                 "FlowName")
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const char *tmp;
@@ -2566,7 +2596,8 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj
       // define/modify the "Flows" property.
       CORBA::Any flows_any;
       flows_any <<= this->flows_;
-      this->define_property ("Flows",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Flows"),
                              flows_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -2627,7 +2658,8 @@ TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator
     {
       CORBA::Any negotiator;
       negotiator <<= new_negotiator;
-      this->define_property ("Negotiator",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Negotiator"),
                              negotiator
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -2783,7 +2815,8 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                           if (CORBA::is_nil (this->streamctrl_.in ()))
                               {
                                 CORBA::Any_var streamctrl_any;
-                                streamctrl_any = this->get_property_value ("Related_StreamCtrl"
+                                streamctrl_any = this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                                           "Related_StreamCtrl")
                                                                            ACE_ENV_ARG_PARAMETER);
                                 ACE_TRY_CHECK;
                                 AVStreams::StreamCtrl_ptr streamctrl;
@@ -3017,7 +3050,8 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
                   if (CORBA::is_nil (this->streamctrl_.in ()))
                     {
                       CORBA::Any_var streamctrl_any;
-                      streamctrl_any = this->get_property_value ("Related_StreamCtrl"
+                      streamctrl_any = this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                                "Related_StreamCtrl")
                                                                  ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
                       AVStreams::StreamCtrl_ptr streamctrl;
@@ -3141,7 +3175,8 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
 
       CORBA::Any anyval;
       anyval <<= the_peer_dev;
-      this->define_property ("Related_VDev",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Related_VDev"),
                              anyval
                              ACE_ENV_ARG_PARAMETER);
 
@@ -3151,7 +3186,8 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       this->peer_ = AVStreams::VDev::_duplicate (the_peer_dev);
 
       CORBA::Any_var anyptr;
-      anyptr = this->peer_->get_property_value ("Related_MediaCtrl"
+      anyptr = this->peer_->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                "Related_MediaCtrl")
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -3297,7 +3333,8 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
           AVStreams::StreamEndPoint_A_ptr sep_a;
 
           CORBA::Any_ptr streamendpoint_a_any =
-          this->get_property_value ("Related_StreamEndpoint"
+          this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                    "Related_StreamEndpoint")
                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
@@ -3315,7 +3352,8 @@ TAO_VDev::modify_QoS (AVStreams::streamQoS &the_qos,
           AVStreams::StreamEndPoint_B_ptr sep_b;
 
           CORBA::Any_ptr streamendpoint_b_any =
-          this->get_property_value ("Related_StreamEndpoint"
+          this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                    "Related_StreamEndpoint")
                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
           *streamendpoint_b_any >>= sep_b;
@@ -3578,7 +3616,10 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                 }
               CORBA::Any flowname_any;
               flowname_any <<= forward_entry.flowname ();
-              flow_endpoint->define_property ("FlowName", flowname_any ACE_ENV_ARG_PARAMETER);
+              flow_endpoint->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                              "FlowName"), 
+                                              flowname_any 
+                                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               sep->add_fep (flow_endpoint.in ()
                             ACE_ENV_ARG_PARAMETER);
@@ -3707,7 +3748,10 @@ TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev
       ACE_OS::sprintf (tmp, "flow%d", flow_num_++);
       CORBA::Any flowname_any;
       flowname_any <<= flow_name.in ();
-      fdev->define_property ("Flow", flowname_any ACE_ENV_ARG_PARAMETER);
+      fdev->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Flow"), 
+                             flowname_any 
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -3739,7 +3783,9 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj
           return 0;
 
 
-      flow_name_any = fdev->get_property_value ("Flow" ACE_ENV_ARG_PARAMETER);
+      flow_name_any = fdev->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                "Flow")
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (flow_name);
 
       const char *tmp;
@@ -3772,7 +3818,8 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj
   flows_any <<= this->flows_;
   ACE_TRY_EX (flows)
     {
-      this->define_property ("Flows",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Flows"),
                              flows_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (flows);
@@ -3828,7 +3875,8 @@ TAO_MMDevice::remove_fdev (const char *flow_name
       CORBA::Any flows;
       flows <<= new_flows;
       this->flows_ = new_flows;
-      this->define_property ("Flows",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Flows"),
                              flows
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -4427,7 +4475,8 @@ TAO_FlowEndPoint::open (const char *flowname,
     {
       CORBA::Any flowname_any;
       flowname_any <<= flowname;
-      this->define_property ("FlowName",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "FlowName"),
                              flowname_any
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -4557,7 +4606,8 @@ TAO_FlowEndPoint::use_flow_protocol (const char * fp_name,
       // Define the property called FlowProtocol
       CORBA::Any flowname_property;
       flowname_property <<= fp_name;
-      this->define_property ("FlowProtocol",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "FlowProtocol"),
                              flowname_property
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -4585,7 +4635,8 @@ TAO_FlowEndPoint::set_format (const char * format
       // check if 2 flowendpoints are compatible.
       CORBA::Any format_val;
       format_val <<= format;
-      this->define_property ("Format",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "Format"),
                              format_val
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -4610,7 +4661,8 @@ TAO_FlowEndPoint::set_dev_params (const CosPropertyService::Properties & new_set
     {
       CORBA::Any DevParams_property;
       DevParams_property <<= new_settings;
-      this->define_property ("DevParams",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "DevParams"),
                              DevParams_property
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -4640,12 +4692,14 @@ TAO_FlowEndPoint::set_protocol_restriction (const AVStreams::protocolSpec & prot
         }
       CORBA::Any AvailableProtocols_property;
       AvailableProtocols_property <<= protocols;
-      this->define_property ("AvailableProtocols",
+      this->define_property (ACE_const_cast (const CosPropertyService::PropertyName,
+                                             "AvailableProtocols"),
                              AvailableProtocols_property
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AVStreams::protocolSpec *temp_spec;
-      CORBA::Any_var temp_any = this->get_property_value ("AvailableProtocols"
+      CORBA::Any_var temp_any = this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                          "AvailableProtocols")
                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       temp_any.in () >>= temp_spec;
@@ -4682,7 +4736,8 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep
       CORBA::String_var my_format, peer_format;
 
       exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format";
-      format_ptr = this->get_property_value ("Format"
+      format_ptr = this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                             "Format")
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -4691,7 +4746,8 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep
       my_format = CORBA::string_dup (temp_format);
       // get my peer's format value
       exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format[2]";
-      format_ptr = peer_fep->get_property_value ("Format"
+      format_ptr = peer_fep->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                 "Format")
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       format_ptr.in () >>= temp_format;
@@ -4707,7 +4763,8 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep
 
       exception_message =
         "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols";
-      AvailableProtocols_ptr = this->get_property_value ("AvailableProtocols"
+      AvailableProtocols_ptr = this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                         "AvailableProtocols")
                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AvailableProtocols_ptr.in () >>= temp_protocols;
@@ -4715,7 +4772,8 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep
 
       exception_message =
         "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols[2]";
-      AvailableProtocols_ptr = peer_fep->get_property_value ("AvailableProtocols"
+      AvailableProtocols_ptr = peer_fep->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                                             "AvailableProtocols")
                                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       AvailableProtocols_ptr.in () >>= temp_protocols;
@@ -4811,13 +4869,15 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
   AVStreams::protocolSpec *temp_protocols;
   CORBA::Any_var AvailableProtocols_ptr =
-    peer_fep->get_property_value ("AvailableProtocols"
+    peer_fep->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                                  "AvailableProtocols")
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   AvailableProtocols_ptr.in () >>= temp_protocols;
   peer_protocol_spec = *temp_protocols;
   AvailableProtocols_ptr =
-    this->get_property_value ("AvailableProtocols"
+    this->get_property_value (ACE_const_cast (const CosPropertyService::PropertyName,
+                                              "AvailableProtocols")
                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   AvailableProtocols_ptr.in () >>= temp_protocols;
