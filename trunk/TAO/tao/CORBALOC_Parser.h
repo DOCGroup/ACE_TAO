@@ -58,7 +58,9 @@ public:
 private:
 
   /// Checks the prefix to see if it is RIR.
-  virtual int check_prefix (const char *endpoint);
+  virtual int check_prefix (const char *endpoint,
+                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Helps count the length of the <obj_addr_list> and the number of
   /// individual <obj_addr> in the <obj_addr_list>.

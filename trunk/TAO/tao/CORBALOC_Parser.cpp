@@ -19,6 +19,10 @@ TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 }
 
 static const char corbaloc_prefix[] = "corbaloc:";
+static const char iiop_prefix[] = "iiop:";
+static const char uiop_prefix[] = "uiop:";
+static const char shmiop_prefix[] = "shmiop:";
+static const char rir_prefix[] = "rir:";
 
 int
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
@@ -57,6 +61,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
 
               ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
                                            CORBA::COMPLETED_NO));
+
             }
         }
 
@@ -353,7 +358,9 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
 }
 
 int
-TAO_CORBALOC_Parser::check_prefix (const char *end_point)
+TAO_CORBALOC_Parser::check_prefix (const char *end_point,
+                                   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   // This checks if the prefix is "rir:" or not. Returns a -1 if it is
@@ -361,6 +368,34 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point)
   // Check for a valid string
   if (!end_point || !*end_point)
     return -1; // Failure
+
+  // Lets first check if it is a valid protocol:
+  if (!(ACE_OS::strncmp (end_point,
+                       iiop_prefix,
+                       sizeof iiop_prefix - 1) == 0) ||
+
+      (ACE_OS::strncmp (end_point,
+                        shmiop_prefix,
+                        sizeof shmiop_prefix - 1) == 0) ||
+
+      (ACE_OS::strncmp (end_point,
+                        uiop_prefix,
+                        sizeof uiop_prefix - 1) == 0) ||
+
+      (ACE_OS::strncmp (end_point,
+                        rir_prefix,
+                        sizeof rir_prefix - 1) == 0))
+    {
+
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) ")
+                  ACE_TEXT ("no usable transport protocol ")
+                  ACE_TEXT ("was found.\n")));
+
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
+                        -1);
+    }
 
   const char *protocol[] = {"rir:"};
 
@@ -399,8 +434,12 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
   // Length of obj_addr_list
   CORBA::ULong addr_list_length = 0;
 
-  // If the protocol is not "rir:"
-  if (this->check_prefix (corbaloc_name) != 0)
+  // If the protocol is not "rir:" and also is a valid protocol
+  int check_prefix_result = this->check_prefix (corbaloc_name,
+                                                ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  if (check_prefix_result != 0)
     {
       // Count the length of the obj_addr_list and number of
       // endpoints in the obj_addr_list
