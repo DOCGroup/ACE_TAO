@@ -1,3 +1,10 @@
+Sun Dec 29 16:43:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/FileCharStream.cpp (close): Changed to reset the
+	  file pointer, filename_ and encoding_ strings after they are
+	  release.  Thanks to Andrew Marlow <apm35@student.open.ac.uk> for
+	  suggesting the change.
+
 Sun Dec 29 00:47:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Security tests using SSLIOP will not be
