@@ -1,285 +1,193 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 001</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 001</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 001</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 001<BR>
-A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>A Beginners Guide to Using the ACE Toolkit</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>Now we begin to look at the acceptor object.</P>
+<P>Now we begin to look at the <A HREF="acceptor.h">acceptor</A> object.
 
-<P>I will present the entire object header file first and then disect it
-as with <I>main()</I>.</P>
+<P>
+<HR WIDTH="100%">
+<PRE>
+#if !defined (_CLIENT_ACCEPTOR_H)
+#define _CLIENT_ACCEPTOR_H
 
-<UL>
-<PRE>1.      #include &lt;stdio.h&gt;
+/*
+  A SOCK_Acceptor knows how to accept socket connections.  We'll use
+  one of those at the heart of our Logging_Acceptor.
+ */
+#include "ace/SOCK_Acceptor.h"
+
+/*
+  An Event_Handler is what you register with ACE_Reactor.  When events occur,
+  the reactor will callback on the Event_Handler.  More on that in a few lines.
+ */
+#include "ace/Event_Handler.h"
+
+/*
+  When a client connects, we'll create a Logging_Handler to deal with the
+  connection.  Here, we bring in that declaration.
+ */
+#include "logger.h"
+
+/*
+  Our Logging_Acceptor is derived from ACE_Event_Handler.  That lets the
+  reactor treat our acceptor just like every other handler.
+ */
+class Logging_Acceptor : public ACE_Event_Handler
+{
+
+friend class Logging_Handler;
+
+public:
+
+  /*
+    For this simple case we won't bother with either constructor or
+    destructor.  In a real application you would certainly have them.
+   */
+
+  /*
+    Here's the open() method we called from main().  We have two things
+    to accomplish here:  (1)  Open the acceptor so that we can hear
+    client requests and (2) register ourselves with the reactor so that
+    we can respond to those requests.
+   */
+  int open (const ACE_INET_Addr &amp;_addr, ACE_Reactor * _reactor )
+  {
+    /*
+      Perform the open() on the acceptor.  We pass through the address
+      at which main() wants us to listen.  The second parameter tells
+      the acceptor it is OK to reuse the address.  This is necessary
+      sometimes to get around closed connections that haven't timed out.
+     */
+     if (this->peer_acceptor_.open (_addr, 1) == -1)
+       return -1;
+
+    /*
+      Remember the reactor we're using.  We'll need it later when we
+      create a client connection handler.
+     */
+    reactor_ = _reactor;
+
+    /*
+      Now we can register with the reactor we were given.  Since the reactor
+      pointer is global, we could have just used that but it's gross enough
+      already.
+      Notice that we can pass 'this' right into the registration since we're
+      derived from ACE_Event_Handler.  We also provide ACCEPT_MASK to tell
+      the reactor that we want to know about accept requests from clients.
+     */
+    return _reactor->register_handler( this, ACE_Event_Handler::ACCEPT_MASK );
+  }
         
-2.      #include &quot;ace/Reactor.h&quot;
-3.      #include &quot;ace/Event_Handler.h&quot;
-4.      #include &quot;ace/SOCK_Acceptor.h&quot;
-5.      #include &quot;ace/SOCK_Stream.h&quot;
-6.      #include &quot;ace/INET_Addr.h&quot;
+private:
+
+  /*
+    To provide multi-OS abstraction, ACE uses the concept of "handles" for
+    connection endpoints.  In Unix, this is a traditional file descriptor
+    (or integer).  On other OS's, it may be something else.
+    The reactor will need to get the handle (file descriptor) to satisfy
+    it's own internal needs.  Our relevant handle is the handle of the
+    acceptor object, so that's what we provide.
+   */
+  ACE_HANDLE get_handle (void) const
+  { 
+    return this->peer_acceptor_.get_handle (); 
+  }
+
+  /*
+    When an accept request arrives, the reactor will invoke the handle_input()
+    callback.  This is where we deal with the connection request.
+   */
+  int handle_input (ACE_HANDLE)
+  {
+    /*
+      In response to the connection request, we create a new Logging_Handler.
+      This new object will be used to interact with the client until it
+      disconnects.
+     */
+    Logging_Handler *svc_handler = new Logging_Handler;
         
-7.      #include &quot;logger.h&quot;
+    /*
+      To complete the connection, we invoke the accept() method call on
+      the acceptor object and provide it with the connection handler instance.
+      This transfers "ownership" of the connection from the acceptor to the
+      connection handler.
+     */
+    if (this->peer_acceptor_.accept (*svc_handler) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR, "%p", "accept failed"), -1);
+
+    /*
+      Again, most objects need to be open()ed before they are useful.  We'll
+      give the handler our reactor pointer so that it can register for
+      events as well.  If the open fails, we'll force a close().
+     */
+    if (svc_handler->open (reactor_) == -1)
+      svc_handler->close ();
         
-        
-8.      extern ACE_Reactor g_reactor;
-        
-9.      class Client_Acceptor : public ACE_Event_Handler
-        {
-        
-10.     public :
-          
-11.       Client_Acceptor( const ACE_INET_Addr &amp;addr) : acceptor_(addr) {
-12.             if( ! (fp = fopen(&quot;acceptor&quot;,&quot;w+&quot;)) )
-13.                     fp = stderr;
-        
-14.             fprintf(fp,&quot;Constructed\n&quot;);
-          }
-        
-15.       virtual int handle_exception(ACE_HANDLE handle)
-          {
-16.         fprintf(fp,&quot;Exception\n&quot;);
-17.         return(-1);
-          }
-        
-18.       virtual int handle_input(ACE_HANDLE handle)
-          {
-19.         ACE_SOCK_Stream new_connection;
-        
-20.         this-&gt;acceptor_.accept(new_connection);
-        
-21.         Logging_Handler *cli_handler = new Logging_Handler(new_connection);
-        
-22.         fprintf(fp,&quot;Got New Connection\n&quot;);
-        
-23.         int foo = g_reactor.register_handler(cli_handler,ACE_Event_Handler::RWE_MASK);
-24.         return( foo );
-          }
-        
-25.       virtual ACE_HANDLE get_handle(void) const
-          {
-26.         fprintf(fp,&quot;Providing Handle\n&quot;);
-27.         return this-&gt;acceptor_.get_handle();
-          }
-        
-28.       virtual void handle_close(void)
-          {
-29.         this-&gt;acceptor_.close();
-30.         fprintf(fp,&quot;Closing\n&quot;);
-          }
-        
-31.     private :
-32.       ACE_SOCK_Acceptor acceptor_;
-33.       FILE * fp;
-34.     };
+    return 0;
+  }
 
-</PRE>
-</UL>
+protected:
 
-<P>Here's a blow-by-blow account of what's being done:</P>
+  /*
+    Our acceptor object instance
+   */
+  ACE_SOCK_Acceptor peer_acceptor_;     
 
-<OL START=1>
-<LI>Include the standard I/O&nbsp;system header file. I only need this
-so that I&nbsp;can use <I>fprintf</I> stuff for the logging function. In
-reality we would probably talk to a database or something.</LI>
+  /*
+    A place to remember our reactor pointer
+   */
+  ACE_Reactor * reactor_;
+};
 
-<LI>Bring in the ACE headers. Don't worry about the details here.</LI>
-</OL>
+#endif /* _CLIENT_ACCEPTOR_H */
 
-<OL START=7>
-<LI>Bring in the definition of the <I>logger</I> object. The logger will
-handle connections after our acceptor has accepted the connection. We'll
-look at that on the next page.</LI>
 
-<LI>Provide quick access to the reactor object. Later tutorials will be
-more clever than this...</LI>
-
-<LI>Derive our new acceptor object from the ACE_Event_Handler base-class.
-The event handler object is designed to work with the reactor. When an
-event handler is registered with a reactor, the reactor uses member functions
-of the event handler object to gain access to the underlying connection
-<I>handle.</I> We saw this registration process in the previous example
-when the acceptor object was registered with the reactor in the <I>main()</I>
-function. On Unix-type systems, the reactor will then use the <I>select</I>
-system call to wait for activity on the handle (on Win32, <I>WaitForMultipleObjects</I>
-is used instead). Once activity is detected on the handle by the reactor,
-different member functions of the event handler are invoked to process
-the activity. We'll see these in the lines below.</LI>
-
-<LI>Most of the object is going to be public. When we get a little better
-at what we're doing, we can try to make it safer by declaring some of these
-protected. Most of them can never be private however. Notice at this point
-how each of the functions is declared to be a virtual. This MUST be done
-so that if we later derive a class from here the runtime environment will
-get the member function of the derived class instead of that of the baseclass.</LI>
-
-<LI>The object constructor is the only non-virtual function. We may find
-out later that it should have been virtual! Anyway, we take the single
-parameter, a reference to an address object, and use it to initialize our
-<I>acceptor_</I> object. This is the object which will actually listen
-for client connections. There is a discussion below about why the Acceptor
-is a member of our object rather than it's base class.</LI>
-
-<LI>Remove the gag from the object by giving it somewhere to write debug
-information to. We'll use this file pointer throughout the object to keep
-track of it's internal activities.</LI>
-
-<LI>Fall back to <I>stderr</I> if we failed to open our output file.</LI>
-
-<LI>Status message (duh).</LI>
-
-<LI>The <I>handle_exception</I> member function will be called by the reactor
-if an exception is noticed on the handle associated with this object. In
-the case of a connected socket, an exception is generally caused when the
-remote side closes the connection. In the case of a listening socket, it
-could indicate som rare and strange network failure. See the <I>man</I>
-pages for <I>accept</I> and <I>listen</I> if you really care. For our purposes,
-if we get an exception on our acceptor then we return <I>-1</I> to the
-reactor which tells it we're out of commission. At that point the reactor
-will invoke our <I>close</I> funtion and shut us down.</LI>
-
-<LI>Display notification of the error.</LI>
-
-<LI>Return -1 to tell the reactor that we should be shut down.</LI>
-
-<LI>The <I>handle_input</I> method is called by the reactor whenever our
-handle has some data available for us to process. The actual handle is
-passed into the function but we won't be using it because we know it MUST
-be the <I>acceptor_</I> member object. We could compare the two as a safety
-check though.</LI>
-
-<LI>Now we are creating a new connection. It will be this connection which
-we use to communicate with the client. This will free up the acceptor to
-listen for more connection requests. Because the acceptor as a <I>SOCK
-</I>type object we need to create the connection as a <I>SOCK</I> also.
-An <I>ACE_SOCK_Stream</I> will provide us with an end-to-end connection
-similar to a pipe. This gives us the guarantee that any data we send or
-receive will be complete and in the correct order. An <I>ACE_SOCK_Dgram</I>
-could be used if we don't mind missing some packets or receiving them out
-of order.</LI>
-
-<LI>The <I>acceptor_</I> member object is now told to accept the client
-connection and attach it to the new <I>ACE_SOCK_Stream</I> object we just
-created. This is what frees up the acceptor to listen for more new connections.
-If you don't <I>accept</I> the connection, you cannot read the client's
-data and new clients cannot connect. In fact, after a timeout, the client
-which caused this <I>handle_input</I> callback will give up and assume
-the connection failed.</LI>
-
-<LI>Up to this point, we haven't done anything very specific with regards
-to our application. Here, however, we finally create a <I>logger</I> object
-to handle the connection. The logger object is something we defined in
-<I>logger.h</I>. It is given an <I>ACE_SOCK_Stream</I> object on which
-it will communicate. This is the <B>only</B> application-specific code
-you will find in the <I>Client_Acceptor</I> object we are developing here.</LI>
-
-<LI>Announce the new connection. We could use member functions of <I>new_connection</I>
-to report either of the local and remote systems' addresses and names.</LI>
-
-<LI>Finally, we register our <I>Logging_Handler</I> with our reactor. This
-tells the reactor about our new connection and tells it who to inform when
-there is activity on the connection. Note that we use the <I>RWE</I> mask
-so that we get notification when the connection has data for us to read,
-is available for us to write upon* and when it takes an error. (* Because
-of network buffers and such, you can't necessarily write on a connection
-anytime you want. At times, a <I>write</I> operation on a connection will
-fail or partially fail due to full buffers or some other network issue.
-When that happens, you must cache the remaining data to be written and
-wait for the write-notification event.)</LI>
-
-<LI>Return the result of registering the new connection. If the registration
-failed for some reason, this will cause the <I>handle_input</I> to fail
-and, ultimately, shut down the server. There is probably a much better
-way to handle this but it serves our purposes at the moment.</LI>
-
-<LI><I>get_handle</I> provides an interface layer between the reactor with
-which we're registered and the connection we wish the reactor to operate
-on. The reactor does it's job by monitoring one or more <I>handles</I>.
-In the Unix world, these are simply file descriptors. The <I>get_handle</I>
-method of a communcations object such as our <I>acceptor_</I> returns the
-underlying socket file descriptor associated with the connection. Because
-other OSes work differently, however, the <I>get_handle</I> method provides
-insulation for the programmer. By doing this, the programmer has the option
-of registering many types of objects with a reactor: disk-based file, serial
-port, intra-process pipes, etc...</LI>
-
-<LI>Progress notification.</LI>
-
-<LI>Return the handle of the actual communcation's object.</LI>
-
-<LI>Similar to <I>get_handle</I>, the <I>handle_close</I> is a wrapper
-that allows the reactor to close a connection object. Again, this does
-not have to be an IPC object, it could be anything that supports basic
-open/read/write/close functionality. What we're doing here is shutting
-down the acceptor. You would do this when you want to bring down or pause
-the server.</LI>
-
-<LI>Perform the actual close operation.</LI>
-
-<LI>Another notification</LI>
-
-<LI>Now we begin our brief section of private data. In a real application
-this might be <I>protected</I> instead so that a derived object would have
-direct access to the data members. On the other hand, we may not want that...</LI>
-
-<LI>The <I>acceptor_</I> member object is where all of the action centers.
-It is this object which abstracts all of the socket-level mess necessary
-to listen for client connection requests.</LI>
-
-<LI>The file pointer is our simple way of reporting progress throught the
-program and logging activity from the client.</LI>
-
-<LI>All Done.</LI>
-</OL>
-
-<P>It is important to notice here that we have done very little application-specifc
+<HR WIDTH="100%"></PRE>
+It is important to notice here that we have done very little application-specifc
 code in developing this object. In fact, if we take out the progress information,
 the only app-specific code is when we create the new <I>Logging_Handler</I>
 object to give to the <I>accept</I> function. You may begin to wonder why
-there isn't a C++&nbsp;template that does all of this coding for you. Actually,
-the ACE toolkit happens to have one handy:</P>
-
-<UL>
-<P>typedef ACE_Acceptor &lt;<I>YourHandlerClass</I>, ACE_SOCK_ACCEPTOR&gt;
-<I>YourAcceptorClass</I>;</P>
-</UL>
-
-<P>We would have used it like this:</P>
-
-<UL>
-<P>typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR&gt; Client_Acceptor;</P>
-</UL>
-
-<P>This will create a piece of code similar to what I've shown above. The
+there isn't a C++ template that does all of this coding for you. Actually,
+the ACE toolkit happens to have one handy:
+<UL>typedef ACE_Acceptor &lt;<I>YourHandlerClass</I>, ACE_SOCK_ACCEPTOR>
+<I>YourAcceptorClass</I>;</UL>
+We would have used it like this:
+<UL>typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR> Client_Acceptor;</UL>
+This will create a piece of code similar to what I've shown above. The
 primary difference is that the <I>handle_input </I>function created by
 the template does NOT register the handler with the reactor. In the long-run,
 that is good for us because we can then move that logic into the <I>open</I>
-function of the <I>Logging_Handler</I> and use a completely-generic acceptor.</P>
+function of the <I>Logging_Handler</I> and use a completely-generic acceptor.
 
 <P>Now that we know how to accept a connection request, let's move on to
 the next page where we learn how to handle the actual connection. Even
 though we just learned about this cool template thing, we will continue
-to use the &quot;hand-written&quot; acceptor developed above. As I mentioned,
-the only difference will be in the <I>open</I> function of the connection
-handler anyway.</P>
+to use the "hand-written" acceptor developed above. As I mentioned, the
+only difference will be in the <I>open</I> function of the connection handler
+anyway.
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
+<CENTER></CENTER>
 
-<CENTER><P>[<A HREF="..">Tutorial
+<CENTER>[<A HREF="..">Tutorial
 Index</A>] [<A HREF="page02.html">Previous
 Page</A>] [<A HREF="page04.html">Continue
-This Tutorial</A>] </P></CENTER>
+This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

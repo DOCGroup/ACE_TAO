@@ -1,65 +1,170 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 002</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 002</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 002</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 002<BR>
-Creating a Better Server </FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>Creating a Better Server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>This is what we do to create an acceptor from the ACE&nbsp;template:</P>
-
-<UL>
-<PRE>        
-1.      #include &quot;ace/Acceptor.h&quot;
-2.      #include &quot;ace/SOCK_Acceptor.h&quot;
-        
-3.      typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR&gt; Logging_Acceptor;
-</PRE>
-</UL>
+<P>Now lets take a look at the new <A HREF="handler.h">Logging_Handler</A>:
 
 <P>
-<HR></P>
+<HR WIDTH="100%">
+<BR>&nbsp;
+<PRE>#ifndef LOGGING_HANDLER_H
+#define LOGGING_HANDLER_H
 
-<P>Now, if you think that was difficult, you may as well give up now.</P>
+/*
+&nbsp; Since we used the template to create the acceptor, we don't know if there is a
+&nbsp; way to get to the reactor it uses.&nbsp; We'll take the easy way out and grab the
+&nbsp; global pointer.&nbsp; (There is a way to get back to the acceptor's reactor that
+&nbsp; we'll see later on.)
+&nbsp;*/
+extern ACE_Reactor * g_reactor;
 
-<OL>
-<LI>The <I>Acceptor</I> header file defines the template we're about to
-use. This is a totally generic object where all of the hard work as already
-been done.</LI>
+/*
+&nbsp; This time we're deriving from ACE_Svc_Handler instead of ACE_Event_Handler.
+&nbsp; The big reason for this is because it already knows how to contain a SOCK_Stream
+&nbsp; and provides all of the method calls needed by the reactor.&nbsp; The second template
+&nbsp; parameter is for some advanced stuff we'll do with later servers.&nbsp; For now, just
+&nbsp; use it as is...
+&nbsp;*/
+class Logging_Handler : public ACE_Svc_Handler &lt; ACE_SOCK_STREAM, ACE_NULL_SYNCH >
+{
 
-<LI>Because we want to accept connections on an <I>ACE_SOCK_Stream</I>,
-we have to pull in this header. It provides the API details that we will
-need.</LI>
+public:
 
-<LI>Finally, create a <I>Logging_Acceptor</I> object based on the <I>ACE_Acceptor</I>
-template. The first parameter <I>Logging_Handler</I> is an object we will
-develop on the next page. This object will be created by the template-generated
-code whenever a new connection request is accepted. The second parameter
-tells the template what kind of acceptor to create. It is most important
-that the first-parameter object and the second parameter be consistent
-in the connetion types used.</LI>
-</OL>
+&nbsp; /*
+&nbsp;&nbsp;&nbsp; The Acceptor&lt;> template will open() us when there is a new client connection.
+&nbsp;&nbsp; */
+&nbsp; int open (void *)
+&nbsp; {
+&nbsp;&nbsp;&nbsp; ACE_INET_Addr addr;
 
-<P>Obviously we're doing things a bit out of order here: <I>main</I> won't
-be happy until it knows what a <I>Logging_Acceptor</I> is and the acceptor
-won't be happy until it knows what a <I>Logging_Handler</I> is. The next
-page pulls in this last definition for us and after that we tie it all
-together.</P>
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ask the peer() (held in our baseclass) to tell us the address of the cient
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; which has connected.&nbsp; There may be valid reasons for this to fail where we
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wouldn't want to drop the connection but I can't think of one.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (this->peer ().get_remote_addr (addr) == -1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return -1;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Acceptor&lt;> won't register us with it's reactor, so we have to do so
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ourselves.&nbsp; This is where we have to grab that global pointer.&nbsp; Notice
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; that we again use the READ_MASK so that handle_input() will be called
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; when the client does something.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (g_reactor->register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Here's another new treat.&nbsp; We schedule a timer event.&nbsp; This particular one
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; will fire in two seconds and then every three seconds after that.&nbsp; It doesn't
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; serve any useful purpose in our application other than to show you how it
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; is done.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; else if (g_reactor->schedule_timer (this, 0, ACE_Time_Value (2), ACE_Time_Value (3)) == -1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "can'(%P|%t) t register with reactor\n"), -1);
+
+&nbsp;&nbsp;&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected with %s\n", addr.get_host_name() ));
+
+&nbsp;&nbsp;&nbsp; return 0;
+&nbsp; }
+
+&nbsp; /*
+&nbsp;&nbsp;&nbsp; This is a matter of style &amp; maybe taste.&nbsp; Instead of putting all of this stuff
+&nbsp;&nbsp;&nbsp; into a destructor, we put it here and request that everyone call destroy()
+&nbsp;&nbsp;&nbsp; instead of 'delete'.
+&nbsp;&nbsp; */
+&nbsp; void destroy (void)
+&nbsp; {
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cancel that timer we scheduled in open()
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; g_reactor->cancel_timer (this);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shut down the connection to the client.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; this->peer ().close ();
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Free our memory.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; delete this;
+&nbsp; }
+
+&nbsp; /*
+&nbsp;&nbsp;&nbsp; If somebody doesn't like us, the will close() us.&nbsp; Actually, if our open() method
+&nbsp;&nbsp;&nbsp; returns -1, the Acceptor&lt;> will invoke close() on us for cleanup.
+&nbsp;&nbsp; */
+&nbsp; int close (u_long)
+&nbsp; {
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clean up and go away.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; this->destroy ();
+&nbsp;&nbsp;&nbsp; return 0;
+&nbsp; }
+
+protected:
+
+&nbsp; /*
+&nbsp;&nbsp;&nbsp; Respond to input just like Tutorial 1.
+&nbsp;&nbsp; */
+&nbsp; int handle_input (ACE_HANDLE)
+&nbsp; {
+&nbsp;&nbsp;&nbsp; char buf[128];
+&nbsp;&nbsp;&nbsp; memset (buf, 0, sizeof (buf));
+
+&nbsp;&nbsp;&nbsp; switch (this->peer ().recv (buf, sizeof buf))
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp; case -1:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p bad read\n", "client logger"), -1);
+&nbsp;&nbsp;&nbsp; case 0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) closing log daemon (fd = %d)\n", this->get_handle ()), -1);
+&nbsp;&nbsp;&nbsp; default:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) from client: %s", buf));
+&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp; return 0;
+&nbsp; }
+
+&nbsp; /*
+&nbsp;&nbsp;&nbsp; When the timer expires, handle_timeout() will be called.&nbsp; The 'arg' is the value passed
+&nbsp;&nbsp;&nbsp; after 'this' in the schedule_timer() call.&nbsp; You can pass in anything there that you can
+&nbsp;&nbsp;&nbsp; cast to a void*.
+&nbsp;&nbsp; */
+&nbsp; int handle_timeout (const ACE_Time_Value &amp; tv, const void *arg)
+&nbsp; {
+&nbsp;&nbsp;&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) handling timeout from this = %u\n", this));
+&nbsp;&nbsp;&nbsp; return 0;
+&nbsp; }
+
+};
+
+#endif // LOGGING_HANDLER_H</PRE>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
+<CENTER></CENTER>
 
-<CENTER><P>[<A HREF="../../Tutorial">Tutorial Index</A>] [<A HREF="page02.html">Previous
-Page</A>] [<A HREF="page04.html">Continue This Tutorial</A>] </P></CENTER>
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page02.html">Previous
+Page</A>] [<A HREF="page04.html">Continue
+This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

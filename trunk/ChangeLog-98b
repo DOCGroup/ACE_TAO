@@ -1,3 +1,24 @@
+Fri Sep 11 22:46:54 EDT 1998  James CE Johnson <jcej@lads.com>
+
+          docs/tutorials/001/Source.tgz
+          docs/tutorials/001/acceptor.h
+          docs/tutorials/001/logger.h
+          docs/tutorials/001/page02.html
+          docs/tutorials/001/page03.html
+          docs/tutorials/001/page04.html
+          docs/tutorials/001/page05.html
+          docs/tutorials/001/server.cpp
+          docs/tutorials/002/Makefile
+          docs/tutorials/002/handler.h
+          docs/tutorials/002/page01.html
+          docs/tutorials/002/page02.html
+          docs/tutorials/002/page03.html
+          docs/tutorials/002/page04.html
+          docs/tutorials/002/server.cpp
+
+	  Updated to "new style".  Corrected issues with Reactor
+	  based on recent mailing list discussions.
+
 Fri Sep 11 12:30:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* ace/config-chorus.h: Uncommented ACE_LACKS_SYSV_SHMEM as ace
