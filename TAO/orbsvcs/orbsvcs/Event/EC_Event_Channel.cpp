@@ -30,7 +30,7 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     disconnect_callbacks_ (attr.disconnect_callbacks),
     busy_hwm_ (attr.busy_hwm),
     max_write_delay_ (attr.max_write_delay)
-  , destroyed_ (0)
+  , status_ (EC_S_IDLE)
 {
   if (this->factory_ == 0)
     {
@@ -104,20 +104,37 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
 void
 TAO_EC_Event_Channel::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
+  {
+    // First check if the EC is idle, if it is not then we need to
+    // return right away...
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    if (this->status_ != EC_S_IDLE)
+      return;
+    this->status_ = EC_S_ACTIVATING;
+  }
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
   this->consumer_control_->activate ();
   this->supplier_control_->activate ();
+  {
+    // Only when all the operations complete successfully we can mark
+    // the EC as active...
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    ACE_ASSERT (this->status_ == EC_S_ACTIVATING);
+    this->status_ = EC_S_ACTIVE;
+  }
 }
 
 void
 TAO_EC_Event_Channel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   {
+    // First check if the EC is already active, if it is not then we
+    // need to return right away...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    if (this->destroyed_)
+    if (this->status_ != EC_S_ACTIVE)
       return;
-    this->destroyed_ = 1;
+    this->status_ = EC_S_DESTROYING;
   }
   this->dispatching_->shutdown ();
   this->timeout_generator_->shutdown ();
@@ -148,6 +165,13 @@ TAO_EC_Event_Channel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->consumer_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  {
+    // Wait until all the shutdown() operations return before marking
+    // the EC as destroyed...
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+    ACE_ASSERT (this->status_ == EC_S_DESTROYING);
+    this->status_ = EC_S_DESTROYED;
+  }
 }
 
 void
