@@ -5461,7 +5461,6 @@ ace_main_i (int, ASYS_TCHAR *[]); /* forward declaration */ \
 int \
 ace_ce_main (int argc, ASYS_TCHAR *argv[])   /* user's entry point, e.g., "main" */ \
 { \
-  ACE_Object_Manager ace_object_manager;        /* has program lifetime */ \
   return ace_main_i (argc, argv);         /* what the user calls "main" */ \
 } \
 int \
