@@ -21,14 +21,16 @@
 # include "tao/Object.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Object, "$Id$")
+ACE_RCSID (tao,
+           Object,
+           "$Id$")
 
 int CORBA_Object::_tao_class_id = 0;
 
 CORBA_Object::~CORBA_Object (void)
 {
   if (this->protocol_proxy_)
-    this->protocol_proxy_->_decr_refcnt ();
+    (void) this->protocol_proxy_->_decr_refcnt ();
 }
 
 CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
@@ -36,41 +38,54 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
                             TAO_Abstract_ServantBase *servant)
   : is_collocated_ (collocated),
     servant_ (servant),
-    is_local_ (0),
-    protocol_proxy_ (protocol_proxy),
-    refcount_ (1),
-    refcount_lock_ ()
+    is_local_ (protocol_proxy == 0 ? 1 : 0),
+    proxy_broker_ (0),
+    protocol_proxy_ (protocol_proxy)
 {
-  // Notice that the refcount_ above is initialized to 1 because
-  // the semantics of CORBA Objects are such that obtaining one
-  // implicitly takes a reference.
 
-  // If the object is collocated then set the broker
-  // using the factory otherwise use the remote proxy
-  // broker.
-  if (this->is_collocated_ &&
-      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
-    this->proxy_broker_ = _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
-  else
-  this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
+  if (protocol_proxy != 0)
+    {
+      // If the object is collocated then set the broker using the
+      // factory otherwise use the remote proxy broker.
+      if (this->is_collocated_ &&
+          _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
+        this->proxy_broker_ = _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
+      else
+        this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
+
+      // Make sure the underlying TAO_Stub object is not yanked out
+      // from under us.  This will bring the TAO_Stub reference count
+      // up to at least 2.
+      (void) protocol_proxy->_incr_refcnt ();
+    }
 }
 
 void
 CORBA_Object::_add_ref (void)
 {
-  this->_incr_refcnt ();
+  if (this->protocol_proxy_ != 0)
+    (void) this->protocol_proxy_->_incr_refcnt ();
 }
 
 void
 CORBA_Object::_remove_ref (void)
 {
-  this->_decr_refcnt ();
+  // Note that we check if the reference count in the TAO_Stub is one
+  // instead of zero since the reference count was increased by one in
+  // the CORBA::Object constructor.  This object's destructor cleans
+  // up the remaining TAO_Stub reference (that cleanup should not be
+  // done here).
+  if (this->protocol_proxy_ != 0
+      && this->protocol_proxy_->_decr_refcnt () == 1)
+    {
+      delete this;
+    }
 }
 
 void
 CORBA_Object::_tao_any_destructor (void *x)
 {
-  CORBA_Object_ptr tmp = ACE_static_cast(CORBA_Object_ptr,x);
+  CORBA::Object_ptr tmp = ACE_static_cast (CORBA::Object_ptr, x);
   CORBA::release (tmp);
 }
 
@@ -143,9 +158,6 @@ CORBA_Object::_is_local (void) const
   return this->is_local_;
 }
 
-// Quickly hash an object reference's representation data.  Used to
-// create hash tables.
-
 CORBA::ULong
 CORBA_Object::_hash (CORBA::ULong maximum
                      ACE_ENV_ARG_DECL)
@@ -153,16 +165,18 @@ CORBA_Object::_hash (CORBA::ULong maximum
   if (this->protocol_proxy_ != 0)
     return this->protocol_proxy_->hash (maximum ACE_ENV_ARG_PARAMETER);
   else
-    // @@ I really don't know how to support this for
-    //    a locality constrained object.  -- nw.
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-}
+    {
+      // Locality-constrained object.
 
-// Compare two object references to see if they point to the same
-// object.  Used in linear searches, as in hash buckets.
-//
-// XXX would be useful to also have a trivalued comparison predicate,
-// such as strcmp(), to allow more comparison algorithms.
+      // Note that we reinterpret_cast to an "unsigned long" instead
+      // of CORBA::ULong since we need to first cast to an integer
+      // large enough to hold an address to avoid compile-time
+      // warnings on some 64-bit platforms.
+      CORBA::ULong hash = ACE_reinterpret_cast (unsigned long, this);
+
+      return hash % maximum;
+    }
+}
 
 CORBA::Boolean
 CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj

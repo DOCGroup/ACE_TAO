@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 // ****************************************************************
@@ -8,35 +10,12 @@ CORBA_Object::CORBA_Object (int)
     servant_ (0),
     is_local_ (1),
     proxy_broker_ (0),
-    protocol_proxy_ (0),
-    refcount_ (1),
-    refcount_lock_ ()
+    protocol_proxy_ (0)
 {
 }
 
-ACE_INLINE CORBA::ULong
-CORBA_Object::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
-  return this->refcount_++;
-}
-
-ACE_INLINE CORBA::ULong
-CORBA_Object::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
-}
-
-ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_duplicate (CORBA_Object_ptr obj)
+ACE_INLINE CORBA::Object_ptr
+CORBA_Object::_duplicate (CORBA::Object_ptr obj)
 {
   if (obj)
     obj->_add_ref ();
@@ -47,14 +26,14 @@ CORBA_Object::_duplicate (CORBA_Object_ptr obj)
 // These are in CORBA namespace
 
 ACE_INLINE void
-CORBA::release (CORBA_Object_ptr obj)
+CORBA::release (CORBA::Object_ptr obj)
 {
   if (obj)
     obj->_remove_ref ();
 }
 
 ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA_Object_ptr obj)
+CORBA::is_nil (CORBA::Object_ptr obj)
 {
   if (obj == 0)
     {
@@ -68,14 +47,15 @@ CORBA::is_nil (CORBA_Object_ptr obj)
 
 // Null pointers represent nil objects.
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object::_nil (void)
 {
   return 0;
 }
 
-ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj ACE_ENV_ARG_DECL_NOT_USED)
+ACE_INLINE CORBA::Object_ptr
+CORBA_Object::_unchecked_narrow (CORBA::Object_ptr obj
+                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return CORBA::Object::_nil ();
@@ -90,10 +70,12 @@ CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj ACE_ENV_ARG_DECL_NOT_USED)
     return CORBA::Object::_duplicate (obj);
 }
 
-ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_narrow (CORBA_Object_ptr obj ACE_ENV_ARG_DECL)
+ACE_INLINE CORBA::Object_ptr
+CORBA_Object::_narrow (CORBA::Object_ptr obj
+                       ACE_ENV_ARG_DECL)
 {
-  return CORBA_Object::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+  return CORBA_Object::_unchecked_narrow (obj
+                                          ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE TAO_Stub *
@@ -113,9 +95,10 @@ CORBA_Object_var::CORBA_Object_var (void)
 }
 
 ACE_INLINE
-CORBA_Object_var::CORBA_Object_var (CORBA_Object_ptr p)
+CORBA_Object_var::CORBA_Object_var (CORBA::Object_ptr p)
   : ptr_ (p)
-{}
+{
+}
 
 ACE_INLINE
 CORBA_Object_var::~CORBA_Object_var (void)
@@ -123,19 +106,20 @@ CORBA_Object_var::~CORBA_Object_var (void)
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_Object_var::CORBA_Object_var (const CORBA_Object_var &p) // copy constructor
-        : ptr_ (CORBA_Object::_duplicate (p.ptr ()))
-{}
+CORBA_Object_var::CORBA_Object_var (const CORBA_Object_var &p)
+  : ptr_ (CORBA_Object::_duplicate (p.ptr ()))
+{
+}
 
 ACE_INLINE CORBA_Object_var &
-CORBA_Object_var::operator= (CORBA_Object_ptr p)
+CORBA_Object_var::operator= (CORBA::Object_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
@@ -154,36 +138,36 @@ CORBA_Object_var::operator= (const CORBA_Object_var &p)
 }
 
 ACE_INLINE
-CORBA_Object_var::operator const CORBA_Object_ptr &() const // cast
+CORBA_Object_var::operator const CORBA::Object_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_Object_var::operator CORBA_Object_ptr &() // cast
+CORBA_Object_var::operator CORBA::Object_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr &
+ACE_INLINE CORBA::Object_ptr &
 CORBA_Object_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr &
+ACE_INLINE CORBA::Object_ptr &
 CORBA_Object_var::out (void)
 {
   CORBA::release (this->ptr_);
@@ -191,34 +175,34 @@ CORBA_Object_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  CORBA_Object_ptr val = this->ptr_;
+  CORBA::Object_ptr val = this->ptr_;
   this->ptr_ = CORBA_Object::_nil ();
   return val;
 }
 
-ACE_INLINE CORBA_Object_ptr
-CORBA_Object_var::tao_duplicate (CORBA_Object_ptr p)
+ACE_INLINE CORBA::Object_ptr
+CORBA_Object_var::tao_duplicate (CORBA::Object_ptr p)
 {
   return CORBA_Object::_duplicate (p);
 }
 
 ACE_INLINE void
-CORBA_Object_var::tao_release (CORBA_Object_ptr p)
+CORBA_Object_var::tao_release (CORBA::Object_ptr p)
 {
   CORBA::release (p);
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_var::tao_nil (void)
 {
   return CORBA_Object::_nil ();
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_var::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL_NOT_USED
@@ -240,24 +224,25 @@ CORBA_Object_var::tao_upcast (void *src)
 // *************************************************************
 
 ACE_INLINE
-CORBA_Object_out::CORBA_Object_out (CORBA_Object_ptr &p)
-        : ptr_ (p)
+CORBA_Object_out::CORBA_Object_out (CORBA::Object_ptr &p)
+  : ptr_ (p)
 {
   this->ptr_ = CORBA_Object::_nil ();
 }
 
 ACE_INLINE
-CORBA_Object_out::CORBA_Object_out (CORBA_Object_var &p) // constructor from _var
-        : ptr_ (p.out ())
+CORBA_Object_out::CORBA_Object_out (CORBA_Object_var &p)
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = CORBA_Object::_nil ();
 }
 
 ACE_INLINE
-CORBA_Object_out::CORBA_Object_out (const CORBA_Object_out &p) // copy constructor
-        : ptr_ (p.ptr_)
-{}
+CORBA_Object_out::CORBA_Object_out (const CORBA_Object_out &p)
+  : ptr_ (p.ptr_)
+{
+}
 
 ACE_INLINE CORBA_Object_out &
 CORBA_Object_out::operator= (const CORBA_Object_out &p)
@@ -274,25 +259,25 @@ CORBA_Object_out::operator= (const CORBA_Object_var &p)
 }
 
 ACE_INLINE CORBA_Object_out &
-CORBA_Object_out::operator= (CORBA_Object_ptr p)
+CORBA_Object_out::operator= (CORBA::Object_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-CORBA_Object_out::operator CORBA_Object_ptr &() // cast
+CORBA_Object_out::operator CORBA::Object_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr &
+ACE_INLINE CORBA::Object_ptr &
 CORBA_Object_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_Object_ptr
+ACE_INLINE CORBA::Object_ptr
 CORBA_Object_out::operator-> (void)
 {
   return this->ptr_;

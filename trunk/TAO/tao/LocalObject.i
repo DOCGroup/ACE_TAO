@@ -58,7 +58,8 @@ CORBA_LocalObject::CORBA_LocalObject (void)
 
 ACE_INLINE
 TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
-  // : CORBA_LocalObject ()
+  : refcount_lock_ (),
+    refcount_ (1)
 {
 }
 

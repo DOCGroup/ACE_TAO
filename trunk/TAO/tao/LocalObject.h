@@ -266,6 +266,14 @@ private:
   TAO_Local_RefCounted_Object &operator = (const TAO_Local_RefCounted_Object &);
   //@}
 
+protected:
+
+  /// Mutex to protect reference count.
+  TAO_SYNCH_MUTEX refcount_lock_;
+
+  /// Number of outstanding references to this object.
+  CORBA::ULong refcount_;
+
 };
 
 #if defined (__ACE_INLINE__)
