@@ -230,7 +230,7 @@ ACE_Stream<ACE_SYNCH_USE>::pop (int flags)
 
 template <ACE_SYNCH_DECL> int
 ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
-                                 int flags)
+                                   int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::remove");
   ACE_Module<ACE_SYNCH_USE> *prev = 0;
@@ -278,8 +278,8 @@ ACE_Stream<ACE_SYNCH_USE>::find (const ACE_TCHAR *name)
 
 template <ACE_SYNCH_DECL> int
 ACE_Stream<ACE_SYNCH_USE>::push_module (ACE_Module<ACE_SYNCH_USE> *new_top,
-                                      ACE_Module<ACE_SYNCH_USE> *current_top,
-                                      ACE_Module<ACE_SYNCH_USE> *head)
+                                        ACE_Module<ACE_SYNCH_USE> *current_top,
+                                        ACE_Module<ACE_SYNCH_USE> *head)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::push_module");
   ACE_Task<ACE_SYNCH_USE> *nt_reader = new_top->reader ();

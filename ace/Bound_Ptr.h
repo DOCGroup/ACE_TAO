@@ -169,7 +169,7 @@ public:
   X &operator * (void) const;
 
   /// Get the pointer value.
-  X *get (void);
+  X *get (void) const;
 
   /// Resets the ACE_Strong_Bound_Ptr to refer to a different
   /// underlying object.

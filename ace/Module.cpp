@@ -28,7 +28,7 @@ ACE_Module<ACE_SYNCH_USE>::dump (void) const
 
 template <ACE_SYNCH_DECL> void
 ACE_Module<ACE_SYNCH_USE>::writer (ACE_Task<ACE_SYNCH_USE> *q,
-                                 int flags /* = M_DELETE_WRITER */)
+                                   int flags /* = M_DELETE_WRITER */)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::writer");
 
