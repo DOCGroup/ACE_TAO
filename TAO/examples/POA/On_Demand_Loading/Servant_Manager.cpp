@@ -98,9 +98,9 @@ ServantManager_i::obtain_servant (const char *str,
 void 
 ServantManager_i::parse_string (const char *s)
 {
-  // The format of the objectid is <dll:factory_function>.  This string is
-  // parsed to obtain the dll name and the function name which will
-  // create trhe servant and return it to us.
+  // The format of the objectid is <dll:factory_function>.  This
+  // string is parsed to obtain the dll name and the function name
+  // which will create trhe servant and return it to us.
 
   ACE_CString str (s);
 
@@ -112,12 +112,13 @@ ServantManager_i::parse_string (const char *s)
   
   // The index gives us the location which is equivalent to the size
   // of the dllname_ string.
-  this->dllname_.set (str.c_str (), (index));
+  this->dllname_.set (str.c_str (),
+                      index);
   
-  // Obtain the substring from the offset which is one greater than the 
-  // location of ':'. 
-  this->create_symbol_ = str.substring (index + 1, str.length ());
-  
+  // Obtain the substring from the offset which is one greater than
+  // the location of ':'.
+  this->create_symbol_ = str.substring (index + 1,
+                                        str.length ());
   ACE_DEBUG ((LM_DEBUG,
               "the servant dll:%s\n the factory_function:%s\n ",
               this->dllname_.c_str (),
@@ -139,11 +140,9 @@ ServantManager_i::create_dll_object_id (const char *libname,
   ACE_DEBUG ((LM_DEBUG,
               "format-string is %s\n",
               format_string.c_str ()));
-
   // The object ID is created.
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (format_string.c_str ());
-
   return oid;
 }
 
