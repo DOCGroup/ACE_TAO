@@ -183,8 +183,8 @@ namespace ACE
       Stream * stream_;
       int sock_flags_;
     };
-  };
-};
+  }
+}
 #if defined (__ACE_INLINE__)
 #include "HTBP_Session.inl"
 #endif

@@ -76,8 +76,8 @@ namespace ACE
       int make_request_header (Channel *, const char *, char *, size_t );
 
     };
-  };
-};
+  }
+}
 
 #if defined (__ACE_INLINE__)
 #include "HTBP_Inside_Squid_Filter.inl"
