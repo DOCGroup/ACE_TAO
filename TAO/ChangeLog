@@ -1,3 +1,15 @@
+Fri Mar 11 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/PSS/PSDL_Scope.cpp:
+        * orbsvcs/PSS/PSDL_Node.cpp:
+        * examples/Advanced/ch_12/icp.cpp:
+        * examples/Advanced/ch_21/icp.cpp:
+        * examples/Advanced/ch_18/icp.cpp:
+        * examples/Advanced/ch_8_and_10/icp.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_Factory_i.h:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Stock_i.h:
+          Changed _MSC_VER checks
+
 Fri Mar 11 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
