@@ -113,7 +113,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
         int expired_timers;
 
         // Expire the pending timers.
-	// @@ We need to figure out how to implement interval timers...
+        // @@ We need to figure out how to implement interval timers...
         expired_timers = this->timer_queue_.expire ();
 
         if (expired_timers > 0)
@@ -168,7 +168,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
 
 template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
-					    const void **act)
+                                            const void **act)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
@@ -202,17 +202,17 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
     {
       // If the queue is empty, sleep until there is a change on it.
       if (this->timer_queue_.is_empty ())
-	this->condition_.wait ();
+        this->condition_.wait ();
       else
-	{
-	  // Compute the remaining time, being careful not to sleep
-	  // for "negative" amounts of time.
-	  ACE_Time_Value tv = this->timer_queue_.earliest_time ();
+        {
+          // Compute the remaining time, being careful not to sleep
+          // for "negative" amounts of time.
+          ACE_Time_Value tv = this->timer_queue_.earliest_time ();
 
-	  // ACE_DEBUG ((LM_DEBUG, "waiting until %u.%3.3u secs\n",
-	  // tv.sec(), tv.msec()));
-	  this->condition_.wait (&tv);
-	}
+          // ACE_DEBUG ((LM_DEBUG, "waiting until %u.%3.3u secs\n",
+          // tv.sec(), tv.msec()));
+          this->condition_.wait (&tv);
+        }
 
       // Expire timers anyway, at worst this is a no-op.
       this->timer_queue_.expire ();
