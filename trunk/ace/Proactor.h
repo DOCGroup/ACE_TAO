@@ -9,6 +9,7 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Alexander Libman <alibman@@ihug.com.au>
  */
 //=============================================================================
 
@@ -162,7 +163,8 @@ public:
 
   /// Set pointer to a process-wide <ACE_Proactor> and return existing
   /// pointer.
-  static ACE_Proactor *instance (ACE_Proactor *);
+  static ACE_Proactor *instance (ACE_Proactor * proactor,
+                                 int delete_proactor = 0);
 
   /// Delete the dynamically allocated Singleton.
   static void close_singleton (void);
@@ -203,6 +205,48 @@ public:
 
   /// Close the IO completion port.
   virtual int close (void);
+
+   /**
+   * You can add a hook to various run_event methods and the hook will
+   * be called after handling every proactor event.  If this function
+   * returns 0, proactor_run_event_loop will check for the return value of
+   * handle_events.  If it is -1, the the proactor_run_event_loop will return
+   * (pre-maturely.)
+   */
+  typedef int (*PROACTOR_EVENT_HOOK)(ACE_Proactor *, void *);
+
+  // These methods work with an instance of a proactor.
+  /**
+   * Run the event loop until the
+   * <ACE_Proactor::handle_events>
+   * method returns -1 or the <end_proactor_event_loop> method is invoked.
+   */
+  virtual int proactor_run_event_loop (PROACTOR_EVENT_HOOK = 0);
+  
+  /**
+   * Run the event loop until the <ACE_Proactor::handle_events> 
+   * method returns -1, the
+   * <end_proactor_event_loop> method is invoked, 
+   * or the <ACE_Time_Value>
+   * expires.
+   */
+  virtual int proactor_run_event_loop (ACE_Time_Value &tv,
+                                       PROACTOR_EVENT_HOOK = 0);
+
+  /**
+   * Instruct the ACE_Proactor to terminate its event loop
+   * and notifies the ACE_Proactor so that it can wake up
+   * and close down gracefully.
+   */
+  virtual int proactor_end_event_loop (void);
+
+  /// Report if the ACE_Proactor event loop is finished.
+  virtual int proactor_event_loop_done (void);
+
+  /// Resets the <ACE_Reactor::end_event_loop_> static so that the
+  /// <run_event_loop> method can be restarted.
+  virtual int proactor_reset_event_loop (void);
+
 
   /// This method adds the <handle> to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
@@ -457,6 +501,13 @@ protected:
    */
   static int post_wakeup_completions (int how_many);
 
+  /**
+   * Post <how_many> completions to the completion port so that all
+   * threads can wake up. This is used in conjunction with the
+   * <proactor_run_event_loop>.
+   */
+  virtual int proactor_post_wakeup_completions (int how_many);
+
   /// Set the implementation class.
   virtual void implementation (ACE_Proactor_Impl *implementation);
 
@@ -487,10 +538,14 @@ protected:
   int delete_timer_queue_;
 
   /// Terminate the proactor event loop.
-  static sig_atomic_t end_event_loop_;
+  sig_atomic_t end_event_loop_;
 
   /// Number of threads in the event loop.
-  static sig_atomic_t event_loop_thread_count_;
+  sig_atomic_t event_loop_thread_count_;
+
+  /// Mutex to protect work with lists.
+  ACE_SYNCH_MUTEX mutex_;
+
 
 private:
   /// Deny access since member-wise won't work...
@@ -530,5 +585,10 @@ public:
   static sig_atomic_t event_loop_done (void);
 };
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
+
+#if defined (__ACE_INLINE__)
+#include "ace/Proactor.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/post.h"
 #endif /* ACE_PROACTOR_H */

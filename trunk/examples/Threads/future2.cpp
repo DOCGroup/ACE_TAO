@@ -514,6 +514,7 @@ main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Future<char *>;
 template class ACE_Future<u_long>;
 template class ACE_Future_Rep<char *>;
@@ -528,6 +529,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<char *> *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Future<char *>
 #pragma instantiate ACE_Future<u_long>
 #pragma instantiate ACE_Future_Rep<char *>

@@ -49,14 +49,10 @@ Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL)
     }
 }
 
-
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
-
+template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
-
+#pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX, CORBA::ULong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

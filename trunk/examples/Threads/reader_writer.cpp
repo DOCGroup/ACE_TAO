@@ -176,16 +176,17 @@ int main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 template class ACE_Guard<ACE_RW_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 #else
 int

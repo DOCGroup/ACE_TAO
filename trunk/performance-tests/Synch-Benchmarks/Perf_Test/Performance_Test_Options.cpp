@@ -468,9 +468,11 @@ Performance_Test_Options::print_results (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, size_t>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, size_t>;
 #endif /* ACE_MT_SAFE */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, size_t>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, size_t>
 #endif /* ACE_MT_SAFE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

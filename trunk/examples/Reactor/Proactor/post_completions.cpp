@@ -293,9 +293,11 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Task <ACE_NULL_SYNCH>;
 template class ACE_Atomic_Op <ACE_Thread_Mutex, size_t>;
+template class ACE_Atomic_Op_Ex <ACE_Thread_Mutex, size_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Task <ACE_NULL_SYNCH>
 #pragma instantiate ACE_Atomic_Op <ACE_Thread_Mutex, size_t>
+#pragma instantiate ACE_Atomic_Op_Ex <ACE_Thread_Mutex, size_t>
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
 
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/

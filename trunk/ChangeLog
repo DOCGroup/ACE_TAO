@@ -1,5 +1,50 @@
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp: 
+	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp: 
+	* examples/Threads/tss2.cpp: 
+	* examples/Reactor/Misc/test_reactors.cpp: 
+	* examples/Reactor/Proactor/post_completions.cpp: 
+	* examples/Reactor/Proactor/test_timeout.cpp: 
+	* examples/Threads/manual_event.cpp: 
+	* examples/Threads/future1.cpp: 
+	* examples/Threads/future2.cpp: 
+	* examples/Threads/reader_writer.cpp:
+	* examples/Threads/task_two.cpp: 
+	* tests/Atomic_Op_Test.cpp: 
+	* tests/Auto_IncDec_Test.cpp: 
+	* tests/Future_Set_Test.cpp: 
+	* tests/Future_Test.cpp: 
+	* tests/MEM_Stream_Test.cpp:   
+	* tests/Message_Queue_Notifications_Test.cpp: 
+	* tests/Notify_Performance_Test.cpp: 
+	* tests/Reactors_Test.cpp: 
+	* tests/Upgradable_RW_Test.cpp: 
+	* tests/Reader_Writer_Test.cpp: 
+          Added explicit template instantiation for ACE_Atomic_Op_Ex<>.
+
+	* ace/Malloc_Allocator.cpp: Added explicit template instantiation
+	  for ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>.
+
+	* ace/Atomic_Op.i,
+	* ace/Synch_T.{h,cpp}: Factored out some of the structure/logic
+	  from ACE_Atomic_Op into a new base class called
+ 	  ACE_Atomic_Op_Ex.  Thanks to Alex Libman <alibman@@ihug.com.au>
+ 	  for contributing this.
+
+	* ace/Service_Config.cpp (close_singletons): Add support to close
+	  the Proactor singleton, just like the Reactor singleton.  Thanks
+ 	  to Alex Libman <alibman@@ihug.com.au> for contributing this.
+
+	* ace/WIN32_Proactor.cpp: Make sure to remove all the pending 
+	  results from the I/O completion port queue when we close down to
+ 	  avoid memory leaks.  Thanks to Alex Libman
+ 	  <alibman@@ihug.com.au> for contribuging this.
+
+	* ace/Proactor.{h,i,cpp}: Added Alex Libman's <alibman@@ihug.com.au> 
+	  enhancements that make the ACE_Proactor behave more like the
+ 	  ACE_Reactor with respect to singletons etc.
+ 
  	* ace/Logging_Strategy.cpp
  	* ace/Naming_Context.cpp
  	* ace/Service_Manager.cpp: Removed the explicit template instantiations 
