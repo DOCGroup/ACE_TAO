@@ -1,3 +1,14 @@
+Wed Oct 14 18:25:52 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* Client_i.cpp Consumer.dsp Consumer.idl Consumer_i.cpp
+	Consumer_i.h Makefile MarketFeed.dsp MarketFeed_i.cpp
+	MarketFeed_i.h Server_i.cpp Server_i.h Supplier.dsp Supplier.idl
+	Supplier_i.cpp Supplier_i.h consumer_client.cpp
+	marketfeed_client.cpp server.cpp
+
+	Removed these files.
+
+
 Wed Oct 14 12:05:37 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
         * tests/Param_Test/ub_struct_seq.h
