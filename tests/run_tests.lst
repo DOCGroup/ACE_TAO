@@ -59,6 +59,7 @@ Cached_Conn_Test
 Cached_Accept_Conn_Test
 Map_Manager_Test
 Hash_Map_Manager_Test
+Lazy_Map_Manager_Test
 Hash_Map_Bucket_Iterator_Test
 Map_Test
 Message_Queue_Notifications_Test

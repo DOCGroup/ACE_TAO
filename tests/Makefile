@@ -33,6 +33,7 @@ BIN =   Aio_Platform_Test \
         Hash_Map_Manager_Test \
         Hash_Map_Bucket_Iterator_Test \
         IOStream_Test \
+        Lazy_Map_Manager_Test \
 	Log_Msg_Test \
         Malloc_Test \
         Map_Test \

@@ -95,25 +95,85 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (size_t &free_slot)
 {
-  // Find an empty slot.
+  // Look in the free list for an empty slot.
   free_slot = this->free_list_.next ();
 
-  // Make sure we haven't run out of free slots.
+  // If we do find a free slot, return successfully.
   if (free_slot != this->free_list_id ())
     return 0;
-  else
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+  // Move any free slots from occupied list to free list.
+  this->move_all_free_slots_from_occupied_list ();
+
+  // Try again in case we found any free slots in the occupied list.
+  free_slot = this->free_list_.next ();
+
+  // If we do find a free slot, return successfully.
+  if (free_slot != this->free_list_id ())
+    return 0;
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
+  // Resize the map.
+  int result = this->resize_i (this->new_size ());
+
+  // Check for errors.
+  if (result == 0)
+    // New free slot.
+    free_slot = this->free_list_.next ();
+
+  return result;
+}
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK> void
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_all_free_slots_from_occupied_list (void)
+{
+  //
+  // In the case of lazy map managers, the movement of free slots from
+  // the occupied list to the free list is delayed until we run out of
+  // free slots in the free list.
+  //
+
+  // Go through the entire occupied list, moving free slots to the
+  // free list. Note that all free slots in the occupied list are
+  // moved in this loop.
+  for (size_t i = this->occupied_list_.next ();
+       i != this->occupied_list_id ();
+       )
     {
-      // Resize the map.
-      int result = this->resize_i (this->new_size ());
+      //
+      // Note the trick used here: Information about the current slot
+      // is first noted; <i> then moves to the next occupied slot;
+      // only after this is the slot (potentially) moved from the
+      // occupied list to the free list.  This order of things, i.e.,
+      // moving <i> before moving the free slot is necessary,
+      // otherwise we'll forget which our next occupied slot is.
+      //
 
-      // Check for errors.
-      if (result == 0)
-        // New free slot.
-        free_slot = this->free_list_.next ();
+      // Note information about current slot.
+      ACE_Map_Entry<EXT_ID, INT_ID> &current_slot = this->search_structure_[i];
+      size_t position_of_current_slot = i;
 
-      return result;
+      // Move <i> to next occupied slot.
+      i = this->search_structure_[i].next ();
+
+      // If current slot is free
+      if (current_slot.free_)
+        {
+          // Reset free flag to zero before moving to free list.
+          current_slot.free_ = 0;
+
+          // Move from occupied list to free list.
+          this->move_from_occupied_list_to_free_list (position_of_current_slot);
+        }
     }
 }
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (size_t slot,
@@ -303,6 +363,14 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &
        i != this->occupied_list_id ();
        i = this->search_structure_[i].next ())
     {
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+      if (this->search_structure_[i].free_)
+        continue;
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
       if (this->equal (this->search_structure_[i].ext_id_,
                        ext_id))
         {
@@ -341,8 +409,23 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID
 
   if (result == 0)
     {
-      // Move from occupied list to free list
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+      //
+      // In the case of lazy map managers, the movement of free slots
+      // from the occupied list to the free list is delayed until we
+      // run out of free slots in the free list.
+      //
+
+      this->search_structure_[slot].free_ = 1;
+
+#else
+
+      // Move from occupied list to free list.
       this->move_from_occupied_list_to_free_list (slot);
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       // Update the current size.
       --this->cur_size_;
@@ -400,6 +483,17 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t new_size)
       new (&(temp[i])) ENTRY;
       temp[i].next (i + 1);
       temp[i].prev (i - 1);
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+
+      // Even though this slot is initially free, we need the <free_>
+      // flag to be zero so that we don't have to set it when the slot
+      // is moved to the occupied list.  In addition, this flag has no
+      // meaning while this slot is in the free list.
+      temp[i].free_ = 0;
+
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
     }
 
   // Add new entries to the free list.
@@ -463,6 +557,11 @@ ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("next_ = %d"), this->next_));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("prev_ = %d"), this->prev_));
+
+#if defined (ACE_HAS_LAZY_MAP_MANAGER)
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("free_ = %d"), this->free_));
+#endif /* ACE_HAS_LAZY_MAP_MANAGER */
+
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
