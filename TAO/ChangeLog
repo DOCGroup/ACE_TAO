@@ -1,3 +1,20 @@
+Mon Mar  3 17:23:55 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
+
+	  Fixed existing and added missing emulated exception support.
+
+Mon Mar  3 14:50:31 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicInterface/Request.h:
+
+	  Explicitly qualify the TAO_Dynamic_Adapter_Impl friend
+	  declaration with a global scope qualifier in an attempt to work
+	  around a problem where some compilers assume that the friend
+	  declaration refers to a class in the local scope or current
+	  namespace.
+
+
 Mon Mar  3 14:36:53 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.h:
