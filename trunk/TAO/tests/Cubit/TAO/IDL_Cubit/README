@@ -1,3 +1,5 @@
+// $Id$
+
 This is the cubit example that uses the TAO IDL compiler to generate
 the stubs and skeletons. Additional features include presence of a
 factory to create Cubit objects and testing the _bind call to get the
