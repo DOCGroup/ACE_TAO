@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "ORB.h"
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
@@ -42,6 +43,7 @@
 # include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+#include "tao/BiDir_ORBInitializer.h"
 #if defined (TAO_HAS_VALUETYPE)
 #  include "ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
@@ -68,7 +70,9 @@ using std::set_unexpected;
 #endif /* ! __ACE_INLINE__ */
 
 
+
 ACE_RCSID(tao, ORB, "$Id$")
+
 
 static const char ior_prefix [] = "IOR:";
 
@@ -1103,6 +1107,36 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+  // @@ At presnt we are trying to register the BiDirORB Initializer
+  //    only if the GIOP minor version is greater than or equal to
+  //    2. The question is -- Do we need this check? This check would
+  //    be good if somebody decides to compile TAO with 1.0 or
+  //    1.1. But will it save them any foot print? Not really....
+
+  if (TAO_DEF_GIOP_MINOR >= 2)
+    {
+
+      PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_var bidir_orb_initializer;
+
+      /// Register the BiDir ORBInitializer.
+      ACE_NEW_THROW_EX (tmp_orb_initializer,
+                        TAO_BiDir_ORBInitializer,
+                        CORBA::NO_MEMORY (
+                            CORBA_SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                            CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      bidir_orb_initializer = tmp_orb_initializer;
+
+      PortableInterceptor::register_orb_initializer (bidir_orb_initializer.in (),
+                                                     ACE_TRY_ENV);
+      ACE_CHECK;
+    }
   // -------------------------------------------------------------
 }
 

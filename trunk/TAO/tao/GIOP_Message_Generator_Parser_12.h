@@ -28,6 +28,8 @@
 #endif /* _MSC_VER */
 
 class TAO_GIOP_Message_State;
+class TAO_Service_Context;
+class TAO_Transport;
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser_12
@@ -88,14 +90,29 @@ public:
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
 
+  /// Is the messaging object ready for processing BiDirectional
+  /// request/response?
+  virtual int is_ready_for_bidirectional (void);
+
 private:
 
   /// Marshall the TargetSpecification
 
-  // This method may be required for other GIOP versiona coming out
-  // later than 1.2. We need to share this method
+  /// This method may be required for other GIOP versiona coming out
+  /// later than 1.2. We need to share this method
   int marshall_target_spec (TAO_Target_Specification &spec,
                             TAO_OutputCDR &msg);
+
+  /// Check whether we have BiDirContext info available. If available
+  /// delegate  the responsibility on to the TAO_Transport classes to
+  /// initiate action.
+  /// Note: At somepoint this may be needed for future versions of
+  /// GIOP and we may have to share this
+  int check_bidirectional_context (TAO_ServerRequest &);
+
+  /// Process the BiDirContext info that we have received.
+  int process_bidir_context (TAO_Service_Context &,
+                             TAO_Transport *transport);
 };
 
 

@@ -824,6 +824,14 @@ public:
   /// Return the underlying connection cache.
   TAO_Connection_Cache_Manager &connection_cache (void);
 
+  /// Set and Get methods to indicate whether a BiDir IIOP policy has
+  /// been set in the POA.
+  /// @@ At present, the value will be true even if one of the POA's
+  ///    is set with the Bi Dir GIOP policy.
+  CORBA::Boolean bidir_giop_policy (void);
+  void bidir_giop_policy (CORBA::Boolean);
+
+
   /**
    * Return the table that maps object key/name to de-stringified
    * object reference.  The contents of this table do not correspond
@@ -1156,6 +1164,8 @@ protected:
   /// TAO's connection cache.
   TAO_Connection_Cache_Manager connection_cache_;
 
+  /// Bir Dir GIOP policy value
+  CORBA::Boolean bidir_giop_policy_;
 };
 
 // ****************************************************************

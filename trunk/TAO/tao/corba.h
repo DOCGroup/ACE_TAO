@@ -86,6 +86,7 @@
 #include "tao/PortableInterceptor.h" /* This needs to remain visible. */
 
 #include "tao/ClientRequestInfo.h"
+#include "tao/BiDirPolicyC.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
