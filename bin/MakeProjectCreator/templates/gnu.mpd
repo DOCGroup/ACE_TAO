@@ -58,7 +58,19 @@ LIB   = $(LIB_UNCHECKED)
 <%if(sharedname)%>
 SHLIB = $(SHLIB_UNCHECKED)
 <%endif%>
-<%foreach(avoids requires comps)%>
+<%foreach(comps)%>
+else
+  all: comp_warning
+endif
+<%endfor%>
+<%foreach(avoids)%>
+else
+  all: avoid_warning
+endif
+<%endfor%>
+<%foreach(requires)%>
+else
+  all: require_warning
 endif
 <%endfor%>
 <%else%>
@@ -126,7 +138,19 @@ ifneq ($(<%avoid%>),1)
 ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 <%endfor%>
 BIN    = $(BIN_UNCHECKED)
-<%foreach(avoids requires comps)%>
+<%foreach(comps)%>
+else
+  all: comp_warning
+endif
+<%endfor%>
+<%foreach(avoids)%>
+else
+  all: avoid_warning
+endif
+<%endfor%>
+<%foreach(requires)%>
+else
+  all: require_warning
 endif
 <%endfor%>
 
@@ -243,6 +267,21 @@ TAO_IDLFLAGS += <%idlflags%>
 #       Local targets
 #----------------------------------------------------------------------------
 <%marker(local)%>
+<%if(comps)%>
+comp_warning:
+	@echo This project will not be built due to one of the following missing components:
+	@echo<%foreach(comps)%> <%comp%><%endfor%>
+<%endif%>
+<%if(requires)%>
+require_warning:
+	@echo This project will not be built due to one of the following missing features:
+	@echo<%foreach(requires)%> <%require%><%endfor%>
+<%endif%>
+<%if(avoids)%>
+avoid_warning:
+	@echo This project will not be built due to one of the following enabled features:
+	@echo<%foreach(avoids)%> <%avoid%><%endfor%>
+<%endif%>
 <%if(custom_types)%>
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>

@@ -1,3 +1,11 @@
+Thu Jun 19 11:36:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Updated the GNUACE template to issue information as to why a
+          particular project wasn't built based on the comps, requires and
+          avoids values.
+
 Thu Jun 19 12:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
