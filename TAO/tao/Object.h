@@ -58,6 +58,9 @@ public:
   /// Used in the implementation of CORBA::Any
   static void _tao_any_destructor (void*);
 
+  /// Uninlined part of the now-inlined CORBA::is_nil().
+  static CORBA::Boolean is_nil_i (CORBA_Object_ptr obj);
+
   // These calls correspond to over-the-wire operations, or at least
   // do so in many common cases.  The normal implementation assumes a
   // particular simple, efficient, protocol-neutral interface for

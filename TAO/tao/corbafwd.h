@@ -855,7 +855,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_UnknownUserException UnknownUserException;
 
   // = all the CORBA::is_nil methods.
-  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Object_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Object_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
