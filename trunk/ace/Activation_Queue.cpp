@@ -76,7 +76,7 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mo,
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) mo,
-                                     0,
+                                     sizeof (*mo),
                                      mo->priority ()),
                   -1);
 

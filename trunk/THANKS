@@ -795,6 +795,7 @@ Engelbert Staller <engelbert.staller@siemens.at>
 George Ball <george@jgserv.co.uk>
 Ronald Fischer <ronald.fischer@icn.siemens.de>
 Marvin Allen Wolfthal <maw@ziplink.net>
+Dan Gilboa <dgilboa@qualcomm.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
