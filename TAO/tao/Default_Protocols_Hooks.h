@@ -31,21 +31,19 @@ class TAO_Export TAO_Default_Protocols_Hooks : public TAO_Protocols_Hooks
   /// Destructor
   virtual ~TAO_Default_Protocols_Hooks (void);
 
-#if (TAO_HAS_RT_CORBA == 1)
-
   virtual int
   call_client_protocols_hook (TAO_ORB_Core *orb_core,
-                              RTCORBA::ProtocolProperties_var &
-                              properties,
+                              int &send_buffer_size,
+                              int &recv_buffer_size,
+                              int &no_delay,
                               const char *protocol_type);
 
   virtual int
   call_server_protocols_hook (TAO_ORB_Core *orb_core,
-                              RTCORBA::ProtocolProperties_var &
-                              properties,
+                              int &send_buffer_size,
+                              int &recv_buffer_size,
+                              int &no_delay,
                               const char *protocol_type);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   virtual void call_policy_type_hook (CORBA::PolicyList *&policy_list,
                                       CORBA::ULong &policy_type);

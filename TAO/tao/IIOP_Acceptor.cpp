@@ -763,39 +763,35 @@ TAO_IIOP_Acceptor::init_tcp_properties (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  RTCORBA::ProtocolProperties_var properties =
-    RTCORBA::ProtocolProperties::_nil ();
+  int send_buffer_size = 0;
+  int recv_buffer_size = 0;
+  int no_delay = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
-  
+
   if (tph != 0)
     {
       const char protocol [] = "iiop";
       const char *protocol_type = protocol;
 
-      int hook_return = 
+      int hook_return =
         tph->call_server_protocols_hook (this->orb_core_,
-                                         properties,
+                                         send_buffer_size,
+                                         recv_buffer_size,
+                                         no_delay,
                                          protocol_type);
 
       if (hook_return == -1)
         return -1;
     }
 
-  RTCORBA::TCPProtocolProperties_var tcp_properties =
-    RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
-                                             ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  this->tcp_properties_.send_buffer_size =
+    send_buffer_size;
+  this->tcp_properties_.recv_buffer_size =
+    recv_buffer_size;
+  this->tcp_properties_.no_delay =
+    no_delay;
 
-  if (!CORBA::is_nil (tcp_properties.in ()))
-    {  // Extract and locally store properties of interest.
-      this->tcp_properties_.send_buffer_size =
-        tcp_properties->send_buffer_size ();
-      this->tcp_properties_.recv_buffer_size =
-        tcp_properties->recv_buffer_size ();
-      this->tcp_properties_.no_delay =
-        tcp_properties->no_delay ();
-    }
   // @@ NOTE.  RTCORBA treats a combination of transport+messaging
   // as a single protocol.  Keep this in mind for when we adopt
   // RTCORBA approach to protocols configuration for nonRT use.  In

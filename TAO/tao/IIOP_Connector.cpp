@@ -446,9 +446,10 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  RTCORBA::ProtocolProperties_var properties = 
-    RTCORBA::ProtocolProperties::_nil ();
-    
+  int send_buffer_size = 0;
+  int recv_buffer_size = 0;
+  int no_delay = 0;
+
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
   
   if (tph != 0)
@@ -458,26 +459,22 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
       int hook_result =
         tph->call_client_protocols_hook (this->orb_core (),
-                                         properties,
+                                         send_buffer_size,
+                                         recv_buffer_size,
+                                         no_delay,
                                          protocol_type);
 
       if(hook_result == -1)
         return -1;
     }
   
-  RTCORBA::TCPProtocolProperties_var tcp_properties =
-    RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
-                                             ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-
   // Extract and locally store properties of interest.
   this->tcp_properties_.send_buffer_size =
-    tcp_properties->send_buffer_size ();
+    send_buffer_size;
   this->tcp_properties_.recv_buffer_size =
-    tcp_properties->recv_buffer_size ();
+    recv_buffer_size;
   this->tcp_properties_.no_delay =
-    tcp_properties->no_delay ();
+    no_delay;
 
 #else /* TAO_HAS_RT_CORBA == 1 */
 

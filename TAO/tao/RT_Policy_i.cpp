@@ -598,10 +598,14 @@ TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
 
 int
 TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
-                                RTCORBA::ProtocolProperties_var
-                                &properties,
+                                int &send_buffer_size,
+                                int &recv_buffer_size,
+                                int &no_delay,
                                 const char *protocol_type)
 {
+  RTCORBA::ProtocolProperties_var properties = 
+    RTCORBA::ProtocolProperties::_nil ();
+  
   // ServerProtocolProperties policy controls protocols configuration.
   // Look for protocol properties in the effective ServerProtocolPolicy.
   CORBA::Policy_var policy =
@@ -708,6 +712,36 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
             }
         }
     }
+
+  if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+    {
+      RTCORBA::TCPProtocolProperties_var tcp_properties =
+        RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
+                                                 ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      send_buffer_size = tcp_properties->send_buffer_size ();
+      recv_buffer_size = tcp_properties->recv_buffer_size ();
+      no_delay = tcp_properties->no_delay ();
+    }
+
+  if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+    {
+      RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
+        RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
+                                                        ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      if (!CORBA::is_nil (uiop_properties.in ()))
+        {
+          // Extract and locally store properties of interest.
+          send_buffer_size =
+            uiop_properties->send_buffer_size ();
+          recv_buffer_size =
+            uiop_properties->recv_buffer_size ();
+        }
+    }
+
   return 0;
 }
 
@@ -775,10 +809,14 @@ TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
 
 int
 TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
-                                RTCORBA::ProtocolProperties_var
-                                &properties,
+                                int &send_buffer_size,
+                                int &recv_buffer_size,
+                                int &no_delay,
                                 const char *protocol_type)
 {
+  RTCORBA::ProtocolProperties_var properties = 
+    RTCORBA::ProtocolProperties::_nil ();
+  
   // Check ORB-level override for properties.
   CORBA::Policy_var policy =
     orb_core->policy_manager ()->client_protocol ();
@@ -816,7 +854,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
               ACE_CHECK_RETURN (-1);
 
               if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-                  break;            
+                  break;
             }
           else if (protocols[j].protocol_type == TAO_TAG_UIOP_PROFILE)
             {
@@ -885,6 +923,35 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
           }
       }
   }
+
+  if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
+    {
+      RTCORBA::TCPProtocolProperties_var tcp_properties =
+        RTCORBA::TCPProtocolProperties::_narrow (properties.in (),
+                                                 ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      send_buffer_size = tcp_properties->send_buffer_size ();
+      recv_buffer_size = tcp_properties->recv_buffer_size ();
+      no_delay = tcp_properties->no_delay ();
+    }
+
+  if (ACE_OS::strcmp (protocol_type, "uiop") == 0)
+    {
+      RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
+        RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
+                                                        ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      if (!CORBA::is_nil (uiop_properties.in ()))
+        {
+          // Extract and locally store properties of interest.
+          send_buffer_size =
+            uiop_properties->send_buffer_size ();
+          recv_buffer_size =
+            uiop_properties->recv_buffer_size ();
+        }
+    }
   return 0;
 }
 
