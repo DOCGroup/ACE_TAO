@@ -6113,7 +6113,7 @@ ACE_OS::last_error (void)
   return lerrno == 0 ? lerror : lerrno;
 #else
   return errno;
-#endif /* ACE_HAS_WIN32 */
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE void
@@ -6124,7 +6124,7 @@ ACE_OS::last_error (int error)
   ::SetLastError (error);
 #else
   errno = error;
-#endif /* ACE_HAS_WIN32 */
+#endif /* ACE_WIN32 */
 }
 
 #if !defined (ACE_HAS_WINCE)
