@@ -413,6 +413,7 @@ public:
       TAO_OPERATION_TIE_SI,
 
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature
+      TAO_OBV_OPERATION_ARGLIST_CS,           // used only for AMH exceptions
       // ... for client header
       TAO_OBV_OPERATION_ARGLIST_OBV_CH,       // ... for OBV_ class
       TAO_OBV_OPERATION_ARGLIST_SH,           // ... for server header

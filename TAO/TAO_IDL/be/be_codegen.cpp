@@ -346,7 +346,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                               "tao/ClientRequestInfo_i.h");
   this->gen_standard_include (this->client_stubs_,
                               "tao/ClientInterceptorAdapter.h");
-  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
 
   if (be_global->ami_call_back () == I_TRUE)
     {
@@ -356,7 +356,14 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/AMI_ClientRequestInfo_i.h");
-      *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+      *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
+    }
+
+  if (be_global->gen_amh_classes () == I_TRUE)
+    {
+      // Necessary for the AIX compiler.
+      this->gen_standard_include (this->client_stubs_,
+                                  "ace/Auto_Ptr.h");
     }
 
   *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
