@@ -46,16 +46,8 @@ TAO_Wait_On_Reactor::wait (void)
   ACE_Reactor* reactor =
     this->transport_->orb_core ()->reactor ();
 
-  // @@ Carlos: Can we rely on <reply_received> flag in the AMI case?
-  //    It depends on whether we are expecting replies or not, right?
-  //    So, I think we can simply return from this loop, when some
-  //    event occurs, and the invocation guy can call us again, if it
-  //    wants to. (AMI will call, if it is expecting replies, SMI will
-  //    call if the reply is not arrived) (Alex).
-  // @@ Alex: I think you are right, let's fix it later....
-
-  // Do the event loop, till we received the reply.
-
+  // Do the event loop, till we fully receive a reply.
+  
   int result = 0;
   this->reply_received_ = 0;
   while (this->reply_received_ == 0 && result >= 0)
@@ -136,23 +128,12 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
     //if (TAO_debug_level > 0)
     //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - sending request for <%x>\n",
     //this->transport_));
-
   }
-
-  // @@ Should we do here that checking for the difference in the
-  //    Reactor used??? (Alex).
 
   // Register the handler.
   this->transport_->register_handler ();
-  // @@ Carlos: We do this only if the reactor is different right?
-  //    (Alex)
-  // @@ Alex: that is taken care of in
-  //    IIOP_Transport::register_handler, but maybe we shouldn't do
-  //    this checking everytime, I recall that there was a problem
-  //    (sometime ago) about using the wrong ORB core, but that may
-  //    have been fixed...
-
-  // Send the request
+  
+  // Send the request.
   int result =
     this->TAO_Wait_Strategy::sending_request (orb_core,
                                               two_way);
@@ -213,9 +194,11 @@ TAO_Wait_On_Leader_Follower::wait (void)
       if (leader_follower.add_follower (cond) == -1)
         ACE_ERROR ((LM_ERROR,
                     "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                    "add_follower failed for <%x>\n", cond));
+                    "add_follower failed for <%x>\n",
+                    cond));
 
-      while (!this->reply_received_ && leader_follower.leader_available ())
+      while (!this->reply_received_ &&
+             leader_follower.leader_available ())
         {
           if (cond == 0 || cond->wait () == -1)
             return -1;
@@ -233,7 +216,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
       // our input. We are already removed from the follower queue.
       if (this->reply_received_ == 1)
         {
-          // But first reset our state in case we are invoked again...
+          // But first reset our state in case we are invoked
+          // again... 
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -242,7 +226,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
         }
       else if (this->reply_received_ == -1)
         {
-          // But first reset our state in case we are invoked again...
+          // But first reset our state in case we are invoked
+          // again... 
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
@@ -334,7 +319,8 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Obtain the lock.
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    orb_core->leader_follower ().lock (), -1);
+                    orb_core->leader_follower ().lock (), 
+                    -1);
 
   //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
   //              this->transport_));

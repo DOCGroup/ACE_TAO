@@ -10,6 +10,11 @@
 #include "tao/Pluggable.h"
 #include "tao/Connector_Registry.h"
 
+#include "tao/Wait_Strategy.h"
+// @@ This file is here so that we can call sending request method on
+//    the wait strategy. It is a hack and this should go
+//    away. (Alex). 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
 #endif /* ! __ACE_INLINE__ */
@@ -66,8 +71,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // restructuring an ORB core in terms of asynchrony.
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
-                                                      const char *operation,
-                                                      TAO_ORB_Core* orb_core)
+                                          const char *operation,
+                                          TAO_ORB_Core* orb_core)
   : stub_ (stub),
     opname_ (operation),
     request_id_ (0),
@@ -363,8 +368,8 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
 TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle ();
+
+  this->transport_->idle_after_reply ();
 }
 
 void
@@ -613,6 +618,20 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   int reply_error = this->transport_->wait_for_reply ();
 
+  // Do the wait loop till we receive the reply for this invocation.
+  while (reply_error != -1 && 
+         this->transport_->reply_received (this->request_id_) != 1)
+    {
+      // @@ Hack to init the Leader-Follower state, so that we can
+      //    wait again. (Alex).
+      this->transport_->wait_strategy ()->sending_request (this->orb_core_,
+                                                           1);
+      
+      // Wait for reply.
+      reply_error = this->transport_->wait_for_reply ();
+    }
+
+  // Check the reply error.
   if (reply_error == -1)
     {
       this->close_connection ();
@@ -706,8 +725,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle ();
+  this->transport_->idle_after_reply ();
 }
 
 void
@@ -730,8 +748,7 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle ();
+  this->transport_->idle_after_reply ();
 }
 
 // Send request, block until any reply comes back. 
@@ -807,6 +824,14 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
   int reply_error = this->transport_->wait_for_reply ();
 
+  // Do the wait loop, till we receive the reply for this invocation. 
+  while (reply_error != -1 && 
+         this->transport_->reply_received (this->request_id_) != 1)
+    {
+      reply_error = this->transport_->wait_for_reply ();
+    }
+  
+  // Check the reply error.
   if (reply_error == -1)
     {
       this->close_connection ();

@@ -9,6 +9,7 @@
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
+  //  : reply_received_ (0)
 {
 }
 
@@ -23,11 +24,18 @@ TAO_Reply_Dispatcher::message_state (void) const
   return 0;
 }
 
+// int
+// TAO_Reply_Dispatcher::reply_received (void) const
+// {
+//   return reply_received_;
+// }
+ 
 // *********************************************************************
 
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (void)
-  : message_state_ (0)
+  : message_state_ (0),
+    reply_cdr_ (0)
 {
 }
 
@@ -43,6 +51,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                             TAO_GIOP_ServiceContextList &reply_ctx,
                                             TAO_GIOP_Message_State *message_state)
 {
+  // this->reply_received_ = 1;
+
   this->reply_status_ = reply_status;
   this->version_ = version;
   this->message_state_ = message_state;
@@ -54,6 +64,16 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_ctx_.replace (max, len, context_list, 1);
 
+  // @@ Unnecessary copying should be avoided here (Alex).
+  // @@ Carlos: I am confused about implementing this one. In the
+  //    MUXED TMS, this mess state is going to get deleted, as soon as
+  //    we return from here. So we need to save the CDR. But in the
+  //    Exclusive case, the message state will be there. So, how do we
+  //    correctly own the CDR here? (Alex).
+  ACE_NEW_RETURN (this->reply_cdr_,
+                  TAO_InputCDR (message_state->cdr.steal_contents ()),
+                  0);
+  
   return 0;
 }
 
@@ -62,6 +82,13 @@ TAO_Synch_Reply_Dispatcher::message_state (void) const
 {
   return this->message_state_;
 }
+
+TAO_InputCDR &
+TAO_Synch_Reply_Dispatcher::reply_cdr (void) const
+{
+  return *this->reply_cdr_;
+}
+
 
 // *********************************************************************
 
@@ -85,6 +112,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                              TAO_GIOP_ServiceContextList &reply_ctx,
                                              TAO_GIOP_Message_State *message_state)
 {
+  // this->reply_received_ = 1;
+  
   this->reply_status_ = reply_status;
   this->version_ = version;
   this->message_state_ = message_state;
@@ -96,10 +125,10 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_ctx_.replace (max, len, context_list, 1);
 
-  if (TAO_debug_level > 0)
+  if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%N:%l:TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
+                  "(%P | %t):TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
     }
   
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -108,6 +137,10 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   reply_handler_skel_ (message_state_->cdr,
                        reply_handler_,
                        ACE_TRY_ENV);
+  
+  // This was dynamically allocated. Now the job is done. Commit 
+  // suicide here.  
+  delete this;
                                   
   return 0;
 }

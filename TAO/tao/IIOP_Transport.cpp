@@ -208,9 +208,12 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                   two_way) == -1)
     return -1;
 
-  return TAO_GIOP::send_message (this,
-                                 stream,
-                                 orb_core);
+  if (TAO_GIOP::send_message (this,
+                              stream,
+                              orb_core) == -1)
+    return -1;
+
+  return this->idle_after_send ();
 }
 
 // Return 0, when the reply is not read fully, 1 if it is read fully.

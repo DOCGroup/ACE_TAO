@@ -180,6 +180,22 @@ public:
   // Strategy if Reactor is used  for that strategy. Default
   // implementation out here returns -1 setting <errno> to ENOTSUP.
 
+  // = Setting the Transport object in Idle state. Theese methods are
+  //   routed the TMS object. The TMS starategies implement the
+  //   methods accordingly. 
+  
+  virtual int idle_after_send (void);
+  // Request has been just sent, but the reply is not received. Idle
+  // the transport now.
+  
+  virtual int idle_after_reply (void);
+  // Request is sent and the reply is received. Idle the transport
+  // now. 
+
+  virtual int reply_received (const CORBA::ULong request_id);
+  // Check with the TMS whether the reply has been receieved for the
+  // request with <request_id>.
+
 protected:
   CORBA::ULong tag_;
   // IOP protocol tag.

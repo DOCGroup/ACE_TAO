@@ -31,7 +31,7 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Twoway_Invocation::inp_stream (void)
 {
-  return this->rd_.message_state ()->cdr;
+  return this->rd_.reply_cdr ();
 }
 
 ACE_INLINE void
@@ -73,5 +73,5 @@ TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
 {
-  return this->rd_.message_state ()->cdr;
+  return this->rd_. reply_cdr ();
 }

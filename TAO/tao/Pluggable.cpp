@@ -215,6 +215,12 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
                                       rd);
 }
 
+int
+TAO_Transport::wait_for_reply (void)
+{
+  return this->ws_->wait ();
+}
+
 // Read and handle the reply. Returns 0 when there is Short Read on
 // the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors.
@@ -233,9 +239,20 @@ TAO_Transport::register_handler (void)
 }
 
 int
-TAO_Transport::wait_for_reply (void)
+TAO_Transport::idle_after_send (void)
 {
-  return this->ws_->wait ();
+  return this->tms ()->idle_after_send (this);
+}  
+int
+TAO_Transport::idle_after_reply (void)
+{
+  return this->tms ()->idle_after_reply (this);
+}
+
+int
+TAO_Transport::reply_received (const CORBA::ULong request_id)
+{
+  return this->tms ()->reply_received (request_id);
 }
 
 void
