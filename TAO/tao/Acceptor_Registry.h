@@ -28,7 +28,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Exception.h"
 
-#include "ace/SString.h"
+#include "ace/SStringfwd.h"
 
 // Forward declarations.
 class ACE_Addr;
