@@ -2,7 +2,7 @@ Fri Jun  4 12:01:34 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/GIOP.cpp (process_server_locate): Added the INS
 	  functionality for lookup of "simple" object keys when the
-	  incoming request is a GIOP LocateRequest message. This 
+	  incoming request is a GIOP LocateRequest message. This
 	  was previously possible only for GIOP Request messages.
 
 Fri Jun 04 11:37:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
@@ -16,7 +16,7 @@ Fri Jun 04 11:37:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Ohagan <jk13@dial.pipex.com> for pointing out this problem.
 
 	  Also, fixed the options parsing with respect to reporting
-	  problems and helping the user (-? option).
+	  problems and helping the user (-? option was changed to -h).
 
 Fri Jun  4 11:03:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
