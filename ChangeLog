@@ -1,3 +1,8 @@
+Thu May 17 21:34:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/POSIX_Asynch_IO.cpp: Added an ACE_UNUSED_ARG to keep G++ 
+	  happy.
+
 Thu May 17 16:52:17 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/CDR_File_Test.cpp (run_test): 
