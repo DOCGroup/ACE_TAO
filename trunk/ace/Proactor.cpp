@@ -307,10 +307,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // Dequeued a failed or successful operation.  Dispatch the
   // Event_Handler.  Note that GetQueuedCompletionStatus returns false
   // when operations fail, but they still need to be dispatched.
-  // We propagate the error status to the callee by setting errno  =
-  // error (which is the value returned by ::GetLastError().
-  errno = error;
-  int dispatch_result = this->dispatch (overlapped, bytes_transferred);
+  int dispatch_result = this->dispatch (overlapped, bytes_transferred, error);
 
   // Return -1 (failure), or return 1.  Remember that 0 is reserved
   // for timeouts only, so we have to turn dispatch_results to 1.  So,
@@ -321,9 +318,14 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 
 // Returns 0 or 1 on success, -1 on failure.
 int
-ACE_Proactor::dispatch (ACE_Overlapped_IO *overlapped, 
-			u_long bytes_transferred)
+ACE_Proactor::dispatch (ACE_Overlapped_IO *overlapped,
+			u_long bytes_transferred,
+			int error)
 {
+  // We propagate the error status to the callee by setting errno  =
+  // error (which is the value returned by ::GetLastError().
+  errno = error;
+
   // Call back the Event_Handler and do what it wants based on the
   // return value.
   int dispatch_result = overlapped->dispatch (bytes_transferred);
@@ -419,7 +421,7 @@ ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
     case ERROR_NETNAME_DELETED:
       // The OVERLAPPED will *not* get queued for this case.  Thus, we
       // have to dispatch immediately. 
-      return this->dispatch (overlapped, bytes_transferred);
+      return this->dispatch (overlapped, bytes_transferred, err);
  
     case ERROR_IO_PENDING:
       // The IO will complete proactively.
