@@ -2,16 +2,21 @@
 
 #include "Server_Manager.h"
 #include "ace/Get_Opt.h"
+
 ACE_RCSID(On_Demand_Loading, Server_Manager, "$Id$")
 
 Server_i::Server_i(void)
   : ior_output_file_ (0),
-    policies_ (4)
+    policies_ (4),
+    servant_activator_impl_ (0),
+    servant_locator_impl_ (0)
 {
 }
 
 Server_i::~Server_i(void)
 {
+  delete servant_activator_impl_;
+  delete servant_locator_impl_;
 }
 
 // This method parses the input.
@@ -360,6 +365,9 @@ Server_i::run (void)
 
       // Run the ORB.
       orb_->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb_->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

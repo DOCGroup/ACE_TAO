@@ -109,6 +109,8 @@ main (int argc,
       test_var test_object = servant._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      int expected_exception_raised = 0;
+
       ACE_TRY_EX (first_poa)
         {
           servant.test_poa (first_poa.in ());
@@ -119,6 +121,7 @@ main (int argc,
       ACE_CATCH (CORBA::BAD_INV_ORDER, ex)
         {
           // This is the correct exception! Ignore
+          expected_exception_raised = 1;
         }
       ACE_CATCHANY
         {
@@ -128,9 +131,19 @@ main (int argc,
       ACE_ENDTRY;
       ACE_CHECK_RETURN (-1);
 
+      // Make sure an exception was raised and it was of the correct
+      // type.
+      ACE_ASSERT (expected_exception_raised);
+
+      // In non-debug compiles, asserts will disappear.
+      ACE_UNUSED_ARG (expected_exception_raised);
+
       servant.test_poa (second_poa.in ());
 
       test_object->destroy_poa (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      first_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

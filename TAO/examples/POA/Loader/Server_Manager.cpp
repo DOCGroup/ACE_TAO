@@ -246,16 +246,18 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
     {
       // An Servant Activator object is created which will activate
       // the servant on demand.
-      ACE_NEW_RETURN (servant_activator_impl_,
+      PortableServer::ServantManager_ptr temp_servant_activator;
+      ACE_NEW_RETURN (temp_servant_activator,
                       ServantActivator_i (orb_.in (),
                                           "Generic_Servant",
                                           "supply_servant",
                                           "destroy_servant"),
                       0);
+      this->servant_activator_ = temp_servant_activator;
 
       // Set ServantActivator_i object as the servant_manager of
       // firstPOA.
-      first_poa->set_servant_manager (servant_activator_impl_,
+      first_poa->set_servant_manager (this->servant_activator_.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -291,17 +293,19 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
     {
       // An Servant Locator object is created which will activate
       // the servant on demand.
-      ACE_NEW_RETURN (servant_locator_impl_,
+      PortableServer::ServantManager_ptr temp_servant_locator;
+      ACE_NEW_RETURN (temp_servant_locator,
                       ServantLocator_i (orb_.in (),
                                         "Generic_Servant",
                                         "supply_servant",
                                         "destroy_servant"),
                       0);
+      this->servant_locator_ = temp_servant_locator;
 
       // Set ServantLocator_i object as the servant Manager of
       // secondPOA.
 
-      second_poa->set_servant_manager (servant_locator_impl_,
+      second_poa->set_servant_manager (this->servant_locator_.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
