@@ -1,3 +1,9 @@
+Fri Mar 19 17:31:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp: 
+	  Fixed silly error in the InputCDR constructor taking an
+	  ACE_Message_Block.
+
 Fri Mar 19 15:41:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Added CE fix.
