@@ -1,3 +1,9 @@
+Wed Nov  6 20:09:14 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* utils/nslist/nsadd.cpp: Enhanced the utilty so that it can add arbitrary
+	  paths to Naming Service entries.  Thanks to Paul Caffrey <denginere@hotmail.com>
+	  for this fix.
+  
 Thu Nov  7 06:44:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Makefile.bor:
