@@ -3106,6 +3106,8 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 }
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
 CORBA::Policy *
 TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 {
@@ -3124,6 +3126,8 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 
   return result;
 }
+
+#endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
 void
 TAO_ORB_Core::add_poa_extension_initializer (TAO_POA_Extension_Initializer *initializer)
