@@ -1,3 +1,14 @@
+Thu Aug 28 18:36:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Dynamic/client.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/test.idl:
+	* tests/Portable_Interceptors/Dynamic/test_i.cpp:
+	* tests/Portable_Interceptors/Dynamic/test_i.h: Test "out"
+	  arguments in the IDL. There was no support for out arguments
+	  before in interceptors. With the new architecture this shold
+	  work. 
+	
 Thu Aug 28 17:51:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:

@@ -29,7 +29,7 @@ module Test_Interceptors
     // = DESCRIPTION
     //
 
-    void normal (in long arg);
+    void normal (in long arg, out string msg);
     // Normal operation.
 
     long calculate (in long one, in long two);
@@ -44,7 +44,5 @@ module Test_Interceptors
 
    oneway void shutdown ();
     // shutdown the ORB
-
-
   };
 };
