@@ -44,10 +44,10 @@ ACE_Sched_Params::priority_min (const Policy policy,
     {
       // Get the priority class ID and attributes.
       pcinfo_t pcinfo;
-      ACE_OS::strcpy (pcinfo.pc_clname, "TS");
       // The following is just to avoid Purify warnings about unitialized
       // memory reads.
-      ACE_OS::memset (pcinfo.pc_clinfo, 0, PC_CLINFOSZ);
+      ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
+      ACE_OS::strcpy (pcinfo.pc_clname, "TS");
 
       if (::priocntl (P_ALL /* ignored */,
                       P_MYID /* ignored */,
@@ -126,11 +126,11 @@ ACE_Sched_Params::priority_max (const Policy policy,
 
   // Get the priority class ID and attributes.
   pcinfo_t pcinfo;
-  ACE_OS::strcpy (pcinfo.pc_clname,
-                  policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
   // The following is just to avoid Purify warnings about unitialized
   // memory reads.
-  ACE_OS::memset (pcinfo.pc_clinfo, 0, PC_CLINFOSZ);
+  ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
+  ACE_OS::strcpy (pcinfo.pc_clname,
+                  policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
 
   if (::priocntl (P_ALL /* ignored */,
                   P_MYID /* ignored */,
