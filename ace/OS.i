@@ -7725,10 +7725,10 @@ ACE_OS::tzset (void)
 ACE_INLINE long
 ACE_OS::timezone (void)
 {
-# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS)
+# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) 
 #   if defined (ACE_WIN32)
   return ::_timezone;  // For Win32.
-#   elif defined(__Lynx__) || defined (__FreeBSD__)
+#   elif defined(__Lynx__) || defined (__FreeBSD__) || defined (CHORUS)
   long result = 0;
   struct timeval time;
   struct timezone zone;
@@ -7738,7 +7738,7 @@ ACE_OS::timezone (void)
   return ::timezone;   // For UNIX platforms.
 #   endif
 # else
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (0);
 # endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
 }
 

@@ -1,3 +1,7 @@
+Wed Mar 17 17:23:43 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* ace/OS.i (timezone): Added support for timezone () on CHORUS
+
 Wed Mar 17 14:06:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h: Some characters got removed so I put them back.
