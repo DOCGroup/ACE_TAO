@@ -1,3 +1,11 @@
+Mon Mar 10 08:25:30 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Log_Msg.cpp (log_hexdump):
+
+	  Corrected format specifier for size_t (unsigned integer)
+	  variable, i.e. "%u" instead of "%d".  Fixes mismatched format
+	  specifier warnings.
+
 Mon Mar 10 07:36:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:

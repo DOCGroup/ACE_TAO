@@ -2055,14 +2055,14 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   // 58 for the HEXDUMP header;
 
   ACE_TCHAR *msg_buf;
-  size_t text_sz = text ? ACE_OS_String::strlen(text) : 0;
+  const size_t text_sz = text ? ACE_OS_String::strlen(text) : 0;
   ACE_NEW_RETURN (msg_buf,
                   ACE_TCHAR[text_sz + 58],
                  -1);
 
   buf[0] = 0; // in case size = 0
 
-  size_t len = ACE::format_hexdump
+  const size_t len = ACE::format_hexdump
     (buffer, size, buf, sizeof (buf) / sizeof (ACE_TCHAR) - text_sz);
 
   int sz = 0;
@@ -2073,12 +2073,12 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                           text);
 
   sz += ACE_OS::sprintf (msg_buf + sz,
-                         ACE_LIB_TEXT ("HEXDUMP %d bytes"),
+                         ACE_LIB_TEXT ("HEXDUMP %u bytes"),
                          size);
 
   if (len < size)
     ACE_OS::sprintf (msg_buf + sz,
-                     ACE_LIB_TEXT (" (showing first %d bytes)"),
+                     ACE_LIB_TEXT (" (showing first %u bytes)"),
                      len);
 
   // Now print out the formatted buffer.
