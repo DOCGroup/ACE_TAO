@@ -342,8 +342,6 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
       // We need to call the method seperately. If there is no
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
-      // @@Will not work for RT CORBA as the index we get would be
-      // wrong.
       CORBA::ULong index = this->create_ior_info ();
       this->target_spec_.target_specifier (this->ior_info_,
                                            index);
@@ -506,9 +504,6 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 CORBA::ULong
 TAO_GIOP_Invocation::create_ior_info (void)
 {
-  // Get the list of profiles
-  const TAO_MProfile &mprofile = this->stub_->base_profiles ();
-
   if (this->ior_info_.profiles.length () == 0)
     {
       // We are making a copy, it is expensive. We want a copy of the
@@ -518,6 +513,9 @@ TAO_GIOP_Invocation::create_ior_info (void)
       // get the info
 
       // @@ There should be a better way to do this - Bala
+      // @@ Bala, your code is not exception-safe.  The call below
+      // allocates memory, and could very well return 0.  In such
+      // case, the second call below would seg fault.
       TAO_MProfile *multi_prof =
         this->stub_->make_profiles ();
 
@@ -539,6 +537,21 @@ TAO_GIOP_Invocation::create_ior_info (void)
       delete multi_prof;
     }
 
+  // Figure out the index of the profile we are using for invocation.
+
+  // @@ Bala, you are using base_profiles, which means this will not
+  // work if there was forwarding ...  But it seems the problem isn't
+  // just here, but the whole addressing mode thing won't work if
+  // there was forwarding.
+  const TAO_MProfile &mprofile = this->stub_->base_profiles ();
+
+  for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+    {
+      if (mprofile.get_profile (i) == this->profile_)
+        return i;
+
+    }
+  // If there was forwarding the loop above won't find a match.
   return mprofile.get_current_handle ();
 }
 

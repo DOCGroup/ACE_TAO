@@ -1,3 +1,13 @@
+Mon Dec  4 13:04:55 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation.h
+	* tao/Invocation.cpp (create_ior_info):
+
+	  Updated the method to return proper index of the profile being
+	  used for the Invocation even when RTCORBA policies are used.  In
+	  other words, TAO_Target_Specification::Reference_Addr scheme now
+	  works with RTCORBA policies.
+
 Sun Dec  3 00:21:09 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Makefile.bor:
