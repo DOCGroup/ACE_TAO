@@ -670,6 +670,12 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "No PolicyFactory has been registered for the given PolicyType." // 3
     };
 
+  static const char *BAD_OPERATION_TABLE[] =
+    {
+      "ServantManager returned wrong servant type." // 1
+      "Operation or Attribute not known to target object." // 2
+    };
+
   if (minor_code == 0)
     return "*unknown description*";
 
@@ -735,6 +741,9 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
     return INV_POLICY_TABLE[minor_code];
 
+  if (exc._is_a ("IDL:omg.org/CORBA/BAD_OPERATION:1.0")
+      && minor_code < sizeof BAD_OPERATION_TABLE / sizeof (char *))
+    return BAD_OPERATION_TABLE[minor_code];
 #else
   ACE_UNUSED_ARG (exc);
   ACE_UNUSED_ARG (minor_code);
