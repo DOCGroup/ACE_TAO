@@ -345,6 +345,18 @@ Mon Feb 14 22:56:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  New source containing TAO::Upcall_Wrapper class implementation.
 
+	From Carlos O'Ryan  <coryan@atdesk.com>
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Add a _tao_release() static operation to all interfaces.  With
+          this operation we can write sequences of object references as
+          templates that only depend on the template parameter.  This
+          greatly simplifies that lookup rules in the template code, and
+          make it possible to write unit tests for the templates.
+          Look in Pseudo_VarOut_T.h for a more detailed description of
+          the problem.
+
 Tue Feb 15 21:47:15 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
