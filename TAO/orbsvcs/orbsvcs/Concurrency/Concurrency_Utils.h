@@ -62,4 +62,3 @@ private:
 };
 
 #endif /* _CONCURRENCY_SERVER_H */
-
