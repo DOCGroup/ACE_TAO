@@ -1,3 +1,10 @@
+Fri May 16 11:39:51 1997  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/OS.i (sigaddset, sigdelset, sigemptyset, sigfillset,
+	  sigismember): Added implementation when ACE_LACKS_SIGSET so that
+ 	  platforms (NT?) without these functions can still manipulate
+ 	  sigset_t variables.
+
 Thu May 15 22:19:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server: Removed the THR_DETACHED

@@ -6790,9 +6790,8 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigaddset (s, signum), int, -1);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (signum);
-  ACE_NOTSUP_RETURN (-1);
+  *s |= (1 << (signum-1)) ;
+  return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
 }
 
@@ -6802,9 +6801,8 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (signum);
-  ACE_NOTSUP_RETURN (-1);
+  *s &= ~(1 << (signum-1)) ;
+  return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
 }
 
@@ -6814,8 +6812,8 @@ ACE_OS::sigemptyset (sigset_t *s)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigemptyset (s), int, -1);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (-1);
+  *s = 0 ;
+  return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
 }
 
@@ -6825,9 +6823,8 @@ ACE_OS::sigfillset (sigset_t *s)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigfillset (s), int, -1);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_NOTSUP_RETURN (0);
-  ACE_NOTSUP_RETURN (-1);
+  *s = ~(sigset_t) 0 ;
+  return 0 ;
 #endif /* !ACE_LACKS_SIGSET */
 }
 
@@ -6837,9 +6834,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 #if !defined (ACE_LACKS_SIGSET)
   ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (signum);
-  ACE_NOTSUP_RETURN (-1);
+  return ((*s & ~(1 << (signum-1))) != 0) ;
 #endif /* !ACE_LACKS_SIGSET */
 }
 
