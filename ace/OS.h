@@ -297,9 +297,6 @@ class ACE_Timeout_Manager;
 
 #   if defined (ACE_HAS_TERM_IOCTLS)
 #     include "ace/os_include/os_termios.h"
-#     if defined (HPUX)
-#       include /**/ <sys/modem.h>
-#     endif /* HPUX */
 #   endif /* ACE_HAS_TERM_IOCTLS */
 
 #   if defined (ACE_HAS_AIO_CALLS)
