@@ -293,8 +293,8 @@ public:
   ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
   // Returns a reference to the interal element <this> is pointing to.
 
-  int operator== (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &);
-  int operator!= (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &);
+  int operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  int operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   // Check if two iterators point to the same position
 
   ACE_ALLOC_HOOK_DECLARE;
