@@ -2,22 +2,23 @@
 
 #include "Counter_i.h"
 
+// @@ Angelo, please add rcsid string here.
 // Dtor-Ctor Implementation
 
-CounterServant::CounterServant ( void ) : count_ (0) 
+CounterServant::CounterServant ( void )
+  : count_ (0)
+  // @@ Angelo, remove extra spaces in paranthesis.
 {
-
 }
 
 CounterServant::~CounterServant ( void )
 {
-
 }
 
 
 // Counter Interface Methods Implementation
-
-void 
+// @@ Angelo, please fix the class name.
+void
 CounterServant::increment ( void )
 {
   ++this->count_;
@@ -29,7 +30,7 @@ CounterServant::decrement ( void )
   --this->count_;
 }
 
-void 
+void
 CounterServant::reset ( void )
 {
   this->count_ = 0;
@@ -40,4 +41,3 @@ CounterServant::get_count ( void )
 {
   return this->count_;
 }
-
