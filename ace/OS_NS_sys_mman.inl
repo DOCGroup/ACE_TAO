@@ -8,6 +8,10 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/os_include/sys/os_mman.h"
 
+#if defined (__Lynx__)
+#  include "ace/OS_NS_sys_stat.h"
+#endif /* __Lynx__ */
+
 #if defined (ACE_HAS_VOIDPTR_MMAP)
 // Needed for some odd OS's (e.g., SGI).
 typedef void *ACE_MMAP_TYPE;

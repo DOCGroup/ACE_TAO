@@ -30,9 +30,12 @@ class ACE_Message_Block;
 class ACE_RMCast_Proxy;
 
 // LynxOS 3.X defines the following macro
-#if defined(MT_DATA)
-#undef MT_DATA
-#endif /* MT_DATA */
+#if defined (__Lynx__)
+#  include <bsd/mbuf.h>
+#  if defined(MT_DATA)
+#    undef MT_DATA
+#  endif /* MT_DATA */
+#endif /* __Lynx__ */
 
 //! The RMCast namespace
 /*!
