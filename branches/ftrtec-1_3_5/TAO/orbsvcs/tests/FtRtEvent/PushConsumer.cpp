@@ -79,10 +79,7 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
 
     num_events_recevied_ ++;
 
-    ACE_DEBUG((LM_DEBUG, " num_events_recevied_ = %d, num_events_to_end_ = %d\n"
-      , num_events_recevied_, num_events_to_end_));
-
-    if ( num_iterations_ > static_cast<int>(x) && 
+     if ( num_iterations_ > static_cast<int>(x) &&
          num_events_recevied_ < num_events_to_end_ ) {
       run_times_[x] = static_cast<int>(elaps/10);
       TAO_FTRTEC::Log(3, "received event %d\n", x);
@@ -126,8 +123,8 @@ PushConsumer_impl::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
 void 
 PushConsumer_impl::output_result()
 {
-  int lost = 0;
-  for (int i =0; i < run_times_.size(); ++i)
+  size_t lost = 0;
+  for (size_t i =0; i < run_times_.size(); ++i)
     if (run_times_[i] == -1) lost++;
     else
       ACE_DEBUG((LM_DEBUG, "%5d received, elapsed time = %d\n",i, run_times_[i]));

@@ -23,7 +23,7 @@ FtRtEvent_Test_Base::FtRtEvent_Test_Base()
 : gateway_(0)
 , use_gateway_(1)
 {
-  options_.num_events = -1;
+  options_.num_events = INT_MAX;
   options_.num_iterations=100;
   options_.timer_interval.set(1,0);
   options_.proxy_consumer_file="consumer.ior";
@@ -86,6 +86,7 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       return -1;
     }
   }
+  ACE_DEBUG((LM_DEBUG, "After Parse args\n"));
   return 0;
 }
 
