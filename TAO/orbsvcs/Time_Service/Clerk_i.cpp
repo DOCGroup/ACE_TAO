@@ -30,35 +30,38 @@ Clerk_i::~Clerk_i (void)
 int
 Clerk_i::read_ior (const char *filename)
 {
+
   // Open the file for reading.
-  this->ior_fp_ = ACE_OS::fopen (filename, "r");
+  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
-  if ((this->ior_fp_ = ACE_OS::fopen (filename, "r")) == 0)
+  if (f_handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n",
+                       filename),
+                      -1);
+  else
+    this->ior_fp_ = 1;
+
+  ACE_Read_Buffer ior_buffer (f_handle);
+
+  char * data = ior_buffer.read ();
+  char * str = data;
+
+  if (data == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"),
+                      -1);
+
+  int nreplaced = ior_buffer.replaced ();
+
+  while (nreplaced--)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Clerk_i::read_ior () "
-                         "Failed to open the IOR file for reading\n"),
-                        -1);
-    }
 
-  // @@ Vishal, please sure you don't use magic numbers like 1024 *
-  // 10.  Instead, add a const or an enum to the Clerk_i class.  Check
-  // other applications in TAO that read IORs and see if there's a
-  // default size for these things.  Please update Andy's stuff to
-  // also use a const.
-
-  char str[1024 * 10];
-  ACE_OS::memset (str, 0, sizeof (str));
-
-  while (fscanf (this->ior_fp_, "%s", str) != EOF)
-    {
-      // Get the IOR and insert it into the set of server IORs.
+      ACE_DEBUG ((LM_DEBUG,
+                  "iors -> |%s|\n",
+                  str));
       TAO_TRY
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "iors -> %s\n",
-                      str));
-
           CORBA::Object_var objref =
             this->orb_->string_to_object (str,
 					  TAO_TRY_ENV);
@@ -82,10 +85,46 @@ Clerk_i::read_ior (const char *filename)
           TAO_TRY_ENV.print_exception ("Exception");
         }
       TAO_ENDTRY;
-    }
-  return 0;
 
+      if (nreplaced != 0)
+          str = str + ACE_OS::strlen (str) + 1;
+
+   }
+
+  ACE_OS::close (f_handle);
+  ior_buffer.alloc ()->free (data);
+
+  return 0;
 }
+
+//     if ((this->ior_fp_ = ACE_OS::fopen (filename, "r")) == 0)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              "Clerk_i::read_ior () "
+//                              "Failed to open the IOR file for reading\n"),
+//                             -1);
+//     }
+
+//   // @@ Vishal, please sure you don't use magic numbers like 1024 *
+//   // 10.  Instead, add a const or an enum to the Clerk_i class.  Check
+//   // other applications in TAO that read IORs and see if there's a
+//   // default size for these things.  Please update Andy's stuff to
+//   // also use a const.
+
+//   char str[1024 * 10];
+//   //  ACE_OS::memset (str, 0, sizeof (str));
+
+//   while (fscanf (this->ior_fp_, "%s", str) != EOF)
+//     {
+//       // Get the IOR and insert it into the set of server IORs.
+
+//     }
+
+//   this->ior_fp_.close ();
+
+//   return 0;
+
+// }
 
 // Parse the command-line arguments and set options.
 
