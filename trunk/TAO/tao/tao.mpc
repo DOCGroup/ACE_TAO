@@ -186,6 +186,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Fault_Tolerance_Service.cpp
       Interceptor_List.cpp
       IORInterceptor_Adapter.cpp
+      IORInterceptor_Adapter_Factory.cpp
       IFR_Client_Adapter.cpp
       ORBInitInfo.cpp
       ORBInitializer_Registry.cpp
