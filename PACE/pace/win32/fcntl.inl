@@ -146,12 +146,13 @@ pace_win32_emulation_creat (const char * path, pace_mode_t mode)
     }
   else
     {
-      /* POSIX needs an integer 
-         return h;
-         Should return lowest unused file descriptor but windows
-         doesn't do that. So we return a (int) casted HANDLE.
+      /* return h;
+	  
+	 POSIX returns lowest unused file descriptor but windows
+         doesn't handle files in the same manner.
+         We return -1 for failure and 1 for success.
        */
-      return (int)*h;
+      return 1;
     }
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */

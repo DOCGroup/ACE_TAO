@@ -50,7 +50,7 @@ extern "C" {
 
 #ifndef PACE_STAT
 #define PACE_STAT
-  typedef struct stat pace_stat;
+  typedef struct stat pace_stat_s;
 #endif /* PACE_STAT */
 
 #if defined (PACE_HAS_CPLUSPLUS)
