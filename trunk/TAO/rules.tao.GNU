@@ -66,7 +66,7 @@ CORBA_BE=$(FLICK_OBJDIR)/bin/flick-c-pbe-iiopxx
 $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -c -o $*-client.prc $*.aoi && \
-	$(CORBA_BE) $*-client.prc -o $*C.cpp -h $*C.h -f $*S.h -F $*S.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	$(CORBA_BE) $*-client.prc -o $*C.cpp -h $*C.h -f $*S.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
 	echo > $*C.i
 	$(CORBA_FE) $< && \
 	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
