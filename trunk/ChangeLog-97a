@@ -1,3 +1,14 @@
+Tue Jun 24 14:27:47 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_{Hash,Heap,List,Wheel}_T.cpp: Changed cancel (type..)
+	  to call cancellation() even if there are no timers to cancel.  
+	  This causes the correct behavior of calling handle_close () 
+	  during expire when handle_timeout() returns -1.  Thanks to 
+	  Hamutal Yanay <hamutal_yanay_at_quantum@mail.icomverse.com> for 
+	  pointing this out.
+
+	* tests/Timer_Queue_Test.cpp: Updated to correctly test this.
+
 Tue Jun 24 13:02:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/SString.h (ACE_SString ctor): changed "allocator" to "alloc".
