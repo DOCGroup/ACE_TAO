@@ -1,3 +1,16 @@
+Wed Jul 31 08:41:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          For the compilation of Win32_Asynch_IO we now need to have
+          FILE_SEGMENT_ELEMENT from winnt.h and ReadFileScatter and
+          WriteFileScatter from winbase.h.
+          These are not in the header files of the MingW w32api 1.4/1.5
+          release. That's why we do these union/defines also in this header
+          file. By adding the defines ACE_MINGW_LACKS_READWRITE_FILESCATTER
+          and ACE_MINGW_LACKS_FILE_SEGMENT_ELEMENT to your config.h file
+          these defines/union are done by ACE for MingW32 so that everything
+          will compile.
+
 Wed Jul 31 08:11:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/Task.cpp:
