@@ -396,7 +396,7 @@ namespace CORBA
     ) const;
 
     /// Returns the concrete base type. Raises (BadKind).  Useful for
-    /// tk_value only. 
+    /// tk_value only.
     CORBA::TypeCode_ptr private_concrete_base_type (
       ACE_ENV_SINGLE_ARG_DECL
     ) const;
