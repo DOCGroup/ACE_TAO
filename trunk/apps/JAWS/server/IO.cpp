@@ -262,7 +262,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
       ACE_Message_Block header_mb (header, header_size);
       ACE_Message_Block trailer_mb (trailer, trailer_size);
       header_and_trailer = new ACE_Asynch_Transmit_File::Header_And_Trailer
-        (&header_mb, header_size, trailer_mb, trailer_size);
+        (&header_mb, header_size, &trailer_mb, trailer_size);
       ACE_Asynch_Transmit_File tf;
       if (tf.open (*this, this->handle_) == -1 ||
 	  tf.transmit_file (jfp->handle (), // file handle 
