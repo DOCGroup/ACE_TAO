@@ -10,6 +10,7 @@ OBJFILES = \
 	$(OBJDIR)\timeoutS.obj \
 	$(OBJDIR)\timeoutC.obj \
 	$(OBJDIR)\timeout_i.obj \
+	$(OBJDIR)\timeout_client.obj \
 	$(OBJDIR)\client.obj
 
 CFLAGS = \
