@@ -249,6 +249,7 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   if (result != -1)
     {
       this->transport_->message_state_.reset ();
+      result = 0;
     }
 
   return result;
