@@ -35,30 +35,26 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (
         ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                           CORBA::Object::_nil ());
 
-      TAO_LB_ReplicaInfo_Set_Iterator begin = entry->replica_infos.begin ();
-      TAO_LB_ReplicaInfo_Set_Iterator end = entry->replica_infos.end ();
+      TAO_LB_ReplicaInfo_Set::iterator begin = entry->replica_infos.begin ();
+      TAO_LB_ReplicaInfo_Set::iterator end = entry->replica_infos.end ();
 
-      TAO_LB_ReplicaInfo_Set_Iterator i = begin;
+      TAO_LB_ReplicaInfo_Set::iterator i = begin;
       TAO_LB_ReplicaInfo *replica_info = (*i);
 
-      LoadBalancing::LoadList_var d =
-        replica_info->load_monitor->current_load (ACE_TRY_ENV);
-
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      LoadBalancing::LoadList *d =
+        replica_info->location_entry->load_list.ptr ();
 
       for (++i ; i != end; ++i)
         {
-          LoadBalancing::LoadList_var load =
-            (*i)->load_monitor->current_load (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          LoadBalancing::LoadList *load =
+            (*i)->location_entry->load_list.ptr ();
 
           // @@ Hardcode one load and don't bother checking the
           // LoadId, for now.  (just to get things going)
-          if (d[CORBA::Long (0)].value > load[CORBA::Long (0)].value)
+          if (d[CORBA::ULong (0)].value > load[CORBA::ULong (0)].value)
             {
               replica_info = *i;
-              d = (*i)->load_monitor->current_load (ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::Object::_nil ());
+              d = (*i)->location_entry->load_list.ptr ();
             }
         }
 

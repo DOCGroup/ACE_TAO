@@ -2,6 +2,8 @@
 
 #include "LB_GenericFactory.h"
 #include "LB_ReplicaInfo.h"
+#include "LB_Location_Map.h"
+#include "LB_ObjectGroup_Map.h"
 #include "LB_PropertyManager.h"
 
 #include "ace/Auto_Ptr.h"
@@ -12,11 +14,13 @@ ACE_RCSID (LoadBalancing,
 
 
 TAO_LB_GenericFactory::TAO_LB_GenericFactory (
-  TAO_LB_PropertyManager &property_manager,
-  TAO_LB_ObjectGroup_Map &object_group_map)
+  TAO_LB_Location_Map &location_map,
+  TAO_LB_ObjectGroup_Map &object_group_map,
+  TAO_LB_PropertyManager &property_manager)
   : poa_ (),
-    property_manager_ (property_manager),
+    location_map_ (location_map),
     object_group_map_ (object_group_map),
+    property_manager_ (property_manager),
     next_fcid_ (0),
     lock_ ()
 {
@@ -72,7 +76,11 @@ TAO_LB_GenericFactory::create_object (
   TAO_LB_ObjectGroup_Map_Entry *object_group_entry = 0;
   ACE_NEW_THROW_EX (object_group_entry,
                     TAO_LB_ObjectGroup_Map_Entry,
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   auto_ptr<TAO_LB_ObjectGroup_Map_Entry> safe_object_group_entry (
@@ -212,6 +220,8 @@ TAO_LB_GenericFactory::delete_object (
               }
 
             (void) replica_infos.remove (replica_info);
+            (void) replica_info->location_entry->replica_infos.remove (
+                     replica_info);
 
             delete replica_info;
           }
@@ -257,6 +267,26 @@ TAO_LB_GenericFactory::populate_object_group (
                                 ACE_TRY_ENV);
       ACE_CHECK;
 
+      // If no location entry exists for the given location, then
+      // create and bind a new one.
+      if (this->location_map_.find (factory_info.the_location,
+                                    location_entry) != 0)
+        {
+          ACE_NEW_THROW_EX (location_entry,
+                            CORBA::NO_MEMORY (
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO));
+          ACE_CHECK;
+
+          safe_location_entry = location_entry;
+
+          if (this->location_map_.bind (factory_info.the_location,
+                                        location_entry) != 0)
+            ACE_THROW (LoadBalancing::ObjectNotCreated ());
+        }
+        
 #if 0
       // @@ Should an "_is_a()" be performed here?  While it appears
       //    to be the right thing to do, it can be expensive.
@@ -294,7 +324,8 @@ TAO_LB_GenericFactory::populate_object_group (
 
       auto_ptr<TAO_LB_ReplicaInfo> safe_replica_info (replica_info);
 
-      if (object_group_entry->replica_infos.insert (replica_info) != 0)
+      if (object_group_entry->replica_infos.insert (replica_info) != 0
+          || location_entry->replica_infos.insert (replica_info) != 0)
         {
           // An Object of incorrect type was created.  Delete it, and
           // throw a NoFactory exception.
@@ -309,6 +340,8 @@ TAO_LB_GenericFactory::populate_object_group (
       replica_info->factory_info = factory_info;  // Deep copy.
 
       replica_info->factory_creation_id = replica_fcid;
+
+      replica_info->location_entry = location_entry;
 
       // No longer need to protect the allocated Replica_Map.
       safe_replica_info.release ();
@@ -352,6 +385,9 @@ TAO_LB_GenericFactory::get_ObjectId (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class auto_ptr<TAO_LB_Location_Map_Entry>;
+template class ACE_Auto_Basic_Ptr<TAO_LB_Location_Map_Entry>;
+
 template class auto_ptr<TAO_LB_ObjectGroup_Map_Entry>;
 template class ACE_Auto_Basic_Ptr<TAO_LB_ObjectGroup_Map_Entry>;
 
@@ -359,6 +395,9 @@ template class auto_ptr<TAO_LB_ReplicaInfo>;
 template class ACE_Auto_Basic_Ptr<TAO_LB_ReplicaInfo>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<TAO_LB_Location_Map_Entry>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_LB_Location_Map_Entry>
 
 #pragma instantiate auto_ptr<TAO_LB_ObjectGroup_Map_Entry>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_LB_ObjectGroup_Map_Entry>

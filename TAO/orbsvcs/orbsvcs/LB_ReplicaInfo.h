@@ -33,9 +33,8 @@ typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfo_Set;
  *
  * @brief Class that contains all replica-specific information.
  */
-class TAO_LB_ReplicaInfo
+struct TAO_LB_ReplicaInfo
 {
-public:
 
   /// Reference to the replica.
   CORBA::Object_var replica;
@@ -48,12 +47,10 @@ public:
   /// was not created using a GenericFactory.
   LoadBalancing::GenericFactory::FactoryCreationId_var factory_creation_id;
 
-  /// Reference to the load monitor residing at the same location the
-  /// replica resides.
-  LoadBalancing::LoadMonitor_var load_monitor;
-
-  /// Average load(s) on the replica
-  LoadBalancing::LoadList_var load_list;
+  /// Pointer to the location map entry containing the information
+  /// related to the location the replica corresponding to this
+  /// TAO_LB_ReplicaInfo structure.
+  TAO_LB_Location_Map_Entry *location_entry;
 
 };
 

@@ -29,11 +29,34 @@
 #include "LB_Location_Hash.h"
 #include "LB_Location_Equal_To.h"
 
+/**
+ * @class TAO_LB_Location_Map_Entry
+ *
+ * @brief Value field (internal ID) of the location hash map.
+ *
+ * Structure that contains all information corresponding to a given
+ * location.  
+ */
+struct TAO_LB_Location_Map_Entry
+{
+
+  /// Set of replicas at the location corresponding to this location
+  /// map entry.
+  TAO_LB_ReplicaInfo_Set replica_infos;
+
+  /// List of loads reported by the load monitor at the given
+  /// location.
+  LoadBalancing::LoadList_var load_list;
+
+  /// Reference to the load monitor at the given location.
+  LoadBalancing::LoadMonitor_var load_monitor;
+
+};
 
 /// Location hash map.
 typedef ACE_Hash_Map_Manager_Ex<
   LoadBalancing::Location,
-  TAO_LB_ReplicaInfo_Set,
+  TAO_LB_Location_Map_Entry,
   TAO_LB_Location_Hash,
   TAO_LB_Location_Equal_To,
   TAO_SYNCH_MUTEX> TAO_LB_Location_Map;

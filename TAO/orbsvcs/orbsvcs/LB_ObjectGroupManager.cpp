@@ -1,7 +1,10 @@
 // -*- C++ -*-
 
 #include "LB_ObjectGroupManager.h"
+
+#include "LB_Location_Map.h"
 #include "LB_ObjectGroup_Map.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_ObjectGroupManager,
@@ -9,11 +12,12 @@ ACE_RCSID (LoadBalancing,
 
 
 TAO_LB_ObjectGroupManager::TAO_LB_ObjectGroupManager (
-  TAO_LB_PropertyManager &property_manager,
-  TAO_LB_ObjectGroup_Map &map)
-  : property_manager_ (property_manager),
-    object_group_map_ (map),
-    location_map_ ()
+  TAO_LB_Location_Map &location_map,
+  TAO_LB_ObjectGroup_Map &object_group_map,
+  TAO_LB_PropertyManager &property_manager)
+  : location_map_ (location_map),
+    object_group_map_ (object_group_map),
+    property_manager_ (property_manager)
 {
 }
 

@@ -22,11 +22,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "LB_ObjectGroup_Map.h"
-#include "LB_Location_Map.h"
 
 /// Forward declarations.
+class TAO_LB_Location_Map;
+class TAO_LB_ObjectGroup_Map;
 class TAO_LB_PropertyManager;
+
 
 /**
  * @class TAO_LB_ObjectGroupManager
@@ -42,8 +43,9 @@ class TAO_LB_ObjectGroupManager
 public:
 
   /// Constructor.
-  TAO_LB_ObjectGroupManager (TAO_LB_PropertyManager &property_manager,
-                             TAO_LB_ObjectGroup_Map &map);
+  TAO_LB_ObjectGroupManager (TAO_LB_Location_Map &location_map,
+                             TAO_LB_ObjectGroup_Map &object_group_map,
+                             TAO_LB_PropertyManager &property_manager);
 
   /**
    * @name TAO_LoadBalancer::ObjectGroupManager methods
@@ -151,14 +153,16 @@ public:
 
 private:
 
-  /// Reference to the PropertyManager.
-  TAO_LB_PropertyManager &property_manager_;
+  /// Map that contains list of all replicas at a given location, in
+  /// addition to the load monitor at that location.
+  TAO_LB_Location_Map &location_map_;
 
   /// Pointer to the ObjectGroup map.
   TAO_LB_ObjectGroup_Map &object_group_map_;
 
-  /// Map that contains list of all replicas at a given location.
-  TAO_LB_Location_Map location_map_;
+  /// Reference to the PropertyManager.
+  TAO_LB_PropertyManager &property_manager_;
+
 };
 
 #endif  /* TAO_LB_OBJECT_GROUP_MANAGER_H */

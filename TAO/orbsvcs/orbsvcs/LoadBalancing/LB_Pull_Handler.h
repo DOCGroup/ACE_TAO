@@ -28,7 +28,7 @@
 
 
 // Forward declarations.
-class TAO_LB_ObjectGroup_Map;
+class TAO_LB_Location_Map;
 
 
 /**
@@ -45,7 +45,7 @@ class TAO_LB_Pull_Handler : public ACE_Event_Handler
 public:
 
   /// Constructor
-  TAO_LB_Pull_Handler (TAO_LB_ObjectGroup_Map &object_group_map);
+  TAO_LB_Pull_Handler (TAO_LB_Location_Map &location_map);
 
   /// Receive the timeout event.
     /
@@ -56,7 +56,7 @@ private:
 
   /// The table that contains all object groups registered with the
   /// load balancer.
-  TAO_LB_ObjectGroup_Map &object_group_map_;
+  TAO_LB_Location_Map &location_map_;
 
 };
 #include "ace/post.h"
