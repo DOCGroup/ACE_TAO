@@ -1,3 +1,17 @@
+Sun Sep 26 21:06:53 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+          (mktemp, mkstemp) Changed protototype (parameter name) to match
+          implementation.
+        
+        * ace/OS_NS_stdlib.cpp: (realpath)
+          Added check for new macro ACE_LACKS_SYMLINKS to leave out symbolic
+          links related code. This fixes compile errors on platforms which
+          do not support symbolic links. Fixes bug 1900.
+
+        * ace/README:
+          Added ACE_LACKS_SYMLINKS.
+        
 Sun Sep 26 14:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ICMP_Socket.cpp:
@@ -26,25 +40,25 @@ Sun Sep 26 10:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 24 22:35:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Robert S. Iakobashvili <roberti at go-WLAN dot com> and
-	Gonzalo A. Diethelm <gonzalo dot diethelm at aditiva dot com>:
+        From Robert S. Iakobashvili <roberti at go-WLAN dot com> and
+        Gonzalo A. Diethelm <gonzalo dot diethelm at aditiva dot com>:
 
-	* ace/ICMP_Socket.cpp:
-	* ace/ICMP_Socket.h:
-	* ace/ICMP_Socket.inl:
-	* ace/Ping_Socket.cpp:
-	* ace/Ping_Socket.h:
-	* ace/Ping_Socket.inl:
-	* tests/Network_Adapters_Test.cpp:
-	* tests/Network_Adapters_Test.h:
+        * ace/ICMP_Socket.cpp:
+        * ace/ICMP_Socket.h:
+        * ace/ICMP_Socket.inl:
+        * ace/Ping_Socket.cpp:
+        * ace/Ping_Socket.h:
+        * ace/Ping_Socket.inl:
+        * tests/Network_Adapters_Test.cpp:
+        * tests/Network_Adapters_Test.h:
 
-	  New ICMP and "ping" support, and accompanying test.
+          New ICMP and "ping" support, and accompanying test.
 
-	* ace/ace.mpc:
-	* tests/tests.mpc:
+        * ace/ace.mpc:
+        * tests/tests.mpc:
 
-	  Added new ICMP and "ping" source files to the appropriate
-	  source lists.
+          Added new ICMP and "ping" source files to the appropriate
+          source lists.
 
 Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
@@ -53,26 +67,26 @@ Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
 Fri Sep 24 11:07:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.h:
-	* ace/ACE_crc32.cpp:
-	* ace/ACE_crc_ccitt.cpp:
+        * ace/ACE.h:
+        * ace/ACE_crc32.cpp:
+        * ace/ACE_crc_ccitt.cpp:
 
-	  Changed the buffer and iovec versions of ACE::crc32() and
-	  ACE_crc_ccitt() family of functions to take an additional
-	  initial/partial crc argument.  This allows CRCs to be computed
-	  over multiple buffers/iovecs by passing the result as input to
-	  the next call.  The default value allows callers to omit the
-	  argument on the first call.
+          Changed the buffer and iovec versions of ACE::crc32() and
+          ACE_crc_ccitt() family of functions to take an additional
+          initial/partial crc argument.  This allows CRCs to be computed
+          over multiple buffers/iovecs by passing the result as input to
+          the next call.  The default value allows callers to omit the
+          argument on the first call.
 
 Fri Sep 24 12:39:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* build/Linux/include/makeinclude/platform_linux.GNU:
-	  Provide reasonable defaults for Boost.Test
+        * build/Linux/include/makeinclude/platform_linux.GNU:
+          Provide reasonable defaults for Boost.Test
 
-	* bin/MakeProjectCreator/config/boost_unit_test.mpb:
-	  Different sites may have different configurations for boost,
-	  made the options needed to compile with it configurable via the
-	  platform_macros.GNU file.
+        * bin/MakeProjectCreator/config/boost_unit_test.mpb:
+          Different sites may have different configurations for boost,
+          made the options needed to compile with it configurable via the
+          platform_macros.GNU file.
 
 Fri Sep 24 10:21:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -83,57 +97,57 @@ Fri Sep 24 10:21:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Sep 24 10:55:34 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-linux-common.h: If __USE_POSIX199309 is defined from
-	  <features.h> set ACE_HAS_CLOCK_GETTIME. This is most often the case.
+        * ace/config-linux-common.h: If __USE_POSIX199309 is defined from
+          <features.h> set ACE_HAS_CLOCK_GETTIME. This is most often the case.
 
 Fri Sep 24 10:40:11 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/JAWS/clients/Blobby/blobby.cpp:
-	* apps/JAWS/clients/Blobby/Blob.{h cpp}:
-	* apps/JAWS/clients/Blobby/Blob_Handler.cpp:
-	* apps/JAWS/clients/Blobby/Options.{h cpp}:
-	* apps/JAWS/clients/Caching/http_client.cpp:
-	* apps/JAWS/clients/Caching/http_handler.cpp:
-	* apps/JAWS/server/HTTP_Server.{h cpp}:
-	* apps/JAWS/server/HTTP_Response.cpp:
-	  Wide-char fixes.
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+        * apps/JAWS/clients/Blobby/Blob.{h cpp}:
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+        * apps/JAWS/clients/Blobby/Options.{h cpp}:
+        * apps/JAWS/clients/Caching/http_client.cpp:
+        * apps/JAWS/clients/Caching/http_handler.cpp:
+        * apps/JAWS/server/HTTP_Server.{h cpp}:
+        * apps/JAWS/server/HTTP_Response.cpp:
+          Wide-char fixes.
 
 Fri Sep 24 10:34:26 2004  Steve Huston  <shuston@riverace.com>
 
-	* bin/MakeProjectCreator/config/acedefaults.mpb:
-	* bin/MakeProjectCreator/config/acelib.mpb: For automake projects,
-	  change ACE_ROOT to either top_srcdir or top_builddir depending
-	  on whether it's looking for source (such as includes) or libraries.
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/acelib.mpb: For automake projects,
+          change ACE_ROOT to either top_srcdir or top_builddir depending
+          on whether it's looking for source (such as includes) or libraries.
 
-	* performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Benchmarks_Synch_Lib.mpc:
-	  Changed base project from aceexe to acelib. This builds a library.
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Benchmarks_Synch_Lib.mpc:
+          Changed base project from aceexe to acelib. This builds a library.
 
 Fri Sep 24 07:04:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Add new files.
+          Add new files.
 
-	* ace/ACE.h:
-	* ace/ACE_crc_ccitt.cpp:
+        * ace/ACE.h:
+        * ace/ACE_crc_ccitt.cpp:
 
-	  Added ACE::crc_ccitt() family of functions in new file
-	  ACE_crc_ccitt.cpp.
+          Added ACE::crc_ccitt() family of functions in new file
+          ACE_crc_ccitt.cpp.
 
-	* ace/ACE_crc32.cpp:
+        * ace/ACE_crc32.cpp:
 
-	  Changed table and shift expression so the special case with
-	  additional masking for systems where ACE_UINT32 is more than 32
-	  bits wide (such as the Cray) is not needed.  See "A Painless
-	  Guide to CRC Error Detection Algorithms" by Ross Williams for
-	  details.
+          Changed table and shift expression so the special case with
+          additional masking for systems where ACE_UINT32 is more than 32
+          bits wide (such as the Cray) is not needed.  See "A Painless
+          Guide to CRC Error Detection Algorithms" by Ross Williams for
+          details.
 
-	* ace/ACE.cpp:
-	* ace/ACE_crc32.cpp:
+        * ace/ACE.cpp:
+        * ace/ACE_crc32.cpp:
 
-	  Split out ACE::crc32() family of functions out of ACE.cpp into
-	  new file ACE_crc32.cpp.
+          Split out ACE::crc32() family of functions out of ACE.cpp into
+          new file ACE_crc32.cpp.
 
 Fri Sep 24 08:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -149,10 +163,10 @@ Fri Sep 24 08:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 23 19:27:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.cpp:
-	* ace/ACE.h:
+        * ace/ACE.cpp:
+        * ace/ACE.h:
 
-	  Changed iovec version of ACE::crc32 to take a const iovec.
+          Changed iovec version of ACE::crc32 to take a const iovec.
 
 Thu Sep 23 19:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -181,12 +195,12 @@ Thu Sep 23 19:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 23 12:07:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.cpp:
-	* ace/ACE.h:
+        * ace/ACE.cpp:
+        * ace/ACE.h:
 
-	  Changed buffer version of ACE::crc32 to take a void * argument
-	  (to avoid requiring callers to cast non-char data structures),
-	  and a size_t length.
+          Changed buffer version of ACE::crc32 to take a void * argument
+          (to avoid requiring callers to cast non-char data structures),
+          and a size_t length.
 
 Thu Sep 23 13:24:54 2004  Chad Elliott  <elliott_c@ociweb.com>
 
