@@ -1,3 +1,5 @@
+// $Id$
+
 ACE_INLINE
 IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
   : major (maj),
@@ -49,7 +51,7 @@ IIOP_Object::IIOP_Object (char *repository_id)
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id,
-			  const IIOP::Profile &a_profile)
+                          const IIOP::Profile &a_profile)
   : STUB_Object (repository_id),
     profile (a_profile),
     refcount_ (0),

@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -72,4 +73,8 @@ private:
 
 typedef IIOP_ORB *IIOP_ORB_ptr;
 
-#endif	/* TAO_IIOPORB_H */
+#if defined (__ACE_INLINE__)
+# include "tao/IIOP_ORB.i"
+#endif /* __ACE_INLINE__ */
+
+#endif  /* TAO_IIOPORB_H */

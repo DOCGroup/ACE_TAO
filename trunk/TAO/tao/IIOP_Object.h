@@ -135,7 +135,7 @@ class TAO_Export IIOP_Object : public STUB_Object
   // = DESCRIPTION
   //   NOTE that this uses (single) implementation inheritance to share
   //   most of the basic code for an object reference.
-  //  
+  //
   //   This implementation provides DII support, and an analagous
   //   interpreter that let  static stubs be very small.  It's
   //   specific to objrefs with IIOP::Profile.
@@ -207,14 +207,14 @@ public:
 
   IIOP_Object (const char *host,
                const CORBA::UShort p,
-               const char *objkey, 
+               const char *objkey,
                char *repository_id = 0);
   // This constructor will usually be used by a <_bind> call on the
   // client side.
 
   IIOP_Object (char *repository_id,
                const ACE_INET_Addr &addr,
-               const char *objkey); 
+               const char *objkey);
   // Constructor used typically by the server side.
 
   // = Memory management.
@@ -260,5 +260,9 @@ private:
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/IIOP_Object.i"
+#endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_IIOPOBJ_H */
