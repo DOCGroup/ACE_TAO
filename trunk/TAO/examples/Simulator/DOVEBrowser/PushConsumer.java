@@ -102,15 +102,15 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
         rt_info_ = new RtecScheduler.handle_tHolder (scheduler_.create (name));
 
         scheduler_.set (rt_info_.value,
-                        RtecScheduler.Criticality.VERY_LOW_CRITICALITY,
+                        RtecScheduler.Criticality_t.VERY_LOW_CRITICALITY,
                         0L,
                         0L,
                         0L,
                         2500000,  // period
-                        RtecScheduler.Importance.VERY_LOW_IMPORTANCE,
+                        RtecScheduler.Importance_t.VERY_LOW_IMPORTANCE,
                         0L,
                         1,
-                        RtecScheduler.Info_Type.OPERATION);
+                        RtecScheduler.Info_Type_t.OPERATION);
 
 
         // Register for Notification and Shutdown events

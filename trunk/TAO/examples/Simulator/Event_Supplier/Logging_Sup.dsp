@@ -17,13 +17,12 @@ CFG=Logging_Sup - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Logging_Sup - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Logging_Sup - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Logging_Sup - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Logging_Sup - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -132,7 +131,7 @@ InputName=NavWeap
 
 BuildCmds= \
 	xcopy ..\$(InputName).idl \
-	..\..\..\..\..\bin\tao_idl $(InputName).idl \
+	..\..\..\..\..\bin\tao_idl  -I ..\..\..\orbsvcs $(InputName).idl \
 	
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
