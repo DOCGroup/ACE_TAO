@@ -101,7 +101,7 @@ You can specify any command line options understood by server and
 client in server-side and client-side options string.  The easiest way
 to run the test is:
 
-  collocation_test -c
+  collocation_test
 
 This will start testing the "thru_poa" collocation strategy.  Notice
 that the ior filenames passed to both server side and client side must
