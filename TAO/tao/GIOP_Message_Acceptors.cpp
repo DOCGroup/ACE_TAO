@@ -2,7 +2,6 @@
 //$Id$
 
 #include "tao/GIOP_Message_Acceptors.h"
-#include "tao/POA.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Server_Request.h"
@@ -106,63 +105,51 @@ TAO_GIOP_Message_Acceptors::
 
       response_required = request.response_expected ();
 
-      this->find_ior_in_table (request.object_key (),
-                               orb_core,
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      CORBA::Object_var forward_to;
 
       // Do this before the reply is sent.
-      orb_core->object_adapter ()->dispatch_servant (
-                                                     request.object_key (),
-                                                     request,
-                                                     0,
-                                                     ACE_TRY_ENV
-                                                     );
+      orb_core->adapter_registry ()->dispatch (request.object_key (),
+                                               request,
+                                               0,
+                                               forward_to,
+                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (!CORBA::is_nil (forward_to.in ()))
+        {
+          // We should forward to another object...
+          TAO_Pluggable_Reply_Params reply_params;
+          reply_params.request_id_ = request_id;
+          reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
+          reply_params.svc_ctx_.length (0);
+          // Sending back the same service context list we received in the
+          // Request.  (Important for RT CORBA).
+          reply_params.service_context_notowned (&request.service_info ());
+          reply_params.params_ = 0;
+          // Make the GIOP header and Reply header
+          this->write_reply_header (*this->output_,
+                                    reply_params);
+
+          *this->output_ << forward_to.in ();
+
+          int result = this->send_message (transport,
+                                           *this->output_);
+          if (result == -1)
+            {
+              if (TAO_debug_level > 0)
+                {
+                  // No exception but some kind of error, yet a
+                  // response is required.
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
+                              ACE_TEXT ("TAO_GIOP::process_server_message")));
+                }
+            }
+          return result;
+        }
     }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
-    {
-      TAO_Pluggable_Reply_Params reply_params;
-      reply_params.request_id_ = request_id;
-      reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
-      reply_params.svc_ctx_.length (0);
-      // Sending back the same service context list we received in the
-      // Request.  (Important for RT CORBA).
-      reply_params.service_context_notowned (&request.service_info ());
-      reply_params.params_ = 0;
-
-      // Make the GIOP header and Reply header
-      this->write_reply_header (*this->output_,
-                                reply_params);
-
-      CORBA::Object_ptr object_ptr =
-        forward_request.forward_reference.in();
-
-      *this->output_ << object_ptr;
-
-      int result = this->send_message (transport,
-                                       *this->output_);
-
-      if (result == -1)
-      {
-         if (TAO_debug_level > 0)
-         {
-            // No exception but some kind of error, yet a response
-            // is required.
-            ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
-                          ACE_TEXT ("TAO_GIOP::process_server_message")));
-         }
-      }
-      return result;
-
-    }
-#else
-  ACE_UNUSED_ARG (request_id);
-#endif /* TAO_HAS_MINIMUM_CORBA */
   // Only CORBA exceptions are caught here.
-   ACE_CATCHANY
+  ACE_CATCHANY
     {
       int result = 0;
       if (response_required)
@@ -249,9 +236,7 @@ TAO_GIOP_Message_Acceptors::
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
 
-  int result = 0;
-
-  return result;
+  return 0;
 }
 
 int
@@ -280,11 +265,6 @@ TAO_GIOP_Message_Acceptors::
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
-
-      this->find_ior_in_table (locate_request.object_key (),
-                               orb_core,
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       // Execute a fake request to find out if the object is there or
       // if the POA can activate it on demand...
@@ -319,14 +299,23 @@ TAO_GIOP_Message_Acceptors::
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
 
-      orb_core->object_adapter ()->dispatch_servant
-        (server_request.object_key (),
-         server_request,
-         0,
-         ACE_TRY_ENV);
+      CORBA::Object_var forward_to;
+
+      orb_core->adapter_registry ()->dispatch (server_request.object_key (),
+                                               server_request,
+                                               0,
+                                               forward_to,
+                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
+      if (!CORBA::is_nil (forward_to.in ()))
+        {
+          status_info.status = TAO_GIOP_OBJECT_FORWARD;
+          status_info.forward_location_var = forward_to;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("handle_locate has been called: forwarding\n")));
+        }
+      else if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
         {
           // We got no exception, so the object is here.
           status_info.status = TAO_GIOP_OBJECT_HERE;
@@ -334,7 +323,7 @@ TAO_GIOP_Message_Acceptors::
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO: (%P|%t) handle_locate() : found\n")));
         }
-      else if (server_request.exception_type () != TAO_GIOP_NO_EXCEPTION)
+      else
         {
           status_info.forward_location_var = server_request.forward_location ();
           if (!CORBA::is_nil (status_info.forward_location_var.in ()))
@@ -351,18 +340,9 @@ TAO_GIOP_Message_Acceptors::
                           ACE_TEXT ("handle_locate has been called: not here\n")));
             }
         }
+
     }
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  ACE_CATCH (PortableServer::ForwardRequest, forward_request)
-    {
-      status_info.status = TAO_GIOP_OBJECT_FORWARD;
-      status_info.forward_location_var =
-        forward_request.forward_reference;
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("handle_locate has been called: forwarding\n")));
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
   ACE_CATCHANY
     {
       // Normal exception, so the object is not here
@@ -388,68 +368,6 @@ TAO_GIOP_Message_Acceptors::
   return this->make_send_locate_reply (transport,
                                        locate_request,
                                        status_info);
-}
-
-void
-TAO_GIOP_Message_Acceptors::
-  find_ior_in_table (TAO_ObjectKey &object_key,
-                     TAO_ORB_Core *orb_core,
-                     CORBA::Environment &ACE_TRY_ENV)
-{
-#if (TAO_NO_IOR_TABLE == 0)
-  const CORBA::Octet *key =
-    object_key.get_buffer ();
-
-  if (ACE_OS::memcmp (key,
-                      &TAO_POA::objectkey_prefix[0],
-                      TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
-    {
-      ACE_CString object_id (ACE_reinterpret_cast (const char *,
-                                                   key),
-                             object_key.length (),
-                             0,
-                             0);
-      // @@ This debugging output should *NOT* be used since the
-      //    object key string is not null terminated, nor can it
-      //    be null terminated without copying.  No copying should
-      //    be done since performance is somewhat important here.
-      //    So, just remove the debugging output entirely.
-      //
-      //           if (TAO_debug_level > 0)
-      //             ACE_DEBUG ((LM_DEBUG,
-      //                         "Simple Object key %s. "
-      //                         "Doing the Table Lookup ...\n",
-      //                         object_id.c_str ()));
-
-      //CORBA::Object_ptr object_reference =
-      CORBA::Object_var object_reference =
-        CORBA::Object::_nil ();
-
-      // Do the Table Lookup.
-      int status =
-        orb_core->orb ()->_tao_find_in_IOR_table (object_id,
-                                                  object_reference.out ());
-
-      // If ObjectID not in table or reference is nil raise
-      // OBJECT_NOT_EXIST.
-
-      if (status == -1 || CORBA::is_nil (object_reference.in ()))
-        ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
-
-      // ObjectID present in the table with an associated NON-NULL
-      // reference.  Throw a forward request exception.
-
-      /*CORBA::Object_ptr dup =
-        CORBA::Object::_duplicate (object_reference);*/
-
-      // @@ We could simply write the response at this point...
-      ACE_THROW (PortableServer::ForwardRequest (object_reference.in ()));
-    }
-#else
-  ACE_UNUSED_ARG (object_key);
-  ACE_UNUSED_ARG (orb_core);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif /* TAO_NO_IOR_TABLE */
 }
 
 int

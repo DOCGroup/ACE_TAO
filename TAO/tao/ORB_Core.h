@@ -28,18 +28,13 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
-#include "tao/PortableServerC.h"
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/TAO_Singleton.h"
+#include "tao/Adapter.h"
 
 #include "ace/Map_Manager.h"
 
 // Forward declarations
-class TAO_POA;
-class TAO_POA_Current;
-class TAO_POA_Current_Impl;
-class TAO_POA_Manager;
-class TAO_POA_Policies;
 class TAO_Acceptor;
 class TAO_Connector;
 class TAO_Acceptor_Registry;
@@ -49,7 +44,7 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
-class TAO_Object_Adapter;
+
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
@@ -164,7 +159,16 @@ public:
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
-  TAO_POA_Current &poa_current (void) const;
+  // @@ PPOA: TAO_POA_Current &poa_current (void) const;
+  // @@ In the future this hook should change, instead of hardcoding
+  //    the object we should add a "Resolver" to the ORB, so the
+  //    "POACurrent" object returns a per-ORB object.
+  //    Similarly, each ORB should implement the TSS pattern to put
+  //    the POA_Current_Impl in a void* slot.
+  //    The current approach *does* decouple the POA from the ORB, but
+  //    it cannot add new adapters or other components transparently.
+  CORBA::Object_ptr poa_current (void);
+  void poa_current (CORBA::Object_ptr poa_current);
   // Accessor to the POA current.
 
   // = Get the connector registry
@@ -186,6 +190,7 @@ public:
   // = Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
 
+#if 0 // PPOA
   // = Get the rootPOA
   TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment (),
@@ -198,6 +203,14 @@ public:
       const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
       TAO_POA_Manager *poa_manager = 0,
       const TAO_POA_Policies *policies = 0);
+#else
+  CORBA::Object_ptr root_poa (CORBA::Environment &ACE_TRY_ENV);
+  // Return the RootPOA, or try to load it if not initialized already.
+
+  TAO_Adapter_Registry *adapter_registry (void); // PPOA
+  // Get the adapter registry
+
+#endif /* 0 PPOA */
 
   // = Collocation strategies.
   enum
@@ -253,8 +266,13 @@ public:
 
   CORBA::ULong get_collocation_strategy (void) const;
 
-  TAO_Object_Adapter *object_adapter (void);
+  // @@ PPOA: Should go away!  But leave it here to remove the other
+  // bugs first!
+  // @@ TAO_Object_Adapter *object_adapter (void);
   // Get <Object Adapter>.
+  TAO_Adapter *poa_adapter (void);
+  // Get the adapter named "RootPOA" and cache the result, this is an
+  // optimization for the POA.
 
   int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
   // A spawned thread needs to inherit some properties/objects from
@@ -464,10 +482,14 @@ public:
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
-                                TAO_POA *poa,
+                                TAO_Acceptor_Filter *filter,
                                 CORBA::Environment &ACE_TRY_ENV);
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
+
+  CORBA::Object_ptr create_object (TAO_Stub *the_stub);
+  // Create a new object, use the adapter registry to create a
+  // collocated object, if not possible then create a regular object.
 
   const char *orbid (void) const;
   // Return ORBid string.
@@ -506,6 +528,7 @@ protected:
   int fini (void);
   // Final termination hook, typically called by CORBA::ORB's DTOR.
 
+#if 0
   void create_and_set_root_poa (const char *adapter_name,
                                 TAO_POA_Manager *poa_manager,
                                 const TAO_POA_Policies *policies,
@@ -518,6 +541,7 @@ protected:
 
   TAO_Object_Adapter *object_adapter_i (void);
   // Get <Object Adapter>, assume the lock is held...
+#endif /* PPOA */
 
   ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
@@ -539,6 +563,12 @@ private:
   // The ORB Core should not be copied
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
   ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_ORB_Core&))
+
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *the_stub,
+                                              TAO_ORB_Core *other_orb,
+                                              const TAO_MProfile &mprofile);
+  // Try to create a new collocated object, using <other_orb> as the
+  // target ORB.  If not possible return 0.
 
 protected:
   ACE_SYNCH_MUTEX lock_;
@@ -576,7 +606,8 @@ protected:
   //    same object, but maybe don't want so much coupling.
   // Pointer to the ORB.
 
-  TAO_POA *root_poa_;
+  CORBA::Object_var root_poa_;
+  // PPOA: TAO_POA *root_poa_;
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to <CORBA::ORB::resolve_initial_references
   // ("RootPOA")>.
@@ -638,15 +669,22 @@ protected:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  TAO_POA_Current *poa_current_;
+  // PPOA: TAO_POA_Current *poa_current_;
+  CORBA::Object_var poa_current_;
   // POA current.
   //
   // Note that this is a pointer in order to reduce the include file
   // dependencies.
   //
 
-  TAO_Object_Adapter *object_adapter_;
+  // PPOA: TAO_Object_Adapter *object_adapter_;
   // Object Adapter.
+
+  TAO_Adapter_Registry adapter_registry_; // PPOA
+  // The list of Adapters used in this ORB
+
+  TAO_Adapter *poa_adapter_;
+  // An optimization for the POA
 
   ACE_Thread_Manager tm_;
   // The Thread Manager
@@ -786,7 +824,8 @@ private:
 
 public:
 
-  TAO_POA_Current_Impl *poa_current_impl_;
+  // PPOA: TAO_POA_Current_Impl *poa_current_impl_;
+  void *poa_current_impl_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
   // resource factory because it must always be held in

@@ -17,7 +17,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
 #include "ace/Get_Opt.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_Dgram.h"
 #include "orbsvcs/AV/AVStreams_i.h"

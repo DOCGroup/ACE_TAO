@@ -128,7 +128,7 @@ CORBA::IRObject_ptr _TAO_collocation_POA_CORBA_IRObject_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -152,14 +152,14 @@ CORBA::IRObject_ptr _TAO_collocation_POA_CORBA_IRObject_Stub_Factory (
 int _TAO_collocation_POA_CORBA_IRObject_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_CORBA_IRObject_Stub_Factory_function_pointer =
     _TAO_collocation_POA_CORBA_IRObject_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_CORBA_IRObject_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_CORBA_IRObject_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_CORBA_IRObject_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_CORBA_IRObject_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -180,8 +180,8 @@ POA_CORBA::IRObject::~IRObject (void)
 
 void POA_CORBA::IRObject::_get_def_kind_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -206,8 +206,8 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
 
 void POA_CORBA::IRObject::destroy_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -224,7 +224,7 @@ void POA_CORBA::IRObject::destroy_skel (
 }
 
 void POA_CORBA::IRObject::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -236,10 +236,10 @@ void POA_CORBA::IRObject::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -248,7 +248,7 @@ void POA_CORBA::IRObject::_is_a_skel (
 }
 
 void POA_CORBA::IRObject::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -257,7 +257,7 @@ void POA_CORBA::IRObject::_non_existent_skel (
   POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -335,7 +335,7 @@ POA_CORBA::IRObject::_this (CORBA_Environment &ACE_TRY_ENV)
 POA_CORBA::_tao_thru_poa_collocated_IRObject::_tao_thru_poa_collocated_IRObject (
   TAO_Stub *stub
 )
-  :  CORBA_Object (stub, 0, 1)
+  :  CORBA_Object (stub, 1)
 {
 }
 
@@ -346,7 +346,7 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_IRObject::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -369,7 +369,7 @@ CORBA::Boolean POA_CORBA::_tao_thru_poa_collocated_IRObject::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -396,7 +396,7 @@ IR::DefinitionKind POA_CORBA::_tao_thru_poa_collocated_IRObject::def_kind  (
   IR::DefinitionKind _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -423,7 +423,7 @@ void POA_CORBA::_tao_thru_poa_collocated_IRObject::destroy  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -539,9 +539,9 @@ TAO_IR_Contained_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       -1,  14,  -1,  15,  16,  -1,  -1,  -1,  -1,  17,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  18, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       -1,  14,  -1,  15,  16,  -1,  -1,  -1,  -1,  17,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  18,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -583,7 +583,7 @@ IR::Contained_ptr _TAO_collocation_POA_IR_Contained_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -607,14 +607,14 @@ IR::Contained_ptr _TAO_collocation_POA_IR_Contained_Stub_Factory (
 int _TAO_collocation_POA_IR_Contained_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_Contained_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_Contained_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_Contained_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_Contained_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_Contained_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_Contained_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_Contained_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -636,8 +636,8 @@ POA_IR::Contained::~Contained (void)
 
 void POA_IR::Contained::_get_id_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -662,8 +662,8 @@ void POA_IR::Contained::_get_id_skel (
 
 void POA_IR::Contained::_set_id_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -689,8 +689,8 @@ void POA_IR::Contained::_set_id_skel (
 
 void POA_IR::Contained::_get_name_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -715,8 +715,8 @@ void POA_IR::Contained::_get_name_skel (
 
 void POA_IR::Contained::_set_name_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -742,8 +742,8 @@ void POA_IR::Contained::_set_name_skel (
 
 void POA_IR::Contained::_get_version_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -768,8 +768,8 @@ void POA_IR::Contained::_get_version_skel (
 
 void POA_IR::Contained::_set_version_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -795,8 +795,8 @@ void POA_IR::Contained::_set_version_skel (
 
 void POA_IR::Contained::_get_defined_in_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -821,8 +821,8 @@ void POA_IR::Contained::_get_defined_in_skel (
 
 void POA_IR::Contained::_get_absolute_name_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -847,8 +847,8 @@ void POA_IR::Contained::_get_absolute_name_skel (
 
 void POA_IR::Contained::_get_containing_repository_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -873,8 +873,8 @@ void POA_IR::Contained::_get_containing_repository_skel (
 
 void POA_IR::Contained::describe_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -899,8 +899,8 @@ void POA_IR::Contained::describe_skel (
 
 void POA_IR::Contained::move_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -931,7 +931,7 @@ void POA_IR::Contained::move_skel (
 }
 
 void POA_IR::Contained::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -943,10 +943,10 @@ void POA_IR::Contained::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -955,7 +955,7 @@ void POA_IR::Contained::_is_a_skel (
 }
 
 void POA_IR::Contained::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -964,7 +964,7 @@ void POA_IR::Contained::_non_existent_skel (
   POA_IR::Contained *_tao_impl = (POA_IR::Contained *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -1046,7 +1046,7 @@ POA_IR::_tao_thru_poa_collocated_Contained::_tao_thru_poa_collocated_Contained (
   TAO_Stub *stub
 )
   :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -1057,7 +1057,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Contained::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1080,7 +1080,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Contained::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1107,7 +1107,7 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::id  (
   CORBA::String_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1135,7 +1135,7 @@ void POA_IR::_tao_thru_poa_collocated_Contained::id  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1165,7 +1165,7 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::name  (
   CORBA::String_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1193,7 +1193,7 @@ void POA_IR::_tao_thru_poa_collocated_Contained::name  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1223,7 +1223,7 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::version  (
   CORBA::String_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1251,7 +1251,7 @@ void POA_IR::_tao_thru_poa_collocated_Contained::version  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1281,7 +1281,7 @@ IR::Container_ptr POA_IR::_tao_thru_poa_collocated_Contained::defined_in  (
   IR::Container_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1310,7 +1310,7 @@ char * POA_IR::_tao_thru_poa_collocated_Contained::absolute_name  (
   CORBA::String_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1339,7 +1339,7 @@ IR::Repository_ptr POA_IR::_tao_thru_poa_collocated_Contained::containing_reposi
   IR::Repository_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1368,7 +1368,7 @@ IR::Contained::Description * POA_IR::_tao_thru_poa_collocated_Contained::describ
   IR::Contained::Description_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1398,7 +1398,7 @@ void POA_IR::_tao_thru_poa_collocated_Contained::move  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -1523,9 +1523,9 @@ TAO_IR_Container_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,  -1,   6,   7,  -1, -10,  -2,   8,   9, -42, 
-       -1,  -1,  12,  13,  14,  -1,  15,  16,  17,  18,  -1,  19,  20,  21, 
-       22,  -1,  -1,  23,  -1,  -1,  -1,  -1,  -1,  -1,  24, 
+       -1,  -1,  -1,  -1,  -1,  -1,   6,   7,  -1, -10,  -2,   8,   9, -42,
+       -1,  -1,  12,  13,  14,  -1,  15,  16,  17,  18,  -1,  19,  20,  21,
+       22,  -1,  -1,  23,  -1,  -1,  -1,  -1,  -1,  -1,  24,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -1567,7 +1567,7 @@ IR::Container_ptr _TAO_collocation_POA_IR_Container_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -1591,14 +1591,14 @@ IR::Container_ptr _TAO_collocation_POA_IR_Container_Stub_Factory (
 int _TAO_collocation_POA_IR_Container_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_Container_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_Container_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_Container_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_Container_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_Container_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_Container_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_Container_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -1620,8 +1620,8 @@ POA_IR::Container::~Container (void)
 
 void POA_IR::Container::lookup_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1653,8 +1653,8 @@ void POA_IR::Container::lookup_skel (
 
 void POA_IR::Container::contents_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1689,8 +1689,8 @@ void POA_IR::Container::contents_skel (
 
 void POA_IR::Container::lookup_name_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1731,8 +1731,8 @@ void POA_IR::Container::lookup_name_skel (
 
 void POA_IR::Container::describe_contents_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1770,8 +1770,8 @@ void POA_IR::Container::describe_contents_skel (
 
 void POA_IR::Container::create_module_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1809,8 +1809,8 @@ void POA_IR::Container::create_module_skel (
 
 void POA_IR::Container::create_constant_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1854,8 +1854,8 @@ void POA_IR::Container::create_constant_skel (
 
 void POA_IR::Container::create_struct_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1896,8 +1896,8 @@ void POA_IR::Container::create_struct_skel (
 
 void POA_IR::Container::create_union_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1941,8 +1941,8 @@ void POA_IR::Container::create_union_skel (
 
 void POA_IR::Container::create_enum_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -1983,8 +1983,8 @@ void POA_IR::Container::create_enum_skel (
 
 void POA_IR::Container::create_alias_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2025,8 +2025,8 @@ void POA_IR::Container::create_alias_skel (
 
 void POA_IR::Container::create_interface_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2073,8 +2073,8 @@ void POA_IR::Container::create_interface_skel (
 
 void POA_IR::Container::create_value_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2133,8 +2133,8 @@ void POA_IR::Container::create_value_skel (
 
 void POA_IR::Container::create_value_box_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2175,8 +2175,8 @@ void POA_IR::Container::create_value_box_skel (
 
 void POA_IR::Container::create_exception_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2217,8 +2217,8 @@ void POA_IR::Container::create_exception_skel (
 
 void POA_IR::Container::create_native_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -2255,7 +2255,7 @@ void POA_IR::Container::create_native_skel (
 }
 
 void POA_IR::Container::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -2267,10 +2267,10 @@ void POA_IR::Container::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -2279,7 +2279,7 @@ void POA_IR::Container::_is_a_skel (
 }
 
 void POA_IR::Container::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -2288,7 +2288,7 @@ void POA_IR::Container::_non_existent_skel (
   POA_IR::Container *_tao_impl = (POA_IR::Container *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -2370,7 +2370,7 @@ POA_IR::_tao_thru_poa_collocated_Container::_tao_thru_poa_collocated_Container (
   TAO_Stub *stub
 )
   :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -2381,7 +2381,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Container::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2404,7 +2404,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Container::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2432,7 +2432,7 @@ IR::Contained_ptr POA_IR::_tao_thru_poa_collocated_Container::lookup  (
   IR::Contained_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2464,7 +2464,7 @@ IR::ContainedSeq * POA_IR::_tao_thru_poa_collocated_Container::contents  (
   IR::ContainedSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2499,7 +2499,7 @@ IR::ContainedSeq * POA_IR::_tao_thru_poa_collocated_Container::lookup_name  (
   IR::ContainedSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2535,7 +2535,7 @@ IR::Container::DescriptionSeq * POA_IR::_tao_thru_poa_collocated_Container::desc
   IR::Container::DescriptionSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2570,7 +2570,7 @@ IR::ModuleDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_module  (
   IR::ModuleDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2607,7 +2607,7 @@ IR::ConstantDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_constant 
   IR::ConstantDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2645,7 +2645,7 @@ IR::StructDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_struct  (
   IR::StructDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2683,7 +2683,7 @@ IR::UnionDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_union  (
   IR::UnionDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2721,7 +2721,7 @@ IR::EnumDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_enum  (
   IR::EnumDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2758,7 +2758,7 @@ IR::AliasDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_alias  (
   IR::AliasDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2797,7 +2797,7 @@ IR::InterfaceDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_interfac
   IR::InterfaceDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2842,7 +2842,7 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_value  (
   IR::ValueDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2885,7 +2885,7 @@ IR::ValueBoxDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_value_box
   IR::ValueBoxDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2922,7 +2922,7 @@ IR::ExceptionDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_exceptio
   IR::ExceptionDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -2958,7 +2958,7 @@ IR::NativeDef_ptr POA_IR::_tao_thru_poa_collocated_Container::create_native  (
   IR::NativeDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -3093,7 +3093,7 @@ IR::IDLType_ptr _TAO_collocation_POA_IR_IDLType_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -3117,14 +3117,14 @@ IR::IDLType_ptr _TAO_collocation_POA_IR_IDLType_Stub_Factory (
 int _TAO_collocation_POA_IR_IDLType_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_IDLType_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_IDLType_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_IDLType_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_IDLType_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_IDLType_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_IDLType_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_IDLType_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -3146,8 +3146,8 @@ POA_IR::IDLType::~IDLType (void)
 
 void POA_IR::IDLType::_get_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3171,7 +3171,7 @@ void POA_IR::IDLType::_get_type_skel (
 }
 
 void POA_IR::IDLType::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -3183,10 +3183,10 @@ void POA_IR::IDLType::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -3195,7 +3195,7 @@ void POA_IR::IDLType::_is_a_skel (
 }
 
 void POA_IR::IDLType::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -3204,7 +3204,7 @@ void POA_IR::IDLType::_non_existent_skel (
   POA_IR::IDLType *_tao_impl = (POA_IR::IDLType *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -3286,7 +3286,7 @@ POA_IR::_tao_thru_poa_collocated_IDLType::_tao_thru_poa_collocated_IDLType (
   TAO_Stub *stub
 )
   :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -3297,7 +3297,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_IDLType::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -3320,7 +3320,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_IDLType::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -3347,7 +3347,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_IDLType::type  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -3477,12 +3477,12 @@ TAO_IR_Repository_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,  -1,   6,  -1,  -1, -16,  -2,   7,   8,   9, 
-       -1,  10,  11,  -1,  12,  13,  -1,  14,  15, -84,  -1,  18,  19,  20, 
-       21,  -1,  22,  23,  24,  25,  -1,  26,  -1,  27,  28,  -1,  29,  -1, 
-       30,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       31,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       32, 
+       -1,  -1,  -1,  -1,  -1,  -1,   6,  -1,  -1, -16,  -2,   7,   8,   9,
+       -1,  10,  11,  -1,  12,  13,  -1,  14,  15, -84,  -1,  18,  19,  20,
+       21,  -1,  22,  23,  24,  25,  -1,  26,  -1,  27,  28,  -1,  29,  -1,
+       30,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,
+       31,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,
+       32,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -3524,7 +3524,7 @@ IR::Repository_ptr _TAO_collocation_POA_IR_Repository_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -3548,14 +3548,14 @@ IR::Repository_ptr _TAO_collocation_POA_IR_Repository_Stub_Factory (
 int _TAO_collocation_POA_IR_Repository_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_Repository_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_Repository_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_Repository_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_Repository_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_Repository_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_Repository_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_Repository_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -3578,8 +3578,8 @@ POA_IR::Repository::~Repository (void)
 
 void POA_IR::Repository::lookup_id_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3611,8 +3611,8 @@ void POA_IR::Repository::lookup_id_skel (
 
 void POA_IR::Repository::get_canonical_typecode_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3644,8 +3644,8 @@ void POA_IR::Repository::get_canonical_typecode_skel (
 
 void POA_IR::Repository::get_primitive_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3677,8 +3677,8 @@ void POA_IR::Repository::get_primitive_skel (
 
 void POA_IR::Repository::create_string_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3710,8 +3710,8 @@ void POA_IR::Repository::create_string_skel (
 
 void POA_IR::Repository::create_wstring_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3743,8 +3743,8 @@ void POA_IR::Repository::create_wstring_skel (
 
 void POA_IR::Repository::create_sequence_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3779,8 +3779,8 @@ void POA_IR::Repository::create_sequence_skel (
 
 void POA_IR::Repository::create_array_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3815,8 +3815,8 @@ void POA_IR::Repository::create_array_skel (
 
 void POA_IR::Repository::create_fixed_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -3850,7 +3850,7 @@ void POA_IR::Repository::create_fixed_skel (
 }
 
 void POA_IR::Repository::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -3862,10 +3862,10 @@ void POA_IR::Repository::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -3874,7 +3874,7 @@ void POA_IR::Repository::_is_a_skel (
 }
 
 void POA_IR::Repository::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -3883,7 +3883,7 @@ void POA_IR::Repository::_non_existent_skel (
   POA_IR::Repository *_tao_impl = (POA_IR::Repository *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -3969,7 +3969,7 @@ POA_IR::_tao_thru_poa_collocated_Repository::_tao_thru_poa_collocated_Repository
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Container) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -3980,7 +3980,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Repository::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4003,7 +4003,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_Repository::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4031,7 +4031,7 @@ IR::Contained_ptr POA_IR::_tao_thru_poa_collocated_Repository::lookup_id  (
   IR::Contained_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4062,7 +4062,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_Repository::get_canonical_t
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4093,7 +4093,7 @@ IR::PrimitiveDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::get_primitive 
   IR::PrimitiveDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4124,7 +4124,7 @@ IR::StringDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_string  (
   IR::StringDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4155,7 +4155,7 @@ IR::WstringDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_wstring  
   IR::WstringDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4187,7 +4187,7 @@ IR::SequenceDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_sequence
   IR::SequenceDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4220,7 +4220,7 @@ IR::ArrayDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_array  (
   IR::ArrayDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4253,7 +4253,7 @@ IR::FixedDef_ptr POA_IR::_tao_thru_poa_collocated_Repository::create_fixed  (
   IR::FixedDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4387,10 +4387,10 @@ TAO_IR_ComponentRepository_Perfect_Hash_OpTable::lookup (const char *str, unsign
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,   8,  -1,  -1,   9,  10, -22, 
-       -2,  11,  12,  -1,  13,  14,  15,  16,  -1,  17,  18,  19,  20,  21, 
-      -68,  -1,  24,  25,  26,  27,  -1,  -1,  28,  29,  30,  -1,  -1,  31, 
-       32,  -1,  33,  -1,  -1,  34,  -1,  -1,  -1,  -1,  35,  36, 
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,   8,  -1,  -1,   9,  10, -22,
+       -2,  11,  12,  -1,  13,  14,  15,  16,  -1,  17,  18,  19,  20,  21,
+      -68,  -1,  24,  25,  26,  27,  -1,  -1,  28,  29,  30,  -1,  -1,  31,
+       32,  -1,  33,  -1,  -1,  34,  -1,  -1,  -1,  -1,  35,  36,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -4432,7 +4432,7 @@ IR::ComponentRepository_ptr _TAO_collocation_POA_IR_ComponentRepository_Stub_Fac
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -4456,14 +4456,14 @@ IR::ComponentRepository_ptr _TAO_collocation_POA_IR_ComponentRepository_Stub_Fac
 int _TAO_collocation_POA_IR_ComponentRepository_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ComponentRepository_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ComponentRepository_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ComponentRepository_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ComponentRepository_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ComponentRepository_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ComponentRepository_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ComponentRepository_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -4487,8 +4487,8 @@ POA_IR::ComponentRepository::~ComponentRepository (void)
 
 void POA_IR::ComponentRepository::create_component_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -4532,8 +4532,8 @@ void POA_IR::ComponentRepository::create_component_skel (
 
 void POA_IR::ComponentRepository::create_home_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -4579,7 +4579,7 @@ void POA_IR::ComponentRepository::create_home_skel (
 }
 
 void POA_IR::ComponentRepository::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -4591,10 +4591,10 @@ void POA_IR::ComponentRepository::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -4603,7 +4603,7 @@ void POA_IR::ComponentRepository::_is_a_skel (
 }
 
 void POA_IR::ComponentRepository::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -4612,7 +4612,7 @@ void POA_IR::ComponentRepository::_non_existent_skel (
   POA_IR::ComponentRepository *_tao_impl = (POA_IR::ComponentRepository *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -4702,7 +4702,7 @@ POA_IR::_tao_thru_poa_collocated_ComponentRepository::_tao_thru_poa_collocated_C
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Repository) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Container) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -4713,7 +4713,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentRepository::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4736,7 +4736,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentRepository::_non_existe
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4768,7 +4768,7 @@ IR::ComponentDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentRepository::creat
   IR::ComponentDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4808,7 +4808,7 @@ IR::HomeDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentRepository::create_hom
   IR::HomeDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -4947,10 +4947,10 @@ TAO_IR_ModuleDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,   4,  -7,  -2, -13,  -2, -19,  -2,   5,   6, -59, 
-       -1,   9,  10,  11,  12, -63,  -1,  15,  16,  17, -24,  -2,  18, -69, 
-       21,  -1,  22,  23, -59,  26,  -1,  27,  28,  29,  30,  -1,  -1,  -1, 
-       31,  32,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  33, 
+       -1,  -1,  -1,  -1,   4,  -7,  -2, -13,  -2, -19,  -2,   5,   6, -59,
+       -1,   9,  10,  11,  12, -63,  -1,  15,  16,  17, -24,  -2,  18, -69,
+       21,  -1,  22,  23, -59,  26,  -1,  27,  28,  29,  30,  -1,  -1,  -1,
+       31,  32,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  33,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -4992,7 +4992,7 @@ IR::ModuleDef_ptr _TAO_collocation_POA_IR_ModuleDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -5016,14 +5016,14 @@ IR::ModuleDef_ptr _TAO_collocation_POA_IR_ModuleDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ModuleDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ModuleDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ModuleDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ModuleDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ModuleDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ModuleDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ModuleDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ModuleDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -5046,7 +5046,7 @@ POA_IR::ModuleDef::~ModuleDef (void)
 }
 
 void POA_IR::ModuleDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -5058,10 +5058,10 @@ void POA_IR::ModuleDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -5070,7 +5070,7 @@ void POA_IR::ModuleDef::_is_a_skel (
 }
 
 void POA_IR::ModuleDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -5079,7 +5079,7 @@ void POA_IR::ModuleDef::_non_existent_skel (
   POA_IR::ModuleDef *_tao_impl = (POA_IR::ModuleDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -5169,7 +5169,7 @@ POA_IR::_tao_thru_poa_collocated_ModuleDef::_tao_thru_poa_collocated_ModuleDef (
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Container) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -5180,7 +5180,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ModuleDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5203,7 +5203,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ModuleDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5324,9 +5324,9 @@ TAO_IR_ConstantDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const signed char lookup[] =
     {
-      -12,  -2, -14,  -2,   4,   5,  -1,  53,   8,  46, -46,  -1, -46,  16, 
-       -1,  17,  -1,  18,  19,  -9,  -3, -20,  -2, -38,  -6,  -2,  -1,  -1, 
-       22,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  23, 
+      -12,  -2, -14,  -2,   4,   5,  -1,  53,   8,  46, -46,  -1, -46,  16,
+       -1,  17,  -1,  18,  19,  -9,  -3, -20,  -2, -38,  -6,  -2,  -1,  -1,
+       22,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -5368,7 +5368,7 @@ IR::ConstantDef_ptr _TAO_collocation_POA_IR_ConstantDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -5392,14 +5392,14 @@ IR::ConstantDef_ptr _TAO_collocation_POA_IR_ConstantDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ConstantDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ConstantDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ConstantDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ConstantDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ConstantDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ConstantDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ConstantDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ConstantDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -5422,8 +5422,8 @@ POA_IR::ConstantDef::~ConstantDef (void)
 
 void POA_IR::ConstantDef::_get_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -5448,8 +5448,8 @@ void POA_IR::ConstantDef::_get_type_skel (
 
 void POA_IR::ConstantDef::_get_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -5474,8 +5474,8 @@ void POA_IR::ConstantDef::_get_type_def_skel (
 
 void POA_IR::ConstantDef::_set_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -5501,8 +5501,8 @@ void POA_IR::ConstantDef::_set_type_def_skel (
 
 void POA_IR::ConstantDef::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -5527,8 +5527,8 @@ void POA_IR::ConstantDef::_get_value_skel (
 
 void POA_IR::ConstantDef::_set_value_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -5553,7 +5553,7 @@ void POA_IR::ConstantDef::_set_value_skel (
 }
 
 void POA_IR::ConstantDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -5565,10 +5565,10 @@ void POA_IR::ConstantDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -5577,7 +5577,7 @@ void POA_IR::ConstantDef::_is_a_skel (
 }
 
 void POA_IR::ConstantDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -5586,7 +5586,7 @@ void POA_IR::ConstantDef::_non_existent_skel (
   POA_IR::ConstantDef *_tao_impl = (POA_IR::ConstantDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -5672,7 +5672,7 @@ POA_IR::_tao_thru_poa_collocated_ConstantDef::_tao_thru_poa_collocated_ConstantD
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -5683,7 +5683,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConstantDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5706,7 +5706,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConstantDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5733,7 +5733,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ConstantDef::type  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5762,7 +5762,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ConstantDef::type_def  (
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5790,7 +5790,7 @@ void POA_IR::_tao_thru_poa_collocated_ConstantDef::type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5820,7 +5820,7 @@ CORBA::Any * POA_IR::_tao_thru_poa_collocated_ConstantDef::value  (
   CORBA::Any_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5848,7 +5848,7 @@ void POA_IR::_tao_thru_poa_collocated_ConstantDef::value  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -5968,9 +5968,9 @@ TAO_IR_TypedefDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14, 
-       -1,  15,  -1,  16,  17,  -1,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  19, 
+       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14,
+       -1,  15,  -1,  16,  17,  -1,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  19,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -6012,7 +6012,7 @@ IR::TypedefDef_ptr _TAO_collocation_POA_IR_TypedefDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -6036,14 +6036,14 @@ IR::TypedefDef_ptr _TAO_collocation_POA_IR_TypedefDef_Stub_Factory (
 int _TAO_collocation_POA_IR_TypedefDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_TypedefDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_TypedefDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_TypedefDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_TypedefDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_TypedefDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_TypedefDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_TypedefDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -6066,7 +6066,7 @@ POA_IR::TypedefDef::~TypedefDef (void)
 }
 
 void POA_IR::TypedefDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -6078,10 +6078,10 @@ void POA_IR::TypedefDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -6090,7 +6090,7 @@ void POA_IR::TypedefDef::_is_a_skel (
 }
 
 void POA_IR::TypedefDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -6099,7 +6099,7 @@ void POA_IR::TypedefDef::_non_existent_skel (
   POA_IR::TypedefDef *_tao_impl = (POA_IR::TypedefDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -6189,7 +6189,7 @@ POA_IR::_tao_thru_poa_collocated_TypedefDef::_tao_thru_poa_collocated_TypedefDef
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -6200,7 +6200,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_TypedefDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -6223,7 +6223,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_TypedefDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -6357,10 +6357,10 @@ TAO_IR_StructDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -6,  -3,   5,  -1,  -9,  -2, -57, -54,  11,  -1, -14, 
-       -2,  12,  13, -55,  16,  17,  18,  19,  -1,  -1, -21,  -2,  20, -54, 
-       23, -26,  -2,  24,  25, -55,  -1,  28,  29,  30,  -1,  -1,  -1,  31, 
-       -1,  32,  -1,  -1,  33,  34,  35,  -1,  36,  37, 
+       -1,  -1,  -1,  -6,  -3,   5,  -1,  -9,  -2, -57, -54,  11,  -1, -14,
+       -2,  12,  13, -55,  16,  17,  18,  19,  -1,  -1, -21,  -2,  20, -54,
+       23, -26,  -2,  24,  25, -55,  -1,  28,  29,  30,  -1,  -1,  -1,  31,
+       -1,  32,  -1,  -1,  33,  34,  35,  -1,  36,  37,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -6402,7 +6402,7 @@ IR::StructDef_ptr _TAO_collocation_POA_IR_StructDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -6426,14 +6426,14 @@ IR::StructDef_ptr _TAO_collocation_POA_IR_StructDef_Stub_Factory (
 int _TAO_collocation_POA_IR_StructDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_StructDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_StructDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_StructDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_StructDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_StructDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_StructDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_StructDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -6459,8 +6459,8 @@ POA_IR::StructDef::~StructDef (void)
 
 void POA_IR::StructDef::_get_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -6485,8 +6485,8 @@ void POA_IR::StructDef::_get_members_skel (
 
 void POA_IR::StructDef::_set_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -6511,7 +6511,7 @@ void POA_IR::StructDef::_set_members_skel (
 }
 
 void POA_IR::StructDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -6523,10 +6523,10 @@ void POA_IR::StructDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -6535,7 +6535,7 @@ void POA_IR::StructDef::_is_a_skel (
 }
 
 void POA_IR::StructDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -6544,7 +6544,7 @@ void POA_IR::StructDef::_non_existent_skel (
   POA_IR::StructDef *_tao_impl = (POA_IR::StructDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -6642,7 +6642,7 @@ POA_IR::_tao_thru_poa_collocated_StructDef::_tao_thru_poa_collocated_StructDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -6653,7 +6653,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StructDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -6676,7 +6676,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StructDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -6703,7 +6703,7 @@ IR::StructMemberSeq * POA_IR::_tao_thru_poa_collocated_StructDef::members  (
   IR::StructMemberSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -6731,7 +6731,7 @@ void POA_IR::_tao_thru_poa_collocated_StructDef::members  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -6871,11 +6871,11 @@ TAO_IR_UnionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -6,  -3,   4,   5,  -1,  -9,  -2, -74, -70,  11,  -1, -16, 
-       -2,  12,  13,  -1,  14, -21,  -2,  15, -76,  18,  -1,  19,  20, -75, 
-       23,  -1,  -1,  24,  -1,  -1, -27,  -2,  25,  26, -71, -30,  -2,  29, 
-      -70,  -1,  -1,  -1,  32,  33,  -1,  -1,  34,  35,  -1,  36,  -1,  37, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  38,  -1,  -1,  -1,  39, 
+       -1,  -1,  -6,  -3,   4,   5,  -1,  -9,  -2, -74, -70,  11,  -1, -16,
+       -2,  12,  13,  -1,  14, -21,  -2,  15, -76,  18,  -1,  19,  20, -75,
+       23,  -1,  -1,  24,  -1,  -1, -27,  -2,  25,  26, -71, -30,  -2,  29,
+      -70,  -1,  -1,  -1,  32,  33,  -1,  -1,  34,  35,  -1,  36,  -1,  37,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  38,  -1,  -1,  -1,  39,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -6917,7 +6917,7 @@ IR::UnionDef_ptr _TAO_collocation_POA_IR_UnionDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -6941,14 +6941,14 @@ IR::UnionDef_ptr _TAO_collocation_POA_IR_UnionDef_Stub_Factory (
 int _TAO_collocation_POA_IR_UnionDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_UnionDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_UnionDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_UnionDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_UnionDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_UnionDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_UnionDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_UnionDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -6974,8 +6974,8 @@ POA_IR::UnionDef::~UnionDef (void)
 
 void POA_IR::UnionDef::_get_discriminator_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7000,8 +7000,8 @@ void POA_IR::UnionDef::_get_discriminator_type_skel (
 
 void POA_IR::UnionDef::_get_discriminator_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7026,8 +7026,8 @@ void POA_IR::UnionDef::_get_discriminator_type_def_skel (
 
 void POA_IR::UnionDef::_set_discriminator_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7053,8 +7053,8 @@ void POA_IR::UnionDef::_set_discriminator_type_def_skel (
 
 void POA_IR::UnionDef::_get_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7079,8 +7079,8 @@ void POA_IR::UnionDef::_get_members_skel (
 
 void POA_IR::UnionDef::_set_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7105,7 +7105,7 @@ void POA_IR::UnionDef::_set_members_skel (
 }
 
 void POA_IR::UnionDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -7117,10 +7117,10 @@ void POA_IR::UnionDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -7129,7 +7129,7 @@ void POA_IR::UnionDef::_is_a_skel (
 }
 
 void POA_IR::UnionDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -7138,7 +7138,7 @@ void POA_IR::UnionDef::_non_existent_skel (
   POA_IR::UnionDef *_tao_impl = (POA_IR::UnionDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -7236,7 +7236,7 @@ POA_IR::_tao_thru_poa_collocated_UnionDef::_tao_thru_poa_collocated_UnionDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -7247,7 +7247,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UnionDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7270,7 +7270,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UnionDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7297,7 +7297,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_UnionDef::discriminator_typ
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7326,7 +7326,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_UnionDef::discriminator_type_de
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7354,7 +7354,7 @@ void POA_IR::_tao_thru_poa_collocated_UnionDef::discriminator_type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7384,7 +7384,7 @@ IR::UnionMemberSeq * POA_IR::_tao_thru_poa_collocated_UnionDef::members  (
   IR::UnionMemberSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7412,7 +7412,7 @@ void POA_IR::_tao_thru_poa_collocated_UnionDef::members  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7534,9 +7534,9 @@ TAO_IR_EnumDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14, 
-       -1,  15,  -1,  16,  17,  -1, -18,  -2, -38,  20,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  21, 
+       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14,
+       -1,  15,  -1,  16,  17,  -1, -18,  -2, -38,  20,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  21,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -7578,7 +7578,7 @@ IR::EnumDef_ptr _TAO_collocation_POA_IR_EnumDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -7602,14 +7602,14 @@ IR::EnumDef_ptr _TAO_collocation_POA_IR_EnumDef_Stub_Factory (
 int _TAO_collocation_POA_IR_EnumDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_EnumDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_EnumDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_EnumDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_EnumDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_EnumDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_EnumDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_EnumDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -7634,8 +7634,8 @@ POA_IR::EnumDef::~EnumDef (void)
 
 void POA_IR::EnumDef::_get_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7660,8 +7660,8 @@ void POA_IR::EnumDef::_get_members_skel (
 
 void POA_IR::EnumDef::_set_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -7686,7 +7686,7 @@ void POA_IR::EnumDef::_set_members_skel (
 }
 
 void POA_IR::EnumDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -7698,10 +7698,10 @@ void POA_IR::EnumDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -7710,7 +7710,7 @@ void POA_IR::EnumDef::_is_a_skel (
 }
 
 void POA_IR::EnumDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -7719,7 +7719,7 @@ void POA_IR::EnumDef::_non_existent_skel (
   POA_IR::EnumDef *_tao_impl = (POA_IR::EnumDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -7813,7 +7813,7 @@ POA_IR::_tao_thru_poa_collocated_EnumDef::_tao_thru_poa_collocated_EnumDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -7824,7 +7824,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EnumDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7847,7 +7847,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EnumDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7874,7 +7874,7 @@ IR::EnumMemberSeq * POA_IR::_tao_thru_poa_collocated_EnumDef::members  (
   IR::EnumMemberSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -7902,7 +7902,7 @@ void POA_IR::_tao_thru_poa_collocated_EnumDef::members  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8024,9 +8024,9 @@ TAO_IR_AliasDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14, 
-       -1,  15,  -1,  16,  17,  -1, -18,  -2, -38,  20,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  21, 
+       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14,
+       -1,  15,  -1,  16,  17,  -1, -18,  -2, -38,  20,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  21,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -8068,7 +8068,7 @@ IR::AliasDef_ptr _TAO_collocation_POA_IR_AliasDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -8092,14 +8092,14 @@ IR::AliasDef_ptr _TAO_collocation_POA_IR_AliasDef_Stub_Factory (
 int _TAO_collocation_POA_IR_AliasDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_AliasDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_AliasDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_AliasDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_AliasDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_AliasDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_AliasDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_AliasDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -8124,8 +8124,8 @@ POA_IR::AliasDef::~AliasDef (void)
 
 void POA_IR::AliasDef::_get_original_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -8150,8 +8150,8 @@ void POA_IR::AliasDef::_get_original_type_def_skel (
 
 void POA_IR::AliasDef::_set_original_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -8176,7 +8176,7 @@ void POA_IR::AliasDef::_set_original_type_def_skel (
 }
 
 void POA_IR::AliasDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -8188,10 +8188,10 @@ void POA_IR::AliasDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -8200,7 +8200,7 @@ void POA_IR::AliasDef::_is_a_skel (
 }
 
 void POA_IR::AliasDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -8209,7 +8209,7 @@ void POA_IR::AliasDef::_non_existent_skel (
   POA_IR::AliasDef *_tao_impl = (POA_IR::AliasDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -8303,7 +8303,7 @@ POA_IR::_tao_thru_poa_collocated_AliasDef::_tao_thru_poa_collocated_AliasDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -8314,7 +8314,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AliasDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8337,7 +8337,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AliasDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8364,7 +8364,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_AliasDef::original_type_def  (
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8392,7 +8392,7 @@ void POA_IR::_tao_thru_poa_collocated_AliasDef::original_type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8512,9 +8512,9 @@ TAO_IR_NativeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14, 
-       -1,  15,  -1,  16,  17,  -1,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  19, 
+       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14,
+       -1,  15,  -1,  16,  17,  -1,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  19,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -8556,7 +8556,7 @@ IR::NativeDef_ptr _TAO_collocation_POA_IR_NativeDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -8580,14 +8580,14 @@ IR::NativeDef_ptr _TAO_collocation_POA_IR_NativeDef_Stub_Factory (
 int _TAO_collocation_POA_IR_NativeDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_NativeDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_NativeDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_NativeDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_NativeDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_NativeDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_NativeDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_NativeDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -8611,7 +8611,7 @@ POA_IR::NativeDef::~NativeDef (void)
 }
 
 void POA_IR::NativeDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -8623,10 +8623,10 @@ void POA_IR::NativeDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -8635,7 +8635,7 @@ void POA_IR::NativeDef::_is_a_skel (
 }
 
 void POA_IR::NativeDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -8644,7 +8644,7 @@ void POA_IR::NativeDef::_non_existent_skel (
   POA_IR::NativeDef *_tao_impl = (POA_IR::NativeDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -8738,7 +8738,7 @@ POA_IR::_tao_thru_poa_collocated_NativeDef::_tao_thru_poa_collocated_NativeDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -8749,7 +8749,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_NativeDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8772,7 +8772,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_NativeDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -8903,7 +8903,7 @@ IR::PrimitiveDef_ptr _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -8927,14 +8927,14 @@ IR::PrimitiveDef_ptr _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory (
 int _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_PrimitiveDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_PrimitiveDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_PrimitiveDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -8957,8 +8957,8 @@ POA_IR::PrimitiveDef::~PrimitiveDef (void)
 
 void POA_IR::PrimitiveDef::_get_kind_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -8982,7 +8982,7 @@ void POA_IR::PrimitiveDef::_get_kind_skel (
 }
 
 void POA_IR::PrimitiveDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -8994,10 +8994,10 @@ void POA_IR::PrimitiveDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -9006,7 +9006,7 @@ void POA_IR::PrimitiveDef::_is_a_skel (
 }
 
 void POA_IR::PrimitiveDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -9015,7 +9015,7 @@ void POA_IR::PrimitiveDef::_non_existent_skel (
   POA_IR::PrimitiveDef *_tao_impl = (POA_IR::PrimitiveDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -9101,7 +9101,7 @@ POA_IR::_tao_thru_poa_collocated_PrimitiveDef::_tao_thru_poa_collocated_Primitiv
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -9112,7 +9112,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimitiveDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9135,7 +9135,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimitiveDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9162,7 +9162,7 @@ IR::PrimitiveKind POA_IR::_tao_thru_poa_collocated_PrimitiveDef::kind  (
   IR::PrimitiveKind _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9272,8 +9272,8 @@ TAO_IR_StringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7, -25,  -1,  -1,  10, 
-       -1,  -1,  -1,  -1,  11, 
+       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7, -25,  -1,  -1,  10,
+       -1,  -1,  -1,  -1,  11,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -9315,7 +9315,7 @@ IR::StringDef_ptr _TAO_collocation_POA_IR_StringDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -9339,14 +9339,14 @@ IR::StringDef_ptr _TAO_collocation_POA_IR_StringDef_Stub_Factory (
 int _TAO_collocation_POA_IR_StringDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_StringDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_StringDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_StringDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_StringDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_StringDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_StringDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_StringDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -9369,8 +9369,8 @@ POA_IR::StringDef::~StringDef (void)
 
 void POA_IR::StringDef::_get_bound_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -9395,8 +9395,8 @@ void POA_IR::StringDef::_get_bound_skel (
 
 void POA_IR::StringDef::_set_bound_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -9421,7 +9421,7 @@ void POA_IR::StringDef::_set_bound_skel (
 }
 
 void POA_IR::StringDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -9433,10 +9433,10 @@ void POA_IR::StringDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -9445,7 +9445,7 @@ void POA_IR::StringDef::_is_a_skel (
 }
 
 void POA_IR::StringDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -9454,7 +9454,7 @@ void POA_IR::StringDef::_non_existent_skel (
   POA_IR::StringDef *_tao_impl = (POA_IR::StringDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -9540,7 +9540,7 @@ POA_IR::_tao_thru_poa_collocated_StringDef::_tao_thru_poa_collocated_StringDef (
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -9551,7 +9551,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StringDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9574,7 +9574,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_StringDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9601,7 +9601,7 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_StringDef::bound  (
   CORBA::ULong _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9629,7 +9629,7 @@ void POA_IR::_tao_thru_poa_collocated_StringDef::bound  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -9740,8 +9740,8 @@ TAO_IR_WstringDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7, -25,  -1,  -1,  10, 
-       -1,  -1,  -1,  -1,  11, 
+       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7, -25,  -1,  -1,  10,
+       -1,  -1,  -1,  -1,  11,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -9783,7 +9783,7 @@ IR::WstringDef_ptr _TAO_collocation_POA_IR_WstringDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -9807,14 +9807,14 @@ IR::WstringDef_ptr _TAO_collocation_POA_IR_WstringDef_Stub_Factory (
 int _TAO_collocation_POA_IR_WstringDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_WstringDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_WstringDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_WstringDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_WstringDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_WstringDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_WstringDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_WstringDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -9837,8 +9837,8 @@ POA_IR::WstringDef::~WstringDef (void)
 
 void POA_IR::WstringDef::_get_bound_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -9863,8 +9863,8 @@ void POA_IR::WstringDef::_get_bound_skel (
 
 void POA_IR::WstringDef::_set_bound_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -9889,7 +9889,7 @@ void POA_IR::WstringDef::_set_bound_skel (
 }
 
 void POA_IR::WstringDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -9901,10 +9901,10 @@ void POA_IR::WstringDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -9913,7 +9913,7 @@ void POA_IR::WstringDef::_is_a_skel (
 }
 
 void POA_IR::WstringDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -9922,7 +9922,7 @@ void POA_IR::WstringDef::_non_existent_skel (
   POA_IR::WstringDef *_tao_impl = (POA_IR::WstringDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -10008,7 +10008,7 @@ POA_IR::_tao_thru_poa_collocated_WstringDef::_tao_thru_poa_collocated_WstringDef
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -10019,7 +10019,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_WstringDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10042,7 +10042,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_WstringDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10069,7 +10069,7 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_WstringDef::bound  (
   CORBA::ULong _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10097,7 +10097,7 @@ void POA_IR::_tao_thru_poa_collocated_WstringDef::bound  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10210,8 +10210,8 @@ TAO_IR_FixedDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -8,  -2, -10,  -2,   5,  -1,   6,  -1,   7, -27, -26,  -1,  12, 
-       -1,  -1,  -1,  -1,  13, 
+       -1,  -8,  -2, -10,  -2,   5,  -1,   6,  -1,   7, -27, -26,  -1,  12,
+       -1,  -1,  -1,  -1,  13,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -10253,7 +10253,7 @@ IR::FixedDef_ptr _TAO_collocation_POA_IR_FixedDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -10277,14 +10277,14 @@ IR::FixedDef_ptr _TAO_collocation_POA_IR_FixedDef_Stub_Factory (
 int _TAO_collocation_POA_IR_FixedDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_FixedDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_FixedDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_FixedDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_FixedDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_FixedDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_FixedDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_FixedDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -10307,8 +10307,8 @@ POA_IR::FixedDef::~FixedDef (void)
 
 void POA_IR::FixedDef::_get_digits_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10333,8 +10333,8 @@ void POA_IR::FixedDef::_get_digits_skel (
 
 void POA_IR::FixedDef::_set_digits_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10360,8 +10360,8 @@ void POA_IR::FixedDef::_set_digits_skel (
 
 void POA_IR::FixedDef::_get_scale_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10386,8 +10386,8 @@ void POA_IR::FixedDef::_get_scale_skel (
 
 void POA_IR::FixedDef::_set_scale_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10412,7 +10412,7 @@ void POA_IR::FixedDef::_set_scale_skel (
 }
 
 void POA_IR::FixedDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -10424,10 +10424,10 @@ void POA_IR::FixedDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -10436,7 +10436,7 @@ void POA_IR::FixedDef::_is_a_skel (
 }
 
 void POA_IR::FixedDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -10445,7 +10445,7 @@ void POA_IR::FixedDef::_non_existent_skel (
   POA_IR::FixedDef *_tao_impl = (POA_IR::FixedDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -10531,7 +10531,7 @@ POA_IR::_tao_thru_poa_collocated_FixedDef::_tao_thru_poa_collocated_FixedDef (
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -10542,7 +10542,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FixedDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10565,7 +10565,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FixedDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10592,7 +10592,7 @@ CORBA::UShort POA_IR::_tao_thru_poa_collocated_FixedDef::digits  (
   CORBA::UShort _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10620,7 +10620,7 @@ void POA_IR::_tao_thru_poa_collocated_FixedDef::digits  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10650,7 +10650,7 @@ CORBA::Short POA_IR::_tao_thru_poa_collocated_FixedDef::scale  (
   CORBA::Short _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10678,7 +10678,7 @@ void POA_IR::_tao_thru_poa_collocated_FixedDef::scale  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -10792,8 +10792,8 @@ TAO_IR_SequenceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7, -28,  -1,  -1,  10, 
-       -1,  -1,  -1,  11,  12, -13,  -2, -23, 
+       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7, -28,  -1,  -1,  10,
+       -1,  -1,  -1,  11,  12, -13,  -2, -23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -10835,7 +10835,7 @@ IR::SequenceDef_ptr _TAO_collocation_POA_IR_SequenceDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -10859,14 +10859,14 @@ IR::SequenceDef_ptr _TAO_collocation_POA_IR_SequenceDef_Stub_Factory (
 int _TAO_collocation_POA_IR_SequenceDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_SequenceDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_SequenceDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_SequenceDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_SequenceDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_SequenceDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_SequenceDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_SequenceDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -10889,8 +10889,8 @@ POA_IR::SequenceDef::~SequenceDef (void)
 
 void POA_IR::SequenceDef::_get_bound_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10915,8 +10915,8 @@ void POA_IR::SequenceDef::_get_bound_skel (
 
 void POA_IR::SequenceDef::_set_bound_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10942,8 +10942,8 @@ void POA_IR::SequenceDef::_set_bound_skel (
 
 void POA_IR::SequenceDef::_get_element_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10968,8 +10968,8 @@ void POA_IR::SequenceDef::_get_element_type_skel (
 
 void POA_IR::SequenceDef::_get_element_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -10994,8 +10994,8 @@ void POA_IR::SequenceDef::_get_element_type_def_skel (
 
 void POA_IR::SequenceDef::_set_element_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -11020,7 +11020,7 @@ void POA_IR::SequenceDef::_set_element_type_def_skel (
 }
 
 void POA_IR::SequenceDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -11032,10 +11032,10 @@ void POA_IR::SequenceDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -11044,7 +11044,7 @@ void POA_IR::SequenceDef::_is_a_skel (
 }
 
 void POA_IR::SequenceDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -11053,7 +11053,7 @@ void POA_IR::SequenceDef::_non_existent_skel (
   POA_IR::SequenceDef *_tao_impl = (POA_IR::SequenceDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -11139,7 +11139,7 @@ POA_IR::_tao_thru_poa_collocated_SequenceDef::_tao_thru_poa_collocated_SequenceD
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -11150,7 +11150,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_SequenceDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11173,7 +11173,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_SequenceDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11200,7 +11200,7 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_SequenceDef::bound  (
   CORBA::ULong _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11228,7 +11228,7 @@ void POA_IR::_tao_thru_poa_collocated_SequenceDef::bound  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11258,7 +11258,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_SequenceDef::element_type  
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11287,7 +11287,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_SequenceDef::element_type_def  
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11315,7 +11315,7 @@ void POA_IR::_tao_thru_poa_collocated_SequenceDef::element_type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11429,8 +11429,8 @@ TAO_IR_ArrayDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7,  -1, -29,  -1,  10, 
-       -1,  -1,  -1,  11,  12, -13,  -2, -23, 
+       -1,  -1,  -1,  -8,  -2,   5,  -1,   6,  -1,   7,  -1, -29,  -1,  10,
+       -1,  -1,  -1,  11,  12, -13,  -2, -23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -11472,7 +11472,7 @@ IR::ArrayDef_ptr _TAO_collocation_POA_IR_ArrayDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -11496,14 +11496,14 @@ IR::ArrayDef_ptr _TAO_collocation_POA_IR_ArrayDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ArrayDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ArrayDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ArrayDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ArrayDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ArrayDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ArrayDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ArrayDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ArrayDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -11526,8 +11526,8 @@ POA_IR::ArrayDef::~ArrayDef (void)
 
 void POA_IR::ArrayDef::_get_length_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -11552,8 +11552,8 @@ void POA_IR::ArrayDef::_get_length_skel (
 
 void POA_IR::ArrayDef::_set_length_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -11579,8 +11579,8 @@ void POA_IR::ArrayDef::_set_length_skel (
 
 void POA_IR::ArrayDef::_get_element_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -11605,8 +11605,8 @@ void POA_IR::ArrayDef::_get_element_type_skel (
 
 void POA_IR::ArrayDef::_get_element_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -11631,8 +11631,8 @@ void POA_IR::ArrayDef::_get_element_type_def_skel (
 
 void POA_IR::ArrayDef::_set_element_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -11657,7 +11657,7 @@ void POA_IR::ArrayDef::_set_element_type_def_skel (
 }
 
 void POA_IR::ArrayDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -11669,10 +11669,10 @@ void POA_IR::ArrayDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -11681,7 +11681,7 @@ void POA_IR::ArrayDef::_is_a_skel (
 }
 
 void POA_IR::ArrayDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -11690,7 +11690,7 @@ void POA_IR::ArrayDef::_non_existent_skel (
   POA_IR::ArrayDef *_tao_impl = (POA_IR::ArrayDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -11776,7 +11776,7 @@ POA_IR::_tao_thru_poa_collocated_ArrayDef::_tao_thru_poa_collocated_ArrayDef (
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -11787,7 +11787,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ArrayDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11810,7 +11810,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ArrayDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11837,7 +11837,7 @@ CORBA::ULong POA_IR::_tao_thru_poa_collocated_ArrayDef::length  (
   CORBA::ULong _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11865,7 +11865,7 @@ void POA_IR::_tao_thru_poa_collocated_ArrayDef::length  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11895,7 +11895,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ArrayDef::element_type  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11924,7 +11924,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ArrayDef::element_type_def  (
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -11952,7 +11952,7 @@ void POA_IR::_tao_thru_poa_collocated_ArrayDef::element_type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -12089,10 +12089,10 @@ TAO_IR_ExceptionDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -6,  -3,   5,  -1,  -9,  -2, -57, -54,  11,  -1, -14, 
-       -2,  12,  13, -55,  16,  17,  18,  19,  -1,  -1, -21,  -2,  20, -54, 
-       23, -26,  -2,  24,  25, -55,  -1,  28,  29,  30,  -1,  -1,  -1,  31, 
-       -1,  32,  -1,  -1,  33,  34,  35,  -1,  36,  37, 
+       -1,  -1,  -1,  -6,  -3,   5,  -1,  -9,  -2, -57, -54,  11,  -1, -14,
+       -2,  12,  13, -55,  16,  17,  18,  19,  -1,  -1, -21,  -2,  20, -54,
+       23, -26,  -2,  24,  25, -55,  -1,  28,  29,  30,  -1,  -1,  -1,  31,
+       -1,  32,  -1,  -1,  33,  34,  35,  -1,  36,  37,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -12134,7 +12134,7 @@ IR::ExceptionDef_ptr _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -12158,14 +12158,14 @@ IR::ExceptionDef_ptr _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ExceptionDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ExceptionDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ExceptionDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -12189,8 +12189,8 @@ POA_IR::ExceptionDef::~ExceptionDef (void)
 
 void POA_IR::ExceptionDef::_get_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12215,8 +12215,8 @@ void POA_IR::ExceptionDef::_get_type_skel (
 
 void POA_IR::ExceptionDef::_get_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12241,8 +12241,8 @@ void POA_IR::ExceptionDef::_get_members_skel (
 
 void POA_IR::ExceptionDef::_set_members_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12267,7 +12267,7 @@ void POA_IR::ExceptionDef::_set_members_skel (
 }
 
 void POA_IR::ExceptionDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -12279,10 +12279,10 @@ void POA_IR::ExceptionDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -12291,7 +12291,7 @@ void POA_IR::ExceptionDef::_is_a_skel (
 }
 
 void POA_IR::ExceptionDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -12300,7 +12300,7 @@ void POA_IR::ExceptionDef::_non_existent_skel (
   POA_IR::ExceptionDef *_tao_impl = (POA_IR::ExceptionDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -12390,7 +12390,7 @@ POA_IR::_tao_thru_poa_collocated_ExceptionDef::_tao_thru_poa_collocated_Exceptio
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Container) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -12401,7 +12401,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ExceptionDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -12424,7 +12424,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ExceptionDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -12451,7 +12451,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ExceptionDef::type  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -12480,7 +12480,7 @@ IR::StructMemberSeq * POA_IR::_tao_thru_poa_collocated_ExceptionDef::members  (
   IR::StructMemberSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -12508,7 +12508,7 @@ void POA_IR::_tao_thru_poa_collocated_ExceptionDef::members  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -12632,9 +12632,9 @@ TAO_IR_AttributeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -5,   4,   5,  -1, -43,   8, -43, -14,  -2, -38,  16, 
-       -1,  17,  -1,  18,  19,  -1,  -1, -20,  -2, -38,  -1,  -1,  -1,  -1, 
-       22,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  23, 
+       -6,  -2,  -9,  -5,   4,   5,  -1, -43,   8, -43, -14,  -2, -38,  16,
+       -1,  17,  -1,  18,  19,  -1,  -1, -20,  -2, -38,  -1,  -1,  -1,  -1,
+       22,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -12676,7 +12676,7 @@ IR::AttributeDef_ptr _TAO_collocation_POA_IR_AttributeDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -12700,14 +12700,14 @@ IR::AttributeDef_ptr _TAO_collocation_POA_IR_AttributeDef_Stub_Factory (
 int _TAO_collocation_POA_IR_AttributeDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_AttributeDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_AttributeDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_AttributeDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_AttributeDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_AttributeDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_AttributeDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_AttributeDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -12730,8 +12730,8 @@ POA_IR::AttributeDef::~AttributeDef (void)
 
 void POA_IR::AttributeDef::_get_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12756,8 +12756,8 @@ void POA_IR::AttributeDef::_get_type_skel (
 
 void POA_IR::AttributeDef::_get_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12782,8 +12782,8 @@ void POA_IR::AttributeDef::_get_type_def_skel (
 
 void POA_IR::AttributeDef::_set_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12809,8 +12809,8 @@ void POA_IR::AttributeDef::_set_type_def_skel (
 
 void POA_IR::AttributeDef::_get_mode_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12835,8 +12835,8 @@ void POA_IR::AttributeDef::_get_mode_skel (
 
 void POA_IR::AttributeDef::_set_mode_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -12862,7 +12862,7 @@ void POA_IR::AttributeDef::_set_mode_skel (
 }
 
 void POA_IR::AttributeDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -12874,10 +12874,10 @@ void POA_IR::AttributeDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -12886,7 +12886,7 @@ void POA_IR::AttributeDef::_is_a_skel (
 }
 
 void POA_IR::AttributeDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -12895,7 +12895,7 @@ void POA_IR::AttributeDef::_non_existent_skel (
   POA_IR::AttributeDef *_tao_impl = (POA_IR::AttributeDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -12981,7 +12981,7 @@ POA_IR::_tao_thru_poa_collocated_AttributeDef::_tao_thru_poa_collocated_Attribut
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -12992,7 +12992,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AttributeDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13015,7 +13015,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_AttributeDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13042,7 +13042,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_AttributeDef::type  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13071,7 +13071,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_AttributeDef::type_def  (
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13099,7 +13099,7 @@ void POA_IR::_tao_thru_poa_collocated_AttributeDef::type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13129,7 +13129,7 @@ IR::AttributeMode POA_IR::_tao_thru_poa_collocated_AttributeDef::mode  (
   IR::AttributeMode _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13157,7 +13157,7 @@ void POA_IR::_tao_thru_poa_collocated_AttributeDef::mode  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13292,7 +13292,7 @@ TAO_IR_OperationDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
             {
-              const class TAO_operation_db_entry   *resword; 
+              const class TAO_operation_db_entry   *resword;
 
               switch (key)
                 {
@@ -13380,7 +13380,7 @@ IR::OperationDef_ptr _TAO_collocation_POA_IR_OperationDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -13404,14 +13404,14 @@ IR::OperationDef_ptr _TAO_collocation_POA_IR_OperationDef_Stub_Factory (
 int _TAO_collocation_POA_IR_OperationDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_OperationDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_OperationDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_OperationDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_OperationDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_OperationDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_OperationDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_OperationDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -13434,8 +13434,8 @@ POA_IR::OperationDef::~OperationDef (void)
 
 void POA_IR::OperationDef::_get_result_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13460,8 +13460,8 @@ void POA_IR::OperationDef::_get_result_skel (
 
 void POA_IR::OperationDef::_get_result_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13486,8 +13486,8 @@ void POA_IR::OperationDef::_get_result_def_skel (
 
 void POA_IR::OperationDef::_set_result_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13513,8 +13513,8 @@ void POA_IR::OperationDef::_set_result_def_skel (
 
 void POA_IR::OperationDef::_get_params_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13539,8 +13539,8 @@ void POA_IR::OperationDef::_get_params_skel (
 
 void POA_IR::OperationDef::_set_params_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13566,8 +13566,8 @@ void POA_IR::OperationDef::_set_params_skel (
 
 void POA_IR::OperationDef::_get_mode_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13592,8 +13592,8 @@ void POA_IR::OperationDef::_get_mode_skel (
 
 void POA_IR::OperationDef::_set_mode_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13619,8 +13619,8 @@ void POA_IR::OperationDef::_set_mode_skel (
 
 void POA_IR::OperationDef::_get_contexts_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13645,8 +13645,8 @@ void POA_IR::OperationDef::_get_contexts_skel (
 
 void POA_IR::OperationDef::_set_contexts_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13672,8 +13672,8 @@ void POA_IR::OperationDef::_set_contexts_skel (
 
 void POA_IR::OperationDef::_get_exceptions_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13698,8 +13698,8 @@ void POA_IR::OperationDef::_get_exceptions_skel (
 
 void POA_IR::OperationDef::_set_exceptions_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -13724,7 +13724,7 @@ void POA_IR::OperationDef::_set_exceptions_skel (
 }
 
 void POA_IR::OperationDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -13736,10 +13736,10 @@ void POA_IR::OperationDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -13748,7 +13748,7 @@ void POA_IR::OperationDef::_is_a_skel (
 }
 
 void POA_IR::OperationDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -13757,7 +13757,7 @@ void POA_IR::OperationDef::_non_existent_skel (
   POA_IR::OperationDef *_tao_impl = (POA_IR::OperationDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -13843,7 +13843,7 @@ POA_IR::_tao_thru_poa_collocated_OperationDef::_tao_thru_poa_collocated_Operatio
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -13854,7 +13854,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_OperationDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13877,7 +13877,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_OperationDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13904,7 +13904,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_OperationDef::result  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13933,7 +13933,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_OperationDef::result_def  (
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13961,7 +13961,7 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::result_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -13991,7 +13991,7 @@ IR::ParDescriptionSeq * POA_IR::_tao_thru_poa_collocated_OperationDef::params  (
   IR::ParDescriptionSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14019,7 +14019,7 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::params  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14049,7 +14049,7 @@ IR::OperationMode POA_IR::_tao_thru_poa_collocated_OperationDef::mode  (
   IR::OperationMode _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14077,7 +14077,7 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::mode  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14107,7 +14107,7 @@ IR::ContextIdSeq * POA_IR::_tao_thru_poa_collocated_OperationDef::contexts  (
   IR::ContextIdSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14135,7 +14135,7 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::contexts  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14165,7 +14165,7 @@ IR::ExceptionDefSeq * POA_IR::_tao_thru_poa_collocated_OperationDef::exceptions 
   IR::ExceptionDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14193,7 +14193,7 @@ void POA_IR::_tao_thru_poa_collocated_OperationDef::exceptions  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14337,11 +14337,11 @@ TAO_IR_InterfaceDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 
   static const signed char lookup[] =
     {
-       -11,   -2,  -14,   -2,    4,    5,    6,  -17,   -2,  103,   -1,   10,   -1,  -78, 
-        13,  -78,   16,  -75,   19,   -1,   20,   21,  -22,   -2,  -26,   -2,  -29,   -2, 
-       -34,   -2,  -73,   24,   25,  -74,   -1,   28,  -75,   31,   32,   -1,   33,  -78, 
-        36,   37,  -38,   -2,  -67,   -7,   -3,   -1,   -1,   40,   -1,   -1,   -1,   -1, 
-        41,   -1,   -1,   -1,   -1,   -1,   -1,   42,   -1,   43, 
+       -11,   -2,  -14,   -2,    4,    5,    6,  -17,   -2,  103,   -1,   10,   -1,  -78,
+        13,  -78,   16,  -75,   19,   -1,   20,   21,  -22,   -2,  -26,   -2,  -29,   -2,
+       -34,   -2,  -73,   24,   25,  -74,   -1,   28,  -75,   31,   32,   -1,   33,  -78,
+        36,   37,  -38,   -2,  -67,   -7,   -3,   -1,   -1,   40,   -1,   -1,   -1,   -1,
+        41,   -1,   -1,   -1,   -1,   -1,   -1,   42,   -1,   43,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -14383,7 +14383,7 @@ IR::InterfaceDef_ptr _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -14407,14 +14407,14 @@ IR::InterfaceDef_ptr _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory (
 int _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_InterfaceDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_InterfaceDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_InterfaceDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -14439,8 +14439,8 @@ POA_IR::InterfaceDef::~InterfaceDef (void)
 
 void POA_IR::InterfaceDef::_get_base_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14465,8 +14465,8 @@ void POA_IR::InterfaceDef::_get_base_interfaces_skel (
 
 void POA_IR::InterfaceDef::_set_base_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14492,8 +14492,8 @@ void POA_IR::InterfaceDef::_set_base_interfaces_skel (
 
 void POA_IR::InterfaceDef::_get_is_abstract_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14518,8 +14518,8 @@ void POA_IR::InterfaceDef::_get_is_abstract_skel (
 
 void POA_IR::InterfaceDef::_set_is_abstract_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14545,8 +14545,8 @@ void POA_IR::InterfaceDef::_set_is_abstract_skel (
 
 void POA_IR::InterfaceDef::_get_is_local_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14571,8 +14571,8 @@ void POA_IR::InterfaceDef::_get_is_local_skel (
 
 void POA_IR::InterfaceDef::_set_is_local_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14598,8 +14598,8 @@ void POA_IR::InterfaceDef::_set_is_local_skel (
 
 void POA_IR::InterfaceDef::is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14631,8 +14631,8 @@ void POA_IR::InterfaceDef::is_a_skel (
 
 void POA_IR::InterfaceDef::create_attribute_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14682,8 +14682,8 @@ void POA_IR::InterfaceDef::create_attribute_skel (
 
 void POA_IR::InterfaceDef::create_operation_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -14735,7 +14735,7 @@ void POA_IR::InterfaceDef::create_operation_skel (
 }
 
 void POA_IR::InterfaceDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -14747,10 +14747,10 @@ void POA_IR::InterfaceDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -14759,7 +14759,7 @@ void POA_IR::InterfaceDef::_is_a_skel (
 }
 
 void POA_IR::InterfaceDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -14768,7 +14768,7 @@ void POA_IR::InterfaceDef::_non_existent_skel (
   POA_IR::InterfaceDef *_tao_impl = (POA_IR::InterfaceDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -14862,7 +14862,7 @@ POA_IR::_tao_thru_poa_collocated_InterfaceDef::_tao_thru_poa_collocated_Interfac
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -14873,7 +14873,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14896,7 +14896,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14923,7 +14923,7 @@ IR::InterfaceDefSeq * POA_IR::_tao_thru_poa_collocated_InterfaceDef::base_interf
   IR::InterfaceDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14951,7 +14951,7 @@ void POA_IR::_tao_thru_poa_collocated_InterfaceDef::base_interfaces  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -14981,7 +14981,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_abstract  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15009,7 +15009,7 @@ void POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_abstract  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15039,7 +15039,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_local  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15067,7 +15067,7 @@ void POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_local  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15098,7 +15098,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_InterfaceDef::is_a  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15135,7 +15135,7 @@ IR::AttributeDef_ptr POA_IR::_tao_thru_poa_collocated_InterfaceDef::create_attri
   IR::AttributeDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15179,7 +15179,7 @@ IR::OperationDef_ptr POA_IR::_tao_thru_poa_collocated_InterfaceDef::create_opera
   IR::OperationDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15310,9 +15310,9 @@ TAO_IR_ValueMemberDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 
   static const signed char lookup[] =
     {
-      -12,  -2, -14,  -2,   4,   5,  -1,  53,   8,  46,  -1, -47, -46,  16, 
-       -1,  17,  -1,  18,  19,  -9,  -3, -20,  -2, -38,  -6,  -2,  -1,  -1, 
-       22,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  23, 
+      -12,  -2, -14,  -2,   4,   5,  -1,  53,   8,  46,  -1, -47, -46,  16,
+       -1,  17,  -1,  18,  19,  -9,  -3, -20,  -2, -38,  -6,  -2,  -1,  -1,
+       22,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -15354,7 +15354,7 @@ IR::ValueMemberDef_ptr _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -15378,14 +15378,14 @@ IR::ValueMemberDef_ptr _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ValueMemberDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ValueMemberDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ValueMemberDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -15408,8 +15408,8 @@ POA_IR::ValueMemberDef::~ValueMemberDef (void)
 
 void POA_IR::ValueMemberDef::_get_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -15434,8 +15434,8 @@ void POA_IR::ValueMemberDef::_get_type_skel (
 
 void POA_IR::ValueMemberDef::_get_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -15460,8 +15460,8 @@ void POA_IR::ValueMemberDef::_get_type_def_skel (
 
 void POA_IR::ValueMemberDef::_set_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -15487,8 +15487,8 @@ void POA_IR::ValueMemberDef::_set_type_def_skel (
 
 void POA_IR::ValueMemberDef::_get_access_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -15513,8 +15513,8 @@ void POA_IR::ValueMemberDef::_get_access_skel (
 
 void POA_IR::ValueMemberDef::_set_access_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -15539,7 +15539,7 @@ void POA_IR::ValueMemberDef::_set_access_skel (
 }
 
 void POA_IR::ValueMemberDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -15551,10 +15551,10 @@ void POA_IR::ValueMemberDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -15563,7 +15563,7 @@ void POA_IR::ValueMemberDef::_is_a_skel (
 }
 
 void POA_IR::ValueMemberDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -15572,7 +15572,7 @@ void POA_IR::ValueMemberDef::_non_existent_skel (
   POA_IR::ValueMemberDef *_tao_impl = (POA_IR::ValueMemberDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -15658,7 +15658,7 @@ POA_IR::_tao_thru_poa_collocated_ValueMemberDef::_tao_thru_poa_collocated_ValueM
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -15669,7 +15669,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueMemberDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15692,7 +15692,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueMemberDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15719,7 +15719,7 @@ CORBA::TypeCode_ptr POA_IR::_tao_thru_poa_collocated_ValueMemberDef::type  (
   CORBA::TypeCode_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15748,7 +15748,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ValueMemberDef::type_def  (
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15776,7 +15776,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueMemberDef::type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15806,7 +15806,7 @@ CORBA::Visibility POA_IR::_tao_thru_poa_collocated_ValueMemberDef::access  (
   CORBA::Visibility _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15834,7 +15834,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueMemberDef::access  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -15987,13 +15987,13 @@ TAO_IR_ValueDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -7,  -3,   4,   5,   6, -11,  -2, -92,  -1,  10, -13,  -2, 
-      -92, -88, -16,  -2,  15, -88,  -1,  -1,  -1,  -1,  18, -19,  -2, -87, 
-      -24,  -2,  21,  22,  -1,  23, -26,  -2, -93, -88, -28,  -2, -31,  -4, 
-      -89,  30,  -1, -90,  -1,  35,  36,  -1,  -1,  -1,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1, -39,  -2,  37,  38, -89, -41,  -2, -87,  -1,  -1,  43, 
-       -1,  44,  45,  -1,  -1,  -1,  -1,  46,  47, -48,  -2, -87,  50,  51, 
-       -1,  52, 
+       -1,  -1,  -7,  -3,   4,   5,   6, -11,  -2, -92,  -1,  10, -13,  -2,
+      -92, -88, -16,  -2,  15, -88,  -1,  -1,  -1,  -1,  18, -19,  -2, -87,
+      -24,  -2,  21,  22,  -1,  23, -26,  -2, -93, -88, -28,  -2, -31,  -4,
+      -89,  30,  -1, -90,  -1,  35,  36,  -1,  -1,  -1,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1, -39,  -2,  37,  38, -89, -41,  -2, -87,  -1,  -1,  43,
+       -1,  44,  45,  -1,  -1,  -1,  -1,  46,  47, -48,  -2, -87,  50,  51,
+       -1,  52,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -16035,7 +16035,7 @@ IR::ValueDef_ptr _TAO_collocation_POA_IR_ValueDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -16059,14 +16059,14 @@ IR::ValueDef_ptr _TAO_collocation_POA_IR_ValueDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ValueDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ValueDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ValueDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ValueDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ValueDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ValueDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ValueDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ValueDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -16091,8 +16091,8 @@ POA_IR::ValueDef::~ValueDef (void)
 
 void POA_IR::ValueDef::_get_supported_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16117,8 +16117,8 @@ void POA_IR::ValueDef::_get_supported_interfaces_skel (
 
 void POA_IR::ValueDef::_set_supported_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16144,8 +16144,8 @@ void POA_IR::ValueDef::_set_supported_interfaces_skel (
 
 void POA_IR::ValueDef::_get_initializers_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16170,8 +16170,8 @@ void POA_IR::ValueDef::_get_initializers_skel (
 
 void POA_IR::ValueDef::_set_initializers_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16197,8 +16197,8 @@ void POA_IR::ValueDef::_set_initializers_skel (
 
 void POA_IR::ValueDef::_get_base_value_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16223,8 +16223,8 @@ void POA_IR::ValueDef::_get_base_value_skel (
 
 void POA_IR::ValueDef::_set_base_value_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16250,8 +16250,8 @@ void POA_IR::ValueDef::_set_base_value_skel (
 
 void POA_IR::ValueDef::_get_abstract_base_values_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16276,8 +16276,8 @@ void POA_IR::ValueDef::_get_abstract_base_values_skel (
 
 void POA_IR::ValueDef::_set_abstract_base_values_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16303,8 +16303,8 @@ void POA_IR::ValueDef::_set_abstract_base_values_skel (
 
 void POA_IR::ValueDef::_get_is_abstract_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16329,8 +16329,8 @@ void POA_IR::ValueDef::_get_is_abstract_skel (
 
 void POA_IR::ValueDef::_set_is_abstract_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16356,8 +16356,8 @@ void POA_IR::ValueDef::_set_is_abstract_skel (
 
 void POA_IR::ValueDef::_get_is_custom_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16382,8 +16382,8 @@ void POA_IR::ValueDef::_get_is_custom_skel (
 
 void POA_IR::ValueDef::_set_is_custom_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16409,8 +16409,8 @@ void POA_IR::ValueDef::_set_is_custom_skel (
 
 void POA_IR::ValueDef::_get_is_truncatable_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16435,8 +16435,8 @@ void POA_IR::ValueDef::_get_is_truncatable_skel (
 
 void POA_IR::ValueDef::_set_is_truncatable_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16462,8 +16462,8 @@ void POA_IR::ValueDef::_set_is_truncatable_skel (
 
 void POA_IR::ValueDef::is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16495,8 +16495,8 @@ void POA_IR::ValueDef::is_a_skel (
 
 void POA_IR::ValueDef::create_value_member_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16540,8 +16540,8 @@ void POA_IR::ValueDef::create_value_member_skel (
 
 void POA_IR::ValueDef::create_attribute_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16591,8 +16591,8 @@ void POA_IR::ValueDef::create_attribute_skel (
 
 void POA_IR::ValueDef::create_operation_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -16644,7 +16644,7 @@ void POA_IR::ValueDef::create_operation_skel (
 }
 
 void POA_IR::ValueDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -16656,10 +16656,10 @@ void POA_IR::ValueDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -16668,7 +16668,7 @@ void POA_IR::ValueDef::_is_a_skel (
 }
 
 void POA_IR::ValueDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -16677,7 +16677,7 @@ void POA_IR::ValueDef::_non_existent_skel (
   POA_IR::ValueDef *_tao_impl = (POA_IR::ValueDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -16771,7 +16771,7 @@ POA_IR::_tao_thru_poa_collocated_ValueDef::_tao_thru_poa_collocated_ValueDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -16782,7 +16782,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16805,7 +16805,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16832,7 +16832,7 @@ IR::InterfaceDefSeq * POA_IR::_tao_thru_poa_collocated_ValueDef::supported_inter
   IR::InterfaceDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16860,7 +16860,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::supported_interfaces  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16890,7 +16890,7 @@ IR::InitializerSeq * POA_IR::_tao_thru_poa_collocated_ValueDef::initializers  (
   IR::InitializerSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16918,7 +16918,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::initializers  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16948,7 +16948,7 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::base_value  (
   IR::ValueDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -16976,7 +16976,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::base_value  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17006,7 +17006,7 @@ IR::ValueDefSeq * POA_IR::_tao_thru_poa_collocated_ValueDef::abstract_base_value
   IR::ValueDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17034,7 +17034,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::abstract_base_values  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17064,7 +17064,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_abstract  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17092,7 +17092,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::is_abstract  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17122,7 +17122,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_custom  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17150,7 +17150,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::is_custom  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17180,7 +17180,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_truncatable  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17208,7 +17208,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueDef::is_truncatable  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17239,7 +17239,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueDef::is_a  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17274,7 +17274,7 @@ IR::ValueMemberDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_value_m
   IR::ValueMemberDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17315,7 +17315,7 @@ IR::AttributeDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_attribute
   IR::AttributeDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17359,7 +17359,7 @@ IR::OperationDef_ptr POA_IR::_tao_thru_poa_collocated_ValueDef::create_operation
   IR::OperationDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17488,9 +17488,9 @@ TAO_IR_ValueBoxDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14, 
-       -1,  15,  -1,  16,  17,  -1, -18,  -2, -38,  20,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  21, 
+       -6,  -2,  -9,  -3,   4,   5,  -1, -43,   8, -43, -12,  -2, -38,  14,
+       -1,  15,  -1,  16,  17,  -1, -18,  -2, -38,  20,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  21,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -17532,7 +17532,7 @@ IR::ValueBoxDef_ptr _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -17556,14 +17556,14 @@ IR::ValueBoxDef_ptr _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ValueBoxDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ValueBoxDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ValueBoxDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -17588,8 +17588,8 @@ POA_IR::ValueBoxDef::~ValueBoxDef (void)
 
 void POA_IR::ValueBoxDef::_get_original_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -17614,8 +17614,8 @@ void POA_IR::ValueBoxDef::_get_original_type_def_skel (
 
 void POA_IR::ValueBoxDef::_set_original_type_def_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -17640,7 +17640,7 @@ void POA_IR::ValueBoxDef::_set_original_type_def_skel (
 }
 
 void POA_IR::ValueBoxDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -17652,10 +17652,10 @@ void POA_IR::ValueBoxDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -17664,7 +17664,7 @@ void POA_IR::ValueBoxDef::_is_a_skel (
 }
 
 void POA_IR::ValueBoxDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -17673,7 +17673,7 @@ void POA_IR::ValueBoxDef::_non_existent_skel (
   POA_IR::ValueBoxDef *_tao_impl = (POA_IR::ValueBoxDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -17767,7 +17767,7 @@ POA_IR::_tao_thru_poa_collocated_ValueBoxDef::_tao_thru_poa_collocated_ValueBoxD
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -17778,7 +17778,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueBoxDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17801,7 +17801,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ValueBoxDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17828,7 +17828,7 @@ IR::IDLType_ptr POA_IR::_tao_thru_poa_collocated_ValueBoxDef::original_type_def 
   IR::IDLType_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17856,7 +17856,7 @@ void POA_IR::_tao_thru_poa_collocated_ValueBoxDef::original_type_def  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -17976,9 +17976,9 @@ TAO_IR_ProvidesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       -1,  14,  -1,  15,  16,  17,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  19, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       -1,  14,  -1,  15,  16,  17,  -1,  -1,  -1,  18,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  19,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -18020,7 +18020,7 @@ IR::ProvidesDef_ptr _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -18044,14 +18044,14 @@ IR::ProvidesDef_ptr _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ProvidesDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ProvidesDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ProvidesDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -18074,8 +18074,8 @@ POA_IR::ProvidesDef::~ProvidesDef (void)
 
 void POA_IR::ProvidesDef::_get_interface_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -18099,7 +18099,7 @@ void POA_IR::ProvidesDef::_get_interface_type_skel (
 }
 
 void POA_IR::ProvidesDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -18111,10 +18111,10 @@ void POA_IR::ProvidesDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -18123,7 +18123,7 @@ void POA_IR::ProvidesDef::_is_a_skel (
 }
 
 void POA_IR::ProvidesDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -18132,7 +18132,7 @@ void POA_IR::ProvidesDef::_non_existent_skel (
   POA_IR::ProvidesDef *_tao_impl = (POA_IR::ProvidesDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -18218,7 +18218,7 @@ POA_IR::_tao_thru_poa_collocated_ProvidesDef::_tao_thru_poa_collocated_ProvidesD
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -18229,7 +18229,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ProvidesDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18252,7 +18252,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ProvidesDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18279,7 +18279,7 @@ IR::InterfaceDef_ptr POA_IR::_tao_thru_poa_collocated_ProvidesDef::interface_typ
   IR::InterfaceDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18399,9 +18399,9 @@ TAO_IR_UsesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       -1,  14,  15,  16,  17,  18,  -1,  -1,  -1,  19,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       -1,  14,  15,  16,  17,  18,  -1,  -1,  -1,  19,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -18443,7 +18443,7 @@ IR::UsesDef_ptr _TAO_collocation_POA_IR_UsesDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -18467,14 +18467,14 @@ IR::UsesDef_ptr _TAO_collocation_POA_IR_UsesDef_Stub_Factory (
 int _TAO_collocation_POA_IR_UsesDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_UsesDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_UsesDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_UsesDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_UsesDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_UsesDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_UsesDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_UsesDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -18497,8 +18497,8 @@ POA_IR::UsesDef::~UsesDef (void)
 
 void POA_IR::UsesDef::_get_interface_type_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -18523,8 +18523,8 @@ void POA_IR::UsesDef::_get_interface_type_skel (
 
 void POA_IR::UsesDef::_get_is_multiple_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -18548,7 +18548,7 @@ void POA_IR::UsesDef::_get_is_multiple_skel (
 }
 
 void POA_IR::UsesDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -18560,10 +18560,10 @@ void POA_IR::UsesDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -18572,7 +18572,7 @@ void POA_IR::UsesDef::_is_a_skel (
 }
 
 void POA_IR::UsesDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -18581,7 +18581,7 @@ void POA_IR::UsesDef::_non_existent_skel (
   POA_IR::UsesDef *_tao_impl = (POA_IR::UsesDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -18667,7 +18667,7 @@ POA_IR::_tao_thru_poa_collocated_UsesDef::_tao_thru_poa_collocated_UsesDef (
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -18678,7 +18678,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UsesDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18701,7 +18701,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UsesDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18728,7 +18728,7 @@ IR::InterfaceDef_ptr POA_IR::_tao_thru_poa_collocated_UsesDef::interface_type  (
   IR::InterfaceDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18757,7 +18757,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_UsesDef::is_multiple  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -18877,9 +18877,9 @@ TAO_IR_EventDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -18921,7 +18921,7 @@ IR::EventDef_ptr _TAO_collocation_POA_IR_EventDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -18945,14 +18945,14 @@ IR::EventDef_ptr _TAO_collocation_POA_IR_EventDef_Stub_Factory (
 int _TAO_collocation_POA_IR_EventDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_EventDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_EventDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_EventDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_EventDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_EventDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_EventDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_EventDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -18975,8 +18975,8 @@ POA_IR::EventDef::~EventDef (void)
 
 void POA_IR::EventDef::is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -19008,8 +19008,8 @@ void POA_IR::EventDef::is_a_skel (
 
 void POA_IR::EventDef::_get_event_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -19033,7 +19033,7 @@ void POA_IR::EventDef::_get_event_skel (
 }
 
 void POA_IR::EventDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -19045,10 +19045,10 @@ void POA_IR::EventDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -19057,7 +19057,7 @@ void POA_IR::EventDef::_is_a_skel (
 }
 
 void POA_IR::EventDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -19066,7 +19066,7 @@ void POA_IR::EventDef::_non_existent_skel (
   POA_IR::EventDef *_tao_impl = (POA_IR::EventDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -19152,7 +19152,7 @@ POA_IR::_tao_thru_poa_collocated_EventDef::_tao_thru_poa_collocated_EventDef (
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -19163,7 +19163,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EventDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19186,7 +19186,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EventDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19214,7 +19214,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EventDef::is_a  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19244,7 +19244,7 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_EventDef::event  (
   IR::ValueDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19364,9 +19364,9 @@ TAO_IR_EmitsDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -19408,7 +19408,7 @@ IR::EmitsDef_ptr _TAO_collocation_POA_IR_EmitsDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -19432,14 +19432,14 @@ IR::EmitsDef_ptr _TAO_collocation_POA_IR_EmitsDef_Stub_Factory (
 int _TAO_collocation_POA_IR_EmitsDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_EmitsDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_EmitsDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_EmitsDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_EmitsDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_EmitsDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_EmitsDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_EmitsDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -19462,7 +19462,7 @@ POA_IR::EmitsDef::~EmitsDef (void)
 }
 
 void POA_IR::EmitsDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -19474,10 +19474,10 @@ void POA_IR::EmitsDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -19486,7 +19486,7 @@ void POA_IR::EmitsDef::_is_a_skel (
 }
 
 void POA_IR::EmitsDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -19495,7 +19495,7 @@ void POA_IR::EmitsDef::_non_existent_skel (
   POA_IR::EmitsDef *_tao_impl = (POA_IR::EmitsDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -19585,7 +19585,7 @@ POA_IR::_tao_thru_poa_collocated_EmitsDef::_tao_thru_poa_collocated_EmitsDef (
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_EventDef) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -19596,7 +19596,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EmitsDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19619,7 +19619,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_EmitsDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19737,9 +19737,9 @@ TAO_IR_PublishesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -19781,7 +19781,7 @@ IR::PublishesDef_ptr _TAO_collocation_POA_IR_PublishesDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -19805,14 +19805,14 @@ IR::PublishesDef_ptr _TAO_collocation_POA_IR_PublishesDef_Stub_Factory (
 int _TAO_collocation_POA_IR_PublishesDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_PublishesDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_PublishesDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_PublishesDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_PublishesDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_PublishesDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_PublishesDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_PublishesDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -19835,7 +19835,7 @@ POA_IR::PublishesDef::~PublishesDef (void)
 }
 
 void POA_IR::PublishesDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -19847,10 +19847,10 @@ void POA_IR::PublishesDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -19859,7 +19859,7 @@ void POA_IR::PublishesDef::_is_a_skel (
 }
 
 void POA_IR::PublishesDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -19868,7 +19868,7 @@ void POA_IR::PublishesDef::_non_existent_skel (
   POA_IR::PublishesDef *_tao_impl = (POA_IR::PublishesDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -19958,7 +19958,7 @@ POA_IR::_tao_thru_poa_collocated_PublishesDef::_tao_thru_poa_collocated_Publishe
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_EventDef) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -19969,7 +19969,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PublishesDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -19992,7 +19992,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PublishesDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -20110,9 +20110,9 @@ TAO_IR_ConsumesDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13, 
-       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -43,   8, -43, -11,  -2, -38,  13,
+       14,  15,  -1,  16,  17,  -1,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  -1,  -1,  -1,  -1,  -1,  20,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -20154,7 +20154,7 @@ IR::ConsumesDef_ptr _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -20178,14 +20178,14 @@ IR::ConsumesDef_ptr _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ConsumesDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ConsumesDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ConsumesDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -20208,7 +20208,7 @@ POA_IR::ConsumesDef::~ConsumesDef (void)
 }
 
 void POA_IR::ConsumesDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -20220,10 +20220,10 @@ void POA_IR::ConsumesDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -20232,7 +20232,7 @@ void POA_IR::ConsumesDef::_is_a_skel (
 }
 
 void POA_IR::ConsumesDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -20241,7 +20241,7 @@ void POA_IR::ConsumesDef::_non_existent_skel (
   POA_IR::ConsumesDef *_tao_impl = (POA_IR::ConsumesDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -20331,7 +20331,7 @@ POA_IR::_tao_thru_poa_collocated_ConsumesDef::_tao_thru_poa_collocated_ConsumesD
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_EventDef) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -20342,7 +20342,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConsumesDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -20365,7 +20365,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ConsumesDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -20520,12 +20520,12 @@ TAO_IR_ComponentDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 
   static const signed char lookup[] =
     {
-        -1,   -1,   -6,   -2,    4,    5,  -10,   -3,  -13,   -4,  -21,   -2,  -91,  -23, 
-        -2,  -28,   -2,    8,    9,  -94,  -93,   17,   18,   19,   20,  -96,   -1,  -95, 
-        25,   -1,   26,  -34,   -2,   27,  -38,   -2, -102,   30,   31,   32,   -1,   33, 
-       -92,   36,   37,  -92,   40,  -43,   -2,  -45,   -2,   41,   42,  -87,  -48,   -2, 
-       -88,   47,  -85,  -50,   -2,  -83,   -1,   52,   -1,   53,   54,   -1,   -1,   -1, 
-        -1,   55,   -1,   -1,   -1,   -1,   56,   -1,   -1,   -1,   -1,   57, 
+        -1,   -1,   -6,   -2,    4,    5,  -10,   -3,  -13,   -4,  -21,   -2,  -91,  -23,
+        -2,  -28,   -2,    8,    9,  -94,  -93,   17,   18,   19,   20,  -96,   -1,  -95,
+        25,   -1,   26,  -34,   -2,   27,  -38,   -2, -102,   30,   31,   32,   -1,   33,
+       -92,   36,   37,  -92,   40,  -43,   -2,  -45,   -2,   41,   42,  -87,  -48,   -2,
+       -88,   47,  -85,  -50,   -2,  -83,   -1,   52,   -1,   53,   54,   -1,   -1,   -1,
+        -1,   55,   -1,   -1,   -1,   -1,   56,   -1,   -1,   -1,   -1,   57,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -20567,7 +20567,7 @@ IR::ComponentDef_ptr _TAO_collocation_POA_IR_ComponentDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -20591,14 +20591,14 @@ IR::ComponentDef_ptr _TAO_collocation_POA_IR_ComponentDef_Stub_Factory (
 int _TAO_collocation_POA_IR_ComponentDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_ComponentDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_ComponentDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_ComponentDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_ComponentDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_ComponentDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_ComponentDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_ComponentDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -20624,8 +20624,8 @@ POA_IR::ComponentDef::~ComponentDef (void)
 
 void POA_IR::ComponentDef::_get_supported_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20650,8 +20650,8 @@ void POA_IR::ComponentDef::_get_supported_interfaces_skel (
 
 void POA_IR::ComponentDef::_set_supported_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20677,8 +20677,8 @@ void POA_IR::ComponentDef::_set_supported_interfaces_skel (
 
 void POA_IR::ComponentDef::_get_base_component_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20703,8 +20703,8 @@ void POA_IR::ComponentDef::_get_base_component_skel (
 
 void POA_IR::ComponentDef::_get_provides_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20729,8 +20729,8 @@ void POA_IR::ComponentDef::_get_provides_interfaces_skel (
 
 void POA_IR::ComponentDef::_get_uses_interfaces_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20755,8 +20755,8 @@ void POA_IR::ComponentDef::_get_uses_interfaces_skel (
 
 void POA_IR::ComponentDef::_get_emits_events_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20781,8 +20781,8 @@ void POA_IR::ComponentDef::_get_emits_events_skel (
 
 void POA_IR::ComponentDef::_get_publishes_events_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20807,8 +20807,8 @@ void POA_IR::ComponentDef::_get_publishes_events_skel (
 
 void POA_IR::ComponentDef::_get_consumes_events_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20833,8 +20833,8 @@ void POA_IR::ComponentDef::_get_consumes_events_skel (
 
 void POA_IR::ComponentDef::_get_is_basic_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20859,8 +20859,8 @@ void POA_IR::ComponentDef::_get_is_basic_skel (
 
 void POA_IR::ComponentDef::create_provides_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20901,8 +20901,8 @@ void POA_IR::ComponentDef::create_provides_skel (
 
 void POA_IR::ComponentDef::create_uses_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20946,8 +20946,8 @@ void POA_IR::ComponentDef::create_uses_skel (
 
 void POA_IR::ComponentDef::create_emits_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -20988,8 +20988,8 @@ void POA_IR::ComponentDef::create_emits_skel (
 
 void POA_IR::ComponentDef::create_publishes_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -21030,8 +21030,8 @@ void POA_IR::ComponentDef::create_publishes_skel (
 
 void POA_IR::ComponentDef::create_consumes_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -21071,7 +21071,7 @@ void POA_IR::ComponentDef::create_consumes_skel (
 }
 
 void POA_IR::ComponentDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -21083,10 +21083,10 @@ void POA_IR::ComponentDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -21095,7 +21095,7 @@ void POA_IR::ComponentDef::_is_a_skel (
 }
 
 void POA_IR::ComponentDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -21104,7 +21104,7 @@ void POA_IR::ComponentDef::_non_existent_skel (
   POA_IR::ComponentDef *_tao_impl = (POA_IR::ComponentDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -21202,7 +21202,7 @@ POA_IR::_tao_thru_poa_collocated_ComponentDef::_tao_thru_poa_collocated_Componen
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -21213,7 +21213,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21236,7 +21236,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21263,7 +21263,7 @@ IR::InterfaceDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::supported_i
   IR::InterfaceDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21291,7 +21291,7 @@ void POA_IR::_tao_thru_poa_collocated_ComponentDef::supported_interfaces  (
   ))
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21321,7 +21321,7 @@ IR::ComponentDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::base_compone
   IR::ComponentDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21350,7 +21350,7 @@ IR::ProvidesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::provides_int
   IR::ProvidesDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21379,7 +21379,7 @@ IR::UsesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::uses_interfaces 
   IR::UsesDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21408,7 +21408,7 @@ IR::EmitsDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::emits_events  (
   IR::EmitsDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21437,7 +21437,7 @@ IR::PublishesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::publishes_e
   IR::PublishesDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21466,7 +21466,7 @@ IR::ConsumesDefSeq * POA_IR::_tao_thru_poa_collocated_ComponentDef::consumes_eve
   IR::ConsumesDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21495,7 +21495,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_ComponentDef::is_basic  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21528,7 +21528,7 @@ IR::ProvidesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_provid
   IR::ProvidesDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21566,7 +21566,7 @@ IR::UsesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_uses  (
   IR::UsesDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21604,7 +21604,7 @@ IR::EmitsDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_emits  (
   IR::EmitsDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21641,7 +21641,7 @@ IR::PublishesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_publi
   IR::PublishesDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21678,7 +21678,7 @@ IR::ConsumesDef_ptr POA_IR::_tao_thru_poa_collocated_ComponentDef::create_consum
   IR::ConsumesDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -21802,9 +21802,9 @@ TAO_IR_PrimaryKeyDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int
 
   static const signed char lookup[] =
     {
-       -6,  -2,  -9,  -2,   4,   5,  -1, -38,   8, -38,  -1,  -1,  11,  12, 
-       13, -14,  -2, -33,  16,  -1,  17,  18,  -1,  19,  -1,  -1,  -1,  -1, 
-       -1,  -1,  -1,  20, 
+       -6,  -2,  -9,  -2,   4,   5,  -1, -38,   8, -38,  -1,  -1,  11,  12,
+       13, -14,  -2, -33,  16,  -1,  17,  18,  -1,  19,  -1,  -1,  -1,  -1,
+       -1,  -1,  -1,  20,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -21846,7 +21846,7 @@ IR::PrimaryKeyDef_ptr _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -21870,14 +21870,14 @@ IR::PrimaryKeyDef_ptr _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory (
 int _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_PrimaryKeyDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_PrimaryKeyDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_PrimaryKeyDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -21900,8 +21900,8 @@ POA_IR::PrimaryKeyDef::~PrimaryKeyDef (void)
 
 void POA_IR::PrimaryKeyDef::is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -21933,8 +21933,8 @@ void POA_IR::PrimaryKeyDef::is_a_skel (
 
 void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -21958,7 +21958,7 @@ void POA_IR::PrimaryKeyDef::_get_primary_key_skel (
 }
 
 void POA_IR::PrimaryKeyDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -21970,10 +21970,10 @@ void POA_IR::PrimaryKeyDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -21982,7 +21982,7 @@ void POA_IR::PrimaryKeyDef::_is_a_skel (
 }
 
 void POA_IR::PrimaryKeyDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -21991,7 +21991,7 @@ void POA_IR::PrimaryKeyDef::_non_existent_skel (
   POA_IR::PrimaryKeyDef *_tao_impl = (POA_IR::PrimaryKeyDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -22077,7 +22077,7 @@ POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::_tao_thru_poa_collocated_Primary
 )
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -22088,7 +22088,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -22111,7 +22111,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -22139,7 +22139,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::is_a  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -22169,7 +22169,7 @@ IR::ValueDef_ptr POA_IR::_tao_thru_poa_collocated_PrimaryKeyDef::primary_key  (
   IR::ValueDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -22303,7 +22303,7 @@ TAO_IR_FactoryDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
             {
-              const class TAO_operation_db_entry   *resword; 
+              const class TAO_operation_db_entry   *resword;
 
               switch (key)
                 {
@@ -22391,7 +22391,7 @@ IR::FactoryDef_ptr _TAO_collocation_POA_IR_FactoryDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -22415,14 +22415,14 @@ IR::FactoryDef_ptr _TAO_collocation_POA_IR_FactoryDef_Stub_Factory (
 int _TAO_collocation_POA_IR_FactoryDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_FactoryDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_FactoryDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_FactoryDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_FactoryDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_FactoryDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_FactoryDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_FactoryDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -22445,7 +22445,7 @@ POA_IR::FactoryDef::~FactoryDef (void)
 }
 
 void POA_IR::FactoryDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -22457,10 +22457,10 @@ void POA_IR::FactoryDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -22469,7 +22469,7 @@ void POA_IR::FactoryDef::_is_a_skel (
 }
 
 void POA_IR::FactoryDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -22478,7 +22478,7 @@ void POA_IR::FactoryDef::_non_existent_skel (
   POA_IR::FactoryDef *_tao_impl = (POA_IR::FactoryDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -22568,7 +22568,7 @@ POA_IR::_tao_thru_poa_collocated_FactoryDef::_tao_thru_poa_collocated_FactoryDef
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_OperationDef) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -22579,7 +22579,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FactoryDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -22602,7 +22602,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FactoryDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -22734,7 +22734,7 @@ TAO_IR_FinderDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
             {
-              const class TAO_operation_db_entry   *resword; 
+              const class TAO_operation_db_entry   *resword;
 
               switch (key)
                 {
@@ -22822,7 +22822,7 @@ IR::FinderDef_ptr _TAO_collocation_POA_IR_FinderDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -22846,14 +22846,14 @@ IR::FinderDef_ptr _TAO_collocation_POA_IR_FinderDef_Stub_Factory (
 int _TAO_collocation_POA_IR_FinderDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_FinderDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_FinderDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_FinderDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_FinderDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_FinderDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_FinderDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_FinderDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -22876,7 +22876,7 @@ POA_IR::FinderDef::~FinderDef (void)
 }
 
 void POA_IR::FinderDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -22888,10 +22888,10 @@ void POA_IR::FinderDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -22900,7 +22900,7 @@ void POA_IR::FinderDef::_is_a_skel (
 }
 
 void POA_IR::FinderDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -22909,7 +22909,7 @@ void POA_IR::FinderDef::_non_existent_skel (
   POA_IR::FinderDef *_tao_impl = (POA_IR::FinderDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -22999,7 +22999,7 @@ POA_IR::_tao_thru_poa_collocated_FinderDef::_tao_thru_poa_collocated_FinderDef (
   :  ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_OperationDef) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -23010,7 +23010,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FinderDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23033,7 +23033,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_FinderDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23183,13 +23183,13 @@ TAO_IR_HomeDef_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-        -1,   -1,   -6,   -2,    4,    5,   -1,  -93,   -1,   -1,   -1,    8,   -1,    9, 
-        -1,   -1,  -10,   -2,  -90,   -1,  -12,   -2,  -90,  -22,   -2,   14,   15,   16, 
-        17,   18,   -1,   19,   20,   21,   -1, -100,   -1,   24,   25,  -26,   -2,  -90, 
-        28,   29,  -30,   -2,  -90,   -1,   -1,   32,  -35,   -3,   33,   34,  -92,   -1, 
-        -1,   -1,   38,   39,   40,   41,   42,   43,   -1,   -1,   -1,   -1,   -1,  -46, 
-        -2,   44,   45,  -92,  -48,   -2,  -90,   -1,   -1,   -1,   -1,   50,   -1,   -1, 
-        51,   -1,   -1,   -1,   52, 
+        -1,   -1,   -6,   -2,    4,    5,   -1,  -93,   -1,   -1,   -1,    8,   -1,    9,
+        -1,   -1,  -10,   -2,  -90,   -1,  -12,   -2,  -90,  -22,   -2,   14,   15,   16,
+        17,   18,   -1,   19,   20,   21,   -1, -100,   -1,   24,   25,  -26,   -2,  -90,
+        28,   29,  -30,   -2,  -90,   -1,   -1,   32,  -35,   -3,   33,   34,  -92,   -1,
+        -1,   -1,   38,   39,   40,   41,   42,   43,   -1,   -1,   -1,   -1,   -1,  -46,
+        -2,   44,   45,  -92,  -48,   -2,  -90,   -1,   -1,   -1,   -1,   50,   -1,   -1,
+        51,   -1,   -1,   -1,   52,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -23231,7 +23231,7 @@ IR::HomeDef_ptr _TAO_collocation_POA_IR_HomeDef_Stub_Factory (
   )
 {
   TAO_Stub *stub = obj->_stubobj ();
-  
+
   switch (stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ())
     {
     case TAO_ORB_Core::THRU_POA:
@@ -23255,14 +23255,14 @@ IR::HomeDef_ptr _TAO_collocation_POA_IR_HomeDef_Stub_Factory (
 int _TAO_collocation_POA_IR_HomeDef_Stub_Factory_Initializer (long dummy)
 {
   ACE_UNUSED_ARG (dummy);
-  
-  _TAO_collocation_IR_HomeDef_Stub_Factory_function_pointer = 
+
+  _TAO_collocation_IR_HomeDef_Stub_Factory_function_pointer =
     _TAO_collocation_POA_IR_HomeDef_Stub_Factory;
-  
+
   return 0;
 }
 
-static int _TAO_collocation_POA_IR_HomeDef_Stub_Factory_Initializer_Scarecrow = 
+static int _TAO_collocation_POA_IR_HomeDef_Stub_Factory_Initializer_Scarecrow =
   _TAO_collocation_POA_IR_HomeDef_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_IR_HomeDef_Stub_Factory_Initializer));
 
 // skeleton constructor
@@ -23288,8 +23288,8 @@ POA_IR::HomeDef::~HomeDef (void)
 
 void POA_IR::HomeDef::_get_base_home_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23314,8 +23314,8 @@ void POA_IR::HomeDef::_get_base_home_skel (
 
 void POA_IR::HomeDef::_get_managed_component_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23344,8 +23344,8 @@ void POA_IR::HomeDef::_dispatch (CORBA::ServerRequest &req, void *context, CORBA
 
 void POA_IR::HomeDef::_get_primary_key_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23370,8 +23370,8 @@ void POA_IR::HomeDef::_get_primary_key_skel (
 
 void POA_IR::HomeDef::_get_factories_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23396,8 +23396,8 @@ void POA_IR::HomeDef::_get_factories_skel (
 
 void POA_IR::HomeDef::_get_finders_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23422,8 +23422,8 @@ void POA_IR::HomeDef::_get_finders_skel (
 
 void POA_IR::HomeDef::_get_is_basic_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23448,8 +23448,8 @@ void POA_IR::HomeDef::_get_is_basic_skel (
 
 void POA_IR::HomeDef::create_primary_key_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23490,8 +23490,8 @@ void POA_IR::HomeDef::create_primary_key_skel (
 
 void POA_IR::HomeDef::create_factory_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23535,8 +23535,8 @@ void POA_IR::HomeDef::create_factory_skel (
 
 void POA_IR::HomeDef::create_finder_skel (
     CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
@@ -23579,7 +23579,7 @@ void POA_IR::HomeDef::create_finder_skel (
 }
 
 void POA_IR::HomeDef::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -23591,10 +23591,10 @@ void POA_IR::HomeDef::_is_a_skel (
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -23603,7 +23603,7 @@ void POA_IR::HomeDef::_is_a_skel (
 }
 
 void POA_IR::HomeDef::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request, 
+    CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
@@ -23612,7 +23612,7 @@ void POA_IR::HomeDef::_non_existent_skel (
   POA_IR::HomeDef *_tao_impl = (POA_IR::HomeDef *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
@@ -23705,7 +23705,7 @@ POA_IR::_tao_thru_poa_collocated_HomeDef::_tao_thru_poa_collocated_HomeDef (
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_Contained) (stub),
     ACE_NESTED_CLASS (POA_IR,_tao_thru_poa_collocated_IDLType) (stub),
     ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_IRObject) (stub),
-    CORBA_Object (stub, 0, 1)
+    CORBA_Object (stub, 1)
 {
 }
 
@@ -23716,7 +23716,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_HomeDef::_is_a(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23739,7 +23739,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_HomeDef::_non_existent(
 
 {
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23766,7 +23766,7 @@ IR::HomeDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::base_home  (
   IR::HomeDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23795,7 +23795,7 @@ IR::ComponentDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::managed_component
   IR::ComponentDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23824,7 +23824,7 @@ IR::PrimaryKeyDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::primary_key  (
   IR::PrimaryKeyDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23853,7 +23853,7 @@ IR::FactoryDefSeq * POA_IR::_tao_thru_poa_collocated_HomeDef::factories  (
   IR::FactoryDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23882,7 +23882,7 @@ IR::FinderDefSeq * POA_IR::_tao_thru_poa_collocated_HomeDef::finders  (
   IR::FinderDefSeq_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23911,7 +23911,7 @@ CORBA::Boolean POA_IR::_tao_thru_poa_collocated_HomeDef::is_basic  (
   CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23944,7 +23944,7 @@ IR::PrimaryKeyDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_primary_k
   IR::PrimaryKeyDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -23982,7 +23982,7 @@ IR::FactoryDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_factory  (
   IR::FactoryDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -24021,7 +24021,7 @@ IR::FinderDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_finder  (
   IR::FinderDef_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
-      *this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()
+      this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
@@ -24044,5 +24044,3 @@ IR::FinderDef_ptr POA_IR::_tao_thru_poa_collocated_HomeDef::create_finder  (
     );
 
 }
-
-

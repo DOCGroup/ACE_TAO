@@ -59,9 +59,6 @@ protected:
   const char* factory_name_;
   // The name of the factory registered with the naming service.
 
-  PortableServer::POA_var root_poa_;
-  // Reference to the root poa.
-
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
@@ -77,7 +74,6 @@ protected:
 
 FactoryClient::FactoryClient (void)
   :factory_name_ ("CosEC_Factory"),
-   root_poa_ (PortableServer::POA::_nil ()),
    use_naming_service (0)
 {
   // No-Op.
@@ -97,29 +93,6 @@ FactoryClient::init_ORB (int argc,
                                 argv,
                                 "",
                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  CORBA::Object_var poa_object  =
-    this->orb_->resolve_initial_references("RootPOA",
-                                           ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (CORBA::is_nil (poa_object.in ()))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to initialize the POA.\n"));
-      return;
-    }
-  this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in (),
-                                  ACE_TRY_ENV);
-  ACE_CHECK;
-
-  PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  poa_manager->activate (ACE_TRY_ENV);
   ACE_CHECK;
 }
 

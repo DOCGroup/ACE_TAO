@@ -34,7 +34,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Stream.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "mpeg_shared/Audio_ControlS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "Globals.h"

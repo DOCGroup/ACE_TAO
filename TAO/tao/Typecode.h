@@ -481,7 +481,7 @@ public:
   CORBA::TCKind  tc_kind_;
   // our kind that will determine what kind of children we may have
 
-  // = data members that indicate if the desired quantify 
+  // = data members that indicate if the desired quantify
   // was precomputed or not.
   CORBA::Boolean tc_id_known_;
   CORBA::Boolean tc_name_known_;

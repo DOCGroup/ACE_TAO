@@ -34,16 +34,14 @@ ifndef TAO_ORBSVCS
                 RTOLDEvent \
 		RTSchedEvent \
                 Concurrency \
-		Trader \
-		Log \
-		AV
+		Trader
 
   ifeq ($(minimum_corba),0)
 
     # Trader uses DynAny which is disabled when compiling with minimum
     # CORBA support.  LifeCycle, Log, AV and Notify depend on Trader
     # so don't build them either, with minimum CORBA.
-    TAO_ORBSVCS +=
+    TAO_ORBSVCS += Log AV
 
     ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
       TAO_ORBSVCS += LifeCycle

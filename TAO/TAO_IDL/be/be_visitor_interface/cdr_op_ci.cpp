@@ -126,7 +126,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
       << "return 0;" << be_uidt_nl
       << "// narrow to the right type" << be_nl;
   *os << "_tao_objref =" << be_idt_nl
-      << node->full_name () << "::_unchecked_narrow (" 
+      << node->full_name () << "::_unchecked_narrow ("
       << be_idt << be_idt_nl
       << "obj.in ()," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl

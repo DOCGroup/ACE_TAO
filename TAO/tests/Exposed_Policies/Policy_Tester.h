@@ -25,6 +25,7 @@
 
 // -- TAO Include --
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class Policy_Tester
 {

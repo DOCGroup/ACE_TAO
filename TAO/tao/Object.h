@@ -36,7 +36,6 @@
   class IR_InterfaceDef;
 #endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
-class TAO_ServantBase;
 class TAO_Stub;
 
 class TAO_Export CORBA_Object
@@ -77,9 +76,6 @@ public:
   virtual const char* _interface_repository_id (void) const;
   // The repository ID for the most derived class, this is an
   // implementation method and does no remote invocations!
-
-  virtual TAO_ServantBase *_servant (void) const;
-  // return the associated servant (if one exists)
 
   virtual CORBA::Boolean _is_collocated (void) const;
   // Is this object collocated with the servant?
@@ -223,7 +219,6 @@ public:
   // = TAO extensions
 
   CORBA_Object (TAO_Stub *p = 0,
-                TAO_ServantBase *servant = 0,
                 CORBA::Boolean collocated = 0);
   // constructor
 
@@ -244,9 +239,6 @@ protected:
 
   CORBA::ULong _decr_refcnt (void);
   // Decrement the reference count.
-
-  TAO_ServantBase *servant_;
-  // Servant pointer.  It is 0 except for collocated objects.
 
   CORBA::Boolean is_collocated_;
   // Flag to indicate collocation.  It is 0 except for collocated

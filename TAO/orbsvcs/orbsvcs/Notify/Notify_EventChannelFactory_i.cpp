@@ -1,6 +1,5 @@
 // $Id$
 
-#include "tao/Servant_Base.h"
 #include "Notify_EventChannelFactory_i.h"
 #include "Notify_EventChannel_i.h"
 #include "Notify_Channel_Objects_Factory.h"

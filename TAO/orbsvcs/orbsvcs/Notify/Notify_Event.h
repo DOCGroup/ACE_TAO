@@ -22,7 +22,6 @@
 
 #include "ace/pre.h"
 #include "orbsvcs/CosNotificationC.h"
-#include "orbsvcs/TimeBaseC.h"
 #include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

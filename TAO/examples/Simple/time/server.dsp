@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_CosNaming.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_CosNaming.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib TAOd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_CosNamingd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\PortableServer" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Debug"
 
@@ -110,7 +110,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
-# ADD LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server - Win32 Alpha Release"
 
@@ -139,7 +139,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
-# ADD LINK32 ace.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
 
 !ENDIF 
 
@@ -337,7 +337,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Object.i"\
 	"..\..\..\tao\Object_KeyC.h"\
 	"..\..\..\tao\Object_KeyC.i"\
-	"..\..\..\tao\Operation_Table.h"\
 	"..\..\..\tao\ORB.h"\
 	"..\..\..\tao\ORB.i"\
 	"..\..\..\tao\ORB_Core.h"\
@@ -345,14 +344,6 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\orbconf.h"\
 	"..\..\..\tao\params.h"\
 	"..\..\..\tao\params.i"\
-	"..\..\..\tao\POA.h"\
-	"..\..\..\tao\POA.i"\
-	"..\..\..\tao\POA_CORBA.h"\
-	"..\..\..\tao\poa_macros.h"\
-	"..\..\..\tao\POAC.h"\
-	"..\..\..\tao\POAC.i"\
-	"..\..\..\tao\POAS.h"\
-	"..\..\..\tao\POAS.i"\
 	"..\..\..\tao\PolicyC.h"\
 	"..\..\..\tao\PolicyC.i"\
 	"..\..\..\tao\Principal.h"\
@@ -364,13 +355,11 @@ DEP_CPP_SERVE=\
 	"..\..\..\tao\Sequence_T.cpp"\
 	"..\..\..\tao\Sequence_T.h"\
 	"..\..\..\tao\Sequence_T.i"\
-	"..\..\..\tao\Servant_Base.h"\
 	"..\..\..\tao\Server_Request.h"\
 	"..\..\..\tao\Server_Request.i"\
 	"..\..\..\tao\Server_Strategy_Factory.h"\
 	"..\..\..\tao\Stub.h"\
 	"..\..\..\tao\Stub.i"\
-	"..\..\..\tao\TAO.h"\
 	"..\..\..\tao\Typecode.h"\
 	"..\..\..\tao\Typecode.i"\
 	
@@ -392,10 +381,21 @@ NODEP_CPP_SERVE=\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
+	"..\..\..\tao\Operation_Table.h"\
 	"..\..\..\tao\ORB_Strategies_T.cpp"\
 	"..\..\..\tao\ORB_Strategies_T.h"\
 	"..\..\..\tao\ORB_Strategies_T.i"\
+	"..\..\..\tao\POA.h"\
+	"..\..\..\tao\POA.i"\
+	"..\..\..\tao\POA_CORBA.h"\
+	"..\..\..\tao\poa_macros.h"\
+	"..\..\..\tao\POAC.h"\
+	"..\..\..\tao\POAC.i"\
+	"..\..\..\tao\POAS.h"\
+	"..\..\..\tao\POAS.i"\
+	"..\..\..\tao\Servant_Base.h"\
 	"..\..\..\tao\singletons.h"\
+	"..\..\..\tao\TAO.h"\
 	"..\..\..\tao\Union.h"\
 	"..\..\..\tao\varout.cpp"\
 	"..\..\..\tao\varout.h"\
@@ -616,7 +616,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Object.i"\
 	"..\..\..\tao\Object_KeyC.h"\
 	"..\..\..\tao\Object_KeyC.i"\
-	"..\..\..\tao\Operation_Table.h"\
 	"..\..\..\tao\ORB.h"\
 	"..\..\..\tao\ORB.i"\
 	"..\..\..\tao\ORB_Core.h"\
@@ -624,14 +623,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\orbconf.h"\
 	"..\..\..\tao\params.h"\
 	"..\..\..\tao\params.i"\
-	"..\..\..\tao\POA.h"\
-	"..\..\..\tao\POA.i"\
-	"..\..\..\tao\POA_CORBA.h"\
-	"..\..\..\tao\poa_macros.h"\
-	"..\..\..\tao\POAC.h"\
-	"..\..\..\tao\POAC.i"\
-	"..\..\..\tao\POAS.h"\
-	"..\..\..\tao\POAS.i"\
 	"..\..\..\tao\PolicyC.h"\
 	"..\..\..\tao\PolicyC.i"\
 	"..\..\..\tao\Principal.h"\
@@ -643,7 +634,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\Sequence_T.cpp"\
 	"..\..\..\tao\Sequence_T.h"\
 	"..\..\..\tao\Sequence_T.i"\
-	"..\..\..\tao\Servant_Base.h"\
 	"..\..\..\tao\Server_Request.h"\
 	"..\..\..\tao\Server_Request.i"\
 	"..\..\..\tao\Server_Strategy_Factory.h"\
@@ -670,9 +660,19 @@ NODEP_CPP_TIMEC=\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
+	"..\..\..\tao\Operation_Table.h"\
 	"..\..\..\tao\ORB_Strategies_T.cpp"\
 	"..\..\..\tao\ORB_Strategies_T.h"\
 	"..\..\..\tao\ORB_Strategies_T.i"\
+	"..\..\..\tao\POA.h"\
+	"..\..\..\tao\POA.i"\
+	"..\..\..\tao\POA_CORBA.h"\
+	"..\..\..\tao\poa_macros.h"\
+	"..\..\..\tao\POAC.h"\
+	"..\..\..\tao\POAC.i"\
+	"..\..\..\tao\POAS.h"\
+	"..\..\..\tao\POAS.i"\
+	"..\..\..\tao\Servant_Base.h"\
 	"..\..\..\tao\singletons.h"\
 	"..\..\..\tao\Union.h"\
 	"..\..\..\tao\varout.cpp"\
@@ -877,7 +877,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Object.i"\
 	"..\..\..\tao\Object_KeyC.h"\
 	"..\..\..\tao\Object_KeyC.i"\
-	"..\..\..\tao\Operation_Table.h"\
 	"..\..\..\tao\ORB.h"\
 	"..\..\..\tao\ORB.i"\
 	"..\..\..\tao\ORB_Core.h"\
@@ -885,14 +884,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\orbconf.h"\
 	"..\..\..\tao\params.h"\
 	"..\..\..\tao\params.i"\
-	"..\..\..\tao\POA.h"\
-	"..\..\..\tao\POA.i"\
-	"..\..\..\tao\POA_CORBA.h"\
-	"..\..\..\tao\poa_macros.h"\
-	"..\..\..\tao\POAC.h"\
-	"..\..\..\tao\POAC.i"\
-	"..\..\..\tao\POAS.h"\
-	"..\..\..\tao\POAS.i"\
 	"..\..\..\tao\PolicyC.h"\
 	"..\..\..\tao\PolicyC.i"\
 	"..\..\..\tao\Principal.h"\
@@ -904,7 +895,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\Sequence_T.cpp"\
 	"..\..\..\tao\Sequence_T.h"\
 	"..\..\..\tao\Sequence_T.i"\
-	"..\..\..\tao\Servant_Base.h"\
 	"..\..\..\tao\Server_Request.h"\
 	"..\..\..\tao\Server_Request.i"\
 	"..\..\..\tao\Server_Strategy_Factory.h"\
@@ -931,9 +921,19 @@ NODEP_CPP_TIMES=\
 	"..\..\..\tao\IIOP_ORB.h"\
 	"..\..\..\tao\IIOP_ORB.i"\
 	"..\..\..\tao\Object_Table.h"\
+	"..\..\..\tao\Operation_Table.h"\
 	"..\..\..\tao\ORB_Strategies_T.cpp"\
 	"..\..\..\tao\ORB_Strategies_T.h"\
 	"..\..\..\tao\ORB_Strategies_T.i"\
+	"..\..\..\tao\POA.h"\
+	"..\..\..\tao\POA.i"\
+	"..\..\..\tao\POA_CORBA.h"\
+	"..\..\..\tao\poa_macros.h"\
+	"..\..\..\tao\POAC.h"\
+	"..\..\..\tao\POAC.i"\
+	"..\..\..\tao\POAS.h"\
+	"..\..\..\tao\POAS.i"\
+	"..\..\..\tao\Servant_Base.h"\
 	"..\..\..\tao\singletons.h"\
 	"..\..\..\tao\Union.h"\
 	"..\..\..\tao\varout.cpp"\

@@ -6,9 +6,7 @@
 // ORB:         CORBA_Object operations
 
 #include "tao/Object.h"
-#include "tao/Object_Adapter.h"
 #include "tao/Stub.h"
-#include "tao/Servant_Base.h"
 #include "tao/Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
@@ -32,10 +30,8 @@ CORBA_Object::~CORBA_Object (void)
 }
 
 CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
-                            TAO_ServantBase *servant,
                             CORBA::Boolean collocated)
-  : servant_ (servant),
-    is_collocated_ (collocated),
+  : is_collocated_ (collocated),
     is_local_ (0),
     protocol_proxy_ (protocol_proxy),
     refcount_ (1),
@@ -95,29 +91,6 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       && ACE_OS::strcmp (type_id,
                          this->_stubobj ()->type_id.in ()) == 0)
     return 1;
-
-  // If the object is collocated then try locally....
-  if (this->is_collocated_)
-    {
-      // Which collocation strategy should we use?
-      if (this->protocol_proxy_ != 0 &&
-          this->protocol_proxy_->servant_orb_var ()->orb_core ()
-          ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
-        {
-          TAO_Object_Adapter::Servant_Upcall servant_upcall
-            (*this->_stubobj ()->servant_orb_var ()->orb_core ()
-             ->object_adapter ());
-          servant_upcall.prepare_for_upcall (this->_object_key (),
-                                             "_is_a",
-                                             ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
-          return servant_upcall.servant ()->_is_a (type_id, ACE_TRY_ENV);
-        }
-
-      // Direct collocation strategy is used.
-      if (this->servant_ != 0)
-        return this->servant_->_is_a (type_id, ACE_TRY_ENV);
-    }
 
   CORBA::Boolean _tao_retval = 0;
 
@@ -190,12 +163,6 @@ CORBA_Object::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/Object:1.0";
 }
 
-TAO_ServantBase *
-CORBA_Object::_servant (void) const
-{
-  return this->servant_;
-}
-
 CORBA::Boolean
 CORBA_Object::_is_collocated (void) const
 {
@@ -241,8 +208,8 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
 
   if (this->protocol_proxy_ != 0)
     return this->protocol_proxy_->is_equivalent (other_obj);
-  else
-    return this->servant_ == other_obj->servant_;
+
+  return 0;
 }
 
 // TAO's extensions
@@ -310,28 +277,6 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      // If the object is collocated then try locally....
-      if (this->is_collocated_)
-        {
-          // Which collocation strategy should we use?
-          if (this->protocol_proxy_ != 0 &&
-              this->protocol_proxy_->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
-            {
-              TAO_Object_Adapter::Servant_Upcall servant_upcall
-                (*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ());
-              servant_upcall.prepare_for_upcall (this->_object_key (),
-                                                 "_non_existent",
-                                                 ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-              return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
-            }
-
-          // Direct collocation strategy is used.
-          if (this->servant_ != 0)
-            return this->servant_->_non_existent (ACE_TRY_ENV);
-        }
-
       // Must catch exceptions, if the server raises a
       // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
       // propagating the exception.
@@ -610,7 +555,6 @@ CORBA_Object::_set_policy_overrides (
 
   ACE_NEW_THROW_EX (obj,
                     CORBA_Object (stub,
-                                  this->servant_,
                                   this->is_collocated_),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
@@ -763,34 +707,17 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   TAO_Stub *objdata = 0;
   ACE_NEW_RETURN (objdata, TAO_Stub (type_hint._retn (),
                                      mp,
-                                     cdr.orb_core ()), 0);
+                                     orb_core),
+                  0);
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
-  // Figure out if the servant is collocated.
-  TAO_ServantBase *servant = 0;
-  TAO_SERVANT_LOCATION servant_location =
-    objdata->orb_core ()->orb ()->_get_collocated_servant (safe_objdata.get (),
-                                                           servant);
+  x = orb_core->create_object (safe_objdata.get ());
+  if (x == 0)
+    return 0;
 
-  int collocated = 0;
-  if (servant_location != TAO_SERVANT_NOT_FOUND)
-    collocated = 1;
-
-  // Create a new CORBA_Object and give it the TAO_Stub just created.
-  ACE_NEW_RETURN (x,
-                  CORBA_Object (safe_objdata.get (),
-                                servant,
-                                (CORBA::Boolean) collocated),
-                  0);
-
-  // It is now safe to release the TAO_Stub from the TAO_Stub_Auto_Ptr.
-  objdata = safe_objdata.release ();
-
-  // the corba proxy would have already incremented the reference count on
-  // the objdata. So we decrement it here by 1 so that the objdata is now
-  // fully owned by the corba_proxy that was created.
-  // objdata->_decr_refcnt ();
+  // Transfer ownership to the CORBA::Object
+  (void) safe_objdata.release ();
 
   return (CORBA::Boolean) cdr.good_bit ();
 }

@@ -60,6 +60,14 @@ int be_visitor_operation_interceptors_result::visit_array (be_array *node)
 int be_visitor_operation_interceptors_result::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
@@ -70,6 +78,13 @@ int be_visitor_operation_interceptors_result::visit_interface (be_interface *nod
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
@@ -78,6 +93,14 @@ int be_visitor_operation_interceptors_result::visit_interface (be_interface *nod
 int be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
@@ -89,10 +112,16 @@ int be_visitor_operation_interceptors_result::visit_interface_fwd (be_interface_
 int be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  os->indent ();
 
-  // Not supported since TAO doesnt support Any operators for valuetype yet.
-  //  *os << "this->result_val_ <<= this->result_;";
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  os->indent ();
+  *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 
@@ -101,9 +130,16 @@ int be_visitor_operation_interceptors_result::visit_valuetype (be_valuetype *nod
 int be_visitor_operation_interceptors_result::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
-  // Not supported since TAO doesnt support Any operators for valuetype yet.
-  //  *os << "this->result_val_ <<= this->result_;";
+  *os << "this->result_val_ <<= this->result_;";
 
   return 0;
 
@@ -115,6 +151,14 @@ int
 be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= ";
   switch (node->pt ())
@@ -159,6 +203,14 @@ be_visitor_operation_interceptors_result::visit_predefined_type (be_predefined_t
 int be_visitor_operation_interceptors_result::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
@@ -198,6 +250,13 @@ int be_visitor_operation_interceptors_result::visit_structure (be_structure *nod
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
@@ -209,6 +268,13 @@ int be_visitor_operation_interceptors_result::visit_union (be_union *node)
 {
  TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";
 
@@ -219,6 +285,13 @@ int be_visitor_operation_interceptors_result::visit_union (be_union *node)
 int be_visitor_operation_interceptors_result::visit_typedef (be_typedef *node)
 {
  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+
+  // if the current type is an alias, use that
+  be_type *bt;
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
 
   os->indent ();
   *os << "this->result_val_ <<= this->result_;";

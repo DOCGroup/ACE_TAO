@@ -260,8 +260,12 @@ AST_Decl::destroy (void)
   delete this->pd_original_local_name;
   this->pd_original_local_name = 0;
 
-  // Pragmas will be done in IDL_GlobalData
-  // because they're not copied.
+  if (this->pd_pragmas != 0)
+    {
+      this->pd_pragmas->destroy ();
+      delete this->pd_pragmas;
+      this->pd_pragmas = 0;
+    }
 }
 
 // Data accessors.

@@ -20,11 +20,11 @@
 #ifndef IMPLREPO_I_H
 #define IMPLREPO_I_H
 
-#include "ace/Process_Manager.h"
-#include "tao/ImplRepoS.h"
-#include "orbsvcs/IOR_Multicast.h"
-#include "tao/IOR_LookupTable.h"
 #include "Repository.h"
+#include "tao/PortableServer/ImplRepoS.h"
+#include "tao/IOR_LookupTable.h"
+#include "orbsvcs/IOR_Multicast.h"
+#include "ace/Process_Manager.h"
 
 // Forward declarations.
 class ImplRepo_i;

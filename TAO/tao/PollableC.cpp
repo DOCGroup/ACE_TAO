@@ -11,7 +11,6 @@
 
 #if (TAO_HAS_AMI_POLLER == 1)
 
-#include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/Any.h"

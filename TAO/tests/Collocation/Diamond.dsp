@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib coll_test_stubs.lib /nologo /dll /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 ace.lib tao.lib TAO_PortableServer.lib coll_test_stubs.lib /nologo /dll /machine:I386 /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "Diamond DLL - Win32 Debug"
 
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib coll_test_stubsd.lib /nologo /dll /debug /machine:I386 /out:"Diamondd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
+# ADD LINK32 aced.lib taod.lib TAO_PortableServerd.lib coll_test_stubsd.lib /nologo /dll /debug /machine:I386 /out:"Diamondd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
 
 !ENDIF 
 

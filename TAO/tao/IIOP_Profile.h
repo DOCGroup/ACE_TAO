@@ -147,8 +147,8 @@ public:
 
   IOP::TaggedProfile &create_tagged_profile (void);
   // Please refer to Profile.h for the documentation of this
-  // function.  
-  
+  // function.
+
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
@@ -183,7 +183,7 @@ private:
 
   IOP::TaggedProfile tagged_profile_;
   // Our tagged profile
-  
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -14,7 +14,7 @@ endif
 
 SRC = LoadBalancer.cpp LoadBalancer_Service.cpp
 
-LDLIBS  = -lTAO_LoadBalancing -lTAO
+LDLIBS  = -lTAO_LoadBalancing -lTAO_PortableServer -lTAO
 
 BIN2 = LoadBalancer_Service
 

@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-//=================================================================================
+// ================================================================
 //
 // = LIBRARY
 //     TAO/examples/POA/On_Demand_Loading
@@ -16,7 +16,7 @@
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
-//==================================================================================
+// ================================================================
 
 #include "ace/OS.h"
 
@@ -24,6 +24,7 @@
 #define SERVANT_ACTIVATOR_H
 
 #include "tao/corba.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/DLL.h"
 
 class ServantActivator_i : public PortableServer::ServantActivator

@@ -58,18 +58,22 @@ typedef enum
 
 // = Forward declarations.
 class TAO_MProfile;
-class TAO_POA_Manager;
-class TAO_POA_Policies;
-class TAO_POA;
 struct TAO_Dispatch_Context;
-class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_InputCDR;
 class TAO_OutputCDR;
 class CORBA_ORB_InconsistentTypeCode;
-class TAO_ServantBase;
 class TAO_Stub;
+
+#if 0 // PPOA
+class TAO_POA_Manager;
+class TAO_POA_Policies;
+class TAO_ServantBase;
+class TAO_POA;
+#endif /* 0 */
+
+class TAO_Acceptor_Filter;
 
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
@@ -572,13 +576,6 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
-  TAO_SERVANT_LOCATION _get_collocated_servant (TAO_Stub *p,
-                                                TAO_ServantBase *&servant);
-  // Return the object pointer of an collocated object it there is
-  // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
-  // must implement this and determine what is a collocated object
-  // based on information provided in the TAO_Stub.
-
   int _tao_add_to_IOR_table (const ACE_CString &object_id,
                              CORBA::Object_ptr obj);
   // Add a mapping ObjectID->IOR to the table.
@@ -594,21 +591,24 @@ public:
                                          int delete_callback);
   // Registers a new callback class with the table
 
-  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV,
+  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
+#if 0 // PPOA
                                      const char *adapter_name =
                                          TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
                                      const TAO_POA_Policies *policies = 0);
+#endif /* 0 */
   // Resolve the POA.
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
-                                TAO_POA *poa,
+                                TAO_Acceptor_Filter *acceptor_filter,
                                 CORBA_Environment &ACE_TRY_ENV);
   // Delegates on the ORB_Core to create a TAO_Stub.
 
 
+#if 0 // PPOA
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list,
@@ -638,6 +638,7 @@ public:
   // reported by the ORB.  If the POA is a "Named POA" the client's
   // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
+#endif /* 0 */
 
   static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ());
@@ -675,12 +676,6 @@ protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (TAO_ORB_Core *orb_core);
   ~CORBA_ORB (void);
-
-  TAO_SERVANT_LOCATION _find_collocated_servant (TAO_Stub *sobj,
-                                                 TAO_ORB_Core *orb_core,
-                                                 TAO_ServantBase *& servant,
-                                                 const TAO_MProfile &mprofile);
-  // Check if local servant exists for <mprofile> in <orb_core>.
 
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
   // Resolve the POA current.

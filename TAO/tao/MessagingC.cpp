@@ -11,7 +11,6 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/MessagingS.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 

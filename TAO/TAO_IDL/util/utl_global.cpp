@@ -829,7 +829,5 @@ IDL_GlobalData::destroy (void)
       delete this->pd_stripped_filename;
       this->pd_stripped_filename = 0;
     }
-
-  // Should do pragmas here.
 }
 

@@ -11,7 +11,7 @@
 // -- TAO Include --
 #include "tao/RT_ORB.h"
 #include "tao/RT_Policy_i.h"
-
+#include "tao/PortableServer/POA.h"
 
 ACE_RCSID (tao, Policy_Tester, "$Id$");
 
