@@ -31,9 +31,9 @@ int
 Session::svc (void)
 {
   this->barrier_.wait ();
+  CORBA::ULong i = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
-
   ACE_TRY
     {
       // Use the same payload over and over
@@ -52,7 +52,7 @@ Session::svc (void)
       this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      for (CORBA::ULong i = 0; i != this->message_count_; ++i)
+      for (; i != this->message_count_; ++i)
         {
 #if 0
           if (i % 500 == 0)
@@ -84,6 +84,10 @@ Session::svc (void)
     }
   ACE_CATCHANY
     {
+      ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) ERROR: Session::svc, "
+                          "send %d messages out of %d\n",
+                          i, message_count_));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Session::svc - ");
       return -1;
     }
