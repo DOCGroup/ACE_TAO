@@ -1,3 +1,11 @@
+Sun Feb 22 13:06:20 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.h (class ACE_Asynch_Acceptor): Made the
+	  accept method virtual so that users can override it and do
+	  things like enforce limits on the maximum number of simultaneous
+	  connections.  Thanks to Jason Katz <Jason@email.rts-inc.com> for
+	  suggesting this.
+
 Sun Feb 22 13:22:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Moved definition of ACE_MAP_{PRIVATE,SHARED,FIXED}
