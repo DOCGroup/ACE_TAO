@@ -40,9 +40,10 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
 {
   Kokyu::DSRT_ConfigInfo config;
 
-  kokyu_dispatcher_ =
-    Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::
-    create_DSRT_dispatcher (config);
+  Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
+    tmp( Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::
+         create_DSRT_dispatcher (config) );
+  kokyu_dispatcher_ = tmp;
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current"
