@@ -1,3 +1,15 @@
+Thu Jan  8 12:00:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        
+          Changed default suffix for the generated executor mapping IDL file
+          from '_exec.idl' to 'E.idl'.
+          
+        * ciao/CCM_Core.mpc:
+        
+          Added header files that are unmatched by a corresponding .cpp file.
+
 Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
