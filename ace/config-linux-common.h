@@ -96,16 +96,18 @@
 #define ACE_HAS_GETRUSAGE
 #define ACE_HAS_GETRUSAGE_PROTO
 
+#define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-// ONLY define this if you have config'd multicast into a 2.x kernel.
-// If you do anything else, we've never tested it!
-#if ! defined(ACE_HAS_IP_MULTICAST)
-#define ACE_HAS_IP_MULTICAST
-#endif /* #if ! defined(ACE_HAS_IP_MULTICAST) */
+// ONLY define this if you have config'd multicast into a 2.0.34 or
+// prior kernel.  It is enabled by default in 2.0.35 kernels.
+#if !defined (ACE_HAS_IP_MULTICAST)
+# define ACE_HAS_IP_MULTICAST
+#endif /* ! ACE_HAS_IP_MULTICAST */
 
 #define ACE_HAS_BIG_FD_SET
 
