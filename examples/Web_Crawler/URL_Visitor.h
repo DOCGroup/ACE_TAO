@@ -294,7 +294,7 @@ public:
                                    CONNECTION_HASH_MAP, int,\
                                    SVC_CACHING_STRATEGY_UTILITY >
           LRU;
-  typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler,ACE_SOCK_CONNECTOR, LRU, ACE_SYNCH_NULL_MUTEX>
+  typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler,ACE_SOCK_CONNECTOR, LRU,int, ACE_SYNCH_NULL_MUTEX>
           CACHED_CONNECT_STRATEGY;
 
 protected:
