@@ -329,8 +329,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   this->sessions_--;
-  if (rcvr.index_ >= 0
-     && rcvr.index_ < MAX_RECEIVERS
+  if (rcvr.index_ < MAX_RECEIVERS
      && this->list_receivers_[rcvr.index_] == &rcvr)
     this->list_receivers_[rcvr.index_] = 0;
 
@@ -390,7 +389,7 @@ Receiver::~Receiver (void)
   if (acceptor_ != 0)
     acceptor_->on_delete_receiver (*this);
 
-  this->index_ = -1;
+  this->index_ = 0;
 
   for (; ;)
     {
@@ -628,7 +627,7 @@ private:
   int  check_destroy (void);
 
   Connector * connector_;
-  int  index_;
+  size_t  index_;
   int  flg_mask_;
 
   ACE_Recursive_Thread_Mutex mutex_;
@@ -656,7 +655,7 @@ public:
 private:
 
   ACE_Recursive_Thread_Mutex mutex_;
-  long  sessions_;
+  size_t  sessions_;
   Sender * list_senders_ [MAX_SENDERS];
 
   void on_new_sender (Sender & sndr);
@@ -714,8 +713,7 @@ Connector::on_delete_sender (Sender & sndr)
   ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   this->sessions_--;
-  if (sndr.index_ >= 0
-     && sndr.index_ < MAX_SENDERS
+  if (sndr.index_ < MAX_SENDERS
      && this->list_senders_[sndr.index_] == &sndr)
     this->list_senders_[sndr.index_] = 0;
 
@@ -795,7 +793,7 @@ Sender::~Sender (void)
   if (connector_ != 0)
     connector_->on_delete_sender (*this);
 
-  this->index_ = -1;
+  this->index_ = 0;
 
   for (; ;)
     {

@@ -1,3 +1,9 @@
+Sun Feb  3 18:32:29 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tests/TP_Reactor_Test.cpp: Use size_t instead of long
+	  and int for index_ and sessions_ in order to eliminate
+	  more compiler warnings.
+
 Sun Feb  3 09:20:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/TP_Reactor_Test.cpp: Fixed a bunch of warnings.  Thanks
