@@ -1,3 +1,10 @@
+Wed Dec  3 10:54:39 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+          Added missing includes to fix compile errors in the MSVC6 Release
+          build.
+
 Wed Dec  3 09:19:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Supports/server.cpp:
