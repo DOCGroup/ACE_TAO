@@ -18,6 +18,13 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 # This is needed to add ACE to the libs for the shared library.
 LIBS    += $(ACELIB)
 
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
 ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
@@ -28,13 +35,6 @@ ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
   BUILD = $(VSHLIB) $(VBIN)
 endif # Other
 endif # static_libs_only
-
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
