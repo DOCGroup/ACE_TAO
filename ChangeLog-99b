@@ -1,3 +1,13 @@
+Tue Jul 20 16:25:51 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Handle_Consumer:
+	  This class is the file descriptor gobbler class. Used for
+	  testing out caching and purging of connections.
+	
+	* tests/Cached_Conn_Test.cpp:
+	* tests/Cached_Accept_Conn_Test.cpp:
+	  Added the handle_consumer object for testing purposes.  
+
 Fri Jul 16 13:55:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* include/makeinclude/{build_dll.bor,build_exe.bor,compiler.bor},
