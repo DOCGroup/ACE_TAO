@@ -1,8 +1,0 @@
-
-#
-# Makefile for building the TAO examples
-# 
-
-DIRS = Callback_Quoter Simple
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
