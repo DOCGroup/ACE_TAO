@@ -152,6 +152,7 @@ prof_fork (size_t iteration)
   else
     return -1.0;
 #else
+  ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "fork () is not supported on this platform."), -1);
 #endif
 }
@@ -198,6 +199,7 @@ prof_native_thread (size_t iteration)
   else
     return -1.0;
 #else
+  ACE_UNUSED_ARG (iteration);
   ACE_ERROR_RETURN ((LM_ERROR, "Testing of native threads is not supported on this platform."), -1);
 #endif
 }
@@ -217,7 +219,7 @@ prof_ace_os_thread (size_t iteration)
 	  ptimer.start ();
 
 	  for (size_t j = 0; j < MULTIPLY_FACTOR; j++) 
-	    if (ACE_OS::thr_create (empty,
+	    if (ACE_OS::thr_create ((ACE_THR_FUNC) empty,
 				    0,
 				    THR_SUSPENDED,
 				    NULL) == -1)
