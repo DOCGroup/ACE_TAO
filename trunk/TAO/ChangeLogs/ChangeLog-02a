@@ -1,3 +1,240 @@
+Thu Jun  8 17:21:11 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Stub.cpp (hash):
+
+	  Throw an exception if the pointer to the profile is null,
+	  instead of returning with an error.  Only print an error message
+	  if debugging messages are enabled (via -ORBDebugLevel 4).
+
+Thu Jun  8 15:11:23 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h (~TAO_LB_ReplicaProxy):
+	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i (~TAO_LB_ReplicaProxy):
+
+	  Added a no-op private destructor to ensure that the ReplicaProxy
+	  servant is allocated on the heap.  This is necessary since the
+	  ReplicaProxy derives from PortableServer::RefCountServantBase,
+	  which expects that objects derived from it are heap allocated.
+
+	* orbsvcs/tests/LoadBalancing/client.cpp (main):
+	* orbsvcs/tests/LoadBalancing/server.cpp (main):
+
+	  Added missing emulated exception check when calling
+	  CORBA::ORB::string_to_object().  This fixes a segmentation fault
+	  in each program.
+
+	  Added CORBA::is_nil() checks on the replica and load balancer
+	  object references, to ensure that each object reference was
+	  successfully narrow()ed.
+
+	* Load balancing branch merge:
+
+	  Fri Apr 21 14:16:15 2000  Ossama Othman  <ossama@uci.edu>
+
+		* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+		* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+		* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+		* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i:
+		* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+
+		  Improved class naming conventions so that they are now
+		  prepended with a "TAO_LB_" to prevent namespace
+		  pollution.
+
+		* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp
+		  (load_changed):
+
+		  Fixed potential division by zero producing operation.
+
+		* orbsvcs/LoadBalancer/LoadBalancer.h:
+		* orbsvcs/LoadBalancer/LoadBalancer.cpp (init):
+
+		  Updated to use renamed TAO load balancer classes.
+
+	  Tue Mar 28 20:53:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+		* orbsvcs/LoadBalancer/LoadBalancer.h:
+		* orbsvcs/LoadBalancer/LoadBalancer_Service.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing.idl:
+		* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+		* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+		* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+		* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+		* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+		* orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
+		* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+		* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+		* orbsvcs/tests/LoadBalancing/client.cpp:
+		  Left a ton of @@ comments for Ossama.
+
+	  Mon Mar 27 09:03:51 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+		* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+		  Only one client is rejected under high load conditions.
+		  Otherwise we get herds of clients moving from server to
+		  server, i.e. the load balancing system is unstable.
+
+		* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+		  Adjust the high load threshold.
+
+	  Sun Mar 26 20:15:17 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	          Add new load balancing strategy
+
+	        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	          Several improvements to this strategy, i tried to detect
+	          crashed servers, not very successfully.
+
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	          More fixes to the load balancer.
+
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	          Fine tune the load measurement algorithm.  Try to make
+		  the load less sensible to transient spikes.
+
+	        * orbsvcs/tests/LoadBalancing/server.cpp:
+	          The Win32 workaround is not the Right Thing [tm]
+
+	        * orbsvcs/tests/LoadBalancing/client.cpp:
+	          Try to improve fault tolerance, had to back it up,
+		  Forwarding does not seems to work right.
+
+	  Sun Mar 26 13:53:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	        * orbsvcs/LoadBalancer/LoadBalancer.h:
+	        * orbsvcs/LoadBalancer/LoadBalancer.cpp
+	        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	          Implemented new load balancing strategy.
+
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	          Add debugging messages
+
+	        * orbsvcs/tests/LoadBalancing/server.cpp:
+	          Workaround problems on Win32 implementations of the
+		  Reactor.
+
+	  Sat Mar 25 21:27:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.i:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	          Fixed problems with the implementation, it does not
+		  crash anymore.
+
+	        * orbsvcs/tests/LoadBalancing/Makefile:
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+	        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+	        * orbsvcs/tests/LoadBalancing/client.cpp:
+	        * orbsvcs/tests/LoadBalancing/server.cpp:
+	          Re-organized the implementation of the Hash_Replica and
+		  the Replica Control.  I'm setting up a timer to
+		  periodically report the load, instead of on each
+		  request.
+
+	  Sat Mar 25 19:55:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+	          Use explicit cast to generate floating point numbers in
+		  the load.
+
+	        * orbsvcs/tests/LoadBalancing/LoadBalancing.dsw:
+	        * orbsvcs/tests/LoadBalancing/client.dsp:
+	        * orbsvcs/tests/LoadBalancing/server.dsp:
+	          Add project files for MSVC
+
+	  Sat Mar 25 17:52:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	        * orbsvcs/LoadBalancer/Makefile:
+	        * orbsvcs/LoadBalancer/LoadBalancer.h:
+	        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
+	        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	        * orbsvcs/tests/LoadBalancing/Hash_Replica.idl:
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.h:
+	        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+	        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.h:
+	        * orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+	        * orbsvcs/tests/LoadBalancing/Makefile:
+	        * orbsvcs/tests/LoadBalancing/client.cpp:
+	        * orbsvcs/tests/LoadBalancing/server.cpp:
+	          Now it compiles and links under Linux.
+
+	  Sat Mar 25 16:31:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	        * orbsvcs/LoadBalancer/Makefile:
+	        * orbsvcs/LoadBalancer/LoadBalancer.h:
+	        * orbsvcs/LoadBalancer/LoadBalancer.cpp:
+	        * orbsvcs/LoadBalancer/LoadBalancer_Service.cpp:
+	        * orbsvcs/LoadBalancer/LoadBalancer_Service.dsp:
+	        * orbsvcs/LoadBalancer/LoadBalancer_Service.dsw:
+	          Add project files, Makefile and missing header file.
+	          Fixed typos syntax errors and other problems, so at
+		  least it compiles now.
+
+	        * orbsvcs/orbsvcs/Makefile:
+	        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	        * orbsvcs/orbsvcs/orbsvcs.dsw:
+	        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+	        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.i:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+	        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+	        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+	          Fixed numerous typos, errors and configuration
+		  problems.  Added the Makefile, updated the project file
+		  and inserted the project file to the orbsvcs workspace.
+
+	        * orbsvcs/tests/LoadBalancing/client.cpp:
+	          Implemented a simple client body, still not compiled.
+
+	        * orbsvcs/tests/LoadBalancing/server.cpp:
+	          Cosmetic errors.
+
+	
 Thu Jun  8 09:01:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/ami-latency-client.cpp:
@@ -24,7 +261,6 @@ Thu Jun  8 00:16:51 2000  Marina Spivak  <marina@cs.wustl.edu>
         * tao/RT_Policy_i.h:
 
           Coding style/comments fixes.  Code review comments for Angelo.
-
 
 Wed Jun  7 18:31:54 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -101,7 +337,6 @@ Wed Jun  7 15:28:21 2000  Darrell Brunsch <brunsch@uci.edu>
         * tao/Makefile.bor:
 
           Added some missing files.
-
 
 Wed Jun 07 13:41:17 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
@@ -473,7 +708,6 @@ Sun Jun  4 13:33:43 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
         * orbsvcs/tests/Notify/Basic/Updates.cpp:
           renamed #defines to fix compile errors on Compaq Tru64 UNIX.
-
 
 Sun Jun  4 11:07:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
