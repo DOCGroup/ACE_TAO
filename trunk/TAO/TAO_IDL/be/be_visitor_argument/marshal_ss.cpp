@@ -80,7 +80,7 @@ int be_visitor_args_marshal_ss::visit_array (be_array *node)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << arg->local_name ();
+      *os << "_tao_forany_" << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
@@ -159,43 +159,43 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
   if (node->pt () == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	case AST_Argument::dir_INOUT:
+        {
+        case AST_Argument::dir_IN:
+        case AST_Argument::dir_INOUT:
           os->indent ();
           *os << "&" << arg->local_name ();
-	  break;
-	case AST_Argument::dir_OUT:
+          break;
+        case AST_Argument::dir_OUT:
           os->indent ();
           //          *os << "_tao_ptr_" << arg->local_name ();
           *os << "&" << arg->local_name () << ".inout ()";
-	  break;
-	} // end switch direction
+          break;
+        } // end switch direction
     } // end of if
   else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	case AST_Argument::dir_INOUT:
-	case AST_Argument::dir_OUT:
+        {
+        case AST_Argument::dir_IN:
+        case AST_Argument::dir_INOUT:
+        case AST_Argument::dir_OUT:
           os->indent ();
           //          *os << "&_tao_ptr_" << arg->local_name ();
           *os << "&" << arg->local_name () << ".inout ()";
-	  break;
-	} // end switch direction
+          break;
+        } // end switch direction
     } // end else if
   else // simple predefined types
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	case AST_Argument::dir_INOUT:
-	case AST_Argument::dir_OUT:
+        {
+        case AST_Argument::dir_IN:
+        case AST_Argument::dir_INOUT:
+        case AST_Argument::dir_OUT:
           os->indent ();
           *os << "&" << arg->local_name ();
-	  break;
-	} // end switch direction
+          break;
+        } // end switch direction
     } // end of else
 
   return 0;

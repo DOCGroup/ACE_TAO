@@ -151,13 +151,21 @@ int be_visitor_args_compiled_marshal_ss::visit_array (be_array *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
+#if 0
           *os << node->name () << "_forany ("
               << "(" << node->name () << "_slice *)"
               << arg->local_name () << ")";
+#else
+          *os << "_tao_forany_" << arg->local_name ();
+#endif
           break;
         case AST_Argument::dir_INOUT:
+#if 0
           *os << node->name () << "_forany ("
               << arg->local_name () << ")";
+#else
+          *os << "_tao_forany_" << arg->local_name ();
+#endif
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -170,10 +178,15 @@ int be_visitor_args_compiled_marshal_ss::visit_array (be_array *node)
         case AST_Argument::dir_IN:
           break;
         case AST_Argument::dir_INOUT:
+#if 0
           *os << node->name () << "_forany ("
               << arg->local_name () << ")";
+#else
+          *os << "_tao_forany_" << arg->local_name ();
+#endif
           break;
         case AST_Argument::dir_OUT:
+#if 0
           if (node->size_type () == be_decl::VARIABLE)
             {
               *os << node->name () << "_forany ("
@@ -185,6 +198,9 @@ int be_visitor_args_compiled_marshal_ss::visit_array (be_array *node)
               *os << node->name () << "_forany ("
                   << arg->local_name () << ")";
             }
+#else
+          *os << "_tao_forany_" << arg->local_name ();
+#endif
           break;
         }
     }

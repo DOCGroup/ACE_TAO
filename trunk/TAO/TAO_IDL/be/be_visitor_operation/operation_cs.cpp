@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -653,8 +653,6 @@ be_compiled_visitor_operation_cs::gen_pre_stub_info (be_operation *node,
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-
   return 0;
 }
 
@@ -810,48 +808,67 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   // the code below this is for 2way operations only
 
-  if (!this->void_return_type (bt) ||
-      this->has_param_type (node, AST_Argument::dir_INOUT) ||
-      this->has_param_type (node, AST_Argument::dir_OUT))
+  if (this->void_return_type (bt) &&
+      !this->has_param_type (node, AST_Argument::dir_INOUT) &&
+      !this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      // Do any post_invoke stuff that might be necessary.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_cs::"
-                             "gen_marshal_and_invoke - "
-                             "codegen for args in post do_static_call\n"),
-                            -1);
-        }
+      return 0;
+    }
+
+  // Do any post_invoke stuff that might be necessary.
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
+  ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for args in post do_static_call\n"),
+                        -1);
+    }
 
 
-      // Generate any temporary variables to demarshal the arguments
-      be_visitor_context ctx = *this->ctx_;
-      be_visitor_compiled_args_decl visitor (&ctx);
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_cs::"
-                             "gen_pre_stub_info - "
-                             "codegen for pre args failed\n"),
-                            -1);
-        }
-      // check if there was a user exception, else demarshal the
-      // return val (if any) and parameters (if any) that came with
-      // the response message
-      os->indent ();
-      *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
-          << "if (!(\n" << be_idt << be_idt << be_idt;
+  // Generate any temporary variables to demarshal the arguments
+  ctx = *this->ctx_;
+  be_visitor_compiled_args_decl vis1 (new be_visitor_context (ctx));
+  if (node->accept (&vis1) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_compiled_visitor_operation_cs::"
+                         "gen_pre_stub_info - "
+                         "codegen for pre args failed\n"),
+                        -1);
     }
 
   if (!this->void_return_type (bt))
     {
-      // demarshal the return val and each inout and out argument
+      // Generate any temporary variables to demarshal the return value
+      ctx = *this->ctx_;
+      be_visitor_context *new_ctx =
+        new be_visitor_context (ctx);
+      be_visitor_operation_compiled_rettype_post_docall vis2 (new_ctx);
+      if (bt->accept (&vis2) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_compiled_visitor_operation_cs::"
+                             "gen_pre_stub_info - "
+                             "codegen rettype [post docall] failed\n"),
+                            -1);
+        }
+    }
+
+  // check if there was a user exception, else demarshal the
+  // return val (if any) and parameters (if any) that came with
+  // the response message
+  *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
+      << "if (!(\n" << be_idt << be_idt << be_idt;
+
+  if (!this->void_return_type (bt))
+    {
+      // demarshal the return val
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -865,17 +882,14 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                              "codegen for return var failed\n"),
                             -1);
         }
-      if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
-          this->has_param_type (node, AST_Argument::dir_OUT))
-        {
-          // there are more to follow
-          *os << " &&\n";
-        }
     }
 
   if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
       this->has_param_type (node, AST_Argument::dir_OUT))
     {
+      if (!this->void_return_type (bt))
+          *os << " &&\n";
+
       // demarshal each out and inout argument
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);

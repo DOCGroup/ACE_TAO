@@ -28,11 +28,11 @@
 ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
 
 
-// ********************************************************************************
+// ************************************************************************
 //    be_visitor_operation_rettype_vardecl_ss
 //    This visitor generates code for variable declaration and initialization
 //    of the return type.
-// ********************************************************************************
+// ************************************************************************
 
 be_visitor_operation_rettype_vardecl_ss::be_visitor_operation_rettype_vardecl_ss
 (be_visitor_context *ctx)
@@ -57,11 +57,7 @@ be_visitor_operation_rettype_vardecl_ss::visit_array (be_array *node)
     bt = node;
 
   os->indent ();
-#if 0 /* ASG */
-  *os << bt->name () << "_var _tao_retval;" << be_nl;
-  *os << bt->name () << "_slice *&_tao_ptr_retval = _tao_retval.out ();\n";
-#endif
-  *os << bt->name () << "_var _tao_retval;\n";
+  *os << bt->name () << "_var _tao_retval;\n\n";
   return 0;
 }
 

@@ -20,9 +20,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -246,19 +246,9 @@ be_visitor_compiled_args_decl::visit_array (be_array *node)
     {
       *os << fname << "_forany "
           << "_tao_argument_" << f->local_name () << " ("
-          << be_idt << be_idt_nl;
-      *os << f->local_name ();
-      if (f->direction () == AST_Argument::dir_OUT)
-        {
-          // *os << ".ptr ()";
-        }
-#if 0
-      *os << "(ACE_const_cast (" << be_idt << be_idt_nl
-          << fname << "_slice*," << be_nl
-          << f->local_name () << be_uidt_nl
-          << ")" << be_uidt;
-#endif
-      *os << be_uidt_nl << ");" << be_uidt_nl;
+          << be_idt << be_idt_nl
+          << f->local_name ()
+          << be_uidt_nl << ");" << be_uidt_nl;
     }
   return 0;
 }

@@ -19,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -80,5 +80,45 @@ visit_interface_fwd (be_interface_fwd *node)
   *os << "_tao_retval = " << bt->name ()
       << "::_narrow (_tao_base_retval, ACE_TRY_ENV);" << be_nl;
   *os << "CORBA::release (_tao_base_retval);\n";
+  return 0;
+}
+
+// ****************************************************************
+
+be_visitor_operation_compiled_rettype_post_docall::
+    be_visitor_operation_compiled_rettype_post_docall (be_visitor_context *ctx)
+      : be_visitor_decl (ctx)
+{
+}
+
+int
+be_visitor_operation_compiled_rettype_post_docall::visit_array (be_array *node)
+{
+  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt = node;
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+
+  *os << bt->name () << "_forany _tao_retval_forany ("
+      << be_idt << be_idt_nl
+      << "_tao_retval" << be_uidt_nl
+      << ");\n" << be_uidt;
+  return 0;
+}
+
+int
+be_visitor_operation_compiled_rettype_post_docall::visit_typedef (be_typedef *node)
+{
+  this->ctx_->alias (node); // set the alias node
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_operation_rettype_post_docall::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
   return 0;
 }

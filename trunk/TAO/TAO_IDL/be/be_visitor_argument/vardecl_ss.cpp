@@ -86,25 +86,25 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
       os->indent ();
-      *os << bt->name () << " " << arg->local_name () << ";\n";
+      *os << bt->name () << " " << arg->local_name () << ";" << be_nl
+          << bt->name () << "_forany _tao_forany_"
+          << arg->local_name () << " (" << be_idt << be_idt_nl
+          << arg->local_name () << be_uidt_nl
+          << ");\n" << be_uidt;
       break;
+
     case AST_Argument::dir_OUT:
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
         {
-#if 0 /* ASG */
-          *os << bt->name () << "_var _tao_var_"
-              << arg->local_name () << ";" << be_nl;
-          *os << bt->name () << "_slice *&_tao_ptr_" << arg->local_name ()
-              << " = _tao_var_" << arg->local_name () << ".out ();" << be_nl;
-          *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_ptr_" << arg->local_name () << ");\n";
-#endif
-          *os << bt->name () << "_var "
-              << arg->local_name () << ";\n";
+          *os << bt->name () << "_var " << arg->local_name ()
+              << ";\n\n";
         }
       else
-        *os << bt->name () << " " << arg->local_name () << ";\n";
+        {
+          *os << bt->name () << " " << arg->local_name ()
+              << ";\n\n";
+        }
       break;
     }
   return 0;
