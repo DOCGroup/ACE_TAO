@@ -1,3 +1,11 @@
+Thu Jul 12 22:22:31 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Connector_Registry.cpp (create_profile):
+
+	  Print the hexadecimal value of the unknown profile tag in the
+	  debugging output rather than the decimal value.  The former is
+	  generally more useful.
+
 Thu Jul 12 21:36:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile (MKLIST):
