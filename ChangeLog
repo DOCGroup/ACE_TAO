@@ -1,3 +1,9 @@
+Tue Feb 10 13:32:51 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Proactor/HA_Proactive_Status.cpp: Add ACE_TEXT
+	  around string literal and make the "need async I/O" message
+	  more explicit.
+
 Tue Feb 10 11:27:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/bison.mpb:
