@@ -42,15 +42,7 @@ be_visitor_valuetype_ami_exception_holder_ch::~be_visitor_valuetype_ami_exceptio
 int
 be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os; // output stream
-
-
-  os = this->ctx_->stream ();
-
-  // Open the namespace again.
-
-  //*os << be_nl
-  //    << "TAO_NAME_S
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the implemenation of the Messaging aware ORB
   *os << be_nl
@@ -58,39 +50,41 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
       << ": public ";
 
   if (!node->is_nested ())
-    *os << "OBV_";
+    {
+      *os << "OBV_";
+    }
 
   *os << node->local_name () << "," << be_nl
       << "  public virtual OBV_Messaging::ExceptionHolder," << be_nl
       << "  public virtual CORBA::DefaultValueRefCountBase" << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{" << be_nl;
 
-  *os << be_uidt_nl << "public:" << be_idt_nl;
+  *os << "public:" << be_idt_nl;
 
   *os << "_tao_" << node->local_name () << " ();" << be_nl << be_nl;
 
-  *os << "~_tao_" << node->local_name () << " ();\n\n";
+  *os << "~_tao_" << node->local_name () << " ();" << be_nl << be_nl;
 
   if (this->visit_valuetype_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ami_exception_holder_cs::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
-
-  os->indent ();
 
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
   // Create code for the valuetype factory
 
-  *os << "class " << node->local_name () << "_factory : public "
-      << node->full_name () << "_init" << be_idt_nl
+  *os << "class " << node->local_name () << "_factory" << be_idt_nl
+      << ": public "
+      << node->full_name () << "_init" << be_uidt_nl
       << "{" << be_idt_nl
-      << "friend class " << node->local_name () << ";" << be_nl
-      << be_uidt_nl << "public:" << be_idt_nl
+      << "friend class " << node->local_name () << ";" << be_uidt_nl
+      << "public:" << be_idt_nl
       << "// create (...) would go here" << be_nl
       << be_uidt_nl << "private:" << be_idt_nl;
 
@@ -99,10 +93,6 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
   *os << "TAO_OBV_CREATE_RETURN_TYPE (" << node->local_name ()
       << ")  create_for_unmarshal ();" << be_nl << be_uidt_nl
       << "};" << be_uidt_nl;
-
-  // close the namespace again.
-  //*os << "}" << be_nl
-  //    << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl;
 
   return 0;
 }
@@ -113,6 +103,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_operation (be_operation *nod
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_IH);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -131,6 +122,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_operation (be_operation *nod
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
 
   return 0;

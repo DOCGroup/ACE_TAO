@@ -43,7 +43,7 @@ be_visitor_root_ch::~be_visitor_root_ch (void)
 int
 be_visitor_root_ch::init (void)
 {
-  // first open the client-side header file for writing
+  // First open the client-side header file for writing
   if (tao_cg->start_client_header (be_global->be_get_client_hdr_fname ())
         == -1)
     {
@@ -53,7 +53,7 @@ be_visitor_root_ch::init (void)
       return -1;
     }
 
-  // init the stream
+  // Initialize the stream.
   this->ctx_->stream (tao_cg->client_header ());
 
   return 0;

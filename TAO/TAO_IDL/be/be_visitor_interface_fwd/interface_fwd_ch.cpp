@@ -52,19 +52,15 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       return 0;
     }
 
-  os->indent (); // start from the current
-
-  // all we do in this is generate a forward declaration of the class
+  // All we do in this is generate a forward declaration of the class.
   *os << "class " << node->local_name () << ";" << be_nl;
 
   // generate the ifdefined macro for the _ptr type
   os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
-  os->indent (); // start from the current
-
   // Generate the _ptr typedef.
   *os << "typedef " << node->local_name () << " *" << node->local_name ()
-      << "_ptr;\n";
+      << "_ptr;" << be_nl;
 
   os->gen_endif ();
 
@@ -86,12 +82,14 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_fwd_ch::"
                          "visit_interface_fwd - "
-                         "codegen for _var failed\n"), -1);
+                         "codegen for _var failed\n"), 
+                        -1);
     }
-  // gen an endif
+
+  // Generate an endif.
   os->gen_endif ();
 
-  // enclose under an ifdef macro
+  // Enclose under an ifdef macro.
   os->gen_ifdef_macro (node->flat_name (), "_out");
 
   // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
@@ -100,9 +98,11 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_fwd_ch::"
                          "visit_interface_fwd - "
-                         "codegen for _out failed\n"), -1);
+                         "codegen for _out failed\n"), 
+                        -1);
     }
-  // generate the endif macro
+
+  // Generate the endif macro.
   os->gen_endif ();
 
   node->cli_hdr_gen (I_TRUE);

@@ -48,19 +48,12 @@ be_visitor_module_ch::visit_module (be_module *node)
     {
       os = this->ctx_->stream ();
 
-      // XXXASG - Modules really map to namespace. We need to see if our target
-      // compiler supports namespaces or not. This visitor generates a class for a
-      // module. We can have the factory generate another module visitor that can
-      // generate namespaces
-
-      os->indent (); // start from whatever indentation level we were at
-      // now generate the class definition
-      *os << "TAO_NAMESPACE " // << idl_global->stub_export_macro ()
+      os->indent ();
+      *os << "TAO_NAMESPACE "
           << " " << node->local_name () << be_nl
-          << "{\n";
-      os->incr_indent (0);
+          << "{" << be_idt_nl;
 
-      // generate code for the module definition by traversing thru the
+      // Generate code for the module definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
       if (this->visit_scope (node) == -1)

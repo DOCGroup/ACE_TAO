@@ -41,7 +41,7 @@ be_visitor_constant_ch::~be_visitor_constant_ch (void)
 {
 }
 
-// visit the Constant_Ch node and its scope
+// Visit the Constant node and its scope.
 int
 be_visitor_constant_ch::visit_constant (be_constant *node)
 {
@@ -49,28 +49,36 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   if (!node->cli_hdr_gen () && !node->imported ())
     {
-      // if we are defined in the outermost scope, then the value is assigned
-      // to us here itself, else it will be in the *.cpp file
+      // If we are defined in the outermost scope, then the value is assigned
+      // to us here itself, else it will be in the *.cpp file.
 
-      os->indent (); // start from whatever indentation level we were at
-      // is our enclosing scope a module? We need this check because for
+      // Is our enclosing scope a module? We need this check because for
       // platforms that support namespaces, the typecode must be declared
-      // extern
+      // extern.
       if (node->is_nested () &&
           (node->defined_in ()->scope_node_type () == AST_Decl::NT_module))
-        *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+        {
+          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+        }
       else
-        *os << "static ";
+        {
+          *os << "static ";
+        }
+
       *os << "const " << node->exprtype_to_string ()
           << " " << node->local_name ();
+
       if (!node->is_nested ())
         {
           // We were defined at the outermost scope. So we put the value in the
-          // header itself
+          // header itself.
           *os << " = " << node->constant_value ();
         }
-      *os << ";\n\n";
+
+      *os << ";" << be_nl << be_nl;
+
       node->cli_hdr_gen (I_TRUE);
     }
+
   return 0;
 }

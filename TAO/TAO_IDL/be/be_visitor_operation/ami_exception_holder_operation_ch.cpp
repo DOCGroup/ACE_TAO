@@ -45,24 +45,20 @@ be_visitor_operation_ami_exception_holder_operation_ch::~be_visitor_operation_am
 int
 be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
-  os = this->ctx_->stream ();
-  this->ctx_->node (node); // save the node
-
-  os->indent (); // start with the current indentation level
-
-  // every operation is declared virtual in the client code
+  // Every operation is declared virtual in the client code.
   *os << be_idt << "virtual ";
 
-  // STEP I: generate the return type. Return type is simpy void.
+  // STEP I: Generate the return type. Return type is simpy void.
   *os << "void raise_";
 
-  // check if we are an attribute node in disguise
+  // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
     {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
         *os << "set_";
       else
         *os << "get_";
@@ -73,11 +69,17 @@ be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_oper
        << " (";
 
   if (!idl_global->exception_support ())
-    *os << "CORBA::Environment &ACE_TRY_ENV =" << be_idt << be_idt_nl
-        << "TAO_default_environment ()" << be_uidt << be_uidt;
-  *os << ")" << be_idt;
+    {
+      *os << "CORBA::Environment &ACE_TRY_ENV =" << be_idt << be_idt_nl
+          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << ")";
+    }
+  else
+    {
+      *os << ")";
+    }
 
-  // now generate the throw specs
+  // Now generate the throw specs.
   if (this->gen_throw_spec (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,7 +89,7 @@ be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_oper
                         -1);
     }
 
-  *os << ";\n" << be_uidt << be_uidt;
+  *os << be_uidt << be_uidt_nl;
 
   return 0;
 }

@@ -45,55 +45,63 @@ be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch (void)
 }
 
 
-// OBV_ class must be in OBV_ namespace
+// OBV_ class must be in OBV_ namespace.
 int
 be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 {
-  // only visit non-abstract non-imported valuetype
+  // Only visit non-abstract non-imported valuetype.
   if (node->is_abstract_valuetype () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
-  TAO_OutStream *os; // output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  os = this->ctx_->stream ();
-
-  // OBV_ class maps only to a typedef if we are optimizing accessors
+  // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
     {
-      os->indent ();
       *os << "typedef " << node->full_name () << " ";
+
       if (!node->is_nested ())
-        *os << "OBV_";
+        {
+          *os << "OBV_";
+        }
+
       *os << node->local_name () << ";" << be_nl;
     }
   else
     {
-      // == STEP 1:  generate the class name and the class name we inherit ==
-
+      // STEP 1: Generate the class name and the class name we inherit.
       os->gen_ifdef_macro (node->flat_name (), "_OBV");
-      os->indent ();
 
       *os << "// OBV_ class" << be_nl;
       *os << "class ";
-      if (!node->is_nested())   // we are in root ?
-        *os << "OBV_";
-      *os << node->local_name () << " : public virtual "
-                                 << node->full_name () << be_nl;
 
-      // == STEP 2: generate the body ==
+      if (!node->is_nested())
+        {
+          *os << "OBV_";
+        }
 
-      *os << "{\n" << be_idt;
+      *os << node->local_name () << be_idt_nl
+          << ": public virtual "
+          << node->full_name () << be_uidt_nl;
 
-      // generate code for the OBV_ class definition
+      // STEP 2: Generate the body ==
+
+      *os << "{" << be_idt_nl;
+
+      // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_obv_ch::"
                              "visit_valuetype - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
         }
-      // map fields to private data
-      if (!node->opt_accessor ())  // check again (redundant)
+
+      // Map fields to private data.
+      if (!node->opt_accessor ())
         {
           *os << be_uidt_nl << "protected:" << be_idt_nl;
           *os << "virtual CORBA::Boolean _tao_marshal__"
@@ -103,15 +111,18 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "CORBA::Boolean "
               << "_tao_marshal_state (TAO_OutputCDR &);" << be_nl
               << "CORBA::Boolean "
-              << "_tao_unmarshal_state (TAO_InputCDR &);\n\n";
-          *os << be_uidt_nl << "private:" << be_idt_nl;
+              << "_tao_unmarshal_state (TAO_InputCDR &);"
+              << be_uidt_nl << be_nl;
+          *os << "private:" << be_idt_nl;
+
           this->gen_pd (node);
         }
-      *os << be_uidt;
-      os->indent ();
-      *os << "};\n";
+
+      *os << be_uidt_nl;
+      *os << "};" << be_nl;
+
       os->gen_endif ();
-    } // if !opt_accessor ()
+    }
 
   return 0;
 }
@@ -121,15 +132,19 @@ int
 be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 {
   be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
+
   if (!vt)
-    return -1;
-  // only in OBV_ class, if we are not optimizing accessors (and modifiers)
+    {
+      return -1;
+    }
+
+  // Only in OBV_ class, if we are not optimizing accessors (and modifiers).
   if (!vt->opt_accessor ())
     {
       be_visitor_context* ctx = new be_visitor_context (*this->ctx_);
       ctx->state (TAO_CodeGen::TAO_FIELD_OBV_CH);
       be_visitor_valuetype_field_ch *visitor =
-                 new be_visitor_valuetype_field_ch (ctx);
+        new be_visitor_valuetype_field_ch (ctx);
 
       if (!visitor)
         {
@@ -140,6 +155,7 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
         }
 
       visitor->setenclosings ("virtual ",";");
+
       if (node->accept (visitor) == -1)
         {
           delete visitor;
@@ -148,29 +164,25 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
                             "visit_field - codegen failed\n"),
                             -1);
         }
+
       delete visitor;
     }
+
   return 0;
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_public ()
+be_visitor_valuetype_obv_ch::begin_public (void)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  *os << be_uidt;
-  os->indent ();
-  *os << "public:\n" << be_idt;
+  TAO_OutStream *os = this->ctx_->stream ();
+  *os << be_uidt_nl;
+  *os << "public:" << be_idt_nl;
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_private ()
+be_visitor_valuetype_obv_ch::begin_private (void)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  *os << be_uidt;
-  os->indent ();
-  *os << "protected:\n" << be_idt;
+  TAO_OutStream *os = this->ctx_->stream ();
+  *os << be_uidt_nl;
+  *os << "protected:" << be_idt_nl;
 }

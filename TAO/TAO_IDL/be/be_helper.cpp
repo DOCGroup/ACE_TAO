@@ -271,7 +271,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
       return -1;
   }
   *this << "\n#if !defined (" << macro << ")\n";
-  *this << "#define " << macro << "\n\n";
+  *this << "#define " << macro << be_nl << be_nl;
 
   return 0;
 }
@@ -279,7 +279,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
 int
 TAO_OutStream::gen_endif (void)
 {
-  *this << "\n#endif /* end #if !defined */\n\n";
+  *this << "\n#endif /* end #if !defined */" << be_nl << be_nl;
 
   return 0;
 }
@@ -291,7 +291,7 @@ TAO_OutStream::gen_ifdef_AHETI (void)
 {
   *this << "\n"
         << "#if !defined (TAO_USE_SEQUENCE_TEMPLATES)"
-        << be_idt_nl;
+        << be_nl;
 
   return 0;
 }
@@ -308,8 +308,7 @@ TAO_OutStream::gen_else_AHETI (void)
 int
 TAO_OutStream::gen_endif_AHETI (void)
 {
-  *this << be_uidt
-        << "\n#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ "
+  *this << "\n#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ "
         << be_nl;
 
   return 0;

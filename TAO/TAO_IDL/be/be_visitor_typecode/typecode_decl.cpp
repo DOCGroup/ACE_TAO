@@ -51,27 +51,32 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 
   if (node->is_nested ())
     {
-      // we have a scoped name
-      os->indent ();
-      // is our enclosing scope a module? We need this check because for
+      // We have a scoped name.
+      // Is our enclosing scope a module? We need this check because for
       // platforms that support namespaces, the typecode must be declared
-      // extern
+      // extern.
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-        *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+        {
+          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+        }
       else
-        *os << "static ";
+        {
+          *os << "static ";
+        }
+
       *os << "CORBA::TypeCode_ptr "
-          << node->tc_name (prefix, postfix)->last_component () << ";\n\n";
+          << node->tc_name (prefix, postfix)->last_component () 
+          << ";" << be_nl << be_nl;
     }
   else
     {
-      // we are in the ROOT scope
-      os->indent ();
+      // We are in the ROOT scope.
       *os << "extern " << be_global->stub_export_macro () 
           << " CORBA::TypeCode_ptr "
           << " " << node->tc_name (prefix, postfix)->last_component () 
-          << ";\n\n";
+          << ";" << be_nl << be_nl;
     }
+
   return 0;
 }
 

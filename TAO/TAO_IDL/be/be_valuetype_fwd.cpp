@@ -411,7 +411,7 @@ be_valuetype_fwd::gen_out_defn (char *)
   *ch << this->local_name () << "_ptr &ptr_;\n";
 
   ch->decr_indent ();
-  *ch << "};\n\n";
+  *ch << "};" << be_nl << be_nl;
 
   return 0;
 }

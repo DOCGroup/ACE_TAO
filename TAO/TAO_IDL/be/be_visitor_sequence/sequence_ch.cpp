@@ -46,6 +46,7 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
+
   if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -337,8 +338,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // Generate the ifdefined macro for the sequence type.
   os->gen_ifdef_macro (node->flat_name ());
 
-  os->indent ();
-
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
@@ -369,7 +368,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "codegen for base sequence class\n"), -1);
+                         "codegen for base sequence class\n"), 
+                        -1);
     }
 
   *os << "{" << be_nl
@@ -383,7 +383,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << be_nl;
     }
 
-  *os << node->local_name () << " (" << be_idt_nl;
+  *os << node->local_name () << " (" << be_idt << be_idt_nl;
 
   if (node->unbounded ())
     {
@@ -403,7 +403,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "Bad visitor\n"), -1);
+                         "Bad visitor\n"), 
+                        -1);
     }
 
   if (bt->accept (visitor) == -1)
@@ -419,18 +420,18 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   *os << " *buffer, " << be_nl
       << "CORBA::Boolean release = 0" << be_uidt_nl
-      << ");" << be_nl;
+      << ");" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &); // copy ctor" << be_nl;
   *os << "~" << node->local_name () << " (void);" << be_nl
-      << "static void _tao_any_destructor (void*);\n\n";
+      << "static void _tao_any_destructor (void*);" << be_nl;
 
   // Generate the _ptr_type and _var_type typedefs
   // but we must protect against certain versions of g++.
-  *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
-  os->indent ();
+  *os << "\n#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)" 
+      << be_nl;
   *os << "typedef " << node->local_name () << "_var _var_type;\n"
-      << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
+      << "#endif /* ! __GNUC__ || g++ >= 2.8 */" << be_nl << be_nl;
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).
@@ -458,19 +459,17 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
       && node->unbounded ())
     {
-      *os << "\n"
-	        << "#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
+      *os << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
 	        << node->local_name () << " (" << be_idt << be_idt_nl
 	        << "CORBA::ULong length," << be_nl
 	        << "const ACE_Message_Block* mb" << be_uidt_nl
 	        << ")" << be_uidt_nl
 	        << "  : " << node->instance_name ()
 	        << " (length, mb) {}" << "\n"
-	        << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */\n\n";
+	        << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */" << be_nl;
     }
 
-  os->decr_indent ();
-  *os << "};" << be_nl;
+  *os << be_uidt_nl << "};" << be_nl;
 
   os->gen_endif (); // Endif macro.
 
@@ -527,11 +526,11 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
                    "%s_var",
                    node->local_name ()->get_string ());
 
-  os->indent ();
   *os << "// *************************************************************"
       << be_nl;
   *os << "// class " << node->name () << "_var" << be_nl;
-  *os << "// *************************************************************\n\n";
+  *os << "// *************************************************************"
+      << be_nl << be_nl;
 
   // Retrieve base type.
   bt = be_type::narrow_from_decl (node->base_type ());
@@ -549,32 +548,30 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  os->indent ();
   *os << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
   *os << "{" << be_nl;
-  *os << "public:\n";
-  os->incr_indent ();
+  *os << "public:" << be_idt_nl;
 
   // Default constuctor.
-  *os << namebuf << " (void); // default constructor" << be_nl;
+  *os << namebuf << " (void);" << be_nl;
 
   // Constuctor.
   *os << namebuf << " (" << node->local_name () << " *);" << be_nl;
 
   // Copy constructor.
-  *os << namebuf << " (const " << namebuf <<
-    " &); // copy constructor" << be_nl;
+  *os << namebuf << " (const " << namebuf <<  " &);" << be_nl;
 
   // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)
     {
+      *os << "// Fixed-size base types only." << be_nl;
       *os << namebuf << " (const " << node->local_name ()
-          << " &); // fixed-size base types only" << be_nl;
+          << " &);" << be_nl;
     }
 
   // Destructor.
-  *os << "~" << namebuf << " (void); // destructor" << be_nl;
+  *os << "~" << namebuf << " (void);" << be_nl;
   *os << be_nl;
 
   // Assignment operator from a pointer.
@@ -587,8 +584,9 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // Fixed-size base types only.
   if (bt->size_type () == be_decl::FIXED)
     {
+      *os << "// Fixed-size base types only." << be_nl;
       *os << namebuf << " &operator= (const " << node->local_name ()
-          << " &); // fixed-size base types only" << be_nl;
+          << " &);" << be_nl;
     }
 
   // Arrow operator.
@@ -697,18 +695,13 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
 
   // Generate an additional member function that 
   // returns the underlying pointer.
-  *os << node->local_name () << " *ptr (void) const;\n";
-
-  *os << "\n";
-  os->decr_indent ();
+  *os << node->local_name () << " *ptr (void) const;" << be_uidt_nl << be_nl;
 
   // Generate the private section.
-  *os << "private:\n";
-  os->incr_indent ();
-  *os << node->local_name () << " *ptr_;\n";
+  *os << "private:" << be_idt_nl;
+  *os << node->local_name () << " *ptr_;" << be_uidt_nl;
 
-  os->decr_indent ();
-  *os << "};\n\n";
+  *os << "};" << be_nl << be_nl;
 
   return 0;
 }
@@ -721,8 +714,12 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   char namebuf [NAMEBUFSIZE];
   be_type *bt = 0;
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_out", node->local_name ()->get_string ());
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::sprintf (namebuf, 
+                   "%s_out", 
+                   node->local_name ()->get_string ());
 
   // Retrieve base type.
   bt = be_type::narrow_from_decl (node->base_type ());
@@ -737,13 +734,10 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
     }
 
   // Generate the out definition (always in the client header).
-  os->indent ();
-
   *os << "class " << be_global->stub_export_macro () << " "
       << namebuf << be_nl;
   *os << "{" << be_nl;
-  *os << "public:\n";
-  os->incr_indent ();
+  *os << "public:" << be_idt_nl;
 
   // No default constructor.
 
@@ -799,18 +793,15 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
 
   delete visitor;
 
-  *os << " operator[] (CORBA::ULong index);" << be_nl;
-  *os << "\n";
-  os->decr_indent ();
-  *os << "private:\n";
-  os->incr_indent ();
+  *os << " operator[] (CORBA::ULong index);" << be_uidt_nl << be_nl;
+  *os << "private:" << be_idt_nl;
 
   *os << node->local_name () << " *&ptr_;" << be_nl;
-  *os << "// assignment from T_var not allowed" << be_nl;
-  *os << "void operator= (const " << node->local_name () << "_var &);\n";
+  *os << "// Assignment from T_var not allowed." << be_nl;
+  *os << "void operator= (const " << node->local_name () 
+      << "_var &);" << be_uidt_nl;
 
-  os->decr_indent ();
-  *os << "};\n\n";
+  *os << "};" << be_nl << be_nl;
 
   return 0;
 }
