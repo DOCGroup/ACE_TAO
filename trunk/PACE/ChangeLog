@@ -1,3 +1,9 @@
+Sun Jul 16 16:17:25 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h (PACE_FAIL_RETURN):
+
+	  Fixed to work with just PACE_WIN32 defined.
+
 Fri Jul 14 22:56:29 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h (PACE_FAIL_RETURN):
