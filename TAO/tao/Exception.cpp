@@ -9,6 +9,10 @@
 #include "tao/Any.h"
 #include "tao/CDR.h"
 
+#if defined(ACE_MVS)
+#include "ace/Codeset_IBM1047.h"
+#endif /* ACE_MVS */
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
@@ -451,7 +455,7 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   // are stored in ISO8859 form, the problem is that this hack does
   // not scale as more native sets have to be supported
 
-  ACE_Codeset_IBM1047_ISO8859 translator;
+  ACE_IBM1047_ISO8859 translator;
   TAO_OutputCDR stream (0,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
@@ -512,7 +516,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // are stored in ISO8859 form, the problem is that this hack does
   // not scale as more native sets have to be supported
 
-  ACE_Codeset_IBM1047_ISO8859 translator;
+  ACE_IBM1047_ISO8859 translator;
   TAO_OutputCDR stream (buffer, buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
