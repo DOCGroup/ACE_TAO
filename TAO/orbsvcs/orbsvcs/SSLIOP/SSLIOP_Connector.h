@@ -92,7 +92,8 @@ namespace TAO
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
       //@}
 
-      virtual TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
+      /// SSL-specific profile 
+      TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
 
       /// IIOP-specific connection establishment.
       /**
