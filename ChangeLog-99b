@@ -1,3 +1,9 @@
+Wed Apr 21 16:35:21 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/New_Fail_Test.cpp: Test to be sure that the ACE_NEW[_RETURN]
+          stuff works correctly when heap is exhausted.
+        * tests/Makefile: Added New_Fail_Test.
+
 Wed Apr 21 15:35:44 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: On Win32, with ACE_HAS_NONSTATIC_OBJECT_MANAGER, use
