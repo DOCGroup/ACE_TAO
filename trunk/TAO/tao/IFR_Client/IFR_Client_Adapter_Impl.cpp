@@ -16,7 +16,7 @@ ACE_RCSID (IFR_Client,
 
 namespace TAO
 {
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDef>
     : public
         Object_Arg_Traits_T<

@@ -62,7 +62,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
   if (node->is_local ())
     {
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Dual_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
@@ -71,7 +71,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
           << "}";
 
       *os << be_nl << be_nl
-          << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          << "template<>" << be_nl
           << "CORBA::Boolean" << be_nl
           << "TAO::Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
