@@ -36,14 +36,13 @@ sub new
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
     $self->{PURIFY_CMD} = $ENV{"ACE_RUN_PURIFY_CMD"};
-    $self->{WAIT_DELAY_FACTOR} = $ENV{"ACE_RUNTEST_DELAY"};
-
-    if (!defined $self->{WAIT_DELAY_FACTOR}) {
+    $self->{PURIFY_OPT} = $ENV{"ACE_RUN_PURIFY_OPT"};
+    if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
         if (defined $self->{PURIFY_CMD}) {
-            $self->{WAIT_DELAY_FACTOR} = 10;
+            $PerlACE::Process::WAIT_DELAY_FACTOR = 10;
         }
         else {
-            $self->{WAIT_DELAY_FACTOR} = 1;
+            $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
         }
     }
 
@@ -168,19 +167,24 @@ sub Spawn ()
         my $orig_cmdline = $self->CommandLine ();
         $executable = $self->{PURIFY_CMD};
         my $basename = basename ($self->{EXECUTABLE});
+
+        my $PurifyOptions = $self->{PURIFY_OPT};
+        if (!defined $PurifyOptions) {
+            $PurifyOptions =
+                "/run ".
+#                "/save-data=$basename.pfy ".
+                "/save-text-data=$basename.pfytxt ".
+                "/AllocCallStackLength=20 ".
+                "/ErrorCallStackLength=20 ".
+                "/HandlesInUseAtExit ".
+                "/InUseAtExit ".
+                "/LeaksAtExit ";
+        }
+        my $basename = basename ($self->{EXECUTABLE});
         $cmdline =
             "purify " .
-            "/run ".
-            "/save-data=$basename.pfy ".
-            "/save-text-data=$basename.txt ".
-            "/AllocCallStackLength=20 ".
-            "/ErrorCallStackLength=20 ".
-            "/HandlesInUseAtExit ".
-            "/InUseAtExit ".
-            "/LeaksAtExit ".
-            "$orig_cmdline"
-
-            ;
+            "$PurifyOptions ".
+            "$orig_cmdline" ;
     }
     else {
         $executable = $self->Executable ();
@@ -296,7 +300,7 @@ sub TimedWait ($)
     }
 
     if (Win32::Process::Wait ($self->{PROCESS},
-                              $timeout * 1000 * $self->{WAIT_DELAY_FACTOR}) == 0) {
+                              $timeout * 1000 * $PerlACE::Process::WAIT_DELAY_FACTOR) == 0) {
         return -1;
     }
 
