@@ -1,3 +1,12 @@
+Thu Sep 17 22:33  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/index.html
+	  docs/tutorials/templates.html
+	
+	  Added templates.html to discuss issues surrounding manual vs
+	  automatic template instantiation.
+	  
+
 Thu Sep 17 20:01:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
