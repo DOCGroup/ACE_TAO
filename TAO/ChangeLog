@@ -1,3 +1,14 @@
+Thu Jun 19 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+          Updated doxygen documentation
+
 Wed Jun 18 23:29:20 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/CosNotification.dsp:
@@ -5,9 +16,9 @@ Wed Jun 18 23:29:20 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
 	* orbsvcs/tests/Notify/lib/TAO_NotifyTests_Static.dsp:
 	* orbsvcs/orbsvcs/CosNotification.bor:
-	
+
 	  Updated
-	
+
 Wed Jun 18 22:27:49 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify_Service/Notify_Service.cpp:

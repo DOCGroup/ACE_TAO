@@ -80,7 +80,7 @@ public:
   /// Is the message complete?
   int complete (void) const;
 
-  /// Return a buffer for the fragment at offset <fragment_offset>
+  /// Return a buffer for the fragment at offset @a fragment_offset
   char* fragment_buffer (CORBA::ULong fragment_offset);
 
 private:
@@ -155,8 +155,8 @@ public:
   void shutdown (void);
   //@}
 
-  /// Main method: read the data from <dgram> and either pass ready data
-  /// to <cdr_processor> or update the <request_map_> if the request
+  /// Main method: read the data from @a dgram and either pass ready data
+  /// to @a cdr_processor or update the <request_map_> if the request
   /// is not yet complete.
   /**
    * Returns 1 if data was read successfully and accepted by
