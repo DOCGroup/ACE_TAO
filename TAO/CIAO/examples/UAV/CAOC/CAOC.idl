@@ -1,0 +1,29 @@
+//$Id$
+//=============================================================================
+/**
+ * @file CAOC.idl
+ *
+ * Definition of the CAOC component
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_CAOC_IDL
+#define CIAO_CAOC_IDL
+
+#include "../BBN_UAV.idl"
+
+module BBN_UAV
+{
+  component CAOC
+    {
+      publishes PrepareCapture prepare_capture;
+      consumes TargetLocated target_located;
+    };
+
+  home CAOCHome manages CAOC
+    {
+    };
+};
+
+#endif /*CIAO_CAOC_IDL */

@@ -1,0 +1,29 @@
+//$Id$
+//=============================================================================
+/**
+ * @file UAV.idl
+ *
+ * Definition of the UAV component
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ */
+//=============================================================================
+#ifndef CIAO_UAV_IDL
+#define CIAO_UAV_IDL
+
+#include "../BBN_UAV.idl"
+
+module BBN_UAV
+{
+  component UAV
+    {
+      publishes TargetLocated target_located;
+      consumes StartCapture start_capture;
+    };
+
+  home UAVHome manages UAV
+    {
+    };
+};
+
+#endif /*CIAO_BMDEVICE_IDL */

@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef ATR_CIDL
+#define ATR_CIDL
+
+#include "ATR.idl"
+
+composition session ATR_Impl
+{
+  home executor ATRHome_Exec
+  {
+    implements BBN_UAV::ATRHome;
+    manages ATR_Exec;
+  };
+};
+
+#endif /* ATR_CIDL */

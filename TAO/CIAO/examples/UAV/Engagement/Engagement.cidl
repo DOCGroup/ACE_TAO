@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef ENGAGEMENT_CIDL
+#define ENGAGEMENT_CIDL
+
+#include "Engagement.idl"
+
+composition session Engagement_Impl
+{
+  home executor EngagementHome_Exec
+  {
+    implements BBN_UAV::EngagementHome;
+    manages Engagement_Exec;
+  };
+};
+
+#endif /* ENGAGEMENT_CIDL */

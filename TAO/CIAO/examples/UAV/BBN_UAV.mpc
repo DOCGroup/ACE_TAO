@@ -1,0 +1,34 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n BBN_UAV"
+
+project(BBN_UAV_stub): ciao_client {
+  
+  sharedname = BBN_UAV_stub
+  idlflags += -Wb,stub_export_macro=BBN_UAV_STUB_Export -Wb,stub_export_include=BBN_UAV_stub_export.h -Wb,skel_export_macro=BBN_UAV_SVNT_Export -Wb,skel_export_include=BBN_UAV_svnt_export.h
+  dynamicflags   = BBN_UAV_STUB_BUILD_DLL
+
+  IDL_Files {
+    BBN_UAV.idl
+  }
+
+  Source_Files {
+    BBN_UAVC.cpp
+  }
+}
+
+project(BBN_UAV_svnt) : ciao_server {
+  after +=  BBN_UAV_stub
+  sharedname  = BBN_UAV_svnt
+  libs    += BBN_UAV_stub 
+  
+  idlflags  +=  -Wb,export_macro=BBN_UAV_SVNT_Export -Wb,export_include=BBN_UAV_svnt_export.h
+  dynamicflags = BBN_UAV_SVNT_BUILD_DLL
+
+  Source_Files {
+    BBN_UAVS.cpp
+  }
+}
+
+
+
+

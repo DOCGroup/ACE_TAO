@@ -1,0 +1,62 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl CAOC"
+
+project(CAOC_stub): ciao_client {
+  
+  sharedname = CAOC_stub
+  idlflags += -Wb,stub_export_macro=CAOC_STUB_Export -Wb,stub_export_include=CAOC_stub_export.h -Wb,skel_export_macro=CAOC_SVNT_Export -Wb,skel_export_include=CAOC_svnt_export.h
+  dynamicflags   = CAOC_STUB_BUILD_DLL
+
+  IDL_Files {
+    CAOC.idl
+  }
+
+  Source_Files {
+    CAOCC.cpp
+  }
+}
+
+project(CAOC_svnt) : ciao_servant {
+  after +=  CAOC_stub
+  sharedname  = CAOC_svnt
+  libs    += CAOC_stub 
+  
+  idlflags  +=  -Wb,export_macro=CAOC_SVNT_Export -Wb,export_include=CAOC_svnt_export.h
+  dynamicflags = CAOC_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    CAOC.cidl
+  }
+
+  IDL_Files {
+    CAOCE.idl
+  }
+
+  Source_Files {
+    CAOCEC.cpp
+    CAOCS.cpp
+    CAOC_svnt.cpp
+  }
+}
+
+
+project(CAOC_exec) : ciao_component {
+  after   += CAOC_svnt
+  sharedname = CAOC_exec
+  libs      += CAOC_stub CAOC_svnt 
+  
+  idlflags  +=  -Wb,export_macro=CAOC_EXEC_Export -Wb,export_include=CAOC_exec_export.h
+  dynamicflags   = CAOC_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    CAOC_exec.cpp
+  }
+}
+
+
+
