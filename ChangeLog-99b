@@ -1,3 +1,8 @@
+Thu Dec 02 18:16:27 1999  James Hu <jxh@entera.com>
+
+        * ace/Filecache.cpp: Make it possible to remove something from
+          the Filecache.
+
 Thu Dec 02 18:03:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Malloc_Test.cpp (parent): Before binding the name "bar",
