@@ -1,3 +1,8 @@
+Thu Dec 20 13:53:48 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ace/SSL/SSL_SOCK_Connector.cpp: Fixed compile errors on Win32.
+
 Thu Dec 20 13:37:42 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-all.h: Restructured the section for
