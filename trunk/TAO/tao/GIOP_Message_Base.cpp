@@ -584,12 +584,21 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 #endif /* ACE_HAS_PURIFY */
 
   // Initialze an output CDR on the stack
+  // NOTE: Dont jump to a conclusion as to why we are using the
+  // inpout_cdr and hence the  global pool here. These pools will move
+  // to the lanes anyway at some point of time. Further, it would have
+  // been awesome to have this in TSS. But for some reason the cloning
+  // that happens when the ORB gets flow controlled while writing a
+  // reply is messing things up. We crash horribly. Doing this adds a
+  // lock, we need to set things like this -- put stuff in TSS here
+  // and transfer to global memory when we get flow controlled. We
+  // need to work on the message block to get it right!
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
-                        this->orb_core_->output_cdr_buffer_allocator (),
-                        this->orb_core_->output_cdr_dblock_allocator (),
-                        this->orb_core_->output_cdr_msgblock_allocator (),
+                        this->orb_core_->input_cdr_buffer_allocator (),
+                        this->orb_core_->input_cdr_dblock_allocator (),
+                        this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
                         qd->minor_version_,
@@ -882,7 +891,9 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
               return -1;
             }
 
-          int result = transport->send_message (output);
+          int result = transport->send_message (output,
+                                                0,
+                                                TAO_Transport::TAO_REPLY);
           if (result == -1)
             {
               if (TAO_debug_level > 0)
@@ -1154,7 +1165,9 @@ TAO_GIOP_Message_Base::make_send_locate_reply (TAO_Transport *transport,
                                    status_info);
 
   // Send the message
-  int result = transport->send_message (output);
+  int result = transport->send_message (output,
+                                        0,
+                                        TAO_Transport::TAO_REPLY);
 
   // Print out message if there is an error
   if (result == -1)
@@ -1387,7 +1400,9 @@ TAO_GIOP_Message_Base::send_reply_exception (
                                       *x) == -1)
     return -1;
 
-  return transport->send_message (output);
+  return transport->send_message (output,
+                                  0,
+                                  TAO_Transport::TAO_REPLY);
 }
 
 void
@@ -1427,22 +1442,33 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       // request/reply id.
       CORBA::ULong tmp = 0;
       CORBA::ULong *id = &tmp;
+      char *tmp_id = 0;
 
       if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
           ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
-          // @@ Only works if ServiceContextList is empty....
           if (minor < 2)
             {
-              id = ACE_reinterpret_cast (CORBA::ULong *,
-                                         (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4));
-
+              // @@ Only works if ServiceContextList is empty....
+              tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4);
             }
           else
             {
-              id = ACE_reinterpret_cast (CORBA::ULong *,
-                                         (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN));
+              tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
             }
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
+      if (byte_order == TAO_ENCAP_BYTE_ORDER)
+        {
+          id = ACE_reinterpret_cast (ACE_CDR::ULong*, tmp_id);
+        }
+      else
+        {
+          ACE_CDR::swap_4 (tmp_id, ACE_reinterpret_cast (char*,id));
+        }
+#else
+      id = ACE_reinterpret_cast(ACE_CDR::ULong*, tmp_id);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
+
         }
 
       // Print.

@@ -9,8 +9,10 @@
 
 ACE_RCSID(tao, Queued_Message, "$Id$")
 
-TAO_Queued_Message::TAO_Queued_Message (void)
-  : next_ (0)
+TAO_Queued_Message::TAO_Queued_Message (ACE_Allocator *alloc)
+  : allocator_ (alloc)
+  , is_heap_created_ (0)
+  , next_ (0)
   , prev_ (0)
 {
 }

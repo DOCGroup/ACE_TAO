@@ -194,7 +194,7 @@ TAO_Queued_Data::get_queued_data (ACE_Allocator *alloc)
     {
       // This debug is for testing purposes!
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Queued_Data[%d]::get_queued_data\n",
+                  "TAO (%P|%t) - Queued_Data::get_queued_data\n",
                   "Using global pool for allocation \n"));
     }
 
