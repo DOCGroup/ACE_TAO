@@ -9,7 +9,7 @@ Mon Dec 01 07:56:02 1997  David L. Levine  <levine@cs.wustl.edu>
           etc/ace_ld, bin/ace_ld, ACE-INSTALL.html:
           moved ace_ld from etc/ to bin/.
 
-        * Makefile: added etc/ to DIRS, CLONE, and RELEASE_FILES.
+        * Makefile: added etc/ to CLONE and RELEASE_FILES.
 
         * include/makeinclude/platform_lynxos.GNU: added -Wall to CFLAGS.
 
