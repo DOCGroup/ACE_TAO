@@ -1,4 +1,7 @@
+$Id$
+
 // ========================================================================
+//
 // $Id$
 //
 // = LIBRARY
@@ -28,7 +31,8 @@ TAO_Service_Type_Repository (ACE_Lock* lock)
   // If a lock wasn't provided, let's assume the user doesn't want any
   // kind of lock at all.
   if (this->lock_ == 0)
-    ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Null_Mutex> ());
+    ACE_NEW (this->lock_,
+             ACE_Lock_Adapter<ACE_Null_Mutex> ());
 }
 
 
