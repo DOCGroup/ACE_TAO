@@ -1015,7 +1015,6 @@ CORBA_ORB::leader_follower_info (void)
 
 // Dynamic Any factory functions.
 
-ACE_INLINE
 CORBA_DynAny_ptr
 CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
                                  CORBA::Environment& env)
@@ -1023,7 +1022,6 @@ CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
   return TAO_DynAny_i::create_dyn_any (any, env);
 }
 
-ACE_INLINE
 CORBA_DynAny_ptr
 CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
@@ -1031,7 +1029,6 @@ CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_any (tc, env);
 }
 
-ACE_INLINE
 CORBA_DynStruct_ptr
 CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
@@ -1039,7 +1036,6 @@ CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_struct (tc, env);
 }
 
-ACE_INLINE
 CORBA_DynSequence_ptr
 CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
@@ -1047,7 +1043,6 @@ CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_sequence (tc, env);
 }
 
-ACE_INLINE
 CORBA_DynArray_ptr
 CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
@@ -1055,7 +1050,6 @@ CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_array (tc, env);
 }
 
-ACE_INLINE
 CORBA_DynUnion_ptr
 CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
@@ -1063,7 +1057,6 @@ CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_union (tc, env);
 }
 
-ACE_INLINE
 CORBA_DynEnum_ptr
 CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
                                  CORBA::Environment& env)
