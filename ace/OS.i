@@ -5626,38 +5626,6 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_PENTIUM)
-// Thanks to Tim Harrison and Wayne Vucenic <wvucenic@netgate.net>
-// for this assembly-language routine to read the clock; see
-// http://www.sandpile.org/80x86/rdtsc.shtml for a description of
-// the RDTSC instruction.
-//
-// The ACE_RDTSC function issues the RDTSC assembler instruction to get the
-// number of clock ticks since system boot, then stores the 64 bit
-// result into the array named counter.  Note that the most
-// significant 32 bits are in counter[1] (little-endian style).  RDTSC
-// is only available on Pentiums and up, and may be disabled for ring
-// 3 by the operating system.  (But NT doesn't, and 95 apparently
-// doesn't either.)
-
-ACE_INLINE void
-ACE_RDTSC (unsigned long &lo, unsigned long &hi)
-{
-  unsigned long least;
-  unsigned long most;
-
-  __asm {
-      __asm		_emit		0xf
-      __asm		_emit		0x31
-      __asm		mov		least,eax
-      __asm		mov		most,edx
-      }
-
-  lo = least;
-  hi = most;
-}
-#endif /* ACE_HAS_PENTIUM */
-
 ACE_INLINE ACE_hrtime_t 
 ACE_OS::gethrtime (void)
 {
@@ -5671,12 +5639,6 @@ ACE_OS::gethrtime (void)
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
   return tb.tb_high * 1000000000L + tb.tb_low;
-#elif defined (ACE_HAS_PENTIUM)
-  unsigned long lo;
-  unsigned long hi;
-
-  ACE_RDTSC (lo, hi);
-  return ACE_MAKE_QWORD (lo, hi);
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_HI_RES_TIMER */
