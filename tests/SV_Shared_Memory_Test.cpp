@@ -52,13 +52,18 @@ parent (char *shm)
 {
   ACE_SV_Semaphore_Complex mutex;
 
+  // This semaphore is initially created with a count of 0, i.e., it
+  // is "locked."
   ACE_ASSERT (mutex.open (SEM_KEY_1,
                            ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   ACE_SV_Semaphore_Complex synch;
+  // This semaphore is initially created with a count of 0, i.e., it
+  // is "locked."
   ACE_ASSERT (synch.open (SEM_KEY_2,
                            ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
+  // This for loop executes in a critical section proteced by <mutex>.
   for (int i = 0; i < SHMSZ; i++)
     shm[i] = SHMDATA[i];
 
@@ -80,14 +85,21 @@ static int
 child (char *shm)
 {
   ACE_SV_Semaphore_Complex mutex;
+  // This semaphore is initially created with a count of 0, i.e., it
+  // is "locked."
   ACE_ASSERT (mutex.open (SEM_KEY_1,
                            ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
   ACE_SV_Semaphore_Complex synch;
-
+  // This semaphore is initially created with a count of 0, i.e., it
+  // is "locked."
   ACE_ASSERT (synch.open (SEM_KEY_2,
                            ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
+  // Perform "busy waiting" here until we acquire the semaphore.  This
+  // isn't really a good design -- it's just to illustrate that you
+  // can do non-blocking acquire() calls with the ACE System V
+  // semaphore wrappers.
   while (mutex.tryacquire () == -1)
     if (errno == EAGAIN)
       ACE_DEBUG ((LM_DEBUG, "(%P) spinning in child!\n"));
@@ -113,10 +125,7 @@ template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 #pragma instantiate ACE_Write_Guard<ACE_SV_Semaphore_Simple>
 #pragma instantiate ACE_Read_Guard<ACE_SV_Semaphore_Simple>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #endif /* ACE_HAS_SYSV_IPC */
-
 int
 main (int, char *[])
 {
