@@ -1,3 +1,10 @@
+Tue Mar 23 12:06:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_THROW_SPEC): Added prgama to disable reporting
+	  warning 4290 on MSVC.  MSVC "supports" the exception
+	  specification but doesn't provide an implementation for it.
+	  Instead, it warns you the specification is ignored.
+
 Mon Mar 22 21:34:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_g++.GNU: use -m uname
