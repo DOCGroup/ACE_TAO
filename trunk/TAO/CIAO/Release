@@ -48,3 +48,6 @@ show_release_lib_files:
 show_release_tag_files:
 	@echo ""
 
+INSTALL: CIAO-INSTALL.html
+	@lynx -dump $< > CIAO-INSTALL
+
