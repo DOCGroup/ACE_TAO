@@ -25,6 +25,9 @@ project(RTOLDEvent) : orbsvcslib, core, rtevent, rtsched {
     }
   }
 
+  Template_Files {
+  }
+
   // Since the resource file for RTOLDEvent does
   // not match the project name, we must explicitly list it.
   Resource_Files {

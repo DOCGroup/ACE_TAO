@@ -26,8 +26,11 @@ project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
     CosEventChannelAdminC.inl
   }
 
+  Template_Files {
+  }
+
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
-  Resource_Files{
+  Resource_Files {
     CosEvent.rc
   }
 }
@@ -53,6 +56,9 @@ project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver
   Inline_Files {
     CosEventCommS.inl
     CosEventChannelAdminS.inl
+  }
+
+  Template_Files {
   }
 }
 
@@ -87,5 +93,8 @@ project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_
       CosEvent/CEC_SupplierAdmin.cpp
       CosEvent/CEC_SupplierControl.cpp
     }
+  }
+
+  Template_Files {
   }
 }

@@ -98,4 +98,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging {
       Event/EC_UDP_Admin.cpp
     }
   }
+
+  Template_Files {
+  }
 }

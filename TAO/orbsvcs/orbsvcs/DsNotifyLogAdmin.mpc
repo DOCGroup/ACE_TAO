@@ -21,7 +21,10 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event
 
   Inline_Files {
     DsNotifyLogAdminC.inl
-  }   
+  }
+
+  Template_Files {
+  }
 
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
   Resource_Files {
@@ -47,6 +50,9 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventloga
   Inline_Files {
     DsNotifyLogAdminS.inl
   }   
+
+  Template_Files {
+  }
 }
 
 
@@ -65,5 +71,11 @@ project(DsNotifyLogAdmin_Serv) : orbsvcslib, core, dsnotifylogadmin_skel, dsloga
       Log/NotifyLogNotification.cpp
       Log/NotifyLog_i.cpp
     }
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
   }
 }

@@ -23,6 +23,9 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
     DsEventLogAdminC.inl
   }
 
+  Template_Files {
+  }
+
   // explicit Resource_Files to avoid including _Skel & _Serv rc files.
   Resource_Files {
     DsEventLogAdmin.rc
@@ -47,6 +50,9 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_sk
   Inline_Files {
     DsEventLogAdminS.inl
   }
+
+  Template_Files {
+  }
 }
 
 project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadmin_serv, event_serv {
@@ -64,5 +70,11 @@ project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadm
       Log/EventLogNotification.cpp
       Log/EventLog_i.cpp
     }
+  }
+
+  Inline_Files {
+  }
+
+  Template_Files {
   }
 }

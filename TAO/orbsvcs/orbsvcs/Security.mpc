@@ -32,4 +32,7 @@ project(Security) : orbsvcslib, corba_messaging, core, portableserver, intercept
       Security
     }
   }
+
+  Template_Files {
+  }
 }
