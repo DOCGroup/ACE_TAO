@@ -12,6 +12,9 @@ ACE_RCSID (TAO_SSLIOP,
 
 #include "tao/debug.h"
 
+#include "ace/SSL/SSL_Context.h"
+
+
 extern "C"
 int
 TAO_SSLIOP_password_callback (char *buf,
@@ -122,6 +125,9 @@ TAO_SSLIOP_Vault::acquire_credentials (
 
   TAO_SSLIOP_EVP_PKEY_var evp = this->make_EVP_PKEY (data->key);
 
+  if (evp.in () == 0)
+    return Security::SecAuthFailure;
+
   // Verify that the private key is consistent with the certificate.
   if (::X509_check_private_key (x509.in (), evp.in ()) != 1)
     {
@@ -148,7 +154,7 @@ TAO_SSLIOP_Vault::continue_credentials_acquisition (
     CORBA::Any_out /* continuation_data */,
     CORBA::Any_out /* auth_specific_data */
     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
@@ -254,7 +260,14 @@ TAO_SSLIOP_Vault::make_X509 (const SSLIOP::File &certificate)
       fp = ACE_OS::fopen (filename, "rb");
 
       if (fp == 0)
-        return 0;
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) SSLIOP_Vault::make_X509 - %p\n"),
+                        ACE_TEXT ("fopen")));
+
+          return 0;
+        }
 
       // Read ASN.1 / DER encoded X.509 certificate from a file, and
       // convert it to OpenSSL's internal X.509 format.
@@ -267,7 +280,14 @@ TAO_SSLIOP_Vault::make_X509 (const SSLIOP::File &certificate)
       fp = ACE_OS::fopen (filename, "r");
 
       if (fp == 0)
-        return 0;
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) SSLIOP_Vault::make_X509 - %p\n"),
+                        ACE_TEXT ("fopen")));
+
+          return 0;
+        }
 
       const char *password = certificate.password.in ();
 
@@ -280,6 +300,9 @@ TAO_SSLIOP_Vault::make_X509 (const SSLIOP::File &certificate)
     }
 
   (void) ACE_OS::fclose (fp);
+
+  if (x == 0 && TAO_debug_level > 0)
+    ACE_SSL_Context::report_error ();
 
   return x;
 }
@@ -313,7 +336,15 @@ TAO_SSLIOP_Vault::make_EVP_PKEY (const SSLIOP::File &key)
       fp = ACE_OS::fopen (filename, "rb");
 
       if (fp == 0)
-        return 0;
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) SSLIOP_Vault::make_EVP_PKEY ")
+                        ACE_TEXT ("- %p\n"),
+                        ACE_TEXT ("fopen")));
+
+          return 0;
+        }
 
       // Read ASN.1 / DER encoded private key from a file, and convert
       // it to OpenSSL's internal private key format.
@@ -326,7 +357,15 @@ TAO_SSLIOP_Vault::make_EVP_PKEY (const SSLIOP::File &key)
       fp = ACE_OS::fopen (filename, "r");
 
       if (fp == 0)
-        return 0;
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) SSLIOP_Vault::make_EVP_PKEY ")
+                        ACE_TEXT ("- %p\n"),
+                        ACE_TEXT ("fopen")));
+
+          return 0;
+        }
 
       const char *password = key.password.in ();
 
@@ -339,6 +378,9 @@ TAO_SSLIOP_Vault::make_EVP_PKEY (const SSLIOP::File &key)
     }
 
   (void) ACE_OS::fclose (fp);
+
+  if (evp == 0 && TAO_debug_level > 0)
+    ACE_SSL_Context::report_error ();
 
   return evp;
 }
