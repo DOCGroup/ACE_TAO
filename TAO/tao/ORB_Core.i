@@ -589,11 +589,15 @@ TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
     CORBA::Object::_duplicate (current);
 }
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
 ACE_INLINE  TAO_Policy_Manager_Impl *
 TAO_ORB_Core::get_default_policies (void)
 {
   return this->default_policies_;
 }
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE CORBA_Environment *
 TAO_ORB_Core::default_environment (void) const
