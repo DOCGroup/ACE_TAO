@@ -2,8 +2,9 @@ Sun Jun 15 03:44:21 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* examples/Threads/thread_specific.cpp (worker): Changed the
  	  output of diagnostics from using cout to using printf.  Also
- 	  corrected several portability problems.
-
+ 	  corrected several portability problems.  Thanks for Chuck Gehr
+ 	  <gehr@sweng.stortek.com> for pointing these out.
+	
 	* ace/OS.i (thread_mutex_trylock): Corrected the code for NT.  Now
  	  this function returns 0 if lock is obtained and -1 otherwise.
   	  Thanks to Robert V. Head <rhead@virtc.com> for noticing this.
