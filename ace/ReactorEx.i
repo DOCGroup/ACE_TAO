@@ -85,7 +85,8 @@ ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
 ACE_INLINE ACE_thread_t 
 ACE_ReactorEx::owner (void)
 {
-  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, ACE_thread_t (0));
+  // Since changes to the owner field are very well synchronized, we
+  // do not need to synchronize this accessor
   return this->owner_;
 }
 
