@@ -1,3 +1,25 @@
+Wed May 12 07:03:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/README:
+          Removed description of ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS.
+          This was for a bug in GCC 2.7.3 which we don't support anymore and
+          none of the config files set this define at this moment.
+
+        * ace/Thread_Manager.h:
+          Removed usage of ACE_INLINE_FOR_GNUC and improved doxygen documentation
+
+        * ace/Memory_Pool.h:
+          Improved doxygen documentation
+
+        * ace/Mem_IO.h:
+          Removed usage of ACE_INLINE_FOR_GNUC
+
+        * ace/config-lite.h:
+          Removed checking of ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS and
+          setting of ACE_INLINE_FOR_GNUC. This was for GCC 2.7.3 and we don't
+          support this anymore and the broken template define is not set in any
+          config file.
+
 Wed May 12 06:37:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.inl:
