@@ -1,3 +1,9 @@
+Sat Apr 14 10:51:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Log_Msg.h:
+          Document the lock related functions in a separate Doxygen
+          section.
+
 Mon Apr 23 17:18:35 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (ACE::handle_timed_complete): Set need_to_check for
