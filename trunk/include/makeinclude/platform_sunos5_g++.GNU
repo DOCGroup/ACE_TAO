@@ -47,3 +47,7 @@ RANLIB          = @true
 SOFLAGS         = -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
+
+PLATFORM_X11_CPPFLAGS= -I/usr/include -I/usr/dt/include
+PLATFORM_X11_LIBS =-lX11
+PLATFORM_X11_LDFLAGS=
