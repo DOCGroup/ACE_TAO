@@ -1,3 +1,9 @@
+Thu Aug 27 20:01:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* utils/IOR-parser: Added a number of enhancements from Priya
+ 	  Narasimhan <priya@lambda.ece.ucsb.edu> and cleaned up the code a
+ 	  bit more to make it more ACE/TAO-like!
+
 Thu Aug 27 17:52:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
