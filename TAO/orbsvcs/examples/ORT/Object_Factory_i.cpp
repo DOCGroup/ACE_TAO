@@ -20,7 +20,7 @@ Object_Factory_i::create_object (const char *interface_repository_id,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var stringified_object =
-    this->orb_->object_to_string (gatewayed_object ACE_ENV_ARG_DECL);
+    this->orb_->object_to_string (gatewayed_object ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   const PortableServer::ObjectId_var id =
@@ -44,7 +44,7 @@ Object_Factory_i::create_object (const char *interface_repository_id,
   CORBA::Object_ptr object_ptr =
     ort->make_object (interface_repository_id,
                       *obj_id
-                      ACE_ENV_ARG_DECL);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object_ptr;
