@@ -1,3 +1,8 @@
+Wed Jun  2 17:14:33 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tests/NestedUpcall/Reactor/README:
+	  Updated the README. Removed the -f option.
+
 Wed Jun 02 15:17:24 1999    <alex@cs.wustl.edu>
 
        * tests/NestedUpcall/Reactor/NestedUpcall.dsw
@@ -48,7 +53,7 @@ Wed Jun  2 13:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/UIOP_Connector.h:
 	* tao/UIOP_Transport.cpp:
 	* tao/UIOP_Transport.h:
-	  Removed several uses (or abuses?) of TAO_ORB_Core_instance()
+	  Removed several uses g(or abuses?) of TAO_ORB_Core_instance()
 	  The Client_Strategy_Factory does not create the IIOP
 	  Client_Connection_Handlers anymore, it only creates the
 	  Wait_Strategy and its friends.  This was the last thorn in the
