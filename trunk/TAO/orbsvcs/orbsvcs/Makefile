@@ -15,7 +15,11 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h
+# In the Trading Service TAO has difficulty marshalling a struct that
+# has an object reference field. For more information about this
+# macro, see the trading service release notes.
+TAO_IDLFLAGS = -Wb,export_macro=TAO_ORBSVCS_Export -Wb,export_include=orbsvcs_export.h \
+	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
 
 IDL_FILES = \
 	CosConcurrencyControlC \
@@ -37,7 +41,9 @@ IDL_FILES = \
 	RtecEventChannelAdminC \
 	RtecEventChannelAdminS \
 	LifeCycleServiceC \
-	LifeCycleServiceS
+	LifeCycleServiceS \
+	CosTradingC \
+	CosTradingS
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
@@ -48,19 +54,6 @@ IDL_FILES += \
 	Null_MediaCtrlS \
 	Null_MediaCtrlC
 endif
-
-ifdef trader
-
-IDL_FILES += \
-	CosTradingC \
-	CosTradingS
-
-CPPFLAGS += -DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-TAO_IDLFLAGS += -DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-# In Trading Service dynamic properties, TAO has difficulties
-# marshalling a struct that has an object reference field.
-
-endif #trader
 
 FILES= $(IDL_FILES) \
 	Event_Utilities \
@@ -100,6 +93,20 @@ FILES= $(IDL_FILES) \
 	\
 	Sched/Strategy_Scheduler \
 	\
+        Trader/Constraint_Interpreter \
+        Trader/Constraint_Nodes \
+	Trader/Constraint_Visitors \
+	Trader/Constraint_l \
+	Trader/Constraint_y \
+	Trader/Offer_Database \
+        Trader/Offer_Iterators \
+        Trader/Offer_Iterators_T \
+        Trader/Service_Type_Repository \
+        Trader/Trader \
+	Trader/Trader_Interfaces \
+        Trader/Trader_T \
+	Trader/Trader_Utils \
+	\
 	Property/CosPropertyService_i \
 	\
 	Log/Logger_i \
@@ -114,23 +121,6 @@ ifdef av
 FILES += \
 	AV/AVStreams_i \
 	AV/Endpoint_Strategy
-endif
-
-ifdef trader
-FILES += \
-        Trader/Constraint_Interpreter \
-        Trader/Constraint_Nodes \
-	Trader/Constraint_Visitors \
-	Trader/Constraint_l \
-	Trader/Constraint_y \
-	Trader/Offer_Database \
-        Trader/Offer_Iterators \
-        Trader/Offer_Iterators_T \
-        Trader/Service_Type_Repository \
-        Trader/Trader \
-	Trader/Trader_Interfaces \
-        Trader/Trader_T \
-	Trader/Trader_Utils
 endif
 
 DEFS    = $(addsuffix .h,$(FILES))
@@ -156,7 +146,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG) \
+	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
 
 .PRECIOUS: CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h
 .PRECIOUS: CosTimeBaseC.cpp CosTimeBaseS.cpp CosTimeBaseC.h CosTimeBaseS.h
