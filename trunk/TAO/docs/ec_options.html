@@ -688,6 +688,22 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             by the gateway also.
           </TD>
         </TR>
+
+        <!-- <TR NAME="ECGIIOPUseConsumerProxyMap"> -->
+        <TR>
+          <TD><CODE>-ECGIIOPUseConsumerProxyMap</CODE>
+            <EM>use_consumer_proxy_map: 0 | 1</EM>
+          </TD>
+          <TD>Set whether the IIOP Gateway uses a map with a proxy 
+            push consumer for each unique source id or not. This is 1
+            by default meaning that a map is used. When set to 0 the 
+            gateway will just use one proxy push consumer to push
+            events to the consumer ec. This options is useful when 
+            a lot of different source id's are used but there is no 
+            need for a different proxy push consumer for each source id.
+            Setting this option to 0 then improves the performance.
+          </TD>
+        </TR>
       </TABLE>
     </P>
 

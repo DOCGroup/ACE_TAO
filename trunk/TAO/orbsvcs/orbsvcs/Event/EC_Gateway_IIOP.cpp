@@ -22,7 +22,8 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
      supplier_is_active_ (0),
      ec_control_ (0),
      factory_ (0),
-     use_ttl_ (1)
+     use_ttl_ (1),
+     use_consumer_proxy_map_ (1)
 {
   if (this->factory_ == 0)
     {
@@ -36,8 +37,12 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
                    TAO_EC_Gateway_IIOP_Factory);
           this->factory_ = f;
         }
+    }
 
+  if (this->factory_ != 0)
+    {
       this->use_ttl_ = this->factory_->use_ttl();
+      this->use_consumer_proxy_map_ = this->factory_->use_consumer_proxy_map();
     }
 }
 
@@ -230,11 +235,12 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
     this->consumer_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Change the RT_Info in the consumer QoS.
-  // On the same loop we discover the subscriptions by event source,
-  // and fill the consumer proxy map.
   RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
   sub.is_gateway = 1;
+
+  // Change the RT_Info in the consumer QoS.
+  // On the same loop we discover the subscriptions by event source,
+  // and fill the consumer proxy map if we have to use this map.
   for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
     {
       sub.dependencies[i].rt_info = this->supplier_info_;
@@ -250,12 +256,13 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       //           sid, h.type));
 
       // Skip all subscriptions that do not require an specific source
-      // id.
-      if (sid == 0)
+      // id or skip all subscriptions when we don't need to use the consumer
+      // proxy map.
+      if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0)
         continue;
 
       // Skip all the magic event types.
-      if (0 < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
         continue;
 
       if (this->consumer_proxy_map_.find (sid, proxy) == -1)
@@ -300,7 +307,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
               const RtecEventComm::EventHeader& h =
                 sub.dependencies[k].event.header;
               if (h.source != sid
-                  || (0 < h.type
+                  || (ACE_ES_EVENT_ANY < h.type
                       && h.type < ACE_ES_EVENT_UNDEFINED))
                 continue;
               pub.publications[c].event.header = h;
@@ -327,10 +334,11 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
         }
     }
 
-  // Also build the subscriptions that are *not* by source and connect
-  // to the default consumer proxy.
+  // Also build the subscriptions that are *not* by source when we use the
+  // consumer proxy map, and all subscriptions when we don't use the map and
+  // then connect to the default consumer proxy.
   RtecEventChannelAdmin::SupplierQOS pub;
-  pub.publications.length (sub.dependencies.length () - 1);
+  pub.publications.length (sub.dependencies.length () + 1);
   pub.is_gateway = 1;
   int c = 0;
   for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
@@ -338,10 +346,15 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       const RtecEventComm::EventHeader& h =
         sub.dependencies[k].event.header;
       RtecEventComm::EventSourceID sid = h.source;
-      if (sid != 0
-          || (0 <= h.type
-              && h.type < ACE_ES_EVENT_UNDEFINED))
+
+      // Skip all subscriptions with a specific source when we use the map
+      if (sid != ACE_ES_EVENT_SOURCE_ANY && this->use_consumer_proxy_map_ == 1)
         continue;
+
+      // Skip all the magic event types.
+      if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+        continue;
+
       pub.publications[c].event.header = h;
       pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero ();
       pub.publications[c].dependency_info.dependency_type =
@@ -374,8 +387,6 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       ACE_CHECK;
     }
 
-
-
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->supplier_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -396,7 +407,6 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
                                                 sub
                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
 }
 
 void
@@ -458,11 +468,11 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
       RtecEventComm::EventSourceID sid = events[i].header.source;
-      if (sid == 0
+      if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0
           || this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
-          // If the source is not in our map we have to use the
-          // default consumer proxy.
+          // If the source is not in our map or we should not use the map then
+          // use the default consumer proxy.
           proxy = this->default_consumer_proxy_.in ();
         }
 
