@@ -1,3 +1,10 @@
+Fri Feb 26 21:56:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: moved ACE_COMPONENTS to after include
+          of wrapper_macros.GNU, so that users can set it in
+          their platform_macros.GNU.  Also, added ACE_LACKS_ACE_OTHER
+          to CFLAGS if Other ACE_COMPONENT is not built.
+
 Fri Feb 26 17:48:32 1999  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Added OCFLAGS
