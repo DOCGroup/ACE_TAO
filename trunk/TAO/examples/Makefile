@@ -19,6 +19,7 @@ DIRS  = Callback_Quoter \
         Load_Balancing \
 	Persistent_Grid \
 	AMI \
+	AMH \
 	Quoter \
 	Load_Balancing_persistent \
 	Simulator \
