@@ -1436,6 +1436,7 @@ TAO_NAMESPACE_END
   {
     IR::PublishesDef **tmp = ACE_static_cast (IR::PublishesDef**, target);
     *tmp = IR::PublishesDef::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
@@ -1622,6 +1623,7 @@ TAO_NAMESPACE_END
   {
     IR::ConsumesDef **tmp = ACE_static_cast (IR::ConsumesDef**, target);
     *tmp = IR::ConsumesDef::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
@@ -1807,6 +1809,7 @@ TAO_NAMESPACE_END
   {
     IR::FactoryDef **tmp = ACE_static_cast (IR::FactoryDef**, target);
     *tmp = IR::FactoryDef::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
@@ -1992,6 +1995,7 @@ TAO_NAMESPACE_END
   {
     IR::FinderDef **tmp = ACE_static_cast (IR::FinderDef**, target);
     *tmp = IR::FinderDef::_narrow (src, ACE_TRY_ENV);
+    ACE_CHECK;
   }
 
   CORBA_Object*
