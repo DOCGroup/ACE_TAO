@@ -25,6 +25,10 @@ noinst_DATA = \
   dummy.pem \
   key.pem
 
+EXTRA_DIST = \
+  dummy.pem \
+  key.pem
+
 ## Automake recognized target.  Appends these rules to the "all"
 ## target.
 all-local:
