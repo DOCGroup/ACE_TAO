@@ -1279,8 +1279,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Impl.inl \
  $(TAO_ROOT)/tao/Connector_Impl.cpp \
  SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Endpoint.i \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Base_Transport_Property.h \
+ $(TAO_ROOT)/tao/Base_Transport_Property.inl \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i
 
@@ -5424,8 +5424,8 @@ realclean: clean
  SSLIOP/SSLIOP_Endpoint.h SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.h \
- $(TAO_ROOT)/tao/Base_Connection_Property.inl \
+ $(TAO_ROOT)/tao/Base_Transport_Property.h \
+ $(TAO_ROOT)/tao/Base_Transport_Property.inl \
  $(TAO_ROOT)/tao/Messaging_Policy_i.h \
  $(TAO_ROOT)/tao/Messaging_Policy_i.i \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \

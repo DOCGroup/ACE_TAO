@@ -1,3 +1,18 @@
+Sat Mar 17 16:15:14 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+          Update the SSL Pluggable protocal to reflect the new transport
+          caching changes.
+
 Sat Mar 17 11:54:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Simple/Makefile:

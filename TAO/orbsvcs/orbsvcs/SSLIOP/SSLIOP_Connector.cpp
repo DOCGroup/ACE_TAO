@@ -103,7 +103,7 @@ TAO_SSLIOP_Connector::close (void)
 }
 
 int
-TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
+TAO_SSLIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
                                TAO_Transport *&transport,
                                ACE_Time_Value *max_wait_time,
                                CORBA::Environment &ACE_TRY_ENV)
@@ -201,11 +201,11 @@ TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
 
   int result = 0;
   TAO_SSLIOP_Connection_Handler *svc_handler = 0;
-  TAO_Connection_Handler *conn_handler = 0;
+  TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
-  if (this->orb_core ()->connection_cache ().find_handler (desc,
-                                                           conn_handler) == 0)
+  if (this->orb_core ()->transport_cache ().find_transport (desc,
+                                                            base_transport) == 0)
     {
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
@@ -215,7 +215,7 @@ TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
       // We have found a connection and a handler
       svc_handler =
         ACE_dynamic_cast (TAO_SSLIOP_Connection_Handler *,
-                          conn_handler);
+                          base_transport->connection_handler ());
     }
   else
     {
@@ -270,11 +270,11 @@ TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
           return -1;
         }
 
-
+      base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->connection_cache ().cache_handler (desc,
-                                                              svc_handler);
+        this->orb_core ()->transport_cache ().cache_transport (desc,
+                                                               base_transport);
 
       if (retval != 0 && TAO_debug_level > 0)
         {
@@ -284,7 +284,9 @@ TAO_SSLIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
         }
     }
 
-  transport = svc_handler->transport ();
+  // No need to _duplicate and release since base_transport
+  // is going out of scope.  transport now has control of base_transport.
+  transport = base_transport;
 
   return 0;
 }
