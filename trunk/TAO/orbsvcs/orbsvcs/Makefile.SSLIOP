@@ -39,6 +39,7 @@ IDL_SRC = \
 FILES = \
   SSLIOP/IIOP_SSL_Acceptor \
   SSLIOP/IIOP_SSL_Connection_Handler \
+  SSLIOP/IIOP_SSL_Transport \
   SSLIOP/IIOP_SSL_Connector \
   SSLIOP/SSLIOP_Current \
   SSLIOP/SSLIOP_Current_Impl \
