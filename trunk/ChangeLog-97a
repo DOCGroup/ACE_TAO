@@ -1,11 +1,16 @@
 Thu Jan 30 16:01:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/{config-aix-4.1.x.h,README}: added ACE_HAS_AIX_HIRES_TIMER;
-	  see change to gettimeofday in OS.i below.
+	* ace/{config-aix-4.1.x.h,README}: added ACE_HAS_AIX_HIRES_TIMER,
+	  see change to gettimeofday in OS.i below; and ACE_HAS_LONGLONG_T.
 
-	* ace/OS.i (gettimeofday): use read_real_time () if
+	* ace/OS.i (gettimeofday, gethrtime): use read_real_time () if
 	  ACE_HAS_AIX_HIRES_TIMER.  Thanks to Bob Olson
 	  <olson@mcs.anl.gov> for this suggestion.
+
+	* ace/OS.h: define hrtime_t as long long if ACE_HAS_AIX_HIRES_TIMER.
+
+	* ace/High_Res_Timer.*: added ACE_HAS_AIX_HIRES_TIMER support.
+	  Also, renamed get_time () to elapsed_microseconds ().
 
 	* ace/OS.{i,cpp}: uninlined ACE_OS::gethostbyname (),
 	  and ACE_OS::inet_ntoa () on VxWorks, because they have
