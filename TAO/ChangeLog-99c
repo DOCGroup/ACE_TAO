@@ -1,3 +1,32 @@
+Sun Jul 18 19:41:30 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/InterOp-Naming/INS_test_client.cpp (main):
+
+	  Added a command line option "-l" that tests and demonstrates
+	  usage of the CORBA::ORB::list_initial_services() method.
+
+	* tests/InterOp-Naming/run_tests.pl:
+
+	  Added a test that exercises the newly added "-l" option.
+
+	* tao/DynAny_i.cpp (get_any):
+
+	  Fixed problem where CORBA_Any_var::out() was being passed to an
+	  ACE_NEW_THROW_EX macro, which is a problem since
+	  CORBA_Any_var::out() gets called twice, which in turn causes the 
+	  underlying pointer to be set to zero.  Thanks to Carlos for
+	  explaining the problem.
+
+	* tao/IOR_LookupTable.{h,cpp}:
+	* tao/ORB.{h,cpp}:
+
+	  Implemented the CORBA::ORB::list_initial_services() method.
+	
+	* tao/orbconf.h:
+
+	  Added a macro that defines a comma separated list of initial
+	  references/ObjectIDs that TAO currently supports.
+
 Sun Jul 18 14:21:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/compiler.html: Updated the new options described below.
