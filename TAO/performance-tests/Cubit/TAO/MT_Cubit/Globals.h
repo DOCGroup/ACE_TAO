@@ -92,9 +92,6 @@ argv = force_argv;
 #define TASK_ID_LEN 32
 // length of the task id ,used in vxworks.
 
-#define PRIORITY_INCR 25
-// added to ACE_THR_PRI_FIFO_DEF for non vxworks and non win32 platforms.
-
 #define TASKNAME_LEN 14
 // Length of the task name in the task control block for vxworks.
 
@@ -125,6 +122,10 @@ public:
   long thr_create_flags;
   // Thread creation flags.  Must call sched_fifo_init () before
   // accessing.
+
+  int default_priority;
+  // Default thread priority, used for the high thread priority.
+  // Must call sched_fifo_init () before accessing.
 
   char hostname[BUFSIZ];
   // hostname to be used for ORB_init.

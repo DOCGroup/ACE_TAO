@@ -3,7 +3,8 @@
 #include "Globals.h"
 
 Globals::Globals (void)
-  : thr_create_flags (THR_BOUND),
+  : thr_create_flags (0),
+    default_priority (0),
     ior_file (0),
     base_port (0),
     num_of_objs (2),
@@ -88,6 +89,8 @@ Globals::sched_fifo_init (void)
           ACE_DEBUG ((LM_MAX,
                       "User is not superuser, "
                       "so remain in time-sharing class\n"));
+          ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_NEW_LWP);
+          GLOBALS::instance ()->default_priority = ACE_THR_PRI_OTHER_DEF;
           return 1;
         }
       else
@@ -101,7 +104,10 @@ Globals::sched_fifo_init (void)
                     -1);
 #endif /* ACE_HAS_THREADS */
 
+  ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_BOUND);
   ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_SCHED_FIFO);
+  GLOBALS::instance ()->default_priority = ACE_THR_PRI_FIFO_DEF;
+
   return 0;
 }
 
@@ -117,13 +123,13 @@ MT_Priority::get_high_priority (void)
   ACE_Sched_Priority high_priority;
 
 #if defined (VXWORKS)
-  high_priority = ACE_THR_PRI_FIFO_DEF;
+  high_priority = default_priority;
 #elif defined (ACE_WIN32)
   high_priority =
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
 #else
-  high_priority = ACE_THR_PRI_FIFO_DEF + PRIORITY_INCR;
+  high_priority = GLOBALS::instance ()->default_priority;
 #endif /* VXWORKS */
   return high_priority;
 }
