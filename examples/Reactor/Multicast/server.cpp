@@ -18,13 +18,13 @@ class Server_Events : public ACE_Event_Handler
 {
 public:
   Server_Events (u_short port,
-		 const char *mcast_addr,
-		 long time_interval = 0);
+                 const char *mcast_addr,
+                 long time_interval = 0);
   ~Server_Events (void);
 
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv,
-			      const void *arg);
+                              const void *arg);
 
   virtual ACE_HANDLE get_handle (void) const;
 
@@ -103,16 +103,16 @@ Server_Events::~Server_Events (void)
   this->mcast_dgram_.unsubscribe ();
 
   ACE_DEBUG ((LM_DEBUG, "total bytes received = %d after %d second\n",
-	      this->total_bytes_received_, this->interval_));
+              this->total_bytes_received_, this->interval_));
 
   ACE_DEBUG ((LM_DEBUG, "Mbits/sec = %.2f\n",
-	      (float) (total_bytes_received_ * 8 / (float) (1024*1024*interval_))));
+              (float) (total_bytes_received_ * 8 / (float) (1024*1024*interval_))));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "last sequence number = %d\ntotal messages received = %d\ndiff = %d\n",
-	      this->last_sequence_number_,
-	      this->total_messages_received_,
-	      this->last_sequence_number_ - total_messages_received_));
+              "last sequence number = %d\ntotal messages received = %d\ndiff = %d\n",
+              this->last_sequence_number_,
+              this->total_messages_received_,
+              this->last_sequence_number_ - total_messages_received_));
 }
 
 int
@@ -120,9 +120,9 @@ Server_Events::handle_timeout (const ACE_Time_Value &,
                                const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG, "\t%d timeout%s occurred for %s.\n",
-	      this->count_,
-	      this->count_ == 1 ? "" : "s",
-	      (char *) arg));
+              this->count_,
+              this->count_ == 1 ? "" : "s",
+              (char *) arg));
 
   // Don't let the timeouts continue if there's no activity since
   // otherwise we use up a lot of CPU time unnecessarily.
@@ -132,8 +132,8 @@ Server_Events::handle_timeout (const ACE_Time_Value &,
       this->initialized_ = 0;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "\tcancelled timeout for %s to avoid busy waiting.\n",
-		  (char *) arg));
+                  "\tcancelled timeout for %s to avoid busy waiting.\n",
+                  (char *) arg));
     }
 
   this->count_++;
@@ -160,19 +160,19 @@ Server_Events::handle_input (ACE_HANDLE)
       last_sequence_number_ = ntohl (log_record_->sequence_number);
 
       ACE_DEBUG ((LM_DEBUG, "sequence number = %d\n",
-		  last_sequence_number_));
+                  last_sequence_number_));
       ACE_DEBUG ((LM_DEBUG, "message = '%s'\n",
-		  this->message_));
+                  this->message_));
 
       if (this->initialized_ == 0)
         {
-	  // Restart the timer since we've received events again.
-	  if (reactor()->schedule_timer (this,
-					 (void *) this->hostname_,
-					 ACE_Time_Value::zero,
-					 ACE_Time_Value (DURATION)) == -1)
-	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
-	  this->initialized_ = 1;
+          // Restart the timer since we've received events again.
+          if (reactor()->schedule_timer (this,
+                                         (void *) this->hostname_,
+                                         ACE_Time_Value::zero,
+                                         ACE_Time_Value (DURATION)) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+          this->initialized_ = 1;
         }
 
       this->count_ = 1;
@@ -193,7 +193,7 @@ main (int, char *[])
   ACE_Reactor reactor;
 
   if (reactor.register_handler (&server_events,
-				ACE_Event_Handler::READ_MASK) == -1)
+                                ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "register_handler", 1));
 
   ACE_DEBUG ((LM_DEBUG, "starting up server\n"));
@@ -201,8 +201,7 @@ main (int, char *[])
   for (;;)
     reactor.handle_events (server_events.wait_time ());
 
-  /* NOTREACHED */
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 #else
 int
