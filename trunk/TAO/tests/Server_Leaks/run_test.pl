@@ -29,11 +29,11 @@ $SV = new PerlACE::Process ("server", "-o $iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
 $count = 0;
 for ($i = 0; $i != $iterations; $i++) {
