@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_ProxyPushConsumer
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_ProxyPushConsumer
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_PROXYPUSHCONSUMER_H
 #define TAO_CEC_PROXYPUSHCONSUMER_H
@@ -31,57 +27,59 @@ class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
 class TAO_CEC_ProxyPushSupplier;
 
+/**
+ * @class TAO_CEC_ProxyPushConsumer
+ *
+ * @brief ProxyPushConsumer
+ *
+ * Implement the CosEventChannelAdmin::ProxyPushConsumer interface,
+ * remember that this class is used to communicate with a
+ * PushSupplier, so, in effect, this is the ambassador for a
+ * supplier inside the event channel.
+ * = MEMORY MANAGMENT
+ * The object commits suicide when disconnect_push_consumer() is
+ * called.
+ */
 class TAO_Event_Export TAO_CEC_ProxyPushConsumer : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
-  // = TITLE
-  //   ProxyPushConsumer
-  //
-  // = DESCRIPTION
-  //   Implement the CosEventChannelAdmin::ProxyPushConsumer interface,
-  //   remember that this class is used to communicate with a
-  //   PushSupplier, so, in effect, this is the ambassador for a
-  //   supplier inside the event channel.
-  //
-  // = MEMORY MANAGMENT
-  //   The object commits suicide when disconnect_push_consumer() is
-  //   called.
-  //
 public:
   typedef CosEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
   typedef CosEventChannelAdmin::ProxyPushConsumer_var _var_type;
 
+  /// constructor...
   TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel);
-  // constructor...
 
+  /// destructor...
   virtual ~TAO_CEC_ProxyPushConsumer (void);
-  // destructor...
 
+  /// Activate in the POA
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
-  // Activate in the POA
 
+  /// Deactivate from the POA
   virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Deactivate from the POA
 
+  /// Return 0 if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
-  // Return 0 if no supplier is connected...
 
+  /// Return the consumer object reference. It returns nil() if it has
+  /// not connected yet.
   CosEventComm::PushSupplier_ptr supplier (void) const;
-  // Return the consumer object reference. It returns nil() if it has
-  // not connected yet.
 
+  /**
+   * Invoke the _non_existent() pseudo-operation on the supplier. If
+   * it is disconnected then it returns true and sets the
+   * <disconnected> flag.
+   */
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected,
                                         CORBA::Environment &ACE_TRY_ENV);
-  // Invoke the _non_existent() pseudo-operation on the supplier. If
-  // it is disconnected then it returns true and sets the
-  // <disconnected> flag.
 
+  /// The event channel is shutting down
   virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down
 
+  /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-  // Increment and decrement the reference count.
 
   // = The CosEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
@@ -103,83 +101,84 @@ public:
                                 TAO_default_environment ());
 
 protected:
+  /// Set the supplier, used by some implementations to change the
+  /// policies used when invoking operations on the supplier.
   void supplier (CosEventComm::PushSupplier_ptr supplier);
   void supplier_i (CosEventComm::PushSupplier_ptr supplier);
-  // Set the supplier, used by some implementations to change the
-  // policies used when invoking operations on the supplier.
 
   friend class TAO_CEC_ProxyPushConsumer_Guard;
   // The guard needs access to the following protected methods.
 
+  /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i (void) const;
-  // The private version (without locking) of is_connected().
 
+  /// Release the supplier
   void cleanup_i (void);
-  // Release the supplier
 
 private:
+  /// The supplier admin, used for activation and memory managment.
   TAO_CEC_EventChannel* event_channel_;
-  // The supplier admin, used for activation and memory managment.
 
+  /// The locking strategy.
   ACE_Lock* lock_;
-  // The locking strategy.
 
+  /// The reference count.
   CORBA::ULong refcount_;
-  // The reference count.
 
+  /// The supplier....
   CosEventComm::PushSupplier_var supplier_;
-  // The supplier....
 
+  /// If the flag is not zero then we are connected, notice that the
+  /// supplier can be nil.
   int connected_;
-  // If the flag is not zero then we are connected, notice that the
-  // supplier can be nil.
 
+  /// Store the default POA.
   PortableServer::POA_var default_POA_;
-  // Store the default POA.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_CEC_ProxyPushConsumer_Guard
+ *
+ * @brief A Guard for the ProxyPushConsumer reference count
+ *
+ * This is a helper class used in the implementation of
+ * ProxyPushConumer.  It provides a Guard mechanism to increment
+ * the reference count on the proxy, eliminating the need to hold
+ * mutexes during long operations.
+ */
 class TAO_Event_Export TAO_CEC_ProxyPushConsumer_Guard
 {
-  // = TITLE
-  //   A Guard for the ProxyPushConsumer reference count
-  //
-  // = DESCRIPTION
-  //   This is a helper class used in the implementation of
-  //   ProxyPushConumer.  It provides a Guard mechanism to increment
-  //   the reference count on the proxy, eliminating the need to hold
-  //   mutexes during long operations.
-  //
 public:
+  /// Constructor
   TAO_CEC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                    CORBA::ULong &refcount,
                                    TAO_CEC_EventChannel *ec,
                                    TAO_CEC_ProxyPushConsumer *proxy);
-  // Constructor
 
+  /// Destructor
   ~TAO_CEC_ProxyPushConsumer_Guard (void);
-  // Destructor
 
+  /// Returns 1 if the reference count successfully acquired
   int locked (void) const;
-  // Returns 1 if the reference count successfully acquired
 
 private:
+  /// The lock used to protect the reference count
   ACE_Lock *lock_;
-  // The lock used to protect the reference count
 
+  /// The reference count
   CORBA::ULong &refcount_;
-  // The reference count
 
+  /// The event channel used to destroy the proxy
   TAO_CEC_EventChannel *event_channel_;
-  // The event channel used to destroy the proxy
 
+  /// The proxy whose lifetime is controlled by the reference count
   TAO_CEC_ProxyPushConsumer *proxy_;
-  // The proxy whose lifetime is controlled by the reference count
 
+  /// This flag is set to 1 if the reference count was successfully
+  /// acquired.
   int locked_;
-  // This flag is set to 1 if the reference count was successfully
-  // acquired.
 };
 
 #if defined (__ACE_INLINE__)

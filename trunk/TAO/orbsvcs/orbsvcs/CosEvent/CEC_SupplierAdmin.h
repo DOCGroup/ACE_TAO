@@ -1,26 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   CEC_SupplierAdmin
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_SupplierAdmin
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)Based on previous work by Tim Harrison (harrison@cs.wustl.edu)and other members of the DOC group.More details can be found in:http://www.cs.wustl.edu/~schmidt/oopsla.ps.gzhttp://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_SUPPLIERADMIN_H
 #define TAO_CEC_SUPPLIERADMIN_H
@@ -39,41 +27,40 @@
 
 class TAO_CEC_EventChannel;
 
+/**
+ * @class TAO_CEC_SupplierAdmin
+ *
+ * @brief ProxyPushSupplier
+ *
+ * Implement the CosEventChannelAdmin::SupplierAdmin interface.
+ * This class is an Abstract Factory for the
+ * TAO_CEC_ProxyPushConsumer.
+ * = MEMORY MANAGMENT
+ * It does not assume ownership of the TAO_CEC_EventChannel object
+ * = LOCKING
+ * @@ TODO
+ * No provisions for locking, access must be serialized
+ * externally.
+ * = TODO
+ */
 class TAO_Event_Export TAO_CEC_SupplierAdmin : public POA_CosEventChannelAdmin::SupplierAdmin
 {
-  // = TITLE
-  //   ProxyPushSupplier
-  //
-  // = DESCRIPTION
-  //   Implement the CosEventChannelAdmin::SupplierAdmin interface.
-  //   This class is an Abstract Factory for the
-  //   TAO_CEC_ProxyPushConsumer.
-  //
-  // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_CEC_EventChannel object
-  //
-  // = LOCKING
-  //   @@ TODO
-  //   No provisions for locking, access must be serialized
-  //   externally.
-  //
-  // = TODO
-  //
 public:
+  /// constructor...
   TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel* event_channel);
-  // constructor...
 
+  /// destructor...
   virtual ~TAO_CEC_SupplierAdmin (void);
-  // destructor...
 
+  /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
-  // For each elements call <worker->work()>.
 
+  /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
-  // For each elements call <worker->work()>.
 
+  /// Keep track of connected consumers.
   virtual void connected (TAO_CEC_ProxyPushConsumer*,
                           CORBA::Environment&);
   virtual void reconnected (TAO_CEC_ProxyPushConsumer*,
@@ -86,11 +73,10 @@ public:
                             CORBA::Environment&);
   virtual void disconnected (TAO_CEC_ProxyPullConsumer*,
                              CORBA::Environment&);
-  // Keep track of connected consumers.
 
+  /// The event channel is shutting down, inform all the consumers of
+  /// this
   virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down, inform all the consumers of
-  // this
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
@@ -104,15 +90,15 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
 
 private:
+  /// The Event Channel we belong to
   TAO_CEC_EventChannel *event_channel_;
-  // The Event Channel we belong to
 
+  /// The push and pull aspects are implemented using these classes
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer> push_admin_;
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer> pull_admin_;
-  // The push and pull aspects are implemented using these classes
 
+  /// Store the default POA.
   PortableServer::POA_var default_POA_;
-  // Store the default POA.
 };
 
 #if defined (__ACE_INLINE__)

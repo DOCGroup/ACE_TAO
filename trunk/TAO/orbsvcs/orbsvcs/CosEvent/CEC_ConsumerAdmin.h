@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_ConsumerAdmin
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_ConsumerAdmin
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_CONSUMERADMIN_H
 #define TAO_CEC_CONSUMERADMIN_H
@@ -31,45 +27,47 @@
 
 class TAO_CEC_EventChannel;
 
+/**
+ * @class TAO_CEC_ConsumerAdmin
+ *
+ * @brief ConsumerAdmin
+ *
+ * Implements the ConsumerAdmin interface, i.e. the factory for
+ * ProxyPushSupplier objects.
+ * = MEMORY MANAGMENT
+ * It does not assume ownership of the TAO_CEC_EventChannel
+ * object; but it *does* assume ownership of the
+ * TAO_CEC_ProxyPushSupplier_Set object.
+ * = LOCKING
+ * No provisions for locking, access must be serialized
+ * externally.
+ * = TODO
+ */
 class TAO_Event_Export TAO_CEC_ConsumerAdmin : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
-  // = TITLE
-  //   ConsumerAdmin
-  //
-  // = DESCRIPTION
-  //   Implements the ConsumerAdmin interface, i.e. the factory for
-  //   ProxyPushSupplier objects.
-  //
-  // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_CEC_EventChannel
-  //   object; but it *does* assume ownership of the
-  //   TAO_CEC_ProxyPushSupplier_Set object.
-  //
-  // = LOCKING
-  //   No provisions for locking, access must be serialized
-  //   externally.
-  //
-  // = TODO
-  //
 public:
+  /**
+   * constructor. If <supplier_set> is nil then it builds one using
+   * the <event_channel> argument.
+   * In any case it assumes ownership.
+   */
   TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
-  // constructor. If <supplier_set> is nil then it builds one using
-  // the <event_channel> argument.
-  // In any case it assumes ownership.
 
+  /// destructor...
   virtual ~TAO_CEC_ConsumerAdmin (void);
-  // destructor...
 
+  /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
-  // For each elements call <worker->work()>.
 
+  /// Push the event to all the consumers
   void push (const CORBA::Any &event,
              CORBA::Environment &ACE_TRY_ENV);
-  // Push the event to all the consumers
 
+  /// Used to inform the EC that a Supplier has connected or
+  /// disconnected from it.
   virtual void connected (TAO_CEC_ProxyPushSupplier*,
                           CORBA::Environment&);
   virtual void reconnected (TAO_CEC_ProxyPushSupplier*,
@@ -82,12 +80,10 @@ public:
                             CORBA::Environment&);
   virtual void disconnected (TAO_CEC_ProxyPullSupplier*,
                              CORBA::Environment&);
-  // Used to inform the EC that a Supplier has connected or
-  // disconnected from it.
 
+  /// The event channel is shutting down, inform all the consumers of
+  /// this
   virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down, inform all the consumers of
-  // this
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
@@ -101,17 +97,17 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
 
 private:
+  /// The Event Channel we belong to
   TAO_CEC_EventChannel *event_channel_;
-  // The Event Channel we belong to
 
+  /// Store the default POA.
   PortableServer::POA_var default_POA_;
-  // Store the default POA.
 
+  /// Implement the push side of this class
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier,CosEventChannelAdmin::ProxyPushSupplier> push_admin_;
-  // Implement the push side of this class
 
+  /// Implement the pull side of this class
   TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullSupplier,CosEventChannelAdmin::ProxyPullSupplier> pull_admin_;
-  // Implement the pull side of this class
 
 };
 
@@ -126,8 +122,8 @@ public:
              CORBA::Environment &ACE_TRY_ENV);
 
 private:
+  /// The event
   CORBA::Any event_;
-  // The event
 };
 
 // ****************************************************************
@@ -141,8 +137,8 @@ public:
              CORBA::Environment &ACE_TRY_ENV);
 
 private:
+  /// The event
   CORBA::Any event_;
-  // The event
 };
 
 #if defined (__ACE_INLINE__)

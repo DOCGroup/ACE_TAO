@@ -1,18 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Cos Event Channel
-//
-// = FILENAME
-//   CEC_Dispatching_Task
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   CEC_Dispatching_Task
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_CEC_DISPATCHING_TASK_H
 #define TAO_CEC_DISPATCHING_TASK_H
@@ -28,31 +24,32 @@
 #include "orbsvcs/CosEvent/event_export.h"
 #include "CEC_ProxyPushSupplier.h"
 
+/**
+ * @class TAO_CEC_Dispatching_Task
+ *
+ * @brief Implement the dispatching queues for FIFO and Priority
+ * dispatching.
+ *
+ */
 class TAO_Event_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //   Implement the dispatching queues for FIFO and Priority
-  //   dispatching.
-  //
-  // = DESCRIPTION
-  //
 public:
+  /// Constructor
   TAO_CEC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
-  // Constructor
 
+  /// Process the events in the queue.
   virtual int svc (void);
-  // Process the events in the queue.
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      CORBA::Any& event,
                      CORBA::Environment &env);
 
 private:
+  /// An per-task allocator
   ACE_Allocator *allocator_;
-  // An per-task allocator
 
+  /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> > data_block_;
-  // Helper data structure to minimize memory allocations...
 };
 
 // ****************************************************************
@@ -60,18 +57,18 @@ private:
 class TAO_Event_Export TAO_CEC_Dispatch_Command : public ACE_Message_Block
 {
 public:
+  /// Constructor, it will allocate its own data block
   TAO_CEC_Dispatch_Command (ACE_Allocator *mb_allocator = 0);
-  // Constructor, it will allocate its own data block
 
+  /// Constructor, it assumes ownership of the data block
   TAO_CEC_Dispatch_Command (ACE_Data_Block*,
                            ACE_Allocator *mb_allocator = 0);
-  // Constructor, it assumes ownership of the data block
 
+  /// Destructor
   virtual ~TAO_CEC_Dispatch_Command (void);
-  // Destructor
 
+  /// Command callback
   virtual int execute (CORBA::Environment&) = 0;
-  // Command callback
 };
 
 // ****************************************************************
@@ -79,11 +76,11 @@ public:
 class TAO_Event_Export TAO_CEC_Shutdown_Task_Command : public TAO_CEC_Dispatch_Command
 {
 public:
+  /// Constructor
   TAO_CEC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
-  // Constructor
 
+  /// Command callback
   virtual int execute (CORBA::Environment&);
-  // Command callback
 };
 
 // ****************************************************************
@@ -91,24 +88,24 @@ public:
 class TAO_Event_Export TAO_CEC_Push_Command : public TAO_CEC_Dispatch_Command
 {
 public:
+  /// Constructor
   TAO_CEC_Push_Command (TAO_CEC_ProxyPushSupplier* proxy,
                         CORBA::Any& event,
                         ACE_Data_Block* data_block,
                         ACE_Allocator *mb_allocator);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_CEC_Push_Command (void);
-  // Destructor
 
+  /// Command callback
   virtual int execute (CORBA::Environment&);
-  // Command callback
 
 private:
+  /// The proxy
   TAO_CEC_ProxyPushSupplier* proxy_;
-  // The proxy
 
+  /// The event
   CORBA::Any event_;
-  // The event
 };
 
 #if defined (__ACE_INLINE__)
