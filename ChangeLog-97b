@@ -1,7 +1,19 @@
+Fri Nov  7 16:04:35 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp: Added a missing '>' for one of the
+ 	  template specializations.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for reporting this.
+
+	* ace/OS.cpp: ACE_OS::ACE_OS is defined in OS.cpp, which causes
+ 	  the compiler to complain about multiple definitions.  Other
+ 	  ACE_CLASS_IS_NAMESPACE doesn't have constructors, which is why
+ 	  they work.  Thanks to Torbjorn Lindgren <tl@funcom.no> for
+ 	  reporting this.
+
 Fri Nov  7 16:03:13 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking):
-	Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
+ 	  Added ECONNREFUSED as a "valid failure", alongwith EWOULDBLOCK.
 
 Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
