@@ -1,81 +1,87 @@
+Sat Apr 15 14:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+          Fix problems with DU/CXX builds.
+
 Fri Apr 14 18:21:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	* orbsvcs/IFR_Service/TCF_Export.h:
-	* orbsvcs/IFR_Service/TCF_Loader.h:
-	* orbsvcs/IFR_Service/TCF_Loader.cpp:
-	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
-	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	* orbsvcs/IFR_Service/IFR.dsw:
-	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
-	* docs/releasenotes.orbcore.html:
-	  The typecode creating functions are now in class
-	  CORBA::TypeCodeFactory, implemented as a DLL in
-	  the same directory where the future Interface
-	  Repository will reside (TypeCodeFactory is used by
-	  the Interface Repository, but can also be used 
-	  separately. The object reference is now obtained
-	  by calling resolve_initial_references ("TypeCodeFactory").
-	  See the releasenotes entry for more details.
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/IFR_Service/TCF_Export.h:
+        * orbsvcs/IFR_Service/TCF_Loader.h:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+        * orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+        * orbsvcs/IFR_Service/IFR.dsw:
+        * orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+        * docs/releasenotes.orbcore.html:
+          The typecode creating functions are now in class
+          CORBA::TypeCodeFactory, implemented as a DLL in
+          the same directory where the future Interface
+          Repository will reside (TypeCodeFactory is used by
+          the Interface Repository, but can also be used
+          separately. The object reference is now obtained
+          by calling resolve_initial_references ("TypeCodeFactory").
+          See the releasenotes entry for more details.
 
 Fri Apr 14 17:12:46 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* orbsvcs/examples/Log/test/BasicLog_Test.h (class BasicLog_Test):
-	* orbsvcs/examples/Log/test/BasicLog_Test.cpp (class BasicLog_Test):
-	* orbsvcs/examples/Log/test/client.cpp: Fixed some errors for Digital
-	Unix.
+        * orbsvcs/examples/Log/test/BasicLog_Test.h (class BasicLog_Test):
+        * orbsvcs/examples/Log/test/BasicLog_Test.cpp (class BasicLog_Test):
+        * orbsvcs/examples/Log/test/client.cpp: Fixed some errors for Digital
+        Unix.
 
 Fri Apr 14 14:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tao/orbconf.h: Moved MINIMUM_CONNECTION_CACHING_STRATEGY
-	  definition to after MINIMUM_CORBA definition so that it can be
-	  disabled for MINIMUM_CORBA. Thanks to Irfan Pyarali
-	  <irfan@cs.wustl.edu> for observing this.
-	* TAO_IDL/util/utl_global.cpp: Added the -Gsp flag for generation
-	  of smart proxy classes automatically when TAO_HAS_SMART_PROXIES
-	  is enabled. This resolves build errors obtained when compiling
-	  with TAO_HAS_SMART_PROXIES enabled. Thanks to Bala
-	  <bala@cs.wustl.edu> for helping with putting this in the
-	  appropriate location in TAO_IDL compiler code.
+        * tao/orbconf.h: Moved MINIMUM_CONNECTION_CACHING_STRATEGY
+          definition to after MINIMUM_CORBA definition so that it can be
+          disabled for MINIMUM_CORBA. Thanks to Irfan Pyarali
+          <irfan@cs.wustl.edu> for observing this.
+        * TAO_IDL/util/utl_global.cpp: Added the -Gsp flag for generation
+          of smart proxy classes automatically when TAO_HAS_SMART_PROXIES
+          is enabled. This resolves build errors obtained when compiling
+          with TAO_HAS_SMART_PROXIES enabled. Thanks to Bala
+          <bala@cs.wustl.edu> for helping with putting this in the
+          appropriate location in TAO_IDL compiler code.
 
 Fri Apr 14 11:02:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	* tao/DomainS.cpp:
-	* tao/InterfaceC.h:
-	* tao/InterfaceC.i:
-	* tao/InterfaceC.cpp:
-	* tao/InterfaceS.h:
-	* tao/InterfaceS.cpp:
-	* tao/Object.h:
-	* tao/Object.cpp:
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	* tao/orbconf.h:
-	* tao/POA_CORBA.h:
-	* tao/TAO.dsp:
-	* tao/TAO_static.dsp:
-	  Changes related to the forthcoming Interface Repository,
-	  and some code moved out to the directory where the
-	  TypeCodeFactory DLL resides (to be checked in shortly).
+        * tao/corbafwd.h:
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainS.cpp:
+        * tao/InterfaceC.h:
+        * tao/InterfaceC.i:
+        * tao/InterfaceC.cpp:
+        * tao/InterfaceS.h:
+        * tao/InterfaceS.cpp:
+        * tao/Object.h:
+        * tao/Object.cpp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/orbconf.h:
+        * tao/POA_CORBA.h:
+        * tao/TAO.dsp:
+        * tao/TAO_static.dsp:
+          Changes related to the forthcoming Interface Repository,
+          and some code moved out to the directory where the
+          TypeCodeFactory DLL resides (to be checked in shortly).
 
-	* tao/ifrfwd.h:
-	  New file, the IR namespace is now handled similarly to
-	  the handling of the CORBA namespace in TAO.
+        * tao/ifrfwd.h:
+          New file, the IR namespace is now handled similarly to
+          the handling of the CORBA namespace in TAO.
 
-	* tao/InterfaceS.i:
-	  Removed file, this code will be in the directory with the
-	  rest of the Interface Repository files.
+        * tao/InterfaceS.i:
+          Removed file, this code will be in the directory with the
+          rest of the Interface Repository files.
 
 Fri Apr 14 08:16:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosEvent:
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	  The DU C++ compiler needs to have the templates in a directory
-	  accessible through the -I flags.
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+          The DU C++ compiler needs to have the templates in a directory
+          accessible through the -I flags.
 
 Fri Apr 14 09:12:24 2000  David L. Levine  <levine@cs.wustl.edu>
 
