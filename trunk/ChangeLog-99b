@@ -17,8 +17,6 @@ Tue Apr 27 12:57:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Removed `Timer_Queue.i' from the list of headers.
 
-Tue Apr 27 12:04:29 1999  Ossama Othman  <othman@cs.wustl.edu>
-
 	* bin/autogen:
 	* bin/bootstrap: 
 
