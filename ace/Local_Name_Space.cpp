@@ -20,7 +20,8 @@ ACE_NS_String::fast_rep (void) const
 ACE_NS_String::operator ACE_WString () const
 {
   ACE_TRACE ("ACE_NS_String::operator ACE_WString");
-  return ACE_WString (this->rep_, (this->len_ / sizeof (ACE_USHORT16)) - 1);
+  return ACE_WString (this->rep_,
+                      (this->len_ / sizeof (ACE_USHORT16)) - 1);
 }
 
 size_t
@@ -34,7 +35,8 @@ char *
 ACE_NS_String::char_rep (void) const
 {
   ACE_TRACE ("ACE_NS_String::char_rep");
-  ACE_WString w_string (this->rep_, (this->len_ / sizeof (ACE_USHORT16)) - 1);
+  ACE_WString w_string (this->rep_,
+                        (this->len_ / sizeof (ACE_USHORT16)) - 1);
   return w_string.char_rep ();
 }
 
