@@ -9,8 +9,3 @@ TAO_LF_Event_Binder::TAO_LF_Event_Binder (TAO_LF_Event *event,
 }
 
 
-ACE_INLINE
-TAO_LF_Event_Binder::~TAO_LF_Event_Binder (void)
-{
-  this->event_->unbind ();
-}
