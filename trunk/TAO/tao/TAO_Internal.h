@@ -36,19 +36,21 @@ public:
   // called (see <open_services>).  It is fully thread-safe.  Return 0
   // if successful, -1 with errno set if failure.
 
+  static int open_services (int rargc, char* resource_factory_arg[],
+                            int cargc, char* client_factory_arg[],
+                            int sargc, char* server_factory_arg[]);
+  // Initialize the ACE Service Configurator using the default
+  // factories in TAO.  This is also a one-shot method.  This mehtod
+  // is used on platforms that don't support the Service
+  // Configurator's model of loading services and when the use of a
+  // <svc.conf> file is not desirable.
+
   static int close_services (void);
   // The complement to <open_services>, this will perform appropriate
   // ACE Service Configurator closure operations.  It should be called
   // as many times as <open_services>, and will only actually close
   // things down on the last call.  It is fully thread-safe.  Return 0
   // if successful, -1 with errno set if failure.
-
-protected:
-  static int fake_service_entries_i (void);
-  // If your platform can't support the Service Configurator's model
-  // of loading services found in a file, then you should change the
-  // code in here in order to get service entries into the service
-  // repository.
 
 private:
   TAO_Internal (void);
