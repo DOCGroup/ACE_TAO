@@ -1,3 +1,9 @@
+Sun Nov 16 10:03:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+
+	  Added the new generated files into the project.
+
 Sun Nov 16 09:46:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Dynamic.pidl:
