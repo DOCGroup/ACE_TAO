@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"../../ace"
+# ADD LINK32 tqtd.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"../../ace"
 
 !ELSEIF  "$(CFG)" == "Async_Timer_Queue_Test - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../ace"
+# ADD LINK32 tqtdd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../ace"
 
 !ENDIF 
 
@@ -84,10 +84,6 @@ LINK32=link.exe
 
 # Name "Async_Timer_Queue_Test - Win32 Release"
 # Name "Async_Timer_Queue_Test - Win32 Debug"
-# Begin Source File
-
-SOURCE=.\Async_Timer_Queue_Test.cpp
-# End Source File
 # Begin Source File
 
 SOURCE=.\main_async.cpp
