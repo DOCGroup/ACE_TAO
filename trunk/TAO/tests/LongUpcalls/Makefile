@@ -16,7 +16,7 @@ LDLIBS = -lTAO
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
-BIN = blocking_client blocking_server
+BIN_UNCHECKED = blocking_client blocking_server
 
 SRC = $(addsuffix .cpp, $(BIN) ami_client ami_server Controller Manager AMI_Manager Manager_Handler) $(IDL_SRC)
 
@@ -37,8 +37,12 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(ami),1)
 TAO_IDLFLAGS += -GC
-BIN += ami_client ami_server
+BIN_UNCHECKED += ami_client ami_server
 endif
+
+ifeq ($(corba_messaging),1)
+BIN=$(BIN_UNCHECKED)
+endif # corba_messaging
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
