@@ -1,3 +1,14 @@
+Wed Aug 18 13:49:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Makefile: if ACE_COMPONENTS = FOR_TAO, don't include
+          Filecache in UTILS_FILES.  TAO doesn't need Filecache.
+          And, its ACE_Hash<ACE_CString> and ACE_Equal_To<ACE_CString>
+          explicit template instantiations collide with those in
+          ACE_wrappers/TAO/tao/POA.cpp.  That precludes building
+          a shared libTAO for VxWorks, for example.  And, it costs 14 Kb.
+          Thanks to Erik Johannes <ejohannes@oresis.com> for helping
+          to find this solution.  And reminding me to implement it :-)
+
 Wed Aug 18 13:16:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: clarify that PERL_PATH must include

@@ -20,7 +20,6 @@ UTILS_FILES = \
   Containers \
   Dirent \
   Dynamic \
-  Filecache \
   Functor \
   Get_Opt \
   Hash_Map_Manager \
@@ -39,6 +38,7 @@ UTILS_FILES = \
   Timer_List \
   Timer_Queue \
   Timer_Wheel
+  #### NOTE:  see below for Filecache.
 LOGGING_FILES = \
   Dump \
   Log_Msg \
@@ -186,7 +186,7 @@ TEMPLATE_FILES = \
            Active_Map_Manager_T \
            Asynch_Acceptor \
            Auto_Ptr \
-	   Based_Pointer_T \
+           Based_Pointer_T \
            Connector \
            Containers_T \
            Cache_Map_Manager_T \
@@ -284,7 +284,13 @@ ifeq (FOR_TAO,$(ACE_COMPONENTS))
     Svcconf \
     Streams \
     Memory
-endif # FOR_TAO
+else  # ! FOR_TAO
+  #### TAO doesn't need Filecache.  And, its ACE_Hash<ACE_CString> and
+  #### ACE_Equal_To<ACE_CString> explicit template instantiations collide
+  #### with those in ACE_wrappers/TAO/tao/POA.cpp.  That precludes building
+  #### a shared libTAO for VxWorks, for example.  And, it costs 14 Kb.
+  UTILS_FILES += Filecache
+endif # ! FOR_TAO
 
 ####
 #### ACE_COMPONENTS support.
