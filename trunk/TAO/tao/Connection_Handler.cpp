@@ -25,13 +25,24 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 {
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
-
   this->lock_ =
     this->orb_core_->resource_factory ()->create_cached_connection_lock ();
 
   // Put ourselves in the connection wait state as soon as we get
   // created
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT);
+
+  // It would be strange to see why we increment the refcount only
+  // here. Theoretically it is not needed for the reactive model. But
+  // for the TPC model, a shutdown () call from a remote host could
+  // potentially cleanup the whole ORB and call ORB::fini () before
+  // the thread in svc_i () can try calling has_shutdown () to exit
+  // out of the svc_i () loop. This could cause a crash. To prevent
+  // that from happening we will increment the refcount. With reactive
+  // model this is not needed at all, since all the threads are
+  // kicked out of the reactor before the ORB is shutdown by the
+  // closing thread.
+  (void) this->orb_core_->_incr_refcnt ();
 }
 
 TAO_Connection_Handler::~TAO_Connection_Handler (void)
@@ -48,6 +59,8 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
 
   // @@ TODO Use auto_ptr<>
   delete this->lock_;
+
+  (void) this->orb_core_->_decr_refcnt ();
 }
 
 

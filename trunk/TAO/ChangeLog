@@ -1,3 +1,22 @@
+Sat Jan 10 21:17:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp:
+
+	  Increase the refcount of the ORB_Core in the constructor aand
+	  decrement the  refcount in the destructor. This may not be
+	  required at all. This is required only for the
+	  thread-per-connection model. A shutdown () call from a remote
+	  host could potentially cleanup the whole ORB and call ORB::fini
+	  () before the thread in svc_i () can try calling has_shutdown ()
+	  to exit out of the svc_i () loop. This could cause a crash. To
+	  prevent that from happening we will increment the refcount. With
+	  reactive model this is not be needed at all, since all the
+	  threads are  kicked out of the reactor before the ORB is
+	  shutdown by the closing thread. 
+
+	  Thanks to valgrind for helping me catch this. This should have
+	  slipped through for a very long time, if my guess is right.
+
 Sat Jan 10 17:47:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
