@@ -1,3 +1,8 @@
+Thu Apr  3 21:39:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.i (mutex_init): Removed errant open-brace ('{').  Thanks
+ 	  to Chuck Gehr (gehr@sweng.stortek.com) for the fix!
+
 Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h,OS.cpp,Sched_Params.cpp: added /**/ to some #include
