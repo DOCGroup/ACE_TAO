@@ -8,10 +8,10 @@
 #include "ace/Log_Msg.h"
 
 #include "Node_Handler.h"
-#include "IC_handler.h"
-#include "SR_handler.h"
-#include "SP_handler.h"
-#include "Resource_handler.h"
+#include "IC_Handler.h"
+#include "SR_Handler.h"
+#include "SP_Handler.h"
+#include "Resource_Handler.h"
 
 #include <iostream>
 
@@ -79,52 +79,6 @@ namespace CIAO
 
               // delegate the populating process
               SP_Handler::process_SatisfierProperty (this->iter_,
-                                                     resource.property[i]);
-            }
-          else
-            {
-              // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
-            }
-        }
-      return;
-    }
-
-    /// handle the Resource type and populate the IDL structure
-    void Resource_Handler::process_resource_with_iter
-           (DOMNodeIterator * iter,
-            ::Deployment::Resource &resource)
-    {
-      // This is bogus and should be replaced later.
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      for (DOMNode* node = iter->nextNode();
-           node != 0;
-           node = iter->nextNode())
-        {
-          XStr node_name (node->getNodeName());
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              // Fetch the text node which contains the "UUID"
-              node = iter->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_name (text->getNodeValue(), resource);
-            }
-          else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-              // Fetch the text node which contains the "location"
-              node = iter->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_resource_type (text->getNodeValue(), resource);
-            }
-          else if (node_name == XStr (ACE_TEXT ("property")))
-            {
-              // increase the length of the sequence
-              CORBA::ULong i (resource.property.length ());
-              resource.property.length (i + 1);
-
-              // delegate the populating process
-              SP_Handler::process_SatisfierProperty (iter,
                                                      resource.property[i]);
             }
           else

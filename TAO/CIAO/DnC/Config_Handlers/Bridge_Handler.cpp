@@ -78,8 +78,8 @@ namespace CIAO
               bridge.resource.length (i + 1);
 
               // delegate the populating process
-              Resource_Handler::process_resource_with_iter (this->iter_,
-                                                            bridge.resource[i]);
+              Resource_Handler res_handler (this->iter_, false);
+              res_handler.process_resource (bridge.resource[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("connect")))
             {
