@@ -1,3 +1,10 @@
+Thu Sep 30 18:06:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/ace.mpc:
+
+	  Sorted header, inline, and template file sections to make it
+	  easier to figure out if something is missing.
+
 Thu Sep 30 18:00:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/ace.mpc:
