@@ -76,7 +76,7 @@ mailing list</A> and someone will try to help you fix the problems.
 
 <p>The responsibility for maintaining ACE across this wide range of
 platforms is divided among a few different groups: the DOC group,
-Riverace, OCI, and the ACE user community itself.
+Riverace, OCI, Remedy IT, and the ACE user community itself.
 The table below summarizes each group's role
 and where you can get more detailed information.
 For information on TAO's platform coverage and support, please also see
@@ -121,18 +121,21 @@ For information on TAO's platform coverage and support, please also see
   </tr>
   <tr>
     <th>Remedy IT</th>
-    <td>Maintains ACE on certain platforms required for their ACE and
-        TAO service offerings.
+    <td>Maintains ACE on many platforms required for their ACE and
+        TAO service offerings. Besides the standard DOC group platforms 
+        we also support Borland C++ Builder 6, CBuilderX 1.0, VxWorks 5.5, 
+        OpenVMS 7.3-2, Linux 64bit Alpha, and Tru64.
     </td>
-    <td>Remedy IT <A HREF="http://www.theaceorb.nl">web site</A></td>
+    <td>Remedy IT <A HREF="http://www.theaceorb.nl">web site</A> and
+        the TAO <A HREF="TAO/TAO-INSTALL.html">install document</A>
+    </td>
   </tr>
   <tr>
     <th>ACE user community</th>
     <td>Responsible for continued maintenance and testing of platforms
         to which ACE has been ported, but aren't supported by the
         above groups. These include
-        Windows 95/98 using Borland C++ Builder 4.0 and later,
-        and GNU g++ on MinGW and Cygwin;
+        Windows 95/98 using Borland C++ Builder 4.0 and later;
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
         IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
         Linux on Alpha and PPC; OpenMVS;
@@ -140,6 +143,14 @@ For information on TAO's platform coverage and support, please also see
         Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
         QNX RTP and Neutrino 2.0; VxWorks; LynxOS; RTEMS
     </td>
+  <tr>
+    <th>Not supported</th>
+    <td>The following platforms have been supported in the past but are
+        not supported anymore by the DOC Group. If you want to have
+        support for these environments contact ons of the commercial
+        support organisations. The platforms are: VxWorks 5.4, MSVC5.
+    </td>
+  </tr>
     <td></td>
   </tr>
 </table><P>
@@ -1320,7 +1331,7 @@ to check <A HREF="#win32nonic">here</A> first. <P>
       <BR>
   <LI>Build release DLLs for ACE by going:<BR>
       <BR>
-      <CODE>make -f Makefile.bor</CODE><BR>
+      <CODE>make -f Makefile.bor all</CODE><BR>
       <BR>
   <LI>You can build several different versions of ACE by setting environment
 variables
