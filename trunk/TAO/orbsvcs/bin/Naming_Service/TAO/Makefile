@@ -11,13 +11,13 @@
 
 LDLIBS     =  -lTAO
 
-IDL_SRC	= CosNamingC.cpp CosNamingS.cpp  
+IDL_SRC	= CosNamingC.cpp CosNamingS.cpp
 PROG_SRCS =	$(IDL_SRC) NS_CosNaming.cpp svr.cpp clnt.cpp
 
 LSRC = $(PROG_SRCS)
 
 COSNAMING_SVR_OBJS = CosNamingC.o CosNamingS.o svr.o CosNaming_i.o NS_CosNaming.o
-COSNAMING_CLT_OBJS = CosNamingC.o CosNamingS.o clnt.o NS_CosNaming.o CosNaming_i.o
+COSNAMING_CLT_OBJS = CosNamingC.o clnt.o NS_CosNaming.o
 
 BIN = svr clnt
 BUILD = $(BIN)
@@ -42,8 +42,8 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-#$(IDL_SRC): CosNaming.idl
-#	$(TAO_ROOT)/TAO_IDL/tao_idl CosNaming_.idl
+$(IDL_SRC): CosNaming.idl
+	$(TAO_ROOT)/TAO_IDL/tao_idl CosNaming.idl
 
 svr:	$(addprefix $(VDIR),$(COSNAMING_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
@@ -83,5 +83,4 @@ clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf CosNamingC.* CosNamingS.* 
-
+	-/bin/rm -rf CosNamingC.* CosNamingS.*
