@@ -57,12 +57,16 @@ public:
   // = These are really private, but unfortunately template friends
   // are not portable.
 
-  /// Get/Set next entry.
+  /// Get next entry.
   ACE_UINT32 next (void) const;
+
+  /// Set next entry.
   void next (ACE_UINT32 n);
 
-  /// Get/Set prev entry.
+  /// Get prev entry.
   ACE_UINT32 prev (void) const;
+
+  /// Set prev entry.
   void prev (ACE_UINT32 p);
 
   /// Keeps track of the next entry.
@@ -139,43 +143,45 @@ public:
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
 
   // = Initialization and termination methods.
-  /// Initialize a <Map_Manager> with the <ACE_DEFAULT_MAP_SIZE>.
+  /// Initialize a ACE_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Map_Manager (ACE_Allocator *alloc = 0);
 
-  /// Initialize a <Map_Manager> with <size> entries.
+  /// Initialize a ACE_Map_Manager with @a size entries.
   ACE_Map_Manager (size_t size,
                    ACE_Allocator *alloc = 0);
 
-  /// Initialize a <Map_Manager> with size <length>.
+  /// Initialize a ACE_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = 0);
 
-  /// Close down a <Map_Manager> and release dynamically allocated
+  /// Close down a ACE_Map_Manager and release dynamically allocated
   /// resources.
   int close (void);
 
-  /// Close down a <Map_Manager> and release dynamically allocated
+  /// Close down a ACE_Map_Manager and release dynamically allocated
   /// resources.
   ~ACE_Map_Manager (void);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is already in the
-   * map then the <Map_Entry> is not changed.  Returns 0 if a new
-   * entry is bound successfully, returns 1 if an attempt is made to
-   * bind an existing entry, and returns -1 if failures occur.
+   * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
+   * map then the ACE_Map_Entry is not changed.
+   * @retval 0 If a new entry is bound successfully.
+   * @retval 1 If an attempt is made to bind an existing entry.
+   * @retval -1 If failures occur.
    */
   int bind (const EXT_ID &ext_id,
             const INT_ID &int_id);
 
   /**
-   * Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
-   * map then behaves just like <bind>.  Otherwise, store the old
+   * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
+   * map then behaves just like bind().  Otherwise, store the old
    * values of <ext_id> and <int_id> into the "out" parameters and
    * rebind the new parameters.  This is very useful if you need to
    * have an atomic way of updating <Map_Entries> and you also need
-   * full control over memory allocation.  Returns 0 if a new entry is
-   * bound successfully, returns 1 if an existing entry was rebound,
-   * and returns -1 if failures occur.
+   * full control over memory allocation.
+   * @retval 0 If a new entry is bound successfully.
+   * @retval 1 If an existing entry was rebound.
+   * @retval -1 If failures occur.
    */
   int rebind (const EXT_ID &ext_id,
               const INT_ID &int_id,
@@ -183,18 +189,19 @@ public:
               INT_ID &old_int_id);
 
   /**
-   * Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
+   * Reassociate @a ext_id with @a int_id.  If <ext_id> is not in the
    * map then behaves just like <bind>.  Otherwise, store the old
    * values of <int_id> into the "out" parameter and rebind the new
-   * parameters.  Returns 0 if a new entry is bound successfully,
-   * returns 1 if an existing entry was rebound, and returns -1 if
-   * failures occur.
+   * parameters.
+   * @retval 0 If a new entry is bound successfully.
+   * @retval 1 If an existing entry was rebound.
+   * @retval -1 If failures occur.
    */
   int rebind (const EXT_ID &ext_id,
               const INT_ID &int_id,
               INT_ID &old_int_id);
 
-  /// Reassociate <ext_id> with <int_id>.  Old values in the map are
+  /// Reassociate @a ext_id with @a int_id.  Old values in the map are
   /// ignored.
   int rebind (const EXT_ID &ext_id,
               const INT_ID &int_id);
@@ -203,15 +210,18 @@ public:
    * Associate <ext_id> with <int_id> if and only if <ext_id> is not
    * in the map.  If <ext_id> is already in the map then the <int_id>
    * parameter is overwritten with the existing value in the map
-   * Returns 0 if a new entry is bound successfully, returns 1 if an
-   * attempt is made to bind an existing entry, and returns -1 if
-   * failures occur.
+   * @retval 0 If a new entry is bound successfully.
+   * @retval 1 If an attempt is made to bind an existing entry.
+   * @retval -1 If failures occur.
    */
   int trybind (const EXT_ID &ext_id,
                INT_ID &int_id);
 
-  /// Locate <ext_id> and pass out parameter via <int_id>.
-  /// Returns 0 if found, returns -1 if not found.
+  /**
+   * Locate <ext_id> and pass out parameter via <int_id>.
+   * @retval 0 If found.
+   * @retval -1 If not found.
+   */
   int find (const EXT_ID &ext_id,
             INT_ID &int_id) const;
 
@@ -429,7 +439,7 @@ private:
 /**
  * @class ACE_Map_Iterator_Base
  *
- * @brief Iterator for the <ACE_Map_Manager>.
+ * @brief Iterator for the ACE_Map_Manager.
  *
  * This class factors out common code from its templatized
  * subclasses.
@@ -488,7 +498,7 @@ protected:
 /**
  * @class ACE_Map_Const_Iterator_Base
  *
- * @brief Const iterator for the <ACE_Map_Manager>.
+ * @brief Const iterator for the ACE_Map_Manager.
  *
  * This class factors out common code from its templatized
  * subclasses.
@@ -547,7 +557,7 @@ protected:
 /**
  * @class ACE_Map_Iterator
  *
- * @brief Forward iterator for the <ACE_Map_Manager>.
+ * @brief Forward iterator for the ACE_Map_Manager.
  *
  * This class does not perform any internal locking of the
  * <ACE_Map_Manager> it is iterating upon since locking is
@@ -594,7 +604,7 @@ public:
 /**
  * @class ACE_Map_Const_Iterator
  *
- * @brief Forward const iterator for the <ACE_Map_Manager>.
+ * @brief Forward const iterator for the ACE_Map_Manager.
  *
  * This class does not perform any internal locking of the
  * <ACE_Map_Manager> it is iterating upon since locking is
