@@ -29,36 +29,36 @@ CC_LockSetFactory::~CC_LockSetFactory (void)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create (CORBA::Environment &_env)
+CC_LockSetFactory::create (CORBA::Environment &TAO_IN_ENV)
 {
   CC_LockSet *ls = 0;
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
-  _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  TAO_IN_ENV.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW_THROW_RETURN (ls,
                         CC_LockSet,
                         CORBA::NO_MEMORY(CORBA::COMPLETED_NO),
                         CosConcurrencyControl::LockSet::_nil ());
-  _env.clear ();
+  TAO_IN_ENV.clear ();
 
-  return ls->_this (_env);
+  return ls->_this (TAO_IN_ENV);
 }
 
 CosConcurrencyControl::LockSet_ptr
 CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which,
-                                   CORBA::Environment &_env)
+                                   CORBA::Environment &TAO_IN_ENV)
 {
   CC_LockSet *ls = 0;
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
-  _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  TAO_IN_ENV.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW_THROW_RETURN (ls,
                         CC_LockSet (which),
                         CORBA::NO_MEMORY(CORBA::COMPLETED_NO),
                         CosConcurrencyControl::LockSet::_nil ());
-  _env.clear ();
+  TAO_IN_ENV.clear ();
 
-  return ls->_this (_env);
+  return ls->_this (TAO_IN_ENV);
 }

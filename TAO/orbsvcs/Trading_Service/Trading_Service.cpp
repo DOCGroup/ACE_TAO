@@ -118,12 +118,12 @@ int
 Trading_Service::run (void)
 {
   int return_value;
-  CORBA::Environment _env;
+  CORBA::Environment TAO_IN_ENV;
   Trading_Shutdown trading_shutdown (*this);
   
   // Run the Trading Service.
-  return_value = this->orb_manager_.run (_env);
-  TAO_CHECK_ENV_RETURN (_env, -1);
+  return_value = this->orb_manager_.run (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
   
   return return_value;
 }
@@ -281,7 +281,7 @@ Trading_Service::bootstrap_to_federation (void)
 int
 Trading_Service::shutdown (void)
 {  
-  CORBA::Environment _env;
+  CORBA::Environment TAO_IN_ENV;
 
   if (this->trader_.get () != 0)
     {  
@@ -290,7 +290,7 @@ Trading_Service::shutdown (void)
       CosTrading::Link_ptr our_link = trd_comp.link_if ();
       
       CosTrading::LinkNameSeq_var link_name_seq =
-        our_link->list_links (_env);
+        our_link->list_links (TAO_IN_ENV);
       
       ACE_DEBUG ((LM_DEBUG, "*** Unlinking from federated traders.\n"));
       for (int i = link_name_seq->length () - 1; i >= 0; i--)

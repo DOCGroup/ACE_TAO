@@ -21,12 +21,12 @@
 
 ACE_RCSID(Concurrency, CC_naming_service, "$Id$")
 
-  CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &_env)
+  CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &TAO_IN_ENV)
     : cc_factory_key_ (0),
       orb_ (0),
       factory_ (0)
 {
-  this->Init(orb, _env);
+  this->Init(orb, TAO_IN_ENV);
   instance_ = this;
 }
 
@@ -38,7 +38,7 @@ CC_naming_service::CC_naming_service(void)
 }
 
 void
-CC_naming_service::Init(CORBA::ORB_var orb, CORBA::Environment &_env)
+CC_naming_service::Init(CORBA::ORB_var orb, CORBA::Environment &TAO_IN_ENV)
 {
   this->orb_ = orb;
 
@@ -66,7 +66,7 @@ CC_naming_service::Instance(void)
 
 CORBA::Object_var
 CC_naming_service::get_obj_from_name (char *c_name, char *name,
-                                      CORBA::Environment &_env)
+                                      CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "C: %s, N: %s\n", c_name, name));
   CORBA::Object_var obj;
@@ -107,7 +107,7 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
 void
 CC_naming_service::bind_name (char *n,
 			      CORBA::Object_ptr obj,
-			      CORBA::Environment &_env)
+			      CORBA::Environment &TAO_IN_ENV)
 {
   ACE_DEBUG ((LM_DEBUG, "CC_Client::bind_name\n"));
 

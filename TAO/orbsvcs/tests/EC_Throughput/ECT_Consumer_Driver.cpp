@@ -192,7 +192,7 @@ ECT_Consumer_Driver::shutdown_consumer (void*,
 
 void
 ECT_Consumer_Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -212,8 +212,8 @@ ECT_Consumer_Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr 
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
-                                    _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+                                    TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 
@@ -231,12 +231,12 @@ ECT_Consumer_Driver::dump_results (void)
 }
 
 void
-ECT_Consumer_Driver::disconnect_consumers (CORBA::Environment &_env)
+ECT_Consumer_Driver::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->consumers_[i]->disconnect (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 

@@ -7,24 +7,24 @@ ACE_RCSID(Trading, Service_Type_Exporter, "$Id$")
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
                            CORBA::Boolean verbose,
-                           CORBA::Environment& _env)
+                           CORBA::Environment& TAO_IN_ENV)
   : verbose_ (verbose),
     lookup_ (lookup_if)
 {
   // Obtain the Service Type Repository.
-  CosTrading::TypeRepository_var obj = lookup_if->type_repos (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosTrading::TypeRepository_var obj = lookup_if->type_repos (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // Narrow the Service Type Repository.
-  this->repos_ = CosTradingRepos::ServiceTypeRepository::_narrow (obj.in (), _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->repos_ = CosTradingRepos::ServiceTypeRepository::_narrow (obj.in (), TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   // Build the service type descriptions.
   this->create_types ();
 }
 
 void
-TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& _env)
+TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -59,7 +59,7 @@ TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& _env)
 }
 
 void
-TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& _env)
+TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -73,12 +73,12 @@ TAO_Service_Type_Exporter::add_all_types (CORBA::Environment& _env)
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
               "adding all types to the Repository.\n"));
-  this->add_all_types_to (this->repos_.ptr (), _env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->add_all_types_to (this->repos_.ptr (), TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 }
 
 void
-TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& _env)
+TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -93,13 +93,13 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& _env)
               "add all types to all repositories.\n"));
 
   ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
-  CosTrading::Link_var link_if = this->lookup_->link_if (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosTrading::Link_var link_if = this->lookup_->link_if (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
               " linked to the root trader.\n"));
-  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (_env);
-  TAO_CHECK_ENV_RETURN_VOID (_env);
+  CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (TAO_IN_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
   ACE_DEBUG ((LM_DEBUG, "Exporting service types with each of the linked"
               " traders.\n"));
@@ -110,7 +110,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& _env)
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (link_name_seq[i], _env);
+            link_if->describe_link (link_name_seq[i], TAO_IN_ENV);
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
@@ -136,8 +136,8 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& _env)
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          this->add_all_types_to (str, _env);
-          TAO_CHECK_ENV_RETURN_VOID (_env);
+          this->add_all_types_to (str, TAO_IN_ENV);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
         }
       TAO_CATCHANY
         {
@@ -149,7 +149,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& _env)
 void
 TAO_Service_Type_Exporter::
 add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
-                  CORBA::Environment& _env)
+                  CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -210,7 +210,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos,
 }
 
 void
-TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& _env)
+TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_TRY
@@ -242,7 +242,7 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& _env)
 }
 
 void
-TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& _env)
+TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
@@ -275,7 +275,7 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& _env)
 }
 
 void
-TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& _env)
+TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))

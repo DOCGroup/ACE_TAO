@@ -240,7 +240,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 }
 
 CosTime::UTO_ptr
-TAO_TIO::time (CORBA::Environment &_env)
+TAO_TIO::time (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_UTO *uto = 0;
 

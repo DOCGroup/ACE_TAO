@@ -291,7 +291,7 @@ ECT_Throughput::shutdown_consumer (void*,
 
 void
 ECT_Throughput::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -311,14 +311,14 @@ ECT_Throughput::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr chann
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
-                                    _env);
-      if (_env.exception () != 0) return;
+                                    TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
 void
 ECT_Throughput::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -335,8 +335,8 @@ ECT_Throughput::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr chann
                                     this->event_a_,
                                     this->event_b_,
                                     channel,
-                                    _env);
-      if (_env.exception () != 0) return;
+                                    TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
@@ -350,22 +350,22 @@ ECT_Throughput::activate_suppliers (CORBA::Environment &)
 }
 
 void
-ECT_Throughput::disconnect_suppliers (CORBA::Environment &_env)
+ECT_Throughput::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->disconnect (_env);
-      if (_env.exception () != 0) return;
+      this->suppliers_[i]->disconnect (TAO_IN_ENV);
+      if (TAO_IN_ENV.exception () != 0) return;
     }
 }
 
 void
-ECT_Throughput::disconnect_consumers (CORBA::Environment &_env)
+ECT_Throughput::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (_env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      this->consumers_[i]->disconnect (TAO_IN_ENV);
+      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
     }
 }
 

@@ -29,9 +29,9 @@ Airplane_i::~Airplane_i (void)
 // Returns a random plane and page number
 
 char *
-Airplane_i::get_plane (CORBA::Environment &_env)
+Airplane_i::get_plane (CORBA::Environment &TAO_IN_ENV)
 {
-  ACE_UNUSED_ARG (_env);
+  ACE_UNUSED_ARG (TAO_IN_ENV);
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));

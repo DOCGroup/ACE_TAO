@@ -136,7 +136,7 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
-                           CORBA::Environment &_env)
+                           CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TIO *tio = 0;
 
@@ -171,7 +171,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
   // time value in the UTO.
 
 CosTime::TIO_ptr
-TAO_UTO::interval (CORBA::Environment &_env)
+TAO_UTO::interval (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_TIO *tio = 0;
 

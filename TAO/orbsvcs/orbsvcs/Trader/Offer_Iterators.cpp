@@ -81,7 +81,7 @@ TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 }
 
 CORBA::ULong 
-TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& _env) 
+TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& TAO_IN_ENV) 
   TAO_THROW_SPEC((CORBA::SystemException, 
 		 CosTrading::UnknownMaxLeft))
 {
@@ -91,7 +91,7 @@ TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& _env)
 CORBA::Boolean 
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n, 
                                        CosTrading::OfferSeq_out offers,
-				       CORBA::Environment& _env) 
+				       CORBA::Environment& TAO_IN_ENV) 
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
@@ -208,7 +208,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
 }
 
 void
-TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& _env)  
+TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& TAO_IN_ENV)  
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Destroy all iterators in the collection.
@@ -219,7 +219,7 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& _env)
       CosTrading::OfferIterator** iter = 0;
 
       iters_iter.next (iter);
-      (*iter)->destroy (_env);
+      (*iter)->destroy (TAO_IN_ENV);
     }
 
   // Remove self from POA
@@ -247,7 +247,7 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& _env)
 }
 
 CORBA::ULong
-TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &_env)
+TAO_Offer_Iterator_Collection::max_left (CORBA::Environment &TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::UnknownMaxLeft))
 {
@@ -287,7 +287,7 @@ TAO_Offer_Id_Iterator::max_left (CORBA::Environment& env)
 }
 
 void
-TAO_Offer_Id_Iterator::destroy (CORBA::Environment& _env)
+TAO_Offer_Id_Iterator::destroy (CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove self from POA
@@ -317,7 +317,7 @@ TAO_Offer_Id_Iterator::destroy (CORBA::Environment& _env)
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
 			       CosTrading::OfferIdSeq_out _ids,
-			       CORBA::Environment& _env)
+			       CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.
