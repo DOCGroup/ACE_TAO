@@ -24,6 +24,8 @@
 #undef ACE_NDEBUG
 #include "ace/OS.h"
 #include "ace/streams.h"
+#include "ace/Singleton.h"
+#include "ace/Synch.h"
 
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
@@ -139,27 +141,27 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #define ACE_START_TEST(NAME) \
   const ASYS_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
-  if (ace_file_stream.set_output (program) != 0) \
+  if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting %s test at %D\n"), program))
 
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
-  ace_file_stream.close ()
+  ace_file_stream::instance()->close ()
 
 #if !defined (ACE_WIN32)
 #define ACE_APPEND_LOG(NAME) \
   const ASYS_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
-  ace_file_stream.close (); \
-  if (ace_file_stream.set_output (program, 1) != 0) \
+  ace_file_stream::instance()->close (); \
+  if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 #else /* ACE_WIN32 */
 #define ACE_APPEND_LOG(NAME) \
   const ASYS_TCHAR *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
-  if (ace_file_stream.set_output (program, 1) != 0) \
+  if (ace_file_stream::instance()->set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program));
 #endif /* ACE_WIN32 */
@@ -167,7 +169,7 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n\n"), program)); \
   ACE_LOG_MSG->set_flags(ACE_Log_Msg::SILENT); \
-  ace_file_stream.close ();
+  ace_file_stream::instance()->close ();
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid an error
@@ -222,7 +224,7 @@ private:
   OFSTREAM *output_file_;
 };
 
-static ACE_Test_Output ace_file_stream;
+typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 
 ACE_Test_Output::ACE_Test_Output (void)
   : output_file_ (0)
@@ -235,10 +237,7 @@ ACE_Test_Output::ACE_Test_Output (void)
 
 ACE_Test_Output::~ACE_Test_Output (void)
 {
-#if !defined (ACE_WIN32)
-  ACE_LOG_MSG->msg_ostream (&cerr);
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
+#if !defined (ACE_HAS_WINCE)
   delete this->output_file_;
 #endif /* ACE_HAS_WINCE */
 }
@@ -306,7 +305,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 #endif /* ACE_HAS_WINCE */
 
-  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ());
+  ACE_LOG_MSG->msg_ostream (this->output_file ());
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
@@ -329,6 +328,9 @@ ACE_Test_Output::close (void)
   ACE_OS::fflush (this->output_file_);
   ACE_OS::fclose (this->output_file_);
 #endif /* !ACE_HAS_WINCE */
+  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 }
 
 #if 0 /* old WinCE stuff */
