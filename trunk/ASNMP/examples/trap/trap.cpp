@@ -9,7 +9,7 @@
 //    trap.cpp
 //
 // = DESCRIPTION
-//  Sample application demonstrating synchronous Snmp::trap API  
+//  Sample application demonstrating synchronous Snmp::trap API
 //  to send to an SNMP Version 1 trap listener app.
 //
 // = AUTHOR
@@ -20,7 +20,7 @@
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
- 
+
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
   Permission to use, copy, modify, distribute and/or sell this software
   and/or its documentation is hereby granted without fee. User agrees
@@ -53,7 +53,7 @@ class trapapp {
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private: 
+  private:
   trapapp(const trapapp&);
 
   UdpAddress address_;
@@ -66,8 +66,8 @@ class trapapp {
 };
 
 
-// main entry point 
-int main( int argc, char *argv[])  
+// main entry point
+int main( int argc, char *argv[])
 {
   trapapp get(argc, argv);
   if (get.valid())
@@ -77,18 +77,18 @@ int main( int argc, char *argv[])
   return 1;
 }
 
-int trapapp::valid() const 
-{ 
- return valid_; 
+int trapapp::valid() const
+{
+ return valid_;
 }
 trapapp::trapapp(int argc, char *argv[]): valid_(0)
 {
-   Oid def_ent_oid("1.3.6.1.2.1.1.1.2.0.1");      // def enterprise oid 
+   Oid def_ent_oid("1.3.6.1.2.1.1.1.2.0.1");      // def enterprise oid
    Oid ent, trap; // user specified values
 
    if ( argc < 2)  // hostname mandatory
-     return; 
-    
+     return;
+
    address_ = argv[argc - 1];
    if ( !address_.valid()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
@@ -101,16 +101,16 @@ trapapp::trapapp(int argc, char *argv[]): valid_(0)
      switch (c)
        {
        case 'c': // community string
-         community_ = get_opt.optarg;
+         community_ = get_opt.opt_arg();
          target_.set_read_community(community_);
          break;
 
        case 'e': // trap oid to send
-         ent = get_opt.optarg;
+         ent = get_opt.opt_arg();
          break;
 
        case 't': // trap oid
-         trap = get_opt.optarg;
+         trap = get_opt.opt_arg();
          break;;
 
        default:
@@ -148,9 +148,9 @@ void trapapp::usage()
 }
 
 int trapapp::run()
-{ 
+{
    if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
-      cout << "\nASNMP:ERROR:Create session failed: "<< 
+      cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
@@ -167,7 +167,7 @@ int trapapp::run()
    const char *name = address_.resolve_hostname(rc);
 
    cout << "Device: " << address_ << " ";
-   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
+   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
    cout << "[ Community=" <<  community_.to_string() << " ]"<< endl;
 
    if (snmp_.trap( pdu_, target_) == SNMP_CLASS_SUCCESS) {
@@ -180,5 +180,5 @@ int trapapp::run()
 
   cout << "ASNMP:INFO:command completed normally.\n"<< endl;
   return 0;
-} 
+}
 

@@ -9,7 +9,7 @@
 //    walk.cpp
 //
 // = DESCRIPTION
-//  Sample application demonstrating synchronous Snmp::get, get_next API  
+//  Sample application demonstrating synchronous Snmp::get, get_next API
 //  to access an SNMP Version 1 agent.
 //
 // = AUTHOR
@@ -20,7 +20,7 @@
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
- 
+
   ATTENTION: USE OF THIS SOFTWARE IS SUBJECT TO THE FOLLOWING TERMS.
   Permission to use, copy, modify, distribute and/or sell this software
   and/or its documentation is hereby granted without fee. User agrees
@@ -50,7 +50,7 @@ class walkapp {
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private: 
+  private:
   walkapp(const walkapp&);
 
   UdpAddress address_;
@@ -63,8 +63,8 @@ class walkapp {
 };
 
 
-// main entry point 
-int main( int argc, char *argv[])  
+// main entry point
+int main( int argc, char *argv[])
 {
   walkapp get(argc, argv);
   if (get.valid())
@@ -74,17 +74,17 @@ int main( int argc, char *argv[])
   return 1;
 }
 
-int walkapp::valid() const 
-{ 
- return valid_; 
+int walkapp::valid() const
+{
+ return valid_;
 }
 
 walkapp::walkapp(int argc, char *argv[]): valid_(0)
 {
-   Oid req, def_oid("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII 
-   if ( argc < 2) 
-     return; 
-    
+   Oid req, def_oid("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII
+   if ( argc < 2)
+     return;
+
    address_ = argv[argc - 1];
    if ( !address_.valid()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
@@ -97,23 +97,23 @@ walkapp::walkapp(int argc, char *argv[]): valid_(0)
      switch (c)
        {
        case 'o':
-         req = get_opt.optarg;
-         if (req.valid() == 0) 
-         cout << "ERROR: oid value: " <<get_opt.optarg  \
+         req = get_opt.opt_arg();
+         if (req.valid() == 0)
+         cout << "ERROR: oid value: " <<get_opt.opt_arg()  \
               << "is not valid. using default.\n";
          break;
 
        case 'c':
-         community_ = get_opt.optarg;
+         community_ = get_opt.opt_arg();
          target_.set_read_community(community_);
          break;
 
        case 'r':
-         target_.set_retry(ACE_OS::atoi (get_opt.optarg));
+         target_.set_retry(ACE_OS::atoi (get_opt.opt_arg()));
          break;
 
        case 't':
-         target_.set_timeout(ACE_OS::atoi (get_opt.optarg));
+         target_.set_timeout(ACE_OS::atoi (get_opt.opt_arg()));
          break;
 
        default:
@@ -121,9 +121,9 @@ walkapp::walkapp(int argc, char *argv[]): valid_(0)
        }
 
   Vb vb;                                  // construct a Vb object
-  if (req.valid()) 
+  if (req.valid())
      vb.set_oid( req);                    // set the Oid portion of the Vb
-  else { 
+  else {
      vb.set_oid( def_oid);               // set the Oid portion of the Vb
   }
   pdu_ += vb;
@@ -143,7 +143,7 @@ void walkapp::usage()
 
 
 //
-// simple mib iterator class 
+// simple mib iterator class
 //
 class MibIter {
   public:
@@ -160,14 +160,14 @@ class MibIter {
   int valid_;  // flag to obtain first entry
 };
 
-MibIter::MibIter(Snmp* snmp, Pdu& pdu, UdpTarget *target): 
-  snmp_(snmp), target_(target), pdu_(pdu), first_(0), 
+MibIter::MibIter(Snmp* snmp, Pdu& pdu, UdpTarget *target):
+  snmp_(snmp), target_(target), pdu_(pdu), first_(0),
  valid_(0)
 {
   // verify we have a valid oid to begin iterating with
   Oid oid;
   Vb vb;
-  pdu.get_vb(vb, 0);  
+  pdu.get_vb(vb, 0);
   vb.get_oid(oid);
   if (oid.valid())
     valid_ = 1;
@@ -187,7 +187,7 @@ int MibIter::next(Vb& vb, char *& reason)
     first_++;
   }
   else {
-   rc = snmp_->get_next( pdu_, *target_); 
+   rc = snmp_->get_next( pdu_, *target_);
   }
 
   if (rc != SNMP_CLASS_SUCCESS) {
@@ -201,9 +201,9 @@ int MibIter::next(Vb& vb, char *& reason)
      return 0;
   }
 
-  // 3. return vb to caller 
+  // 3. return vb to caller
   pdu_.get_vb(vb, 0);
-  Oid nextoid;  
+  Oid nextoid;
   vb.get_oid(nextoid); // and setup next oid to get
   Vb nextvb(nextoid);
   pdu_.delete_all_vbs();
@@ -213,11 +213,11 @@ int MibIter::next(Vb& vb, char *& reason)
 }
 
 int walkapp::run()
-{ 
+{
 
    //----------[ create a ASNMP session ]-----------------------------------
    if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
-      cout << "\nASNMP:ERROR:Create session failed: "<< 
+      cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
@@ -235,7 +235,7 @@ int walkapp::run()
    const char *name = address_.resolve_hostname(rc);
 
    cout << "Device: " << address_ << " ";
-   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
+   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
@@ -253,9 +253,9 @@ int walkapp::run()
    if (!err_str) {
      cout << "ERROR: walk: " << err_str << endl;
      return 0;
-   } 
+   }
 
   cout << "ASNMP:INFO:command completed normally. ACE Rocks...\n"<< endl;
   return 0;
-} 
+}
 
