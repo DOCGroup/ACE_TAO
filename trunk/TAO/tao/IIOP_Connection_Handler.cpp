@@ -25,7 +25,8 @@ ACE_RCSID (tao,
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0)
+    TAO_Connection_Handler (0),
+    dscp_codepoint_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -495,9 +496,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
       ACE_CHECK_RETURN (-1);
     }
   else
-    {
-      tos = IPDSFIELD_DSCP_DEFAULT << 2;
-    }
+    tos = IPDSFIELD_DSCP_DEFAULT << 2;
 
   if (tos != this->dscp_codepoint_)
     {
@@ -520,10 +519,6 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
 
   return 0;
 }
-
-
-
-
 
 // ****************************************************************
 
