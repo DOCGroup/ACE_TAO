@@ -1,3 +1,26 @@
+Fri Jan 29 14:49:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/ACE.cpp: 
+	* ace/Basic_Types.h: 
+	* ace/INET_Addr.cpp: 
+	* ace/Memory_Pool.cpp: 
+	* ace/OS.cpp: 
+	* ace/OS.h: 
+	* ace/OS.i: 
+	* ace/SOCK_Dgram_Bcast.cpp: 
+	* ace/config-cray.h: 
+	* examples/IPC_SAP/SOCK_SAP/C-inserver.cpp: 
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp: 
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp: 
+	* include/makeinclude/platform_cray.GNU: 
+	* tests/Basic_Types_Test.cpp: 
+	* tests/Handle_Set_Test.cpp: 
+	* tests/Message_Queue_Test.cpp: 
+	* tests/SV_Shared_Memory_Test.cpp: 
+	* tests/run_tests.sh: 
+	  Thanks to Doug Anderson <doug@clark.net> for this port of ACE to
+	  Cray machines.
+
 Fri Jan 29 13:51:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Removed definition of ACE_Thread_State.

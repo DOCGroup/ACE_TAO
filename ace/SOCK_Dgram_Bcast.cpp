@@ -140,9 +140,19 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ASYS_TCHAR *host_name)
       if (hp == 0)
 	return -1;
       else
+#if !defined(_UNICOS)
 	ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr, 
 			(char *) hp->h_addr, 
 			hp->h_length);
+#else /* _UNICOS */
+        {
+          ACE_UINT64 haddr;  // a place to put the address
+          char * haddrp = (char *) &haddr;  // convert to char pointer
+          haddr += 4;   // adjust within the word
+          ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
+          host_addr.sin_addr.s_addr = haddr;
+        }
+#endif /* ! _UNICOS */
     }
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0; n--, ifr++) 

@@ -3959,7 +3959,13 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     return 0;
   else
     {
+#if !defined(_UNICOS)
       ACE_OS::memcpy ((void *) addr, (void *) &ip_addr, sizeof ip_addr);
+#else /* ! _UNICOS */
+      // on UNICOS, perform assignment to bitfield, since doing the above
+      // actually puts the address outside of the 32-bit bitfield
+      addr->s_addr = ip_addr;
+#endif /* ! _UNICOS */
       return 1;
     }
 }
