@@ -768,7 +768,13 @@ DRV_parse_args (long ac, char **av)
             case 'H':
               idl_global->append_idl_flag (av[i+1]);
 
-              if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
+              if (av[i+1] == 0 || av[i+1][0] == '-')
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("no selection for -H option\n")));
+                  ACE_OS::exit (99);
+                }
+              else if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
                 {
                   be_global->lookup_strategy (
                       BE_GlobalData::TAO_DYNAMIC_HASH
@@ -798,6 +804,7 @@ DRV_parse_args (long ac, char **av)
                               ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
                               av[0],
                               av[i+1]));
+                  ACE_OS::exit (99);
                 }
 
               i++;
