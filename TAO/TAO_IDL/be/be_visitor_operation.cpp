@@ -39,6 +39,7 @@
 #include "be_helper.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
+#include "nr_extern.h"
 
 #include "be_visitor_operation.h"
 #include "be_visitor_argument.h"

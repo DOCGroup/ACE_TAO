@@ -49,6 +49,10 @@ template class ACE_Node<AST_Field *>;
 template class ACE_Unbounded_Queue<AST_Field *>;
 template class ACE_Unbounded_Queue_Iterator<AST_Field *>;
 
+template class ACE_Node<AST_Interface *>;
+template class ACE_Unbounded_Queue<AST_Interface *>;
+template class ACE_Unbounded_Queue_Iterator<AST_Interface *>;
+
 template class ACE_Node<AST_Component::uses_description>;
 template class ACE_Unbounded_Queue<AST_Component::uses_description>;
 template class ACE_Unbounded_Queue_Iterator<AST_Component::uses_description>;

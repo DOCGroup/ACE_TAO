@@ -59,20 +59,12 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
       return 0;
     }
 
-  // Generate helper functions declaration.
-  if (bfd->gen_helper_header () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
-                         "visit_valuetype - "
-                         "codegen for helper functions failed\n"), -1);
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the CDR << and >> operator declarations (prototypes)
 
-  //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro ()
       << " CORBA::Boolean operator<< (TAO_OutputCDR &, const "
@@ -83,6 +75,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
       << node->full_name () << " *&);" << be_nl;
 
   node->cli_hdr_cdr_op_gen (I_TRUE);
+  bfd->cli_hdr_cdr_op_gen (I_TRUE);
 
   return 0;
 }

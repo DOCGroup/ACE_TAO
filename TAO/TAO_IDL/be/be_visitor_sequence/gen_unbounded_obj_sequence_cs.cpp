@@ -99,8 +99,8 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
@@ -136,8 +136,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "if (old[i] != 0)" << be_idt_nl
-          << "old[i]->_add_ref ();" << be_uidt_nl
+      *os << "tao_" << pt->flat_name () << "_add_ref (old[i]);" << be_nl
           << "tmp[i] = old[i];";
     }
   else
@@ -165,7 +164,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "}" << be_uidt_nl << be_nl
       << "if (this->release_)" << be_idt_nl
       << "{" << be_idt_nl
-      << "delete[] old;" << be_uidt_nl
+      << "delete [] old;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = tmp;" << be_uidt_nl
@@ -191,8 +190,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "if (tmp[i] != 0)" << be_idt_nl
-          << "tmp[i]->_remove_ref ();" << be_uidt_nl
+      *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);" << be_nl
           << "tmp[i] = 0;";
     }
   else if (bt_is_defined)
@@ -243,8 +241,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "if (tmp[i] != 0)" << be_idt_nl
-          << "tmp[i]->_remove_ref ();" << be_uidt_nl
+      *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);" << be_nl
           << "tmp[i] = 0;";
     }
   else if (bt_is_defined)

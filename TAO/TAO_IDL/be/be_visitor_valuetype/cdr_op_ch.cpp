@@ -44,8 +44,6 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  os->indent (); //start with whatever indentation level we are at now
-
   if (!node->cli_hdr_cdr_op_gen ())
   {
     // Generate helper functions declaration.
@@ -58,7 +56,8 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
                           -1);
       }
 
-      os->indent (); //start with whatever indentation level we are at now
+      *os << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
       *os << be_global->stub_export_macro () << " "
           << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "

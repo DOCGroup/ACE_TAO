@@ -232,9 +232,15 @@ be_valuetype::gen_var_defn (char *local_name)
 
   // Generate an additional member function that returns
   // the underlying pointer.
-  *ch << local_name << "* ptr (void) const;";
+  *ch << local_name << "* ptr (void) const;" << be_nl << be_nl;
 
-  *ch << be_uidt_nl << be_nl;
+  // Hooks for non-defined forward declared interfaces.
+  *ch << "// Hooks used by template sequence and valuetype manager classes"
+      << be_nl
+      << "// for non-defined forward declared valuetypes." << be_nl
+      << "static void tao_add_ref (" << local_name << " *);" << be_nl
+      << "static void tao_remove_ref (" << local_name << " *);"
+      << be_uidt_nl << be_nl;
 
   // Private.
   *ch << "private:" << be_idt_nl;
@@ -439,8 +445,26 @@ be_valuetype::gen_var_impl (char *local_name,
   *cs << local_name << "* tmp = this->ptr_;" << be_nl;
   *cs << "this->ptr_ = 0;" << be_nl;
   *cs << "return tmp;" << be_uidt_nl;
-
   *cs << "}" << be_nl << be_nl;
+
+  // Hooks for the flat name global functions used by references to 
+  // non-defined valuetypes.
+  *cs << "void" << be_nl
+      << fname << "::tao_add_ref (" << be_idt << be_idt_nl
+      << local_name << " *p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::add_ref (p);"
+      << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *cs << "void" << be_nl
+      << fname << "::tao_remove_ref (" << be_idt << be_idt_nl
+      << local_name << " *p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::remove_ref (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -666,16 +690,7 @@ be_valuetype::gen_helper_header (char*,
       << this->full_name () << " *);" << be_nl
       << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" 
       << this->full_name () << " *);";
-/*
-  if (this->supports_abstract ())
-    {
-      *os << be_nl
-          << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" 
-          << "OBV_" << this->full_name () << " *);" << be_nl
-          << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" 
-          << "OBV_" << this->full_name () << " *);";
-    }
-*/
+
   *os <<  be_uidt_nl
       << "}" << be_nl
       << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl;

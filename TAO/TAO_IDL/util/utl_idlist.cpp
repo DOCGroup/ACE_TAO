@@ -132,6 +132,18 @@ UTL_IdList::last_component (void)
   return ((UTL_IdList *) this->tail ())->last_component ();
 }
 
+// Get first item of this list holding a non-empty string.
+Identifier *
+UTL_IdList::first_component (void)
+{
+  if (ACE_OS::strlen (this->pd_car_data->get_string ()) > 0)
+    {
+      return this->pd_car_data;
+    }
+
+  return ((UTL_IdList *) this->tail ())->first_component ();
+}
+
 int
 UTL_IdList::compare (UTL_IdList *other)
 {

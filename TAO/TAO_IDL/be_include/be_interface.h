@@ -28,7 +28,6 @@
 #include "be_type.h"
 #include "be_codegen.h"
 #include "ast_interface.h"
-#include "ace/Unbounded_Queue.h"
 
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
@@ -351,22 +350,6 @@ public:
   idl_bool has_mixed_parentage (void) const;
   // Do we have both abstract and concrete parents?
 
-protected:
-  // Queue data structure needed for breadth-first traversal of
-  // inheritance tree.
-  ACE_Unbounded_Queue<be_interface *> insert_queue;
-
-  // For a special case of a deeply nested inheritance graph and one specific
-  // way of inheritance in which a node that was already visited,
-  // but is not present in
-  // the queue, gets inserted at the tail. This situation arises when a node
-  // multiply inherits from two or more interfaces in which the first parent is
-  // higher up in the tree than the second parent. In addition, if the second
-  // parent turns out to be a child of the first .
-
-  // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue<be_interface *> del_queue;
-
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
@@ -402,6 +385,7 @@ private:
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
 
+private:
   int skel_count_;
   // Number of static skeletons in the operation table.
 

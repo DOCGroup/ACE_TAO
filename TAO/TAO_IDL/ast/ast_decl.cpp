@@ -128,20 +128,8 @@ AST_Decl::AST_Decl (void)
     version_ (0),
     anonymous_ (I_FALSE),
     typeid_set_ (I_FALSE),
-    cli_hdr_gen_ (I_FALSE),
-    cli_stub_gen_ (I_FALSE),
-    cli_inline_gen_ (I_FALSE),
-    srv_hdr_gen_ (I_FALSE),
-    impl_hdr_gen_ (I_FALSE),
-    srv_skel_gen_ (I_FALSE),
-    impl_skel_gen_ (I_FALSE),
-    srv_inline_gen_ (I_FALSE),
-    cli_hdr_any_op_gen_ (I_FALSE),
-    cli_stub_any_op_gen_ (I_FALSE),
-    cli_hdr_cdr_op_gen_ (I_FALSE),
-    cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE),
-    flat_name_ (0)
+    flat_name_ (0),
+    last_referenced_as_ (0)
 {
 }
 
@@ -166,20 +154,8 @@ AST_Decl::AST_Decl (NodeType nt,
     version_ (0),
     anonymous_ (anonymous),
     typeid_set_ (I_FALSE),
-    cli_hdr_gen_ (I_FALSE),
-    cli_stub_gen_ (I_FALSE),
-    cli_inline_gen_ (I_FALSE),
-    srv_hdr_gen_ (I_FALSE),
-    impl_hdr_gen_ (I_FALSE),
-    srv_skel_gen_ (I_FALSE),
-    impl_skel_gen_ (I_FALSE),
-    srv_inline_gen_ (I_FALSE),
-    cli_hdr_any_op_gen_ (I_FALSE),
-    cli_stub_any_op_gen_ (I_FALSE),
-    cli_hdr_cdr_op_gen_ (I_FALSE),
-    cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE),
-    flat_name_ (0)
+    flat_name_ (0),
+    last_referenced_as_ (0)
 {
   this->compute_full_name (n);
 
@@ -1218,169 +1194,16 @@ AST_Decl::original_local_name (void)
   return this->pd_original_local_name;
 }
 
-// Boolean methods to test if code was already generated.
-idl_bool
-AST_Decl::cli_hdr_gen (void)
+UTL_ScopedName *
+AST_Decl::last_referenced_as (void) const
 {
-  return this->cli_hdr_gen_;
-}
-
-idl_bool
-AST_Decl::cli_stub_gen (void)
-{
-  return this->cli_stub_gen_;
-}
-
-idl_bool
-AST_Decl::cli_hdr_any_op_gen (void)
-{
-  return this->cli_hdr_any_op_gen_;
-}
-
-idl_bool
-AST_Decl::cli_stub_any_op_gen (void)
-{
-  return this->cli_stub_any_op_gen_;
-}
-
-idl_bool
-AST_Decl::cli_hdr_cdr_op_gen (void)
-{
-  return this->cli_hdr_cdr_op_gen_;
-}
-
-idl_bool
-AST_Decl::cli_stub_cdr_op_gen (void)
-{
-  return this->cli_stub_cdr_op_gen_;
-}
-
-idl_bool
-AST_Decl::cli_inline_cdr_op_gen (void)
-{
-  return this->cli_inline_cdr_op_gen_;
-}
-
-idl_bool
-AST_Decl::cli_inline_cdr_decl_gen (void)
-{
-  return this->cli_inline_cdr_decl_gen_;
-}
-
-idl_bool
-AST_Decl::cli_inline_gen (void)
-{
-  return this->cli_inline_gen_;
-}
-
-idl_bool
-AST_Decl::srv_hdr_gen (void)
-{
-  return this->srv_hdr_gen_;
-}
-
-idl_bool
-AST_Decl::impl_hdr_gen (void)
-{
-  return this->impl_hdr_gen_;
-}
-
-idl_bool
-AST_Decl::srv_skel_gen (void)
-{
-  return this->srv_skel_gen_;
-}
-
-idl_bool
-AST_Decl::impl_skel_gen (void)
-{
-  return this->impl_skel_gen_;
-}
-
-idl_bool
-AST_Decl::srv_inline_gen (void)
-{
-  return this->srv_inline_gen_;
-}
-
-// Set the flag indicating that code generation is done.
-void
-AST_Decl::cli_hdr_gen (idl_bool val)
-{
-  this->cli_hdr_gen_ = val;
+  return this->last_referenced_as_;
 }
 
 void
-AST_Decl::cli_stub_gen (idl_bool val)
+AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
-  this->cli_stub_gen_ = val;
-}
-
-void
-AST_Decl::cli_hdr_any_op_gen (idl_bool val)
-{
-  this->cli_hdr_any_op_gen_ = val;
-}
-
-void
-AST_Decl::cli_stub_any_op_gen (idl_bool val)
-{
-  this->cli_stub_any_op_gen_ = val;
-}
-
-void
-AST_Decl::cli_hdr_cdr_op_gen (idl_bool val)
-{
-  this->cli_hdr_cdr_op_gen_ = val;
-}
-
-void
-AST_Decl::cli_stub_cdr_op_gen (idl_bool val)
-{
-  this->cli_stub_cdr_op_gen_ = val;
-}
-
-void
-AST_Decl::cli_inline_cdr_op_gen (idl_bool val)
-{
-  this->cli_inline_cdr_op_gen_ = val;
-}
-
-void
-AST_Decl::cli_inline_cdr_decl_gen (idl_bool val)
-{
-  this->cli_inline_cdr_decl_gen_ = val;
-}
-
-void
-AST_Decl::cli_inline_gen (idl_bool val)
-{
-  this->cli_inline_gen_ = val;
-}
-
-void
-AST_Decl::srv_hdr_gen (idl_bool val)
-{
-  this->srv_hdr_gen_ = val;
-}
-
-void
-AST_Decl::impl_hdr_gen (idl_bool val)
-{
-  this->impl_hdr_gen_ = val;
-}
-
-
-void
-AST_Decl::srv_skel_gen (idl_bool val)
-{
-  this->srv_skel_gen_ = val;
-}
-
-void
-AST_Decl::srv_inline_gen (idl_bool val)
-{
-  this->srv_inline_gen_ = val;
+  this->last_referenced_as_ = n;
 }
 
 //Narrowing methods for AST_Decl.

@@ -58,8 +58,8 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CH);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
@@ -176,21 +176,22 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "virtual void _shrink_buffer (" << be_idt << be_idt_nl
       << "CORBA::ULong nl," << be_nl
       << "CORBA::ULong ol" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");";
 
   if (! (is_pseudo_object || nt == AST_Decl::NT_valuetype))
     {
       // Pseudo objects do not require these methods.
-      *os << "virtual void _downcast (" << be_idt << be_idt_nl
-                << "void* target," << be_nl
-                << "CORBA_Object *src" << be_nl
-                << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
-                << ");" << be_uidt_nl;
+      *os << be_uidt_nl << be_nl
+          << "virtual void _downcast (" << be_idt << be_idt_nl
+          << "void* target," << be_nl
+          << "CORBA_Object *src" << be_nl
+          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS"  << be_uidt_nl
+          << ");" << be_uidt_nl;
 
       *os << "virtual CORBA_Object* _upcast (void *src) const;";
     }
 
-  *os << be_uidt_nl << "};" << be_nl;
+  *os << be_uidt << be_uidt_nl << "};" << be_nl;
 
   os->gen_endif (); // endif macro
 

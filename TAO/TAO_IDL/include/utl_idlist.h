@@ -111,6 +111,9 @@ public:
   Identifier *last_component (void);
   // Get last element in this list.
 
+  Identifier *first_component (void);
+  // Get first element in this list holding a non-empty string.
+
   int compare (UTL_IdList *other);
   // Compares each component for equality.
 private:

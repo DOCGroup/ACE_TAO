@@ -63,7 +63,28 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->indent ();
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  // Global functions to allow non-defined forward declared interfaces
+  // access to some methods in the full definition.
+  *os << "void" << be_nl
+      << "tao_" << node->flat_name ()
+      << "_add_ref (" << be_idt << be_idt_nl
+      << node->full_name () << " *p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::add_ref (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "void" << be_nl
+      << "tao_" << node->flat_name ()
+      << "_remove_ref (" << be_idt << be_idt_nl
+      << node->full_name () << " *p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::remove_ref (p);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generate methods for _var class.
   if (node->gen_var_impl () == -1)

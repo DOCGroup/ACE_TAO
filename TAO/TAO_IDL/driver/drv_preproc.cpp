@@ -200,7 +200,6 @@ DRV_cpp_init (void)
       if (cpp_path != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s%s%s%s",
                       "Warning: The environment variable "
                       "CPP_LOCATION has been deprecated.\n"
                       "         Please use TAO_IDL_PREPROCESSOR "
@@ -247,11 +246,10 @@ DRV_cpp_init (void)
       if (args2 != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s%s%s%s%s",
-                      "Warning: The environment variable ",
-                      "TAO_IDL_DEFAULT_CPP_FLAGS has been ",
-                      "deprecated.\n",
-                      "         Please use ",
+                      "Warning: The environment variable "
+                      "TAO_IDL_DEFAULT_CPP_FLAGS has been "
+                      "deprecated.\n"
+                      "         Please use "
                       "TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
 
           cpp_args = args2;
@@ -300,10 +298,9 @@ DRV_cpp_init (void)
                 {
                   ACE_ERROR ((
                       LM_ERROR,
-                      "%s%s%s%s",
-                      "Note: The environment variables ",
-                      "TAO_ROOT and ACE_ROOT are not defined.\n",
-                      "      TAO_IDL may not be able to ",
+                      "Note: The environment variables "
+                      "TAO_ROOT and ACE_ROOT are not defined.\n"
+                      "      TAO_IDL may not be able to "
                       "locate orb.idl\n"
                     ));
 
@@ -454,7 +451,6 @@ DRV_check_for_include (const char* buf)
   // we don't want to generate header includes for that.
   if (ACE_OS::strcmp (file_name, "orb.idl"))
     {
-      cout << file_name << endl;
       idl_global->add_to_included_idl_files (file_name);
     }
 }

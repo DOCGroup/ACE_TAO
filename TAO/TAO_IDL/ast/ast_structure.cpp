@@ -271,6 +271,16 @@ AST_Structure::fe_add_field (AST_Field *t)
                            I_FALSE,
                            t->local_name ());
 
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               I_FALSE,
+                               mru->first_component ());
+    }
+
   this->fields_.enqueue_tail (t);
 
   return t;

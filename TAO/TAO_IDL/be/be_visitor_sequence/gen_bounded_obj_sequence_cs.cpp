@@ -176,8 +176,7 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
 
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
-      *os << "if (tmp[i] != 0)" << be_idt_nl
-          << "tmp[i]->_remove_ref ();" << be_uidt_nl
+      *os << "tao_" << pt->flat_name () << "_remove_ref (tmp[i]);" << be_nl
           << "tmp[i] = 0;";
     }
   else if (bt_is_defined)

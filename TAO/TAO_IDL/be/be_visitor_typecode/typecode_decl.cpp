@@ -60,7 +60,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 
       *os << "::CORBA::TypeCode_ptr "
           << node->tc_name ()->last_component ()
-          << ";" << be_nl;
+          << ";" << be_nl << be_nl;
     }
   else
     {
@@ -68,7 +68,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       *os << "extern " << be_global->stub_export_macro ()
           << " ::CORBA::TypeCode_ptr "
           << " " << node->tc_name ()->last_component ()
-          << ";" << be_nl;
+          << ";" << be_nl << be_nl;
     }
 
   return 0;

@@ -50,8 +50,8 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
                         -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   os->gen_ifdef_AHETI();
 
@@ -249,8 +249,8 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl

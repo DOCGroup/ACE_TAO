@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_interface.h"
 #include "ast_interface_fwd.h"
+#include "ast_valuetype.h"
+#include "ast_component.h"
 #include "ast_constant.h"
 #include "ast_exception.h"
 #include "ast_attribute.h"
@@ -906,6 +908,18 @@ AST_Interface::fe_add_typedef (AST_Typedef *t)
                            I_FALSE,
                            t->local_name ());
 
+  AST_Type *bt = t->base_type ();
+  UTL_ScopedName *mru = bt->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (
+          bt,
+          I_FALSE,
+          mru->first_component ()
+        );
+    }
+
   return t;
 }
 
@@ -1102,6 +1116,106 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
     }
 }
 
+void
+AST_Interface::redef_clash_populate_r (AST_Interface *t)
+{
+  if (this->insert_non_dup (t) == 0)
+    {
+      return;
+    }
+
+  AST_Interface **parents = t->inherits ();
+  long n_parents = t->n_inherits ();
+  long i;
+
+  for (i = 0; i < n_parents; ++i)
+    {
+      this->redef_clash_populate_r (parents[i]);
+    }
+
+  AST_Decl::NodeType nt = t->node_type ();
+
+  if (nt == AST_Decl::NT_valuetype)
+    {
+      AST_ValueType *v = AST_ValueType::narrow_from_decl (t);
+      AST_Interface **supports = v->supports ();
+      long n_supports = v->n_supports ();
+
+      for (i = 0; i < n_supports; ++i)
+        {
+          this->redef_clash_populate_r (supports[i]);
+        }
+    }
+  else if (nt == AST_Decl::NT_component)
+    {
+      AST_Component *c = AST_Component::narrow_from_decl (t);
+      AST_Interface **supports = c->supports ();
+      long n_supports = c->n_supports ();
+
+      for (i = 0; i < n_supports; ++i)
+        {
+          this->redef_clash_populate_r (supports[i]);
+        }
+    }
+}
+
+int
+AST_Interface::insert_non_dup (AST_Interface *t)
+{
+  const char *full_name = t->full_name ();
+
+  // Initialize an iterator to search the queue for duplicates.
+  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> q_iter (
+           this->insert_queue
+         );
+       !q_iter.done ();
+       (void) q_iter.advance ())
+    {
+      // Queue element.
+      AST_Interface **temp;
+
+      (void) q_iter.next (temp);
+
+      if (!ACE_OS::strcmp (full_name,
+                           (*temp)->full_name ()))
+        {
+          // We exist in this queue and cannot be inserted.
+          return 0;
+        }
+    }
+
+  // Initialize an iterator to search the del_queue for duplicates.
+  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> del_q_iter (
+           this->del_queue
+         );
+       !del_q_iter.done ();
+       (void) del_q_iter.advance ())
+    {
+      // Queue element.
+      AST_Interface **temp;
+
+      (void) del_q_iter.next (temp);
+
+      if (!ACE_OS::strcmp (full_name,
+                           (*temp)->full_name ()))
+        {
+          // We exist in this del_queue and cannot be inserted.
+          return 0;
+        }
+    }
+
+  // Insert the parent in the queue.
+  if (this->insert_queue.enqueue_tail (t) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%N:%l) be_interface::insert_non_dup - "
+                        "enqueue failed\n"),
+                        0);
+    }
+
+  return 1;
+}
+
 // This serves only for interfaces. AST_ValueType has its
 // own redefine() function which calls this one.
 void
@@ -1155,150 +1269,133 @@ AST_Interface::n_inherits_flat (void) const
   return pd_n_inherits_flat;
 }
 
-void
-AST_Interface::inherited_name_clash (void)
-{
-  AST_Decl *my_member = 0;
-  AST_Decl *parent1_member = 0;
-  AST_Decl  *parent2_member = 0;
+idl_bool
+AST_Interface::redef_clash (void)
+{ 
+  this->insert_queue.reset ();
+  this->redef_clash_populate_r (this);
 
-  // Compare our members with those of each parent.
+  AST_Interface **group1_member = 0;
+  AST_Interface **group2_member = 0;
+  AST_Decl *group1_member_item = 0;
+  AST_Decl *group2_member_item = 0;
 
-  for (UTL_ScopeActiveIterator my_members (DeclAsScope (this), IK_decls);
-       !my_members.is_done ();
-       my_members.next ())
+  int i = 1;
+
+  // Now compare all pairs.
+  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> group1_iter (
+           this->insert_queue
+         );
+       !group1_iter.done ();
+       (void) group1_iter.advance (), ++i)
     {
-      my_member = my_members.item ();
-      Identifier *id = my_member->local_name ();
+      // Queue element.
+      (void) group1_iter.next (group1_member);
 
-      for (int i = 0; i < this->pd_n_inherits_flat; ++i)
+      for (UTL_ScopeActiveIterator group1_member_items (
+               DeclAsScope (*group1_member),
+               UTL_Scope::IK_decls
+             );
+           !group1_member_items.is_done ();
+           group1_member_items.next ())
         {
-          for (UTL_ScopeActiveIterator parent_members (
-                   DeclAsScope (this->pd_inherits_flat[i]), 
-                   UTL_Scope::IK_decls
-                 );
-               !parent_members.is_done ();
-               parent_members.next ())
+          group1_member_item = group1_member_items.item ();
+          AST_Decl::NodeType nt1 = group1_member_item->node_type ();
+
+          // Only these member types may cause a clash because
+          // they can't be redefined.
+          if (nt1 != AST_Decl::NT_op && nt1 != AST_Decl::NT_attr)
             {
-              parent1_member = parent_members.item ();
-              AST_Decl::NodeType nt = parent1_member->node_type ();
+              continue;
+            }
 
-              // All other member types but these may be redefined in
-              // the child.
-              if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+          Identifier *pid1 = group1_member_item->local_name ();
+          int j = 0;
+
+          for (ACE_Unbounded_Queue_Iterator<AST_Interface *> group2_iter (
+                   this->insert_queue
+                 );
+               !group2_iter.done ();
+               (void) group2_iter.advance ())
+            {
+              // Since group1 and group2 are the same list, we can start this
+              // iterator from where the outer one is.
+              while (j++ < i)
                 {
-                  Identifier *pid = parent1_member->local_name ();
+                  group2_iter.advance ();
+                }
 
-                  if (id->compare (pid) == I_TRUE)
+              if (group2_iter.done ())
+                {
+                  break;
+                }
+
+              // Queue element.
+              (void) group2_iter.next (group2_member);
+
+              for (UTL_ScopeActiveIterator group2_member_items (
+                       DeclAsScope (*group2_member),
+                       UTL_Scope::IK_decls
+                     );
+                   !group2_member_items.is_done ();
+                   group2_member_items.next ())
+                {
+                  group2_member_item = group2_member_items.item ();
+                  AST_Decl::NodeType nt2 = group2_member_item->node_type ();
+
+                  // Only these member types may cause a clash
+                  // with other parents' member of the same type.
+                  if (nt2 != AST_Decl::NT_op && nt2 != AST_Decl::NT_attr)
                     {
-                      idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
-                                                  my_member,
-                                                  parent1_member);
+                      continue;
                     }
-                  else if (id->case_compare_quiet (pid) == I_TRUE)
+
+                  Identifier *pid2 = group2_member_item->local_name ();
+
+                  if (pid1->compare (pid2) == I_TRUE)
+                    {
+                      idl_global->err ()->error3 (
+                                              UTL_Error::EIDL_REDEF,
+                                              *group1_member,
+                                              *group2_member,
+                                              group2_member_item
+                                            );
+                      return 1;
+                    }
+                  else if (pid1->case_compare_quiet (pid2) == I_TRUE)
                     {
                       if (idl_global->case_diff_error ())
                         {
-                          idl_global->err ()->error2 (
+                          idl_global->err ()->error3 (
                               UTL_Error::EIDL_NAME_CASE_ERROR,
-                              my_member,
-                              parent1_member
+                              *group1_member,
+                              group1_member_item,
+                              group2_member_item
                             );
                         }
                       else
                         {
-                          idl_global->err ()->warning2 (
+                          idl_global->err ()->warning3 (
                               UTL_Error::EIDL_NAME_CASE_WARNING,
-                              my_member,
-                              parent1_member
+                              *group1_member,
+                              group1_member_item,
+                              group2_member_item
                             );
                         }
+
+                      return 1;
                     }
-                } // end of IF (nt == AST_Decl::NT_op ....)
-            } // end of FOR (parent_members ...)
-        } // end of FOR (i ...)
-    } // end of FOR (my_members ...)
+                } // end of FOR (group2_member_items)
+            } // end of FOR (group2_iter)
+        } // end of FOR (group1_member_items)
+    } // end of FOR (group1_iter)
 
-  // Now compare members of each parent with each other.
-
-  for (int i = 0; i < this->pd_n_inherits_flat - 1; i++)
-    {
-      for (UTL_ScopeActiveIterator parent1_members (
-               DeclAsScope (this->pd_inherits_flat[i]),
-               UTL_Scope::IK_decls
-             );
-           !parent1_members.is_done ();
-           parent1_members.next ())
-        {
-          parent1_member = parent1_members.item ();
-          AST_Decl::NodeType nt1 = parent1_member->node_type ();
-
-          // Only these member types may cause a clash with other
-          // parents' member of the same type.
-          if (nt1 == AST_Decl::NT_op || nt1 == AST_Decl::NT_attr)
-            {
-              Identifier *pid1 = parent1_member->local_name ();
-
-              for (int j = i + 1; j < this->pd_n_inherits_flat; j++)
-                {
-                  for (UTL_ScopeActiveIterator parent2_members (
-                           DeclAsScope (this->pd_inherits_flat[j]),
-                           UTL_Scope::IK_decls
-                         );
-                       !parent2_members.is_done ();
-                       parent2_members.next ())
-                    {
-                      parent2_member = parent2_members.item ();
-                      AST_Decl::NodeType nt2 =
-                        parent2_member->node_type ();
-
-                      // Only these member types may cause a clash
-                      // with other parents' member of the same type.
-                      if (nt2 == AST_Decl::NT_op || nt2 == AST_Decl::NT_attr)
-                        {
-                          Identifier *pid2 = parent2_member->local_name ();
-
-                          if (pid1->compare (pid2) == I_TRUE)
-                            {
-                              idl_global->err ()->error3 (
-                                                      UTL_Error::EIDL_REDEF,
-                                                      this,
-                                                      parent1_member,
-                                                      parent2_member
-                                                    );
-                            }
-                          else if (pid1->case_compare_quiet (pid2) == I_TRUE)
-                            {
-                              if (idl_global->case_diff_error ())
-                                {
-                                  idl_global->err ()->error3 (
-                                      UTL_Error::EIDL_NAME_CASE_ERROR,
-                                      this,
-                                      parent1_member,
-                                      parent2_member
-                                    );
-                                }
-                              else
-                                {
-                                  idl_global->err ()->warning3 (
-                                      UTL_Error::EIDL_NAME_CASE_WARNING,
-                                      this,
-                                      parent1_member,
-                                      parent2_member
-                                    );
-                                }
-                            }
-                        } // end of IF (nt2 == AST_Decl::NT_op ...)
-                    } // end of FOR (parent2_members ...)
-                } // end of FOR (j ...)
-            } // end of IF (nt1 == AST_Decl::NT_op ..)
-        } // end of FOR (parent1_members ...)
-    } // end of FOR (i ...)
+  return 0;
 }
 
 AST_Decl *
 AST_Interface::lookup_for_add (AST_Decl *d,
-                               idl_bool trea_as_ref)
+                               idl_bool /* treat_as_ref */)
 {
   if (d == 0)
     {

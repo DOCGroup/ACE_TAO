@@ -149,7 +149,8 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_interface_is::"
-                             "method_helper\n"), -1);
+                             "method_helper\n"), 
+                            -1);
         }
     }
 

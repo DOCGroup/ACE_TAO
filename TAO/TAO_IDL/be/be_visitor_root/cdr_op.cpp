@@ -44,8 +44,7 @@ be_visitor_root_cdr_op::visit_root (be_root *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CDR_OP_CH)
     {
-      *os << be_nl
-          << "#ifndef __ACE_INLINE__\n\n";
+      *os << "#ifndef __ACE_INLINE__" << be_nl << be_nl;
     }
 
   if (this->visit_scope (node) == -1)

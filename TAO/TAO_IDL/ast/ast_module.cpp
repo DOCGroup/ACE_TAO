@@ -240,6 +240,11 @@ AST_Module::fe_add_module (AST_Module *t)
 AST_Interface *
 AST_Module::fe_add_interface (AST_Interface *t)
 {
+  if (t->redef_clash ())
+    {
+      return 0;
+    }
+
   AST_Decl *predef = 0;
   AST_Interface *fwd = 0;
 
@@ -322,6 +327,11 @@ AST_Module::fe_add_interface (AST_Interface *t)
 AST_ValueType *
 AST_Module::fe_add_valuetype (AST_ValueType *t)
 {
+  if (t->redef_clash ())
+    {
+      return 0;
+    }
+
   AST_Decl *predef = 0;
   AST_ValueType *fwd = 0;
 
@@ -404,6 +414,11 @@ AST_Module::fe_add_valuetype (AST_ValueType *t)
 AST_Component *
 AST_Module::fe_add_component (AST_Component *t)
 {
+  if (t->redef_clash ())
+    {
+      return 0;
+    }
+
   AST_Decl *predef = 0;
   AST_Component *fwd = 0;
 
@@ -1307,6 +1322,16 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  AST_Type *bt = t->base_type ();
+  UTL_ScopedName *mru = bt->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (bt,
+                               I_FALSE,
+                               mru->first_component ());
+    }
 
   return t;
 }

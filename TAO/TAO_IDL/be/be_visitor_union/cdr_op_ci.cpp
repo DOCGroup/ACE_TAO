@@ -219,6 +219,14 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
       return 0;
     }
 
+  // Enum val nodes are added just to help check reference
+  // clashes, since an enum declared in our scope is not itself
+  // a scope.
+  if (bd->node_type () == AST_Decl::NT_enum_val)
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_union_branch* b =
@@ -253,9 +261,14 @@ be_visitor_union_cdr_op_ci::pre_process (be_decl *bd)
 }
 
 int
-be_visitor_union_cdr_op_ci::post_process (be_decl *)
+be_visitor_union_cdr_op_ci::post_process (be_decl *bd)
 {
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
+    {
+      return 0;
+    }
+
+  if (bd->node_type () == AST_Decl::NT_enum_val)
     {
       return 0;
     }
