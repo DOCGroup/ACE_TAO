@@ -1,7 +1,23 @@
+Thu Jun  1 17:41:04 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* ACE_wrappers/pace/pace/emulation
+	* ACE_wrappers/pace/pace/common
+	* ACE_wrappers/pace/pace/emulation/README
+	* ACE_wrappers/pace/pace/common/README
+
+	  Added to repository.
+
+
 Thu Jun  1 17:18:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/config_sunos5.7.h:
 	  Removed from repository.
+
+	* ACE_wrappers/pace/pace/posix/README
+	* ACE_wrappers/pace/pace/win32/README
+	* ACE_wrappers/pace/pace/vxworks/README
+
+	  Added to repository to keep the directories visible.
 	  
 
 Thu Jun 01 16:50:48 2000    <luther@cs.wustl.edu>
