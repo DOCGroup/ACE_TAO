@@ -1,3 +1,9 @@
+Wed May 16 11:33:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile*: 
+	* orbsvcs/*/Makefile: 
+	* examples/*/Makefile:Updated dependencies.
+
 Wed May 16 11:28:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:

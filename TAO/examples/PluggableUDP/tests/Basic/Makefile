@@ -339,7 +339,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(TAO_ROOT)/examples/PluggableUDP/DIOP/DIOP.h \
+ $(TAO_ROOT)/examples/PluggableUDP/DIOP/diop_export.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp UDP_i.h UDPS.h UDPC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -581,7 +583,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/tao/debug.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ $(TAO_ROOT)/examples/PluggableUDP/DIOP/DIOP.h \
+ $(TAO_ROOT)/examples/PluggableUDP/DIOP/diop_export.h
 
 .obj/UDP_Client_i.o .obj/UDP_Client_i.so .shobj/UDP_Client_i.o .shobj/UDP_Client_i.so: UDP_Client_i.cpp UDP_Client_i.h \
  $(ACE_ROOT)/ace/Task.h \
