@@ -1,3 +1,14 @@
+Fri Dec 19 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/INET_Addr.i:
+
+	  Fix for [BUGID 1688]. Please see
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1688
+
+	  for more details. Thanks to Gary Maxey <gary.maxey@hp.com> for
+	  the patch.
+
 Fri Dec 19 11:57:20 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/Sigset_Ops_Test.cpp: Add an optional can_miss parameter to
