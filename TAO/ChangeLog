@@ -1,3 +1,8 @@
+Sat Feb 15 10:14:08 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/RTCORBA/Activity/Activity.h: Fixed compile errors in
+	  builds where exceptions have been turned off.
+
 Fri Feb 14 21:12:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
