@@ -57,12 +57,12 @@ class TAO_ECG_UDP_Out_Endpoint;
 /**
  * @class TAO_ECG_UDP_Sender_Disconnect_Command
  *
- * @brief Disconnects consumer represented by <proxy> from the Event Channel.
+ * @brief Disconnects consumer represented by @a proxy from the Event Channel.
  *
  * Utility class for use as a template argument to TAO_EC_Auto_Command.
  * TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command> manages
  * consumer connection to the Event Channel, automatically disconnecting from
- * <proxy> in its destructor, if necessary.
+ * @a proxy in its destructor, if necessary.
  */
 class TAO_RTEvent_Export TAO_ECG_UDP_Sender_Disconnect_Command
 {
@@ -115,7 +115,7 @@ public:
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
    * @param addr_server Address server used to obtain event type to
    *        multicast group mapping.
-   * @param endpoint Endpoint for sending udp/multicast messages.
+   * @param endpoint_rptr Endpoint for sending udp/multicast messages.
    *        Endpoint's dgram must be open!
    *
    * To insure proper resource clean up, if init () is successful,

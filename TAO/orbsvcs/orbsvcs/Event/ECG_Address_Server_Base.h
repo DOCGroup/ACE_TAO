@@ -18,7 +18,7 @@
 #include "ace/Auto_Ptr.h"
 
 /**
- * @class TAO_ECG_Simple_Address_Server
+ * @class TAO_ECG_Address_Server_Base
  *
  * @brief All implementations of RtecUDPAdmin::AddrServer idl
  * interface should inherit from this abstract base.
