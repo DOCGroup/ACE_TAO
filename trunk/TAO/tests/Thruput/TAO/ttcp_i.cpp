@@ -1,6 +1,5 @@
 // $Id$
 
-#include <iostream.h>
 #include "ace/ACE.h"
 #include "ttcp_i.h"
 #include "ttcp_decl.h"
@@ -91,7 +90,8 @@ ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq, CORBA::
   numCalls++;
   this->nbytes_ += ttcp_seq.length()*sizeof(BinStruct) ;
 #ifdef DEBUG
-  //    cout << "Bytes received so far = " << this->nbytes_ << endl;
+  ACE_DEBUG ((LM_DEBUG,
+	      "Bytes received so far = %d\n", this->nbytes_));
 #endif
 }
 

@@ -9,7 +9,7 @@
 extern	"C" int tao_yywrap();
 #endif	// (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
-void tao_yyerror (char *);
+void tao_yyerror (const char *);
 int tao_yylex (void);
 extern "C" int tao_yywrap (void);
 extern char tao_yytext[];
@@ -97,13 +97,12 @@ typedef union
 
 #ifdef __STDC__
 #include <stdlib.h>
-// #include <string.h>
+#include <string.h>
 #else
 #include <malloc.h>
 #include <memory.h>
 #endif
 
-// #include <values.h>
 
 #ifdef __cplusplus
 
@@ -161,7 +160,7 @@ tao_yywrap()
  * idl_global->err() operations
  */
 void
-tao_yyerror(char *)
+tao_yyerror(const char *)
 {
 }
 tao_yytabelem tao_yyexca[] ={
@@ -837,9 +836,6 @@ char * tao_yyreds[] =
  * Copyright (c) 1993 by Sun Microsystems, Inc.
  */
 
-#if !defined (ACE_WIN32)
-#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
-#endif /* ACE_WIN32 */
 
 /*
 ** Skeleton parser driver for yacc output

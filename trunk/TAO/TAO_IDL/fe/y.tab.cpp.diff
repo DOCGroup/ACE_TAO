@@ -1,24 +1,22 @@
---- y.tab.cpp.orig	Fri Jan 23 11:09:05 1998
-+++ y.tab.cpp	Fri Jan 23 11:08:33 1998
-@@ -97,13 +97,13 @@
-
- #ifdef __STDC__
- #include <stdlib.h>
--#include <string.h>
-+// #include <string.h>
- #else
- #include <malloc.h>
+--- y.tab.cpp.orig	Fri Sep  4 18:41:31 1998
++++ y.tab.cpp	Fri Sep  4 18:43:08 1998
+@@ -1,4 +1,4 @@
+-
++// $Id$
+ # line 74 "fe/idl.tao_yy"
+ #include "idl.h"
+ #include "idl_extern.h"
+@@ -103,7 +103,6 @@
  #include <memory.h>
  #endif
-
+ 
 -#include <values.h>
-+// #include <values.h>
-
+ 
  #ifdef __cplusplus
-
-@@ -494,52 +494,52 @@
-
- yytoktype yytoks[] =
+ 
+@@ -494,52 +493,52 @@
+ 
+ tao_yytoktype tao_yytoks[] =
  {
 -	"IDENTIFIER",	257,
 -	"IDL_CONST",	258,
@@ -113,15 +111,13 @@
 +	{"IDL_RIGHT_SHIFT",	301},
 +	{"-unknown-",	-1}	/* ends search */
  };
-
- char * yyreds[] =
-@@ -837,7 +837,9 @@
+ 
+ char * tao_yyreds[] =
+@@ -837,7 +836,6 @@
   * Copyright (c) 1993 by Sun Microsystems, Inc.
   */
-
-+#if !defined (ACE_WIN32)
- #pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
-+#endif /* ACE_WIN32 */
-
+ 
+-#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
+ 
  /*
  ** Skeleton parser driver for yacc output

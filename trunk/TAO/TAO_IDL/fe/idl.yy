@@ -80,7 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern	"C" int yywrap();
 #endif	// (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
-void yyerror (char *);
+void yyerror (const char *);
 int yylex (void);
 extern "C" int yywrap (void);
 extern char yytext[];
@@ -2295,6 +2295,6 @@ yywrap()
  * idl_global->err() operations
  */
 void
-yyerror(char *)
+yyerror(const char *)
 {
 }
