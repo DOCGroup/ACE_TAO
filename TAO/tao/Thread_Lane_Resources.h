@@ -29,7 +29,6 @@
 class ACE_Allocator;
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
-class TAO_Transport_Cache_Manager;
 class TAO_Leader_Follower;
 class TAO_MProfile;
 class TAO_New_Leader_Generator;
@@ -39,6 +38,11 @@ class TAO_Resource_Factory;
 namespace CORBA
 {
   class Environment;
+}
+
+namespace TAO
+{
+  class Transport_Cache_Manager;
 }
 
 /**
@@ -74,7 +78,12 @@ public:
   /// Shutdown the reactor.
   void shutdown_reactor (void);
 
-  /// @name Accessors
+  /// Certain ORB policies such as dropping replies on shutdown with
+  /// RW connection handlers would need cleanup of transports to wake
+  /// threads up.
+  void cleanup_rw_transports (void);
+
+  /// @named Accessors
   //@{
 
   TAO_Acceptor_Registry &acceptor_registry (void);
@@ -85,7 +94,7 @@ public:
    */
   TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
 
-  TAO_Transport_Cache_Manager &transport_cache (void);
+  TAO::Transport_Cache_Manager &transport_cache (void);
 
   TAO_Leader_Follower &leader_follower (void);
 
@@ -157,7 +166,7 @@ private:
   TAO_Connector_Registry *connector_registry_;
 
   /// Transport cache.
-  TAO_Transport_Cache_Manager *transport_cache_;
+  TAO::Transport_Cache_Manager *transport_cache_;
 
   /// The leader/followers management class for this lane.
   TAO_Leader_Follower *leader_follower_;
