@@ -15,7 +15,8 @@ DIRS  =	orbsvcs \
 	Dump_Schedule \
 	Concurrency_Service \
 	LifeCycle_Service \
-	tests \
+	Trading_Service \
+	tests
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
