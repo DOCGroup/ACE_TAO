@@ -1,3 +1,12 @@
+Wed Sep 20 08:17:13 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
+	  (receive_exception, send_exception):
+
+	  Updated these methods to not use the ACE_CString::c_str()
+	  accessor method when invoking CORBA::Exception::_info().
+	  CORBA::Exception::_info() now returns a "const char *."
+
 Wed Sep 20 10:39:20 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Abstract_Servant_Base.cpp:
@@ -7,7 +16,6 @@ Wed Sep 20 10:39:20 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/Remote_Object_Proxy_Broker.cpp:
 
 	  Fixed warning caused by unused args.
-	
 
 Wed Sep 20 09:38:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
