@@ -250,6 +250,13 @@ endif # xt_reactor
 
 ifdef exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
+  ifeq ($(findstring g++,$(CXX)),g++)
+    ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+      #### Enable exception handling with g++ < 2.8.0.  Not recommended,
+      #### but provided here for completeness.
+      CCFLAGS += -fhandle-exceptions
+    endif # ACE_HAS_GNUG_PRE_2_8
+  endif # g++
 else  # ! exceptions
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
