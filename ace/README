@@ -896,7 +896,7 @@ ACE_LACKS_SYS_NERR                      Platforms/compiler lacks the
                                         VxWorks and MVS).
 ACE_LACKS_SYSTIME_H                     <time.h> doesn't automatically
                                         #include /**/ <sys/time.h>
-ACE_LACKS_SYSV_MSG_H                    Platform lacks sys/msg.h
+ACE_LACKS_SYS_MSG_H                    Platform lacks sys/msg.h
                                         (e.g., Chorus and VxWorks)
 ACE_LACKS_SENDMSG                       Platform lacks sendmsg()
                                         (e.g., Linux)

@@ -207,7 +207,7 @@
 
 #define ACE_LACKS_SYSCALL
 
-#define ACE_LACKS_SYSV_MSG_H
+#define ACE_LACKS_SYS_MSG_H
 
 #define ACE_LACKS_SYSV_SHMEM
 

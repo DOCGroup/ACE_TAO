@@ -509,7 +509,7 @@ AC_CHECK_HEADER([sys/msg.h],
       AC_DEFINE([ACE_HAS_BROKEN_MSG_H])
      ],)
   ],
-  [AC_DEFINE([ACE_LACKS_SYSV_MSG_H])])
+  [AC_DEFINE([ACE_LACKS_SYS_MSG_H])])
 
 AC_CHECK_HEADER([sys/param.h],
   [],
@@ -5454,7 +5454,7 @@ ACE_CACHE_CHECK([if msgsnd() takes a struct msgbuf* second argument],
 # include <sys/types.h>
 #endif
 # include <sys/ipc.h>
-#ifndef ACE_LACKS_SYSV_MSG_H
+#ifndef ACE_LACKS_SYS_MSG_H
 # include <sys/msg.h>
 #endif
       ]], [[
@@ -5481,7 +5481,7 @@ ACE_CACHE_CHECK([if msgsnd() takes a struct msgbuf* second argument],
 # include <sys/types.h>
 #endif
 # include <sys/ipc.h>
-#ifndef ACE_LACKS_SYSV_MSG_H
+#ifndef ACE_LACKS_SYS_MSG_H
 # include <sys/msg.h>
 #endif
          ]], [[
@@ -5522,7 +5522,7 @@ AC_CACHE_CHECK([if msgrcv() takes a void* second argument],
 # include <sys/types.h>
 #endif
 # include <sys/ipc.h>
-#ifndef ACE_LACKS_SYSV_MSG_H
+#ifndef ACE_LACKS_SYS_MSG_H
 # include <sys/msg.h>
 #endif
       ]], [[
@@ -7268,8 +7268,32 @@ AC_CONFIG_FILES([
   ace-config
   ace-config.1
   aceConf.sh
+  Makefile
+  ace/Makefile
+  ace/RMCast/Makefile
+  ace/QoS/Makefile
+  ace/SSL/Makefile
+  apps/Makefile
+  apps/gperf/Makefile
+  apps/gperf/src/Makefile
+  netsvcs/Makefile
+  netsvcs/lib/Makefile
+  netsvcs/clients/Makefile
+  netsvcs/clients/Logger/Makefile
+  netsvcs/clients/Naming/Makefile
+  netsvcs/clients/Naming/Client/Makefile
+  netsvcs/clients/Naming/Dump_Restore/Makefile
+  netsvcs/clients/Tokens/Makefile
+  netsvcs/clients/Tokens/collection/Makefile
+  netsvcs/clients/Tokens/deadlock/Makefile
+  netsvcs/clients/Tokens/invariant/Makefile
+  netsvcs/clients/Tokens/manual/Makefile
+  netsvcs/clients/Tokens/mutex/Makefile
+  netsvcs/clients/Tokens/rw_lock/Makefile
+  netsvcs/servers/Makefile
+  tests/Makefile
+  tests/SSL/Makefile
 ])
-m4_include([configure.ac.Makefiles])
 
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
 dnl that expands to the version of ACE being configured.

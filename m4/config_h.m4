@@ -1180,7 +1180,7 @@ AH_TEMPLATE([ACE_LACKS_STRUCT_DIR],
 AH_TEMPLATE([ACE_LACKS_SYS_NERR],
 [Platforms/compiler lacks the sys_nerr variable (e.g., VxWorks and MVS).])
 
-AH_TEMPLATE([ACE_LACKS_SYSV_MSG_H],
+AH_TEMPLATE([ACE_LACKS_SYS_MSG_H],
 [Platform lacks sys/msg.h (e.g., Chorus and VxWorks)])
 
 AH_TEMPLATE([ACE_LACKS_SYSV_MSQ_PROTOS],
