@@ -7,6 +7,7 @@
 
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
+                                                int timer_value_usecs,
                                                 const IORS& servers)
   : server_ (servers),
     helper_ (this)
@@ -18,7 +19,7 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
       (&helper_,
        0,
        ACE_Time_Value::zero,
-       ACE_Time_Value (timer_value)) == -1)
+       ACE_Time_Value(timer_value,timer_value_usecs)) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "schedule_timer ()"));
