@@ -1,3 +1,10 @@
+Mon May  3 18:31:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/examples/POA/DSI/Database_i.{h,cpp}:
+	  Updated format of a CORBA::NO_IMPLEMENT exception and
+	  removed a leading underbar from an 'is_a' so that
+	  declaration, definition and call signature all agree.
+
 Mon May  3 17:19:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.{h,i}:

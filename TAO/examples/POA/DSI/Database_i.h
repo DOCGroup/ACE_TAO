@@ -47,7 +47,7 @@ public:
     virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
     // Returns the default POA for this servant.
 
-    virtual void _is_a (CORBA::ServerRequest_ptr request,
+    virtual void is_a (CORBA::ServerRequest_ptr request,
                         CORBA::Environment &env);
     // Handles the _is_a call
 
