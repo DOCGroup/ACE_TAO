@@ -44,7 +44,7 @@ public:
 private:
   // Store the RH and the parameter that we send back to the client.
   // We create one Timer_Handler instance for each RH.
-  Test::AMH_RoundtripResponseHandler_ptr rh_;
+  Test::AMH_RoundtripResponseHandler_var rh_;
   Test::Timestamp send_time_;
 };
 
