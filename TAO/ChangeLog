@@ -33,6 +33,8 @@ Sat Mar  1 03:41:30 2003  Ossama Othman  <ossama@uci.edu>
 	* orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
 	* orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
 	* orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
 	* orbsvcs/orbsvcs/IFRService/IFR_macro.h:
 	* orbsvcs/orbsvcs/IFRService/IRObject_i.h:
 	* orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
