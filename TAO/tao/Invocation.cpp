@@ -632,7 +632,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
 
   int reply_error =
     this->transport_->wait_strategy ()->wait (this->max_wait_time_,
-                                              this->rd_.reply_received ());
+                                              this->rd_);
 
 
   if (TAO_debug_level > 0 && this->max_wait_time_ != 0)

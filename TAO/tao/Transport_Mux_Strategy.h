@@ -53,7 +53,7 @@ public:
   /// Bind the dispatcher with the request id. Commonalities in the
   /// derived class implementations is kept here.
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rd);
+                               TAO_Reply_Dispatcher *rd) = 0;
 
   /**
    * Unbind the dispatcher, the client is no longer waiting for the
@@ -62,7 +62,7 @@ public:
    * request.
    * A later reply for that request should be ignored.
    */
-  virtual void unbind_dispatcher (CORBA::ULong request_id);
+  virtual void unbind_dispatcher (CORBA::ULong request_id) = 0;
 
   /// Dispatch the reply for <request_id>, cleanup any resources
   /// allocated for that request.

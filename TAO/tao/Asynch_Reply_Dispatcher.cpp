@@ -55,11 +55,6 @@ TAO_Asynch_Reply_Dispatcher_Base::dispatch_reply (
 
 
 void
-TAO_Asynch_Reply_Dispatcher_Base::dispatcher_bound (TAO_Transport *)
-{
-}
-
-void
 TAO_Asynch_Reply_Dispatcher_Base::connection_closed (void)
 {
 }

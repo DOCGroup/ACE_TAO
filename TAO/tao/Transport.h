@@ -252,13 +252,6 @@ public:
   int handle_output (void);
 
   /**
-   * Return the TSS leader follower condition variable used in the
-   * Wait Strategy. Muxed Leader Follower implementation returns a
-   * valid condition variable, others return 0.
-   */
-  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
-
-  /**
    * Initialising the messaging object. This would be used by the
    * connector side. On the acceptor side the connection handler
    * would take care of the messaging objects.
@@ -771,10 +764,11 @@ private:
   /// A helper routine used in drain_queue_i()
   int drain_queue_helper (int &iovcnt, iovec iov[]);
 
-  /// This class needs privileged access to:
+  /// These classes need privileged access to:
   /// - schedule_output_i()
   /// - cancel_output_i()
   friend class TAO_Reactive_Flushing_Strategy;
+  friend class TAO_Leader_Follower_Flushing_Strategy;
 
   /// Schedule handle_output() callbacks
   int schedule_output_i (void);
