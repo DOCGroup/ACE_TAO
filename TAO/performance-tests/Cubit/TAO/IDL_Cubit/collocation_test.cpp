@@ -4,6 +4,8 @@
 #include "Cubit_Client.h"
 #include "Cubit_Server.h"
 
+#define THE_IOR_FILE "theior"
+
 ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
 
 #define ACE_THREAD_MANAGER ACE_Thread_Manager::instance ()
@@ -13,11 +15,11 @@ svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
   ACE_Barrier *barrier = (ACE_Barrier *) arg;
-  char *fake[] = {"server"};
+  char *fake[] = {"server", "-o", THE_IOR_FILE };
 
   TAO_TRY
     {
-      if (cubit_server.init (1, fake, TAO_TRY_ENV) == -1)
+      if (cubit_server.init (3, fake, TAO_TRY_ENV) == -1)
         return (void *) 1;
       else
         {
@@ -46,7 +48,10 @@ svr_worker (void *arg)
 int
 main (int argc, char **argv)
 {
-  Cubit_Client cubit_client;
+  Cubit_Client cubit_client (1);
+  // We want to test collocation, so create
+  // cubit_client with parameter 1 set.
+
   CORBA::Environment env;
   ACE_Barrier barrier (2);
 
@@ -60,10 +65,10 @@ main (int argc, char **argv)
   barrier.wait ();
   ACE_OS::sleep (1);
 
-  if (cubit_client.init (argc, argv) == -1)
-    return 1;
+  if (cubit_client.init (argc, argv, THE_IOR_FILE) == -1)
+    return 1;  
   else
-    retv = cubit_client.run (1);
+    retv = cubit_client.run ();
 
   ACE_THREAD_MANAGER->wait ();
   return retv;
