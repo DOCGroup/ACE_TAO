@@ -470,17 +470,31 @@ TAO_ClientRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Any *
-TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId,
+TAO_ClientRequestInfo::get_slot (PortableInterceptor::SlotId id,
                                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  // @@ This implementation incurs a TSS access each time it is
+  //    invoked.  It need not do that.  This method can be invoked by
+  //    each client request interceptor multiple times.  At some point
+  //    we need to add the request scope current to the Invocation
+  //    object or some other object that is tied to a given
+  //    invocation.  That way, only one TSS access would be
+  //    introduced.
+  //        -Ossama
+
+  TAO_PICurrent *pi_current =
+    this->invocation_->orb_core ()->pi_current ();
+
+  if (pi_current == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  // PICurrent is read-only during a request invocation on the client
+  // side.  No copying is necessary.
+  return
+    pi_current->get_slot (id,
+                          ACE_TRY_ENV);
 }
 
 IOP::ServiceContext *

@@ -190,6 +190,8 @@ ORB_CORE_FILES = \
   RequestInfo_Util \
   ClientInterceptorAdapter \
   PortableInterceptorC \
+  PICurrent \
+  PICurrent_ORBInitializer \
   DynamicC \
   OctetSeqC \
   StringSeqC \

@@ -1,3 +1,139 @@
+Mon Sep 24 01:21:16 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PICurrent.h:
+	* tao/PICurrent.inl:
+	* tao/PICurrent.cpp:
+
+	  Implementation of the "PICurrent" object, i.e. the
+	  PortableInterceptor::Current interface.
+
+	* tao/PICurrent_ORBInitializer.h:
+	* tao/PICurrent_ORBInitializer.cpp:
+
+	  ORBInitializer that registers the PICurrent object with each
+	  ORB.
+
+	* tao/Makefile:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added new PICurrent source files to these Makefiles and project
+	  files.
+
+	* tao/ClientInterceptorAdapter.h:
+	* tao/PortableServer/ServerInterceptorAdapter.h:
+
+	  Updated list of authors.
+
+	* tao/ClientRequestInfo.cpp (get_slot):
+	* tao/ORBInitInfo.cpp (allocated_slot_id):
+
+	  Implemented these methods.
+
+	* tao/ORB.cpp (init_orb_globals):
+
+	  Register the PICurrent ORB initializer.
+
+	* tao/ORB_Core.h:
+
+	  Added TSS portion of the PICurrent object to the ORB Core TSS
+	  resources object.
+
+	  Cache the PICurrent object reference for speed/efficiency
+	  reasons.
+
+	* tao/ORB_Core.i (pi_current):
+
+	  New methods to set and get the cached thread-scope PICurrent
+	  object reference.
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core):
+
+	  Initialize the pointer to the PICurrent object reference to
+	  zero.
+
+	* tao/PolicyFactory_Registry.cpp (~TAO_PolicyFactory_Registry):
+
+	  Close the factory map for the sake of completeness.
+
+	* tao/TAO_Server_Request.h (TAO_ServerRequest):
+
+	  The "request scope" PICurrent object implementation for the
+	  server side is now held in this class.
+
+	* tao/TAO_Server_Request.i (rs_pi_current):
+
+	  Accessor for the request scope PICurrent object implementation.
+
+	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+
+	  Added request scope PICurrent attribute to the base member
+	  initializer list.
+
+	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+
+	  Instantiate a "PICurrent" guard before invoking the
+	  receive_request_service_contexts() interception point.  Upon
+	  leaving the scope, the request PICurrent will be logically
+	  copied to the thread scope PICurrent.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.inl (server_request):
+
+	  Added accessor to return a reference to the cached
+	  TAO_ServerRequest object.
+
+	* tao/PortableServer/ServerRequestInfo.cpp (get_server_policy):
+
+	  Implemented this method.  However, see comments in the
+	  implementation for important details.
+
+	  (get_slot, set_slot):
+
+	  Also implemented these methods.  They are used to get and set
+	  data in the "request scope" "PICurrent" object.
+
+	* TAO_IDL/be/be_codegen.cpp (start_server_skeletons):
+
+	  Generate code to include the `tao/PICurrent.h' header.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Generate code that instantiates a "TAO_PICurrent_Guard" before
+	  the code that invokes the receive_request() interception point
+	  and the upcall.  The thread scope PICurrent must be copied to
+	  the request scope PICurrent object when the upcall is done.
+
+	* tests/Portable_Interceptors/PICurrent/ServerORBInitializer.cpp:
+	* tests/Portable_Interceptors/PICurrent/ServerORBInitializer.h:
+	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
+	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.h:
+	* tests/Portable_Interceptors/PICurrent/client.cpp:
+	* tests/Portable_Interceptors/PICurrent/server.cpp:
+	* tests/Portable_Interceptors/PICurrent/test.idl:
+	* tests/Portable_Interceptors/PICurrent/test_i.cpp:
+	* tests/Portable_Interceptors/PICurrent/test_i.h:
+	* tests/Portable_Interceptors/PICurrent/Makefile:
+	* tests/Portable_Interceptors/PICurrent/Makefile.bor:
+	* tests/Portable_Interceptors/PICurrent/client.bor:
+	* tests/Portable_Interceptors/PICurrent/server.bor:
+	* tests/Portable_Interceptors/PICurrent/PICurrent.dsw:
+	* tests/Portable_Interceptors/PICurrent/client.dsp:
+	* tests/Portable_Interceptors/PICurrent/server.dsp:
+
+	  Test that verifies PICurrent support is working properly.
+
+	* tests/Portable_Interceptors/Makefile:
+	* tests/Portable_Interceptors/Makefile.bor:
+
+	  Added PICurrent test directory to the build list.
+
+	* docs/interceptors.html:
+
+	  Updated PortableInterceptor release notes.
+
 Sun Sep 23 20:34:23 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Typecode.cpp (BadKind, Bounds):

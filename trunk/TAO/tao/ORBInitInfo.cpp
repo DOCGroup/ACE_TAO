@@ -7,6 +7,10 @@
 #include "StringSeqC.h"
 #include "CodecFactory.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+#include "PICurrent.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 ACE_RCSID (TAO,
            ORBInitInfo,
            "$Id$")
@@ -217,12 +221,16 @@ TAO_ORBInitInfo::allocate_slot_id (CORBA::Environment &ACE_TRY_ENV)
   this->check_validity (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
+#if TAO_HAS_INTERCEPTORS == 1
+  return this->orb_core_->pi_current ()->allocate_slot_id ();
+#else
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
                     0);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 void

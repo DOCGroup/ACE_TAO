@@ -194,4 +194,10 @@ TAO_ServerRequest::interceptor_count (void)
 {
   return this->interceptor_count_;
 }
+
+ACE_INLINE TAO_PICurrent_Impl &
+TAO_ServerRequest::rs_pi_current (void)
+{
+  return this->rs_pi_current_;
+}
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
