@@ -155,7 +155,7 @@ public:
   // demarshal incoming parameters
 
   virtual void marshal (CORBA_Environment &orb_env,
-                        CORBA_Environment &skel_env,
+                        //                        CORBA_Environment &skel_env,
                         const TAO_Call_Data_Skel *info,
                         ...) = 0;
   // marshal outgoing parameters
@@ -236,7 +236,7 @@ public:
   // compiler generated skeleton)
 
   virtual void marshal (CORBA_Environment &orb_env,
-                        CORBA_Environment &skel_env,
+                        //                        CORBA_Environment &skel_env,
                         const TAO_Call_Data_Skel *info,
                         ...);
   // marshal outgoing parameters and return value. This is used by the SSI
