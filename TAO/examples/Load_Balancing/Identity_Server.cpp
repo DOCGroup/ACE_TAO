@@ -107,7 +107,8 @@ Identity_Server::init (int argc,
                   "Group with id <Identity, Random>\n"));
 
       Load_Balancer::Object_Group_var random_group =
-        factory->make_random ("Identity, Random"
+        factory->make_random (ACE_const_cast (const Load_Balancer::Group_ID,
+                                              "Identity, Random")
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -116,7 +117,8 @@ Identity_Server::init (int argc,
                   "Object Group with id <Identity, Round Robin>\n"));
 
       Load_Balancer::Object_Group_var rr_group =
-        factory->make_round_robin ("Identity, Round Robin"
+        factory->make_round_robin (ACE_const_cast (const Load_Balancer::Group_ID,
+                                                   "Identity, Round Robin")
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

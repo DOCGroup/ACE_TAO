@@ -1,3 +1,11 @@
+Thu Oct 24 10:59:20 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * examples/Load_Balancing/Identity_Server.cpp:
+        * examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * examples/POA/DSI/client.cpp:
+
+          More replacement of char* with typedef name.
+
 Thu Oct 24 10:39:10 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/LifeCycle_Service/Factory_Trader.cpp:
