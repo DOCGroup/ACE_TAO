@@ -7,13 +7,13 @@
 
 // Do nothing routine for constructor.
 
-ACE_INLINE
+ASYS_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
 
-ACE_INLINE
+ASYS_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               int reuse_addr,
                                               int protocol_family,
@@ -28,7 +28,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
 
-ACE_INLINE
+ASYS_INLINE
 ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               ACE_Protocol_Info *protocolinfo,
                                               ACE_SOCK_GROUP g,
@@ -49,7 +49,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
 
-ACE_INLINE int
+ASYS_INLINE int
 ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                              int reuse_addr,
                              int protocol_family,
@@ -69,14 +69,14 @@ ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
   return 0;
 }
 
-ACE_INLINE int
+ASYS_INLINE int
 ACE_SSL_SOCK_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::close ()");
   return this->acceptor_.close ();
 }
 
-ACE_INLINE
+ASYS_INLINE
 ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor");
