@@ -61,8 +61,8 @@ TAO_NAMESPACE RTCORBA
   typedef CORBA::Short NativePriority;
 
   typedef CORBA::Short Priority;
-  TAO_NAMESPACE_STORAGE_CLASS const Priority minPriority;
-  TAO_NAMESPACE_STORAGE_CLASS const Priority maxPriority;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short minPriority;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short maxPriority;
 
   typedef TAO_Priority_Mapping PriorityMapping;
 }
