@@ -164,32 +164,46 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
                                   int message_semantics,
                                   ACE_Time_Value *max_wait_time)
 {
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-  
-  if (tph != 0)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      /*
-	int send_buffer_size;
-	int recv_buffer_size;
-	int no_delay;
-	int enable_network_priority;
-      */      
-      
+      TAO_Protocols_Hooks *tph =
+        this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      const char protocol [] = "iiop";
-      const char *protocol_type = protocol;
+      if (tph != 0)
+        {
+          /*
+            int send_buffer_size;
+            int recv_buffer_size;
+            int no_delay;
+            int enable_network_priority;
+          */
 
-      int result =
-        tph->update_client_protocol_properties (stub,
-						this->connection_handler_,
-						protocol_type);
-      
-      if (result == -1)
-        return -1;
-      
+          const char protocol[] = "iiop";
+          const char * protocol_type = protocol;
+
+          int result =
+            tph->update_client_protocol_properties (stub,
+                                                    this->connection_handler_,
+                                                    protocol_type);
+
+          if (result == -1)
+            return -1;
+        }
     }
-  
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                             "TAO_IIOP_Transport::send_request - "
+                             "get_protocol_hooks");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
 
@@ -200,7 +214,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
                           message_semantics,
                           max_wait_time) == -1)
     return -1;
-  
+
   return this->idle_after_send ();
 }
 
@@ -215,9 +229,9 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     ACE_DEBUG ((LM_DEBUG,
 		"TAO_IIOP_Transport::send_message\n enable_network_priority = %d\n",
 		this->connection_handler_->enable_network_priority ()));
-  
+
   this->connection_handler_->set_dscp_codepoint ();
-  
+
 
   // Format the message in the stream first
   if (this->messaging_object_->format_message (stream) != 0)
@@ -244,25 +258,25 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 }
 
 /*
-int 
+int
 TAO_IIOP_Transport::send_reply (TAO_OutputCDR &stream,
 				TAO_Adapter *poa)
 {
 
   TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  
-  
+
+
   if (tph != 0)
     {
       int send_buffer_size;
       int recv_buffer_size;
       int no_delay;
       int enable_network_priority;
-      
+
       const char protocol [] = "iiop";
       const char *protocol_type = protocol;
-	      
+
       int result =
 	tph->get_effective_server_protocol_properties (poa,
 						       send_buffer_size,
@@ -274,7 +288,7 @@ TAO_IIOP_Transport::send_reply (TAO_OutputCDR &stream,
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "Error in getting the effective protocol properties\n"),
 			  -1);
-      
+
       this->connection_handler_->update_protocol_properties (send_buffer_size,
 							     recv_buffer_size,
 							     no_delay,
