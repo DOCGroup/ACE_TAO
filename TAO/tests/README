@@ -166,6 +166,10 @@ how to run the following tests:
           clients can send requests to it, the requests are handled in
           different threads.
 
+        . MT_Timeout
+
+          Test the ORB timeouts in multithreaded configurations.
+
         . Multiple
                     
           This test make sure that the collocation scheme works fine
