@@ -142,8 +142,6 @@ CORBA_ContextList::item (CORBA::ULong slot,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   char **ctx;
-  ACE_TRY_ENV.clear ();
-
   if (this->ctx_list_.get (ctx,
                            slot) == -1)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
@@ -155,8 +153,7 @@ void
 CORBA_ContextList::remove (CORBA::ULong,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  // unimplemented
-  ACE_TRY_ENV.clear ();
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA_ContextList_ptr

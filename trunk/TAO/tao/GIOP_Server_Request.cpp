@@ -367,10 +367,8 @@ TAO_GIOP_ServerRequest::set_result (const CORBA::Any &value,
   // exists is an error
   if (this->retval_ || this->exception_)
     ACE_THROW (CORBA::BAD_INV_ORDER ());
-  else
-    {
-      this->retval_ = new CORBA::Any (value);
-    }
+
+  this->retval_ = new CORBA::Any (value);
 }
 
 // Store the exception value.
@@ -442,13 +440,16 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
           CORBA::TypeCode_var tc = this->retval_->type ();
                 if (this->retval_->any_owns_data ())
             {
-              (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, ACE_TRY_ENV);
+              (void) this->outgoing_->encode (tc.in (),
+                                              retval_->value (),
+                                              0, ACE_TRY_ENV);
               ACE_CHECK;
             }
           else
             {
               TAO_InputCDR cdr (retval_->_tao_get_cdr ());
-              (void) this->outgoing_->append (tc.in (), &cdr, ACE_TRY_ENV);
+              (void) this->outgoing_->append (tc.in (), &cdr,
+                                              ACE_TRY_ENV);
               ACE_CHECK;
             }
         }
@@ -462,6 +463,7 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
             {
               CORBA::NamedValue_ptr nv = this->params_->item (i, ACE_TRY_ENV);
               ACE_CHECK;
+
               if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
                 continue;
 
@@ -469,13 +471,16 @@ TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
               CORBA::TypeCode_var tc = any->type ();
               if (any->any_owns_data ())
                 {
-                  (void) this->outgoing_->encode (tc.in (), any->value (), 0, ACE_TRY_ENV);
+                  (void) this->outgoing_->encode (tc.in (),
+                                                  any->value (),
+                                                  0, ACE_TRY_ENV);
                   ACE_CHECK;
                 }
               else
                 {
                   TAO_InputCDR cdr (any->_tao_get_cdr ());
-                  (void) this->outgoing_->append (tc.in (), &cdr, ACE_TRY_ENV);
+                  (void) this->outgoing_->append (tc.in (),
+                                                  &cdr, ACE_TRY_ENV);
                   ACE_CHECK;
                 }
             }
@@ -507,19 +512,8 @@ TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &ACE_TRY_ENV,
       if ((pdp->mode == CORBA::ARG_IN)
           || (pdp->mode == CORBA::ARG_INOUT))
         {
-          ACE_TRY
-            {
-              // Then just unmarshal the value.
-              (void) incoming_->decode (pdp->tc, ptr, 0, ACE_TRY_ENV);
-              //ACE_TRY_CHECK;
-            }
-          ACE_CATCHANY
-            {
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "TAO_GIOP_ServerRequest::marshal - parameter decode failed");
-              ACE_RETHROW;
-            }
-          ACE_ENDTRY;
+          // Then just unmarshal the value.
+          (void) incoming_->decode (pdp->tc, ptr, 0, ACE_TRY_ENV);
           ACE_CHECK;
         }
     }
@@ -558,7 +552,7 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
       // The Any does not own the because ultimately it will be owned
       // by the Server_Request via the call to "set_exception"
       CORBA::Any any (skel_env.exception ()->_type (), exception);
-      this->set_exception (any, orb_env);
+      this->set_exception (any, ACE_TRY_ENV);
     }
 #endif
 
@@ -596,7 +590,8 @@ TAO_GIOP_ServerRequest::marshal (CORBA::Environment &ACE_TRY_ENV,
               if (result != CORBA::tk_void)
                 {
                   // Then just marshal the value.
-                  (void) this->outgoing_->encode (pdp->tc, ptr, 0, ACE_TRY_ENV);
+                  (void) this->outgoing_->encode (pdp->tc, ptr, 0,
+                                                  ACE_TRY_ENV);
                   ACE_TRY_CHECK;
                 }
             }
