@@ -164,7 +164,7 @@ DynamicAny::DynAny::_unchecked_narrow (
           DynAny_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynAny::_tao_class_id
                 )
             )
@@ -182,19 +182,19 @@ DynamicAny::DynAny::_duplicate (DynAny_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynAny::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynAny::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -509,7 +509,7 @@ DynamicAny::DynFixed::_unchecked_narrow (
           DynFixed_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynFixed::_tao_class_id
                 )
             )
@@ -527,19 +527,19 @@ DynamicAny::DynFixed::_duplicate (DynFixed_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynFixed::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynFixed::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynFixed)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -553,7 +553,7 @@ void *DynamicAny::DynFixed::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -698,7 +698,7 @@ DynamicAny::DynEnum::_unchecked_narrow (
           DynEnum_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynEnum::_tao_class_id
                 )
             )
@@ -716,19 +716,19 @@ DynamicAny::DynEnum::_duplicate (DynEnum_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynEnum::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynEnum::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynEnum)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -742,7 +742,7 @@ void *DynamicAny::DynEnum::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1189,7 +1189,7 @@ DynamicAny::DynStruct::_unchecked_narrow (
           DynStruct_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynStruct::_tao_class_id
                 )
             )
@@ -1207,19 +1207,19 @@ DynamicAny::DynStruct::_duplicate (DynStruct_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynStruct::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynStruct::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynStruct)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -1233,7 +1233,7 @@ void *DynamicAny::DynStruct::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1378,7 +1378,7 @@ DynamicAny::DynUnion::_unchecked_narrow (
           DynUnion_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynUnion::_tao_class_id
                 )
             )
@@ -1396,19 +1396,19 @@ DynamicAny::DynUnion::_duplicate (DynUnion_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynUnion::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynUnion::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynUnion)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -1422,7 +1422,7 @@ void *DynamicAny::DynUnion::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1821,7 +1821,7 @@ DynamicAny::DynSequence::_unchecked_narrow (
           DynSequence_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynSequence::_tao_class_id
                 )
             )
@@ -1839,19 +1839,19 @@ DynamicAny::DynSequence::_duplicate (DynSequence_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynSequence::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynSequence::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynSequence)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -1865,7 +1865,7 @@ void *DynamicAny::DynSequence::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2010,7 +2010,7 @@ DynamicAny::DynArray::_unchecked_narrow (
           DynArray_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynArray::_tao_class_id
                 )
             )
@@ -2028,19 +2028,19 @@ DynamicAny::DynArray::_duplicate (DynArray_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynArray::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynArray::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynArray)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -2054,7 +2054,7 @@ void *DynamicAny::DynArray::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2199,7 +2199,7 @@ DynamicAny::DynValue::_unchecked_narrow (
           DynValue_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynValue::_tao_class_id
                 )
             )
@@ -2217,19 +2217,19 @@ DynamicAny::DynValue::_duplicate (DynValue_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynValue::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynValue::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynValue)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAny)::_tao_class_id)
             )
     {
@@ -2243,7 +2243,7 @@ void *DynamicAny::DynValue::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -2388,7 +2388,7 @@ DynamicAny::DynAnyFactory::_unchecked_narrow (
           DynAnyFactory_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &DynAnyFactory::_tao_class_id
                 )
             )
@@ -2406,19 +2406,19 @@ DynamicAny::DynAnyFactory::_duplicate (DynAnyFactory_ptr obj)
   return obj;
 }
 
-void *DynamicAny::DynAnyFactory::_tao_QueryInterface (ptr_arith_t type)
+void *DynamicAny::DynAnyFactory::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::DynamicAny, DynAnyFactory)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

@@ -70,7 +70,7 @@ public:
     (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
 private:
   // = Unimplemented methods

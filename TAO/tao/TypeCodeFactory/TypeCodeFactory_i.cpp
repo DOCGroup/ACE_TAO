@@ -34,7 +34,7 @@ TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr obj
              TAO_TypeCodeFactory_i *,
              obj->_tao_QueryInterface (
                       ACE_reinterpret_cast (
-                          ptr_arith_t,
+                          ptrdiff_t,
                           &TAO_TypeCodeFactory_i::_narrow
                         )
                     )
@@ -42,10 +42,10 @@ TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr obj
 }
 
 void *
-TAO_TypeCodeFactory_i::_tao_QueryInterface (ptr_arith_t type)
+TAO_TypeCodeFactory_i::_tao_QueryInterface (ptrdiff_t type)
 {
-  ptr_arith_t mytype =
-    ACE_reinterpret_cast (ptr_arith_t,
+  ptrdiff_t mytype =
+    ACE_reinterpret_cast (ptrdiff_t,
                           &TAO_TypeCodeFactory_i::_narrow);
   if (type == mytype)
     {
@@ -1564,8 +1564,8 @@ TAO_TypeCodeFactory_i::update_map (
     TAO_OutputCDR &cdr
   )
 {
-  ptr_arith_t unaligned_offset =
-    ACE_static_cast (ptr_arith_t,
+  ptrdiff_t unaligned_offset =
+    ACE_static_cast (ptrdiff_t,
                      cdr.total_length ());
 
   CORBA::Long aligned_offset =
@@ -1633,7 +1633,7 @@ TAO_TypeCodeFactory_i::update_map (
           else
             {
               const char *slot = 
-                member_tc->buffer_ + ACE_static_cast (ptr_arith_t,
+                member_tc->buffer_ + ACE_static_cast (ptrdiff_t,
                                                       *list_entry);
               
               CORBA::Long recursion_offset = 

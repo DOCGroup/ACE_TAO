@@ -293,10 +293,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // TAO internals.
-  *os << "virtual void *_tao_obv_narrow (ptr_arith_t);"
+  *os << "virtual void *_tao_obv_narrow (ptrdiff_t);"
       << "\n#if defined (_MSC_VER)" << be_nl
       << "virtual void *" << node->flat_name () 
-      << "_tao_obv_narrow (ptr_arith_t);"
+      << "_tao_obv_narrow (ptrdiff_t);"
       << "\n#endif /* _MSC_VER */" << be_nl;
 
   // Support for marshalling.

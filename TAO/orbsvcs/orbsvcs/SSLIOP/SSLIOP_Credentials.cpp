@@ -436,7 +436,7 @@ TAO_SSLIOP_Credentials::_unchecked_narrow (CORBA::Object_ptr obj
                 (
                   ACE_reinterpret_cast
                     (
-                      ptr_arith_t,
+                      ptrdiff_t,
                       &TAO_SSLIOP_Credentials::_tao_class_id
                     )
                 )
@@ -453,15 +453,15 @@ TAO_SSLIOP_Credentials::_duplicate (TAO_SSLIOP_Credentials_ptr obj)
 }
 
 void *
-TAO_SSLIOP_Credentials::_tao_QueryInterface (ptr_arith_t type)
+TAO_SSLIOP_Credentials::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
+    (ptrdiff_t,
       &TAO_SSLIOP_Credentials::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
-    (ptr_arith_t,
+    (ptrdiff_t,
       &::SecurityLevel2::Credentials::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
@@ -472,7 +472,7 @@ TAO_SSLIOP_Credentials::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
+  else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

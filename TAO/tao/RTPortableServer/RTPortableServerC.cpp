@@ -155,7 +155,7 @@ RTPortableServer::POA::_unchecked_narrow (
           POA_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &POA::_tao_class_id
                 )
             )
@@ -173,19 +173,19 @@ RTPortableServer::POA::_duplicate (POA_ptr obj)
   return obj;
 }
 
-void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
+void *RTPortableServer::POA::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::RTPortableServer, POA)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::PortableServer::POA::_tao_class_id)
             )
     {
@@ -199,7 +199,7 @@ void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

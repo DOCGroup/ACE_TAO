@@ -854,7 +854,7 @@ ImplementationRepository::ServerObject::_unchecked_narrow (
           ServerObject_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ServerObject::_tao_class_id
                 )
             )
@@ -900,19 +900,19 @@ ImplementationRepository::ServerObject::_is_a (
     }
 }
 
-void *ImplementationRepository::ServerObject::_tao_QueryInterface (ptr_arith_t type)
+void *ImplementationRepository::ServerObject::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::ImplementationRepository, ServerObject)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -6289,7 +6289,7 @@ ImplementationRepository::Administration::_unchecked_narrow (
           Administration_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Administration::_tao_class_id
                 )
             )
@@ -6335,19 +6335,19 @@ ImplementationRepository::Administration::_is_a (
     }
 }
 
-void *ImplementationRepository::Administration::_tao_QueryInterface (ptr_arith_t type)
+void *ImplementationRepository::Administration::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::ImplementationRepository, Administration)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -7616,7 +7616,7 @@ ImplementationRepository::ServerInformationIterator::_unchecked_narrow (
           ServerInformationIterator_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ServerInformationIterator::_tao_class_id
                 )
             )
@@ -7662,19 +7662,19 @@ ImplementationRepository::ServerInformationIterator::_is_a (
     }
 }
 
-void *ImplementationRepository::ServerInformationIterator::_tao_QueryInterface (ptr_arith_t type)
+void *ImplementationRepository::ServerInformationIterator::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::ImplementationRepository, ServerInformationIterator)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

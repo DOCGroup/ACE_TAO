@@ -1,3 +1,134 @@
+Thu May  1 11:25:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* tao/AbstractBase.cpp:
+	* tao/AbstractBase.h:
+	* tao/AbstractBase.inl:
+	* tao/Any.cpp:
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/CurrentC.cpp:
+	* tao/CurrentC.h:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/Exception.h:
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/LocalObject.cpp:
+	* tao/LocalObject.i:
+	* tao/NVList.cpp:
+	* tao/NVList.h:
+	* tao/ORBInitInfo.cpp:
+	* tao/ORBInitInfo.h:
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/ObjectReferenceTemplateC.cpp:
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PollableC.cpp:
+	* tao/PollableC.h:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+	* tao/ValueBase.cpp:
+	* tao/ValueBase.h:
+	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+	* tao/BiDir_GIOP/BiDirPolicyC.h:
+	* tao/DynamicAny/DynAny_i.cpp:
+	* tao/DynamicAny/DynAny_i.h:
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynArray_i.h:
+	* tao/DynamicAny/DynEnum_i.cpp:
+	* tao/DynamicAny/DynEnum_i.h:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynSequence_i.h:
+	* tao/DynamicAny/DynStruct_i.cpp:
+	* tao/DynamicAny/DynStruct_i.h:
+	* tao/DynamicAny/DynUnion_i.cpp:
+	* tao/DynamicAny/DynUnion_i.h:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.h:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/IORManipulation/IORC.cpp:
+	* tao/IORManipulation/IORC.h:
+	* tao/IORTable/IORTableC.cpp:
+	* tao/IORTable/IORTableC.h:
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingC.h:
+	* tao/Messaging/Messaging_No_ImplC.cpp:
+	* tao/Messaging/Messaging_No_ImplC.h:
+	* tao/Messaging/Messaging_RT_PolicyC.cpp:
+	* tao/Messaging/Messaging_RT_PolicyC.h:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
+	* tao/Messaging/TAO_ExtC.cpp:
+	* tao/Messaging/TAO_ExtC.h:
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/Collocated_Object.h:
+	* tao/PortableServer/Default_ORTC.cpp:
+	* tao/PortableServer/Default_ORTC.h:
+	* tao/PortableServer/ImR_LocatorC.cpp:
+	* tao/PortableServer/ImR_LocatorC.h:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/POAManager.i:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/Servant_Base.i:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+	* tao/RTCORBA/Priority_Mapping_Manager.cpp:
+	* tao/RTCORBA/Priority_Mapping_Manager.h:
+	* tao/RTCORBA/RTCORBAC.cpp:
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTPortableServer/RTPortableServerC.cpp:
+	* tao/RTPortableServer/RTPortableServerC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+	  Changed all uses of ptr_arith_t to ptrdiff_t.  Addresses 64 bit
+	  platform issues.  Thanks to Steve Huston <shuston@riverace.com>
+	  for suggesting this change.
+
+	* tao/Exception.h:
+
+	  Updated author information.
+
+	* tao/Pseudo_VarOut_T.h:
+
+	  Nuked trailing whitespace.
+
 Thu May 01 10:35:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints):
