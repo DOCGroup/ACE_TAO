@@ -1,3 +1,15 @@
+Wed Mar 12 13:31:08 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+
+          Fixed output directories for executables and pdb locations as
+          below.
+
 Wed Mar 12 12:19:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/vc6dsp.mpd:
@@ -14,11 +26,11 @@ Wed Mar 12 12:19:23 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Mar 12 08:59:18 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Log_Msg.cpp (log_hexdump):
-	* tests/Proactor_Test.cpp:
+        * ace/Log_Msg.cpp (log_hexdump):
+        * tests/Proactor_Test.cpp:
 
-	  Another round of format specifier corrections.  "%lu" instead of
-	  "%u".  Addresses warnings in 64 bit platform builds.
+          Another round of format specifier corrections.  "%lu" instead of
+          "%u".  Addresses warnings in 64 bit platform builds.
 
 Wed Mar 12 10:42:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
