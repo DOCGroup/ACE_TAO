@@ -26,6 +26,7 @@
 
 namespace TAO
 {
+
   /**
    * @class Null_RefCount_Policy
    *

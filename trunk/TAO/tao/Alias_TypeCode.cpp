@@ -12,14 +12,30 @@
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
+#include "tao/RefCount_Policy_Traits.h"
+
 #include "ace/Dynamic_Service.h"
 
 
 template <typename StringType, class RefCountPolicy>
 TAO::TypeCode::Alias<StringType, RefCountPolicy>::~Alias (void)
 {
+#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
+
   if (this->content_type_)
+    TAO::RefCount_Policy_Traits<RefCountPolicy,
+                                CORBA::TypeCode_ptr>::release (
+      *this->content_type_);
+
+#else
+
+  // MSVC++ 6 can't handle partial template specializations.
+
+  if (TAO::RefCount_Policy_Traits<RefCountPolicy>::is_refcounted ()
+      && this->content_type_)
     CORBA::release (*this->content_type_);
+
+#endif  /* !_MSC_VER ||_MSC_VER >= 1310 */
 }
 
 template <typename StringType, class RefCountPolicy>

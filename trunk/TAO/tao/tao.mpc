@@ -531,6 +531,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Queued_Message.h
     Reactive_Connect_Strategy.h
     Reactive_Flushing_Strategy.h
+    RefCount_Policy_Traits.h
     Refcounted_ObjectKey.h
     Remote_Invocation.h
     Remote_Object_Proxy_Broker.h

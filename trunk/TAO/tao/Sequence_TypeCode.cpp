@@ -3,17 +3,34 @@
 #ifndef TAO_SEQUENCE_TYPECODE_CPP
 #define TAO_SEQUENCE_TYPECODE_CPP
 
-#include "Sequence_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Sequence_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+#include "tao/RefCount_Policy_Traits.h"
+
+
 template <class RefCountPolicy>
 TAO::TypeCode::Sequence<RefCountPolicy>::~Sequence (void)
 {
+#if !defined (_MSC_VER) || (_MSC_VER >= 1310)
+
   if (this->content_type_)
+    TAO::RefCount_Policy_Traits<RefCountPolicy,
+                                CORBA::TypeCode_ptr>::release (
+      *this->content_type_);
+
+#else
+
+  // MSVC++ 6 can't handle partial template specializations.
+
+  if (TAO::RefCount_Policy_Traits<RefCountPolicy>::is_refcounted ()
+      && this->content_type_)
     CORBA::release (*this->content_type_);
+
+#endif  /* !_MSC_VER ||_MSC_VER >= 1310 */
 }
 
 template <class RefCountPolicy>
