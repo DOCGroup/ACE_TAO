@@ -936,10 +936,11 @@ sub generate_default_target_names {
 
     ## If it's neither an exe or library target, we will search
     ## through the source files for a main()
+    my(@sources) = $self->get_component_list('source_files');
     if (!$self->lib_target()) {
       my($fh)      = new FileHandle();
       my($exename) = undef;
-      foreach my $file ($self->get_component_list('source_files')) {
+      foreach my $file (@sources) {
         if (open($fh, $file)) {
           while(<$fh>) {
             ## Remove c++ comments (ignore c style comments for now)
@@ -965,8 +966,8 @@ sub generate_default_target_names {
       }
 
       ## If we still don't have a project type, then we will
-      ## default to a library
-      if (!$self->exe_target()) {
+      ## default to a library if there are source files
+      if (!$self->exe_target() && $#sources >= 0) {
         my($base) = $self->get_assignment('project_name');
         $self->process_assignment('sharedname', $base);
         $self->process_assignment('staticname', $base);
@@ -1645,7 +1646,9 @@ sub check_custom_output {
           }
           my($re) = $self->escape_regex_special(basename($base));
           foreach my $c (@$comps) {
-            if ($c =~ /$re$/) {
+            ## We only match if the built file name matches from
+            ## beginning to end or from a slash to the end.
+            if ($c =~ /^$re$/ || $c =~ /\/$re$/) {
               push(@outputs, $built);
               last;
             }

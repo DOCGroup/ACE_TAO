@@ -1,3 +1,25 @@
+Thu May 15 07:08:39 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a couple of bugs with the custom build types.  Generated
+          files were being selected due to a back regular expression match.
+          
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Only write out a new workspace if it is different than the
+          existing one or if one doesn't exist.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Only output custom rules if the input file has corresponding
+          output files.
+
 Wed May 14 20:02:56 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-all.h:

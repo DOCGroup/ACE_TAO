@@ -248,6 +248,7 @@ InputDir=<%dirname(idl_file)%>
 <%endfor%>
 <%foreach(custom_types)%>
 <%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
 SOURCE=<%custom_type->input_file%>
 
 <%foreach(platforms)%>
@@ -274,6 +275,7 @@ InputDir=<%dirname(custom_type->input_file)%>
 !ENDIF
 <%endfor%>
 
+<%endif%>
 <%endfor%>
 <%endfor%>
 <%foreach(resource_files)%>

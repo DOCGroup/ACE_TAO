@@ -181,6 +181,7 @@
 			Name="<%custom_type%>"
 			Filter="<%foreach(custom_type->inputexts)%><%custom_type->inputext%><%fornotlast(";")%><%endfor%>">
 <%foreach(custom_type->input_files)%>
+<%if(custom_type->input_file->output_files)%>
 			<File
 				RelativePath=".\<%custom_type->input_file%>">
 <%foreach(configurations)%>
@@ -194,6 +195,7 @@
 				</FileConfiguration>
 <%endfor%>
 			</File>
+<%endif%>
 <%endfor%>
 		</Filter>
 <%endfor%>
