@@ -30,6 +30,9 @@ Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Event/Event_Channel.i: specify constant
           2147483648u as unsigned, to avoid compiler warning.
 
+        * TAO_IDL/Makefile: removed -fPIC for g++ because it's not needed
+          without shared libraries.
+
 Mon Feb 23 22:13:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.5, released Mon Feb 23 22:13:14 1998.
