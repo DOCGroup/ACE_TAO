@@ -1,28 +1,26 @@
 // $Id$
 
 #include "LRU_Connection_Purging_Strategy.h"
+#include "Cache_Entries.h"
 
 ACE_RCSID(tao, LRU_Connection_Purging_Strategy, "$Id$")
 
 TAO_LRU_Connection_Purging_Strategy::TAO_LRU_Connection_Purging_Strategy (
-                                               TAO_Resource_Factory* rf)
- : TAO_ULong_Connection_Purging_Strategy (rf),
+                                                           int cache_maximum)
+ : TAO_Connection_Purging_Strategy (cache_maximum),
    order_ (0)
 {
 }
 
 
-TAO_LRU_Connection_Purging_Strategy::~TAO_LRU_Connection_Purging_Strategy ()
+TAO_LRU_Connection_Purging_Strategy::~TAO_LRU_Connection_Purging_Strategy (void)
 {
 }
 
 
 void
-TAO_LRU_Connection_Purging_Strategy::update_item_i (
-                                       TAO_DESCRIPTOR_INTERFACE *prop,
-                                       TAO_PURGING_CACHE_ITEM* /* item */)
+TAO_LRU_Connection_Purging_Strategy::update_item (TAO_Cache_IntId& int_id)
 {
-  TAO_Cache_ExtId ext_id (prop);
-  ATTRIBUTE_TYPE int_id (this->order_++);
-  this->tracking_map ().rebind(ext_id, int_id);
+  int_id.purging_order (this->order_++);
 }
+

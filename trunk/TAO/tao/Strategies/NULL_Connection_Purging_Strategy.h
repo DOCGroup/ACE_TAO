@@ -12,33 +12,38 @@
 #define TAO_NULL_PURGING_STRATEGY_H
 #include "ace/pre.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "strategies_export.h"
 #include "tao/Connection_Purging_Strategy.h"
+
+// ****************************************************************
+
+/**
+ * @class TAO_NULL_Connection_Purging_Strategy
+ *
+ * @brief The null connection purging strategy
+ *
+ * This class does not do anything.
+ */
 
 class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy:
                             public TAO_Connection_Purging_Strategy
 {
 public:
   /// The constructor
-  TAO_NULL_Connection_Purging_Strategy (TAO_Resource_Factory* rf);
+  TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
   /// The destructor
-  virtual ~TAO_NULL_Connection_Purging_Strategy ();
-
-protected:
-  /// Does nothing.
-  virtual int fill_set_i (DESCRIPTOR_SET& sorted_set);
+  virtual ~TAO_NULL_Connection_Purging_Strategy (void);
 
   /// Does nothing.
-  virtual void update_item_i (TAO_DESCRIPTOR_INTERFACE* prop,
-                              TAO_PURGING_CACHE_ITEM* item);
+  virtual void update_item (TAO_Cache_IntId& int_id);
 
-  /// Does nothing.
-  virtual void remove_item_i (TAO_DESCRIPTOR_INTERFACE* prop);
-
-  /// Does nothing.
-  virtual void remove_all_i ();
-
+  /// Returns -1 to signify no maximum
+  virtual int cache_maximum (void) const;
 };
 
 #include "ace/post.h"

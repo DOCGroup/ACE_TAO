@@ -55,7 +55,7 @@ class TAO_Connector_Registry;
 class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
-class TAO_Connection_Purging_Strategy;
+class TAO_Transport_Cache_Manager;
 
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
@@ -141,7 +141,7 @@ public:
   /// This is is just a place holder, in the future the transport
   /// cache will be separated from the connectors and it will be a
   /// (potentially) TSS object.
-  TAO_Connection_Purging_Strategy *purging_strategy_;
+  TAO_Transport_Cache_Manager *transport_cache_;
 
   /// Counter for how (nested) calls this thread has made to run the
   /// event loop.
@@ -872,8 +872,8 @@ public:
   /// otherwise 0.
   int open (CORBA::Environment &ACE_TRY_ENV);
 
-  /// Return the underlying purging strategy
-  TAO_Connection_Purging_Strategy *purging_strategy (void);
+  /// Return the underlying transport cache
+  TAO_Transport_Cache_Manager *transport_cache (void);
 
   /// Call the bidir_giop library to parse the policy.
   int parse_bidir_policy (CORBA::Policy_ptr policy,
@@ -1253,8 +1253,8 @@ protected:
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;
 
-  /// TAO's connection purging strategy
-  TAO_Connection_Purging_Strategy* purging_strategy_;
+  /// TAO's connection cache
+  TAO_Transport_Cache_Manager* transport_cache_;
 
   /// BiDirectional GIOP factory
   TAO_BiDir_Adapter *bidir_adapter_;

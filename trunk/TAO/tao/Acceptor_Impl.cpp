@@ -29,7 +29,7 @@
 #include "tao/ORB_Table.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Connector_Registry.h"
-#include "tao/Connection_Purging_Strategy.h"
+#include "tao/Transport_Cache_Manager.h"
 
 #include "ace/Object_Manager.h"
 
@@ -58,7 +58,7 @@ TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   if (sh == 0)
     {
       // Purge connections (if necessary)
-      this->orb_core_->purging_strategy ()->purge ();
+      this->orb_core_->transport_cache ()->purge ();
 
       ACE_NEW_RETURN (sh,
                       SVC_HANDLER (this->orb_core_,
