@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\Messaging"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\Messaging"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -104,7 +104,19 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_No_ImplC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_RT_PolicyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_SyncScope_PolicyC.i
 # End Source File
 # Begin Source File
 
@@ -152,6 +164,10 @@ SOURCE=.\messaging_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_No_ImplC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -161,6 +177,14 @@ SOURCE=.\Messaging_Policy_i.h
 # Begin Source File
 
 SOURCE=.\Messaging_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_RT_PolicyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_SyncScope_PolicyC.h
 # End Source File
 # Begin Source File
 
@@ -204,6 +228,10 @@ SOURCE=.\Messaging.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_No_ImplC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_ORBInitializer.cpp
 # End Source File
 # Begin Source File
@@ -213,6 +241,14 @@ SOURCE=.\Messaging_Policy_i.cpp
 # Begin Source File
 
 SOURCE=.\Messaging_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_RT_PolicyC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_SyncScope_PolicyC.cpp
 # End Source File
 # Begin Source File
 
