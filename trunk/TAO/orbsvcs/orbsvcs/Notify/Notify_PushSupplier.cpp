@@ -76,7 +76,7 @@ TAO_Notify_PushSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 PortableServer::POA_ptr
 TAO_Notify_PushSupplier::_default_POA (CORBA::Environment& /* env */)
 {
-  return PortableServer::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void

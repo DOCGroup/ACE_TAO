@@ -29,7 +29,7 @@ void TAO_Notify_StructuredPushConsumer::init (PortableServer::POA_ptr poa, CORBA
 PortableServer::POA_ptr
 TAO_Notify_StructuredPushConsumer::_default_POA (CORBA::Environment &/*env*/)
 {
-  return PortableServer::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void

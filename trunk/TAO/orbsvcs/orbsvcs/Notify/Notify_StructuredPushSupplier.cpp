@@ -71,7 +71,7 @@ TAO_Notify_StructuredPushSupplier::subscription_change (
 PortableServer::POA_ptr
 TAO_Notify_StructuredPushSupplier::_default_POA (CORBA::Environment& /* env */)
 {
-  return PortableServer::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
