@@ -196,30 +196,41 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
 int
 be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-  be_type *bt; // return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt;
 
-  if (this->ctx_->alias ()) // a typedefed return type
-    bt = this->ctx_->alias ();
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
   else
-    bt = node;
+    {
+      bt = node;
+    }
+
+  os->indent ();
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      os->indent ();
       *os << bt->name () << "_ptr _tao_retval = " 
           << bt->name () << "::_nil ();" << be_nl;
       *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
       break;
     case AST_PredefinedType::PT_any:
-      os->indent ();
       *os << bt->name () << " *_tao_retval = 0;";
       break;
     case AST_PredefinedType::PT_void:
       break;
+    case AST_PredefinedType::PT_longdouble:
+      *os << bt->name () 
+          << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;";
+      break;
+    case AST_PredefinedType::PT_longlong:
+      *os << bt->name () 
+          << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;";
+      break;
     default:
-      os->indent ();
       *os << bt->name () << " _tao_retval = 0;";
       break;
     }
