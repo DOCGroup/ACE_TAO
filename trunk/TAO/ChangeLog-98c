@@ -1,3 +1,12 @@
+Mon Jul 20 10:20:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * docs/releasenotes/index.html: Added a reference to the
+	  global resources and leader-follower model documentation.
+
+	* docs/leader_follower.html: Documentation about the leader-follower
+	  model used for global resources, especially for one Reactor
+	  accessed by multiple threads.
+
 Mon Jul 20 06:52:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/{array_ch, array_ci, array_cs}.cpp:
