@@ -1,3 +1,30 @@
+Wed Jan 22 10:33:47 2004  Scott Harris <harris_s@ociweb.com>
+        * bin/MakeProjectCreator/config/wxwindows.mpb
+        * include/makeinclude/platform_linux.GNU
+        * include/makeinclude/platform_linux_borland.GNU
+        * include/makeinclude/platform_linux_icc.GNU:
+          Fixed wxwindows base project in support
+          of $TAO_ROOT/util/wxNamingViewer.
+          wxwindows project now require wxWindows defined
+          (in plaform_macros.GNU) as was since 12/1/00
+          instead of wxwindows. I choose historical precidence
+          over making the macro and project name both
+          being all lower case.
+
+          Note: The wxNamingViewer Makefile was overriding the
+          PLATFORM_WX_* macros defined in platform_*.GNU so I updated the
+          macros in platform_*.GNU to be like the overrides in the Makefile.
+          These macros are based on the wxWindows configuration.
+          The wxNamingViewer makefile contains the only use of these
+          macros.
+
+          Only tested on RedHat 9 with wx_gtk 2.4.2.
+
+          Note - the platform_*.GNU files definition of PLATFORM_WX_*
+                 only support wxWindows over GTK+.
+          TBD - support wxWindows MSVC and Borland in wxwindows.mpc.
+
+
 Thu Jan 22 12:19:42 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
