@@ -1,3 +1,11 @@
+Mon Feb 18 01:45:07 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+          Use ACE_OS::qsort() instead of global qsort() to fix build error
+          with Borland C++Builder 6.
+
 Sun Feb 17 16:32:32 2002  Venkita  <venkita@cs.wustl.edu>
 
         * TAO version 1.2.2 released.
