@@ -27,9 +27,9 @@
 /**
  * @class TAO_Tagged_Profile
  *
- * @brief This class is used to manipulate and access the target 
+ * @brief This class is used to manipulate and access the target
  *        address field of a GIOP 1.2 request.
- * 
+ *
  */
 class TAO_Export TAO_Tagged_Profile
 {
@@ -64,7 +64,7 @@ public:
   /// the client.
   const ACE_CString &type_id (void) const;
 
-  CORBA::Short discriminator (void) const; 
+  CORBA::Short discriminator (void) const;
 
 private:
   /// Extract the object key from the TaggedProfile and store it in
@@ -85,11 +85,11 @@ private:
   /// Our ORB Core
   TAO_ORB_Core *orb_core_;
 
-  /// Flag to denote whether the object key has been extracted yet.
-  CORBA::Boolean object_key_extracted_;
-
   /// Keep track of which kind of target profile that was extracted.
   CORBA::Short discriminator_;
+
+  /// Flag to denote whether the object key has been extracted yet.
+  CORBA::Boolean object_key_extracted_;
 
   /// The object key
   TAO_ObjectKey object_key_;

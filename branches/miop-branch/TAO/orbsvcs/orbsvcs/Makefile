@@ -36,7 +36,8 @@ ifndef TAO_ORBSVCS
                 Concurrency \
 		Trader \
 		Log \
-		AV 
+		AV \
+		PortableGroup
 
   ifeq ($(minimum_corba),0)
 
@@ -46,7 +47,7 @@ ifndef TAO_ORBSVCS
     TAO_ORBSVCS +=
 
     ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-      TAO_ORBSVCS += LifeCycle 
+      TAO_ORBSVCS += LifeCycle
 
     ifeq ($(corba_messaging),1)
       TAO_ORBSVCS += FaultTolerance
@@ -64,7 +65,7 @@ ifndef TAO_ORBSVCS
   endif # ssl
 
   ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    TAO_ORBSVCS += Notify 
+    TAO_ORBSVCS += Notify
   endif # ACE_HAS_GNUG_PRE_2_8
 
 endif # TAO_ORBSVCS
@@ -176,6 +177,9 @@ ifneq (,$(findstring  SSLIOP, $(TAO_ORBSVCS)))
 endif
 ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
   MKLIST += Makefile.FaultTolerance
+endif
+ifneq (,$(findstring  PortableGroup, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.PortableGroup
 endif
 
 #----------------------------------------------------------------------------

@@ -45,9 +45,9 @@ TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor (void)
 }
 
 int
-TAO_UIPMC_Acceptor::create_profile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile,
-                                    CORBA::Short priority)
+TAO_UIPMC_Acceptor::create_profile (const TAO_ObjectKey &,
+  TAO_MProfile &,
+  CORBA::Short)
 {
   // The standard mechanism for adding profiles to object references
   // for each pluggable protocol doesn't apply to UIPMC profiles, so
@@ -60,25 +60,9 @@ TAO_UIPMC_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *)
 {
-#if 0
-  const TAO_UIPMC_Endpoint *endp =
-    ACE_dynamic_cast (const TAO_UIPMC_Endpoint *, endpoint);
-
-  // Make sure the dynamically cast pointer is valid.
-  if (endp == 0)
-    return 0;
-
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
-    {
-      // compare the port and sin_addr (numeric host address)
-      if (endp->object_addr () == this->addrs_[i])
-        return 1;  // Collocated
-    }
-#endif
-
-  // @@ Frank: Comment this out for now since its not clear how
+  // @@ Not clear how
   // to best handle collation.  For example, one servant could
   // be collocated, but we still need to send the request out on
   // the network to see if there are any other servants in the
@@ -89,7 +73,7 @@ TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_UIPMC_Acceptor::close (void)
 {
-  // @@ Frank: Commented out since it seems like the reactor always is the one to 
+  // @@ Frank: Commented out since it seems like the reactor always is the one to
   //    remove the connection handler.
 //  if (this->connection_handler_)
 //    {
@@ -186,7 +170,7 @@ TAO_UIPMC_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->addrs_[0].set (addr) != 0)
     return -1;
 
-  return this->open_i (addr, 
+  return this->open_i (addr,
                        reactor);
 }
 
@@ -247,10 +231,10 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
 }
 
 int
-TAO_UIPMC_Acceptor::hostname (TAO_ORB_Core *orb_core,
-                             ACE_INET_Addr &addr,
-                             char *&host,
-                             const char *specified_hostname)
+TAO_UIPMC_Acceptor::hostname (TAO_ORB_Core *,
+                              ACE_INET_Addr &addr,
+                              char *&host,
+                              const char *)
 {
   // Only have dotted decimal addresses for multicast.
   return this->dotted_decimal_address (addr, host);
@@ -258,7 +242,7 @@ TAO_UIPMC_Acceptor::hostname (TAO_ORB_Core *orb_core,
 
 int
 TAO_UIPMC_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
-                                           char *&host)
+                                            char *&host)
 {
   const char *tmp = addr.get_host_addr ();
   if (tmp == 0)
@@ -283,8 +267,8 @@ TAO_UIPMC_Acceptor::endpoint_count (void)
 }
 
 int
-TAO_UIPMC_Acceptor::object_key (IOP::TaggedProfile &profile,
-                                TAO_ObjectKey &object_key)
+TAO_UIPMC_Acceptor::object_key (IOP::TaggedProfile &,
+                                TAO_ObjectKey &)
 {
   // No object key to extract.  Just return success.
   return 1;

@@ -22,6 +22,7 @@ static const char corbaloc_prefix[] = "corbaloc:";
 static const char iiop_prefix[] = "iiop:";
 static const char uiop_prefix[] = "uiop:";
 static const char shmiop_prefix[] = "shmiop:";
+static const char miop_prefix[] = "miop:";
 static const char rir_prefix[] = "rir:";
 
 int
@@ -362,7 +363,6 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
   size_t colon_slot = ACE_OS::strchr (end_point, ':') - end_point;
   size_t len0 = ACE_OS::strlen (protocol[0]);
 
-  /*
   // Lets first check if it is a valid protocol:
   if (colon_slot != 0 &&
       !((ACE_OS::strncmp (end_point,
@@ -378,6 +378,10 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
                           sizeof uiop_prefix - 1) == 0) ||
 
         (ACE_OS::strncmp (end_point,
+                          miop_prefix,
+                          sizeof miop_prefix - 1) == 0) ||
+
+        (ACE_OS::strncmp (end_point,
                           rir_prefix,
                           sizeof rir_prefix - 1) == 0)))
     {
@@ -390,7 +394,7 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
                                           CORBA::COMPLETED_NO),
                         -1);
     }
-*/
+
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0

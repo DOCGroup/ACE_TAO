@@ -138,7 +138,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
   // Decode the endpoint.
   ACE_CString address;
   CORBA::UShort port;
-  
+
   if (!(cdr.read_string (address)
         && cdr.read_ushort (port)))
     {
@@ -189,7 +189,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
       string[3] == '@')
     {
       if (string[0] != '1' ||
-          string[2] != '0') 
+          string[2] != '0')
         {
           ACE_THROW (CORBA::INV_OBJREF (
                           CORBA_SystemException::_tao_minor_code (
@@ -208,7 +208,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
   //
   // Parse the group_id.
   //
-  
+
   // Parse the group component version.
   if (isdigit (string [0]) &&
       string[1] == '.' &&
@@ -256,7 +256,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
 
   if (pos == ACE_CString::npos)
     {
-      // The group_domain_id is mandatory, so throw an 
+      // The group_domain_id is mandatory, so throw an
       // exception if it isn't found.
       ACE_THROW (CORBA::INV_OBJREF (
                       CORBA_SystemException::_tao_minor_code (
@@ -270,9 +270,9 @@ TAO_UIPMC_Profile::parse_string (const char *string
 
   // Parse the group_id.
   // The group_id is terminated with a '-' or a '/'.
-  
+
   // Skip past the last '-'.
-  pos++;  
+  pos++;
   int end_pos = ace_str.find ('-',pos);
 
   CORBA::Boolean parse_group_ref_version_flag = 0;
@@ -305,7 +305,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
   // Convert the domain_id into numerical form.
   // @@ group_id is actually 64 bits, but strtoul only can parse 32 bits.
   // @@ Need a 64 bit strtoul...
-  PortableGroup::ObjectGroupId group_id = 
+  PortableGroup::ObjectGroupId group_id =
     ACE_OS::strtoul (str_domain_id.c_str (), 0, 10);
 
   PortableGroup::ObjectGroupRefVersion ref_version = 0;
@@ -327,7 +327,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
 
       ACE_CString str_group_ref_ver = ace_str.substring (pos, end_pos - pos);
 
-      ref_version = 
+      ref_version =
         ACE_OS::strtoul (str_group_ref_ver.c_str (), 0, 10);
     }
 
@@ -364,7 +364,7 @@ TAO_UIPMC_Profile::parse_string (const char *string
                       CORBA::COMPLETED_NO));
     }
 
-  CORBA::UShort mcast_port = 
+  CORBA::UShort mcast_port =
       ACE_static_cast (CORBA::UShort,
         ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
 
@@ -448,13 +448,9 @@ TAO_UIPMC_Profile::to_string (TAO_ENV_ARG_DECL_NOT_USED)
 
   char * buf = CORBA::string_alloc (buflen);
 
-  static const char digits [] = "0123456789";
-
   ACE_OS::sprintf (buf,
-                   "%sloc://%c.%c@%s:%d%c%s",
+                   "corbaloc:%s://1.0@%s:%d",
                    ::prefix_,
-                   digits [this->version_.major],
-                   digits [this->version_.minor],
                    this->endpoint_.get_host_addr (),
                    this->endpoint_.port ());
   return buf;
@@ -620,7 +616,7 @@ TAO_UIPMC_Profile::set_group_info (const char *domain_id,
   this->update_cached_group_component ();
 }
 
-void 
+void
 TAO_UIPMC_Profile::update_cached_group_component (void)
 {
   PortableGroup::TagGroupTaggedComponent group;
@@ -636,7 +632,7 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   TAO_OutputCDR out_cdr;
   if ((out_cdr << group) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Error marshaling group component!"));
       return;
     }
@@ -664,7 +660,7 @@ TAO_UIPMC_Profile::update_cached_group_component (void)
   this->tagged_components_.set_component (tagged_component);
 }
 
-void 
+void
 TAO_UIPMC_Profile::request_target_specifier (
                       TAO_Target_Specification &target_spec,
                       TAO_Target_Specification::TAO_Target_Address required_type
@@ -681,7 +677,7 @@ TAO_UIPMC_Profile::request_target_specifier (
       target_spec.target_specifier (
             this->create_tagged_profile ());
       break;
-    
+
     case TAO_Target_Specification::Key_Addr:
     case TAO_Target_Specification::Reference_Addr:
     default:
@@ -702,7 +698,7 @@ TAO_UIPMC_Profile::addressing_mode (CORBA::Short addr
                                     TAO_ENV_ARG_DECL)
 {
   // ** See race condition note about addressing mode in Profile.h **
-  switch (addr) 
+  switch (addr)
     {
     case TAO_Target_Specification::Profile_Addr:
     case TAO_Target_Specification::Reference_Addr:
@@ -729,11 +725,10 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
 //#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 //  TAO_InputCDR cdr (profile.profile_data.mb ());
 //#else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
+  TAO_InputCDR cdr (ACE_reinterpret_cast(const char*,
+                                         profile.profile_data.get_buffer ()),
                     profile.profile_data.length ());
 //#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
-  CORBA::ULong encap_len = cdr.length ();
 
   // Extract the Byte Order.
   CORBA::Boolean byte_order;
@@ -763,7 +758,7 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
   // Decode the endpoint.
   ACE_CString address;
   CORBA::UShort port;
-  
+
   if (!(cdr.read_string (address)
         && cdr.read_ushort (port)))
     {

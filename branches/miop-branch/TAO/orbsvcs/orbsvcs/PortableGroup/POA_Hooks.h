@@ -14,6 +14,8 @@
 #define TAO_POA_HOOKS_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

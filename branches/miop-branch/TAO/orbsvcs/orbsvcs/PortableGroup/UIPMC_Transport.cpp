@@ -74,7 +74,7 @@ public:
   /// Get the next data block that has a size less than or equal
   /// to max_length.  Return the length of the block returned.
   size_t next_block (size_t max_length,
-                     const char *&block,
+                     void *&block,
                      size_t &block_len);
 
 private:
@@ -88,7 +88,7 @@ private:
   int iovcnt_;
 
   // Point internal to a message block, if we have to split one up.
-  const char *iov_ptr_;
+  void *iov_ptr_;
   int iov_index_;
 
   // Length used in a split message block.
@@ -103,15 +103,15 @@ ACE_Message_Block_Data_Iterator::ACE_Message_Block_Data_Iterator (iovec *iov, in
   iov_ (iov),
   iovcnt_ (iovcnt),
   iov_ptr_ (0),
-  iov_len_left_ (0),
   iov_index_ (0),
+  iov_len_left_ (0),
   state_ (INTER_BLOCK)
 {
 }
 
 size_t
 ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
-                                             const char *&block,
+                                             void *&block,
                                              size_t &block_len)
 {
   if (this->state_ == INTER_BLOCK)
@@ -144,7 +144,10 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
 
           // Break up the block.
           this->iov_len_left_ = current_iov_len - max_length;
-          this->iov_ptr_ = block + max_length;
+          this->iov_ptr_ =
+            ACE_reinterpret_cast (void *,
+                                  ACE_reinterpret_cast (char *, block)
+                                  + max_length);
           this->state_ = INTRA_BLOCK;
 
           return max_length;
@@ -174,7 +177,10 @@ ACE_Message_Block_Data_Iterator::next_block (size_t max_length,
           block = this->iov_ptr_;
 
           this->iov_len_left_ -= max_length;
-          this->iov_ptr_ += max_length;
+          this->iov_ptr_ =
+            ACE_reinterpret_cast (void *,
+                                  ACE_reinterpret_cast (char *, this->iov_ptr_)
+                                  + max_length);
           return max_length;
         }
     }
@@ -195,7 +201,6 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
                              const ACE_Time_Value *)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
-  size_t temp = 0;
   bytes_transferred = 0;
 
   MIOP_Packet fragments[MIOP_MAX_FRAGMENTS];

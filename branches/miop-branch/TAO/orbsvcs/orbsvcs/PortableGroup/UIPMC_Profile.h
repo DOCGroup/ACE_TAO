@@ -218,7 +218,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/UIPMC_Profile.i"
+# include "UIPMC_Profile.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

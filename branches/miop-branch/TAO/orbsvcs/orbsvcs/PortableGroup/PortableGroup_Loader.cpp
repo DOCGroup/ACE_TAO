@@ -13,8 +13,8 @@ TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
 }
 
 int
-TAO_PortableGroup_Loader::init (int argc,
-                                char* argv[])
+TAO_PortableGroup_Loader::init (int /*argc*/,
+                                char* /*argv*/ [])
 {
   ACE_TRACE ("TAO_PortableGroup_Loader::init");
 

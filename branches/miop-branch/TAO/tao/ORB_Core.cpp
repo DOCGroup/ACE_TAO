@@ -112,6 +112,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (),
+    portable_group_poa_hooks_ (0),
     orb_params_ (),
     init_ref_map_ (),
     object_ref_table_ (),
@@ -169,7 +170,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     parser_registry_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
-    portable_group_poa_hooks_ (0),
     flushing_strategy_ (0)
 {
 #if defined(ACE_MVS)
