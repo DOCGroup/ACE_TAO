@@ -44,10 +44,15 @@ else
 XTREACTOR_TEST =
 endif
 
-## Build the shared library needed for the DLL_Test
-noinst_LTLIBRARIES = libDLL_Test.la
+## Build the shared libraries needed for the DLL_Test and the
+## Service_Config_DLL test. 
+noinst_LTLIBRARIES = libDLL_Test.la libService_Config_DLL.la
+
 libDLL_Test_la_LDFLAGS = -module
-libDLL_Test_la_SOURCES = $(DLL_Test_SOURCES)
+libDLL_Test_la_SOURCES = DLL_Test_Impl.cpp DLL_Test_Impl.h
+
+libService_Config_DLL_la_LDFLAGS = -module
+libService_Config_DLL_la_SOURCES = Service_Config_DLL.cpp Service_Config_DLL.h
 
 ## Build the following test programs when a `make check' is
 ## issued by the user.
@@ -163,6 +168,7 @@ Collection_Test_SOURCES = Collection_Test.cpp
 Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h
 
 DLL_Test_SOURCES = DLL_Test.cpp DLL_Test.h
+DLL_Test : libDLL_Test.la
 
 DLList_Test_SOURCES = DLList_Test.cpp
 
@@ -257,6 +263,7 @@ SV_Shared_Memory_Test_SOURCES = SV_Shared_Memory_Test.cpp
 Semaphore_Test_SOURCES = Semaphore_Test.cpp
 
 Service_Config_Test_SOURCES = Service_Config_Test.cpp
+Service_Config_Test : libService_Config_DLL.la
 
 Sigset_Ops_Test_SOURCES = Sigset_Ops_Test.cpp
 

@@ -1,3 +1,15 @@
+Tue Jul 31 22:53:26 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/libService_Config_DLL.icc:
+
+	  New Visual Age project file for the libService_Config_DLL
+	  library.
+
+	* tests/Makefile.am:
+
+	  Added build targets/dependencies for the libService_Config_DLL
+	  library.
+
 Tue Jul 31 22:46:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Service_Config_DLL.dsp:
