@@ -1,3 +1,12 @@
+Thu Mar 29 08:38:42 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Do not close the connection if it sends 0 bytes.  This is
+          perfectly possible when using non-blocking I/O.
+
 Wed Mar 28 10:42:12 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Another merge for the branch fixing bug 132
@@ -1174,14 +1183,14 @@ Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.RTSched:
-	  Added guards for old g++.
+          Added guards for old g++.
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
-	  Removed redundant guards  in the files. This should fix a small
-	  compilation problem in LYNX-I386 builds.
+          Removed redundant guards  in the files. This should fix a small
+          compilation problem in LYNX-I386 builds.
 
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
