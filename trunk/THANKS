@@ -801,7 +801,7 @@ Engelbert Staller <engelbert.staller@siemens.at>
 George Ball <george@jgserv.co.uk>
 Dennis Noll <Dennis.Noll@MW.Boeing.com>
 Ronald Fischer <ronald.fischer@icn.siemens.de>
-Marvin Allen Wolfthal <maw@ziplink.net>
+Marvin Allen Wolfthal <maw@weichi.com>
 Dan Gilboa <dgilboa@qualcomm.com>
 Sean Boudreau <seanb@qnx.com>
 Shalini Yajnik <shalini@research.bell-labs.com>
@@ -1412,6 +1412,8 @@ Roy Sharon <roysharon@hotmail.com>
 Charlie Grames <charlie.grames@windriver.com>
 Tom Howard <tom_howard@yahoo.com>
 Michael Gillmann <michael.gillmann@infor.de>
+Yaniv Ben Ari <yanivb@bis.co.il>
+Victor Terber <vterber@csksoftware.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
