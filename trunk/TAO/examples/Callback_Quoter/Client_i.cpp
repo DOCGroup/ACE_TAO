@@ -21,6 +21,8 @@
 #include "ace/Read_Buffer.h"
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
+#include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 
 Client_i::Client_i ()
   : ior_ (0),
@@ -103,7 +105,7 @@ Client_i::parse_args (void)
                              get_opts.optarg),
                             -1);
         break;
-        
+
       case 's': // don't use the naming service
 	this->use_naming_service_ = 0;
 	break;
@@ -159,6 +161,12 @@ Client_i::via_naming_service (void)
         Supplier::_narrow (supplier_obj.in (),
                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // I know the server , pass it to the consumer_i
+      //  ACE_NEW_RETURN (this->consumer_i_,
+      //		      Consumer_i (this->server_.in ()),
+      //	      -1);
+
     }
   TAO_CATCHANY
     {
@@ -188,10 +196,13 @@ Client_i::init (int argc, char **argv)
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        return -1;
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "parse_args failed\n"),
+			   -1);
 
        if (this->use_naming_service_)
-        return via_naming_service ();
+	 return via_naming_service ();
+
 
        if (this->ior_ == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
@@ -209,11 +220,12 @@ Client_i::init (int argc, char **argv)
                            "invalid ior <%s>\n",
                            this->ior_),
                           -1);
-      
+
       // The downcasting from CORBA::Object_var to Supplier_var is done
       // using the <_narrow> method.
       this->server_ = Supplier::_narrow (server_object.in (),
                                          TAO_TRY_ENV);
+
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -232,31 +244,142 @@ int
 Client_i::run (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "\n============= Consumer Client! =================\n"));
+	      "\n============= Consumer Client! ================\n"));
 
-  TAO_TRY
-    {
-      this->consumer_var_ =
-	this->consumer_i_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  ACE_DEBUG ((LM_DEBUG,
+	      " Services provided:\n "));
 
-      // Register  with the server.
-      server_->register_callback (this->stock_name_,
-				  this->threshold_value_,
-				  this->consumer_var_.in (),
-				  TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  ACE_DEBUG ((LM_DEBUG,
+	      " 1) Registration <type \"register\">\n "));
 
-      // Run the ORB.
-      this->orb_->run ();
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Client_i::run ()");
-      return -1;
-    }
-  TAO_ENDTRY;
+  ACE_DEBUG ((LM_DEBUG,
+	      " 2) Unregistration <type \"unregister\">\n "));
 
-  return 0;
+  ACE_DEBUG ((LM_DEBUG,
+	      " 3) Quit <type \"quit\">\n "));
+
+
+
+  int registered = 0;
+  int unregistered = 0;
+  char buf[BUFSIZ];
+
+  // the string could read contains \n\0 hence using ACE_OS::read
+  // which returns the no of bytes read and hence i can manipulate
+  // and remove the devil from the picture i.e '\n' ! ;)
+   int strlen = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+
+   if ( buf[strlen -1] == '\n' )
+     buf[strlen -1] = '\0';
+
+       if ( ACE_OS::strcmp (buf, "register") == 0)
+       {
+
+	    CORBA::Environment TAO_TRY_ENV;
+	    // I know the server , pass it to the consumer_i
+	    // on creating it.
+	    ACE_NEW_RETURN (this->consumer_i_,
+			    Consumer_i (this->server_),
+			    -1);
+
+	    ACE_DEBUG ((LM_DEBUG,"consumer_i_ created\n"));
+
+
+	    TAO_TRY
+	      {
+		// get the consumer stub (i.e consumer object) pointer.
+		this->consumer_var_ =
+		  this->consumer_i_->_this (TAO_TRY_ENV);
+		TAO_CHECK_ENV;
+
+		// get the stockname the consumer is interested in.
+		char stockname[BUFSIZ];
+		ACE_DEBUG ((LM_DEBUG,
+			    "Stockname?"));
+
+		strlen = ACE_OS::read (ACE_STDIN, stockname, sizeof stockname);
+
+		if ( stockname[strlen -1] == '\n' )
+		  stockname[strlen -1] = '\0';
+
+		this->stock_name_ = stockname;
+
+		// get the threshold value.
+		char needed_stock_value[BUFSIZ];
+		ACE_DEBUG ((LM_DEBUG,
+			    "Threshold Stock value?"));
+
+		strlen = ACE_OS::read (ACE_STDIN, needed_stock_value, sizeof needed_stock_value);
+
+
+		if ( needed_stock_value[strlen -1] == '\n' )
+		  needed_stock_value[strlen -1] = '\0';
+
+		this->threshold_value_ = ACE_OS::atoi (needed_stock_value);
+
+		// Register  with the server.
+		server_->register_callback (this->stock_name_,
+					    this->threshold_value_,
+					    this->consumer_var_.in (),
+					    TAO_TRY_ENV);
+
+		TAO_CHECK_ENV;
+
+		// note the registration.
+		registered =1;
+
+		ACE_DEBUG ((LM_DEBUG,
+			    "registeration done!\n"));
+
+		// Run the ORB.
+		this->orb_->run ();
+
+
+	      }
+	    TAO_CATCHANY
+	      {
+		TAO_TRY_ENV.print_exception ("Client_i::run ()");
+		return -1;
+	      }
+	    TAO_ENDTRY;
+
+
+       }
+
+      if ( ACE_OS::strcmp (buf, "unregister") == 0)
+       {
+	    if (registered == 1)
+	      {
+
+		this->server_->unregister_callback (this->consumer_var_);
+		ACE_DEBUG ((LM_DEBUG,
+	        	    " Consumer Unregistered \n "));
+
+		unregistered = 1;
+
+	      }
+	    else
+	      {
+		ACE_DEBUG ((LM_DEBUG,
+			    " Invalid Operation: Consumer not Registered\n"));
+	      }
+
+
+       }
+
+
+      if (ACE_OS::strcmp (buf, "quit") == 0)
+       {
+	 // get the consumer stub (i.e consumer object) pointer.
+	   this->consumer_var_ =
+	     this->consumer_i_->_this ();
+	    this->consumer_var_->shutdown ();
+
+        }
+
+
+      ACE_DEBUG ((LM_DEBUG,
+	    "\nreturned from run method\n"));
+return 0;
+
 }
-
