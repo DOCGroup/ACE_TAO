@@ -26,8 +26,8 @@ CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += -ltli -lrt -ptr ptrepository
-OFLAGS          += -O4
+LIBS            += -lpthread -ltli -lrt -ptr ptrepository
+OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = cruvZ
 # When libraries are archived, a hash index is automatically created 
