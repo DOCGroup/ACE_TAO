@@ -1,3 +1,24 @@
+Tue Oct 12 09:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Lifespan_Strategy.{h,cpp}:
+          Implemented this strategy a little bit more
+
+        * tao/PortableServer/Id_Uniqueness_Strategy.{h,cpp}:
+          Added validate method to check whether servant may be activated or
+          not based on this policy
+
+        * tao/PortableServer/Active_Policy_Strategies.{h,cpp}:
+          Create some more specific strategies, this will use a factory later,
+          but this is for testing now
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Use Lifespan and Id_Uniqueness strategies so far as they now exist
+
+Tue Oct 12 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Key_Adapters.{h,cpp,i}:
+          Removed the Key_Adapters.i file, it is empty
+
 Tue Oct 12 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
