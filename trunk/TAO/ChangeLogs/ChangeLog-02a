@@ -75,21 +75,9 @@ Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Server_Declared/Server.dsp
         * tests/RTCORBA/Server_Declared/client.dsp
-<<<<<<< ChangeLog
-
 	  Made minor changes to get the test running.
 	  Updated the project files to link TAO_Strategies.
  
-=======
-
-          Made minor changes to get the test running.
-          Updated the project files to link TAO_Strategies.
->>>>>>> 1.1919
-
-<<<<<<< ChangeLog
-=======
-
->>>>>>> 1.1919
 Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Propagated/svc.conf:
