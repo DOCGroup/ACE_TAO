@@ -11,6 +11,7 @@ package Driver;
 # ************************************************************
 
 use strict;
+use File::Basename;
 
 # ************************************************************
 # Data Section
@@ -345,6 +346,15 @@ sub run {
   my(%loaded) = ();
   ## Generate the files
   foreach my $file (@input) {
+    ## To correctly reference any pathnames in the input file, chdir to
+    ## its directory if there's any directory component to the specified path.
+    my $orig_dir = Cwd::getcwd();
+    my $dir = dirname($file);
+    my $base = basename($file);
+    if ($base ne $file) {
+      chdir($dir);
+      $file = $base;
+    }
     foreach my $name (@generators) {
       if (!$loaded{$name}) {
         require "$name.pm";
@@ -363,6 +373,7 @@ sub run {
       }
       print "  End Time: " . scalar(localtime(time())) . "\n";
     }
+    chdir($orig_dir);
   }
 
   return $status;
