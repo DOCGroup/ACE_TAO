@@ -740,6 +740,7 @@ ACE_InputCDR::read_array (void* x,
   char* buf;
   if (this->adjust (size * length, align, buf) == 0)
     {
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_ || size == 1)
         {
           ACE_OS::memcpy (x, buf, size*length);
@@ -781,6 +782,9 @@ ACE_InputCDR::read_array (void* x,
               return 0;
             }
         }
+#else
+      ACE_OS::memcpy (x, buf, size*length);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
       return this->good_bit_;
     }
   return 0;
@@ -822,6 +826,7 @@ ACE_InputCDR::read_2 (CDR::UShort *x)
   char *buf;
   if (this->adjust (CDR::SHORT_SIZE, buf) == 0)
     {
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast (CDR::UShort*, buf);
@@ -830,6 +835,9 @@ ACE_InputCDR::read_2 (CDR::UShort *x)
         {
           CDR::swap_2 (buf, ACE_reinterpret_cast (char*, x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CDR::UShort*,buf);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
   return 0;
@@ -841,6 +849,7 @@ ACE_InputCDR::read_4 (CDR::ULong *x)
   char *buf;
   if (this->adjust (CDR::LONG_SIZE, buf) == 0)
     {
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast (CDR::ULong*, buf);
@@ -849,6 +858,9 @@ ACE_InputCDR::read_4 (CDR::ULong *x)
         {
           CDR::swap_4 (buf, ACE_reinterpret_cast (char*, x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CDR::ULong*,buf);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
   return 0;
@@ -860,6 +872,7 @@ ACE_InputCDR::read_8 (CDR::ULongLong *x)
   char *buf;
   if (this->adjust (CDR::LONGLONG_SIZE, buf) == 0)
     {
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast (CDR::ULongLong *, buf);
@@ -868,6 +881,9 @@ ACE_InputCDR::read_8 (CDR::ULongLong *x)
         {
           CDR::swap_8 (buf, ACE_reinterpret_cast (char*, x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CDR::ULongLong*,buf);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
   return 0;
@@ -881,6 +897,7 @@ ACE_InputCDR::read_16 (CDR::LongDouble *x)
                     CDR::LONGLONG_ALIGN, 
                     buf) == 0)
     {
+#if !defined (ACE_DISABLE_SWAP_ON_READ)
       if (!this->do_byte_swap_)
         {
           *x = *ACE_reinterpret_cast (CDR::LongDouble *, buf);
@@ -889,6 +906,9 @@ ACE_InputCDR::read_16 (CDR::LongDouble *x)
         {
           CDR::swap_16 (buf, ACE_reinterpret_cast (char*, x));
         }
+#else
+      *x = *ACE_reinterpret_cast(CDR::LongDouble*,buf);
+#endif /* ACE_DISABLE_SWAP_ON_READ */
       return 1;
     }
   return 0;
