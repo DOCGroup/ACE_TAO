@@ -4,28 +4,23 @@
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Atomic_Op_Test - Win32 DLL Debug
+CFG=Atomic_Op_Test - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
-!MESSAGE NMAKE /f "atomic_op_test.mak".
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "Atomic_Op_Test.mak".
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "atomic_op_test.mak" CFG="Atomic_Op_Test - Win32 DLL Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "Atomic_Op_Test.mak" CFG="Atomic_Op_Test - Win32 Release"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "Atomic_Op_Test - Win32 DLL Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 DLL Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 DLL Unicode Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 static Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 static Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 static Unicode Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 static Unicode Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Atomic_Op_Test - Win32 DLL Unicode Release" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "Atomic_Op_Test - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Atomic_Op_Test - Win32 Static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Atomic_Op_Test - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -34,96 +29,21 @@ CFG=Atomic_Op_Test - Win32 DLL Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 DLL Debug"
+!IF  "$(CFG)" == "Atomic_Op_Test - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Atomic_Op_Test\DLL Debug"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\DLL Debug"
+# PROP BASE Output_Dir ".\Atomic_Op_Test\Static Debug"
+# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\Static Debug"
 # PROP BASE Target_Dir ".\Atomic_Op_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\DLL Debug"
-# PROP Intermediate_Dir ".\DLL Debug"
+# PROP Output_Dir ".\LIB\Debug"
+# PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Atomic_Op_Test"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=1 /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Atomic_Op_Test\DLL Release"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\DLL Release"
-# PROP BASE Target_Dir ".\Atomic_Op_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\DLL Release"
-# PROP Intermediate_Dir ".\DLL Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Atomic_Op_Test"
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=1 /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 DLL Unicode Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Atomic_Op_Test\DLL Unicode Debug"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\DLL Unicode Debug"
-# PROP BASE Target_Dir ".\Atomic_Op_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\DLL Unicode Debug"
-# PROP Intermediate_Dir ".\DLL Unicode Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Atomic_Op_Test"
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=1 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aceud.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 static Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Atomic_Op_Test\static Debug"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\static Debug"
-# PROP BASE Target_Dir ".\Atomic_Op_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\static Debug"
-# PROP Intermediate_Dir ".\static Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Atomic_Op_Test"
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "../../" /D "_DEBUG" /D ACE_HAS_DLL=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -134,21 +54,21 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 static Release"
+!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Atomic_Op_Test\static Release"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\static Release"
+# PROP BASE Output_Dir ".\Atomic_Op_Test\Static Release"
+# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\Static Release"
 # PROP BASE Target_Dir ".\Atomic_Op_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\static Release"
-# PROP Intermediate_Dir ".\static Release"
+# PROP Output_Dir ".\LIB\Release"
+# PROP Intermediate_Dir ".\LIB\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Atomic_Op_Test"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "../../" /D "NDEBUG" /D ACE_HAS_DLL=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -157,48 +77,23 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aces.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
+# ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 static Unicode Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Atomic_Op_Test\static Unicode Debug"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\static Unicode Debug"
-# PROP BASE Target_Dir ".\Atomic_Op_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ".\static Unicode Debug"
-# PROP Intermediate_Dir ".\static Unicode Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Atomic_Op_Test"
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /D "_DEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 acesud.lib user32.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 static Unicode Release"
+!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Atomic_Op_Test\static Unicode Release"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\static Unicode Release"
+# PROP BASE Output_Dir ".\Atomic_Op_Test\Release"
+# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\Release"
 # PROP BASE Target_Dir ".\Atomic_Op_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\static Unicode Release"
-# PROP Intermediate_Dir ".\static Unicode Release"
+# PROP Output_Dir ".\DLL\Release"
+# PROP Intermediate_Dir ".\DLL\Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\Atomic_Op_Test"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=0 /D ACE_NO_INLINE /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -207,48 +102,17 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 acesu.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
+# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Atomic_Op_Test - Win32 DLL Unicode Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Atomic_Op_Test\DLL Unicode Release"
-# PROP BASE Intermediate_Dir ".\Atomic_Op_Test\DLL Unicode Release"
-# PROP BASE Target_Dir ".\Atomic_Op_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\DLL Unicode Release"
-# PROP Intermediate_Dir ".\DLL Unicode Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Atomic_Op_Test"
-# ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /D "NDEBUG" /D ACE_HAS_DLL=1 /D "UNICODE" /D "WIN32" /D "_CONSOLE" /FD /c
-# SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aceu.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
-
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
-# Name "Atomic_Op_Test - Win32 DLL Debug"
-# Name "Atomic_Op_Test - Win32 DLL Release"
-# Name "Atomic_Op_Test - Win32 DLL Unicode Debug"
-# Name "Atomic_Op_Test - Win32 static Debug"
-# Name "Atomic_Op_Test - Win32 static Release"
-# Name "Atomic_Op_Test - Win32 static Unicode Debug"
-# Name "Atomic_Op_Test - Win32 static Unicode Release"
-# Name "Atomic_Op_Test - Win32 DLL Unicode Release"
-# Begin Group "Source Files"
+# Name "Atomic_Op_Test - Win32 Static Debug"
+# Name "Atomic_Op_Test - Win32 Static Release"
+# Name "Atomic_Op_Test - Win32 Release"# Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
+# PROP Default_Filter ".cpp"
 # Begin Source File
 
 SOURCE=..\Atomic_Op_Test.cpp
@@ -256,15 +120,11 @@ SOURCE=..\Atomic_Op_Test.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# PROP Default_Filter ".h"
 # Begin Source File
 
 SOURCE=..\test_config.h
 # End Source File
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project
