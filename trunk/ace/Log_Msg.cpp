@@ -685,7 +685,10 @@ ACE_Log_Msg::log (const char *format_str,
     }
 
   if (abort_prog)
-    ACE_OS::exit (exit_value);
+    {
+      ACE_OS::fprintf (stderr, "ACE_Log_Msg::log(): abort requested\n");
+      ACE_OS::exit (exit_value);
+    }
 
   return result;
 }
