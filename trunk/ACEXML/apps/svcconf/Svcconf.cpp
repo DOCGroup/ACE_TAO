@@ -26,6 +26,19 @@ ACEXML_Svcconf_Parser::ACEXML_Svcconf_Parser ()
   this->parser_.setDTDHandler (&this->svcconf_handler_);
   this->parser_.setErrorHandler (&this->svcconf_handler_);
   this->parser_.setEntityResolver (&this->svcconf_handler_);
+  ACEXML_TRY_NEW_ENV
+    {
+      this->parser_.setFeature (ACE_TEXT ("http://xml.org/sax/features/validation"),
+                                0
+                                ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
+    }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+    {
+      ex.print ();              // Can't do much except printing the error.
+      return;
+    }
+  ACEXML_ENDTRY;
 }
 
 ACEXML_Svcconf_Parser::~ACEXML_Svcconf_Parser ()
