@@ -1,3 +1,12 @@
+Wed May 31 11:51:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:
+
+          Fixed the output directories to be relative to ".\".  Thanks
+          to Francois Bernier <fbernier@gel.ulaval.ca> for pointing
+          this out.
+
 Wed May 31 10:31:18 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/ConfigViewer/ConfigurationViewer.dsp:
