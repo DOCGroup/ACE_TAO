@@ -2,8 +2,8 @@
 // $Id$
 //
 
-ACE_RCSID (be_visitor_interface, 
-           strategized_proxy_broker_ss, 
+ACE_RCSID (be_visitor_interface,
+           strategized_proxy_broker_ss,
            "$Id$")
 
 be_visitor_interface_strategized_proxy_broker_ss::
@@ -31,7 +31,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   os->indent ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//            Strategized Proxy Broker Implementation" << be_nl
       << "//" << be_nl << be_nl;
@@ -88,7 +88,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl
-      << "size_t op_len," << be_nl
+      << "size_t ," << be_nl
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
@@ -123,7 +123,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "}" << be_uidt << be_uidt_nl
       << "}" << be_uidt
       << "\n#if (TAO_HAS_MINIMUM_CORBA == 0)" << be_nl
-      << "ACE_CATCH (PortableServer::ForwardRequest, forward_request)" 
+      << "ACE_CATCH (PortableServer::ForwardRequest, forward_request)"
       << be_idt_nl
       << "{" << be_idt_nl
       << "forward_obj =" << be_idt_nl
@@ -149,7 +149,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   return 0;
 }
 
-int 
+int
 be_visitor_interface_strategized_proxy_broker_ss::visit_component (
     be_component *node
   )
@@ -187,7 +187,7 @@ be_visitor_interface_strategized_proxy_broker_ss::gen_thru_poa_operations (
       *os << "if (ACE_OS::strcmp (op, \"" << d->local_name () << "\") == 0)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << node->full_thru_poa_proxy_impl_name () << "::" 
+          << node->full_thru_poa_proxy_impl_name () << "::"
           << d->local_name () << " (" << be_idt << be_idt_nl
           << "obj," << be_nl
           << "forward_obj," << be_nl
@@ -207,4 +207,3 @@ be_visitor_interface_strategized_proxy_broker_ss::gen_direct_operations (
   )
 {
 }
-

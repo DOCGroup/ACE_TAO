@@ -45,8 +45,7 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
       << "TAO::Argument ** args," << be_nl
       << "int num_args" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException));" << be_uidt;
+      << ");" << be_uidt_nl;
 
   return 0;
 }
