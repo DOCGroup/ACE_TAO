@@ -281,9 +281,9 @@ TAO_PG_ObjectGroupManager::remove_member (
 
   TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
-       i != end;
-       ++i)
+  for (TAO_PG_MemberInfo_Set::iterator iter = member_infos.begin ();
+       iter != end;
+       ++iter)
     {
       const TAO_PG_MemberInfo & info = *i;
 
