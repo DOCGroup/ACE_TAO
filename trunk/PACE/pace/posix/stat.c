@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/sys/stat.inl"
+# include "stat.inl"
 # endif /* !PACE_HAS_INLINE */

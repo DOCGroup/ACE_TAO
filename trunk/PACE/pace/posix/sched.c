@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/sched.inl"
+# include "sched.inl"
 # endif /* !PACE_HAS_INLINE */

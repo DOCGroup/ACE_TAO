@@ -17,5 +17,5 @@
 #include "pace/sys/socket.h"
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/sys/socket.inl"
+# include "socket.inl"
 # endif /* !PACE_HAS_INLINE */

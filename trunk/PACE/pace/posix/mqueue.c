@@ -18,5 +18,5 @@
 
 
 # if !defined (PACE_HAS_INLINE)
-# include "pace/mqueue.inl"
+# include "mqueue.inl"
 # endif /* PACE_HAS_INLINE */
