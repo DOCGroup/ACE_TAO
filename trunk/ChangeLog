@@ -1,4 +1,18 @@
-Fri Nov 10 12:28:42 2000  Johnny Willemsen <jwillemsen@remedy.nl?
+Fri Nov 10 10:42:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (ACE_OS::gethrtime): Removed the ACE_HAS_PENTIUM check
+          from the #if defined (ACE_WIN32) line surrounding the use of
+          QueryPerformanceCounter - it works fine on 486 also, per
+          Bernd Annamaier <bernd.annamaier@de.adtranz.com>. Thanks to
+          Bernd for testing this out.
+
+        * ace/High_Res_Timer.cpp: Replaced all occurrences of
+          "defined (ACE_HAS_PENTIUM)" with "defined (ACE_WIN32)" since there
+          is nothing Pentium-specific any longer in the Win32 sections.
+
+        * THANKS: Added Bernd Annamier to the Hall of Fame.
+
+Fri Nov 10 12:28:42 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/log_msg/makefile.bor:
         * examples/map_manager/makefile.bor:
