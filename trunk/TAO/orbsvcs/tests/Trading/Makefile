@@ -5,10 +5,9 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
-shared_libs_only=1
 BIN     = export_test import_test colocated_test
 
 MAKEFILE = Makefile
@@ -21,14 +20,14 @@ TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 IDL_FILES = TTestC \
-	    TTestS \
+            TTestS \
 
 FILES   = $(IDL_FILES) \
-	  TT_Info \
-	  Service_Type_Exporter \
-	  Offer_Exporter \
-	  Offer_Importer \
-	  Simple_Dynamic
+          TT_Info \
+          Service_Type_Exporter \
+          Offer_Exporter \
+          Offer_Importer \
+          Simple_Dynamic
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
@@ -39,7 +38,7 @@ LDLIBS  = -lTTest -lorbsvcs -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
