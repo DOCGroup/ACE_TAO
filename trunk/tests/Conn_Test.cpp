@@ -44,11 +44,11 @@ Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
 int
 Svc_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) opening Svc_Handler %d with handle %d\n",
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) opening Svc_Handler %d with handle %d\n"),
               this, this->peer ().get_handle ()));
   // Enable non-blocking I/O.
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "enable"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("enable")), -1);
 
   return 0;
 }
@@ -56,7 +56,7 @@ Svc_Handler::open (void *)
 int
 Svc_Handler::recycle (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) recycling Svc_Handler %d with handle %d\n",
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) recycling Svc_Handler %d with handle %d\n"),
               this, this->peer ().get_handle ()));
   return 0;
 }
@@ -68,7 +68,7 @@ Svc_Handler::send_data (void)
 
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (this->peer ().send_n (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("send_n")));
 }
 
 void
@@ -90,7 +90,7 @@ Svc_Handler::recv_data (void)
       if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
                           handle_set,
                           0, 0, 0) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "select"));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("select")));
       else
         {
           char c;
@@ -111,22 +111,22 @@ Svc_Handler::recv_data (void)
           if (r_bytes == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) reached end of input, connection closed by client\n"));
+                          ASYS_TEXT ("(%P|%t) reached end of input, connection closed by client\n")));
 
               // Close endpoint handle (but don't close <this> yet
               // since we're going to recycle it for the next
               // iteration).
               if (new_stream.close () == -1)
-                ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+                ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("close")));
               break;
             }
           else if (r_bytes == -1)
             {
               if (errno == EWOULDBLOCK)
                 ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) no input available, going back to reading\n"));
+                            ASYS_TEXT ("(%P|%t) no input available, going back to reading\n")));
               else
-                ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "recv_n"));
+                ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("recv_n")));
             }
         }
     }
@@ -137,7 +137,7 @@ Svc_Handler::close (u_long side)
 {
   // Only run this protocol if we're the write-side (i.e., "1").
   if (side == 1 && this->peer ().close () == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close_writer"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("close_writer")));
 
   // Trigger the shutdown.
   return this->handle_close ();
@@ -206,7 +206,7 @@ timed_blocking_connect (CONNECTOR &con,
   // connect quickly since we're in the same address space or same
   // host).
   if (con.connect (svc_handler, server_addr, options) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("connection failed")));
   else
     {
       // Send the data to the server.
@@ -214,7 +214,7 @@ timed_blocking_connect (CONNECTOR &con,
 
       // Close the connection completely.
       if (svc_handler->close (1) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("close")));
     }
 }
 
@@ -227,7 +227,7 @@ blocking_connect (CONNECTOR &con,
 
   // Perform a blocking connect to the server.
   if (con.connect (svc_handler, server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("connection failed")));
   else
     {
       // Send the data to the server.
@@ -235,7 +235,7 @@ blocking_connect (CONNECTOR &con,
 
       // Close the connection completely.
       if (svc_handler->close (1) == -1)
-        ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("close")));
     }
 }
 
@@ -256,7 +256,7 @@ cached_connect (STRAT_CONNECTOR &con,
       // same dynamically allocated <Svc_Handler> for each <connect>.
       if (con.connect (svc_handler, server_addr) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
+          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("connection failed")));
           return;
         }
 
@@ -299,7 +299,7 @@ client_connections (void *arg)
   Client_Info *info = (Client_Info *) arg;
 
   // Run the timed-blocking test.
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting timed-blocking connect\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) **** starting timed-blocking connect\n")));
   timed_blocking_connect (*info->connector_,
                           *info->server_addr_);
 
@@ -309,7 +309,7 @@ client_connections (void *arg)
 #endif /* ACE_HAS_THREADS */
 
   // Run the blocking test.
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting blocking connect\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) **** starting blocking connect\n")));
   blocking_connect (*info->connector_,
                     *info->server_addr_);
 
@@ -319,7 +319,7 @@ client_connections (void *arg)
 #endif /* ACE_HAS_THREADS */
 
   // Run the cached blocking test.
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) **** starting cached blocking connect\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) **** starting cached blocking connect\n")));
   cached_connect (*info->strat_connector_,
                   *info->server_addr_);
 
@@ -363,7 +363,7 @@ client (void *arg)
        (ACE_THR_FUNC) client_connections,
        (void *) &info,
        THR_NEW_LWP) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "client thread spawn failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"), ASYS_TEXT ("client thread spawn failed")));
 
   // Wait for the threads to exit.
   client_manager.wait ();
@@ -380,7 +380,7 @@ static void *
 server (void *arg)
 {
 #if defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server stack size is %u\n",
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) server stack size is %u\n"),
               ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
 
@@ -413,11 +413,11 @@ server (void *arg)
       if (result == -1)
         {
           svc_handler->close ();
-          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-                             "accept failed, shutting down"),
+          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"),
+                             ASYS_TEXT ("accept failed, shutting down")),
                             0);
         }
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client %s connected from %d\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) client %s connected from %d\n"),
                   cli_addr.get_host_name (),
                   cli_addr.get_port_number ()));
 
@@ -433,7 +433,7 @@ static void
 handler (int signum)
 {
   // Print the signal number and exit.
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %S\n"), signum));
   ACE_OS::exit (0);
 }
 
@@ -452,11 +452,11 @@ spawn_processes (ACCEPTOR *acceptor,
   // on the same port number for clients to connect.
   for (i = 0; i < n_servers; i++)
     {
-      pid_t pid = ACE_OS::fork ("child");
+      pid_t pid = ACE_OS::fork (ASYS_TEXT ("child"));
       switch (pid)
         {
         case -1:
-          ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"), ASYS_TEXT ("fork failed")));
           ACE_OS::exit (-1);
           /* NOTREACHED */
         case 0:             // In the child.
@@ -480,14 +480,14 @@ spawn_processes (ACCEPTOR *acceptor,
   for (i = 0; i < n_servers; i++)
     // Shutdown the servers.
     if (ACE_OS::kill (children[i], SIGTERM) == -1)
-      ACE_ERROR ((LM_ERROR, "(%P|%t) %p for %d\n", children[i]));
+      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p for %d\n"), children[i]));
 
   pid_t child;
 
   do
     {
       child = ACE_OS::wait ();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping %d\n", child));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) reaping %d\n"), child));
     }
   while (child != -1);
 
@@ -518,8 +518,8 @@ spawn_threads (ACCEPTOR *acceptor,
 
   for (i = 0; i < n_servers; ++i)
     {
-      ACE_NEW (server_name[i], char[32]);
-      ACE_OS::sprintf (server_name[i], "server%u", i);
+      ACE_NEW (server_name[i], ASYS_TCHAR[32]);
+      ACE_OS::sprintf (server_name[i], ASYS_TEXT ("server%u"), i);
 
       stack_size[i] = 40000;
       ACE_NEW (stack[i], char[stack_size[i]]);
@@ -528,7 +528,7 @@ spawn_threads (ACCEPTOR *acceptor,
       ACE_OS::memset (stack[i], 0xEE, stack_size[i]);
     }
 
-  char *client_name = "Conn client";
+  ASYS_TCHAR *client_name = ASYS_TEXT ("Conn client");
 #endif /* VXWORKS */
 
   if (ACE_Thread_Manager::instance ()->spawn_n
@@ -551,7 +551,8 @@ spawn_threads (ACCEPTOR *acceptor,
        , stack_size
 #endif /* VXWORKS */
        ) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "server thread create failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"),
+                ASYS_TEXT ("server thread create failed")));
 
   if (ACE_Thread_Manager::instance ()->spawn
       ((ACE_THR_FUNC) client,
@@ -561,7 +562,8 @@ spawn_threads (ACCEPTOR *acceptor,
        , &client_name
 #endif /* VXWORKS */
        ) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "client thread create failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n%a"),
+                ASYS_TEXT ("client thread create failed")));
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
@@ -580,22 +582,22 @@ spawn_threads (ACCEPTOR *acceptor,
 #endif /* (ACE_WIN32 || VXWORKS || ACE_PSOS) && ACE_HAS_THREADS */
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST ("Conn_Test");
+  ACE_START_TEST (ASYS_TEXT ("Conn_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, "c:i:s:", 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("c:i:s:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
       case 'c':
-        n_clients = atoi (getopt.optarg);
+        n_clients = ACE_OS::atoi (getopt.optarg);
         break;
       case 'i':
-        n_client_iterations = atoi (getopt.optarg);
+        n_client_iterations = ACE_OS::atoi (getopt.optarg);
         break;
       case 's':
-        n_servers = atoi (getopt.optarg);
+        n_servers = ACE_OS::atoi (getopt.optarg);
         break;
       }
 
@@ -606,20 +608,20 @@ main (int argc, char *argv[])
   // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "open"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"), ASYS_TEXT ("open")));
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (ACE_PSOS)
       if (spawn_processes (&acceptor, &server_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%r) %p\n", "spawn_processes"), 1);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%r) %p\n"), ASYS_TEXT ("spawn_processes")), 1);
 #elif defined (ACE_HAS_THREADS)
       spawn_threads (&acceptor, &server_addr);
 #else
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
+                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
 #endif /* ACE_HAS_THREADS */
     }
 

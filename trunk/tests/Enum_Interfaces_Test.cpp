@@ -32,9 +32,9 @@
 #include "ace/INET_Addr.h"
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Enum_Interfaces_Test");
+  ACE_START_TEST (ASYS_TEXT ("Enum_Interfaces_Test"));
 
   ACE_INET_Addr *the_addr_array;
   size_t how_many = 0;
@@ -43,17 +43,17 @@ main (int, char *[])
 
   if (rc != 0)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
-		"ACE::get_ip_interfaces failed"));
+		ASYS_TEXT ("%p\n"),
+		ASYS_TEXT ("ACE::get_ip_interfaces failed")));
   else if (how_many == 0)
     ACE_ERROR ((LM_ERROR,
-		"No interfaces presently configured in the kernel\n"));
+		ASYS_TEXT ("No interfaces presently configured in the kernel\n")));
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "there are %d interfaces\n", how_many));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("there are %d interfaces\n"), how_many));
 
       for (size_t i = 0; i < how_many; i++)
-	ACE_DEBUG ((LM_DEBUG, "\t%s\n", the_addr_array[i].get_host_addr ()));
+	ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\t%s\n"), the_addr_array[i].get_host_addr ()));
 
       delete [] the_addr_array;
     }

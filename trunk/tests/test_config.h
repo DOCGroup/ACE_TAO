@@ -102,6 +102,8 @@ const size_t ACE_MAX_ITERATIONS = 10;
 const size_t ACE_MAX_PROCESSES = 10;
 const size_t ACE_MAX_CLIENTS = 30;
 
+char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+
 #if !defined (ACE_HAS_WINCE)
 #define ACE_START_TEST(NAME) \
   const char *program = NAME; \
@@ -159,8 +161,6 @@ const size_t ACE_MAX_CLIENTS = 30;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Deleting old log file %s (if any)\n\n", temp)); \
   ACE_OS::unlink (temp);
 #endif /* ! VXWORKS */
-
-char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 class ACE_Test_Output
 {

@@ -91,7 +91,7 @@ test_boundaries (void)
   ACE_Handle_Set_Iterator i1 (handle_set);
 
   while ((handle = i1 ()) != ACE_INVALID_HANDLE)
-    ACE_ASSERT (!"this shouldn't get called since the set is empty!\n");
+    ACE_ASSERT (!ASYS_TEXT ("this shouldn't get called since the set is empty!\n"));
 
   // Insert the vector of HANDLEs into the set.
 
@@ -150,31 +150,31 @@ test_performance (size_t max_handles,
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
-	      "real time = %u usecs\n",
+	      ASYS_TEXT ("real time = %u usecs\n"),
 	      et.real_time));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "time per each of the %d calls = %u usecs\n",
+	      ASYS_TEXT ("time per each of the %d calls = %u usecs\n"),
 	      count,
 	      et.real_time / count));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_DEBUG ((LM_DEBUG,
-	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
+	      ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
 	      et.real_time,
 	      et.user_time,
 	      et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "time per each of the %d calls = %f usecs\n",
+	      ASYS_TEXT ("time per each of the %d calls = %f usecs\n"),
 	      count,
 	      et.real_time / double (count) * 1000000));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_START_TEST ("Handle_Set_Test");
+  ACE_START_TEST (ASYS_TEXT ("Handle_Set_Test"));
 
   int count = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_Handle_Set::MAXSIZE;
   size_t max_handles = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_Handle_Set::MAXSIZE;

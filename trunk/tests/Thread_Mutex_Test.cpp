@@ -32,9 +32,9 @@ test (void *args)
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = trying to acquire on iteration %d\n", i));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"), i));
       ACE_ASSERT (mutex->acquire () == 0);
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquired on iteration %d\n", i));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) = acquired on iteration %d\n"), i));
 
       // Sleep for a random amount of time between 0 and 2 seconds.
       // Note that it's ok to use rand() here because we are running
@@ -42,7 +42,7 @@ test (void *args)
       ACE_OS::sleep (ACE_OS::rand () % 2);
 
       ACE_ASSERT (mutex->release () == 0);
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released on iteration %d\n", i));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) = released on iteration %d\n"), i));
     }
 
   return 0;
@@ -59,20 +59,20 @@ spawn (void)
                                                 ACE_THR_FUNC (test),
                                                 (void *) &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 }
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Thread_Mutex_Test");
+  ACE_START_TEST (ASYS_TEXT ("Thread_Mutex_Test"));
 
   spawn ();
 
