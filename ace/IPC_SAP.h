@@ -31,7 +31,7 @@ public:
   int control (int cmd, void *) const;
   // Interface for ioctl. 
 
-  // = Common I/O descriptor options related to sockets.
+  // = Common I/O handle options related to sockets.
 
   int enable (int value) const;
   // Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
@@ -44,10 +44,10 @@ public:
   // which is passed as the <value>.
 
   ACE_HANDLE get_handle (void) const;
-  // Get the underlying descriptor. 
+  // Get the underlying handle. 
 
   void set_handle (ACE_HANDLE handle);
-  // Set the underlying descriptor. 
+  // Set the underlying handle. 
 
   void dump (void) const;
   // Dump the state of an object.
@@ -62,7 +62,7 @@ protected:
 
 private:
   ACE_HANDLE handle_;
-  // Underlying I/O descriptor.
+  // Underlying I/O handle.
 
   static pid_t pid_;
   // Cache the process ID. 
@@ -70,6 +70,6 @@ private:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/IPC_SAP.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_IPC_SAP_H */

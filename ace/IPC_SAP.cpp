@@ -35,7 +35,7 @@ ACE_IPC_SAP::ACE_IPC_SAP (void)
 }
 
 int
-ACE_IPC_SAP::enable (int signum) const
+ACE_IPC_SAP::enable (int value) const
 {
   ACE_TRACE ("ACE_IPC_SAP::enable");
 
@@ -44,7 +44,7 @@ ACE_IPC_SAP::enable (int signum) const
     ACE_IPC_SAP::pid_ = ACE_OS::getpid ();
 
 #if defined (ACE_WIN32) || defined (VXWORKS)
-  switch (signum)
+  switch (value)
     {
     case ACE_NONBLOCK:
       {
@@ -59,7 +59,7 @@ ACE_IPC_SAP::enable (int signum) const
       ACE_NOTSUP_RETURN (-1);
     }
 #else  /* ! ACE_WIN32 && ! VXWORKS */
-  switch (signum)
+  switch (value)
     {
 #if defined (SIGURG)
     case SIGURG:
@@ -82,8 +82,7 @@ ACE_IPC_SAP::enable (int signum) const
           || ACE::set_flags (this->handle_,
                              FASYNC) == -1)
         return -1;
-      else
-        return 0;
+      break;
 #else
       ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN && FASYNC */
@@ -94,32 +93,30 @@ ACE_IPC_SAP::enable (int signum) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETFD,
                          1) == -1)
-	return 1;
-      else
-	return 0;
+	return -1;
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_,
                           ACE_NONBLOCK) == ACE_INVALID_HANDLE)
         return -1;
-      else
-        return 0;
+      break;
     default:
       return -1;
     }
+  return 0;
 #endif /* ! ACE_WIN32 && ! VXWORKS */
 
   /* NOTREACHED */
 }
 
 int
-ACE_IPC_SAP::disable (int signum) const
+ACE_IPC_SAP::disable (int value) const
 {
   ACE_TRACE ("ACE_IPC_SAP::disable");
 
 #if defined (ACE_WIN32) || defined (VXWORKS)
-  switch (signum)
+  switch (value)
     {
     case ACE_NONBLOCK:
       // nonblocking argument (1)
@@ -134,7 +131,7 @@ ACE_IPC_SAP::disable (int signum) const
       ACE_NOTSUP_RETURN (-1);
     }
 #else  /* ! ACE_WIN32 && ! VXWORKS */
-  switch (signum)
+  switch (value)
     {
 #if defined (SIGURG)
     case SIGURG:
@@ -157,8 +154,7 @@ ACE_IPC_SAP::disable (int signum) const
           || ACE::clr_flags (this->handle_,
                              FASYNC) == -1)
         return -1;
-      else
-        return 0;
+      break;
 #else
       ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN && FASYNC */
@@ -169,21 +165,18 @@ ACE_IPC_SAP::disable (int signum) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETFD,
                          0) == -1)
-	return 1;
-      else
-	return 0;
+	return -1;
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_,
                           ACE_NONBLOCK) == -1)
         return -1;
-      else
-        return 0;
+      break;
     default:
       return -1;
     }
+  return 0;
 #endif /* ! ACE_WIN32 && ! VXWORKS */
-
   /* NOTREACHED */
 }
