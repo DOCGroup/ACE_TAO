@@ -409,7 +409,7 @@
 
 #  if defined (ACE_HAS_NEW_NOTHROW)
 #    define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
+   do { POINTER = new (ACE_nothrow) CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 #    define ACE_NEW(POINTER,CONSTRUCTOR) \

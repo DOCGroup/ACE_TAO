@@ -48,14 +48,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_IPC
 #endif /* ! ACE_WIN32 */
 
-// This is only needed here because we can't afford to call
-// ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
-// we will recurse infinitely!  Not for public use!
-#define ACE_NEW_RETURN_I(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-     } while (0)
-
 // Instance count for Log_Msg - used to know when dynamically
 // allocated storage (program name and host name) can be safely
 // deleted.
@@ -170,9 +162,9 @@ ACE_Log_Msg_Manager::get_lock (void)
     {
       ACE_NO_HEAP_CHECK;
 
-      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_,
-                        ACE_Recursive_Thread_Mutex,
-                        0);
+      ACE_NEW_RETURN (ACE_Log_Msg_Manager::lock_,
+                      ACE_Recursive_Thread_Mutex,
+                      0);
     }
 
   if (init_backend () == -1)
@@ -327,9 +319,9 @@ ACE_Log_Msg::instance (void)
       {
         ACE_NO_HEAP_CHECK;
 
-        ACE_NEW_RETURN_I (tss_log_msg,
-                          ACE_Log_Msg,
-                          0);
+        ACE_NEW_RETURN (tss_log_msg,
+                        ACE_Log_Msg,
+                        0);
         // Store the dynamically allocated pointer in thread-specific
         // storage.  It gets deleted via the ACE_TSS_cleanup function
         // when the thread terminates.

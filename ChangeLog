@@ -1,3 +1,18 @@
+Fri May 17 07:32:49 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Log_Msg.cpp: Replaced ACE_NEW_RETURN_I with ACE_NEW_RETURN.
+	  Thanks to Johnny Willemsen for reporting this.
+
+Thu May 16 20:15:36 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.i: Added ACE_HAS_ISASTREAM_PROTO guard around the
+	  extern "C" int isastream() method.  Thanks to Oleg Terletsky
+ 	  <oterletsky@comcast.net> for reporting this.
+
+	* ace/ARGV.h: Added a comment that points out the "add()" method
+	  doesn't handle memory management.  Thanks to Kyle Brost
+ 	  <kyle.brost@quest.com> and Don Hinton for clarifying this.
+
 Thu May 16 17:05:19 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Connector.cpp (handle_input, handle_output):
