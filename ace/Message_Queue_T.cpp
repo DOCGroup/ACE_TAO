@@ -510,7 +510,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
 {
-  size_t number_flushed = 0;
+  int number_flushed = 0;
 
   // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
   // and <release> their memory.

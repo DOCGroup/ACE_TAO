@@ -96,7 +96,7 @@ public:
 
   /// Receive an <iovec> of size <iovcnt> from the connected socket.
   ssize_t recvv_n (iovec iov[],
-                   size_t iovcnt,
+                   int iovcnt,
                    const ACE_Time_Value *timeout = 0,
                    size_t *bytes_transferred = 0) const;
 
@@ -122,7 +122,7 @@ public:
 
   /// Send an <iovec> of size <iovcnt> to the connected socket.
   ssize_t sendv_n (const iovec iov[],
-                   size_t iovcnt,
+                   int iovcnt,
                    const ACE_Time_Value *timeout = 0,
                    size_t *bytes_transferred = 0) const;
 
