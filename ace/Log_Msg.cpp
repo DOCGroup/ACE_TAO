@@ -900,7 +900,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   type = SKIP_SPRINTF;
 #if defined (ACE_WIN32)
                   ACE_OS::sprintf (bp, ASYS_TEXT ("%u"), ACE_Thread::self ());
-#elif defined (AIX)
+#elif defined (AIX) && (ACE_AIX_MINOR_VERS <= 2)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,
                   // get the kernel thread ID (tid_t) via thread_self() and
