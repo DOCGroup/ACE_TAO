@@ -43,7 +43,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "cb_ptr_ = %x", this->cb_ptr_));
   ACE_DEBUG ((LM_DEBUG, "\n"));
 #if defined (ACE_MALLOC_STATS)
-  this->malloc_stats_.dump ();
+  this->cp_ptr_->malloc_stats_.dump ();
 #endif /* ACE_MALLOC_STATS */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -56,7 +56,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::print_stats (void)
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::print_stats");
   ACE_GUARD (LOCK, ace_mon, this->lock_);
 
-  this->cb_ptr_->malloc_stats_.print ();
+  this->cb_ptr_->malloc_stats_.dump ();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) contents of freelist:\n"));
 
   for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_; 

@@ -104,6 +104,38 @@ public:
   // Dump the state of the object.
 };
 
+#if defined (ACE_MALLOC_STATS)
+#include "ace/Synch_T.h"
+#if defined (ACE_HAS_THREADS)
+#define ACE_PROCESS_MUTEX ACE_Process_Mutex
+#else
+#include "ace/SV_Semaphore_Simple.h"
+#define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
+#endif /* ACE_HAS_THREADS */
+
+typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
+
+struct ACE_Export ACE_Malloc_Stats
+// TITLE
+//    This keeps stats on the usage of the memory manager.
+{
+  ACE_Malloc_Stats (void);
+  void dump (void) const;
+
+  ACE_INT nchunks_; 
+  // Coarse-grained unit of allocation. 
+
+  ACE_INT nblocks_; 
+  // Fine-grained unit of allocation. 
+
+  ACE_INT ninuse_;  
+  // Number of blocks in use 
+};
+#define AMS(X) X
+#else
+#define AMS(X) 
+#endif /* ACE_MALLOC_STATS */
+
 // Allow the user to override this in the config.h file.
 #if !defined (ACE_MALLOC_ALIGN)
 #define ACE_MALLOC_ALIGN sizeof (long)
@@ -194,39 +226,6 @@ public:
   // Dump the state of the object.
 };
 
-#if defined (ACE_MALLOC_STATS)
-#include "ace/Synch_T.h"
-#if defined (ACE_HAS_THREADS)
-#define ACE_PROCESS_MUTEX ACE_Process_Mutex
-#else
-#include "ace/SV_Semaphore_Simple.h"
-#define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
-#endif /* ACE_HAS_THREADS */
-
-typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
-
-struct ACE_Export ACE_Malloc_Stats
-// TITLE
-//    This keeps stats on the usage of the memory manager.
-{
-  ACE_Malloc_Stats (void);
-  void dump (void) const;
-
-  ACE_INT nchunks_; 
-  // Coarse-grained unit of allocation. 
-
-  ACE_INT nblocks_; 
-  // Fine-grained unit of allocation. 
-
-  ACE_INT ninuse_;  
-  // Number of blocks in use 
-};
-#define AMS(X) X
-#else
-#define AMS(X) 
-#endif /* ACE_MALLOC_STATS */
-
-
 class ACE_New_Allocator : public ACE_Allocator
   // = TITLE
   //     Defines a class that provided a simple implementation of
@@ -242,36 +241,21 @@ class ACE_New_Allocator : public ACE_Allocator
   //     bind/find/etc. while using the new/delete operators.
 {
 public:
-  
-  void *malloc (size_t nbytes); 
-  
-  void *calloc (size_t nbytes, char initial_value = '\0');
-  
-  void free (void *ptr);
-  
-  int remove (void);
-  
-  int bind (const char *name, void *pointer, int duplicates = 0);
-  
-  int trybind (const char *name, void *&pointer);
-  
-  int find (const char *name, void *&pointer);
-  
-  int find (const char *name);
-  
-  int unbind (const char *name);
-  
-  int unbind (const char *name, void *&pointer);
-  
-  int sync (ssize_t len = -1, int flags = MS_SYNC);
-  
-  int sync (void *addr, size_t len, int flags = MS_SYNC);
-  
-  int protect (ssize_t len = -1, int prot = PROT_RDWR); 
-  
-  int protect (void *addr, size_t len, int prot = PROT_RDWR);
-  
-  void dump (void) const;
+  virtual void *malloc (size_t nbytes); 
+  vritual void *calloc (size_t nbytes, char initial_value = '\0');
+  virtual void free (void *ptr);
+  virtual int remove (void);
+  virtual int bind (const char *name, void *pointer, int duplicates = 0);
+  virtual int trybind (const char *name, void *&pointer);
+  virtual int find (const char *name, void *&pointer);
+  virtual int find (const char *name);
+  virtual int unbind (const char *name);
+  virtual int unbind (const char *name, void *&pointer);
+  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
+  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
+  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR); 
+  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  virtual void dump (void) const;
 };
 
 #if defined (__ACE_INLINE__)

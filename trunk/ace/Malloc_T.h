@@ -70,7 +70,7 @@ public:
   
   // = Map manager like functions
 
-  int bind (const char *name, void *pointer, int duplicates = 0);
+  virtual int bind (const char *name, void *pointer, int duplicates = 0);
   // Associate <name> with <pointer>.  If <duplicates> == 0 then do
   // not allow duplicate <name>/<pointer> associations, else if
   // <duplicates> != 0 then allow duplicate <name>/<pointer>
@@ -79,7 +79,7 @@ public:
   // bind a previously bound <name> and <duplicates> == 0, else
   // returns -1 if a resource failure occurs.  
 
-  int trybind (const char *name, void *&pointer);
+  virtual int trybind (const char *name, void *&pointer);
   // Associate <name> with <pointer>.  Does not allow duplicate
   // <name>/<pointer> associations.  Returns 0 if successfully binds
   // (1) a previously unbound <name>, 1 if trying to bind a previously
@@ -89,38 +89,38 @@ public:
   // to use <pointer> (e.g., to free it) a copy must be maintained by
   // the caller.
 
-  int find (const char *name, void *&pointer);
+  virtual int find (const char *name, void *&pointer);
   // Locate <name> and pass out parameter via pointer.  If found,
   // return 0, Returns -1 if failure occurs.
 
-  int find (const char *name);
+  virtual int find (const char *name);
   // returns 0 if the name is in the mapping. -1, otherwise.
 
-  int unbind (const char *name);
+  virtual int unbind (const char *name);
   // Unbind (remove) the name from the map.  Don't return the pointer
   // to the caller
 
-  int unbind (const char *name, void *&pointer);
+  virtual int unbind (const char *name, void *&pointer);
   // Break any association of name.  Returns the value of pointer in
   // case the caller needs to deallocate memory.
 
   // = Protection and "sync" (i.e., flushing data to backing store).
 
-  int sync (ssize_t len = -1, int flags = MS_SYNC);
+  virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Sync <len> bytes of the memory region to the backing store
   // starting at <this->base_addr_>.  If <len> == -1 then sync the
   // whole region.
 
-  int sync (void *addr, size_t len, int flags = MS_SYNC);
+  virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
   // Sync <len> bytes of the memory region to the backing store
   // starting at <addr_>.
 
-  int protect (ssize_t len = -1, int prot = PROT_RDWR);
+  virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
   // then change protection of all pages in the mapped region.
 
-  int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
