@@ -704,6 +704,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
   if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr_.sin6_addr)) {
     ACE_UINT32 addr;
     addr = this->get_ip_address();
+    addr = htonl(addr);
     return ACE_OS::inet_ntop (AF_INET, (const void*)&addr,dst,size);
   }
   dst[0] = '[';
