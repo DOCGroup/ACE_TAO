@@ -13,6 +13,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Endpoint.h"
+#include "tao/Connection_Purging_Strategy.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -252,8 +253,8 @@ TAO_SSLIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ().cache_transport (&prop,
-                                                                this->transport ());
+  return this->orb_core ()->purging_strategy ()->add_to_cache (&prop,
+                                                               this->transport ());
 }
 
 

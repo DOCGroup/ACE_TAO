@@ -3,6 +3,7 @@
 #include "test_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/Connection_Purging_Strategy.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
@@ -47,7 +48,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback,
           this->callback_->callback_method (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
 
-          ACE_ASSERT(this->orb_->orb_core ()->transport_cache ().total_size () > 1);
+          ACE_ASSERT(this->orb_->orb_core ()->purging_strategy ()->total_size () > 1);
         }
     }
 

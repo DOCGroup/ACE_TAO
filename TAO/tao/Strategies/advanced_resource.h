@@ -14,6 +14,8 @@
 
 #include "tao/ORB_Core.h"
 
+class TAO_Connection_Purging_Strategy;
+
 class TAO_Strategies_Export TAO_Resource_Factory_Changer
 {
 public:
@@ -86,6 +88,7 @@ public:
 
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
 
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
 protected:

@@ -27,7 +27,10 @@ OBJFILES = \
 	$(OBJDIR)\advanced_resource.obj \
 	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\Linear_Priority_Mapping.obj \
-	$(OBJDIR)\Direct_Priority_Mapping.obj
+	$(OBJDIR)\Direct_Priority_Mapping.obj \
+	$(OBJDIR)\FIFO_Connection_Purging_Strategy.obj \
+	$(OBJDIR)\LFU_Connection_Purging_Strategy.obj \
+	$(OBJDIR)\NULL_Connection_Purging_Strategy.obj
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_STRATEGIES_CFLAGS)

@@ -195,6 +195,10 @@
 # define TAO_PURGE_PERCENT 20
 #endif /* TAO_PURGE_PERCENT */
 
+#if !defined (TAO_CONNECTION_CACHE_MAXIMUM)
+# define TAO_CONNECTION_CACHE_MAXIMUM (ACE::max_handles () / 2)
+#endif /* TAO_CONNECTION_CACHE_MAXIMUM */
+
 // This deals with platforms that support namespaces vs platforms that
 // don't.  @@ MSVC's namespace implementation is somehow broken.
 // The following macros are required to deal with the most bizarre and insane

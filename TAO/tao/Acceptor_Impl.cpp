@@ -29,6 +29,8 @@
 #include "tao/ORB_Table.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Connector_Registry.h"
+#include "tao/Connection_Purging_Strategy.h"
+
 #include "ace/Object_Manager.h"
 
 #if !defined(__ACE_INLINE__)
@@ -54,11 +56,16 @@ template <class SVC_HANDLER> int
 TAO_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   if (sh == 0)
-    ACE_NEW_RETURN (sh,
-                    SVC_HANDLER (this->orb_core_,
-                                 this->lite_flag_,
-                                 this->arg_),
-                    -1);
+    {
+      // Purge connections (if necessary)
+      this->orb_core_->purging_strategy ()->purge ();
+
+      ACE_NEW_RETURN (sh,
+                      SVC_HANDLER (this->orb_core_,
+                                   this->lite_flag_,
+                                   this->arg_),
+                      -1);
+    }
 
   return 0;
 }
