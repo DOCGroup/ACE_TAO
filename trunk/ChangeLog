@@ -1,3 +1,8 @@
+Tue May  9 17:38:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile_win32.pl:
+          Include the new library used in the RT CORBA tests.
+
 Tue May  9 09:01:24 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Export/README: (added)
@@ -15,9 +20,9 @@ Tue May  9 09:01:24 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon May  8 14:37:32 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task.h: Cleaned up the documentation so that it will
-	  work correctly with class2man.  Thanks to Charlie Duke
- 	  <cduke@www.cuseemeworld.com> for reporting this.
+        * ace/Task.h: Cleaned up the documentation so that it will
+          work correctly with class2man.  Thanks to Charlie Duke
+          <cduke@www.cuseemeworld.com> for reporting this.
 
 Mon May 08 22:56:28 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -33,10 +38,10 @@ Mon May  8 11:02:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon May  8 12:30:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_kcc.GNU: Added
-	  "--once_instantiation_per_object" flag for both compiler and
-	  linker to avoid some warnings about duplicate symbol
-	  definitions.
+        * include/makeinclude/platform_sunos5_kcc.GNU: Added
+          "--once_instantiation_per_object" flag for both compiler and
+          linker to avoid some warnings about duplicate symbol
+          definitions.
 
 Sun May  7 19:50:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -68,8 +73,8 @@ Sat May  6 17:49:01 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat May  6 19:33:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd.GNU: Removed definition
-	  BIN_TRUE.  It's no longer used.
+        * include/makeinclude/platform_freebsd.GNU: Removed definition
+          BIN_TRUE.  It's no longer used.
 
 Thu May  4 14:53:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -107,14 +112,14 @@ Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu May  4 14:47:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd.GNU: Defined BIN_TRUE as
-	  /usr/bin/true.
+        * include/makeinclude/platform_freebsd.GNU: Defined BIN_TRUE as
+          /usr/bin/true.
 
 Wed May  3 19:35:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Log_Msg.cpp:
-	  The implementation of the log_priority_enabled function did not
-	  match its declaration.
+        * ace/Log_Msg.cpp:
+          The implementation of the log_priority_enabled function did not
+          match its declaration.
 
 Wed May  3 17:21:50 2000  Darrell Brunsch <brunsch@uci.edu>
 

@@ -193,6 +193,7 @@ TAO/performance-tests/Pluggable/Pluggable.dsw, Pluggable Server:
 TAO/performance-tests/Pluggable/Pluggable.dsw, Pluggable Client:
 TAO/performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw, Reliable Oneways Server:
 TAO/performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw, Reliable Oneways Client:
+TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsw, RTCORBA Test Common DLL:
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw, Server:
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw, Client:
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.dsw, Server:
@@ -409,6 +410,7 @@ TAO/performance-tests/Pluggable/Pluggable.dsw, Pluggable Server:
 TAO/performance-tests/Pluggable/Pluggable.dsw, Pluggable Client:
 TAO/performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw, Reliable Oneways Server:
 TAO/performance-tests/RTCorba/Oneways/Reliable/Reliable.dsw, Reliable Oneways Client:
+TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsw, RTCORBA Test Common DLL:
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw, Server:
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw, Client:
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.dsw, Server:
