@@ -15,7 +15,8 @@
 //      conjunction with the <ACE_Hash_Map_Manager>.
 //
 // = AUTHOR
-//    James Hu and Douglas C. Schmidt
+//    James Hu <jxh@cs.wustl.edu> and 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -31,25 +32,25 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-typedef ACE_Hash_Map_Entry<ASYS_TCHAR *, 
-                           ASYS_TCHAR *> HASH_STRING_ENTRY;
+typedef ACE_Hash_Map_Entry<LPCTSTR, 
+                           LPCTSTR> HASH_STRING_ENTRY;
 
-typedef ACE_Hash_Map_Manager_Ex<ASYS_TCHAR *, 
-                                ASYS_TCHAR *, 
-                                ACE_Hash<ASYS_TCHAR *>, 
-                                ACE_Equal_To<ASYS_TCHAR *>, 
+typedef ACE_Hash_Map_Manager_Ex<LPCTSTR, 
+                                LPCTSTR, 
+                                ACE_Hash<LPCTSTR>, 
+                                ACE_Equal_To<LPCTSTR>, 
                                 ACE_Null_Mutex> HASH_STRING_MAP;
 
-typedef ACE_Hash_Map_Iterator_Ex<ASYS_TCHAR *, 
-                                 ASYS_TCHAR *, 
-                                 ACE_Hash<ASYS_TCHAR *>, 
-                                 ACE_Equal_To<ASYS_TCHAR *>, 
+typedef ACE_Hash_Map_Iterator_Ex<LPCTSTR, 
+                                 LPCTSTR, 
+                                 ACE_Hash<LPCTSTR>, 
+                                 ACE_Equal_To<LPCTSTR>, 
                                  ACE_Null_Mutex> HASH_STRING_ITER;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *, 
-                                         ASYS_TCHAR *, 
-                                         ACE_Hash<ASYS_TCHAR *>, 
-                                         ACE_Equal_To<ASYS_TCHAR *>, 
+typedef ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, 
+                                         LPCTSTR, 
+                                         ACE_Hash<LPCTSTR>, 
+                                         ACE_Equal_To<LPCTSTR>, 
                                          ACE_Null_Mutex> HASH_STRING_REVERSE_ITER;
 
 struct String_Table
@@ -84,7 +85,8 @@ static const size_t MAX_HASH = 6;
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
-static const size_t String_Table_size = sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_SIZE + MAX_HASH);
+static const size_t String_Table_size =
+  sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_SIZE + MAX_HASH);
 static ACE_Static_Allocator<String_Table_size> alloc;
 
 static int
@@ -105,7 +107,7 @@ run_test (void)
                          ASYS_TEXT ("bind"),
                          string_table[i].key_), -1);
 
-  ASYS_TCHAR *entry;
+  LPCTSTR entry;
 
   // Check the <find> operation.
   for (i = 0; string_table[i].key_ != 0; i++)
@@ -123,7 +125,7 @@ run_test (void)
 
   // Check the <trybind> operation.
   {
-    ASYS_TCHAR *pc = string_table[1].value_;
+    LPCTSTR pc = string_table[1].value_;
     if (hash.trybind (string_table[0].key_,
                       pc) != 1)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -147,8 +149,8 @@ run_test (void)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
                     i,
-                    (ASYS_TCHAR *) entry->ext_id_,
-                    (ASYS_TCHAR *) entry->int_id_));
+                    (LPCTSTR) entry->ext_id_,
+                    (LPCTSTR) entry->int_id_));
         i++;
       }
   }
@@ -181,8 +183,8 @@ run_test (void)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("iterating (%d): [%s, %s]\n"),
                     i,
-                    (ASYS_TCHAR *) entry->ext_id_,
-                    (ASYS_TCHAR *) entry->int_id_));
+                    (LPCTSTR) entry->ext_id_,
+                    (LPCTSTR) entry->int_id_));
         i++;
       }
   }
@@ -204,17 +206,17 @@ main (int, ASYS_TCHAR *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>;
-template class ACE_Hash_Map_Manager_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>;
+template class ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>;
 template class ACE_Static_Allocator<String_Table_size>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<ASYS_TCHAR *, ASYS_TCHAR *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ASYS_TCHAR *, ASYS_TCHAR *, ACE_Hash<ASYS_TCHAR *>, ACE_Equal_To<ASYS_TCHAR *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<LPCTSTR, LPCTSTR>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<LPCTSTR, LPCTSTR, ACE_Hash<LPCTSTR>, ACE_Equal_To<LPCTSTR>, ACE_Null_Mutex>
 #pragma instantiate ACE_Static_Allocator<String_Table_size>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -129,7 +129,7 @@ test_active_map_manager (size_t table_size,
       ACE_ASSERT (map.current_size () == remaining_entries);
     }
 
-  delete[] active_keys;
+  delete [] active_keys;
 }
 
 static void
@@ -552,11 +552,14 @@ run_test (void (*ptf) (size_t, size_t, int),
 
   timer.elapsed_time (et);
 
-  ASYS_TCHAR *test_iterators_string = 0;
+  LPCTSTR test_iterators_string = 0;
+
   if (test_iterators)
-    test_iterators_string = ASYS_TEXT ("includes executing iterators");
+    test_iterators_string =
+      ASYS_TEXT ("includes executing iterators");
   else
-    test_iterators_string = ASYS_TEXT ("doesn't include executing iterators");
+    test_iterators_string =
+      ASYS_TEXT ("doesn't include executing iterators");
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("time to test a map of size %d for %d iterations using %s (%s)\n"),
