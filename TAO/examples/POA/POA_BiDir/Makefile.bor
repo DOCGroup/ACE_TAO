@@ -1,12 +1,11 @@
-
 #
-# Makefile for building the NewPOA example
+# Makefile for building the POA_BiDir example
 #
 
-NAME = NewPOA
+NAME = POA_BiDir
 
 OBJFILES = \
-        $(OBJDIR)\NewPOA.obj
+        $(OBJDIR)\POA_BiDir.obj
 
 CPPDIR = .;..
 
