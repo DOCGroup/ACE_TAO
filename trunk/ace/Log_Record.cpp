@@ -138,8 +138,8 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
       const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0)
         ? ((char *) ASYS_TEXT ("<local_host>")) : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-      const ASYS_TCHAR *lhost_name = host_name ==
-        0 ? ASYS_TEXT ("<local_host>") : host_name;
+      const ASYS_TCHAR *lhost_name = ((host_name == 0)
+        ? ASYS_TEXT ("<local_host>") : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 
       ACE_OS::sprintf (verbose_msg,
