@@ -1,3 +1,30 @@
+Wed Mar 31 17:56:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Advanced/ch_12/icp.h:
+	* examples/Advanced/ch_18/icp.h:
+	* examples/Advanced/ch_21/icp.h:
+	* examples/Advanced/ch_8_and_10/icp.h:
+	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+	* orbsvcs/performance-tests/LoadBalancing/LoadBalancing.mpc:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
+	* performance-tests/Anyop/Anyop.mpc:
+	* performance-tests/Latency/Collocation/Collocation.mpc:
+
+	  Fixes for fuzz warnings.
+
 Wed Mar 31 15:29:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PICurrent_Copy_Callback.h:
