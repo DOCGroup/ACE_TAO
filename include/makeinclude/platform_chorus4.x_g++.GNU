@@ -98,11 +98,15 @@ AR              = $(TOOLDIR)/ar
 RANLIB          = $(TOOLDIR)/ranlib
 
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 #
 # Flag Settings
 #
 CFLAGS  += -w
-CCFLAGS += $(CFLAGS) -fno-implicit-templates    \
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG) \
            -fno-strict-prototypes               \
            -Usun                                \
            -fno-builtin                         \
@@ -135,7 +139,7 @@ CCFLAGS  += -D__CHORUS__=400                    \
 ifeq ($(exceptions),1)
 else  # ! exceptions
   CCFLAGS += -fno-exceptions
-endif # ! exceptions     
+endif # ! exceptions
 
 OCFLAGS        += -O
 PIC             = -fPIC
@@ -154,7 +158,7 @@ CHORUSLINK = true
 PRELIB     = @true
 
 #
-# Special link process to get the right libraries and 
+# Special link process to get the right libraries and
 # build up the static constructors and destructors.
 #
 POSTLINK= -r $(OS_DIR)/lib/CC/libC.a $(OS_DIR)/lib/libbsd/libbsd.a          \
@@ -171,4 +175,3 @@ POSTLINK= -r $(OS_DIR)/lib/CC/libC.a $(OS_DIR)/lib/libbsd/libbsd.a          \
               $(NUCLEUS_DIR)/lib/crt/crtn.o;                                \
         $(RM) $@.xp.o;                                                      \
         $(RM) $@.ct.o
-

@@ -65,20 +65,20 @@ CFLAGS += $(MODEL_FLAGS)
 # Never use -pipe with 95/98. On NT/2000, not sure if it helps.
 CFLAGS  += -W -Wall -Wpointer-arith
 
-ifeq ($(IMPLICIT_TEMPLATES_FLAG),)
-  IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
-endif
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 EXEEXT = .exe
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
 
 ifeq ($(mingw32),1)
 ifeq ($(winsock2),1)
-LIBS    += -lws2_32 -lmswsock 
+LIBS    += -lws2_32 -lmswsock
 endif
 LIBS    += -lwsock32
 endif

@@ -25,7 +25,12 @@ endif
 CC              = gcc
 CXX             = g++
 CFLAGS          += -D_REENTRANT
-CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG) -fno-strict-prototypes
 DCFLAGS         += -g
 LD              = $(CXX)
 DLD             = $(CXX)

@@ -29,7 +29,7 @@ endif
 ifeq (1,$(threads))
   CFLAGS  += -mthreads
 endif
- 
+
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
 AIX_MAJOR_VERS := $(shell uname -v)
@@ -38,8 +38,14 @@ AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 
 CC             = gcc
 CXX            = g++
+
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+
 CFLAGS         += -W -Wall -pipe -mcpu=common -DACE_AIX_VERS=$(AIX_VERS)
-CCFLAGS        += $(CFLAGS) -fno-implicit-templates
+CCFLAGS        += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS        += -g
 DLD             = $(CXX)
 LD              = $(CXX)
