@@ -1,3 +1,17 @@
+Sat Sep 12 13:13:39 EDT 1998  James CE Johnson <jcej@lads.com>
+
+          docs/tutorials/003/Makefile
+          Removed dependency stuff since installations may vary
+    
+          docs/tutorials/003/client.cpp
+          docs/tutorials/003/page01.html
+          docs/tutorials/004/Makefile
+          docs/tutorials/004/client.cpp
+          docs/tutorials/004/page01.html
+    
+          Converted to new style with embedded comments instead of
+          line-numbered comments.
+
 Fri Sep 11 22:46:54 EDT 1998  James CE Johnson <jcej@lads.com>
 
           docs/tutorials/001/Source.tgz
@@ -16,8 +30,8 @@ Fri Sep 11 22:46:54 EDT 1998  James CE Johnson <jcej@lads.com>
           docs/tutorials/002/page04.html
           docs/tutorials/002/server.cpp
 
-	  Updated to "new style".  Corrected issues with Reactor
-	  based on recent mailing list discussions.
+          Updated to "new style".  Corrected issues with Reactor
+          based on recent mailing list discussions.
 
 Fri Sep 11 12:30:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
