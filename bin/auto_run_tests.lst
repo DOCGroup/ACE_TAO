@@ -85,7 +85,8 @@ TAO/examples/Load_Balancing/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM
