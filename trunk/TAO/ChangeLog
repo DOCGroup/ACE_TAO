@@ -1,3 +1,9 @@
+Fri Aug 15 14:58:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp:
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
+          Fixes for emulated exceptions, will also fix the fuzz error.
+
 Fri Aug 15 14:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
