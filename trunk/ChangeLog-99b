@@ -1,3 +1,9 @@
+Wed Mar 17 13:59:42 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	* acconfig.h:
+	  Added autoconf check for rename() system call.
+
 Wed Mar 17 07:55:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_freebsd_pthread.GNU: Made some
