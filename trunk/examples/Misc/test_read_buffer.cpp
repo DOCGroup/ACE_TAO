@@ -18,7 +18,7 @@ main (int argc, char *argv[])
   while ((buf = rb.read (term, search, replace)) != 0)
     {
       ::write (1, buf, rb.size ());
-      ACE_Service_Config::allocator ()->free (buf);
+      ACE_Service_Config::alloc ()->free (buf);
     }
   return 0;
 }

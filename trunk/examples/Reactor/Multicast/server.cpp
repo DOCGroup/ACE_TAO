@@ -74,7 +74,7 @@ Server_Events::Server_Events (u_short port,
   this->how_long_ = 0;
 
   this->log_record_ = (Log_Wrapper::ACE_Log_Record *) &buf_;
-  this->message_    = &buf_[sizeof (Log_Wrapper::ACE_Log_Record)];
+  this->message_ = &buf_[sizeof (Log_Wrapper::ACE_Log_Record)];
 }
 
 // A destructor that emacs refuses to color blue ;-)
