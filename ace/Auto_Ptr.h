@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_AUTO_PTR_H)
+#ifndef ACE_AUTO_PTR_H
 #define ACE_AUTO_PTR_H
 
 #include "ace/ACE.h"

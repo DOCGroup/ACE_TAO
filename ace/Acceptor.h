@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_ACCEPTOR_H)
+#ifndef ACE_ACCEPTOR_H
 #define ACE_ACCEPTOR_H
 
 #include "ace/Service_Config.h"

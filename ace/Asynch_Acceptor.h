@@ -13,7 +13,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_ASYNCH_ACCEPTOR_H)
+#ifndef ACE_ASYNCH_ACCEPTOR_H
 #define ACE_ASYNCH_ACCEPTOR_H
 
 #include "ace/OS.h"
