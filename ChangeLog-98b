@@ -1,3 +1,10 @@
+Mon Dec 28 23:12:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/DLL.h,
+	  ace/Mem_Map.h,
+	  ace/Read_Buffer.h:
+	  Added ACE_UNIMPLEMENTED_FUNC() macros to these headers.
+
 Wed Dec 28 22:55:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/DLL.h: Prevent copying and assignment by putting these

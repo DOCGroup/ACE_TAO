@@ -94,8 +94,8 @@ private:
   // Pointer to the allocator.
 
   // = Disallow copying and assignment...
-  void operator= (const ACE_Read_Buffer &);
-  ACE_Read_Buffer (const ACE_Read_Buffer &);
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Read_Buffer &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Read_Buffer (const ACE_Read_Buffer &))
 };
 
 #if defined (__ACE_INLINE__)
