@@ -73,6 +73,10 @@ extern "C"
   char *mktemp (char *);
 #endif /* !ACE_WIN32 && ACE_LACKS_MKTEMP */
 
+#if defined (DIGITAL_UNIX)
+  extern int _Prand_r (unsigned int *seedptr);
+#endif /* DIGITAL_UNIX */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

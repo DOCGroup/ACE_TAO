@@ -26,6 +26,10 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_TLI.h"
 
+#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+#  include "ace/OS_NS_poll.h"
+#endif /* ACE_HAS_POLL  && ACE_HAS_LIMITED_SELECT */
+
 ACE_RCSID(ace, ACE, "$Id$")
 
   // Static data members.

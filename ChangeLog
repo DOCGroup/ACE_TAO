@@ -1,3 +1,38 @@
+Wed Nov  5 19:03:20 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/ACE.cpp:
+          Added #include of OS_NS_poll.h if ACE_HAS_POLL and
+          ACE_HAS_LIMITED_SELECT are defined.  Thanks to Andrew G. Harvey
+          <agh@cisco.com> for reporting this.
+
+        * ace/INET_Addr.cpp:
+          Added ACE_UNUSED_ARG wrapper around the map variable when
+          ACE_HAS_IPV6 isn't defined to get rid of warning.
+
+        * ace/Log_Msg.cpp:
+          Changed #ifdef to include Object_Manager_Base.h if ACE_MT_SAFE
+          != 0 (instead of == 0) instead of Object_Manger.h.
+
+        * ace/Object_Manager.h:
+        * ace/Static_Object_Lock.h:
+          Added new file, Static_Object_Lock.h, and moved
+          ACE_Stratic_Object_Lock.h there to help reduce need to include
+          Object_Manger.h.
+
+        * ace/Reactor.cpp:
+          Made #includes of Reactor implementations conditional on usage.
+          Removed #include of Reactor_Impl.h and Handle_Set.h
+          (Handle_Set.h isn't needed and Reactor_Impl.h doesn't need to be
+          read again).  Include Static_Object_Lock.h instead of
+          Object_Manager.h.
+
+        * OS.i:
+        * ace/os_include/os_pwd.h:
+        * ace/os_include/os_stdlib.h:
+        * ace/os_include/os_time.h:
+          Moved remaining functions prototypes for AIX and Digital Unix to
+          the appropriate places.
+
 Wed Nov  5 11:58:04 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp,

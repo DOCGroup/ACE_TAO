@@ -850,6 +850,8 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                           &newaddress,
                           sizeof (newaddress));
         }
+#else
+      ACE_UNUSED_ARG (map);
 #endif /* ACE_HAS_IPV6 */
 
       return 0;

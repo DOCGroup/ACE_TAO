@@ -87,6 +87,13 @@ typedef struct timespec * ACE_TIMESPEC_PTR;
 typedef const struct timespec * ACE_TIMESPEC_PTR;
 #endif /* HPUX */
 
+#if defined (DIGITAL_UNIX)
+  extern char *_Pctime_r (const time_t *, char *);
+  extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
+  extern struct tm *_Pgmtime_r (const time_t *, struct tm *);
+  extern char *_Pasctime_r (const struct tm *, char *);
+#endif /* DIGITAL_UNIX */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
