@@ -9,6 +9,10 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
           of course, so that was leaked if the fork was attempted
           but failed.
 
+        * tests/run_tests.vxworks: changed
+          Message_Queue_Notifications_Test.cpp to
+          Message_Queue_Notifications_Test.
+
 Mon Oct 26 01:49:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/Env_Value_Test.cpp (main): Changed argv and envp to type
