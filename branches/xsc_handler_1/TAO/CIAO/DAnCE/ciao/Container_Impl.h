@@ -73,8 +73,7 @@ namespace CIAO
                          Deployment::UnknownImplId,
                          Deployment::ImplEntryPointNotFound,
                          Deployment::InstallationFailure,
-                         Components::InvalidConfiguration,
-                         Components::RemoveFailure));
+                         Components::InvalidConfiguration));
 
     /// Remove all homes and components
     virtual void 

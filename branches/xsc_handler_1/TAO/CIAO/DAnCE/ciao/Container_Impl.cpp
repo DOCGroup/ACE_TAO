@@ -48,12 +48,12 @@ Deployment::ComponentInfos *
 CIAO::Container_Impl::install (
     const ::Deployment::ContainerImplementationInfo & container_impl_info
     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::UnknownImplId,
-                   Deployment::ImplEntryPointNotFound,
-                   Deployment::InstallationFailure,
-                   Components::InvalidConfiguration,
-                   Components::RemoveFailure))
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        ::Deployment::UnknownImplId,
+        ::Deployment::ImplEntryPointNotFound,
+        ::Deployment::InstallationFailure,
+        ::Components::InvalidConfiguration))
 {
   Deployment::ComponentInfos_var retv;
   ACE_TRY

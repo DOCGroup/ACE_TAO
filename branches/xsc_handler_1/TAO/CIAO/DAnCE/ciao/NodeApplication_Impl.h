@@ -121,8 +121,7 @@ namespace CIAO
 
     // Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
+      ACE_THROW_SPEC ((CORBA::SystemException));
       
     /// Create a container interface, which will be hosted in this NodeApplication.
     virtual ::Deployment::Container_ptr 
