@@ -1,4 +1,11 @@
-Mon Aug 30 02:11:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 30 02:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): Added a missing "}" and fixed indentation
+	  problem in generated code.  This was causing compilation errors
+	  in tests/Collocation project.
+
+Mon Aug 30 02:37:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	Merging the PI-current (Interceptors) branch to the main trunk.
 
