@@ -16374,6 +16374,21 @@ NODEP_CPP_INVOC=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_LookupTable.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -31113,6 +31128,10 @@ SOURCE=.\IIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\InconsistentTypeCodeC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOR_LookupTable.h
 # End Source File
 # Begin Source File
 
