@@ -8,9 +8,14 @@ Sun Nov 14 18:13:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 	* configure.in:
 
 	  User must now specify the "--enable-maintainer-mode" configure
-	  script option before in order to be able to use the configure
-	  script.  Once autoconf support is fully integrated into ACE,
-	  this requirement will be removed.
+	  script option in order to be able to use the configure script.
+	  If an attempt is made to run the configure script with this
+	  option, the configure script will immediately exit with a
+	  summary that states that ACE stock build procedure should be
+	  used until autoconf support is fully integrated into ACE.
+
+	  Once autoconf support is fully integrated into ACE, this
+	  requirement will be removed.
 
 Sun Nov 14 15:22:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
