@@ -513,6 +513,48 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Simple Time Date Client"=".\Simple\time-date\client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Simple Time Date Library
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Simple Time Date Library"=".\Simple\time-date\Time_Date.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple Time Date Server"=".\Simple\time-date\server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Simple Time Date Library
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Simple Time Server"=.\Simple\time\server.dsp - Package Owner=<4>
 
 Package=<5>

@@ -3,7 +3,22 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Time_Date"=".\Time_Date.dsp" - Package Owner=<4>
+Project: "Simple Time Date Client"=".\client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Simple Time Date Library
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Simple Time Date Library"=".\Time_Date.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +30,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "client"=".\client.dsp" - Package Owner=<4>
+Project: "Simple Time Date Server"=".\server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -23,18 +38,9 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "server"=".\server.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
+    Begin Project Dependency
+    Project_Dep_Name Simple Time Date Library
+    End Project Dependency
 }}}
 
 ###############################################################################
