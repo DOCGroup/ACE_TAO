@@ -70,7 +70,7 @@ class Prime_Scheduler : public ACE_Task_Base
 public:
   // = Initialization and termination methods.
   Prime_Scheduler (const ASYS_TCHAR *,
-             Prime_Scheduler * = 0);
+                   Prime_Scheduler * = 0);
   // Constructor.
 
   virtual int open (void *args = 0);
@@ -232,7 +232,7 @@ Method_Request_end::call (void)
 
 // Constructor
 Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
-                      Prime_Scheduler *new_scheduler)
+                                  Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
 {
   ACE_NEW (this->name_,
@@ -373,7 +373,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Future<const ASYS_TCHAR *>;
 template class ACE_Future<int>;
 template class ACE_Future<u_long>;
-template class ACE_Future_Rep<ASYS_TCHAR const *>;
+template class ACE_Future_Rep<const ASYS_TCHAR *>;
 template class ACE_Future_Rep<int>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Request>;
@@ -392,7 +392,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #pragma instantiate ACE_Future<const ASYS_TCHAR *>
 #pragma instantiate ACE_Future<int>
 #pragma instantiate ACE_Future<u_long>
-#pragma instantiate ACE_Future_Rep<ASYS_TCHAR const *>
+#pragma instantiate ACE_Future_Rep<const ASYS_TCHAR *>
 #pragma instantiate ACE_Future_Rep<int>
 #pragma instantiate ACE_Future_Rep<u_long>
 #pragma instantiate auto_ptr<ACE_Method_Request>

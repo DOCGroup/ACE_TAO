@@ -375,7 +375,7 @@ template class ACE_Future_Observer<const ASYS_TCHAR *>;
 template class ACE_Future_Observer<u_long>;
 template class ACE_Future<const ASYS_TCHAR *>;
 template class ACE_Future<u_long>;
-template class ACE_Future_Rep<ASYS_TCHAR const *>;
+template class ACE_Future_Rep<const ASYS_TCHAR *>;
 template class ACE_Future_Rep<u_long>;
 template class ACE_Future_Set<const ASYS_TCHAR *>;
 template class ACE_Future_Set<u_long>;
@@ -411,7 +411,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<char_star_key, char_star_value, 
 #pragma instantiate ACE_Future_Observer<u_long>
 #pragma instantiate ACE_Future<const ASYS_TCHAR *>
 #pragma instantiate ACE_Future<u_long>
-#pragma instantiate ACE_Future_Rep<ASYS_TCHAR const *>
+#pragma instantiate ACE_Future_Rep<const ASYS_TCHAR *>
 #pragma instantiate ACE_Future_Rep<u_long>
 #pragma instantiate ACE_Future_Set<const ASYS_TCHAR *>
 #pragma instantiate ACE_Future_Set<u_long>

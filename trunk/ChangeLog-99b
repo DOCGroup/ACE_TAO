@@ -1,3 +1,12 @@
+Wed Jul 07 08:35:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Threads/future1.cpp
+	* examples/Threads/future2.cpp
+	* tests/Future_Set_Test.cpp
+	* tests/Future_Test.cpp
+
+	  Fixed some template instantiations.
+
 Wed Jul  7 03:27:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Shared_Malloc: Added a new file called
