@@ -169,12 +169,12 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
-      *os << "if (this->the_TAO_" << parent->local_name () 
+      *os << "if (this->the_TAO_" << parent->local_name ()
           << "_Proxy_Broker_ == 0)" << be_idt_nl
           << "{" << be_idt_nl
-          << parent->flat_name () << "_setup_collocation (" 
+          << parent->flat_name () << "_setup_collocation ("
           << be_idt << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()" 
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl;
@@ -266,8 +266,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
         }
     }
 
-  *os << be_uidt_nl 
-      << "}" << be_uidt;
+  *os << be_uidt_nl
+      << "};" << be_uidt;
 
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
@@ -296,7 +296,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
     }
 
   *os << "AMI_" << parent->local_name () << "Handler::"
-      << opname.fast_rep () + (this->ctx_->attribute () != 0) 
+      << opname.fast_rep () + (this->ctx_->attribute () != 0)
       << "_reply_stub" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
