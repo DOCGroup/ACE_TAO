@@ -1,3 +1,19 @@
+Wed Feb 18 22:34:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Reactor/Dgram/Dgram.dsw:
+	* examples/Reactor/Dgram/Dgram.dsp:
+	* examples/Reactor/Dgram/CODgram.dsp: Newly added files for NT.
+
+	* examples/Reactor/Dgram/Dgram.cpp:
+	* examples/Reactor/Dgram/CODgram.cpp: Made them runnable on NT.
+
+	* ace/Process.h (ACE_Process_Options): Changed the definition of
+	  ACE_Process_Options::NO_EXEC to 0 for Win32 because it doesn't
+	  mean anything on NT (you must exec a new program on NT, no fork
+	  syntax available.)  With this, we can simulate the fork effect
+	  more or less (still not portable thou.  See
+	  examples/Reactor/Dgram/ for some examples.)
+
 Wed Feb 18 16:07:14 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib/Log_Message_Receiver.cpp (log_output): There was a
