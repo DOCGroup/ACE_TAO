@@ -1,14 +1,91 @@
-Fri Dec 14 07:01:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Wed Jan  9 15:29:13 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Merged with the main trunk and moved things to a new branch.
-	  The following changes below have already been merged into the
-	  main trunk. 
+	* tao_ace/Makefile: Added this to the repo.
 
-Tue Nov 27 21:30:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Tue Jan  9 15:25:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Cache_Entries.h:
-	* tao/DLL_ORB.h: 
-	* tao/Transport.h: Added additional #includes to fix compilation
-	  errors.  
+	A checkin that compiles fine with g++. The following files just
+	compile fine and nothing more. 
 	
-	* tao/*/Makefile: Updated dependencies.
+	* tao_ace/Event_Dispatcher.h:
+	* tao_ace/Event_Dispatcher.cpp: A new dispatcher class. This
+	  dispatcher class handles the dispatching the incrementing the
+	  refcounts, performing upcalls etc. 
+	
+	* tao_ace/Event_Reactor.h:
+	* tao_ace/Event_Reactor.cpp:
+	* tao_ace/Event_Reactor.inl: The new TAO_ACE_Event_Reactor
+	  interface which is a singleton. Redirects all the calls to the 
+	  Reactor_Interface. 
+	
+	* tao_ace/Event_Reactor_Impl.h:
+	* tao_ace/Event_Reactor_Impl.cpp:
+	* tao_ace/Event_Reactor_Impl.inl: The
+	  TAO_ACE_Event_Reactor_Interface's implementation. 
+	
+	* tao_ace/Event_Reactor_Interface.h:
+	* tao_ace/Event_Reactor_Interface.cpp: The interface which will
+	  receive all the calls from the TAO_ACE_Event_Reactor. 
+	
+	* tao_ace/Event_Selection_Strategy.h: The strategy for selecting
+	  events to dispatch from a list of that are made available after
+	  a selection. 
+	
+	* tao_ace/Event_Wait_Strategy.h:
+	* tao_ace/Event_Wait_Strategy.cpp:
+	* tao_ace/Event_Wait_Strategy.inl: Strategy for waiting for a
+	  event. 
+	
+	* tao_ace/Fair_Perf_Selection_Strategy.h:
+	* tao_ace/Fair_Perf_Selection_Strategy.cpp:
+	* tao_ace/Fair_Perf_Selection_Strategy.inl: Specialization of the
+	  Event_Selection_Strategy for fair and better performance. 
+	
+	* tao_ace/IO_Event_Handler.h:
+	* tao_ace/IO_Event_Handler.cpp:
+	* tao_ace/IO_Event_Masks.h: Event handlers for IO events. 
+
+	* tao_ace/IO_Handler_Repository.h:
+	* tao_ace/IO_Handler_Repository.cpp:
+	* tao_ace/IO_Handler_Repository.inl: Repository for IO handles.
+	
+	* tao_ace/IO_Peer_Handler.h:
+	* tao_ace/IO_Peer_Handler.cpp:
+	* tao_ace/IO_Peer_Handler.inl: IO event handler with a peer
+	  association. 
+	
+	* tao_ace/Reactive_Handler.h:
+	* tao_ace/Reactive_Handler.cpp:
+	* tao_ace/Reactive_Handler.inl: The Reactive handler which is tha
+	  base class for all types of event handling and will be
+	  understood by the Reactor. 
+	
+	* tao_ace/Select_Fair_Perf_Strategy.h:
+	* tao_ace/Select_Fair_Perf_Strategy.cpp:
+	* tao_ace/Select_Fair_Perf_Strategy.inl: A fair and high
+	  performance event selection strategy for events coming off
+	  select (). 
+	
+	* tao_ace/Select_IO_Handler_Repository.h:
+	* tao_ace/Select_IO_Handler_Repository.cpp:
+	* tao_ace/Select_IO_Handler_Repository.inl: An IO handle
+	  repository for the select () operation.
+	
+	* tao_ace/Select_Wait_Strategy.h:
+	* tao_ace/Select_Wait_Strategy.cpp: A select () event wait
+	  strategy. 
+	
+	* tao_ace/TAO_ACE_export.h
+
+	* tao_ace/Dev_Poll_IO_Handler_Repository.h: Repository for
+	  Dev_Poll IO handlers.
+	  
+
+
+
+
+
+
+
+
+
