@@ -89,7 +89,7 @@ main (int argc, char **argv)
 
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Cubit::init");
+      TAO_TRY_ENV.print_exception ("AVStreams: client: ");
       return -1;
     }
   TAO_ENDTRY;
