@@ -549,7 +549,7 @@ TAO_UIPMC_Transport::recv (char *buf,
 }
 
 int
-TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
+TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
                                   ACE_Time_Value *max_wait_time,
                                   int /*block*/)
 {
