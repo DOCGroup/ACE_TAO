@@ -1,3 +1,21 @@
+Wed Dec 31 21:57:08 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
+
+	* ace/Base_Thread_Adapter.h:
+	* ace/Base_Thread_Adapter.inl:
+	* ace/Base_Thread_Adapter.cpp:
+	Added #include "os_include/sys/os_time.h" and 
+	data member itimerval itimer_ wrapped with ACE_USES_GPROF.
+	This data member will hold the thread profiling timer.
+	Added Accessor function to itimer_ data member.
+	(ACE_Base_Thread_Adapter) Constructor calls getitimer.
+	(ace_thread_adapter) Calls setitimer.
+	Both are wrapped with ACE_USES_GPROF
+	
+	* ace/README: 
+	Added Useful information about ACE_USES_GPROF macro.
+	That macro enable profiling with gprof in a multithreaded 
+	application.
+
 Wed Dec 31 13:13:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
