@@ -67,21 +67,21 @@ TAO_NT_Naming_Service::init (int argc,
 
   // Get Naming Service options from the NT Registry.
 
-  RegOpenKeyEx (REGISTRY_KEY_ROOT,
-                TAO_REGISTRY_SUBKEY,
-                0,
-                KEY_READ,
-                &hkey);
+  ACE_TEXT_RegOpenKeyEx (REGISTRY_KEY_ROOT,
+                         TAO_REGISTRY_SUBKEY,
+                         0,
+                         KEY_READ,
+                         &hkey);
 
   DWORD type;
   DWORD bufSize = sizeof (buf);
 
-  RegQueryValueEx (hkey,
-                   TAO_NAMING_SERVICE_OPTS_NAME,
-                   NULL,
-                   &type,
-                   buf,
-                   &bufSize);
+  ACE_TEXT_RegQueryValueEx (hkey,
+                            TAO_NAMING_SERVICE_OPTS_NAME,
+                            NULL,
+                            &type,
+                            buf,
+                            &bufSize);
 
   RegCloseKey (hkey);
 
