@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Malloc_T.h
 //
 // = AUTHOR
 //    Doug Schmidt and Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_MALLOC_T_H)
@@ -21,6 +21,64 @@
 #include "ace/Synch.h"
 #include "ace/Malloc.h"
 #include "ace/Free_List.h"
+
+// Some useful abstration for expressions involving
+// ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
+// with ACE_ALLOCATOR* is that they call constructors also.
+
+#define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+   } while (0)
+#define ACE_ALLOCATOR(POINTER,ALLOCATOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+
+#define ACE_NEW_MALLOC_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+#define ACE_NEW_MALLOC(POINTER,ALLOCATOR,CONSTRUCTOR) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR; } \
+   } while (0)
+
+#if defined (ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR)
+// Although this template function is enclosed by this "broken"
+// directive, it is really a more elegant way of calling
+// destructor explicitly.  However, we can't use it for
+// portability issues.
+template <class T> inline void ACE_Destructor_Template_For_HPUX_aCC_Only (T *obj)
+{
+  obj->T::~T ();
+}
+
+#define ACE_DES_NOFREE (POINTER,CLASS) \
+   ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER)
+#define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+#define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+   ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER)
+#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+   do { ACE_Destructor_Template_For_HPUX_aCC_Only (POINTER); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+#else
+#define ACE_DES_NOFREE (POINTER,CLASS) POINTER->CLASS::~CLASS ()
+#define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
+#define ACE_DES_NOFREE_TEMPLATE (POINTER,T_CLASS,T_PARAMETER) \
+     POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS ()
+#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+   do { POINTER-> T_CLASS T_PARAMETER ::~ T_CLASS (); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+#endif /* ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR */
 
 template <class T>
 class ACE_Cached_Mem_Pool_Node
@@ -48,7 +106,7 @@ public:
 
 private:
   ACE_Cached_Mem_Pool_Node<T> *next_;
-  // Since memory is not used when placed in a free list, 
+  // Since memory is not used when placed in a free list,
   // we can use it to maintain the structure of  free list.
   // I was using union to hide the fact of overlapping memory
   // usage.  However, that cause problem on MSVC.  So, I now turn
@@ -60,8 +118,8 @@ class ACE_Cached_Allocator : public ACE_New_Allocator
 {
 public:
   ACE_Cached_Allocator (size_t n_chunks);
-  // Create a cached memory poll with <n_chunks> chunks 
-  // each with sizeof (TYPE) size.  
+  // Create a cached memory poll with <n_chunks> chunks
+  // each with sizeof (TYPE) size.
 
   ~ACE_Cached_Allocator (void);
   // clear things up.
@@ -127,7 +185,7 @@ public:
 
   virtual int remove (void);
   // Remove any resources associated with this memory manager.
-  
+
   // = Map manager like functions
 
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
@@ -137,7 +195,7 @@ public:
   // assocations.  Returns 0 if successfully binds (1) a previously
   // unbound <name> or (2) <duplicates> != 0, returns 1 if trying to
   // bind a previously bound <name> and <duplicates> == 0, else
-  // returns -1 if a resource failure occurs.  
+  // returns -1 if a resource failure occurs.
 
   virtual int trybind (const char *name, void *&pointer);
   // Associate <name> with <pointer>.  Does not allow duplicate
@@ -220,7 +278,7 @@ friend class ACE_Malloc_Iterator<ACE_MEM_POOL_2, ACE_LOCK>;
 public:
   typedef ACE_MEM_POOL MEMORY_POOL;
   typedef ACE_MEM_POOL_OPTIONS MEMORY_POOL_OPTIONS;
-  
+
   // = Initialization and termination methods.
   ACE_Malloc (LPCTSTR pool_name = 0);
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
@@ -249,16 +307,16 @@ public:
   // Destructor
 
   int remove (void);
-  // Releases resources allocated by ACE_Malloc. 
+  // Releases resources allocated by ACE_Malloc.
 
   // = Memory management
-    
+
   void *malloc (size_t nbytes);
   // Allocate <nbytes>, but don't give them any initial value.
 
   void *calloc (size_t nbytes, char initial_value = '\0');
   // Allocate <nbytes>, giving them <initial_value>.
-  
+
   void  free (void *ptr);
   // Deallocate memory pointed to by <ptr>, which must have been
   // allocated previously by <this->malloc>.
@@ -275,7 +333,7 @@ public:
   // assocations.  Returns 0 if successfully binds (1) a previously
   // unbound <name> or (2) <duplicates> != 0, returns 1 if trying to
   // bind a previously bound <name> and <duplicates> == 0, else
-  // returns -1 if a resource failure occurs.  
+  // returns -1 if a resource failure occurs.
 
   int trybind (const char *name, void *&pointer);
   // Associate <name> with <pointer>.  Does not allow duplicate
@@ -328,17 +386,17 @@ public:
   ssize_t avail_chunks (size_t size) const;
   // Returns a count of the number of available chunks that can hold
   // <size> byte allocations.  Function can be used to determine if you
-  // have reached a water mark. This implies a fixed amount of allocated 
+  // have reached a water mark. This implies a fixed amount of allocated
   // memory.
   //
   // @param size - the chunk size of that you would like a count of
-  // @return function returns the number of chunks of the given size 
+  // @return function returns the number of chunks of the given size
   //          that would fit in the currently allocated memory.
 
 #if defined (ACE_MALLOC_STATS)
   void print_stats (void) const;
   // Dump statistics of how malloc is behaving.
-#endif /* ACE_MALLOC_STATS */  
+#endif /* ACE_MALLOC_STATS */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -370,7 +428,7 @@ private:
   // MEMORY_POOL).
 
   MEMORY_POOL memory_pool_;
-  // Pool of memory used by ACE_Malloc 
+  // Pool of memory used by ACE_Malloc
 
   ACE_LOCK lock_;
   // Local that ensures mutual exclusion.
