@@ -117,9 +117,7 @@
 
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 
-// DF: So why were these two defined rather then the third?
 #define ACE_HAS_PTHREAD_EQUAL
-#define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
 
 // ACE supports POSIX Pthreads. OSF/1 3.2 has draft 4
 #define ACE_HAS_PTHREADS
