@@ -1,3 +1,10 @@
+Tue Jan  4 17:22:14 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Signal.h:
+	* ace/TLI.h:
+	* ace/TLI_Stream.h: Include "ace/config-lite.h" before testing any ACE
+	  config macros.
+
 Tue Jan  4 09:56:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/TMCast/TMCast.mpc:
