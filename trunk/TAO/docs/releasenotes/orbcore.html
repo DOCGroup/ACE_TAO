@@ -48,7 +48,7 @@
       multiple ORBs in a process and a POA may be shared by several
       ORBs.  That means, we may not handling the object with the same
       ORB it was created. Collocation optimization further complicated
-      the problem. 
+      the problem.
 
       At the moment, using TAO_ORB_Core_instance ()->orb () is the
       only sane way to get arond the problem.  Though there may be a
@@ -104,6 +104,16 @@
 <b>Recently Completed Work:</b>
 
 <UL>
+  <li>Adding a new option into TAO_Resource_Factory to control the
+      internal lock used by ORB's reacotr.  With
+      "<code>-ORBreactorlock null</code>" added into
+      <code>svc.conf</code>, you can eliminate the token inside the
+      Select_Reactor inside the ORB even on multi-threaded platforms.
+      This eliminate some overheads caused by synchronizing access to
+      the Select_Reactor.  Usually, if you have TSS ORB and are using reactive
+      concurrency startegy, the ORB are not accessed by multiple
+      threads, then, you can safely turn the lock off.<p>
+
   <li>Making the collocation table configurable.  We can either
       use a global collocation table to share objects among ORBs,
       or use the per-ORB collocation table.
