@@ -287,7 +287,9 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
 				     siginfo_t *siginfo, 
 				     ucontext_t *)
 {
-  // Just check for sanity...
+	ACE_UNUSED_ARG(signum);
+
+	// Just check for sanity...
   if (siginfo->si_handle_ != this->notify_event_.handle ())
     return -1;
 

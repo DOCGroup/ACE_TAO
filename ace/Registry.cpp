@@ -171,8 +171,10 @@ ACE_Registry::Naming_Context::Naming_Context (const Naming_Context &rhs)
 const ACE_Registry::Naming_Context &
 ACE_Registry::Naming_Context::operator= (const Naming_Context &rhs)
 {
-  // Not implemented
-  return *this;
+	ACE_UNUSED_ARG(rhs);
+
+	// Not implemented
+	return *this;
 }
 
     
@@ -1033,8 +1035,11 @@ int
 ACE_Registry::Binding_Iterator::Iteration_Complete::next_n (u_long how_many, 
 							    Binding_List &list)
 {
-  // No more values
-  return -1;
+	ACE_UNUSED_ARG(list);
+	ACE_UNUSED_ARG(how_many);
+
+	// No more values
+	return -1;
 }
 
 

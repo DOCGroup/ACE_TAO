@@ -149,7 +149,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
 	case 6:
 	case 7:
 	case 8:
-	  dcb.ByteSize = arg->databits;
+	  dcb.ByteSize = u_char (arg->databits);
 	  break;
 	default:
 	  return -1;

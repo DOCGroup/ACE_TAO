@@ -493,57 +493,54 @@ int
 Input_Channel::recv_peer (ACE_Message_Block *&route_addr)
 { 
   Peer_Message *peer_msg;
-  size_t       len;
-  ssize_t      n = 0;
-  ssize_t      m = 0;
-  size_t       offset = 0;
+  size_t len;
+  ssize_t n = 0;
+  ssize_t m = 0;
+  size_t offset = 0;
 
   if (this->msg_frag_ == 0)
+    // No existing fragment...
+    ACE_NEW_RETURN (this->msg_frag_, 
+		    ACE_Message_Block (sizeof (Peer_Message)), 
+		    -1);
+
+  peer_msg = (Peer_Message *) this->msg_frag_->rd_ptr ();
+
+  const ssize_t HEADER_SIZE = sizeof (Peer_Header);
+  ssize_t header_bytes_left_to_read = HEADER_SIZE - this->msg_frag_->length ();
+
+  if (header_bytes_left_to_read > 0)
     {
-      // No existing fragment...
-      ACE_NEW_RETURN (this->msg_frag_, 
-		      ACE_Message_Block (sizeof (Peer_Message)), 
-		      -1);
+      n = this->peer ().recv (this->msg_frag_->wr_ptr (), header_bytes_left_to_read);
 
-      if (this->msg_frag_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%t) out of memory\n"), -1);
+      if (n == -1 /* error */
+	  || n == 0  /* EOF */)
+	{
+	  ACE_ERROR ((LM_ERROR, "%p\n", "Recv error during header read "));
+	  ACE_DEBUG ((LM_DEBUG, "attempted to read %d\n", header_bytes_left_to_read));
+	  delete this->msg_frag_;
+	  this->msg_frag_ = 0;
+	  return n;
+	}
 
-      peer_msg = (Peer_Message *) this->msg_frag_->rd_ptr ();
+      // Bump the write pointer by the amount read.
+      this->msg_frag_->wr_ptr (n);
 
-      switch (n = this->peer ().recv (peer_msg, sizeof (Peer_Header)))
-        {
-        case sizeof (Peer_Header):
-          len = ntohl (peer_msg->header_.len_);
-          if (len <= sizeof peer_msg->buf_)
-            {
-              this->msg_frag_->wr_ptr (sizeof (Peer_Header));
-              break; // The message is within the maximum size range.
-            }
-          else
-            ACE_ERROR ((LM_ERROR, "(%t) message too long = %d\n", len));
-          /* FALLTHROUGH */
-        default:
-          ACE_ERROR ((LM_ERROR, "(%t) invalid length = %d\n", n));
-          n = -1;
-          /* FALLTHROUGH */
-        case -1:
-          /* FALLTHROUGH */
-        case 0: // Premature EOF.
-          // Make sure to free up memory on error returns.
-          delete this->msg_frag_;
-          this->msg_frag_ = 0;
-          return n;
-        }
-    }
-  else
-    {
-      // Figure out where we left off.
-      peer_msg = (Peer_Message *) this->msg_frag_->rd_ptr ();
-      offset = this->msg_frag_->length () - sizeof (Peer_Header);
-      len = peer_msg->header_.len_ - offset;
+      // At this point we may or may not have the ENTIRE header.
+      if (this->msg_frag_->length () < HEADER_SIZE)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "Partial header received: only %d bytes\n",
+		     this->msg_frag_->length ()));
+	  // Notify the caller that we didn't get an entire message.
+	  errno = EWOULDBLOCK;
+	  return -1;
+	}
     }
 
-  // Try to receive the remainder of the message.
+  // At this point there is a complete, valid header in msg_frag_
+  len = sizeof peer_msg->buf_ + HEADER_SIZE - this->msg_frag_->length ();
+
+  // Try to receive the remainder of the message
 
   switch (m = this->peer ().recv (peer_msg->buf_ + offset, len))
     {

@@ -1011,7 +1011,9 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
 ACE_Thread_Control::~ACE_Thread_Control (void)
 {
   ACE_TRACE ("ACE_Thread_Control::~ACE_Thread_Control");
+#if !defined (ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS)
   this->exit (this->status_);
+#endif /* ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS */
 }
 
 // Exit from thread (but clean up first).

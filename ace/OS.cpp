@@ -41,6 +41,8 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
+#else
+	ACE_UNUSED_ARG(mutex);
 #endif /* ACE_HAS_DCETHREADS */
 #endif /* ACE_HAS_THREADS */
 }
@@ -502,7 +504,10 @@ ACE_TSS_Cleanup::detach (void *inst)
 int 
 ACE_TSS_Cleanup::detach (ACE_thread_key_t key, ACE_thread_t tid)
 {
-  return -1;
+	ACE_UNUSED_ARG(key);
+	ACE_UNUSED_ARG(tid);
+
+	return -1;
 }
   
 int 
@@ -621,7 +626,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   int result;
   pthread_attr_t attr;
   ACE_thread_t tmp_thr;
-  ACE_thread_t *p_thr;
+
+  ACE_hthread_t tmp_handle;
+
+  if (thr_id == 0)
+    thr_id = &tmp_thr;
+
+  if (thr_handle == 0)
+    thr_handle = &tmp_handle;
 
 #if defined (ACE_HAS_SETKIND_NP)
   if (::pthread_attr_create (&attr) != 0)
@@ -842,10 +854,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  }
       }
 
-      p_thr = thr_id == 0 ? &tmp_thr : thr_id;
-
 #if defined (ACE_HAS_SETKIND_NP)
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr, func, args), 
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr, func, args), 
 				    result),
 		  int, -1, result);
       ::pthread_attr_delete (&attr);
@@ -854,13 +864,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       ACE_Thread_Adapter *thread_args;
       ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
 
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr,
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr,
 						      ACE_THR_C_FUNC (&ace_thread_adapter), 
 						      thread_args),
 				    result),
 		  int, -1, result);
 #else
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr, func, args), 
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr, func, args), 
 				    result),
 		  int, -1, result);
 #endif /* ACE_HAS_THR_C_FUNC */
@@ -869,38 +879,50 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #if defined (ACE_HAS_STHREADS)
       // This is the Solaris implementation of pthreads, where
       // ACE_thread_t and ACE_hthread_t are the same.
-      if (result == 0 && thr_handle != 0)
-	*thr_handle = thr_id == 0 ? 0 : *thr_id;
+      if (result == 0)
+	*thr_handle = *thr_id;
 #else
-      if (thr_handle != 0)
-	*thr_handle = ACE_OS::NULL_hthread;
+      *thr_handle = ACE_OS::NULL_hthread;
 #endif /* ACE_HAS_STHREADS */
       return result;
 #elif defined (ACE_HAS_STHREADS)
       int result;
+      int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
+
+      if (priority > 0)
+	// If we need to set the priority, then we need to start the
+	// thread in a suspended mode.
+	ACE_SET_BITS (flags, THR_SUSPENDED);
+
       ACE_OSCALL (ACE_ADAPT_RETVAL (::thr_create (stack, stacksize, func, args,
 						  flags, thr_id), result), 
 		  int, -1, result);
-      if (result == 0 && thr_handle != 0)
-	*thr_handle = thr_id == 0 ? 0 : *thr_id;
+
+      if (priority > 0 && result != -1)
+	{
+	  // Set the priority of the new thread and then let it
+	  // continue, but only if the user didn't start it suspended
+	  // in the first place!
+	  ACE_OS::thr_setprio (*thr_id, priority);
+
+	  if (start_suspended == 0)
+	    ACE_OS::thr_continue (*thr_id);
+	}
+
+      if (result == 0)
+	*thr_handle = *thr_id;
       return result;
 #elif defined (ACE_HAS_WTHREADS)
-      ACE_thread_t t;
-      ACE_hthread_t handle;
-
-      if (thr_id == 0)
-	thr_id = &t;
-      if (thr_handle == 0)
-	thr_handle = &handle;
-
+      ACE_UNUSED_ARG (stack);
       ACE_Thread_Adapter *thread_args;
       ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
+
 #if defined (ACE_HAS_MFC)
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
   	{
   	  CWinThread *cwin_thread = 
   	    ::AfxBeginThread (ACE_THR_C_FUNC (&ace_thread_adapter)),
- 			      thread_args, 0, 0, flags | THR_SUSPENDED);
+ 			      thread_args, priority, 0, flags | THR_SUSPENDED);
  	  // Have to duplicate the handle because
  	  // CWinThread::~CWinThread() closes the original handle.
  	  *thr_handle = ::DuplicateHandle (::GetCurrentProcess (), 
@@ -912,23 +934,42 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
  					   DUPLICATE_SAME_ACCESS);
  
   	  *thr_id = cwin_thread->m_nThreadID;
+
  	  if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
 	    cwin_thread->ResumeThread ();
 	      // cwin_thread will be deleted in AfxThreadExit()
 	      // Warning: If AfxThreadExit() is called from within the
 	      // thread, ACE_TSS_Cleanup->exit() never gets called !
-
 	}
       else
 #endif /* ACE_HAS_MFC */
-	*thr_handle = (void *) ::_beginthreadex 
-	  (NULL,
-	   stacksize,
-	   ACE_THR_C_FUNC (&ace_thread_adapter),
-	   thread_args,
-	   flags,
-	   (unsigned int *) thr_id);
+        {
+	  int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
+	  if (priority > 0)
+	    // If we need to set the priority, then we need to start the
+	    // thread in a suspended mode.
+	    ACE_SET_BITS (flags, THR_SUSPENDED);
+
+	  *thr_handle = (void *) ::_beginthreadex 
+	    (NULL,
+	     stacksize,
+	     ACE_THR_C_FUNC (&ace_thread_adapter),
+	     thread_args,
+	     flags,
+	     (unsigned int *) thr_id);
+
+	  if (priority > 0 && *thr_handle != 0)
+	    {
+	      // Set the priority of the new thread and then let it
+	      // continue, but only if the user didn't start it suspended
+	      // in the first place!
+	      ACE_OS::thr_setprio (*thr_id, priority);
+
+	      if (start_suspended == 0)
+		ACE_OS::thr_continue (*thr_id);
+	    }
+	}
 #if 0
       *thr_handle = ::CreateThread 
 	 (NULL, stacksize,
@@ -937,7 +978,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* 0 */
 
       // Close down the handle if no one wants to use it.
-      if (thr_handle == &handle)
+      if (thr_handle == &tmp_handle)
 	::CloseHandle (handle);
 
       if (*thr_handle != 0)
@@ -977,16 +1018,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         return -1;
       else
         {
-          // return the thr_id and thr_handle, if addresses were provided for them
-          if (thr_id != 0)
-            // ::taskTcb (int tid) returns the address of the WIND_TCB
-            // (task control block).  According to the ::taskSpawn()
-            // documentation, the name of the new task is stored at
-            // pStackBase, but is that of the current task?  If so, it
-            // might be a bit quicker than this extraction of the tcb . . .
-            *thr_id = ::taskTcb (tid)->name;
-          if (thr_handle != 0)
-            *thr_handle = tid;
+	  // ::taskTcb (int tid) returns the address of the WIND_TCB
+	  // (task control block).  According to the ::taskSpawn()
+	  // documentation, the name of the new task is stored at
+	  // pStackBase, but is that of the current task?  If so, it
+	  // might be a bit quicker than this extraction of the tcb . . .
+	  *thr_id = ::taskTcb (tid)->name;
+	  *thr_handle = tid;
           return 0;
         }
 
@@ -1354,7 +1392,7 @@ ACE_OS::socket_fini (void)
 #if defined (VXWORKS)
 int sys_nerr = ERRMAX + 1;
 
-#include <usrLib.h>   // for ::sp()
+#include /**/ <usrLib.h>   // for ::sp()
 
 // This global function can be used from the VxWorks shell to
 // pass arguments to a C main () function.

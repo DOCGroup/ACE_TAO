@@ -1,7 +1,39 @@
+Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Added a new macro called ACE_UNUSED_ARG() to keep 
+	  the compiler from outputting warnings about unused
+	  arguments.  So far, this is mostly done for Win32, but it
+	  should be easy to do it for other compilers.  Thanks
+	  to Matthias for these changes.
+
+	* ace/OS.cpp: Added support so that thread priorities will
+ 	  automatically be set when we spawn threads using
+ 	  ACE_OS::thr_create().
+
+	* ace/OS.cpp: Simplified the logic for handling NULL thr_handles
+ 	  and thr_ids.  Now, we set all this stuff in one place at the
+ 	  beginning of the function, rather than recomputing it all over
+ 	  the place.
+
+	* ace/config-aix-{3.2.5,4.1.x}.h: Added the
+ 	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS flag.
+
+	* ace/Thread_Manager.cpp (ACE_Thread_Control): Conditionally
+ 	  compiled the logic for calling this->exit() in the destructor
+ 	  for ACE_Thread_Control so that we only make this call if
+ 	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS is *not* set.  This will
+ 	  prevent infinite recursion on platforms like AIX.  Thanks to
+ 	  Chris Lahey for reporting this.
+
+	* apps/Gateway/Gateway/Channel.cpp (recv_peer): Added the logic
+ 	  that makes sure we don't get screwed up by partial headers.
+  	  Thanks to Chris Cleeland for this.
+
 Thu Dec 12 20:55:02 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* include/makeinclude/platform_sunos5_sunc++*.GNU: removed
  	  SOLINK step in build of shared objects for SunOS5 with SunC++:
-	  it's not necessary
+	  it's not necessary.
 
 Thu Dec 12 03:48:26 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 

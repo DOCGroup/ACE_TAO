@@ -75,10 +75,11 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   // process is reused with a new client process, ::ConnectNamedPipe()
   // would fail.
 
-  ACE_TRACE ("ACE_SPIPE_Acceptor::create_new_instance");
+	ACE_UNUSED_ARG(perms);
+	ACE_TRACE ("ACE_SPIPE_Acceptor::create_new_instance");
 
-  // Create a new instance of the named pipe
-  ACE_HANDLE handle = ::CreateNamedPipe (this->local_addr_.get_path_name (),
+	// Create a new instance of the named pipe
+	ACE_HANDLE handle = ::CreateNamedPipe (this->local_addr_.get_path_name (),
 					 PIPE_ACCESS_DUPLEX |
 					 FILE_FLAG_OVERLAPPED,
 					 PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE,
@@ -157,6 +158,10 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
 
   return 0;
 #elif defined (ACE_WIN32)
+	ACE_UNUSED_ARG(restart);
+	ACE_UNUSED_ARG(timeout);
+	ACE_UNUSED_ARG(remote_addr);
+
   // Check to see if we have a valid pipe
   if (this->get_handle () == ACE_INVALID_HANDLE)
     return -1;
