@@ -1,5 +1,7 @@
 Wed Jul  7 18:10:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* ace/CDR_Stream.i: Fixed the <byte_order> implementation again.    
+
 	 * ace/CDR_Stream.h
 	 * ace/CDR_Stream.i
   
