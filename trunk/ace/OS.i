@@ -5365,41 +5365,52 @@ ACE_Flow_Spec::priority (int p)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE ACE_Flow_Spec
+ACE_INLINE
+ACE_QoS::ACE_QoS (void)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
+#else
+  : sending_flowspec_ (0),
+    receiving_flowspec_ (0)
+#endif /* ACE_HAS_WINSOCK2 */
+{
+}
+
+ACE_INLINE ACE_Flow_Spec*
 ACE_QoS::sending_flowspec (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return (ACE_Flow_Spec &) this->SendingFlowspec;
+  return &((ACE_Flow_Spec &) this->SendingFlowspec);
 #else
   return this->sending_flowspec_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE void
-ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs)
+ACE_QoS::sending_flowspec (ACE_Flow_Spec *fs)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  this->SendingFlowspec = (FLOWSPEC) fs;
+  this->SendingFlowspec = (FLOWSPEC) (*fs);
 #else
   this->sending_flowspec_ = fs;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE ACE_Flow_Spec
+ACE_INLINE ACE_Flow_Spec*
 ACE_QoS::receiving_flowspec (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return (ACE_Flow_Spec &) this->ReceivingFlowspec;
+  return &((ACE_Flow_Spec &) this->ReceivingFlowspec);
 #else
   return receiving_flowspec_;
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE void
-ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs)
+ACE_QoS::receiving_flowspec (ACE_Flow_Spec *fs)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  this->ReceivingFlowspec = (FLOWSPEC) fs;
+  this->ReceivingFlowspec = (FLOWSPEC) (*fs);
 #else
   this->receiving_flowspec_ = fs;
 #endif /* ACE_HAS_WINSOCK2 */
@@ -5409,7 +5420,7 @@ ACE_INLINE iovec
 ACE_QoS::provider_specific (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  return (iovec &) this->ProviderSpecific;
+  return (iovec&) this->ProviderSpecific;
 #else
   ACE_NOTSUP_RETURN (iovec ());
 #endif /* ACE_HAS_WINSOCK2 */
@@ -5650,8 +5661,8 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   QOS qos;
   // Construct the WinSock2 QOS structure.
 
-  qos.SendingFlowspec = qos_params.socket_qos ()->sending_flowspec ();
-  qos.ReceivingFlowspec = qos_params.socket_qos ()->receiving_flowspec ();
+  qos.SendingFlowspec = *(qos_params.socket_qos ()->sending_flowspec ());
+  qos.ReceivingFlowspec = *(qos_params.socket_qos ()->receiving_flowspec ());
   qos.ProviderSpecific = (WSABUF) qos_params.socket_qos ()->provider_specific ();
 
   ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
@@ -5730,8 +5741,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
   if (io_control_code == SIO_SET_QOS)
     {
-      qos.SendingFlowspec = ace_qos.sending_flowspec ();
-      qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
+      qos.SendingFlowspec = *(ace_qos.sending_flowspec ());
+      qos.ReceivingFlowspec = *(ace_qos.receiving_flowspec ());
       qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
 
       qos_len += ace_qos.provider_specific ().iov_len;
@@ -5836,8 +5847,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                       0,
                                       0);
 
-       ace_qos.sending_flowspec (sending_flowspec);
-       ace_qos.receiving_flowspec (receiving_flowspec);
+       ace_qos.sending_flowspec (&sending_flowspec);
+       ace_qos.receiving_flowspec (&receiving_flowspec);
        ace_qos.provider_specific (*((struct iovec *) (&qos->ProviderSpecific)));
 
 
