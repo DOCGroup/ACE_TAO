@@ -1,3 +1,11 @@
+Thu May  1 16:46:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/object.{hh,cpp}: Added a method that can set the parent
+	pointer. 
+
+	* IIOP/lib/params.cpp: A hook has been provided in ROA_Factory to
+	enable the user to use a user-defined demux strategy.
+
 Wed Apr 30 22:00:51 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/objtable.{hh,cpp}: Added two new files that define
