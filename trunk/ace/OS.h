@@ -1480,11 +1480,13 @@ typedef DWORD nlink_t;
 // 64-bit quad-word definitions
 #if !defined (_MSC_VER) /* Borland? */
 typedef uint64 ACE_QWORD;
+typedef ACE_QWORD ACE_hrtime_t;
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return unit64 (lo, hi); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return q.LowPart; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return q.HighPart; }
 #else
 typedef unsigned __int64  ACE_QWORD;
+typedef signed __int64 ACE_hrtime_t;  /* VC++ won't convert unsigned __int64 to double */
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
@@ -1497,7 +1499,6 @@ typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
 typedef char *caddr_t;
-typedef ACE_QWORD ACE_hrtime_t;
 struct rlimit { };
 struct t_call { };
 struct t_bind { };
