@@ -1,3 +1,15 @@
+Mon Apr 14 11:24:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.cpp: A blunder cause by moving the
+	  pointer 4 bytes ahead in parse_string_i () caused lots of tests
+	  to fail in TAO. The pointer shift is not required, since
+	  TAO_Profile::parse_string () itself moves the pointer ahead at
+	  the right place before calling parse_string_i () on the concrete
+	  profile implementations.
+
 Mon Apr 14 15:02:25 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tests/OBV/TC_Alignment/client.dsp:

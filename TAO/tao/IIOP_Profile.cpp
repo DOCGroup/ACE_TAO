@@ -111,9 +111,6 @@ void
 TAO_IIOP_Profile::parse_string_i (const char *ior
                                   ACE_ENV_ARG_DECL)
 {
-  // Go ahead 4 bytes to allow for the version.
-  ior += 4;
-
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
