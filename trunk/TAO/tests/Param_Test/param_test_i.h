@@ -153,6 +153,13 @@ public:
                CORBA::Environment &env);
   // test for object references
 
+  virtual CORBA::Any *
+  test_any (const CORBA::Any &a1,
+            CORBA::Any &a2,
+            CORBA::Any_out a3,
+            CORBA::Environment &env);
+  // test for Anys
+
 private:
   Coffee_i obj_;
   // the coffee object reference we maintain

@@ -327,7 +327,7 @@ Param_Test_i::test_objref (Coffee_ptr o1,
                            CORBA::Environment &env)
 {
   Coffee_ptr ret = Coffee::_nil ();
-  
+
   TAO_TRY
     {
       Coffee_var myobj = obj_._this (TAO_TRY_ENV);
@@ -358,4 +358,14 @@ Param_Test_i::test_objref (Coffee_ptr o1,
   TAO_ENDTRY;
 
   return ret;
+}
+
+// test for Anys
+CORBA::Any *
+Param_Test_i::test_any (const CORBA::Any &a1,
+                        CORBA::Any &a2,
+                        CORBA::Any_out a3,
+                        CORBA::Environment &env)
+{
+  return 0;
 }
