@@ -1,3 +1,10 @@
+Tue Aug 19 20:52:57 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
+        * orbsvcs/tests/Event/lib/Event_lib.mpc:
+          Changed name of Event_Test_Lib project so it could be used as a
+          prerequisite to all the Event tests.
+
 Tue Aug 19 18:49:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Callback_Quoter/Notifier_i.h:
