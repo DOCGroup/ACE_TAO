@@ -244,20 +244,20 @@ Wed Jun 16 11:24:13 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Tue Jun 15 20:53:28 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tools\ServerActivator\ServerActivator_test_client.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
 
 	  Added missing include file.
 
-	* tools\Segment_Timer\Segment_Timer.cpp:
+	* tools/Segment_Timer/Segment_Timer.cpp:
 
 	  Commented out debug statement since the division in it was
 	  failing to compile on Windows.
 
-	* tools\RTComponentServer\RTServer_Impl.cpp (init):
+	* tools/RTComponentServer/RTServer_Impl.cpp (init):
 
 	  Indent fixes.
 
-	* tests\RTCCM\DiffServ\descriptors\run_test.pl:
+	* tests/RTCCM/DiffServ/descriptors/run_test.pl:
 
 	  Remove assembly descriptor file also.
 
@@ -2334,7 +2334,7 @@ Thu May 20 10:36:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 Wed May 19 15:15:21 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-        * tests\RTCCM\DiffServ:
+        * tests/RTCCM/DiffServ:
 
           Added a new DiffServ test. This test is similar to the
           RTCORBA/DiffServ test but uses components instead of a client
@@ -3933,13 +3933,13 @@ Tue Apr 20 20:29:37 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Tue Apr 20 17:11:35 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-        * examples\Hello\Sender\Sender_exec.h (Sender_Impl):
+        * examples/Hello/Sender/Sender_exec.h (Sender_Impl):
 
           The second constructor also needed the same fix.
 
 Tue Apr 20 15:50:07 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-        * examples\Hello\Sender\Sender_exec.h (Sender_Impl):
+        * examples/Hello/Sender/Sender_exec.h (Sender_Impl):
 
           <message_> was getting initialized properly causing a crash
           later in the execution.
