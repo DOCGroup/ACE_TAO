@@ -232,8 +232,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
 #   endif /* IDL_HAS_VALUETYPE */
 
-    case TAO_CodeGen::TAO_OPERATION_AMI:
-      return new be_visitor_operation_ami (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_AMI_CH:
+      return new be_visitor_operation_ami_ch (new_ctx);
 
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_AMI:
       return new be_visitor_operation_arglist_ami (new_ctx);
@@ -496,6 +496,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_ch (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_CS:
       return new be_interpretive_visitor_operation_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_AMI_CS:
+      return new be_interpretive_visitor_operation_ami_cs (new_ctx);
+
     case TAO_CodeGen::TAO_OPERATION_SH:
       return new be_visitor_operation_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_IH:
@@ -619,6 +623,10 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_operation_ch (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_CS:
       return new be_compiled_visitor_operation_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_OPERATION_AMI_CS:
+      return new be_compiled_visitor_operation_ami_cs (new_ctx);
+
     case TAO_CodeGen::TAO_OPERATION_SH:
       return new be_visitor_operation_sh (new_ctx);
     case TAO_CodeGen::TAO_OPERATION_SS:
