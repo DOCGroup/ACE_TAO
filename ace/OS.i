@@ -1205,13 +1205,15 @@ ACE_INLINE int
 ACE_OS::mutex_init (ACE_mutex_t *m, 
 		    int type, 
 		    LPCTSTR name, 
-		    void *arg)
+		    void *arg,
+		    LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::mutex_init");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (sa);
 
   pthread_mutexattr_t attributes;
   int result = -1;
@@ -1248,6 +1250,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   return result;
 #elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, arg), 
 				       ace_result_), 
 		     int, -1);
@@ -1257,7 +1260,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   switch (type)
     {
     case USYNC_PROCESS: 
-      m->proc_mutex_ = ::CreateMutex (NULL, FALSE, name);
+      m->proc_mutex_ = ::CreateMutex (sa, FALSE, name);
       if (m->proc_mutex_ == 0)
 	ACE_FAIL_RETURN (-1);
       else 
@@ -1272,6 +1275,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (sa);
 
   // Type includes these options: SEM_Q_PRIORITY, SEM_Q_FIFO, SEM_DELETE_SAFE,
   // and SEM_INVERSION_SAFE that are currently outside of the ACE mutex model.
@@ -1282,6 +1286,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1814,12 +1819,14 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 
 ACE_INLINE int 
 ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type, 
-		   LPCTSTR name, void *arg, int max)
+		   LPCTSTR name, void *arg, int max,
+		   LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::sema_init");
 #if defined (ACE_HAS_POSIX_SEM)
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
 
 #if !defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (name)
@@ -1842,10 +1849,12 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
 #if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
   int result = -1;
 
   if (ACE_OS::mutex_init (&s->lock_, type, name, arg) == 0
@@ -1870,7 +1879,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
-  *s = ::CreateSemaphore (0, count, max, name);
+  *s = ::CreateSemaphore (sa, count, max, name);
 
   if (*s == 0)
     ACE_FAIL_RETURN (-1);
@@ -1882,6 +1891,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
   s->name_ = 0;
   s->sema_ = ::semCCreate (SEM_Q_FIFO, count);
 
@@ -1894,6 +1904,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
+  ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
@@ -2873,12 +2884,13 @@ ACE_OS::event_init (ACE_event_t *event,
 		    int initial_state,
 		    int type, 
 		    LPCTSTR name,
-		    void *arg)
+		    void *arg,
+		    LPSECURITY_ATTRIBUTES sa)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
-  *event = ::CreateEvent (0,  // no security attributes
+  *event = ::CreateEvent (sa,
 			  manual_reset,    
 			  initial_state,
 			  name);
@@ -2887,6 +2899,7 @@ ACE_OS::event_init (ACE_event_t *event,
   else 
     return 0;
 #elif defined (ACE_HAS_THREADS)
+  ACE_UNUSED_ARG (sa);
   event->manual_reset_ = manual_reset;
   event->is_signaled_ = initial_state;
   event->waiting_threads_ = 0;
@@ -2908,6 +2921,7 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -5653,7 +5667,8 @@ ACE_OS::mmap (void *addr,
 	      int flags, 
 	      ACE_HANDLE file_handle, 
 	      off_t off, 
-	      ACE_HANDLE *file_mapping)
+	      ACE_HANDLE *file_mapping,
+	      SECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::mmap");
 #if defined (ACE_WIN32)
@@ -5679,7 +5694,7 @@ ACE_OS::mmap (void *addr,
 
   // Only create a new handle if we didn't have a valid one passed in.
   if (*file_mapping == ACE_INVALID_HANDLE)
-    *file_mapping = ::CreateFileMapping (file_handle, 0, 
+    *file_mapping = ::CreateFileMapping (file_handle, sa, 
 					 prot, 0, len, 0);
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
@@ -5704,6 +5719,7 @@ ACE_OS::mmap (void *addr,
   else
     return addr_mapping;
 #elif !defined (ACE_LACKS_MMAP)
+  ACE_UNUSED_ARG (sa);
   file_mapping = file_mapping;
   ACE_OSCALL_RETURN ((void *) ::mmap ((ACE_MMAP_TYPE) addr, len, 
 				      prot, flags, file_handle, off),
@@ -5716,6 +5732,7 @@ ACE_OS::mmap (void *addr,
   ACE_UNUSED_ARG (file_handle);
   ACE_UNUSED_ARG (off);
   ACE_UNUSED_ARG (file_mapping);
+  ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (MAP_FAILED);
 #endif /*ACE_WIN32 */
 }
@@ -5964,7 +5981,8 @@ ACE_OS::shmget (key_t key, int size, int flags)
 ACE_INLINE ACE_HANDLE 
 ACE_OS::open (const char *filename,
 	      int mode, 
-	      int perms)
+	      int perms,
+	      LPSECURITY_ATTRIBUTES sa)
 {
   // ACE_TRACE ("ACE_OS::open");
 #if defined (ACE_WIN32)
@@ -6010,7 +6028,7 @@ ACE_OS::open (const char *filename,
 
   ACE_HANDLE h = ::CreateFileA (filename, access, 
 				FILE_SHARE_READ | FILE_SHARE_WRITE,
-				0, creation, 
+				sa, creation, 
 				flags,
 				0);
 
@@ -6024,6 +6042,7 @@ ACE_OS::open (const char *filename,
     }
   return h;
 #else
+  ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
 #endif /* ACE_WIN32 */
 }
@@ -7143,7 +7162,8 @@ ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
 ACE_INLINE ACE_HANDLE 
 ACE_OS::open (const wchar_t *filename,
 	      int mode, 
-	      int perms)
+	      int perms,
+	      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_UNUSED_ARG (perms);
   // ACE_TRACE ("ACE_OS::open");
@@ -7187,7 +7207,7 @@ ACE_OS::open (const wchar_t *filename,
 
   ACE_HANDLE h = ::CreateFileW (filename, access, 
 				FILE_SHARE_READ | FILE_SHARE_WRITE,
-				0, creation, 
+				sa, creation, 
 				flags,
 				0);
 
