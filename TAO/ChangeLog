@@ -1,3 +1,11 @@
+Wed Dec  1 19:29:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/SystemException.cpp:
+
+	  Moved some of the minor code changes from Johnn's branch to the
+	  main trunk. The minor code specification was slightly out of
+	  whack with the CORBA specification.
+
 Wed Dec  1 17:19:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:

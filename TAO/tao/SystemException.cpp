@@ -511,7 +511,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
     {
       "Unlisted user exception received by client.",    // 1
       "Non-standard SystemException not supported.",    // 2
-      "An unkown user exception received by a portable interceptor." // 3
+      "An unknown user exception received by a portable interceptor." // 3
     };
 
   static const char *BAD_PARAM_TABLE[] =
@@ -532,7 +532,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Invalid object id passed to POA::create_reference_by_id.",  // 14
       "Bad name argument in TypeCode operation.",                  // 15
       "Bad RepositoryId argument in TypeCode operation.",          // 16
-      "Invalid member namein TypeCode operation.",                 // 17
+      "Invalid member name in TypeCode operation.",                 // 17
       "Duplicate label value in create_union_tc.",                 // 18
       "Incompatible TypeCode of label and discriminator in create_union_tc.", // 19
       "Supplied discriminator type illegitimate in create_union_tc.", // 20
@@ -554,7 +554,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Illegal IDL property search string.",  // 36
       "Illegal IDL context name.",            // 37
       "Non-empty IDL context.",               // 38
-      "Servant not found [ServantManager].",  // 39
+      "Unsupported RMI/IDL customer value type stream format.",  // 39
       "ORB output stream does not support ValueOutputStream interface.", // 40
       "ORB input stream does not support ValueInputStream interface."    // 41
     };
@@ -583,7 +583,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "NVList passed to ServerRequest::arguments does not describe all parameters passed by client.", // 3
       "Attempt to marshal Local object.", // 4
       "wchar or wstring data erroneously sent by client over GIOP 1.0 connection.", // 5
-      "wchar or wstring data erroneously returned by server over GIOP 1.0 connection." //6
+      "wchar or wstring data erroneously returned by server over GIOP 1.0 connection.", //6
       "Unsupported RMI/IDL custom value type stream format." // 7
     };
 
@@ -621,7 +621,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Attempt to set a servant manager after one has already been set.", // 6
       "ServerRequest::arguments called more than once or after a call to ServerRequest::set_exception.", // 7
       "ServerRequest::ctx called more than once or before ServerRequest::arguments or after ServerRequest::ctx, ServerRequest::set_result or ServerRequest::set_exception.", // 8
-      "ServerRequest::result called more than once or before ServerRequest::arguments or after ServerRequest::set_result or ServerRequest::set_exception.", // 9
+      "ServerRequest::set_result called more than once or before ServerRequest::arguments or after ServerRequest::set_result or ServerRequest::set_exception.", // 9
       "Attempt to send a DII request after it was sent previously.", // 10
       "Attempt to poll a DII request or to retrieve its result before the request was sent.", // 11
       "Attempt to poll a DII request or to retrieve its result after the result was retrieved previously.", // 12
@@ -629,12 +629,15 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Invalid portable interceptor call",                 // 14
       "Service context add failed in portable interceptor because a service context with the given id already exists.", // 15
       "Registration of PolicyFactory failed because a factory already exists for the given type.", // 16
-      "POA cannot create POAs while undergoing destruction." // 17
+      "POA cannot create POAs while undergoing destruction.", // 17
+      "Attempt to reassign priority.", // 18
+      "An OTS/XA integration xa_start call returned XAER_OUTSIDE.", // 19
+      "An OTS/XA integration xa_call returned XAER_PROTO." // 20
     };
 
   static const char *TRANSIENT_TABLE[] =
     {
-      "Request discarded due to resource exhaustion in POA, or because POA is in discarding state.", // 1
+      "Request discarded because of resource exhaustion in POA, or because POA is in discarding state.", // 1
       "No usable profile in IOR.",                            // 2
       "Request cancelled.",                                   // 3
       "POA destroyed."                                        // 4
@@ -642,12 +645,12 @@ CORBA::SystemException::_tao_get_omg_exception_description (
 
   static const char *OBJ_ADAPTER_TABLE[] =
     {
-      "System exception in POA::unknown_adapter.",              // 1
+      "System exception in AdapterActivator::unknown_adapter.",              // 1
       "Incorrect servant type returned by servant manager",     // 2
       "No default servant available [POA policy].",             // 3
       "No servant manager available [POA policy].",             // 4
       "Violation of POA policy by ServantActivator::incarnate.",// 5
-      "Exception in PortableInterceptor::IORInterceptor::components_established.", // 6
+      "Exception in PortableInterceptor::IORInterceptor.components_established.", // 6
       "Null servant returned by servant manager."               // 7
     };
 
@@ -660,20 +663,32 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   static const char *OBJECT_NOT_EXIST_TABLE[] =
     {
       "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
-      "POAManager::incarnate failed to create POA." // 2
+      "Failed to create or locate Object Adapter.", // 2
+      "Biomolecular Sequence Analysis Service is no longer available.", // 3
+      "Object Adapter inactive." // 4
     };
 
   static const char *INV_POLICY_TABLE[] =
     {
-      "Unable to reconcile IOR specified policy with the effective policy override." // 1
+      "Unable to reconcile IOR specified policy with the effective policy override.", // 1
       "Invalid PolicyType.", // 2
       "No PolicyFactory has been registered for the given PolicyType." // 3
     };
 
+  static const char *ACTIVITY_COMPLETED_TABLE[] =
+    {
+      "Activity context completed through timeout, or in some way other then requested." // 1
+    };
+
+  static const char *ACTIVITY_REQUIRED_TABLE[] =
+    {
+      "Calling thread lacks required activity context." // 1
+    };
+
   static const char *BAD_OPERATION_TABLE[] =
     {
-      "ServantManager returned wrong servant type." // 1
-      "Operation or Attribute not known to target object." // 2
+      "ServantManager returned wrong servant type.", // 1
+      "Operation or attribute not known to target object." // 2
     };
 
   if (minor_code == 0)
@@ -741,9 +756,18 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
     return INV_POLICY_TABLE[minor_code];
 
+  if (exc._is_a ("IDL:omg.org/CORBA/ACTIVITY_COMPLETED:1.0")
+      && minor_code < sizeof ACTIVITY_COMPLETED_TABLE / sizeof (char *))
+    return ACTIVITY_COMPLETED_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/ACTIVITY_REQUIRED:1.0")
+      && minor_code < sizeof ACTIVITY_REQUIRED_TABLE / sizeof (char *))
+    return ACTIVITY_REQUIRED_TABLE[minor_code];
+
   if (exc._is_a ("IDL:omg.org/CORBA/BAD_OPERATION:1.0")
       && minor_code < sizeof BAD_OPERATION_TABLE / sizeof (char *))
     return BAD_OPERATION_TABLE[minor_code];
+
 #else
   ACE_UNUSED_ARG (exc);
   ACE_UNUSED_ARG (minor_code);
