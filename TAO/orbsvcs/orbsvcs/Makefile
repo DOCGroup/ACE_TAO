@@ -66,7 +66,6 @@ STL=$(STL_ROOT)/stl
 include $(STL_ROOT)/config/local.cfg
 
 CC_INCLUDES += -I$(STD)
-CC_INCLUDES += -pta
 
 CPPFLAGS += \
 	-I$(TOOLKIT) \
