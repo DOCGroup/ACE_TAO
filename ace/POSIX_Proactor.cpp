@@ -650,7 +650,7 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
   this->pipe_.open ();
 
   // Set write side in NONBLOCK mode
-  ACE_Flag_Manip::set_flags (this->pipe_.write_handle (), ACE_NONBLOCK);
+  ACE::set_flags (this->pipe_.write_handle (), ACE_NONBLOCK);
 
   // Let AIOCB_Proactor know about our handle
   posix_aiocb_proactor_->set_notify_handle (this->pipe_.read_handle ());

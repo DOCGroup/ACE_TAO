@@ -26,22 +26,26 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_fcntl.h"   /* For values passed to these methods */
 
-class ACE_Export ACE_Flag_Manip
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
+
+
+namespace ACE
 {
- public:
-
   // = Set/get/clear various flags related to I/O HANDLE.
-  /// Set flags associated with <handle>.
-  static int set_flags (ACE_HANDLE handle,
-                        int flags);
+  /// Set flags associated with @a handle.
+  extern ACE_Export int set_flags (ACE_HANDLE handle,
+                                   int flags);
 
-  /// Clear flags associated with <handle>.
-  static int clr_flags (ACE_HANDLE handle,
-                        int flags);
+  /// Clear flags associated with @a handle.
+  extern ACE_Export int clr_flags (ACE_HANDLE handle,
+                                   int flags);
 
-  /// Return the current setting of flags associated with <handle>.
-  static int get_flags (ACE_HANDLE handle);
-};
+  /// Return the current setting of flags associated with @a handle.
+  ACE_NAMESPACE_INLINE_FUNCTION int get_flags (ACE_HANDLE handle);
+}
 
 #if defined (__ACE_INLINE__)
 #include "ace/Flag_Manip.inl"

@@ -436,7 +436,7 @@ ACE_Name_Options::ACE_Name_Options (void)
   size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
   this->namespace_dir_ = ACE_static_cast (ACE_TCHAR *, ACE_OS::malloc (pathsize));
 
-  if (ACE_Lib_Find::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
+  if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("Temporary path too long, ")

@@ -38,6 +38,7 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
+#include "ace/IfThenElse.h"
 
 
 class ACE_Message_Block;
@@ -165,8 +166,9 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-
-  typedef unsigned char Boolean;
+  typedef ACE::IfThenElse<sizeof (bool) == 1,
+                          bool,
+                          unsigned char>::result_type Boolean;
   typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
