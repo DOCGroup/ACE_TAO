@@ -1,52 +1,83 @@
+Sat Oct 25 06:22:03 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy: I got errors parsing the idl.yy thru
+	bison. There were errors indicating "type clash on default action".
+
+	This had to do with the fact that the non-terminal "type_dcl" did not
+	have any type defined for it, but it had "struct_type", "union_type"
+	and others on the right-hand side of the rules. The default action of
+	YACC is supposed to assign $1 to $$. So the type for "struct_type"
+	that happened to be a AST_Decl node was getting assigned to the
+	non-terminal "type_dcl" who had no type.
+
+	I am very surprised that the "yacc" on our Sparcs never ever gave this
+	error, but bison did.
+
+	Hence I have modified idl.yy slightly so that I have {$$ = 0;} as the
+	default action. In addition, the non-terminal "type_dcl" is now
+	defined to be of type "ival" which is defined as long inside the
+	%union clause.
+
+	Above all, the bison generated files required some prototypes. So I
+	had to add the following to idl.yy in the declarations section.
+
+	int yylex (void);
+	void yyerror (char *);
+	extern "C" yywrap (void);
+
+	Somehow, this yywrap had to be under extern "C". I don't know why the
+	others need not be under extern "C".
+
+
 Sat Oct 25 00:05:05 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.15, released Sat Oct 25 00:05:05 1997.
 
 Sat Oct 25 02:46:05 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* TAO_IDL/fe/Makefile: 
+	* TAO_IDL/fe/Makefile:
 	Changed the YACC variable to use the bison compiler.
 	Added "-y" to YFLAGS to make bison generate output files like yacc.
 	Changed the LEX variable to use the flex parser instead of lex.
-	These programs generate code that has less warnings and is better 
+	These programs generate code that has less warnings and is better
 	code in general.
 	Added "-D_REENTRANT" to CPPFLAGS, to be able to eliminate the warnings
 	in lex.yy.cpp.  This could also be fixed if we include "ace/ACE.h" at
 	the beginning of lex.yy.cpp, but this file is generated with flex.
 
-	* TAO_IDL/fe/idl.yy: 
-	Added ACE_UNUSED_ARG macro to avoid unused variable warning, 
+	* TAO_IDL/fe/idl.yy:
+	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
 	for variable "AST_Decl *v".
 
-	* TAO_IDL/fe/idl.ll (idl_atof): 
-	Added ACE_UNUSED_ARG macro to avoid unused variable warning, 
+	* TAO_IDL/fe/idl.ll (idl_atof):
+	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
 	for variable f and h.
 
-	* TAO_IDL/include/idl.h: 
+	* TAO_IDL/include/idl.h:
 	Added include file "ace/ACE.h".  This was necessary to eliminate
 	warnings of implicit declarations, which were because the _REENTRANT
 	flag was not defined.
-	
-	* TAO_IDL/ast/ast_operation.cpp (AST_Operation): 
+
+	* TAO_IDL/ast/ast_operation.cpp (AST_Operation):
 	Reordered member initializers to match declaration order to
 	eliminate warnings from the compiler.
-	
-	* TAO_IDL/ast/ast_operation.cpp (fe_add_exceptions): 
-	Added ACE_UNUSED_ARG macro to avoid unused variable warning, 
+
+	* TAO_IDL/ast/ast_operation.cpp (fe_add_exceptions):
+	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
 	for variable fs.
 
-	* TAO_IDL/ast/ast_interface.cpp (AST_Interface): 
+	* TAO_IDL/ast/ast_interface.cpp (AST_Interface):
 	Reordered member initializers to match declaration order to
 	eliminate warnings from the compiler.
 
-	* TAO_IDL/ast/ast_expression.cpp (operator==): 
-	* TAO_IDL/ast/ast_expression.cpp (coerce): 
-	* TAO_IDL/ast/ast_expression.cpp (coerce_value): 
-	* TAO_IDL/ast/ast_expression.cpp (compare): 
-	* TAO_IDL/ast/ast_expression.cpp (dump_expr_val): 
-	Added case statements to handle the rest of un-handled 
-	enumerations from AST_Expression::ExprType.  These will 
-	handle a default value (i.e. the same case as 
+	* TAO_IDL/ast/ast_expression.cpp (operator==):
+	* TAO_IDL/ast/ast_expression.cpp (coerce):
+	* TAO_IDL/ast/ast_expression.cpp (coerce_value):
+	* TAO_IDL/ast/ast_expression.cpp (compare):
+	* TAO_IDL/ast/ast_expression.cpp (dump_expr_val):
+	Added case statements to handle the rest of un-handled
+	enumerations from AST_Expression::ExprType.  These will
+	handle a default value (i.e. the same case as
 	AST_Expression::EV_none).  Enumerations added are:
 	AST_Expression::EV_wstring
 	AST_Expression::EV_wchar
@@ -54,39 +85,39 @@ Sat Oct 25 02:46:05 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 	AST_Expression::EV_ulonglong
 	AST_Expression::EV_longlong
 
-	* TAO_IDL/ast/ast_expression.cpp (AST_Expression): 
+	* TAO_IDL/ast/ast_expression.cpp (AST_Expression):
 	Reordered member initializers to match declaration order to
 	eliminate warnings from the compiler.
-	
-	* TAO_IDL/ast/ast_decl.cpp (AST_Decl): 
+
+	* TAO_IDL/ast/ast_decl.cpp (AST_Decl):
 	Reordered member initializers to match declaration order to
 	eliminate warnings from the compiler.
 	Also, use 0 instead of NULL to initialize pointers in the
-	member initialization list, again to avoid ANSI C++ forbids 
+	member initialization list, again to avoid ANSI C++ forbids
 	implicit (void *) conversions warnings.
-	
-	* TAO_IDL/ast/ast_array.cpp (dump): 
+
+	* TAO_IDL/ast/ast_array.cpp (dump):
 	Added "unsigned" to index variable "i" used in for() loop,
 	to avoid warning "comparison between unsigned and signed"
 
-	* TAO_IDL/ast/ast_array.cpp (compute_dims): 
+	* TAO_IDL/ast/ast_array.cpp (compute_dims):
 	Added "unsigned" to index variable "i" used in for() loop,
 	to avoid warning "comparison between unsigned and signed"
 
-	* TAO_IDL/ast/ast_array.cpp (AST_Array): 
+	* TAO_IDL/ast/ast_array.cpp (AST_Array):
 	Reordered member initializers to match declaration order to
 	eliminate warnings from the compiler.
 
-	* TAO_IDL/fe/fe_declarator.cpp (FE_Declarator): 
+	* TAO_IDL/fe/fe_declarator.cpp (FE_Declarator):
 	Reordered member initializers to match declaration order to
 	eliminate warnings from the compiler.
 
-	* TAO_IDL/driver/drv_main.cpp (DRV_drive): 
+	* TAO_IDL/driver/drv_main.cpp (DRV_drive):
 	Added ACE_UNUSED_ARG macro to avoid unused variable warning.
 
-	* TAO_IDL/ast/ast_recursive.cpp (AST_illegal_recursive_type): 
+	* TAO_IDL/ast/ast_recursive.cpp (AST_illegal_recursive_type):
 	Initialized pointer variables to avoid warnings.
-	
+
 Fri Oct 24 19:18:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao: Changed remaining uses of BOA to POA.
@@ -99,11 +130,11 @@ Fri Oct 24 19:18:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	oa_ptr->clean_shutdown (env);
 
-	since this is no longer supported in TAO's POA. 
+	since this is no longer supported in TAO's POA.
 
 	* tao/poa.h: Changed the get_boa() method to get_poa().  Even this
  	will probably go away soon.
-	
+
 Fri Oct 24 18:25:00 1997  Aniruddha Gokhale  <gokhale@flamenco.cs.wustl.edu>
 
 	* TAO/tao/svrrqst.cpp: Method params was allocating memory even
