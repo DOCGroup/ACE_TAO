@@ -556,7 +556,7 @@ ACE_OS::chdir (const ACE_TCHAR *path)
 
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
-  
+
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 
@@ -569,7 +569,7 @@ ACE_OS::mktemp (ACE_TCHAR *s)
 {
 # if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   return ::_wmktemp (s);
-# elif defined (ACE_WIN32) 
+# elif defined (ACE_WIN32)
   return ::_mktemp (s);
 # else /* ACE_WIN32 */
   return ::mktemp (s);
@@ -2212,7 +2212,7 @@ ACE_OS::ace_isspace (const ACE_TCHAR s)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_USES_WCHAR)
   return iswspace (s);
-#else 
+#else
   return isspace (s);
 #endif /* ACE_HAS_WINCE */
 }
@@ -2225,7 +2225,7 @@ ACE_OS::ace_isprint (const ACE_TCHAR s)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_USES_WCHAR)
   return iswprint (s);
-#else 
+#else
   return isprint (s);
 #endif /* ACE_HAS_WINCE */
 }
@@ -3828,10 +3828,10 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
   // its maximum value initialized to <max>.
-  *s = 
-    ACE_TEXT_CreateSemaphore (ACE_OS::default_win32_security_attributes (sa), 
-                              count, 
-                              max, 
+  *s =
+    ACE_TEXT_CreateSemaphore (ACE_OS::default_win32_security_attributes (sa),
+                              count,
+                              max,
                               name);
 
   if (*s == 0)
@@ -6000,12 +6000,12 @@ ACE_OS::gethostbyname (const ACE_TCHAR *name)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)), 
-                       struct hostent *, 
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)),
+                       struct hostent *,
                        0);
 # else
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)), 
-                       struct hostent *, 
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)),
+                       struct hostent *,
                        0);
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
@@ -6020,13 +6020,13 @@ ACE_OS::gethostbyname2 (const ACE_TCHAR *name, int family)
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_IP6)
 #   if defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name), 
-                                         family), 
-                       struct hostent *, 
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_const_cast (char *, name),
+                                         family),
+                       struct hostent *,
                        0);
 #   else
-  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_TEXT_ALWAYS_CHAR (name), family), 
-                       struct hostent *, 
+  ACE_SOCKCALL_RETURN (::gethostbyname2 (ACE_TEXT_ALWAYS_CHAR (name), family),
+                       struct hostent *,
                        0);
 #   endif /* ACE_HAS_NONCONST_GETBY */
 # else
@@ -6048,16 +6048,16 @@ ACE_OS::gethostbyaddr (const ACE_TCHAR *addr, int length, int type)
   ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr), 
-                                        (ACE_SOCKET_LEN) length, 
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr),
+                                        (ACE_SOCKET_LEN) length,
                                         type),
-                       struct hostent *, 
+                       struct hostent *,
                        0);
 # else
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr), 
-                                        (ACE_SOCKET_LEN) length, 
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr),
+                                        (ACE_SOCKET_LEN) length,
                                         type),
-                       struct hostent *, 
+                       struct hostent *,
                        0);
 # endif /* ACE_HAS_NONCONST_GETBY */
 }
@@ -6347,11 +6347,11 @@ ACE_OS::getprotobyname (const ACE_TCHAR *name)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name)),
-                       struct protoent *, 
+                       struct protoent *,
                        0);
 #else
   ACE_SOCKCALL_RETURN (::getprotobyname (ACE_TEXT_ALWAYS_CHAR (name)),
-                       struct protoent *, 
+                       struct protoent *,
                        0);
 #endif /* VXWORKS */
 }
@@ -6379,9 +6379,9 @@ ACE_OS::getprotobyname_r (const ACE_TCHAR *name,
                         struct protoent *, 0,
                         buffer, sizeof (ACE_PROTOENT_DATA));
 #   else
-    ACE_SOCKCALL_RETURN (::getprotobyname_r (name, 
-                                             result, 
-                                             buffer, 
+    ACE_SOCKCALL_RETURN (::getprotobyname_r (name,
+                                             result,
+                                             buffer,
                                              sizeof (ACE_PROTOENT_DATA)),
                        struct protoent *, 0);
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
@@ -6396,7 +6396,7 @@ ACE_OS::getprotobyname_r (const ACE_TCHAR *name,
   ACE_UNUSED_ARG (result);
 
   ACE_SOCKCALL_RETURN (::getprotobyname (ACE_TEXT_ALWAYS_CHAR (name)),
-                       struct protoent *, 
+                       struct protoent *,
                        0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) !defined (UNIXWARE) */
 }
@@ -6458,14 +6458,14 @@ ACE_OS::getservbyname (const ACE_TCHAR *svc, const ACE_TCHAR *proto)
   ACE_UNUSED_ARG (proto);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc), 
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc),
                                         ACE_const_cast (char *, proto)),
-                       struct servent *, 
+                       struct servent *,
                        0);
 #else
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc), 
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc),
                                         ACE_TEXT_ALWAYS_CHAR (proto)),
-                       struct servent *, 
+                       struct servent *,
                        0);
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
@@ -6477,13 +6477,13 @@ ACE_OS::getsockname (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_OS::getsockname");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, 
+  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
                                       (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #else
-  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle, 
-                                      addr, 
+  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
+                                      addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #endif /* defined (ACE_PSOS) */
@@ -6497,12 +6497,12 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                     int *optlen)
 {
   ACE_TRACE ("ACE_OS::getsockopt");
-  ACE_SOCKCALL_RETURN (::getsockopt ((ACE_SOCKET) handle, 
-                                     level, 
-                                     optname, 
-                                     optval, 
+  ACE_SOCKCALL_RETURN (::getsockopt ((ACE_SOCKET) handle,
+                                     level,
+                                     optname,
+                                     optval,
                                      (ACE_SOCKET_LEN *) optlen),
-                       int, 
+                       int,
                        -1);
 }
 
@@ -6514,19 +6514,19 @@ ACE_OS::listen (ACE_HANDLE handle, int backlog)
 }
 
 ACE_INLINE int
-ACE_OS::setsockopt (ACE_HANDLE handle, 
-                    int level, 
+ACE_OS::setsockopt (ACE_HANDLE handle,
+                    int level,
                     int optname,
-                    const char *optval, 
+                    const char *optval,
                     int optlen)
 {
   ACE_TRACE ("ACE_OS::setsockopt");
-  ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle, 
-                                     level, 
+  ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle,
+                                     level,
                                      optname,
-                                     (ACE_SOCKOPT_TYPE1) optval, 
+                                     (ACE_SOCKOPT_TYPE1) optval,
                                      optlen),
-                       int, 
+                       int,
                        -1);
 }
 
@@ -6782,7 +6782,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                   off_t offset)
 {
   ACE_TRACE ("ACE_OS::truncate");
-#if defined (ACE_WIN32) 
+#if defined (ACE_WIN32)
   ACE_HANDLE handle = ACE_OS::open (filename,
                                     O_WRONLY,
                                     ACE_DEFAULT_FILE_PERMS);
@@ -6929,10 +6929,10 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 
 #if !defined (VXWORKS)
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr, 
-                         int length, 
+ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr,
+                         int length,
                          int type,
-                         hostent *result, 
+                         hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {
@@ -6975,26 +6975,26 @@ ACE_OS::gethostbyaddr_r (const ACE_TCHAR *addr,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr), 
-                                        (ACE_SOCKET_LEN) length, 
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_const_cast (char *, addr),
+                                        (ACE_SOCKET_LEN) length,
                                         type),
-                       struct hostent *, 
+                       struct hostent *,
                        0);
 # else
   ACE_UNUSED_ARG (h_errnop);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr), 
-                                        (ACE_SOCKET_LEN) length, 
+  ACE_SOCKCALL_RETURN (::gethostbyaddr (ACE_TEXT_ALWAYS_CHAR (addr),
+                                        (ACE_SOCKET_LEN) length,
                                         type),
-                       struct hostent *, 
+                       struct hostent *,
                        0);
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname_r (const ACE_TCHAR *name, 
+ACE_OS::gethostbyname_r (const ACE_TCHAR *name,
                          hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
@@ -7035,9 +7035,9 @@ ACE_OS::gethostbyname_r (const ACE_TCHAR *name,
                         buffer, sizeof (ACE_HOSTENT_DATA));
 #     else
   ACE_SOCKCALL_RETURN (::gethostbyname_r (name, result, buffer,
-                                          sizeof (ACE_HOSTENT_DATA), 
+                                          sizeof (ACE_HOSTENT_DATA),
                                           h_errnop),
-                       struct hostent *, 
+                       struct hostent *,
                        0);
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #   endif /* defined (AIX) || defined (DIGITAL_UNIX) */
@@ -7045,16 +7045,16 @@ ACE_OS::gethostbyname_r (const ACE_TCHAR *name,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)), 
-                       struct hostent *, 
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_const_cast (char *, name)),
+                       struct hostent *,
                        0);
 # else
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
 
-  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)), 
-                       struct hostent *, 
+  ACE_SOCKCALL_RETURN (::gethostbyname (ACE_TEXT_ALWAYS_CHAR (name)),
+                       struct hostent *,
                        0);
 # endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
@@ -7074,9 +7074,9 @@ ACE_OS::gets (char *str)
 #endif /* 0 */
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname_r (const ACE_TCHAR *svc, 
+ACE_OS::getservbyname_r (const ACE_TCHAR *svc,
                          const ACE_TCHAR *proto,
-                         struct servent *result, 
+                         struct servent *result,
                          ACE_SERVENT_DATA buf)
 {
   ACE_TRACE ("ACE_OS::getservbyname_r");
@@ -7109,17 +7109,17 @@ ACE_OS::getservbyname_r (const ACE_TCHAR *svc,
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc), 
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_const_cast (char *, svc),
                                         ACE_const_cast (char *, proto)),
-                       struct servent *, 
+                       struct servent *,
                        0);
 #else
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
 
-  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc), 
+  ACE_SOCKCALL_RETURN (::getservbyname (ACE_TEXT_ALWAYS_CHAR (svc),
                                         ACE_TEXT_ALWAYS_CHAR (proto)),
-                       struct servent *, 
+                       struct servent *,
                        0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
@@ -7176,9 +7176,9 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   ACE_UNUSED_ARG (addr);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (ACE_TEXT_CHAR_TO_TCHAR (::inet_ntoa (addr)), 
-                                             ACE_TCHAR *, 
-											 0);
+  ACE_OSCALL_RETURN (ACE_TEXT_CHAR_TO_TCHAR (::inet_ntoa (addr)),
+                                             ACE_TCHAR *,
+                                                                                         0);
 #endif /* defined (ACE_PSOS) */
 }
 
@@ -7315,7 +7315,7 @@ ACE_OS::perror (const ACE_TCHAR *s)
   ACE_UNUSED_ARG (s);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ::_wperror (s);
-#else 
+#else
   ::perror (s);
 #endif /* ACE_HAS_WINCE */
 }
@@ -7383,8 +7383,8 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wsystem (s), int, -1);  
-#else 
+  ACE_OSCALL_RETURN (::_wsystem (s), int, -1);
+#else
   ACE_OSCALL_RETURN (::system (s), int, -1);
 #endif /* !CHORUS */
 }
@@ -7756,9 +7756,6 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 # elif defined (VXWORKS) || defined (ACE_PSOS)
-  // VxWorks could possibly support thread join with
-  // ::taskSafe()/::taskUnsafe().  But, a task can only calls those
-  // functions on itself.  Until there's really a need . . .
   ACE_UNUSED_ARG (thr_handle);
   ACE_UNUSED_ARG (status);
   ACE_NOTSUP_RETURN (-1);
@@ -9019,7 +9016,7 @@ ACE_OS::hostname (ACE_TCHAR name[], size_t maxnamelen)
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_PHARLAP_RT */
 #elif defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (ACE_TEXT_GetComputerName (name, 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (ACE_TEXT_GetComputerName (name,
                                                         LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
 #elif defined (VXWORKS)
@@ -9318,7 +9315,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_TRACE ("ACE_OS::dlsym");
 
   // Get the correct OS type.
-#if defined (ACE_HAS_WINCE) 
+#if defined (ACE_HAS_WINCE)
   const wchar_t *symbolname = sname;
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   char *symbolname = ACE_TEXT_ALWAYS_CHAR (sname);
@@ -9361,7 +9358,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   return status == 0 ? value : NULL;
 
 # else
-  
+
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (symbolname);
   ACE_NOTSUP_RETURN (0);
@@ -12167,29 +12164,29 @@ ACE_OS::readdir (DIR *d)
         {
           ::FindClose (d->current_handle_);
           d->current_handle_ = INVALID_HANDLE_VALUE;
-	    }
-	  else // Skip "." and ".."
-	    {
-		  int retval = 1;
-		  while (*(d->fdata_.cFileName) == '.'
-		         && retval
-				 && d->current_handle_ != INVALID_HANDLE_VALUE)
-			{
-			  retval = ACE_TEXT_FindNextFile (d->current_handle_, 
+            }
+          else // Skip "." and ".."
+            {
+                  int retval = 1;
+                  while (*(d->fdata_.cFileName) == '.'
+                         && retval
+                                 && d->current_handle_ != INVALID_HANDLE_VALUE)
+                        {
+                          retval = ACE_TEXT_FindNextFile (d->current_handle_,
                                               &(d->fdata_));
-			}
-	      if (retval == 0)
-	        d->current_handle_ = INVALID_HANDLE_VALUE;
-		}
+                        }
+              if (retval == 0)
+                d->current_handle_ = INVALID_HANDLE_VALUE;
+                }
 
-	  d->started_reading_ = 1;
-	}
+          d->started_reading_ = 1;
+        }
   else
     {
       int retval = ACE_TEXT_FindNextFile (d->current_handle_,
                                           &(d->fdata_));
-	  if (retval == 0)
-	    d->current_handle_ = INVALID_HANDLE_VALUE;
+          if (retval == 0)
+            d->current_handle_ = INVALID_HANDLE_VALUE;
     }
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
@@ -12230,7 +12227,7 @@ ACE_OS::readdir_r (DIR *dirp,
 # else
   return ::readdir_r (dirp, entry, result);
 # endif /* defined (__GNUG__) && defined (DIGITAL_UNIX) */
-    return ::readdir_r (dirp, entry, result); 
+    return ::readdir_r (dirp, entry, result);
 # else  /* ! POSIX.1c - this is draft 4 or draft 6 */
 #   if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
     *result = entry;
