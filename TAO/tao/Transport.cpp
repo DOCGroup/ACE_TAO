@@ -404,6 +404,20 @@ TAO_Transport::close_connection (void)
   // Close the underlying connection, it is enough to get an
   // Event_Handler pointer to do this, so we can factor out the code
   // in the base TAO_Transport class.
+
+
+  // We first try to remove the handler from the reactor. After that
+  // we destroy the handler using handle_close (). The remove handler
+  // is necessary because if the handle_closed is called directly, the
+  // reactor would be left with a dangling pointer.
+  if (this->ws_->is_registered ())
+    {
+      this->orb_core_->reactor ()->remove_handler (
+          eh,
+          ACE_Event_Handler::ALL_EVENTS_MASK |
+          ACE_Event_Handler::DONT_CALL);
+    }
+
   (void) eh->handle_close (ACE_INVALID_HANDLE,
                            ACE_Event_Handler::ALL_EVENTS_MASK);
 
