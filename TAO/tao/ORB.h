@@ -50,16 +50,6 @@ typedef enum
 # pragma option -a                // BC++, use 1 byte alignment
 #endif
 
-#if !defined (TAO_CONST)
-// Something to document the fact that we want to put 'const' in front
-// of a type, but that it won't turn out the way we want, e.g., we
-// really want to express that a CORBA_String is const, but since
-// CORBA_String is a char*, the const modifies the pointer and not the
-// pointed-to, and some compilers (like SGI's EDG-derived thang)
-// complain.
-#define TAO_CONST
-#endif /* TAO_CONST */
-
 // Forward declarations of some data types are needed.
 
 class TAO_POA_Manager;

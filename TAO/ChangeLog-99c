@@ -1,3 +1,96 @@
+Thu Jun 10 21:20:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.i:
+	* tao/Tagged_Components.cpp:
+	  New class to manipulate and query tagged components
+	  efficiently.
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Profile.cpp:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/UIOP_Profile.cpp:
+	* tao/UIOP_Acceptor.cpp:
+	  The IIOP and UIOP profiles use the TAO_Tagged_Components class
+	  to implement the tagged_components field in GIOP/IIOP 1.1
+	  The Acceptors generate the standard IOP::TAG_ORB_TYPE and IOP
+
+	* tao/iopfwd.h:
+	* tao/MessagingC.h:
+	  Removed "tao/iopfwd.h" the contents are in IOPC.h
+
+	* tao/corbafwd.h:
+	  Added several magic numbers that we use for the tagged
+	  components and the codeset support, I tried to describe the
+	  source for each one.
+
+	* tao/ORB.cpp:
+	  Fixed demarshaling of TC_opaque (again!)
+
+	* tao/CONV_FRAME.pidl:
+	* tao/CONV_FRAMEC.cpp:
+	* tao/CONV_FRAMEC.h:
+	* tao/CONV_FRAMEC.i:
+	* tao/CONV_FRAMES.cpp:
+	* tao/CONV_FRAMES.h:
+	* tao/CONV_FRAMES.i:
+	* tao/CONV_FRAMES_T.cpp:
+	* tao/CONV_FRAMES_T.h:
+	* tao/CONV_FRAMES_T.i:
+	  Implement the the CONV_FRAME module in CORBA 2.2, it is just a
+	  bunch of types, no interfaces.
+
+	* tao/IOPC.h:
+	* tao/IOPC.i:
+	* tao/IOPC.cpp:
+	* tao/IOPS.h:
+	* tao/IOPS.i:
+	* tao/IOPS.cpp:
+	* tao/IOPS_T.h:
+	* tao/IOPS_T.i:
+	* tao/IOPS_T.cpp:
+	  Added the complete (as of CORBA 2.2) IOP module definition.
+
+	* tao/Makefile:
+	  Added the new files.
+
+	* tao/orbconf.h:
+	* tao/ORB_Core.cpp:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/params.cpp:
+	  New option (-ORBStdProfileComponents 0/1) to control the
+	  generation of the standard tagged components on each
+	  profile. They are optional, i.e. we are not required to generate
+	  them, and take some space (in the IORs). Notice that they do
+	  *not* affect the critical path (unless you are sending a lot of
+	  object references).
+
+	* docs/Options.html:
+	  Documented the new -ORBStdProfileComponents option
+
+	* utils/catior/catior.cpp:
+	  Added support for GIOP 1.1 tagged components in both IIOP and
+	  UIOP profiles
+
+	* tao/GIOP.cpp:
+	  Removed unused variable
+
+	* tao/orbconf.h:
+	* tao/corbafwd.h:
+	* tao/ORB.h:
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	  Removed the last use of TAO_CONST
+
+	* TAO_IDL/driver/drv_args.cpp:
+	  If the temporary directory cannot be open we print an Error, not 
+	  a Warning (it would be confusing otherwise). Thanks to Jim
+	  Rogers <jrogers@viasoft.com> for pointing this out.
+
 Thu Jun 10 17:15:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.cpp:

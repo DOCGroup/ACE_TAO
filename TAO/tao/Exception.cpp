@@ -81,7 +81,7 @@ CORBA_Exception::_id (void) const
     return 0;
 }
 
-TAO_CONST CORBA::TypeCode_ptr
+CORBA::TypeCode_ptr
 CORBA_Exception::_type (void) const
 {
   return this->type_;

@@ -193,3 +193,16 @@ TAO_ORB_Parameters::default_init_ref (void) const
 {
   return this->default_init_ref_.rep ();
 }
+
+ACE_INLINE int
+TAO_ORB_Parameters::std_profile_components (void) const
+{
+  return this->std_profile_components_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::std_profile_components (int x)
+{
+  this->std_profile_components_ = x;
+}
+
