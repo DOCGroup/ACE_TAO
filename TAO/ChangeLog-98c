@@ -1,3 +1,15 @@
+Sun Jul 26 10:11:07 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp: 
+	* orbsvcs/tests/Trading/colocated_test.cpp: 
+	  MSVC++ and std::auto_ptr don't like implicit conversions from
+	  the pointer type to the auto_ptr, this is (I believe) the
+	  standard behavior.
+
+	* orbsvcs/tests/Logger/server.dsp: 
+	* orbsvcs/tests/Logger/client.dsp: 
+	  Added missing files to the project.
+
 Sun Jul 26 09:17:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.h: increased
