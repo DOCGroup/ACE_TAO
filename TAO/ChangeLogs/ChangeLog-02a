@@ -1,3 +1,9 @@
+Sun Mar 12 18:42:26 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbscvs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Updated Notify files.
+
 Sun Mar 12 10:23:21 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Types.cpp:
