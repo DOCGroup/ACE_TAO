@@ -59,6 +59,6 @@ main (int, char *[])
     }
 
   ACE_END_TEST;
-  return 0;
+  return rc != 0;	// return 1 if get_ip_interfaces failed
 }
 
