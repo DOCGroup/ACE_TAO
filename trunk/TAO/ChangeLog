@@ -1,11 +1,3 @@
-Tue Feb 18 13:44:34 2003  OCI  <oci@cs.wustl.edu>
-
-        * TAO version 1.3.1 released.
-
-Tue Feb 18 13:09:05  2003  Priyanka Gontl a <gontla_p@ociweb.com>
-
-	* TAO version 1.3.1 released
-
 Mon Feb 17 15:37:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/Persistent_IOR/client.bor: Linked the client with
