@@ -51,6 +51,11 @@ case $1 in
 esac
 done
 
+# Dependencies on local files are better expressed like that, instead
+# of using $(TAO_ROOT) or $(ACE_ROOT).  This is specially important
+# for IDL generated files.
+REL="-e s;$PWD/;;g "$REL
+
 if [ ! -w $MAKE ]; then
   echo "g++dep: no writeable file \"$MAKE\""
   exit 1
