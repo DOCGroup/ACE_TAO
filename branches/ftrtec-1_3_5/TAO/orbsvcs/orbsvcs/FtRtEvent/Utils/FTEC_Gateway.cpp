@@ -213,7 +213,6 @@ RtecEventChannelAdmin::SupplierAdmin_ptr
 FTEC_Gateway::for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG((LM_DEBUG, "FTEC_Gateway::for_suppliers\n"));
   return RtecEventChannelAdmin::SupplierAdmin::_duplicate(impl_->supplier_admin.in());
 }
 
