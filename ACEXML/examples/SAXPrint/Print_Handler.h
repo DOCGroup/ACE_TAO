@@ -21,7 +21,7 @@
  * @brief ACEXML_Print_Handler is an example SAX event handler.
  *
  * This SAX event handler prints out a detailed event report
- * on every event it received.
+ * on every event it receives.
  */
 class ACEXML_Print_Handler : public ACEXML_DefaultHandler
 {
@@ -29,14 +29,14 @@ public:
   /*
    * Default constructor.
    */
-  ACEXML_Print_Handler (void);
+  ACEXML_Print_Handler (ACEXML_Char* fileName);
 
   /*
    * Default destructor.
    */
   virtual ~ACEXML_Print_Handler (void);
 
-  // Methods inherit from ACEXML_ContentHandler.
+  // Methods inherited from ACEXML_ContentHandler.
 
   /*
    * Receive notification of character data.
@@ -192,6 +192,11 @@ public:
                         ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     ;
+private:
+
+  ACEXML_Char* fileName_;
+  ACEXML_Locator* locator_;
+
 };
 
 #endif /* ACEXML_PRINT_HANDLER_H */

@@ -1,3 +1,35 @@
+Thu May 23 14:04:52 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/LocatorImpl.cpp:
+        * ACEXML/common/LocatorImpl.h:
+        * ACEXML/common/LocatorImpl.i:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+        * ACEXML/parser/parser/Parser.i:
+
+          Implemented the Locator for the XML parser.
+
+        * ACEXML/common/CharStream.h:
+        * ACEXML/common/DTDHandler.h:
+        * ACEXML/common/Env.h:
+        * ACEXML/common/Exception.h:
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/InputSource.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/common/SAXExceptions.h:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.h:
+
+          Cosmetic fixes including some fixing some memory leaks.
+
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/Print_Handler.h:
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Add support for printing out errors which uses the Locator. This
+          will print out errors only if there is an error in the XML file.
+
+
 Thu May 23 07:53:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/Misc/test_read_buffer.cpp (ACE_TMAIN): Use ACE_STDIN

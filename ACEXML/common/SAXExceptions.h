@@ -129,8 +129,6 @@ protected:
  *
  * @brief ACEXML_SAXParseException
  *
- * @todo This exception needs to provide error location information to behave like
- * the real SAXParseException defined in SAX2 spec.
  */
 class ACEXML_Export ACEXML_SAXParseException
   : public ACEXML_SAXException

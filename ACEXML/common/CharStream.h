@@ -18,10 +18,9 @@
 /**
  * @class ACEXML_CharStream CharStream.h "ACEXML/common/CharStream.h"
  *
- * ACEXML_CharStream is an abstract class (interface) which defines
- * the basic opertions a parser could use to retrieve XML charater
- * sequence.  The sequence can be read from a file or a character
- * buffer.
+ * ACEXML_CharStream is an abstract class (interface) which defines the
+ * basic opertions a parser could use to retrieve XML charater sequence.
+ * The sequence can be read from a file or a character buffer.
  */
 class ACEXML_Export ACEXML_CharStream
 {

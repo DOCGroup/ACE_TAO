@@ -165,7 +165,7 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char *,
   // No-op.
 }
 
-// *** Methods inherit from ACEXML_DTDHandler.
+// *** Methods inherited from ACEXML_DTDHandler.
 
 void
 ACEXML_SAXPrint_Handler::notationDecl (const ACEXML_Char *,
@@ -188,7 +188,7 @@ ACEXML_SAXPrint_Handler::unparsedEntityDecl (const ACEXML_Char *,
   // No-op.
 }
 
-// Methods inherit from ACEXML_EnitityResolver.
+// Methods inherited from ACEXML_EnitityResolver.
 
 ACEXML_InputSource *
 ACEXML_SAXPrint_Handler::resolveEntity (const ACEXML_Char *,
@@ -200,7 +200,7 @@ ACEXML_SAXPrint_Handler::resolveEntity (const ACEXML_Char *,
   return 0;
 }
 
-// Methods inherit from ACEXML_ErrorHandler.
+// Methods inherited from ACEXML_ErrorHandler.
 
   /*
    * Receive notification of a recoverable error.
@@ -210,7 +210,7 @@ ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException &,
                                 ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+
 }
 
 void

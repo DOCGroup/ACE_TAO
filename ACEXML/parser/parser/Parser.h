@@ -140,7 +140,7 @@ public:
   // *** Helper functions for parsing XML
 
   /**
-   * Skip any whitespaces encounter until the first non-whitespace
+   * Skip any whitespaces encountered until the first non-whitespace
    * character is encountered and consumed from the current input
    * CharStream.
    *
@@ -157,13 +157,13 @@ public:
   ACEXML_Char skip_whitespace (ACEXML_Char **whitespace);
 
   /**
-   * Skip any whitespaces encounter until the first non-whitespace
+   * Skip any whitespaces encountered until the first non-whitespace
    * character.  The first non-whitespace character is not consumed.
    * This method does peek into the input CharStream and therefore
    * is more expensive than @ref skip_whitespace.
    *
    * @param peek If non-null, @a peek points to a ACEXML_Char where
-   *        skip_whitespace_count store the first non-whitespace
+   *        skip_whitespace_count stores the first non-whitespace
    *        character it sees (character is not removed from the stream.)
    *
    * @retval The number of whitespace characters consumed.
@@ -422,15 +422,27 @@ protected:
 
 private:
   /**
-   * Check and dispatch errors/warnings to ErrorHandler.
+   * Dispatch errors to ErrorHandler.
    *
-   * @retval 0 if the error/warning is handled successfully, -1, if
-   * the handler doesn't know how to handle the error/exceptions.
    */
-  int check_exception (ACEXML_Env &xmlenv);
+  void report_error (ACEXML_SAXParseException& exception, ACEXML_Env& xmlenv);
 
-  /// Keeping track of the handlers.  We do not manage
-  /// the memory for handlers.
+  /**
+   * Dispatch warnings to ErrorHandler.
+   *
+   */
+  void report_warning (ACEXML_SAXParseException& exception,
+                       ACEXML_Env& xmlenv);
+
+  /**
+   * Dispatch fatal errors to ErrorHandler.
+   *
+   */
+  void report_fatal_error (ACEXML_SAXParseException& exception,
+                           ACEXML_Env& xmlenv);
+
+  /// Keeping track of the handlers. We do not manage the memory for
+  /// handlers.
   ACEXML_DTDHandler *dtd_handler_;
   ACEXML_EntityResolver *entity_resolver_;
   ACEXML_ContentHandler *content_handler_;
