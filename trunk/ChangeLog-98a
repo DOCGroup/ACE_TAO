@@ -27,6 +27,9 @@ Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
           ghs) into this new config for easier maintenance.  Added
           ACE_THR_PRI_FIFO_DEF, set to 6.
 
+        * tests/Reactor_Timer_Test.cpp (main): cast i to u_long to avoid
+          signed/unsigned comparison.
+
 Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/SString_Test.cpp (main): Removed the "silly" strings from
