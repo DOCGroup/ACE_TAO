@@ -1,3 +1,14 @@
+Wed Dec 31 09:54:05 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+
+          Added #include of portablegroup_export.h.
+
+        * orbsvcs/orbsvcs.mwc:
+
+          Removed this file.  It is no longer necessary since the
+          introduction of the -hierarchy option.
+
 Wed Dec 31 15:12:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Supplier_T.h:
@@ -22,10 +33,10 @@ Wed Dec 31 09:58:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 30 20:32:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/Security.idl:
 
-	  Fixed a path to the IDL file. This should fix the compile errors
-	  in the daily builds.
+          Fixed a path to the IDL file. This should fix the compile errors
+          in the daily builds.
 
 Tue Dec 30 19:09:46 2003  Dale Wilson  <wilson_d@ociweb.com>
 
