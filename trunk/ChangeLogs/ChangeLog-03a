@@ -1,3 +1,8 @@
+Thu May  4 14:47:09 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_freebsd.GNU: Defined BIN_TRUE as
+	  /usr/bin/true.
+
 Wed May  3 19:35:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Log_Msg.cpp:
