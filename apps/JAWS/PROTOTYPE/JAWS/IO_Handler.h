@@ -150,9 +150,6 @@ public:
   virtual void task (JAWS_Pipeline_Handler *ph);
   virtual JAWS_Pipeline_Handler *task (void);
 
-  virtual void waiter_index (int index);
-  virtual int waiter_index (void);
-
   virtual void message_block (JAWS_Data_Block *mb);
   virtual JAWS_Data_Block *message_block (void);
 
