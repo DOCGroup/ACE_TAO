@@ -83,8 +83,9 @@ public:
 protected:
   // = Ensure we are an abstract class.
   /// Default constructor.
-  /// Destructor.
   ACE_TLI (void);
+
+  /// Destructor.
   ~ACE_TLI (void);
 
   /// Initialize a TLI endpoint.
