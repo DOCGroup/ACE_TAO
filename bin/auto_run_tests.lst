@@ -5,32 +5,32 @@
 # Each line has its own test, and a test can be followed by a
 # list of configurations it does _not_ run on.
 #
-# Example: TAO\examples\foo\run_test.pl: MINIMUM ST
+# Example: TAO\examples\foo\run_test.pl: !MINIMUM !ST
 
 tests/run_test.pl
 
-TAO/tests/Param_Test/run_test.pl: MINIMUM
-TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: MINIMUM ST
-TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: ST
-TAO/performance-tests/Latency/run_test.pl: MINIMUM ST
+TAO/tests/Param_Test/run_test.pl: !MINIMUM
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
+TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST
+TAO/performance-tests/Latency/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
-TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: MINIMUM
+TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
 
 TAO/tests/OctetSeq/run_test.pl
-TAO/tests/Leader_Followers/run_test.pl: ST
+TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
-TAO/tests/RTCORBA/Client_Propagated/run_test.pl: MINIMUM linux
-TAO/tests/RTCORBA/Server_Declared/run_test.pl: MINIMUM ST linux
-TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: MINIMUM ST linux
-TAO/tests/RTCORBA/Banded_Connections/run_test.pl: MINIMUM ST linux
-TAO/tests/RTCORBA/Server_Protocol/run_test.pl: MINIMUM
-TAO/tests/RTCORBA/Client_Protocol/run_test.pl: MINIMUM
-TAO/tests/RTCORBA/Private_Connection/run_test.pl: MINIMUM
-TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: MINIMUM
-TAO/tests/MT_Client/run_test.pl: ST
-TAO/tests/MT_Server/run_test.pl: ST
-TAO/tests/Faults/run_test.pl: MINIMUM
-TAO/tests/NestedUpcall/Simple/run_test.pl: ST
+TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !linux
+TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST !linux
+TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST !linux
+TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST !linux
+TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
+TAO/tests/MT_Client/run_test.pl: !ST
+TAO/tests/MT_Server/run_test.pl: !ST
+TAO/tests/Faults/run_test.pl: !MINIMUM
+TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
 TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
 TAO/tests/Nested_Event_Loop/run_test.pl
@@ -40,51 +40,51 @@ TAO/tests/POA/Destruction/run_test.pl
 TAO/tests/POA/Non_Servant_Upcalls/run_test.pl
 TAO/tests/POA/wait_for_completion/run_test.pl
 TAO/tests/IORManipulation/run_test.pl
-TAO/tests/Policies/run_test.pl: MINIMUM ST
-TAO/tests/Timeout/run_test.pl: MINIMUM
-TAO/tests/Timed_Buffered_Oneways/run_test.pl: MINIMUM
+TAO/tests/Policies/run_test.pl: !MINIMUM !ST
+TAO/tests/Timeout/run_test.pl: !MINIMUM
+TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/IDL_Test/run_test.pl
 TAO/tests/ORB_init/run_test.pl
 TAO/tests/ORB_destroy/run_test.pl
-TAO/tests/DSI_Gateway/run_test.pl: MINIMUM
-TAO/tests/DynAny_Test/run_test.pl: MINIMUM
-# BROKEN TAO/tests/Connection_Purging/run_test.pl: ST
-TAO/tests/LongUpcalls/run_test.pl: MINIMUM
-TAO/examples/Buffered_Oneways/run_test.pl: MINIMUM
-# REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: MINIMUM
-TAO/tests/InterOp-Naming/run_test.pl: MINIMUM
+TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
+TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
+# BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
+TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
+TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
+# REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
+TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl
 # This test is broken - to be fixed by Angelo TAO/tests/Exposed_Policies/run_test.pl
 
 
-TAO/examples/POA/Adapter_Activator/run_test.pl: MINIMUM
-TAO/examples/POA/DSI/run_test.pl: MINIMUM
-TAO/examples/POA/Default_Servant/run_test.pl: MINIMUM
-TAO/examples/POA/Explicit_Activation/run_test.pl: MINIMUM
-TAO/examples/POA/FindPOA/run_test.pl: MINIMUM
-TAO/examples/POA/Forwarding/run_test.pl: MINIMUM
-TAO/examples/POA/NewPOA/run_test.pl: MINIMUM
-TAO/examples/POA/On_Demand_Activation/run_test.pl: MINIMUM STATIC
-TAO/examples/POA/On_Demand_Loading/run_test.pl: MINIMUM STATIC
+TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM
+TAO/examples/POA/DSI/run_test.pl: !MINIMUM
+TAO/examples/POA/Default_Servant/run_test.pl: !MINIMUM
+TAO/examples/POA/Explicit_Activation/run_test.pl: !MINIMUM
+TAO/examples/POA/FindPOA/run_test.pl: !MINIMUM
+TAO/examples/POA/Forwarding/run_test.pl: !MINIMUM
+TAO/examples/POA/NewPOA/run_test.pl: !MINIMUM
+TAO/examples/POA/On_Demand_Activation/run_test.pl: !MINIMUM !STATIC
+TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/Reference_Counted_Servant/run_test.pl
-TAO/examples/POA/Loader/run_test.pl: MINIMUM STATIC
+TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/RootPOA/run_test.pl
-TAO/examples/POA/Adapter_Activator/run_test.pl: MINIMUM
+TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM
 TAO/examples/Simple/bank/run_test.pl
 TAO/examples/Simple/grid/run_test.pl
-TAO/examples/Simple/time-date/run_test.pl: ST STATIC
+TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
 TAO/examples/Simple/time/run_test.pl
-TAO/examples/Load_Balancing/run_test.pl: MINIMUM
+TAO/examples/Load_Balancing/run_test.pl: !MINIMUM
 
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl
-TAO/orbsvcs/tests/Trading/run_test.pl: MINIMUM
-TAO/orbsvcs/tests/Event/Basic/run_test.pl: ST
-TAO/orbsvcs/tests/Event/Performance/run_test.pl: ST
+TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST
+TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST
 TAO/orbsvcs/tests/EC_Basic/run_test.pl
-TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: ST
-TAO/orbsvcs/tests/EC_Throughput/run_test.pl: ST
-# BREAKS LINUX 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
+TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST
+TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST
+# BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
 TAO/orbsvcs/tests/Event_Latency/run_test.pl
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl

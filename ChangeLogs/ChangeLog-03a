@@ -1,3 +1,32 @@
+Thu Dec 14 10:36:45 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_run_tests.lst:
+        * tests/run_test.lst:
+
+          Converted to the new PerlACE::ConfigList style of .lst 
+          files (can now say stuff like "Test: MSVC !Borland")
+
+        * bin/auto_run_tests.pl:
+        * bin/auto_compile:
+        * tests/run_test.pl:
+
+          Changed to use PerlACE::ConfigList.
+
+        * bin/ACEutils.pm:
+
+          Made sure it would eat the -Config option so it will not
+          be a problem if old run_test.pl's don't get updated 
+          immediately.
+
+        * bin/msvc_auto_compile.pl:
+
+          Added -d flag for debugging (just prints out what would be
+          compiled)
+
+        * bin/fuzz.pl:
+
+          Added a rudimentary run_test.pl out-of-date test.
+
 Thu Dec 14 10:20:49 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_lynxos.GNU
