@@ -511,13 +511,18 @@ public:
   // Set the total amount of space in the message.  Returns 0 if
   // successful, else -1.
 
-  virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0,
-                                 int copy_data = 1) const;
+  virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0) const;
   // Return an exact "deep copy" of the message, i.e., create fresh
   // new copies of all the Data_Blocks and continuations.
   // Notice that Data_Blocks can act as "Prototypes", i.e. derived
   // classes can override this method and create instances of
   // themselves.
+
+  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0) const;
+  // As clone above, but it does not copy the contents of the buffer,
+  // i.e., create a new Data_Block of the same dynamic type, with the
+  // same allocator, locking_strategy, and with the same amount of
+  // storage available but the buffer is unitialized.
 
   ACE_Data_Block *duplicate (void);
   // Return a "shallow" copy that increments our reference count by 1.
