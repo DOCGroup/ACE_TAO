@@ -1,3 +1,13 @@
+Fri Mar  9 14:34:34 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * PACE/Makefile:
+        * apps/drwho/Makefile:
+        * bin/PerlACE/Process_Unix.pm:
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+
+          Modifications to make things build and run correctly with
+          Chorus 4.0.1.
+
 Thu Mar  8 08:38:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:

@@ -37,7 +37,13 @@ DIRS  =
   all clean realclean:
 	@echo PACE won\'t run or build for VxWorks.
 else
+  ifdef CHORUS
+  DIRS  =
+    all clean realclean:
+	@echo PACE won\'t run or build for Chorus.
+  else
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
+  endif # CHORUS
 endif # VXWORKS
