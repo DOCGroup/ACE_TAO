@@ -7,6 +7,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
+#include "ace/ACE.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
