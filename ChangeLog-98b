@@ -1,3 +1,8 @@
+Fri Sep  4 18:29:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp: Changed to use
+	"test_proactor.cpp" as input file. 
+
 Fri Sep  4 17:51:17 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/Proactor.cpp:
