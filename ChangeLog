@@ -1,3 +1,8 @@
+Thu Jan  1 16:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ASNMP/asnmp/asn1.cpp:
+	  Removed not needed ;. This is the last fix for bugzilla [BUGID 1677]
+
 Thu Jan  1 09:51:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_orb_tests.lst:
@@ -16,7 +21,7 @@ Wed Dec 31 21:57:08 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 	* ace/Base_Thread_Adapter.inl:
 	* ace/Base_Thread_Adapter.cpp:
 
-	  Added #include "os_include/sys/os_time.h" and 
+	  Added #include "os_include/sys/os_time.h" and
 	  data member itimerval itimer_ wrapped with ACE_USES_GPROF.
 
 	  This data member will hold the thread profiling timer.
@@ -24,10 +29,10 @@ Wed Dec 31 21:57:08 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 	  (ACE_Base_Thread_Adapter) Constructor calls getitimer.
 	  (ace_thread_adapter) Calls setitimer.
 	  Both are wrapped with ACE_USES_GPROF
-	
-	* ace/README: 
+
+	* ace/README:
 	  Added Useful information about ACE_USES_GPROF macro.
-	  That macro enable profiling with gprof in a multithreaded 
+	  That macro enable profiling with gprof in a multithreaded
 	  application.
 
 Wed Dec 31 13:13:11 2003  Chad Elliott  <elliott_c@ociweb.com>
