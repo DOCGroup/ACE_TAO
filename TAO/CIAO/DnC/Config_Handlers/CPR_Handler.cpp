@@ -4,7 +4,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "CPR_Handler.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
@@ -20,14 +20,15 @@ void CPR_Handler::process_ComponentPackageReference
 
       if (false);
       else if
-        (process_string(this->iter_, node_name, "requiredUUID", 
+        (CIAO::Config_Handler::Utils::process_string
+               (this->iter_, node_name, "requiredUUID", 
                         cpr.requiredUUID));
       else if
-        (process_string(this->iter_, node_name, "requiredName", 
-                        cpr.requiredName));
+        (CIAO::Config_Handler::Utils::process_string
+               (this->iter_, node_name, "requiredName", cpr.requiredName));
       else if
-        (process_string(this->iter_, node_name, "requiredType", 
-                        cpr.requiredType));
+        (CIAO::Config_Handler::Utils::process_string
+               (this->iter_, node_name, "requiredType", cpr.requiredType));
       else
         {
           this->iter_->previousNode ();

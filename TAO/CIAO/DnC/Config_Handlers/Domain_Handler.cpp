@@ -7,7 +7,7 @@
 #include "Property_Handler.h"
 #include "SP_Handler.h"
 #include "Process_Element.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include <iostream>
 #include "string.h"
 
@@ -26,9 +26,11 @@ void Domain_Handler::process_domain (Deployment::Domain& domain)
         {
         }
       else if
-        (process_string(this->iter_, node_name, "UUID", domain.UUID));
+        (CIAO::Config_Handler::Utils::process_string
+             (this->iter_, node_name, "UUID", domain.UUID));
       else if
-        (process_string(this->iter_, node_name, "label", domain.label));
+        (CIAO::Config_Handler::Utils::process_string
+             (this->iter_, node_name, "label", domain.label));
       else if
         (process_sequence_local<Deployment::SharedResource>
            (this->doc_, this->iter_, node,
@@ -84,9 +86,11 @@ void Domain_Handler::process_node (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string(iter, node_name, "name", domain_node.name));
+        (CIAO::Config_Handler::Utils::process_string
+               (iter, node_name, "name", domain_node.name));
       else if
-        (process_string(iter, node_name, "label", domain_node.label));
+        (CIAO::Config_Handler::Utils::process_string
+               (iter, node_name, "label", domain_node.label));
       else if
         (process_sequence_local<Deployment::Resource>
            (node->getOwnerDocument(), iter, node,
@@ -128,9 +132,10 @@ void Domain_Handler::process_resource (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string(iter, node_name, "name", domain_resource.name));
+        (CIAO::Config_Handler::Utils::process_string
+             (iter, node_name, "name", domain_resource.name));
       else if
-        (process_string_seq
+        (CIAO::Config_Handler::Utils::process_string_seq
            (iter, node_name, "resourceType", domain_resource.resourceType));
       else if
         (process_sequence_common<Deployment::SatisfierProperty>
@@ -160,9 +165,11 @@ void Domain_Handler::process_bridge (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", domain_bridge.name));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "name", domain_bridge.name));
       else if
-        (process_string (iter, node_name, "label", domain_bridge.label));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "label", domain_bridge.label));
       else if
         (process_reference_seq (node, node_name, "connect",
                                 domain_bridge.connectRef,
@@ -198,9 +205,11 @@ void Domain_Handler::process_interconnect (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", domain_ic.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "name", domain_ic.name));
       else if
-        (process_string (iter, node_name, "label", domain_ic.label));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "label", domain_ic.label));
       else if
         (process_reference_seq (node, node_name, "connect",
                                 domain_ic.connectRef,
@@ -243,10 +252,12 @@ void Domain_Handler::process_sr (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", domain_sr.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "name", domain_sr.name));
       else if
-        (process_string_seq (iter, node_name, "resourceType", 
-                             domain_sr.resourceType));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+              (iter, node_name, "resourceType", 
+               domain_sr.resourceType));
       else if
         (process_reference_seq (node, node_name, "node",
                                 domain_sr.nodeRef,

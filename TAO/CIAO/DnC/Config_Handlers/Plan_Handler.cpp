@@ -37,9 +37,11 @@ void Plan_Handler::process_plan(Deployment::DeploymentPlan& plan)
         {
         }
       else if
-        (process_string (this->iter_, node_name, "label", plan.label));
+        (CIAO::Config_Handler::Utils::process_string 
+             (this->iter_, node_name, "label", plan.label));
       else if
-        (process_string (this->iter_, node_name, "UUID", plan.UUID));
+        (CIAO::Config_Handler::Utils::process_string 
+             (this->iter_, node_name, "UUID", plan.UUID));
       else if
         (process_element<Deployment::ComponentInterfaceDescription>
            (this->doc_, this->iter_, node,
@@ -111,10 +113,12 @@ void Plan_Handler::process_rdd (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "requirementName", 
-                         rdd.requirementName));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "requirementName", 
+               rdd.requirementName));
       else if
-        (process_string (iter, node_name, "resourceName", rdd.resourceName));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "resourceName", rdd.resourceName));
       else if (node_name == XStr (ACE_TEXT ("resourceValue")))
         {
           Any_Handler::process_Any (iter, rdd.resourceValue);
@@ -146,10 +150,12 @@ void Plan_Handler::process_irdd (DOMNodeIterator* iter,
           RUK_Handler::process_ResourceUsageKind (iter, irdd.resourceUsage);
         }
       else if
-        (process_string (iter, node_name, "requirementName", 
-                         irdd.requirementName));
+        (CIAO::Config_Handler::Utils::process_string 
+            (iter, node_name, "requirementName", 
+             irdd.requirementName));
       else if
-        (process_string (iter, node_name, "resourceName", irdd.resourceName));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "resourceName", irdd.resourceName));
       else if (node_name == XStr (ACE_TEXT ("resourceValue")))
         {
           Any_Handler::process_Any (iter, irdd.resourceValue);
@@ -176,13 +182,17 @@ void Plan_Handler::process_add (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", add.name));
+        (CIAO::Config_Handler::Utils::process_string 
+               (iter, node_name, "name", add.name));
       else if
-        (process_string_seq (iter, node_name, "location", add.location));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+               (iter, node_name, "location", add.location));
       else if
-        (process_string (iter, node_name, "node", add.node));
+        (CIAO::Config_Handler::Utils::process_string 
+               (iter, node_name, "node", add.node));
       else if
-        (process_string_seq (iter, node_name, "source", add.source));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+               (iter, node_name, "source", add.source));
       else if
         (process_sequence_common<Deployment::Property>
            (node->getOwnerDocument(), iter, node,
@@ -222,11 +232,14 @@ void Plan_Handler::process_idd (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", idd.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "name", idd.name));
       else if
-        (process_string (iter, node_name, "node", idd.node));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "node", idd.node));
       else if
-        (process_string_seq (iter, node_name, "source", idd.source));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+              (iter, node_name, "source", idd.source));
       else if
         (process_reference (node, node_name, "implementation",
                             idd.implementationRef, 
@@ -275,9 +288,11 @@ void Plan_Handler::process_mdd (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", mdd.name));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "name", mdd.name));
       else if
-        (process_string_seq (iter, node_name, "source", mdd.source));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+             (iter, node_name, "source", mdd.source));
       else if
         (process_reference_seq (node, node_name, "artifact",
                                 mdd.artifactRef,
@@ -327,7 +342,8 @@ void Plan_Handler::process_pspr (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "propertyName", pspr.propertyName));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "propertyName", pspr.propertyName));
       else if
         (process_reference (node, node_name, "instance", pspr.instanceRef, 
                             this->index_, this->idref_map_))
@@ -356,7 +372,8 @@ void Plan_Handler::process_pspe (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "portName", pspe.portName));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "portName", pspe.portName));
       else if
         (process_boolean (iter, node_name, "provider", pspe.provider));
       else if (node_name == XStr (ACE_TEXT ("kind")))
@@ -392,11 +409,14 @@ void Plan_Handler::process_ppm(DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", ppm.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "name", ppm.name));
       else if
-        (process_string_seq (iter, node_name, "source", ppm.source));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+              (iter, node_name, "source", ppm.source));
       else if
-        (process_string (iter, node_name, "externalName", ppm.externalName));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "externalName", ppm.externalName));
       else if
         (process_sequence_local<Deployment::PlanSubcomponentPropertyReference>
            (node->getOwnerDocument(), iter, node,
@@ -425,12 +445,15 @@ void Plan_Handler::process_crdd (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "targetName", crdd.targetName));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "targetName", crdd.targetName));
       else if
-        (process_string (iter, node_name, "requirementName", 
-                         crdd.requirementName));
+        (CIAO::Config_Handler::Utils::process_string 
+             (iter, node_name, "requirementName", 
+              crdd.requirementName));
       else if
-        (process_string (iter, node_name, "resourceName", crdd.resourceName));
+        (CIAO::Config_Handler::Utils::process_string 
+            (iter, node_name, "resourceName", crdd.resourceName));
       else if (node_name == XStr (ACE_TEXT ("resourceValue")))
         {
           Any_Handler::process_Any (iter, crdd.resourceValue);
@@ -457,9 +480,11 @@ void Plan_Handler::process_pcd (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string (iter, node_name, "name", pcd.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (iter, node_name, "name", pcd.name));
       else if
-        (process_string_seq (iter, node_name, "source", pcd.source));
+        (CIAO::Config_Handler::Utils::process_string_seq 
+              (iter, node_name, "source", pcd.source));
       else if
         (process_sequence_common<Deployment::Requirement>
            (node->getOwnerDocument(), this->iter_, node,

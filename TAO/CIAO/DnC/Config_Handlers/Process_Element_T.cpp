@@ -21,7 +21,7 @@ BEGIN_DEPLOYMENT_NAMESPACE
 class parser_error { };
 
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
-ACE_INLINE bool
+bool
 process_sequence_local(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                        XStr& node_name, const char* name,
                        SEQUENCE& seq, OBJECT* obj, FUNCTION func)
@@ -39,7 +39,7 @@ process_sequence_local(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 }
 
 template<typename DATA, typename OBJECT, typename SEQUENCE, typename FUNCTION>
-ACE_INLINE bool
+bool
 process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode*
 node,
                         XStr& node_name, const char* name,
@@ -61,7 +61,7 @@ node,
 }
 
 template<typename DATA, typename SEQUENCE, typename FUNCTION>
-ACE_INLINE bool
+bool
 process_sequence_common(DOMDocument* doc, DOMNodeIterator* iter, DOMNode*
 node,
                         XStr& node_name, const char* name,
@@ -81,7 +81,7 @@ node,
 }
 
 template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
-ACE_INLINE bool
+bool
 process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                 XStr& node_name, const char* name,
                 ELEMENT& elem, OBJECT* obj, FUNCTION func,
@@ -111,7 +111,7 @@ process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 }
 
 template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
-ACE_INLINE bool
+bool
 process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
                        XStr& node_name, const char *name,
                        ELEMENT& elem, FUNCTION func,

@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "CompImplDesc_Handler.h"
 #include "PCI_Handler.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 
 BEGIN_DEPLOYMENT_NAMESPACE
@@ -25,7 +25,8 @@ void PCI_Handler::process_PackagedComponentImplementation
         {
         }
       else if
-        (process_string (this->iter_, node_name, "name", pci.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "name", pci.name));
       else if
         (process_element_remote<Deployment::ComponentImplementationDescription,
                                 CompImplDesc_Handler>

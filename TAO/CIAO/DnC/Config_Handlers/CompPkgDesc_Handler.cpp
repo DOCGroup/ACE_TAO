@@ -6,7 +6,7 @@
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "CompPkgDesc_Handler.h"
 #include "Property_Handler.h"
 #include "PCI_Handler.h"
@@ -31,9 +31,11 @@ void CompPkgDesc_Handler::process_ComponentPackageDescription
         {
         }
       else if
-        (process_string (this->iter_, node_name, "label", comppkgdesc.label));
+        (CIAO::Config_Handler::Utils::process_string 
+             (this->iter_, node_name, "label", comppkgdesc.label));
       else if
-        (process_string (this->iter_, node_name, "UUID", comppkgdesc.UUID));
+        (CIAO::Config_Handler::Utils::process_string 
+             (this->iter_, node_name, "UUID", comppkgdesc.UUID));
       else if
         (process_element_remote<Deployment::ComponentInterfaceDescription, 
                                 CompIntrDesc_Handler>
