@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Synch.h"
-#include "client_i.h"
+#include "Cubit_Client.h"
 #include "Cubit_Server.h"
 
 ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")

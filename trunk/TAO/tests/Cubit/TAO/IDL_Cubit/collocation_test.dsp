@@ -91,7 +91,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;idl"
 # Begin Source File
 
-SOURCE=.\client_i.cpp
+SOURCE=.\Cubit_Client.cpp
 # End Source File
 # Begin Source File
 
@@ -119,7 +119,7 @@ SOURCE=.\Cubit_Server.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=.\client_i.h
+SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 
