@@ -1,3 +1,45 @@
+Fri Nov 01 20:09:44 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+
+          Modified project files to correct .pdb target.
+
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+
+          In method <run_test> removed duplicate call to Sequence Consumer.
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+          Changed code to obtain the notify service for colocation.
+
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+        * orbsvcs/tests/Notify/Discarding/notify.conf:
+        * orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
+        * orbsvcs/tests/Notify/Ordering/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/Filter/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf:
+
+          Modified the .conf files to use the revised Notify Service directive.
+
+        * orbsvcs/tests/Notify/Structured_Filter/run_test.pl:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
+
+          Added missing definition for $notify_conf
+
+        * orbsvcs/tests/Notify/Structured_Filter/notify.conf:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/notify.conf:
+
+          Added missing notify.conf file.
+
 Fri Nov  1 19:12:49 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Makefile.dirs: Added tao/Utils directory to the list of
