@@ -51,7 +51,8 @@ public:
 	    size_t bytes_to_read = 0,
 	    int pass_addresses = 0,
 	    int backlog = 5,
-	    int reuse_addr = 1);
+	    int reuse_addr = 1,
+	    ACE_Proactor *proactor = 0);
   // This starts the listening process at the port specified by
   // <address>.  ACE_Asynch_Acceptor initiates the AcceptEx calls with
   // <bytes_to_read>.  The buffer for the initial data will be created
@@ -91,7 +92,7 @@ protected:
   // This is the template method used to create new handler.
   // Subclasses must overwrite this method if a new handler creation
   // strategy is required.
-
+  
 private:
   ACE_HANDLE listen_handle_;
   // Handle used to listen for new connections.
