@@ -8,6 +8,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/Countdown_Time.h"
 
 #include "Kokyu_dsrt.h"
 
