@@ -151,7 +151,7 @@ int
 ACE_Task_Base::activate (long flags, 
 			 int n_threads, 
 			 int force_active,
-			 u_int priority,
+			 long priority,
 			 int grp_id,
 			 ACE_Task_Base *task)
 {

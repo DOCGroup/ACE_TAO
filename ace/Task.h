@@ -90,7 +90,7 @@ public:
   virtual int activate (long flags = THR_NEW_LWP, 
 			int n_threads = 1, 
 			int force_active = 0,
-			u_int priority = 0,
+			long priority = -1,
 			int grp_id = -1,
 			ACE_Task_Base *task = 0); 
   // Turn the task into an active object, i.e., having <n_threads> of
