@@ -1,8 +1,10 @@
-// $Id$
+// -*- C++ -*-
 
 //============================================================
 /**
  * @file RoundTrip_exec.h
+ *
+ * $Id$
  *
  * Header file for the Executor implementation.
  *
@@ -25,22 +27,19 @@ namespace RoundTrip_Impl
    *
    * RoundTrip executor implementation class.
    */
-
-  class NODEAPPTEST_ROUNDTRIP_EXEC_Export RoundTrip_exec_i :
-    public virtual NodeAppTest::LatencyTest,
-    public virtual RoundTrip_Impl::RoundTrip_Exec,
-    public virtual TAO_Local_RefCounted_Object
+  class NODEAPPTEST_ROUNDTRIP_EXEC_Export RoundTrip_exec_i
+    : public virtual NodeAppTest::LatencyTest,
+      public virtual RoundTrip_Impl::RoundTrip_Exec,
+      public virtual TAO_Local_RefCounted_Object
   {
 
   public:
     /// Default constructor.
     RoundTrip_exec_i ();
 
-    /// Default destructor.
-      ~RoundTrip_exec_i ();
-
     /// Operation to test the data
-      virtual CORBA::Long cube_long (CORBA::Long data)
+      virtual CORBA::Long cube_long (CORBA::Long data
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*
@@ -87,6 +86,16 @@ namespace RoundTrip_Impl
       virtual void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 	ACE_THROW_SPEC ((CORBA::SystemException,
 			 Components::CCMException));
+
+  protected:
+
+    /// Destructor.
+    /**
+     * Protected destructor to enforce proper memory management
+     * through the reference counting mechanism.
+     */
+    ~RoundTrip_exec_i ();
+
   };
 
   //
@@ -117,15 +126,22 @@ namespace RoundTrip_Impl
     /// Default ctor.
     RoundTripHome_exec_i ();
 
-    /// Default dtor.
-    ~RoundTripHome_exec_i ();
-
     // Implicit home operations.
 
     virtual ::Components::EnterpriseComponent_ptr
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
+
+  protected:
+
+    /// Destructor.
+    /**
+     * Protected destructor to enforce proper memory management
+     * through the reference counting mechanism.
+     */
+    ~RoundTripHome_exec_i ();
+
   };
 
 }

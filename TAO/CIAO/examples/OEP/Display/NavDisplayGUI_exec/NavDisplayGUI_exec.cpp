@@ -102,7 +102,7 @@ MyImpl::NavDisplayGUI_exec_impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_U
 }
 
 void
-MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyImpl::NavDisplayGUI_exec_impl::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

@@ -34,10 +34,11 @@ RoundTrip_Impl::RoundTrip_exec_i::get_facet_2 (
 }
 
 CORBA::Long
-RoundTrip_Impl::RoundTrip_exec_i::cube_long (CORBA::Long data)
+RoundTrip_Impl::RoundTrip_exec_i::cube_long (CORBA::Long data
+                                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return data*data*data;
+  return data * data * data;
 }
 
 // Operations from Components::SessionComponent

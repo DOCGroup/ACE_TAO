@@ -5,4 +5,5 @@ project (perf*) : ciao_client, rtcorba {
   includes += ../Sender
   includes += ../Receiver
   libs += Protocols_Receiver_stub Protocols_Sender_stub Protocols_stub
+  requires += exceptions
 }
