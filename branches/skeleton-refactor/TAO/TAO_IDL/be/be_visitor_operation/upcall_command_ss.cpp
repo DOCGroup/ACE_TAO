@@ -105,7 +105,7 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
   // class, an instance of which will be invoked by the
   // TAO::Upcall_Wrapper object.
 
-  *os << class_name.c_str () << be_nl
+  *os << "class " << class_name.c_str () << be_nl
       <<"  : public TAO::Upcall_Command" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl << be_nl;
