@@ -1,3 +1,7 @@
+Sat Jan 24 21:55:55 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* AVStreams_i.h, AVStreams_i.cpp: Made changes for new POA
+
 Sat Jan 24 21:46:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* AVStreams.idl:
