@@ -29,22 +29,19 @@
 #define ACE_CC_MINOR_VERSION (_MSC_VER % 100)
 #define ACE_CC_BETA_VERSION (0)
 
-// Support "decorated" library names for MSVC 6 or better.
-#if (_MSC_VER >= 1200)
-# if !defined (ACE_LD_DECORATOR_STR)
-#  if defined (_DEBUG)
-#   if ACE_HAS_MFC == 1
-#    define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfcd")
-#   else
-#    define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
-#   endif  /* ACE_HAS_MFC */
-#  else  /* _NDEBUG */
-#   if ACE_HAS_MFC == 1
-#    define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfc")
-#   endif  /* ACE_HAS_MFC */
-#  endif  /* _DEBUG */
-# endif  /* ACE_LD_DECORATOR_STR */
-#endif  /* _MSC_VER >= 1200 */
+#if !defined (ACE_LD_DECORATOR_STR)
+# if defined (_DEBUG)
+#  if ACE_HAS_MFC == 1
+#   define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfcd")
+#  else
+#   define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
+#  endif  /* ACE_HAS_MFC */
+# else  /* _NDEBUG */
+#  if ACE_HAS_MFC == 1
+#   define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfc")
+#  endif  /* ACE_HAS_MFC */
+# endif  /* _DEBUG */
+#endif  /* ACE_LD_DECORATOR_STR */
 
 // Compiler sets _CPPRTTI if rtti is enabled.
 #if defined (_CPPRTTI)
@@ -61,6 +58,7 @@
 # include "ace/config-win32-msvc-8.h"
 #elif (_MSC_VER >= 1300)
 # include "ace/config-win32-msvc-7.h"
+// FUZZ: disable check_for_msc_ver
 #elif (_MSC_VER >= 1200)
 # include "ace/config-win32-msvc-6.h"
 #else
