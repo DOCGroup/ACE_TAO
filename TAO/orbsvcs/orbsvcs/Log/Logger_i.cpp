@@ -54,8 +54,19 @@ Logger_i::priority_conversion (Logger::Log_Priority priority)
 u_long
 Logger_i::verbosity_conversion (Logger::Verbosity_Level verbosity_level)
 {
-  u_long pval = ACE_static_cast (int, verbosity_level);
-  return 1 << pval;
+  // This isn't very elegant, but it's because there's no simple
+  // mapping from <Logger::Verbosity_Level>'s to the verbosity flags
+  // specified in <ace/Log_Msg.h>
+  switch (verbosity_level)
+    {
+    case Logger::SILENT:
+      return 040;
+    case Logger::VERBOSE_LITE:
+      return 020;
+    default:
+    case Logger::VERBOSE:  
+      return 010;
+    }
 }
 
 void
@@ -99,9 +110,11 @@ Logger_i::log (const Logger::Log_Record &log_rec,
   ASYS_TCHAR namebuf[MAXHOSTNAMELEN + 1];
   addy.get_host_name (namebuf,
                       MAXHOSTNAMELEN);
+
+  u_long verb_level = this->verbosity_conversion (this->verbosity_level_);
   
   rec.print (namebuf,
-	     this->verbosity_conversion (this->verbosity_level_),
+	     verb_level,
 	     stderr);
   // Print out the logging message to stderr with the given level of
   // verbosity
