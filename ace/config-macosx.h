@@ -37,7 +37,7 @@
 
 
 
-#define ACE_HAS_CLOCK_GETIME
+#define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_MEMCHR
 
 // Compiler/platform defines the sig_atomic_t typedef.
