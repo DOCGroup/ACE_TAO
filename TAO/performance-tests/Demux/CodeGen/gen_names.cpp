@@ -184,9 +184,7 @@ Demux_Test_CodeGenerator::insert_unique_string (ACE_Unbounded_Queue<ACE_CString>
 long 
 Demux_Test_CodeGenerator::gen_rand (int low, int up)
 {
-  // @@ Vishal, this call to lrand48 isn't portable.  Can you please
-  // try to replace it with a call from ACE_OS, e.g., ACE_OS::rand()?
-  return (lrand48 () % (up - low + 1)) + low;
+  return (ACE_OS::rand () % (up - low + 1)) + low;
 }
 
 // Check if the given string is present in the array
@@ -205,7 +203,7 @@ Demux_Test_CodeGenerator:: is_present (ACE_Unbounded_Queue<ACE_CString> &arr,
 
   for (;
        !iter.done ();
-       iter.advance ();
+       iter.advance ())
     {
       // Grab the next element waiting to be grabbed.
       (void) iter.next (str);
