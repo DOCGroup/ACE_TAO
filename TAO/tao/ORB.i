@@ -7,8 +7,8 @@
 
 ACE_INLINE
 CORBA_String_var::CORBA_String_var (void)
+  : ptr_ (0)
 {
-  this->ptr_ = 0;
 }
 
 ACE_INLINE
@@ -135,8 +135,8 @@ CORBA_String_out::ptr (void)
 
 ACE_INLINE
 CORBA_WString_var::CORBA_WString_var (void)
+  : ptr_ (0)
 {
-  this->ptr_ = 0;
 }
 
 ACE_INLINE
@@ -148,14 +148,14 @@ CORBA_WString_var::CORBA_WString_var (const CORBA::WChar *p)
 ACE_INLINE CORBA::WChar &
 CORBA_WString_var::operator[] (CORBA::ULong slot)
 {
-  // We need to verify bounds else raise some exception.
+  // @@ We need to verify bounds else raise some exception.
   return this->ptr_[slot];
 }
 
 ACE_INLINE CORBA::WChar
 CORBA_WString_var::operator[] (CORBA::ULong slot) const
 {
-  // We need to verify bounds else raise some exception.
+  // @@ We need to verify bounds else raise some exception.
   return this->ptr_[slot];
 }
 
@@ -388,7 +388,7 @@ CORBA_ORB_var::CORBA_ORB_var (void) // default constructor
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (CORBA::ORB_ptr p)
-        : ptr_ (p)
+  : ptr_ (p)
 {
 }
 
@@ -482,14 +482,14 @@ CORBA_ORB_var::_retn (void)
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA::ORB_ptr &p)
-        : ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = CORBA_ORB::_nil ();
 }
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_var &p) // constructor from _var
-        : ptr_ (p.out ())
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = CORBA_ORB::_nil ();
@@ -497,7 +497,7 @@ CORBA_ORB_out::CORBA_ORB_out (CORBA_ORB_var &p) // constructor from _var
 
 ACE_INLINE
 CORBA_ORB_out::CORBA_ORB_out (const CORBA_ORB_out &p) // copy constructor
-        : ptr_ (p.ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE CORBA_ORB_out &

@@ -141,7 +141,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   //
   // Prepare a copy of the argument vector for the service configurator.
 
-  char **svc_config_argv = 0;
+  CORBA::String *svc_config_argv = 0;
 
   // @@ deprecated
   int old_style_endpoint = 0;
@@ -151,7 +151,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // @@ Memory leak occurs here if we return with an error or with an
   //    exception later on in this method!
   //          -Ossama
-  ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], -1);
+  ACE_NEW_RETURN (svc_config_argv, CORBA::String[argc + 1], -1);
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
@@ -161,13 +161,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     argv0 = argv[0];
   svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
 
-  // @@ This should be an IIOP default, more generally each
-  //    loaded protocol should have it's own default defined by the
-  //    implemention.  This is currently defined to be a zero, fredk
-  ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
-                              TAO_DEFAULT_SERVER_PORT);
   ACE_CString host;
-  CORBA::UShort port = (CORBA::UShort) defport;
+  CORBA::UShort port = 0;
 
   // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
   int giop_lite = 0;
@@ -430,12 +425,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             ACE_CString ('=') +
             ACE_CString (current_arg);
 
-            if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) Unable to add the Trading "
-                                 "Service IOR <%s> to the lookup table.\n",
-                                 current_arg),
-                                -1);
+          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) Unable to add the Trading "
+                               "Service IOR <%s> to the lookup table.\n",
+                               current_arg),
+                              -1);
 
           arg_shifter.consume_arg ();
         }
@@ -468,20 +463,21 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             ACE_CString ('=') +
             ACE_CString (current_arg);
 
-            if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) Unable to add the "
-                                 "Implementation Repository IOR <%s> to "
-                                 "the lookup table.\n",
-                                 current_arg),
-                                -1);
+          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO (%P|%t) Unable to add the "
+                               "Implementation Repository IOR <%s> to "
+                               "the lookup table.\n",
+                               current_arg),
+                              -1);
 
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBImplRepoServicePort")))
         {
-          // Specify the multicast port number for the Implementation Repository.
+          // Specify the multicast port number for the Implementation
+          // Repository.
           ir_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
@@ -518,7 +514,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                 ("-ORBSndSock")))
+                ("-ORBSndSock")))
         {
           // @@ All protocol implementation may not use sockets, so
           //    this can either be a generic I/O Buffer size or
@@ -583,8 +579,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (ACE_OS::strcasecmp (opt, "YES") == 0)
             {
               yes_implies_global = 1;
-              ACE_DEBUG ((LM_DEBUG,
-                          "Warning: using '-ORBCollocation YES' is obsolete "
+              ACE_DEBUG ((LM_WARNING,
+                          "WARNING: using '-ORBCollocation YES' is obsolete "
                           "and implies '-ORBCollocation global'"
                           "  Please use '-ORBCollocation global' instead.\n"));
             }
@@ -611,9 +607,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         // i.e. all the ORBs in the same address space use collocated
         // calls.
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Warning: -ORBGlobalCollocation option is obsolete."
-                      "  Please use '-ORBCollocation global/per-orb/no' instead.\n"));
+          ACE_DEBUG ((LM_WARNING,
+                      "WARNING: -ORBGlobalCollocation option is obsolete."
+                      "  Please use '-ORBCollocation global/per-orb/no'"
+                      "instead.\n"));
 
           char *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, "YES") == 0)
@@ -686,20 +683,20 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBSvcConfDirective")))
-         {
-           // This is used to pass arguments to the Service
-           // Configurator using the "command line" to provide
-           // configuration information rather than using a svc.conf
-           // file.  Pass the "-S" to the service configurator.
-           svc_config_argv[svc_config_argc++] =
-             CORBA::string_dup ("-S");
+        {
+          // This is used to pass arguments to the Service
+          // Configurator using the "command line" to provide
+          // configuration information rather than using a svc.conf
+          // file.  Pass the "-S" to the service configurator.
+          svc_config_argv[svc_config_argc++] =
+            CORBA::string_dup ("-S");
 
-           // Pass the next argument.
-           svc_config_argv[svc_config_argc++] =
-             CORBA::string_dup (current_arg);
+          // Pass the next argument.
+          svc_config_argv[svc_config_argc++] =
+            CORBA::string_dup (current_arg);
 
-           arg_shifter.consume_arg ();
-         }
+          arg_shifter.consume_arg ();
+        }
 
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
       // used by the resolve_initial_references ().
@@ -728,7 +725,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                 ("-ORBStdProfileComponents")))
         {
           std_profile_components =
-                ACE_OS::atoi (current_arg);
+            ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -750,12 +747,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       // catch all the remaining -ORB args                          //
       ////////////////////////////////////////////////////////////////
       else if (arg_shifter.cur_arg_strncasecmp
-          ("-ORB") != -1)
+               ("-ORB") != -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "warning: unknown -ORB arg %s, consuming arg\n",
-                       current_arg));
+            ACE_DEBUG ((LM_WARNING,
+                        "WARNING: Unknown \"-ORB\" option <%s>.\n"
+                        "         Removing it from the argument list.\n",
+                        current_arg));
           arg_shifter.consume_arg ();
         }
 
@@ -801,7 +799,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (result != 0 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
-                       "ORB Core unable to initialize the Service Configurator"),
+                       "ORB Core unable to initialize the "
+                       "Service Configurator"),
                       -1);
 
   // Initialize the pointers to resources in the ORB Core instance,
@@ -841,7 +840,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (ssf == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
-                       "ORB Core unable to find a Server Strategy Factory instance"),
+                       "ORB Core unable to find a Server Strategy Factory "
+                       "instance"),
                       -1);
 
   ssf->open (this);
@@ -874,7 +874,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       this->tm_.wait_on_exit (0);
     }
 
-  // Inititalize the "ORB" pseudo-object now.
+  // Initialize the "ORB" pseudo-object now.
   ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), -1);
 
   // This should probably move into the ORB Core someday rather then
@@ -891,7 +891,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // determined.
 
   // @@ Set the endpoint string to iiop://host:port/
-  //    Add a string to hold the endpoint desgination for this ORB
+  //    Add a string to hold the endpoint designation for this ORB
   //    for now it will be IIOP://host:port/  fredk
   if (old_style_endpoint)
     {
@@ -923,7 +923,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->std_profile_components (std_profile_components);
 
-  // ** Set up the pluggable protocol infrastructure.  First get a
+  // Set up the pluggable protocol infrastructure.  First get a
   // pointer to the protocol factories set, then obtain pointers to
   // all factories loaded by the service configurator.
   // Load all protocol factories!
@@ -943,8 +943,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // Have the connector registry parse the preconnects.
   if (this->orb_params ()->preconnects ().is_empty () == 0)
-    this->connector_registry ()->preconnect (this,
-                                             this->orb_params ()->preconnects ());
+    this->connector_registry ()->preconnect (
+                      this,
+                      this->orb_params ()->preconnects ());
 
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
@@ -959,6 +960,18 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
                                  ACE_CString &host,
                                  ACE_CString &endpoint)
 {
+  // @@ It would be nice to get rid of this environment variable at
+  //    some point in the near future.
+  //       -Ossama
+
+  // Check if the a default port has been specified by the user in an
+  // environment variable.
+  ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
+                              TAO_DEFAULT_SERVER_PORT);
+
+  if (port == 0)
+    port = ACE_static_cast (CORBA::UShort, defport);
+
   // No host specified; find it
   if (host.length () == 0)
     {
@@ -966,8 +979,9 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
       if (ACE_OS::hostname (name, MAXHOSTNAMELEN + 1) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Failed to look up local host name.\n"),
-                       -1);
+                             "(%P|%t) %p\n",
+                             "failed to look up local host name"),
+                            -1);
         }
       host.set (name, 1);
     }
@@ -984,15 +998,15 @@ TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
                                  MAXHOSTNAMELEN,
                                  dotted_decimal_addresses) == -1)
     {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) failed in addr_to_string () %p.\n"),
-                          -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) %p\n",
+                         "failed in addr_to_string ()"),
+                        -1);
     }
 
   // endpoint == iiop://host:port/
   endpoint.set ("iiop://", 1);
   endpoint += buffer;
-  endpoint += ACE_CString("/");
 
   return 0;
 }
@@ -1068,7 +1082,8 @@ TAO_ORB_Core::resource_factory (void)
     {
       // Look in the service repository for an instance.
       this->resource_factory_ =
-        ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
+        ACE_Dynamic_Service<TAO_Resource_Factory>::instance (
+                                                       "Resource_Factory");
       // @@ Not needed!
       this->resource_factory_from_service_config_ = 1;
     }
@@ -1082,8 +1097,10 @@ TAO_ORB_Core::resource_factory (void)
       // platforms.
       if (TAO_orbdebug)
         ACE_ERROR ((LM_WARNING,
-                    "(%P|%t) WARNING - No Resource Factory found in Service Repository."
-                    "  Using default instance with GLOBAL resource source specifier.\n"));
+                    "(%P|%t) WARNING - No Resource Factory found "
+                    "in Service Repository.\n"
+                    "  Using default instance with GLOBAL resource "
+                    "source specifier.\n"));
 
       TAO_Default_Resource_Factory *default_factory;
       ACE_NEW_RETURN (default_factory,
@@ -1108,7 +1125,8 @@ TAO_ORB_Core::client_factory (void)
     {
       // Look in the service repository for an instance.
       this->client_factory_ =
-        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance (
+                                                  "Client_Strategy_Factory");
       // @@ Not needed!
       this->client_factory_from_service_config_ = 1;
     }
@@ -1122,7 +1140,8 @@ TAO_ORB_Core::client_factory (void)
       // platforms.
       if (TAO_orbdebug)
         ACE_ERROR ((LM_WARNING,
-                    "(%P|%t) WARNING - No Client Strategy Factory found in Service Repository."
+                    "(%P|%t) WARNING - No Client Strategy Factory found "
+                    "in Service Repository.\n"
                     "  Using default instance.\n"));
 
       ACE_NEW_RETURN (this->client_factory_,
@@ -1144,13 +1163,15 @@ TAO_ORB_Core::server_factory (void)
     {
       // Look in the service repository for an instance.
       this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance (
+                                                "Server_Strategy_Factory");
       // @@ Not needed!
       this->server_factory_from_service_config_ = 1;
     }
 
   //@@ None of this stuff is needed since the default server factory
-  //   is statically adde to the Service Configurator, fredk
+  //   is statically added to the Service Configurator, fredk
+
   // If the <server_factory_> isn't found it's usually because the ORB
   // hasn't been intialized correctly...
   if (this->server_factory_ == 0)
@@ -1177,7 +1198,8 @@ TAO_ORB_Core::server_factory (void)
 }
 
 int
-TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources)
+TAO_ORB_Core::inherit_from_parent_thread (
+    TAO_ORB_Core_TSS_Resources *tss_resources)
 {
   // Inherit properties/objects used in ORB_Core from the
   // parent thread.  Stuff inherited here must already exist
@@ -1260,7 +1282,8 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
           if (policies == 0)
             {
               // RootPOA policies defined in spec
-              root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+              root_poa_policies.implicit_activation (
+                  PortableServer::IMPLICIT_ACTIVATION);
 
               policies = &root_poa_policies;
             }
@@ -1304,14 +1327,15 @@ TAO_ORB_Core::object_adapter_i (void)
   if (this->object_adapter_ == 0)
     {
       ACE_NEW_RETURN (this->object_adapter_,
-                      TAO_Object_Adapter (this->server_factory ()->active_object_map_creation_parameters (),
+                      TAO_Object_Adapter (this->server_factory ()->
+                                    active_object_map_creation_parameters (),
                                           *this),
                       0);
     }
   return this->object_adapter_;
 }
 
-ACE_SYNCH_CONDITION*
+ACE_SYNCH_CONDITION *
 TAO_ORB_Core::leader_follower_condition_variable (void)
 {
   // Always using TSS.
@@ -1339,7 +1363,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   (void) this->open (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::String id = 0;
+  CORBA::String_var id;
 
   if (type_id)
     id = CORBA::string_dup (type_id);
@@ -1352,10 +1376,13 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   // First we create a profile list, well actually the empty container
   TAO_MProfile mp (pfile_count);
 
-  this->acceptor_registry ()->make_mprofile (key, mp);
+  if (this->acceptor_registry ()->make_mprofile (key, mp) == -1)
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_MPROFILE_CREATION_ERROR,
+                                       CORBA::COMPLETED_NO),
+                      0);
 
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id, mp, this),
+                    TAO_Stub (id._retn (), mp, this),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
@@ -1573,8 +1600,6 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
   // get a reference to the acceptor_registry!
 
   int ret = ar->open (this, ACE_TRY_ENV);
-  // Need to return an error somehow!!  Maybe set do_exit?
-
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -1609,7 +1634,7 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p\n",
                            "TAO_ORB_Core::input_cdr_dblock_allocator (); "
-                             "no more TSS keys"),
+                           "no more TSS keys"),
                           0);
       return this->input_cdr_dblock_allocator_i (tss);
     }
@@ -1650,7 +1675,7 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p\n",
                            "TAO_ORB_Core::input_cdr_buffer_allocator (); "
-                             "no more TSS keys"),
+                           "no more TSS keys"),
                           0);
 
       return this->input_cdr_buffer_allocator_i (tss);
@@ -1682,7 +1707,7 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p\n",
                            "TAO_ORB_Core::output_cdr_dblock_allocator (); "
-                             "no more TSS keys"),
+                           "no more TSS keys"),
                           0);
 
       if (tss->output_cdr_dblock_allocator_ == 0)
@@ -1721,7 +1746,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p\n",
                            "TAO_ORB_Core::input_cdr_buffer_allocator (); "
-                             "no more TSS keys"),
+                           "no more TSS keys"),
                           0);
 
       if (tss->output_cdr_buffer_allocator_ == 0)
@@ -1763,7 +1788,7 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) %p\n",
                            "TAO_ORB_Core::create_input_cdr_data_block (); "
-                             "no more TSS keys"),
+                           "no more TSS keys"),
                           0);
 
       dblock_allocator =
@@ -1786,17 +1811,17 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
     }
 
   ACE_NEW_MALLOC_RETURN (
-      nb,
-      ACE_static_cast(ACE_Data_Block*,
-                      dblock_allocator->malloc (sizeof (ACE_Data_Block))),
-      ACE_Data_Block (size,
-                      ACE_Message_Block::MB_DATA,
-                      0,
-                      buffer_allocator,
-                      lock_strategy,
-                      0,
-                      dblock_allocator),
-      0);
+                         nb,
+                         ACE_static_cast(ACE_Data_Block*,
+                                         dblock_allocator->malloc (sizeof (ACE_Data_Block))),
+                         ACE_Data_Block (size,
+                                         ACE_Message_Block::MB_DATA,
+                                         0,
+                                         buffer_allocator,
+                                         lock_strategy,
+                                         0,
+                                         dblock_allocator),
+                         0);
 
   return nb;
 }
@@ -1989,7 +2014,7 @@ TAO_TSS_Resources::TAO_TSS_Resources (void)
   :  poa_current_impl_ (0),
      default_environment_ (&this->tss_environment_)
 #if defined (TAO_HAS_CORBA_MESSAGING)
-     , policy_current_ (&this->initial_policy_current_)
+  , policy_current_ (&this->initial_policy_current_)
 #endif /* TAO_HAS_CORBA_MESSAGING */
 {
 }
