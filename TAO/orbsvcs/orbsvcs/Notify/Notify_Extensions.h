@@ -24,4 +24,5 @@ TAO_NAMESPACE TAO_Notify_Extensions
 }
 TAO_NAMESPACE_CLOSE
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_EXTENSIONS_H */
