@@ -59,7 +59,9 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.criticality) &&
     (strm << _tao_aggregate.desired_priority) &&
     (strm << _tao_aggregate.deadline) &&
-    (strm << _tao_aggregate.estimated_initial_execution_time);
+    (strm << _tao_aggregate.estimated_initial_execution_time) &&
+    (strm << _tao_aggregate.period) &&
+    (strm << _tao_aggregate.task_id);
 }
 
 ACE_INLINE
@@ -74,6 +76,8 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.criticality) &&
     (strm >> _tao_aggregate.desired_priority) &&
     (strm >> _tao_aggregate.deadline) &&
-    (strm >> _tao_aggregate.estimated_initial_execution_time);
+    (strm >> _tao_aggregate.estimated_initial_execution_time) &&
+    (strm >> _tao_aggregate.period) &&
+    (strm >> _tao_aggregate.task_id);
 }
 

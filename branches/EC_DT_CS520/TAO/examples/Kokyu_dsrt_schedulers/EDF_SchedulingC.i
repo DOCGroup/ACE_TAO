@@ -37,7 +37,9 @@ CORBA::Boolean operator<< (
 {
   return
     (strm << _tao_aggregate.deadline) &&
-    (strm << _tao_aggregate.importance);
+    (strm << _tao_aggregate.importance) &&
+    (strm << _tao_aggregate.period) &&
+    (strm << _tao_aggregate.task_id);
 }
 
 ACE_INLINE
@@ -48,6 +50,8 @@ CORBA::Boolean operator>> (
 {
   return
     (strm >> _tao_aggregate.deadline) &&
-    (strm >> _tao_aggregate.importance);
+    (strm >> _tao_aggregate.importance) &&
+    (strm >> _tao_aggregate.period) &&
+    (strm >> _tao_aggregate.task_id);
 }
 

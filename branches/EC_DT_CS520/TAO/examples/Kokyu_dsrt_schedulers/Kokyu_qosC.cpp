@@ -168,7 +168,7 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
   ACE_NTOHL (0x5f445352), 
   ACE_NTOHL (0x545f516f), 
   ACE_NTOHL (0x53000000),  // name = Svc_Ctxt_DSRT_QoS
-  6, // member count
+  8, // member count
     5,
   ACE_NTOHL (0x67756964), 
   ACE_NTOHL (0x0),  // name = guid
@@ -283,6 +283,32 @@ static const CORBA::Long _oc_Kokyu_Svc_Ctxt_DSRT_QoS[] =
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
+
+  7,
+  ACE_NTOHL (0x70657269), 
+  ACE_NTOHL (0x6f640000),  // name = period
+    CORBA::tk_alias, // typecode kind for typedefs
+  56, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    31,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x42617365), 
+    ACE_NTOHL (0x2f54696d), 
+    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
+        6,
+    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54000000),  // name = TimeT
+        CORBA::tk_ulonglong,
+
+
+  8,
+  ACE_NTOHL (0x7461736b), 
+  ACE_NTOHL (0x5f696400),  // name = task_id
+    CORBA::tk_long,
 
 };
 
@@ -522,103 +548,4 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_Kokyu_GuidType_CPP_ */
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO_FixedSeq_Var_T<
-        Kokyu::GuidType,
-        CORBA::Octet
-      >;
-
-  template class
-    TAO_Seq_Var_Base_T<
-        Kokyu::GuidType,
-        CORBA::Octet
-      >;
-
-  template class
-    TAO_Seq_Out_T<
-        Kokyu::GuidType,
-        Kokyu::GuidType_var,
-        CORBA::Octet
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Kokyu::GuidType
-      >;
-
-  template class
-    TAO_Var_Var_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS
-      >;
-
-  template class
-    TAO_Out_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS,
-        Kokyu::Svc_Ctxt_DSRT_QoS_var
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Kokyu::Svc_Ctxt_DSRT_QoS
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO_FixedSeq_Var_T< \
-        Kokyu::GuidType, \
-        CORBA::Octet \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Var_Base_T< \
-        Kokyu::GuidType, \
-        CORBA::Octet \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Out_T< \
-        Kokyu::GuidType, \
-        Kokyu::GuidType_var, \
-        CORBA::Octet \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Kokyu::GuidType \
-      >
-
-# pragma instantiate \
-    TAO_Var_Var_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS \
-      >
-
-# pragma instantiate \
-    TAO_Out_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS, \
-        Kokyu::Svc_Ctxt_DSRT_QoS_var \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Kokyu::Svc_Ctxt_DSRT_QoS \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

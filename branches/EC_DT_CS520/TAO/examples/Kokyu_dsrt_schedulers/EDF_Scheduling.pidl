@@ -45,6 +45,8 @@ module EDF_Scheduling
   {
     TimeBase::TimeT deadline;
     long importance;
+    TimeBase::TimeT period;
+    long task_id;
   };
 
   local interface SchedulingParameterPolicy

@@ -169,6 +169,8 @@ namespace Kokyu
     RTCORBA::Priority desired_priority;
     TimeBase::TimeT deadline;
     TimeBase::TimeT estimated_initial_execution_time;
+    TimeBase::TimeT period;
+    CORBA::Long task_id;
   };
   
   // TAO_IDL - Generated from
@@ -182,7 +184,7 @@ namespace Kokyu
 } // module Kokyu
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
+// be/be_visitor_traits.cpp:50
 
 // Traits specializations.
 namespace TAO

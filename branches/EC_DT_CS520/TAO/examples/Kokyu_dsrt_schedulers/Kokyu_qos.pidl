@@ -52,6 +52,9 @@ module Kokyu
     RTCORBA::Priority desired_priority;
     TimeBase::TimeT deadline;
     TimeBase::TimeT estimated_initial_execution_time;
+    TimeBase::TimeT period;
+    long task_id;
+//    And deadline info in QoS is a subdeadline for a subtask or a task deadline.
   };
 };
 
