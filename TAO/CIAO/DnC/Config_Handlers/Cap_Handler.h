@@ -1,4 +1,12 @@
-// $Id$
+//==================================================================
+/**
+ *  @file  Cap_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ */
+//=====================================================================
 
 #ifndef CAP_HANDLER_H
 #define CAP_HANDLER_H

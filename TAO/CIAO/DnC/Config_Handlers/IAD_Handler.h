@@ -1,4 +1,12 @@
-// $Id$
+//==================================================================
+/**
+ *  @file  IAD_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ */
+//=====================================================================
 
 #ifndef IAD_HANDLER_H
 #define IAD_HANDLER_H

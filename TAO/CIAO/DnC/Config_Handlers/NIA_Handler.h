@@ -1,4 +1,12 @@
-// $Id$
+//==================================================================
+/**
+ *  @file  NIA_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ */
+//=====================================================================
 
 #ifndef NIA_HANDLER_H
 #define NIA_HANDLER_H

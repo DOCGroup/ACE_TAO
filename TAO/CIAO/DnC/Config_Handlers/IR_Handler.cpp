@@ -1,4 +1,12 @@
-// $Id$
+//==================================================================
+/**
+ *  @file  IR_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
+ */
+//=====================================================================
 
 #ifndef IR_HANDLER_C
 #define IR_HANDLER_C
