@@ -1,4 +1,4 @@
-# Microsoft Developer Studio Project File - Name="Map_Manager_Test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Basic_Types_Test" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
@@ -6,25 +6,25 @@
 # TARGTYPE "Win32 (WCE MIPS) Application" 0x0a01
 # TARGTYPE "Win32 (WCE SH) Application" 0x0901
 
-CFG=Map_Manager_Test - Win32 (WCE x86em) Debug
+CFG=Basic_Types_Test - Win32 (WCE x86em) Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Map_Manager_Test.mak".
+!MESSAGE NMAKE /f "Basic_Types_Test.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Map_Manager_Test.mak"\
- CFG="Map_Manager_Test - Win32 (WCE x86em) Debug"
+!MESSAGE NMAKE /f "Basic_Types_Test.mak"\
+ CFG="Basic_Types_Test - Win32 (WCE x86em) Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Map_Manager_Test - Win32 (WCE x86em) Debug" (based on\
+!MESSAGE "Basic_Types_Test - Win32 (WCE x86em) Debug" (based on\
  "Win32 (WCE x86em) Application")
-!MESSAGE "Map_Manager_Test - Win32 (WCE MIPS) Debug" (based on\
+!MESSAGE "Basic_Types_Test - Win32 (WCE MIPS) Debug" (based on\
  "Win32 (WCE MIPS) Application")
-!MESSAGE "Map_Manager_Test - Win32 (WCE SH) Debug" (based on\
+!MESSAGE "Basic_Types_Test - Win32 (WCE SH) Debug" (based on\
  "Win32 (WCE SH) Application")
 !MESSAGE 
 
@@ -33,7 +33,7 @@ CFG=Map_Manager_Test - Win32 (WCE x86em) Debug
 # PROP Scc_LocalPath ""
 # PROP WCE_Configuration "H/PC Ver. 2.00"
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -65,7 +65,7 @@ EMPFILE=empfile.exe
 # ADD BASE EMPFILE -COPY
 # ADD EMPFILE -COPY
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -99,7 +99,7 @@ PFILE=pfile.exe
 # ADD BASE PFILE COPY
 # ADD PFILE COPY
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -137,14 +137,14 @@ PFILE=pfile.exe
 
 # Begin Target
 
-# Name "Map_Manager_Test - Win32 (WCE x86em) Debug"
-# Name "Map_Manager_Test - Win32 (WCE MIPS) Debug"
-# Name "Map_Manager_Test - Win32 (WCE SH) Debug"
+# Name "Basic_Types_Test - Win32 (WCE x86em) Debug"
+# Name "Basic_Types_Test - Win32 (WCE MIPS) Debug"
+# Name "Basic_Types_Test - Win32 (WCE SH) Debug"
 # Begin Source File
 
 SOURCE=..\..\WindozeCE\ACEApp.cpp
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_ACEAP=\
 	"..\..\ace\ACE.h"\
@@ -181,9 +181,9 @@ DEP_CPP_ACEAP=\
 	"..\..\WindozeCE\stdafx.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 DEP_CPP_ACEAP=\
 	"..\..\ace\ACE.h"\
@@ -225,9 +225,9 @@ DEP_CPP_ACEAP=\
 # End Source File
 # Begin Source File
 
-SOURCE=..\Map_Manager_Test.cpp
+SOURCE=..\Basic_Types_Test.cpp
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_MAP_M=\
 	"..\..\ace\ACE.h"\
@@ -320,9 +320,9 @@ DEP_CPP_MAP_M=\
 	"..\test_config.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 DEP_CPP_MAP_M=\
 	"..\..\ace\ACE.h"\
@@ -422,15 +422,15 @@ DEP_CPP_MAP_M=\
 
 SOURCE=..\..\WindozeCE\StdAfx.cpp
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_STDAF=\
 	"..\..\WindozeCE\stdafx.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 DEP_CPP_STDAF=\
 	"..\..\WindozeCE\stdafx.h"\
@@ -443,7 +443,7 @@ DEP_CPP_STDAF=\
 
 SOURCE=..\..\WindozeCE\WindozeCE.cpp
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_WINDO=\
 	"..\..\ace\ACE.h"\
@@ -482,9 +482,9 @@ DEP_CPP_WINDO=\
 	"..\..\WindozeCE\WindozeCEDlg.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 DEP_CPP_WINDO=\
 	"..\..\ace\ACE.h"\
@@ -530,11 +530,11 @@ DEP_CPP_WINDO=\
 
 SOURCE=..\..\WindozeCE\WindozeCE.rc
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -543,7 +543,7 @@ SOURCE=..\..\WindozeCE\WindozeCE.rc
 
 SOURCE=..\..\WindozeCE\WindozeCEDlg.cpp
 
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE x86em) Debug"
+!IF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE x86em) Debug"
 
 DEP_CPP_WINDOZ=\
 	"..\..\ace\ACE.h"\
@@ -616,9 +616,9 @@ DEP_CPP_WINDOZ=\
 	"..\..\WindozeCE\WindozeCEDlg.h"\
 	
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE MIPS) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE MIPS) Debug"
 
-!ELSEIF  "$(CFG)" == "Map_Manager_Test - Win32 (WCE SH) Debug"
+!ELSEIF  "$(CFG)" == "Basic_Types_Test - Win32 (WCE SH) Debug"
 
 DEP_CPP_WINDOZ=\
 	"..\..\ace\ACE.h"\
