@@ -1,3 +1,10 @@
+Fri Apr 18 13:35:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/OS.i:
+        * ace/OS.cpp:
+
+          Added an implementation of ACE_OS::thr_join() for VxWorks.
+
 Fri Apr 18 12:24:02 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
