@@ -4007,7 +4007,7 @@ ACE_OS::thr_self (void)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
-  ACE_OSCALL_RETURN (pthread_self (), int, -1);
+  return pthread_self ();
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (::thr_self (), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
