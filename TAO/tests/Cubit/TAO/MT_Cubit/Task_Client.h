@@ -167,6 +167,13 @@ public:
   u_int use_name_service_;
   // Flag that say if we are using the or not the name service.
 
+  u_int one_to_n_test_;
+  // indicates whether we are running the "1 to n" test, which has 1
+  // low priority servant and n low priority clients.
+
+  u_int context_switch_test_;
+  // flag to run context switch test
+
   char **iors_;
   // Array of pointers used to hold the ior strings read from the ior file
   // that the server created.

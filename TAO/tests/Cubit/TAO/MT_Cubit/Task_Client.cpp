@@ -20,9 +20,11 @@ Task_State::Task_State (int argc, char **argv)
     ior_file_ (0),
     granularity_ (1),
     use_utilization_test_ (0),
-    high_priority_loop_count_ (0)
+    high_priority_loop_count_ (0),
+    one_to_n_test_ (0),
+    context_switch_test_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "usn:t:d:rk:xof:g:");
+  ACE_Get_Opt opts (argc, argv, "usn:t:d:rk:xof:g:1c");
   int c;
   int datatype;
 
@@ -32,6 +34,12 @@ Task_State::Task_State (int argc, char **argv)
       granularity_ = ACE_OS::atoi (opts.optarg);
       if (granularity_ < 1)
         granularity_ = 1;
+      break;
+    case 'c':
+      context_switch_test_ = 1;
+      break;
+    case '1':
+      one_to_n_test_ = 1;
       break;
     case 'u':
       use_utilization_test_ = 1;
@@ -109,7 +117,7 @@ Task_State::Task_State (int argc, char **argv)
       int i = 0;
       int j = 0;
 
-      while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0)
+      while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
         {
           j = ACE_OS::strlen (buf);
           buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
@@ -438,68 +446,76 @@ Client::svc (void)
               }
           }
 
-        if (naming_success == CORBA::B_FALSE && ts_->factory_ior_ != 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
+        if (naming_success == CORBA::B_FALSE)
+	  {
+	    if (ts_->factory_ior_ != 0)
+	      {
+		ACE_DEBUG ((LM_DEBUG,
+			    " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
 
-            objref =
-              orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+		objref =
+		  orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
+		TAO_CHECK_ENV;
 
-            if (CORBA::is_nil (objref.in ()))
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%s:  must identify non-null target objref\n",
-                                 ts_->argv_ [0]),
-                                1);
+		if (CORBA::is_nil (objref.in ()))
+		  ACE_ERROR_RETURN ((LM_ERROR,
+				     "%s:  must identify non-null target objref\n",
+				     ts_->argv_ [0]),
+				    1);
 
-            // Narrow the CORBA::Object reference to the stub object,
-            // checking the type along the way using _is_a.
-            Cubit_Factory_var cb_factory =
-              Cubit_Factory::_narrow (objref.in (),
-                                      TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+		// Narrow the CORBA::Object reference to the stub object,
+		// checking the type along the way using _is_a.
+		Cubit_Factory_var cb_factory =
+		  Cubit_Factory::_narrow (objref.in (),
+					  TAO_TRY_ENV);
+		TAO_CHECK_ENV;
 
-            if (CORBA::is_nil (cb_factory.in ()))
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Create cubit factory failed\n"),
-                                1);
+		if (CORBA::is_nil (cb_factory.in ()))
+		  ACE_ERROR_RETURN ((LM_ERROR,
+				     "Create cubit factory failed\n"),
+				    1);
 
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) >>> Factory binding succeeded\n"));
+		ACE_DEBUG ((LM_DEBUG,
+			    "(%t) >>> Factory binding succeeded\n"));
 
 
-            char * tmp_ior = cb_factory->create_cubit (this->id_,
-                                                       TAO_TRY_ENV);
-            TAO_CHECK_ENV;
+		char * tmp_ior = cb_factory->create_cubit (this->id_,
+							   TAO_TRY_ENV);
+		TAO_CHECK_ENV;
 
-            if (tmp_ior == 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "create_cubit() returned a null pointer!\n"),
-                                 -1);
+		if (tmp_ior == 0)
+		  ACE_ERROR_RETURN ((LM_ERROR,
+				     "create_cubit() returned a null pointer!\n"),
+				    -1);
 
-            char *my_ior = ACE_OS::strdup (tmp_ior);
+		char *my_ior = ACE_OS::strdup (tmp_ior);
 
-            TAO_CHECK_ENV;
+		TAO_CHECK_ENV;
 
-            objref = orb->string_to_object (my_ior,
-                                            TAO_TRY_ENV);
-            TAO_CHECK_ENV;
-          }
-        else
-          {
-            char *my_ior = ts_->iors_[this->id_];
+		objref = orb->string_to_object (my_ior,
+						TAO_TRY_ENV);
+		TAO_CHECK_ENV;
+	      }
+	    else
+	      {
+		char *my_ior = ts_->iors_[this->id_];
 
-            if (my_ior == 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Must specify valid factory ior key with -k option,"
-                                 " naming service, or ior filename\n"),
-                                -1);
+		// if we are running the "1 to n" test make sure all low
+		// priority clients use only 1 low priority servant.
+		if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
+		  my_ior = ts_->iors_[1];
 
-            objref = orb->string_to_object (my_ior,
-                                            TAO_TRY_ENV);
-            TAO_CHECK_ENV;
-          }
+		if (my_ior == 0)
+		  ACE_ERROR_RETURN ((LM_ERROR,
+				     "Must specify valid factory ior key with -k option,"
+				     " naming service, or ior filename\n"),
+				    -1);
+
+		objref = orb->string_to_object (my_ior,
+						TAO_TRY_ENV);
+		TAO_CHECK_ENV;
+	      }
+	  }
 
         if (CORBA::is_nil (objref.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -592,9 +608,14 @@ Client::run_tests (Cubit_ptr cb,
   u_int low_priority_client_count = ts_->thread_count_ - 1;
   double *my_jitter_array;
 
-  ACE_NEW_RETURN (my_jitter_array,
-                  double [loop_count*3], // magic number, for now.
-                  -1);
+  if (id_ == 0) 
+    ACE_NEW_RETURN (my_jitter_array,
+		    double [(loop_count/ts_->granularity_)*3], // magic number, for now.
+		    -1);
+  else
+    ACE_NEW_RETURN (my_jitter_array,
+		    double [loop_count/ts_->granularity_], // magic number, for now.
+		    -1);
 
   double latency = 0;
   double sleep_time = (1 / frequency) * (1000 * 1000) * ts_->granularity_; // usec
@@ -611,7 +632,7 @@ Client::run_tests (Cubit_ptr cb,
   quantify_clear_data ();
 #endif /* USE_QUANTIFY */
     
-  ACE_High_Res_Timer * timer_ = 0;
+  ACE_High_Res_Timer timer_;
 
   // Make the calls in a loop.
 
@@ -636,10 +657,10 @@ Client::run_tests (Cubit_ptr cb,
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
- 	  ACE_NEW_RETURN (timer_,
- 			  ACE_High_Res_Timer,
- 			  -1);
-          timer_->start ();
+//  	  ACE_NEW_RETURN (timer_,
+//  			  ACE_High_Res_Timer,
+//  			  -1);
+          timer_.start ();
 #endif /* !CHORUS */
         }
 
@@ -656,9 +677,7 @@ Client::run_tests (Cubit_ptr cb,
                 /* start recording quantify data from here */
                 quantify_start_recording_data ();
 #endif /* USE_QUANTIFY */
-                //ACE_ERROR (( LM_ERROR, "in {%t} i=%d\n", i));
                 ret_octet = cb->cube_octet (arg_octet, env);
-                //ACE_ERROR (( LM_ERROR, "out {%t} i=%d\n", i));
 
 #if defined (USE_QUANTIFY)
                 quantify_stop_recording_data();
@@ -841,8 +860,8 @@ Client::run_tests (Cubit_ptr cb,
           pstopTime = pccTime1Get();
 #else /* CHORUS */
           // if CHORUS is not defined just use plain timer_.stop ().
-          timer_->stop ();
-          timer_->elapsed_time (delta_t);
+          timer_.stop ();
+          timer_.elapsed_time (delta_t);
 #endif /* !CHORUS */
 
           // Calculate time elapsed
@@ -863,26 +882,20 @@ Client::run_tests (Cubit_ptr cb,
 
 // These comments are to temporarily fix what seems a bug in
 // the ACE_Long_Long class that is used to calc the elapsed
-// time, which appears only in VxWorks.
+// time.
 // I'll leave these here to debug it later.
-// double tmp = (double)delta_t.sec ();
-// if (tmp > 100000) tmp=0.0;
-// real_time = tmp + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
+ double tmp = (double)delta_t.sec ();
+ double tmp2 = (double)delta_t.usec ();
+ if (tmp > 100000) {tmp=0.0; tmp2 = 2000.0; fprintf(stderr, "tmp > 100000!, delta_t.usec ()=%f\n", (double)delta_t.usec ());}
 
-          real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
+ real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
+ //          real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
 	  
-// if (real_time > 100000)
-//   fprintf(stderr, "real_time=%f, delta_t.sec ()=%d, delta_t.usec ()=%d\n",
-// 	  real_time,
-// 	  delta_t.sec (),
-// 	  delta_t.usec ());
-
           real_time /= ts_->granularity_;
 
           delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
           latency += (real_time * ts_->granularity_);
           my_jitter_array [i/ts_->granularity_] = real_time * 1000;
-	  delete timer_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
         }
 
@@ -955,7 +968,6 @@ Client::run_tests (Cubit_ptr cb,
                   error_count));
     }
 
-  // cb->please_exit (env);
   return 0;
 }
 
