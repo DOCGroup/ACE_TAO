@@ -35,7 +35,7 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Removed all interceptor related code.  They should have been in
 	  the TAO_ORB_Core class since code in these files is related
-	  predominantly to ORB pseudo-references, not the actaul ORB
+	  predominantly to ORB pseudo-references, not the actual ORB
 	  implementation (i.e. the ORB core).
 
 	* tao/ORB.cpp (ORB_init):
@@ -52,7 +52,11 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 
 	  Attempt to obtain the policy of the given type from the policy
 	  factory registry rather than the now deprecated
-	  TAO_Service_Callbacks::service_create_policy() method.
+	  TAO_Service_Callbacks::service_create_policy() method.  The
+	  TAO_Service_Callbacks::service_create_policy() is still invoked
+	  from within the policy factory registry to ease the transition
+	  of the FT service code to the standard portable interceptor
+	  interface.
 	  
 	* tao/ORB_Core.h:
 	* tao/ORB_Core.i:
