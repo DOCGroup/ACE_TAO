@@ -87,7 +87,33 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
     be_scope::narrow_from_scope (node->defined_in ())->decl ();
   *os << parent->full_name () <<";"<< be_nl;
   
-  *os << "TAO_ClientRequest_Info_"<< node->flat_name () << " (" << be_idt_nl 
+  *os << "TAO_ClientRequest_Info_"<< node->flat_name ();
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os << " (" << be_idt_nl 
       << "const char *  operation,"<< be_nl 
       << "IOP::ServiceContextList &service_context_list," << be_nl
       << "CORBA::Object * target" << be_uidt;
