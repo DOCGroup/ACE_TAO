@@ -1,3 +1,8 @@
+Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * parser/parser/Parser.i:
+          Added (int) cast to table index to get rid of a warning.
+
 Tue Jun 24 23:31:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* apps/svcconf/Svcconf.cpp: Turned off validation temporarily when
