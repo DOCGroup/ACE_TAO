@@ -1,0 +1,28 @@
+##---------------------------------------------------------------------------
+##       $Id$
+##
+##       Makefile for TAO's AVStreams Tests -- mpeg/source/client directory
+##
+##---------------------------------------------------------------------------
+
+##
+##  Process this file with automake to create Makefile.in
+##
+
+## The number in AUTOMAKE_OPTIONS is the minimum required version automake
+## needed to process this file.
+AUTOMAKE_OPTIONS = 1.4
+
+INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+
+noinst_PROGRAMS = vcr
+
+vcr_LDADD = \
+	$(top_builddir)/ace/libACE.la $(top_builddir)/TAO/tao/libTAO.la
+
+vcr_SOURCES = \
+        vcr.cpp
+
+noinst_DATA = svc.conf
+
+EXTRA_DIST = $(noinst_DATA)

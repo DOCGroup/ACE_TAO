@@ -1,0 +1,209 @@
+#!/bin/sh
+#
+# $Id$
+
+set -e
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+bindir=@bindir@
+sbindir=@sbindir@
+libexecdir=@libexecdir@
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+mandir=@mandir@
+includedir=@includedir@
+
+pkgdatadir=${datadir}/@PACKAGE@
+pkglibdir=${libdir}/@PACKAGE@
+pkgincludedir=${includedir}/@PACKAGE@
+
+usage()
+{
+    cat <<EOF
+Usage: tao-config [OPTIONS]... [LIBRARY]...
+
+Generic options
+  --version	output TAO version information
+  --help	display this help and exit
+
+Compilation support options
+  --cxx         print C++ compiler used for compiling
+  --cxxflags	print C++ pre-processor and compiler flags
+  --libs	print library linking information
+  --libs-only-L	only print the -L/-R part of --libs
+  --libs-only-l only print the -l part of --libs
+
+Install directories ace-libs was configured to
+  --prefix  --exec-prefix  --bindir  --sbindir  --libexecdir  --datadir
+  --sysconfdir  --sharedstatedir  --localstatedir  --libdir  --infodir
+  --mandir  --includedir
+
+Known values for LIBRARY are:
+
+    ace         (calls ace-config)
+    orbsvcs
+    tao
+
+If LIBRARY is none of these,
+    
+    ${libdir}/<LIBRARY>Conf.sh
+
+is looked in for the necessary information. 
+EOF
+
+    exit $1
+}
+
+if test $# -eq 0; then
+    usage 1
+fi
+
+cxx=false
+cxxflags=false
+libs_L=false
+libs_l=false
+
+while test $# -gt 0; do
+    case "$1" in
+    -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+    *) optarg= ;;
+    esac
+
+    case $1 in
+    --version)
+	echo @PACKAGE@ @VERSION@
+	exit 0
+	;;
+    --exec-prefix)
+	echo $exec_prefix
+	exit 0
+	;;
+    --prefix)
+	echo $prefix
+	exit 0
+	;;
+    --*dir)
+	dirname=\$`echo $1 | sed -e 's,^--,,'`
+	dirname=`eval echo $dirname`
+	test -z "$dirname" && exit 1
+	echo $dirname
+	exit 0
+	;;
+    --help)
+	usage 0
+	;;
+    --cxx)
+        cxx=true
+        ;;
+    --cxxflags)
+       	cxxflags=true
+       	;;
+    --libs)
+       	libs_L=true
+	libs_l=true
+       	;;
+    --libs-only-L)
+	libs_L=true
+	;;
+    --libs-only-l)
+	libs_l=true
+	;;
+    --*)
+	usage 1
+	;;
+    ace)
+        # The ACE compiler should be the same as TAO's compiler!
+        the_compiler="`ace-config --cxx tao`"
+        the_libs="$the_libs `ace-config --libs ace`"
+        the_flags="$the_flags `ace-config --cxxflags ace`"
+	;;
+    tao)
+        the_compiler="@CXX@"
+       	the_libs="$the_libs @TAO_LIBDIR@ @TAO_LIBS@"
+  	the_flags="$the_flags @TAO_INCLUDEDIR@ @CXXFLAGS@"
+	;;
+    orbsvcs)
+        echo "Currently unsupported."
+        exit 1
+#      	the_libs="$the_libs @TAO_LIBDIR@ @ORBSVCS_LIBS@"
+#  	the_flags="$the_flags @TAO_INCLUDEDIR@ @CXXFLAGS@"
+	;;
+    *)
+	cnf_sh=${libdir}/${1}Conf.sh
+	if test -f ${cnf_sh}; then
+	    . ${cnf_sh}
+	    up_name=`echo $1 | tr a-z A-Z`
+            cnf_compiler=\$${up_name}_COMPILER
+	    cnf_libdir=\$${up_name}_LIBDIR
+	    cnf_libs=\$${up_name}_LIBS
+	    cnf_flags=\$${up_name}_INCLUDEDIR
+            the_compiler="`eval echo $cnf_compiler`"
+	    the_libs="$the_libs `eval echo $cnf_libdir` `eval echo $cnf_libs`"
+	    the_flags="$the_flags `eval echo $cnf_flags`"
+	else
+	    echo Unknown library \`$1\' 1>&2
+	fi
+	;;
+    esac
+    shift
+done
+
+if $cxx; then
+    all_flags="$the_compiler"
+fi
+
+if $cxxflags; then
+    all_flags="$all_flags $the_flags"
+fi
+
+if $libs_L || $libs_l; then
+    all_flags="$all_flags $the_libs"
+fi
+
+if test -z "$all_flags" || test "x$all_flags" = "x "; then
+    exit 1
+fi
+
+# Straight out any possible duplicates, but be careful to
+# get `-lfoo -lbar -lbaz' for `-lfoo -lbaz -lbar -lbaz'
+other_flags=
+lib_L_flags=
+rev_libs=
+for i in $all_flags; do
+    case "$i" in
+    # a library, save it for later, in reverse order
+    -l*) rev_libs="$i $rev_libs" ;;
+    -L*|-R*)
+	if $libs_L; then
+	    case " $lib_L_flags " in
+	    *\ $i\ *) ;;			# already there
+	    *) lib_L_flags="$lib_L_flags $i" ;;	# add it to output
+	    esac 
+	fi;;
+    *)
+	case " $other_flags " in
+	*\ $i\ *) ;;				# already there
+	*) other_flags="$other_flags $i" ;;	# add it to output
+        esac ;;
+    esac
+done
+
+ord_libs=
+if $libs_l; then
+    for i in $rev_libs; do
+	case " $ord_libs " in
+	*\ $i\ *) ;;			# already there
+	*) ord_libs="$i $ord_libs" ;;	# add it to output in reverse order
+	esac
+    done
+fi
+
+echo $other_flags $lib_L_flags $ord_libs
+
+exit 0

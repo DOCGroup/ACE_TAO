@@ -1,3 +1,64 @@
+Wed Apr  7 15:13:23 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	* tao-config.1.in:
+	* tao-config.in:
+	* taoConf.sh.in:
+	* Makefile.am:
+	* TAO_IDL/ast/Makefile.am:
+	* TAO_IDL/be/Makefile.am:
+	* TAO_IDL/be_include/Makefile.am:
+	* TAO_IDL/driver/Makefile.am:
+	* TAO_IDL/fe/Makefile.am:
+	* TAO_IDL/include/Makefile.am:
+	* TAO_IDL/narrow/Makefile.am:
+	* TAO_IDL/util/Makefile.am:
+	* TAO_IDL/Makefile.am:
+	* orbsvcs/Concurrency_Service/Makefile.am:
+	* orbsvcs/CosEvent_Service/Makefile.am:
+	* orbsvcs/Dump_Schedule/Makefile.am:
+	* orbsvcs/Event_Service/Makefile.am:
+	* orbsvcs/ImplRepo_Service/Makefile.am:
+	* orbsvcs/LifeCycle_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Makefile.am:
+	* orbsvcs/Naming_Service/Makefile.am:
+	* orbsvcs/Scheduling_Service/Makefile.am:
+	* orbsvcs/Time_Service/Makefile.am:
+	* orbsvcs/Trading_Service/Makefile.am:
+	* orbsvcs/Makefile.am:
+	* orbsvcs/orbsvcs/AV/Makefile.am:
+	* orbsvcs/orbsvcs/Concurrency/Makefile.am:
+	* orbsvcs/orbsvcs/CosEvent/Makefile.am:
+	* orbsvcs/orbsvcs/Event/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* orbsvcs/orbsvcs/Log/Makefile.am:
+	* orbsvcs/orbsvcs/Naming/Makefile.am:
+	* orbsvcs/orbsvcs/Property/Makefile.am:
+	* orbsvcs/orbsvcs/Sched/Makefile.am:
+	* orbsvcs/orbsvcs/Time/Makefile.am:
+	* orbsvcs/orbsvcs/Trader/Makefile.am:
+	* orbsvcs/tests/AVStreams/benchmark/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/client/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/source/Makefile.am:
+	* orbsvcs/tests/AVStreams/mpeg/Makefile.am:
+	* orbsvcs/tests/AVStreams/server_discovery/Makefile.am:
+	* orbsvcs/tests/AVStreams/sfp/Makefile.am:
+	* orbsvcs/tests/AVStreams/Makefile.am:
+	* orbsvcs/tests/Makefile.am:
+	* tao/Makefile.am:
+
+	  Checked these files into the CVS repository.  These files are
+	  part of the TAO+auto{conf,make}/libtool integration work.  There
+	  are still some missing files and some of the above files need
+	  to be modified before they will work.  I just wanted to get
+	  these files under CVS control so that I can easily recover
+	  from a mishap or for some reason beyond my control.
+
 Wed Apr 07 14:34:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/DSI/Database_i.cpp (_is_a): Removed unused
