@@ -1,3 +1,9 @@
+Tue Feb 13 09:16:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+
+          Initialized forward_obj to remove warnings.
+
 Tue Feb 13 09:09:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO-INSTALL.html:

@@ -73,7 +73,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
   ACE_TString ior;
-  CORBA::Object_ptr forward_obj;
+  CORBA::Object_ptr forward_obj = CORBA::Object::_nil ();
 
   ACE_TRY
     {
