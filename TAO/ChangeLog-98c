@@ -1,3 +1,8 @@
+Thu May 7  16:11:00 1998  Robert Eric Thornton <ret1@cec.wustl.edu>
+
+        * orbsvcs/tests/Naming/ns_tree.cpp: added the NamingService to this
+	   test.
+
 Thu May  7 15:29:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
