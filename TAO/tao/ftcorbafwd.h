@@ -141,7 +141,7 @@ class FT_InvalidProperty;
 class FT_NoFactory;
 class FT_InvalidCriteria;
 class FT_CannotMeetCriteria;
-
+class FT_ObjectGroupNotFound;
 class FT_PropertyManager;
 class FT_PropertyManager_var;
 class FT_PropertyManager_out;
@@ -382,6 +382,7 @@ TAO_NAMESPACE FT
   typedef FT_InterfaceNotFound InterfaceNotFound;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceNotFound;
 
+  typedef FT_ObjectGroupNotFound ObjectGroupNotFound;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroupNotFound;
 
   typedef FT_MemberNotFound MemberNotFound;
