@@ -1729,9 +1729,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	ACE_FAIL_RETURN (-1);
       /* NOTREACHED */
 #elif defined (VXWORKS)
-      // If thr_id points to NULL (or is 0), the call below causes
-      // VxWorks to assign a unique task name of the form: "t" + an
-      // integer.
+      // The call below to ::taskSpawn () causes VxWorks to assign a
+      // unique task name of the form: "t" + an integer, because the
+      // first argument is 0.
 
       // args must be an array of _exactly_ 10 ints.
 
@@ -1753,7 +1753,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       if (stacksize == 0) stacksize = 20000;
 
-      ACE_hthread_t tid = ::taskSpawn (thr_id == 0 ? NULL : *thr_id, priority,
+      ACE_hthread_t tid = ::taskSpawn (0, priority,
                                        (int) flags, (int) stacksize, func,
                                        (int)args, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
 
