@@ -1,11 +1,20 @@
+Fri Feb 18 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO/tao/*C.{h,cpp,inl}:
+        * TAO/tao/*A.cpp:
+          Regenerated the pidl files in the archive with the latest version
+          of the idl compiler. Disable fuzz checks in the pidl files for
+          include and renamed some of the Factory implementation files of
+          the request processing strategy to fix the fuzz errors
+
 Fri Feb 18 05:32:41 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
-        
+
           Changed 'return' to 'exit (99)' in several places where lookups
           are checked and have failed. These cases are always due to
           incorrect IDL encounterred previously in the file (and for
-          which appropriate error messages have already been output). 
+          which appropriate error messages have already been output).
           Processing further from the point of lookup failure leads to
           a crash. Thanks to Steve Baker <steven_d_baker@raytheon.com>
           for reporting a crash with the incorrect IDL 'abstract component'.
