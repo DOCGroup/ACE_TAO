@@ -1,9 +1,23 @@
+Fri Jan 23 14:04:31 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Changed the defaulting rules for implicitly adding source files
+          when IDL_Files (or any other custom type) is specified. 
+          Previously, generated source files would only be added to the
+          Source_Files section only if IDL_Files was not specified and no
+          generated source files were already listed in Source_Files.  Now,
+          the generated source files will be added whether or not IDL_Files
+          is specified and no generated source files were already listed in
+          Source_Files.
+
 Fri Jan 23 19:09:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_string.cpp:
-	  With CBuilderX Preview strdup is in the std namespace, so
-	  added ACE_STD_NAMESPACE which expands to std with Borland,
-	  to nothing with other compilers.
+        * ace/OS_NS_string.cpp:
+          With CBuilderX Preview strdup is in the std namespace, so
+          added ACE_STD_NAMESPACE which expands to std with Borland,
+          to nothing with other compilers.
 
 Fri Jan 23 10:04:00 2004  Gary Maxey <gary.maxey@hp.com>
 
@@ -24,7 +38,7 @@ Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
           Fix for BUGID 1708
 
           Added #elif in ACE_OS::sigwait to use alternate sigwait() when
-	  compiling for Tandem NSK platform.
+          compiling for Tandem NSK platform.
 
 Fri Jan 23 09:34:00 2004  Gary Maxey <gary.maxey@hp.com>
 
@@ -33,7 +47,7 @@ Fri Jan 23 09:34:00 2004  Gary Maxey <gary.maxey@hp.com>
           Fix for BUGID 1709
 
           Added #ifdef to use alternate select() when compiling for Tandem
-	  NSK platform.
+          NSK platform.
 
 Fri Jan 23 10:30:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
