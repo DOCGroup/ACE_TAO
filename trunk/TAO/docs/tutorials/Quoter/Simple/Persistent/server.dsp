@@ -90,10 +90,12 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\QuoterC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\QuoterS.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
