@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+
 // ============================================================================
 //
 // $Id$
@@ -85,11 +86,10 @@ public:
   // <name> is used by the hash map manager to hash Logger instances
 
 private:
-  // Calls to make_logger will create a new instance of Logger and
+  ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
+  // Calls to <make_logger> will create a new instance of <Logger> and
   // bind into the hash map manager if <name> is unique, else it will
   // return a previously bound entry.
-  ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
 };
-
 
 #endif /* TAO_ORBSVCS_LOGGER_I_H */
