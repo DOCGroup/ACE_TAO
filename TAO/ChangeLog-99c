@@ -1,3 +1,36 @@
+Mon Sep 13 13:55:22 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Stub.i:
+
+	  Make sure underlying TAO_Stub pointer is not equal to zero
+	  before calling its _decr_refcnt() method.  Previously it was
+	  possible to release() the underlying pointer and still have
+	  ~TAO_Stub_Auto_Ptr() call _decr_refcnt().  This fixes the
+	  TAO_Stub_Auto_Ptr segmentation fault problem. [Bug 307]
+
+	  Moved inclusion of tao/debug.h to tao.Stub.cpp.  It wasn't
+	  needed in this file.
+
+	* tao/ORB.cpp (url_ior_string_to_object):
+
+	  Re-enable TAO_Stub_Auto_Ptr code since the TAO_Stub_Auto_Ptr
+	  segmentation fault problem was fixed.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Made string comparison for "-ORBid" case insensitive.
+
+	* tao/ORB.i (is_nil, release):
+
+	  To be technically correct, check for nil ORB_ptr by using
+	  CORBA::is_nil() in CORBA::ORB::release() and by comparing the
+	  ORB_ptr to CORBA::ORB::_nil() in CORBA::is_nil(), not by
+	  comparing to zero.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Mon Sep 13 13:49:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
