@@ -9,7 +9,7 @@ project : taoexe, ciao_client_dnc, ciao_deployment_stub  {   // , portableserver
   libs     += xerces-c Config_Handlers // Deployment_stub Deployment_svnt
   after    += Config_Handlers
 
-  Source_Files {
+  Template_Files {
     Handler_Test.cpp
   }
 }

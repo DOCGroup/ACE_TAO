@@ -6,8 +6,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
-#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
-
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/Exception.h"
@@ -43,6 +41,12 @@ template <typename HANDLER, typename DATA>
 int run_test (int argc, ACE_TCHAR *argv[], void (HANDLER::*func) (DATA&));
 
 
-#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Handler_Test.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Handler_Test.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif // HANDLER_TEST_H
