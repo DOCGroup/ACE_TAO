@@ -23,6 +23,34 @@ DEFINE_GUID (IID_CORBA_ORB,
 DEFINE_GUID (IID_STUB_Object,
              0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+CORBA::String_var::String_var (char *p)
+  : ptr_ (p)
+{
+  // NOTE: According to the CORBA spec this string must *not* be
+  // copied, but it is non-compliant to use it/release it in the
+  // calling code.  argument is consumed. p should never be NULL
+}
+
+CORBA::String_var::String_var (const CORBA::String_var& r)
+{
+  this->ptr_ = CORBA::string_dup (r.ptr_);
+}
+
+CORBA::String_var::~String_var (void)
+{
+  if (this->ptr_ != 0)
+    {
+      CORBA::string_free (this->ptr_);
+      this->ptr_ = 0;
+    }
+}
+
+TAO_Export CORBA::String
+CORBA::string_dup (const CORBA::Char *str)
+{
+  return CORBA::string_copy (str);
+}
+
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
     open_called_(CORBA::B_FALSE),

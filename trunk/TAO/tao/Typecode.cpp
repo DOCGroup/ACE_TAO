@@ -14,6 +14,31 @@
 
 #include "tao/corba.h"
 
+// Just fetch the 'kind' field out of the typecode.
+void *
+CORBA_TypeCode::operator new (size_t s)
+{
+  return ::operator new (s);
+}
+
+CORBA::TypeCode_ptr
+CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
+{
+  if (tc)
+    tc->AddRef ();
+  return tc;
+}
+
+CORBA_Bounds::CORBA_Bounds (void)
+  : CORBA_UserException (CORBA::_tc_Bounds) 
+{
+}
+
+CORBA_BadKind::CORBA_BadKind (void)
+  : CORBA_UserException (CORBA::_tc_BadKind) 
+{
+}
+
 // Constructor for CONSTANT typecodes with empty parameter lists.
 // These are only created once, and those constants are shared.
 

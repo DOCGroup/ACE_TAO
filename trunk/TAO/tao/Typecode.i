@@ -20,21 +20,6 @@ CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
     return this->private_equal (tc, env);
 }
 
-// just fetch the 'kind' field out of the typecode
-ACE_INLINE void *
-CORBA_TypeCode::operator new (size_t s)
-{
-  return ::operator new (s);
-}
-
-ACE_INLINE CORBA::TypeCode_ptr
-CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    tc->AddRef ();
-  return tc;
-}
-
 // returns the Repository ID
 ACE_INLINE const char *
 CORBA_TypeCode::id (CORBA::Environment &env) const
@@ -261,3 +246,4 @@ CORBA_TypeCode_out::operator-> (void)
 {
   return this->ptr_;
 }
+

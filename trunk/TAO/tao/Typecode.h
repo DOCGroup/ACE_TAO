@@ -23,23 +23,22 @@
 // Forward decl.
 class CDR;
 
-// Two "user exceptions" are defined for manipulating TypeCodes. These two
-// classes are really to be defined inside the TypeCode class
+// Two "user exceptions" are defined for manipulating TypeCodes. These
+// two classes are really to be defined inside the TypeCode class.
+// @@ Andy, can you please explain why they aren't defined there?
 
 //extern CORBA::TypeCode_ptr CORBA::_tc_Bounds;
 class CORBA_Bounds : public CORBA_UserException
 {
 public:
-  CORBA_Bounds (void)
-    : CORBA_UserException (CORBA::_tc_Bounds) {}
+  CORBA_Bounds (void);
 };
 
 //extern CORBA::TypeCode_ptr CORBA::_tc_BadKind;
 class CORBA_BadKind : public CORBA_UserException
 {
 public:
-  CORBA_BadKind (void)
-    : CORBA_UserException (CORBA::_tc_BadKind) {}
+  CORBA_BadKind (void);
 };
 
 // A TypeCode describes data.  This one's as thin a wrapper around CDR

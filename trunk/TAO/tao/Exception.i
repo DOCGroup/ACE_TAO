@@ -7,18 +7,6 @@ CORBA_Exception::operator new (size_t,
   return (void *) p;
 }
 
-ACE_INLINE void *
-CORBA_Exception::operator new (size_t s)
-{
-  return ::operator new (s);
-}
-
-ACE_INLINE void
-CORBA_Exception::operator delete (void *p)
-{
-  ::operator delete (p);
-}
-
 ACE_INLINE
 CORBA_UserException::CORBA_UserException (const CORBA_UserException &src)
   : CORBA_Exception (src)
@@ -50,6 +38,8 @@ CORBA_SystemException::completion (CORBA::CompletionStatus c)
 }
 
 ACE_INLINE
+<<<<<<< Exception.i
+=======
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0)
 {
@@ -77,13 +67,3 @@ CORBA::Exception_ptr CORBA_Environment::exception (void) const
   return this->exception_;
 }
 
-ACE_INLINE void
-CORBA_Environment::exception (CORBA::Exception *ex)
-{
-  if (ex != this->exception_)
-    {
-      this->clear ();
-      this->exception_ = ex;
-      this->exception_->AddRef ();
-    }
-}

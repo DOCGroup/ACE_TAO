@@ -45,15 +45,6 @@ CORBA_Object::QueryInterface (REFIID riid,
   return TAO_NOERROR;
 }
 
-// CORBA dup/release build on top of COM's (why not).
-
-ACE_INLINE void
-CORBA::release (CORBA_Object_ptr obj)
-{
-  if (obj)
-    obj->Release ();
-}
-
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_duplicate (CORBA::Object_ptr obj)
 {
@@ -90,21 +81,6 @@ CORBA_Object::_set_parent (STUB_Object *p)
     }
 
   ACE_ASSERT (this->parent_ != 0);
-}
-
-ACE_INLINE
-CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
-                            TAO_ServantBase *servant,
-                            CORBA_Boolean collocated)
-  : servant_ (servant),
-    is_collocated_ (collocated),
-    parent_ (0),
-    refcount_ (1)
-{
-  // Notice that the refcount_ above is initialized to 1 because
-  // the semantics of CORBA Objects are such that obtaining one
-  // implicitly takes a reference.
-  this->_set_parent (protocol_proxy);
 }
 
 ACE_INLINE STUB_Object *
@@ -145,11 +121,6 @@ CORBA_Object::_request (const CORBA::Char *operation,
 // *************************************************************
 
 ACE_INLINE
-CORBA_Object_var::CORBA_Object_var (void) // default constructor
-        : ptr_ (CORBA_Object::_nil ())
-{}
-
-ACE_INLINE
 CORBA_Object_var::CORBA_Object_var (CORBA_Object_ptr p)
         : ptr_ (p)
 {}
@@ -164,12 +135,6 @@ ACE_INLINE
 CORBA_Object_var::CORBA_Object_var (const CORBA_Object_var &p) // copy constructor
         : ptr_ (CORBA_Object::_duplicate (p.ptr ()))
 {}
-
-ACE_INLINE
-CORBA_Object_var::~CORBA_Object_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
 
 ACE_INLINE CORBA_Object_var &
 CORBA_Object_var::operator= (CORBA_Object_ptr p)
