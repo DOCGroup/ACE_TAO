@@ -1,8 +1,16 @@
+Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Future.h: Moved the static methods until the bottom
+          of the ACE_Future_Rep class (again) to workaround a bug with
+ 	  Borland's C++ Builder.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this (again).
+  
 Mon Jul 26 20:59:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* websvcs/README:
 	  Added a brief description of the directory and its current
-	  contents.
+	  contents.  Thanks to Will Skunk <willskunk@homemail.com>
+	  for motivating this.
 
 Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
