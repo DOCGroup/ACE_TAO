@@ -1,3 +1,8 @@
+Thu Feb 11 15:05:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ACE-INSTALL.html: Reworded the first step of the Windows
+          NT installation to be a bit clearer.
+
 Thu Feb 11 14:30:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/ace_dll.dsp: Fixed Alpha Configuration.
