@@ -6,31 +6,45 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #
 # Reviews build logs and reports problems, via stdout or mail.
 
-$usage="$0 [-l log directory] [-m mail recipient(s)]\n";
+use strict;
+
+my $usage="$0 [-l log directory] [-m mail recipient(s)]\n";
 
 ####
 #### Configuration parameters.
 ####
-$subject = 'ACE+TAO build results';
-$find = 'find';
-$mail = "mail -s '$subject'";
+my $subject = 'ACE+TAO build results';
+my $find = -e '/pkg/gnu/bin/find'  ?  '/pkg/gnu/bin/find'  :  'find';
+my $mail = "mail -s '$subject'";
 
-$ostype = $ENV{'OSTYPE'}  ||  `/bin/uname -s`;
+my $ostype = $ENV{'OSTYPE'}  ||  `/bin/uname -s`;
 if ( "$ostype" =~ /(solaris)|(SunOS)/i ) {
-  $find = '/pkg/gnu/bin/find';
-  $mail = "/pkg/mh/bin/mhmail -subject '$subject'";
+  #### $mail = "/pkg/mh/bin/mhmail -subject '$subject'";
+  $mail = "/usr/bin/mailx -s '$subject'";
 }
 
+$ENV{'LD_LIBRARY_PATH'} = '/opt/SUNWspro_5.0/dt/lib:/usr/openwin/lib:/usr/lib:/project/danzon/pkg/egcs/lib:' unless $ENV{'LD_LIBRARY_PATH'};
+$ENV{'MAIL'} = '/var/mail/levine';
+$ENV{'TMPDIR'} = '/tmp';
+$ENV{'ARCH'} = 'sun4';
+$ENV{'HOSTNAME'} = 'danzon';
+$ENV{'HOSTTYPE'} = 'sparc';
+$ENV{'HZ'} = '100';
+$ENV{'MACHTYPE'} = 'sparc-sun-solaris2.5.1';
+$ENV{'NOMHNPROC'} = '1';
+$ENV{'OSTYPE'} = 'solaris2.5.1';
+#### $ENV{'TERM'} = 'vt100';
+$ENV{'USER'} = $ENV{'LOGNAME'};
 
-$log_directory = '/project/danzontmp/levine/build-logs';
-$mail_recipients = '';
+my $log_directory = '/project/danzontmp/levine/build-logs';
+my $mail_recipients = '';
 
 ####
 #### Process command line args.
 ####
 while ($#ARGV >= $[) {
   if ($ARGV[0] eq '-l') {
-    if ($ARGV[1] =~ /^\w+$/) {
+    if ($ARGV[1] =~ /^[^-]/) {
       $log_directory = $ARGV[1];
       shift;
     } else {
@@ -63,14 +77,14 @@ while ($#ARGV >= $[) {
 chdir $log_directory  ||
   die "$0: unable to cd to \"$log_directory\"\n";
 
-($log_files = ( `$find . -name '*.log' -daystart -ctime 0 -print` )) =~
+(my $log_files = ( `$find . -name '*.log' -daystart -ctime 0 -print` )) =~
   tr [\n] [ ];
 
 
 ####
 #### Grep the log files for problems.
 ####
-@output = ();
+my @output = ();
 open (EGREP, "egrep -n \'Error|errors|[^a]Stop|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files |")  ||
   die "$0: unable to open egrep\n";
 while (<EGREP>) {
@@ -82,11 +96,17 @@ close EGREP;
 ####
 #### Produce output, if there were any problems.
 ####
-if ($#output > -1) {
+if ($#output == -1) {
+  push @output, "No problems to report.\n";
+}
+
+{
+  my $tmp_file;
 
   if ("$mail_recipients") {
-    open (MAIL, "| $mail $mail_recipients")  ||
-      die "$0: unable to open pipe to $mail\n";
+    $tmp_file = "/tmp/check_build_logs.$$";
+    open (MAIL, "> $tmp_file")  ||
+      die "$0: unable to open $tmp_file\n";
     select MAIL;
   }
 
@@ -95,5 +115,11 @@ if ($#output > -1) {
 
   print @output;
 
-  close MAIL if "$mail_recipients";
+  if ("$mail_recipients") {
+    close MAIL;
+    system ("$mail $mail_recipients < $tmp_file")  &&
+      warn "$0: $mail $mail_recipients failed with status $?\n";
+    unlink $tmp_file;
+  }
 }
+
