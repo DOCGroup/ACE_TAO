@@ -1,26 +1,25 @@
-# Microsoft Developer Studio Project File - Name="Kokyu LIB" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Kokyu_Static" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=Kokyu LIB - Win32 Static Debug
+CFG=Kokyu_Static - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE run the tool that generated this project file and specify the
-!MESSAGE nmake output type.  You can then use the following command:
-!MESSAGE
+!MESSAGE use the Export Makefile command and run
+!MESSAGE 
 !MESSAGE NMAKE /f "Kokyu_Static.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
-!MESSAGE NMAKE /f "Kokyu_Static.mak" CFG="Kokyu LIB - Win32 Static Debug"
-!MESSAGE
+!MESSAGE 
+!MESSAGE NMAKE /f "Kokyu_Static.mak" CFG="Kokyu_Static - Win32 Debug"
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "Kokyu LIB - Win32 Static Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "Kokyu LIB - Win32 Static Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "Kokyu_Static - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "Kokyu_Static - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -29,47 +28,63 @@ CFG=Kokyu LIB - Win32 Static Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Kokyu LIB - Win32 Static Release"
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
 
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "Release"
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Static_Release"
-# PROP Intermediate_Dir "Static_Release"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Static\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
-# ADD CPP /nologo /G5 /W3 /GX /O2 /MD /Zi /GR /I ".." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D ACE_AS_STATIC_LIBS=1 /FD /c
+# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I ".." /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
-# ADD RSC /l 0x409 /d NDEBUG=1 /i ".."
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
-# ADD BSC32 /nologo /o".\Kokyu.bsc"
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD LIB32 /nologo /out:".\Kokyus.lib"
+# ADD BASE LIB32 /nologo
+# ADD LIB32 /nologo /out:"Kokyus.lib"
 
-!ELSEIF  "$(CFG)" == "Kokyu LIB - Win32 Static Debug"
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
 
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Debug"
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Static_Debug"
-# PROP Intermediate_Dir "Static_Debug"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Static\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
-# ADD CPP /nologo /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd /I ".." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D ACE_AS_STATIC_LIBS=1 /FD /c
-# SUBTRACT CPP /Fr /YX
-# ADD RSC /l 0x409 /d _DEBUG=1 /i ".."
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "ACE_AS_STATIC_LIBS" /FD /c
+# SUBTRACT CPP /YX
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
-# ADD BSC32 /nologo /o".\Kokyu.bsc"
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD LIB32 /nologo /out:".\Kokyusd.lib"
+# ADD BASE LIB32 /nologo
+# ADD LIB32 /nologo /out:"Kokyusd.lib"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
-# Name "Kokyu LIB - Win32 Static Release"
-# Name "Kokyu LIB - Win32 Static Debug"
+# Name "Kokyu_Static - Win32 Release"
+# Name "Kokyu_Static - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;cxx;c"
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
 SOURCE=.\Default_Dispatcher_Impl.cpp
@@ -93,7 +108,7 @@ SOURCE=.\Kokyu_defs.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hh"
+# PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
 SOURCE=.\Default_Dispatcher_Impl.h
@@ -108,22 +123,6 @@ SOURCE=.\Dispatcher_Task.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Direct_Dispatcher_Impl_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Dispatch_Item_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Dispatcher_Impl_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Sched_Queue_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Kokyu.h
 # End Source File
 # Begin Source File
@@ -132,27 +131,67 @@ SOURCE=.\Kokyu_defs.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu_dsrt.h
+SOURCE=.\kokyu_export.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i;inl"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\Default_Dispatcher_Impl.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dispatcher_Impl.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dispatcher_Task.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatch_Item_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -161,6 +200,15 @@ SOURCE=.\DSRT_Dispatcher_Impl_T.i
 # Begin Source File
 
 SOURCE=.\Kokyu.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -177,27 +225,67 @@ SOURCE=.\Kokyu_dsrt.i
 # Begin Source File
 
 SOURCE=.\DSRT_Direct_Dispatcher_Impl_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatch_Item_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatcher_Impl_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\DSRT_Sched_Queue_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Kokyu_dsrt.cpp
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
