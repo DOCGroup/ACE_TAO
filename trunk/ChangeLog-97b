@@ -2,6 +2,12 @@ Tue Sep 30 08:35:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Atomic_Op.i: added CVS header.
 
+	* tests/TSS_Test_Errno.h,TSS_Test.cpp: dynamically allocate
+	  Errno::lock_ to try to avoid problem with cleanup of statics
+	  on VxWorks.  It doesn't solve the problem, all of the time.
+	  There are still statics in the ACE library, which could be
+	  causing it.
+
 Tue Sep 30 01:35:28 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Naming_Context.cpp (close, close_down): Separated these two
