@@ -11,6 +11,7 @@
 #include "Notify_Factory.h"
 #include "Notify_Event_Manager_Objects_Factory.h"
 #include "Notify_Collection_Factory.h"
+#include "Notify_AdminProperties.h"
 
 ACE_RCSID(Notify, Notify_EventChannel_i, "$Id$")
 
@@ -23,9 +24,6 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFac
    event_manager_objects_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
    default_op_ (CosNotifyChannelAdmin::OR_OP),
    default_id_ (0),
-   max_queue_length_ (0),
-   max_consumers_ (0),
-   max_suppliers_ (0),
    event_listener_list_ (0)
 {
   channel_factory_->_add_ref ();
@@ -161,6 +159,9 @@ TAO_Notify_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   // release all references.
   this->event_listener_list_->shutdown (ACE_TRY_ENV);
+
+  // @@ TODO: We need a way to send shutdown messages to the proxy consumers too.
+  // (event listeners are proxy suppliers or CA's in disguise)
 
   this->poa_factory_->destroy_POA (this->CA_POA_.in (),
                                    ACE_TRY_ENV);
@@ -358,31 +359,8 @@ TAO_Notify_EventChannel_i::get_admin (CORBA::Environment &ACE_TRY_ENV)
                    CORBA::SystemException
                    ))
 {
-  CORBA::Long property_count = 3; //The spec has 3 properties, so far.
-
-  CosNotification::AdminProperties_var admin;
-
-  ACE_NEW_THROW_EX (admin,
-                    CosNotification::AdminProperties (property_count),
-                    CORBA::NO_MEMORY ());
-  admin->length (property_count);
-
-#if 0 // temporarily commenting out till i find out whats causing VxWorks to break.
-
-  (*admin)[0].name =
-  CORBA::string_dup (CosNotification::MaxQueueLength);
-  (*admin)[0].value <<= (CORBA::Long)max_queue_length_;
-
-  (*admin)[1].name =
-  CORBA::string_dup (CosNotification::MaxConsumers);
-  (*admin)[1].value <<= (CORBA::Long)max_consumers_;
-
-  (*admin)[2].name =
-  CORBA::string_dup (CosNotification::MaxSuppliers);
-  (*admin)[2].value <<= (CORBA::Long)max_suppliers_;
-
-#endif
-  return admin._retn ();
+  // Delegate to Event Manager.
+  return this->event_manager_->admin_properties ()->get_admin (ACE_TRY_ENV);
 }
 
 void
@@ -392,26 +370,7 @@ TAO_Notify_EventChannel_i::set_admin (const CosNotification::AdminProperties & a
                    CosNotification::UnsupportedAdmin
                    ))
 {
-  for (CORBA::ULong i = 0; i < admin.length (); ++i)
-    {
-      if (ACE_OS::strcmp (admin[i].name,
-                          CosNotification::MaxQueueLength) == 0)
-        {
-          admin[i].value >>= max_queue_length_;
-        }
-      else if (ACE_OS::strcmp (admin[i].name,
-                               CosNotification::MaxSuppliers) == 0)
-        {
-          admin[i].value >>= max_suppliers_;
-        }
-      else if (ACE_OS::strcmp (admin[i].name,
-                               CosNotification::MaxConsumers) == 0)
-        {
-          admin[i].value >>= max_consumers_;
-        }
-      else
-        ACE_THROW (CosNotification::UnsupportedAdmin ());
-    }
+  this->event_manager_->admin_properties ()->set_admin (admin, ACE_TRY_ENV);
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr

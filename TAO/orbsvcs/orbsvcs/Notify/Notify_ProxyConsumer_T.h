@@ -90,6 +90,9 @@ protected:
   void on_connected (CORBA::Environment &ACE_TRY_ENV);
   // Derived classes should call this when their suppliers connect.
 
+  void on_disconnected (CORBA::Environment &ACE_TRY_ENV);
+  // Derived classes should call this when their suppliers disconnect.
+
   // = Data members
   TAO_Notify_SupplierAdmin_i* supplier_admin_;
   // My parent supplier admin.

@@ -21,6 +21,7 @@
 #include "Notify_Worker_Task.h"
 #include "Notify_Event_Dispatch_Command.h"
 #include "Notify_Event_Processor.h"
+#include "Notify_Worker_Task.h"
 
 ACE_RCSID(Notify, Notify_ConsumerAdmin_i, "$Id$")
 
@@ -178,16 +179,21 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
 
   // Create the task to forward filtering/dispatching commands to:
   this->dispatching_task_ =
-    this->event_manager_objects_factory_->create_dispatching_task (ACE_TRY_ENV);
+    new TAO_Notify_Worker_Task ();
+  /*this->event_manager_objects_factory_->create_dispatching_task (ACE_TRY_ENV);
   ACE_CHECK;
-
+  */
   this->filter_eval_task_ =
     this->event_manager_objects_factory_->create_listener_eval_task (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // open the tasks
-  this->dispatching_task_->open (0);
-  this->filter_eval_task_->open (0);
+  // Get hold of the admin properties.
+  TAO_Notify_AdminProperties* const admin_properties =
+    this->event_manager_->admin_properties ();
+
+  // Init the tasks
+  this->dispatching_task_->init_task (admin_properties);
+  this->filter_eval_task_->init_task (admin_properties);
 
   // Initially we set up things so that all listeners are subscribed for
   // all the events so that things "work" even if we don't twiddle with

@@ -48,9 +48,9 @@ TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotif
       {
         ACE_GUARD_THROW_EX (TAO_Notify_Unlock, ace_mon, reverse_lock,
                             CORBA::INTERNAL ());
-        ACE_CHECK;
+        ACE_TRY_CHECK;
 
-        this->event_manager_->register_for_subscription_updates (this, ACE_TRY_ENV);
+        this->on_connected (ACE_TRY_ENV);
         ACE_TRY_CHECK;
       }
     }
@@ -58,6 +58,7 @@ TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotif
     {
       this->push_supplier_ = CosNotifyComm::SequencePushSupplier::_nil ();
       this->is_connected_ = 0;
+
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -119,6 +120,9 @@ TAO_Notify_SequenceProxyPushConsumer_i::disconnect_sequence_push_consumer (CORBA
   // ask our parent to deaactivate us.
   this->supplier_admin_->
     deactivate_proxy_pushconsumer (this, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->on_disconnected (ACE_TRY_ENV);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
