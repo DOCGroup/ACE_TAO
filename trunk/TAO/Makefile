@@ -52,12 +52,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 # $(ACE_ROOT)/bin/clone.cpp file and install it in your ~/bin
 # directory (or some place similar).
 
-.PHONY: clone
+.PHONY: clone reverseclean
 clone:
 	@for dir in $(CLONE) ;\
 	do \
 		(clone -s $(ACE_ROOT)/$$dir $$dir) \
 	done
+
+reverseclean:
+	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
 
 CONTROLLED_FILES = TAO
 

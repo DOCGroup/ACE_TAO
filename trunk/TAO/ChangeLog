@@ -1,3 +1,8 @@
+Tue Dec 10 16:15:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Makefile: Added a target 'reverseclean' to be used in our daily
+	  builds.
+
 Mon Dec  9 22:25:06 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
