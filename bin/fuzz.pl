@@ -633,7 +633,7 @@ sub check_for_bad_ace_trace()
 # resolve_initial_references
 sub check_for_missing_rir_env ()
 {
-    print "Running resolve_inital_references() check\n";
+    print "Running resolve_initial_references() check\n";
     foreach $file (@files_cpp, @files_inl) {
         my $line = 0;
         if (open (FILE, $file)) {
