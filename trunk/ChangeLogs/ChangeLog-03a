@@ -1,90 +1,95 @@
+Mon May 15 15:49:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/run_all_list.pm:
+          Add Connection_Purging to the list.
+
 Mon May 15 15:23:27 2000  Ossama Othman  <ossama@uci.edu>
 
-	The following are primarily consistency related updates.
+        The following are primarily consistency related updates.
 
-	* ace/LSOCK.i (ACE_LSOCK):
+        * ace/LSOCK.i (ACE_LSOCK):
 
-	  Initialize "aux_handle_" member to ACE_INVALID_HANDLE in the
-	  base member initializer list.
+          Initialize "aux_handle_" member to ACE_INVALID_HANDLE in the
+          base member initializer list.
 
-	* ace/Thread_Manager.i (ACE_At_Thread_Exit):
+        * ace/Thread_Manager.i (ACE_At_Thread_Exit):
 
-	  Initialize "next_" member to 0 in the base member initializer
-	  list.
-	  
-	  (ACE_Thread_Descriptor_Base):
+          Initialize "next_" member to 0 in the base member initializer
+          list.
 
-	  Initialize "next_" and "prev_" members to 0 in the base member
-	  initializer list.
+          (ACE_Thread_Descriptor_Base):
+
+          Initialize "next_" and "prev_" members to 0 in the base member
+          initializer list.
 
 Mon May 15 15:14:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/CDR_Stream.h:
-	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp:
-	  Cristian Ferretti <cristian_ferretti@yahoo.com> has contributed
-	  a number of optimizations to the byte swapping code for CDR
-	  streams.  The optimizations include loop unrolling for 32-bit
-	  and 64-bit architectures, use of especial assembly instructions
-	  for x86-based platforms and use of bit operations (instead of
-	  memory manipulation) for other processors.
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+        * ace/CDR_Stream.cpp:
+          Cristian Ferretti <cristian_ferretti@yahoo.com> has contributed
+          a number of optimizations to the byte swapping code for CDR
+          streams.  The optimizations include loop unrolling for 32-bit
+          and 64-bit architectures, use of especial assembly instructions
+          for x86-based platforms and use of bit operations (instead of
+          memory manipulation) for other processors.
 
-	* tests/Makefile:
-	* tests/Makefile.am:
-	* tests/Makefile.bor:
-	* tests/run_tests.bat:
-	* tests/run_tests.lst:
-	* tests/run_tests.vxworks:
-	* tests/tests.dsw:
-	* tests/CDR_Array_Test.cpp:
-	* tests/CDR_Array_Test.dsp:
-	* tests/CDR_Array_Test.icc:
-	  New test to verify that the array operations in the CDR classes
-	  actually work, this is specially critical because the new
-	  versions unroll loop, perform assembly instructions that work
-	  best when the alignment is right, etc.
+        * tests/Makefile:
+        * tests/Makefile.am:
+        * tests/Makefile.bor:
+        * tests/run_tests.bat:
+        * tests/run_tests.lst:
+        * tests/run_tests.vxworks:
+        * tests/tests.dsw:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_Array_Test.dsp:
+        * tests/CDR_Array_Test.icc:
+          New test to verify that the array operations in the CDR classes
+          actually work, this is specially critical because the new
+          versions unroll loop, perform assembly instructions that work
+          best when the alignment is right, etc.
 
-	* tests/CDR_File_Test.cpp:
-	  The test was extended.  Now we can save a file in one platform
-	  and load it (manually) in another platform, to verify that byte
-	  swapping actually works.
-	  Both tests were contributed by Cristian Ferretti
-	  <cristian_ferretti@yahoo.com>, which is good because all this
-	  voodoo programming needs testing.
-	  The changes were tested using PA-RISC, Alphas, Sparcs and
-	  finally Pentiums in various forms and using several compilers.
+        * tests/CDR_File_Test.cpp:
+          The test was extended.  Now we can save a file in one platform
+          and load it (manually) in another platform, to verify that byte
+          swapping actually works.
+          Both tests were contributed by Cristian Ferretti
+          <cristian_ferretti@yahoo.com>, which is good because all this
+          voodoo programming needs testing.
+          The changes were tested using PA-RISC, Alphas, Sparcs and
+          finally Pentiums in various forms and using several compilers.
 
 Mon May 15 14:01:23 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  QNX Neutrino has the <sys/resource.h> header, so include it.
+          QNX Neutrino has the <sys/resource.h> header, so include it.
 
-	* ace/config-qnx-neutrino.h:
+        * ace/config-qnx-neutrino.h:
 
-	  QNX supports the {get,set}rlimit() functions.  ACE's autoconf
-	  support detected this support.
+          QNX supports the {get,set}rlimit() functions.  ACE's autoconf
+          support detected this support.
 
 Mon May 15 12:32:05 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Log_Record.cpp (print):
+        * ace/Log_Record.cpp (print):
 
-	  Added a "%s" format specifier to the fprintf() call.  This was
-	  needed to allow strings containing percent signs '%' to be
-	  printed.  This problem was inadvertently introduced during some
-	  UNICODE related updates.  The "%s" format specifier can handle
-	  UNICODE strings.  Thanks to Edan Ayal <edana@bandwiz.com> for
-	  reporting this problem and providing a fix.
+          Added a "%s" format specifier to the fprintf() call.  This was
+          needed to allow strings containing percent signs '%' to be
+          printed.  This problem was inadvertently introduced during some
+          UNICODE related updates.  The "%s" format specifier can handle
+          UNICODE strings.  Thanks to Edan Ayal <edana@bandwiz.com> for
+          reporting this problem and providing a fix.
 
 Mon May 15 10:25:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/create_vt_dsps.pl:
 
           I got tired of creating the version tests for the ACE tests,
-          so why not script it?  
+          so why not script it?
 
         * tests/version_tests/ACE_Init_Test.dsp: (removed)
-          
+
           This test is tricky.  It uses MFC, which gets complicated when
           also using the static version of ACE.  Since this is the only
           test that does this, I just disabled it in the create_vt_dsps.pl.
