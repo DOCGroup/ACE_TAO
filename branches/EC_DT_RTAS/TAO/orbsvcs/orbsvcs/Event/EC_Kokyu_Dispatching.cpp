@@ -163,6 +163,14 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
 
+  //set event deadlines!
+  for(CORBA::ULong i=0; i<event.length(); ++i)
+    {
+      ORBSVCS_Time::Time_Value_to_TimeT(event[i].header.deadline,
+                                        qosd.deadline_);
+      ACE_DEBUG((LM_DEBUG,"EC_Kokyu_Dispatching (%P|%t) push_nocopy() Event[%d] deadline is %i\n",i,event[i].header.deadline));
+    }
+
   ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor period: %isec %iusec\n",
              qosd.period_.sec(),
              qosd.period_.usec()));
