@@ -14,7 +14,15 @@ endif # ! TAO_ROOT
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
-BIN = client
+BIN_UNCHECKED = client
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+BIN = $(BIN_UNCHECKED)
+endif # corba_messaging
 
 SRC = $(addsuffix .cpp, $(BIN)) $(IDL_SRC)
 
@@ -26,9 +34,6 @@ TAO_IDLFLAGS += -Ge 1
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

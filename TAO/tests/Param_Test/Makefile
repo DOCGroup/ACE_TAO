@@ -88,7 +88,9 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(minimum_corba),0)
+ifeq ($(corba_messaging),1)
 BIN=$(BIN_UNCHECKED)
+endif # corba_messaging
 endif # minimum_corba
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
