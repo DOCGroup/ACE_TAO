@@ -1,3 +1,8 @@
+Sat Jan  9 14:53:15 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp:
+	  dereferenced uses of _var with .in ()
+
 Fri Jan  8 18:06:11 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent:
