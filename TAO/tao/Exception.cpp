@@ -612,11 +612,17 @@ TAO_DONT_CATCH::TAO_DONT_CATCH ()
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Node<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>;
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Node<CORBA::TypeCode_ptr>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
