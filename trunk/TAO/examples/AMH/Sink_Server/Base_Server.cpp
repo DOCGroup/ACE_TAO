@@ -140,8 +140,6 @@ Base_Server::start_orb_and_poa (void)
       return -1;
     }
   ACE_ENDTRY;
-
-  return 0;
 }
 
 void
