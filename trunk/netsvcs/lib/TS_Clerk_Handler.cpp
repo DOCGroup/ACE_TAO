@@ -809,6 +809,7 @@ template class ACE_Guard<ACE_RW_Mutex>;
 template class ACE_Map_Iterator<int, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_RW_Mutex>;
 template class ACE_Map_Manager<int, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_RW_Mutex>;
 template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Set_Node<ACE_TS_Clerk_Handler *>;
 template class ACE_Svc_Tuple<ACE_TS_Clerk_Handler>;
 template class ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
 template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
