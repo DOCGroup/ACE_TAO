@@ -118,6 +118,10 @@ namespace Kokyu
     int schedule (Guid_t guid,
                   const DSRT_QoSDescriptor&);
 
+    ///Release a thread on its proper release time.
+    int release_guard (Guid_t guid,
+                       const DSRT_QoSDescriptor&);
+
     /// Update the schedule for a thread. This could alter the current
     /// schedule.
     int update_schedule (Guid_t guid,
@@ -146,6 +150,9 @@ namespace Kokyu
     virtual int init_i (const DSRT_ConfigInfo&)=0;
     virtual int schedule_i (Guid_t guid,
                     const DSRT_QoSDescriptor&)=0;
+    virtual int release_guard_i (Guid_t guid,
+                    const DSRT_QoSDescriptor&)=0;
+
     virtual int update_schedule_i (Guid_t guid,
                            const DSRT_QoSDescriptor&)=0;
     virtual int update_schedule_i (Guid_t guid, Block_Flag_t flag)=0;

@@ -256,6 +256,14 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
+release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
+{
+
+ return this->schedule (guid, qos);
+}
+
+template <class DSRT_Scheduler_Traits>
+int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
 {
   return this->schedule (guid, qos);

@@ -21,6 +21,7 @@
 #include "Kokyu_dsrt.h"
 #include "DSRT_Sched_Queue_T.h"
 #include "DSRT_Dispatcher_Impl_T.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 namespace Kokyu
 {
@@ -44,6 +45,9 @@ namespace Kokyu
     /// Schedule a thread dynamically based on the qos info supplied.
     int schedule_i (Guid_t, const DSRT_QoSDescriptor&);
 
+    ///block a thread on the release_cond_, until the proper release time
+    int release_guard_i (Guid_t, const DSRT_QoSDescriptor&);
+
     /// Update the schedule for a thread. This could alter the current
     /// schedule.
     int update_schedule_i (Guid_t, const DSRT_QoSDescriptor&);
@@ -61,11 +65,33 @@ namespace Kokyu
     int shutdown_i ();
 
   private:
+    class Guid_Hash
+    {
+    public:
+      /// Returns hash value.
+      u_long operator () (const typename DSRT_Scheduler_Traits::Guid_t &id)
+      {
+        typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
+        return guid_hash(id);
+      }
+    };
+
+//Maybe I need to change Guid_t to a task ID.
+    typedef ACE_Hash_Map_Manager_Ex<int,
+                                    TimeBase::TimeT,
+                                    Guid_Hash,
+                                    ACE_Equal_To<int>,
+                                    ACE_SYNCH_NULL_MUTEX>
+    Release_Time_Map;
+
     typedef ACE_SYNCH_MUTEX cond_lock_t;
     typedef ACE_SYNCH_CONDITION cond_t;
 
     cond_lock_t run_cond_lock_;
     cond_t run_cond_;
+    cond_lock_t release_cond_lock_;
+    cond_t release_cond_;
+    Release_Time_Map release_map_;
   };
 
 }
