@@ -1,3 +1,13 @@
+Mon Oct 13 00:10:00 1997    <irfan@TWOSTEP>
+
+	* tests/Atomic_Op_Test.cpp (main): Changed "foo == 5L" to
+ 	  "foo.operator== (5L)" because the former was breaking some
+ 	  compilers.
+
+	* ace/Connector.h (open): Removed the defaults arguments since
+ 	  some compilers complain about the two open()s been
+ 	  indistinguishable.
+
 Sun Oct 12 23:51:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/{Synch_T,Atomic_Op}: All the relational operators should
