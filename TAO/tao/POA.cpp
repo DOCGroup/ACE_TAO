@@ -2439,7 +2439,8 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Try to find the last separator
   int last_token_position = 0;
   if (system_id)
-    // The minus one is because of zero indexing
+    // The minus one is because we want <last_token_position> to point
+    // to the separator
     last_token_position = key.length () - (2 * sizeof (CORBA::ULong)) - 1;
   else
     last_token_position = this->rfind (key, TAO_POA::name_separator ());

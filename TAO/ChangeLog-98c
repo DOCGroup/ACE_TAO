@@ -1,3 +1,13 @@
+Sun Sep 27 23:00:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA: Changed the creation time to have a binary encoding
+ 	  rather than the hex encoding.  Binary is better than the hex
+ 	  representation because it takes half the space to store.
+
+	  Also, changed the Object Id generation and parsing code to not
+ 	  use MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX but use
+ 	  (2 * sizeof (CORBA::ULong)).
+
 Sun Sep 27 22:53:08 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* examples/POA/Explicit_Activation/run_test.pl: Changed
