@@ -1,3 +1,10 @@
+Tue Sep 18 13:57:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+        * */Makefile.*:
+          Updated dependencies, some of the paths were absolute leading to
+          ambiguities in parallel builds.
+
 Tue Sep 18 12:18:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/footprint_stats.sh:
