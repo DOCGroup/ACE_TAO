@@ -68,13 +68,22 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_Addr &mcast_addr,
         return -1;
 #endif /* SO_REUSEPORT */
 
-      // Create an address to bind the socket to.
-      ACE_INET_Addr local;
+#if 0
+      // @@ Revert this code if the following call to shared_open() fails...
+       // Create an address to bind the socket to.
+       ACE_INET_Addr local;
+ 
+       if (local.set (this->mcast_addr_.get_port_number ()) == -1)
+         return -1;
+       else if (ACE_SOCK_Dgram::shared_open (local,
+                                             protocol_family) == -1)
+         return -1;
+      }
+#endif /* 0 */
 
-      if (local.set (this->mcast_addr_.get_port_number ()) == -1)
-        return -1;
-      else if (ACE_SOCK_Dgram::shared_open (local,
-                                            protocol_family) == -1)
+      // Create an address to bind the socket to.
+      if (ACE_SOCK_Dgram::shared_open (this->mcast_addr_,
+                                       protocol_family) == -1)
         return -1;
     }
 
