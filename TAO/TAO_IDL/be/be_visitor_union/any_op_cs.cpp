@@ -100,7 +100,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
       << be_nl
       << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "}" << be_nl
+      << "return 0;" << be_uidt_nl
       << "}\n\n";
 
 
