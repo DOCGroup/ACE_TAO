@@ -5,12 +5,26 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
+#       Include macros
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+#----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
+
+# finding the moc compiler
+ifneq ($(QTDIR),)
+  MOC = ${QTDIR}/bin/moc
+else
+  MOC = moc
+endif
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
@@ -19,7 +33,7 @@ BIN = client server
 ifneq ($(qt_reactor),)
 CLNT_MOC = client_moc
 TEST_MOC = test_i_moc
-CLNT_MOC _OBJ = client_moc.o
+CLNT_MOC_OBJ = client_moc.o
 TEST_MOC_OBJ = test_i_moc.o
 endif #qt_reactor
 
@@ -35,13 +49,10 @@ SERVER_OBJS = server.o test_i.o $(TEST_MOC_OBJ) $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 
-
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#       Include targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -58,10 +69,10 @@ include $(TAO_ROOT)/taoconfig.mk
 
 ifneq ($(qt_reactor),)
 test_i_moc.cpp: test_i.h
-		moc test_i.h > test_i_moc.cpp
+		$(MOC) test_i.h > test_i_moc.cpp
 
 client_moc.cpp: client.h
-		moc client.h > client_moc.cpp
+		$(MOC) client.h > client_moc.cpp
 endif #qt_reactor
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
@@ -70,13 +81,11 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
 
-
 realclean: clean
 	-$(RM) testC.* testS.* testS_T.* *moc.cpp
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \

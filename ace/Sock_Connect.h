@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Sock_Connect.h
@@ -9,12 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SOCK_CONNECT_H
 #define ACE_SOCK_CONNECT_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -80,6 +80,10 @@ ifeq ($(threads),1)
   endif
 endif 
 
+PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
+PLATFORM_QT_LIBS=-lqt
+PLATFORM_QT_LDFLAGS=-L$(QTDIR)/lib
+
 OCFLAGS += -O3
 PIC     = -fPIC
 AR      = ar

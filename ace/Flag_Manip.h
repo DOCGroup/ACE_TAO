@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Flag_Manip.h
@@ -11,12 +10,11 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_FLAG_MANIP_H
 #define ACE_FLAG_MANIP_H
 #include "ace/pre.h"
 
-#include "OS.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

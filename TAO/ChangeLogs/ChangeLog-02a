@@ -124,7 +124,6 @@ Wed May 23 11:45:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Merle <Philippe.Merle@lifl.fr> for simultaneously discovering
           this bug, and to Carlos for seeing the fix right away.
 
-
 Wed May 23 11:37:02 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * docs/Options.html:
@@ -180,7 +179,9 @@ Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
         * orbsvcs/orbsvcs/AV/Transport.h:
         * orbsvcs/orbsvcs/AV/Transport.cpp:
 
-          Provided a mechanism to modify QoS when there is a change in QoS. Also added the QoS negotiator mechanism as a means of notifying change in QoS.
+          Provided a mechanism to modify QoS when there is a change in
+ 	  QoS. Also added the QoS negotiator mechanism as a means of
+ 	  notifying change in QoS.
 
         * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
         * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
@@ -189,15 +190,33 @@ Wed May 23 8:23:20 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 Tue May 22 15:34:20 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-        * tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
-        * tao/tests/Big_Oneways/Session.{h,cpp}:
-        * tao/tests/AMI_Buffering/test_i.{h,cpp}:
-        * tao/examples/Logging/Logger_i.{h,cpp}:
-        * tao/examples/Buffered_Oneways/test_i.{h,cpp}:
-        * tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
+	* tao/tests/Oneway_Buffering/Oneway_Buffering_Admin.{h,cpp}:
+	* tao/tests/Big_Oneways/Session.{h,cpp}:
+	* tao/tests/AMI_Buffering/test_i.{h,cpp}:
+	* tao/examples/Logging/Logger_i.{h,cpp}:
+	* tao/examples/Buffered_Oneways/test_i.{h,cpp}:
+	* tao/examples/Buffered_AMI/AMI_Buffering_Admin.{h,cpp}:
+	  Fixed compile errors in Forte update 1.
 
-          Fixed compile errors in Forte update 1.
+Tue May 22 21:21:10 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: When the IFR and Name
+	  Service initialize the multicast server they check if the
+ 	  ORBMulticastDiscoveryEndpoint option was specified and use that
+ 	  address instead of the default one, however, the Trading Service
+ 	  did not. It just uses the hard coded default no matter
+ 	  what. This meant we can't programmatically change the multicast
+ 	  endpoint.  The fix was to add the little bit of code in the Name
+ 	  Service and IFR implementation to
+ 	  TAO_Trading_Loader::init_multicast_server() that checks for the
+ 	  multicast endpoint.  Thanks to Mike Pyle
+ 	  <mike.pyle@burning-glass.com> for this fix.	
+  
+Mon May 21 18:43:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/QtTests: Fixed the Makefile so that it handles the
+	  PLATFORM_QT_* flags correctly.  Thanks to Hans Utz
+ 	  <hans.utz@informatik.uni-ulm.de> for reporting this.
 
 Mon May 21 23:22:20 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -297,14 +316,15 @@ Sat May 19 17:00:00 2001  Ossama Othman  <ossama@uci.edu>
 
 Sat May 19 17:17:32 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
-        * docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
-        * orbsvcs/Notify_Service/README,
-        * tests/Param_Test/anyop.cpp (main),
-        * tests/Param_Test/manipulation.cpp: Fixed all uses of
-          "iioploc://" with "corbaloc:iiop:".  Thanks to Craig Rodrigues
-          for suggesting this.
-
+	* docs/tutorials/Quoter/Simple/Impl-Repo/index.html,
+	* docs/pluggable_protocols/index.html (TAO_IIOP_Profile),
+	* orbsvcs/Notify_Service/README,
+	* tests/Param_Test/anyop.cpp (main),
+  	* tests/Param_Test/manipulation.cpp: Fixed all uses of
+	  "iioploc://" with "corbaloc:iiop:" to conform to the CORBA INS
+ 	  standard consistently.  Thanks to Craig Rodrigues for suggesting
+ 	  this.
+  
 Sat May 19 11:02:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: Fixed a problem
