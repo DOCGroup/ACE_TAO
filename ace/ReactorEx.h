@@ -78,11 +78,11 @@ public:
 
   // Check the <handle> to make sure it's a valid ACE_HANDLE that
   // within the range of legal handles (i.e., >= 0 && < max_size_).
-  int invalid_handle (ACE_HANDLE handle);
+  int invalid_handle (ACE_HANDLE handle) const;
 
   // Check the <index> to make sure it's within the range of currently
   // registered HANDLEs (i.e., >= 0 && < max_handlep1_).
-  int handle_in_range (size_t handle);
+  int handle_in_range (size_t handle) const;
 
   // = Accessors.
   size_t max_handlep1 (void) const;
