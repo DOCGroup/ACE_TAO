@@ -196,13 +196,21 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // passed to the reactor on ORB destruction.
       this->is_registered (0);
 
-      this->peer ().remove ();
+      // Close the handle..
+      if (this->get_handle () != ACE_INVALID_HANDLE)
+        {
+          // Send the buffered messages first
+          this->transport_.send_buffered_messages ();
+
+          this->peer ().close ();
+
+          // Purge the entry too
+          this->mark_invalid ();
+        }
 
       // Decrement the reference count
       this->decr_ref_count ();
 
-      // Purge the entry
-      this->purge_entry ();
     }
 
   return 0;

@@ -65,6 +65,9 @@ TAO_SSLIOP_Transport::close_connection (void)
 {
   // First close the handle
   this->connection_handler_->handle_close ();
+
+  // Purge the entry
+  this->connection_handler_->purge_entry ();
 }
 
 int

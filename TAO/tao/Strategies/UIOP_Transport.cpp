@@ -78,6 +78,9 @@ TAO_UIOP_Transport::close_connection (void)
 {
   // Now close the handler
   this->connection_handler_->handle_close ();
+
+  // Purge the entry
+  this->connection_handler_->purge_entry ();
 }
 
 int

@@ -72,8 +72,11 @@ TAO_IIOP_Transport::event_handler (void)
 void
 TAO_IIOP_Transport::close_connection (void)
 {
-  // Cal handle close
+  // Call handle close
   this->connection_handler_->handle_close ();
+
+  // Purge the entry
+  this->connection_handler_->purge_entry ();
 }
 
 int
