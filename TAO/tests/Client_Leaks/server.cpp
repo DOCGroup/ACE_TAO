@@ -92,7 +92,7 @@ main (int argc, char *argv[])
       Server_Task server_task (orb.in (),
                                ACE_Thread_Manager::instance ());
 
-      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 8, 1) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }

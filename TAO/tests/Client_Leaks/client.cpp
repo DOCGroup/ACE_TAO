@@ -88,6 +88,13 @@ main (int argc, char *argv[])
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // Only pass the test if 90% of the calls worked
+      if (client_task.successful_calls () < 0.9 * iterations * threads)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: no calls were successful\n"));
+        }
     }
   ACE_CATCHANY
     {
