@@ -352,7 +352,7 @@ Brad Walton <brad.walton@transnexus.com>
 Paul Motuzenko <p_motuzenko@hotmail.com>
 Kurt Sussman <kls@best.com>
 Rob Thornton <ret1@cec.wustl.edu>
-Chanaka Liyanaarachchi <chanakal@ittc.ukans.edu>
+Chanaka Liyanaarachchi <chanaka@ociweb.com>
 Saneyasu <sane@sail.t.u-tokyo.ac.jp>
 Steve Kay <slk1@icore.ih.lucent.com>
 Greg White <gwhite@northlink.com>
@@ -914,6 +914,7 @@ David O'Farrell <eeidofl@eei.ericsson.se>
 Bob Bouterse <BBouterse@escient.com>
 Malcolm Spence <spence_m@ociweb.com>
 Dong-Yueh Liu <dyliu@ms1.hinet.net>
+Craig Ball <Craig.Ball@megasys.com> 
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

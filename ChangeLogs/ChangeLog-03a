@@ -1,3 +1,13 @@
+Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com> 
+
+	* tests/Makefile.bor: Added new test Process_Manager_Test.
+  
+        * include/makeinclude/compiler.bor, make_flags.bor: Added support
+	  for BCB's codeguard memory checking tool.
+
+        * include/makeinclude/outputdir.bor: Allow a different directory
+	  creation tool to be substituted for "mkdir" on Win9x.
+	
 Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
 
         * ace/Singleton.h: added comment to ACE_Unmanaged_Singleton

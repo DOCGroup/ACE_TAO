@@ -36,7 +36,7 @@ class ACE_Export ACE_Token
   // = TITLE
   //    Class that acquires, renews, and releases a synchronization
   //    token that is serviced in strict FIFO ordering and that also
-  //    supports readers/writer semantics.
+  //    supports (1) recursion and (2) readers/writer semantics.
   //
   // = DESCRIPTION
   //    This class is a more general-purpose synchronization mechanism
