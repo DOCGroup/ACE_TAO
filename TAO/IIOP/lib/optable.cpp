@@ -1,5 +1,9 @@
 #include "optable.h"
 
+TAO_Operation_Table::~TAO_Operation_Table (void)
+{
+}
+
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (CORBA_ULong size)
 {
   if (size > 0)
