@@ -1,3 +1,7 @@
+Sat Jan 25 18:55:47 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.h: Fixed a compilation error.
+
 Sat Jan 25 18:50:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.cpp (close_i): Avoid totally
