@@ -1,3 +1,15 @@
+Fri Sep  4 17:51:17 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/Proactor.cpp:
+	* ace/Asynch_Acceptor.cpp:
+ 	* ace/Asynch_Acceptor.h:
+ 	* ace/Asynch_IO.cpp:
+	* examples/Reactor/Proactor/test_proactor.cpp:
+		First round of changes for ACE_Asynch_Accept. Makes use of
+	separate thread  for each accept call, each thread blocking on the
+	ACE_OS::accept. Thanks to Irfan, a better implementation using
+	TP_Reactor is currently being done. 
+
 Fri Sep  4 16:45:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Removed all traces of ACE_HAS_MT_SAFE_SOCKETS -- this was a
