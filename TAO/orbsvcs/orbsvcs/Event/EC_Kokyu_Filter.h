@@ -24,6 +24,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "rtkokyu_event_export.h"
+#include "ace/SString.h"
 
 /**
  * @class TAO_EC_Kokyu_Filter
