@@ -1,0 +1,105 @@
+// -*- C++ -*- 
+
+// $Id$
+
+interface Video_Control
+{
+
+  const long VIDEO_PATTERN_SIZE = 100;
+  struct INITvideoPara
+  {
+    long sn;
+    long version;
+    long nameLength;    /* the length of the video file */
+    /* this structure is followed by a zero-terminated file name as follows:
+       char videoFile[];
+    */
+  };
+
+  struct INITvideoReply
+  {
+    long live;
+    long format;
+  
+    long totalHeaders;
+    long totalFrames;
+    long totalGroups;
+    long horizontalSize;
+    long verticalSize;
+    long pelAspectRatio;
+    long pictureRate1000;
+    long vbvBufferSize;
+    long sizeIFrame;
+    long sizePFrame;
+    long sizeBFrame;
+    long sizeSystemHeader;
+    long sizeGop;
+    long averageFrameSize;
+    long firstGopFrames;
+    long patternSize;
+    sequence <char> pattern;
+  };
+
+  /* CmdPOSITION, CmdPOSITIONrelease: followed by following parameter */
+  struct POSITIONpara
+  {
+    long sn;
+    long nextGroup;
+  };
+
+  /* CmdSTEP: followed by following parameter */
+  struct STEPpara
+  {
+    long sn;
+    long nextFrame;
+  };
+
+  /* CmdFF, CmdFB: followed by following parameter */
+  struct FFpara
+  {
+    long sn;
+    long nextGroup;
+    long usecPerFrame;
+    long framesPerSecond;
+    long VStimeAdvance;
+  };
+
+  /*CmdPLAY: followed by following parameter */
+  struct PLAYpara
+  {
+    long sn;
+    long collectStat;
+    long nextFrame;
+    long usecPerFrame;
+    long framesPerSecond;
+    long frameRateLimit1000;
+    long VStimeAdvance;
+    long sendPatternGops;
+    sequence <char> sendPattern;
+  };
+
+  /* CmdSPEED: parameter */
+  struct SPEEDpara
+  {
+    long sn;
+    long usecPerFrame;
+    long framesPerSecond;
+    long frameRateLimit1000;
+    long sendPatternGops;
+    sequence <char> sendPattern;
+  };
+
+
+  boolean init_video (in INITvideoPara para);
+  boolean stat_stream (out char ch, out long size);
+  boolean close ();
+  boolean stat_sent ();
+  boolean fast_forward (in FFpara para);
+  boolean fast_backward (in FFpara para);
+  boolean step (in STEPpara para);
+  boolean play (in PLAYpara para, out long vts);
+  boolean position (in POSITIONpara para);
+  boolean speed (in SPEEDpara para);
+  boolean stop (in long cmdsn);
+};
+

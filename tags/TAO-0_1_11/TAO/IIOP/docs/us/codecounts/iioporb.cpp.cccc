@@ -1,0 +1,35 @@
+
+CCCC - a code counter for C and C++
+===================================
+
+A program to analyse C and C++ source code and report on
+some simple software metrics
+Version  1.00 
+Copyright Tim Littlefair, 1995
+
+The development of this program was heavily dependent on
+the Purdue Compiler Construction Tool Set (PCCTS) 
+by Terence Parr, Will Cohen, Hank Dietz, Russel Quoung
+and others.
+
+This software is provided with NO WARRANTY
+
+
+Scope: ../../../lib/iioporb.cpp
+Canonical name                       From   To   COM   LOC   MVG   L/C   M/C
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+static const char ior_prefix[]=";    1    27       9     1     0   0.1   0.0
+static const char iiop_prefix[]=";   28   28       0     0     0            
+static const char xchars[]=";        29   29       0     0     0            
+static inline char nibble2hex(unsig  32   39       3     4     1   1.3   0.3
+static inline unsigned char hex2byt  41   51       0    10     5 ! *** ! ***
+CORBA_String IIOP_ORB::object_to_st  54   174     42    64 ?  17   1.5   0.4
+static CORBA_Object_ptr ior_string_  177  231     14    33 ?  10   2.4   0.7
+static CORBA_Object_ptr iiop_string  234  349     34    68 !  22   2.0   0.6
+CORBA_Object_ptr IIOP_ORB::string_t  352  374      6    13     5   2.2   0.8
+DEFINE_GUID(IID_IIOP_ORB,0xa201e4c4  376  382      4     2     0   0.5   0.0
+HRESULT __stdcall IIOP_ORB::QueryIn  385  408      3    16     6   5.3   2.0
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+Summary for scope:                               115   222    66   1.9   0.6
+--------------------                 ---- ---- ----- ----- ----- ----- -----
+
