@@ -19,7 +19,7 @@
 #include "test_config.h"
 #include "DLL_Test.h"
 #include "ace/DLL.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
@@ -86,11 +86,23 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                        dll.error ()),
                       -1);
 
-  auto_ptr<Hello> my_hello (factory ());
+  Hello *my_hello = factory ();
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
   my_hello->say_next ();
+
+  // Allocate and delete a string allocated via new in a different dll.
+  ACE_TCHAR *new_str = my_hello->new_info ();
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Result for new_info(): %s\n"), new_str));
+  ACE::strdelete (new_str);
+
+  // Allocate and free a string allocated via malloc in a different dll.
+  ACE_TCHAR *malloc_str = my_hello->malloc_info ();
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Result for malloc_info(): %s\n"), malloc_str));
+  ACE_OS_Memory::free (malloc_str);
+
+  my_hello->destroy ();
 
 #else
   ACE_ERROR ((LM_INFO,
@@ -100,11 +112,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr <Hello>;
-template class ACE_Auto_Basic_Ptr <Hello>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr <Hello>
-#pragma instantiate ACE_Auto_Basic_Ptr <Hello>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

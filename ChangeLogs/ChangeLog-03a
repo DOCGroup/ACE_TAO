@@ -1,3 +1,18 @@
+Sat Apr 13 15:42:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/DLL_Test.{h,cpp}:
+	* tests/DLL_Test_Impl.{h,cpp}:  Added methods to test the 
+	  the malloc/free and strnew/strdelete methods below.  Also
+	  removed use auto_ptr and added a destroy method to delete
+	  the object within the dll/heap it was allocated.
+
+	* ace/OS_Memory.{inl,cpp}:  Changed malloc(), calloc()
+	  realloc(), and free() to be non-inlined to avoid the heap
+	  problem on Windows.
+
+	* ace/ACE.{h,i,cpp}: Changed strnew() to be non-inlined and 
+	  added strdelete() for the same reason.
+	
 Sat Apr 13 14:33:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.h:

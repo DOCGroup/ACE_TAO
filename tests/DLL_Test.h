@@ -31,8 +31,8 @@ public:
   /**
    * @name Methods invoked by the test
    *
-   * The test invokes two methods, a non-virtual method and a virtual
-   * method implemented in the shared library.
+   * The test invokes four methods, a non-virtual method and a three virtual
+   * methods implemented in the shared library.
    */
   //@{
   void say_hello (void)
@@ -42,7 +42,17 @@ public:
   }
 
   virtual void say_next (void) = 0;
+
+  virtual ACE_TCHAR *new_info (void) = 0;
+
+  virtual ACE_TCHAR *malloc_info (void) = 0;
   //@}
+
+  void destroy (void)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Hello::destroy() \n")));
+    delete this;
+  }
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */
