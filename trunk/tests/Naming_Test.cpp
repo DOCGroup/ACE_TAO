@@ -194,14 +194,14 @@ main (int argc, char *argv[])
 #endif /* ACE_WIN32 && UNICODE */
   if (unicode && name_options->use_registry () == 1)
     {
-      name_options->namespace_dir (__TEXT ("Software\\ACE\\Name Service"));
-      name_options->database (__TEXT ("Version 1"));  
+      name_options->namespace_dir (ACE_TEXT ("Software\\ACE\\Name Service"));
+      name_options->database (ACE_TEXT ("Version 1"));  
     }
   else
     {
       ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
 						ACE_DIRECTORY_SEPARATOR_CHAR));
-      ACE_OS::strcat (temp_file, __TEXT ("XXXXXX"));
+      ACE_OS::strcat (temp_file, ACE_TEXT ("XXXXXX"));
       
       // Set the database name using mktemp to generate a unique file name
       name_options->database (ACE_OS::mktemp (temp_file));
@@ -244,7 +244,7 @@ main (int argc, char *argv[])
   test_unbind (*ns_context); 
   print_time (timer, "Unbinds");
 
-  ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
+  ACE_OS::sprintf (temp_file, ACE_TEXT ("%s%s%s"),
 		   name_options->namespace_dir (),
 		   ACE_DIRECTORY_SEPARATOR_STR,
 		   name_options->database ());

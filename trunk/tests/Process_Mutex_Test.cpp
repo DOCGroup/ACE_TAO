@@ -106,13 +106,13 @@ main (int argc, char *argv[])
 
       ACE_Process_Options options;
       if (release_mutex == 0)
-        options.command_line (__TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              __TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
-                              __TEXT (" -c -n %s -d"), ACE_WIDE_STRING (mutex_name));
+        options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
+                              ACE_TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+                              ACE_TEXT (" -c -n %s -d"), ACE_WIDE_STRING (mutex_name));
       else
-        options.command_line (__TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                              __TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
-                              __TEXT (" -c -n %s"), ACE_WIDE_STRING (mutex_name));
+        options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
+                              ACE_TEXT ("Process_Mutex_Test") ACE_PLATFORM_EXE_SUFFIX
+                              ACE_TEXT (" -c -n %s"), ACE_WIDE_STRING (mutex_name));
 
       // Spawn ACE_MAX_PROCESSES processes that will contend for the
       // lock.

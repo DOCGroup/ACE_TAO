@@ -113,6 +113,7 @@ ACE_HAS_RUSAGE_WHO_ENUM                 Platform has enum instead of
                                         definition, e.g., enum
                                         __rusage_who, for Linux glibc
                                         2.0.
+ACE_HAS_TEXT_MACRO_CONFLICT             Platform also has __TEXT defined.
 ACE_HAS_SEND_TIMEDWAIT
 ACE_HAS_SENDTO_TIMEDWAIT
 ACE_HAS_SENDMSG_TIMEDWAIT

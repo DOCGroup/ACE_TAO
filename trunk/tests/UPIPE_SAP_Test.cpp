@@ -32,7 +32,7 @@ USELIB("..\ace\aced.lib");
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
 
 // Global pattern
-static ACE_UPIPE_Addr addr (__TEXT ("pattern"));
+static ACE_UPIPE_Addr addr (ACE_TEXT ("pattern"));
 
 // connector thread.
 

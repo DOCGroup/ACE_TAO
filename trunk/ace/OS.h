@@ -835,13 +835,17 @@ typedef struct
 #     endif /* ACE_DEFAULT_GLOBALNAME_W */
 #   endif /* ACE_HAS_UNICODE */
 
-#   if !defined (__TEXT)
+#   if !defined (ACE_TEXT)
 #     if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
-#       define __TEXT(STRING) L##STRING
+#       define ACE_TEXT(STRING) L##STRING
 #     else
-#       define __TEXT(STRING) STRING
+#       define ACE_TEXT(STRING) STRING
 #     endif /* UNICODE && ACE_HAS_UNICODE */
-#   endif /* !defined __TEXT */
+#   endif /* !defined ACE_TEXT */
+
+#   if !defined (ACE_HAS_TEXT_MACRO_CONFLICT)
+#     define __TEXT(STRING) ACE_TEXT(STRING)
+#   endif /* ACE_HAS_TEXT_MACRO_CONFLICT */
 
 typedef int ACE_HANDLE;
 typedef ACE_HANDLE ACE_SOCKET;
@@ -2713,7 +2717,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // Used for ACE_MMAP_Memory_Pool
 #   if !defined (ACE_DEFAULT_BACKING_STORE)
-#     define ACE_DEFAULT_BACKING_STORE __TEXT ("C:\\temp\\ace-malloc-XXXXXX")
+#     define ACE_DEFAULT_BACKING_STORE ACE_TEXT ("C:\\temp\\ace-malloc-XXXXXX")
 #   endif /* ACE_DEFAULT_BACKING_STORE */
 
 // Used for logging
@@ -3005,17 +3009,19 @@ typedef ACE_UINT64 ACE_hrtime_t;
 typedef const wchar_t *LPCTSTR;
 typedef wchar_t *LPTSTR;
 typedef wchar_t TCHAR;
-#     if !defined (__TEXT)
-#         define __TEXT(STRING) L##STRING
-#     endif /* __TEXT */
+#     if !defined (ACE_TEXT)
+#         define ACE_TEXT(STRING) L##STRING
+#     endif /* ACE_TEXT */
 #   else
 typedef const char *LPCTSTR;
 typedef char *LPTSTR;
 typedef char TCHAR;
-#     if !defined (__TEXT)
-#         define __TEXT(STRING) STRING
-#     endif /* __TEXT */
+#     if !defined (ACE_TEXT)
+#         define ACE_TEXT(STRING) STRING
+#     endif /* ACE_TEXT */
 #   endif /* ACE_HAS_UNICODE && UNICODE */
+
+#   define __TEXT(STRING) ACE_TEXT(STRING)
 
 #   if defined (m88k)
 #     define RUSAGE_SELF 1
@@ -6200,7 +6206,7 @@ private:
 # if defined ACE_HAS_VERBOSE_NOTSUP
   // Print a console message with the file and line number of the
   // unsupported function.
-#   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, __TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
+#   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
 # else /* ! ACE_HAS_VERBOSE_NOTSUP */
 #   define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
 # endif /* ! ACE_HAS_VERBOSE_NOTSUP */

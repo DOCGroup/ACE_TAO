@@ -1,3 +1,16 @@
+Sat Oct 24 15:21:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_TEXT): Changed the macro __TEXT to ACE_TEXT to
+	  avoid conflicting with OS/390.  __TEXT is still available for
+	  backward compatibility unless ACE_HAS_TEXT_MACRO_CONFLICT is
+	  defined.  However, using ACE_TEXT is prefered for obvious
+	  reason.  Thanks to Paul K. Fisher <pfisher@plexware.com> for
+	  reporting this.
+
+	* ace/README: Added documentation for ACE_HAS_TEXT_MACRO_CONFLICT.
+
+	* *.cpp: Replaced a bunch of __TEXT to ACE_TEXT.
+
 Sat Oct 24 08:34:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Updated the fstat() and stat() calls to work properly
@@ -33,7 +46,7 @@ Sat Oct 24 02:13:11 1998  Detlef Backer <Detlef.Becker@med.siemens.de>
 	* ace/Thread_Manager.cpp (spawn_i): In
 	  ACE_Thread_Manager::spawn_i() I added the initialization of
 	  selector and handler at the creation time of
-	  ACE_Thread_Adapter. 
+	  ACE_Thread_Adapter.
 
 Fri Oct 23 21:11:03 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
@@ -70,7 +83,7 @@ Thu Oct 22 19:48:20 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
         Since Windows just *pretends* to have mixed-case names the cpp
 	files conflict with client.cpp and server.cpp.  I renamed these
 	files to:
-	
+
         * docs/tutorials/015/Client_i.h
         * docs/tutorials/015/Client_i.cpp
         * docs/tutorials/015/Server_i.h

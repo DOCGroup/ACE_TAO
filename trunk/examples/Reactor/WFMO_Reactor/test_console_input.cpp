@@ -53,7 +53,7 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::read"), -1);
     }
 
-  if (ACE_OS::strcmp (__TEXT("quit\r\n"), buffer) == 0)
+  if (ACE_OS::strcmp (ACE_TEXT("quit\r\n"), buffer) == 0)
     this->reactor ()->close ();
 
   ACE_DEBUG ((LM_DEBUG, "User input: %s", buffer));

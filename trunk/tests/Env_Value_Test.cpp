@@ -48,13 +48,13 @@ main (int argc, ASYS_TCHAR* [], ASYS_TCHAR*envp[])
       status = options.setenv (envp);
       ACE_ASSERT (status == 0);
 
-      options.command_line (__TEXT ("Env_Value_Test run_as_test"));
+      options.command_line (ACE_TEXT ("Env_Value_Test run_as_test"));
 
-      status = options.setenv(__TEXT ("TEST_VALUE_POSITIVE"), __TEXT ("%s"),
-                              __TEXT ("10.2"));
+      status = options.setenv(ACE_TEXT ("TEST_VALUE_POSITIVE"), ACE_TEXT ("%s"),
+                              ACE_TEXT ("10.2"));
       ACE_ASSERT (status == 0);
-      status = options.setenv(__TEXT ("TEST_VALUE_NEGATIVE"), __TEXT ("%s"),
-                              __TEXT ("-10.2"));
+      status = options.setenv(ACE_TEXT ("TEST_VALUE_NEGATIVE"), ACE_TEXT ("%s"),
+                              ACE_TEXT ("-10.2"));
       ACE_ASSERT (status == 0);
 
       ACE_Process p;

@@ -149,8 +149,8 @@ main (int, ASYS_TCHAR *[])
 
   // Create another temporary file that would hold the output of
   // reversing the first temporary file
-  ACE_OS::sprintf (temp_file_name, __TEXT ("%s%s"),
-                   ACE_TEMP_FILE_NAME, __TEXT ("2"));
+  ACE_OS::sprintf (temp_file_name, ACE_TEXT ("%s%s"),
+                   ACE_TEMP_FILE_NAME, ACE_TEXT ("2"));
   if ((temp_file_handle = ACE_OS::open (temp_file_name,
                                         O_RDWR | O_TRUNC | O_CREAT,
                                         0666)) == ACE_INVALID_HANDLE)

@@ -23,8 +23,8 @@
 ACE_RCSID(ReactorEx, test_directory_changes, "$Id$")
 
 static int stop_test = 0;
-static LPCTSTR directory = __TEXT (".");
-static LPCTSTR temp_file = __TEXT ("foo");
+static LPCTSTR directory = ACE_TEXT (".");
+static LPCTSTR temp_file = ACE_TEXT ("foo");
 
 class Event_Handler : public ACE_Event_Handler
 {

@@ -412,19 +412,19 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   size_t length = 0;
   length = sizeof lock_name_for_local_name_space / sizeof (TCHAR);
   ACE_OS::strncpy (lock_name_for_local_name_space, 
-		   __TEXT ("name_space_"),
+		   ACE_TEXT ("name_space_"),
 		   length);
   ACE_OS::strncat (lock_name_for_local_name_space, 
 		   postfix,
-		   length - ACE_OS::strlen (__TEXT ("name_space_")));
+		   length - ACE_OS::strlen (ACE_TEXT ("name_space_")));
   
   length = sizeof lock_name_for_backing_store / sizeof (TCHAR);
   ACE_OS::strncpy (lock_name_for_backing_store, 
-		   __TEXT ("backing_store_"),
+		   ACE_TEXT ("backing_store_"),
 		   length);
   ACE_OS::strncat (lock_name_for_backing_store, 
 		   postfix,
-		   length - ACE_OS::strlen (__TEXT ("backing_store_")));
+		   length - ACE_OS::strlen (ACE_TEXT ("backing_store_")));
 
   // Create the allocator with the appropriate options.
   ACE_NEW_RETURN (this->allocator_, 
