@@ -20,7 +20,8 @@ Tue Jul 13 21:43:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           signalled. Otherwise it may be signalled twice, once because it
           received its reply and another time to become the leader; in
           that case the second signal is lost and nobody becomes the
-          leader.
+          leader. Thanks to Marina for helping debug and test this
+	  problem.
 
         * orbsvcs/tests/Simple_Naming/client.cpp:
           Work around IRIX/MIPSPro bug.
