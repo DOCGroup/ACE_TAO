@@ -1,3 +1,10 @@
+Mon Nov 24 15:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/IFR_Service/IFR_Service.dsp:
+	* orbsvcs/orbsvcs/Security.dsp:
+
+	  Set the RTTI options on for these project files. 
+
 Mon Nov 24 14:31:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FTORB_Utils.dsp:
