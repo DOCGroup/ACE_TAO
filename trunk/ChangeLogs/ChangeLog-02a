@@ -1,3 +1,36 @@
+Fri Oct 20 14:13:43 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Sock_Connect.i: 
+	* ace/Sock_Connect.h: 
+	* ace/Sock_Connect.cpp: 
+
+	* ace/Lib_Find.i: 
+	* ace/Lib_Find.h: 
+	* ace/Lib_Find.cpp: 
+
+	* ace/Init_ACE.i: 
+	* ace/Init_ACE.h: 
+	* ace/Init_ACE.cpp: 
+
+	* ace/Handle_Ops.i: 
+	* ace/Handle_Ops.h: 
+	* ace/Handle_Ops.cpp: 
+
+	* ace/Flag_Manip.i: 
+	* ace/Flag_Manip.h: 
+	* ace/Flag_Manip.cpp: 
+	  Renamed the recently added ACE_* files as above to follow 
+	  the naming convention.
+
+	* ace/IPC_SAP.h: 
+	* ace/IO_SAP.h: 
+	* ace/FILE_Connector.cpp: 
+	* ace/FILE_Addr.h: 
+	  Changed the include files to reflect the above change.
+
+	* ace/Makefile: 
+	  Added the new files and updated dependencies.
+	
 Fri Oct 20 11:40:31 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Makefile: 
