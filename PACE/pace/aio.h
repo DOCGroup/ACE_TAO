@@ -16,6 +16,8 @@
 #ifndef PACE_AIO_H_INDIRECT
 #define PACE_AIO_H_INDIRECT
 
+#include "pace/defines.h"
+
 #if defined (PACE_HAS_POSIX)
 # include "pace/posix/aio.h"
 #elif defined (PACE_VXWORKS)
