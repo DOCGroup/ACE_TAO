@@ -1,7 +1,12 @@
+Sun Aug 16 20:57:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (dlerror): Fixed a typo.  Thanks to Ossama Othman
+	  <othman@astrosun.tn.cornell.edu> for reporting this.
+
 Fri Aug 14 18:58:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp	:	Changed <sysconf>'s to
-	ACE_OS::sysconf's. 
+	ACE_OS::sysconf's.
 
 Fri Aug 14 11:41:23 1998  Steve Huston  <shuston@riverace.com>
 
