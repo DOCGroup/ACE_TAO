@@ -563,7 +563,11 @@ be_interface:: gen_var_out_seq_decls (void)
       << "static " << lname << "_ptr tao_duplicate (" 
       << lname << "_ptr);" << be_nl
       << "static void tao_release (" << lname << "_ptr);" << be_nl
-      << "static " << lname << "_ptr tao_nil (void);" << be_uidt_nl
+      << "static " << lname << "_ptr tao_nil (void);" << be_nl
+      << "static CORBA::Boolean tao_marshal (" << be_idt << be_idt_nl
+      << lname << "_ptr," << be_nl
+      << "TAO_OutputCDR &" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "};";
 
   *os << be_nl << be_nl

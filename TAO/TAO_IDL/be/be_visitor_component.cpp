@@ -37,6 +37,7 @@
 #include "be_helper.h"
 #include "be_extern.h"
 #include "idl_defines.h"
+#include "nr_extern.h"
 #include "ace/Log_Msg.h"
 
 #include "be_visitor_component/component.cpp"

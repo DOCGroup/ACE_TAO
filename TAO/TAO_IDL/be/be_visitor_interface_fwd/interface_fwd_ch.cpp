@@ -50,12 +50,6 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
   AST_Interface *fd = node->full_definition ();
   be_interface *bfd = be_interface::narrow_from_decl (fd);
 
-  if (!fd->is_defined ())
-    {
-      // To generate extern declarations after all modules are closed.
-      be_global->non_defined_interfaces.enqueue_tail (node);
-    }
-
   if (bfd->var_out_seq_decls_gen () == 0)
     {
       bfd->gen_var_out_seq_decls ();
