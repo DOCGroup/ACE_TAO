@@ -506,15 +506,15 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::expire (const ACE_Time_Value &cur_time)
   for (i = 0; i < this->wheel_size_; i++)
     {
       if (this->wheel_[i]->get_next () != this->wheel_[i]
-          && this->wheel_[i]->get_next ()->get_timer_value () < earliest_time)
+          && this->wheel_[i]->get_next ()->get_timer_value () <= earliest_time)
         {
           earliest = i;
           earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
         }
     }
 
-  // Check to see if there is anything to expire
-  if (this->wheel_[earliest]->get_next ()->get_timer_value () > cur_time)
+  // Check to see if there is nothing to expire
+  if (earliest == this->wheel_size_) 
     return 0;
 
   do
