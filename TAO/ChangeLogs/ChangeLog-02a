@@ -1,26 +1,35 @@
 Sun Mar 18 01:53:42 2001  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile.SSLIOP:
+	* Security/Security_Current.cpp:
+	* Security/Security_Current.h:
+	* Security/Security_Current.inl:
+	* Security/Security_Current_Impl.cpp:
+	* Security/Security_Current_Impl.h:
+	* Security/Security_ORBInitializer.cpp:
+	* Security/Security_ORBInitializer.h:
+
+	  New Security Level 1 implementation.
+
+	* SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* SSLIOP/SSLIOP_Current.cpp:
+	* SSLIOP/SSLIOP_Current.inl:
+	* SSLIOP/SSLIOP_Current_Impl.cpp:
+	* SSLIOP/SSLIOP_Current_Impl.h:
+	* SSLIOP/SSLIOP_Factory.cpp:
+	* SSLIOP/SSLIOP_Factory.h:
+	* SSLIOP/SSLIOP_ORBInitializer.cpp:
+	* SSLIOP/SSLIOP_ORBInitializer.h:
+
+	  Updates to support Security Level 1 (via SSLIOP security
+	  mechanism).
+
 	* Makefile.Security:
-	M SSLIOP/SSLIOP_Connection_Handler.cpp
-	M SSLIOP/SSLIOP_Connector.cpp
-	M SSLIOP/SSLIOP_Current.cpp
-	M SSLIOP/SSLIOP_Current.inl
-	M SSLIOP/SSLIOP_Current_Impl.cpp
-	M SSLIOP/SSLIOP_Current_Impl.h
-	M SSLIOP/SSLIOP_Factory.cpp
-	M SSLIOP/SSLIOP_Factory.h
-	M SSLIOP/SSLIOP_ORBInitializer.cpp
-	M SSLIOP/SSLIOP_ORBInitializer.h
-	M SSLIOP/SSLIOP_Profile.cpp
-	M SSLIOP/SSLIOP_Profile.h
-	A Security/Security_Current.cpp
-	A Security/Security_Current.h
-	A Security/Security_Current.inl
-	A Security/Security_Current_Impl.cpp
-	A Security/Security_Current_Impl.h
-	A Security/Security_ORBInitializer.cpp
-	A Security/Security_ORBInitializer.h
+
+	  Added new Security Level 1 implementation to the source list.
+
+	* Makefile.SSLIOP:
+
+	  Updated dependencies.
 
 Sat Mar 17 14:33:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
