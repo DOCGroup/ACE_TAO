@@ -58,3 +58,32 @@ Malloc::instance (void)
 
   return Malloc::instance_;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Allocator_Adapter<L_ALLOCATOR>;
+template class ACE_Allocator_Adapter<M_ALLOCATOR>;
+template class ACE_Allocator_Adapter<SB_ALLOCATOR>;
+template class ACE_Allocator_Adapter<SP_ALLOCATOR>;
+template class ACE_Allocator_Adapter<ST_ALLOCATOR>;
+template class ACE_Guard<ACE_Process_Mutex>;
+template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, THREAD_MUTEX>;
+template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
+template class ACE_Read_Guard<ACE_Process_Mutex>;
+template class ACE_Read_Guard<THREAD_MUTEX>;
+template class ACE_Write_Guard<ACE_Process_Mutex>;
+template class ACE_Write_Guard<THREAD_MUTEX>;
+
+#if defined (ACE_LACKS_SYSV_SHMEM)
+template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, THREAD_MUTEX>;
+#else
+template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex>;
+template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, THREAD_MUTEX>;
+#endif /* ACE_LACKS_SYSV_SHMEM */
+
+#if defined (ACE_LACKS_SBRK)
+template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, THREAD_MUTEX>;
+#else
+template class ACE_Malloc <ACE_SBRK_MEMORY_POOL, THREAD_MUTEX>;
+#endif /* ACE_LACKS_SBRK */
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
