@@ -48,6 +48,8 @@ class Async_Timer_Queue
   //     place. 
 {
 public:
+  typedef int (Async_Timer_Queue::*ACTION) (void *);
+
   static Async_Timer_Queue *instance (void);
    // Singleton access point.
 
@@ -83,15 +85,16 @@ private:
   // The adapter is instantiated by an <ACE_Timer_Heap>.
 };
 
-class Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue>
-// = TITLE
-//    Async_Timer_Queue_Test_Driver
-//
-// = DESCRIPTION
-//    This class implements a test driver for the <Async_Timer_Queue>.  Implements
-//     a display_menu() method that prints the options for a user. and init() which
-//     initializes the driver.  The rest of the common functionality is in the parent
-//     class <Timer_Queue_Test_Driver>.
+class Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
+  // = TITLE
+  //    Async_Timer_Queue_Test_Driver
+  //
+  // = DESCRIPTION
+  //    This class implements a test driver for the
+  //    <Async_Timer_Queue>.  Implements a display_menu() method that
+  //    prints the options for a user. and init() which initializes
+  //    the driver.  The rest of the common functionality is in the
+  //    parent class <Timer_Queue_Test_Driver>.
 {
 public:
   Async_Timer_Queue_Test_Driver (void);

@@ -23,10 +23,10 @@ DIRS  =	ASX \
 	Shared_Malloc \
 	Shared_Memory \
 	System_V_IPC \
-	Timer_Queue \
-	Threads
+	Threads 
 
 # Makefiles TBD:
+# 	Timer_Queue 
 #	ttcp 
 #       CORBA 
 

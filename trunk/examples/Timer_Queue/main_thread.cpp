@@ -23,7 +23,9 @@
 #include "Driver.h"
 #include "Thread_Timer_Queue_Test.h"
 
-typedef Timer_Queue_Test_Driver<Thread_Timer_Queue, Input_Task>  
+typedef Timer_Queue_Test_Driver<Thread_Timer_Queue, 
+                                Input_Task,
+				Input_Task::ACTION>
 	THREAD_TIMER_QUEUE_TEST_DRIVER;
 
 int

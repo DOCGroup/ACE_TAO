@@ -23,7 +23,9 @@
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
 
-typedef Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler>
+typedef Timer_Queue_Test_Driver <ACE_Timer_Heap, 
+	                         Input_Handler,
+				 Input_Handler::ACTION>
 	REACTOR_TIMER_QUEUE_TEST_DRIVER;
 
 int

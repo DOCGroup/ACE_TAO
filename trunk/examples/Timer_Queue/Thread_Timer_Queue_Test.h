@@ -51,15 +51,18 @@ class Input_Task : public ACE_Task<ACE_SYNCH>
   //   Read user actions on the Timer_Queue from stdin.
   //
   // = DESCRIPTION
-  //   This class reads user input from stdin; those commands permit the
-  //   control of a Timer_Queue, which is dispatched by another thread.
+  //   This class reads user input from stdin; those commands permit
+  //   the control of a Timer_Queue, which is dispatched by another
+  //   thread.
 {
 public:
+  typedef int (Input_Task::*ACTION) (void *);
+
   Input_Task (Thread_Timer_Queue *queue,
 	      Thread_Timer_Queue_Test_Driver &timer_queue_driver);
 
   virtual int svc (void);
-  // The method run on the new thread.
+  // This method runs the event loop in the new thread.
 
   // = Some helper methods.
 
@@ -85,18 +88,19 @@ private:
   const int usecs_;
   // How many micro seconds are in a second.
 
-  Timer_Queue_Test_Driver<Thread_Timer_Queue, Input_Task> &driver_;
+  Timer_Queue_Test_Driver<Thread_Timer_Queue, Input_Task, Input_Task::ACTION> &driver_;
   // The thread timer queue test driver 
 };
 
-class Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task>
-// = TITLE
-//    Thread_Timer_Queue_Test_Driver
-// = DESCRIPTION
-//    This class implements a simple test driver for the <Thread_Timer_Queue>.
-//   The <display_menu> hook method is called from the base class to print
-//   a menu specific to the thread implementation of the timer queue.
-//
+class Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task, Input_Task::ACTION>
+  // = TITLE
+  //    Thread_Timer_Queue_Test_Driver
+  //
+  // = DESCRIPTION
+  //    This class implements a simple test driver for the
+  //    <Thread_Timer_Queue>.  The <display_menu> hook method is
+  //    called from the base class to print a menu specific to the
+  //    thread implementation of the timer queue.
 {
 public:
   Thread_Timer_Queue_Test_Driver (void);
@@ -107,6 +111,7 @@ public:
 
 private:
   Input_Task input_task;
+  // @@ Please fix this by putting a trailing '_'...
 };
 
 class Handler : public ACE_Event_Handler 
@@ -116,7 +121,7 @@ class Handler : public ACE_Event_Handler
   // = DESCRIPTION
   //     The <handle_timeout> hook method justs printouts the current
   //     time, delete this and prints the delay on the twhen it is
-  //     expired. 
+  //     expired.
 {
 public:
   Handler (const ACE_Time_Value &expiration_time);

@@ -20,17 +20,17 @@
 
 // constructor
 
-template <class Receiver>
-Command<Receiver>::Command (Receiver &recvr, 
-		  Action action) 
-  : receiver_(recvr), 
-    action_(action)
+template <class RECEIVER, class ACTION>
+Command<RECEIVER, ACTION>::Command (RECEIVER &recvr, 
+				    ACTION action)
+  : receiver_ (recvr), 
+    action_ (action)
 {}
 
 // invokes an operation.
 
-template <class Receiver> int
-Command<Receiver>::execute (void *arg)
+template <class RECEIVER, class ACTION> int
+Command<RECEIVER, ACTION>::execute (void *arg)
 {
   return (receiver_.*action_) (arg);
 }
@@ -38,8 +38,8 @@ Command<Receiver>::execute (void *arg)
 
 // gets the next request from the user input.
 
-template <class TQ, class Receiver> int
-Timer_Queue_Test_Driver<TQ, Receiver>::get_next_request (void)
+template <class TQ, class RECEIVER, class ACTION> int
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
 {
   char buf[BUFSIZ];
 
@@ -58,8 +58,8 @@ Timer_Queue_Test_Driver<TQ, Receiver>::get_next_request (void)
 
 // Runs the test.
 
-template <class TQ, class Receiver> int 
-Timer_Queue_Test_Driver<TQ, Receiver>::run_test (void) 
+template <class TQ, class RECEIVER, class ACTION> int 
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test (void) 
 {     
   this->init ();
 
@@ -72,8 +72,8 @@ Timer_Queue_Test_Driver<TQ, Receiver>::run_test (void)
 
 // Reads input from the user from ACE_STDIN into the buffer specified.
 
-template <class TQ, class Receiver> ssize_t
-Timer_Queue_Test_Driver<TQ, Receiver>::read_input (char *buf, size_t bufsiz)
+template <class TQ, class RECEIVER, class ACTION> ssize_t
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::read_input (char *buf, size_t bufsiz)
 {
   ACE_OS::memset (buf, 0, bufsiz);
 
@@ -84,8 +84,8 @@ Timer_Queue_Test_Driver<TQ, Receiver>::read_input (char *buf, size_t bufsiz)
 
 // Parse the input and executes the corresponding operation
 
-template <class TQ, class Receiver> int 
-Timer_Queue_Test_Driver<TQ, Receiver>::parse_commands (const char *buf)
+template <class TQ, class RECEIVER, class ACTION> int 
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
 {
   int option;
 

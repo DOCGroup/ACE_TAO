@@ -1,3 +1,8 @@
+Mon Oct 20 02:01:43 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Makefile: Removed the Timer_Queue directory from the
+ 	  Makefile until Sergio has fixed all the examples for GCC.
+
 Sun Oct 19 21:15:10 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* examples/Timer_Queue: Added a new testing framework for

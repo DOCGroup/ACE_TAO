@@ -74,7 +74,6 @@ ACE_TSS_Connection::operator ACE_SOCK_Stream *(void)
   return this->get_connection ();
 }
 
-
 void
 ACE_TSS_Connection::dump (void) const
 {
@@ -87,10 +86,6 @@ ACE_TSS_Connection::dump (void) const
   ACE_TSS<ACE_SOCK_Stream>::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
-// ************************************************************
-// ************************************************************
-// ************************************************************
 
 ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy (void)
 {
@@ -390,10 +385,6 @@ ACE_Remote_Token_Proxy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// ************************************************************
-// ************************************************************
-// ************************************************************
-
 void
 ACE_Remote_Mutex::dump (void) const
 {
@@ -404,10 +395,6 @@ ACE_Remote_Mutex::dump (void) const
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
-// ************************************************************
-// ************************************************************
-// ************************************************************
 
 void
 ACE_Remote_RLock::dump (void) const
@@ -420,10 +407,6 @@ ACE_Remote_RLock::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// ************************************************************
-// ************************************************************
-// ************************************************************
-
 void
 ACE_Remote_WLock::dump (void) const
 {
@@ -434,7 +417,6 @@ ACE_Remote_WLock::dump (void) const
   ACE_Remote_Token_Proxy::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_TSS <ACE_SOCK_Stream>;
