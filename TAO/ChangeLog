@@ -1,9 +1,67 @@
+Fri May 21 15:01:06 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+
+          Added the explicit include of OS.h necessary to get lib built on
+          linux with gcc 3.3.1. Also included the changelog entry I
+          apparently neglected to commit.
+
 Fri May 21 09:20:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_union.cpp:
-        
+
           Added missing check for 0 when narrowing elements of
           a union's scope to union_branch.
+
+Thu May 20 21:28:41 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/UTF16_BOM_Factory.cpp:
+        * tao/UTF16_BOM_Factory.h:
+        * tao/UTF16_BOM_Translator.cpp:
+        * tao/UTF16_BOM_Translator.h:
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/tao.mpc:
+
+          Using UTF16 as the native wide character codeset requires a
+          special translator even if the transmission wide char codeset is
+          also UTF16. this is because byte ordering for UTF16 data is
+          independant of the byte order of the enclosing encapsulation. In
+          addition, an optional byte order marker (BOM) may be serialized
+          with the data. No other wide char codeset suffers from this
+          feature.
+
+          As defined by the CORBA specification (up to 3.0.2), UTF-16 data
+          is implictly big-endian if no BOM is present. In my opinion,
+          this violates the UTF specification that states that unicode
+          data implies no ordering. To me, it seems like if no BOM is
+          present the byte order of the containing encapsulation should
+          enforce the order.
+
+        * interop-tests:
+
+          This is a new directory intended to hold a suite of tests
+          designed to demonstrated interoperability between TAO and other
+          ORBs. Right now the only "other" ORB people are interested in
+          testing with is JacORB.
+
+        * interop-tests/wchar:
+
+          This is a test used to validate wide character data
+          interoperability. It contains implementations for both TAO and
+          JacORB clients and servers. See the associated README file for
+          more details.
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.h:
+
+          Fixed a number of issues related to translation that were
+          discovered after actually building and running on a proper UCS4
+          enabled system rather than on a simulated environment. This
+          included correcting an error in the computation of an index used
+          to read raw UTF16 data, forcing the output to use BOM correctly,
+          and to raise a MARSHAL exception if a single UCS4 wchar value
+          cannot be encoded into a single UTF16 value.
 
 Thu May 20 17:14:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
