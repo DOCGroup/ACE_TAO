@@ -169,7 +169,12 @@ TAO_GIOP_ServerRequest::parse_header_lite (void)
   CORBA::Octet response_flags;
   hdr_status = hdr_status && input.read_octet (response_flags);
   this->response_expected_ = (response_flags != 0);
-  this->sync_with_server_ = (response_flags == 1);
+
+  // The high bit of the octet has been set if the SyncScope policy
+  // value is SYNC_WITH_SERVER. This is a temporary hack until all
+  // of GIOP 1.2 is in place. Then we can check the version in the
+  // message header instead.
+  this->sync_with_server_ = (response_flags == 129);
 
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
