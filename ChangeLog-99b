@@ -18,8 +18,12 @@ Fri Jun 25 13:02:33 1999  Steve Huston  <shuston@riverace.com>
           and handler classes' definitions to new server_loggerd.h file to
           build with AIX IBM C++.
 
+        * examples/Misc/testr_dump.cpp: Moved the program's classes'
+          definitions to new server_loggerd.h file to build with AIX IBM C++.
+
         * examples/IPC_SAP/SOCK_SAP/Makefile:
         * examples/Connection/non_blocking/Makefile:
+        * examples/Misc/Makefile:
           On AIX w/ IBM C++, delete the tempinc directory before compiling
           each new program. Keeps the template instantiations from one
           program from conflicting with the others.
