@@ -384,7 +384,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
         }
 
       // Go to the next endpoint in this profile.
-      ep = r.profile ()->endpoint ()->next();
+      ep = ep->next();
     }
 
   return 0;
