@@ -96,7 +96,7 @@ Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* tests/{Notify,Reactor}_Performance_Test.cpp: added
 	  ACE_UNUSED_ARG (handle).
 
-	* tests/run_tests.sh: added Reactor_Performance_Test and
+	* tests/Makefile,run_tests.sh: added Reactor_Performance_Test and
 	  Notify_Performance_Test.
 
 	* tests/run_tests.vxworks: added test status of
