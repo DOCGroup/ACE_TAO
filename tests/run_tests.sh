@@ -31,6 +31,7 @@ run()
 echo "Starting tests..."
 
 run Basic_Types_Test
+run Env_Value_Test			# uses Env_Value_T and Process
 run Atomic_Op_Test                      # uses Atomic_Op
 run TSS_Test                            # uses Task, Mutex, Guard
 run Time_Value_Test
