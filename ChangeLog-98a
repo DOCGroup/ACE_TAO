@@ -17,6 +17,8 @@ Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
           why that rule was there.  With it, if a Makefile had a target such
           as clean:, it got deleted.  Not any more.
 
+        * many Makefiles: updated dependences with revised depend.local.
+
         * bin/g++dep: added lib/g++-include path to gcc -MM invocation, so
           that gcc can find all of its headers.  (It didn't help to replace
           gcc with g++, though I would have expected that to solve the
