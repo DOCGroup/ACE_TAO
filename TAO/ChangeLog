@@ -1,3 +1,28 @@
+Thu Mar 25 13:14:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+	* tao/Sequence.cpp:
+
+	  Removed ACE_ASSERT since they are not good for the
+	  middleware. ACE_ASSERT's were used in places where bounds
+	  checking were done. 
+
+	  They have now been replaced with a new macro,
+	  TAO_SEQUENCE_ASSERT. This macro just calls the function
+	  check_bounds () which takes care of things. At this point this
+	  method is structured in such a way to print an error message and
+	  call a hook if necessary (this was discussed in the devo-group
+	  sometime back). If native exceptions are turned on, we throw a
+	  BAD_PARAM exception. May be std::out_of_range would be better. But
+	  the thought process is to throw a CORBA exception. If exceptions
+	  are turned off we abort. 
+
+	  We should do something better for non-exception cases. If we
+	  have hooks for these we will be in a much better position. 
+
+	  Thanks to Priya Narasimhan <priya@ece.cmu.edu> and Dr. Schmidt
+	  for motivating much of this.
+
 Thu Mar 25 06:42:49 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Policy_Validator.h:
