@@ -3,10 +3,6 @@
 #include "test_i.h"
 #include "tao/debug.h"
 
-#if !defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(MT_Client, test_i, "$Id$")
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
@@ -44,5 +40,3 @@ Simple_Server_i::_default_POA (CORBA::Environment &)
 {
   return PortableServer::POA::_duplicate (this->poa_);
 }
-  
-

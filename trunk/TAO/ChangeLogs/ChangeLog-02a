@@ -1,21 +1,27 @@
+Fri Apr 21 18:40:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MProfile/test_i.cpp:
+          Removed an extra #include, the file included does not exist and
+          it is not needed, clearly too much cut&past programming.
+
 Fri Apr 21 17:31:55 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Simple: Updated the README files in all these directories
-	  thanks to Pradeep's help.
+        * examples/Simple: Updated the README files in all these directories
+          thanks to Pradeep's help.
 
 Fri Apr 21 17:19:33 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* examples/Simple/chat/README:
-	  added a section on using a file to publish the server IOR.
+        * examples/Simple/chat/README:
+          added a section on using a file to publish the server IOR.
 
 Fri Apr 21 13:27:56 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
           dereference <default_filter_factory_> via in ()
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
- 	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h:
-	  modified #pragma once usage
-	  - fixes for Vxworks warnings
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h:
+          modified #pragma once usage
+          - fixes for Vxworks warnings
 
 Fri Apr 21 09:15:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
