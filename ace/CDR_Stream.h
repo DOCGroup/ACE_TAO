@@ -243,10 +243,10 @@ public:
 
   #  if   ACE_SIZEOF_LONG_DOUBLE == 16
     typedef long double LongDouble;
-#define ACE_CDR_LONG_DOUGLE_INITIALIZER 0
+#define ACE_CDR_LONG_DOUBLE_INITIALIZER 0
   #  else
   #    define NONNATIVE_LONGDOUBLE
-#define ACE_CDR_LONG_DOUGLE_INITIALIZER {{0}}
+#define ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
     struct ACE_Export LongDouble
     {
       char ld[16];
