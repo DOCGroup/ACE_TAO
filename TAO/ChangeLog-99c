@@ -1,3 +1,9 @@
+Thu May 20 20:00:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/decode.cpp:
+	  Added a typecode release call to TAO_Marshal_Any::decode()
+	  to plug a memory leak occurring with inout Any parameters.
+
 Thu May 20 19:52:49 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
