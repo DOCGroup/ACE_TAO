@@ -1,3 +1,9 @@
+Wed Nov 27 07:18:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Fixed compile
+	  errors in single threaded builds.
+
 Wed Nov 27 13:19:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin:

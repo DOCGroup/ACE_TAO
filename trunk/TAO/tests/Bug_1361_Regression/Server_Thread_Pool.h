@@ -18,7 +18,7 @@
 
 #include "TestC.h"
 
-class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
+class Thread_Pool : public ACE_Task<ACE_SYNCH_MUTEX>
 {
   // = TITLE
   //   Defines a thread pool abstraction based on the <ACE_Task>.
