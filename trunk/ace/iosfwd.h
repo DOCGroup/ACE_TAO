@@ -31,11 +31,14 @@
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
-#include /**/ <iosfwd>
+#if !defined (ACE_USES_OLD_IOSTREAMS)
+    #include /**/ <iosfwd>
+#endif /* ! ACE_USES_OLD_IOSTREAMS */
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 
+#if !defined (ACE_USES_OLD_IOSTREAMS)
 // Make these available in the global name space
 using std::ios;
 using std::streambuf;
@@ -46,6 +49,7 @@ using std::filebuf;
 using std::ifstream;
 using std::ofstream;
 using std::fstream;
+#endif /* ! ACE_USES_OLD_IOSTREAMS */
 
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 

@@ -145,18 +145,18 @@
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
-	#define ACE_NTRACE 1
+        #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
 // #define ACE_NLOGGING
 
 // ----------------- "derived" defines and includes -----------
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-	#if defined (_MSC_VER)
+        #if defined (_MSC_VER)
                 #if (_MSC_VER > 1020)
-			// Platform has its Standard C++ library in the namespace std
+                        // Platform has its Standard C++ library in the namespace std
                         #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-                                    #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	1
+                                    #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB       1
                         #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
                 #else /* (_MSC_VER > 1020) */
                         #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
@@ -169,87 +169,89 @@
                         #endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
                         #define ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER 1
                 #endif /* (_MSC_VER > 1020) */
-	#endif /* _MSC_VER */
+        #endif /* _MSC_VER */
 
-	// ace/iostream.h does not work with the standard cpp library (yet).
-	#define ACE_LACKS_ACE_IOSTREAM
+        // ace/iostream.h does not work with the standard cpp library (yet).
+        #if !defined (ACE_USES_OLD_IOSTREAMS)
+                #define ACE_LACKS_ACE_IOSTREAM
+        #endif /* ! ACE_USES_OLD_IOSTREAMS */
 #else
-	// iostream header lacks ipfx (), isfx (), etc., declarations
-	#define ACE_LACKS_IOSTREAM_FX
+        // iostream header lacks ipfx (), isfx (), etc., declarations
+        #define ACE_LACKS_IOSTREAM_FX
 #endif
 
 #if defined (_MSC_VER)
         // While digging the MSVC 4.0 include files, I found how to disable
         // MSVC warnings: --Amos Shapira
 
-	// "C4355: 'this' : used in base member initializer list"
-	#pragma warning(disable:4355) /* disable C4514 warning */
-	//	#pragma warning(default:4355)   // use this to reenable, if desired
+        // "C4355: 'this' : used in base member initializer list"
+        #pragma warning(disable:4355) /* disable C4514 warning */
+        //      #pragma warning(default:4355)   // use this to reenable, if desired
 
-	#pragma warning(disable:4201)  /* winnt.h uses nameless structs */
+        #pragma warning(disable:4201)  /* winnt.h uses nameless structs */
 
         #pragma warning(disable:4231)
         // Disable warning of using Microsoft Extension.
 
-	// It seems that this works with MSVC 4.[1,2]
-	#if (1010 <= _MSC_VER) && (_MSC_VER <= 1020)
-		#define ACE_HAS_TEMPLATE_TYPEDEFS
-	#endif
+        // It seems that this works with MSVC 4.[1,2]
+        #if (1010 <= _MSC_VER) && (_MSC_VER <= 1020)
+                #define ACE_HAS_TEMPLATE_TYPEDEFS
+        #endif
 
-	// MSVC 4.0 or greater
-	#if (_MSC_VER >= 1000)
-		// Compiler/Platform supports the "using" keyword.
-		#define ACE_HAS_USING_KEYWORD
-	#endif
+        // MSVC 4.0 or greater
+        #if (_MSC_VER >= 1000)
+                // Compiler/Platform supports the "using" keyword.
+                #define ACE_HAS_USING_KEYWORD
+        #endif
 
-	// MSVC 2.2 or lower
-	#if (_MSC_VER < 1000)
-		// This needs to be here since MSVC++ 2.0 seems to have forgotten to
-		// include it. Does anybody know which MSC_VER MSVC 2.0 has ?
-		inline void *operator new (unsigned int, void *p) { return p; }
-	#endif
+        // MSVC 2.2 or lower
+        #if (_MSC_VER < 1000)
+                // This needs to be here since MSVC++ 2.0 seems to have forgotten to
+                // include it. Does anybody know which MSC_VER MSVC 2.0 has ?
+                inline void *operator new (unsigned int, void *p) { return p; }
+        #endif
 #endif /* _MSC_VER */
 
 // MFC itself defines STRICT.
 #if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0)
-	#if !defined(ACE_HAS_STRICT)
-		#define ACE_HAS_STRICT 1
-	#endif
-	#if (ACE_HAS_STRICT != 1)
-		#undef ACE_HAS_STRICT
-		#define ACE_HAS_STRICT 1
-	#endif
+        #if !defined(ACE_HAS_STRICT)
+                #define ACE_HAS_STRICT 1
+        #endif
+        #if (ACE_HAS_STRICT != 1)
+                #undef ACE_HAS_STRICT
+                #define ACE_HAS_STRICT 1
+        #endif
 #endif
 
 // If you want to use highres timers, ensure that
 // Build.Settings.C++.CodeGeneration.Processor is
 // set to Pentium !
 #if (_M_IX86 > 400)
-	// Used for high resolution timers
-	#define ACE_HAS_PENTIUM
+        // Used for high resolution timers
+        #define ACE_HAS_PENTIUM
 #endif
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-	// Platform supports threads.
-	#define ACE_HAS_THREADS
+        // Platform supports threads.
+        #define ACE_HAS_THREADS
 
-	// Platform supports Windows32 threads.
-	#define ACE_HAS_WTHREADS
+        // Platform supports Windows32 threads.
+        #define ACE_HAS_WTHREADS
 
-	// Compiler/platform has thread-specific storage
-	#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+        // Compiler/platform has thread-specific storage
+        #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-	// must have _MT defined to include multithreading
-	// features from win32 headers
-	#if !defined(_MT)
-		#define _MT
-	#endif
+        // must have _MT defined to include multithreading
+        // features from win32 headers
+        #if !defined(_MT)
+                #define _MT
+        #endif
 #endif
 
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra
 #if !defined (NOMINMAX)
-	#define NOMINMAX
+        #define NOMINMAX
 #endif /* NOMINMAX */
 
 #if defined (_UNICODE)
@@ -266,26 +268,26 @@
 
 // If __ACE_INLINE__ is defined to be 0, we will undefine it
 #if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
-	#undef __ACE_INLINE__
+        #undef __ACE_INLINE__
 #endif /* __ACE_INLINE__ */
 
 #ifdef _DEBUG
 #if !defined (ACE_HAS_WINCE)
-	#include /**/ <crtdbg.h>
+        #include /**/ <crtdbg.h>
 #endif /* ACE_HAS_WINCE */
 #else
         // If we are making a release, and the user has not specified
         // inline directives, we will default to inline
-	#if ! defined (__ACE_INLINE__)
-		#define __ACE_INLINE__
-	#endif /* __ACE_INLINE__ */
+        #if ! defined (__ACE_INLINE__)
+                #define __ACE_INLINE__
+        #endif /* __ACE_INLINE__ */
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
 #if (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
         #if !defined (_AFXDLL)
-	        // force multithreaded MFC DLL
-	        #define _AFXDLL
+                // force multithreaded MFC DLL
+                #define _AFXDLL
         #endif /* _AFXDLL */
 #endif
 
@@ -307,20 +309,20 @@
 // <windows.h> directly.
 #if defined (_AFXDLL) || defined (_WINDLL) || \
     ( (ACE_HAS_DLL != 0) && defined(ACE_BUILD_DLL) && (ACE_HAS_MFC != 0))
-	#include /**/ <afxwin.h>   /* He is doing MFC */
-		// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
-		// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
+        #include /**/ <afxwin.h>   /* He is doing MFC */
+                // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
+                // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 
-#if !defined (_INC_WINDOWS)	/* Already include windows.h ? */
-	// Must define strict before including windows.h !
-	#if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
-		#define STRICT 1
-	#endif /* ACE_HAS_STRICT */
+#if !defined (_INC_WINDOWS)     /* Already include windows.h ? */
+        // Must define strict before including windows.h !
+        #if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
+                #define STRICT 1
+        #endif /* ACE_HAS_STRICT */
 
-	#if !defined (WIN32_LEAN_AND_MEAN)
-		#define WIN32_LEAN_AND_MEAN
-	#endif /* WIN32_LEAN_AND_MEAN */
+        #if !defined (WIN32_LEAN_AND_MEAN)
+                #define WIN32_LEAN_AND_MEAN
+        #endif /* WIN32_LEAN_AND_MEAN */
 
         #if defined (_UNICODE)
                 #if !defined (UNICODE)
@@ -339,48 +341,48 @@
 
 // Always use WS2 when available
 #if (ACE_HAS_WINNT4 != 0)
-  	#if !defined(ACE_HAS_WINSOCK2)
+        #if !defined(ACE_HAS_WINSOCK2)
                 #define ACE_HAS_WINSOCK2 1
-  	#endif
+        #endif
 #endif
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-	#if !defined (_WINSOCK2API_)
+        #if !defined (_WINSOCK2API_)
 
-		#include /**/ <winsock2.h>		/* will also include windows.h, if not present */
-		#include /**/ <mswsock.h>
-		#if defined (_MSC_VER)
-			#pragma comment(lib, "ws2_32.lib")
-			#pragma comment(lib, "mswsock.lib")
-		#endif /* _MSC_VER */
-	#endif /* _WINSOCK2API */
+                #include /**/ <winsock2.h>              /* will also include windows.h, if not present */
+                #include /**/ <mswsock.h>
+                #if defined (_MSC_VER)
+                        #pragma comment(lib, "ws2_32.lib")
+                        #pragma comment(lib, "mswsock.lib")
+                #endif /* _MSC_VER */
+        #endif /* _WINSOCK2API */
 
-	#define ACE_WSOCK_VERSION 2, 0
+        #define ACE_WSOCK_VERSION 2, 0
 #else
-	#if !defined (_WINSOCKAPI_)
-		#include /**/ <winsock.h>	/* will also include windows.h, if not present */
+        #if !defined (_WINSOCKAPI_)
+                #include /**/ <winsock.h>       /* will also include windows.h, if not present */
 
-		#if defined (_MSC_VER)
-			#pragma comment(lib, "wsock32.lib")
-		#endif /* _MSC_VER */
-	#endif /* _WINSOCKAPI */
+                #if defined (_MSC_VER)
+                        #pragma comment(lib, "wsock32.lib")
+                #endif /* _MSC_VER */
+        #endif /* _WINSOCKAPI */
 
-	// Version 1.1 of WinSock
-	#define ACE_WSOCK_VERSION 1, 1
+        // Version 1.1 of WinSock
+        #define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
 
 #if defined (_MSC_VER)
-	#pragma warning(default: 4201)  /* winnt.h uses nameless structs */
+        #pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 #endif /* _MSC_VER */
 
 #if (_WIN32_WINNT >= 0x0400) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
         #define ACE_HAS_INTERLOCKED_EXCHANGEADD
-	#define ACE_HAS_WIN32_TRYLOCK
-	#define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
+        #define ACE_HAS_WIN32_TRYLOCK
+        #define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
-	// If CancelIO is undefined get the updated sp2-sdk
-	// from MS
-	#define ACE_HAS_CANCEL_IO
+        // If CancelIO is undefined get the updated sp2-sdk
+        // from MS
+        #define ACE_HAS_CANCEL_IO
 #endif
 
 #endif /* ACE_WIN32_COMMON_H */
