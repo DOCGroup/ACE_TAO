@@ -33,9 +33,9 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "netsvcs - Win32 Debug"
-RSC=rc.exe
 MTL=mktyplib.exe
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "netsvcs - Win32 Release"
 
@@ -56,13 +56,13 @@ ALL : "$(OUTDIR)\netsvcs.dll"
 
 CLEAN : 
 	-@erase ".\netsvcs\Release\netsvcs.dll"
-	-@erase ".\netsvcs\Release\Token_Handler.obj"
-	-@erase ".\netsvcs\Release\Server_Logging_Handler.obj"
-	-@erase ".\netsvcs\Release\TS_Server_Handler.obj"
-	-@erase ".\netsvcs\Release\Client_Logging_Handler.obj"
-	-@erase ".\netsvcs\Release\TS_Clerk_Handler.obj"
-	-@erase ".\netsvcs\Release\Name_Handler.obj"
 	-@erase ".\netsvcs\Release\Logging_Strategy.obj"
+	-@erase ".\netsvcs\Release\Server_Logging_Handler.obj"
+	-@erase ".\netsvcs\Release\Name_Handler.obj"
+	-@erase ".\netsvcs\Release\Client_Logging_Handler.obj"
+	-@erase ".\netsvcs\Release\Token_Handler.obj"
+	-@erase ".\netsvcs\Release\TS_Clerk_Handler.obj"
+	-@erase ".\netsvcs\Release\TS_Server_Handler.obj"
 	-@erase ".\netsvcs\Release\netsvcs.lib"
 	-@erase ".\netsvcs\Release\netsvcs.exp"
 
@@ -87,21 +87,20 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)/netsvcs.bsc"
 BSC32_SBRS=
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib\
- advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib\
- odbccp32.lib /nologo /subsystem:windows /dll /incremental:no\
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:no\
  /pdb:"$(OUTDIR)/netsvcs.pdb" /machine:I386 /out:"$(OUTDIR)/netsvcs.dll"\
  /implib:"$(OUTDIR)/netsvcs.lib" 
 LINK32_OBJS= \
-	"$(INTDIR)/Token_Handler.obj" \
-	"$(INTDIR)/Server_Logging_Handler.obj" \
-	"$(INTDIR)/TS_Server_Handler.obj" \
-	"$(INTDIR)/Client_Logging_Handler.obj" \
-	"$(INTDIR)/TS_Clerk_Handler.obj" \
-	"$(INTDIR)/Name_Handler.obj" \
 	"$(INTDIR)/Logging_Strategy.obj" \
-	"..\..\ace\ace.lib"
+	"$(INTDIR)/Server_Logging_Handler.obj" \
+	"$(INTDIR)/Name_Handler.obj" \
+	"$(INTDIR)/Client_Logging_Handler.obj" \
+	"$(INTDIR)/Token_Handler.obj" \
+	"$(INTDIR)/TS_Clerk_Handler.obj" \
+	"$(INTDIR)/TS_Server_Handler.obj"
 
 "$(OUTDIR)\netsvcs.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -129,13 +128,13 @@ CLEAN :
 	-@erase ".\debug\vc40.pdb"
 	-@erase ".\debug\vc40.idb"
 	-@erase "..\..\ace\netsvcs.dll"
-	-@erase ".\debug\Client_Logging_Handler.obj"
-	-@erase ".\debug\Server_Logging_Handler.obj"
 	-@erase ".\debug\Token_Handler.obj"
 	-@erase ".\debug\TS_Server_Handler.obj"
+	-@erase ".\debug\Client_Logging_Handler.obj"
 	-@erase ".\debug\Name_Handler.obj"
-	-@erase ".\debug\TS_Clerk_Handler.obj"
 	-@erase ".\debug\Logging_Strategy.obj"
+	-@erase ".\debug\TS_Clerk_Handler.obj"
+	-@erase ".\debug\Server_Logging_Handler.obj"
 	-@erase "..\..\ace\netsvcs.ilk"
 	-@erase "..\..\ace\netsvcs.lib"
 	-@erase "..\..\ace\netsvcs.exp"
@@ -165,21 +164,20 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)/netsvcs.bsc"
 BSC32_SBRS=
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib\
- advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib\
- odbccp32.lib wsock32.lib /nologo /subsystem:windows /dll /incremental:yes\
+# ADD LINK32 wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
+LINK32_FLAGS=wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:yes\
  /pdb:"$(OUTDIR)/netsvcs.pdb" /debug /machine:I386 /out:"$(OUTDIR)/netsvcs.dll"\
  /implib:"$(OUTDIR)/netsvcs.lib" 
 LINK32_OBJS= \
-	"$(INTDIR)/Client_Logging_Handler.obj" \
-	"$(INTDIR)/Server_Logging_Handler.obj" \
 	"$(INTDIR)/Token_Handler.obj" \
 	"$(INTDIR)/TS_Server_Handler.obj" \
+	"$(INTDIR)/Client_Logging_Handler.obj" \
 	"$(INTDIR)/Name_Handler.obj" \
-	"$(INTDIR)/TS_Clerk_Handler.obj" \
 	"$(INTDIR)/Logging_Strategy.obj" \
-	"..\..\ace\ace.lib"
+	"$(INTDIR)/TS_Clerk_Handler.obj" \
+	"$(INTDIR)/Server_Logging_Handler.obj"
 
 "$(OUTDIR)\netsvcs.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
@@ -221,18 +219,6 @@ LINK32_OBJS= \
 ################################################################################
 # Begin Source File
 
-SOURCE=\ACE_wrappers\ace\ace.lib
-
-!IF  "$(CFG)" == "netsvcs - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "netsvcs - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-################################################################################
-# Begin Source File
-
 SOURCE=.\Token_Handler.cpp
 DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
@@ -250,9 +236,8 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -281,13 +266,14 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Set.i"\
 	{$(INCLUDE)}"\ace\Set.cpp"\
 	{$(INCLUDE)}"\ace\Message_Block.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Malloc.h"\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
@@ -302,7 +288,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Timer_Queue.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\ReactorEx.i"\
 	{$(INCLUDE)}"\ace\Token.i"\
@@ -330,9 +315,11 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -357,9 +344,6 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Stack.i"\
 	{$(INCLUDE)}"\ace\Stack.cpp"\
-	
-NODEP_CPP_TOKEN=\
-	".\..\..\ace\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\Token_Handler.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
@@ -460,9 +444,11 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -478,9 +464,8 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Time_Value.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Malloc.i"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
@@ -490,9 +475,6 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	
-NODEP_CPP_TS_CL=\
-	".\..\..\ace\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\TS_Clerk_Handler.obj" : $(SOURCE) $(DEP_CPP_TS_CL) "$(INTDIR)"
@@ -517,9 +499,8 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -553,11 +534,12 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Message_Block.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Malloc.h"\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
@@ -572,7 +554,6 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Timer_Queue.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
 	{$(INCLUDE)}"\ace\ReactorEx.i"\
@@ -596,9 +577,11 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -624,9 +607,6 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	
-NODEP_CPP_TS_SE=\
-	".\..\..\ace\ace\Sync_T.h"\
-	
 
 "$(INTDIR)\TS_Server_Handler.obj" : $(SOURCE) $(DEP_CPP_TS_SE) "$(INTDIR)"
 
@@ -651,9 +631,8 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -661,8 +640,10 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\TLI.h"\
@@ -705,7 +686,6 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Set.cpp"\
 	{$(INCLUDE)}"\ace\Message_Block.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Proactor.i"\
 	{$(INCLUDE)}"\ace\Malloc.h"\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
@@ -720,7 +700,6 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Timer_Queue.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Token.h"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
 	{$(INCLUDE)}"\ace\ReactorEx.i"\
@@ -744,9 +723,11 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -759,9 +740,6 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Dynamic.h"\
 	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Strategies.cpp"\
-	
-NODEP_CPP_SERVE=\
-	".\..\..\ace\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\Server_Logging_Handler.obj" : $(SOURCE) $(DEP_CPP_SERVE) "$(INTDIR)"
@@ -787,9 +765,8 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -874,9 +851,11 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -897,9 +876,6 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	
-NODEP_CPP_NAME_=\
-	".\..\..\ace\ace\Sync_T.h"\
 	
 
 "$(INTDIR)\Name_Handler.obj" : $(SOURCE) $(DEP_CPP_NAME_) "$(INTDIR)"
@@ -935,9 +911,8 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -997,9 +972,11 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\Message_Queue.i"\
 	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
@@ -1034,9 +1011,6 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\FIFO_Recv.i"\
 	{$(INCLUDE)}"\ace\FIFO.i"\
 	
-NODEP_CPP_CLIEN=\
-	".\..\..\ace\ace\Sync_T.h"\
-	
 
 "$(INTDIR)\Client_Logging_Handler.obj" : $(SOURCE) $(DEP_CPP_CLIEN) "$(INTDIR)"
 
@@ -1056,9 +1030,8 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
