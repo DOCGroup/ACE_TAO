@@ -1,3 +1,8 @@
+Mon May 18 13:48:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
+ 	  on non-threaded platforms.
+
 Mon May 18 12:24:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-sunos5*.h: Removed the ACE_LACKS_RWLOCK_T stuff since
