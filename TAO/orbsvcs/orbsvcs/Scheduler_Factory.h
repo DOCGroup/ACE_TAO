@@ -45,10 +45,12 @@ public:
     //
     // = DESCRIPTION
     //   This type enumerates the possible states of the factory:
-    //   uninitialized, or in a config or runtime mode of operation.
+    //   uninitialized, or in a configuration, runtime, or 
+    //   reconfigurable mode of operation.
 
     UNINITIALIZED,
     CONFIG,
+    RECONFIG,
     RUNTIME
   };
 
@@ -59,7 +61,7 @@ public:
     //
     // = DESCRIPTION
     //   This class provide us with a plain old data version of
-    //   RT_Info, this is useful for implementing static arrays or  of
+    //   RT_Info, this is useful for implementing arrays of
     //   those.
 
     const char *entry_point;
@@ -76,6 +78,23 @@ public:
     RtecScheduler::Preemption_Subpriority_t static_subpriority;
     RtecScheduler::Preemption_Priority_t preemption_priority;
     CORBA::Long info_type;
+  };
+
+
+  struct POD_Dependency_Info
+  {
+    // = TITLE
+    //   Plain Old Data for RT_Info Dependencies.
+    //
+    // = DESCRIPTION
+    //   This class provide us with a plain old data version of
+    //   dependencies between RT_Infos.  This is useful for implementing
+    //   arrays of those.
+
+    RtecScheduler::handle_t info_that_depends;
+    RtecScheduler::handle_t info_depended_on;
+    RtecScheduler::Dependency_Type_t dependency_type;
+    CORBA::Long number_of_calls;
   };
 
   struct POD_Config_Info
