@@ -13,7 +13,7 @@
         Points of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
         <a href="mailto: bosk@ipmce.ru">Boris Kolpackov</a>
 
-        <p>Last Update: $Date$</p>
+        <p>Last Update: 2002/07/29 </p>
       </center>
 
       <p>Objects-by-Value (OBV) describes the new type, <CODE>valuetype</CODE>.
@@ -66,6 +66,20 @@
             <CODE>valuetype</CODE> objects (but without sharing).
           </p>
         </li>
+        <li>
+          <p> Support for valuetypes as members of IDL aggregate types has been
+              added.</p>
+        </li>
+        <li>
+          <p> Support for inheritance from interface (supports) has been added. </p>
+        </li>
+        <li>
+          <p> Support for abstract interfaces has been added.</p>
+        </li>
+        <li>
+          <p> Support for forward declared valuetypes defined in another compilation
+              unit has been added.</p>
+        </li>
       </ul>
 
       <a name="issues"><h3>Known issues:</h3></a>
@@ -77,24 +91,7 @@
           </p>
         </li>
 
-        <li><p><CODE>Valuetype</CODE>s can not be contained in other types like
-            <CODE>struct</CODE>, <CODE>union</CODE>,
-            <CODE>sequence</CODE> or <CODE>array</CODE>. 
-          </p>
-        </li>
-
         <li><p>No support for sharing (aliasing).
-          </p>
-        </li>
-
-        <li><p>Forward and typedef'd declaration does not work.</p>
-        </li>
-
-        <li><p>Inheritance (support) from an ordinary interface
-            not implemented.</p>
-        </li>
-
-        <li><p>No support for abstract interfaces.
           </p>
         </li>
 
