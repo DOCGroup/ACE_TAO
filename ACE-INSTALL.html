@@ -469,6 +469,9 @@ If you use the GNU GCC g++ compiler please note the following:
       Or, you can edit your include/makeinclude/platform_sunos5_g++.GNU,
       and comment out the <code>OCFLAGS</code> line.<P>
 
+  <li>ACE/TAO don't seem to build well with g++ 2.8.1.  We routinely
+      use g++ 2.7.2.3 and egcs 1.0.2, and recommend those versions.<p>
+
   <LI>Earlier (prior to 2.7.2) versions of g++ may not compile
       certain parts of ACE correctly due to compiler bugs.  Please
       upgrade to g++ 2.7.2 or greater.<P>
@@ -489,7 +492,7 @@ If you use the GNU GCC g++ compiler please note the following:
       first looks for the GNU linker if it is installed along
       with gcc.  The only way to not use the GNU linker is to
       delete it from the installation or to build your own
-      compiler with no linker. Be aware that you still need the
+      compiler with no linker.  Be aware that you still need the
       libraries and includes of gcc.<P>
 
   <LI>Don't get too confused about contradictory statements in
@@ -539,8 +542,8 @@ If you use the GNU GCC g++ compiler please note the following:
       in template classes.<p>
 
   <li>A final alternative is to
-      remove the -fno-implicit-templates option from the CCFLAGS
-      macro in your include/makeinclude/platform_macros.GNU, and
+      remove the <code>-fno-implicit-templates</code> option from the
+      CCFLAGS macro in your include/makeinclude/platform_macros.GNU, and
       thereby use the default g++ implicit template instantiation.<P>
 
   <LI>Thanks to Thilo Kielmann &lt<A
