@@ -88,8 +88,8 @@ private:
   const size_t hwm_;
   const size_t lwm_;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> role_;
-  ACE_Barrier mq_full_;
-  ACE_Barrier mq_low_water_mark_hit_;
+  ACE_MT (ACE_Barrier mq_full_);
+  ACE_MT (ACE_Barrier mq_low_water_mark_hit_);
 };
 
 Message_Handler::Message_Handler (ACE_Reactor &reactor)
@@ -183,8 +183,10 @@ Watermark_Test::Watermark_Test (void)
     hwm_ (this->len_ * default_high_water_mark),
     lwm_ (this->len_ * default_low_water_mark),
     role_ (0),
+#if defined (ACE_HAS_THREADS)
     mq_full_ (worker_threads),
     mq_low_water_mark_hit_ (worker_threads)
+#endif /* ACE_HAS_THREADS */
 {
   this->water_marks (ACE_IO_Cntl_Msg::SET_LWM,
                      this->lwm_);
@@ -207,7 +209,8 @@ Watermark_Test::producer (void)
     }
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Producer: High water mark hit ---- \n"));
-  this->mq_full_.wait ();
+
+  ACE_MT (this->mq_full_.wait ());
 
   // The following put_message should block until the message queue
   // has dropped under the lwm.
@@ -229,7 +232,8 @@ Watermark_Test::producer (void)
 int
 Watermark_Test::consumer (void)
 {
-  this->mq_full_.wait ();
+  ACE_MT (this->mq_full_.wait ());
+
   ACE_OS::sleep (1);
 
   // Let producer proceed and block in putq.
