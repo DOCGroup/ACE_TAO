@@ -214,7 +214,6 @@ void POA_CORBA_DomainManager::get_domain_policy_skel (
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb_core ()->server_request_interceptors ());
-  ACE_CHECK;
   // @@ CORBA::Object_var _tao_objref;
     POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy  ri ("get_domain_policy",
 _tao_server_request.service_info ()    ,  policy_type    ,
@@ -776,9 +775,8 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
-      _tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV)
+      _tao_server_request.orb_core ()->server_request_interceptors ()
     );
-  ACE_CHECK;
   POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager ri (
       "make_domain_manager",
       _tao_server_request.service_info (),  
