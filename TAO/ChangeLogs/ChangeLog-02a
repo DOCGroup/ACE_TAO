@@ -1,3 +1,24 @@
+Thu Jun 28 18:56:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/Container_i.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+
+          Fixed the setting of the UnionMembers's label value
+          for the default case, when creating a UnionDef in the IFR.
+
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Fixed set_discriminator() so it will work even if
+          the DynUnion's own discriminator is modified with
+          insert_*() and then passed to this function.
+
+        Thanks to Philippe Merle <Philippe.Merle@lifl.fr> for
+        pointing out the above bugs.
+
 Thu Jun 28 15:30:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
