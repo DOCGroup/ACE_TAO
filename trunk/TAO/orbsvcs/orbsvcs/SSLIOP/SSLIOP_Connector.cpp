@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "SSLIOP_Connector.h"
 #include "SSLIOP_Credentials.h"
 #include "SSLIOP_Profile.h"
@@ -17,11 +15,14 @@
 #include "tao/Stub.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Blocked_Connect_Strategy.h"
+#include "tao/Wait_Strategy.h"
 #include "ace/Auto_Ptr.h"
+
 
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Connector,
            "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
