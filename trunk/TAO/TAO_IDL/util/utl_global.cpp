@@ -475,14 +475,12 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   // Check if we need to store it at all or whether we've seen it already
   if (seen)
     {
-      if (this->last_seen_index_ == 0)
-        {
-          this->repeat_include_ = 1;
-        }
-
       this->last_seen_index_ = seen;
       return;
     }
+
+  // If it's a new filename, we need to push an empty prefix.
+  idl_global->pragma_prefixes ().push (ACE::strnew (""));
 
   // OK, need to store. Make sure there's space for one more string
   if (this->pd_n_include_file_names == this->pd_n_alloced_file_names)
@@ -491,22 +489,16 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
       if (this->pd_n_alloced_file_names == 0)
         {
           this->pd_n_alloced_file_names = INCREMENT;
-          ACE_NEW (this->pd_include_file_names,
-                   UTL_String *[this->pd_n_alloced_file_names]);
+          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
         }
       else
         {
           o_include_file_names = this->pd_include_file_names;
           o_n_alloced_file_names = this->pd_n_alloced_file_names;
           this->pd_n_alloced_file_names += INCREMENT;
-          ACE_NEW (this->pd_include_file_names,
-                   UTL_String *[this->pd_n_alloced_file_names]);
-
-          for (i = 0; i < o_n_alloced_file_names; ++i)
-            {
-              this->pd_include_file_names[i] = o_include_file_names[i];
-            }
-
+          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
+          for (i = 0; i < o_n_alloced_file_names; i++)
+            this->pd_include_file_names[i] = o_include_file_names[i];
           delete [] o_include_file_names;
         }
     }
