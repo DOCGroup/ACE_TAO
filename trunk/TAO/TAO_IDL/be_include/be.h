@@ -127,6 +127,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be_typedef.h"              // class BE_Typedef
 #include        "be_root.h"                 // class BE_Root
 #include        "be_native.h"               // class BE_Native
+#include        "be_factory.h"              // class be_factory
 
 #include        "be_helper.h"               // helper functions
 #include        "be_codegen.h"              // code generator

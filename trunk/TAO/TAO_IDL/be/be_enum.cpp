@@ -31,16 +31,13 @@ be_enum::be_enum (void)
 }
 
 be_enum::be_enum (UTL_ScopedName *n,
-                  UTL_StrList *p,
                   idl_bool local,
                   idl_bool abstract)
   : AST_Enum (n, 
-              p, 
               local, 
               abstract),
     AST_Decl (AST_Decl::NT_enum, 
-              n, 
-              p),
+              n),
     UTL_Scope (AST_Decl::NT_enum),
     COMMON_Base (local, 
                  abstract)

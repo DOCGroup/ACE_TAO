@@ -120,6 +120,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_string.h"          // class AST_String
 #include        "ast_typedef.h"         // class AST_Typedef
 #include        "ast_native.h"          // class AST_Native
+#include        "ast_factory.h"         // class AST_Factory
 
 #include        "utl_list.h"            // class UTL_List
 #include        "utl_strlist.h"         // class UTL_StrList

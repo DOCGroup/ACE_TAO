@@ -97,14 +97,12 @@ public:
   AST_Field (void);
 
   AST_Field (AST_Type *field_type,
-             UTL_ScopedName *n,
-             UTL_StrList *p,
+             UTL_ScopedName *n, 
              Visibility vis = vis_NA);
 
   AST_Field (AST_Decl::NodeType nt,
              AST_Type *field_type,
-             UTL_ScopedName *n,
-             UTL_StrList *p,
+             UTL_ScopedName *n, 
              Visibility vis = vis_NA);
 
   virtual ~AST_Field (void);

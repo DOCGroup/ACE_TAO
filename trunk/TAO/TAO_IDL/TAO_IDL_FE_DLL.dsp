@@ -146,6 +146,10 @@ SOURCE=.\ast\ast_expression.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_field.cpp
 # End Source File
 # Begin Source File
@@ -251,6 +255,10 @@ SOURCE=.\fe\fe_lookup.cpp
 # Begin Source File
 
 SOURCE=.\fe\fe_private.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\fe\fe_tmplinst.cpp
 # End Source File
 # Begin Source File
 
@@ -375,6 +383,10 @@ SOURCE=.\include\ast_expression.h
 # Begin Source File
 
 SOURCE=.\include\ast_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_factory.h
 # End Source File
 # Begin Source File
 

@@ -104,45 +104,63 @@ UTL_ScopeStack::~UTL_ScopeStack()
  * Public operations
  */
 
-// Push an element on the stack
+// Push an element on the stack.
 UTL_ScopeStack *
-UTL_ScopeStack::push(UTL_Scope *el)
+UTL_ScopeStack::push (UTL_Scope *el)
 {
   UTL_Scope	**tmp;
-  long		ostack_data_nalloced;
-  long		i;
+  long ostack_data_nalloced;
+  long i;
 
   // Make sure there's space for one more
-  if (pd_stack_data_nalloced == pd_stack_top) {
-    ostack_data_nalloced = pd_stack_data_nalloced;
-    pd_stack_data_nalloced += INCREMENT;
-    tmp			 = new UTL_Scope *[pd_stack_data_nalloced];
+  if (this->pd_stack_data_nalloced == this->pd_stack_top) 
+    {
+      ostack_data_nalloced = this->pd_stack_data_nalloced;
+      this->pd_stack_data_nalloced += INCREMENT;
 
-    for (i = 0; i < ostack_data_nalloced; i++)
-      tmp[i] = pd_stack_data[i];
+      ACE_NEW_RETURN (tmp,
+                      UTL_Scope *[this->pd_stack_data_nalloced],
+                      0);
 
-    delete []pd_stack_data;
-    pd_stack_data = tmp;
-  }
+      for (i = 0; i < ostack_data_nalloced; ++i)
+        {
+          tmp[i] = this->pd_stack_data[i];
+        }
 
-  // Insert new scope
-  pd_stack_data[pd_stack_top++] = el;
+      delete [] this->pd_stack_data;
+      this->pd_stack_data = tmp;
+    }
+
+  // Insert new scope.
+  this->pd_stack_data[this->pd_stack_top++] = el;
 
   return this;
 }
 
-// Pop an element from the stack
+// Pop an element from the stack.
 void
-UTL_ScopeStack::pop()
+UTL_ScopeStack::pop (void)
 {
-  if (pd_stack_top <= 0)
-    return;
-  --pd_stack_top;
+  if (this->pd_stack_top <= 0)
+    {
+      return;
+    }
+
+  // If our top scope has a #pragma prefix associated with it,
+  // it goes away with the scope.
+  if (this->top_non_null ()->has_prefix ())
+    {
+      char *trash = 0;
+      idl_global->pragma_prefixes ().pop (trash);
+      delete [] trash;
+    }
+
+  --this->pd_stack_top;
 }
 
 // Return top element on stack
 UTL_Scope *
-UTL_ScopeStack::top()
+UTL_ScopeStack::top (void)
 {
   if (pd_stack_top <= 0)
     return NULL;
@@ -151,7 +169,7 @@ UTL_ScopeStack::top()
 
 // Return bottom element on stack
 UTL_Scope *
-UTL_ScopeStack::bottom()
+UTL_ScopeStack::bottom (void)
 {
   if (pd_stack_top == 0)
     return NULL;
@@ -160,21 +178,21 @@ UTL_ScopeStack::bottom()
 
 // Clear entire stack
 void
-UTL_ScopeStack::clear()
+UTL_ScopeStack::clear (void)
 {
   pd_stack_top = 0;
 }
 
 // How deep is the stack?
 unsigned long
-UTL_ScopeStack::depth()
+UTL_ScopeStack::depth (void)
 {
   return pd_stack_top;
 }
 
 // Return (top - 1) element on stack
 UTL_Scope *
-UTL_ScopeStack::next_to_top()
+UTL_ScopeStack::next_to_top (void)
 {
   UTL_Scope	*tmp, *retval;
 
@@ -190,7 +208,7 @@ UTL_ScopeStack::next_to_top()
 
 // Return topmost non-NULL element
 UTL_Scope *
-UTL_ScopeStack::top_non_null()
+UTL_ScopeStack::top_non_null (void)
 {
   long		i;
 

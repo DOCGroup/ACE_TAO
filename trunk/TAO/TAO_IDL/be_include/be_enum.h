@@ -27,7 +27,6 @@
 #include "be_type.h"
 #include "ast_enum.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_enum : public virtual AST_Enum,
@@ -39,7 +38,6 @@ public:
   // Default constructor.
 
   be_enum (UTL_ScopedName *n,
-           UTL_StrList *p,
            idl_bool local,
            idl_bool abstract);
   // Constructor.

@@ -36,11 +36,14 @@ class be_visitor_valuetype : public be_visitor_scope
   //
 
 public:
+
   be_visitor_valuetype (be_visitor_context *ctx);
   // constructor
 
   ~be_visitor_valuetype (void);
   // destructor
+
+public:
 
   virtual int visit_valuetype (be_valuetype *node);
   // visit the valuetype node
@@ -83,9 +86,6 @@ public:
 
   // =helper methods for generation of fields
 
-  //int gen_field_i (be_field *node, idl_bool make_inline);
-  // field accessor and modifier implemantation
-
   int gen_pd (be_valuetype *node);
   // private data fields for scope
 
@@ -98,6 +98,43 @@ public:
   virtual int gen_init_impl (be_valuetype *node);
   // generate the _init implementation
 
+protected:
+
+  // There are three possible situations.
+  // (1) If there is no initializers but at least one operation.
+  //     In this case we don't need to bother about factory.
+  //
+  // (2) There are no (operations or initializers) (i.e. only state
+  //     members) then we need a concrete type-specific factory 
+  //     class whose create_for_unmarshal creates OBV_ class.
+  //
+  // (3) There is at least one operation and at least one initializer.
+  //     In this case we need to generate abstract factory class.
+  //
+  // Here I reflect these situations.
+
+  enum FactoryStyle
+  {
+    FS_UNKNOWN,
+    FS_NO_FACTORY,
+    FS_CONCRETE_FACTORY,
+    FS_ABSTRACT_FACTORY
+  };
+
+  static FactoryStyle determine_factory_style (be_valuetype* node);
+  // determine what kind of factory needed
+
+  static idl_bool have_operation(be_valuetype* node);
+  // recurse down the inheritance tree to determine
+  // if valuetype has at least one operation/attribute.
+
+  static idl_bool obv_need_ref_counter(be_valuetype* node);
+  // check is VT needs a RefCounter mix-in in OBV_ class
+  // suppose that we are deciding for this node
+
+  static idl_bool obv_have_ref_counter(be_valuetype* node);
+  // recurse down the inheritance tree to see
+  // if node or one of its OBV_ base class already has RefCounter
 };
 
 #endif /*  _BE_VALUETYPE_VALUETYPE_H_ */

@@ -25,6 +25,7 @@ libfe_la_SOURCES = \
   fe_lookup.cpp \
   fe_private.cpp \
   lex.yy.cpp \
+  tmplinst.cpp \
   y.tab.cpp
 
 

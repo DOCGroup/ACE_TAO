@@ -28,7 +28,6 @@
 
 ACE_RCSID(be, be_interface, "$Id$")
 
-
 // Default constructor.
 be_interface::be_interface (void)
   : skel_count_ (0),
@@ -47,7 +46,6 @@ be_interface::be_interface (UTL_ScopedName *n,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
-                            UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
   : AST_Interface (n,
@@ -55,12 +53,10 @@ be_interface::be_interface (UTL_ScopedName *n,
                    nih,
                    ih_flat,
                    nih_flat,
-                   p,
                    local,
                    abstract),
     AST_Decl (AST_Decl::NT_interface,
-              n,
-              p),
+              n),
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local,
                  abstract),

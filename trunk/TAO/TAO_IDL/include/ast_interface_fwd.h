@@ -78,16 +78,16 @@ public:
   AST_InterfaceFwd (void);
 
   AST_InterfaceFwd (AST_Interface *dummy,
-                    UTL_ScopedName *n,
-                    UTL_StrList *p);
+                    UTL_ScopedName *n);
 
   // Destructor.
   virtual ~AST_InterfaceFwd (void);
 
   // Data Accessors.
   AST_Interface *full_definition (void);
-
   void set_full_definition (AST_Interface *nfd);
+
+  virtual idl_bool is_defined (void);
 
   virtual idl_bool is_local (void);
   virtual idl_bool is_valuetype (void);

@@ -102,17 +102,17 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
       // Each method is pure virtual in the Valuetype class.
-      *os << " = 0;" << be_uidt_nl;
+      *os << " = 0;" << be_nl;
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-      *os << ";\n";
+      *os << ";" << be_nl;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
-       *os << "\n";
+       *os << be_nl;
     }
 
   if (!this->ctx_->attribute ())    // hack to get a nice newline

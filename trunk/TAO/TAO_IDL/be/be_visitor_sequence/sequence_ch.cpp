@@ -90,6 +90,17 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
         }
 
       break;
+    case be_sequence::MNG_VALUE:
+      if (node->unbounded ())
+        {
+          *os << "TAO_Unbounded_Valuetype_Sequence<";
+        }
+      else
+        {
+          *os << "TAO_Bounded_Valuetype_Sequence<";
+        }
+
+      break;
     case be_sequence::MNG_STRING:
       if (node->unbounded ())
         {
@@ -225,6 +236,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
     {
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_VALUE:
       if (node->unbounded ())
         {
           this->gen_unbounded_obj_sequence (node);

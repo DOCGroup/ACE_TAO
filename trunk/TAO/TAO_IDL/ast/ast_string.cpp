@@ -84,7 +84,6 @@ AST_String::AST_String (AST_Expression *ms)
  : AST_Decl (AST_Decl::NT_string,
 		         new UTL_ScopedName (new Identifier ("string"),
 					                       0),
-             0,
              I_TRUE),
    pd_max_size (ms),
    pd_width (sizeof (char))
@@ -101,7 +100,6 @@ AST_String::AST_String (AST_Expression *ms,
        new Identifier ((wide == (long) sizeof (char)) ? "string" : "wstring"),
 			 0
      ),
-     0,
      I_TRUE
    ),
    pd_max_size (ms),

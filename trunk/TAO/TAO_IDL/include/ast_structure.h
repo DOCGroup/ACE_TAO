@@ -89,13 +89,11 @@ public:
   AST_Structure (void);
 
   AST_Structure (UTL_ScopedName *n,
-                 UTL_StrList *p,
                  idl_bool local,
                  idl_bool abstract);
 
   AST_Structure (AST_Decl::NodeType nt,
                  UTL_ScopedName *n,
-                 UTL_StrList *p,
                  idl_bool local,
                  idl_bool abstract);
 

@@ -179,6 +179,8 @@ error_string (UTL_Error::ErrorCode c)
       return ACE_TEXT ("specified symbol is not a type: ");
     case UTL_Error::EIDL_UNDERSCORE:
       return ACE_TEXT ("identifier has more than one leading underscore: ");
+    case UTL_Error::EIDL_EMPTY_MODULE:
+      return ACE_TEXT ("module must contain at least one declaration: ");
     case UTL_Error::EIDL_BACK_END:
       return ACE_TEXT ("back end: ");
   }
@@ -593,7 +595,8 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
                     idl_global->lineno (),
                     idl_global->filename ());
   d->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -608,7 +611,8 @@ UTL_Error::error2 (UTL_Error::ErrorCode c,
   d1->name ()->dump (cerr);
   cerr << ", ";
   d2->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -626,7 +630,8 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
   d2->name ()->dump (cerr);
   cerr << ", ";
   d3->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -647,7 +652,8 @@ UTL_Error::warning1 (UTL_Error::ErrorCode c,
                     idl_global->lineno (),
                     idl_global->filename ());
   d->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
 }
 
 void
@@ -661,7 +667,8 @@ UTL_Error::warning2 (UTL_Error::ErrorCode c,
   d1->name ()->dump (cerr);
   cerr << ", ";
   d2->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
 }
 
 void
@@ -678,7 +685,8 @@ UTL_Error::warning3 (UTL_Error::ErrorCode c,
   d2->name ()->dump (cerr);
   cerr << ", ";
   d3->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
 }
 
 // Report a failed coercion attempt.
@@ -759,7 +767,8 @@ UTL_Error::inheritance_fwd_error (UTL_ScopedName *n,
   n->dump (cerr);
   cerr << ACE_TEXT (" cannot inherit from forward declared interface ");
   f->local_name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -774,7 +783,8 @@ UTL_Error::inheritance_error (UTL_ScopedName *n,
   n->dump (cerr);
   cerr << ACE_TEXT (" attempts to inherit from ");
   d->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -800,7 +810,8 @@ UTL_Error::eval_error (AST_Expression *v)
                     v->line (),
                     v->file_name ());
   v->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -817,7 +828,8 @@ UTL_Error::constant_expected (UTL_ScopedName *n,
   n->dump (cerr);
   cerr << ACE_TEXT (" bound to ");
   d->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -834,7 +846,8 @@ UTL_Error::enum_val_expected (AST_Union *u,
                     u->file_name ());
   cerr << " union " << u->local_name ()->get_string () << ", ";
   l->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -855,7 +868,8 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
   cerr << " enum " << e->local_name ()->get_string () << ", ";
   cerr << " enumerator ";
   n->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -928,7 +942,8 @@ UTL_Error::ambiguous (UTL_Scope *s,
   d->name ()->dump (cerr);
   cerr << " vs. ";
   l->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -941,7 +956,8 @@ UTL_Error::fwd_decl_not_defined (AST_Interface *d)
                     d->file_name());
   cerr << "interface ";
   d->local_name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -957,7 +973,8 @@ UTL_Error::fwd_decl_lookup (AST_Interface *d,
   n->dump (cerr);
   cerr << ACE_TEXT (" in undefined forward declared interface ");
   d->local_name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -972,7 +989,8 @@ UTL_Error::redefinition_in_scope (AST_Decl *d,
   d->name ()->dump (cerr);
   cerr << ", ";
   s->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -987,7 +1005,8 @@ UTL_Error::not_a_type (AST_Decl *d)
     cerr << ACE_TEXT ("unknown symbol");
   else
     d->name ()->dump (cerr);
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 

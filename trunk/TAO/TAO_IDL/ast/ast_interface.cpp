@@ -92,12 +92,10 @@ AST_Interface::AST_Interface(UTL_ScopedName *n,
                              long nih,
                              AST_Interface **ih_flat,
                              long nih_flat,
-                             UTL_StrList *p,
                              idl_bool local,
                              idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_interface,
-              n,
-              p),
+  : AST_Decl (AST_Decl::NT_interface, 
+              n),
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local,
                  abstract),
@@ -328,7 +326,6 @@ AST_Interface::fe_add_attribute (AST_Attribute *t)
 AST_Field *
 AST_Interface::fe_add_field (AST_Field *t)
 {
-#ifdef IDL_HAS_VALUETYPE
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
@@ -369,11 +366,6 @@ AST_Interface::fe_add_field (AST_Field *t)
                            t->local_name ());
 
   return t;
-
-#else /* IDL_HAS_VALUETYPE */
-  ACE_ASSERT (0);
-  return 0;
-#endif /* IDL_HAS_VALUETYPE */
 }
 
 // Add an AST_Operation node (an operation declaration) to this scope.
@@ -764,6 +756,60 @@ AST_Interface::fe_add_native (AST_Native *t)
   return t;
 }
 
+AST_Factory *
+AST_Interface::fe_add_factory (AST_Factory *f)
+{
+  AST_Decl *d = 0;
+
+  // Can't add to interface which was not yet defined.
+  if (!this->is_defined ())
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_DECL_NOT_DEFINED,
+                                  this,
+                                  f);
+      return 0;
+    }
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (f, I_FALSE)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, f->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      f,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (f->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (f,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (f);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (f,
+                           I_FALSE,
+                           f->local_name ());
+
+  return f;
+}
+
 // Dump this AST_Interface node to the ostream o.
 void
 AST_Interface::dump (ACE_OSTREAM_TYPE &o)
@@ -817,8 +863,7 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 
 void
 AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
-                                        UTL_Scope *s,
-                                        UTL_StrList *p)
+                                        UTL_Scope *s)
 {
   if (i == 0)
     {
@@ -834,6 +879,15 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
   if (d != 0)
     {
+      // Full definition must have the same prefix as the forward declaration.
+      if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
+        {
+          idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
+                                      i);
+
+          return;
+        }
+
       // If this interface has been forward declared in a previous opening
       // of the module it's defined in, the lookup will find the
       // forward declaration.
@@ -875,12 +929,10 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
             {
               // Only redefinition of the same kind.
               if (i->is_local () != fd->is_local ()
-#             ifdef IDL_HAS_VALUETYPE
                   || i->is_valuetype () != fd->is_valuetype ()
                   || i->is_abstract_valuetype () !=
                        fd->is_abstract_valuetype ()
                   || i->is_abstract () != fd->is_abstract ()
-#             endif /* IDL_HAS_VALUETYPE */
                   )
                 {
                   idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
@@ -889,8 +941,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                   return;
                 }
 
-              fd->redefine (i,
-                            p);
+              fd->redefine (i);
 
               // Use full definition node.
               delete i;
@@ -903,8 +954,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 // Data accessors.
 
 void
-AST_Interface::redefine (AST_Interface *from,
-                         UTL_StrList *p)
+AST_Interface::redefine (AST_Interface *from)
 {
   // 'this' is the full_definition member of a forward
   // declared interface. 'from' is the actual full
@@ -916,26 +966,8 @@ AST_Interface::redefine (AST_Interface *from,
   this->set_inherits_flat (from->inherits_flat ());
   this->set_n_inherits_flat (from->n_inherits_flat ());
 
-  // If we were forward declared in another file, then forward
-  // declared in this file, then fully defined, there's a
-  // possibility of a cycle in the list of pragma strings. We
-  // want only those pragmas associated with the full definition
-  // anyway, so we just replace the list in this case.
-  if (this->imported ())
-    {
-      this->pragmas (p);
-    }
-  else
-    {
-      // If we are being defined from a forward declaration in
-      // the same scope (i.e., the same opening of the enclosing
-      // module), the two pragma lists will share the same pointer.
-      // In this case, addition would lead to infinite recursion.
-      if (this->pragmas () != p)
-        {
-          this->add_pragmas (p);
-        }
-    }
+  // We've already checked for inconsistent prefixes.
+  this->prefix (ACE::strnew (from->prefix ()));
 
   this->set_defined_in (from->defined_in ());
   this->set_imported (idl_global->imported ());

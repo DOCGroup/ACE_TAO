@@ -81,12 +81,10 @@ AST_Structure::AST_Structure (void)
 }
 
 AST_Structure::AST_Structure (UTL_ScopedName *n,
-                              UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (AST_Decl::NT_struct,
-             n,
-             p),
+ : AST_Decl (AST_Decl::NT_struct, 
+             n),
    UTL_Scope (AST_Decl::NT_struct),
    COMMON_Base (local,
                 abstract),
@@ -97,12 +95,10 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
 
 AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                               UTL_ScopedName *n,
-                              UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (nt,
-             n,
-             p),
+ : AST_Decl (nt, 
+             n),
    UTL_Scope (nt),
    COMMON_Base (local,
                 abstract),
@@ -546,16 +542,3 @@ IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Structure)
 IMPL_NARROW_FROM_SCOPE(AST_Structure)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<AST_Field *>;
-template class ACE_Unbounded_Queue<AST_Field *>;
-template class ACE_Unbounded_Queue_Iterator<AST_Field *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<AST_Decl *>
-#pragma instantiate ACE_Unbounded_Queue<AST_Decl *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Decl *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -80,11 +80,9 @@ AST_Type::AST_Type (void)
 }
 
 AST_Type::AST_Type (AST_Decl::NodeType nt,
-                    UTL_ScopedName *n,
-                    UTL_StrList *p)
+                    UTL_ScopedName *n)
   : AST_Decl (nt, 
-              n, 
-              p),
+              n),
     ifr_added_ (0),
     ifr_fwd_added_ (0)
 {
@@ -101,6 +99,14 @@ AST_Type::in_recursion (AST_Type *)
 {
   // By default we are not involved in recursion.
   return 0;
+}
+
+idl_bool
+AST_Type::is_defined (void)
+{
+  // AST_Interface, AST_Structure, and AST_Union will
+  // override this, as will AST_InterfaceFwd, etc.
+  return 1;
 }
 
 idl_bool 

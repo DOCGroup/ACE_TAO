@@ -79,12 +79,10 @@ AST_Root::AST_Root (void)
 {
 }
 
-AST_Root::AST_Root (UTL_ScopedName *n,
-                    UTL_StrList *p)
-        : AST_Decl (AST_Decl::NT_module,
-              n,
-              p),
-          UTL_Scope (AST_Decl::NT_module)
+AST_Root::AST_Root (UTL_ScopedName *n)
+	: AST_Decl (AST_Decl::NT_module, 
+              n),
+	  UTL_Scope (AST_Decl::NT_module)
 {
 }
 

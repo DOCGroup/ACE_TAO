@@ -32,11 +32,9 @@ be_type::be_type (void)
 }
 
 be_type::be_type (AST_Decl::NodeType nt, 
-                  UTL_ScopedName *n, 
-                  UTL_StrList *p)
+                  UTL_ScopedName *n)
   : AST_Decl (nt, 
-              n, 
-              p),
+              n),
     tc_name_ (0),
     nested_type_name_ (0)
 {

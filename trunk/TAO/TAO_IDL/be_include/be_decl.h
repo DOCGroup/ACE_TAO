@@ -49,8 +49,7 @@ public:
   // Default constructor.
 
   be_decl (AST_Decl::NodeType type, 
-           UTL_ScopedName *n, 
-           UTL_StrList *pragmas);
+           UTL_ScopedName *n);
   // Constructor that sets the node type.
 
   ~be_decl (void);

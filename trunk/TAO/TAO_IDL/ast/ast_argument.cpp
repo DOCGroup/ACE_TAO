@@ -103,15 +103,12 @@ AST_Argument::AST_Argument (void)
 
 AST_Argument::AST_Argument (Direction d, 
                             AST_Type *ft, 
-                            UTL_ScopedName *n,
-			                      UTL_StrList *p)
+                            UTL_ScopedName *n)
   : AST_Field (AST_Decl::NT_argument, 
                ft, 
-               n, 
-               p),
+               n),
 	  AST_Decl (AST_Decl::NT_argument, 
-              n, 
-              p),
+              n),
 	  pd_direction (d)
 {
 }

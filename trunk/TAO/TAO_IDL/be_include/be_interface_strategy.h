@@ -40,7 +40,7 @@ public:
   };
 
   be_interface_strategy (be_interface *node,
-                              Strategy_Kind strategy_type);
+                         Strategy_Kind strategy_type);
 
   virtual ~be_interface_strategy ();
 

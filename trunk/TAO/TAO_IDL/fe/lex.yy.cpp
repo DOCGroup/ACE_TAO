@@ -802,14 +802,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_private.h"
 #include "y.tab.h"
 
-static char *           idl_wstring_escape_reader(char *);
-static ACE_CDR::WChar   idl_wchar_escape_reader(char *);
-static char             idl_escape_reader(char *);
-static double           idl_atof(char *);
-static long             idl_atoi(char *, long);
-static unsigned long    idl_atoui(char *, long);
-static void             idl_parse_line_and_file(char *);
-static void             idl_store_pragma(char *);
+static char *           idl_wstring_escape_reader (char *);
+static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
+static char             idl_escape_reader (char *);
+static double           idl_atof (char *);
+static long             idl_atoi (char *, long);
+static unsigned long	idl_atoui (char *, long);
+static void		idl_parse_line_and_file (char *);
+static void		idl_store_pragma (char *);
+static char *           idl_get_pragma_string (char *);
+static idl_bool         idl_valid_version (char *);
+static AST_Decl *       idl_find_node (char *);
 
 #if 0 /* defined (HPUX) */
 // HPUX has tao_yytext typed to unsigned char *. We make sure here that
@@ -1518,137 +1521,136 @@ TAO_YY_RULE_SETUP
 TAO_YY_ECHO;
         break;
 case TAO_YY_STATE_EOF(INITIAL):
-        tao_yyterminate();
+	tao_yyterminate();
 
-        case TAO_YY_END_OF_BUFFER:
-                {
-                /* Amount of text matched not including the EOB char. */
-                int tao_yy_amount_of_matched_text = (int) (tao_yy_cp - tao_yytext_ptr) - 1;
+	case TAO_YY_END_OF_BUFFER:
+		{
+		/* Amount of text matched not including the EOB char. */
+		int tao_yy_amount_of_matched_text = (int) (tao_yy_cp - tao_yytext_ptr) - 1;
 
-                /* Undo the effects of TAO_YY_DO_BEFORE_ACTION. */
-                *tao_yy_cp = tao_yy_hold_char;
-                TAO_YY_RESTORE_TAO_YY_MORE_OFFSET
+		/* Undo the effects of TAO_YY_DO_BEFORE_ACTION. */
+		*tao_yy_cp = tao_yy_hold_char;
+		TAO_YY_RESTORE_TAO_YY_MORE_OFFSET
 
-                if ( tao_yy_current_buffer->tao_yy_buffer_status == TAO_YY_BUFFER_NEW )
-                        {
-                        /* We're scanning a new file or input source.  It's
-                         * possible that this happened because the user
-                         * just pointed tao_yyin at a new source and called
-                         * tao_yylex().  If so, then we have to assure
-                         * consistency between tao_yy_current_buffer and our
-                         * globals.  Here is the right place to do so, because
-                         * this is the first action (other than possibly a
-                         * back-up) that will match for the new input source.
-                         */
-                        tao_yy_n_chars = tao_yy_current_buffer->tao_yy_n_chars;
-                        tao_yy_current_buffer->tao_yy_input_file = tao_yyin;
-                        tao_yy_current_buffer->tao_yy_buffer_status = TAO_YY_BUFFER_NORMAL;
-                        }
+		if ( tao_yy_current_buffer->tao_yy_buffer_status == TAO_YY_BUFFER_NEW )
+			{
+			/* We're scanning a new file or input source.  It's
+			 * possible that this happened because the user
+			 * just pointed tao_yyin at a new source and called
+			 * tao_yylex().  If so, then we have to assure
+			 * consistency between tao_yy_current_buffer and our
+			 * globals.  Here is the right place to do so, because
+			 * this is the first action (other than possibly a
+			 * back-up) that will match for the new input source.
+			 */
+			tao_yy_n_chars = tao_yy_current_buffer->tao_yy_n_chars;
+			tao_yy_current_buffer->tao_yy_input_file = tao_yyin;
+			tao_yy_current_buffer->tao_yy_buffer_status = TAO_YY_BUFFER_NORMAL;
+			}
 
-                /* Note that here we test for tao_yy_c_buf_p "<=" to the position
-                 * of the first EOB in the buffer, since tao_yy_c_buf_p will
-                 * already have been incremented past the NUL character
-                 * (since all states make transitions on EOB to the
-                 * end-of-buffer state).  Contrast this with the test
-                 * in input().
-                 */
-                if ( tao_yy_c_buf_p <= &tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars] )
-                        { /* This was really a NUL. */
-                        tao_yy_state_type tao_yy_next_state;
+		/* Note that here we test for tao_yy_c_buf_p "<=" to the position
+		 * of the first EOB in the buffer, since tao_yy_c_buf_p will
+		 * already have been incremented past the NUL character
+		 * (since all states make transitions on EOB to the
+		 * end-of-buffer state).  Contrast this with the test
+		 * in input().
+		 */
+		if ( tao_yy_c_buf_p <= &tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars] )
+			{ /* This was really a NUL. */
+			tao_yy_state_type tao_yy_next_state;
 
-                        tao_yy_c_buf_p = tao_yytext_ptr + tao_yy_amount_of_matched_text;
+			tao_yy_c_buf_p = tao_yytext_ptr + tao_yy_amount_of_matched_text;
 
-                        tao_yy_current_state = tao_yy_get_previous_state();
+			tao_yy_current_state = tao_yy_get_previous_state();
 
-                        /* Okay, we're now positioned to make the NUL
-                         * transition.  We couldn't have
-                         * tao_yy_get_previous_state() go ahead and do it
-                         * for us because it doesn't know how to deal
-                         * with the possibility of jamming (and we don't
-                         * want to build jamming into it because then it
-                         * will run more slowly).
-                         */
+			/* Okay, we're now positioned to make the NUL
+			 * transition.  We couldn't have
+			 * tao_yy_get_previous_state() go ahead and do it
+			 * for us because it doesn't know how to deal
+			 * with the possibility of jamming (and we don't
+			 * want to build jamming into it because then it
+			 * will run more slowly).
+			 */
 
-                        tao_yy_next_state = tao_yy_try_NUL_trans( tao_yy_current_state );
+			tao_yy_next_state = tao_yy_try_NUL_trans( tao_yy_current_state );
 
-                        tao_yy_bp = tao_yytext_ptr + TAO_YY_MORE_ADJ;
+			tao_yy_bp = tao_yytext_ptr + TAO_YY_MORE_ADJ;
 
-                        if ( tao_yy_next_state )
-                                {
-                                /* Consume the NUL. */
-                                tao_yy_cp = ++tao_yy_c_buf_p;
-                                tao_yy_current_state = tao_yy_next_state;
-                                goto tao_yy_match;
-                                }
+			if ( tao_yy_next_state )
+				{
+				/* Consume the NUL. */
+				tao_yy_cp = ++tao_yy_c_buf_p;
+				tao_yy_current_state = tao_yy_next_state;
+				goto tao_yy_match;
+				}
 
-                        else
-                                {
-                                tao_yy_cp = tao_yy_c_buf_p;
-                                goto tao_yy_find_action;
-                                }
-                        }
+			else
+				{
+				tao_yy_cp = tao_yy_c_buf_p;
+				goto tao_yy_find_action;
+				}
+			}
 
-                else switch ( tao_yy_get_next_buffer() )
-                        {
-                        case EOB_ACT_END_OF_FILE:
-                                {
-                                tao_yy_did_buffer_switch_on_eof = 0;
+		else switch ( tao_yy_get_next_buffer() )
+			{
+			case EOB_ACT_END_OF_FILE:
+				{
+				tao_yy_did_buffer_switch_on_eof = 0;
 
-                                if ( tao_yywrap() )
-                                        {
-                                        /* Note: because we've taken care in
-                                         * tao_yy_get_next_buffer() to have set up
-                                         * tao_yytext, we can now set up
-                                         * tao_yy_c_buf_p so that if some total
-                                         * hoser (like flex itself) wants to
-                                         * call the scanner after we return the
-                                         * TAO_YY_NULL, it'll still work - another
-                                         * TAO_YY_NULL will get returned.
-                                         */
-                                        tao_yy_c_buf_p = tao_yytext_ptr + TAO_YY_MORE_ADJ;
+				if ( tao_yywrap() )
+					{
+					/* Note: because we've taken care in
+					 * tao_yy_get_next_buffer() to have set up
+					 * tao_yytext, we can now set up
+					 * tao_yy_c_buf_p so that if some total
+					 * hoser (like flex itself) wants to
+					 * call the scanner after we return the
+					 * TAO_YY_NULL, it'll still work - another
+					 * TAO_YY_NULL will get returned.
+					 */
+					tao_yy_c_buf_p = tao_yytext_ptr + TAO_YY_MORE_ADJ;
 
-                                        tao_yy_act = TAO_YY_STATE_EOF(TAO_YY_START);
-                                        goto do_action;
-                                        }
+					tao_yy_act = TAO_YY_STATE_EOF(TAO_YY_START);
+					goto do_action;
+					}
 
-                                else
-                                        {
-                                        if ( ! tao_yy_did_buffer_switch_on_eof )
-                                                TAO_YY_NEW_FILE;
-                                        }
-                                break;
-                                }
+				else
+					{
+					if ( ! tao_yy_did_buffer_switch_on_eof )
+						TAO_YY_NEW_FILE;
+					}
+				break;
+				}
 
-                        case EOB_ACT_CONTINUE_SCAN:
-                                tao_yy_c_buf_p =
-                                        tao_yytext_ptr + tao_yy_amount_of_matched_text;
+			case EOB_ACT_CONTINUE_SCAN:
+				tao_yy_c_buf_p =
+					tao_yytext_ptr + tao_yy_amount_of_matched_text;
 
-                                tao_yy_current_state = tao_yy_get_previous_state();
+				tao_yy_current_state = tao_yy_get_previous_state();
 
-                                tao_yy_cp = tao_yy_c_buf_p;
-                                tao_yy_bp = tao_yytext_ptr + TAO_YY_MORE_ADJ;
-                                goto tao_yy_match;
+				tao_yy_cp = tao_yy_c_buf_p;
+				tao_yy_bp = tao_yytext_ptr + TAO_YY_MORE_ADJ;
+				goto tao_yy_match;
 
-                        case EOB_ACT_LAST_MATCH:
-                                tao_yy_c_buf_p =
-                                &tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars];
+			case EOB_ACT_LAST_MATCH:
+				tao_yy_c_buf_p =
+				&tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars];
 
-                                tao_yy_current_state = tao_yy_get_previous_state();
+				tao_yy_current_state = tao_yy_get_previous_state();
 
-                                tao_yy_cp = tao_yy_c_buf_p;
-                                tao_yy_bp = tao_yytext_ptr + TAO_YY_MORE_ADJ;
-                                goto tao_yy_find_action;
-                        }
-                break;
-                }
+				tao_yy_cp = tao_yy_c_buf_p;
+				tao_yy_bp = tao_yytext_ptr + TAO_YY_MORE_ADJ;
+				goto tao_yy_find_action;
+			}
+		break;
+		}
 
-        default:
-                TAO_YY_FATAL_ERROR(
-                        "fatal flex scanner internal error--no action found" );
-        } /* end of action switch */
-                } /* end of scanning one token */
-        } /* end of tao_yylex */
-
+	default:
+		TAO_YY_FATAL_ERROR(
+			"fatal flex scanner internal error--no action found" );
+	} /* end of action switch */
+		} /* end of scanning one token */
+	} /* end of tao_yylex */
 
 /* tao_yy_get_next_buffer - try to read in a new buffer
  *
@@ -1714,79 +1716,78 @@ static int tao_yy_get_next_buffer()
 "input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
 #else
 
-                        /* just a shorter name for the current buffer */
-                        TAO_YY_BUFFER_STATE b = tao_yy_current_buffer;
+			/* just a shorter name for the current buffer */
+			TAO_YY_BUFFER_STATE b = tao_yy_current_buffer;
 
-                        int tao_yy_c_buf_p_offset =
-                                (int) (tao_yy_c_buf_p - b->tao_yy_ch_buf);
+			int tao_yy_c_buf_p_offset =
+				(int) (tao_yy_c_buf_p - b->tao_yy_ch_buf);
 
-                        if ( b->tao_yy_is_our_buffer )
-                                {
-                                int new_size = b->tao_yy_buf_size * 2;
+			if ( b->tao_yy_is_our_buffer )
+				{
+				int new_size = b->tao_yy_buf_size * 2;
 
-                                if ( new_size <= 0 )
-                                        b->tao_yy_buf_size += b->tao_yy_buf_size / 8;
-                                else
-                                        b->tao_yy_buf_size *= 2;
+				if ( new_size <= 0 )
+					b->tao_yy_buf_size += b->tao_yy_buf_size / 8;
+				else
+					b->tao_yy_buf_size *= 2;
 
-                                b->tao_yy_ch_buf = (char *)
-                                        /* Include room in for 2 EOB chars. */
-                                        tao_yy_flex_realloc( (void *) b->tao_yy_ch_buf,
-                                                         b->tao_yy_buf_size + 2 );
-                                }
-                        else
-                                /* Can't grow it, we don't own it. */
-                                b->tao_yy_ch_buf = 0;
+				b->tao_yy_ch_buf = (char *)
+					/* Include room in for 2 EOB chars. */
+					tao_yy_flex_realloc( (void *) b->tao_yy_ch_buf,
+							 b->tao_yy_buf_size + 2 );
+				}
+			else
+				/* Can't grow it, we don't own it. */
+				b->tao_yy_ch_buf = 0;
 
-                        if ( ! b->tao_yy_ch_buf )
-                                TAO_YY_FATAL_ERROR(
-                                "fatal error - scanner input buffer overflow" );
+			if ( ! b->tao_yy_ch_buf )
+				TAO_YY_FATAL_ERROR(
+				"fatal error - scanner input buffer overflow" );
 
-                        tao_yy_c_buf_p = &b->tao_yy_ch_buf[tao_yy_c_buf_p_offset];
+			tao_yy_c_buf_p = &b->tao_yy_ch_buf[tao_yy_c_buf_p_offset];
 
-                        num_to_read = tao_yy_current_buffer->tao_yy_buf_size -
-                                                number_to_move - 1;
+			num_to_read = tao_yy_current_buffer->tao_yy_buf_size -
+						number_to_move - 1;
 #endif
-                        }
+			}
 
-                if ( num_to_read > TAO_YY_READ_BUF_SIZE )
-                        num_to_read = TAO_YY_READ_BUF_SIZE;
+		if ( num_to_read > TAO_YY_READ_BUF_SIZE )
+			num_to_read = TAO_YY_READ_BUF_SIZE;
 
-                /* Read in more data. */
-                TAO_YY_INPUT( (&tao_yy_current_buffer->tao_yy_ch_buf[number_to_move]),
-                        tao_yy_n_chars, num_to_read );
+		/* Read in more data. */
+		TAO_YY_INPUT( (&tao_yy_current_buffer->tao_yy_ch_buf[number_to_move]),
+			tao_yy_n_chars, num_to_read );
 
-                tao_yy_current_buffer->tao_yy_n_chars = tao_yy_n_chars;
-                }
+		tao_yy_current_buffer->tao_yy_n_chars = tao_yy_n_chars;
+		}
 
-        if ( tao_yy_n_chars == 0 )
-                {
-                if ( number_to_move == TAO_YY_MORE_ADJ )
-                        {
-                        ret_val = EOB_ACT_END_OF_FILE;
-                        tao_yyrestart( tao_yyin );
-                        }
+	if ( tao_yy_n_chars == 0 )
+		{
+		if ( number_to_move == TAO_YY_MORE_ADJ )
+			{
+			ret_val = EOB_ACT_END_OF_FILE;
+			tao_yyrestart( tao_yyin );
+			}
 
-                else
-                        {
-                        ret_val = EOB_ACT_LAST_MATCH;
-                        tao_yy_current_buffer->tao_yy_buffer_status =
-                                TAO_YY_BUFFER_EOF_PENDING;
-                        }
-                }
+		else
+			{
+			ret_val = EOB_ACT_LAST_MATCH;
+			tao_yy_current_buffer->tao_yy_buffer_status =
+				TAO_YY_BUFFER_EOF_PENDING;
+			}
+		}
 
-        else
-                ret_val = EOB_ACT_CONTINUE_SCAN;
+	else
+		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-        tao_yy_n_chars += number_to_move;
-        tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars] = TAO_YY_END_OF_BUFFER_CHAR;
-        tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars + 1] = TAO_YY_END_OF_BUFFER_CHAR;
+	tao_yy_n_chars += number_to_move;
+	tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars] = TAO_YY_END_OF_BUFFER_CHAR;
+	tao_yy_current_buffer->tao_yy_ch_buf[tao_yy_n_chars + 1] = TAO_YY_END_OF_BUFFER_CHAR;
 
-        tao_yytext_ptr = &tao_yy_current_buffer->tao_yy_ch_buf[0];
+	tao_yytext_ptr = &tao_yy_current_buffer->tao_yy_ch_buf[0];
 
-        return ret_val;
-        }
-
+	return ret_val;
+	}
 
 /* tao_yy_get_previous_state - get the state just before the EOB char was reached */
 
@@ -1994,29 +1995,28 @@ void tao_yy_switch_to_buffer( TAO_YY_BUFFER_STATE new_buffer )
 void tao_yy_switch_to_buffer( new_buffer )
 TAO_YY_BUFFER_STATE new_buffer;
 #endif
-        {
-        if ( tao_yy_current_buffer == new_buffer )
-                return;
+	{
+	if ( tao_yy_current_buffer == new_buffer )
+		return;
 
-        if ( tao_yy_current_buffer )
-                {
-                /* Flush out information for old buffer. */
-                *tao_yy_c_buf_p = tao_yy_hold_char;
-                tao_yy_current_buffer->tao_yy_buf_pos = tao_yy_c_buf_p;
-                tao_yy_current_buffer->tao_yy_n_chars = tao_yy_n_chars;
-                }
+	if ( tao_yy_current_buffer )
+		{
+		/* Flush out information for old buffer. */
+		*tao_yy_c_buf_p = tao_yy_hold_char;
+		tao_yy_current_buffer->tao_yy_buf_pos = tao_yy_c_buf_p;
+		tao_yy_current_buffer->tao_yy_n_chars = tao_yy_n_chars;
+		}
 
-        tao_yy_current_buffer = new_buffer;
-        tao_yy_load_buffer_state();
+	tao_yy_current_buffer = new_buffer;
+	tao_yy_load_buffer_state();
 
-        /* We don't actually know whether we did this switch during
-         * EOF (tao_yywrap()) processing, but the only time this flag
-         * is looked at is after tao_yywrap() is called, so it's safe
-         * to go ahead and always set it.
-         */
-        tao_yy_did_buffer_switch_on_eof = 1;
-        }
-
+	/* We don't actually know whether we did this switch during
+	 * EOF (tao_yywrap()) processing, but the only time this flag
+	 * is looked at is after tao_yywrap() is called, so it's safe
+	 * to go ahead and always set it.
+	 */
+	tao_yy_did_buffer_switch_on_eof = 1;
+	}
 
 #ifdef TAO_YY_USE_PROTOS
 void tao_yy_load_buffer_state( void )
@@ -2425,48 +2425,74 @@ stripped_name(UTL_String *fn)
     return n;
 }
 
-/*
- * Parse a #line statement generated by the C preprocessor
- */
+// Parse a #line statement generated by the C preprocessor
 static void
-idl_parse_line_and_file(char *buf)
+idl_parse_line_and_file (char *buf)
 {
-  char          *r = buf;
-  char          *h;
-  UTL_String    *nm;
+  char *r = buf;
+  char *h = 0;
+  UTL_String *nm = 0;
 
-  /* Skip initial '#' */
+  // Skip initial '#'.
   if (*r != '#')
-    return;
+    {
+      return;
+    }
   else
-    r++;
+    {
+      r++;
+    }
 
-  /* Check to see if we're running under the screwy Microsoft scheme */
-  /* of putting #line num instead of #num. */
+  // Check to see if we're running under the screwy Microsoft scheme
+  // of putting #line num instead of #num.
 
   if (ACE_OS::strncmp (r, "line", 4) == 0)
-    r += 5;
+    {
+      r += 5;
+    }
 
-  /* Find line number */
+  // Find line number.
   while (isspace (*r))
-    r++;
-  h = r;
-  for (; isdigit (*r); r++)
-    continue;
-  *r++ = 0;
-  idl_global->set_lineno(idl_atoui(h, 10));
+    {
+      r++;
+    }
 
-  /* Find file name, if present */
+  h = r;
+
+  for (; isdigit (*r); r++)
+    {
+      continue;
+    }
+
+  *r++ = 0;
+  idl_global->set_lineno (idl_atoui (h, 10));
+
+  // Find file name, if present.
   for (; *r != '"'; r++)
-    if (*r == '\n' || *r == '\0')
-      return;
+    {
+      if (*r == '\n' || *r == '\0')
+        {
+          return;
+        }
+    }
 
   h = ++r;
+
   for (; *r != '"'; r++)
-    continue;
+    {
+      continue;
+    }
+
   *r = 0;
+  UTL_String *tmp = 0;
+
   if (*h == '\0')
-    idl_global->set_filename(new UTL_String("standard input"));
+    {
+      ACE_NEW (tmp,
+               UTL_String ("standard input"));
+      idl_global->set_filename (tmp);
+      return;
+    }
   else
     {
       long i;
@@ -2476,70 +2502,183 @@ idl_parse_line_and_file(char *buf)
       for (i = 0, j = 0; h[j] != '\0'; i++, j++)
         {
           if (h[j] == '\\' && h[j + 1] == '\\')
-            j++;
+            {
+	            j++;
+            }
 
-          h[i] = h[j];
+	        h[i] = h[j];
         }
+
       h[i] = '\0';
-      idl_global->set_filename(new UTL_String(h));
+      ACE_NEW (tmp,
+               UTL_String (h));
+      idl_global->set_filename (tmp);
     }
-  int in_main_file = I_FALSE;
-  if (idl_global->filename()->compare(idl_global->real_filename())
-      || idl_global->filename()->compare(idl_global->main_filename()))
-    in_main_file = I_TRUE;
-  idl_global->set_in_main_file(in_main_file);
-  /*
-   * If it's an import file store the stripped name for the BE to use
-   */
-  if (!(idl_global->in_main_file()) && idl_global->import()) {
-    nm = new UTL_String(stripped_name(idl_global->filename()));
-    idl_global->store_include_file_name(nm);
-  }
+
+  UTL_String *fname = idl_global->filename ();
+  idl_bool in_main_file = I_FALSE;
+  idl_bool is_real_filename = fname->compare (idl_global->real_filename ());
+  idl_bool is_main_filename = I_FALSE;
+
+  if (!is_real_filename)
+    {
+      is_main_filename = fname->compare (idl_global->main_filename ());
+    }
+
+  if (is_real_filename || is_main_filename)
+    {
+      in_main_file = I_TRUE;
+    }
+
+  idl_global->set_in_main_file (in_main_file);
+
+  // If it's an import file store the stripped name for the BE to use
+  if (!(idl_global->in_main_file ()) && idl_global->import ()) 
+    {
+      ACE_NEW (nm,
+               UTL_String (stripped_name (fname)));
+
+      // This call also manages the #pragma prefix.
+      idl_global->store_include_file_name (nm);
+    }
+  else if (is_main_filename && idl_global->pragma_prefixes ().size () > 1)
+    {
+      // If we're here, we have come to the end of an included file, so we
+      // pop its prefix.
+      char *trash = 0;
+      idl_global->pragma_prefixes ().pop (trash);
+      delete [] trash;
+    }
 }
 
-/*
- * Store a #pragma line into the list of pragmas
- */
+// Store a #pragma line into the list of pragmas
 static void
-idl_store_pragma(char *buf)
+idl_store_pragma (char *buf)
 {
   char *sp = buf + 1;
-  // Remove all the blanks between the '#' and the 'pragma'
+
+  // Remove all the blanks between the '#' and the 'pragma'.
   if (*sp != 'p')
     {
       while (*sp != 'p')
-        ++sp;
+        {
+          ++sp;
+        }
+
       char *tp = buf + 1;
+
       while (*sp != '\n')
         {
           *tp = *sp;
-          ++tp; ++sp;
+	        ++tp; 
+          ++sp;
         }
     }
 
-  if (ACE_OS::strstr(buf + 8, "import") != 0) {
-    idl_global->set_import(I_TRUE);
-    return;
-  }
-  if (ACE_OS::strstr(buf + 8, "include") != 0) {
-    idl_global->set_import(I_FALSE);
-    return;
-  }
-  // Remove the final '\n'
+  if (ACE_OS::strstr (buf + 8, "import") != 0) 
+    {
+      idl_global->set_import (I_TRUE);
+      return;
+    }
+
+  if (ACE_OS::strstr (buf + 8, "include") != 0) 
+    {
+      idl_global->set_import (I_FALSE);
+      return;
+    }
+
+  // Remove the final '\n'.
   while (*sp != '\n')
-    ++sp;
+    {
+      ++sp;
+    }
+
   *sp = '\0';
-  if (ACE_OS::strstr(buf + 8, "ident") != 0) {
-    idl_global->ident_string(buf + 8);
-    return;
-  }
-  UTL_StrList *p = idl_global->pragmas();
-  if (p == NULL)
-    idl_global->set_pragmas(new UTL_StrList(new UTL_String(buf), NULL));
-  else {
-    p->nconc(new UTL_StrList(new UTL_String(buf), NULL));
-    idl_global->set_pragmas(p);
-  }
+
+  if (ACE_OS::strncmp (buf + 8, "prefix", 6) == 0)
+    {
+      char *new_prefix = idl_get_pragma_string (buf);
+
+      if (new_prefix != 0)
+        {
+          unsigned long depth = idl_global->scopes ()->depth ();
+
+          // At global scope, we always replace the prefix. For all
+          // other scopes, we replace only if there is a prefix already
+          // associated with that scope, otherwise we add the prefix.
+          if (depth == 1 || idl_global->scopes ()->top ()->has_prefix ())
+            {
+              char *trash = 0;
+              idl_global->pragma_prefixes ().pop (trash);
+              delete [] trash;
+            }
+
+          if (depth > 1)
+            {
+              idl_global->scopes ()->top ()->has_prefix (1);
+            }
+
+          idl_global->pragma_prefixes ().push (new_prefix);
+        }
+    }
+  else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
+    {
+      char *tmp = buf + 16;
+
+      while (*tmp == ' ')
+        {
+          ++tmp;
+        }
+
+      char *number = ACE_OS::strchr (tmp, ' ');
+
+      while (*number == ' ')
+        {
+          ++number;
+        }
+
+      AST_Decl *d = idl_find_node (tmp);
+
+      if (d == 0)
+        {
+          return;
+        }
+
+      if (!idl_valid_version (number))
+        {
+          idl_global->err ()->version_number_error (number);
+          return;
+        }
+
+      d->version (ACE::strnew (number));
+    }
+  else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0) 
+    {
+      idl_global->ident_string (buf + 8);
+    }
+  else if (ACE_OS::strncmp (buf + 8, "id", 2) == 0)
+    {
+      char *tmp = buf + 11;
+
+      while (*tmp == ' ')
+        {
+          ++tmp;
+        }
+
+      AST_Decl *d = idl_find_node (tmp);
+
+      if (d == 0)
+        {
+          return;
+        }
+
+      char *new_id = idl_get_pragma_string (buf);
+
+      if (new_id != 0)
+        {
+          d->repoID (new_id);
+        }
+    }
 }
 
 /*
@@ -2751,4 +2890,112 @@ static char *
 idl_wstring_escape_reader (char *str)
 {
   return str;
+}
+
+static char *
+idl_get_pragma_string (char *pragma)
+{
+  // Get pointers to each end of the substring between the quotes.
+  const char *start = ACE_OS::strchr (pragma, '"') + 1;
+  const char *end = ACE_OS::strchr (start, '"');
+
+  if (end == 0)
+    {
+      idl_global->err ()->syntax_error (
+          IDL_GlobalData::PS_PragmaPrefixSyntax
+        );
+
+      return 0;
+    }
+
+  int len = end - start;
+  char *retval = 0;
+
+  ACE_NEW_RETURN (retval,
+                  char[len + 1],
+                  0);
+
+  ACE_OS::strncpy (retval,
+                   start,
+                   len);
+
+  retval[len] = '\0';
+  return retval;
+}
+
+static idl_bool
+idl_valid_version (char *s)
+{
+  // Nothing preceding decimal point.
+  if (*s == '.')
+    {
+      return 0;
+    }
+
+  char *minor = ACE_OS::strchr (s, '.');
+  int i;
+
+  if (minor == 0)
+    {
+      // No decimal point.
+      return 0;
+    }
+
+  if (*(minor + 1) == '\0')
+    {
+      // Nothing following decimal point.
+      return 0;
+    }
+
+  char *tmp = minor + 1;
+
+  for (i = 0; tmp[i] != '\0'; ++i)
+    {
+      if (!isdigit (tmp[i]))
+        {
+          return 0;
+        }
+    }
+
+  int len = minor - s;
+
+  for (i = 0; i < len; ++i)
+    {
+      if (!isdigit (s[i]))
+        {
+          return 0;
+        }
+    }
+
+  // Major and minor version numbers must be unsigned shorts.
+  if (ACE_OS::atoi (minor + 1) > ACE_UINT16_MAX
+      || ACE_OS::atoi (s) > ACE_UINT16_MAX)
+    {
+      return 0;
+    }
+
+  return 1;
+}
+
+static AST_Decl *
+idl_find_node (char *s)
+{
+  UTL_ScopedName *node = idl_global->string_to_scoped_name (s);
+  AST_Decl *d = 0;
+
+  if (node != 0)
+    {
+      d = idl_global->scopes ()->top_non_null ()->lookup_by_name (node,
+                                                                  I_TRUE);
+    }
+
+  if (d == 0)
+    {
+      idl_global->err ()->lookup_error (node);
+      node->destroy ();
+      delete node;
+      node = 0;
+    }
+
+  return d;
 }

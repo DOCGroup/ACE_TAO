@@ -61,6 +61,8 @@ be_scope::decl (void)
       return be_enum::narrow_from_scope (this);
     case AST_Decl::NT_op:
       return be_operation::narrow_from_scope (this);
+    case AST_Decl::NT_factory:
+      return be_factory::narrow_from_scope (this);
     default:
       return (be_decl *)0;
     }

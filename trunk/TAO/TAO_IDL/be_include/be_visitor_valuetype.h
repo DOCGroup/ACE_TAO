@@ -18,8 +18,6 @@
 #ifndef TAO_BE_VISITOR_VALUETYPE_H
 #define TAO_BE_VISITOR_VALUETYPE_H
 
-#ifdef IDL_HAS_VALUETYPE
-
 #include "be_visitor_scope.h"
 
 #include "be_visitor_valuetype/valuetype.h"
@@ -31,6 +29,7 @@
 #include "be_visitor_valuetype/valuetype_cs.h"
 #include "be_visitor_valuetype/cdr_op_ch.h"
 #include "be_visitor_valuetype/cdr_op_ci.h"
+#include "be_visitor_valuetype/cdr_op_cs.h"
 #include "be_visitor_valuetype/marshal_ch.h"
 #include "be_visitor_valuetype/marshal_cs.h"
 #include "be_visitor_valuetype/arglist.h"
@@ -42,7 +41,10 @@
 #include "be_visitor_valuetype/obv_module.h"
 #include "be_visitor_valuetype/ami_exception_holder_ch.h"
 #include "be_visitor_valuetype/ami_exception_holder_cs.h"
-
-#endif /* IDL_HAS_VALUETYPE */
+#include "be_visitor_valuetype/valuetype_init.h"
+#include "be_visitor_valuetype/valuetype_init_ch.h"
+#include "be_visitor_valuetype/valuetype_init_ci.h"
+#include "be_visitor_valuetype/valuetype_init_cs.h"
+#include "be_visitor_valuetype/valuetype_init_arglist_ch.h"
 
 #endif /* TAO_BE_VISITOR_VALUETYPE_H */

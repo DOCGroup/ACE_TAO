@@ -214,7 +214,8 @@ UTL_Scope::UTL_Scope (void)
     pd_referenced_used (0),
     pd_name_referenced (0),
     pd_name_referenced_allocated (0),
-    pd_name_referenced_used (0)
+    pd_name_referenced_used (0),
+    has_prefix_ (0)
 {
 }
 
@@ -231,7 +232,8 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
     pd_referenced_used (0),
     pd_name_referenced (0),
     pd_name_referenced_allocated (0),
-    pd_name_referenced_used (0)
+    pd_name_referenced_used (0),
+    has_prefix_ (0)
 {
 }
 
@@ -360,10 +362,6 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
 }
 
 // Public operations.
-
-// Narrowing
-IMPL_NARROW_METHODS0(UTL_Scope)
-IMPL_NARROW_FROM_SCOPE(UTL_Scope)
 
 // Scope Management Protocol.
 //
@@ -686,6 +684,19 @@ UTL_Scope::add_native (AST_Native *n)
   return n;
 }
 
+AST_Factory *
+UTL_Scope::add_factory (AST_Factory *f)
+{
+  //We don't invite any new types so there is nothing actually to add
+  if (f == 0) 
+    {
+      return 0;
+    }
+
+  f->set_added (I_TRUE);
+  return f;
+}
+
 // Protected Front End Scope Management Protocol.
 //
 // All members of the protocol defined in UTL_Scope simply return NULL
@@ -825,6 +836,12 @@ UTL_Scope::fe_add_native (AST_Native *)
   return 0;
 }
 
+AST_Factory *
+UTL_Scope::fe_add_factory (AST_Factory *)
+{
+  return 0;
+}
+
 // This is the second pass of the front end
 // It calls the public add protocol on everything in scope.
 // It calls the add_xx functions of the most derived AST_Node.
@@ -916,6 +933,10 @@ UTL_Scope::call_add (void)
         case AST_Decl::NT_union_branch:
           result =
             add_union_branch (AST_UnionBranch::narrow_from_decl (decl));
+          break;
+        case AST_Decl::NT_factory:
+          result = add_factory (AST_Factory::narrow_from_decl (decl));
+          scope = AST_Factory::narrow_from_decl (decl);
           break;
         default:
           return 0;
@@ -1660,7 +1681,10 @@ UTL_Scope::add_to_scope (AST_Decl *e,
 
   // The name of any scope except the unnamed scope formed by an operation
   // may not be redefined immediately within (and the root scope has no name).
-  if (nt != AST_Decl::NT_root && nt != AST_Decl::NT_op)
+  // As well as OBV factory construct.
+  if (nt != AST_Decl::NT_root 
+      && nt != AST_Decl::NT_op
+      && nt != AST_Decl::NT_factory)
     {
       Identifier *parent_name = d->local_name ();
 
@@ -1853,6 +1877,18 @@ UTL_Scope::referenced (AST_Decl *e,
   return I_FALSE;
 }
 
+idl_bool
+UTL_Scope::has_prefix (void)
+{
+  return this->has_prefix_;
+}
+
+void
+UTL_Scope::has_prefix (idl_bool val)
+{
+  this->has_prefix_ = val;
+}
+
 // Redefinition of inherited virtual operations.
 
 // AST Dumping.
@@ -1944,6 +1980,10 @@ UTL_Scope::destroy (void)
 {
 }
 
+// Narrowing.
+IMPL_NARROW_METHODS0(UTL_Scope)
+IMPL_NARROW_FROM_SCOPE(UTL_Scope)
+
 // UTL_SCOPE_ACTIVE_ITERATOR
 
 // Constructor.
@@ -1953,7 +1993,7 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
   )
   : iter_source (s),
     ik(i),
-    stage(i == UTL_Scope::IK_both ? UTL_Scope::IK_decls : i),
+    stage(i == UTL_Scope::IK_both ? UTL_Scope::IK_localtypes : i),
     il(0)
 {
 }
@@ -2006,22 +2046,22 @@ UTL_ScopeActiveIterator::is_done (void)
           return I_FALSE;
         }
 
-      // Already done local types?
-      if (this->stage == UTL_Scope::IK_localtypes)
+      // Only want decls?
+      if (this->stage == UTL_Scope::IK_decls)
         {
           return I_TRUE;
         }
 
-      // Only want decls?
-      if (this->ik == UTL_Scope::IK_decls)
+      // Already done local types?
+      if (this->ik == UTL_Scope::IK_localtypes)
         {
           return I_TRUE;
         }
 
       // Switch to next stage.
-      this->stage = UTL_Scope::IK_localtypes;
+      this->stage = UTL_Scope::IK_decls;
       this->il = 0;
-      limit = this->iter_source->pd_locals_used;
+      limit = this->iter_source->pd_decls_used;
     }
 }
 

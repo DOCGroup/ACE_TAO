@@ -80,8 +80,7 @@ public:
 
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
-                   UTL_ScopedName *n,
-                   UTL_StrList *p);
+                   UTL_ScopedName *n);
 
   virtual ~AST_UnionBranch (void);
 

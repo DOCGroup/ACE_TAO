@@ -108,6 +108,18 @@ be_visitor_sequence_base::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_sequence_base::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_base::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_base::visit_string (be_string *)
 {
   // NO-OP, we have ad-hoc classes from strings.
@@ -162,22 +174,6 @@ be_visitor_sequence_base::visit_typedef (be_typedef *node)
   this->ctx_->alias (0);
   return 0;
 }
-
-#if defined(IDL_HAS_VALUETYPE)
-
-int
-be_visitor_sequence_base::visit_valuetype (be_valuetype *node)
-{
-  return this->visit_node (node);
-}
-
-int
-be_visitor_sequence_base::visit_valuetype_fwd (be_valuetype_fwd *node)
-{
-  return this->visit_node (node);
-}
-#endif /*IDL_HAS_VALUETYPE*/
-
 
 be_visitor_sequence_base_template_args::
   be_visitor_sequence_base_template_args (be_visitor_context *ctx,
@@ -253,6 +249,20 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
     }
 
   return 0;
+}
+
+int
+be_visitor_sequence_base_template_args::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_sequence_base_template_args::visit_valuetype_fwd (
+    be_valuetype_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
 }
 
 int

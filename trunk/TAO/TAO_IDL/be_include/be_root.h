@@ -26,7 +26,6 @@
 #include "be_scope.h"
 #include "ast_root.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_root : public virtual AST_Root,
@@ -42,8 +41,7 @@ public:
   be_root (void);
   // Default constructor.
 
-  be_root (UTL_ScopedName *n, 
-           UTL_StrList *p);
+  be_root (UTL_ScopedName *n);
   // Constructor that sets its scoped name <n>, and any pragmas <p>.
 
   // Scope management functions that override the AST scope management methods

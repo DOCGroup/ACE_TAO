@@ -7,7 +7,6 @@
 #include "be_type.h"
 #include "ast_exception.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_exception : public virtual AST_Exception,
@@ -20,7 +19,6 @@ public:
   // Default constructor.
 
   be_exception (UTL_ScopedName *n,
-                UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
   // Constructor.

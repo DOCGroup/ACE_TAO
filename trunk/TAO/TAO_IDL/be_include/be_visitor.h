@@ -32,10 +32,9 @@ class be_predefined_type;
 class be_module;
 class be_interface;
 class be_interface_fwd;
-#ifdef IDL_HAS_VALUETYPE
-  class be_valuetype;
-  class be_valuetype_fwd;
-#endif /* IDL_HAS_VALUETYPE */
+class be_valuetype;
+class be_valuetype_fwd;
+class be_factory;
 class be_structure;
 class be_exception;
 class be_expression;
@@ -95,13 +94,14 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface_fwd
 
-#ifdef IDL_HAS_VALUETYPE
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd
-#endif /* IDL_HAS_VALUETYPE */
+
+  virtual int visit_factory (be_factory *node);
+  // Visit a OBV factory construct.
 
   virtual int visit_structure (be_structure *node);
   // visit a structure

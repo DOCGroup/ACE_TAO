@@ -81,11 +81,9 @@ AST_Module::AST_Module ()
 {
 }
 
-AST_Module::AST_Module (UTL_ScopedName *n,
-                        UTL_StrList *p)
- : AST_Decl (AST_Decl::NT_module,
-             n,
-             p),
+AST_Module::AST_Module (UTL_ScopedName *n)
+ : AST_Decl (AST_Decl::NT_module, 
+             n),
    UTL_Scope (AST_Decl::NT_module),
    pd_has_nested_valuetype (0)
 {
@@ -813,8 +811,7 @@ AST_Module::add_CORBA_members (void)
   AST_PredefinedType *pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            sn,
-                            0
+                            sn
                           );
 
   this->fe_add_predefined_type (pdt);
@@ -829,8 +826,7 @@ AST_Module::add_CORBA_members (void)
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            sn,
-                            0
+                            sn
                           );
 
   this->fe_add_predefined_type (pdt);
@@ -930,16 +926,3 @@ IMPL_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Module)
 IMPL_NARROW_FROM_SCOPE(AST_Module)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<AST_Decl *>;
-template class ACE_Unbounded_Set<AST_Decl *>;
-template class ACE_Unbounded_Set_Iterator<AST_Decl *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<AST_Decl *>
-#pragma instantiate ACE_Unbounded_Set<AST_Decl *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<AST_Decl *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

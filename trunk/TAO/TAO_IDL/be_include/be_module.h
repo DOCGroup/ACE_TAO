@@ -27,7 +27,6 @@
 #include "be_decl.h"
 #include "ast_module.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_module : public virtual AST_Module,
@@ -38,8 +37,7 @@ public:
   be_module (void);
   // Default constructor.
 
-  be_module (UTL_ScopedName *n, 
-             UTL_StrList *p);
+  be_module (UTL_ScopedName *n);
   // Constructor.
 
   virtual void destroy (void);

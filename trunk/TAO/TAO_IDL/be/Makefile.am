@@ -82,7 +82,8 @@ libbe_la_SOURCES = \
   be_visitor_union.cpp \
   be_visitor_union_branch.cpp \
   be_visitor_valuetype.cpp \
-  be_visitor_valuetype_fwd.cpp
+  be_visitor_valuetype_fwd.cpp \
+  tmplinst.cpp
 
 
 dist-hook:

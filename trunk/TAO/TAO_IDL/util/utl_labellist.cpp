@@ -73,12 +73,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	 It relies on a type-unsafe cast from UTL_List to subclasses, which
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
-//
-//	 For portability reasons we have decided to provide both this and
-//	 an implementation of the list classes in terms of templates. If
-//	 your compiler supports templates, please use the files in the
-//	 include/utl_tmpl and util/utl_tmpl directories instead of the
-//	 files by the same names in the include and util directories.
 
 #include	"idl.h"
 #include	"idl_extern.h"

@@ -27,7 +27,6 @@
 
 class UTL_LabelList;
 class UTL_Type;
-class UTL_StrList;
 class be_visitor;
 
 class be_union_branch : public virtual AST_UnionBranch,
@@ -39,8 +38,7 @@ public:
 
   be_union_branch (UTL_LabelList *ll, 
                    AST_Type *ft, 
-                   UTL_ScopedName *n,
-                   UTL_StrList *p);
+                   UTL_ScopedName *n);
   // Constructor.
 
   int gen_label_value (TAO_OutStream *os, 

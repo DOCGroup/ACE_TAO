@@ -85,7 +85,6 @@ public:
   // Constructor(s)
   AST_Enum (void);
   AST_Enum (UTL_ScopedName *n,
-            UTL_StrList *p,
             idl_bool local,
             idl_bool abstract);
 

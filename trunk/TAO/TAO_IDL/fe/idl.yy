@@ -259,112 +259,102 @@ definitions
 definition
         : type_dcl
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_TypeDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | const_dcl
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | exception
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | interface_def
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | module
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ModuleDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ModuleDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | value_def
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ValuetypeDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ValuetypeDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | error
         {
-          idl_global->err()->syntax_error(idl_global->parse_state());
+          idl_global->err()->syntax_error (idl_global->parse_state());
         }
         ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
         ;
 
 module  : IDL_MODULE
           {
-            idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSeen);
+            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSeen);
           }
           IDENTIFIER
           {
-            UTL_ScopedName      *n =
-                new UTL_ScopedName(new Identifier($3), NULL);
-            AST_Module          *m = NULL;
-            UTL_Scope           *s = idl_global->scopes()->top_non_null();
-            UTL_StrList         *p = idl_global->pragmas();
+            UTL_ScopedName *n =
+                new UTL_ScopedName(new Identifier ($3), 0);
+            AST_Module *m = 0;
+            UTL_Scope *s = idl_global->scopes ()->top_non_null ();
 
-            idl_global->set_parse_state(IDL_GlobalData::PS_ModuleIDSeen);
+            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
             /*
              * Make a new module and add it to the enclosing scope
              */
-            if (s != NULL) {
-              m = idl_global->gen ()->create_module (s, n, p);
+            if (s != 0) {
+              m = idl_global->gen ()->create_module (s, n);
               (void) s->fe_add_module (m);
             }
             /*
              * Push it on the stack
              */
-            idl_global->scopes()->push(m);
+            idl_global->scopes ()->push (m);
           }
           '{'
           {
-            idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSqSeen);
+            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSqSeen);
           }
           definitions
           {
-            idl_global->set_parse_state(IDL_GlobalData::PS_ModuleBodySeen);
+            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleBodySeen);
           }
           '}'
           {
-            idl_global->set_parse_state(IDL_GlobalData::PS_ModuleQsSeen);
+            idl_global->set_parse_state (IDL_GlobalData::PS_ModuleQsSeen);
             /*
              * Finished with this module - pop it from the scope stack
              */
-            UTL_Scope* s = idl_global->scopes()->top();
-            AST_Module* m = AST_Module::narrow_from_scope (s);
-            if (m != 0)
-              {
-                UTL_StrList *p = m->pragmas ();
-                if (p != 0)
-                  p = (UTL_StrList*)p->copy ();
-                idl_global->set_pragmas (p);
-              }
-            idl_global->scopes()->pop();
+            idl_global->scopes ()->pop ();
           }
           ;
 
@@ -376,27 +366,23 @@ interface_def
 interface :
         interface_header
         {
-          UTL_Scope     *s = idl_global->scopes ()->top_non_null ();
-          AST_Interface *i = NULL;
-          AST_Decl      *v = NULL;
-          UTL_StrList   *p = idl_global->pragmas ();
-          ACE_UNUSED_ARG (v);
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Interface *i = 0;
 
           /*
            * Make a new interface node and add it to its enclosing scope
            */
-          if (s != NULL && $1 != NULL) {
+          if (s != 0 && $1 != 0) {
             i = idl_global->gen ()->create_interface (
                                        $1->interface_name (),
                                        $1->inherits (),
                                        $1->n_inherits (),
                                        $1->inherits_flat (),
                                        $1->n_inherits_flat (),
-                                       p,
                                        $1->is_local (),
                                        $1->is_abstract ()
                                      );
-            AST_Interface::fwd_redefinition_helper (i,s,p);
+            AST_Interface::fwd_redefinition_helper (i, s);
             /*
              * Add the interface to its definition scope
              */
@@ -409,42 +395,30 @@ interface :
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
         }
         exports
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
           /*
            * Done with this interface - pop it off the scopes stack
            */
-          UTL_Scope* s = idl_global->scopes ()->top();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          if (m != NULL)
-            {
-              m->inherited_name_clash ();
-              UTL_StrList *p = m->pragmas ();
-              if (p != 0)
-                {
-                  p = (UTL_StrList*) p->copy ();
-                }
-              idl_global->set_pragmas (p);
-            }
-          idl_global->scopes ()->pop();
+          idl_global->scopes ()->pop ();
         }
         ;
 
 interface_decl:
          IDL_INTERFACE
          {
-           idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSeen);
+           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSeen);
          }
          id
          {
-           idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceIDSeen);
+           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceIDSeen);
            $$ = $3;
          }
         ;
@@ -452,51 +426,44 @@ interface_decl:
 interface_header :
         interface_decl inheritance_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
           /*
            * Create an AST representation of the information in the header
            * part of an interface - this representation contains a computed
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          $$ = new FE_InterfaceHeader(new UTL_ScopedName($1, NULL), $2);
+          $$ = new FE_InterfaceHeader (new UTL_ScopedName ($1, 0), $2);
         }
         |
         IDL_LOCAL interface_decl inheritance_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
           /*
            * Create an AST representation of the information in the header
            * part of an interface - this representation contains a computed
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          $$ = new FE_Local_InterfaceHeader(new UTL_ScopedName($2, NULL), $3);
+          $$ = new FE_Local_InterfaceHeader (new UTL_ScopedName($2, 0), $3);
         }
         |
         IDL_ABSTRACT interface_decl inheritance_spec
         {
-           cerr << "error in " << idl_global->filename()->get_string()
-                << " line " << idl_global->lineno() << ":\n" ;
-           cerr << "Sorry, I (TAO_IDL) can't handle abstract interface yet\n";
-            /* (if not truncatable) */
-#if 0
-          idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
-          /*
-           * Create an AST representation of the information in the header
-           * part of an interface - this representation contains a computed
-           * list of all interfaces which this interface inherits from,
-           * recursively
-           */
-          $$ = new FE_Abstract_InterfaceHeader(new UTL_ScopedName($2, NULL), $3);
-#endif
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("error in %s line %d\n"),
+                       idl_global->filename ()->get_string (),
+                       idl_global->lineno ()));
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("Sorry, I (TAO_IDL) can't handle abstract")
+                       ACE_TEXT (" interfaces yet\n")));
         }
         ;
 
 inheritance_spec
         : ':'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InheritColonSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
           at_least_one_scoped_name
         {
@@ -504,7 +471,7 @@ inheritance_spec
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
@@ -518,10 +485,13 @@ value_def
 valuetype
         : IDL_CUSTOM value_concrete_decl
         {
-           cerr << "error in " << idl_global->filename()->get_string()
-                << " line " << idl_global->lineno() << ":\n" ;
-           cerr << "Sorry, I (TAO_IDL) can't handle custom yet\n";
-            /* set custom (if not truncatable) */
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("error in %s line %d\n"),
+                       idl_global->filename ()->get_string (),
+                       idl_global->lineno ()));
+           ACE_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
+                       ACE_TEXT (" custom yet\n")));
         }
         | value_concrete_decl
         ;
@@ -529,47 +499,42 @@ valuetype
 value_concrete_decl :
         value_header
         {
-          UTL_Scope     *s = idl_global->scopes()->top_non_null();
-          AST_Interface *i = NULL;
-          UTL_StrList   *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Interface *i = 0;
 
-          if (s != NULL && $1 != NULL) {
-            i = idl_global->gen()->create_valuetype($1->interface_name(),
-                                                    $1->inherits(),
-                                                    $1->n_inherits(),
-                                                    p);
-            AST_Interface::fwd_redefinition_helper (i,s,p);
+          if (s != 0 && $1 != 0) {
+            i = idl_global->gen ()->create_valuetype ($1->interface_name (),
+                                                      $1->inherits (),
+                                                      $1->n_inherits ());
+            AST_Interface::fwd_redefinition_helper (i, s);
             /*
              * Add the valuetype to its definition scope
              */
-            (void) s->fe_add_interface(i);
+            (void) s->fe_add_interface (i);
           }
           /*
            * Push it on the scope stack
            */
-          idl_global->scopes()->push(i);
+          idl_global->scopes ()->push (i);
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
         }
         value_elements
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
           /*
            * Done with this interface - pop it off the scopes stack
            */
-          UTL_Scope* s = idl_global->scopes()->top();
+          UTL_Scope* s = idl_global->scopes ()->top ();
           AST_Interface* m = AST_Interface::narrow_from_scope (s);
           m->inherited_name_clash ();
-          UTL_StrList *p = m->pragmas ();
-          if (p != 0) p = (UTL_StrList*)p->copy ();
-          idl_global->set_pragmas (p);
-          idl_global->scopes()->pop();
+          idl_global->scopes ()->pop ();
         }
         ;
 
@@ -577,53 +542,48 @@ value_abs_decl :
         IDL_ABSTRACT
         value_header
         {
-          UTL_Scope     *s = idl_global->scopes()->top_non_null();
-          AST_Interface *i = NULL;
-          UTL_StrList   *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Interface *i = 0;
 
-          if (s != NULL && $2 != NULL) {
+          if (s != 0 && $2 != 0) {
 
             if ($2->n_concrete() > 0) {
-              idl_global->err()->abstract_inheritance_error ($2->interface_name ());
+              idl_global->err ()->abstract_inheritance_error ($2->interface_name ());
             }
 
-            i = idl_global->gen()->create_valuetype($2->interface_name(),
-                                                    $2->inherits(),
-                                                    $2->n_inherits(),
-                                                    p);
+            i = idl_global->gen()->create_valuetype ($2->interface_name (),
+                                                     $2->inherits (),
+                                                     $2->n_inherits ());
             i->set_abstract_valuetype ();
-            AST_Interface::fwd_redefinition_helper (i,s,p);
+            AST_Interface::fwd_redefinition_helper (i, s);
             /*
              * Add the valuetype to its definition scope
              */
-            (void) s->fe_add_interface(i);
+            (void) s->fe_add_interface (i);
           }
           /*
            * Push it on the scope stack
            */
-          idl_global->scopes()->push(i);
+          idl_global->scopes ()->push (i);
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
         }
         exports
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
           /*
            * Done with this interface - pop it off the scopes stack
            */
-          UTL_Scope* s = idl_global->scopes()->top();
+          UTL_Scope* s = idl_global->scopes ()->top ();
           AST_Interface* m = AST_Interface::narrow_from_scope (s);
           m->inherited_name_clash ();
-          UTL_StrList *p = m->pragmas ();
-          if (p != 0) p = (UTL_StrList*)p->copy ();
-          idl_global->set_pragmas (p);
-          idl_global->scopes()->pop();
+          idl_global->scopes ()->pop ();
         }
 
         ;
@@ -634,18 +594,18 @@ value_header :
         inheritance_spec
         supports_spec
         {
-          $$ = new FE_obv_header (new UTL_ScopedName ($1, NULL), $3, $4);
+          $$ = new FE_obv_header (new UTL_ScopedName ($1, 0), $3, $4);
         }
         ;
 
 value_decl
         : IDL_VALUETYPE
         {
-           idl_global->set_parse_state(IDL_GlobalData::PS_ValuetypeSeen);
+           idl_global->set_parse_state (IDL_GlobalData::PS_ValuetypeSeen);
         }
         id
         {
-           idl_global->set_parse_state(IDL_GlobalData::PS_ValuetypeIDSeen);
+           idl_global->set_parse_state (IDL_GlobalData::PS_ValuetypeIDSeen);
            $$ = $3;
         }
         ;
@@ -653,11 +613,14 @@ value_decl
 opt_truncatable :
           IDL_TRUNCATABLE
           {
-            cerr << "warning in " << idl_global->filename()->get_string()
-                 << " line " << idl_global->lineno() << ":\n" ;
-            cerr << "truncatable modifier not supported and is ignored\n";
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("warning in %s line %d\n"),
+                        idl_global->filename ()->get_string (),
+                        idl_global->lineno ()));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("truncatable modifier not supported ")
+                        ACE_TEXT ("and is ignored\n")));
             $$ = I_FALSE;
-            /* $$ = I_TRUE; */
           }
         | /* EMPTY */
           {
@@ -669,11 +632,11 @@ supports_spec :
             IDL_SUPPORTS
             scoped_name
             {
-              $$ = new UTL_NameList($2, NULL);
+              $$ = new UTL_NameList ($2, 0);
             }
         |   /* empty */
             {
-              $$ = NULL;
+              $$ = 0;
             }
         ;
 
@@ -681,42 +644,37 @@ value_forward_decl :
         IDL_ABSTRACT
         value_decl
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($2, NULL);
-          AST_InterfaceFwd      *f = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($2, 0);
+          AST_InterfaceFwd *f = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ForwardDeclSeen);
           /*
            * Create a node representing a forward declaration of an
            * valuetype. Store it in the enclosing scope
            */
-          if (s != NULL) {
-            f = idl_global->gen()->create_valuetype_fwd(n, p);
-         //   if ($1)
+          if (s != 0) {
+            f = idl_global->gen()->create_valuetype_fwd (n);
             f->set_abstract_valuetype ();
-            (void) s->fe_add_interface_fwd(f);
+            (void) s->fe_add_interface_fwd (f);
           }
-          idl_global->set_pragmas (p);
         }
       |
         value_decl
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($1, NULL);
-          AST_InterfaceFwd      *f = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($1, 0);
+          AST_InterfaceFwd *f = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ForwardDeclSeen);
           /*
            * Create a node representing a forward declaration of an
            * valuetype. Store it in the enclosing scope
            */
-          if (s != NULL) {
-            f = idl_global->gen()->create_valuetype_fwd(n, p);
-            (void) s->fe_add_interface_fwd(f);
+          if (s != 0) {
+            f = idl_global->gen ()->create_valuetype_fwd (n);
+            (void) s->fe_add_interface_fwd (f);
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
@@ -724,9 +682,13 @@ value_forward_decl :
 value_box_decl
         : value_decl type_spec /* in this order %!?*/
         {
-           cerr << "error in " << idl_global->filename()->get_string()
-                << " line " << idl_global->lineno() << ":\n" ;
-           cerr << "Sorry, I (TAO_IDL) can't handle boxes yet\n";
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("error in %s line %d\n"),
+                      idl_global->filename ()->get_string (),
+                      idl_global->lineno ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
+                      ACE_TEXT (" boxes yet\n")));
         }
         ;
 
@@ -739,6 +701,7 @@ value_element
         : state_member
         | export
         | init_decl
+          ';'
         ;
 
 state_member
@@ -764,15 +727,15 @@ exports
 export
         : type_dcl
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_TypeDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | const_dcl
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstDeclSeen);
         }
           ';'
         {
@@ -780,35 +743,35 @@ export
         }
         | exception
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | attribute
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_AttrDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | operation
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpDeclSeen);
         }
           ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | error
         {
-          idl_global->err()->syntax_error(idl_global->parse_state());
+          idl_global->err()->syntax_error (idl_global->parse_state());
         }
         ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
         ;
@@ -816,7 +779,7 @@ export
 at_least_one_scoped_name :
         scoped_name scoped_names
         {
-          $$ = new UTL_NameList($1, $2);
+          $$ = new UTL_NameList ($1, $2);
         }
         ;
 
@@ -824,164 +787,153 @@ scoped_names
         : scoped_names
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SNListCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SNListCommaSeen);
         }
           scoped_name
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ScopedNameSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ScopedNameSeen);
 
-          if ($1 == NULL)
-            $$ = new UTL_NameList($4, NULL);
+          if ($1 == 0)
+            $$ = new UTL_NameList ($4, 0);
           else {
-            $1->nconc(new UTL_NameList($4, NULL));
+            $1->nconc (new UTL_NameList ($4, 0));
             $$ = $1;
           }
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
 scoped_name
         : id
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
-          $$ = new UTL_IdList($1, NULL);
+          $$ = new UTL_IdList($1, 0);
         }
         | IDL_SCOPE_DELIMITOR
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ScopeDelimSeen);
         }
           id
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
-          $$ = new UTL_IdList(new Identifier($1),
-                              new UTL_IdList($3, NULL));
+          $$ = new UTL_IdList (new Identifier ($1),
+                               new UTL_IdList ($3, 0));
         }
         | scoped_name
           IDL_SCOPE_DELIMITOR
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ScopeDelimSeen);
         }
           id
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
-          $1->nconc(new UTL_IdList($4, NULL));
+          $1->nconc (new UTL_IdList ($4, 0));
           $$ = $1;
         }
         ;
 
 id: IDENTIFIER
         {
-            $$ = new Identifier($1);
+            $$ = new Identifier ($1);
         }
         ;
 
 forward :
         interface_decl
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($1, NULL);
-          AST_InterfaceFwd      *f = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName($1, 0);
+          AST_InterfaceFwd *f = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ForwardDeclSeen);
           /*
            * Create a node representing a forward declaration of an
            * interface. Store it in the enclosing scope
            */
-          if (s != NULL) {
-            f = idl_global->gen()->create_interface_fwd(n, p, 0, 0);
-            (void) s->fe_add_interface_fwd(f);
+          if (s != 0) {
+            f = idl_global->gen ()->create_interface_fwd (n, 0, 0);
+            (void) s->fe_add_interface_fwd (f);
           }
-          idl_global->set_pragmas (p);
         }
         |
         IDL_LOCAL interface_decl
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($2, NULL);
-          AST_InterfaceFwd      *f = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($2, 0);
+          AST_InterfaceFwd *f = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ForwardDeclSeen);
           /*
            * Create a node representing a forward declaration of an
            * interface. Store it in the enclosing scope
            */
-          if (s != NULL) {
-            f = idl_global->gen()->create_interface_fwd(n, p, 1, 0);
-            (void) s->fe_add_interface_fwd(f);
+          if (s != 0) {
+            f = idl_global->gen ()->create_interface_fwd (n, 1, 0);
+            (void) s->fe_add_interface_fwd (f);
           }
-          idl_global->set_pragmas (p);
         }
         |
         IDL_ABSTRACT interface_decl
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($2, NULL);
-          AST_InterfaceFwd      *f = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($2, 0);
+          AST_InterfaceFwd *f = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_ForwardDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ForwardDeclSeen);
           /*
            * Create a node representing a forward declaration of an
            * interface. Store it in the enclosing scope
            */
-          if (s != NULL) {
-            f = idl_global->gen()->create_interface_fwd(n, p, 0, 1);
-            (void) s->fe_add_interface_fwd(f);
+          if (s != 0) {
+            f = idl_global->gen ()->create_interface_fwd (n, 0, 1);
+            (void) s->fe_add_interface_fwd (f);
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
 const_dcl :
         IDL_CONST
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstSeen);
         }
         const_type
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstTypeSeen);
         }
         id
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstIDSeen);
         }
         '='
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstAssignSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstAssignSeen);
         }
         expression
         {
-          UTL_ScopedName        *n = new UTL_ScopedName($5, NULL);
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          AST_Constant          *c = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
-          AST_Decl              *v = NULL;
+          UTL_ScopedName *n = new UTL_ScopedName ($5, 0);
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Constant *c = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_ConstExprSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ConstExprSeen);
           /*
            * Create a node representing a constant declaration. Store
            * it in the enclosing scope
            */
-          if ($9 != NULL && s != NULL) {
-            if ($9->coerce($3) == NULL)
-              idl_global->err()->coercion_error($9, $3);
+          if ($9 != 0 && s != 0) {
+            if ($9->coerce ($3) == 0)
+              idl_global->err ()->coercion_error ($9, $3);
             else {
               c =
-                idl_global->gen()->create_constant($3, $9, n, p);
-              (void) s->fe_add_constant(c);
+                idl_global->gen ()->create_constant ($3, $9, n);
+              (void) s->fe_add_constant (c);
             }
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
@@ -1002,31 +954,31 @@ const_type
         }
         | scoped_name
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          AST_Decl              *d = NULL;
-          AST_PredefinedType    *c = NULL;
-          AST_Typedef           *t = NULL;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Decl *d = 0;
+          AST_PredefinedType *c = 0;
+          AST_Typedef *t = 0;
 
           /*
            * If the constant's type is a scoped name, it must resolve
            * to a scalar constant type
            */
-          if (s != NULL && (d = s->lookup_by_name($1, I_TRUE)) != NULL) {
+          if (s != 0 && (d = s->lookup_by_name ($1, I_TRUE)) != 0) {
             /*
              * Look through typedefs
              */
-            while (d->node_type() == AST_Decl::NT_typedef) {
-              t = AST_Typedef::narrow_from_decl(d);
-              if (t == NULL)
+            while (d->node_type () == AST_Decl::NT_typedef) {
+              t = AST_Typedef::narrow_from_decl (d);
+              if (t == 0)
                 break;
-              d = t->base_type();
+              d = t->base_type ();
             }
-            if (d == NULL)
+            if (d == 0)
               $$ = AST_Expression::EV_any;
-            else if (d->node_type() == AST_Decl::NT_pre_defined) {
-              c = AST_PredefinedType::narrow_from_decl(d);
-              if (c != NULL) {
-                 $$ = idl_global->PredefinedTypeToExprType(c->pt());
+            else if (d->node_type () == AST_Decl::NT_pre_defined) {
+              c = AST_PredefinedType::narrow_from_decl (d);
+              if (c != 0) {
+                 $$ = idl_global->PredefinedTypeToExprType (c->pt ());
               } else {
                  $$ = AST_Expression::EV_any;
               }
@@ -1048,7 +1000,9 @@ const_expr : or_expr ;
 or_expr : xor_expr
         | or_expr '|' xor_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_or, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_or, 
+                                                $1, 
+                                                $3);
         }
         ;
 
@@ -1056,7 +1010,9 @@ xor_expr
         : and_expr
         | xor_expr '^' and_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_xor, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_xor, 
+                                                $1, 
+                                                $3);
         }
         ;
 
@@ -1064,7 +1020,9 @@ and_expr
         : shift_expr
         | and_expr '&' shift_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_and, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_and, 
+                                                $1, 
+                                                $3);
         }
         ;
 
@@ -1072,11 +1030,15 @@ shift_expr
         : add_expr
         | shift_expr IDL_LEFT_SHIFT add_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_left,$1,$3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_left, 
+                                                $1, 
+                                                $3);
         }
         | shift_expr IDL_RIGHT_SHIFT add_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_right,$1,$3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_right, 
+                                                $1, 
+                                                $3);
         }
         ;
 
@@ -1084,11 +1046,15 @@ add_expr
         : mult_expr
         | add_expr '+' mult_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_add, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_add, 
+                                                $1, 
+                                                $3);
         }
         | add_expr '-' mult_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_minus,$1,$3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_minus, 
+                                                $1, 
+                                                $3);
         }
         ;
 
@@ -1096,15 +1062,21 @@ mult_expr
         : unary_expr
         | mult_expr '*' unary_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_mul, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_mul, 
+                                                $1, 
+                                                $3);
         }
         | mult_expr '/' unary_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_div, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_div, 
+                                                $1, 
+                                                $3);
         }
         | mult_expr '%' unary_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_mod, $1, $3);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_mod, 
+                                                $1, 
+                                                $3);
         }
         ;
 
@@ -1112,21 +1084,21 @@ unary_expr
         : primary_expr
         | '+' primary_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_u_plus,
-                                              $2,
-                                              NULL);
+          $$ = idl_global->gen ()->create_expr (AST_Expression::EC_u_plus,
+                                                $2,
+                                                0);
         }
         | '-' primary_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_u_minus,
-                                              $2,
-                                              NULL);
+          $$ = idl_global->gen()->create_expr (AST_Expression::EC_u_minus,
+                                               $2,
+                                               0);
         }
         | '~' primary_expr
         {
-          $$ = idl_global->gen()->create_expr(AST_Expression::EC_bit_neg,
-                                              $2,
-                                              NULL);
+          $$ = idl_global->gen()->create_expr (AST_Expression::EC_bit_neg,
+                                               $2,
+                                               0);
         }
         ;
 
@@ -1138,7 +1110,7 @@ primary_expr
            * but only when it is evaluated (such as when it is assigned
            * as a constant value).
            */
-          UTL_Scope *s = idl_global->scopes()->top_non_null ();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
 
           AST_Decl *d = s->lookup_by_name ($1,
                                             1);
@@ -1171,42 +1143,42 @@ primary_expr
 literal
         : IDL_INTEGER_LITERAL
         {
-          $$ = idl_global->gen()->create_expr($1);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_UINTEGER_LITERAL
         {
-          $$ = idl_global->gen()->create_expr($1);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_STRING_LITERAL
         {
-          $$ = idl_global->gen()->create_expr($1);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_WSTRING_LITERAL
         {
-          $$ = idl_global->gen()->create_expr($1);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_CHARACTER_LITERAL
         {
-          $$ = idl_global->gen()->create_expr($1);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_WCHAR_LITERAL
         {
           ACE_OutputCDR::from_wchar wc ($1);
-          $$ = idl_global->gen()->create_expr(wc);
+          $$ = idl_global->gen ()->create_expr (wc);
         }
         | IDL_FLOATING_PT_LITERAL
         {
-          $$ = idl_global->gen()->create_expr($1);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_TRUETOK
         {
-          $$ = idl_global->gen()->create_expr((idl_bool) I_TRUE,
-                                              AST_Expression::EV_bool);
+          $$ = idl_global->gen ()->create_expr ((idl_bool) I_TRUE,
+                                                AST_Expression::EV_bool);
         }
         | IDL_FALSETOK
         {
-          $$ = idl_global->gen()->create_expr((idl_bool) I_FALSE,
-                                              AST_Expression::EV_bool);
+          $$ = idl_global->gen ()->create_expr ((idl_bool) I_FALSE,
+                                                AST_Expression::EV_bool);
         }
         ;
 
@@ -1280,7 +1252,7 @@ positive_int_expr :
 type_dcl
         : IDL_TYPEDEF
           {
-            idl_global->set_parse_state(IDL_GlobalData::PS_TypedefSeen);
+            idl_global->set_parse_state (IDL_GlobalData::PS_TypedefSeen);
           }
           type_declarator {$$ = 0;}
         | struct_type { $$ = 0;}
@@ -1288,67 +1260,58 @@ type_dcl
         | enum_type   { $$ = 0;}
         | IDL_NATIVE simple_declarator
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          AST_Native            *node = NULL;
-          AST_Decl              *v = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Native *node = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_NativeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NativeSeen);
           /*
            * Create a node representing a Native and add it to its
            * enclosing scope
            */
-          if (s != NULL) {
-            node = idl_global->gen()->create_native ($2->name (), p);
+          if (s != 0) {
+            node = idl_global->gen ()->create_native ($2->name ());
             /*
              * Add it to its defining scope
              */
             (void) s->fe_add_native (node);
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
 type_declarator :
         type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_TypeSpecSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_TypeSpecSeen);
         }
         at_least_one_declarator
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
           UTL_DecllistActiveIterator *l;
-          FE_Declarator         *d = NULL;
-          AST_Typedef           *t = NULL;
-          AST_Decl              *v = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          FE_Declarator *d = 0;
+          AST_Typedef *t = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_DeclaratorsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DeclaratorsSeen);
           /*
            * Create a list of type renamings. Add them to the
            * enclosing scope
            */
-          if (s != NULL && $1 != NULL && $3 != NULL) {
-            l = new UTL_DecllistActiveIterator($3);
-            for (;!(l->is_done()); l->next()) {
-              d = l->item();
-              if (d == NULL)
-                      continue;
-              AST_Type * tp = d->compose($1);
-              if (tp == NULL)
-                     continue;
-              t = idl_global->gen()->create_typedef(tp, d->name(), p,
-                                                    s->is_local (),
-                                                    s->is_abstract ());
-              (void) s->fe_add_typedef(t);
+          if (s != 0 && $1 != 0 && $3 != 0) {
+            l = new UTL_DecllistActiveIterator ($3);
+            for (;!(l->is_done ()); l->next ()) {
+              d = l->item ();
+              if (d == 0)
+                continue;
+              AST_Type * tp = d->compose ($1);
+              if (tp == 0)
+                continue;
+              t = idl_global->gen ()->create_typedef (tp, 
+                                                      d->name (),
+                                                      s->is_local (),
+                                                      s->is_abstract ());
+              (void) s->fe_add_typedef (t);
             }
             delete l;
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
@@ -1360,18 +1323,18 @@ type_spec
 simple_type_spec
         : base_type_spec
         {
-          $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          $$ = idl_global->scopes ()->bottom ()->lookup_primitive_type ($1);
         }
         | template_type_spec
         | scoped_name
         {
-          UTL_Scope     *s = idl_global->scopes()->top_non_null();
-          AST_Decl      *d = NULL;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Decl *d = 0;
 
-          if (s != NULL)
-            d = s->lookup_by_name($1, I_TRUE);
-          if (d == NULL)
-            idl_global->err()->lookup_error($1);
+          if (s != 0)
+            d = s->lookup_by_name ($1, I_TRUE);
+          if (d == 0)
+            idl_global->err ()->lookup_error ($1);
           $$ = d;
         }
         ;
@@ -1401,7 +1364,7 @@ constructed_type_spec
 at_least_one_declarator :
         declarator declarators
         {
-          $$ = new UTL_DeclList($1, $2);
+          $$ = new UTL_DeclList ($1, $2);
         }
         ;
 
@@ -1409,22 +1372,22 @@ declarators
         : declarators
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DeclsCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DeclsCommaSeen);
         }
           declarator
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DeclsDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
-          if ($1 == NULL)
-            $$ = new UTL_DeclList($4, NULL);
+          if ($1 == 0)
+            $$ = new UTL_DeclList ($4, 0);
           else {
-            $1->nconc(new UTL_DeclList($4, NULL));
+            $1->nconc (new UTL_DeclList ($4, 0));
             $$ = $1;
           }
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
@@ -1436,7 +1399,7 @@ declarator
 at_least_one_simple_declarator :
         simple_declarator simple_declarators
         {
-          $$ = new UTL_DeclList($1, $2);
+          $$ = new UTL_DeclList ($1, $2);
         }
         ;
 
@@ -1444,39 +1407,40 @@ simple_declarators
         : simple_declarators
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DeclsCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DeclsCommaSeen);
         }
           simple_declarator
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DeclsDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
-          if ($1 == NULL)
-            $$ = new UTL_DeclList($4, NULL);
+          if ($1 == 0)
+            $$ = new UTL_DeclList ($4, 0);
           else {
-            $1->nconc(new UTL_DeclList($4, NULL));
+            $1->nconc (new UTL_DeclList ($4, 0));
             $$ = $1;
           }
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
 simple_declarator :
         id
         {
-          $$ = new FE_Declarator(new UTL_ScopedName($1, NULL),
-                                 FE_Declarator::FD_simple, NULL);
+          $$ = new FE_Declarator (new UTL_ScopedName ($1, 0),
+                                  FE_Declarator::FD_simple, 0);
         }
         ;
 
 complex_declarator :
         array_declarator
         {
-          $$ = new FE_Declarator(new UTL_ScopedName($1->local_name(), NULL),
-                                 FE_Declarator::FD_complex,
-                                 $1);
+          $$ = new FE_Declarator (new UTL_ScopedName ($1->local_name (), 
+                                                      0),
+                                  FE_Declarator::FD_complex,
+                                  $1);
         }
         ;
 
@@ -1533,9 +1497,13 @@ floating_pt_type
 fixed_type
         : IDL_FIXED
         {
-           cerr << "error in " << idl_global->filename()->get_string()
-                << " line " << idl_global->lineno() << ":\n" ;
-           cerr << "Sorry, I (TAO_IDL) can't handle fixed types yet\n";
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("error in %s line %d\n"),
+                      idl_global->filename ()->get_string (),
+                      idl_global->lineno ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
+                      ACE_TEXT (" fixed types yet\n")));
         }
         ;
 
@@ -1574,57 +1542,48 @@ any_type
 struct_type :
         IDL_STRUCT
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StructSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructSeen);
         }
         id
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($3, NULL);
-          AST_Structure         *d = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
-          AST_Decl              *v = NULL;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($3, 0);
+          AST_Structure *d = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_StructIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructIDSeen);
           /*
            * Create a node representing a struct declaration. Add it
            * to the enclosing scope
            */
-          if (s != NULL) {
-            d = idl_global->gen()->create_structure(n,
-                                                    p,
-                                                    s->is_local (),
-                                                    s->is_abstract ());
-            (void) s->fe_add_structure(d);
+          if (s != 0) {
+            d = idl_global->gen ()->create_structure (n,
+                                                      s->is_local (),
+                                                      s->is_abstract ());
+            (void) s->fe_add_structure (d);
           }
           /*
            * Push the scope of the struct on the scopes stack
            */
-          idl_global->scopes()->push(d);
+          idl_global->scopes ()->push (d);
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StructSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructSqSeen);
         }
         at_least_one_member
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StructBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructBodySeen);
         }
         '}'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StructQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructQsSeen);
           /*
            * Done with this struct. Pop its scope off the scopes stack
            */
-          $$ =
-              AST_Structure::narrow_from_scope(
-                                   idl_global->scopes()->top_non_null());
-           UTL_StrList *p = $$->pragmas ();
-           if (p != 0)
-             p = (UTL_StrList*)p->copy ();
-          idl_global->set_pragmas (p);
-          idl_global->scopes()->pop();
+          $$ = AST_Structure::narrow_from_scope (
+                   idl_global->scopes ()->top_non_null ()
+                 );
+          idl_global->scopes ()->pop ();
         }
         ;
 
@@ -1646,53 +1605,55 @@ member  :
 member_i:
         type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_MemberTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_MemberTypeSeen);
         }
         at_least_one_declarator
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_MemberDeclsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsSeen);
         }
         ';'
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_DecllistActiveIterator *l = NULL;
-          FE_Declarator         *d = NULL;
-          AST_Field             *f = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_DecllistActiveIterator *l = 0;
+          FE_Declarator *d = 0;
+          AST_Field *f = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_MemberDeclsCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
           /*
            * Check for illegal recursive use of type
            */
-          if ($1 != NULL && AST_illegal_recursive_type($1))
-            idl_global->err()->error1(UTL_Error::EIDL_RECURSIVE_TYPE, $1);
+          if ($1 != 0 && AST_illegal_recursive_type ($1))
+            idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, 
+                                        $1);
           /*
            * Create a node representing a struct or exception member
            * Add it to the enclosing scope
            */
-          else if (s != NULL && $1 != NULL && $3 != NULL) {
-            l = new UTL_DecllistActiveIterator($3);
-            for (;!(l->is_done()); l->next()) {
-              d = l->item();
-              if (d == NULL)
+          else if (s != 0 && $1 != 0 && $3 != 0) {
+            l = new UTL_DecllistActiveIterator ($3);
+            for (;!(l->is_done ()); l->next ()) {
+              d = l->item ();
+              if (d == 0)
                 continue;
-              AST_Type *tp = d->compose($1);
-              if (tp == NULL)
+              AST_Type *tp = d->compose ($1);
+              if (tp == 0)
                 continue;
               /* $0 denotes Visibility, must be on yacc reduction stack */
-              f = idl_global->gen()->create_field(tp, d->name(), p, $<vival>0);
-              (void) s->fe_add_field(f);
+              f = idl_global->gen ()->create_field (tp, 
+                                                    d->name (), 
+                                                    $<vival>0);
+              (void) s->fe_add_field (f);
             }
             delete l;
           }
         }
         | error
         {
-          idl_global->err()->syntax_error(idl_global->parse_state());
+          idl_global->err()->syntax_error (idl_global->parse_state ());
         }
         ';'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
         ;
@@ -1700,82 +1661,72 @@ member_i:
 union_type :
         IDL_UNION
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionSeen);
         }
         id
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionIDSeen);
         }
         IDL_SWITCH
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SwitchSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SwitchSeen);
         }
         '('
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SwitchOpenParSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
         }
         switch_type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SwitchTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SwitchTypeSeen);
         }
         ')'
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($3, NULL);
-          AST_Union             *u = NULL;
-          AST_Decl              *v = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($3, 0);
+          AST_Union *u = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_SwitchCloseParSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
           /*
            * Create a node representing a union. Add it to its enclosing
            * scope
            */
-          if ($9 != NULL && s != NULL) {
-            AST_ConcreteType    *tp = AST_ConcreteType::narrow_from_decl($9);
-            if (tp == NULL) {
-              idl_global->err()->not_a_type($9);
+          if ($9 != 0 && s != 0) {
+            AST_ConcreteType *tp = AST_ConcreteType::narrow_from_decl ($9);
+            if (tp == 0) {
+              idl_global->err ()->not_a_type ($9);
             } else {
-              u = idl_global->gen()->create_union(tp,
-                                                  n,
-                                                  p,
-                                                  s->is_local (),
-                                                  s->is_abstract ());
-              (void) s->fe_add_union(u);
+              u = idl_global->gen ()->create_union (tp,
+                                                    n,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
+              (void) s->fe_add_union (u);
             }
           }
           /*
            * Push the scope of the union on the scopes stack
            */
-          idl_global->scopes()->push(u);
+          idl_global->scopes()->push (u);
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionSqSeen);
         }
         at_least_one_case_branch
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionBodySeen);
         }
         '}'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionQsSeen);
           /*
            * Done with this union. Pop its scope from the scopes stack
            */
-          $$ =
-             AST_Union::narrow_from_scope (
-                 idl_global->scopes()->top_non_null()
-               );
+          $$ = AST_Union::narrow_from_scope (
+                   idl_global->scopes ()->top_non_null ()
+                 );
           if ($$ != 0)
             {
-              UTL_StrList *p = $$->pragmas ();
-              if (p != 0)
-                 p = (UTL_StrList*)p->copy ();
-              idl_global->set_pragmas (p);
-              idl_global->scopes()->pop();
+              idl_global->scopes ()->pop ();
             }
         }
         ;
@@ -1783,30 +1734,36 @@ union_type :
 switch_type_spec :
         integer_type
         {
-          $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          $$ = idl_global->scopes ()->bottom ()->lookup_primitive_type ($1);
         }
         | char_type
         {
-          $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          /* wchars are not allowed */
+          if ($1 == AST_Expression::EV_wchar)
+            {
+              idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
+            }
+
+          $$ = idl_global->scopes ()->bottom ()->lookup_primitive_type ($1);
         }
         | octet_type
         {
-          // octets are not allowed
+          /* octets are not allowed */
           idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-          $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          $$ = idl_global->scopes ()->bottom ()->lookup_primitive_type ($1);
         }
         | boolean_type
         {
-          $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          $$ = idl_global->scopes ()->bottom ()->lookup_primitive_type ($1);
         }
         | enum_type
         | scoped_name
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          AST_Decl              *d = NULL;
-          AST_PredefinedType    *p = NULL;
-          AST_Typedef           *t = NULL;
-          long                  found = I_FALSE;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Decl *d = 0;
+          AST_PredefinedType *p = 0;
+          AST_Typedef *t = 0;
+          long found = I_FALSE;
 
           /*
            * The discriminator is a scoped name. Try to resolve to
@@ -1814,17 +1771,17 @@ switch_type_spec :
            * typedef's to arrive at the base type at the end of the
            * chain
            */
-          if (s != NULL && (d = s->lookup_by_name($1, I_TRUE)) != NULL) {
+          if (s != 0 && (d = s->lookup_by_name ($1, I_TRUE)) != 0) {
             while (!found) {
-              switch (d->node_type()) {
+              switch (d->node_type ()) {
               case AST_Decl::NT_enum:
                 $$ = d;
                 found = I_TRUE;
                 break;
               case AST_Decl::NT_pre_defined:
-                p = AST_PredefinedType::narrow_from_decl(d);
-                if (p != NULL) {
-                  switch (p->pt()) {
+                p = AST_PredefinedType::narrow_from_decl (d);
+                if (p != 0) {
+                  switch (p->pt ()) {
                   case AST_PredefinedType::PT_long:
                   case AST_PredefinedType::PT_ulong:
                   case AST_PredefinedType::PT_longlong:
@@ -1832,43 +1789,43 @@ switch_type_spec :
                   case AST_PredefinedType::PT_short:
                   case AST_PredefinedType::PT_ushort:
                   case AST_PredefinedType::PT_char:
-                  case AST_PredefinedType::PT_wchar:
                   case AST_PredefinedType::PT_boolean:
                     $$ = p;
                     found = I_TRUE;
                     break;
+                  case AST_PredefinedType::PT_wchar:
                   case AST_PredefinedType::PT_octet:
-                    // octets are not allowed
+                    /* octets and wchars are not allowed */
                     idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-                    $$ = NULL;
+                    $$ = 0;
                     found = I_TRUE;
                     break;
                   default:
-                    $$ = NULL;
+                    $$ = 0;
                     found = I_TRUE;
                     break;
                   }
                 } else
                 {
-                    $$ = NULL;
+                    $$ = 0;
                     found = I_TRUE;
                 }
                 break;
               case AST_Decl::NT_typedef:
-                t = AST_Typedef::narrow_from_decl(d);
-                if (t != NULL) d = t->base_type();
+                t = AST_Typedef::narrow_from_decl (d);
+                if (t != 0) d = t->base_type ();
                 break;
               default:
-                $$ = NULL;
+                $$ = 0;
                 found = I_TRUE;
                 break;
               }
             }
           } else
-            $$ = NULL;
+            $$ = 0;
 
-          if ($$ == NULL)
-            idl_global->err()->lookup_error($1);
+          if ($$ == 0)
+            idl_global->err ()->lookup_error ($1);
         }
         ;
 
@@ -1882,44 +1839,38 @@ case_branches
 case_branch :
         at_least_one_case_label
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionLabelSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionLabelSeen);
         }
         element_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemSeen);
         }
         ';'
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_LabellistActiveIterator *l = NULL;
-          AST_UnionLabel        *d = NULL;
-          AST_UnionBranch       *b = NULL;
-          AST_Field             *f = $3;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_UnionBranch *b = 0;
+          AST_Field *f = $3;
 
-          ACE_UNUSED_ARG (l);
-          ACE_UNUSED_ARG (d);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemCompleted);
           /*
            * Create several nodes representing branches of a union.
            * Add them to the enclosing scope (the union scope)
            */
-          if (s != NULL && $1 != NULL && $3 != NULL) {
-              b = idl_global->gen()->create_union_branch($1,
-                                                      f->field_type(),
-                                                      f->name(),
-                                                      f->pragmas());
-              (void) s->fe_add_union_branch(b);
+          if (s != 0 && $1 != 0 && $3 != 0) {
+              b = idl_global->gen ()->create_union_branch ($1,
+                                                           f->field_type (),
+                                                           f->name ());
+              (void) s->fe_add_union_branch (b);
           }
         }
         | error
         {
-          idl_global->err()->syntax_error(idl_global->parse_state());
+          idl_global->err()->syntax_error (idl_global->parse_state());
         }
         ';'
 
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
         ;
@@ -1927,82 +1878,84 @@ case_branch :
 at_least_one_case_label :
         case_label case_labels
         {
-          $$ = new UTL_LabelList($1, $2);
+          $$ = new UTL_LabelList ($1, $2);
         }
         ;
 
 case_labels
         : case_labels case_label
         {
-          if ($1 == NULL)
-            $$ = new UTL_LabelList($2, NULL);
+          if ($1 == 0)
+            $$ = new UTL_LabelList ($2, 0);
           else {
-            $1->nconc(new UTL_LabelList($2, NULL));
+            $1->nconc(new UTL_LabelList ($2, 0));
             $$ = $1;
           }
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
 case_label
         : IDL_DEFAULT
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DefaultSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DefaultSeen);
         }
           ':'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_LabelColonSeen);
 
-          $$ = idl_global->gen()->
-                    create_union_label(AST_UnionLabel::UL_default,
-                                       NULL);
+          $$ = idl_global->gen ()->create_union_label (
+                                       AST_UnionLabel::UL_default,
+                                       0
+                                     );
         }
         | IDL_CASE
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_CaseSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_CaseSeen);
         }
           const_expr
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_LabelExprSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_LabelExprSeen);
         }
         ':'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_LabelColonSeen);
 
-          $$ = idl_global->gen()->create_union_label(AST_UnionLabel::UL_label,
-                                                     $3);
+          $$ = idl_global->gen()->create_union_label (
+                                      AST_UnionLabel::UL_label,
+                                      $3
+                                    );
         }
         ;
 
 element_spec :
         type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemTypeSeen);
         }
         declarator
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemDeclSeen);
           /*
            * Check for illegal recursive use of type
            */
-          if ($1 != NULL && AST_illegal_recursive_type($1))
-            idl_global->err()->error1(UTL_Error::EIDL_RECURSIVE_TYPE, $1);
+          if ($1 != 0 && AST_illegal_recursive_type ($1))
+            idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE, $1);
           /*
            * Create a field in a union branch
            */
-          else if ($1 == NULL || $3 == NULL)
-            $$ = NULL;
+          else if ($1 == 0 || $3 == 0)
+            $$ = 0;
           else {
-            AST_Type *tp = $3->compose($1);
-            if (tp == NULL)
-              $$ = NULL;
+            AST_Type *tp = $3->compose ($1);
+            if (tp == 0)
+              $$ = 0;
             else
-              $$ = idl_global->gen()->create_field(tp,
-                                                   $3->name(),
-                                                   idl_global->pragmas());
+              $$ = idl_global->gen ()->create_field (tp,
+                                                     $3->name());
           }
         }
         ;
@@ -2010,61 +1963,55 @@ element_spec :
 enum_type :
         IDL_ENUM
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_EnumSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_EnumSeen);
         }
         id
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($3, NULL);
-          AST_Enum              *e = NULL;
-          AST_Decl              *v = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName($3, 0);
+          AST_Enum *e = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_EnumIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
           /*
            * Create a node representing an enum and add it to its
            * enclosing scope
            */
-          if (s != NULL) {
-            e = idl_global->gen()->create_enum(n,
-                                               p,
-                                               s->is_local (),
-                                               s->is_abstract ());
+          if (s != 0) {
+            e = idl_global->gen ()->create_enum (n,
+                                                 s->is_local (),
+                                                 s->is_abstract ());
             /*
              * Add it to its defining scope
              */
-            (void) s->fe_add_enum(e);
+            (void) s->fe_add_enum (e);
           }
           /*
            * Push the enum scope on the scopes stack
            */
-          idl_global->scopes()->push(e);
+          idl_global->scopes ()->push (e);
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_EnumSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_EnumSqSeen);
         }
         at_least_one_enumerator
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_EnumBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_EnumBodySeen);
         }
         '}'
         {
-          UTL_StrList *p = 0;
-          idl_global->set_parse_state(IDL_GlobalData::PS_EnumQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_EnumQsSeen);
           /*
            * Done with this enum. Pop its scope from the scopes stack
            */
-          if (idl_global->scopes()->top() == NULL)
-            $$ = NULL;
+          if (idl_global->scopes ()->top () == 0)
+            $$ = 0;
           else {
-            $$ = AST_Enum::narrow_from_scope(idl_global->scopes()->top_non_null());
-            p = $$->pragmas ();
-            idl_global->scopes()->pop();
+            $$ = AST_Enum::narrow_from_scope (
+                     idl_global->scopes ()->top_non_null ()
+                   );
+            idl_global->scopes ()->pop ();
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
@@ -2074,7 +2021,7 @@ enumerators
         : enumerators
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_EnumCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_EnumCommaSeen);
         }
           enumerator
         | /* EMPTY */
@@ -2083,22 +2030,22 @@ enumerators
 enumerator :
         IDENTIFIER
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n =
-                new UTL_ScopedName(new Identifier($1), NULL);
-          AST_EnumVal           *e = NULL;
-          AST_Enum              *c = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n =
+                new UTL_ScopedName (new Identifier ($1), 0);
+          AST_EnumVal *e = 0;
+          AST_Enum *c = 0;
 
           /*
            * Create a node representing one enumerator in an enum
            * Add it to the enclosing scope (the enum scope)
            */
-          if (s != NULL && s->scope_node_type() == AST_Decl::NT_enum) {
-            c = AST_Enum::narrow_from_scope(s);
-            if (c != NULL)
-              e = idl_global->gen()->create_enum_val(c->next_enum_val(), n, p);
-            (void) s->fe_add_enum_val(e);
+          if (s != 0 && s->scope_node_type () == AST_Decl::NT_enum) {
+            c = AST_Enum::narrow_from_scope (s);
+            if (c != 0)
+              e = idl_global->gen ()->create_enum_val (c->next_enum_val (), 
+                                                       n);
+            (void) s->fe_add_enum_val (e);
           }
         }
         ;
@@ -2107,77 +2054,80 @@ sequence_type_spec
         : seq_head
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceCommaSeen);
         }
         positive_int_expr
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceExprSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceExprSeen);
         }
           '>'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
           /*
            * Remove sequence marker from scopes stack
            */
-          if (idl_global->scopes()->top() == NULL)
-            idl_global->scopes()->pop();
-          UTL_Scope *s = idl_global->scopes()->top_non_null ();
+          if (idl_global->scopes ()->top() == 0)
+            idl_global->scopes ()->pop ();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
           /*
            * Create a node representing a sequence
            */
-          if ($4 == NULL || $4->coerce(AST_Expression::EV_ulong) == NULL) {
-            idl_global->err()->coercion_error($4, AST_Expression::EV_ulong);
-            $$ = NULL;
-          } else if ($1 == NULL) {
-            $$ = NULL;
+          if ($4 == 0 || $4->coerce(AST_Expression::EV_ulong) == 0) {
+            idl_global->err ()->coercion_error ($4, AST_Expression::EV_ulong);
+            $$ = 0;
+          } else if ($1 == 0) {
+            $$ = 0;
           } else {
-            AST_Type *tp = AST_Type::narrow_from_decl($1);
-            if (tp == NULL)
+            AST_Type *tp = AST_Type::narrow_from_decl ($1);
+            if (tp == 0)
               ; // Error will be caught in FE_Declarator.
             else {
-              $$ = idl_global->gen()->create_sequence($4,
-                                                      tp,
-                                                      s->is_local (),
-                                                      s->is_abstract ());
+              $$ = idl_global->gen ()->create_sequence ($4,
+                                                        tp,
+                                                        s->is_local (),
+                                                        s->is_abstract ());
               /*
-               * Add this AST_Sequence to the types defined in the global scope
+               * Add this AST_Sequence to types defined in the global scope.
                */
-              (void) idl_global->root()
-                        ->fe_add_sequence(AST_Sequence::narrow_from_decl($$));
+              (void) idl_global->root ()->fe_add_sequence (
+                                              AST_Sequence::narrow_from_decl ($$)
+                                            );
             }
           }
         }
         | seq_head
           '>'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
           /*
            * Remove sequence marker from scopes stack
            */
-          if (idl_global->scopes()->top() == NULL)
-            idl_global->scopes()->pop();
-          UTL_Scope *s = idl_global->scopes()->top_non_null ();
+          if (idl_global->scopes ()->top () == 0)
+            idl_global->scopes ()->pop ();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
           /*
            * Create a node representing a sequence
            */
-          if ($1 == NULL)
-            $$ = NULL;
+          if ($1 == 0)
+            $$ = 0;
           else {
-            AST_Type *tp = AST_Type::narrow_from_decl($1);
-            if (tp == NULL)
+            AST_Type *tp = AST_Type::narrow_from_decl ($1);
+            if (tp == 0)
               ; // Error will be caught in FE_Declarator.
             else {
               $$ =
-                idl_global->gen()->create_sequence(
-                             idl_global->gen()->create_expr((unsigned long) 0),
-                             tp,
-                             s->is_local (),
-                             s->is_abstract ());
+                idl_global->gen ()->create_sequence (
+                    idl_global->gen ()->create_expr ((unsigned long) 0),
+                    tp,
+                    s->is_local (),
+                    s->is_abstract ()
+                  );
               /*
-               * Add this AST_Sequence to the types defined in the global scope
+               * Add this AST_Sequence to types defined in the global scope
                */
-              (void) idl_global->root()
-                        ->fe_add_sequence(AST_Sequence::narrow_from_decl($$));
+              (void) idl_global->root ()->fe_add_sequence (
+                                              AST_Sequence::narrow_from_decl ($$)
+                                            );
             }
           }
         }
@@ -2186,19 +2136,19 @@ sequence_type_spec
 seq_head:
         IDL_SEQUENCE
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSeen);
           /*
            * Push a sequence marker on scopes stack
            */
-          idl_global->scopes()->push(NULL);
+          idl_global->scopes ()->push (0);
         }
         '<'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSqSeen);
         }
         simple_type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_SequenceTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
           $$ = $5;
         }
         ;
@@ -2207,51 +2157,54 @@ string_type_spec
         : string_head
           '<'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringSqSeen);
         }
         positive_int_expr
         {
-           idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
+           idl_global->set_parse_state (IDL_GlobalData::PS_StringExprSeen);
         }
         '>'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringQsSeen);
           /*
            * Create a node representing a string
            */
-          if ($4 == NULL || $4->coerce(AST_Expression::EV_ulong) == NULL) {
-            idl_global->err()->coercion_error($4, AST_Expression::EV_ulong);
-            $$ = NULL;
+          if ($4 == 0 || $4->coerce (AST_Expression::EV_ulong) == 0) {
+            idl_global->err ()->coercion_error ($4, AST_Expression::EV_ulong);
+            $$ = 0;
           } else {
-            $$ = idl_global->gen()->create_string($4);
+            $$ = idl_global->gen ()->create_string ($4);
             /*
              * Add this AST_String to the types defined in the global scope
              */
-            (void) idl_global->root()
-                      ->fe_add_string(AST_String::narrow_from_decl($$));
+            (void) idl_global->root ()->fe_add_string (
+                                            AST_String::narrow_from_decl ($$)
+                                          );
           }
         }
         | string_head
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
           /*
            * Create a node representing a string
            */
           $$ =
-            idl_global->gen()->create_string(
-                         idl_global->gen()->create_expr((unsigned long) 0));
+            idl_global->gen ()->create_string (
+                idl_global->gen ()->create_expr ((unsigned long) 0)
+              );
           /*
            * Add this AST_String to the types defined in the global scope
            */
-          (void) idl_global->root()
-                    ->fe_add_string(AST_String::narrow_from_decl($$));
+          (void) idl_global->root ()->fe_add_string (
+                                          AST_String::narrow_from_decl ($$)
+                                        );
         }
         ;
 
 string_head:
         IDL_STRING
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringSeen);
         }
         ;
 
@@ -2259,68 +2212,75 @@ wstring_type_spec
         : wstring_head
           '<'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringSqSeen);
         }
         positive_int_expr
         {
-           idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
+           idl_global->set_parse_state (IDL_GlobalData::PS_StringExprSeen);
         }
         '>'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringQsSeen);
           /*
            * Create a node representing a string
            */
-          if ($4 == NULL || $4->coerce(AST_Expression::EV_ulong) == NULL) {
-            idl_global->err()->coercion_error($4, AST_Expression::EV_ulong);
-            $$ = NULL;
+          if ($4 == 0 || $4->coerce(AST_Expression::EV_ulong) == 0) {
+            idl_global->err ()->coercion_error ($4, AST_Expression::EV_ulong);
+            $$ = 0;
           } else {
-            $$ = idl_global->gen()->create_wstring($4);
+            $$ = idl_global->gen ()->create_wstring ($4);
             /*
              * Add this AST_String to the types defined in the global scope
              */
-            (void) idl_global->root()
-                      ->fe_add_string(AST_String::narrow_from_decl($$));
+            (void) idl_global->root ()->fe_add_string (
+                                            AST_String::narrow_from_decl ($$)
+                                          );
           }
         }
         | wstring_head
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
           /*
            * Create a node representing a string
            */
           $$ =
-            idl_global->gen()->create_wstring(
-                         idl_global->gen()->create_expr((unsigned long) 0));
+            idl_global->gen ()->create_wstring (
+                idl_global->gen ()->create_expr ((unsigned long) 0)
+              );
           /*
            * Add this AST_String to the types defined in the global scope
            */
-          (void) idl_global->root()
-                    ->fe_add_string(AST_String::narrow_from_decl($$));
+          (void) idl_global->root ()->fe_add_string (
+                                          AST_String::narrow_from_decl ($$)
+                                        );
         }
         ;
 
 wstring_head:
         IDL_WSTRING
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_StringSeen);
         }
         ;
 
 array_declarator :
         id
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ArrayIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ArrayIDSeen);
         }
         at_least_one_array_dim
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ArrayCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ArrayCompleted);
           /*
            * Create a node representing an array
            */
-          if ($3 != NULL) {
-             $$ = idl_global->gen()->create_array(new UTL_ScopedName($1, NULL),
-                                                  $3->length(), $3, 0, 0);
+          if ($3 != 0) {
+             $$ = idl_global->gen ()->create_array (new UTL_ScopedName ($1, 
+                                                                        0),
+                                                    $3->length (), 
+                                                    $3, 
+                                                    0, 
+                                                    0);
           }
         }
         ;
@@ -2328,45 +2288,45 @@ array_declarator :
 at_least_one_array_dim :
         array_dim array_dims
         {
-          $$ = new UTL_ExprList($1, $2);
+          $$ = new UTL_ExprList ($1, $2);
         }
         ;
 
 array_dims
         : array_dims array_dim
         {
-          if ($1 == NULL)
-            $$ = new UTL_ExprList($2, NULL);
+          if ($1 == 0)
+            $$ = new UTL_ExprList ($2, 0);
           else {
-            $1->nconc(new UTL_ExprList($2, NULL));
+            $1->nconc (new UTL_ExprList ($2, 0));
             $$ = $1;
           }
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
 array_dim :
         '['
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DimSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DimSqSeen);
         }
         positive_int_expr
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DimExprSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DimExprSeen);
         }
         ']'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_DimQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_DimQsSeen);
           /*
            * Array dimensions are expressions which must be coerced to
            * positive integers
            */
-          if ($3 == NULL || $3->coerce(AST_Expression::EV_ulong) == NULL) {
-            idl_global->err()->coercion_error($3, AST_Expression::EV_ulong);
-            $$ = NULL;
+          if ($3 == 0 || $3->coerce (AST_Expression::EV_ulong) == 0) {
+            idl_global->err ()->coercion_error ($3, AST_Expression::EV_ulong);
+            $$ = 0;
           } else
             $$ = $3;
         }
@@ -2376,55 +2336,52 @@ attribute:
         opt_readonly
         IDL_ATTRIBUTE
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_AttrSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
         param_type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_AttrTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrTypeSeen);
         }
         at_least_one_simple_declarator
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_DecllistActiveIterator *l = NULL;
-          AST_Attribute         *a = NULL;
-          FE_Declarator         *d = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_DecllistActiveIterator *l = 0;
+          AST_Attribute *a = 0;
+          FE_Declarator *d = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_AttrCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrCompleted);
           /*
            * Create nodes representing attributes and add them to the
            * enclosing scope
            */
-          if (s != NULL && $4 != NULL && $6 != NULL) {
-            l = new UTL_DecllistActiveIterator($6);
-            for (;!(l->is_done()); l->next()) {
-              d = l->item();
-              if (d == NULL)
+          if (s != 0 && $4 != 0 && $6 != 0) {
+            l = new UTL_DecllistActiveIterator ($6);
+            for (; !(l->is_done ()); l->next ()) {
+              d = l->item ();
+              if (d == 0)
                 continue;
-              AST_Type *tp = d->compose($4);
-              if (tp == NULL)
+              AST_Type *tp = d->compose ($4);
+              if (tp == 0)
                 continue;
-              a = idl_global->gen()->create_attribute($1,
-                                                      tp,
-                                                      (UTL_IdList *) d->name()->copy (),
-                                                      p,
-                                                      s->is_local (),
-                                                      s->is_abstract ());
+              a = idl_global->gen ()->create_attribute ($1,
+                                                        tp,
+                                                        (UTL_IdList *) d->name()->copy (),
+                                                        s->is_local (),
+                                                        s->is_abstract ());
               /*
                * Add one attribute to the enclosing scope
                */
-              (void) s->fe_add_attribute(a);
+              (void) s->fe_add_attribute (a);
             }
             delete l;
           }
-          idl_global->set_pragmas (p);
         }
         ;
 
 opt_readonly
         : IDL_READONLY
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_AttrROSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_AttrROSeen);
           $$ = I_TRUE;
         }
         | /* EMPTY */
@@ -2436,54 +2393,45 @@ opt_readonly
 exception :
         IDL_EXCEPTION
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptSeen);
         }
         id
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n = new UTL_ScopedName($3, NULL);
-          AST_Exception         *e = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
-          AST_Decl              *v = NULL;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n = new UTL_ScopedName ($3, 0);
+          AST_Exception *e = 0;
 
-          ACE_UNUSED_ARG (v);
-
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptIDSeen);
           /*
            * Create a node representing an exception and add it to
            * the enclosing scope
            */
-          if (s != NULL) {
-            e = idl_global->gen()->create_exception(n,
-                                                    p,
-                                                    s->is_local (),
-                                                    s->is_abstract ());
-            (void) s->fe_add_exception(e);
+          if (s != 0) {
+            e = idl_global->gen ()->create_exception (n,
+                                                      s->is_local (),
+                                                      s->is_abstract ());
+            (void) s->fe_add_exception (e);
           }
           /*
            * Push the exception scope on the scope stack
            */
-          idl_global->scopes()->push(e);
+          idl_global->scopes()->push (e);
         }
         '{'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptSqSeen);
         }
         members
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptBodySeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptBodySeen);
         }
         '}'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_ExceptQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ExceptQsSeen);
           /*
            * Done with this exception. Pop its scope from the scope stack
            */
-          AST_Exception *ex =
-            AST_Exception::narrow_from_scope (idl_global->scopes ()->top_non_null ());
-          UTL_StrList *p = ex->pragmas ();
-          idl_global->scopes()->pop();
-          idl_global->set_pragmas (p);
+          idl_global->scopes ()->pop ();
         }
         ;
 
@@ -2491,83 +2439,81 @@ operation :
         opt_op_attribute
         op_type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
         }
         IDENTIFIER
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          UTL_ScopedName        *n =
-                new UTL_ScopedName(new Identifier($4), NULL);
-          AST_Operation         *o = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          UTL_ScopedName *n =
+                new UTL_ScopedName (new Identifier ($4), 0);
+          AST_Operation *o = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpIDSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
           /*
            * Create a node representing an operation on an interface
            * and add it to its enclosing scope
            */
-          if (s != NULL && $2 != NULL) {
-            AST_Type *tp = AST_Type::narrow_from_decl($2);
-            if (tp == NULL) {
-              idl_global->err()->not_a_type($2);
-            } else if (tp->node_type() == AST_Decl::NT_except) {
-              idl_global->err()->not_a_type($2);
+          if (s != 0 && $2 != 0) {
+            AST_Type *tp = AST_Type::narrow_from_decl ($2);
+            if (tp == 0) {
+              idl_global->err ()->not_a_type ($2);
+            } else if (tp->node_type () == AST_Decl::NT_except) {
+              idl_global->err ()->not_a_type ($2);
             } else {
-              o = idl_global->gen()->create_operation(tp,
-                                                      $1,
-                                                      n,
-                                                      p,
-                                                      s->is_local (),
-                                                      s->is_abstract ());
-              (void) s->fe_add_operation(o);
+              o = idl_global->gen ()->create_operation (tp,
+                                                        $1,
+                                                        n,
+                                                        s->is_local (),
+                                                        s->is_abstract ());
+              (void) s->fe_add_operation (o);
             }
           }
           /*
            * Push the operation scope onto the scopes stack
            */
-          idl_global->scopes()->push(o);
+          idl_global->scopes()->push (o);
         }
         parameter_list
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpParsCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
         opt_raises
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
         }
         opt_context
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          AST_Operation         *o = NULL;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Operation *o = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpCompleted);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpCompleted);
           /*
            * Add exceptions and context to the operation
            */
-          if (s != NULL && s->scope_node_type() == AST_Decl::NT_op) {
-            o = AST_Operation::narrow_from_scope(s);
+          if (s != 0 && s->scope_node_type() == AST_Decl::NT_op) {
+            o = AST_Operation::narrow_from_scope (s);
 
-            if ($8 != NULL && o != NULL)
-              (void) o->fe_add_exceptions($8);
-            if ($10 != NULL)
-              (void) o->fe_add_context($10);
+            if ($8 != 0 && o != 0)
+              (void) o->fe_add_exceptions ($8);
+            if ($10 != 0)
+              (void) o->fe_add_context ($10);
           }
           /*
            * Done with this operation. Pop its scope from the scopes stack
            */
-          idl_global->scopes()->pop();
+          idl_global->scopes ()->pop ();
         }
         ;
 
 opt_op_attribute
         : IDL_ONEWAY
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpAttrSeen);
           $$ = AST_Operation::OP_oneway;
         }
         | IDL_IDEMPOTENT
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpAttrSeen);
           $$ = AST_Operation::OP_idempotent;
         }
         | /* EMPTY */
@@ -2581,38 +2527,147 @@ op_type_spec
         | IDL_VOID
         {
           $$ =
-            idl_global->scopes()->bottom()
-               ->lookup_primitive_type(AST_Expression::EV_void);
+            idl_global->scopes ()->bottom ()->lookup_primitive_type (
+                                                  AST_Expression::EV_void
+                                                );
         }
         ;
 
 init_decl
-        : IDL_FACTORY IDENTIFIER parameter_list
+        : IDL_FACTORY 
         {
-           // TODO: replace parameter_list with rule that accepts only IN args
-           cerr << "error in " << idl_global->filename()->get_string()
-                << " line " << idl_global->lineno() << ":\n" ;
-           cerr << "Sorry, I (TAO_IDL) can't handle factory yet\n";
+          //@@ PS_FactorySeen?
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
+        }
+        IDENTIFIER 
+        {
+
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          if (s->is_abstract ())
+          {
+            //@@ Fire error
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("error in %s line %d:\n")
+                        ACE_TEXT ("Abstract valuetype can't have a ")
+                        ACE_TEXT ("factory construct.\n"),
+                        idl_global->filename ()->get_string (),
+                        idl_global->lineno ()));
+          }     
+          UTL_ScopedName *n =
+                new UTL_ScopedName (new Identifier ($3), 0);
+
+          AST_Factory *factory = 0;
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpIDSeen);
+
+          /*
+           * Create a node representing an factory construct
+           * and add it to its enclosing scope
+           */
+          if (s != 0)
+          {
+            factory = idl_global->gen ()->create_factory (n);
+            (void) s->fe_add_factory (factory);
+          }
+          /*
+           * Push the operation scope onto the scopes stack
+           */
+          idl_global->scopes ()->push (factory);
+        }
+        init_parameter_list
+        {
+          // TODO: replace parameter_list with rule that accepts only IN args
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
+          idl_global->scopes ()->pop ();
+        }
+        ;
+
+init_parameter_list
+        : '('
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
+        }
+          ')'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
+        }
+        | '('
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
+        }
+          at_least_one_in_parameter
+          ')'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
+        }
+        ;
+
+at_least_one_in_parameter : in_parameter in_parameters ;
+
+in_parameters
+        : in_parameters
+          ','
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParCommaSeen);
+        }
+          in_parameter
+        | /* EMPTY */
+        ;
+
+in_parameter :
+        IDL_IN
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParDirSeen);
+        }
+        param_type_spec
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParTypeSeen);
+        }
+        declarator
+        {
+
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Argument *a = 0;
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParDeclSeen);
+          /*
+           * Create a node representing an argument to an operation
+           * Add it to the enclosing scope (the operation scope)
+           */
+          if ($3 != 0 && $5 != 0 && s != 0) 
+          {
+            AST_Type *tp = $5->compose ($3);
+            if (tp != 0) 
+            {
+              a = idl_global->gen ()->create_argument (
+                      AST_Argument::dir_IN, 
+                      tp, 
+                      (UTL_IdList *) $5->name ()->copy ()
+                    );
+
+              (void) s->fe_add_argument (a);
+            }
+          }
         }
         ;
 
 parameter_list
         : '('
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
           ')'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
         | '('
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
           at_least_one_parameter
           ')'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
         ;
 
@@ -2622,7 +2677,7 @@ parameters
         : parameters
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpParCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParCommaSeen);
         }
           parameter
         | /* EMPTY */
@@ -2631,36 +2686,43 @@ parameters
 parameter :
         direction
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpParDirSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParDirSeen);
         }
         param_type_spec
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpParTypeSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParTypeSeen);
         }
         declarator
         {
-          UTL_Scope             *s = idl_global->scopes()->top_non_null();
-          AST_Argument          *a = NULL;
-          UTL_StrList           *p = idl_global->pragmas();
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Argument *a = 0;
 
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpParDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpParDeclSeen);
           /*
            * Create a node representing an argument to an operation
            * Add it to the enclosing scope (the operation scope)
            */
-          if ($3 != NULL && $5 != NULL && s != NULL) {
-            AST_Type *tp = $5->compose($3);
-            if (tp != NULL) {
+          if ($3 != 0 && $5 != 0 && s != 0) {
+            AST_Type *tp = $5->compose ($3);
+            if (tp != 0) {
               if (!s->is_local () && tp->is_local ())
                 {
-                  cerr << "error in " << idl_global->filename()->get_string()
-                       << " line " << idl_global->lineno() << ":\n" ;
-                  cerr << "Cannot use a local type as an argument of a remote interface operation\n";
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("error in %s line %d\n"),
+                              idl_global->filename ()->get_string (),
+                              idl_global->lineno ()));
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("Cannot use a local type as an ")
+                              ACE_TEXT ("argument of a remote operation\n")));
                 }
               else
                 {
-                  a = idl_global->gen()->create_argument($1, tp, (UTL_IdList *) $5->name ()->copy (), p);
-                  (void) s->fe_add_argument(a);
+                  a = idl_global->gen ()->create_argument (
+                                              $1, 
+                                              tp, 
+                                              (UTL_IdList *) $5->name ()->copy ()
+                                            );
+                  (void) s->fe_add_argument (a);
                 }
             }
           }
@@ -2670,19 +2732,19 @@ parameter :
 param_type_spec
         : base_type_spec
         {
-          $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
+          $$ = idl_global->scopes ()->bottom ()->lookup_primitive_type ($1);
         }
         | string_type_spec
         | wstring_type_spec
         | scoped_name
         {
-          UTL_Scope     *s = idl_global->scopes()->top_non_null();
-          AST_Decl      *d = NULL;
+          UTL_Scope *s = idl_global->scopes ()->top_non_null ();
+          AST_Decl *d = 0;
 
-          if (s != NULL)
-            d = s->lookup_by_name($1, I_TRUE);
-          if (d == NULL)
-            idl_global->err()->lookup_error($1);
+          if (s != 0)
+            d = s->lookup_by_name ($1, I_TRUE);
+          if (d == 0)
+            idl_global->err ()->lookup_error ($1);
           $$ = d;
         }
         ;
@@ -2705,49 +2767,49 @@ direction
 opt_raises
         : IDL_RAISES
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseSeen);
         }
           '('
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseSqSeen);
         }
           at_least_one_scoped_name
           ')'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseQsSeen);
           $$ = $5;
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
 opt_context
         : IDL_CONTEXT
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpContextSeen);
         }
           '('
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSqSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpContextSqSeen);
         }
           at_least_one_string_literal
           ')'
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpContextQsSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpContextQsSeen);
           $$ = $5;
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
 at_least_one_string_literal :
         IDL_STRING_LITERAL string_literals
         {
-          $$ = new UTL_StrList($1, $2);
+          $$ = new UTL_StrList ($1, $2);
         }
         ;
 
@@ -2755,20 +2817,20 @@ string_literals
         : string_literals
           ','
         {
-          idl_global->set_parse_state(IDL_GlobalData::PS_OpContextCommaSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_OpContextCommaSeen);
         }
           IDL_STRING_LITERAL
         {
-          if ($1 == NULL)
-            $$ = new UTL_StrList($4, NULL);
+          if ($1 == 0)
+            $$ = new UTL_StrList ($4, 0);
           else {
-            $1->nconc(new UTL_StrList($4, NULL));
+            $1->nconc (new UTL_StrList ($4, 0));
             $$ = $1;
           }
         }
         | /* EMPTY */
         {
-          $$ = NULL;
+          $$ = 0;
         }
         ;
 
@@ -2779,7 +2841,7 @@ string_literals
  * ???
  */
 int
-yywrap()
+yywrap ()
 {
   return 1;
 }
@@ -2788,7 +2850,7 @@ yywrap()
  * Report an error situation discovered in a production
  */
 void
-yyerror(const char *msg)
+yyerror (const char *msg)
 {
   ACE_ERROR ((LM_ERROR,
               "%s\n",
