@@ -28,6 +28,7 @@ Time_Client_i::run (int argc,
     {
       //Make the RMI.
       CORBA::Long timedate = client->time (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       
       // Print out value
       char *ascii_timedate =
@@ -39,6 +40,7 @@ Time_Client_i::run (int argc,
 
       if (client.shutdown () == 1)
         client->shutdown (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
