@@ -258,6 +258,9 @@ TAO_IFR_Server::open_config (ACE_ENV_SINGLE_ARG_DECL)
 
           if (heap->open (filename))
             {
+              delete heap;
+              heap = 0;
+            
               ACE_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
