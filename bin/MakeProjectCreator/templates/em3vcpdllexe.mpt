@@ -7,6 +7,7 @@ type_is_binary        = 1
 common_defines        = UNICODE _UNICODE
 pch_defines           = ACE_USING_PCH
 ssl_libs              = libeay32 ssleay32
+pdb                   = 1
 
 WCE x86 {
   type_code   = 0x8301
@@ -47,7 +48,7 @@ Debug {
   compile_flags         = /W3 /Zi /Od
   defines               = _DEBUG
   compile_flags_removed = /YX
+  output_dir            = .
   intermediate_dir      = Debug
   lib_modifier          = d
 }
-

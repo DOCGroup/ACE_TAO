@@ -27,6 +27,7 @@ Release {
   debug_switch          =
   type_is_dynamic       = 1
   type_is_binary        = 1
+  pdb                   = 1
   ssl_libs              = libeay32 ssleay32
 }
 
@@ -36,6 +37,7 @@ Debug {
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
+  output_dir            = .
   intermediate_dir      = Debug
   lib_modifier          = d
   type_is_dynamic       = 1
@@ -71,6 +73,5 @@ Static Debug {
   lib_modifier          = sd
   type_is_static        = 1
   need_libflags         = 1
-  pdb                   = 1
 }
 

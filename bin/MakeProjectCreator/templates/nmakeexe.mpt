@@ -7,6 +7,7 @@ type_is_binary        = 1
 common_defines        = WIN32 _CONSOLE
 subsystem             = console
 pch_defines           = ACE_USING_PCH
+pdb                   = 1
 
 Win32 {
   machine_description = x86
@@ -36,9 +37,9 @@ Debug {
   compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /YX
+  output_dir            = .
   intermediate_dir      = Debug
   lib_modifier          = d
-  pdb                   = 1
   ssl_libs              = libeay32 ssleay32
 }
 
@@ -63,5 +64,4 @@ Static Debug {
   need_libflags         = 1
   output_dir            = Static_Debug
   intermediate_dir      = Static_Debug
-  pdb                   = 1
 }
