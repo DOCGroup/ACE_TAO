@@ -8,6 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_wait.h"
+#include "ace/OS_NS_unistd.h"
 #include "Malloc.h"
 #include "Options.h"
 
