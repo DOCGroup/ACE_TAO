@@ -45,6 +45,9 @@
 // specializations for all used templates.
 #  define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
+// Template specialization is supported.
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // The HP/UX compiler doesn't support volatile!!!!
 #  define volatile
 
@@ -59,14 +62,11 @@
 #  define ACE_HAS_TYPENAME_KEYWORD
 
 // Compiler implements templates that support typedefs inside of classes
-// used as formal arguments to a template class. 
+// used as formal arguments to a template class.
 #  define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Platform lacks streambuf "linebuffered ()".
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
-
-// Compiler's template mechanism must see source code (i.e., .C files).
-#  define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #endif /* __cplusplus < 199707L */
 
