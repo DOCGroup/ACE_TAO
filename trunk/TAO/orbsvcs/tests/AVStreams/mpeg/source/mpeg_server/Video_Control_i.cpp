@@ -50,7 +50,12 @@ Video_Control_i::stat_stream (CORBA::Char_out ch,
 CORBA::Boolean 
 Video_Control_i::close (CORBA::Environment& env)
 {
-  return 0;
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Video_Control_i::close:"
+              "shutting down the reactor\n"));
+
+  TAO_ORB_Core_instance ()-> orb ()-> shutdown ();
+  return CORBA::B_TRUE;
 }
 
 
