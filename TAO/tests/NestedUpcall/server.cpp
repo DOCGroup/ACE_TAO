@@ -14,7 +14,7 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "tao/tao_util.h"
+#include "tao/TAO.h"
 #include "reactor_i.h"
 
 int
