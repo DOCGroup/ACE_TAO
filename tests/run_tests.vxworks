@@ -171,6 +171,10 @@ ld < Conn_Test
 write 2, "Conn_Test ", 10
 ace_main; unld "Conn_Test"
 
+ld < Cached_Conn_Test
+write 2, "Cached_Conn_Test ", 17
+ace_main; unld "Cached_Conn_Test"
+
 ld < Barrier_Test
 write 2, "Barrier_Test ", 13
 ace_main; unld "Barrier_Test"
@@ -196,9 +200,13 @@ ld < Reverse_Lock_Test
 write 2, "Reverse_Lock_Test ", 18
 ace_main; unld "Reverse_Lock_Test"
 
-#### ld < Map_Manager_Test
-#### write 2, "Map_Manager_Test ", 17
-#### ace_main; unld "Map_Manager_Test"
+ld < Map_Manager_Test
+write 2, "Map_Manager_Test ", 17
+ace_main; unld "Map_Manager_Test"
+
+ld < Cache_Map_Manager_Test
+write 2, "Cache_Map_Manager_Test ", 23
+ace_main; unld "Cache_Map_Manager_Test"
 
 ld < Map_Test
 write 2, "Map_Test ", 9

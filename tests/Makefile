@@ -15,6 +15,7 @@ BIN =   Aio_Platform_Test \
         Basic_Types_Test \
         Buffer_Stream_Test \
         Cache_Map_Manager_Test \
+        Cached_Conn_Test \
         CDR_Test \
         Collection_Test \
         Conn_Test \
@@ -6392,3 +6393,4 @@ realclean: clean
  $(ACE_ROOT)/ace/Token_Invariants.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
+# DO NOT DELETE THIS LINE -- make depend depends on it.
