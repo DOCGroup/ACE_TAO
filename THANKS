@@ -1368,7 +1368,6 @@ Bo Balder <bba@post.utfors.se>
 Michael Sawczyn <msawczyn@columbus.rr.com>
 Ildar Gabdulline <ildar_gabdullin@mailru.com>
 David Yongqiang Wang <davidyw@avaya.com>
-Jim Connelly <jim.connelly@neustar.com>
 Andrew Foster <awf@prismtechnologies.com>
 C Chan <CChan@md.aacisd.com>
 Alexey Chalimov <alexey@allcharge.com>
@@ -1376,6 +1375,7 @@ Andrea Bernicchia <a.bernicchia@acsys.it>
 Praphul Menon <praphulm@yahoo.com>
 Patrick N <pn@milhouse.co.uk> 
 Garth Watney <Garth.J.Watney@jpl.nasa.gov>
+Jim Connelly <jim.connelly@neustar.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
