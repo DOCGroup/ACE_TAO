@@ -9,13 +9,13 @@
 //     Server to test the Servant Activator and Servant Locator for a POA.
 //
 //  =AUTHOR
-//     Irfan Pyarali
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
 //=============================================================================
 
 #include "ace/streams.h"
 #include "Servant_Activator.h"
-//#include "Servant_Locator.h"
+#include "Servant_Locator.h"
 
 ACE_RCSID(On_Demand_Activation, server, "$Id$")
 
@@ -267,9 +267,6 @@ main (int argc, char **argv)
   PortableServer::ObjectId_var first_foo_oid =
     servant_activator_impl.create_objectId ("MyFoo","create_MyFoo");
 
-  // PortableServer::ObjectId_var first_foo_oid =
-  //  PortableServer::string_to_ObjectId ("MyFoo:create_MyFoo");
-
   CORBA::Object_var first_foo =
     first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", env);
 
@@ -279,9 +276,9 @@ main (int argc, char **argv)
       return -1;
     }
 
-  /*  MyFooServantLocator servant_locator_impl (orb.in ());
-  PortableServer::ServantLocator_var servant_locator =
-    servant_locator_impl._this (env);
+   MyFooServantLocator servant_locator_impl (orb.in ());
+   PortableServer::ServantLocator_var servant_locator =
+     servant_locator_impl._this (env);
 
   if (env.exception () != 0)
     {
@@ -299,12 +296,12 @@ main (int argc, char **argv)
       env.print_exception ("PortableServer::POAManager::set_servant_manager");
       return -1;
     }
-  */
+ 
   // Try to create a reference with user created ID in second_poa
   // which uses MyFooServantLocator.
 
   PortableServer::ObjectId_var second_foo_oid =
-    PortableServer::string_to_ObjectId ("secondFoo");
+   servant_locator_impl.create_objectId ("MyFoo","create_MyFoo");
 
   CORBA::Object_var second_foo =
     second_poa->create_reference_with_id (second_foo_oid.in (),

@@ -7,17 +7,23 @@ This example deals with dynamically loading servants in a POA.
 
 A POA configured with the USE_SERVANT_MANAGER policy value relies on
 an application supplied Servant Manager object to supply object/server
-associations. If the POA has the RETAIN value for the servant
+associations. 
+
+If the POA has the RETAIN value for the servant
 retention, the POA expects the Servant Manager to supply the Servant
-Activator interface.
+Activator interface. When the POA is created with the NON RETAIN value
+for servant retention, the Servant_Locator interface takes over.
 
-In this example, the Servant Activator interface is used.  The servant
-is an dynamically linkable library Dir_Service.  This is an servant
-that provides directory assistance.
+In this example, the Servant Activator as well as the Servant_Loactor
+interfaces are used.  The servant is an dynamically linkable library
+which is loaded on demand. The case of the Servantor Activator once the
+servant is loaded, the Object to Servant association is added to the 
+Actiove Object Map maintained by the POA. This association becomes
+invalid when the POA is destroyed or/and the Object i sdeactivated.
+On the other hand, the Servant_Locator is called per operation request
+from the client and the associations too are made per request and the
+servant is destroyed per request too.
 
-The client asks for directory assistance and at the server end the
-Servant Actiavtor loads the dynamic linkable library on demand,
-obtains the servant object that then answers the client's request.
 
 Note that the server need not be built with the library. The library
 name and the factory method which will be used to obtain the servant
@@ -28,27 +34,12 @@ server along with the library.
 Execution:
 ---------
 
-There are two process:
-
-1. Server -- which will handle any requests for directory assistance.
-2. client -- needs the directory assistance.
-
-So run the server first and then the client process.
+        Run the run_test_pl script.
 
 example:
-        
-      >  server -f ior_file 
-                The ior_file is a file which stores the IOR, that is
-        the object reference of the server which identifies it in the endsystem.
+        run_test_pl -f ior_file
 
 
-      > client -f ior_file -x
-                The server IOR is read by the client so that the
-        request can be targetted to the server. The -x option shuts down the
-        server when its request is answered.
-
-        On giving the -o option, the area codes are displayed as part
-        of a oneway directory service.
-
-
-
+The output will demonstrate the different actions performed by the 
+Servant_Manager via the Servant_Activator and the Servant_Locator
+interfaces.
