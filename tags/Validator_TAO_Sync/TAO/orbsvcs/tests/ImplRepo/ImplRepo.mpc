@@ -1,0 +1,70 @@
+project(airplane server) : server, orbsvcsexe, minimum_corba {
+  depends += IORTable
+  libs    += TAO_IORTable
+  exename  = airplane_server
+
+  IDL_Files {
+    Airplane.idl
+  }
+
+  Source_Files {
+    AirplaneC.cpp
+    AirplaneS.cpp
+    airplane_i.cpp
+    airplane_server_i.cpp
+    airplane_server.cpp
+  }
+}
+
+project(airplane client) : server, orbsvcsexe, minimum_corba {
+  depends += IORTable
+  libs    += TAO_IORTable
+  exename  = airplane_client
+
+  IDL_Files {
+    Airplane.idl
+  }
+
+  Source_Files {
+    AirplaneC.cpp
+    AirplaneS.cpp
+    airplane_client_i.cpp
+    airplane_client.cpp
+  }
+}
+
+project(nestea server) : server, orbsvcsexe, minimum_corba {
+  depends += IORTable
+  libs    += TAO_IORTable
+  exename  = nestea_server
+
+  IDL_Files {
+    Nestea.idl
+  }
+
+  Source_Files {
+    NesteaC.cpp
+    NesteaS.cpp
+    nestea_i.cpp
+    nestea_server_i.cpp
+    nestea_server.cpp
+  }
+}
+
+project(nestea client) : server, orbsvcsexe, minimum_corba {
+  depends += IORTable
+  libs    += TAO_IORTable
+  exename  = nestea_client
+
+  IDL_Files {
+    Nestea.idl
+  }
+
+  Source_Files {
+    NesteaC.cpp
+    NesteaS.cpp
+    nestea_client_i.cpp
+    nestea_client.cpp
+  }
+}
+

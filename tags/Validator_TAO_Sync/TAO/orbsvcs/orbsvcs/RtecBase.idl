@@ -1,0 +1,75 @@
+/**
+ * @file RtecBase.idl
+ *
+ * @brief Define the RtecBase module
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ */
+
+#ifndef TAO_RTEC_BASE_IDL
+#define TAO_RTEC_BASE_IDL
+
+/**
+ * @namespace RtecBase
+ *
+ * @brief Define types shared by the real-time scheduling and event
+ * services.
+ *
+ * These types are defined in a separate module to decouple the
+ * real-time event services from the scheduling service interface (and
+ * implementation!)
+ */
+module RtecBase
+{
+  /// Specify one-way or two-way call.
+  enum Dependency_Type_t
+  {
+    ONE_WAY_CALL,
+    TWO_WAY_CALL
+  };
+
+  /// Provide a fast, low-footprint identifier for RT_Infos.
+  /**
+   * The Event and Scheduling Service need to communicate information
+   * about RT_Infos (descriptions about the scheduling properties of a
+   * simple operation).  On a centralized application one would use
+   * pointers for such a task, but obviously that does not work on a
+   * distributed system.
+   * It is tempting to use object references to identify each RT_Info,
+   * but that does not work either:  first the *contents* of the
+   * RT_Info must be transmitted between applications, and object
+   * references are not good identifiers (due to the semantics of
+   * _is_equivalent())
+   *
+   * The handle_t type is used to generate unique identifiers on the
+   * scheduling service, the Event Service can then refer to any
+   * RT_Info using either their name or the quicker handle_t.
+   */
+  typedef long handle_t;
+
+  /// Define dependencies between two RT_Infos
+  struct Dependency_Info
+  {
+    /// Type of dependency
+    Dependency_Type_t dependency_type;
+
+    /// Number of times the dependency is called
+    long number_of_calls;
+
+    /// Dependency
+    handle_t rt_info;
+  };
+
+  /// Helper typedef to define the OS priority.
+  typedef long OS_Priority;
+
+  /// Helper typedef to define the OS-independent priority
+  typedef long Preemption_Priority_t;
+
+  /// Helper typedef to define the OS-independent sub-priority
+  typedef long Preemption_Subpriority_t;
+};
+
+#endif /* TAO_RTEC_BASE_IDL */

@@ -1,0 +1,414 @@
+<HTML>
+<TITLE>Portable Interceptors</TITLE>
+<BODY>
+
+<hr><P>
+<H3>Portable Interceptors</H3>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+<p>We have revised TAO's interceptor implementation so that it
+conforms to the Portable Interceptor specification which is now a part
+of the <a href="http://www.omg.org/cgi-bin/doc?formal/02-05-15">CORBA
+2.6.1</A> specification.  The purpose of this document is to provide a
+transition guide for those who have used our old interceptors.  The
+old interceptors will no longer be supported now that we have the new
+mechanism in place.  A paper that describes TAO's portable
+interceptors and <A HREF="Smart_Proxies.html">smart proxies</A> is
+available
+<A HREF="http://www.cs.wustl.edu/~schmidt/PDF/smart_proxies.pdf">online</A>.
+</p>
+
+<hr><P>
+<h3><a name="toc">Table of Contents</a></h3>
+<ul>
+  <li><a href="#context">Context</a>
+  <li><a href="#implement">TAO's Implementation</a>
+  <li><a href="#api">Transition</a>
+  <li><a href="#status">Current Status</a>
+  <li><a href="#future">Future Work</a>
+  <li><a href="#issues">Known Issues</a>
+  <li><a href="#ref">References</a>
+</ul>
+
+<hr><P>
+<h2><a name="context">Context</a></h2>
+
+<p>Interceptors allow you to interpose other CORBA services to the ORB
+and extend the ORB's functionalities.  They are most commonly used in,
+but not limited to, Security Service, Transaction Service.  They are
+also for accounting, auditing and debugging distributed applications.
+</p> 
+
+<hr><P>
+<h3><a name="implement">TAO's Implementation of "Portable
+Interceptors"</a></h3>
+
+<p>We have modifed TAO's interceptor interface to conform with the
+CORBA 2.5 spec.  The current implementation of interceptors consists of
+support for the <CODE>Dynamic</CODE> module as well as the canonical
+interception points including
+(1) <CODE>send_request</CODE>,
+(2) <CODE>receive_reply</CODE>,
+(3) <CODE>receive_exception</CODE>,
+(4) <CODE>receive_other</CODE>,
+(5) <CODE>receive_request_service_contexts</CODE>,
+(6) <CODE>receive_request</CODE>,
+(7) <CODE>send_reply</CODE>,
+(8) <CODE>send_exception</CODE>,
+(9) <CODE>send_other</CODE>, and
+(10) <CODE>establish_components</CODE> (specific to
+<CODE>IORInterceptor</CODE>s).  Each request interception point is
+passed a <CODE>RequestInfo</CODE> object which encapsulates the
+details of the operation like arguments, etc.  The IOR interception
+point is passed an <CODE>IORInfo</CODE> object that encapsulates
+operations for adding tagged components to profiles in an IOR.
+Registration of all three types of interceptors (client and server
+request interceptors, and IOR interceptors) is now done using the
+interface provided by the standard <CODE>ORBInitInfo</CODE>
+object.</p>
+
+<p>
+Details of this implementation along with benchmarking is available in
+the paper on <a
+href="http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf">Meta-programming
+mechanisms.</a>
+</p>
+
+<p> Examples on this new version of Portable Interceptors is available
+at <CODE>$TAO_ROOT/tests/Portable_Interceptors</CODE>.</p>
+
+<hr><P>
+<h3><a name="api">Transitting from TAO's Old "Portable"
+Interceptor APIs to the Standard Portable Interceptor APIs</a></h3>
+
+<p>Please refer to CORBA 2.5 specification for details on the proposed
+Portable Interceptor interfaces.  Below is the old but now obsolete
+interceptor version in TAO.</p>
+
+<pre>
+// -*- IDL -*- $Id$
+
+// This file contains the interface definitions for "Portable"
+// Interceptor support.
+
+// **********************************************************
+//   Notice that the Portable Interceptor specification
+//   is still under discussion in OMG and both the IDL
+//   and the implementation details in TAO will eventually
+//   change to conform with the PI spec in the future.
+//
+//   @@ Now that a working draft of the Portable Interceptors
+//      is available, we will provide a compliant implementation
+//      shortly.
+//
+//      Please see the annotation marked with "@@" in this file
+//      for hints on transitting from the temporary
+//      implementation to new APIs.
+//
+//      See $TAO_ROOT/docs/interceptors.html for more info.
+// **********************************************************
+
+// Author (currently): Nanbor Wang <nanbor@cs.wustl.edu>
+// @@ I will no longer be the author of this IDL file. ;-)
+
+#include <corba.pidl>
+#include <IOP.pidl>
+
+#pragma prefix "TAO"
+// The prefix should be changed to "omg.org" once the spec. gets
+// finallized.
+// @@ The prefix will be changed to "omg.org".
+
+module PortableInterceptor
+{
+  interface Cookie
+    {
+      // Cookie's are used to pass information among interceptors
+      // within a invocation or an upcall.
+      //
+      // @@ Cookie will no longer be available.
+      string myname ();
+    };
+
+  typedef sequence<Cookie>  Cookies;
+  // Collections of Cookie's become Cookies'es.
+  //
+  // @@ Cookies will no longer be available.
+
+  interface Interceptor
+    {
+      // Base interface for Interceptors.
+      //
+      // @@ This interface will not change.
+      readonly attribute string name;
+    };
+
+  interface ServerRequestInterceptor : Interceptor
+    {
+      // Server side request interceptor definition.
+      //
+      // @@ The name of the interface will not change.
+
+      void preinvoke (in unsigned long request_id,
+                      in boolean response_expected,
+                      in CORBA::Object objref,
+                      in string operation_name,
+                      inout IOP::ServiceContextList sc,
+                      inout NVList arguments,
+                      inout Cookies ck);
+      // Interception pointer before invoking the servant method.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all in and inout arguments
+      // of the operation.
+      //
+      // @@ This operation will map to either
+      // &lt;receive_request_service_contexts&gt; or &lt;receive_request&gt; of
+      // the standard APIs.  If you are not sure, use
+      // &lt;receive_request&gt;.
+      //
+      // void receive_request_service_contexts (in ServerRequestInfo ri) raises (ForwardRequest);
+      // void receive_request (in ServerRequestInfo ri) raises (ForwardRequest);
+      //
+      // @@ Note that all arguments will be accessed thru
+      // &lt;PortableInterceptor::ServerRequestInfo&gt; interface.
+
+      void postinvoke (in unsigned long request_id,
+                       in boolean response_expected,
+                       in CORBA::Object objref,
+                       in string operation_name,
+                       inout IOP::ServiceContextList sc,
+                       inout NVList arguments,
+                       inout Cookies ck);
+      // Interception pointer after invoking the servant method.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all out, inout arguments
+      // and the return value of the operation.
+      //
+      // @@ This operation will map to &lt;send_reply&gt;.
+      // It is not clear whether oneway call will invoke &lt;send_other&gt;
+      // operation or not.
+      //
+      // void send_reply (in ServerRequestInfo ri);
+      // void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
+      //
+      // @@ Note that all arguments will be accessed thru
+      // &lt;PortableInterceptor::ServerRequestInfo&gt; interface.
+
+      void exception_occurred (in unsigned long request_id,
+                               in boolean response_expected,
+                               in CORBA::Object objref,
+                               in string operation_name,
+                               inout Cookies ck);
+      // Exception interception point.
+      //
+      // @@ This method will map to &lt;send_exception&gt; method.
+      //
+      // void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
+      //
+      // @@ Note that all arguments will be accessed thru
+      // &lt;PortableInterceptor::ServerRequestInfo&gt; interface.
+    };
+
+  interface ClientRequestInterceptor : Interceptor
+    {
+      // Client side interceptor.
+      //
+      // @@ The name of the interface will not change.
+
+      void preinvoke (in unsigned long request_id,
+                      in boolean response_expected,
+                      in CORBA::Object objref,
+                      in string operation_name,
+                      inout IOP::ServiceContextList sc,
+                      inout NVList arguments,
+                      inout Cookies ck);
+      // Before remote invocation.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all in and inout arguments
+      // of the operation.
+      //
+      // @@ This operation will map to &lt;send_request&gt; of the standard
+      // APIs.
+      //
+      // void send_request (in ClientRequestInfo) raises (ForwardRequest);
+      //
+      // @@ Note that all arguments will be accessed thru
+      // &lt;PortableInterceptor::ClientRequestInfo&gt; interface.
+
+      void postinvoke (in unsigned long request_id,
+                       in boolean response_expected,
+                       in CORBA::Object objref,
+                       in string operation_name,
+                       inout IOP::ServiceContextList sc,
+                       inout NVList arguments,
+                       inout Cookies ck);
+      // After returned from remote invocation.
+      // Currently, we don't pass NVList into the interceptor because
+      // I haven't figured out how to best optimize this stuff.
+      // In the future, NVList will contain all out, inout arguments
+      // and the return value of the operation.
+      //
+      // @@ This operation will map to either &lt;receive_reply&gt; or
+      // &lt;receive_other&gt; in the standard APIs depending on whether the
+      // operation is oneway or not.
+      //
+      // void receive_reply (in ClientRequestInfo ri);
+      // void receive_other (in ClientRequestInfo ri);
+      //
+      // @@ Note that all arguments will be accessed thru
+      // &lt;PortableInterceptor::ClientRequestInfo&gt; interface.
+
+      void exception_occurred (in unsigned long request_id,
+                               in boolean response_expected,
+                               in CORBA::Object objref,
+                               in string operation_name,
+                               inout Cookies ck);
+      // Exception occurred.
+      //
+      // @@ This method will map to &lt;receive_exception&gt; method as:
+      //
+      //    void receive_exception (in ClientRequestInfo ri) raises (ForwardRequest);
+      //
+      // @@ Note that all arguments will be accessed thru
+      // &lt;PortableInterceptor::ClientRequestInfo&gt; interface.
+    };
+};
+
+#pragma prefix ""
+</pre>
+
+<hr><P>
+<h3><a name="status">Current Status</a></h3>
+<ul>
+  <li>The core infrastructure is in place as well as the canonical
+      request and IOR interception points:
+      <CODE>send_request</CODE>,
+      <CODE>receive_reply</CODE>,
+      <CODE>receive_exception</CODE>,
+      <CODE>receive_other</CODE>,
+      <CODE>receive_request_service_contexts</CODE>,
+      <CODE>receive_request</CODE>,
+      <CODE>send_reply</CODE>,
+      <CODE>send_exception</CODE>,
+      <CODE>send_other</CODE>, and
+      <CODE>establish_components</CODE>.
+      The remaining client request interception point,
+      <CODE>send_poll</CODE>, is <EM>time independent invocation</EM>
+      specific.  Once TAO supports time independent invocations, the
+      <CODE>send_poll</CODE> interception point will be implemented.
+  <li><CODE>ORBInitializer</CODE> registration has been implemented,
+      as per the spec.
+  <li>Registration of interceptors is now conformant to the spec
+      through the <CODE>ORBInitInfo</CODE> class.  Multiple
+      interceptors may now be registered.
+  <li>IOR interceptors have been implemented.  They allow an external
+      service, for example, to add tagged components to profiles
+      within IORs as they are being generated.
+  <li>Policy factory registration, i.e.
+      <CODE>ORBInitInfo::register_policy_factory</CODE>, has been
+      implemented.  Corresponding policies can then be created using
+      the <CODE>ORB::create_policy</CODE> method.
+  <li>Initial reference registration, i.e.
+      <CODE>ORBInitInfo::register_initial_reference</CODE>, has been
+      implemented.  This is particularly useful for registering local
+      objects with the ORB's <CODE>resolve_initial_references</CODE>
+      mechanism since they can't be stringified and registered via
+      <CODE>-ORBInitRef</CODE> ORB option.
+  <li>Basically, all <CODE>ORBInitInfo</CODE> methods have been
+      implemented except <CODE>allocate_slot_id</CODE>.
+  <li>Implemented most of the remaining
+      <CODE>ClientRequestInfo</CODE>, <CODE>ServerRequestInfo</CODE>
+      and <CODE>IORInfo</CODE> methods.
+  <li>Added support for the
+      <CODE>PortableInterceptor::ForwardRequest</CODE>
+      exception on both the client and server sides.
+  <li>Implemented the <CODE>IOP::CodecFactory</CODE> and the CDR
+      encapsulation <CODE>IOP::Codec</CODE> objects.  The CDR
+      encapsulation <CODE>Codec</CODE> is useful for embedding data in
+      an <CODE>octet</CODE> sequence that conforms to the CDR
+      encapsulation rules.  For example, it could be used to marshal
+      data into the <CODE>octet</CODE> sequence that is part of an
+      <CODE>IOP::ServiceContext</CODE> or an
+      <CODE>IOP::TaggedComponent</CODE>.  This means that it could
+      compliment the IOR interceptor support, and the service context
+      manipulation support found in request interceptors.
+  <li>Implemented the
+      <CODE>PortableInterceptor::ServerRequestInfo::object_id</CODE>,
+      <CODE>PortableInterceptor::ServerRequestInfo::adapter_id</CODE>
+      and
+      <CODE>PortableServer::POA::id</CODE> methods.
+  <li>Greatly improved the speed of the
+      <CODE>PortableInterceptor::RequestInfo::arguments</CODE> method
+      for the case when a given target method has more than one
+      parameter.
+  <li>Corrected the <CODE>Dynamic::Parameter</CODE> IDL.  It now
+      correctly uses the <CODE>CORBA::ParameterMode</CODE> enumeration
+      in place of the <CODE>Dynamic::ParameterMode</CODE>
+      enumeration.  The latter has been removed since it was not a
+      standard type.
+  <li>The
+      <CODE>PortableInterceptor::ClientRequestInterceptor::send_request</CODE>
+      interception point now occurs before a connection attempt to the
+      target is ever made.  This greatly improves the speed of client
+      request interceptor initiated <CODE>LOCATION_FORWARD</CODE>s, in
+      addition to making it possible to prevent connection attempts
+      from occuring by throwing an exception, for example.
+  <li>Corrected <CODE>PortableInterceptor::ForwardRequest</CODE>
+      exception support.  It is longer possible to throw a
+      <CODE>PortableInterceptor::ForwardRequest</CODE> exception in
+      application code (i.e. not an interceptor) and expect it to be
+      converted to a <CODE>LOCATION_FORWARD</CODE>.  A
+      <CODE>PortableInterceptor::ForwardRequest</CODE> exception will
+      now only be treated as a <CODE>LOCATION_FORWARD</CODE> if it is
+      thrown from an interception point capable of raising that
+      exception.  Otherwise it will be propagated to the client.  This
+      change also has the added benefit of reducing the stub/skeleton
+      footprint, particularly for IDL with many interfaces.
+  <li>Implemented <CODE>PortableInterceptor::Current</CODE> interface,
+      <CODE>ORBInitInfo::allocate_slot_id</CODE>,
+      <CODE>ClientRequestInfo::get_slot</CODE>,
+      <CODE>ServerRequestInfo::get_slot</CODE>,
+      <CODE>ServerRequestInfo::set_slot</CODE>, and
+      <CODE>ServerRequestInfo::get_server_policy</CODE> methods.
+  <li>Client interception points are now invoked for AMI calls.
+</ul>
+
+<hr><P>
+<h2><a name="future">Future Work</a></h2>
+<ol>
+  <li>Add support for the <CODE>ThruPOA</CODE> collocation
+      optimization to the interceptor chain; the <CODE>direct</CODE>
+      collocation optimization will not go through the interceptor
+      chain.
+  <li>The <CODE>send_poll</CODE> request interception point
+      implementation will most likely be deferred until TII is
+      supported in TAO.
+</ol>
+
+<hr><p>
+<h3><a name="issues">Known Issues</a></h3>
+<ul>
+  <li>The current implementation does not go through the interceptor chain
+      when using collocation optimizations such as <CODE>direct</CODE> or
+      <CODE>ThruPOA</CODE>.
+  <li><CODE>ClientRequestInfo::{arguments,exceptions,result}() are not
+      available for AMI calls.</CODE>
+  <li>Add interception points for DII/DSI invocations.
+</ul>
+
+<hr><P>
+<H3><a name="ref">References</a></H3>
+<UL>
+  <LI><A HREF="http://www.omg.org/cgi-bin/doc?formal/02-11-03">formal/02-11-03</A> -- CORBA 3.0.1 Specification -- contains the Portable Interceptors chapter</LI>
+
+</UL>
+<hr>
+
+</BODY>

@@ -1,0 +1,5 @@
+project : orbsvcsexe, core {
+  depends += RTOLDEvent RTEvent RTSched CosNaming Svc_Utils IORTable Messaging PortableServer
+  exename  = Event_Service
+  libs    += TAO_RTOLDEvent TAO_RTEvent TAO_RTSched TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_Messaging TAO_PortableServer
+}

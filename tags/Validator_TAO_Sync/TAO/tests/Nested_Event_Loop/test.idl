@@ -1,0 +1,29 @@
+//
+// $Id$
+//
+
+typedef sequence<octet> act;
+
+interface client
+{
+  void loop (in unsigned long event_loop_depth,
+             in unsigned long event_loop_iterations);
+
+  oneway void oneway_no_op (in act act_for_iterations,
+                            in act act_for_flag);
+
+  void twoway_no_op ();
+};
+
+interface server
+{
+  void loop (in client remote_partner,
+             in unsigned long event_loop_depth,
+             in unsigned long event_loop_iterations);
+
+  void no_op (in client remote_partner,
+              in act act_for_iterations,
+              in act act_for_flag);
+
+  oneway void shutdown ();
+};
