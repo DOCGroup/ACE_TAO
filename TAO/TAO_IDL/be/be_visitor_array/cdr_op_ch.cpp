@@ -52,11 +52,15 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   // generate the CDR << and >> operator declarations
   *os << "CORBA::Boolean " << idl_global->export_macro ()
-      << " operator<< (TAO_OutputCDR &, const " << node->name ()
-      << "_forany &); // " << be_nl;
+      << " operator<< (TAO_OutputCDR &, const "; 
+  if (!this->ctx_->tdef ())
+    *os << "_";
+  *os << node->name () << "_forany &); // " << be_nl;
   *os << "CORBA::Boolean " << idl_global->export_macro ()
-      << " operator>> (TAO_InputCDR &, "
-      << node->name () << "_forany &);\n";
+      << " operator>> (TAO_InputCDR &, ";
+  if (!this->ctx_->tdef ())
+    *os << "_";
+  *os << node->name () << "_forany &);\n";
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

@@ -41,24 +41,6 @@ public:
 
   ~be_array (void);
 
-  virtual int gen_var_defn (void);
-  // generate the _var class definition
-
-  virtual int gen_var_impl (void);
-  // generate the implementation for the _var class
-
-  virtual int gen_out_defn (void);
-  // generate the _out class definition
-
-  virtual int gen_out_impl (void);
-  // generate the _out implementation
-
-  virtual int gen_forany_defn (void);
-  // the forany class
-
-  virtual int gen_forany_impl (void);
-  // the forany impl
-
   virtual int gen_dimensions (TAO_OutStream *os, unsigned short slice=0);
   // generate dimensions. If slice == 1, generate dimensions for the slice
   // definition

@@ -70,12 +70,8 @@ be_visitor_field_ch::visit_field (be_field *node)
                          "codegen for field type failed\n"
                          ), -1);
     }
-  // now output the field name. However, don't do it if the type was an
-  // anonymous array because generation of the field member got handled by the
-  // array code generation
-
-  if (bt->node_type () != AST_Decl::NT_array)
-    *os << " " << node->local_name () << ";\n";
+  // now output the field name. 
+  *os << " " << node->local_name () << ";\n";
   return 0;
 }
 
@@ -128,6 +124,11 @@ be_visitor_field_ch::visit_array (be_array *node)
                              ), -1);
         }
       delete visitor;
+
+      // having defined all array type and its supporting operations, now
+      // generate the actual variable that is a field of the structure
+      os->indent ();
+      *os << "_" << bt->local_name ();
     }
   else
     {
@@ -385,8 +386,8 @@ be_visitor_field_ch::visit_structure (be_structure *node)
 int
 be_visitor_field_ch::visit_typedef (be_typedef *node)
 {
-  this->ctx_->alias (node);     // save the node for use in code generation and
-                               // indicate that the field of the field node
+  this->ctx_->alias (node);    // save the node for use in code generation and
+                               // indicate that the type of the field node
                                // is a typedefed quantity
 
   // make a decision based on the primitive base type
@@ -394,11 +395,12 @@ be_visitor_field_ch::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_spec_ch::"
+                         "(%N:%l) be_visitor_field_ch::"
                          "visit_typedef - "
                          "Bad primitive type\n"
                          ), -1);
     }
+  // reset the alias
   this->ctx_->alias (0);
   return 0;
 }

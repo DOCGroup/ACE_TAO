@@ -64,24 +64,59 @@ int be_visitor_array_cs::visit_array (be_array *node)
                         -1);
     }
 
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local names of the var
+  // save the node's local name and full name in a buffer for quick use later
+  // on 
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  if (this->ctx_->tdef ())
+    {
+      // typedefed node
+      ACE_OS::sprintf (fname, "%s", node->fullname ());
+      ACE_OS::sprintf (lname, "%s", 
+                       node->local_name ()->get_string ());
+    }
+  else
+    {
+      // for anonymous arrays ...
+      // we have to generate a name for us that has an underscope prepended to
+      // our local name. This needs to be inserted after the parents's name
+      if (node->is_nested ())
+        {
+          be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
+                           node->local_name ()->get_string ());
+          ACE_OS::sprintf (lname, "_%s", 
+                           node->local_name ()->get_string ());
+        }
+      else
+        {
+          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+          ACE_OS::sprintf (lname, "_%s", 
+                           node->local_name ()->get_string ());
+        }
+    }
+
   // dup method
   os->indent ();
-  *os << node->name () << "_slice *" << be_nl
-      << node->name () << "_dup (const " << node->name ()
+  *os << fname << "_slice *" << be_nl
+      << fname << "_dup (const " << fname
       << "_slice *_tao_src_array)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << node->name () << "_slice *_tao_dup_array = " << node->name ()
+  *os << fname << "_slice *_tao_dup_array = " << fname
       << "_alloc ();" << be_nl;
-  *os << "if (!_tao_dup_array) return (" << node->name ()
+  *os << "if (!_tao_dup_array) return (" << fname
       << "_slice *)0;" << be_nl;
-  *os << node->name () << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
+  *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
   *os << "}\n\n";
 
   // copy method
+  os->indent ();
   *os << "void " << be_nl;
-  *os << node->name () << "_copy (" << node->name () << "_slice * _tao_to, "
-      << "const " << node->name () << "_slice *_tao_from)" << be_nl;
+  *os << fname << "_copy (" << fname << "_slice * _tao_to, "
+      << "const " << fname << "_slice *_tao_from)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "// copy each individual elements" << be_nl;
 
@@ -181,6 +216,10 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}\n\n";
 
+#if 0 
+  // typecode for anonymous arrays is not required since we do not generate the
+  // Any operators for it and it cannot be used as a type
+
   // is this a typedefined array? if so, then let the typedef deal with
   // generation of the typecode
   if (!this->ctx_->tdef ())
@@ -201,6 +240,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
       delete visitor;
     }
+#endif /* 0 */
 
   node->cli_stub_gen (1);
 

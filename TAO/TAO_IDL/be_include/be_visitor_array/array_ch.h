@@ -44,6 +44,14 @@ public:
   virtual int visit_array (be_array *node);
   // visit the array node
 
+  virtual int gen_var_defn (be_array *node);
+  // generate the var class definition
+
+  virtual int gen_out_defn (be_array *node);
+  // generate the out class definition
+
+  virtual int gen_forany_defn (be_array *node);
+  // generate the forany class definition
 };
 
 #endif /* _BE_VISITOR_ARRAY_CH_H_ */
