@@ -32,12 +32,14 @@ main (void)
                       dll.error ()),
                       -1);
   {
+    //*done* cool. i realise what you did. You have added a scope that
+    // the auto_ptr deletes the magazine object.
     // Kirthika, can you please use an auto_ptr here.
-    Magazine *magazine = mc ();
+
+    auto_ptr <Magazine> magazine = mc ();
   
     magazine->title ();
-  
-    delete magazine;
+
   }
 
   dll.close ();
@@ -58,14 +60,18 @@ main (void)
                       dll.error ()),
                       -1);
 
+  //*done*
   // Kirthika, can you please use the trick of putting this inside of
   // a bracketed expression and using auto_ptr on it as I showed
   // above?
-  magazine = mc ();
+  
+  {
 
-  magazine->title ();
+   auto_ptr <Magazine> magazine = mc ();
 
-  delete magazine;
+   magazine->title ();
+
+  }
 
   dll.close ();
   

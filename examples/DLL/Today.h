@@ -1,4 +1,23 @@
+/* -*- C++ -*- */
 // $Id$
+
+// ===========================================================
+//
+//
+// = LIBRARY
+//    ACE_wrappers/examples/DLL
+//
+// = FILENAME
+//    Today.h
+//
+// = DESCRIPTION
+//    This class denotes the Today magazine which is derived from 
+//    Magazine.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #ifndef TODAY_H
 #define TODAY_H
@@ -16,15 +35,16 @@ class Today : public Magazine
   //   This is an derived class of Magazine.
   // 
   // = DESCRIPTION
-  //   Polymoriphism is exploited and an object pointer
-  //   of Magazine is bound to the Today object at runtime.
+  //   Polymoriphism is exploited and an object pointer of Magazine 
+  //   is bound to the Today object at runtime.
 public:
 
-  // @@ Kirthika, please put this comment underneath the title()
+  // *done*@@ Kirthika, please put this comment underneath the title()
   // method.  Also, please make the comment more descriptive.
 
-  // The virtual abstract class method.
   void title (void);
+  // The virtual abstract class method which returns the title of the
+  // magazine.
 };
 
 #endif /* TODAY_H */
