@@ -1,3 +1,11 @@
+Thu Mar  1 14:09:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          Removed some extra generated carriage returns in
+          interceptor skeleton code.
+
 Thu Mar  1 12:07:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo.cpp (get_request_policy):
