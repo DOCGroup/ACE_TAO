@@ -27,7 +27,7 @@ TAO_Incoming_Message_Queue::add_message (const ACE_Message_Block &block,
 {
 
   // Check whether the last message in the Queue has a half message
-  if (this->queued_data_ != 0 &&
+  if (this->size_ > 0 &&
       this->queued_data_->missing_data_ > 0)
     {
       // Create the message block
@@ -140,7 +140,7 @@ int
 TAO_Incoming_Message_Queue::add_node (
     TAO_Incoming_Message_Queue::TAO_Queued_Data *nd)
 {
-  if (this->queued_data_ == 0)
+  if (this->size_ == 0)
     {
       this->queued_data_ = nd;
       this->queued_data_->next_ = this->queued_data_;

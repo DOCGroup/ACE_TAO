@@ -23,7 +23,7 @@ TAO_Incoming_Message_Queue::queue_length (void)
 ACE_INLINE int
 TAO_Incoming_Message_Queue::complete_message (void)
 {
-  if (this->queued_data_ != 0 &&
+  if (this->size_ != 0 &&
       this->queued_data_->next_->missing_data_ == 0)
     return 1;
 
