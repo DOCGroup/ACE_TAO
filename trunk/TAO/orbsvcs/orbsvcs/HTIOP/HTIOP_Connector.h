@@ -16,7 +16,7 @@
 
 #ifndef HTIOP_CONNECTOR_H
 #define HTIOP_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Connector_Impl.h"
 
@@ -129,5 +129,5 @@ namespace TAO
     };
   };
 };
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* HTIOP_CONNECTOR_H */

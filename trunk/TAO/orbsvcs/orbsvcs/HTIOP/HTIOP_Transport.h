@@ -3,7 +3,7 @@
 // -*- C++ -*-
 // ===================================================================
 /**
- *  @file   TAO_HTIOP_Transport.h
+ *  @file   HTIOP_Transport.h
  *
  *  $Id$
  *
@@ -14,7 +14,7 @@
 
 #ifndef TAO_HTIOP_TRANSPORT_H
 #define TAO_HTIOP_TRANSPORT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTIOP_Export.h"
 
@@ -165,5 +165,5 @@ namespace TAO
 #include "HTIOP_Transport.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TRANSPORT_H */

@@ -16,7 +16,7 @@
 
 #ifndef HTIOP_ACCEPTOR_H
 #define HTIOP_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "HTIOP_Completion_Handler.h"
 #include "HTIOP_Connection_Handler.h"
@@ -229,5 +229,5 @@ namespace TAO
 #include "HTIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* HTIOP_ACCEPTOR_H */
