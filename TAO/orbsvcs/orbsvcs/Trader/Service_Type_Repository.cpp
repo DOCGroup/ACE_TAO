@@ -383,17 +383,15 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
     }
 
   num_props += type_struct.props.length ();
-  CosTradingRepos::ServiceTypeRepository::PropStruct* prop_buf =
-    CosTradingRepos::ServiceTypeRepository::PropStructSeq::allocbuf (num_props);
-  CosTrading::ServiceTypeName* type_buf =
-    CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq::allocbuf (num_types);
+  props.length (num_props);
+  super_types.length (num_types);
   
   // Copy in all properties.
   int i = 0;
   CORBA::ULong prop_index = 0;
   CORBA::ULong type_index = 0;  
   for (i = type_struct.props.length () - 1; i >= 0; i--)
-    prop_buf[prop_index++] = type_struct.props[i];
+    props[prop_index++] = type_struct.props[i];
 
   iterator.first ();
   for (; ! iterator.done (); iterator.advance ())
@@ -408,13 +406,10 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
       CosTradingRepos::ServiceTypeRepository::TypeStruct& tstruct =
         type_entry->int_id_->type_struct_;
       for (i = tstruct.props.length () - 1; i >= 0; i--)
-        prop_buf[prop_index++] = tstruct.props[i];
+        props[prop_index++] = tstruct.props[i];
 
-      type_buf[type_index++] = CORBA::string_dup (*next_type_name);
+      super_types[type_index++] = CORBA::string_dup (*next_type_name);
     }
-
-  props.replace (num_props, num_props, prop_buf, CORBA::B_TRUE);
-  super_types = CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq (num_types, num_types, type_buf, CORBA::B_TRUE);
 }
 
 void
