@@ -270,24 +270,23 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
       // get the profile ID tag
       if ((continue_append = (src->read_ulong (tag) ?
-                              dest->write_ulong (tag) : 0))
-          == 0)
+                              dest->write_ulong (tag) : 0))  == 0)
         continue;
 
-      if (tag != TAO_IOP_TAG_INTERNET_IOP)
-        {
-          continue_append = dest->append_string (*src);
-          continue;
-        }
+      CORBA::ULong length;
+      if ((continue_append = (src->read_ulong (length)
+                              ? dest->write_ulong (length) : 0)) == 0)
+        continue;
 
-      // OK, we've got an IIOP profile.  It's going to be
-      // encapsulated ProfileData.  Create a new decoding stream and
-      // context for it, and tell the "parent" stream that this data
-      // isn't part of it any more.
-
-      // ProfileData is encoded as an encapsulated sequence of octets.
-      continue_append = (dest->append (TC_opaque, src, env) ==
-                         CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+      // @@ This can be optimized! Pre-allocating on the destination
+      //    and then copying directly into that.
+      CORBA::Octet* body;
+      ACE_NEW_RETURN (body, CORBA::Octet[length],
+                      CORBA::TypeCode::TRAVERSE_STOP);
+      continue_append = (src->read_octet_array (body, length)
+                         ? dest->write_octet_array (body, length)
+                         : 0);
+      delete[] body;
     }
 
   if (continue_append == 1)

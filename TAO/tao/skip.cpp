@@ -289,17 +289,6 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         if ( (continue_skipping = stream->read_ulong (tag)) == 0)
           continue;
 
-        if (tag != TAO_IOP_TAG_INTERNET_IOP)
-          {
-            continue_skipping = stream->skip_string ();
-            continue;
-          }
-
-        // OK, we've got an IIOP profile.  It's going to be
-        // encapsulated ProfileData.  Create a new decoding stream and
-        // context for it, and tell the "parent" stream that this data
-        // isn't part of it any more.
-
         CORBA::ULong encap_len;
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
@@ -308,42 +297,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         if ( (continue_skipping = stream->read_ulong (encap_len)) == 0)
           continue;
 
-        TAO_InputCDR str (*stream, encap_len);
-
-        continue_skipping =
-          str.good_bit ()
-          && stream->skip_bytes (encap_len);
-
-        if (!continue_skipping)
-          continue;
-
-        // Read and verify major, minor versions, ignoring IIOP
-        // profiles whose versions we don't understand.
-        //
-        // XXX this doesn't actually go back and skip the whole
-        // encapsulation...
-        if (!(str.skip_octet ()
-              && str.skip_octet ()))
-          continue;
-
-        // skip host and port
-        if (!str.skip_string ()
-            || !str.skip_ushort ())
-          {
-            if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "error decoding IIOP host/port"));
-            env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
-
-        // ... and object key.
-        if (str.skip (TC_opaque,
-                      env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-          {
-            env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
+        continue_skipping = stream->skip_bytes (encap_len);
       }
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
