@@ -1,3 +1,16 @@
+Thu Feb 01 22:00:17 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
+
+	* tests/Message_Queue_Test_Ex.cpp
+
+          Fixed the bugs which were giving runtime error on
+          Win32 - removed "queue_type" from single_thread_performance_test
+          and performance_test functions. Now these funtions dont 
+          have args.
+
+	* tests/tests.dsw
+	
+	  Just an update of the workspace.
+
 Thu Feb  1 21:00:57 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* bin/auto_compile_win32.pl:
