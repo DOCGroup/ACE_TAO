@@ -109,8 +109,8 @@ ACE_Timer_Queue::dump (void) const
 }
 
 ACE_Timer_Queue::ACE_Timer_Queue (void)
-  : timer_skew_ (0, ACE_TIMER_SKEW),
-    gettimeofday_ (ACE_OS::gettimeofday)
+  : gettimeofday_ (ACE_OS::gettimeofday),
+    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
