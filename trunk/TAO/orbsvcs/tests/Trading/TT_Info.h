@@ -37,7 +37,7 @@ public:
     Remote_Output (void) {}
 
     virtual void confirm (CORBA::Environment &)
-      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+      ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
   };
@@ -50,7 +50,7 @@ public:
     Printer (void) {}
 
     virtual void confirm (CORBA::Environment &)
-      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+      ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
   };
@@ -62,7 +62,7 @@ public:
     Plotter (void) {}
 
     virtual void confirm (CORBA::Environment &)
-      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+      ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
   };
@@ -74,7 +74,7 @@ public:
     File_System (void) {}
 
     virtual void confirm (CORBA::Environment &)
-      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+      ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
   };
@@ -86,7 +86,7 @@ public:
     PostScript_Printer (void) {}
 
     virtual void confirm (CORBA::Environment &)
-      TAO_THROW_SPEC ((CORBA::SystemException)) {}
+      ACE_THROW_SPEC ((CORBA::SystemException)) {}
     // Method to test that the importer received a valid reference to
     // the exported object.
   };

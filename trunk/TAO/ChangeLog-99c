@@ -1,3 +1,17 @@
+Tue Jun 15 20:15:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trading/Offer_Exporter.h:
+	* orbsvcs/tests/Trading/Offer_Importer.cpp:
+	* orbsvcs/tests/Trading/Offer_Importer.h:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+	* orbsvcs/tests/Trading/Service_Type_Exporter.h:
+	* orbsvcs/tests/Trading/Simple_Dynamic.cpp:
+	* orbsvcs/tests/Trading/Simple_Dynamic.h:
+	* orbsvcs/tests/Trading/TT_Info.h:
+	  More TAO_THROW_SPEC converted to ACE_THROW_SPEC, easy job thanks
+	  to Seth forevision...
+
 Tue Jun 15 18:49:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Fixed simple miscellaneous stuff marked by Dr. Schmidt.
