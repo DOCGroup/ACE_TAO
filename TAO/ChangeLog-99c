@@ -1,3 +1,13 @@
+Sat Jun 26 11:55:08 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/UIOP_Transport.cpp:
+
+	  Fixed duplicate enum starting value for UIOP time probes.
+
+	* tao/{IIOP,UIOP}_Transport.cpp:
+
+	  Spelling correction in time probe character string array.
+
 Sat Jun 26 12:43:26 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/DynAny_i.cpp:
