@@ -1,8 +1,9 @@
 Tue Jul 13 14:57:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/SV_Semaphore_Simple.h (init): added static cast of
-          ACE_INVALID_SEM_KEY to key_t.  key_t is unsigned on
-          QNX Neutrino, but we want to keep ACE_INVALID_SEM_KEY as -1.
+        * ace/SV_Semaphore_Simple.{h,cpp} (init,open,name_2_key):
+          added static cast of ACE_INVALID_SEM_KEY to key_t.  key_t
+          is unsigned on QNX Neutrino, but we want to keep
+          ACE_INVALID_SEM_KEY as -1.
 
 Tue Jul 13 11:57:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
