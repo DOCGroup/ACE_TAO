@@ -9,11 +9,26 @@ DatabaseImpl::Simpler_Malloc::Simpler_Malloc (void)
 {
 }
 
+DatabaseImpl::Simpler_Malloc::~Simpler_Malloc (void)
+{
+  this->remove ();
+}
+
 DatabaseImpl::Entry::Entry (CORBA::ORB_ptr orb,
-                            PortableServer::POA_ptr poa)
+                            PortableServer::POA_ptr poa,
+                            CORBA::Environment &ACE_TRY_ENV)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
+  // Get the POA Current object reference
+  CORBA::Object_var obj = this->orb_->resolve_initial_references ("POACurrent",
+                                                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Narrow the object reference to a POA Current reference
+  this->poa_current_ = PortableServer::Current::_narrow (obj.in (),
+                                                         ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 DatabaseImpl::Entry::~Entry (void)
@@ -24,97 +39,78 @@ void
 DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  // Get the POA Current object reference
-  CORBA::Object_var obj = this->orb_->resolve_initial_references ("POACurrent");
-
-  ACE_TRY
-    {
-      // Narrow the object reference to a POA Current reference
-      PortableServer::Current_var poa_current =
-        PortableServer::Current::_narrow (obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // The servant determines the key associated with thex database entry
-      // represented by self
-      PortableServer::ObjectId_var oid =
-        poa_current->get_object_id (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Now convert the id into a string
-      CORBA::String_var key =
-        PortableServer::ObjectId_to_string (oid.in ());
-
-      // Get the operation name for this request
-      const char *operation = request->operation ();
-
-      if (ACE_OS::strcmp (operation, "_is_a") == 0)
-        this->is_a (request, ACE_TRY_ENV);
-
-      else
-        {
-          ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                          CORBA::COMPLETED_NO));
-        }
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      return;
-    }
-  ACE_ENDTRY;
+  // The servant determines the key associated with thex database
+  // entry represented by self
+  PortableServer::ObjectId_var oid =
+    this->poa_current_->get_object_id (ACE_TRY_ENV);
   ACE_CHECK;
+
+  // Now convert the id into a string
+  CORBA::String_var key =
+    PortableServer::ObjectId_to_string (oid.in ());
+
+  // Get the operation name for this request
+  const char *operation = request->operation ();
+
+  if (ACE_OS::strcmp (operation, "_is_a") == 0)
+    {
+      this->is_a (request, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  else
+    {
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
 }
 
 void
 DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request,
-                            CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
 
-  ACE_TRY
-    {
-      CORBA::Any any_1 (CORBA::_tc_string);
+  CORBA::Any any_1 (CORBA::_tc_string);
 
-      list->add_value ("value",
-                       any_1,
-                       CORBA::ARG_IN,
-                       ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  list->add_value ("value",
+                   any_1,
+                   CORBA::ARG_IN,
+                   ACE_TRY_ENV);
+  ACE_CHECK;
 
-      request->arguments (list,
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  request->arguments (list,
+                      ACE_TRY_ENV);
+  ACE_CHECK;
 
-      char *value;
-      CORBA::Any_ptr ap = list->item (0, ACE_TRY_ENV)->value ();
-      *ap >>= value;
+  CORBA_NamedValue_ptr nv = list->item (0, ACE_TRY_ENV);
+  ACE_CHECK;
 
-      CORBA::Boolean result;
-      if (!ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") ||
-          !ACE_OS::strcmp (value, "IDL:Database/Entry:1.0") ||
-          !ACE_OS::strcmp (value, CORBA::_tc_Object->id (ACE_TRY_ENV)))
-        result = 1;
-      else
-        result = 0;
+  CORBA::Any_ptr ap = nv->value ();
+  char *value;
+  *ap >>= value;
 
-      CORBA::Any result_any;
-      CORBA::Any::from_boolean from_boolean (result);
-      result_any <<= from_boolean;
+  const char *object_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
+  ACE_CHECK;
 
-      request->set_result (result_any, ACE_TRY_ENV);
-    }
-  ACE_CATCHANY
-    {
-      return;
-    }
-  ACE_ENDTRY;
+  CORBA::Boolean result;
+  if (!ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") ||
+      !ACE_OS::strcmp (value, "IDL:Database/Entry:1.0") ||
+      !ACE_OS::strcmp (value, object_id))
+    result = 1;
+  else
+    result = 0;
+
+  CORBA::Any result_any;
+  CORBA::Any::from_boolean from_boolean (result);
+  result_any <<= from_boolean;
+
+  request->set_result (result_any, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
 CORBA::RepositoryId
 DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/,
-                                         PortableServer::POA_ptr ,
+                                         PortableServer::POA_ptr,
                                          CORBA::Environment &)
 {
   return 0;
@@ -127,14 +123,18 @@ DatabaseImpl::Entry::_default_POA (CORBA::Environment &)
 }
 
 DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
-                            PortableServer::POA_ptr poa)
+                            PortableServer::POA_ptr poa,
+                            CORBA::Environment &ACE_TRY_ENV)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    common_servant_ (orb, poa)
+    common_servant_ (orb,
+                     poa,
+                     ACE_TRY_ENV)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_CHECK;
 
-  this->poa_->set_servant (&this->common_servant_, ACE_TRY_ENV);
+  this->poa_->set_servant (&this->common_servant_,
+                           ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -174,15 +174,22 @@ DatabaseImpl::Agent::create_entry (const char *key,
   Employee *new_employee = new Employee (name, id);
   DATABASE::instance ()->bind (key, new_employee);
 
+  ACE_DEBUG ((LM_DEBUG,
+              "New employee created with name = %s and id = %d\n",
+              name,
+              id));
+
   // creates a reference to the CORBA object used to encapsulate
   // access to the new entry in the database.  There is an interface
   // for each entry type:
   PortableServer::ObjectId_var obj_id = PortableServer::string_to_ObjectId (key);
   CORBA::String_var repository_id = DatabaseImpl::entry_type_to_repository_id ("Entry");
+
   CORBA::Object_var obj = this->poa_->create_reference_with_id (obj_id.in (),
                                                                 repository_id.in (),
                                                                 ACE_TRY_ENV);
   ACE_CHECK_RETURN (Database::Entry::_nil ()) ;
+
   Database::Entry_var entry = Database::Entry::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (Database::Entry::_nil ());
@@ -205,7 +212,13 @@ DatabaseImpl::Agent::find_entry (const char *key,
   Database::Entry_var entry;
   if (DATABASE::instance ()->find (key, temp) == 0)
     {
-      //      Employee *employee = (Employee *) temp;
+      Employee *employee = (Employee *) temp;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee with key = %s found: name = %s and id = %d\n",
+                  key,
+                  employee->name (),
+                  employee->id ()));
 
       // creates a reference to the CORBA object used to encapsulate
       // access to the new entry in the database.  There is an interface
@@ -223,9 +236,14 @@ DatabaseImpl::Agent::find_entry (const char *key,
     }
   else
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee with key = %s not found\n",
+                  key));
+
       ACE_THROW_RETURN (Database::Unknown_Key (),
                         Database::Entry::_nil ());
     }
+
   return entry._retn ();
 }
 
@@ -243,12 +261,30 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
   if (DATABASE::instance ()->unbind (key, temp) == 0)
     {
       Employee *employee = (Employee *) temp;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee with key = %s will be removed from the database: "
+                  "name = %s and id = %d \n",
+                  key,
+                  employee->name (),
+                  employee->id ()));
+
       delete employee;
     }
   else
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Employee with key = %s not found\n",
+                  key));
+
       ACE_THROW (Database::Unknown_Key ());
     }
+}
+
+void
+DatabaseImpl::Agent::shutdown (CORBA::Environment &)
+{
+  this->orb_->shutdown ();
 }
 
 PortableServer::POA_ptr

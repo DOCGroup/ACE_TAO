@@ -15,9 +15,9 @@ $SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", " -f $iorfile");
 
 ACE::waitforfile ($iorfile);
 
-$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile");
+$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile -x");
 
-$SV->Kill (); $SV->Wait ();
+$SV->Wait ();
 
 unlink $iorfile;
 
