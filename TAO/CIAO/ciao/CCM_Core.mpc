@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
+project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client, ciaoversion {
   sharedname  = CIAO_Client
   idlflags  += -Sc -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
@@ -25,16 +25,16 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
     CIAO_Client_Export.h
     CIAO_common.h
   }
-  
+
   Template_Files {
   }
 }
 
-project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client {
+project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, ciaoversion {
   after += CIAO_Client
   sharedname  = CIAO_Container
   libs       += CIAO_Client
-  idlflags   += -Sc -Wb,export_include=CIAO_Container_Export.h 
+  idlflags   += -Sc -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
 
@@ -55,12 +55,12 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
     CCM_ComponentS.cpp
     Cookies.cpp
   }
-  
+
   Template_Files {
   }
 }
 
-project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security, utils {
+project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security, utils, ciaoversion {
   after += CIAO_Container
   includes += $(CIAO_ROOT)
   sharedname  = CIAO_Server
@@ -97,7 +97,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
     CIAO_Server_Export.h
     CIAO_common.h
   }
-  
+
   Template_Files {
     Context_Impl_T.cpp
     Home_Servant_Impl_T.cpp
