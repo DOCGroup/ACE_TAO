@@ -18,6 +18,9 @@ Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-g++-common.h: protected #define of ACE_LACKS_PRAGMA_ONCE,
           because g++dep now defines it with a -D.
 
+        * ACE-INSTALL.html: updated Linux and LynxOS version status,
+          and egcs --enable-shared discussion.
+
 Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Added
