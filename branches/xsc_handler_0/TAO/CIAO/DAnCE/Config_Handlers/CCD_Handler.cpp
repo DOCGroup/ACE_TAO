@@ -1,151 +1,161 @@
+
 // $Id$
 
+
 #include "CCD_Handler.h"
+#include "Basic_Deployment_Data.hpp"
+#include "ciao/Deployment_DataC.h"
+#include "ccd.hpp"
 #include "Property_Handler.h"
 #include "CPD_Handler.h"
 #include "ComponentPropertyDescription_Handler.h"
+
 
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
-    CCD_Handler::component_interface_descr (
-        Deployment::ComponentInterfaceDescription& toconfig,
-        ComponentInterfaceDescription& desc)
+
+    CCD_Handler::CCD_Handler (void)
     {
-      if(desc.UUID_p ())
-        {
-          toconfig.UUID =
-            CORBA::string_dup (desc.UUID ().c_str ());
-        }
-
-      if(desc.label_p ())
-        {
-          toconfig.label =
-            CORBA::string_dup (desc.label ().c_str ());
-        }
-
-      if(desc.specificType_p ())
-        {
-          toconfig.specificType =
-            CORBA::string_dup (desc.specificType ().c_str ());
-        }
-
-      ComponentInterfaceDescription::supportedType_iterator
-        end = desc.end_supportedType ();
-
-      for (ComponentInterfaceDescription::supportedType_iterator s =
-             desc.begin_supportedType ();
-           s != end; ++s)
-        {
-          // This loop is going to be very slow! :(!
-          CORBA::ULong len =
-            toconfig.supportedType.length ();
-
-          toconfig.supportedType.length (len + 1);
-          toconfig.supportedType[len] =
-            CORBA::string_dup ((*s).c_str ());
-        }
-
-      ComponentInterfaceDescription::idlFile_iterator
-        eidl = desc.end_idlFile ();
-
-      for (ComponentInterfaceDescription::idlFile_iterator sidl=
-             desc.begin_idlFile ();
-           sidl != eidl;
-           ++sidl)
-        {
-          // @@ Another n^2 algorithm
-          CORBA::ULong len =
-            toconfig.idlFile.length ();
-
-          toconfig.idlFile.length (len + 1);
-
-          toconfig.idlFile [len] =
-            (*sidl).c_str ();
-        }
-
-     ComponentInterfaceDescription::configProperty_iterator pend =
-       desc.end_configProperty ();
-
-     for (ComponentInterfaceDescription::configProperty_iterator pstart =
-            desc.begin_configProperty ();
-          pstart != pend;
-          ++pstart)
-       {
-         // Need to improve this. This is clearly O(n^2).
-         CORBA::ULong len =
-           toconfig.configProperty.length ();
-
-         toconfig.configProperty.length (len + 1);
-
-         Property_Handler::get_property (*pstart,
-                                         toconfig.configProperty [len]);
-       }
-
-    for (ComponentInterfaceDescription::port_iterator
-           port (desc.begin_port ());
-           port != desc.end_port ();
-           ++port)
-      {
-        CORBA::ULong len =
-          toconfig.port.length ();
-
-        toconfig.port.length (len + 1);
-
-        CPD_Handler::component_port_description (
-          toconfig.port[len],
-          *port);
-      }
-
-#if 0
-    // @@ MAJO: I don't think we need to handle this now, since they
-    // are not needed for this round. IOW, we don't really understand
-    // how to use this stuff ;)
-     if (desc.property_p ())
-       {
-         //Create the ComponentPropertyDescription handler.
-         ComponentPropertyDescription_Handler cprop_handler;
-
-         //Increase the size of the property sequence.
-         toconfig.property.length (
-                           toconfig.property.length () + 1);
-         //Now delegate the propogation to the
-         //<ComponentPropertyDescription_Handler>.
-         cprop_handler.get_ComponentPropertyDescription (
-                       toconfig.property [toconfig.property.length () -1],
-                       desc.property ());
-       }
-
-
-
-     //The IDL for the <infoProperty> specifies
-     //a sequence of <Property> structs but the schema
-     //specifies <infoProperty> as a single
-     //<Property>. We construct that single property
-     //element and assign it to the first position in the
-     //<infoProperty> sequence. We only do this if it
-     //is present.
-     if (desc.infoProperty_p () )
-       {
-         //First construct the <Deployment::Property>
-         //to configure.
-         Deployment::Property prop;
-
-         //Now, propogate the values from the <desc> into <prop>.
-         Property_Handler::get_property (desc.infoProperty (),
-                                         prop);
-
-         //Finally, add it to the sequence.
-         toconfig.infoProperty.length (
-                  toconfig.infoProperty.length () + 1);
-         toconfig.infoProperty [toconfig.infoProperty.length () - 1] = prop;
-       }
-#endif /*if 0*/
-
-     return 1;
     }
+
+    CCD_Handler::~CCD_Handler (void)
+    {
+    }
+
+
+    void
+    CCD_Handler::comp_interface_descr (
+                    const ComponentInterfaceDescription& desc,
+                    Deployment::ComponentInterfaceDescription& toconfig)
+    {
+
+
+      
+      toconfig.UUID=
+           CORBA::string_dup (desc.UUID ().c_str ());
+      
+      toconfig.label=
+           CORBA::string_dup (desc.label ().c_str ());
+      
+      toconfig.specificType=
+           CORBA::string_dup (desc.specificType ().c_str ());
+      
+      ComponentInterfaceDescription::supportedType_const_iterator supportedType_end =
+        desc.end_supportedType ();
+      ComponentInterfaceDescription::supportedType_const_iterator supportedType_beg =
+        desc.begin_supportedType ();  
+        
+      CORBA::ULong supportedType_length = toconfig.supportedType.length ();
+      size_t supportedType_delta = supportedType_end - supportedType_beg;
+      supportedType_length += supportedType_delta;
+      
+      toconfig.supportedType.length (supportedType_length);  
+      size_t supportedType_count = 0;     
+           
+      for (ComponentInterfaceDescription::supportedType_const_iterator
+           item (desc.begin_supportedType ());
+           item != supportedType_end;
+           ++item)
+        {	 
+           toconfig.supportedType[supportedType_length - (supportedType_delta - supportedType_count)] =
+             CORBA::string_dup (item->c_str ());
+           ++supportedType_count;
+        }
+      
+      ComponentInterfaceDescription::idlFile_const_iterator idlFile_end =
+        desc.end_idlFile ();
+      ComponentInterfaceDescription::idlFile_const_iterator idlFile_beg =
+        desc.begin_idlFile ();  
+        
+      CORBA::ULong idlFile_length = toconfig.idlFile.length ();
+      size_t idlFile_delta = idlFile_end - idlFile_beg;
+      idlFile_length += idlFile_delta;
+      
+      toconfig.idlFile.length (idlFile_length);  
+      size_t idlFile_count = 0;     
+           
+      for (ComponentInterfaceDescription::idlFile_const_iterator
+           item (desc.begin_idlFile ());
+           item != idlFile_end;
+           ++item)
+        {	 
+           toconfig.idlFile[idlFile_length - (idlFile_delta - idlFile_count)] =
+             CORBA::string_dup (item->c_str ());
+           ++idlFile_count;
+        }
+      
+      ComponentInterfaceDescription::configProperty_const_iterator configProperty_end =
+        desc.end_configProperty ();
+      ComponentInterfaceDescription::configProperty_const_iterator configProperty_beg =
+        desc.begin_configProperty ();  
+        
+      CORBA::ULong configProperty_length = toconfig.configProperty.length ();
+      size_t configProperty_delta = configProperty_end - configProperty_beg;
+      configProperty_length += configProperty_delta;
+      
+      toconfig.configProperty.length (configProperty_length);  
+      size_t configProperty_count = 0;        
+
+      for (ComponentInterfaceDescription::configProperty_const_iterator
+           item (configProperty_beg);
+           item != configProperty_end;
+           ++item)
+        {	        
+          Property_Handler::property (
+            *item,
+            toconfig.configProperty[configProperty_length - (configProperty_delta - configProperty_count)]);
+          ++configProperty_count;  
+        }
+      
+      ComponentInterfaceDescription::port_const_iterator port_end =
+        desc.end_port ();
+      ComponentInterfaceDescription::port_const_iterator port_beg =
+        desc.begin_port ();  
+        
+      CORBA::ULong port_length = toconfig.port.length ();
+      size_t port_delta = port_end - port_beg;
+      port_length += port_delta;
+      
+      toconfig.port.length (port_length);  
+      size_t port_count = 0;        
+
+      for (ComponentInterfaceDescription::port_const_iterator
+           item (port_beg);
+           item != port_end;
+           ++item)
+        {	        
+          CPD_Handler::comp_port_descr (
+            *item,
+            toconfig.port[port_length - (port_delta - port_count)]);
+          ++port_count;  
+        }
+      
+     /* if (desc.property_p ())
+        {
+          CORBA::ULong length = toconfig.property.length ();
+          
+          toconfig.property.length (length + 1);
+          ComponentPropertyDescription_Handler::comp_property_descr (
+            desc.property (),
+            toconfig.property[length - 1]);
+        }
+      
+      if (desc.infoProperty_p ())
+        {
+          CORBA::ULong length = toconfig.infoProperty.length ();
+          
+          toconfig.infoProperty.length (length + 1);
+          Property_Handler::property (
+            desc.infoProperty (),
+            toconfig.infoProperty[length - 1]);
+        }*/
+
+      
+    }
+
   }
+
 }
