@@ -220,34 +220,13 @@ public:
   // described by <tc>; returning any errors in <TAO_IN_ENV>.
 };
 
-#if defined(__ACE_INLINE__)
-# include "tao/CDR.i"
-#else
-
-// CDR output operators for CORBA types
-
-// This one must be redefined in TAO to ease some compilers'
-// overload resolution difficulties in
-// TAO_GIOP_Service_Context and TAO_GIOP_Invocation.
-// It simply calls the ACE operator inline.
-extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
-                                            CORBA::ULong x);
-
+// This operators are too complex to be inline....
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
                                             const CORBA::Any &x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
                                             const CORBA::Object *x);
 extern TAO_Export CORBA_Boolean operator<< (TAO_OutputCDR& cdr,
                                             const CORBA::TypeCode *x);
-
-// CDR input operators for CORBA types
-
-// This one must be redefined in TAO to ease some compilers'
-// overload resolution difficulties in 
-// TAO_GIOP_Service_Context and TAO_GIOP_Invocation.
-// It simply calls the ACE operator inline.
-extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
-                                            CORBA::ULong x);
 
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
                                             CORBA::Any &x);
@@ -256,6 +235,51 @@ extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
 extern TAO_Export CORBA_Boolean operator>> (TAO_InputCDR& cdr,
                                             CORBA::TypeCode *&x);
 
+#if defined(__ACE_INLINE__)
+# include "tao/CDR.i"
+#else
+
+// CDR output operators for CORBA types
+
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                             CORBA::Short x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                             CORBA::UShort x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                             CORBA::Long x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                             CORBA::ULong x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                             CORBA::LongLong x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                             CORBA::ULongLong x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& os,
+                                             CORBA::LongDouble x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                             CORBA::Float x);
+extern TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, 
+                                             CORBA::Double x);
+
+// CDR input operators for CORBA types
+
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::Short &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::UShort &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::Long &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::ULong &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                             CORBA::LongLong &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                             CORBA::ULongLong &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                             CORBA::LongDouble &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::Float &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::Double &x);
 
 #endif /* __ACE_INLINE */
 
