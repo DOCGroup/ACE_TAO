@@ -21,8 +21,8 @@
 
 ACE_RCSID(DSI, client, "$Id$")
 
-static char *IOR = 0;
-static char *IOR_file = 0;
+static const char *IOR = 0;
+static const char *IOR_file = 0;
 static int shutdown_server = 0;
 
 static int
@@ -60,7 +60,8 @@ parse_args (int argc, char **argv)
 
   if (IOR == 0 && IOR_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR or IOR_file for the servant\n"), -1);
+                       "Please specify the IOR or IOR_file for the servant\n"),
+                      -1);
 
   // Indicates successful parsing of command line.
   return 0;

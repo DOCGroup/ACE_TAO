@@ -23,9 +23,9 @@
 
 ACE_RCSID(Default_Servant, client, "$Id$")
 
-static char *iorfile = 0;
-static char *filename = "test";
-static char *message = "POA rules!!";
+static const char *iorfile = 0;
+static const char *filename = "test";
+static const char *message = "POA rules!!";
 
 static int
 parse_args (int argc, char **argv)
