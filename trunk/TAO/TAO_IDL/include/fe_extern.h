@@ -73,6 +73,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 TAO_IDL_FE_Export void FE_init (void);
 TAO_IDL_FE_Export void FE_populate (void);
+TAO_IDL_FE_Export void FE_store_env_include_paths (void);
+TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env (void);
+TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env (void);
 
 class File;
 
