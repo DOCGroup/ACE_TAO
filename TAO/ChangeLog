@@ -1,3 +1,19 @@
+Thu May 22 10:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (create_object): If create_collocated_object ()
+	  returns a null, create a CORBA::Object () before
+	  returning.  The null pointer returned by the
+	  create_collocated_object () is indeed right since the object
+	  pointed to by the PortableGroup::ObjectGroup_ptr object
+	  reference being created is not a servant.  It is a
+	  ServantManager!  More specifically, it is Cygnus' ServantManager
+	  created and housed by its LoadManager object.  An actual
+	  ObjectGroup object does not exist.  It is a logical entity
+	  exposed to clients to allow them to invoke methods transparently
+	  on members of that object group. 
+	  
+	  Hence returning a null-object would break the LoadBalancer.
+
 Thu May 22 10:38:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.cpp (ObjectKey_Table): 
