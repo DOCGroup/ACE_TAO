@@ -12,6 +12,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_dlfcn.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Strategies_T.i"

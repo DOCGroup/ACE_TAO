@@ -1,3 +1,13 @@
+Thu Jan 22 06:47:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Strategies_T.cpp:
+
+	  Fix for BUGID 1719. Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1719
+
+	  for details.
+
 Wed Jan 21 22:31:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/SSL/Makefile.am (EXTRA_DIST):
