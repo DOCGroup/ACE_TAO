@@ -1,3 +1,12 @@
+Wed Oct 20 14:25:59 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Windows paths often have embedded colons (':'), which causes
+          problems in the case of parsing the parameters for the -SSL* 
+          options on that platform.
+
 Wed Oct 20 13:55:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
