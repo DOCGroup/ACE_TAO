@@ -68,7 +68,19 @@ public:
    */
   //@{
   /// This method implements the "starting" server side interception
+  /// point. It will be used as the first interception point and it is
+  /// proprietary to TAO.
+  /// @@ Will go away once Bug 1369 is fixed
+  void tao_ft_interception_point (
+    TAO_ServerRequestInfo *ri ,
+    CORBA::OctetSeq_out oc
+    ACE_ENV_ARG_DECL);
+
+  /// This method implements the "intermediate" server side interception
   /// point.
+  /// @@ NOTE: This method should have been the "starting"
+  /// interception point according to the interceptor spec. This will
+  /// be fixed once Bug 1369 is completely done.
   void receive_request_service_contexts (
     TAO_ServerRequestInfo * ri
     ACE_ENV_ARG_DECL);
