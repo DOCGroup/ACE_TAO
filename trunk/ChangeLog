@@ -1,7 +1,13 @@
+Fri Apr 21 09:13:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * websvcs/lib/URL_Addr.cpp:
+          The URL schemes are supposed to be case insensitive, thanks to
+          Paul Carreiro <pcarreir@genuity.com> for pointing this out.
+
 Thu Apr 20 21:05:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin/msvc_auto_compile.pl: 
-          
+        * bin/msvc_auto_compile.pl:
+
           Added a -core for only the core libraries.  Also fixed a problem
           with specifying incorrect directories and the -DLL/-Debug/etc.
           macros.
@@ -56,20 +62,20 @@ Thu Apr 20 18:11:48 2000  Darrell Brunsch <brunsch@uci.edu>
           Missing parentheses.
 
         * Synch-Benchmarks/Synch_Lib/Synch_Lib.dsp:
-          
+
           Changed the name of the project so win32_auto_compile.pl works
           with it properly.
 
         * bin/msvc_auto_compile.pl: (added)
 
           This is a new script for autocompiling with MSVC 6.
-          Eventually this should replace auto_compile_win32.pl.  It still 
-          needs more directories added to it and tested before we put it 
+          Eventually this should replace auto_compile_win32.pl.  It still
+          needs more directories added to it and tested before we put it
           into production
 
         * bin/vc_filter.pl:
 
-          Updated to properly color code output from msvc_auto_compile.pl 
+          Updated to properly color code output from msvc_auto_compile.pl
           also.
 
 Thu Apr 20 09:50:49 2000  Carlos O'Ryan  <coryan@uci.edu>
