@@ -1,3 +1,12 @@
+Thu Jan 17 12:04:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init):
+
+	  The certificate must be set before the private key since the
+	  ACE_SSL_Context attempts to check the private key for
+	  consistency.  That check requires the certificate to be
+	  available in the underlying SSL_CTX.
+
 Thu Jan 17 13:40:09 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         Added new features to the Notification Service.  The following items
@@ -251,6 +260,7 @@ Thu Jan 17 13:40:09 2002  Chad Elliott  <elliott_c@ociweb.com>
 
           Add many new tests to test the various features of the
           Notification Service.
+
 Thu Jan 17 11:03:14 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
