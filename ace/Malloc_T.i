@@ -221,12 +221,24 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter (void)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, -1);
   if (this->cb_ptr_ != 0)
-    return --this->cb_ptr_->ref_counter_;
+    {
+      int retv = --this->cb_ptr_->ref_counter_;
 
+#if 0
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P) ACE_Malloc_T::release ->%d\n"),
+                 this->cb_ptr_->ref_counter_ - 1));
+#endif /* 0 */
+      if (close)
+        this->memory_pool_.release (0);
+
+      if (retv == 0)
+        this->memory_pool_.release (1);
+      return retv;
+    }
   return -1;
 }
 

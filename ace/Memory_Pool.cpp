@@ -54,7 +54,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
 }
 
 int
-ACE_Local_Memory_Pool::release (void)
+ACE_Local_Memory_Pool::release (int)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::release");
 
@@ -92,7 +92,7 @@ ACE_MMAP_Memory_Pool::dump (void) const
 }
 
 int
-ACE_MMAP_Memory_Pool::release (void)
+ACE_MMAP_Memory_Pool::release (int destroy)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::release");
 
@@ -100,7 +100,10 @@ ACE_MMAP_Memory_Pool::release (void)
   ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (this->mmap_.addr ());
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
+  if (destroy)
   this->mmap_.remove ();
+  else
+    this->mmap_.close ();
   return 0;
 }
 
@@ -984,7 +987,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 // Instruct the memory pool to release all of its resources.
 
 int
-ACE_Shared_Memory_Pool::release (void)
+ACE_Shared_Memory_Pool::release (int)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::release");
 
@@ -1019,7 +1022,7 @@ ACE_Pagefile_Memory_Pool_Options::ACE_Pagefile_Memory_Pool_Options (void *base_a
 }
 
 int
-ACE_Pagefile_Memory_Pool::release (void)
+ACE_Pagefile_Memory_Pool::release (int)
 {
   return this->unmap ();
 }

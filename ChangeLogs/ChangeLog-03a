@@ -1,3 +1,25 @@
+Thu Sep 12 17:38:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.h:
+	* ace/Malloc_T.i (release): Added an extra argument (with default
+	  value) to release so that we could decrease the refcount and
+	  releae the backing store if needed atomically (while holding the
+	  lock.)  This was causing a race condition when removing mmap
+	  files used by MEM_Stream's.
+
+	* ace/Memory_Pool.h:
+	* ace/Memory_Pool.i:
+	* ace/Memory_Pool.cpp: Changed the release method to take an extra
+	  argument so that we can control whether we want to perform
+	  cleanup on backing store or not.
+
+	* ace/MEM_SAP.cpp (close_shm_malloc): Changed to use the extended
+	  release method to remove the shared_memory.
+
+	* ace/MEM_IO.cpp: When sending/receiving data reactively, make
+	  sure we don't even try if the socket is not valid.
+
+
 Thu Sep 12 08:39:46 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Synch.h (class ACE_recursive_mutex_state): Changed "HANDLE" to
@@ -121,9 +143,9 @@ Thu Sep  5 12:13:51 2002  Steve Huston  <shuston@riverace.com>
         * ACEXML/common/URL_Addr.inl: Removed ACE_RCSID - it's in URL_Addr.cpp.
 
 Wed Sep  4 16:31:29 2002  Douglas C. Schmidt <schmidt@cs.wustl.edu>
-  
+
         * Kelly Clarkson wins "American Idol."  Go Kelly!!
-  
+
 Wed Sep  4 17:50:27 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.pl: Change run time limit from 300 to 400 seconds.
