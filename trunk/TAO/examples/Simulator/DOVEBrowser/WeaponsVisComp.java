@@ -33,7 +33,7 @@ public class WeaponsVisComp extends Panel implements VisComp
 
   Label default_label_ = new Label ("No weapons available", Label.CENTER);
 
-  public WeaponsVisComp (String title)
+  public WeaponsVisComp ()
     {
       default_label_.setFont (FONT_BIG);
       default_label_.setForeground (BLUE);
@@ -51,23 +51,22 @@ public class WeaponsVisComp extends Panel implements VisComp
       add (default_label_);
     }
 
-  public int getProperty ()
-    {
-      return Properties.WEAPONS;
-    }
+  public void setName (String title) {
+  }
 
-  public Dimension getPreferredSize ()
-    {
-      return new Dimension (250, 200);
-    }
-
-  public Dimension getMinimumSize ()
-    {
-      return new Dimension (80, 80);
-    }
+  public int getProperty () {
+    return Properties.WEAPONS;
+  }
   
-  public void update (java.util.Observable observable, java.lang.Object obj)
-  {
+  public Dimension getPreferredSize () {
+    return new Dimension (250, 200);
+  }
+
+  public Dimension getMinimumSize () {
+    return new Dimension (80, 80);
+  }
+  
+  public void update (java.util.Observable observable, java.lang.Object obj) {
     Weapons weapons_ = null;
     try {
       weapons_ = (Weapons) obj;  

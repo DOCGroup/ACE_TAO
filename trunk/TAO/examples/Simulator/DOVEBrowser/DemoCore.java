@@ -16,6 +16,7 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.*;
 
 public class DemoCore extends Frame {
 
@@ -88,32 +89,48 @@ public class DemoCore extends Frame {
 				       });      
     
     addConnection ("Cpu_UsageObservable");
-    System.out.println ("Connected Cpu_UsageObservable to Observable!");
   }
   
   public boolean addConnection (String selected) {	
     // to not fill too many into it
     if (countVisComp_ < MAX_VIS_COMPS) {
       
-      DemoObservable observable = dataHandler_.getObservable (selected);
+      // get a reference to the Observable
+      DemoObservable observable_ = dataHandler_.getObservable (selected);
 
-      if (observable != null) {
+      if (observable_ != null) {
+
+	ClassLoader classLoader_ = this.getClass().getClassLoader();	
 
 	VisComp visComp_ = null;
-	if (observable.getProperty () == Properties.DOUBLE) {
-	  visComp_ = new DoubleVisComp (selected, 100);
+	String visCompName_ = "VisComp";
+	switch (observable_.getProperty ()) {
+	case Properties.DOUBLE:
+	  visCompName_ = "Double"+visCompName_;
+	  break;
+	case Properties.NAVIGATION:
+	  visCompName_ = "Navigation"+visCompName_;
+	  break;
+	case Properties.WEAPONS:
+	  visCompName_ = "Weapons"+visCompName_;
+	  break;
+	default: return false;
 	}
-	else if (observable.getProperty () == Properties.NAVIGATION) {
-	  visComp_ = new NavigationVisComp (selected);
+	try {
+	  System.out.println ("Trying to connect: " + visCompName_+ " .. ");
+	  visComp_ = (VisComp) Beans.instantiate (classLoader_, visCompName_);
+	  visComp_.setName (selected);
+	  System.out.println ("Connected: " + visCompName_);
 	}
-	else if (observable.getProperty () == Properties.WEAPONS) {
-	  visComp_  = new WeaponsVisComp (selected);
+	catch (Exception e) {
+	  System.out.println ("Unable to load JavaBean: " + e);
+	  return false;
 	}
 	if (visComp_ != null) {
 	  vis_comp_list_.addElement (visComp_);	 
 	  
 	  // connect the Observer with the Observable
-	  observable.addObserver (visComp_);
+	  observable_.addObserver (visComp_);
 	  
 	  countVisComp_++;
 	  
