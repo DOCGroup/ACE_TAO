@@ -21,13 +21,13 @@ IDL_HDR = testC.h testS.h
 
 CLNT_SRCS = client.cpp ifr_dii_client.cpp
 
-SVR_SRCS = server.cpp test_i.cpp testC.cpp testS.cpp
+SVR_SRCS = testC.cpp testS.cpp server.cpp test_i.cpp
 
 SRC = $(PROG_SRCS) $(SVR_SRCS)
 
 CLNT_TEST_OBJS = client.o ifr_dii_client.o
 
-SVR_TEST_OBJS = server.o test_i.o testC.o testS.o
+SVR_TEST_OBJS = testC.o testS.o server.o test_i.o
 
 BIN_UNCHECKED = client server
 
@@ -54,6 +54,9 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao
+
+.PRECIOUS: testC.cpp testS.cpp testC.h testS.h testC.i testS.i \
+        testS_T.h testS_T.cpp testS_T.i
 
 client: $(addprefix $(VDIR),$(CLNT_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_DYNAMIC_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
