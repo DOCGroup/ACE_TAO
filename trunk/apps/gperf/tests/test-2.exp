@@ -84,7 +84,7 @@ in_word_set (str, len)
       0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
       0,  0,  0,  0, 10,
     };
-  static char *wordlist[] =
+  static const char *wordlist[] =
     {
       "", 
       "OR", 
