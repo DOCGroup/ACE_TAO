@@ -444,14 +444,14 @@ Client::test_delete_properties (CORBA::Environment &env)
   prop_names [0] = CORBA::string_dup ("char_property");
   prop_names [1] = CORBA::string_dup ("short_property");
   prop_names [2] = CORBA::string_dup ("long_property");
-  prop_names [4] = CORBA::string_dup ("no_property");
+  prop_names [3] = CORBA::string_dup ("no_property");
   ACE_DEBUG ((LM_DEBUG,
               "Length of sequence %d, Maxlength : %d\n",
               prop_names.length (),
               prop_names.maximum ()));
   this->propsetdef_->delete_properties (prop_names,
 					env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+  TAO_CHECK_ENV_RETURN (env, -1);
 
   return 0;
 }
@@ -753,6 +753,8 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
 int
 Client::test_get_property_value (CORBA::Environment &env)
 {
+  ACE_DEBUG ((LM_DEBUG, "Testing get_property_value\n"));
+
   TAO_TRY
     {
       // Get the ior property.
