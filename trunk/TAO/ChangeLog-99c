@@ -1,3 +1,25 @@
+Wed Jan 27 22:09:14 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp: 
+	Enaaabled the exporting of properties by  mutiple augmented servers
+	
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
+	Need to initialize the handle everytime in rstat
+	
+	* orbsvcs/tests/AVStreams/server_discovery/Strip_Chart.java: 
+	Modified the algorithm to get the performance graph working
+
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java: 
+	Modified  the Jtree to to display multiple movie  info
+	Enabled the display of the performance graph
+	
+
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.java: 
+	Added the thread to get the dynamic properties and display as a
+	graph
+
+	
+
 Wed Jan 27 21:59:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
