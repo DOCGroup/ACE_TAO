@@ -1,0 +1,10 @@
+DSTRM_FAMILY            SCENARIOA               6               "Scenario A family"
+
+
+DSTRM_EVENT             SCENARIOA               6               CREATING_THREAD         0               " "             print_string
+DSTRM_EVENT             SCENARIOA               6               IN_WHILE_LOOP           1               " "             print_string
+DSTRM_EVENT             SCENARIOA               6               CALLING_SLEEP           2               " "             print_string
+DSTRM_EVENT             SCENARIOA               6               EXITING                 3               " "             print_string
+DSTRM_EVENT             SCENARIOA               6               JOINING_GROUP           4               " "             print_string
+DSTRM_EVENT             SCENARIOA               6               AFTER_SLEEP             5               " "             print_string
+DSTRM_EVENT             SCENARIOA               6               AFTER_UNBLOCK           6               " "             print_string

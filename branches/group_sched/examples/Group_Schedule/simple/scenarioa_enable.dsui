@@ -1,0 +1,7 @@
+DSTRM_EVENT             SCENARIOA               6               CREATING_THREAD         0
+DSTRM_EVENT             SCENARIOA               6               IN_WHILE_LOOP           1
+DSTRM_EVENT             SCENARIOA               6               CALLING_SLEEP           2
+DSTRM_EVENT             SCENARIOA               6               EXITING                 3
+DSTRM_EVENT             SCENARIOA               6               JOINING_GROUP           4
+DSTRM_EVENT             SCENARIOA               6               AFTER_SLEEP             5
+DSTRM_EVENT             SCENARIOA               6               UNBLOCK                 6
