@@ -115,14 +115,12 @@ DRV_version (void)
   BE_version ();
 }
 
-// Fork off a process, wait for it to die
+// Until we find the time to make this portable, we'll just
+// have to skip it. It's been left in place
+// for the day when it may be implemented portably.
 void
 DRV_fork (void)
 {
-  // This will not work on NT, but I can hardly think of some way to
-  // make it work.  The idea is to make it compile, and always use the
-  // compiler with just one file, that works because then there is no
-  // fork involved.
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
@@ -156,6 +154,7 @@ DRV_fork (void)
           ACE_OS::exit (99);
         }
     }
+
   // Now the parent process can exit.
   ACE_OS::exit (0);
 }
@@ -320,25 +319,29 @@ main (int argc, char *argv[])
       ACE_OS::exit (0);
     }
 
-  // Fork off a process for each file to process. Fork only if
-  // there is more than one file to process.
+  // The original Sun frontend code included a fork if there
+  // was more than one filename in the command line. This is
+  // a long way from portable, so for now we output a warning
+  // if multiple filenames are passed in.
   if (DRV_nfiles > 1)
     {
-      // DRV_fork never returns.
-      DRV_fork ();
-    }
-  else
-    {
-      // Do the one file we have to parse.
-      // Check if stdin and handle file name appropriately.
-      if (DRV_nfiles == 0)
-        {
-          DRV_files[0] = "standard input";
-        }
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("warning: Multiple file processing")
+                  ACE_TEXT (" not implemented.\nAll filenames")
+                  ACE_TEXT (" after the first will be ignored.\n")));
 
-      DRV_file_index = 0;
-      DRV_drive (DRV_files[DRV_file_index]);
+      // This isn't portable so we have to skip it for now.
+      // DRV_fork ();
     }
+
+  // Do the one file we have to parse.
+  // Check if stdin and handle file name appropriately.
+  if (DRV_nfiles == 0)
+    {
+      DRV_files[0] = "standard input";
+    }
+
+  DRV_drive (DRV_files[0]);
 
   ACE_OS::exit (0);
 
