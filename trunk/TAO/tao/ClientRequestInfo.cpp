@@ -244,6 +244,8 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type,
   return this->target_->_get_policy (type,
                                      ACE_TRY_ENV);
 #else
+  ACE_UNUSED_ARG (type);
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
