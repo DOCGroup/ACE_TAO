@@ -452,17 +452,18 @@ public:
   // the <event_handler>'s <handle_timeout> callback method.  If
   // <interval> is != to <ACE_Time_Value::zero> then it is used to
   // reschedule the <event_handler> automatically.  This method
-  // returns a timer handle that uniquely identifies the
-  // <event_handler> in an internal list.  This timer handle can be
-  // used to cancel an <event_handler> before it expires.  The
-  // cancellation ensures that timer_ids are unique up to values of
-  // greater than 2 billion timers.  As long as timers don't stay
-  // around longer than this there should be no problems with
-  // accidentally deleting the wrong timer.
+  // returns a <timer_id> that uniquely identifies the <event_handler>
+  // in an internal list.  This <timer_id> can be used to cancel an
+  // <event_handler> before it expires.  The cancellation ensures that
+  // <timer_ids> are unique up to values of greater than 2 billion
+  // timers.  As long as timers don't stay around longer than this
+  // there should be no problems with accidentally deleting the wrong
+  // timer.  Returns -1 on failure (which is guaranteed never to be a
+  // valid <timer_id>.
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler);
   // Cancel all <event_handlers> that match the address of
-  // <event_handler>.
+  // <event_handler>.  Returns number of handler's cancelled.
 
   virtual int cancel_timer (int timer_id, const void **arg = 0);
   // Cancel the single <ACE_Event_Handler> that matches the <timer_id>
@@ -470,6 +471,8 @@ public:
   // non-NULL then it will be set to point to the ``magic cookie''
   // argument passed in when the <Event_Handler> was registered.  This
   // makes it possible to free up the memory and avoid memory leaks.
+  // Returns 1 if cancellation succeeded and 0 if the <timer_id>
+  // wasn't found.
 
   // = High-level Event_Handler scheduling operations
   

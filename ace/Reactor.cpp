@@ -5,6 +5,7 @@
 #include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Timer_List.h"
 #include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
@@ -858,7 +859,7 @@ ACE_Reactor::open (size_t size,
       // quickly due to the use of sockets as a notification
       // mechanism).  At least this way the timer_queue_ isn't 0, so
       // we can still use the Reactor as a timer...
-      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Queue, -1);
+      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_List, -1);
       this->delete_timer_queue_ = 1;
     }
 

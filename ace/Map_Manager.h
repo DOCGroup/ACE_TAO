@@ -237,7 +237,7 @@ public:
   // = Iteration methods.
 
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry);
-  // Pass back the <entry> that hasn't been seen in the Set.
+  // Pass back the next <entry> that hasn't been seen in the Set.
   // Returns 0 when all items have been seen, else 1.
 
   int advance (void);

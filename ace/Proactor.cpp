@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Proactor.h"
+#include "ace/Timer_List.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Proactor.i"
@@ -167,7 +168,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
 {
   if (this->timer_queue_ == 0)
     {
-      ACE_NEW (this->timer_queue_, ACE_Timer_Queue);
+      ACE_NEW (this->timer_queue_, ACE_Timer_List);
       this->delete_timer_queue_ = 1;
     }
 
