@@ -159,12 +159,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
     {
       // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) first time in, control block = %u\n"), this->cb_ptr_));
 
-#if defined (ACE_HAS_MALLOC_STATS)
-      // Call the constructor on the ACE_LOCK, using the placement
-      // operator!
-      new ((void *) &this->cb_ptr_->malloc_stats_) ACE_Malloc_Stats;
-#endif /* ACE_HAS_MALLOC_STATS */
-
       MALLOC_HEADER::init_ptr (&this->cb_ptr_->freep_,
                                &this->cb_ptr_->base_,
                                this->cb_ptr_);
@@ -278,9 +272,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 
 #if defined (ACE_HAS_MALLOC_STATS)
   this->print_stats ();
-
-  ACE_DES_NOFREE (this->cb_ptr_->malloc_stats_,
-                  ACE_Malloc_Stats);
 #endif /* ACE_HAS_MALLOC_STATS */
 
   // Remove the ACE_LOCK.
