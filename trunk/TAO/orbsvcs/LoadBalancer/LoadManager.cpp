@@ -223,11 +223,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // to support corbaloc
       // Get a reference to the IOR table.
-      CORBA::Object_var tobj = orb->resolve_initial_references("IORTable");
-      IORTable::Table_var table = IORTable::Table::_narrow(tobj.in());
+      CORBA::Object_var tobj = orb->resolve_initial_references ("IORTable"
+                                                               ACE_ENV_ARG_PARAMETER);
+      IORTable::Table_var table = IORTable::Table::_narrow (tobj.in ()
+                                                            ACE_ENV_ARG_PARAMETER);
 
       // bind your stringified IOR in the IOR table
-      table->bind("LoadManager", str.in());
+      table->bind ("LoadManager", str.in ()
+                   ACE_ENV_ARG_PARAMETER);
 
       FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
       ACE_OS::fprintf (lm_ior, "%s", str.in ());
