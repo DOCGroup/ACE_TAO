@@ -1,3 +1,15 @@
+Wed Jan  5 13:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added zip files to the noncvs files that shouldn't be in the repo.
+          Added a new check that tests for inline files just containing empty
+          lines and c-style comments. These files shouldn't be in the repo
+          and need to get removed. There is an exclusion for TAO_IDL generated
+          files, we don't have an option yet to suppress the generation of
+          empty inline files so, we allow them for the time being. Thanks to
+          Don Hinton, Carlos O'Ryan and Martin Corino for their answers
+          on my questions.
+
 Wed Jan  5 09:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_dirent.inl (readdir_r):

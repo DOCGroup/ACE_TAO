@@ -496,20 +496,21 @@ sub check_for_empty_inline_files ()
 {
     print "Running empty inline files test\n";
     foreach $file (@files_inl) {
-        my $found = 0;
-        my $ignore = 0;
+        my $found_non_empty_line = 0;
+        my $idl_generated = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-              if (/\/\/ TAO and the TAO IDL Compiler have been developed by/) {# skip IDL generated files
-                $ignore = 1;
-                next;}
+              if (m/TAO and the TAO IDL Compiler have been developed by/) {# skip IDL generated files
+                $idl_generated = 1;
+                last;}
               next if /^[:blank:]*$/; # skip empty lines
               next if /^[:blank:]*\/\//; # skip C++ comments
-              $found = 1;
+              $found_non_empty_line = 1;
+              last;
             }
             close (FILE);
-            if ($found == 0 and $ignore == 0) {
+            if ($found_non_empty_line == 0 and $idl_generated == 0) {
              print_error ("File $file is empty and should not be in the "
                          ."repository");
             }
