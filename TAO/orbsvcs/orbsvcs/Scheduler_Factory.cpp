@@ -426,4 +426,6 @@ template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>;
 #pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
 #pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
 #pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
+template ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex> * ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
