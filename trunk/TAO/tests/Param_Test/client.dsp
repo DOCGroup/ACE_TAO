@@ -122,6 +122,10 @@ SOURCE=.\driver.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\except.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\fixed_array.cpp
 # End Source File
 # Begin Source File
@@ -247,6 +251,10 @@ SOURCE=.\client.h
 # Begin Source File
 
 SOURCE=.\driver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\except.h
 # End Source File
 # Begin Source File
 

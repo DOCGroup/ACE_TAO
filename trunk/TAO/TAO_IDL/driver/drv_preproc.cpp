@@ -324,10 +324,19 @@ DRV_pre_proc(char *myfile)
   // the next file will the previous args.
   argcount -= 2;
 
-  if (manager.wait () == -1)
+  int status = 0;
+  if (manager.wait (&status) == -1)
     {
       cerr << idl_global->prog_name ()
            << GTDEVEL(": wait for child process failed\n");
+      return;
+    }
+  if (status != 0)
+    {
+      cerr << idl_global->prog_name()
+           << GTDEVEL(": preprocessor ")
+           << arglist[0]
+           << GTDEVEL(" returned with an error\n");
       return;
     }
   // TODO: Manage problems in the pre-processor, in the previous

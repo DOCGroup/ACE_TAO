@@ -1,3 +1,11 @@
+Fri Aug 21 19:06:21 1998  Carlos O'Ryan <coryan@CHA-CHA>
+
+	* tests/Param_Test/client.dsp:
+	  Added the new except.cpp and except.h
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  Check the error result when running the preprocessor.
+
 Fri Aug 21 15:00:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Any.i:
@@ -6,7 +14,7 @@ Fri Aug 21 15:00:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Fri Aug 21 14:27:27 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: Added virtual 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.{h,cpp}: Added virtual
 	  destructors to all the classes. Thanks to Carlos for reporting
   	  this. Fixed a few template warnings.
 
@@ -22,50 +30,50 @@ Fri Aug 21 13:47:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Fri Aug 21 11:34:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (init_naming_service): 
+	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (init_naming_service):
 	* tests/Cubit/TAO/MT_Cubit/server.cpp (initialize_orb):
-	  Fixed the g++ warning for passing ORB_var to an ORB_ptr 
+	  Fixed the g++ warning for passing ORB_var to an ORB_ptr
 	  argument.
-	
+
 Fri Aug 21 00:04:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Exception.cpp: 
-	* tao/corba.h: 
-	* tao/orbconf.h: 
+	* tao/Exception.cpp:
+	* tao/corba.h:
+	* tao/orbconf.h:
 	  The ORB is ready to work with exceptions now. I was able to
 	  throw an exception on the server side, catch it, transmit it to
 	  the client, the client is able to build the exception with the
 	  right dynamic type and then raise it again. This, of course,
 	  using SII. We still have to do some more work to support DII.
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp: 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp:
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
 	  Fixed misuses of TAO_THROW and TAO_TRY macros that did not work
 	  when the code was used with exceptions enabled.
 
-	* tests/Param_Test/except.cpp: 
-	* tests/Param_Test/param_test_i.cpp: 
-	* tests/Param_Test/param_test_i.h: 
+	* tests/Param_Test/except.cpp:
+	* tests/Param_Test/param_test_i.cpp:
+	* tests/Param_Test/param_test_i.h:
 	  Removed throw specs from the servant implementation, they just
 	  complicate things. Cleanup the client side.
 
 Thu Aug 20 19:42:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp: 
+	* tao/Invocation.cpp:
 	  Fixed two warnings reported by David. They were only a problem
 	  when using user exceptions in DII, something that still requires
 	  some work.
 
 Thu Aug 20 18:24:04 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Property/client.{h,cpp} 
-	* orbsvcs/tests/Property/server.cpp}  
+	* orbsvcs/tests/Property/client.{h,cpp}
+	* orbsvcs/tests/Property/server.cpp}
 	  Added Naming_Utils code to simplify Naming Service
 	  operations. Note that this code is shakey, and will not always
 	  execute properly. For better results, try executing the client
@@ -97,14 +105,14 @@ Thu Aug 20 17:21:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Thu Aug 20 16:14:54 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Added Naming_Utils code 
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Added Naming_Utils code
 	  to simplify Naming Service operations
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/sendpt.h
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util32.cpp
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/util.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered2.cpp
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ordered.cpp
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/motionvector.cpp
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mono.cpp
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/mb_ordered.cpp
@@ -114,19 +122,19 @@ Thu Aug 20 16:14:54 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/gray.cpp
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs4.h
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2fast.cpp
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.h 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/fs2.h
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/decoders.h
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/2x2.cpp
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/24bit.cpp
 	  Added "ace/OS.h" to fix RCSID errors
-	
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.{h,cpp} 	
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.{h,cpp}
 	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.{h,cpp}
   	  Added Naming_Utils code to simplify Naming Service
-	  operations. Also added "ace/OS.h" include to fix RCSID errors	
+	  operations. Also added "ace/OS.h" include to fix RCSID errors
 
-	
+
 Thu Aug 20 14:32:12 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tao/Any.{h,i,cpp}:
@@ -135,42 +143,42 @@ Thu Aug 20 14:32:12 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Thu Aug 20 14:14:30 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp : 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp :
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp :
 		Fixed compile errors and warning shown by g++.
-	
+
 Thu Aug 20 13:58:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/orbconf.h: 
-	* tao/corba.h: 
+	* tao/orbconf.h:
+	* tao/corba.h:
 	  Exception support is controlled my the TAO_USE_EXCEPTIONS
 	  macro.
 
-	* tao/POAC.h: 
-	* tao/POAC.cpp: 
-	* tao/Typecode.cpp: 
+	* tao/POAC.h:
+	* tao/POAC.cpp:
+	* tao/Typecode.cpp:
 	  Added the _raise () methods, they use a macro (TAO_RAISE) to
 	  actually throw the exception, the macro expands to nothing if
 	  exceptions are not supported.
 
-	* tao/Exception.h: 
-	* tao/Exception.i: 
-	* tao/Exception.cpp: 
+	* tao/Exception.h:
+	* tao/Exception.i:
+	* tao/Exception.cpp:
 	  Fixed problems with operator=
 	  The modifier for the CORBA_Environment::exception() would raise
 	  the exception if native C++ exceptions are supported.
 
-	* tao/Connect.h: 
-	* tao/Connect.cpp: 
+	* tao/Connect.h:
+	* tao/Connect.cpp:
 	  Use TAO_TRY macros to catch the exceptions in the upcall, this
 	  is in preparation for the support for native C++ exceptions.
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp: 
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp: 
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
 	  The compiler generates the _raise() method now.
 
-	* tao/debug.h: 
-	* tao/debug.cpp: 
+	* tao/debug.h:
+	* tao/debug.cpp:
 	  Removed some _FAR uses.
 
 Thu Aug 20 11:57:04 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
