@@ -1,31 +1,42 @@
+Mon May 31 17:18:55 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Any_Handler.cpp:
+        * DnC/Config_Handlers/CompIntrDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPropDesc_Handler.cpp:
+        * DnC/Config_Handlers/DT_Handler.cpp:
+        * DnC/Config_Handlers/DT_Handler.h:
+
+          Resolved Typecode and Any related errors relating to parsing the
+          Deployment plan.
+
 Mon May 31 16:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Added support for the emits-related navigation method,
           and automatic registration of value factories for
           event consumers. Also fixed bug in code generation
           for uses multiple.
-          
+
         * ciao/Container_Base.h:
-        
+
           Added CIAO_REGISTER_OBV_FACTORY macro, used by the
           CIDL compiler when generating factory registration
           calls for event consumers. There is also a version of
           this macro called CIAO_REGISTER_VALUE_FACTORY in
           CIAO_common.h. This version takes an extra argument
           which is an ORB pointer. This macro was separately
-          added, planning for the day when we may want 
+          added, planning for the day when we may want
           components to run with a separate process and/or ORB
           from their containers. These two versions will have
           to be reconciled at some point.
-          
+
         * tools/Segment_Timer/Segment_Timer.mpc:
-        
+
           Added the export file to the project.
-          
+
         * tools/XML_Helpers/RTConfig_Handlers.cpp:
-        
+
           Added some static casts to eliminate warnings on
           MSVC.
 

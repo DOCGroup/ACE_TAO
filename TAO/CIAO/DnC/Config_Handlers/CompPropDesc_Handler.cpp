@@ -73,7 +73,7 @@ namespace CIAO
               int argc = 0;
               char ** argv = 0;
               CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
-              DT_Handler::process_DataType(iter_, comppropdesc.type.in (), orb);
+              DT_Handler::process_DataType(iter_, comppropdesc.type.out (), orb);
             }
           else
             {
