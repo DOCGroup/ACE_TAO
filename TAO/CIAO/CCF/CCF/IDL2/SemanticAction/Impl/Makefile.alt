@@ -20,10 +20,12 @@ cxx_translation_units := Attribute.cpp  \
                          Interface.cpp  \
                          Member.cpp     \
                          Module.cpp     \
+                         Native.cpp     \
                          Operation.cpp  \
                          Struct.cpp     \
                          TypeId.cpp     \
-                         Typedef.cpp
+                         Typedef.cpp    \
+                         ValueType.cpp
 
 
 CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)

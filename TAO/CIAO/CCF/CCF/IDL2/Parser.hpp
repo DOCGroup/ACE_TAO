@@ -298,34 +298,44 @@ namespace CCF
       ErrorHandler error_handler;
       RootErrorHandler root_error_handler;
 
-      // End of stream parser
+      // End of stream parser.
+      //
       EndOfStreamParser EOS;
 
       // Keyword parsers (alphabetic order).
+      //
       KeywordParser ABSTRACT;
       KeywordParser ATTRIBUTE;
+      KeywordParser BINCLUDE;
       KeywordParser CONST;
+      KeywordParser CUSTOM;
       KeywordParser ENUM;
       KeywordParser EXCEPTION;
       KeywordParser FACTORY;
       KeywordParser IN;
-      KeywordParser INCLUDE;
       KeywordParser INOUT;
       KeywordParser INTERFACE;
+      KeywordParser QINCLUDE;
       KeywordParser LOCAL;
       KeywordParser MODULE;
+      KeywordParser NATIVE;
       KeywordParser ONEWAY;
       KeywordParser OUT;
+      KeywordParser PRIVATE;
+      KeywordParser PUBLIC;
       KeywordParser RAISES;
+      KeywordParser READONLY;
       KeywordParser SEQUENCE;
-      KeywordParser SINCLUDE;
       KeywordParser STRUCT;
       KeywordParser SUPPORTS;
+      KeywordParser TRUNCATABLE;
       KeywordParser TYPEDEF;
       KeywordParser TYPEID;
       KeywordParser TYPEPREFIX;
+      KeywordParser VALUETYPE;
 
       // Punctuation parsers (alphabetic group order).
+      //
       PunctuationParser COLON;
       PunctuationParser COMMA;
       PunctuationParser LBRACE;
@@ -371,7 +381,8 @@ namespace CCF
       Rule extension;
 
       Rule include_decl;
-      Rule system_include_decl;
+
+      Rule type_decl;
 
       Rule module_decl;
 
@@ -402,8 +413,8 @@ namespace CCF
       Rule abstract_interface_decl;
       Rule local_interface_decl;
       Rule unconstrained_interface_decl;
-      Rule interface_def_trailer;
       Rule interface_inheritance_spec;
+      Rule interface_def_trailer;
       Rule interface_body;
 
       Rule attribute_decl;
@@ -414,7 +425,8 @@ namespace CCF
       Rule direction_specifier;
 
       Rule member_decl;
-      Rule member_declarator_list;
+
+      Rule native_decl;
 
       Rule operation_decl;
       Rule operation_decl_trailer;
@@ -426,12 +438,25 @@ namespace CCF
       Rule struct_def_trailer;
       Rule struct_body;
 
-      Rule typedef_;
+      Rule typedef_decl;
       Rule typedef_type_spec;
-      Rule typedef_declarator_list;
 
-      Rule type_id;
-      Rule type_prefix;
+      Rule type_id_decl;
+      Rule type_prefix_decl;
+
+      Rule abstract_value_type_decl;
+      Rule concrete_value_type_decl;
+      Rule value_type_inheritance_spec;
+      Rule value_type_supports_spec;
+      Rule value_type_def_trailer;
+      Rule value_type_body;
+
+      Rule value_type_member_decl;
+
+      Rule value_type_factory_decl;
+      Rule value_type_factory_parameter_list;
+      Rule value_type_factory_parameter;
+      Rule value_type_factory_raises_list;
 
     public:
       Parser (CompilerElements::Context& context,
@@ -458,11 +483,17 @@ namespace CCF
       // Attribute
       //
       //
+      NoArgAction<SemanticAction::Attribute>
+      act_attribute_begin_ro, act_attribute_begin_rw;
+
       OneArgAction<IdentifierPtr, SemanticAction::Attribute>
       act_attribute_type;
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Attribute>
       act_attribute_name;
+
+      NoArgAction<SemanticAction::Attribute>
+      act_attribute_end;
 
       // Enum
       //
@@ -488,20 +519,15 @@ namespace CCF
       NoArgAction<SemanticAction::Exception>
       act_exception_end;
 
+
       // Include
       //
       //
       OneArgAction<StringLiteralPtr, SemanticAction::Include>
-      act_include_begin;
+      act_include_quote, act_include_bracket;
 
       NoArgAction<SemanticAction::Include>
       act_include_end;
-
-      OneArgAction<StringLiteralPtr, SemanticAction::SystemInclude>
-      act_system_include_begin;
-
-      NoArgAction<SemanticAction::SystemInclude>
-      act_system_include_end;
 
 
       // Interface
@@ -537,6 +563,8 @@ namespace CCF
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Member>
       act_member_name;
 
+      NoArgAction<SemanticAction::Member>
+      act_member_end;
 
       // Module
       //
@@ -552,6 +580,15 @@ namespace CCF
 
       NoArgAction<SemanticAction::Module>
       act_module_end;
+
+      // Native
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::Native>
+      act_native_name;
+
+      NoArgAction<SemanticAction::Native>
+      act_native_end;
 
 
       // Operation
@@ -657,6 +694,28 @@ namespace CCF
 
       NoArgAction<SemanticAction::TypePrefix>
       act_type_prefix_end;
+
+
+      // ValueType
+      //
+      //
+      OneArgAction<SimpleIdentifierPtr, SemanticAction::ValueType>
+        act_abstract_value_type_begin_def,
+        act_abstract_value_type_begin_fwd,
+        act_concrete_value_type_begin_def,
+        act_concrete_value_type_begin_fwd;
+
+      OneArgAction<IdentifierPtr, SemanticAction::ValueType>
+      act_value_type_inherits, act_value_type_supports;
+
+      ScopeAction
+      act_value_type_open_scope;
+
+      ScopeAction
+      act_value_type_close_scope;
+
+      NoArgAction<SemanticAction::ValueType>
+      act_value_type_end;
     };
   }
 }

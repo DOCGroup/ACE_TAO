@@ -120,11 +120,26 @@ namespace CCF
         {
           if (ctx.trace ()) cerr << " " << id << endl;
 
-          if (type_ != 0)
+          SimpleName name (id->lexeme ());
+
+          try
           {
-            SimpleName name (id->lexeme ());
-            ctx.tu ().new_edge<Aliases> (ctx.scope (), *type_, name);
+            if (lookup (ctx.tu (), ctx.scope (), name) == 0)
+            {
+              if (type_ != 0)
+              {
+                ctx.tu ().new_edge<Aliases> (ctx.scope (), *type_, name);
+              }
+
+              return;
+            }
           }
+          catch (NotUnique const& )
+          {
+          }
+
+          cerr << "error: invalid typedef declaration" << endl;
+          cerr << "error: redeclaration of name " << name << endl;
         }
 
         void Typedef::

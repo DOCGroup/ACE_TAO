@@ -35,12 +35,13 @@ namespace CCF
               interface_ (ctx_),
               member_ (ctx_),
               module_ (ctx_),
+              native_ (ctx_),
               operation_ (ctx_),
               struct__ (ctx_),
-              system_include_ (ctx_),
               typedef__ (ctx_),
               type_id_ (ctx_),
-              type_prefix_ (ctx_)
+              type_prefix_ (ctx_),
+              value_type_ (ctx_)
         {
           // Implied translation region with fundamental types.
           //

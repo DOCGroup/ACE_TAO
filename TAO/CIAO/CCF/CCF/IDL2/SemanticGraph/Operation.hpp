@@ -137,46 +137,11 @@ namespace CCF
       class Parameter : public virtual Instance
       {
       public:
-        class Direction
-        {
-        public:
-          static Direction const in, out, inout;
-
-        public:
-          operator char const* () const;
-
-          bool
-          operator== (Direction d) const
-          {
-            return v_ == d.v_;
-          }
-
-          bool
-          operator!= (Direction d) const
-          {
-            return v_ != d.v_;
-          }
-
-        private:
-          enum Value
-          {
-            in_, out_, inout_
-          } v_;
-
-          Direction (Value v)
-              : v_ (v)
-          {
-          }
-        };
-
         std::string
         name () const
         {
           return name_;
         }
-
-        virtual Direction
-        direction () const = 0;
 
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -203,13 +168,6 @@ namespace CCF
       class InParameter : public virtual Parameter
       {
       public:
-        virtual Direction
-        direction () const
-        {
-          return Direction::in;
-        }
-
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -226,13 +184,6 @@ namespace CCF
       class OutParameter : public virtual Parameter
       {
       public:
-        virtual Direction
-        direction () const
-        {
-          return Direction::out;
-        }
-
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -249,13 +200,6 @@ namespace CCF
       class InOutParameter : public virtual Parameter
       {
       public:
-        virtual Direction
-        direction () const
-        {
-          return Direction::inout;
-        }
-
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -322,9 +266,6 @@ namespace CCF
           return dynamic_cast<Returns&> (belongs ());
         }
 
-        virtual bool
-        one_way () const = 0;
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -366,12 +307,6 @@ namespace CCF
       class OneWayOperation : public virtual Operation
       {
       public:
-        virtual bool
-        one_way () const
-        {
-          return true;
-        }
-
         static Introspection::TypeInfo const&
         static_type_info ();
 
@@ -391,12 +326,6 @@ namespace CCF
       class TwoWayOperation : public virtual Operation
       {
       public:
-        virtual bool
-        one_way () const
-        {
-          return false;
-        }
-
         static Introspection::TypeInfo const&
         static_type_info ();
 

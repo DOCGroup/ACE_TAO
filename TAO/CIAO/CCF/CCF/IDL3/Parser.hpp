@@ -44,27 +44,31 @@ namespace CCF
 
       Rule extension;
 
-      // Component
+      // component
+      //
       Rule component_decl;
       Rule component_def_trailer;
       Rule component_inheritance_spec;
       Rule component_support_spec;
       Rule component_body;
 
-      // Component body elements
       Rule provides_decl;
       Rule uses_decl;
       Rule emits_decl;
       Rule publishes_decl;
       Rule consumes_decl;
 
-      // Eventtype
-      Rule eventtype_decl;
-      Rule eventtype_def_trailer;
-      Rule eventtype_inheritance_spec;
-      Rule eventtype_body;
+      // eventtype
+      //
+      Rule abstract_event_type_decl;
+      Rule concrete_event_type_decl;
+      Rule event_type_inheritance_spec;
+      Rule event_type_supports_spec;
+      Rule event_type_def_trailer;
+      Rule event_type_body;
 
-      // Home
+      // home
+      //
       Rule home_decl;
       Rule home_header;
       Rule home_inheritance_spec;
@@ -109,6 +113,7 @@ namespace CCF
       NoArgAction<SemanticAction::Component>
       act_component_end;
 
+
       // Provides
       //
       OneArgAction<IdentifierPtr, SemanticAction::Provides>
@@ -116,6 +121,7 @@ namespace CCF
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Provides>
       act_provides_name;
+
 
       // Uses
       //
@@ -125,6 +131,7 @@ namespace CCF
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Uses>
       act_uses_name;
 
+
       // Publishes
       //
       OneArgAction<IdentifierPtr, SemanticAction::Publishes>
@@ -132,6 +139,7 @@ namespace CCF
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Publishes>
       act_publishes_name;
+
 
       // Emits
       //
@@ -141,6 +149,7 @@ namespace CCF
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Emits>
       act_emits_name;
 
+
       // Consumes
       //
       OneArgAction<IdentifierPtr, SemanticAction::Consumes>
@@ -149,13 +158,17 @@ namespace CCF
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Consumes>
       act_consumes_name;
 
+
       // EventType
       //
       OneArgAction<SimpleIdentifierPtr, SemanticAction::EventType>
-      act_event_type_begin_concrete_def, act_event_type_begin_concrete_fwd;
+      act_event_type_begin_abstract_def,
+      act_event_type_begin_abstract_fwd,
+      act_event_type_begin_concrete_def,
+      act_event_type_begin_concrete_fwd;
 
       OneArgAction<IdentifierPtr, SemanticAction::EventType>
-      act_event_type_inherits;
+      act_event_type_inherits, act_event_type_supports;
 
       ScopeAction
       act_event_type_open_scope;
@@ -165,6 +178,7 @@ namespace CCF
 
       NoArgAction<SemanticAction::EventType>
       act_event_type_end;
+
 
       // Home
       //
@@ -189,6 +203,7 @@ namespace CCF
       NoArgAction<SemanticAction::Home>
       act_home_end;
 
+
       // HomeFactory
       //
       OneArgAction<SimpleIdentifierPtr, SemanticAction::HomeFactory>
@@ -201,6 +216,7 @@ namespace CCF
 
       OneArgAction<IdentifierPtr, SemanticAction::HomeFactory>
       act_home_factory_raises;
+
 
       // HomeFinder
       //

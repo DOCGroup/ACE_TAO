@@ -17,25 +17,6 @@ namespace CCF
       // Composition
       //
       //
-      Composition::Kind const
-        Composition::Kind::entity (Composition::Kind::entity_),
-        Composition::Kind::process (Composition::Kind::process_),
-        Composition::Kind::service (Composition::Kind::service_),
-        Composition::Kind::session (Composition::Kind::session_);
-
-      namespace
-      {
-        char const* composition_kind_labels_[] =
-        {
-          "entity", "process", "service", "session"
-        };
-      }
-
-      Composition::Kind::operator char const* () const
-      {
-        return composition_kind_labels_[v_];
-      }
-
       namespace
       {
         TypeInfo

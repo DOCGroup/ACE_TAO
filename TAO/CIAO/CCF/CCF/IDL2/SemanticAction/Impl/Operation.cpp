@@ -65,7 +65,7 @@ namespace CCF
             {
               Type& t (resolve<Type> (from, name, complete));
 
-              if (op_->one_way ())
+              if (dynamic_cast<OneWayOperation*>(op_))
               {
                 if (dynamic_cast<Void*> (&t) == 0) throw NotVoid ();
               }
@@ -134,14 +134,15 @@ namespace CCF
           {
             try
             {
-              if (op_->one_way () && direction != Direction::in)
+              if (dynamic_cast<OneWayOperation*>(op_) &&
+                  direction != Direction::in)
               {
                 throw NotIn ();
               }
 
               Type& t (resolve<Type> (from, name, complete));
 
-              Parameter* p;
+              Parameter* p (0);
 
               switch (direction)
               {
@@ -210,7 +211,7 @@ namespace CCF
           {
             try
             {
-              if (op_->one_way ()) throw OneWay ();
+              if (dynamic_cast<OneWayOperation*>(op_)) throw OneWay ();
 
               SemanticGraph::Exception& e (
                 resolve<SemanticGraph::Exception> (from, name));

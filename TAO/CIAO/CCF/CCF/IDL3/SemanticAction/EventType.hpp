@@ -20,6 +20,12 @@ namespace CCF
       {
       public:
         virtual void
+        begin_abstract_def (SimpleIdentifierPtr const& id) = 0;
+
+        virtual void
+        begin_abstract_fwd (SimpleIdentifierPtr const& id) = 0;
+
+        virtual void
         begin_concrete_def (SimpleIdentifierPtr const& id) = 0;
 
         virtual void
@@ -27,6 +33,9 @@ namespace CCF
 
         virtual void
         inherits (IdentifierPtr const& id) = 0;
+
+        virtual void
+        supports (IdentifierPtr const& id) = 0;
 
         virtual void
         end () = 0;

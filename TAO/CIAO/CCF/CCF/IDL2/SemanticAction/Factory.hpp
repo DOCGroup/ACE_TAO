@@ -18,12 +18,13 @@ namespace CCF
       class Interface;
       class Member;
       class Module;
+      class Native;
       class Operation;
       class Struct;
-      class SystemInclude;
       class Typedef;
       class TypeId;
       class TypePrefix;
+      class ValueType;
 
       //
       //
@@ -55,14 +56,14 @@ namespace CCF
         virtual Module&
         module () = 0;
 
+        virtual Native&
+        native () = 0;
+        
         virtual Operation&
         operation () = 0;
 
         virtual Struct&
         struct_ () = 0;
-
-        virtual SystemInclude&
-        system_include () = 0;
 
         virtual Typedef&
         typedef_ () = 0;
@@ -72,6 +73,11 @@ namespace CCF
 
         virtual TypePrefix&
         type_prefix () = 0;
+
+        //@@ In some places I use 'value_type' and in others 'valuetype'.
+        //
+        virtual ValueType&
+        value_type () = 0;
       };
 
     }

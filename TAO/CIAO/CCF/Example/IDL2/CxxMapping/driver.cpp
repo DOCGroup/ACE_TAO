@@ -21,6 +21,7 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
+using namespace CCF::CompilerElements;
 using namespace CCF::IDL2;
 using namespace CCF::IDL2::SemanticGraph;
 
@@ -36,8 +37,8 @@ main ()
 
     fs::path file_path ("stdout");
 
-    CCF::InputStreamAdapter isa (std::cin);
-    CCF::Preprocessor pp (isa);
+    InputStreamAdapter isa (std::cin);
+    CPP::Preprocessor pp (isa);
 
     LexicalAnalyzer lexer (pp);
 

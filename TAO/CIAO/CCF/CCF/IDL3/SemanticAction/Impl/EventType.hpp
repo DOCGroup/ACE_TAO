@@ -30,6 +30,12 @@ namespace CCF
           EventType (Context& c);
 
           virtual void
+          begin_abstract_def (SimpleIdentifierPtr const& id);
+
+          virtual void
+          begin_abstract_fwd (SimpleIdentifierPtr const& id);
+
+          virtual void
           begin_concrete_def (SimpleIdentifierPtr const& id);
 
           virtual void
@@ -37,6 +43,9 @@ namespace CCF
 
           virtual void
           inherits (IdentifierPtr const& id);
+
+          virtual void
+          supports (IdentifierPtr const& id);
 
           virtual void
           open_scope ();

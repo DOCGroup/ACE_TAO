@@ -31,11 +31,25 @@ namespace CCF
         }
 
         void Attribute::
+        begin_ro ()
+        {
+          if (ctx.trace ()) cerr << "readonly attribute" << endl;
+
+          a_ = &ctx.tu ().new_node<ReadAttribute> ();
+        }
+
+        void Attribute::
+        begin_rw ()
+        {
+          if (ctx.trace ()) cerr << "readwrite attribute" << endl;
+
+          a_ = &ctx.tu ().new_node<ReadWriteAttribute> ();
+        }
+
+        void Attribute::
         type (IdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "attribute " << id;
-
-          type_ = 0;
+          if (ctx.trace ()) cerr << id << endl;
 
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
@@ -44,7 +58,9 @@ namespace CCF
           {
             try
             {
-              type_ = &resolve<Type> (from, name, complete);
+              Type& t (resolve<Type> (from, name, complete));
+
+              ctx.tu ().new_edge<Belongs> (*a_, t);
             }
             catch (Resolve const&)
             {
@@ -73,16 +89,15 @@ namespace CCF
         void Attribute::
         name (SimpleIdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << " " << id << endl;
+          if (ctx.trace ()) cerr << id << endl;
 
-          if (type_)
-          {
-            SemanticGraph::Attribute& a (
-              ctx.tu ().new_node<SemanticGraph::Attribute> ());
+          ctx.tu ().new_edge<Defines> (ctx.scope (), *a_, id->lexeme ());
+        }
 
-            ctx.tu ().new_edge<Belongs> (a, *type_);
-            ctx.tu ().new_edge<Defines> (ctx.scope (), a, id->lexeme ());
-          }
+        void Attribute::
+        end ()
+        {
+          if (ctx.trace ()) cerr << "end" << endl;
         }
       }
     }

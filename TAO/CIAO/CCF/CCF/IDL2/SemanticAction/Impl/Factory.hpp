@@ -22,10 +22,12 @@
 #include "CCF/IDL2/SemanticAction/Impl/Interface.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Native.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Operation.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Struct.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Typedef.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/ValueType.hpp"
 
 namespace CCF
 {
@@ -90,6 +92,12 @@ namespace CCF
             return module_;
           }
 
+          virtual SemanticAction::Native&
+          native ()
+          {
+            return native_;
+          }
+
           virtual SemanticAction::Operation&
           operation ()
           {
@@ -100,12 +108,6 @@ namespace CCF
           struct_ ()
           {
             return struct__;
-          }
-
-          virtual SemanticAction::SystemInclude&
-          system_include ()
-          {
-            return system_include_;
           }
 
           virtual SemanticAction::Typedef&
@@ -126,6 +128,12 @@ namespace CCF
             return type_prefix_;
           }
 
+          virtual SemanticAction::ValueType&
+          value_type ()
+          {
+            return value_type_;
+          }
+
         protected:
           Context ctx_;
 
@@ -137,12 +145,13 @@ namespace CCF
           Interface interface_;
           Member member_;
           Module module_;
+          Native native_;
           Operation operation_;
           Struct struct__;
-          SystemInclude system_include_;
           Typedef typedef__;
           TypeId type_id_;
           TypePrefix type_prefix_;
+          ValueType value_type_;
         };
       }
     }

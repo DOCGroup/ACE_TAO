@@ -30,34 +30,51 @@ namespace CCF
         // IncludeImpl
         //
         //
-        IncludeImpl::
-        ~IncludeImpl () throw ()
+        Include::
+        ~Include () throw ()
         {
         }
 
-        IncludeImpl::
-        IncludeImpl (Context& c,
-                     CompilerElements::Context& context,
-                     Diagnostic::Stream& dout,
-                     SemanticAction::Factory& action_factory,
-                     Type type)
+        Include::
+        Include (Context& c,
+                 CompilerElements::Context& context,
+                 Diagnostic::Stream& dout,
+                 SemanticAction::Factory& action_factory)
             : ctx (c),
               context_ (context),
               dout_ (dout),
-              action_factory_ (action_factory),
-              type_ (type)
+              action_factory_ (action_factory)
         {
           abs_path_stack_.push (
             fs::normalize (
               fs::complete (context_.get<fs::path> ("file-path"))));
         }
 
-        void IncludeImpl::
-        begin_impl (StringLiteralPtr const& sl)
+        void Include::
+        quote (StringLiteralPtr const& sl)
+        {
+          impl (sl, quote_);
+        }
+
+        void Include::
+        bracket (StringLiteralPtr const& sl)
+        {
+          impl (sl, bracket_);
+        }
+
+
+        void Include::
+        end ()
+        {
+          if (ctx.trace ()) cerr << "end" << endl;
+        }
+
+        void Include::
+        impl (StringLiteralPtr const& sl, Type_ type)
         {
           std::string prefix;
 
-          if (type_ == user)
+          if (type == quote_)
           {
             prefix = std::string ("include") + " \"" + sl->value () + "\"";
           }
@@ -91,7 +108,7 @@ namespace CCF
             {
               bool found (false);
 
-              if (type_ == user)
+              if (type == quote_)
               {
                 fs::path rel_path (abs_path_stack_.top ().branch_path ());
 
@@ -159,7 +176,7 @@ namespace CCF
 
             TranslationRegion& r (ctx.tu() .new_node<TranslationRegion> ());
 
-            if (type_ == user)
+            if (type == quote_)
             {
               ctx.tu ().new_edge<QuoteIncludes> (
                 ctx.region (), r, include_path);
@@ -194,8 +211,8 @@ namespace CCF
             //
 
             //@@ this code is highly experimental
-            InputStreamAdapter isa (ifs);
-            Preprocessor pp (isa);
+            CompilerElements::InputStreamAdapter isa (ifs);
+            CompilerElements::CPP::Preprocessor pp (isa);
             IDL3::LexicalAnalyzer lexer (pp);
 
             TokenList token_stream;
@@ -248,20 +265,14 @@ namespace CCF
           }
         }
 
-        void IncludeImpl::
-        end_impl ()
-        {
-          if (ctx.trace ()) cerr << "end" << endl;
-        }
-
-        bool IncludeImpl::
+        bool Include::
         handle_already_included (fs::path const& path,
                                  StringLiteralPtr const& sl)
         {
           if(!include_file_set_.insert (path).second)
           {
-            cerr << "warning: skipping already included file " << sl
-                 << endl;
+            // cerr << "warning: skipping already included file " << sl
+            //      << endl;
             return true;
           }
           return false;

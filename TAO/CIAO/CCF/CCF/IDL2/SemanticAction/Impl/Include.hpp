@@ -17,9 +17,6 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
         class Include : public virtual SemanticAction::Include
         {
         public:
@@ -29,28 +26,10 @@ namespace CCF
           Include (Context& c);
 
           virtual void
-          begin (StringLiteralPtr const& sl);
+          quote (StringLiteralPtr const& sl);
 
           virtual void
-          end ();
-
-        private:
-          Context& ctx;
-        };
-
-        //
-        //
-        //
-        class SystemInclude : public virtual SemanticAction::SystemInclude
-        {
-        public:
-          virtual
-          ~SystemInclude () throw ();
-
-          SystemInclude (Context& c);
-
-          virtual void
-          begin (StringLiteralPtr const& sl);
+          bracket (StringLiteralPtr const& sl);
 
           virtual void
           end ();

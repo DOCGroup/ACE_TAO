@@ -12,7 +12,16 @@ module M2
   interface I {};
   interface J {};
 
-  eventtype E {};
+  eventtype E supports I, J
+  {
+    factory new (in string name);
+    public string name;
+  };
+
+  valuetype V
+  {
+    public long l;
+  };
 
   component C2 : M1::C1 supports I, J
   {
@@ -56,7 +65,8 @@ module M2
 	 out long ol, 
 	 in M::I i, 
 	 out unsigned long long ull, 
-	 inout S_Seq s_seq) raises (Ex1, Ex2);
+	 inout S_Seq s_seq,
+	 in V v) raises (Ex1, Ex2);
 	 	 
     factory new (in long l, in OctetSeq s) raises (Ex2, Ex1);
     finder find (in long l, in OctetSeq s) raises (Ex1, Ex2);

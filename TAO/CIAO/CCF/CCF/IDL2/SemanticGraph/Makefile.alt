@@ -20,6 +20,7 @@ cxx_translation_units := Attribute.cpp    \
 			 Member.cpp       \
                          Module.cpp       \
                          Name.cpp         \
+                         Native.cpp       \
                          Operation.cpp    \
                          Sequence.cpp     \
                          Struct.cpp       \

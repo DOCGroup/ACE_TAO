@@ -21,6 +21,7 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
+using namespace CCF::CompilerElements;
 using namespace CCF::IDL3;
 using namespace SemanticGraph;
 
@@ -33,8 +34,8 @@ main ()
 
     fs::path file_path ("stdout");
 
-    CCF::InputStreamAdapter isa (std::cin);
-    CCF::Preprocessor pp (isa);
+    InputStreamAdapter isa (std::cin);
+    CPP::Preprocessor pp (isa);
 
     LexicalAnalyzer lexer (pp);
 
@@ -74,7 +75,7 @@ main ()
                                parser.start ());
 
     if (dout.error_count () != 0) return -1;
-    
+
     IDL3::Generator g;
 
     g.generate (tu);

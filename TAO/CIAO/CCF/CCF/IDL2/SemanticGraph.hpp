@@ -16,6 +16,7 @@
 #include "CCF/IDL2/SemanticGraph/Member.hpp"
 #include "CCF/IDL2/SemanticGraph/Module.hpp"
 #include "CCF/IDL2/SemanticGraph/Name.hpp"
+#include "CCF/IDL2/SemanticGraph/Native.hpp"
 #include "CCF/IDL2/SemanticGraph/Operation.hpp"
 #include "CCF/IDL2/SemanticGraph/Sequence.hpp"
 #include "CCF/IDL2/SemanticGraph/Struct.hpp"

@@ -38,7 +38,7 @@ namespace CCF
         void Struct::
         begin_def (SimpleIdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "struct def" << id << endl;
+          if (ctx.trace ()) cerr << "struct def " << id << endl;
 
           SimpleName name (id->lexeme ());
 
@@ -57,7 +57,7 @@ namespace CCF
         void Struct::
         begin_fwd (SimpleIdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "struct fwd" << id << endl;
+          if (ctx.trace ()) cerr << "struct fwd " << id << endl;
 
           SimpleName name (id->lexeme ());
 

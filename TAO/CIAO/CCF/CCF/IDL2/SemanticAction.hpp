@@ -14,10 +14,12 @@
 #include "CCF/IDL2/SemanticAction/Interface.hpp"
 #include "CCF/IDL2/SemanticAction/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Module.hpp"
+#include "CCF/IDL2/SemanticAction/Native.hpp"
 #include "CCF/IDL2/SemanticAction/Operation.hpp"
 #include "CCF/IDL2/SemanticAction/Struct.hpp"
 #include "CCF/IDL2/SemanticAction/Typedef.hpp"
 #include "CCF/IDL2/SemanticAction/TypeId.hpp"
 #include "CCF/IDL2/SemanticAction/Factory.hpp"
+#include "CCF/IDL2/SemanticAction/ValueType.hpp"
 
 #endif  // CCF_IDL2_SEMANTIC_ACTION_HPP

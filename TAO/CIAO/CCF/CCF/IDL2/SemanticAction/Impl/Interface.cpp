@@ -37,6 +37,8 @@ namespace CCF
 
           SimpleName name (id->lexeme ());
 
+          //@@ Not handling NotUnique exception.
+          //
           if (Nameable* s = lookup (ctx.tu (), ctx.scope (), name))
           {
             now (dynamic_cast<AbstractInterface&>(*s));
