@@ -24,6 +24,7 @@
 #include "be_eventtype_fwd.h"
 #include "be_component.h"
 #include "be_component_fwd.h"
+#include "be_array.h"
 #include "be_typedef.h"
 #include "be_helper.h"
 #include "be_extern.h"
@@ -255,6 +256,38 @@ int
 be_visitor_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_traits::visit_array (be_array *node)
+{
+  if (node->cli_traits_gen ())
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl
+      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+      << "struct " << be_global->stub_export_macro () << " Array_Traits<"
+      << node->name () << ", " << node->name () << "_slice>" << be_nl
+      << "{" << be_idt_nl
+      << "static void tao_free (" << be_idt << be_idt_nl
+      << node->name () << "_slice * _tao_slice" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "static " << node->name () << "_slice * tao_dup (" 
+      << be_idt << be_idt_nl
+      << "const " << node->name () << "_slice * _tao_slice" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "static void tao_copy (" << be_idt << be_idt_nl
+      << node->name () << "_slice * _tao_to," << be_nl
+      << "const " << node->name () << "_slice * _tao_from" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "static " << node->name () << "_slice * tao_alloc (void);" << be_uidt_nl
+      << "};";
+      
+  return 0;
 }
 
 int

@@ -1,3 +1,19 @@
+Wed Nov 26 16:29:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        
+          Added code generation for a declaration of the TAO::Array_Traits
+          template specialization implemented in the *C.i file. This
+          is apparently required by BCB6 when inlining is turned off,
+          since the memory management methods in the traits class are
+          needed by the *S.cpp file, and *C.i is not included in *C.h.
+
 Wed Nov 26 14:15:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
