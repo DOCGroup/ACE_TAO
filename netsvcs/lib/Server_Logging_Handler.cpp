@@ -87,6 +87,7 @@ template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NUL
 template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Receiver>;
 
   #if defined (ACE_HAS_THREADS)
+  template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
   template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Static_Receiver>;
   template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Receiver>;
   template class Log_Message_Receiver_Impl<ACE_MT_SYNCH>;
@@ -180,6 +181,7 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Receiver>
 
   #if defined (ACE_HAS_THREADS)
+  #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, u_long>
   #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Static_Receiver>
   #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_MT_SYNCH, Synch_Receiver>
   #pragma instantiate Log_Message_Receiver_Impl<ACE_MT_SYNCH>
@@ -202,7 +204,5 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   // here.
   #endif /* ACE_HAS_TLI */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-#endif /* ACE_SERVER_LOGGING_HANDLERT_C */
+#endif /* ACE_SERVER_LOGGING_HANDLER_C */
 
