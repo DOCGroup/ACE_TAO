@@ -1,3 +1,8 @@
+Mon Sep 27 12:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/xerces.mpb:
+          New base project which can be used when xerces is used
+
 Sun Sep 26 18:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_limits.h:
