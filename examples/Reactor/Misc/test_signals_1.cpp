@@ -50,7 +50,7 @@ public:
 };
 
 int 
-main (int, char *argv[])
+main (int argc, char *argv[])
 {
   // First you need a handler for the timeout.
   My_Handler my_handler;
@@ -58,7 +58,10 @@ main (int, char *argv[])
   // Now set up the timer.
 
   // This is the timeout period in seconds.
-  ACE_Time_Value period (2);
+  ACE_Time_Value period (ACE_DEFAULT_TIMEOUT);
+
+  if (argc > 1)
+    period.set (ACE_OS::atoi (argv[1]));
 
   if (ACE_Reactor::instance ()->schedule_timer 
       (&my_handler, 
