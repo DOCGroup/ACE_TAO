@@ -1,3 +1,15 @@
+Mon Feb 18 08:37:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          Fixed typecode generation and repo id calculation to remove
+          the '_cxx_' prepended by the IDL compiler if the identifier
+          is a C++ keyword. The prefix is necessary for C++ compilation
+          of generated code, but should not go out over the wire. Thanks
+          to Torsten Kuepper <Torsten.Kuepper@nokia.com> for pointing this
+          out.
+
 Mon Feb 18 01:45:07 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp:
