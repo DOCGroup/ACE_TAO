@@ -1,5 +1,13 @@
+Fri Nov 29 18:13:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp: Changed to use
+	  Thread_Manager::task () directly to acquire the task pointer of
+	  the current thread instead of acquiring it indirectly from the
+	  Thread_Descriptor since accessing Thread_Descriptor directly is
+	  no longer allowed.
+
 Fri Nov 29 12:58:00 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
-    
+
         * tests/OBV/TC_Alignment/TC_Alignment.dsw:
         * tests/OBV/TC_Alignment/client.dsp:
         * tests/OBV/TC_Alignment/server.dsp:
@@ -23,7 +31,7 @@ Fri Nov 29 11:42:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Fri Nov 29 11:16:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	This set of fixes are for fixing BUG 1247. Please see 
+	This set of fixes are for fixing BUG 1247. Please see
 
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1247
 	for more details. The problem is that the server side connections
@@ -41,26 +49,26 @@ Fri Nov 29 11:16:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Transport.h:
 	* tao/Transport.cpp: Added a new method update_transport () which
 	  in turn calls the TAO_Transport_Cache_Manager::update_entry ()
-	  to update the purging policy information. 
+	  to update the purging policy information.
 
 	  In close_connection_shared (), the connection handler is set in
 	  a temporary state before waiting on the LF for connection
-	  closure. 
-	  
-	* tao/Connection_Handler.cpp (TAO_Connection_Handler): 
+	  closure.
+
+	* tao/Connection_Handler.cpp (TAO_Connection_Handler):
 	* tao/Connection_Handler.h: Added a new method
 	  connection_close_wait () to set the connection handler in a
 	  a state which is an intermediate state between SUCESS and
-	  CONNECTION_CLOSED. 
+	  CONNECTION_CLOSED.
 
 	  Added a call to update transport information in handle_output_eh
 	  () and handle_input_eh (). This is needed for the following
 	  reasons
 
 	    . A connection could be cached by a server thread and the
-	      connection would be continously used to receive requests. In 
+	      connection would be continously used to receive requests. In
 	      such cases the cache and purging policies should be updated
-	      to ensure that actively used connections are not purged. 
+	      to ensure that actively used connections are not purged.
 
 	    . In BiDirectional cases, a client thread could cache the
 	      connection, but the connection could be actively used by a
@@ -80,7 +88,7 @@ Fri Nov 29 09:56:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tests/OBV/Any/client.cpp:
 	* tests/OBV/Any/AnyS_impl.cpp: Fixed compile errors in BCB6
-	  builds. 
+	  builds.
 
 Fri Nov 29 08:01:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -93,13 +101,13 @@ Fri Nov 29 11:55:41 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
 
 	  Fixed Segmentation fault.
-	
+
 
 Thu Nov 28 22:39:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
 	  Fixed warnings in builds where excetions are turned off.
-	
+
 
 Thu Nov 28 22:30:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -108,10 +116,10 @@ Thu Nov 28 22:30:37 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Thu Nov 28 14:45:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp (svc): 
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp (svc):
 	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
 	* tests/Bug_1361_Regression/shutdown.cpp: Fixed warnings and
-	  compile errors.  
+	  compile errors.
 
 Thu Nov 28 07:57:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -332,7 +340,7 @@ Wed Nov 27 10:14:26 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/RTEventLog.dsp:
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
 	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
-          
+
 	  Updated to reflect additional files...
 	  orbsvcs/orbsvcs/Log/EventLogConsumer.h
 	  orbsvcs/orbsvcs/Log/EventLogConsumer.cpp
@@ -572,7 +580,7 @@ Thu Nov 21 13:26:27 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  fix most of the runtime problems that we are seeing. This place
 	  needs to be reexamined after the beta. The intersection of
 	  RTCORBA and nonRT cases simply makes this place too
-	  complicated. 
+	  complicated.
 
 Wed Nov 20 18:04:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -631,7 +639,7 @@ Wed Nov 20 15:23:13 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  shutdown. The comparisons could be wrong since the thread that
 	  is closing it may not have the right access to all the resources
 	  opened up by other threads (read RTCORBA threads).
-	  
+
 Wed Nov 20 16:14:31 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp: Added
@@ -651,7 +659,7 @@ Wed Nov 20 12:48:35 2002  Irfan Pyarali  <irfan@oomworks.com>
 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Supplier.dsp
 
 	  Fixed release executable name.
-	
+
 Wed Nov 20 10:26:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp: Fixed path to some
@@ -680,16 +688,16 @@ Tue Nov 19 15:16:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
 	  Fixed problems with the test not exiting gracefully.
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-  	  Modified the <create> method to add missing initialization of	
+  	  Modified the <create> method to add missing initialization of
 	  TAO_NS_Notify_Service. Thanks to Steve Totten<totten_s@ociweb.com>
 	  for providing the OCI test example and Irfan for showing how to
 	  use <_tao_poa_downcast>.
-	
+
 	* orbsvcs/Notify_Service/Notify_Service.dsp: Release executable
 	  should go in the Release directory.
-	
+
 Tue Nov 19 15:16:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Consumer.bor:
@@ -699,47 +707,47 @@ Tue Nov 19 15:16:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Updated executable file names.
 
 	* orbsvcs/tests/Notify/Basic/run_test.pl:
-	  Modified to accept conf files are parameters. 
+	  Modified to accept conf files are parameters.
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
 	  Fixed problems with the test not exiting gracefully.
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
- 	  Modified the <create> method to add missing initialization of	
+ 	  Modified the <create> method to add missing initialization of
 	  TAO_NS_Notify_Service. Thanks to Steve Totten<totten_s@ociweb.com>
 	  for providing the OCI test example and Irfan for showing how to
-	  use <_tao_poa_downcast>. 
-	
+	  use <_tao_poa_downcast>.
+
 	* orbsvcs\Notify_Service\Notify_Service.dsp: Release executable
 	  should go in the Release directory.
 
 Tue Nov 19 11:02:00 2002  Pradeep Gore  <pradeep@oomworks.com>
 
-	* Added explaination for each class in 
+	* Added explaination for each class in
 	  ChangeLogTag: Sun Oct 27 01:04:09 2002  Pradeep Gore
-	  <pradeep@oomworks.com> 
- 
+	  <pradeep@oomworks.com>
+
 Mon Nov 18 20:45:12 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Blocking/notify.conf:
 	  As per Bala's suggestion, applied "-ORBClientConnectionHandler
 	  RW" hoping to make the blocking work.  Alas, the buffering
-	  design needs a facelift. 
-	
+	  design needs a facelift.
+
  	* orbsvcs/tests/Notify/Ordering/run_test.pl
 	  - Increased allowable period for consumers to run so that test
 	    doesn't timeout before hand.
 	  - Commented out priority policy temporarily till the sequences
 	    implementation of priority ordering is completed.
-	
+
  	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
 	  Removed the MaxEventsPerConsumer policy applied to the
 	  proxy. That isn't what the test was supposed to excercise.
-	
+
  	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp
 	  Changed OR_OP to AND_OP otherwise the Consumer Admin filter will
-	  always be true and no events would be rejected.	
+	  always be true and no events would be rejected.
 
 Mon Nov 18 17:54:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -759,14 +767,14 @@ Mon Nov 18 14:50:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
 
           Added the operations of Components::CCMObject to the operation
-          table and *_skel method generation for component equivalent 
+          table and *_skel method generation for component equivalent
           interfaces. Thanks to Nanbor <nanbor@cse.wustl.edu> for uncovering
           this bug.
 
         * TAO_IDL/be/be_visitor_component/component_sh.cpp:
         * TAO_IDL/be_include/be_visitor_component/component_sh.h:
 
-          Added conditional generation of AMH classes for component 
+          Added conditional generation of AMH classes for component
           equivalent interfaces.
 
         * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
@@ -777,7 +785,7 @@ Mon Nov 18 14:50:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 Mon Nov 18 12:11:53 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNotification_Static.dsp:
-         
+
           Fixed settings for the IDL files in this project.
 
 Mon Nov 18 13:01:42 2002  Pradeep Gore  <pradeep@oomworks.com>
@@ -786,15 +794,15 @@ Mon Nov 18 13:01:42 2002  Pradeep Gore  <pradeep@oomworks.com>
 	Commented decrement of <queue_length_> in the svc method.
 	This needs to be corrected but at this point all the tests crash
 	because of this, so its being taken out temporarily.
-	
+
 Mon Nov 18 11:04:35 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
 	* orbsvcs/tests/Notify/Structured_Multi_Filter/run_test.pl:
-	Appended Structured_ suffix to executable name. 
+	Appended Structured_ suffix to executable name.
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
 	Reverted thread creation flags.
-	
+
 Mon Nov 18 07:32:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Event.h: Work around for a weird BCB6
@@ -838,19 +846,19 @@ Sat Nov 16 20:43:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Sat Nov 16 20:11:13 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
-	  - Modified threadpool creation flags to ACE_Task::activate. 
-	  - Corrected decrement of <queue_length_>. 
+	  - Modified threadpool creation flags to ACE_Task::activate.
+	  - Corrected decrement of <queue_length_>.
 
 Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Basic/run_test.pl:
 	  Modified to run the basic tests with a reactive and
 	  multithreaded Notification.
-	
+
 	* orbsvcs/tests/Notify/Basic/notify.mt.conf:
 	  Added MT conf for the Basic test.
-	
-	* orbsvcs/tests/Notify/Basic/notify.reactive.conf:	
+
+	* orbsvcs/tests/Notify/Basic/notify.reactive.conf:
 	  Added reactive conf for the Basic test.
 
 	* orbsvcs/tests/Notify/Blocking/notify.conf:
@@ -872,15 +880,15 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:
  	  Not handling signals. The shutdown code and event handler is
-	  maintained in case we want to address this in the future. 
+	  maintained in case we want to address this in the future.
 
 	* orbsvcs/tests/Notify/performance-tests/RedGreen/run_test.pl:
-	  - Modified to run all 3 test cases described in the README.   	    
+	  - Modified to run all 3 test cases described in the README.
 	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
-	  Changed hardcoded "10" to the expected number of events that can 
+	  Changed hardcoded "10" to the expected number of events that can
 	  be specified on the command line.
-	
-	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:	  
+
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
 	  - Changed low=2 and high=20. Here is the explanation:
 	  The Supplier sends 96 events as 6 batches of 16 events.
 	  The Notification is run with 1 dispatching thread. The Discarding
@@ -892,14 +900,14 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  consumer starts *after* the supplier has send all the events to
 	  the Notification. This means that only 2 batches are queued and
 	  all others are discarded. Hence low = 2.
-	
+
 	  - Changed the sleep time that the consumer was polling fior
 	  excess events, from 3 to 1 sec. otherwise the perl script was
 	  timing out.
 
 	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
 	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:	    
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
 	  Removed high-low logic. There is *no* discarding policy set so
 	  the Sequence Consumer should received the expected number of 96 events.
 
@@ -915,7 +923,7 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
  	* orbsvcs/tests/Notify/reactive.conf:
 	  Reverted to Notify_Default_Event_Manager_Objects_Factory for
 	  backward compatibility.
-	
+
 	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
 	* orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
 	* orbsvcs/tests/Notify/Structured_Filter/Structured_Multi_Filter_Consumer.dsp:
@@ -926,10 +934,10 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
 	  Discarding condition should be executed when buffering limit has
 	  reached. Current logic was enqueing 1 extra event.
-	
+
 	* orbsvcs/orbsvcs/Notify/Builder.cpp:
-	  Added call to set default startup QoS options on the Proxys and Admins.  
-	
+	  Added call to set default startup QoS options on the Proxys and Admins.
+
 	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
 	  - Added support for configuring startup threads at the proxy and
@@ -937,31 +945,31 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  - Modified updates logic - Updates are send synchronously by
 	  default. If the -AsynchUpdates option is set, updates are queued along
 	  with the regular events in the Proxy objects worker task.
-	
+
 	* orbsvcs/orbsvcs/Notify/Properties.h:
 	* orbsvcs/orbsvcs/Notify/Properties.inl:
 	  Added get/set methods for Proxy and Admin level default QoS.
-	  Changed <updates> to <asynch_updates> flag.		
-	
+	  Changed <updates> to <asynch_updates> flag.
+
 	* orbsvcs/orbsvcs/Notify/Property_T.h:
 	* orbsvcs/orbsvcs/Notify/Property_T.inl:
 	- Added assignment operator to TAO_NS_Property_T.
 	- Added an <invalidate> method to TAO_NS_PropertyBase_T
-	
+
 	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
 	- Send updates synchronously unless default properties mandate
 	  asynchrony. In that case the event is executed in the current
-	  thread context. 
-	
+	  thread context.
+
 	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
 	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
 	  Added dummy methods and ACE_ASSERT in them if called.
-	
+
 	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
 	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.inl:
 	  Added an accessor for the current size of the EventBatch.
-	  Note that this size can be greater than the batchsize.		 
-	
+	  Note that this size can be greater than the batchsize.
+
 	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
 	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
 	  Overloaded ProxyPushSupplier::push method.
@@ -975,11 +983,11 @@ Fri Nov 15 15:29:24 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
 	  Removed <dispatch_immediate> and <cancel_timer> methods.
 	  There was no need for these seperate methods.
-	
+
 	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
 	  Modified the implementation so that the Pacing Timer is deployed
 	  only if there is atleast 1 event queued to send, otherwise the
-	  existing timer is removed. This will avoid needless timeouts. 
+	  existing timer is removed. This will avoid needless timeouts.
 
 Sat Nov 16 08:22:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -988,8 +996,8 @@ Sat Nov 16 08:22:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  lead to link errors.
 
 	* tao/Asynch_Queued_Message.cpp: Fixed a warning in the daily
-	  builds.  
-	
+	  builds.
+
 Sat Nov 16 12:43:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
@@ -1323,11 +1331,11 @@ Wed Nov 13 14:15:33 2002  Ossama Othman  <ossama@uci.edu>
 Wed Nov 13 14:30:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* Repeated ChangeLogTag: Tue Nov 12 12:37:18 2002  Pradeep Gore
-	  <pradeep@oomworks.com> 
+	  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/CosNotification.dsp:
 	  Updated.
 	* Repeated only the removal of files as per ChangeLogTag: Mon Nov
-	  11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com> 
+	  11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Object.h:
 	* orbsvcs/orbsvcs/Notify/Object.cpp:
@@ -1696,9 +1704,9 @@ Mon Nov 11 20:11:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Removed code that depended the Dispatch_Observer.
 
 	* orbsvcs/orbsvcs/Notify/EventType.h:
-	* orbsvcs/orbsvcs/Notify/EventType.cpp: 
+	* orbsvcs/orbsvcs/Notify/EventType.cpp:
 	  Added a <dump> debugging helper method that prints the contents
-	  of the event type. 
+	  of the event type.
 
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
@@ -2134,7 +2142,7 @@ Tue Nov 05 12:01:25 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
 	  ENV variable was being used in <init>, changed it back to
-	  ACE_ENV_ARG_DECL. 
+	  ACE_ENV_ARG_DECL.
 
 Tue Nov  5 08:28:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -2196,7 +2204,7 @@ Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
 
         * orbsvcs/orbsvcs/Notify/Service.h:
           Defined the string name for the
-	  Notify_Default_Event_Manager_Objects_Factory. 
+	  Notify_Default_Event_Manager_Objects_Factory.
 
         * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
@@ -3132,10 +3140,10 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Wilbur Lang <wilbur@szonline.net> and
 	  Jian Chen <jchen@huawei.com> for reporting various bugs resulting
 	  due to this.
-	
+
         - Fixes bugs related to incorrect ID assignments,
 	  Thanks to Rick Marlborough <RMarlborough@LIO.AACISD.com>,
-	  David-A O-Brien <david-a.o-brien@db.com> and 
+	  David-A O-Brien <david-a.o-brien@db.com> and
 	  Shelton Tang <stang@altigen.com>  for reporting various bugs resulting
 	  due to this.
 
@@ -3150,28 +3158,28 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Defines extensions to The Notification Service to support
 	  threadpools. The threadpool parameters are passed to the set_qos
 	  method as QoS name-value pair. For the Cos Notify, a threadpool
-	  is created as an ACE_Task object. 
+	  is created as an ACE_Task object.
 
 	* orbsvcs/orbsvcs/Notify_Forwarder.idl:
 	  An internal interface to context switch the event propagation
 	  from the proxyconsumer to proxysupplier. This is achieved by the
 	  caller thread invoking the <forward> method of this
 	  interface. Colocation ensures that this call is invoked in the
-	  context of the thread associated with the target object. 
-	  The Event_Forwarder extends the  
+	  context of the thread associated with the target object.
+	  The Event_Forwarder extends the
 	  CosNotifyChannelAdmin::StructuredProxyPushSupplier interface.
-	
+
         * orbsvcs/orbsvcs/Notify/Admin.cpp :
         * orbsvcs/orbsvcs/Notify/Admin.h :
         * orbsvcs/orbsvcs/Notify/Admin.inl:
 	  Base class implementation for the Notify Admin Interfaces.
-  	
+
         * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
         * orbsvcs/orbsvcs/Notify/AdminProperties.h :
         * orbsvcs/orbsvcs/Notify/AdminProperties.inl:
           Maintains the AdminProperties that can be applied per
           eventchannel.
- 
+
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.inl :
@@ -3181,14 +3189,14 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Builder.h:
         * orbsvcs/orbsvcs/Notify/Builder.inl :
 	  Builder for the EventChannelFactory, EventChannel, Admin and
-	  proxy objects. 
-    
+	  proxy objects.
+
         * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.cpp :
         * orbsvcs/orbsvcs/Notify/Constraint_Interpreter.h:
         * orbsvcs/orbsvcs/Notify/Constraint_Visitors.cpp :
         * orbsvcs/orbsvcs/Notify/Constraint_Visitors.h:
           Implementation of interfaces to the ETCL Filtering code.
-  
+
         * orbsvcs/orbsvcs/Notify/Consumer.cpp :
         * orbsvcs/orbsvcs/Notify/Consumer.h:
         * orbsvcs/orbsvcs/Notify/Consumer.inl:
@@ -3208,13 +3216,13 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Base class for the Factory-Container objects in Notify
 	  viz. Factory, Channel and Admin objects. This class manages the
 	  lifetimes of the POA's for activating the EC objects as well as
-	  the POA for activating the Proxys. 
-	
+	  the POA for activating the Proxys.
+
         * orbsvcs/orbsvcs/Notify/Destroy_Callback.h :
           Callback for each Notify Object that supports the <release>
           method which is invoked when the objects reference count
           falls to 0.
-  
+
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp :
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
         * orbsvcs/orbsvcs/Notify/ETCL_Filter.inl :
@@ -3282,12 +3290,12 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/FilterFactory.h :
           Interface for FilterFactories. This allows us to plug
           different filterfactories if required.
-  
+
         * orbsvcs/orbsvcs/Notify/ID_Factory.cpp:
         * orbsvcs/orbsvcs/Notify/ID_Factory.h :
         * orbsvcs/orbsvcs/Notify/ID_Factory.inl:
 	  A Factory class for generating the ID's associated with the
-	  Notify Objects.Note that each TAO_NS_POA used one of these. 
+	  Notify Objects.Note that each TAO_NS_POA used one of these.
 	  Note that the previous implementation of Notification created
 	  unique id's for *each* category of Objects. so
 	  e.g. ConsumerAdmins went from 0,1,2... and ProxySuppliers went
@@ -3297,18 +3305,18 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  CORBA::ULongs are wide enough so that we don't get into any
 	  recycling of Ids. This simplification fixes many nagging bugs in
 	  Notification.
-	
+
         * orbsvcs/orbsvcs/Notify/Method_Request.cpp :
         * orbsvcs/orbsvcs/Notify/Method_Request.h:
         * orbsvcs/orbsvcs/Notify/Method_Request.inl :
 	  Base class for command objects in the activation queue.
-	
+
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp :
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h :
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl :
           Method request for Event dispatching. Contains the event to
           be dispatched and also evaluates the proxy supplier and
-          consumer admin filters.  
+          consumer admin filters.
 
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.cpp :
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_No_Filtering.h :
@@ -3316,14 +3324,14 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
           Dispatch method request to push the event to the target
 	  consumer without any filtering. This is used when sending
           queued events (e.g. via suspend) that don't have to pass a
-          filter because they have already been through it. 
+          filter because they have already been through it.
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
         * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h :
         * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.inl :
 	  Command object to lookup the consumer list in the Event_Map.
 	  Also evaluates the ProxyConsumer and ConsumerAdmin filters.
-	
+
         * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp :
         * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h :
         * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.inl:
@@ -3334,7 +3342,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Notify_Service.inl :
 	  Service Object that allows clients to create and manage Cos Notify
 	  Factory.
-	
+
         * orbsvcs/orbsvcs/Notify/Object.cpp:
         * orbsvcs/orbsvcs/Notify/Object.h:
         * orbsvcs/orbsvcs/Notify/Object.inl :
@@ -3348,7 +3356,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/POA_Helper.h :
         * orbsvcs/orbsvcs/Notify/POA_Helper.inl:
           A helper class that manages the lifetime of POA objects.
-	
+
         * orbsvcs/orbsvcs/Notify/Peer.cpp:
         * orbsvcs/orbsvcs/Notify/Peer.h :
         * orbsvcs/orbsvcs/Notify/Peer.inl:
@@ -3392,8 +3400,8 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.cpp:
         * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.h :
         * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.inl:
-          Template class that implements ProxyConsumer interface methods.       
- 
+          Template class that implements ProxyConsumer interface methods.
+
         * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
         * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
         * orbsvcs/orbsvcs/Notify/ProxySupplier.inl:
@@ -3402,13 +3410,13 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.h :
         * orbsvcs/orbsvcs/Notify/ProxySupplier_T.inl:
-          Template class that implements ProxySupplier interface methods.       
+          Template class that implements ProxySupplier interface methods.
 
         * orbsvcs/orbsvcs/Notify/Proxy_T.cpp
         * orbsvcs/orbsvcs/Notify/Proxy_T.h :
         * orbsvcs/orbsvcs/Notify/Proxy_T.inl:
           Template class that implements Proxy interface
-          methods.       
+          methods.
 
         * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
         * orbsvcs/orbsvcs/Notify/QoSProperties.h:
@@ -3420,12 +3428,12 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
         * orbsvcs/orbsvcs/Notify/Reactive_Task.inl:
           A worker task that executes the command object in the context
-          of the caller thread. 
+          of the caller thread.
 
         * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
         * orbsvcs/orbsvcs/Notify/Refcountable.h:
         * orbsvcs/orbsvcs/Notify/Refcountable.inl:
-          A base class for Notify Objects that wish to be refcounted. 
+          A base class for Notify Objects that wish to be refcounted.
           If a destroy_callback is supplied, it is invoked when the
           ref. count falls to 0.
 
@@ -3433,8 +3441,8 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Interface that defines a ACE_Service_Object for clients to
 	  create Notify Factories. Using this clients can obtain various
 	  types of the Notify Factory implementations. (CosNotify and
-	  Real-Time Notify).  
-	
+	  Real-Time Notify).
+
         * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.cpp:
         * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.h:
         * orbsvcs/orbsvcs/Notify/Subscription_Change_Worker.inl:
@@ -3445,7 +3453,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Supplier.h:
         * orbsvcs/orbsvcs/Notify/Supplier.inl:
           A base wrapper class for encapsulation the remote supplier
-          that has connect to a proxy.  
+          that has connect to a proxy.
 
         * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
         * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
@@ -3455,8 +3463,8 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl:
-          A worker task that creates a thread pool and executes the 
-          enqueued Method_Request command objects in the worker thread 
+          A worker task that creates a thread pool and executes the
+          enqueued Method_Request command objects in the worker thread
           context.
 
         * orbsvcs/orbsvcs/Notify/Types.cpp
@@ -3500,13 +3508,13 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
         * orbsvcs/orbsvcs/Notify/Any/PushConsumer.inl :
         Impkementation of the PushConsumer that connects to the Any
-        style Proxy Supplier. 
+        style Proxy Supplier.
 
         * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
         * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h :
         * orbsvcs/orbsvcs/Notify/Any/PushSupplier.inl:
         Implementation of the PushSupplier that connects to the Any
-        style Proxy Consumer. 
+        style Proxy Consumer.
 
         * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp:
         * orbsvcs/orbsvcs/Notify/Sequence/EventBatch.h:
@@ -3517,7 +3525,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.h:
         * orbsvcs/orbsvcs/Notify/Sequence/Method_Request_Dispatch_EventBatch.inl:
         A command object that stores an event batch destined for
-        dispatch to a sequence consumer.           
+        dispatch to a sequence consumer.
 
         * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
@@ -3535,13 +3543,13 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.inl:
         Wrapper to manage the SequenceConsumer that connects to the
         Sequence Proxy.
- 
+
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.inl:
         Wrapper to manage the SequenceSupplier that connects to the
         Sequence Proxy.
-        
+
         * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.inl:
@@ -3563,7 +3571,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.inl:
         Wrapper to manage the StructuredConsumer that connects to the
         Structured Supplier Proxy.
-        
+
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl:
@@ -3705,7 +3713,7 @@ Fri Oct 25 09:49:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
           Added missing .in() in an assignment of _var class contents to a
 	  pointer,  and 'this->' in several places where a member variable
-	  is referenced. 
+	  is referenced.
 
 Thu Oct 24 19:48:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
