@@ -407,9 +407,9 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::~be_compiled_visitor_oper
 
 int
 be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_operation *node,
-                                                                           be_type *)
+                                                                          be_type *bt)
 {
-
+  ACE_UNUSED_ARG (bt);
   // Check if this operation raises any exceptions. In that case, we must
   // generate a list of exception typecodes. This is not valid for
   // attributes
@@ -442,6 +442,8 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor = 0;
   be_visitor_context ctx;
+
+  ACE_UNUSED_ARG (bt);
 
   os->indent ();
 

@@ -151,12 +151,15 @@ TAO_CodeGen::CG_STATE
 be_operation_ami_exception_holder_raise_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
                                                               int is_extra_state)
 {
-  switch (current_state)
+  if (!is_extra_state)
     {
-  case TAO_CodeGen::TAO_OPERATION_CS:
-    return TAO_CodeGen::TAO_AMI_EXCEP_HOLDER_RAISE_OPERATION_CS;
-  default:
-    return current_state;
+      switch (current_state)
+        {
+      case TAO_CodeGen::TAO_OPERATION_CS:
+        return TAO_CodeGen::TAO_AMI_EXCEP_HOLDER_RAISE_OPERATION_CS;
+      default:
+        return current_state;
+        }
     }
 }
 
