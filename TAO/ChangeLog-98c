@@ -1,3 +1,7 @@
+Mon Oct 05 15:37:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.15 released.
+
 Mon Oct 05 13:52:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynAnyC.cpp,DynArray_i.cpp,DynEnum_i.cpp,DynSequence_i.cpp,
