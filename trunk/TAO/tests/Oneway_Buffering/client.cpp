@@ -153,10 +153,10 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "Running timeout flushing test\n"));
           test_failed =
-            run_message_count (orb.in (),
-                               oneway_buffering.in (),
-                               oneway_buffering_admin.in (),
-                               ACE_TRY_ENV);
+            run_timeout (orb.in (),
+                         oneway_buffering.in (),
+                         oneway_buffering_admin.in (),
+                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else if (run_buffer_size_test)
@@ -164,10 +164,10 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "Running buffer size flushing test\n"));
           test_failed =
-            run_message_count (orb.in (),
-                               oneway_buffering.in (),
-                               oneway_buffering_admin.in (),
-                               ACE_TRY_ENV);
+            run_buffer_size (orb.in (),
+                             oneway_buffering.in (),
+                             oneway_buffering_admin.in (),
+                             ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else

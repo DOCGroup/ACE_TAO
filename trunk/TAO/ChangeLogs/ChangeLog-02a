@@ -1,31 +1,47 @@
+Thu Apr 12 15:51:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Oneway_Buffering/Oneway_Buffering.dsw:
+        * tests/Oneway_Buffering/admin.dsp:
+        * tests/Oneway_Buffering/client.dsp:
+        * tests/Oneway_Buffering/server.dsp:
+          Add project files for MSVC
+
+        * tests/Oneway_Buffering/Test.idl:
+          Made shutdown() operations reliable, a oneway shutdown operation
+          is inadequate for this application, because they can be
+          buffered.
+
+        * tests/Oneway_Buffering/client.cpp:
+          Fixed stupid typos.
+
 Thu Apr 12 17:04:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB.h (CORBA_ORB): Added a comment around destroy () for a
-	  possible case that is not supported in TAO. 
+        * tao/ORB.h (CORBA_ORB): Added a comment around destroy () for a
+          possible case that is not supported in TAO.
 
 Thu Apr 12 16:55:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp (close_connection): Fixed a problem where the
-	  reactor could be left with dangling references to the event
-	  handler.  This showed up from tests in
-	  $TAO_ROOT/tests/Reliable_Oneways. The source of the problem was
-	  that the client ORB while detecting a bad server closes the
-	  connection -- and hence the service handler for that connection
-	  by using handle_close (). As the reactor outlives the handler,
-	  the reactor happens to have the reference. When the ORB
-	  shutsdown, the reactor while trying to access the handler seg
-	  faults. Thanks to Chris Cleeland and Carlos O'Ryan for
-	  participating in the discussion for the right fix.
+        * tao/Transport.cpp (close_connection): Fixed a problem where the
+          reactor could be left with dangling references to the event
+          handler.  This showed up from tests in
+          $TAO_ROOT/tests/Reliable_Oneways. The source of the problem was
+          that the client ORB while detecting a bad server closes the
+          connection -- and hence the service handler for that connection
+          by using handle_close (). As the reactor outlives the handler,
+          the reactor happens to have the reference. When the ORB
+          shutsdown, the reactor while trying to access the handler seg
+          faults. Thanks to Chris Cleeland and Carlos O'Ryan for
+          participating in the discussion for the right fix.
 
 Thu Apr 12 13:54:10 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * performance-tests/Latency/test_i.cpp: 
-        * performance-tests/Latency/st_server.cpp: 
+        * performance-tests/Latency/test_i.cpp:
+        * performance-tests/Latency/st_server.cpp:
         * performance-tests/Latency/st_client.cpp:
           Added Quantify hooks
 
-        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf: 
-        * performance-tests/Latency/st_server.conf: 
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * performance-tests/Latency/st_server.conf:
         * performance-tests/Latency/st_client.conf:
           Moved "-ORBConnectionCacheLock null" from the default
           Resource_Factory to the Advanced_Resource_Factory.
