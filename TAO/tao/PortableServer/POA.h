@@ -63,6 +63,8 @@
 
 class TAO_POA;
 class TAO_ServerProtocolPolicy;
+class TAO_PriorityBandedConnectionPolicy;
+class TAO_Acceptor_Filter;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -282,7 +284,13 @@ public:
   TAO_ServerProtocolPolicy *server_protocol (void) const;
   void server_protocol (TAO_ServerProtocolPolicy *policy);
 
+  TAO_PriorityBandedConnectionPolicy *priority_bands (void) const;
+  void priority_bands (TAO_PriorityBandedConnectionPolicy *policy);
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
+
+  TAO_Acceptor_Filter *make_filter (CORBA::Environment &ACE_TRY_ENV);
+  // Create acceptor filter based on POA's policies.
 
   void parse_policies (const CORBA::PolicyList &policies,
                        CORBA_Environment &ACE_TRY_ENV);
@@ -304,7 +312,7 @@ protected:
 
   int validate_client_protocol (RTCORBA::ClientProtocolPolicy_ptr);
 
-  int validate_priority_bands (RTCORBA::PriorityBandedConnectionPolicy_ptr);
+  int validate_priority_bands (void);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -329,6 +337,7 @@ protected:
 #if (TAO_HAS_RT_CORBA == 1)
 
   TAO_ServerProtocolPolicy *server_protocol_;
+  TAO_PriorityBandedConnectionPolicy *priority_bands_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -976,6 +985,10 @@ protected:
   TAO_POA_Manager &poa_manager_;
 
   TAO_POA_Policies policies_;
+
+  TAO_Acceptor_Filter *acceptor_filter_;
+  // Strategy (selected based on POA policies) for deciding which
+  // endpoints get embedded into object's IOR.
 
   TAO_POA *parent_;
 
