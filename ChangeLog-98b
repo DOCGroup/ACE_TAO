@@ -1,3 +1,8 @@
+Tue Sep 15 20:25:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/test_config.h: Always #undef ACE_NLOGGING so the tests
+ 	  will produce output!  Thanks to Chuck Gehr for reporting this.
+
 Tue Sep 15 17:57:26 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* ace/config-vxworks5.x.h: Added ACE_LACKS_TRUNCATE to VxWorks
