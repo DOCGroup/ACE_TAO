@@ -1,3 +1,21 @@
+Mon Jul 22 13:49:28 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Utils/RIR_Narrow.h:
+	  Removed syntax error.
+
+	* tao/Utils/RIR_Narrow.cpp:
+	  Removed bogus semi-colon.
+
+	* examples/Makefile:
+	  Add AMH directory, without this the nightly regression tests fail.
+
+	* tests/AMH_Exceptions/client.cpp:
+	  This test expects an exception from the server, in fact, the
+	  whole point of the test is to verify that exceptions do work
+	  with AMH.  Thus, the client should not print an error when the
+	  exception is raised, rather, it should print an error when the
+	  exception is *NOT* raised.
+
 Mon Jul 22 12:15:24 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * taoconfig.mk (INCLDIRS):
