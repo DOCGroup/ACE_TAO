@@ -10,12 +10,14 @@ Wed Oct  2 21:48:07 2002  Ossama Othman  <ossama@uci.edu>
 	  attempt to make the code exception-safe.  auto_ptr<> doesn't
 	  apply in this case since the object in question is reference
 	  counted.  Use a PortableServer::ServantBase_var instead to
-	  eventually transfer ownership to the POA.  This also cleans up
-	  an unnecessary, and non-exception-safe, call to the servant's
-	  _remove_ref() method.  This bug was made obvious by the change
-	  below where the servant's destructor was made protected.
-	  Protected destructors in reference counted classes are your
-	  friend!
+	  eventually transfer ownership to the POA.  This addresses a
+	  potential memory access violation due to improper memory
+	  management through the reference counting mechanism.
+	  Furthermoee, it also cleans up an unnecessary, and
+	  non-exception-safe, call to the servant's _remove_ref() method.
+	  This bug was made obvious by the change below where the
+	  servant's destructor was made protected.  Protected destructors
+	  in reference counted classes are your friend!
 
 	  The above change obviates the need for explicit auto_ptr<>
 	  template instantiations.
