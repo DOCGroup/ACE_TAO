@@ -1,3 +1,24 @@
+Fri Dec 11 11:11:27 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_sequence.cpp:
+
+	  For sequences of CORBA::Object, we were generating code such
+	  that the base class was the Pseudo_Sequence class in
+	  tao/sequence_T.h. However, these base template classes do not
+	  provide the _upcast and _downcast methods since they are not
+	  required for the pseudo objects. Thus, whenever the element type
+	  of a sequence is AST_PredefinedType::PT_pseudo, we check if it
+	  was a CORBA::Object or a true pseudo-object. If it is
+	  CORBA::Object, then the managed type becomes MNG_OBJREF instead
+	  of MNG_PSEUDO. Thus, now we generate the base template class to
+	  be Object_Sequence which have the _upcast and _downcast
+	  methods. 
+
+	  Thanks to Ron Barack (rab@terminal.cz) for reporting that the
+	  _upcast and _downcast methods were not available for sequences
+	  of CORBA::Objects.
+	  
+
 Fri Dec 11 08:54:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * VERSION: added ace-users/comp.soft-sys.ace info.
@@ -6,7 +27,7 @@ Fri Dec 11 07:28:54 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
         * TAO_IDL/be/be_visitor_sequence.cpp:
 
-          Added #include for newy added files described below.
+          Added #include for newly added files described below.
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
           TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
