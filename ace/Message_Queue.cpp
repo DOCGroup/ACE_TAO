@@ -130,8 +130,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue<ACE_SYNCH_USE>::ACE_Message_Queue (size_t hwm, 
-                                                   size_t lwm,
-                                                   ACE_Notification_Strategy *ns)
+                                                     size_t lwm,
+                                                     ACE_Notification_Strategy *ns)
 #if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   : not_empty_cond_ (0),
     not_full_cond_ (0),
@@ -162,8 +162,8 @@ ACE_Message_Queue<ACE_SYNCH_USE>::~ACE_Message_Queue (void)
 
 template <ACE_SYNCH_DECL> int 
 ACE_Message_Queue<ACE_SYNCH_USE>::open (size_t hwm, 
-                                      size_t lwm,
-                                      ACE_Notification_Strategy *ns)
+                                        size_t lwm,
+                                        ACE_Notification_Strategy *ns)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::open");
   this->high_water_mark_ = hwm;
