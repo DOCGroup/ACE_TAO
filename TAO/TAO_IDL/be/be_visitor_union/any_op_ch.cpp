@@ -59,6 +59,9 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       << "*); // noncopying version" << be_nl;
   *os << idl_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
+      << node->name () << " *&); // deprecated\n";
+  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
+      << " operator>>= (const CORBA::Any &, const "
       << node->name () << " *&);\n";
 
 
