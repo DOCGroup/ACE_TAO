@@ -516,8 +516,7 @@ Dynamic::ExceptionList::ExceptionList (
     CORBA::ULong max
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode,
-        Dynamic::TypeCode_var
+        Dynamic::TypeCode
       >
     (max)
 {}
@@ -529,8 +528,7 @@ Dynamic::ExceptionList::ExceptionList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode,
-        Dynamic::TypeCode_var
+        Dynamic::TypeCode
       >
     (max, length, buffer, release)
 {}
@@ -539,8 +537,7 @@ Dynamic::ExceptionList::ExceptionList (
     const ExceptionList &seq
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode,
-        Dynamic::TypeCode_var
+        Dynamic::TypeCode
       >
     (seq)
 {}

@@ -114,8 +114,8 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (
       << "{" << be_idt_nl
       << "CORBA::TypeCode_ptr tcp = _tao_" << node->flat_name ()
       << "_exceptiondata[i];" << be_nl
-      << "TAO_Pseudo_Object_Manager<CORBA::TypeCode, "
-      << "CORBA::TypeCode_var> tcp_object (&tcp, 1);" << be_nl
+      << "TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);" 
+      << be_nl
       << "(*exception_list)[i] = tcp_object;" << be_uidt_nl
       << "}\n" << be_uidt;
 

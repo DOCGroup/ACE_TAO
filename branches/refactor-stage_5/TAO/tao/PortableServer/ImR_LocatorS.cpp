@@ -320,7 +320,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_activate_server_in_locati
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Locator_activate_server_in_location_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -484,7 +484,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_remove_server_in_location
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Locator_remove_server_in_location_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -648,7 +648,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_shutdown_server_in_locati
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Locator_shutdown_server_in_location_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -812,7 +812,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_server_is_shutting_down_i
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Locator_server_is_shutting_down_in_location_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -978,7 +978,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_register_activator::excep
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Locator_register_activator_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
@@ -1155,7 +1155,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Locator_unregister_activator::exc
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
       CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Locator_unregister_activator_exceptiondata[i];
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var> tcp_object (&tcp, 1);
+      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 

@@ -803,8 +803,7 @@ be_visitor_tmplinst_cs::gen_managed_type_tmplinst (be_sequence *node,
             << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
             << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
             << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
+            << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
         break;
@@ -869,8 +868,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << node->name () << "," << this->linebreak_ << be_nl
             << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
             << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
+            << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
@@ -882,8 +880,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << node->name () << "," << this->linebreak_ << be_nl
             << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
             << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
+            << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
@@ -895,8 +892,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << node->name () << "_var," << this->linebreak_ << be_nl
             << "TAO_Pseudo_Object_Manager<" << this->linebreak_ 
             << be_idt << be_idt_nl
-            << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
+            << bt->name () << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;

@@ -200,8 +200,7 @@ TAO_NAMESPACE  Dynamic
     TAO_MngSeq_Var_T<
         ExceptionList,
         TAO_Pseudo_Object_Manager<
-            TypeCode,
-            TypeCode_var
+            TypeCode
           >
       >
     ExceptionList_var;
@@ -211,8 +210,7 @@ TAO_NAMESPACE  Dynamic
         ExceptionList,
         ExceptionList_var,
         TAO_Pseudo_Object_Manager<
-            TypeCode,
-            TypeCode_var
+            TypeCode
           >
       >
     ExceptionList_out;
@@ -220,8 +218,7 @@ TAO_NAMESPACE  Dynamic
   class TAO_Export ExceptionList
     : public
         TAO_Unbounded_Pseudo_Sequence<
-            TypeCode,
-            Dynamic::TypeCode_var
+            TypeCode
           >
   {
   public:
