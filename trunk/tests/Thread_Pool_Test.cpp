@@ -18,8 +18,8 @@
 //     queue is deactivated.
 //
 // = AUTHOR
-//    Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>, 
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and 
+//    Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>,
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
 //    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
@@ -128,7 +128,7 @@ Thread_Pool::svc (void)
       if (result == -1 && errno == ESHUTDOWN)
         {
           // The queue has been deactivated, so let's bail out.
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
                       ACE_TEXT ("queue deactivated, exiting\n"),
                       count,
@@ -189,7 +189,7 @@ Thread_Pool::open (void *)
 // consumed by the threads in the thread pool, and demonstate how to
 // shutdown using the <ACE_Message_Queue::deactivate> method.
 
-int 
+int
 Thread_Pool::test_queue_deactivation_shutdown (void)
 {
   if (this->open () == -1)
@@ -218,7 +218,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
 
       if (manual)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enter a new message for ")
                       ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
@@ -229,8 +229,8 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
         {
           static size_t count = 0;
 
-          ACE_OS::sprintf (mb->wr_ptr (),
-                           ACE_SIZE_T_FORMAT_SPECIFIER, 
+          ACE_OS::sprintf (ACE_reinterpret_cast (ACE_TCHAR *, mb->wr_ptr ()),
+                           ACE_SIZE_T_FORMAT_SPECIFIER,
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());
 
@@ -279,7 +279,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
 // pool, and demonstrate how to shutdown by enqueueing "empty"
 // messages into the queue.
 
-int 
+int
 Thread_Pool::test_empty_message_shutdown (void)
 {
   if (this->open () == -1)
@@ -308,7 +308,7 @@ Thread_Pool::test_empty_message_shutdown (void)
 
       if (manual)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) enter a new message for ")
                       ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
@@ -319,7 +319,7 @@ Thread_Pool::test_empty_message_shutdown (void)
         {
           static size_t count = 0;
 
-          ACE_OS::sprintf (mb->wr_ptr (),
+          ACE_OS::sprintf (ACE_reinterpret_cast (ACE_TCHAR *, mb->wr_ptr ()),
                            ACE_SIZE_T_FORMAT_SPECIFIER,
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());
