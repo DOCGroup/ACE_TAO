@@ -341,7 +341,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           if (TAO_orbdebug)
             ACE_ERROR ((LM_WARNING,
                         "TAO (%P|%t) No %s found in Service Repository.  "
-                        "Using default instance IIOP Protocol Factory.\n"));
+                        "Using default instance IIOP Protocol Factory.\n",
+                        "IIOP Protocol Factory"));
 
           ACE_NEW_RETURN (protocol_factory,
                           TAO_IIOP_Protocol_Factory,
