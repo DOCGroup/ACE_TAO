@@ -14,7 +14,6 @@ ACE_ROOT = $(top_srcdir)
 SUBDIRS = \
         . \
         HTBP \
-        RMCast \
         SSL
 
 CLEANFILES =
