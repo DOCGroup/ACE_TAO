@@ -1,88 +1,100 @@
+Wed Apr 07 10:11:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbscvs/Concurrency_Service/Makefile,
+          orbscvs/tests/Concurrency/Makefile,
+          only build if the orbsvcs library was built with the Concurrency
+          TAO_ORBSVCS component.
+
+        * orbscvs/tests/AVStreams/sfp/Makefile:
+          only build if the orbsvcs library was built with the AV
+          TAO_ORBSVCS component.  And, commented out (and replaced
+          /bin/rm with $(RM)) unused realclean target.
+
 Wed Apr 07 02:50:08 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.18 released.
 
 Wed Apr 07 01:02:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (parse_key and create_object_key): Improved the
-	  parsing of object keys belonging to the RootPOA.  Since this is
-	  the default POA and is commonly used, we have given it a
-	  reserved byte in the object key in order to quickly identify
-	  it. With the reserved bit, the active demux key for the RootPOA
-	  is not used, and no map lookups are required.
+        * tao/POA.cpp (parse_key and create_object_key): Improved the
+          parsing of object keys belonging to the RootPOA.  Since this is
+          the default POA and is commonly used, we have given it a
+          reserved byte in the object key in order to quickly identify
+          it. With the reserved bit, the active demux key for the RootPOA
+          is not used, and no map lookups are required.
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
-	  (ServiceTypeRepository): Used Service_Type_Map_Iterator instead
-	  of Service_Type_Map::iterator.  Stupid g++ could not gork it.
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
+          (ServiceTypeRepository): Used Service_Type_Map_Iterator instead
+          of Service_Type_Map::iterator.  Stupid g++ could not gork it.
 
-	* tao/default_server.cpp (parse_args): Removed parsing for
-	  POAManager lock since it is no longer supported.
+        * tao/default_server.cpp (parse_args): Removed parsing for
+          POAManager lock since it is no longer supported.
 
-	* tao/Object_Adapter.cpp: Added missing template instantiations
-	  for ACE_Hash_Map_Manager_Ex_Adapter and ACE_Map_Manager_Adapter.
-	  Thanks to Carlos for pointing this out.
+        * tao/Object_Adapter.cpp: Added missing template instantiations
+          for ACE_Hash_Map_Manager_Ex_Adapter and ACE_Map_Manager_Adapter.
+          Thanks to Carlos for pointing this out.
 
-	* tao/POA.cpp (create_object_key and parse_key): Fixed the use of
-	  ACE_NTOHL and ACE_HTONL.  Thanks to David for helping here.
+        * tao/POA.cpp (create_object_key and parse_key): Fixed the use of
+          ACE_NTOHL and ACE_HTONL.  Thanks to David for helping here.
 
-	* tao/POA (Current): The object id information in the POA Current
-	  was broken since it kept the system id instead of the user
-	  id. The fix was to modify the Active_Object_Map to always
-	  recover the user id. Thanks to Steve Totten
-	  <totten_s@ociweb.com> for pointing this out.
+        * tao/POA (Current): The object id information in the POA Current
+          was broken since it kept the system id instead of the user
+          id. The fix was to modify the Active_Object_Map to always
+          recover the user id. Thanks to Steve Totten
+          <totten_s@ociweb.com> for pointing this out.
 
 Wed Apr  7 01:10:55 1999  Darrell Brunsch  <brunsch@cs.wustl.edu
 
-	* examples/Quoter/Makefile: Now cleans up all IDL generated files
+        * examples/Quoter/Makefile: Now cleans up all IDL generated files
           with realclean.
 
 Tue Apr  6 19:52:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/PropertyTest.dsw:
-	* orbsvcs/tests/Property/server.dsp:
-	* orbsvcs/tests/Property/client.dsp:
-	* orbsvcs/tests/Property/README:
-	  Tested on WIN NT.
+        * orbsvcs/tests/Property/PropertyTest.dsw:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/README:
+          Tested on WIN NT.
 
 Tue Apr  6 18:20:48 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_query ()): Used ACE_HTONS for the
- 	  sent data length (CORBA::Short).
+        * tao/ORB.cpp (multicast_query ()): Used ACE_HTONS for the
+          sent data length (CORBA::Short).
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input()): Used
-	  ACE_NTOHS on the received CORBA::Short.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input()): Used
+          ACE_NTOHS on the received CORBA::Short.
 
 Tue Apr  6 17:55:48 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/NewPOA/NewPOA.cpp (main):
-	* examples/POA/Loader/server.cpp:
-	* examples/POA/Identity/Identity.cpp:
-	* examples/POA/Generic_Servant/client.cpp: Changed ACE_TRY_NEW_ENV
-	  as ACE_TRY with appropriate declaration
+        * examples/POA/NewPOA/NewPOA.cpp (main):
+        * examples/POA/Loader/server.cpp:
+        * examples/POA/Identity/Identity.cpp:
+        * examples/POA/Generic_Servant/client.cpp: Changed ACE_TRY_NEW_ENV
+          as ACE_TRY with appropriate declaration
 
 Tue Apr 06 16:29:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.cpp (ORB_init): Some how, calling to init_orb_globals()
-	  got moved before ORB Core initialization.  This must come AFTER
-	  the initialization of ORB Core.  Otherwise, all hell breaks
-	  loose.
+        * tao/ORB.cpp (ORB_init): Some how, calling to init_orb_globals()
+          got moved before ORB Core initialization.  This must come AFTER
+          the initialization of ORB Core.  Otherwise, all hell breaks
+          loose.
 
 Tue Apr  6 16:29:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/echo/Echo_i.cpp (echo_string):
-	* examples/Simple/echo/Echo_Client_i.cpp
-	* examples/Simple/echo/server.cpp
-	  Made some changes to the ACE_TRY macros
+        * examples/Simple/echo/Echo_i.cpp (echo_string):
+        * examples/Simple/echo/Echo_Client_i.cpp
+        * examples/Simple/echo/server.cpp
+          Made some changes to the ACE_TRY macros
 
 Tue Apr  6 15:44:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Changed the Names of the following files:
+          Changed the Names of the following files:
 
-	* orbsvcs/Time_Service/server.cpp -> Time_Service_Server.cpp:
-	* orbsvcs/Time_Service/clerk.cpp  -> Time_Service_Clerk.cpp:
+        * orbsvcs/Time_Service/server.cpp -> Time_Service_Server.cpp:
+        * orbsvcs/Time_Service/clerk.cpp  -> Time_Service_Clerk.cpp:
 
-	* orbsvcs/Time_Service/Makefile: Changed the Makefile to reflect
-	  the above changes.
+        * orbsvcs/Time_Service/Makefile: Changed the Makefile to reflect
+          the above changes.
 
 Tue Apr 06 15:33:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -95,33 +107,33 @@ Tue Apr 06 05:04:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tao/POA.cpp: Phase two of the new POA design is complete.
 
           - We now have support for active demuxing of POAs. For transient
-	    POAs, we directly use an active demuxing key in the object key
-	    since transient POAs cannot be reactivated.  For persistent
-	    POAs, we have added a active demux hint field in the object
-	    key.  This hint is in addition to the persistent POA name.
+            POAs, we directly use an active demuxing key in the object key
+            since transient POAs cannot be reactivated.  For persistent
+            POAs, we have added a active demux hint field in the object
+            key.  This hint is in addition to the persistent POA name.
 
           - Transient POAs identifiers in the object key are of fixed
-	    size. For persistent POAs, the object key contains a number
-	    that specifies how long the POA name is.  This feature speeds
-	    up things since there is no need for sequential, byte by byte
-	    searching for field separators.
+            size. For persistent POAs, the object key contains a number
+            that specifies how long the POA name is.  This feature speeds
+            up things since there is no need for sequential, byte by byte
+            searching for field separators.
 
           - The use of the active demux hint for the POA name in the
-	    object key is optional.  If used, the lookups are faster
-	    (unless the hint is invalidated by a deactivation or by
-	    restarting a persistent POA).  However, using the hint results
-	    in a larger IOR, and more memory being used in the active
-	    object map.  This option can be controlled through the
-	    -ORBactivehintinpoanames runtime switch and is turned on by
-	    default.
+            object key is optional.  If used, the lookups are faster
+            (unless the hint is invalidated by a deactivation or by
+            restarting a persistent POA).  However, using the hint results
+            in a larger IOR, and more memory being used in the active
+            object map.  This option can be controlled through the
+            -ORBactivehintinpoanames runtime switch and is turned on by
+            default.
 
           - The POA related classes have been rewritten with respect to
-	    exceptions.  Memory management in case of exceptions from
-	    servants and in case of dynamic memory / constructor failures
-	    have been greatly improved through the use of auto pointers
-	    and the new ACE_NEW_THROW_EX macro.  One of the problems
-	    related to exceptions was that the POA Current was not reset
-	    properly.  This has also been fixed.
+            exceptions.  Memory management in case of exceptions from
+            servants and in case of dynamic memory / constructor failures
+            have been greatly improved through the use of auto pointers
+            and the new ACE_NEW_THROW_EX macro.  One of the problems
+            related to exceptions was that the POA Current was not reset
+            properly.  This has also been fixed.
 
           - New file Object_Adapter contains an abstraction for all the
             POAs in the ORB.  This class is used to hold the Object
@@ -154,10 +166,10 @@ Tue Apr 06 05:04:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
             instead to the Root POAs.
 
           - POA objects and POA Manager objects now contain a reference to
-	    lock rather than a lock instance.  The lock comes from the
-	    Object Adapter.  This change was made to centralize the
-	    locking and reduce the number of locks grabbed during request
-	    dispatching.
+            lock rather than a lock instance.  The lock comes from the
+            Object Adapter.  This change was made to centralize the
+            locking and reduce the number of locks grabbed during request
+            dispatching.
 
           - Added ids for POA policies.
 
