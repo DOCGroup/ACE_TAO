@@ -80,12 +80,15 @@
 # else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #   include /**/ <fstream.h>
 #   include /**/ <iomanip.h>
-#   include /**/ <ios.h>
 #   include /**/ <iostream.h>
 #   include /**/ <istream.h>
 #   include /**/ <ostream.h>
-#   include /**/ <streamb.h>
-#   include /**/ <strstrea.h>
+
+#   if defined (ACE_WIN32)
+#     include /**/ <ios.h>
+#     include /**/ <streamb.h>
+#     include /**/ <strstrea.h>
+#   endif /* ACE_WIN32 */
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
