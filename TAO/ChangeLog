@@ -1,3 +1,10 @@
+Thu Jul 25 15:19:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+
+          Put back generation of some lines that I had inadvertently
+          removed. Thanks to Irfan for pointing it out.
+
 Thu Jul 25 13:13:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/PSS/Makefile (%C.cpp): 
