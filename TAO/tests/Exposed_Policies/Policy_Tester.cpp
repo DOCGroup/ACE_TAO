@@ -8,6 +8,8 @@
 // -- ACE Include --
 #include "ace/Arg_Shifter.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 // -- TAO Include --
 #include "tao/RT_ORB.h"
 #include "tao/RT_Policy_i.h"
@@ -182,7 +184,7 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
 
       object =
         this->poa_->create_POA ("Child_POA",
-                                poa_mgr ,
+                                poa_mgr.in (),
                                 poa_policy_list);
 
       this->child_poa_ =
@@ -199,7 +201,7 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Reference Created!\n")));
 
-      if (!check_reference (object,
+      if (!check_reference (object.in (),
                             "Unable to create Object!\n"))
         return 0;
 
@@ -244,7 +246,7 @@ Policy_Tester::create_objects (CORBA::Environment &ACE_TRY_ENV)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Reference Created!\n")));
 
-      if (!check_reference (object,
+      if (!check_reference (object.in (),
                             "Unable to create a Counter Object!\n"))
         return 0;
 
@@ -294,3 +296,6 @@ Policy_Tester::shutdown (CORBA::Environment &ACE_TRY_ENV)
   this->poa_->destroy (1, 1, ACE_TRY_ENV);
   ACE_CHECK;
 }
+
+
+#endif /* (TAO_HAS_RT_CORBA == 1) */

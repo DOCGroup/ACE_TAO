@@ -27,6 +27,8 @@
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 class Policy_Tester
 {
 public:
@@ -49,10 +51,9 @@ private:
   // Helper method used internally.
   int create_objects (CORBA::Environment &ACE_TRY_ENV
                        = TAO_default_environment ());
-public:
 
-  static CORBA::Boolean check_reference (CORBA::Object_ptr object,
-                                         const char *msg);
+  CORBA::Boolean check_reference (CORBA::Object_ptr object,
+                                   const char *msg);
 
 private:
 
@@ -65,5 +66,8 @@ private:
   RT_Properties *rt_object_properties_;
   RT_Properties *rt_poa_properties_;
 };
+
+#endif /* (TAO_HAS_RT_CORBA == 1) */
+
 
 #endif
