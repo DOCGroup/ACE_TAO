@@ -718,27 +718,12 @@ namespace TAO
                           "TAO (%P|%t) - Synch_Oneway_Invocation::"
                           "remote_oneway, queueing message\n"));
 
-            // Format the message in the stream first
-            // @bala is the return ok, how to handle the format
-            // failure?
-            // @@ Johnny, I recommend the following
             // (1) Try decoupling messaging_object from this
             // class. Yes this means removing calls that get the
             // stream. They should be pushed within the transport
-            // (2) Set s = TAO_INVOKE_FAILURE and allow things to pass
-            // through. We should call the end interception point
-            // anyway.
-            // (3) I think our prsent scheme of calling interceptors
-            // are infact right. So we need to addres #2.
 
-            if (transport->messaging_object ()->format_message (cdr) != 0)
-              return TAO_INVOKE_FAILURE;
-
-            // The transport is not connected yet, so queue the
-            // message.
-            /// @@ Johnny, could you please add a method in the
-            // transport class that does formatting and queueing?
-            transport->queue_message (cdr.begin());
+            if (transport->queue_message (cdr) != 0)
+              s = TAO_INVOKE_FAILURE;
           }
 
 #if TAO_HAS_INTERCEPTORS == 1

@@ -348,11 +348,14 @@ TAO_Transport::handle_output (void)
 }
 
 int
-TAO_Transport::queue_message (const ACE_Message_Block *message_block)
+TAO_Transport::queue_message (TAO_OutputCDR &stream)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-  return this->queue_message_i (message_block);
+  if (this->messaging_object ()->format_message (stream) != 0)
+    return -1;
+
+  return this->queue_message_i (stream.begin());
 }
 
 int
