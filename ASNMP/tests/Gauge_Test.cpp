@@ -76,15 +76,15 @@ TestGuage (void)
    Gauge32 g1;
    ACE_ASSERT(g1 == def);
    Gauge32 g2(l);
-   ACE_ASSERT(g2 == ACE_static_cast (unsigned long, l));
+   ACE_ASSERT(g2 == static_cast<unsigned long> (l));
    Gauge32 g3(nl);
-   ACE_ASSERT(g3 == ACE_static_cast (unsigned long, nl));
+   ACE_ASSERT(g3 == static_cast<unsigned long> (nl));
    Gauge32 g4(ul);
    ACE_ASSERT(g4 == ul);
    Gauge32 g5(i);
-   ACE_ASSERT(g5 == ACE_static_cast (unsigned long, i));
+   ACE_ASSERT(g5 == static_cast<unsigned long> (i));
    Gauge32 g6(ni);
-   ACE_ASSERT(g6 == ACE_static_cast (unsigned long, ni));
+   ACE_ASSERT(g6 == static_cast<unsigned long> (ni));
    Gauge32 g7(ui);
    ACE_ASSERT(g7 == ui);
    Gauge32 *g8 = new Gauge32(g5);
@@ -116,7 +116,7 @@ TestGuage (void)
   g1 = us; // unsigned short
   ACE_ASSERT(g1 == us);
   g1 = si; // unsigned short
-  ACE_ASSERT(g1 == si);
+  ACE_ASSERT(g1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32*/
 }
 

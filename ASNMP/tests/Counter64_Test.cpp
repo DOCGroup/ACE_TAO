@@ -136,11 +136,11 @@ static void TestCounter64()
   c4 = c4;
   ACE_ASSERT(c5 == c4);
   c5 = ll;
-  ACE_ASSERT(c5 == ll);
+  ACE_ASSERT(c5 == static_cast<ACE_UINT64> (ll));
   // try simple arithmetic (needs more test cases)
   c5 = mll;
   c5 = c5 + (ULLONG) 10;
-  ACE_ASSERT(c5 == (mll + 10));
+  ACE_ASSERT(c5 == static_cast<ACE_UINT64> (mll + 10));
 #endif /*ACE_WIN32 */
 }
 
