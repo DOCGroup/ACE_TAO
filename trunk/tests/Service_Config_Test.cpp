@@ -13,7 +13,7 @@
 //      working correctly.
 //
 // = AUTHOR
-//    Doug Schmidt
+//    David Levine
 //
 // ============================================================================
 
@@ -22,31 +22,31 @@
 #include "test_config.h"
 
 template <int NUMBER>
-class mySingleton
+class Test_Singleton
 {
 public:
-  static mySingleton *instance ();
+  static Test_Singleton *instance (void);
   static void cleanup (void *, void *);
 private:
-  static mySingleton *instance_;
+  static Test_Singleton *instance_;
 
-  mySingleton () { ACE_DEBUG ((LM_DEBUG, "mySingleton %d ctor\n", NUMBER)); }
-  ~mySingleton () { ACE_DEBUG ((LM_DEBUG, "mySingleton %d dtor\n", NUMBER)); }
+  Test_Singleton (void) { ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d ctor\n", NUMBER)); }
+  ~Test_Singleton (void) { ACE_DEBUG ((LM_DEBUG, "Test_Singleton %d dtor\n", NUMBER)); }
 
-  friend class friend_declaration_to_avoid_compiler_warning_with_private_ctor;
+  friend class verbase_friend_declaration_to_avoid_compiler_warning_with_private_ctor;
 };
 
-mySingleton<1> *mySingleton<1>::instance_ = 0;
-mySingleton<2> *mySingleton<2>::instance_ = 0;
-mySingleton<3> *mySingleton<3>::instance_ = 0;
+Test_Singleton<1> *Test_Singleton<1>::instance_ = 0;
+Test_Singleton<2> *Test_Singleton<2>::instance_ = 0;
+Test_Singleton<3> *Test_Singleton<3>::instance_ = 0;
 
 template <int NUMBER>
-mySingleton<NUMBER> *
-mySingleton<NUMBER>::instance ()
+Test_Singleton<NUMBER> *
+Test_Singleton<NUMBER>::instance (void)
 {
   if (instance_ == 0)
     {
-      ACE_NEW_RETURN (instance_, mySingleton, 0);
+      ACE_NEW_RETURN (instance_, Test_Singleton, 0);
       ACE_Object_Manager::at_exit (instance_, cleanup, 0);
     }
 
@@ -55,15 +55,16 @@ mySingleton<NUMBER>::instance ()
 
 template <int NUMBER>
 void
-mySingleton<NUMBER>::cleanup (void *object, void *)
+Test_Singleton<NUMBER>::cleanup (void *object, void *)
 {
-  delete (mySingleton *) object;
+  delete (Test_Singleton *) object;
 }
 
 static void
 run_test (int argc, char *argv[])
 {
-  // We need this scope to make sure
+  // We need this scope to make sure that the destructor for the
+  // ACE_Service_Config gets called.
   ACE_Service_Config daemon;
 
   daemon.open (argc, argv);
@@ -78,13 +79,12 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Service_Config_Test");
 
-  mySingleton<1> &one = *mySingleton<1>::instance ();
-  mySingleton<2> &two = *mySingleton<2>::instance ();
-  mySingleton<3> &three = *mySingleton<3>::instance ();
+  Test_Singleton<1> &one = *Test_Singleton<1>::instance ();
+  Test_Singleton<2> &two = *Test_Singleton<2>::instance ();
+  Test_Singleton<3> &three = *Test_Singleton<3>::instance ();
+
   if (&one == 0  ||  &two == 0  || &three == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, "instance () allocate failed!\n"), 1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, "instance () allocate failed!\n"), 1);
 
   run_test (argc, argv);
 
@@ -93,12 +93,12 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class mySingleton<1>;
-template class mySingleton<2>;
-template class mySingleton<3>;
+template class Test_Singleton<1>;
+template class Test_Singleton<2>;
+template class Test_Singleton<3>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate mySingleton<1>
-#pragma instantiate mySingleton<2>
-#pragma instantiate mySingleton<3>
+#pragma instantiate Test_Singleton<1>
+#pragma instantiate Test_Singleton<2>
+#pragma instantiate Test_Singleton<3>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
