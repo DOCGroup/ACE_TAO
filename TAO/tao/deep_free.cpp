@@ -216,8 +216,8 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       align_offset =
         (ptr_arith_t) ptr_align_binary (source, alignment)
         - (ptr_arith_t) source
-        - (ptr_arith_t) ptr_align_binary (start_addr, alignment)
-        - (ptr_arith_t) start_addr;
+        - ((ptr_arith_t) ptr_align_binary (start_addr, alignment)
+        - (ptr_arith_t) start_addr);
       if (align_offset < 0)
         align_offset += alignment;
 #else
