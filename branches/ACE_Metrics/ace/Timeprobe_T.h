@@ -55,13 +55,13 @@
  * minimum_id for each table.  It is up to the user to make sure
  * that multiple tables do not share the same event id range.
  */
-template <class ACE_LOCK>
+template <class ACE_LOCK, class ALLOCATOR>
 class ACE_Timeprobe
 {
 public:
 
   /// Self
-  typedef ACE_Timeprobe<ACE_LOCK>
+  typedef ACE_Timeprobe<ACE_LOCK, ALLOCATOR>
           SELF;
 
   /// We can hold multiple event description tables.
@@ -71,6 +71,9 @@ public:
   /// Create Timeprobes with <size> slots
   ACE_Timeprobe (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
+  /// Create Timeprobes with <size> slots
+  ACE_Timeprobe (ALLOCATOR *allocator,
+                 u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
   /// Destructor.
   ~ACE_Timeprobe (void);
 
@@ -92,6 +95,8 @@ public:
 
   /// Reset the slots.  All old time probes will be lost.
   void reset (void);
+
+  void increase_size (u_long size);
 
   /// Not implemented (stupid MSVC won't let it be protected).
   ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
@@ -127,6 +132,10 @@ public:
 
 protected:
 
+  /// Obtain an allocator pointer.  If there is no allocator stored in
+  /// the instance, the singleton allocator in the current process is used.
+  ALLOCATOR * allocator (void);
+
   /// Event Descriptions
   EVENT_DESCRIPTIONS event_descriptions_;
 
@@ -148,6 +157,16 @@ protected:
 
   /// Current size of timestamp table
   u_long current_size_;
+
+  /// flag indicating the report buffer has filled up, and is now
+  /// acting as a ring-buffer using modulus arithmetic: this saves the
+  /// max_size_ most recent time stamps and loses earlier ones until
+  /// drained.
+  u_short report_buffer_full_;
+
+
+private:
+   ALLOCATOR *   allocator_;
 };
 
 /**
