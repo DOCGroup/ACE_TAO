@@ -25,7 +25,7 @@ class HT_Server : public Hash_Table
   //   Provides the server's hash table abstraction.
 
 public:
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);
 };
 

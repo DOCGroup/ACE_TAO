@@ -13,14 +13,14 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
   Protocol_Record *frp = this->ss->insert (protocol_record.get_login ());
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
   Drwho_Node *np = this->get_drwho_node (ACE::strnew (current_node->get_host_name ()),
-                                         frp->drwho_list);
+                                         frp->drwho_list_);
 
   // Update the active and inactive counts.
   
   if (np->get_active_count () < current_node->get_active_count ())
     {
       np->set_active_count (current_node->get_active_count ());
-      frp->is_active 	= 1;
+      frp->is_active_ = 1;
     }
 
   if (np->get_inactive_count () < current_node->get_inactive_count())
@@ -54,7 +54,7 @@ PM_Client::process (void)
   // Goes through the queue of all the logged in friends and prints
   // out the associated information.
   
-  for (Protocol_Record *frp = this->Protocol_Manager::get_each_friend ()
+  for (Protocol_Record *frp = this->Protocol_Manager::get_each_friend ();
        frp != 0;
        frp = this->Protocol_Manager::get_each_friend ())
     {
@@ -89,11 +89,11 @@ PM_Client::process (void)
 	  if ((np = np->next) == 0)
 	    break;
 	  else
-            ACE_DEBUG ((LM_DEBUG
+            ACE_DEBUG ((LM_DEBUG,
                         " "));
 	}
       
-      ACE_DEBUG ((LM_DEBUG
+      ACE_DEBUG ((LM_DEBUG,
                   "]\n"));
     }
   
@@ -114,10 +114,10 @@ PM_Client::handle_protocol_entries (const char *cp,
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
   
   protocol_record.set_login (login_name);
-  protocol_record.set_real  (real_name);
+  protocol_record.set_real (real_name);
   current_node->set_inactive_count (atoi (cp));
-  current_node->set_active_count (atoi (cp = strchr (cp, ' ') + 1));
-  current_node->set_host_name (cp = strchr (cp, ' ') + 1);
+  current_node->set_active_count (atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
+  current_node->set_host_name (cp = ACE_OS::strchr (cp, ' ') + 1);
   
   this->insert_protocol_info (protocol_record);
   
