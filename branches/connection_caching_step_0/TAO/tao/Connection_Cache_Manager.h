@@ -33,7 +33,7 @@ class TAO_Export TAO_Connection_Cache_Manager
   //     TAO_Connection_Cache_Manager is an abstract class for the Connection Cache
 
   // = DESCRIPTION
-  //     This class offers a minmal interface that would be needed in
+  //     This class offers a minimal interface that would be needed in
   //     TAO to add connections in to Cache and find connections from
   //     cache. Further, this interface also allows to purge entries
   //     based on a user defined strategy. The sublasses of this
