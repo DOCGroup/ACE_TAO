@@ -1,3 +1,9 @@
+Wed Nov 24 21:21:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/Log/README:
+
+          Convert from DOS to UNIX text format.
+
 Wed Nov 24 18:38:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Log_Basic_Log_Test.mpc:
