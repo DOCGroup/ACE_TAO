@@ -828,7 +828,7 @@ typedef struct
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
 
 // Define the name of the environment variable that defines the temp
-// directory.  
+// directory.
 #   define ACE_DEFAULT_TEMP_DIR_ENV "TMP"
 
 #   define ACE_DLL_SUFFIX ".so"
@@ -2571,7 +2571,7 @@ typedef unsigned int size_t;
 
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
-# if defined (ACE_LACKS_SCHED_H)
+# if !defined (ACE_LACKS_SCHED_H)
 #   include /**/ <sched.h>
 # endif /* ACE_LACKS_SCHED_H */
 
@@ -2886,7 +2886,7 @@ typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 #   define ACE_DLL_PREFIX ""
 
 // Define the name of the environment variable that defines the temp
-// directory.  
+// directory.
 #   define ACE_DEFAULT_TEMP_DIR_ENV "TEMP"
 
 // This will help until we figure out everything:
@@ -3137,7 +3137,7 @@ typedef char TCHAR;
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
 
 // Define the name of the environment variable that defines the temp
-// directory.  
+// directory.
 #   define ACE_DEFAULT_TEMP_DIR_ENV "TMP"
 
 // We're some kind of UNIX...
