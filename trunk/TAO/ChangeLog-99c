@@ -1,3 +1,18 @@
+Mon Aug 23 14:12:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include.utl_scope.h:
+	* TAO_IDL/util/utl_scope.cpp:
+	  Changes to lookup_by_name() and 
+	  iter_lookup_by_name_local() which cause the lookup
+	  process to exit immediately once the scoped name
+	  argument is completely matched. This removes the problem
+	  of an infinite loop in certain cases where the argument
+	  is a fully scoped name, and has the side effect of making
+	  the lookup process more efficient. Thanks to
+	  Duane Binder <dbinder@globalmt.com> for reporting the
+	  problem and for sending in an .idl file that was
+	  eventally cut down to debuggable size.
+
 Mon Aug 23 11:59:33 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp
