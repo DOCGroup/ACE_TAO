@@ -53,6 +53,7 @@ EXTRA_DIST = \
         ChangeLog-98a \
         ChangeLog-98b \
 	ChangeLog-99a \
+	ChangeLog-99b \
         FAQ \
         PROBLEM-REPORT-FORM \
         README.aceconf \
