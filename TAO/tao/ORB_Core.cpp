@@ -2598,8 +2598,6 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
   return;
 }
 
-#if (TAO_HAS_RELATIVE_ROUNTRIP_POLICY == 1)
-
 CORBA::Policy *
 TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 {
@@ -2626,7 +2624,6 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
   return result;
 }
-#endif /* TAO_HAS_RELATIVE_ROUNTRIP_POLICY == 1*/
 
 #if (TAO_HAS_RT_CORBA == 1)
 

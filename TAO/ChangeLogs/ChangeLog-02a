@@ -1,3 +1,10 @@
+Wed Nov  1 10:04:27 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/Messaging_Policy_i.cpp (relative_expiry): 
+	* tao/ORB_Core.cpp: 
+	  Removed unnecessary TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 
+	  guards.
+	
 Wed Nov  1 09:47:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Stub.cpp: 
