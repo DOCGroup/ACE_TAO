@@ -1,3 +1,35 @@
+Tue Jan  4 16:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Filter.{h,cpp,i}:
+        * tao/Acceptor_Impl.{h,cpp,i}:
+        * tao/Adapter.{h,cpp,i}:
+        * tao/Collocation_Resolver.{h,cpp,i}:
+        * tao/Connector_Impl.{h,cpp,inl}:
+        * tao/Default_Collocation_Resolver.{h,cpp,i}:
+        * tao/Default_Protocols_Hooks.{h,cpp,i}:
+        * tao/Default_Thread_Lane_Resources_Manager.{h,cpp,i}:
+        * tao/GIOP_Message_Base.{h,cpp,i}:
+        * tao/GIOP_Message_Generator_Parser.{h,cpp,inl}:
+        * tao/GIOP_Message_Generator_Parser_10.{h,cpp,inl}:
+        * tao/GIOP_Message_Generator_Parser_11.{h,inl}:
+        * tao/GIOP_Message_Generator_Parser_12.{h,cpp,inl}:
+        * tao/GIOP_Message_Lite.{h,cpp,i}:
+        * tao/GIOP_Utils.{h,cpp,i}:
+        * tao/IIOP_Connection_Handler.{h,cpp,i}:
+        * tao/IIOP_Profile.{h,cpp,i}:
+        * tao/IOR_Parser.{h,cpp,i}:
+        * tao/Objref_VarOut_T.{h,cpp,inl}:
+        * tao/Service_Callbacks.{h,cpp,i}:
+        * tao/corbafwd.{h,cpp,i}:
+        * tao/default_resource.{h,cpp,i}:
+          All .i/.inl files above where empty, so removed them from the repo
+          and updated the h/cpp files to not include the removed file. In case
+          someone want to inline a method, must re-add the file at that moment
+          with the .inl extension
+
+        * tao/Makefile.am
+          Updated for changes above
+
 Tue Jan  4 13:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptorS.h:

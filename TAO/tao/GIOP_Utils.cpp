@@ -5,10 +5,6 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/GIOP_Utils.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            GIOP_Utils,
            "$Id$")

@@ -87,10 +87,6 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
 
-#if defined (__ACE_INLINE__)
-# include "tao/Default_Thread_Lane_Resources_Manager.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H */

@@ -11,10 +11,6 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 
-#if !defined (__ACE_INLINE__)
-# include "GIOP_Message_Generator_Parser_12.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            GIOP_Message_Gen_Parser_12,
            "$Id$")

@@ -267,12 +267,5 @@ private:
   TAO_OutputCDR cdr_;
 };
 
-
-
-
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Lite.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_LITE_H*/

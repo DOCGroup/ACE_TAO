@@ -198,10 +198,6 @@ public:
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-# include "Adapter.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */

@@ -33,10 +33,6 @@
 #include "Transport.h"
 #include "debug.h"
 
-#if !defined(__ACE_INLINE__)
-#include "tao/Acceptor_Impl.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            Acceptor_Impl,
            "$Id$")

@@ -9,10 +9,6 @@
 #include "Protocols_Hooks.h"
 #include "Wait_Strategy.h"
 
-#if !defined (__ACE_INLINE__)
-# include "IIOP_Connection_Handler.i"
-#endif /* ! __ACE_INLINE__ */
-
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 

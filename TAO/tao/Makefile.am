@@ -660,10 +660,7 @@ nobase_include_HEADERS += \
   target_specification.h \
   varbase.h \
   xt_resource.h \
-  Acceptor_Filter.i \
-  Acceptor_Impl.i \
   Acceptor_Registry.i \
-  Adapter.i \
   Any.i \
   AnySeqC.inl \
   Any_Array_Impl_T.inl \
@@ -695,17 +692,12 @@ nobase_include_HEADERS += \
   ClientRequestInfo.inl \
   ClientRequestInfo_i.inl \
   ClientRequestInterceptor_Adapter.inl \
-  Collocation_Resolver.i \
   Condition.inl \
   Connection_Handler.inl \
   Connection_Purging_Strategy.inl \
-  Connector_Impl.inl \
   Connector_Registry.i \
   CurrentC.inl \
   DLL_Parser.i \
-  Default_Collocation_Resolver.i \
-  Default_Protocols_Hooks.i \
-  Default_Thread_Lane_Resources_Manager.i \
   DomainC.inl \
   DoubleSeqC.inl \
   DynamicC.inl \
@@ -723,29 +715,19 @@ nobase_include_HEADERS += \
   GIOPC.inl \
   GIOPS.inl \
   GIOPS_T.inl \
-  GIOP_Message_Base.i \
-  GIOP_Message_Generator_Parser.inl \
-  GIOP_Message_Generator_Parser_10.inl \
-  GIOP_Message_Generator_Parser_11.inl \
-  GIOP_Message_Generator_Parser_12.inl \
   GIOP_Message_Generator_Parser_Impl.inl \
-  GIOP_Message_Lite.i \
   GIOP_Message_Locate_Header.i \
   GIOP_Message_State.inl \
   GIOP_Message_Version.inl \
-  GIOP_Utils.i \
   IIOPC.inl \
   IIOP_Acceptor.i \
-  IIOP_Connection_Handler.i \
   IIOP_Endpoint.i \
   IIOP_EndpointsC.inl \
-  IIOP_Profile.i \
   IOPC.i \
   IOPS.i \
   IOPS_T.i \
   IOP_CodecC.i \
   IOP_IORC.i \
-  IOR_Parser.i \
   Incoming_Message_Queue.inl \
   Interceptor_List.inl \
   Invocation_Adapter.inl \
@@ -779,7 +761,6 @@ nobase_include_HEADERS += \
   Object_Argument_T.inl \
   Object_KeyC.inl \
   Object_SArgument_T.inl \
-  Objref_VarOut_T.inl \
   OctetSeqC.inl \
   PICurrent.inl \
   PI_ForwardC.inl \
@@ -806,7 +787,6 @@ nobase_include_HEADERS += \
   Seq_Var_T.inl \
   Sequence.i \
   Sequence_T.i \
-  Service_Callbacks.i \
   Service_Context.inl \
   ServicesC.inl \
   ServicesS.inl \
@@ -851,9 +831,7 @@ nobase_include_HEADERS += \
   WStringSeqC.inl \
   Wait_Strategy.inl \
   WrongTransactionC.inl \
-  corbafwd.i \
   default_client.i \
-  default_resource.i \
   default_server.i \
   operation_details.i \
   params.i \
