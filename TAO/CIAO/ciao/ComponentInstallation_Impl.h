@@ -18,13 +18,13 @@
 #define CIAO_SERVERACTIVATOR_IMPL_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "CCM_DeploymentS.h"
+#include "ace/Configuration.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CCM_DeploymentS.h"
 
 namespace CIAO
 {
@@ -44,7 +44,8 @@ namespace CIAO
   {
   public:
     /// Constructor
-    ComponentInstallation_Impl (CORBA::ORB_ptr o);
+    ComponentInstallation_Impl (CORBA::ORB_ptr o,
+                                PortableServer::POA_ptr p);
 
     /// Destructor
     virtual ~ComponentInstallation_Impl (void);
@@ -54,8 +55,12 @@ namespace CIAO
     virtual PortableServer::POA_ptr _default_POA (void);
 
     /// Initialize the ComponentInstallation.
-    int init (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    int init (const char *fname
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /// Initialize the ComponentInstallation.
+    int fini ();
 
     /// Components::Deployment::ComponentInstallation defined attributes/operations.
 
@@ -91,6 +96,12 @@ namespace CIAO
 
     /// Keep a pointer to the managing POA.
     PortableServer::POA_var poa_;
+
+    /// Persistent store filename
+    CORBA::String_var filename_;
+
+    /// Mapping and persistent
+    ACE_Configuration *installation_;
   };
 }
 
