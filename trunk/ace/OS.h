@@ -3501,7 +3501,6 @@ typedef char TCHAR;
 // The "null" device on UNIX.
 #   define ACE_DEV_NULL "/dev/null"
 
-
 // Wrapper for NT events on UNIX.
 class ACE_Export ACE_event_t
 {
