@@ -595,7 +595,12 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
                   nl;
               }
             *os << "// set the value" << nl;
-            *os << "this->" << ub->local_name () << "_ = val;\n";
+            *os << "if (!this->" << ub->local_name () << "_) // does not exist"
+                << nl ;
+            *os << "\tthis->" << ub->local_name () <<
+              "_ = new CORBA::String_var (val);" << nl;
+            *os << "else" << nl;
+            *os << "\t*this->" << ub->local_name () << "_ = val;\n";
           }
         else
           {
@@ -637,7 +642,12 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
                   nl;
               }
             *os << "// set the value" << nl;
-            *os << "this->" << ub->local_name () << "_ = val;\n";
+            *os << "if (!this->" << ub->local_name () << "_) // does not exist"
+                << nl ;
+            *os << "\tthis->" << ub->local_name () <<
+              "_ = new CORBA::String_var (val);" << nl;
+            *os << "else" << nl;
+            *os << "\t*this->" << ub->local_name () << "_ = val;\n";
           }
         else
           {
@@ -679,7 +689,12 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
                   nl;
               }
             *os << "// set the value" << nl;
-            *os << "this->" << ub->local_name () << "_ = val;\n";
+            *os << "if (!this->" << ub->local_name () << "_) // does not exist"
+                << nl ;
+            *os << "\tthis->" << ub->local_name () <<
+              "_ = new CORBA::String_var (val);" << nl;
+            *os << "else" << nl;
+            *os << "\t*this->" << ub->local_name () << "_ = val;\n";
           }
         else
           {
@@ -702,7 +717,7 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
           " (void) const // get method" << nl;
         *os << "{\n";
         os->incr_indent ();
-        *os << "return this->" << ub->local_name () << "_;\n";
+        *os << "return *this->" << ub->local_name () << "_;\n";
         os->decr_indent ();
         *os << "}\n\n";
       }
@@ -849,12 +864,12 @@ be_state_union_private_ch::gen_code (be_type *bt, be_decl *d, be_type *type)
         os->indent (); // start from current indentation
         if (bt->node_type () == AST_Decl::NT_typedef)
           {
-            *os << bt->nested_type_name (bu, "_var") << " " << ub->local_name () <<
+            *os << bt->nested_type_name (bu, "_var") << " *" << ub->local_name () <<
               "_;\n";
           }
         else
           {
-            *os << "CORBA::String_var " << ub->local_name () << "_;\n";
+            *os << "CORBA::String_var *" << ub->local_name () << "_;\n";
           }
       }
       break;

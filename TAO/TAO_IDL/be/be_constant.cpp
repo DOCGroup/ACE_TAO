@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_constant.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -35,30 +35,17 @@ be_constant::be_constant (AST_Expression::ExprType et,
   : AST_Constant (et, v, n, p),
     AST_Decl (AST_Decl::NT_const, n, p)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // compute the flattened fully scoped name 
-  compute_flatname ();
 }
 
 // ----------------------------------------
 //            CODE GENERATION METHODS
 // ----------------------------------------
 
-// Generates the client-side header information for the constant 
-int 
+// Generates the client-side header information for the constant
+int
 be_constant::gen_client_header (void)
 {
   TAO_OutStream *ch; // output stream
-  TAO_NL  nl;        // end line
-  be_scope *scope;   // scope
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -68,12 +55,10 @@ be_constant::gen_client_header (void)
 
   // if we are defined in the outermost scope, then the value is assigned
   // to us here itself, else it will be in the *.cpp file
-  
+
   ch->indent (); // start from whatever indentation level we were at
   *ch << "static const " << this->exprtype_to_string () << " " << local_name ();
-  scope = be_scope::narrow_from_scope (this->defined_in ()); // retrieve
-                                                             // our scope 
-  if (scope->scope_node_type () == AST_Decl::NT_root)
+  if (this->is_nested ())
     {
       // We were defined at the outermost scope. So we put the value in the
       // header itself
@@ -85,15 +70,10 @@ be_constant::gen_client_header (void)
 }
 
 // Generates the client-side stubs for the constant
-int 
+int
 be_constant::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
-  be_scope *scope;   // scope
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -101,14 +81,12 @@ be_constant::gen_client_stubs (void)
 
   cs = cg->client_stubs ();
 
-  scope = be_scope::narrow_from_scope (this->defined_in ()); // retrieve
-                                                             // our scope 
-  if (scope->scope_node_type () != AST_Decl::NT_root)
+  if (this->is_nested ())
     {
       // for those constants not defined in the outer most scope, they get
-      // assigned to their values in the 
+      // assigned to their values in the
       cs->indent (); // start from whatever indentation level we were at
-      *cs << "const " << this->exprtype_to_string () << " " << name ();
+      *cs << "const " << this->exprtype_to_string () << " " << this->name ();
       *cs << " = " << this->constant_value ();
       *cs << ";\n\n";
     }
@@ -116,8 +94,8 @@ be_constant::gen_client_stubs (void)
   return 0;
 }
 
-// Generates the server-side header information for the constant 
-int 
+// Generates the server-side header information for the constant
+int
 be_constant::gen_server_header (void)
 {
   // nothing to be done
@@ -125,7 +103,7 @@ be_constant::gen_server_header (void)
 }
 
 // Generates the server-side skeletons for the constant
-int 
+int
 be_constant::gen_server_skeletons (void)
 {
   // nothing to be done
@@ -133,7 +111,7 @@ be_constant::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_constant::gen_client_inline (void)
 {
   // nothing to be done
@@ -141,7 +119,7 @@ be_constant::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_constant::gen_server_inline (void)
 {
   // nothing to be done
@@ -151,7 +129,7 @@ be_constant::gen_server_inline (void)
 char *
 be_constant::exprtype_to_string (void)
 {
-  switch (this->et ()) 
+  switch (this->et ())
     {
     case AST_Expression::EV_short:
       return "CORBA::Short";
@@ -192,4 +170,3 @@ be_constant::exprtype_to_string (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_constant, AST_Constant, be_decl)
 IMPL_NARROW_FROM_DECL (be_constant)
-
