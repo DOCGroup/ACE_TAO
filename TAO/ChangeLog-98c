@@ -1,16 +1,35 @@
+Mon Jul 27 17:30:53 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/LifeCycle_Service/Factory_Trader.{h,cpp}: Enabled all
+	  the functionality by default since the Trading Service is now
+	  in good shape.
+
+	* tests/Quoter/client.cpp: 
+	* tests/Quoter/Generic_Factory.cpp:
+	* tests/Quoter/run_test.pl:
+	  Enabled all the LifeCycle functionality and all looks good on
+	  NT.	
+
+	* TAO_IDL/tao_idl.dsp: Release version now has debug information
+	  in a separate file (or else it doesn't work at all), and the 
+	  Release version of the compiler is placed in the Release 
+	  subdirectory.  This will most likely be teh format we will use
+	  for executables: the debug version in .\ and the release in
+	  .\Release\ (both with the same name).
+
 Mon Jul 27 16:59:14 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Added minor
-	formating changes
+	  formating changes
 	* orbsvcs/tests/Logger/README: Added minor formatting changes
 	* orbsvcs/tests/Logger/client.cpp: Added minor formatting changes
 	* orbsvcs/tests/Logger/server.cpp: Added minor formatting changes
 	* orbscvs/tests/Logger/client_i.{h,cpp}: Added minor formatting
-	changes
+	  changes
 	* orbsvcs/tests/Logger/server_i.{h,cpp}: Added minor formatting
-	changes
+	  changes
 	* orbsvcs/tests/Logger/run_test.pl: Fixed a small error where
-	script tried to kill a non-existant process.
+	  script tried to kill a non-existant process.
 	
 Mon Jul 27 17:15:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
