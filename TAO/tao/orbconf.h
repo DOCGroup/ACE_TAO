@@ -444,20 +444,9 @@ enum MCAST_SERVICEID
 # define TAO_HAS_MINIMUM_CORBA 0
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-// If TAO is configured for minimum CORBA, then DIOP will be disabled
-// by default; otherwise it is enabled.
-// To explicitly enable DIOP support uncomment the following
-// #define TAO_HAS_DIOP 1
-// To explicitly disable DIOP support uncomment the following
-// #define TAO_HAS_DIOP 0
-
 // Default DIOP settings
 #if !defined (TAO_HAS_DIOP)
-#  if (TAO_HAS_MINIMUM_CORBA == 0)
 #    define TAO_HAS_DIOP 1
-#  else
-#    define TAO_HAS_DIOP 0
-#  endif /* TAO_HAS_MINIMUM_CORBA == 1 */
 #endif  /* !TAO_HAS_DIOP */
 
 
