@@ -95,7 +95,7 @@ test (ACE_Configuration *config)
 
   if (config->get_binary_value (testsection,
                                 ACE_TEXT ("binvalue"),
- (void*&) data_out,
+                                (void*&) data_out,
                                 length))
     return -10;
 
@@ -299,7 +299,6 @@ run_tests (void)
   }
 
 #endif /* ACE_WIN32 */
-
   // Test Heap version
   ACE_Configuration_Heap heap_config;
 

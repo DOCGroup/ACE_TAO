@@ -1,3 +1,9 @@
+Sun Apr 15 19:33:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Configuration.cpp,
+  	* ace/Configuration_Import_Export.cpp: Fixed some warnings
+	  that show up with G++.  Thanks to Carlos for reporting this.
+
 Sun Apr 15 17:13:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
