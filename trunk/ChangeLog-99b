@@ -1,3 +1,12 @@
+Tue Feb 09 16:54:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * ace/CDR_Stream.cpp:
+          Put the 'XXX_DISABLE_SWAP_ON_READ' code back into the
+          ACE_INputCDR methods read_array(), read_2(), read_4(),
+          read_8() and read_16(). I didn't realize at first how
+          crucial that is to the Boeing folks. Thanks to Carlos
+          for bringing this to my attention.
+
 Tue Feb 09 16:07:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Synch.{h,i,cpp}: Removed classes ACE_Null_Mutex_Guard and
