@@ -981,7 +981,7 @@ sub create_kit () {
         }
 
       # Reset it again with autoconf files
-      chomp ($release_files = `$regmake -f ACE_wrappers/Release show_autoconf_release_files`);
+      chomp ($release_files = `$regmake -f ACE_wrappers/Release show_release_files`);
 
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
