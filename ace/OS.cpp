@@ -5197,7 +5197,7 @@ ACE_OS_WString::ACE_OS_WString (const ACE_USHORT16 *s)
   size_t len = ACE_OS::strlen (s);
   ACE_NEW (this->rep_, char[len]);
   for (size_t i = 0; i < len; i++)
-    this->rep_[i] = s[i];
+    this->rep_[i] = ACE_static_cast (char, s[i]);
 
   this->rep_[len] = '\0';
   return;

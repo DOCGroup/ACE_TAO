@@ -1,7 +1,7 @@
 Sat Feb 20 02:53:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (ACE_OS_WString): Need to add statis cast when
-	  converting from wchar to char to eliminate warnings from Win98.
+	* ace/OS.cpp (ACE_OS_WString): Need to add a statis cast when
+	  converting from wchar to char to eliminate the warning from Win98.
 
 	* ace/config-win32-common.h: Do not check for library type on CE.
 
