@@ -1,5 +1,5 @@
 /**
- * @file RT_Class.h
+ * @file RT_Class.inl
  *
  * $Id$
  *
