@@ -66,18 +66,18 @@ CORBA_Policy_ptr CORBA_Policy::_nil (void)
   return (CORBA_Policy_ptr)NULL;
 } // end of _nil
 
-static const TAO_Param_Data _get_CORBA_Policy_policy_type_paramdata [] =
-{
-  {CORBA::_tc_PolicyType, PARAM_RETURN, 0}
-}; // CORBA_Policy_policy_type_paramdata
-
-static const TAO_Call_Data _get_CORBA_Policy_policy_type_calldata =
-{"_get_policy_type", 1, 1, _get_CORBA_Policy_policy_type_paramdata, 0, 0};
-
 CORBA::PolicyType CORBA_Policy::policy_type (
     CORBA::Environment &_tao_environment
    )
 {
+  static const TAO_Param_Data _get_CORBA_Policy_policy_type_paramdata [] =
+  {
+    {CORBA::_tc_PolicyType, PARAM_RETURN, 0}
+  }; // CORBA_Policy_policy_type_paramdata
+
+  static const TAO_Call_Data _get_CORBA_Policy_policy_type_calldata =
+  {"_get_policy_type", 1, 1, _get_CORBA_Policy_policy_type_paramdata, 0, 0};
+
   CORBA::PolicyType _tao_retval = 0;
   STUB_Object *istub = this->stubobj (_tao_environment);
   if (istub)
@@ -91,18 +91,18 @@ CORBA::PolicyType CORBA_Policy::policy_type (
   return _tao_retval;
 }
 
-static const TAO_Param_Data CORBA_Policy_copy_paramdata [] =
-{
-  {CORBA::_tc_Policy, PARAM_RETURN, 0}
-}; // CORBA_Policy_copy_paramdata
-
-static const TAO_Call_Data CORBA_Policy_copy_calldata =
-{"copy", 1, 1, CORBA_Policy_copy_paramdata, 0, 0};
-
 CORBA_Policy_ptr CORBA_Policy::copy (
     CORBA::Environment &_tao_environment
    )
 {
+  static const TAO_Param_Data CORBA_Policy_copy_paramdata [] =
+  {
+    {CORBA::_tc_Policy, PARAM_RETURN, 0}
+  }; // CORBA_Policy_copy_paramdata
+
+  static const TAO_Call_Data CORBA_Policy_copy_calldata =
+  {"copy", 1, 1, CORBA_Policy_copy_paramdata, 0, 0};
+
   CORBA_Policy_ptr _tao_retval = CORBA_Policy::_nil ();
   STUB_Object *istub = this->stubobj (_tao_environment);
   if (istub)
@@ -119,18 +119,18 @@ CORBA_Policy_ptr CORBA_Policy::copy (
   return _tao_retval;
 }
 
-static const TAO_Param_Data CORBA_Policy_destroy_paramdata [] =
-{
-  {CORBA::_tc_void, PARAM_RETURN, 0}
-}; // CORBA_Policy_destroy_paramdata
-
-static const TAO_Call_Data CORBA_Policy_destroy_calldata =
-{"destroy", 1, 1, CORBA_Policy_destroy_paramdata, 0, 0};
-
 void CORBA_Policy::destroy (
     CORBA::Environment &_tao_environment
    )
 {
+  static const TAO_Param_Data CORBA_Policy_destroy_paramdata [] =
+  {
+    {CORBA::_tc_void, PARAM_RETURN, 0}
+  }; // CORBA_Policy_destroy_paramdata
+
+  static const TAO_Call_Data CORBA_Policy_destroy_calldata =
+  {"destroy", 1, 1, CORBA_Policy_destroy_paramdata, 0, 0};
+
   STUB_Object *istub = this->stubobj (_tao_environment);
   if (istub)
   {

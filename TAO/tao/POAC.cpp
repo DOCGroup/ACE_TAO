@@ -239,15 +239,15 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_bind (const char
   return PortableServer::ThreadPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_ThreadPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_ThreadPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_ThreadPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_ThreadPolicy_value_paramdata, 0, 0};
-
 PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_ThreadPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_ThreadPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_ThreadPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_ThreadPolicy_value_paramdata, 0, 0};
+
   PortableServer::ThreadPolicyValue retval;
   STUB_Object *istub;
 
@@ -343,15 +343,15 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_bind (const 
   return PortableServer::LifespanPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_LifespanPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_LifespanPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_LifespanPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_LifespanPolicy_value_paramdata, 0, 0};
-
 PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_LifespanPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_LifespanPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_LifespanPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_LifespanPolicy_value_paramdata, 0, 0};
+
   PortableServer::LifespanPolicyValue retval;
   STUB_Object *istub;
 
@@ -447,15 +447,15 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_bind
   return PortableServer::IdUniquenessPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_IdUniquenessPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_IdUniquenessPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_IdUniquenessPolicy_value_paramdata, 0, 0};
-
 PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_IdUniquenessPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_IdUniquenessPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_IdUniquenessPolicy_value_paramdata, 0, 0};
+
   PortableServer::IdUniquenessPolicyValue retval;
   STUB_Object *istub;
 
@@ -551,15 +551,15 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_bind
   return PortableServer::IdAssignmentPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_IdAssignmentPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_IdAssignmentPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_IdAssignmentPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_IdAssignmentPolicy_value_paramdata, 0, 0};
-
 PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_IdAssignmentPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_IdAssignmentPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_IdAssignmentPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_IdAssignmentPolicy_value_paramdata, 0, 0};
+
   PortableServer::IdAssignmentPolicyValue retval;
   STUB_Object *istub;
 
@@ -655,15 +655,15 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
   return PortableServer::ImplicitActivationPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_ImplicitActivationPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_ImplicitActivationPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_ImplicitActivationPolicy_value_paramdata, 0, 0};
-
 PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivationPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_ImplicitActivationPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_ImplicitActivationPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_ImplicitActivationPolicy_value_paramdata, 0, 0};
+
   PortableServer::ImplicitActivationPolicyValue retval;
   STUB_Object *istub;
 
@@ -759,15 +759,15 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
   return PortableServer::ServantRetentionPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_ServantRetentionPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_ServantRetentionPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_ServantRetentionPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_ServantRetentionPolicy_value_paramdata, 0, 0};
-
 PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_ServantRetentionPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_ServantRetentionPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_ServantRetentionPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_ServantRetentionPolicy_value_paramdata, 0, 0};
+
   PortableServer::ServantRetentionPolicyValue retval;
   STUB_Object *istub;
 
@@ -865,15 +865,15 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
   return PortableServer::RequestProcessingPolicy::_narrow (objref, env);
 }
 
-static const TAO_Param_Data _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_RequestProcessingPolicyValue, PARAM_RETURN, 0}};
-
-static const TAO_Call_Data _get_PortableServer_RequestProcessingPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_RequestProcessingPolicy_value_paramdata, 0, 0};
-
 PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPolicy::value(CORBA::Environment &env)
 {
+  static const TAO_Param_Data _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_RequestProcessingPolicyValue, PARAM_RETURN, 0}};
+
+  static const TAO_Call_Data _get_PortableServer_RequestProcessingPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_RequestProcessingPolicy_value_paramdata, 0, 0};
+
   PortableServer::RequestProcessingPolicyValue retval;
   STUB_Object *istub;
 
@@ -1827,16 +1827,16 @@ PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &e
   return PortableServer::POA::_nil ();
 }
 
-static const TAO_Param_Data PortableServer_Current_get_object_id_paramdata [] =
-{
-  {PortableServer::_tc_ObjectId, PARAM_RETURN, sizeof (PortableServer::ObjectId)}
-};
-
-static const TAO_Call_Data PortableServer_Current_get_object_id_calldata =
-{"get_object_id", 1, 1, PortableServer_Current_get_object_id_paramdata, 0, 0};
-
 PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Environment &env)
 {
+  static const TAO_Param_Data PortableServer_Current_get_object_id_paramdata [] =
+  {
+    {PortableServer::_tc_ObjectId, PARAM_RETURN, sizeof (PortableServer::ObjectId)}
+  };
+
+  static const TAO_Call_Data PortableServer_Current_get_object_id_calldata =
+  {"get_object_id", 1, 1, PortableServer_Current_get_object_id_paramdata, 0, 0};
+
   PortableServer::ObjectId *retval = 0;
   STUB_Object *istub;
 

@@ -28,13 +28,6 @@ POA_PortableServer::CurrentBase::CurrentBase (void)
   this->optable_ = &tao_PortableServer_CurrentBase_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_CurrentBase_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_CurrentBase_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_CurrentBase_is_a_paramdata};
 void POA_PortableServer::CurrentBase::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -42,6 +35,13 @@ void POA_PortableServer::CurrentBase::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_CurrentBase_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_CurrentBase_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_CurrentBase_is_a_paramdata};
   POA_PortableServer::CurrentBase_ptr  _tao_impl = (POA_PortableServer::CurrentBase_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -160,21 +160,21 @@ POA_PortableServer::ThreadPolicy::ThreadPolicy (void)
   this->optable_ = &tao_PortableServer_ThreadPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_ThreadPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_ThreadPolicyValue, 0, 0}
-}; // PortableServer_ThreadPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_ThreadPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_ThreadPolicy_value_paramdata};
-
 void POA_PortableServer::ThreadPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &_tao_environment
-)
+    )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_ThreadPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_ThreadPolicyValue, 0, 0}
+  }; // PortableServer_ThreadPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_ThreadPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_ThreadPolicy_value_paramdata};
+
   POA_PortableServer::ThreadPolicy *_tao_impl = (POA_PortableServer::ThreadPolicy *)_tao_object_reference;
   PortableServer::ThreadPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -193,20 +193,20 @@ void POA_PortableServer::ThreadPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_ThreadPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_ThreadPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_ThreadPolicy_is_a_paramdata};
 void POA_PortableServer::ThreadPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /*context*/,
     CORBA::Environment &_tao_environment
-  )
+    )
 {
+  static const TAO_Param_Data_Skel PortableServer_ThreadPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ThreadPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ThreadPolicy_is_a_paramdata};
   POA_PortableServer::ThreadPolicy_ptr  _tao_impl = (POA_PortableServer::ThreadPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -362,14 +362,6 @@ POA_PortableServer::LifespanPolicy::LifespanPolicy (void)
   this->optable_ = &tao_PortableServer_LifespanPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_LifespanPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_LifespanPolicyValue, 0, 0}
-}; // PortableServer_LifespanPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_LifespanPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_LifespanPolicy_value_paramdata};
-
 void POA_PortableServer::LifespanPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -377,6 +369,14 @@ void POA_PortableServer::LifespanPolicy::_get_value_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_LifespanPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_LifespanPolicyValue, 0, 0}
+  }; // PortableServer_LifespanPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_LifespanPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_LifespanPolicy_value_paramdata};
+
   POA_PortableServer::LifespanPolicy *_tao_impl = (POA_PortableServer::LifespanPolicy *)_tao_object_reference;
   PortableServer::LifespanPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -395,13 +395,6 @@ void POA_PortableServer::LifespanPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_LifespanPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_LifespanPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_LifespanPolicy_is_a_paramdata};
 void POA_PortableServer::LifespanPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -409,6 +402,13 @@ void POA_PortableServer::LifespanPolicy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_LifespanPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_LifespanPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_LifespanPolicy_is_a_paramdata};
   POA_PortableServer::LifespanPolicy_ptr  _tao_impl = (POA_PortableServer::LifespanPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -563,14 +563,6 @@ POA_PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void)
   this->optable_ = &tao_PortableServer_IdUniquenessPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_IdUniquenessPolicyValue, 0, 0}
-}; // PortableServer_IdUniquenessPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_IdUniquenessPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_IdUniquenessPolicy_value_paramdata};
-
 void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -578,6 +570,14 @@ void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_IdUniquenessPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_IdUniquenessPolicyValue, 0, 0}
+  }; // PortableServer_IdUniquenessPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_IdUniquenessPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_IdUniquenessPolicy_value_paramdata};
+
   POA_PortableServer::IdUniquenessPolicy *_tao_impl = (POA_PortableServer::IdUniquenessPolicy *)_tao_object_reference;
   PortableServer::IdUniquenessPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -596,13 +596,6 @@ void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_IdUniquenessPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_IdUniquenessPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_IdUniquenessPolicy_is_a_paramdata};
 void POA_PortableServer::IdUniquenessPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -610,6 +603,13 @@ void POA_PortableServer::IdUniquenessPolicy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_IdUniquenessPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_IdUniquenessPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_IdUniquenessPolicy_is_a_paramdata};
   POA_PortableServer::IdUniquenessPolicy_ptr  _tao_impl = (POA_PortableServer::IdUniquenessPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -764,14 +764,6 @@ POA_PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void)
   this->optable_ = &tao_PortableServer_IdAssignmentPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_IdAssignmentPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_IdAssignmentPolicyValue, 0, 0}
-}; // PortableServer_IdAssignmentPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_IdAssignmentPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_IdAssignmentPolicy_value_paramdata};
-
 void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -779,6 +771,14 @@ void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_IdAssignmentPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_IdAssignmentPolicyValue, 0, 0}
+  }; // PortableServer_IdAssignmentPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_IdAssignmentPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_IdAssignmentPolicy_value_paramdata};
+
   POA_PortableServer::IdAssignmentPolicy *_tao_impl = (POA_PortableServer::IdAssignmentPolicy *)_tao_object_reference;
   PortableServer::IdAssignmentPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -797,13 +797,6 @@ void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_IdAssignmentPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_IdAssignmentPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_IdAssignmentPolicy_is_a_paramdata};
 void POA_PortableServer::IdAssignmentPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -811,6 +804,13 @@ void POA_PortableServer::IdAssignmentPolicy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_IdAssignmentPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_IdAssignmentPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_IdAssignmentPolicy_is_a_paramdata};
   POA_PortableServer::IdAssignmentPolicy_ptr  _tao_impl = (POA_PortableServer::IdAssignmentPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -965,21 +965,21 @@ POA_PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
   this->optable_ = &tao_PortableServer_ImplicitActivationPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_ImplicitActivationPolicyValue, 0, 0}
-}; // PortableServer_ImplicitActivationPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_ImplicitActivationPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_ImplicitActivationPolicy_value_paramdata};
-
 void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &_tao_environment
-)
+    )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_ImplicitActivationPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_ImplicitActivationPolicyValue, 0, 0}
+  }; // PortableServer_ImplicitActivationPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_ImplicitActivationPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_ImplicitActivationPolicy_value_paramdata};
+
   POA_PortableServer::ImplicitActivationPolicy *_tao_impl = (POA_PortableServer::ImplicitActivationPolicy *)_tao_object_reference;
   PortableServer::ImplicitActivationPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -998,13 +998,6 @@ void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_ImplicitActivationPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_ImplicitActivationPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_ImplicitActivationPolicy_is_a_paramdata};
 void POA_PortableServer::ImplicitActivationPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -1012,6 +1005,13 @@ void POA_PortableServer::ImplicitActivationPolicy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_ImplicitActivationPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ImplicitActivationPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ImplicitActivationPolicy_is_a_paramdata};
   POA_PortableServer::ImplicitActivationPolicy_ptr  _tao_impl = (POA_PortableServer::ImplicitActivationPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -1166,14 +1166,6 @@ POA_PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
   this->optable_ = &tao_PortableServer_ServantRetentionPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_ServantRetentionPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_ServantRetentionPolicyValue, 0, 0}
-}; // PortableServer_ServantRetentionPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_ServantRetentionPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_ServantRetentionPolicy_value_paramdata};
-
 void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -1181,6 +1173,14 @@ void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_ServantRetentionPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_ServantRetentionPolicyValue, 0, 0}
+  }; // PortableServer_ServantRetentionPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_ServantRetentionPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_ServantRetentionPolicy_value_paramdata};
+
   POA_PortableServer::ServantRetentionPolicy *_tao_impl = (POA_PortableServer::ServantRetentionPolicy *)_tao_object_reference;
   PortableServer::ServantRetentionPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -1199,13 +1199,6 @@ void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_ServantRetentionPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_ServantRetentionPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_ServantRetentionPolicy_is_a_paramdata};
 void POA_PortableServer::ServantRetentionPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -1213,6 +1206,13 @@ void POA_PortableServer::ServantRetentionPolicy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_ServantRetentionPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantRetentionPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantRetentionPolicy_is_a_paramdata};
   POA_PortableServer::ServantRetentionPolicy_ptr  _tao_impl = (POA_PortableServer::ServantRetentionPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -1367,14 +1367,6 @@ POA_PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
   this->optable_ = &tao_PortableServer_RequestProcessingPolicy_optable;
 }
 
-static const TAO_Param_Data_Skel _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
-{
-  {PortableServer::_tc_RequestProcessingPolicyValue, 0, 0}
-}; // PortableServer_RequestProcessingPolicy_value_paramdata
-
-static const TAO_Call_Data_Skel _get_PortableServer_RequestProcessingPolicy_value_calldata =
-{"_get_value", 1, 1, _get_PortableServer_RequestProcessingPolicy_value_paramdata};
-
 void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -1382,6 +1374,14 @@ void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel _get_PortableServer_RequestProcessingPolicy_value_paramdata [] =
+  {
+    {PortableServer::_tc_RequestProcessingPolicyValue, 0, 0}
+  }; // PortableServer_RequestProcessingPolicy_value_paramdata
+
+  static const TAO_Call_Data_Skel _get_PortableServer_RequestProcessingPolicy_value_calldata =
+  {"_get_value", 1, 1, _get_PortableServer_RequestProcessingPolicy_value_paramdata};
+
   POA_PortableServer::RequestProcessingPolicy *_tao_impl = (POA_PortableServer::RequestProcessingPolicy *)_tao_object_reference;
   PortableServer::RequestProcessingPolicyValue _tao_retval;
   _tao_server_request.demarshal (
@@ -1400,13 +1400,6 @@ void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_RequestProcessingPolicy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_RequestProcessingPolicy_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_RequestProcessingPolicy_is_a_paramdata};
 void POA_PortableServer::RequestProcessingPolicy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -1414,6 +1407,13 @@ void POA_PortableServer::RequestProcessingPolicy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_RequestProcessingPolicy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_RequestProcessingPolicy_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_RequestProcessingPolicy_is_a_paramdata};
   POA_PortableServer::RequestProcessingPolicy_ptr  _tao_impl = (POA_PortableServer::RequestProcessingPolicy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -1564,13 +1564,6 @@ POA_PortableServer::POAManager::POAManager (void)
   this->optable_ = &tao_PortableServer_POAManager_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_POAManager_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_POAManager_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_POAManager_is_a_paramdata};
 void POA_PortableServer::POAManager::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -1578,6 +1571,13 @@ void POA_PortableServer::POAManager::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_POAManager_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_POAManager_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_POAManager_is_a_paramdata};
   POA_PortableServer::POAManager_ptr  _tao_impl = (POA_PortableServer::POAManager_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -1736,13 +1736,6 @@ POA_PortableServer::AdapterActivator::AdapterActivator (void)
   this->optable_ = &tao_PortableServer_AdapterActivator_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_AdapterActivator_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_AdapterActivator_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_AdapterActivator_is_a_paramdata};
 void POA_PortableServer::AdapterActivator::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -1750,6 +1743,13 @@ void POA_PortableServer::AdapterActivator::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_AdapterActivator_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_AdapterActivator_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_AdapterActivator_is_a_paramdata};
   POA_PortableServer::AdapterActivator_ptr  _tao_impl = (POA_PortableServer::AdapterActivator_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -1877,13 +1877,6 @@ POA_PortableServer::ServantManager::ServantManager (void)
   this->optable_ = &tao_PortableServer_ServantManager_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_ServantManager_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_ServantManager_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_ServantManager_is_a_paramdata};
 void POA_PortableServer::ServantManager::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -1891,6 +1884,13 @@ void POA_PortableServer::ServantManager::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_ServantManager_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantManager_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantManager_is_a_paramdata};
   POA_PortableServer::ServantManager_ptr  _tao_impl = (POA_PortableServer::ServantManager_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -2005,13 +2005,6 @@ POA_PortableServer::ServantActivator::ServantActivator (void)
   this->optable_ = &tao_PortableServer_ServantActivator_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_ServantActivator_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_ServantActivator_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_ServantActivator_is_a_paramdata};
 void POA_PortableServer::ServantActivator::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -2019,6 +2012,13 @@ void POA_PortableServer::ServantActivator::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_ServantActivator_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantActivator_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantActivator_is_a_paramdata};
   POA_PortableServer::ServantActivator_ptr  _tao_impl = (POA_PortableServer::ServantActivator_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -2169,13 +2169,6 @@ POA_PortableServer::ServantLocator::ServantLocator (void)
   this->optable_ = &tao_PortableServer_ServantLocator_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_ServantLocator_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_ServantLocator_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_ServantLocator_is_a_paramdata};
 void POA_PortableServer::ServantLocator::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -2183,6 +2176,13 @@ void POA_PortableServer::ServantLocator::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_ServantLocator_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantLocator_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantLocator_is_a_paramdata};
   POA_PortableServer::ServantLocator_ptr  _tao_impl = (POA_PortableServer::ServantLocator_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -2337,13 +2337,6 @@ POA_PortableServer::POA::POA (void)
   this->optable_ = &tao_PortableServer_POA_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_POA_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_POA_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_POA_is_a_paramdata};
 void POA_PortableServer::POA::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -2351,6 +2344,13 @@ void POA_PortableServer::POA::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_POA_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_POA_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_POA_is_a_paramdata};
   POA_PortableServer::POA_ptr  _tao_impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
@@ -2790,14 +2790,6 @@ POA_PortableServer::Current::Current (void)
   this->optable_ = &tao_PortableServer_Current_optable;
 }
 
-static const TAO_Param_Data_Skel PortableServer_Current_get_POA_paramdata [] =
-{
-  {PortableServer::_tc_POA, 0, 0}
-}; // PortableServer_Current_get_POA_paramdata
-
-static const TAO_Call_Data_Skel PortableServer_Current_get_POA_calldata =
-{"get_POA", 1, 1, PortableServer_Current_get_POA_paramdata};
-
 void POA_PortableServer::Current::get_POA_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -2805,6 +2797,14 @@ void POA_PortableServer::Current::get_POA_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel PortableServer_Current_get_POA_paramdata [] =
+  {
+    {PortableServer::_tc_POA, 0, 0}
+  }; // PortableServer_Current_get_POA_paramdata
+
+  static const TAO_Call_Data_Skel PortableServer_Current_get_POA_calldata =
+  {"get_POA", 1, 1, PortableServer_Current_get_POA_paramdata};
+
   POA_PortableServer::Current *_tao_impl = (POA_PortableServer::Current *)_tao_object_reference;
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   _tao_server_request.demarshal (
@@ -2823,14 +2823,6 @@ void POA_PortableServer::Current::get_POA_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_Current_get_object_id_paramdata [] =
-{
-  {PortableServer::_tc_ObjectId, 0, 0}
-}; // PortableServer_Current_get_object_id_paramdata
-
-static const TAO_Call_Data_Skel PortableServer_Current_get_object_id_calldata =
-{"get_object_id", 1, 1, PortableServer_Current_get_object_id_paramdata};
-
 void POA_PortableServer::Current::get_object_id_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -2838,6 +2830,14 @@ void POA_PortableServer::Current::get_object_id_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel PortableServer_Current_get_object_id_paramdata [] =
+  {
+    {PortableServer::_tc_ObjectId, 0, 0}
+  }; // PortableServer_Current_get_object_id_paramdata
+
+  static const TAO_Call_Data_Skel PortableServer_Current_get_object_id_calldata =
+  {"get_object_id", 1, 1, PortableServer_Current_get_object_id_paramdata};
+
   POA_PortableServer::Current *_tao_impl = (POA_PortableServer::Current *)_tao_object_reference;
   PortableServer::ObjectId *_tao_retval = 0;
   _tao_server_request.demarshal (
@@ -2856,13 +2856,6 @@ void POA_PortableServer::Current::get_object_id_skel (
   );
 }
 
-static const TAO_Param_Data_Skel PortableServer_Current_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel PortableServer_Current_is_a_calldata =
-{"_is_a", 1, 2, PortableServer_Current_is_a_paramdata};
 void POA_PortableServer::Current::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -2870,6 +2863,13 @@ void POA_PortableServer::Current::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel PortableServer_Current_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_Current_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_Current_is_a_paramdata};
   POA_PortableServer::Current_ptr  _tao_impl = (POA_PortableServer::Current_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
