@@ -128,7 +128,7 @@ ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
                                      const TAO_Profile *that_p)
 {
-  CORBA::Boolean retval = 0;
+  CORBA::Boolean retval = 1;
 
   if (this->ft_service_.service_callback ())
     {

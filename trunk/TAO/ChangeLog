@@ -1,3 +1,10 @@
+Fri Aug  1 22:45:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.i (is_profile_equivalent): Intialize the default
+	  value to be true. Incorrect initializations lead to simple
+	  errors with oebjref comparisions which showed up in our daily
+	  builds. 
+
 Fri Aug  1 22:33:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Sequence.cpp: Fixed a link error due to a wrong inline
