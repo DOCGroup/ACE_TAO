@@ -8,6 +8,10 @@ Tue Mar 25 08:22:03 2003  Ossama Othman  <ossama@uci.edu>
 	  "$GXX"' instances.  Addresses some problems in non-GNU compiler
 	  builds.
 
+	  Replaced all instances "egrep" with the `configure' script
+	  defined "$EGREP".  This improves the `configure' script's
+	  portability.
+
 Fri Mar 21 23:17:26 2003  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Changed <test -n "$GXX"> to <test "$GXX" = yes> to
