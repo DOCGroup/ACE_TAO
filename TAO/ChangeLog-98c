@@ -1,3 +1,37 @@
+Fri Apr  3 08:59:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.cpp: 
+	  Null strings are transmitted as empty strings.
+	  Fixed 
+
+	* tao/IIOP_ORB.cpp: 
+	  Ensure that CDR buffer created from the IOR string is properly
+	  aligned.
+
+	* tao/Server_Request.cpp: 
+	  More checking for exceptions while decoding parameters and we
+	  print an error message if decoding fails.
+
+	* tao/Typecode.cpp: 
+	  Only the first byte of the encapsulation stores the byte order,
+	  the next three bytes are ignored because the <kind> is stored as
+	  a long.
+
+	* tao/decode.cpp: 
+	  Removed dead code, improve error message when decoding object
+	  references and fix an off by one error in ObjRef::decode.
+
+	* tao/encode.cpp: 
+	  When encoding Object References an encapsulated stream is
+	  created in place, I debugged the computation of the length for
+	  that stream and left some debug messages commented out.
+	  The support for encoding null strings and wstrings as empty
+	  strings is in the CDR classes, no need to duplicate the effort
+	  here.
+
+	* tao/Connect.cpp: 
+	  Cosmetic changes.
+
 Fri Apr 03 09:01:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
