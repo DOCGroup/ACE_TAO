@@ -13,19 +13,19 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
-#if ! defined (__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
-#endif
+#endif /* ! ACE_MT_SAFE */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
+#endif /* ! ACE_NTRACE */
 
 // Include unistd.h to define _POSIX_C_SOURCE.
 #include <unistd.h>
@@ -41,53 +41,64 @@
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 # define ACE_TEMPLATES_REQUIRE_SOURCE
 # define ACE_HAS_ONEARG_SIGWAIT
-#else /* ! __GNUG__ */
+#elif defined (__DECCXX)
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 # define DEC_CXX
-#endif /* ! __GNUG__ */
-# if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
-    // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
-#   define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#   define ACE_HAS_BROKEN_IF_HEADER
-#   define ACE_HAS_BROKEN_R_ROUTINES
-#   define ACE_HAS_BROKEN_T_ERRNO
-#   define ACE_HAS_PTHREADS
-#   define ACE_HAS_PTHREADS_1003_DOT_1C
-#   define ACE_HAS_PTHREAD_SIGMASK
-#   define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#   define ACE_LACKS_T_ERRNO
-#   define ACE_POLL_IS_BROKEN
-#   define DIGITAL_UNIX
-    // DJT removed this due to some minor issues related to the
-    // definitions of timestruc_t and tid_t in procfs.h not sure what
-    // functionality is lost?  Platform supports <sys/procfs.h>
-    //#define ACE_HAS_PROC_FS
-# else /* _POSIX_C_SOURCE < 199506L */
+# if (__DECCXX_VER >= 60090010)
+    // DEC CXX 6.0 supports exceptions, etc., by default
+#   define ACE_HAS_ANSI_CASTS
+#   define ACE_HAS_EXCEPTIONS
+#   define ACE_HAS_STDCPP_STL_INCLUDES
+#   define ACE_HAS_TEMPLATE_TYPEDEFS
+#   define ACE_HAS_TYPENAME_KEYWORD
+# endif /* __DECCXX_VER >= 60090010 */
+#else  /* ! __GNUG__ && ! __DECCXX */
+# error unsupported compiler on Digital Unix
+#endif /* ! __GNUG__ && ! __DECCXX */
+
+#if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
+  // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
+# define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+# define ACE_HAS_BROKEN_IF_HEADER
+# define ACE_HAS_BROKEN_R_ROUTINES
+# define ACE_HAS_BROKEN_T_ERRNO
+# define ACE_HAS_PTHREADS
+# define ACE_HAS_PTHREADS_1003_DOT_1C
+# define ACE_HAS_PTHREAD_SIGMASK
+# define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+# define ACE_LACKS_T_ERRNO
+# define ACE_POLL_IS_BROKEN
+# define DIGITAL_UNIX
+  // DJT removed this due to some minor issues related to the
+  // definitions of timestruc_t and tid_t in procfs.h not sure what
+  // functionality is lost?  Platform supports <sys/procfs.h>
+  //#define ACE_HAS_PROC_FS
+#else /* _POSIX_C_SOURCE < 199506L */
   // cxx with DCE threads . . .
   // This ACE configuration is only supported with cxx; it has not been
   // test with g++.
-#   define ACE_HAS_BROKEN_MSG_H
-#   define ACE_HAS_BROKEN_POSIX_TIME
-#   define ACE_HAS_DCETHREADS
-#   define ACE_HAS_DCE_DRAFT4_THREADS
-#   define ACE_HAS_GETPAGESIZE
-#   define ACE_HAS_ONEARG_SIGWAIT
-#   define ACE_HAS_PROC_FS
-#   define ACE_HAS_PTHREAD_EQUAL
-#   define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
-#   define ACE_HAS_PTHREAD_T
-#   define ACE_HAS_SETKIND_NP
-#   define ACE_HAS_THREAD_SELF
-#   define ACE_HAS_TID_T
-#   define ACE_LACKS_CONST_TIMESPEC_PTR
-#   define ACE_LACKS_GETPGID
-#   define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#   define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#   define ACE_LACKS_SETSCHED
-#   define ACE_LACKS_SIGNED_CHAR
-#   define ACE_LACKS_SYSV_MSQ_PROTOS
-# endif /* _POSIX_C_SOURCE < 199506L */
+# define ACE_HAS_BROKEN_MSG_H
+# define ACE_HAS_BROKEN_POSIX_TIME
+# define ACE_HAS_DCETHREADS
+# define ACE_HAS_DCE_DRAFT4_THREADS
+# define ACE_HAS_GETPAGESIZE
+# define ACE_HAS_ONEARG_SIGWAIT
+# define ACE_HAS_PROC_FS
+# define ACE_HAS_PTHREAD_EQUAL
+# define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
+# define ACE_HAS_PTHREAD_T
+# define ACE_HAS_SETKIND_NP
+# define ACE_HAS_THREAD_SELF
+# define ACE_HAS_TID_T
+# define ACE_LACKS_CONST_TIMESPEC_PTR
+# define ACE_LACKS_GETPGID
+# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+# define ACE_LACKS_SETSCHED
+# define ACE_LACKS_SIGNED_CHAR
+# define ACE_LACKS_SYSV_MSQ_PROTOS
+#endif /* _POSIX_C_SOURCE < 199506L */
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 // NOTE: ACE_HAS_64BIT_LONGS is deprecated.  Instead, use ACE_SIZEOF_LONG == 8.
