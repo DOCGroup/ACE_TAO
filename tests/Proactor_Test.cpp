@@ -83,7 +83,6 @@ static size_t threads = 1;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // Log options
-static int logflag  = 0; // 0 STDERR, 1 FILE
 static int loglevel = 0; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
@@ -1187,7 +1186,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #endif
       threads = 3;            // size of Proactor thread pool
       senders = 20;           // number of senders
-      logflag = 1;           // log to : 0 STDERR / 1 FILE
       loglevel = 0;           // log level : 0 full/ 1 only errors
       seconds = 2;            // time to run in seconds
       return 0;
