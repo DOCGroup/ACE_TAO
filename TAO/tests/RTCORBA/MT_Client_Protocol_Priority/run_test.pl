@@ -31,6 +31,12 @@ if ($^O eq "MSWin32") {
     $priority3 = 5;
 }
 
+if ($^O eq "dec_osf") {
+    $priority1 = 20;
+    $priority2 = 25;
+    $priority3 = 30;
+}
+
 # Clean up leftovers from previous runs.
 unlink $iorfile;
 unlink $data_file;
