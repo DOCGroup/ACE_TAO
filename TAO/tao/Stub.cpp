@@ -830,8 +830,6 @@ TAO_Stub::relative_roundtrip_timeout (void)
 {
   CORBA::Policy *result = 0;
 
-  this->policies_ = 0;
-
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)

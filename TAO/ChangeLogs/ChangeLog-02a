@@ -1,3 +1,24 @@
+Sun Mar 25 17:14:31 2001  Angelo Corsaro  <corsaro@danzon.cs.wustl.edu>
+
+	* tao/orbconf.h: 
+	  Updated the number associated to the RTCORBA macros to reflect
+	  the changes made by Frank in:
+       	  Sun Mar  4 13:29:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+	  This fix remove the inconsistencies that were currently present 
+	  in the constant associated to RTCORBA policies.
+	
+	* tao/Stub.cpp (relative_roundtrip_timeout): 
+	  Removed a line of code that was erroneously, setting 
+	  the policies holded by the stub to zero. This subtle bug
+	  a very weird behavior in certain cases because a call to this
+	  method would have wiped out totally the policies associated to 
+	  the Stub.
+
+	* tests/RTCORBA/Banded_Connections/run_test.pl: 
+	  Changed some of paramether passed by the script to the
+	  tests.
+
+
 Sun Mar 25 09:55:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IIOP_Connection_Handler.cpp:
