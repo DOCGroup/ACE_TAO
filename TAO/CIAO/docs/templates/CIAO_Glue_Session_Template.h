@@ -102,7 +102,7 @@ namespace CIAO_GLUE
   protected:
     CCM_[event type]Consumer_var executor_;
   };
-#end foreach [facet name]
+#end foreach [event type]
 
 
   //////////////////////////////////////////////////////////////////
@@ -138,16 +138,16 @@ namespace CIAO_GLUE
 
 #foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
 # if [receptacle name] is a simplex receptacle ('uses')
-    [uses type] get_connection_[receptacle name] ();
+    [uses type]_ptr get_connection_[receptacle name] ();
 # else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // [receptacle name]Connections typedef'ed as a sequence of
     // struct [receptacle name]Connection.
-    [receptacle name]Connections get_connections_[receptacle name] ();
+    [receptacle name]Connections *get_connections_[receptacle name] ();
 # endif [receptacle name]
 #end foreach [receptacle name] with [uses type]
 
 #foreach [event name] with [eventtype] in (list of all event sources) generate:
-    void push_[event name] (in [eventtype] ev);
+    void push_[event name] ([eventtype]_ptr ev);
 #end foreach [event name] with [eventtype]
 
     // Operations for ::Components::CCMContext
@@ -179,10 +179,10 @@ namespace CIAO_GLUE
 #foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
 # if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
-    void connect_[receptacle name] (in [uses type] c)
+    void connect_[receptacle name] ([uses type]_ptr c)
       raises (::Components::AlreadyConnected,
               ::Components::InvalidConnection);
-    [uses type] disconnect_[receptacle name] ()
+    [uses type]_ptr disconnect_[receptacle name] ()
       raises (::Components::NoConnection);
 
     // Simplex [receptacle name] connection
@@ -190,10 +190,10 @@ namespace CIAO_GLUE
 
 # else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie_ptr connect_[receptacle name] (in [uses type] c)
+    ::Components::Cookie_ptr connect_[receptacle name] ([uses type]_ptr c)
       raises (::Components::ExceedConnectionLimit,
               ::Components::InvalidConnection);
-    [uses type] disconnect_[receptacle name] (in ::Components::Cookie_ptr ck)
+    [uses type]_ptr disconnect_[receptacle name] (::Components::Cookie_ptr ck)
       raises (::Components::InvalidConnection);
 
     // Multiplex [receptacle name] connections
@@ -204,7 +204,7 @@ namespace CIAO_GLUE
 
     // Operations for emits interfaces.
 #foreach [emit name] with [eventtype] in (list of all emitters) generate:
-    void connect_[emit name] (in [eventtype]Consumer_ptr c)
+    void connect_[emit name] ([eventtype]Consumer_ptr c)
       raises (::Components::AlreadyConnected);
 
     [eventtype]Consumer_ptr disconnect_[emit name] ()
@@ -258,20 +258,20 @@ namespace CIAO_GLUE
 #foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
 # if [receptacle name] is a simplex receptacle ('uses')
     // Simplex [receptacle name] connection management operations
-    void connect_[receptacle name] (in [uses type] c)
+    void connect_[receptacle name] ([uses type]_ptr c)
       raises (::Components::AlreadyConnected,
               ::Components::InvalidConnection);
-    [uses type] disconnect_[receptacle name] ()
+    [uses type]_ptr disconnect_[receptacle name] ()
       raises (::Components::NoConnection);
-    [uses type] get_connection_[receptacle name] ();
+    [uses type]_ptr get_connection_[receptacle name] ();
 # else ([receptacle name] is a multiplex ('uses multiple') receptacle)
     // Multiplex [receptacle name] connection management operations
-    ::Components::Cookie_ptr connect_[receptacle name] (in [uses type] c)
+    ::Components::Cookie_ptr connect_[receptacle name] ([uses type]_ptr c)
       raises (::Components::ExceedConnectionLimit,
               ::Components::InvalidConnection);
-    [uses type] disconnect_[receptacle name] (in ::Components::Cookie_ptr ck)
+    [uses type]_ptr disconnect_[receptacle name] (::Components::Cookie_ptr ck)
       raises (::Components::InvalidConnection);
-    [receptacle name]Connections get_connections_[receptacle name] ();
+    [receptacle name]Connections *get_connections_[receptacle name] ();
 # endif [receptacle name]
 #end foreach [receptacle name] with [uses type]
 
@@ -282,7 +282,7 @@ namespace CIAO_GLUE
 
     // Operations for emits interfaces.
 #foreach [emit name] with [eventtype] in (list of all emitters) generate:
-    void connect_[emit name] (in [eventtype]Consumer_ptr c)
+    void connect_[emit name] ([eventtype]Consumer_ptr c)
       raises (::Components::AlreadyConnected);
 
     [eventtype]Consumer_ptr disconnect_[emit name] ()
