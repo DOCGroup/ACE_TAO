@@ -1,3 +1,8 @@
+Wed Feb 18 17:10:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* tao/tao_util.cpp (init): The ORB_Manager class does not create
+	it's own POA, but uses the default root POA instead.
+
 Wed Feb 18 16:02:34 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* Commented and indented the follwing files in orbsvcs/orbsvcs/
