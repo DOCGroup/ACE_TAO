@@ -19,8 +19,8 @@ if ($opt_h)
     exit 0;
 }
 
-$experiment_timeout = 120;
-$startup_timeout = 120;
+$experiment_timeout = 600;
+$startup_timeout = 600;
 
 if ($opt_n)
 {
@@ -74,7 +74,9 @@ $Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_io
 
 $Supplier = new PerlACE::Process ("../../../Driver/Notify_Tests_Driver");
 
-$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
+#$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
+
+#$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf -ORBDebugLevel 1";
 
 $Consumer = new PerlACE::Process ("../../../Driver/Notify_Tests_Driver");
 
@@ -158,13 +160,7 @@ if ($opt_o)
       @list=glob("*.dat");
       for $file (@list)
       {
-          copy ("$file", "$results_directory/$file");
-      }
-
-      @list=glob("*.conf");
-      for $file (@list)
-      {
-          copy ("$file", "$results_directory/$file");
+          move ("$file", "$results_directory/$file");
       }
   }
 

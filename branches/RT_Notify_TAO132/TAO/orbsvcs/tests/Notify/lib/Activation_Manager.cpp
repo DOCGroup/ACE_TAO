@@ -176,7 +176,7 @@ TAO_NS_Activation_Manager::activate_suppliers (void)
 }
 
 void
-TAO_NS_Activation_Manager::dump_stats (void)
+TAO_NS_Activation_Manager::dump_stats (int dump_samples)
 {
   char hostname[MAXHOSTNAMELEN];
   ACE_OS::hostname (hostname, MAXHOSTNAMELEN);
@@ -198,7 +198,7 @@ TAO_NS_Activation_Manager::dump_stats (void)
       if (sup_iter.next (sup_entry) != 0)
         {
           supplier = sup_entry->int_id_;
-          supplier->dump_stats (msg);
+          supplier->dump_stats (msg, dump_samples);
         }
     }
 
@@ -213,7 +213,7 @@ TAO_NS_Activation_Manager::dump_stats (void)
       if (cons_iter.next (cons_entry) != 0)
         {
           consumer = cons_entry->int_id_;
-          consumer->dump_stats (msg);
+          consumer->dump_stats (msg, dump_samples);
         }
     }
 }

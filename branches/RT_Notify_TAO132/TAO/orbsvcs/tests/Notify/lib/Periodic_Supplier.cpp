@@ -336,7 +336,7 @@ TAO_NS_Periodic_Supplier::svc (void)
 }
 
 void
-TAO_NS_Periodic_Supplier::dump_stats (ACE_TCHAR* msg)
+TAO_NS_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());
@@ -346,5 +346,5 @@ TAO_NS_Periodic_Supplier::dump_stats (ACE_TCHAR* msg)
   ACE_OS::sprintf (buf,"%s# : Supplier Name = %s, Proxy ID = %d, Event Type = %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d, deadlines missed = %d\n",
                    msg, this->name_.c_str (), this->proxy_id_, this->event_.type (), priority_, period_, exec_time_, phase_, iter_, load_, this->total_deadlines_missed_);
 
-  stats_.dump_samples (fname.c_str (), buf);
+  stats_.dump_samples (fname.c_str (), buf, dump_samples);
 }
