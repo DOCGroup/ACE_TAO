@@ -30,7 +30,6 @@ CAP_Handler::process_Capability (Deployment::Capability &cap)
     {
       XStr node_name (node->getNodeName ());
 
-      if (false);
       else if (node_name == XStr
                (ACE_TEXT ("Deployment:Capability")))
         {

@@ -28,7 +28,10 @@ void IR_Handler::process_ImplementationRequirement
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+        (ACE_TEXT ("Deployment:ImplementationRequirement")))
+        {
+        }
       // TODO:
       //      else if (node_name == XStr (ACE_TEXT ("resourceUsage")))
       //        RUK_Handler::process_ResourceUsageKind (this->iter_, ir.resourceUsage);

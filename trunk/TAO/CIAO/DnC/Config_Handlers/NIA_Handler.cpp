@@ -27,7 +27,10 @@ void NIA_Handler::process_NamedImplementationArtifact
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+        (ACE_TEXT ("Deployment:NamedImplementationArtifact")))
+        {
+        }
       else if
         (process_string(this->iter_, node_name, "name", nia.name));
       else if

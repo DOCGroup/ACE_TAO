@@ -29,8 +29,7 @@ void IAD_Handler::process_ImplementationArtifactDescription
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
-      else if (node_name == XStr 
+      if (node_name == XStr 
         (ACE_TEXT ("Deployment:ImplementationArtifactDescription")))
         {
         }

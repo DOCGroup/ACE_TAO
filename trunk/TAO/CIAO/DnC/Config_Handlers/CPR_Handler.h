@@ -78,15 +78,6 @@ public:
   /// Process the component package reference
   void process_ComponentPackageReference (::Deployment::ComponentPackageReference &cpr);
 
-  /// Process the UUID attribute
-  void process_requiredUUID (const XMLCh* UUID, ::Deployment::ComponentPackageReference &cpr);
-
-  /// Process the requirement name attribute
-  void process_requiredName (const XMLCh* name, ::Deployment::ComponentPackageReference &cpr);
-
-  /// Process the required type attribute
-  void process_requiredType (const XMLCh* type, ::Deployment::ComponentPackageReference &cpr);
-
 };
 
 END_DEPLOYMENT_NAMESPACE

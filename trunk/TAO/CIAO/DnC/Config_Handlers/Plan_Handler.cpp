@@ -111,7 +111,10 @@ void Plan_Handler::process_rdd
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:ResourceDeploymentDescription")))
+        {
+        }
       else if
         (process_string(iter, node_name, "requirementName", rdd.requirementName));
       else if
@@ -135,7 +138,10 @@ void Plan_Handler::process_irdd (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:InstanceResourceDeploymentDescription")))
+        {
+        }
       else if (node_name == "resourceUsage")
         RUK_Handler::process_ResourceUsageKind (iter, irdd.resourceUsage);
       else if
@@ -161,7 +167,10 @@ void Plan_Handler::process_add (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:ArtifactDeploymentDescription")))
+        {
+        }
       else if
         (process_string (iter, node_name, "name", add.name));
       else if
@@ -202,7 +211,10 @@ void Plan_Handler::process_idd (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:InstanceDeploymentDescription")))
+        {
+        }
       else if
         (process_string (iter, node_name, "name", idd.name));
       else if
@@ -249,7 +261,10 @@ void Plan_Handler::process_mdd
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:MonolithicDeploymentDescription")))
+        {
+        }
       else if
         (process_string(iter, node_name, "name", mdd.name));
       else if
@@ -296,7 +311,10 @@ void Plan_Handler::process_pspr (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:PlanSubcomponentPropertyReference")))
+        {
+        }
       else if
         (process_string(iter, node_name, "propertyName", pspr.propertyName));
       else if
@@ -321,7 +339,10 @@ void Plan_Handler::process_pspe (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:PlanSubcomponentPortEndpoint")))
+        {
+        }
       else if
         (process_string(iter, node_name, "portName", pspe.portName));
       else if
@@ -352,7 +373,10 @@ void Plan_Handler::process_ppm(DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:PlanPropertyMapping")))
+        {
+        }
       else if
         (process_string(iter, node_name, "name", ppm.name));
       else if
@@ -381,7 +405,10 @@ void Plan_Handler::process_crdd (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:ConnectionResourceDeploymentDescription")))
+        {
+        }
       else if
         (process_string(iter, node_name, "targetName", crdd.targetName));
       else if
@@ -407,7 +434,10 @@ void Plan_Handler::process_pcd (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      if (false);
+      if (node_name == XStr 
+          (ACE_TEXT ("Deployment:PlanConnectionDescription")))
+        {
+        }
       else if
         (process_string(iter, node_name, "name", pcd.name));
       else if
