@@ -1,3 +1,20 @@
+Thu Feb 27 07:25:21 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.h:
+	* tao/ORBInitInfo.inl:
+	* tao/ORBInitInfo.cpp:
+	* tao/PICurrent.h:
+	* tao/PICurrent.inl:
+	* tao/PICurrent.cpp:
+	* tao/PICurrent_ORBInitializer.cpp:
+
+	  Fixed problem where the ORBInitInfo object was not invalidated
+	  after post_init() was called on ORBInitializers, as required by
+	  the CORBA spec.
+
+	  This also fixes some build problems that were inadvertently
+	  introduced by a partial fix found in ORB.cpp.
+
 Thu Feb 27 09:09:44 2003  Pradeep Gore  <pradeep@oomworks.com>
 	
 	Summary of changes due to code review:

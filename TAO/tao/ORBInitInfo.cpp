@@ -25,7 +25,8 @@ TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
   : orb_core_ (orb_core),
     argc_ (argc),
     argv_ (argv),
-    codec_factory_ ()
+    codec_factory_ (),
+    slot_count_ (0)
 {
 }
 
@@ -219,7 +220,9 @@ TAO_ORBInitInfo::allocate_slot_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
 #if TAO_HAS_INTERCEPTORS == 1
-  return this->orb_core_->pi_current ()->allocate_slot_id ();
+  // No need to acquire a lock.  This only gets called during ORB
+  // initialization.  ORB initialization is already atomic.
+  return this->slot_count_++;
 #else
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (

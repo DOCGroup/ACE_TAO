@@ -59,14 +59,14 @@ class TAO_ServerRequest;
  * request interceptors, in addition to passing data from an
  * interceptor to the calling thread.
  */
-class TAO_Export TAO_PICurrent :
-  public virtual PortableInterceptor::Current,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_Export TAO_PICurrent
+  : public virtual PortableInterceptor::Current,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 
   /// Constructor.
-  TAO_PICurrent (TAO_ORB_Core *orb_core);
+  TAO_PICurrent (void);
 
   /**
    * @name PortableInterceptor::Current Methods
@@ -90,13 +90,6 @@ public:
                      PortableInterceptor::InvalidSlot));
   //@}
 
-  /// Allocate a new SlotId.
-  /* This reserves a slot in the data array.  This method is only
-   * invoked by TAO_ORBInitInfo::allocate_slot_id(), which is why it
-   * is protected.
-   */
-  PortableInterceptor::SlotId allocate_slot_id (void);
-
   /// Number of slots allocated in the slot table.
   PortableInterceptor::SlotId slot_count (void) const;
 
@@ -107,6 +100,10 @@ public:
   /// Verify the validity of the given SlotId.
   void check_validity (const PortableInterceptor::SlotId &id
                        ACE_ENV_ARG_DECL);
+
+  /// Initialize the PICurrent object.
+  void initialize (TAO_ORB_Core * orb_core,
+                   PortableInterceptor::SlotId sc);
 
 protected:
 
