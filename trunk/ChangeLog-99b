@@ -1,3 +1,11 @@
+Fri Jan 29 17:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Added protection against simultaneous executions of the script;
+	  it checks for .disable file on the $LOGDIR directory, if present
+	  it does not execute; if not present it creates one; the file is
+	  deleted at program termination.
+
 Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_GPERF.
