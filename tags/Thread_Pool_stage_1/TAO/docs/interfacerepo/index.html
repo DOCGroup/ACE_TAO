@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>Dynamic Any Status</title>
+<!-- $Id$ -->
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+
+<!-- *********************************** -->
+<a name="toc"><h2>Table of Contents</h2></a>
+<ul>
+  <li><a href="#current">Current Status</a>
+  <li><a href="#issues">Known Issues</a>
+  <li><a href="#ongoing">Ongoing work</a>
+  <li><a href="#future">Future Work</a>
+  <li><a href="#completed">Completed Work</a>
+</ul>
+<!-- *********************************** -->
+
+<hr>
+<center>
+<h1> <a name="interfacerepo"></a>Interface Repository</h1>
+
+Point of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
+
+<p>Last Update: June 11, 2001 </p>
+</center>
+
+
+The Interface Repository provides run-time information about IDL
+interfaces.  Using this information, it is possible for a program to
+encounter an object whose interface was not known when the program was
+compiled, yet, be able to determine what operations are valid on the
+object and invoke requests using the DII.
+
+<p><a href="tao_ifr.html">tao_ifr Guide</a> - Guide to the usage of, and command line options for, tao_ifr, the interface repository loader.</p>
+
+<!-- ============================================================ -->
+<a name="current"><h3>Current status:</h3></a>
+
+<ul>
+
+  <li><p>Fully compliant with OMG 2.4.2 spec.</p>
+  </li>
+
+  <li><p>Fully compatible with CorbaScript.</p>
+  </li>
+
+</ul>
+
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="issues"><h3>Known issues:</h3></a>
+
+<ul>
+
+<li> If, while processing an IDL file, tao_ifr discovers that the interface
+repository id of some declaration in that file already exists in the repository, the reason may be one of the following: (1) the existing entry is for a different type, and so there is a name clash with some repository entry which came from another IDL file; (2) both entries are for an interface declaration, in which case the new entry may be (a) a full definition of a forward declaration from the other IDl file or (b) there is a name clash. If the case is (2), then tao_ifr has no way of telling whether it has an instance of (a) or (b). We have chosen to follow the path taken by other ORB vendors - when tao_ifr comes across this situation, it will replace the old repository entry with the new one.</li><p>
+
+<li> With the chosen design, calling move() on a Contained IR object will
+invalidate the object reference, since the object ID is based on the path
+to the object in the database. This is not expected to be a serious problem
+in the forthcoming implementation of automatic IFR administration, but users
+should be aware of this, if they attempt to write their own IFR administration
+code.</li><p>
+
+</ul>
+
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="ongoing"><h3>Ongoing Work:</h3></a>
+
+<ul>
+
+</ul>
+
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="future"><h3>Future work:</h3></a>
+
+<ul>
+
+<li> Add support for recursive structs and unions to the IFR, and for
+their typecodes to the TypeCodeFactory.</li><p>
+
+<li> When Object By Value is fully supported in TAO (support is rudimentary at
+present), implement methods for classes ValueDef and ValueMemberDef in the IFR,
+and implement create_value_tc in TypeCodeFactory.</li><p>
+
+<li> When component support is added to TAO, implement methods for ComponentDef,
+ComponentRepository and related classes in the IFR, and create_component_tc and
+create_home_tc in TypeCodeFactory.</li><p>
+
+<li> Try alternate methods of creating object references from repository entries,
+other than the servant locator method used at present. An particularly interesting
+possibility is to use a generic servant with perfect hashing to look up the operations.</li><p>
+
+<li> Add capability to resize the hash maps that provide low-level storage for the IFR, when the hash map resize feature is added to ACE.</li><p>
+
+<li> Add pluggability for commonly used OTS databases.</li><p>
+
+</ul>
+
+<!-- --------------------- -->
+<a href="#toc">Back to TOC</a>
+<!-- --------------------- -->
+
+<!-- ============================================================ -->
+<a name="completed"><h3>Completed Work:</h3></a>
+
+<!-- ************************************************************ -->
+<!-- Please make sure you append new items at the end of the list -->
+<!-- ************************************************************ -->
+
+<ul>
+
+<li> The Interface Repository Service has been added to TAO, in
+ACE_wrappers/TAO/orbsvcs/IFR_Service. The implementation follows the
+expanded IDL found in CORBA Components vol. III. The database used to store
+IR objects is an ACE tool called ACE_Configuration, written by
+<a href="mailto:chafey@stentorsoft.com">Chris Hafey</a>. This
+class represents its contents to the user as a tree of hash maps.
+By specifying a disk file to read from at startup, the storage may
+be made persistent. There is also an option to use a win32 registry
+to store the data, although persistence is not available with this
+option.</li><p>
+
+<li> Several methods have been added to class TypeCodeFactory, including
+create_exception_tc, create_alias_tc, create_native_tc, create_wstring_tc,
+create_value_box_tc, and create_union_tc. Union typecodes with both
+multiple and default case labels have been tested.</li><p>
+
+<li> Test code for the IFR service has been added in the directory
+ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/IFR_Test.</li><p>
+
+<li> Code to support multicast discovery of the Interface Repository
+IOR has been added to TAO. Testing has been done using loopback on NT,
+loopback on Solaris, and remotely between these two platforms in both
+directions.</li><p>
+
+<li> Read/write locking option added to IFR service. This option should be
+used if the IFR service is started using a service config file that
+chooses the thread-per-request threading model.</li><p>
+
+<li> A test of the persistence option for the IFR added in the directory
+ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test.</li><p>
+
+<li> Executable to add or subtract the contents of an IDL file to/from the
+IFR, has been added. This executable uses the TAO IDL compiler front end library,
+with a new back end library and top level executable. An application-style test has
+also been added wherein a server is started, the IFR started, the contents of the IDL
+file added to the IFR, a client started, which discovers information about a desired
+operation by searching the IFR, and a DII request constructed from this information.
+</li><p>
+
+<li> The TypeCodeFactory has been moved from the IFR_Service directory to its own
+directory under TAO/tao, taking its place alongside the other satellite libraries
+that have been created recently.</li><p>
+
+<li> IFR has been made compliant with the CORBA 2.4 version of Interface.idl.
+Two new IFR object classes have been added, AbstractInterfaceDef and 
+LocalInterfaceDef. Some data structures have changed, as well as the signature
+of some operations.</li><p>
+
+<li> The create_*_tc functions have been replaced in CORBA::ORB (as part of the
+CORBA 2.x IFR compliance). These functions call the corresponding TypeCodeFactory
+functions. The methods are also hooks, so that the TypeCodeFactory does not have to
+be built and linked if an application does not intend to call those functions. If
+it does, however, the application should have
+#include "tao/TypeCodeFactory_Adapter_Impl.h" or something similar in it somewhere,
+and also link to the TAO_TypeCodeFactory library. This will automatically load the
+library if it has been compiled. Please see the example in 
+ACE_ROOT/TAO/examples/TypeCode_Creation.</li><p>
+
+<li> The CORBA::Object::_get_interface() method has been implemented. This method will
+resolve the IFR of the target object (whether local or remote), and return the
+InterfaceDef associated with that object, if it is found in the repository. The test
+in orbsvcs/tests/InterfaceRepo/Application_Test has been modified to use _get_interface().</li><p>
+
+<li> The executable tao_ifr now handles -ORB options and multiple IDL files in
+the command line. The option<br><br>
+
+-ORBInitRef InterfaceRepository=file://[filename]<br><br>
+
+can now be used instead of relying on IP multicast to resolve the IFR service.</li><p>
+
+<li> A command line option -Si has been added to tao_ifr which suppresses processing of included IDL files. The default is to process them. </li><p>
+
+<li> tao_ifr can now process multiple IDL files per execution portably on all supported platforms. File names and command line options may occur in any order on the command line.</li><p>
+
+</ul>
