@@ -33,8 +33,8 @@ CORBA::TypeCode_ptr TAO_tc__tao_seq_Octet = &_tc__tc_TAO__tao_seq_Octet;
 const CORBA::Long _oc_TAO_ObjectKey[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  22, 0x49444c3a, 0x54414f2f, 0x4f626a65, 0x63744b65, 0x793a312e, 0x30000000,  // repository ID = IDL:TAO/ObjectKey:1.0
-  10, 0x4f626a65, 0x63744b65, 0x79000000,  // name = ObjectKey
+  22, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f2f), ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63744b65), ACE_NTOHL (0x793a312e), ACE_NTOHL (0x3000fdfd),  // repository ID = IDL:TAO/ObjectKey:1.0
+  10, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63744b65), ACE_NTOHL (0x7900fdfd),  // name = ObjectKey
   CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
