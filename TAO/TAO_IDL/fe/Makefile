@@ -53,11 +53,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-CPPFLAGS += -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
-YACC	= yacc
-LEX	= lex
-YFLAGS	= -t -d
-LFLAGS	= -t
+CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
+YACC   = bison
+LEX	= flex
+YFLAGS	= -t -d -y 
+LFLAGS	= -t 
 
 # Create the parser and lexer
 y.tab.hh y.tab.cpp: idl.yy

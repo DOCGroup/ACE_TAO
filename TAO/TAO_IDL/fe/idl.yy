@@ -335,6 +335,8 @@ interface :
 	  AST_Decl	*d = NULL;
 	  AST_Interface *fd = NULL;
 
+	  ACE_UNUSED_ARG (v);
+
 	  /*
 	   * Make a new interface node and add it to its enclosing scope
 	   */
@@ -637,6 +639,8 @@ const_dcl :
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
 
+	  ACE_UNUSED_ARG (v);
+
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstExprSeen);
 	  /*
 	   * Create a node representing a constant declaration. Store
@@ -872,6 +876,8 @@ type_declarator :
 	  AST_Typedef		*t = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclaratorsSeen);
 	  /*
@@ -1117,6 +1123,8 @@ struct_type :
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
 
+          ACE_UNUSED_ARG (v);
+
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructIDSeen);
 	  /*
 	   * Create a node representing a struct declaration. Add it
@@ -1244,6 +1252,8 @@ union_type :
 	  AST_Union		*u = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchCloseParSeen);
 	  /*
@@ -1519,6 +1529,8 @@ enum_type :
 	  AST_Enum		*e = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumIDSeen);
 	  /*
@@ -1924,6 +1936,8 @@ exception :
 	  AST_Exception		*e = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptIDSeen);
 	  /*

@@ -212,7 +212,7 @@ oneway		return ONEWAY;
 		      if (next == '/')
 			break;
 		      else
-			yyunput(c);
+			yyunput(c, NULL);
 	              if (c == '\n') 
 		        idl_global->set_lineno(idl_global->lineno() + 1);
 		    }
@@ -375,6 +375,9 @@ idl_atof(char *s)
 	double	f = 0.0;
 	double	e, k;
 	long	neg = 0, negexp = 0;
+
+	ACE_UNUSED_ARG (f);
+	ACE_UNUSED_ARG (h);
 
 	if (*s == '-') {
 	  neg = 1;
