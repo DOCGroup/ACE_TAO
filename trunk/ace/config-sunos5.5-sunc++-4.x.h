@@ -188,7 +188,8 @@
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
-// Enable this if 
+// Automatically enable this if we aren't using STHREADS so
+// readers/writer locks work.  
 #if !defined (ACE_HAS_STHREADS)
 #define ACE_LACKS_RWLOCK_T
 #endif /* ACE_HAS_STHREADS */
