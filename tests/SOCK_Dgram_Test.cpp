@@ -1,18 +1,22 @@
-// $Id$
-//=============================================================================
-/**
- *
- * @file SOCK_Dgram_Test.cpp
- *
- * @brief Tests that a call to open with an any address binds to the
- * any address for the protocol passed in.
- *
- * This test uses the same test setup as SOCK_Test.
- *
- * @author Brian Buesker <bbuesker@qualcomm.com>
- *
- */
-//=============================================================================
+// // $Id$
+// ===========================================================================
+//
+// = LIBRARY
+//     tests
+//
+// = FILENAME
+//    SOCK_Dgram.cpp
+//
+// = DESCRIPTION
+//     Tests that a call to open with an any address binds to the any address
+//     for the protocol passed in.
+//
+//     This test uses the same test setup as SOCK_Test.
+//
+// = AUTHOR
+//    Brian Buesker (bbuesker@qualcomm.com)
+//
+// ==========================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"
@@ -75,7 +79,7 @@ client (void *arg)
                      ACE_TEXT("%p\n"),
                      ACE_TEXT("recv for UDP over IPv4 timed out")));
         }
-      else
+      else 
         {
           ACE_ERROR((LM_ERROR,
                      ACE_TEXT("%p\n"),
@@ -104,7 +108,7 @@ server (void *arg)
                  ACE_TEXT("%p\n"),
                  ACE_TEXT("recv for UDP over IPv6 failed")));
     }
-  else if (server_dgram->send (TEST_DATA, sizeof (TEST_DATA),
+  else if (server_dgram->send (TEST_DATA, sizeof (TEST_DATA), 
                               peer_addr, 0) == -1)
     {
       peer_addr.addr_to_string (hostname_string, sizeof (hostname_string));
