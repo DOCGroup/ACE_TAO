@@ -1,3 +1,13 @@
+Fri May 14 16:46:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block.cpp: Added a new method called total_size()
+ 	  that returns the total number of bytes in a composite
+ 	  Message_Block (i.e., a Message_Block that has a chain of
+ 	  Message_Blocks).
+
+	* ace/Message_Queue_T.cpp: Reimplemented all the hand-coded loops
+ 	  to use the new ACE_Message_Block::total_size() method.
+
 Fri May 14 16:17:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Synch.h (ACE_Null_Mutex>): Conditionally compiles ~ACE_Guard()

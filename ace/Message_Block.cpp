@@ -213,6 +213,21 @@ ACE_Message_Block::size (size_t length)
   return 0;
 }
 
+size_t
+ACE_Message_Block::total_size (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::total_size");
+
+  size_t s = 0;
+
+  for (ACE_Message_Block *temp = this;
+       temp != 0;
+       temp = temp->cont ())
+    s += temp->size ();
+  
+  return s;
+}
+
 ACE_Data_Block::ACE_Data_Block (void)
   : type_ (ACE_Message_Block::MB_DATA),
     cur_size_ (0),

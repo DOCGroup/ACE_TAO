@@ -302,17 +302,23 @@ public:
   void length (size_t n);
   // Set the length of the message
 
-  // = Message size is the total amount of space alloted.
+  // = Set/get <Message_Block> size info.
+  size_t total_size (void) const;
+  // Get the total number of bytes in all <Message_Block>s, including
+  // chained <Message_Block>s.
+
   size_t size (void) const;
-  // Get the total amount of space in the message.
+  // Get the number of bytes in the top-level <Message_Block> (i.e.,
+  // does not consider the bytes in chained <Message_Block>s).
+
   int size (size_t length);
-  // Set the total amount of space in the message, reallocating space
-  // if necessary.  However, the <rd_ptr_> and <wr_ptr_> remain at the
-  // original offsets into the buffer, even if it is reallocated.
-  // Returns 0 if successful, else -1.
+  // Set the number of bytes in the top-level <Message_Block>,
+  // reallocating space if necessary.  However, the <rd_ptr_> and
+  // <wr_ptr_> remain at the original offsets into the buffer, even if
+  // it is reallocated.  Returns 0 if successful, else -1.
 
   size_t space (void) const;
-  // Get the amount of space remaining in the message.
+  // Get the number of bytes in the top-level <Message_Block>.
 
   void crunch (void);
   // Normalizes data in message block to align with the base.
