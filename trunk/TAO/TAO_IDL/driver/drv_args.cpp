@@ -66,14 +66,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // drv_args.c - Argument parsing for IDL compiler main driver
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
-#include	"drv_private.h"
+#include        "drv_private.h"
 #include        "drv_link.h"
 
 #include        "be.h"
-#include	<stdio.h>
+#include        <stdio.h>
 
 ACE_RCSID(driver, drv_args, "$Id$")
 
@@ -153,9 +153,9 @@ DRV_usage (void)
 void
 DRV_parse_args (long ac, char **av)
 {
-  char	*buffer;
-  char	*s;
-  long	i;
+  char  *buffer;
+  char  *s = 0;
+  long  i;
 
   // Retrieve the singleton instance of the code generator.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -164,9 +164,9 @@ DRV_parse_args (long ac, char **av)
   idl_global->set_prog_name (av[0]);
   for (i = 1; i < ac; i++)
     {
-      if (av[i][0] == '-') 
+      if (av[i][0] == '-')
         {
-          switch (av[i][1]) 
+          switch (av[i][1])
             {
             case 0:
               DRV_push_file ("standard input");
@@ -174,27 +174,27 @@ DRV_parse_args (long ac, char **av)
             case 'A':
               if (av[i][2] == '\0')
                 {
-                  if (i < ac - 1) 
+                  if (i < ac - 1)
                     {
                       i++;
                       s = av[i];
-                    } 
+                    }
                   else
                     ACE_OS::exit (99);
-                } 
+                }
               else
                 s = av[i] + 2;
               ACE_OS::strcat (idl_global->local_escapes (), s);
               ACE_OS::strcat (idl_global->local_escapes (), " ");
               break;
-       
+
               // = File name endings for all the IDL generated header files,
-              //   stub files, skeleton files and inline files. 
+              //   stub files, skeleton files and inline files.
 
               // = Various 'h'eader_file_name_endings.
             case 'h':
-        
-              // <-hc Client's header file name ending> 
+
+              // <-hc Client's header file name ending>
               //      Default is "C.h".
               // <-hs Server's header file name ending>
               //       Default is "S.h".
@@ -228,7 +228,7 @@ DRV_parse_args (long ac, char **av)
                   ACE_OS::exit (99);
                 }
               break;
-        
+
               // = Various 'c'lient side stub file_name_endings.
             case 'c':
               // <-cs Client stub's file name ending>
@@ -254,8 +254,8 @@ DRV_parse_args (long ac, char **av)
                   exit(99);
                 }
               break;
-     
-              // = Various 's'erver side skeleton file name endings. 
+
+              // = Various 's'erver side skeleton file name endings.
             case 's':
               // <-ss Server's skeleton file name ending>
               //      Default is "S.cpp".
@@ -265,7 +265,7 @@ DRV_parse_args (long ac, char **av)
               //      Default is "S.i".
               // <-st Server's template inline file name ending>
               //      Default is "S_T.i".
-    
+
               if (av[i][2] == 's')
                 {
                   idl_global->server_skeleton_ending (av[i+1]);
@@ -286,15 +286,15 @@ DRV_parse_args (long ac, char **av)
                   idl_global->server_template_inline_ending (av[i+1]);
                   i++;
                 }
-              else 
+              else
                 {
-                  // I expect 's' or 'T' or 'i' or 't' after 's'. 
+                  // I expect 's' or 'T' or 'i' or 't' after 's'.
                   cerr << GTDEVEL ("Incomplete Flag : ")
                        << av[i];
                   ACE_OS::exit (99);
                 }
               break;
-    
+
               // Operation lookup strategy.
               // <perfect_hash>, <dynamic_hash> or <binary_search>
               // Default is perfect.
@@ -309,14 +309,14 @@ DRV_parse_args (long ac, char **av)
                 cg->lookup_strategy (TAO_CodeGen::TAO_LINEAR_SEARCH);
               i++;
               break;
-     
+
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':
               idl_global->gperf_path (av[i+1]);
               i++;
               break;
-      
+
               // Directory where all the IDL-Compiler-Generated files are to
               // be kept. Default is the current directory from which the
               // <tao_idl> is called.
@@ -324,7 +324,7 @@ DRV_parse_args (long ac, char **av)
               idl_global->output_dir (av [i+1]);
               i++;
               break;
-        
+
             case 'D':
             case 'U':
             case 'I':
@@ -344,7 +344,7 @@ DRV_parse_args (long ac, char **av)
                            << GTDEVEL ("' flag\n");
                       ACE_OS::exit (99);
                     }
-                } 
+                }
               else
                 DRV_cpp_putarg (av[i]);
               break;
@@ -357,13 +357,13 @@ DRV_parse_args (long ac, char **av)
                                              IDL_CF_VERSION);
               break;
             case 'W':
-              if (av[i][2] == '\0') 
+              if (av[i][2] == '\0')
                 {
-                  if (i < ac - 1) 
+                  if (i < ac - 1)
                     {
                       i++;
                       s = av[i];
-                    } 
+                    }
                   else
                     {
                       cerr << GTDEVEL ("IDL: missing argument after '")
@@ -371,7 +371,7 @@ DRV_parse_args (long ac, char **av)
                            << GTDEVEL ("' flag\n");
                       ACE_OS::exit (99);
                     }
-                } 
+                }
               else
                 s = av[i] + 2;
               switch (*s)
@@ -390,27 +390,27 @@ DRV_parse_args (long ac, char **av)
                 }
               break;
             case 'Y':
-              if (av[i][2] == '\0') 
+              if (av[i][2] == '\0')
                 {
-                  if (i < ac - 1) 
+                  if (i < ac - 1)
                     {
                       i++;
                       s = av[i];
-                    } 
-                  else 
+                    }
+                  else
                     {
                       cerr << GTDEVEL ("IDL: missing argument after '")
                            << av[i]
                            << GTDEVEL ("' flag\n");
                       ACE_OS::exit (99);
                     }
-                } 
+                }
               else
                 s = av[i] + 2;
-              switch (*s) 
+              switch (*s)
                 {
                 case 'p':
-                  if (*(s + 1) == ',') 
+                  if (*(s + 1) == ',')
                     {
                       idl_global->set_cpp_location (s + 2);
                       DRV_cpp_new_location (s + 2);
@@ -421,21 +421,21 @@ DRV_parse_args (long ac, char **av)
                 }
               break;
             case 'b':
-              if (av[i][2] == '\0') 
+              if (av[i][2] == '\0')
                 {
-                  if (i < ac - 1) 
+                  if (i < ac - 1)
                     {
                       i++;
                       s = av[i];
-                    } 
-                  else 
+                    }
+                  else
                     {
                       cerr << GTDEVEL("IDL: missing argument after '")
                            << av[i]
                            << GTDEVEL("' flag\n");
                       ACE_OS::exit (99);
                     }
-                } 
+                }
               else
                 s = av[i] + 2;
               idl_global->set_be (s);
@@ -468,7 +468,7 @@ DRV_parse_args (long ac, char **av)
                   // supress typecode support
                   idl_global->tc_support (0);
                 }
-              else 
+              else
                 {
                   cerr << GTDEVEL("IDL: missing argument after '")
                        << av[i]
@@ -498,7 +498,7 @@ DRV_parse_args (long ac, char **av)
                   // optimized typecode support
                   idl_global->opt_tc (1);
                 }
-              else 
+              else
                 {
                   cerr << GTDEVEL("IDL: missing argument after '")
                        << av[i]
@@ -512,7 +512,7 @@ DRV_parse_args (long ac, char **av)
                                              IDL_CF_ONLY_USAGE);
               break;
             }
-        } 
+        }
       else
         DRV_push_file (av[i]);
     }
@@ -522,7 +522,7 @@ DRV_parse_args (long ac, char **av)
 #if defined (ACE_HAS_GPERF)
   // If Perfect Hashing or Binary Search or Linear Search strategies
   // have been selected, let us make sure that it exists and will
-  // work. 
+  // work.
   if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) || \
       (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH) || \
       (cg->lookup_strategy () == TAO_CodeGen::TAO_LINEAR_SEARCH))
@@ -532,7 +532,7 @@ DRV_parse_args (long ac, char **av)
       if (return_value == -1)
         {
           // If gperf_path is an absolute path, try to call this
-          // again with 
+          // again with
           ACE_DEBUG ((LM_DEBUG,
                       "TAO_IDL: warning, GPERF could not be executed\n"
                       "Perfect Hashing or Binary/Linear Search cannot be done without GPERF\n"
@@ -541,7 +541,7 @@ DRV_parse_args (long ac, char **av)
                       "\t-Build gperf at $ACE_ROOT/apps/gperf/src\n"
                       "\t-Set the environment variable $ACE_ROOT appropriately or add $ACE_ROOT/bin to the PATH\n"
                       "\t-Refer to Operation Lookup section in the TAO IDL User Guide ($TAO_ROOT/docs/compiler.html) for more details\n"));
-          
+
           // Switching over to Dynamic Hashing.
           cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
         }
@@ -549,11 +549,11 @@ DRV_parse_args (long ac, char **av)
 #else /* Not ACE_HAS_GPERF */
   // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
   // us go for DYNAMIC_HASH.
-  if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) || 
+  if ((cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH) ||
       (cg->lookup_strategy () == TAO_CodeGen::TAO_BINARY_SEARCH) ||
       (cg->lookup_strategy () == TAO_CodeGen::TAO_LINEAR_SEARCH))
       cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
-#endif /* ACE_HAS_GPERF */    
+#endif /* ACE_HAS_GPERF */
 
   // make sure that we are not suppressing TypeCode generation and asking for
   // optimized typecode support at the same time
@@ -563,17 +563,17 @@ DRV_parse_args (long ac, char **av)
       ACE_OS::exit (99);
     }
 }
-  
-// Return 0 on success, -1 failure. The <errno> corresponding to the  
+
+// Return 0 on success, -1 failure. The <errno> corresponding to the
 // error that caused the GPERF execution is also set.
-int 
+int
 DRV_check_gperf (void)
 {
   // If absolute path is not specified yet, let us call just
-  // "gperf". Hopefully PATH is set up correctly to locate the gperf. 
+  // "gperf". Hopefully PATH is set up correctly to locate the gperf.
   if (idl_global->gperf_path () == 0)
     idl_global->gperf_path ("gperf");
-  
+
   // If we have absolute path for the <gperf> rather than just the
   // executable name <gperf>, make sure the file exists
   // firsts. Otherwise just call <gperf>. Probably PATH is set
@@ -581,26 +581,26 @@ DRV_check_gperf (void)
   if (ACE_OS::strcmp (idl_global->gperf_path (), "gperf") != 0)
     {
       // It is absolute path. Check the existance, permissions and
-      // the modes. 
-      if (ACE_OS::access (idl_global->gperf_path (), 
+      // the modes.
+      if (ACE_OS::access (idl_global->gperf_path (),
                           F_OK | X_OK) == -1)
         // Problem with the file. No point in having the absolute
         // path. Swith to "gperf".
         idl_global->gperf_path ("gperf");
     }
-  
+
   // Just call gperf in silent mode. It will come and immly exit.
-  
+
   // Using ACE_Process.
   ACE_Process process_manager;
   ACE_Process_Options process_options;
-  
+
   // Set the command line for the gperf program.
   process_options.command_line ("%s"
                                 " "
                                 "-V",
                                 idl_global->gperf_path ());
-  
+
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
     return -1;
@@ -609,7 +609,7 @@ DRV_check_gperf (void)
   // No wait or anything in Win32.
   return 0;
 #endif /* ACE_WIN32 */
-  
+
   // Wait for gperf to complete.
   int wait_status = 0;
   if (process_manager.wait (&wait_status) == -1)
@@ -626,7 +626,7 @@ DRV_check_gperf (void)
           // exits with <errno> as exit code, if it is not able to
           // exec gperf program, so get the exit code now and set that
           // to <errno> again, so that it can be used to print error
-          // messages. 
+          // messages.
           errno = WEXITSTATUS (wait_status);
           if (errno)
             // <exec> has failed.
@@ -636,13 +636,7 @@ DRV_check_gperf (void)
             return 0;
         }
       else
-        // Not a normal exit. No <errno> might be set. 
+        // Not a normal exit. No <errno> might be set.
         return -1;
     }
 }
-
-
-
-
-
-
