@@ -42,10 +42,14 @@ private:
 };
 // Listing 2
 
+#if !defined (ACE_THR_PRI_OTHER_MAX)
 // This should be fixed in ACE... There's no _MAX, _MIN values for
 // thread priorities.
-#if defined (ACE_WIN32) && !defined (ACE_THR_PRI_OTHER_MAX)
+#if defined (ACE_WIN32)
 #  define ACE_THR_PRI_OTHER_MAX ((ACE_THR_PRI_OTHER_DEF) + 1)
+#elif defined (VXWORKS)
+#  define ACE_THR_PRI_OTHER_MAX 0
+#endif
 #endif
 
 // Listing 1 code/ch13
