@@ -8,6 +8,7 @@
 #include "ace/FILE_IO.h"
 
 #include "JAWS/Cache_Manager.h"
+#include "JAWS/FILE.h"
 #include "JAWS/Export.h"
 
 class JAWS_Export JAWS_Referenced_Filecache_Factory
@@ -15,7 +16,7 @@ class JAWS_Export JAWS_Referenced_Filecache_Factory
 {
 public:
 
-  virtual void destroy (ACE_Cache_Object *);
+  virtual void destroy (JAWS_Cache_Object *);
 
 };
 
@@ -24,26 +25,26 @@ class JAWS_Export JAWS_Counted_Filecache_Factory
 {
 public:
 
-  virtual void destroy (ACE_Cache_Object *);
+  virtual void destroy (JAWS_Cache_Object *);
 
 };
 
-typedef ACE_Cache_Manager<ACE_Strdup_String,
-                          JAWS_Referenced_Filecache_Factory,
-                          ACE_String_Hash_Functor,
-                          ACE_String_Equal_Functor>
+typedef JAWS_Cache_Manager<JAWS_Strdup_String,
+                           JAWS_Referenced_Filecache_Factory,
+                           JAWS_String_Hash_Functor,
+                           JAWS_String_Equal_Functor>
         JAWS_Referenced_Filecache_Manager;
 
-typedef ACE_Cache_Manager<ACE_Strdup_String,
-                          JAWS_Counted_Filecache_Factory,
-                          ACE_String_Hash_Functor,
-                          ACE_String_Equal_Functor>
+typedef JAWS_Cache_Manager<JAWS_Strdup_String,
+                           JAWS_Counted_Filecache_Factory,
+                           JAWS_String_Hash_Functor,
+                           JAWS_String_Equal_Functor>
         JAWS_Counted_Filecache_Manager;
 
 typedef JAWS_Referenced_Filecache_Manager JAWS_Filecache_Manager;
 
-typedef ACE_Cache_Proxy<const char *,
-                        JAWS_FILE, JAWS_Filecache_Manager>
+typedef JAWS_Cache_Proxy<const char *,
+                         JAWS_FILE, JAWS_Filecache_Manager>
         JAWS_Filecache_Proxy;
 
 class JAWS_Export JAWS_Cached_FILE : private JAWS_Filecache_Proxy
