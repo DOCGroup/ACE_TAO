@@ -167,7 +167,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosNotificationS.o .obj/CosNotificationS.o .obj/CosNotificationS.o .obj/CosNotificationS.o: CosNotificationS.cpp CosNotificationS.h \
+.obj/CosNotificationS.o .obj/CosNotificationS.so .shobj/CosNotificationS.o .shobj/CosNotificationS.so: CosNotificationS.cpp CosNotificationS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -633,7 +633,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CosNotifyChannelAdminS.o .obj/CosNotifyChannelAdminS.o .obj/CosNotifyChannelAdminS.o .obj/CosNotifyChannelAdminS.o: CosNotifyChannelAdminS.cpp \
+.obj/CosNotifyChannelAdminS.o .obj/CosNotifyChannelAdminS.so .shobj/CosNotifyChannelAdminS.o .shobj/CosNotifyChannelAdminS.so: CosNotifyChannelAdminS.cpp \
   CosNotifyChannelAdminS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotificationS.h CosNotificationC.h \
@@ -825,10 +825,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
   CosNotificationS.i CosNotifyFilterS.h CosNotifyCommS.h CosEventCommS.h \
-  CosEventCommC.h CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
-  CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
-  CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
-  CosNotifyCommS.i CosNotifyFilterC.h \
+  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
+  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1120,7 +1120,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CosNotifyCommS.o .obj/CosNotifyCommS.o .obj/CosNotifyCommS.o .obj/CosNotifyCommS.o: CosNotifyCommS.cpp CosNotifyCommS.h \
+.obj/CosNotifyCommS.o .obj/CosNotifyCommS.so .shobj/CosNotifyCommS.o .shobj/CosNotifyCommS.so: CosNotifyCommS.cpp CosNotifyCommS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotificationS.h CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -1310,9 +1310,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
-  CosNotificationS.i CosEventCommS.h CosEventCommC.h CosEventCommC.i \
-  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
-  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotificationS.i CosEventCommS.h CosEventCommC.h \
+  CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
+  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h \
+  CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp CosNotifyCommS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
   $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
@@ -1593,7 +1594,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.o: CosNotifyFilterS.cpp CosNotifyFilterS.h \
+.obj/CosNotifyFilterS.o .obj/CosNotifyFilterS.so .shobj/CosNotifyFilterS.o .shobj/CosNotifyFilterS.so: CosNotifyFilterS.cpp CosNotifyFilterS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotifyCommS.h CosNotificationS.h CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -1783,9 +1784,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
-  CosNotificationS.i CosEventCommS.h CosEventCommC.h CosEventCommC.i \
-  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
-  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotificationS.i CosEventCommS.h CosEventCommC.h \
+  CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
+  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h \
+  CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -2072,7 +2074,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CosEventCommS.o .obj/CosEventCommS.o .obj/CosEventCommS.o .obj/CosEventCommS.o: CosEventCommS.cpp CosEventCommS.h \
+.obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosEventCommC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -2244,7 +2246,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h CosEventCommC.i \
+  CosEvent/event_export.h CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2541,7 +2543,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.o: CosEventChannelAdminS.cpp \
+.obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
   CosEventChannelAdminS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosEventCommS.h CosEventCommC.h \
@@ -2714,7 +2716,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h CosEventCommC.i \
+  CosEvent/event_export.h CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -3014,7 +3016,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/NotifyExtS.o .obj/NotifyExtS.o .obj/NotifyExtS.o .obj/NotifyExtS.o: NotifyExtS.cpp NotifyExtS.h \
+.obj/NotifyExtS.o .obj/NotifyExtS.so .shobj/NotifyExtS.o .shobj/NotifyExtS.so: NotifyExtS.cpp NotifyExtS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotifyChannelAdminS.h CosNotificationS.h CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -3205,10 +3207,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
   CosNotificationS.i CosNotifyFilterS.h CosNotifyCommS.h CosEventCommS.h \
-  CosEventCommC.h CosEventCommC.i CosEventCommS_T.h CosEventCommS_T.i \
-  CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h CosNotifyCommC.i \
-  CosNotifyCommS_T.h CosNotifyCommS_T.i CosNotifyCommS_T.cpp \
-  CosNotifyCommS.i CosNotifyFilterC.h \
+  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
+  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
+  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -3502,7 +3504,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Event_ForwarderS.o .obj/Event_ForwarderS.o .obj/Event_ForwarderS.o .obj/Event_ForwarderS.o: Event_ForwarderS.cpp Event_ForwarderS.h \
+.obj/Event_ForwarderS.o .obj/Event_ForwarderS.so .shobj/Event_ForwarderS.o .shobj/Event_ForwarderS.so: Event_ForwarderS.cpp Event_ForwarderS.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotificationS.h CosNotificationC.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -3693,9 +3695,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
   CosNotificationS_T.h CosNotificationS_T.i CosNotificationS_T.cpp \
   CosNotificationS.i CosNotifyChannelAdminS.h CosNotifyFilterS.h \
-  CosNotifyCommS.h CosEventCommS.h CosEventCommC.h CosEventCommC.i \
-  CosEventCommS_T.h CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i \
-  CosNotifyCommC.h CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
+  CosNotifyCommS.h CosEventCommS.h CosEventCommC.h \
+  CosEvent/event_export.h CosEventCommC.i CosEventCommS_T.h \
+  CosEventCommS_T.i CosEventCommS_T.cpp CosEventCommS.i CosNotifyCommC.h \
+  CosNotifyCommC.i CosNotifyCommS_T.h CosNotifyCommS_T.i \
   CosNotifyCommS_T.cpp CosNotifyCommS.i CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
@@ -3990,7 +3993,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Dynamic_Service.i \
   $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/CosNotificationC.o .obj/CosNotificationC.o .obj/CosNotificationC.o .obj/CosNotificationC.o: CosNotificationC.cpp CosNotificationC.h \
+.obj/CosNotificationC.o .obj/CosNotificationC.so .shobj/CosNotificationC.o .shobj/CosNotificationC.so: CosNotificationC.cpp CosNotificationC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -4241,7 +4244,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/CosNotifyChannelAdminC.o .obj/CosNotifyChannelAdminC.o .obj/CosNotifyChannelAdminC.o .obj/CosNotifyChannelAdminC.o: CosNotifyChannelAdminC.cpp \
+.obj/CosNotifyChannelAdminC.o .obj/CosNotifyChannelAdminC.so .shobj/CosNotifyChannelAdminC.o .shobj/CosNotifyChannelAdminC.so: CosNotifyChannelAdminC.cpp \
   CosNotifyChannelAdminC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -4457,8 +4460,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  CosNotifyCommC.h CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
-  CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
+  CosNotifyCommC.h CosEventCommC.h CosEvent/event_export.h \
+  CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosEventChannelAdminC.h CosEventChannelAdminC.i \
   CosNotifyChannelAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
@@ -4505,7 +4509,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/CosNotifyCommC.o .obj/CosNotifyCommC.o .obj/CosNotifyCommC.o .obj/CosNotifyCommC.o: CosNotifyCommC.cpp CosNotifyCommC.h \
+.obj/CosNotifyCommC.o .obj/CosNotifyCommC.so .shobj/CosNotifyCommC.o .shobj/CosNotifyCommC.so: CosNotifyCommC.cpp CosNotifyCommC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -4677,7 +4681,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
   Notify/notify_export.h CosNotificationC.h CosNotificationC.i \
-  CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
+  CosEventCommC.h CosEvent/event_export.h CosEventCommC.i \
+  CosNotifyCommC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -4758,7 +4763,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.o: CosNotifyFilterC.cpp CosNotifyFilterC.h \
+.obj/CosNotifyFilterC.o .obj/CosNotifyFilterC.so .shobj/CosNotifyFilterC.o .shobj/CosNotifyFilterC.so: CosNotifyFilterC.cpp CosNotifyFilterC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -4973,7 +4978,8 @@ realclean: clean
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h CosNotificationC.h CosNotificationC.i CosEventCommC.h \
-  CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosEvent/event_export.h CosEventCommC.i CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -5016,7 +5022,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/CosEventCommC.o .obj/CosEventCommC.o .obj/CosEventCommC.o .obj/CosEventCommC.o: CosEventCommC.cpp CosEventCommC.h \
+.obj/CosEventCommC.o .obj/CosEventCommC.so .shobj/CosEventCommC.o .shobj/CosEventCommC.so: CosEventCommC.cpp CosEventCommC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -5187,7 +5193,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h CosEventCommC.i \
+  CosEvent/event_export.h CosEventCommC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
   $(TAO_ROOT)/tao/Invocation_Utils.h \
@@ -5268,7 +5274,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.o: CosEventChannelAdminC.cpp \
+.obj/CosEventChannelAdminC.o .obj/CosEventChannelAdminC.so .shobj/CosEventChannelAdminC.o .shobj/CosEventChannelAdminC.so: CosEventChannelAdminC.cpp \
   CosEventChannelAdminC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
@@ -5440,7 +5446,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h CosEventCommC.h CosEventCommC.i \
+  CosEvent/event_export.h CosEventCommC.h CosEventCommC.i \
   CosEventChannelAdminC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
@@ -5522,7 +5528,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/NotifyExtC.o .obj/NotifyExtC.o .obj/NotifyExtC.o .obj/NotifyExtC.o: NotifyExtC.cpp NotifyExtC.h \
+.obj/NotifyExtC.o .obj/NotifyExtC.so .shobj/NotifyExtC.o .shobj/NotifyExtC.so: NotifyExtC.cpp NotifyExtC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -5737,8 +5743,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  CosNotifyCommC.h CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
-  CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
+  CosNotifyCommC.h CosEventCommC.h CosEvent/event_export.h \
+  CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosEventChannelAdminC.h CosEventChannelAdminC.i \
   CosNotifyChannelAdminC.i NotifyExtC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
@@ -5785,7 +5792,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/Event_ForwarderC.o .obj/Event_ForwarderC.o .obj/Event_ForwarderC.o .obj/Event_ForwarderC.o: Event_ForwarderC.cpp Event_ForwarderC.h \
+.obj/Event_ForwarderC.o .obj/Event_ForwarderC.so .shobj/Event_ForwarderC.o .shobj/Event_ForwarderC.so: Event_ForwarderC.cpp Event_ForwarderC.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -6000,8 +6007,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(TAO_ROOT)/tao/TC_Constants_Forward.h \
   $(TAO_ROOT)/tao/Typecode.i \
-  CosNotifyCommC.h CosEventCommC.h CosEventCommC.i CosNotifyCommC.i \
-  CosNotifyFilterC.i CosEventChannelAdminC.h CosEventChannelAdminC.i \
+  CosNotifyCommC.h CosEventCommC.h CosEvent/event_export.h \
+  CosEventCommC.i CosNotifyCommC.i CosNotifyFilterC.i \
+  CosEventChannelAdminC.h CosEventChannelAdminC.i \
   CosNotifyChannelAdminC.i Event_ForwarderC.i \
   $(TAO_ROOT)/tao/Exception_Data.h \
   $(TAO_ROOT)/tao/Invocation_Adapter.h \
@@ -6042,7 +6050,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Var_Size_Argument_T.inl \
   $(TAO_ROOT)/tao/Var_Size_Argument_T.cpp
 
-.obj/Method_Request_Dispatch.o .obj/Method_Request_Dispatch.o .obj/Method_Request_Dispatch.o .obj/Method_Request_Dispatch.o: Notify/Method_Request_Dispatch.cpp \
+.obj/Method_Request_Dispatch.o .obj/Method_Request_Dispatch.so .shobj/Method_Request_Dispatch.o .shobj/Method_Request_Dispatch.so: Notify/Method_Request_Dispatch.cpp \
   Notify/Method_Request_Dispatch.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -6302,6 +6310,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -6421,7 +6430,7 @@ realclean: clean
   NotifyExtS.i \
   Notify/ConsumerAdmin.inl
 
-.obj/PushSupplier.o .obj/PushSupplier.o .obj/PushSupplier.o .obj/PushSupplier.o: Notify/Any/PushSupplier.cpp Notify/Any/PushSupplier.h \
+.obj/PushSupplier.o .obj/PushSupplier.so .shobj/PushSupplier.o .shobj/PushSupplier.so: Notify/Any/PushSupplier.cpp Notify/Any/PushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -6598,6 +6607,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Supplier.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -6785,7 +6795,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl Notify/Supplier.inl \
   Notify/Any/PushSupplier.inl
 
-.obj/Notify_Extensions.o .obj/Notify_Extensions.o .obj/Notify_Extensions.o .obj/Notify_Extensions.o: Notify/Notify_Extensions.cpp \
+.obj/Notify_Extensions.o .obj/Notify_Extensions.so .shobj/Notify_Extensions.o .shobj/Notify_Extensions.so: Notify/Notify_Extensions.cpp \
   Notify/Notify_Extensions.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -6821,7 +6831,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Lock.h \
   $(ACE_ROOT)/ace/Lock.inl
 
-.obj/Event_Manager.o .obj/Event_Manager.o .obj/Event_Manager.o .obj/Event_Manager.o: Notify/Event_Manager.cpp Notify/Event_Manager.h \
+.obj/Event_Manager.o .obj/Event_Manager.so .shobj/Event_Manager.o .shobj/Event_Manager.so: Notify/Event_Manager.cpp Notify/Event_Manager.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -7001,7 +7011,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h \
+  CosEvent/event_export.h \
   CosEventCommC.h \
   CosEventCommC.i \
   CosEventChannelAdminC.i \
@@ -7064,6 +7074,7 @@ realclean: clean
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
+  Notify/notify_export.h \
   CosNotificationC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -7220,7 +7231,7 @@ realclean: clean
   $(TAO_ROOT)/tao/debug.h \
   Notify/Consumer_Map.h Notify/Supplier_Map.h
 
-.obj/Admin.o .obj/Admin.o .obj/Admin.o .obj/Admin.o: Notify/Admin.cpp Notify/Admin.h \
+.obj/Admin.o .obj/Admin.so .shobj/Admin.o .shobj/Admin.so: Notify/Admin.cpp Notify/Admin.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -7421,6 +7432,7 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -7618,7 +7630,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl Notify/EventChannel.h \
   Notify/EventChannel.inl
 
-.obj/AdminProperties.o .obj/AdminProperties.o .obj/AdminProperties.o .obj/AdminProperties.o: Notify/AdminProperties.cpp Notify/AdminProperties.h \
+.obj/AdminProperties.o .obj/AdminProperties.so .shobj/AdminProperties.o .shobj/AdminProperties.so: Notify/AdminProperties.cpp Notify/AdminProperties.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -7912,6 +7924,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -7922,7 +7935,7 @@ realclean: clean
   Notify/Property_Boolean.h Notify/Property_Boolean.inl \
   Notify/AdminProperties.inl
 
-.obj/AnyEvent.o .obj/AnyEvent.o .obj/AnyEvent.o .obj/AnyEvent.o: Notify/Any/AnyEvent.cpp Notify/Any/AnyEvent.h \
+.obj/AnyEvent.o .obj/AnyEvent.so .shobj/AnyEvent.o .shobj/AnyEvent.so: Notify/Any/AnyEvent.cpp Notify/Any/AnyEvent.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -8180,6 +8193,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -8289,7 +8303,7 @@ realclean: clean
   Notify/ProxySupplier.h Notify/ProxySupplier.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/CosEC_ProxyPushConsumer.o .obj/CosEC_ProxyPushConsumer.o .obj/CosEC_ProxyPushConsumer.o .obj/CosEC_ProxyPushConsumer.o: Notify/Any/CosEC_ProxyPushConsumer.cpp \
+.obj/CosEC_ProxyPushConsumer.o .obj/CosEC_ProxyPushConsumer.so .shobj/CosEC_ProxyPushConsumer.o .shobj/CosEC_ProxyPushConsumer.so: Notify/Any/CosEC_ProxyPushConsumer.cpp \
   Notify/Any/CosEC_ProxyPushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -8465,7 +8479,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -8496,6 +8510,7 @@ realclean: clean
   Notify/ProxyConsumer_T.h Notify/Proxy_T.h Notify/Proxy.h \
   Notify/Object.h \
   NotifyExtC.h \
+  Notify/notify_export.h \
   CosNotifyChannelAdminC.h \
   CosNotificationC.h \
   CosNotificationC.i \
@@ -8707,7 +8722,7 @@ realclean: clean
   Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
   Notify/Any/PushSupplier.inl
 
-.obj/CosEC_ProxyPushSupplier.o .obj/CosEC_ProxyPushSupplier.o .obj/CosEC_ProxyPushSupplier.o .obj/CosEC_ProxyPushSupplier.o: Notify/Any/CosEC_ProxyPushSupplier.cpp \
+.obj/CosEC_ProxyPushSupplier.o .obj/CosEC_ProxyPushSupplier.so .shobj/CosEC_ProxyPushSupplier.o .shobj/CosEC_ProxyPushSupplier.so: Notify/Any/CosEC_ProxyPushSupplier.cpp \
   Notify/Any/CosEC_ProxyPushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -8883,7 +8898,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -8914,6 +8929,7 @@ realclean: clean
   Notify/ProxySupplier_T.h Notify/Proxy_T.h Notify/Proxy.h \
   Notify/Object.h \
   NotifyExtC.h \
+  Notify/notify_export.h \
   CosNotifyChannelAdminC.h \
   CosNotificationC.h \
   CosNotificationC.i \
@@ -9124,7 +9140,7 @@ realclean: clean
   $(TAO_ROOT)/tao/debug.h \
   Notify/Any/PushConsumer.h Notify/Any/PushConsumer.inl
 
-.obj/ProxyPushConsumer.o .obj/ProxyPushConsumer.o .obj/ProxyPushConsumer.o .obj/ProxyPushConsumer.o: Notify/Any/ProxyPushConsumer.cpp \
+.obj/ProxyPushConsumer.o .obj/ProxyPushConsumer.so .shobj/ProxyPushConsumer.o .shobj/ProxyPushConsumer.so: Notify/Any/ProxyPushConsumer.cpp \
   Notify/Any/ProxyPushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -9326,6 +9342,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -9542,7 +9559,7 @@ realclean: clean
   Notify/Peer.h Notify/Peer.inl Notify/Supplier.inl \
   Notify/Any/PushSupplier.inl
 
-.obj/ProxyPushSupplier.o .obj/ProxyPushSupplier.o .obj/ProxyPushSupplier.o .obj/ProxyPushSupplier.o: Notify/Any/ProxyPushSupplier.cpp \
+.obj/ProxyPushSupplier.o .obj/ProxyPushSupplier.so .shobj/ProxyPushSupplier.o .shobj/ProxyPushSupplier.so: Notify/Any/ProxyPushSupplier.cpp \
   Notify/Any/ProxyPushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -9744,6 +9761,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -9959,7 +9977,7 @@ realclean: clean
   $(TAO_ROOT)/tao/debug.h \
   Notify/Any/PushConsumer.h Notify/Any/PushConsumer.inl
 
-.obj/PushConsumer.o .obj/PushConsumer.o .obj/PushConsumer.o .obj/PushConsumer.o: Notify/Any/PushConsumer.cpp Notify/Any/PushConsumer.h \
+.obj/PushConsumer.o .obj/PushConsumer.so .shobj/PushConsumer.o .shobj/PushConsumer.so: Notify/Any/PushConsumer.cpp Notify/Any/PushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -10136,6 +10154,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Consumer.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -10324,7 +10343,7 @@ realclean: clean
   Notify/ProxySupplier.h Notify/ProxySupplier.inl \
   Notify/Any/PushConsumer.inl
 
-.obj/Buffering_Strategy.o .obj/Buffering_Strategy.o .obj/Buffering_Strategy.o .obj/Buffering_Strategy.o: Notify/Buffering_Strategy.cpp \
+.obj/Buffering_Strategy.o .obj/Buffering_Strategy.so .shobj/Buffering_Strategy.o .shobj/Buffering_Strategy.so: Notify/Buffering_Strategy.cpp \
   Notify/Buffering_Strategy.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -10568,6 +10587,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -10694,7 +10714,7 @@ realclean: clean
   Notify/QoSProperties.h Notify/QoSProperties.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/Builder.o .obj/Builder.o .obj/Builder.o .obj/Builder.o: Notify/Builder.cpp Notify/Builder.h \
+.obj/Builder.o .obj/Builder.so .shobj/Builder.o .shobj/Builder.so: Notify/Builder.cpp Notify/Builder.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -10919,6 +10939,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -11191,7 +11212,7 @@ realclean: clean
   ESF/ESF_Shutdown_Proxy.i \
   ESF/ESF_Shutdown_Proxy.cpp
 
-.obj/Consumer.o .obj/Consumer.o .obj/Consumer.o .obj/Consumer.o: Notify/Consumer.cpp Notify/Consumer.h \
+.obj/Consumer.o .obj/Consumer.so .shobj/Consumer.o .shobj/Consumer.so: Notify/Consumer.cpp Notify/Consumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -11368,6 +11389,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Peer.h Notify/EventTypeSeq.h Notify/EventType.h \
@@ -11556,7 +11578,7 @@ realclean: clean
   Notify/ProxySupplier.h Notify/ProxySupplier.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/ConsumerAdmin.o .obj/ConsumerAdmin.o .obj/ConsumerAdmin.o .obj/ConsumerAdmin.o: Notify/ConsumerAdmin.cpp Notify/ConsumerAdmin.h \
+.obj/ConsumerAdmin.o .obj/ConsumerAdmin.so .shobj/ConsumerAdmin.o .shobj/ConsumerAdmin.so: Notify/ConsumerAdmin.cpp Notify/ConsumerAdmin.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -11758,6 +11780,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -11963,7 +11986,7 @@ realclean: clean
   Notify/Find_Worker_T.cpp Notify/Seq_Worker_T.h Notify/Seq_Worker_T.inl \
   Notify/Seq_Worker_T.cpp
 
-.obj/Event.o .obj/Event.o .obj/Event.o .obj/Event.o: Notify/Event.cpp Notify/Event.h \
+.obj/Event.o .obj/Event.so .shobj/Event.o .shobj/Event.so: Notify/Event.cpp Notify/Event.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -12220,6 +12243,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -12314,7 +12338,7 @@ realclean: clean
   Notify/PropertySeq.inl Notify/Event.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/EventChannel.o .obj/EventChannel.o .obj/EventChannel.o .obj/EventChannel.o: Notify/EventChannel.cpp Notify/EventChannel.h \
+.obj/EventChannel.o .obj/EventChannel.so .shobj/EventChannel.o .shobj/EventChannel.so: Notify/EventChannel.cpp Notify/EventChannel.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -12515,6 +12539,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -12730,7 +12755,7 @@ realclean: clean
   Notify/Find_Worker_T.cpp Notify/Seq_Worker_T.h Notify/Seq_Worker_T.inl \
   Notify/Seq_Worker_T.cpp
 
-.obj/EventChannelFactory.o .obj/EventChannelFactory.o .obj/EventChannelFactory.o .obj/EventChannelFactory.o: Notify/EventChannelFactory.cpp \
+.obj/EventChannelFactory.o .obj/EventChannelFactory.so .shobj/EventChannelFactory.o .shobj/EventChannelFactory.so: Notify/EventChannelFactory.cpp \
   Notify/EventChannelFactory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -12932,6 +12957,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -13125,7 +13151,7 @@ realclean: clean
   Notify/Find_Worker_T.cpp Notify/Seq_Worker_T.h Notify/Seq_Worker_T.inl \
   Notify/Seq_Worker_T.cpp
 
-.obj/EventType.o .obj/EventType.o .obj/EventType.o .obj/EventType.o: Notify/EventType.cpp Notify/EventType.h \
+.obj/EventType.o .obj/EventType.so .shobj/EventType.o .shobj/EventType.so: Notify/EventType.cpp Notify/EventType.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -13328,7 +13354,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Msg.h \
   $(ACE_ROOT)/ace/Log_Priority.h
 
-.obj/EventTypeSeq.o .obj/EventTypeSeq.o .obj/EventTypeSeq.o .obj/EventTypeSeq.o: Notify/EventTypeSeq.cpp Notify/EventTypeSeq.h \
+.obj/EventTypeSeq.o .obj/EventTypeSeq.so .shobj/EventTypeSeq.o .shobj/EventTypeSeq.so: Notify/EventTypeSeq.cpp Notify/EventTypeSeq.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -13514,7 +13540,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Log_Priority.h \
   Notify/EventTypeSeq.inl
 
-.obj/Default_Factory.o .obj/Default_Factory.o .obj/Default_Factory.o .obj/Default_Factory.o: Notify/Default_Factory.cpp Notify/Default_Factory.h \
+.obj/Default_Factory.o .obj/Default_Factory.so .shobj/Default_Factory.o .shobj/Default_Factory.so: Notify/Default_Factory.cpp Notify/Default_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -13758,6 +13784,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -13964,7 +13991,7 @@ realclean: clean
   Notify/Sequence/SequenceProxyPushSupplier.inl Notify/Supplier.h \
   Notify/Supplier.inl
 
-.obj/FilterAdmin.o .obj/FilterAdmin.o .obj/FilterAdmin.o .obj/FilterAdmin.o: Notify/FilterAdmin.cpp Notify/FilterAdmin.h \
+.obj/FilterAdmin.o .obj/FilterAdmin.so .shobj/FilterAdmin.o .shobj/FilterAdmin.so: Notify/FilterAdmin.cpp Notify/FilterAdmin.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotifyFilterS.h \
   CosNotifyCommS.h \
@@ -14163,6 +14190,7 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -14319,7 +14347,7 @@ realclean: clean
   Event_ForwarderS.i \
   Notify/Event.inl Notify/FilterAdmin.inl
 
-.obj/ID_Factory.o .obj/ID_Factory.o .obj/ID_Factory.o .obj/ID_Factory.o: Notify/ID_Factory.cpp Notify/ID_Factory.h \
+.obj/ID_Factory.o .obj/ID_Factory.so .shobj/ID_Factory.o .shobj/ID_Factory.so: Notify/ID_Factory.cpp Notify/ID_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -14554,6 +14582,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -14633,7 +14662,7 @@ realclean: clean
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl
 
-.obj/Method_Request.o .obj/Method_Request.o .obj/Method_Request.o .obj/Method_Request.o: Notify/Method_Request.cpp Notify/Method_Request.h \
+.obj/Method_Request.o .obj/Method_Request.so .shobj/Method_Request.o .shobj/Method_Request.so: Notify/Method_Request.cpp Notify/Method_Request.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -14891,6 +14920,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -14984,7 +15014,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl
 
-.obj/Object.o .obj/Object.o .obj/Object.o .obj/Object.o: Notify/Object.cpp Notify/Object.h \
+.obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Notify/Object.cpp Notify/Object.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -15218,6 +15248,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -15422,7 +15453,7 @@ realclean: clean
   Notify/Reactive_Task.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/Method_Request_Lookup.o .obj/Method_Request_Lookup.o .obj/Method_Request_Lookup.o .obj/Method_Request_Lookup.o: Notify/Method_Request_Lookup.cpp \
+.obj/Method_Request_Lookup.o .obj/Method_Request_Lookup.so .shobj/Method_Request_Lookup.o .shobj/Method_Request_Lookup.so: Notify/Method_Request_Lookup.cpp \
   Notify/Method_Request_Lookup.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -15685,6 +15716,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -15833,7 +15865,7 @@ realclean: clean
   NotifyExtS.i \
   Notify/SupplierAdmin.inl
 
-.obj/Method_Request_Shutdown.o .obj/Method_Request_Shutdown.o .obj/Method_Request_Shutdown.o .obj/Method_Request_Shutdown.o: Notify/Method_Request_Shutdown.cpp \
+.obj/Method_Request_Shutdown.o .obj/Method_Request_Shutdown.so .shobj/Method_Request_Shutdown.o .shobj/Method_Request_Shutdown.so: Notify/Method_Request_Shutdown.cpp \
   Notify/Method_Request_Shutdown.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -16093,6 +16125,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -16263,7 +16296,7 @@ realclean: clean
   TimeBaseC.i \
   Notify/Buffering_Strategy.inl
 
-.obj/CosNotify_Service.o .obj/CosNotify_Service.o .obj/CosNotify_Service.o .obj/CosNotify_Service.o: Notify/CosNotify_Service.cpp \
+.obj/CosNotify_Service.o .obj/CosNotify_Service.so .shobj/CosNotify_Service.o .shobj/CosNotify_Service.so: Notify/CosNotify_Service.cpp \
   Notify/CosNotify_Service.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -16525,6 +16558,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -16722,7 +16756,7 @@ realclean: clean
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/Peer.o .obj/Peer.o .obj/Peer.o .obj/Peer.o: Notify/Peer.cpp Notify/Peer.h \
+.obj/Peer.o .obj/Peer.so .shobj/Peer.o .shobj/Peer.so: Notify/Peer.cpp Notify/Peer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -16961,6 +16995,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -17085,7 +17120,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/POA_Helper.o .obj/POA_Helper.o .obj/POA_Helper.o .obj/POA_Helper.o: Notify/POA_Helper.cpp Notify/POA_Helper.h \
+.obj/POA_Helper.o .obj/POA_Helper.so .shobj/POA_Helper.o .shobj/POA_Helper.so: Notify/POA_Helper.cpp Notify/POA_Helper.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -17325,6 +17360,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -17404,7 +17440,7 @@ realclean: clean
   Notify/AdminProperties.inl Notify/Refcountable.h \
   Notify/Refcountable.inl Notify/Object.inl Notify/ID_Factory.inl
 
-.obj/Properties.o .obj/Properties.o .obj/Properties.o .obj/Properties.o: Notify/Properties.cpp Notify/Properties.h \
+.obj/Properties.o .obj/Properties.so .shobj/Properties.o .shobj/Properties.so: Notify/Properties.cpp Notify/Properties.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -17691,6 +17727,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -17700,7 +17737,7 @@ realclean: clean
   NotifyExtC.i \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/PropertySeq.o .obj/PropertySeq.o .obj/PropertySeq.o .obj/PropertySeq.o: Notify/PropertySeq.cpp Notify/PropertySeq.h \
+.obj/PropertySeq.o .obj/PropertySeq.so .shobj/PropertySeq.o .shobj/PropertySeq.so: Notify/PropertySeq.cpp Notify/PropertySeq.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -17923,7 +17960,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Mutex.h \
   Notify/PropertySeq.inl
 
-.obj/Property_Boolean.o .obj/Property_Boolean.o .obj/Property_Boolean.o .obj/Property_Boolean.o: Notify/Property_Boolean.cpp Notify/Property_Boolean.h \
+.obj/Property_Boolean.o .obj/Property_Boolean.so .shobj/Property_Boolean.o .shobj/Property_Boolean.so: Notify/Property_Boolean.cpp Notify/Property_Boolean.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -18147,7 +18184,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Null_Mutex.h \
   Notify/PropertySeq.inl
 
-.obj/Proxy.o .obj/Proxy.o .obj/Proxy.o .obj/Proxy.o: Notify/Proxy.cpp Notify/Proxy.h \
+.obj/Proxy.o .obj/Proxy.so .shobj/Proxy.o .shobj/Proxy.so: Notify/Proxy.cpp Notify/Proxy.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -18382,6 +18419,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -18527,7 +18565,7 @@ realclean: clean
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
   Notify/Properties.inl Notify/POA_Helper.h Notify/POA_Helper.inl
 
-.obj/ProxyConsumer.o .obj/ProxyConsumer.o .obj/ProxyConsumer.o .obj/ProxyConsumer.o: Notify/ProxyConsumer.cpp Notify/ProxyConsumer.h \
+.obj/ProxyConsumer.o .obj/ProxyConsumer.so .shobj/ProxyConsumer.o .shobj/ProxyConsumer.so: Notify/ProxyConsumer.cpp Notify/ProxyConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -18703,7 +18741,7 @@ realclean: clean
   $(ACE_ROOT)/ace/RW_Thread_Mutex.inl \
   $(ACE_ROOT)/ace/Guard_T.cpp \
   $(TAO_ROOT)/tao/ORB.i \
-  Notify/notify_export.h \
+  CosEvent/event_export.h \
   CosEventCommC.h \
   CosEventCommC.i \
   CosEventChannelAdminC.i \
@@ -18766,6 +18804,7 @@ realclean: clean
   Event_ForwarderS.h \
   CosNotificationS.h \
   CosNotificationC.h \
+  Notify/notify_export.h \
   CosNotificationC.i \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
   $(TAO_ROOT)/tao/Collocation_Strategy.h \
@@ -18938,7 +18977,7 @@ realclean: clean
   NotifyExtS.i \
   Notify/SupplierAdmin.inl
 
-.obj/ProxySupplier.o .obj/ProxySupplier.o .obj/ProxySupplier.o .obj/ProxySupplier.o: Notify/ProxySupplier.cpp Notify/ProxySupplier.h \
+.obj/ProxySupplier.o .obj/ProxySupplier.so .shobj/ProxySupplier.o .shobj/ProxySupplier.so: Notify/ProxySupplier.cpp Notify/ProxySupplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -19196,6 +19235,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -19360,7 +19400,7 @@ realclean: clean
   NotifyExtS.i \
   Notify/ConsumerAdmin.inl
 
-.obj/QoSProperties.o .obj/QoSProperties.o .obj/QoSProperties.o .obj/QoSProperties.o: Notify/QoSProperties.cpp Notify/QoSProperties.h \
+.obj/QoSProperties.o .obj/QoSProperties.so .shobj/QoSProperties.o .shobj/QoSProperties.so: Notify/QoSProperties.cpp Notify/QoSProperties.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -19600,6 +19640,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -19609,7 +19650,7 @@ realclean: clean
   NotifyExtC.i \
   Notify/QoSProperties.inl
 
-.obj/Reactive_Task.o .obj/Reactive_Task.o .obj/Reactive_Task.o .obj/Reactive_Task.o: Notify/Reactive_Task.cpp Notify/Reactive_Task.h \
+.obj/Reactive_Task.o .obj/Reactive_Task.so .shobj/Reactive_Task.o .shobj/Reactive_Task.so: Notify/Reactive_Task.cpp Notify/Reactive_Task.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -19868,6 +19909,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -19966,7 +20008,7 @@ realclean: clean
   Notify/Reactive_Task.inl Notify/Timer_Reactor.h Notify/Timer.h \
   Notify/Timer_Reactor.inl
 
-.obj/Refcountable.o .obj/Refcountable.o .obj/Refcountable.o .obj/Refcountable.o: Notify/Refcountable.cpp Notify/Refcountable.h \
+.obj/Refcountable.o .obj/Refcountable.so .shobj/Refcountable.o .shobj/Refcountable.so: Notify/Refcountable.cpp Notify/Refcountable.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -20119,7 +20161,7 @@ realclean: clean
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/TAO_Export.h
 
-.obj/SequenceProxyPushConsumer.o .obj/SequenceProxyPushConsumer.o .obj/SequenceProxyPushConsumer.o .obj/SequenceProxyPushConsumer.o:  \
+.obj/SequenceProxyPushConsumer.o .obj/SequenceProxyPushConsumer.so .shobj/SequenceProxyPushConsumer.o .shobj/SequenceProxyPushConsumer.so:  \
  Notify/Sequence/SequenceProxyPushConsumer.cpp \
   Notify/Sequence/SequenceProxyPushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -20322,6 +20364,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -20539,7 +20582,7 @@ realclean: clean
   Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredEvent.inl
 
-.obj/SequenceProxyPushSupplier.o .obj/SequenceProxyPushSupplier.o .obj/SequenceProxyPushSupplier.o .obj/SequenceProxyPushSupplier.o:  \
+.obj/SequenceProxyPushSupplier.o .obj/SequenceProxyPushSupplier.so .shobj/SequenceProxyPushSupplier.o .shobj/SequenceProxyPushSupplier.so:  \
  Notify/Sequence/SequenceProxyPushSupplier.cpp \
   Notify/Sequence/SequenceProxyPushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -20742,6 +20785,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -20972,7 +21016,7 @@ realclean: clean
   Notify/Sequence/Batch_Buffering_Strategy.inl \
   Notify/Sequence/SequencePushConsumer.inl
 
-.obj/SequencePushConsumer.o .obj/SequencePushConsumer.o .obj/SequencePushConsumer.o .obj/SequencePushConsumer.o: Notify/Sequence/SequencePushConsumer.cpp \
+.obj/SequencePushConsumer.o .obj/SequencePushConsumer.so .shobj/SequencePushConsumer.o .shobj/SequencePushConsumer.so: Notify/Sequence/SequencePushConsumer.cpp \
   Notify/Sequence/SequencePushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -21233,6 +21277,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -21365,7 +21410,7 @@ realclean: clean
   Notify/Method_Request_Event.h Notify/Method_Request_Event.inl \
   Notify/Timer.h
 
-.obj/SequencePushSupplier.o .obj/SequencePushSupplier.o .obj/SequencePushSupplier.o .obj/SequencePushSupplier.o: Notify/Sequence/SequencePushSupplier.cpp \
+.obj/SequencePushSupplier.o .obj/SequencePushSupplier.so .shobj/SequencePushSupplier.o .shobj/SequencePushSupplier.so: Notify/Sequence/SequencePushSupplier.cpp \
   Notify/Sequence/SequencePushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -21543,6 +21588,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Supplier.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -21730,7 +21776,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl Notify/Supplier.inl \
   Notify/Sequence/SequencePushSupplier.inl
 
-.obj/StructuredEvent.o .obj/StructuredEvent.o .obj/StructuredEvent.o .obj/StructuredEvent.o: Notify/Structured/StructuredEvent.cpp \
+.obj/StructuredEvent.o .obj/StructuredEvent.so .shobj/StructuredEvent.o .shobj/StructuredEvent.so: Notify/Structured/StructuredEvent.cpp \
   Notify/Structured/StructuredEvent.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -21989,6 +22035,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -22098,7 +22145,7 @@ realclean: clean
   Notify/ProxySupplier.h Notify/ProxySupplier.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/StructuredProxyPushConsumer.o .obj/StructuredProxyPushConsumer.o .obj/StructuredProxyPushConsumer.o .obj/StructuredProxyPushConsumer.o:  \
+.obj/StructuredProxyPushConsumer.o .obj/StructuredProxyPushConsumer.so .shobj/StructuredProxyPushConsumer.o .shobj/StructuredProxyPushConsumer.so:  \
  Notify/Structured/StructuredProxyPushConsumer.cpp \
   Notify/Structured/StructuredProxyPushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -22301,6 +22348,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -22518,7 +22566,7 @@ realclean: clean
   Notify/Method_Request_Lookup_T.cpp Notify/Method_Request_Lookup.inl \
   Notify/Worker_Task.h Notify/Worker_Task.inl
 
-.obj/StructuredProxyPushSupplier.o .obj/StructuredProxyPushSupplier.o .obj/StructuredProxyPushSupplier.o .obj/StructuredProxyPushSupplier.o:  \
+.obj/StructuredProxyPushSupplier.o .obj/StructuredProxyPushSupplier.so .shobj/StructuredProxyPushSupplier.o .shobj/StructuredProxyPushSupplier.so:  \
  Notify/Structured/StructuredProxyPushSupplier.cpp \
   Notify/Structured/StructuredProxyPushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -22721,6 +22769,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -22938,7 +22987,7 @@ realclean: clean
   Notify/Structured/StructuredPushConsumer.h \
   Notify/Structured/StructuredPushConsumer.inl
 
-.obj/StructuredPushConsumer.o .obj/StructuredPushConsumer.o .obj/StructuredPushConsumer.o .obj/StructuredPushConsumer.o: Notify/Structured/StructuredPushConsumer.cpp \
+.obj/StructuredPushConsumer.o .obj/StructuredPushConsumer.so .shobj/StructuredPushConsumer.o .shobj/StructuredPushConsumer.so: Notify/Structured/StructuredPushConsumer.cpp \
   Notify/Structured/StructuredPushConsumer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -23116,6 +23165,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Consumer.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -23304,7 +23354,7 @@ realclean: clean
   Notify/ProxySupplier.h Notify/ProxySupplier.inl \
   Notify/Structured/StructuredPushConsumer.inl
 
-.obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.o: Notify/Structured/StructuredPushSupplier.cpp \
+.obj/StructuredPushSupplier.o .obj/StructuredPushSupplier.so .shobj/StructuredPushSupplier.o .shobj/StructuredPushSupplier.so: Notify/Structured/StructuredPushSupplier.cpp \
   Notify/Structured/StructuredPushSupplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -23482,6 +23532,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   Notify/Supplier.h Notify/Peer.h Notify/EventTypeSeq.h \
@@ -23669,7 +23720,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl Notify/Supplier.inl \
   Notify/Structured/StructuredPushSupplier.inl
 
-.obj/Supplier.o .obj/Supplier.o .obj/Supplier.o .obj/Supplier.o: Notify/Supplier.cpp Notify/Supplier.h \
+.obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Notify/Supplier.cpp Notify/Supplier.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -23909,6 +23960,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -24033,7 +24085,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl Notify/Supplier.inl \
   Notify/ProxyConsumer.h Notify/ProxyConsumer.inl
 
-.obj/Subscription_Change_Worker.o .obj/Subscription_Change_Worker.o .obj/Subscription_Change_Worker.o .obj/Subscription_Change_Worker.o: Notify/Subscription_Change_Worker.cpp \
+.obj/Subscription_Change_Worker.o .obj/Subscription_Change_Worker.so .shobj/Subscription_Change_Worker.o .shobj/Subscription_Change_Worker.so: Notify/Subscription_Change_Worker.cpp \
   Notify/Subscription_Change_Worker.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -24272,6 +24324,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -24400,7 +24453,7 @@ realclean: clean
   Notify/Refcountable_Guard_T.h Notify/Refcountable_Guard_T.inl \
   Notify/Refcountable_Guard_T.cpp Notify/Proxy.inl
 
-.obj/SupplierAdmin.o .obj/SupplierAdmin.o .obj/SupplierAdmin.o .obj/SupplierAdmin.o: Notify/SupplierAdmin.cpp Notify/SupplierAdmin.h \
+.obj/SupplierAdmin.o .obj/SupplierAdmin.so .shobj/SupplierAdmin.o .shobj/SupplierAdmin.so: Notify/SupplierAdmin.cpp Notify/SupplierAdmin.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -24602,6 +24655,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -24807,7 +24861,7 @@ realclean: clean
   Notify/Find_Worker_T.cpp Notify/Seq_Worker_T.h Notify/Seq_Worker_T.inl \
   Notify/Seq_Worker_T.cpp
 
-.obj/ThreadPool_Task.o .obj/ThreadPool_Task.o .obj/ThreadPool_Task.o .obj/ThreadPool_Task.o: Notify/ThreadPool_Task.cpp Notify/ThreadPool_Task.h \
+.obj/ThreadPool_Task.o .obj/ThreadPool_Task.so .shobj/ThreadPool_Task.o .shobj/ThreadPool_Task.so: Notify/ThreadPool_Task.cpp Notify/ThreadPool_Task.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -25169,6 +25223,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -25297,7 +25352,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
   Notify/Timer_Queue.inl
 
-.obj/Worker_Task.o .obj/Worker_Task.o .obj/Worker_Task.o .obj/Worker_Task.o: Notify/Worker_Task.cpp Notify/Worker_Task.h \
+.obj/Worker_Task.o .obj/Worker_Task.so .shobj/Worker_Task.o .shobj/Worker_Task.so: Notify/Worker_Task.cpp Notify/Worker_Task.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -25556,6 +25611,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -25650,7 +25706,7 @@ realclean: clean
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Refcountable.h Notify/Refcountable.inl Notify/Worker_Task.inl
 
-.obj/Notify_Default_CO_Factory.o .obj/Notify_Default_CO_Factory.o .obj/Notify_Default_CO_Factory.o .obj/Notify_Default_CO_Factory.o: Notify/Notify_Default_CO_Factory.cpp \
+.obj/Notify_Default_CO_Factory.o .obj/Notify_Default_CO_Factory.so .shobj/Notify_Default_CO_Factory.o .shobj/Notify_Default_CO_Factory.so: Notify/Notify_Default_CO_Factory.cpp \
   Notify/Notify_Default_CO_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -25660,7 +25716,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h
 
-.obj/Notify_Default_Collection_Factory.o .obj/Notify_Default_Collection_Factory.o .obj/Notify_Default_Collection_Factory.o .obj/Notify_Default_Collection_Factory.o:  \
+.obj/Notify_Default_Collection_Factory.o .obj/Notify_Default_Collection_Factory.so .shobj/Notify_Default_Collection_Factory.o .shobj/Notify_Default_Collection_Factory.so:  \
  Notify/Notify_Default_Collection_Factory.cpp \
   Notify/Notify_Default_Collection_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -25671,7 +25727,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h
 
-.obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.o: Notify/Notify_Default_EMO_Factory.cpp \
+.obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.so .shobj/Notify_Default_EMO_Factory.o .shobj/Notify_Default_EMO_Factory.so: Notify/Notify_Default_EMO_Factory.cpp \
   Notify/Notify_Default_EMO_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -25681,7 +25737,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h
 
-.obj/Notify_Default_POA_Factory.o .obj/Notify_Default_POA_Factory.o .obj/Notify_Default_POA_Factory.o .obj/Notify_Default_POA_Factory.o: Notify/Notify_Default_POA_Factory.cpp \
+.obj/Notify_Default_POA_Factory.o .obj/Notify_Default_POA_Factory.so .shobj/Notify_Default_POA_Factory.o .shobj/Notify_Default_POA_Factory.so: Notify/Notify_Default_POA_Factory.cpp \
   Notify/Notify_Default_POA_Factory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -25691,7 +25747,7 @@ realclean: clean
   $(ACE_ROOT)/ace/OS_main.h \
   $(ACE_ROOT)/ace/ACE_export.h
 
-.obj/Notify_EventChannelFactory_i.o .obj/Notify_EventChannelFactory_i.o .obj/Notify_EventChannelFactory_i.o .obj/Notify_EventChannelFactory_i.o: Notify/Notify_EventChannelFactory_i.cpp \
+.obj/Notify_EventChannelFactory_i.o .obj/Notify_EventChannelFactory_i.so .shobj/Notify_EventChannelFactory_i.o .shobj/Notify_EventChannelFactory_i.so: Notify/Notify_EventChannelFactory_i.cpp \
   Notify/Notify_EventChannelFactory_i.h \
   $(ACE_ROOT)/ace/pre.h \
   CosNotifyChannelAdminS.h \
@@ -25892,6 +25948,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -26140,7 +26197,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Lock_Adapter_T.cpp \
   $(TAO_ROOT)/tao/ORB_Core.i
 
-.obj/Method_Request_Updates.o .obj/Method_Request_Updates.o .obj/Method_Request_Updates.o .obj/Method_Request_Updates.o: Notify/Method_Request_Updates.cpp \
+.obj/Method_Request_Updates.o .obj/Method_Request_Updates.so .shobj/Method_Request_Updates.o .shobj/Method_Request_Updates.so: Notify/Method_Request_Updates.cpp \
   Notify/Method_Request_Updates.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -26382,6 +26439,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Typecode.i \
   CosNotifyCommC.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -26508,7 +26566,7 @@ realclean: clean
   Notify/Method_Request.inl Notify/Method_Request_Updates.inl \
   $(TAO_ROOT)/tao/debug.h
 
-.obj/Timer_Reactor.o .obj/Timer_Reactor.o .obj/Timer_Reactor.o .obj/Timer_Reactor.o: Notify/Timer_Reactor.cpp Notify/Timer_Reactor.h \
+.obj/Timer_Reactor.o .obj/Timer_Reactor.so .shobj/Timer_Reactor.o .shobj/Timer_Reactor.so: Notify/Timer_Reactor.cpp Notify/Timer_Reactor.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -26896,7 +26954,7 @@ realclean: clean
   CosNotificationC.i \
   Notify/Properties.inl
 
-.obj/Timer_Queue.o .obj/Timer_Queue.o .obj/Timer_Queue.o .obj/Timer_Queue.o: Notify/Timer_Queue.cpp Notify/Timer_Queue.h \
+.obj/Timer_Queue.o .obj/Timer_Queue.so .shobj/Timer_Queue.o .shobj/Timer_Queue.so: Notify/Timer_Queue.cpp Notify/Timer_Queue.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -27075,7 +27133,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
   Notify/Timer_Queue.inl
 
-.obj/Batch_Buffering_Strategy.o .obj/Batch_Buffering_Strategy.o .obj/Batch_Buffering_Strategy.o .obj/Batch_Buffering_Strategy.o: Notify/Sequence/Batch_Buffering_Strategy.cpp \
+.obj/Batch_Buffering_Strategy.o .obj/Batch_Buffering_Strategy.so .shobj/Batch_Buffering_Strategy.o .shobj/Batch_Buffering_Strategy.so: Notify/Sequence/Batch_Buffering_Strategy.cpp \
   Notify/Sequence/Batch_Buffering_Strategy.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -27335,6 +27393,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -27447,7 +27506,7 @@ realclean: clean
   Notify/Sequence/Batch_Buffering_Strategy.inl \
   Notify/Method_Request_Event.h Notify/Method_Request_Event.inl
 
-.obj/CosNotify_Initializer.o .obj/CosNotify_Initializer.o .obj/CosNotify_Initializer.o .obj/CosNotify_Initializer.o: Notify/CosNotify_Initializer.cpp \
+.obj/CosNotify_Initializer.o .obj/CosNotify_Initializer.so .shobj/CosNotify_Initializer.o .shobj/CosNotify_Initializer.so: Notify/CosNotify_Initializer.cpp \
   Notify/CosNotify_Initializer.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -27709,6 +27768,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -27752,7 +27812,7 @@ realclean: clean
   CosNotifyChannelAdminS.i \
   Notify/CosNotify_Service.inl
 
-.obj/Method_Request_Event.o .obj/Method_Request_Event.o .obj/Method_Request_Event.o .obj/Method_Request_Event.o: Notify/Method_Request_Event.cpp \
+.obj/Method_Request_Event.o .obj/Method_Request_Event.so .shobj/Method_Request_Event.o .shobj/Method_Request_Event.so: Notify/Method_Request_Event.cpp \
   Notify/Method_Request_Event.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -28012,6 +28072,7 @@ realclean: clean
   CosNotifyCommS.h \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -28106,7 +28167,7 @@ realclean: clean
   Notify/PropertySeq.inl Notify/Event.inl Notify/Method_Request.inl \
   Notify/Method_Request_Event.inl
 
-.obj/ETCL_Filter.o .obj/ETCL_Filter.o .obj/ETCL_Filter.o .obj/ETCL_Filter.o: Notify/ETCL_Filter.cpp Notify/ETCL_Filter.h \
+.obj/ETCL_Filter.o .obj/ETCL_Filter.so .shobj/ETCL_Filter.o .shobj/ETCL_Filter.so: Notify/ETCL_Filter.cpp Notify/ETCL_Filter.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
   $(ACE_ROOT)/ace/post.h \
@@ -28355,6 +28416,7 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -28444,7 +28506,7 @@ realclean: clean
   Notify/Notify_Constraint_Visitors.h \
   ETCL/ETCL_Constraint_Visitor.h
 
-.obj/ETCL_FilterFactory.o .obj/ETCL_FilterFactory.o .obj/ETCL_FilterFactory.o .obj/ETCL_FilterFactory.o: Notify/ETCL_FilterFactory.cpp \
+.obj/ETCL_FilterFactory.o .obj/ETCL_FilterFactory.so .shobj/ETCL_FilterFactory.o .shobj/ETCL_FilterFactory.so: Notify/ETCL_FilterFactory.cpp \
   Notify/ETCL_FilterFactory.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/notify_export.h \
@@ -28645,6 +28707,7 @@ realclean: clean
   CosNotificationS.i \
   CosEventCommS.h \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosEventCommS_T.h \
   CosEventCommS_T.i \
@@ -28791,7 +28854,7 @@ realclean: clean
   ETCL/ETCL_Constraint.inl \
   Notify/ETCL_Filter.inl
 
-.obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.o:  \
+.obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.so .shobj/Notify_Constraint_Interpreter.o .shobj/Notify_Constraint_Interpreter.so:  \
  Notify/Notify_Constraint_Interpreter.cpp \
   Notify/Notify_Constraint_Interpreter.h \
   $(ACE_ROOT)/ace/pre.h \
@@ -29075,6 +29138,7 @@ realclean: clean
   CosNotificationC.h \
   CosNotificationC.i \
   CosEventCommC.h \
+  CosEvent/event_export.h \
   CosEventCommC.i \
   CosNotifyCommC.i \
   CosNotifyFilterC.i \
@@ -29082,7 +29146,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   ETCL/ETCL_Constraint_Visitor.h
 
-.obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.o: Notify/Notify_Constraint_Visitors.cpp \
+.obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.so .shobj/Notify_Constraint_Visitors.o .shobj/Notify_Constraint_Visitors.so: Notify/Notify_Constraint_Visitors.cpp \
   Notify/Notify_Constraint_Visitors.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
