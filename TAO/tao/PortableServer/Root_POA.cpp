@@ -2567,6 +2567,22 @@ TAO_Root_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
+void
+TAO_Root_POA::set_servant (PortableServer::Servant servant
+                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD;
+
+  this->active_policy_strategies_.request_processing_strategy()->
+    set_servant (servant ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 bool
 TAO_Root_POA::is_servant_activation_allowed (PortableServer::Servant servant,
                                              int &wait_occurred_restart_call)
@@ -2640,23 +2656,6 @@ TAO_Root_POA::is_servant_active (
   return this->active_policy_strategies_.servant_retention_strategy ()->
     is_servant_in_map (servant, wait_occurred_restart_call);
 }
-
-
-void
-TAO_Root_POA::set_servant (PortableServer::Servant servant
-                           ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
-
-  this->active_policy_strategies_.request_processing_strategy()->
-    set_servant (servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO::Portable_Server::Cached_Policies::PriorityModel
 TAO_Root_POA::priority_model (void) const
