@@ -26,10 +26,37 @@
 
 #if defined (ACE_HAS_THREADS)
 
+class Signal_Catcher
+  // = TITLE
+  //     Keeps track of whether a thread has been signaled.
+{
+public:
+  Signal_Catcher (void): signaled_ (0) {}
+
+  sig_atomic_t signaled (void)
+  {
+    return this->signaled_;
+  }
+
+  void signaled (sig_atomic_t s)
+  {
+    this->signaled_ = s;
+  }
+
+private:
+  sig_atomic_t signaled_;
+};
+
+// Each thread keeps track of whether it has been signaled within a
+// separate TSS entry.
+static ACE_TSS<Signal_Catcher> signal_catcher;
+
 extern "C" void
 handler (int signum)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d\n", signum));
+  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d, signaled = %d\n", 
+	      signum, signal_catcher->signaled ()));
+  signal_catcher->signaled (1);
 }
 
 static void *
@@ -37,16 +64,27 @@ worker (int iterations)
 {
   ACE_NEW_THREAD;
 
-  for (int i = 0; i < iterations; i++)
-    if ((i % 1000) == 0 
-	&& ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0)
-      {
-	ACE_DEBUG ((LM_DEBUG, 
-		    "(%t) has been cancelled before iteration %d!\n", 
-		    i));
-	break;
-      }
+  ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
+  for (int i = 0; i < iterations; i++)
+    {
+      if ((i % 1000) == 0)
+	{
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+	  if (signal_catcher->signaled () > 0
+	      // Only test for cancellation after we've been signaled, to
+	      // avoid race conditions for suspend() and resume().
+	      && thr_mgr->testcancel (ACE_Thread::self ()) != 0)
+	    {
+	      ACE_DEBUG ((LM_DEBUG, 
+			  "(%t) has been cancelled before iteration %d!\n", 
+			  i));
+	      break;
+	    }
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+	  ACE_OS::sleep (1);
+	}
+    }
   // Destructor removes thread from Thread_Manager.
   return 0;
 }
@@ -73,7 +111,8 @@ main (int, char *[])
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
+  int grp_id = thr_mgr->spawn_n (n_threads,
+				 ACE_THR_FUNC (worker),
 				 (void *) n_iterations,
 				 THR_BOUND | THR_DETACHED);
 

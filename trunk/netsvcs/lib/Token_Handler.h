@@ -38,7 +38,6 @@ class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,
   //   schedules and handles timeouts that are used to support "timed
   //   waits."  Clients used timed waits to bound the amount of time
   //   they block trying to get a token.
-
 {
 public:
   // = Initialization and termination.
