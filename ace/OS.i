@@ -1304,7 +1304,7 @@ ACE_INLINE void *
 ACE_OS::malloc (size_t nbytes)
 {
   ACE_TRACE ("ACE_OS::malloc");
-  return ::malloc (nbytes);
+  return ACE_MALLOC_FUNC (nbytes);
 }
 
 ACE_INLINE void *
@@ -1312,11 +1312,11 @@ ACE_OS::calloc (size_t elements, size_t sizeof_elements)
 {
 #if !defined (ACE_HAS_WINCE)
   ACE_TRACE ("ACE_OS::calloc");
-  return ::calloc (elements, sizeof_elements);
+  return ACE_CALLOC_FUNC (elements, sizeof_elements);
 #else
   // @@ This will probably not work since it doesn't consider
   // alignment properly.
-  return ::malloc (elements * sizeof_elements);
+  return ACE_MALLOC_FUNC (elements * sizeof_elements);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -1324,14 +1324,14 @@ ACE_INLINE void *
 ACE_OS::realloc (void *ptr, size_t nbytes)
 {
   ACE_TRACE ("ACE_OS::realloc");
-  return ::realloc (ACE_MALLOC_T (ptr), nbytes);
+  return ACE_REALLOC_FUNC (ACE_MALLOC_T (ptr), nbytes);
 }
 
 ACE_INLINE void
 ACE_OS::free (void *ptr)
 {
   // ACE_TRACE ("ACE_OS::free");
-  ::free (ACE_MALLOC_T (ptr));
+  ACE_FREE_FUNC (ACE_MALLOC_T (ptr));
 }
 
 ACE_INLINE int
@@ -1844,7 +1844,7 @@ ACE_OS::strdup (const char *s)
 {
   // @@ WINCE Should we provide this function on WinCE?
 #if defined (ACE_HAS_STRDUP_EMULATION)
-  char *t = (char *) ::malloc (::strlen (s) + 1);
+  char *t = (char *) ACE_OS::malloc (::strlen (s) + 1);
   if (t == 0)
     return 0;
   else
