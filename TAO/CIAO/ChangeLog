@@ -1,19 +1,25 @@
+Tue Feb 10 11:35:47 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+
+	  Added this file for the new DnC spec.
+
 Tue Feb 10 10:41:48 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Assembly_Visitors.{cpp,h}: 
-	* tools/static_configurator/Static_Assembly_Parser.cpp: 
+	* tools/static_configurator/Static_Assembly_Visitors.{cpp,h}:
+	* tools/static_configurator/Static_Assembly_Parser.cpp:
 	* tools/static_configurator/Static_Assembly.h: Offline static
 	  configuration parser to parse XML files into an intermediate C++
 	  header file which will be included by the online configuration
-	  engine. 
-	
-	* tools/static_configurator/Static_Configurator.mpc: 
+	  engine.
+
+	* tools/static_configurator/Static_Configurator.mpc:
 	* tools/static_configurator/Static_Configurator.{h,cpp}: Online
 	  configuration engine that reads the intermediate table created
 	  by the offline parser. This is responsible for creating
 	  component servers, homes, containers, components and
 	  establishing connections between components.
-	
+
 	* ciao/Container_Base.{h,cpp}: Modifications for static
 	  configuration. While installing a home, instead of loading the
 	  entry point symbol from a DLL, the entry point function pointer
@@ -21,7 +27,7 @@ Tue Feb 10 10:41:48 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 	  container. This hashmap contains the name of the entry point and
 	  the entry point function pointer.
 
-	* ciao/Container_Impl.{h,cpp,inl}: 
+	* ciao/Container_Impl.{h,cpp,inl}:
 	* ciao/ComponentServer_Impl.{h,cpp,inl}: Changed constructor
 	  signatures to add a flag for static configuration and a hashmap
 	  containing the static entry function pointers. These are
@@ -34,7 +40,7 @@ Fri Feb  6 15:54:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/Display/HUDisplay.idl:
         * performance-tests/Benchmark/RoundTrip/RoundTrip.idl:
         * performance-tests/Benchmark/RoundTripClient/RoundTripClient.idl:
-        
+
           Removed the 'ciao/' path prefix from inclusions of
           Components.idl.
 
