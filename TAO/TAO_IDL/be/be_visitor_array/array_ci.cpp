@@ -820,7 +820,14 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << fname << "::nocopy (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->nocopy_;" << be_uidt_nl;
-  *os << "}";
+  *os << "}" << be_nl << be_nl;
+
+  *os << "ACE_INLINE" << be_nl
+      << nodename << "_slice *" << be_nl
+      << fname << "::tao_alloc (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return " << nodename << "_alloc ();" << be_uidt_nl
+      << "}";
 
   return 0;
 }

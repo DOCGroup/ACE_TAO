@@ -628,7 +628,10 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   *os << namebuf << "_slice *ptr (void) const;" << be_nl;
 
   // Additional member function that returns the NOCOPY flag.
-  *os << "CORBA::Boolean nocopy (void) const;" << be_uidt_nl;
+  *os << "CORBA::Boolean nocopy (void) const;" << be_nl << be_nl;
+
+  *os << "static " << namebuf << "_slice * tao_alloc (void);" 
+      << be_uidt_nl << be_nl;
 
   // Generate the private section.
   *os << "private:" << be_idt_nl;
