@@ -14,6 +14,7 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 
 use strict;
 use Cwd;
+use Config;
 use File::Basename;
 
 if ( $^O eq 'VMS' ) {
@@ -21,7 +22,7 @@ if ( $^O eq 'VMS' ) {
   import VMS::Filespec qw(unixpath);
 }
 
-my($basePath) = getExecutePath($0) . 'MakeProjectCreator';
+my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
 unshift(@INC, $basePath . '/modules');
 
 my($mpcroot) = $ENV{MPC_ROOT};
@@ -60,31 +61,23 @@ my(@creators) = ('GNUACEProjectCreator',
 # Subroutine Section
 # ************************************************************
 
+sub getBasePath {
+  return $mpcpath;
+}
+
+
 sub which {
-  my($prog)   = shift;
-  my($exec)   = $prog;
-  my($part)   = '';
-  if ( $^O eq 'VMS' ) {
-    my($envSep) = ';';
-    if (defined $ENV{'PATH'}) {
-      foreach $part (split(/$envSep/, $ENV{'PATH'})) {
-        $part .= "$prog";
-        if ( -x $part ) {
-          $exec = $part;
-          last;
-        }
-      }
-    }
-  }
-  else  {
-    my($envSep) = ($^O eq 'MSWin32' ? ';' : ':');
-    if (defined $ENV{'PATH'}) {
-      foreach $part (split(/$envSep/, $ENV{'PATH'})) {
-        $part .= "/$prog";
-        if ( -x $part ) {
-          $exec = $part;
-          last;
-        }
+  my($prog) = shift;
+  my($exec) = $prog;
+
+  if (defined $ENV{'PATH'}) {
+    my($part)   = '';
+    my($envSep) = $Config{'path_sep'};
+    foreach $part (split(/$envSep/, $ENV{'PATH'})) {
+      $part .= "/$prog";
+      if ( -x $part ) {
+        $exec = $part;
+        last;
       }
     }
   }
@@ -97,50 +90,32 @@ sub getExecutePath {
   my($prog) = shift;
   my($loc)  = '';
 
-  if ( $^O eq 'VMS' ) {
-    if ($prog ne basename($prog)) {
-      my($dir) = unixpath( dirname($prog) );
-      if ($prog =~ /^[\/\\]/) {
-        $loc = $dir;
-      }
-      else {
-        $loc = unixpath(getcwd()) . $dir;
-      }
+  if ($prog ne basename($prog)) {
+    my($dir) = ($^O eq 'VMS' ? unixpath(dirname($prog)) : dirname($prog));
+    if ($prog =~ /^[\/\\]/ ||
+        $prog =~ /^[A-Za-z]:[\/\\]?/) {
+      $loc = $dir;
     }
     else {
-      $loc = unixpath( dirname(which($prog)) );
+      $loc = ($^O eq 'VMS' ? unixpath(getcwd()) : getcwd()) . '/' . $dir;
     }
+  }
+  else {
+    $loc = dirname(which($prog));
+    if ($^O eq 'VMS') {
+      $loc = unixpath($loc);
+    }
+  }
 
-    if ($loc eq '.') {
-      $loc = unixpath( getcwd() );
-    }
-  } else {
-    if ($prog ne basename($prog)) {
-      if ($prog =~ /^[\/\\]/ ||
-          $prog =~ /^[A-Za-z]:[\/\\]?/) {
-        $loc = dirname($prog);
-      }
-      else {
-        $loc = getcwd() . '/' . dirname($prog);
-      }
-    }
-    else {
-      $loc = dirname(which($prog));
-    }
+  $loc =~ s/\/\.$//;
 
-    $loc =~ s/\/\.$//;
-
-    if ($loc eq '.') {
-      $loc = getcwd();
-    }
-
-    if ($loc ne '') {
-      $loc .= '/';
-    }
+  if ($loc eq '.') {
+    $loc = ($^O eq 'VMS' ? unixpath(getcwd()) : getcwd());
   }
 
   return $loc;
 }
+
 
 # ************************************************************
 # Main Section
