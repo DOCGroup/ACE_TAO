@@ -29,7 +29,7 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
                              "Error: Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
-      case '?':  // display help for use of the server.*/
+      case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s"
