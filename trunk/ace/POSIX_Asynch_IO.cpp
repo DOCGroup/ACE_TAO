@@ -6,12 +6,14 @@
 #include "ace/POSIX_Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/ACE.h"
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_Pseudo_Task.h"
 #include "ace/POSIX_Proactor.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID (ace,
            POSIX_Asynch_IO,
