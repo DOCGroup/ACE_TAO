@@ -429,7 +429,7 @@ public:
   // until the relative time specified in <timeout> elapses).
 
   virtual int dispatch_notifications (int &number_of_active_handles,
-                                      const ACE_Handle_Set &rd_mask);
+                                      ACE_Handle_Set &rd_mask);
   // No-op.
 
   virtual ACE_HANDLE get_handle (void) const;
