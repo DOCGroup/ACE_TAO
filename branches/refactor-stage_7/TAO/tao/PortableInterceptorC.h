@@ -1858,7 +1858,6 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
 
-#if defined (_MSC_VER)
 
 // Traits specializations.
 namespace TAO
@@ -1866,7 +1865,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::Interceptor>
   {
@@ -1887,7 +1886,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_CURRENT__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::Current>
   {
@@ -1908,7 +1907,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::RequestInfo>
   {
@@ -1929,7 +1928,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ClientRequestInfo>
   {
@@ -1950,7 +1949,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ServerRequestInfo>
   {
@@ -1971,7 +1970,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ClientRequestInterceptor>
   {
@@ -1992,7 +1991,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ServerRequestInterceptor>
   {
@@ -2013,7 +2012,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::PolicyFactory>
   {
@@ -2034,7 +2033,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ORBInitInfo>
   {
@@ -2055,7 +2054,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER__TRAITS_CH_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<PortableInterceptor::ORBInitializer>
   {
@@ -2075,7 +2074,6 @@ namespace TAO
 #endif /* end #if !defined */
 };
 
-#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52

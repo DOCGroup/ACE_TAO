@@ -168,8 +168,6 @@ namespace TAO
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynAny.
 
 DynamicAny::DynAny_ptr
@@ -202,8 +200,6 @@ TAO::Objref_Traits<DynamicAny::DynAny>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -458,8 +454,6 @@ DynamicAny::DynAny::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynFixed.
 
 DynamicAny::DynFixed_ptr
@@ -492,8 +486,6 @@ TAO::Objref_Traits<DynamicAny::DynFixed>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -582,8 +574,6 @@ DynamicAny::DynFixed::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynEnum.
 
 DynamicAny::DynEnum_ptr
@@ -616,8 +606,6 @@ TAO::Objref_Traits<DynamicAny::DynEnum>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -804,8 +792,6 @@ DynamicAny::NameDynAnyPairSeq::~NameDynAnyPairSeq (void)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynStruct.
 
 DynamicAny::DynStruct_ptr
@@ -838,8 +824,6 @@ TAO::Objref_Traits<DynamicAny::DynStruct>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -928,8 +912,6 @@ DynamicAny::DynStruct::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynUnion.
 
 DynamicAny::DynUnion_ptr
@@ -962,8 +944,6 @@ TAO::Objref_Traits<DynamicAny::DynUnion>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1143,8 +1123,6 @@ DynamicAny::DynAnySeq::~DynAnySeq (void)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynSequence.
 
 DynamicAny::DynSequence_ptr
@@ -1177,8 +1155,6 @@ TAO::Objref_Traits<DynamicAny::DynSequence>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1267,8 +1243,6 @@ DynamicAny::DynSequence::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynArray.
 
 DynamicAny::DynArray_ptr
@@ -1301,8 +1275,6 @@ TAO::Objref_Traits<DynamicAny::DynArray>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1391,8 +1363,6 @@ DynamicAny::DynArray::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynValue.
 
 DynamicAny::DynValue_ptr
@@ -1425,8 +1395,6 @@ TAO::Objref_Traits<DynamicAny::DynValue>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1515,8 +1483,6 @@ DynamicAny::DynValue::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for DynamicAny::DynAnyFactory.
 
 DynamicAny::DynAnyFactory_ptr
@@ -1549,8 +1515,6 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *

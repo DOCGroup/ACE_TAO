@@ -189,8 +189,6 @@ namespace TAO
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for ImplementationRepository::ServerObject.
 
 ImplementationRepository::ServerObject_ptr
@@ -223,8 +221,6 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1964,8 +1960,6 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for ImplementationRepository::Administration.
 
 ImplementationRepository::Administration_ptr
@@ -1998,8 +1992,6 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2754,8 +2746,6 @@ namespace ImplementationRepository
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for ImplementationRepository::ServerInformationIterator.
 
 ImplementationRepository::ServerInformationIterator_ptr
@@ -2788,8 +2778,6 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_mar
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *

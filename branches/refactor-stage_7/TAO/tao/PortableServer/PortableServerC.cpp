@@ -1228,8 +1228,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::ThreadPolicy.
 
 PortableServer::ThreadPolicy_ptr
@@ -1262,8 +1260,6 @@ TAO::Objref_Traits<PortableServer::ThreadPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1452,8 +1448,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::LifespanPolicy.
 
 PortableServer::LifespanPolicy_ptr
@@ -1486,8 +1480,6 @@ TAO::Objref_Traits<PortableServer::LifespanPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1677,8 +1669,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::IdUniquenessPolicy.
 
 PortableServer::IdUniquenessPolicy_ptr
@@ -1711,8 +1701,6 @@ TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -1903,8 +1891,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::IdAssignmentPolicy.
 
 PortableServer::IdAssignmentPolicy_ptr
@@ -1937,8 +1923,6 @@ TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2141,8 +2125,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::ImplicitActivationPolicy.
 
 PortableServer::ImplicitActivationPolicy_ptr
@@ -2175,8 +2157,6 @@ TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2372,8 +2352,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::ServantRetentionPolicy.
 
 PortableServer::ServantRetentionPolicy_ptr
@@ -2406,8 +2384,6 @@ TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2616,8 +2592,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::RequestProcessingPolicy.
 
 PortableServer::RequestProcessingPolicy_ptr
@@ -2650,8 +2624,6 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -2794,8 +2766,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::POAManager.
 
 PortableServer::POAManager_ptr
@@ -2828,8 +2798,6 @@ TAO::Objref_Traits<PortableServer::POAManager>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3099,8 +3067,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::AdapterActivator.
 
 PortableServer::AdapterActivator_ptr
@@ -3133,8 +3099,6 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3268,8 +3232,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::ServantManager.
 
 PortableServer::ServantManager_ptr
@@ -3302,8 +3264,6 @@ TAO::Objref_Traits<PortableServer::ServantManager>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3436,8 +3396,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::ServantActivator.
 
 PortableServer::ServantActivator_ptr
@@ -3470,8 +3428,6 @@ TAO::Objref_Traits<PortableServer::ServantActivator>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3609,8 +3565,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::ServantLocator.
 
 PortableServer::ServantLocator_ptr
@@ -3643,8 +3597,6 @@ TAO::Objref_Traits<PortableServer::ServantLocator>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -3783,8 +3735,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::POA.
 
 PortableServer::POA_ptr
@@ -3817,8 +3767,6 @@ TAO::Objref_Traits<PortableServer::POA>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
@@ -5328,8 +5276,6 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
 
-#if defined (_MSC_VER)
-
 // Traits specializations for PortableServer::Current.
 
 PortableServer::Current_ptr
@@ -5362,8 +5308,6 @@ TAO::Objref_Traits<PortableServer::Current>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker *
