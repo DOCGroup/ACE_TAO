@@ -61,6 +61,12 @@ TAO_Resource_Factory::use_tss_resources (void) const
   return 0;
 }
 
+int
+TAO_Resource_Factory::use_locked_data_blocks (void) const
+{
+  return 0;
+}
+
 ACE_Reactor *
 TAO_Resource_Factory::get_reactor (void)
 {
@@ -99,12 +105,6 @@ TAO_Resource_Factory::output_cdr_dblock_allocator (void)
 
 ACE_Allocator *
 TAO_Resource_Factory::output_cdr_buffer_allocator (void)
-{
-  return 0;
-}
-
-ACE_Data_Block *
-TAO_Resource_Factory::create_input_cdr_data_block (size_t)
 {
   return 0;
 }

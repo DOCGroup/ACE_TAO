@@ -22,11 +22,12 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV,
                         const TAO_POA_Policies *policies)
 {
   if (this->root_poa_ == 0)
-    this->create_and_set_root_poa (adapter_name,
-                                   poa_manager,
-                                   policies,
-                                   ACE_TRY_ENV);
-
+    {
+      this->create_and_set_root_poa (adapter_name,
+                                     poa_manager,
+                                     policies,
+                                     ACE_TRY_ENV);
+    }
   return this->root_poa_;
 }
 
@@ -118,12 +119,6 @@ ACE_INLINE TAO_GIOP_ServiceContextList&
 TAO_ORB_Core::service_context (void)
 {
   return this->service_context_;
-}
-
-ACE_INLINE ACE_Data_Block*
-TAO_ORB_Core::create_input_cdr_data_block (size_t size)
-{
-  return this->resource_factory ()->create_input_cdr_data_block (size);
 }
 
 #if defined (TAO_HAS_CORBA_MESSAGING)

@@ -103,6 +103,10 @@ public:
   // @@ Backwards compatibility, return 1 if the ORB core should use
   //    TSS resources
 
+  virtual int use_locked_data_blocks (void) const;
+  // @@ Backwards compatibility, return 1 if the ORB core should use
+  //    Locked_Data_Blocks
+
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 
@@ -119,10 +123,6 @@ public:
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
   // Access the output CDR allocators.
-
-  virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
-  // The Message Blocks used for input CDRs must have appropiate
-  // locking strategies.
 
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
   // The protocol factory list is implemented in this class since

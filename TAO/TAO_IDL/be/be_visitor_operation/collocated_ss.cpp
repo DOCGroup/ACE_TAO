@@ -172,7 +172,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
   os->indent ();
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
-      << "*this->_stubobj ()->servant_orb ()->orb_core ()->object_adapter ()"
+      << "*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl

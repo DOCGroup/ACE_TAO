@@ -720,7 +720,7 @@ Pure clients that will never receive a request</li>
 <b>Allocator for input CDR streams</b> Normally the application has no
 access to this buffer, and it is only used on the demarshaling of arguments
 (or results). It is almost always better to use the "<tt>-ORBinputcdrallocator
-tss</tt>" option since it will allocate memory from a thread specific allocator
+null</tt>" option since it will allocate memory from a thread specific allocator
 and it will not need locks to manage that memory.</li>
 
 <p>In some cases the user <i>may</i> gain access to the CDR stream

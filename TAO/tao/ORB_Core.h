@@ -65,11 +65,14 @@ public:
   ~TAO_ORB_Core_TSS_Resources (void);
   // destructor
 
-  int owns_reactor_;
-  // Set to 1 if this object owns the reactor
+  int owns_resources_;
+  // Set to 1 if this object owns the resources below
 
   ACE_Reactor *reactor_;
   // Used for responding to I/O reactively
+
+  int inherited_reactor_;
+  // The reactor was inherited from the spawning thread, do not delete
 
   // = The rest of the resources are not currently in use, just a plan
   //   for the future...
@@ -79,8 +82,9 @@ public:
   ACE_Allocator *output_cdr_msgblock_allocator_;
   // The allocators for the output CDR streams.
 
-  int owns_connection_cache_;
-  // Set to 1 if this object owns the connection cache
+  ACE_Allocator *input_cdr_dblock_allocator_;
+  ACE_Allocator *input_cdr_buffer_allocator_;
+  // The allocators for the input CDR streams.
 
   TAO_Connection_Cache *connection_cache_;
   // This is is just a place holder, in the future the connection
@@ -372,6 +376,9 @@ protected:
   // Initialize the root POA.
 
 protected:
+  ACE_SYNCH_MUTEX lock_;
+  // Synchronize internal state...
+
   // = Data members.
 
   TAO_Connector_Registry *connector_registry_;
@@ -476,12 +483,12 @@ protected:
   int use_tss_resources_;
   // If 1 then this ORB uses thread-specific resources
 
-  ACE_Reactor* reactor_;
-  // If the ORB has a single reactor shared between all the threads
-  // then this is it....
-
   ACE_TSS_TYPE (TAO_ORB_Core_TSS_Resources) tss_resources_;
   // This is where the tss resources for this ORB are stored.
+
+  TAO_ORB_Core_TSS_Resources orb_resources_;
+  // If the resources are per-ORB (as opposed to per-ORB-per-thread)
+  // then they are stored here...
 
   // @@ TODO: the service context list may need to be in TSS
   //    storage...

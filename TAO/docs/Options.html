@@ -347,21 +347,25 @@ which is not reentrant.</TD></TR>
   <TR><TD><CODE>select_st<CODE></TD><TD>Use the
                     <CODE>ACE_Select_Reactor</CODE> with null locks
                   </TD></TR>
-  <TR><TD><CODE>fl_reactor<CODE></TD><TD>Use the
+  <TR><TD><CODE>fl<CODE></TD><TD>Use the
                     <CODE>ACE_FlReactor</CODE> only available if ACE
                     was compiled with support for the FL toolkit
                   </TD></TR>
-  <TR><TD><CODE>xt_reactor<CODE></TD><TD>Use the
+  <TR><TD><CODE>xt<CODE></TD><TD>Use the
                     <CODE>ACE_FlReactor</CODE> only available if ACE
                     was compiled with support for the XWindows Toolkit
                   </TD></TR>
-  <TR><TD><CODE>WFMO<CODE></TD><TD>Use the
+  <TR><TD><CODE>wfmo<CODE></TD><TD>Use the
                     <CODE>ACE_WFMO_Reactor</CODE> only available on
                     Win32 platforms.
                   </TD></TR>
-  <TR><TD><CODE>MsgWFMO<CODE></TD><TD>Use the
+  <TR><TD><CODE>msg_wfmo<CODE></TD><TD>Use the
                     <CODE>ACE_Msg_WFMO_Reactor</CODE> only available on
                     Win32 platforms.
+                  </TD></TR>
+  <TR><TD><CODE>tp<CODE></TD><TD>Use the
+                    <CODE>ACE_TP_Reactor</CODE>, a select based
+                    thread-pool reactor.
                   </TD></TR>
   </TABLE>
   The default is <code>select_mt</code></TD></TR>
@@ -373,17 +377,17 @@ which is not reentrant.</TD></TR>
 <TR>
 <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
 <TD><a name="-ORBInputCDRAllocator"></a>
-              Specify whether the ORB uses a global
-              (<em>which</em> = <code>global</code>)
-              or a per-thread (<em>which</em> = <code>tss</code>)
-              allocator for the incoming CDR buffers.
-              Though <CODE>tss</CODE> should give the
+              Specify whether the ORB uses locked
+              (<em>which</em> = <code>thread</code>)
+              or lock-free (<em>which</em> = <code>null</code>)
+              allocators for the incoming CDR buffers.
+              Though <CODE>null</CODE> should give the
               optimal performance;
-              we made the default <CODE>global</CODE>.
-              TAO optimizations for octet sequences will not work when
-              returning that data type if the allocator is
-              <CODE>tss</CODE>.
-              Using global allocator also allows the users to
+              we made the default <CODE>thread</CODE>.
+              TAO optimizations for octet sequences will not work in all cases when
+              if the allocator does not have locks (for example if the
+              octet sequences are part of a return value.
+              Using locked allocators also allows the users to
               take advantage of the TAO octet sequence
               extensions to preserve the buffer after the upcall.
             </TD></TR>

@@ -152,7 +152,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
   if (servant_orb == 0)
     servant_orb = stub->orb_core ()->orb ();
-  stub->servant_orb (CORBA::ORB::_duplicate (servant_orb));
+  stub->servant_orb (servant_orb);
   return stub;
 }
 

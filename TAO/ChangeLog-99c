@@ -1,3 +1,30 @@
+Thu Jun 17 19:38:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	* tao/Resource_Factory.h:
+	* tao/Resource_Factory.cpp:
+	* tao/default_resource.h:
+	* tao/default_resource.cpp:
+	* docs/Options.html:
+	* docs/configurations.html:
+	  Moved the CDR allocators from the resource factory to the
+	  ORB_Core resources. They are stored in either per-ORB-per-thread
+	  storage or in per-ORB storage.  Notice that the control on the
+	  allocators location is left for the -ORBResources flag, but the
+	  control of the *type* of allocator is still in the resource
+	  factory class.  This completes the separation of roles between
+	  the resource factory (that only allocates resources), and the
+	  ORB_Core (who manage their lifetime).
+
+	* tao/Stub.h:
+	* tao/Stub.i:
+	* tao/Servant_Base.cpp:
+	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp:
+	  Added new fast accessors to the ORB_Core that do not require a
+	  duplicate on every call.
+
 Thu Jun 17 15:31:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_i.cpp:
