@@ -108,6 +108,7 @@ endif # shared_libs
 
 ace_lib_prelink ?= 0
 aix_build ?= 0
+vxworks_ntbuild ?= 0
 
 $(VLIB): $(VLOBJS)
 
@@ -130,7 +131,11 @@ ifeq (1,$(ace_lib_prelink))
         #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
+ifeq (1,$(vxworks_ntbuild))
+	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+else
 	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA);
+endif
 ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.
