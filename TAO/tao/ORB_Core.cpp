@@ -585,15 +585,11 @@ TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
     {
       char buffer[MAXHOSTNAMELEN + 1];
       if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) failed to resolve local host %p.\n"),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) failed to resolve local host %p.\n"),
+                          -1);
       else
-        {
-          host = buffer;
-        }
+        host = buffer;
     }
 
   // Set the host and port parameters in the address
