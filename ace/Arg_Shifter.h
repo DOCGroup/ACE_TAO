@@ -4,7 +4,7 @@
 // ========================================================================
 //
 // = LIBRARY 
-//     TAO 
+//     ace
 //  
 // = FILENAME 
 //     Arg_Shifter.h
@@ -14,10 +14,10 @@
 // 
 // ========================================================================
 
-#if !defined (TAO_ARG_SHIFTER_H)
-#define TAO_ARG_SHIFTER_H
+#if !defined (ACE_ARG_SHIFTER_H)
+#define ACE_ARG_SHIFTER_H
 
-class Arg_Shifter
+class ACE_Arg_Shifter
 {
   // = TITLE
   //    This ADT shifts known args to the back of the argv vector, so
@@ -25,24 +25,28 @@ class Arg_Shifter
   //    unprocessed arguments at the beginning of the vector.
   //
   // = DESCRIPTION
-  //    The Arg_Shifter copies the pointers of the argv vector into a
-  //    temporary array. As the Arg_Shifter iterates over the temp, is
-  //    places known arguments in the rear of the argv and unknown
-  //    ones in the beginning. So, after having visited all the
-  //    arguments in the temp vector, Arg_Shifter has placed all the
-  //    unknown arguments in their original order at the front of
-  //    argv.
+  //    The <ACE_Arg_Shifter> copies the pointers of the argv vector
+  //    into a temporary array. As the <ACE_Arg_Shifter> iterates over
+  //    the temp, is places known arguments in the rear of the argv
+  //    and unknown ones in the beginning. So, after having visited
+  //    all the arguments in the temp vector, <ACE_Arg_Shifter> has
+  //    placed all the unknown arguments in their original order at
+  //    the front of argv.
 public:
-  Arg_Shifter (int &argc, char **argv, char **temp = 0);
-  // Initialize the Arg_Shifter to the vector over which to iterate,
-  // also providing the temporary array if the client doesn't want the
-  // arg_shifter to dynamically allocate its own. If internal dynamic
-  // allocation fails, the Arg_Shifter will set all the indices to the
-  // end of the vector, forbidding iteration. Following iteration over
-  // argv, the argc value will contain the number of unconsumed
-  // arguments.
+  // = Initialization and termination methods.
+  ACE_Arg_Shifter (int &argc,
+                   char **argv,
+                   char **temp = 0);
+  // Initialize the <ACE_Arg_Shifter> to the vector over which to
+  // iterate, also providing the temporary array if the client doesn't
+  // want the arg_shifter to dynamically allocate its own. If internal
+  // dynamic allocation fails, the <ACE_Arg_Shifter> will set all the
+  // indices to the end of the vector, forbidding iteration. Following
+  // iteration over argv, the argc value will contain the number of
+  // unconsumed arguments.
   
-  ~Arg_Shifter (void);
+  ~ACE_Arg_Shifter (void);
+  // Destructor.
   
   char *get_current (void) const;
   // Get the current head of the vector.
@@ -94,4 +98,4 @@ private:
   // argument. 
 };
 
-#endif /* TAO_ARG_SHIFTER_H */
+#endif /* ACE_ARG_SHIFTER_H */

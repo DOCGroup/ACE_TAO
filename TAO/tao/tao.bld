@@ -4,8 +4,6 @@ default:
 	:defines=DEBUG
 Any.cpp
 	C++
-Arg_Shifter.cpp
-	C++
 CDR.cpp
 	C++
 Client_Strategy_Factory.cpp

@@ -5,8 +5,8 @@
 #include "ace/Service_Repository.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Env_Value_T.h"
+#include "ace/Arg_Shifter.h"
 #include "tao/TAO_Internal.h"
-#include "tao/Arg_Shifter.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"
@@ -63,7 +63,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // than argv[0].  I don't think that's wise.  I think we need to
   // change that convention to argv[0] and let the initializing code
   // make any necessary shifts.
-
+  //
   // Parse arguments to the ORB.  Typically the ORB is passed
   // arguments straight from the command line, so we will simply pass
   // through them and respond to the ones we understand and ignore
@@ -72,21 +72,21 @@ TAO_ORB_Core::init (int& argc, char** argv)
   // In some instances, we may actually build another vector of
   // arguments and stash it for use initializing other components such
   // as the ACE_Service_Config or the RootPOA.
+  // 
+  // Prepare a copy of the argument vector.
 
-  // Prepare a copy of the argument vector
-  char **svc_config_argv; // @@ Should this be a data member?
-  // Probably, but there's no object in which to scope it.
+  char **svc_config_argv;
 
   int svc_config_argc = 0;
   ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  Arg_Shifter arg_shifter(argc, argv);
+  ACE_Arg_Shifter arg_shifter (argc, argv);
   svc_config_argv[svc_config_argc++] = argv[0];
 
-  ACE_Env_Value<int> defport(quote(TAO_DEFAULT_SERVER_PORT),
-                             TAO_DEFAULT_SERVER_PORT);
+  ACE_Env_Value<int> defport (quote (TAO_DEFAULT_SERVER_PORT),
+                              TAO_DEFAULT_SERVER_PORT);
   CORBA::String_var host = CORBA::string_dup ("");
   CORBA::UShort port = defport;
   CORBA::Boolean use_ior = CORBA::B_TRUE;
@@ -124,7 +124,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
           if (arg_shifter.is_parameter_next ())
             {
-              char* file_name = arg_shifter.get_current ();
+              char *file_name = arg_shifter.get_current ();
               // Should we dup the string before assigning?
               svc_config_argv[svc_config_argc++] = file_name;
               arg_shifter.consume_arg();

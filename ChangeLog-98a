@@ -1,5 +1,8 @@
 Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace: Added Arg_Shifter from TAO and renamed it to
+ 	  ACE_Arg_Shifter.
+
 	* ace/IOStream_T.i (recv_n): ACE_IOStream<STREAM>::eof (void) had
  	  a subtle bug if it is called when a get operation (>>) has not
  	  failed.  Thanks to James CE Johnson <ace-users@lads.com> for

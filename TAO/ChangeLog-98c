@@ -1,3 +1,8 @@
+Fri May  1 17:14:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/Makefile: Moved the Arg_Shifter from TAO to ACE since it is
+ 	  generic and not TAO-specific.
+
 Fri May  1 13:05:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/Stub.h: Added a new structure called TAO_Exception_Data that
