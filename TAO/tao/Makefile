@@ -12,8 +12,8 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 # @@ Need to clean up this makefile...it's a MESS!!!! (cjc)
 # These are components that are only headers and must be installed
 CORBA_HDRS = orb sequence stub orbconf objtable optable $(CORBA_SRCS)
-CORBA_SRCS = any corbacom except nvlist object orbobj principa \
-	request svrrqst poa typecode
+CORBA_SRCS = any corbacom except nvlist object orbobj poa \
+	     principa request svrrqst typecode
 
 # These are components that are only headers and must be installed
 OTHERS_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
@@ -24,30 +24,30 @@ OTHERS_INLN = any poa cdr connect iiopobj iioporb object orbobj params svrrqst t
 			  managed_types.i
 # These are components that are either header & source or source-only
 OTHERS_SRCS = \
-	giop \
-	iiopobj \
-	iioporb \
-	invoke \
-	params \
-	default_client \
-	default_server \
-	server_factory \
-	client_factory \
 	arg_shifter \
-	orb_core \
-	objtable \
-	optable \
-	connect \
 	cdr \
+	client_factory \
+	connect \
 	debug \
-	interp \
-	marshal \
-	encode \
 	decode \
 	deep_copy \
 	deep_free \
-	tao_internals \
+	default_client \
+	default_server \
+	encode \
+	giop \
+	iiopobj \
+	iioporb \
+	interp \
+	invoke \
 	managed_types \
+	marshal \
+	objtable \
+	optable \
+	orb_core \
+	params \
+	server_factory \
+	tao_internals \
 	tc_const
 
 FILES	 = $(OTHERS_SRCS) $(CORBA_SRCS)
