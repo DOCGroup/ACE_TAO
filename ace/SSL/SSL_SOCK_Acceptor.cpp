@@ -151,6 +151,8 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           // Could be both handles set (same handle in both masks) so set to 1.
           if (status >= 1)
             status = 1;
+          else                   // Timeout or failure
+            status = -1;
         }
 
     } while (status == 1 && !SSL_is_init_finished (ssl));
