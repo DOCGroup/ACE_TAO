@@ -103,6 +103,9 @@ public:
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
   // Recv <n> bytes via Win32 ReadFile using overlapped I/O.
 
+  // = Meta-type info
+  typedef ACE_SPIPE_Addr PEER_ADDR;
+
   void dump (void) const;
   // Dump the state of an object.
 

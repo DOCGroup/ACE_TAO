@@ -116,7 +116,7 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
-  // ACE_ALLOC_HOOK_DECLARE;
+  ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
 

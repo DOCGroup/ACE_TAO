@@ -76,6 +76,10 @@ public:
   // The <flags> and <perms> arguments are passed down to the open()
   // method.
 
+  // = Meta-type info
+  typedef ACE_SPIPE_Addr PEER_ADDR;
+  typedef ACE_SPIPE_Stream PEER_STREAM;
+
   void dump (void) const;
   // Dump the state of an object.
 
