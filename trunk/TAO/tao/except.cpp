@@ -159,27 +159,26 @@ CORBA_SystemException::_narrow (CORBA_Exception* exception)
   return 0;
 }
 
-// update correctly!
-static const int NUM_SYS_EXCEPTIONS = 26; 
+// Static initializers.
+
+const int TAO_Exception::NUM_SYS_EXCEPTIONS = 26; 
 
 // Preallocated tc buffer.
-static const int TC_BUFLEN = 160;
+const int TAO_Exception::TC_BUFLEN = 160;
 
-static CORBA::TypeCode_ptr sys_exceptions[NUM_SYS_EXCEPTIONS];
-CORBA::ExceptionList __system_exceptions;
+CORBA::TypeCode_ptr TAO_Exception::sys_exceptions[NUM_SYS_EXCEPTIONS];
 
-// Make the TypeCode for a standard exception ... note that "buffer"
-// holds the (unscoped) name originally, and is then overwritten.
-//
-// When used correctly, initializing system exceptions is only an
-// exercise in CPU time; it allocates no new memory.
+CORBA::ExceptionList TAO_Exception::system_exceptions;
 
-static void
-make_standard_typecode (CORBA::TypeCode_ptr tcp,
-                        const char *name,
-                        char *buffer,
-                        size_t buflen,
-                        CORBA::Environment &env)
+// Note that "buffer" holds the (unscoped) name originally, and is
+// then overwritten.
+
+void
+TAO_Exception::make_standard_typecode (CORBA::TypeCode_ptr tcp,
+                                       const char *name,
+                                       char *buffer,
+                                       size_t buflen,
+                                       CORBA::Environment &env)
 {
   static const char *minor = "minor";
   static const char *completion = "completion";
@@ -253,7 +252,7 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  sys_exceptions [__system_exceptions.length++] =
+  sys_exceptions [TAO_Exception::system_exceptions.length++] =
     new (tcp) CORBA::TypeCode (CORBA::tk_except,
                                stream.length (),
                                stream.buffer (),
@@ -309,25 +308,23 @@ make_standard_typecode (CORBA::TypeCode_ptr tcp,
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-// Runtime initialization of all standard exception typecodes.  Called
-// from CORBA::ORB::init ().
-
 void
-__TC_init_standard_exceptions (CORBA::Environment &env)
+TAO_Exception::init_standard_exceptions (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when
   // unmarshaling.
-  __system_exceptions.length = 0;
-  __system_exceptions.maximum = NUM_SYS_EXCEPTIONS;
-  __system_exceptions.buffer = &sys_exceptions [0];
+  TAO_Exception::system_exceptions.length = 0;
+  TAO_Exception::system_exceptions.maximum = 
+    TAO_Exception::NUM_SYS_EXCEPTIONS;
+  TAO_Exception::system_exceptions.buffer = 
+    &TAO_Exception::sys_exceptions [0];
 
   // Initialize the typecodes.
 #define TAO_SYSTEM_EXCEPTION(name) \
   if (env.exception () == 0) \
-        make_standard_typecode (&tc_std_ ## name, #name, \
-        (char *) tc_buf_ ## name, \
-        sizeof tc_buf_ ## name, env);
-
+    TAO_Exception::make_standard_typecode (&tc_std_ ## name, #name, \
+                                           (char *) tc_buf_ ## name, \
+                                           sizeof tc_buf_ ## name, env);
   STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
     }

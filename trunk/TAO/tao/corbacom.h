@@ -387,61 +387,61 @@ public:
     //   To support the memory management for "out" parameter passing
     //   mode.  ORBOS/97-05-15, Appendix C.2 defines a String_out class
   public:
-    // =operations
+    // = operations.
 
     String_out (char *&p);
-    // construction from a reference to a string
+    // Construction from a reference to a string.
 
     String_out (String_var &p);
-    // construction from a var
+    // Construction from a var.
 
     String_out (String_out &s);
-    // copy constructor
+    // Copy constructor.
 
     String_out &operator= (String_out &s);
-    // assignment from a string_out
+    // Assignment from a string_out.
 
     String_out &operator= (char *p);
-    // assignment from a string
+    // Assignment from a string.
 
     String_out &operator= (const char *p);
-    // assignment from a const string
+    // Assignment from a const string.
 
     operator char *&();
-    // cast
+    // Cast.
 
     char *&ptr (void);
-    // return underlying instance
+    // Return underlying instance.
 
   private:
     char *&ptr_;
-    // instance
+    // Instance.
 
     // assignment from _var disallowed
     void operator= (const String_var &);
   };
 
-  // 94-9-32 Appendix A defines 16-bit UNICODE characters as
-  // "WChar", and null-terminated strings of them as "WString".
-  //
-  // NOTE:  those are IDL extensions, not yet standard.
+  // 94-9-32 Appendix A defines 16-bit UNICODE characters as "WChar",
+  // and null-terminated strings of them as "WString".  These are IDL
+  // extensions, not yet standard.
 
   typedef ACE_UINT16 WChar;
   typedef WChar *WString;
 
-  typedef WChar &WChar_out; // out type for WChar
+  typedef WChar &WChar_out; 
+  // Out type for WChar.
 
+  // = String memory management routines.
   static WString wstring_alloc (ULong len);
   static WString wstring_copy (const WChar *const);
   static WString wstring_dup (const WChar *const);
   static void wstring_free (WChar *const);
 
-  // various CORBA defined classes
-
-  typedef CORBA_Any         Any;
-  typedef CORBA_Any_var     Any_var;
-  typedef CORBA_Any_out     Any_out;
-  typedef Any               *Any_ptr;
+  // = various CORBA defined classes.
+  typedef CORBA_Any Any;
+  typedef CORBA_Any_var Any_var;
+  typedef CORBA_Any_out Any_out;
+  typedef Any *Any_ptr;
 
   typedef CORBA_Environment Environment;
   typedef Environment *Environment_ptr;
@@ -494,17 +494,19 @@ public:
   // enum values defined in nvlist.hh, bitwise ORed.
   typedef u_int Flags;
 
-  // Completion Status for System exceptions
   enum CompletionStatus
   {
+    // = Completion Status for System exceptions
+
     COMPLETED_YES,     // successful or exceptional completion
     COMPLETED_NO,      // didn't change any state; retry is OK
     COMPLETED_MAYBE    // can't say what happened; retry unsafe
   };
 
-  // exception type
   enum ExceptionType
   {
+    // = Exception type.
+
     NO_EXCEPTION,
     SYSTEM_EXCEPTION,
     USER_EXCEPTION
@@ -541,7 +543,7 @@ public:
   TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 #undef TAO_SYSTEM_EXCEPTION
 
-  // = all the CORBA::is_nil methods
+  // = all the CORBA::is_nil methods.
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
   static Boolean is_nil (NamedValue_ptr);
@@ -553,7 +555,7 @@ public:
   static Boolean is_nil (Principal_ptr);
   static Boolean is_nil (ServerRequest_ptr req);
 
-  // = all the CORBA release methods
+  // = all the CORBA release methods.
   static void release (Object_ptr);
   static void release (Environment_ptr);
   static void release (NamedValue_ptr);
@@ -565,16 +567,17 @@ public:
   static void release (ORB_ptr);
   static void release (ServerRequest_ptr req);
 
-  // = Kinds of typecodes.
-
-  // Do not change these enum values, or duplicate them if you need to
-  // add values.  They are used to index tables, and if you change the
-  // values you'll need to find and update all of those tables.  The
-  // values are also part of the Common Data Representation, and hence
-  // are part of IIOP and other ORB protocols.
-
   enum TCKind
   {
+    // = Kinds of typecodes.
+
+    // Do not change these enum values, or duplicate them if you need
+    // to add values.  They are used to index tables, and if you
+    // change the values you'll need to find and update all of those
+    // tables.  The values are also part of the Common Data
+    // Representation, and hence are part of IIOP and other ORB
+    // protocols.
+
     tk_null               = 0,
     tk_void               = 1,
     tk_short              = 2,
@@ -599,7 +602,7 @@ public:
     tk_alias              = 21,           // 94-11-7
     tk_except             = 22,           // 94-11-7
 
-    // these five are OMG-IDL data type extensions
+    // = These five are OMG-IDL data type extensions.
     tk_longlong           = 23,           // 94-9-32 Appendix A (+ 2)
     tk_ulonglong          = 24,           // 94-9-32 Appendix A (+ 2)
     tk_longdouble         = 25,           // 94-9-32 Appendix A (+ 2)
@@ -614,36 +617,36 @@ public:
   };
 
   // All the typecode constants
-  static TypeCode_ptr          _tc_null;
-  static TypeCode_ptr          _tc_void;
-  static TypeCode_ptr          _tc_short;
-  static TypeCode_ptr          _tc_long;
-  static TypeCode_ptr          _tc_ushort;
-  static TypeCode_ptr          _tc_ulong;
-  static TypeCode_ptr          _tc_float;
-  static TypeCode_ptr          _tc_double;
-  static TypeCode_ptr          _tc_boolean;
-  static TypeCode_ptr          _tc_char;
-  static TypeCode_ptr          _tc_octet;
-  static TypeCode_ptr          _tc_any;
-  static TypeCode_ptr          _tc_TypeCode;
-  static TypeCode_ptr          _tc_Principal;
-  static TypeCode_ptr          _tc_Object;
-  static TypeCode_ptr          _tc_struct;
-  static TypeCode_ptr          _tc_union;
-  static TypeCode_ptr          _tc_enum;
-  static TypeCode_ptr          _tc_string;
-  static TypeCode_ptr          _tc_sequence;
-  static TypeCode_ptr          _tc_array;
-  static TypeCode_ptr          _tc_alias;
-  static TypeCode_ptr          _tc_except;
-  static TypeCode_ptr          _tc_longlong;
-  static TypeCode_ptr          _tc_ulonglong;
-  static TypeCode_ptr          _tc_longdouble;
-  static TypeCode_ptr          _tc_wchar;
-  static TypeCode_ptr          _tc_wstring;
+  static TypeCode_ptr _tc_null;
+  static TypeCode_ptr _tc_void;
+  static TypeCode_ptr _tc_short;
+  static TypeCode_ptr _tc_long;
+  static TypeCode_ptr _tc_ushort;
+  static TypeCode_ptr _tc_ulong;
+  static TypeCode_ptr _tc_float;
+  static TypeCode_ptr _tc_double;
+  static TypeCode_ptr _tc_boolean;
+  static TypeCode_ptr _tc_char;
+  static TypeCode_ptr _tc_octet;
+  static TypeCode_ptr _tc_any;
+  static TypeCode_ptr _tc_TypeCode;
+  static TypeCode_ptr _tc_Principal;
+  static TypeCode_ptr _tc_Object;
+  static TypeCode_ptr _tc_struct;
+  static TypeCode_ptr _tc_union;
+  static TypeCode_ptr _tc_enum;
+  static TypeCode_ptr _tc_string;
+  static TypeCode_ptr _tc_sequence;
+  static TypeCode_ptr _tc_array;
+  static TypeCode_ptr _tc_alias;
+  static TypeCode_ptr _tc_except;
+  static TypeCode_ptr _tc_longlong;
+  static TypeCode_ptr _tc_ulonglong;
+  static TypeCode_ptr _tc_longdouble;
+  static TypeCode_ptr _tc_wchar;
+  static TypeCode_ptr _tc_wstring;
 
-  // typecode constants for system exceptions
+  // = Typecode constants for system exceptions.
 #define TAO_SYSTEM_EXCEPTION(name) \
   static TypeCode_ptr          _tc_ ## name
 
@@ -684,9 +687,10 @@ public:
                            Environment &env);
   // ORB initialisation, per OMG document 94-9-46.
 
-  // Define flags for NVList add methods
   enum
   {
+    // = Define flags for NVList add methods
+
     ARG_IN = 0x01,
     ARG_OUT = 0x02,
     ARG_INOUT = 0x04,
@@ -695,11 +699,11 @@ public:
   };
 };  // end of class (namespace) CORBA
 
+// Signature of a skeleton for every operation of an interface.
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
                              void *, // object_ptr
                              void *, // context_ptr
                              CORBA::Environment &);
-// signature of a skeleton for every operation of an interface
 
 // COM interface IIDs
 extern "C" TAO_Export const TAO_IID IID_CORBA_Any;

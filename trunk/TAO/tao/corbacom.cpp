@@ -17,7 +17,9 @@ CORBA::string_copy (const CORBA::Char *str)
   if (!str)
     return 0;
 
-  CORBA::String retval = CORBA::string_alloc (ACE_OS::strlen (str));
+  CORBA::String retval =
+    CORBA::string_alloc (ACE_OS::strlen (str));
+
   // clear the contents of the allocated string
   ACE_OS::memset(retval, '\0', ACE_OS::strlen (str));
 
@@ -94,6 +96,71 @@ void
 CORBA::wstring_free (CORBA::WChar *const str)
 {
   delete [] str;
+}
+
+// ORB initialisation, per OMG document 94-9-46.
+//
+// XXX in addition to the "built in" Internet ORB, there will be ORBs
+// which are added separately, e.g. through a DLL listed in the
+// registry.  Registry will be used to assign orb names and to
+// establish which is the default.
+
+CORBA::ORB_ptr
+CORBA::ORB_init (int &argc,
+                 char *const *argv,
+                 const char * /* orb_name */,
+                 CORBA::Environment &env)
+{
+  // Using ACE_Static_Object_Lock::instance() precludes ORB_init from
+  // being called within a static object CTOR.
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                            *ACE_Static_Object_Lock::instance (), 0));
+
+  env.clear ();
+
+  // Verify some of the basic implementation requirements.  This test
+  // gets optimized away by a decent compiler (or else the rest of the
+  // routine does).
+  //
+  // NOTE:  we still "just" assume that native floating point is IEEE.
+
+  if (sizeof (CORBA::Short) != 2
+      || sizeof (CORBA::Long) != 4
+      || sizeof (CORBA::LongLong) != 8
+      || sizeof (CORBA::Float) != 4
+      || sizeof (CORBA::Double) != 8
+      || sizeof (CORBA::LongDouble) != 16
+      || sizeof (CORBA::WChar) < 2
+      || sizeof (void *) != ACE_SIZEOF_VOID_P)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
+                            "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
+                  sizeof (CORBA::Short),
+                  sizeof (CORBA::Long),
+                  sizeof (CORBA::LongLong),
+                  sizeof (CORBA::Float),
+                  sizeof (CORBA::Double),
+                  sizeof (CORBA::LongDouble),
+                  sizeof (CORBA::WChar),
+                  sizeof (void *)));
+
+      env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
+      return 0;
+    }
+
+  // Initialize the ORB Core instance.
+  TAO_ORB_Core_instance ()->init (argc, (char **)argv);
+
+  // @@ Andy, can you please make sure it's ok for the following 3
+  // initialization routines to be called multiple times?!
+  TAO_Interp::init_table ();
+  TAO_Marshal::initialize ();
+  TAO_Exception::init_standard_exceptions (env);
+
+  if (env.exception () != 0)
+    return 0;
+
+  return TAO_ORB_Core_instance()->orb ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

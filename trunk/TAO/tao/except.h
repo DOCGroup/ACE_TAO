@@ -190,6 +190,40 @@ private:
   CORBA_Environment &operator = (const CORBA_Environment &src);
 };
 
+class TAO_Export TAO_Exception
+{
+  // = TITLE
+  //   This class is a namespace for exception-related static data and
+  //   methods. 
+public:
+
+  static void make_standard_typecode (CORBA::TypeCode_ptr tcp,
+                                      const char *name,
+                                      char *buffer,
+                                      size_t buflen,
+                                      CORBA::Environment &env);
+  // Make the TypeCode for a standard exception.  When used
+  // correctly, initializing system exceptions is only an exercise
+  // in CPU time; it allocates no new memory.
+
+  static void init_standard_exceptions (CORBA::Environment &env);
+  // Runtime initialization of all standard exception typecodes.
+  // Called from CORBA::ORB::init ().
+
+  enum
+  {
+    NUM_SYS_EXCEPTIONS = 26,
+    // Number of exceptions (make sure to update correctly).
+
+    TC_BUFLEN = 160
+    // Preallocated tc buffer.
+  };
+
+  static CORBA::TypeCode_ptr sys_exceptions[NUM_SYS_EXCEPTIONS];
+
+  static CORBA::ExceptionList system_exceptions;
+};
+
 #if defined (__ACE_INLINE__)
 #include "except.i"
 #endif /* __ACE_INLINE__ */

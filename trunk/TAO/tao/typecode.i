@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 ACE_INLINE CORBA::TCKind
 CORBA_TypeCode::kind (CORBA::Environment &env) const
 {

@@ -141,6 +141,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"
+#include "tao/interp.h"
 
 // The following *.i files are always included here
 #  if !defined(__ACE_INLINE__)

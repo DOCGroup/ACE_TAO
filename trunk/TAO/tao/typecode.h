@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -9,8 +10,7 @@
 //    typecode.h
 //
 // = DESCRIPTION
-//
-//    Header file for Win32 C/C++/COM interface to CORBA's "TypeCode" type.
+//    Header file CORBA's "TypeCode" type.
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
@@ -20,6 +20,7 @@
 #if !defined (TAO_TYPECODE_H)
 #  define TAO_TYPECODE_H
 
+// Forward decl.
 class CDR;
 
 // Two "user exceptions" are defined for manipulating TypeCodes. These two
@@ -257,7 +258,7 @@ public:
   // helper function.
 
 private:
-  // All the private/helper methods
+  // = All the private/helper methods
 
   CORBA::Boolean private_equal (CORBA::TypeCode_ptr tc,
                                 CORBA::Environment &env) const;
@@ -387,9 +388,9 @@ private:
   CORBA_TypeCode &operator = (const CORBA::TypeCode &src);
 
   char *non_aligned_buffer_;
-  // original buffer that may possibly be non-aligned. We still need a
+  // Original buffer that may possibly be non-aligned. We still need a
   // handle to the allocated memory so that all of it can be freed by
-  // the destructor
+  // the destructor.
 };
 
 class TAO_Export TC_Private_State
