@@ -1,3 +1,11 @@
+Wed Jul 18 08:55:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp (DRV_pre_proc):
+
+          Dump of preprocessed IDL file (from -E command line option)
+          now goes to stdout instead of stderr. Similar to change in
+          TAO IDL compiler in yesterday's entry.
+
 Tue Jul 18 07:58:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp (consolidate_message): Fixed a subtle that
