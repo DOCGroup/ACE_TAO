@@ -1,3 +1,10 @@
+Fri Jan 21 09:50:40 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+
+          Changed the final TerminateWaitKill()'s to Kill()'s as I should
+          have done originally.
+
 Fri Jan 21 13:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/RT_Task.cpp:
@@ -23,22 +30,22 @@ Fri Jan 21 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan 20 17:23:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/CosConcurrency.mpc:
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
-	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosProperty.mpc:
-	* orbsvcs/orbsvcs/CosTime.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
-	* orbsvcs/orbsvcs/ETCL.mpc:
-	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/ETCL.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
 
-	  Added Pkgconfig_Files definitions.
+          Added Pkgconfig_Files definitions.
 
 Thu Jan 20 16:22:42 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -59,9 +66,9 @@ Thu Jan 20 16:22:42 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jan 20 12:41:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Removed directory prefixes from pkgconfig_DATA definitions.
+          Removed directory prefixes from pkgconfig_DATA definitions.
 
 Thu Jan 20 18:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -79,32 +86,32 @@ Thu Jan 20 16:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan 20 06:42:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* tao/BiDir_GIOP.mpc:
-	* tao/Domain.mpc:
-	* tao/DynamicAny.mpc:
-	* tao/DynamicInterface.mpc:
-	* tao/IFR_Client.mpc:
-	* tao/IORInterceptor.mpc:
-	* tao/IORManipulation.mpc:
-	* tao/IORTable.mpc:
-	* tao/Messaging.mpc:
-	* tao/ObjRefTemplate.mpc:
-	* tao/PortableServer.mpc:
-	* tao/RTCORBA.mpc:
-	* tao/RTPortableServer.mpc:
-	* tao/RTScheduler.mpc:
-	* tao/SmartProxies.mpc:
-	* tao/Strategies.mpc:
-	* tao/TypeCodeFactory.mpc:
-	* tao/Utils.mpc:
-	* tao/Valuetype.mpc:
-	* tao/tao.mpc:
+        * tao/BiDir_GIOP.mpc:
+        * tao/Domain.mpc:
+        * tao/DynamicAny.mpc:
+        * tao/DynamicInterface.mpc:
+        * tao/IFR_Client.mpc:
+        * tao/IORInterceptor.mpc:
+        * tao/IORManipulation.mpc:
+        * tao/IORTable.mpc:
+        * tao/Messaging.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mpc:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/SmartProxies.mpc:
+        * tao/Strategies.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Utils.mpc:
+        * tao/Valuetype.mpc:
+        * tao/tao.mpc:
 
-	  Added Pkgconfig_Files definitions.
+          Added Pkgconfig_Files definitions.
 
 Thu Jan 20 07:53:44 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -465,7 +472,7 @@ Wed Jan 12 15:57:30 2005 Huang-Ming Huang <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTRT_Group_Manager.cpp
 
           Fixed unused variable warning. Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for pointing out.
+          <jwillemsen@remedy.nl> for pointing out.
 
 Tue Jan 11 23:19:33 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
