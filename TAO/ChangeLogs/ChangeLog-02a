@@ -1,3 +1,16 @@
+Fri Apr 27 11:58:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply): 
+	* tao/Asynch_Reply_Dispatcher.cpp: Changed the steal_from () calls
+	  to steal_data () calls.  This removes the allocations along the
+	  critical path. The call steal_from () spent 48.5% of the time
+	  trying to do a reset_contents () (basically only memory
+	  allocations as per quantify) which should be gone now. We still
+	  see a problem when we transfer data_blocks. The transfer does a
+	  release which seems to occupy 35% of the time.  Maybe it is time
+	  to think about creating data blocks on the stack if it makes
+	  sense. 
+
 Fri Apr 27 11:45:58 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/POA/Single_Threaded_POA/run_test.pl:
