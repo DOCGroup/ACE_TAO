@@ -1,3 +1,11 @@
+Fri Nov 14 00:42:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.cpp:
+          Test for !ACE_LACKS_RTTI to #ifdef away dynamic_cast test.  Add
+          ACE_UNUSED_ARG around dll if ACE_LACKS_RTTI is defined to quash
+          unused arg warning.
+
 Thu Nov 13 23:22:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/sys/os_select.h:
