@@ -1,3 +1,10 @@
+Sat Jan 17 23:41:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Added more MSVC makefiles in some test directories.
+	
+	* tests/Param_Test/{client,server}.dsp: Correct idl generated
+ 	  files' dependency.
+
 Sat Jan 17 22:40:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tao/orbobj.{h,i}: Added _var and _out for CORBA_ORB

@@ -1,3 +1,9 @@
+Sat Jan 17 23:40:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* netsvcs/VCAUTO.MAK:
+	* netsvcs/lib/VCAUTO.MAK: Added directory information for easier
+ 	  debugging.
+
 Sat Jan 17 16:10:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/main.cpp (main): Replaced the
