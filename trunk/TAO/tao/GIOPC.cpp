@@ -322,6 +322,48 @@ TAO_NAMESPACE_BEGIN (GIOP)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TargetAddress, &_tc_TAO_tc_GIOP_TargetAddress)
 TAO_NAMESPACE_END
 
+static const CORBA::Long _oc_GIOP_Version[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  29,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x47494f50),
+  ACE_NTOHL (0x2f566572),
+  ACE_NTOHL (0x73696f6e),
+  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/GIOP/Version:1.0
+  8,
+  ACE_NTOHL (0x56657273),
+  ACE_NTOHL (0x696f6e00),  // name = Version
+  2, // member count
+  6,
+  ACE_NTOHL (0x6d616a6f),
+  ACE_NTOHL (0x72000000),  // name = major
+  CORBA::tk_octet,
+
+  6,
+  ACE_NTOHL (0x6d696e6f),
+  ACE_NTOHL (0x72000000),  // name = minor
+  CORBA::tk_octet,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_GIOP_Version (
+    CORBA::tk_struct,
+    sizeof (_oc_GIOP_Version),
+    (char *) &_oc_GIOP_Version,
+    0,
+    sizeof (GIOP::Version)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (GIOP)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_Version, &_tc_TAO_tc_GIOP_Version)
+TAO_NAMESPACE_END
+
+
 void
 GIOP::IORAddressingInfo::_tao_any_destructor (void *x)
 {

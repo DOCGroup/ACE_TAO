@@ -56,9 +56,9 @@ GIOP::IORAddressingInfo_var::operator= (const GIOP::IORAddressingInfo_var &p)
         }
       else
         {
-          GIOP::IORAddressingInfo *deep_copy = 
+          GIOP::IORAddressingInfo *deep_copy =
             new GIOP::IORAddressingInfo (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               GIOP::IORAddressingInfo *tmp = deep_copy;
@@ -68,7 +68,7 @@ GIOP::IORAddressingInfo_var::operator= (const GIOP::IORAddressingInfo_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -368,9 +368,9 @@ GIOP::TargetAddress_var::operator= (const GIOP::TargetAddress_var &p)
         }
       else
         {
-          GIOP::TargetAddress *deep_copy = 
+          GIOP::TargetAddress *deep_copy =
             new GIOP::TargetAddress (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               GIOP::TargetAddress *tmp = deep_copy;
@@ -380,7 +380,7 @@ GIOP::TargetAddress_var::operator= (const GIOP::TargetAddress_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -515,6 +515,150 @@ GIOP::TargetAddress_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+// *************************************************************
+// Inline operations for class GIOP::Version_var
+// *************************************************************
+
+ACE_INLINE
+GIOP::Version_var::Version_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+GIOP::Version_var::Version_var (Version *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+GIOP::Version_var::Version_var (const ::GIOP::Version_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, ::GIOP::Version (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+// fixed-size types only
+ACE_INLINE
+GIOP::Version_var::Version_var (const ::GIOP::Version &p)
+{
+  ACE_NEW (this->ptr_, ::GIOP::Version (p));
+}
+
+ACE_INLINE
+GIOP::Version_var::~Version_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE GIOP::Version_var &
+GIOP::Version_var::operator= (Version *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE ::GIOP::Version_var &
+GIOP::Version_var::operator= (const ::GIOP::Version_var &p)
+{
+  if (this != &p)
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Version *deep_copy =
+            new Version (*p.ptr_);
+
+          if (deep_copy != 0)
+            {
+              Version *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+
+  return *this;
+}
+
+// fixed-size types only
+ACE_INLINE GIOP::Version_var &
+GIOP::Version_var::operator= (const ::GIOP::Version &p)
+{
+  if (this->ptr_ != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, ::GIOP::Version (p), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const ::GIOP::Version *
+GIOP::Version_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::GIOP::Version *
+GIOP::Version_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+GIOP::Version_var::operator const ::GIOP::Version &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+GIOP::Version_var::operator ::GIOP::Version &() // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+GIOP::Version_var::operator ::GIOP::Version &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE const ::GIOP::Version &
+GIOP::Version_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::GIOP::Version &
+GIOP::Version_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for fixed size
+ACE_INLINE ::GIOP::Version &
+GIOP::Version_var::out (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::GIOP::Version
+GIOP::Version_var::_retn (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::GIOP::Version *
+GIOP::Version_var::ptr (void) const
+{
+  return this->ptr_;
+}
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const GIOP::IORAddressingInfo &_tao_aggregate)
 {
