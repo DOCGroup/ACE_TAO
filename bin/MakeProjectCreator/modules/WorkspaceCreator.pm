@@ -943,6 +943,33 @@ sub get_project_info {
 }
 
 
+sub generate_circular_tree {
+  my($self)     = shift;
+  my($circular) = shift;
+  my($prepend)  = shift;
+  my($into)     = shift;
+  my($current)  = shift;
+ 
+  if (!defined $$circular{$into}) {
+    $$circular{$into} = {};
+  }
+  my($deps) = $self->get_validated_ordering($current);
+
+  if ($deps ne '') {
+    my($darr) = $self->create_array($deps);
+    foreach my $dep (@$darr) {
+      my($base) = basename($dep);
+      my($full) = (defined $$prepend{$base} ?
+                     "$$prepend{$base}/" : '') . $base;
+      if (!defined $$circular{$into}->{$full}) {
+        $$circular{$into}->{$full} = 1;
+        $self->generate_circular_tree($circular, $prepend, $current, $full);
+      }
+    }
+  }
+}
+
+
 sub sort_dependencies {
   my($self)     = shift;
   my($projects) = shift;
@@ -962,9 +989,8 @@ sub sort_dependencies {
     %$prepref = %prepend;
   }
 
-  ## These will help us catch circular dependencies
-  my($start_project)  = '';
-  my($moved_project) = '';
+  ## This will help us catch circular dependencies
+  my(%circular) = ();
 
   ## Put the projects in the order specified
   ## by the project dpendencies.
@@ -974,7 +1000,11 @@ sub sort_dependencies {
     my($deps) = $self->get_validated_ordering($project);
 
     if ($deps ne '') {
-      my($darr)  = $self->create_array($deps);
+      my($darr) = $self->create_array($deps);
+
+      ## Set up the circular entry
+      $self->generate_circular_tree(\%circular, \%prepend, $project, $project);
+
       my($moved) = 0;
       foreach my $dep (@$darr) {
         my($base) = basename($dep);
@@ -982,27 +1012,33 @@ sub sort_dependencies {
                        "$prepend{$base}/" : '') . $base;
         if ($project ne $full) {
           ## See if the dependency is listed after this project
-          for(my $j = $i; $j <= $#list; ++$j) {
-            if ($i != $j && $list[$j] eq $full &&
-                ($list[$i] ne $moved_project ||
-                 $list[$j] ne $start_project)) {
-              ## Keep track of the one we started with and the
-              ## one we are going to move.  If there is a circular
-              ## dependency, the next time through we will catch it.
-              $start_project = $list[$i];
-              $moved_project = $list[$j];
-
-              ## If so, move it in front of the current project.
-              ## The original code, which had splices, didn't always
-              ## work correctly (especially on AIX for some reason).
-              for(my $k = $j; $k > $i; --$k) {
-                $list[$k] = $list[$k - 1];
+          for(my $j = $i + 1; $j <= $#list; ++$j) {
+            if ($list[$j] eq $full) {
+              if (defined $circular{$full} &&
+                  defined $circular{$full}->{$list[$j]}) {
+                ## Don't warn about circular dependencies if we are
+                ## generating implicit project dependencies.  The
+                ## dependencies in question may have been generated and
+                ## that's not the users fault.
+                if (!$self->generate_implicit_project_dependencies() ||
+                    defined $ENV{MPC_VERBOSE_CIRCULAR}) {
+                  print 'WARNING: Circular dependency between ' .
+                        "$list[$j] and $full\n";
+                }
               }
-              $list[$i] = $full;
+              else {
+                ## If so, move it in front of the current project.
+                ## The original code, which had splices, didn't always
+                ## work correctly (especially on AIX for some reason).
+                for(my $k = $j; $k > $i; --$k) {
+                  $list[$k] = $list[$k - 1];
+                }
+                $list[$i] = $full;
 
-              ## Mark that an entry has been moved
-              $moved = 1;
-              $j--;
+                ## Mark that an entry has been moved
+                $moved = 1;
+                $j--;
+              }
             }
           }
         }

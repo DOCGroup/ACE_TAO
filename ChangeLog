@@ -1,3 +1,11 @@
+Fri Sep 12 13:31:50 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Updated the code to detect and drop circular dependencies.  The
+          original code was wrong and would drop dependencies that didn't
+          need to be.
+
 Fri Sep 12 11:51:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Kokyu/Kokyu.dsp:
