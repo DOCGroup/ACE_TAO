@@ -1,3 +1,26 @@
+Mon Apr 19 18:04:11 2004  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DnC/Config_Handlers/ACD_Handler.cpp
+        * DnC/Config_Handlers/ACD_Handler.h
+        * DnC/Config_Handlers/APM_Handler.cpp
+        * DnC/Config_Handlers/APM_Handler.h
+        * DnC/Config_Handlers/MID_Handler.cpp
+        * DnC/Config_Handlers/MID_Handler.h
+        * DnC/Config_Handlers/SPE_Handler.cpp
+        * DnC/Config_Handlers/SPE_Handler.h
+        
+          XML handlers for below XML data types respectively:
+          
+          "AssemblyConnectionDescription "
+          "AssemblyPropertyMapping"
+          "MonolithicImplementationDescription"
+          "SubcomponentPortEndpoint"
+          
+        * DnC/Config_Handlers/XercesString.cpp
+        * DnC/Config_Handlers/XercesString.h
+        
+          Helper class for using Xerces library to write XML handlers.
+          
 Mon Apr 19 14:50:11 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * DnC/Config_Handlers: Created new directory for adding the
