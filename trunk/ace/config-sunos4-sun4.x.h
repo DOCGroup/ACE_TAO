@@ -8,7 +8,8 @@
 #define ACE_CONFIG_H
 
 #define ACE_HAS_CHARPTR_SPRINTF
-#define ACE_HAS_UNION_WAIT
+#define ACE_LACKS_POSIX_PROTO
+// #define ACE_HAS_UNION_WAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			

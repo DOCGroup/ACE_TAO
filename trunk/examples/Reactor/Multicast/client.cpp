@@ -4,6 +4,8 @@
 // Log_Wrapper.
 
 
+#include "ace/Get_Opt.h"
+
 #include "Log_Wrapper.h"
 
 const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
@@ -19,24 +21,24 @@ static int iterations = 0;
 static void
 parse_args (int argc, char *argv[])
 {
-  int c;
-
   ACE_LOG_MSG->open (argv[0]);
 
-  while ((c = ACE_OS::getopt (argc, argv, "m:ui:")) != -1)
+  ACE_Get_Opt getopt (argc, argv, "m:ui:", 1); // Start at argv[1]
+
+  for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
       case 'm':
-        max_message_size = ACE_OS::atoi (optarg) * BUFSIZ;
+        max_message_size = ACE_OS::atoi (getopt.optarg) * BUFSIZ;
         break;
       case 'i':
-	iterations = ACE_OS::atoi (optarg);
-	break;
+        iterations = ACE_OS::atoi (getopt.optarg);
+        break;
       case 'u':
-	// usage fallthrough
+        // usage fallthrough
       default:
         ACE_ERROR ((LM_ERROR, "%n: -m max_message_size (in k) -i iterations\n%a", 1));
-	/* NOTREACHED */
+        /* NOTREACHED */
       }
 }
 
@@ -66,8 +68,8 @@ main (int argc, char **argv)
     {
       ACE_OS::memset (buf,1,::max_message_size);
       while (iterations--)
-	if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
-	  perror("log failed."), exit(1);
+        if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
+          perror("log failed."), exit(1);
     }
 
   // otherwise, a file has been redirected, or give prompts
@@ -75,29 +77,29 @@ main (int argc, char **argv)
     {
       // If a file has been redirected, don't activate user prompts
       if (ACE_OS::isatty (0))
-	user_prompt = 1;
+        user_prompt = 1;
       else
-	user_prompt = 0;
+        user_prompt = 0;
       
       int nbytes;
       // continually read messages from stdin and log them.
       while (1) 
-	{
-	  if (user_prompt)
-	    ACE_DEBUG ((LM_DEBUG, "\nEnter message ('Q':quit):\n"));
-	  
-	  if ((nbytes = read (0, buf, max_message_size)) == 0)
-	    break; // end of file
-	  buf[nbytes] = '\0';
-	  
-	  // quitting?
-	  if (buf[0] == 'Q')
-	    break;
-	  
-	  // send the message to the logger
-	  else if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
-	    perror("log failed."), exit(1);
-	} // while(1)
+        {
+          if (user_prompt)
+            ACE_DEBUG ((LM_DEBUG, "\nEnter message ('Q':quit):\n"));
+          
+          if ((nbytes = read (0, buf, max_message_size)) == 0)
+            break; // end of file
+          buf[nbytes-1] = '\0';
+          
+          // quitting?
+          if (buf[0] == 'Q')
+            break;
+          
+          // send the message to the logger
+          else if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
+            perror("log failed."), exit(1);
+        } // while(1)
     }
 
   ACE_DEBUG ((LM_DEBUG, "Client done.\n"));
