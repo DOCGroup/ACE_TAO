@@ -38,7 +38,7 @@
 //  The requiremnts on a log manager receiver, T, are quite simple.
 //  1: There must exist one "log_record" member function with the following
 //     prototype:
-//        void log_record(char const* hostname,
+//        void log_record(const ACE_TCHAR *hostname,
 //                        ACE_Log_Record &record);
 //
 //  2: There must exist a public destructor.
@@ -53,7 +53,7 @@
 //  receiver.
 //
 //  Methods:
-//    void log_record(char const* hostname,
+//    void log_record(const ACE_TCHAR* hostname,
 //                    ACE_Log_Record& record)
 //  Description:
 //    Processes the log record "record" from the host "hostname"
@@ -104,12 +104,12 @@ class Static_Log_Message_Receiver
   //  prints the content of log_records on stderr.
 
 public:
-  static void log_record(const char *hostname,
+  static void log_record(const ACE_TCHAR *hostname,
                          ACE_Log_Record &record);
   // Prints the log_record to stderr using record.print (hostname, 0, stderr).
   // Serializes the output by using a ACE_SYNCH_MUTEX.
 
-  static void log_output(const char *hostname,
+  static void log_output(const ACE_TCHAR *hostname,
                          ACE_Log_Record &record,
                          ostream *output);
   // Prints the log_record to a user specified ostream.
@@ -159,10 +159,10 @@ public:
   Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
   ~Log_Message_Receiver (void);
 
-  void log_record (const char *hostname,
+  void log_record (const ACE_TCHAR *hostname,
                    ACE_Log_Record &record);
 
-  void log_output(const char *hostname,
+  void log_output(const ACE_TCHAR *hostname,
                   ACE_Log_Record &record,
                   ostream *output);
 private:
@@ -185,10 +185,10 @@ public:
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
 
-  void log_record (const char *hostname,
+  void log_record (const ACE_TCHAR *hostname,
                    ACE_Log_Record &record);
 
-  void log_output(const char *hostname,
+  void log_output(const ACE_TCHAR *hostname,
                   ACE_Log_Record &record,
                   ostream *output);
 
