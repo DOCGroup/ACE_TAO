@@ -36,7 +36,7 @@ Consumer_i::push (const Callback_Quoter::Info& data,
   this->done_ = 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Buying 10,000 %s shares at %d!!\n",
+              "Selling 10,000 %s shares at %d!!\n",
 	      data.stock_name.in (),
               data.value));
 }
