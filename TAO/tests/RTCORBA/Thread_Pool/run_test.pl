@@ -34,29 +34,29 @@ $client = $CL1->WaitKill (120);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
-    $status = 1
+    $status = 1;
 }
 $client = $CL2->WaitKill (30);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
-    $status = 1
+    $status = 1;
 }
 
 $client = $CL3->WaitKill (30);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
-    $status = 1
+    $status = 1;
 }
 
 $server = $SV->WaitKill (5);
 
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
-    $status = 1
+    $status = 1;
 }
 
 unlink $iorfile;
 
-exit $status
+exit $status;

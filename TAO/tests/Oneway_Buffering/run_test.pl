@@ -10,13 +10,15 @@ use PerlACE::Run_Test;
 
 $admin_iorfile = PerlACE::LocalFile ("admin.ior");
 $server_iorfile = PerlACE::LocalFile ("server.ior");
+$status = 0;
 
 foreach $test_type ("-c", "-t", "-b", "-r") {
   unlink $admin_iorfile;
   unlink $server_iorfile;
 
   my $AD = new PerlACE::Process ("admin", "-o $admin_iorfile");
-  my $SV = new PerlACE::Process ("server", "-o $server_iorfile");
+  my $SV = new PerlACE::Process ("server", "-o $server_iorfile " .
+                                           "-k file://$admin_iorfile");
   my $CL = new PerlACE::Process ("client",
 				 " -k file://$server_iorfile "
 				 ."-a file://$admin_iorfile "

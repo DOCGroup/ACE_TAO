@@ -26,6 +26,7 @@ if (defined $opt_b) {
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 
+$status = 0;
 unlink $iorfile;
 $SV  = new PerlACE::Process ("server", "-o $iorfile $server_args");
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");

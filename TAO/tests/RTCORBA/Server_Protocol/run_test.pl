@@ -11,6 +11,7 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
 unlink $iorfile;
+$status = 0;
 
 $server_reverse_conf    = PerlACE::LocalFile ("server_reverse.conf");
 $server_iiop_conf       = PerlACE::LocalFile ("server_iiop.conf");
@@ -66,7 +67,7 @@ if ($^O eq "MSWin32") {
 
     $comments[3] =
          "* Overriding ORB Default Server Protocol Policy in the POA\n"
-         ."          (POA Server Protocol set to IIOP only): \n",
+         ."          (POA Server Protocol set to IIOP only): \n";
 
 }
 
