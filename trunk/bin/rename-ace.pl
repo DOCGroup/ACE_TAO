@@ -1,12 +1,12 @@
-# $Id$
-
-# The following three lines let this script run without specifying the
-# full path to perl, as long as it is in the user's PATH.
-# Taken from perlrun man page.
-
 eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
     & eval 'exec perl -pi -S $0 $argv:q'
     if 0;
+
+# $Id$
+
+# The first three lines above let this script run without specifying the
+# full path to perl, as long as it is in the user's PATH.
+# Taken from perlrun man page.
 
 s/\bAcceptor\b/ACE_Acceptor/g;
 s/\bAddr\b/ACE_Addr/g;
