@@ -1,3 +1,8 @@
+Fri Dec 14 09:32:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added the Objref_Sequence_Test test
+
 Thu Dec 13 22:50:10 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CORBALOC_Parser.cpp (assign_key_string):
@@ -32,7 +37,7 @@ Thu Dec 13 21:16:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Objref_Sequence_Test: A new test that passes big sequences
 	  of Object References between the client and the server. The
 	  original version of the test was donated by Petr Tuma
-	  <petr.tuma@mff.cuni.cz>. 
+	  <petr.tuma@mff.cuni.cz>.
 
 	* tests/Objref_Sequence_Test/client.cpp:
 	* tests/Objref_Sequence_Test/server.cpp:
@@ -47,11 +52,11 @@ Thu Dec 13 21:16:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Objref_Sequence_Test/client.dsp:
 	* tests/Objref_Sequence_Test/server.dsp:
 	* tests/Objref_Sequence_Test/Objref_Sequence.dsw: Files for the
-	  new test. 
+	  new test.
 
 	  This test cannot be run in the daily builds. The test takes too
 	  long to complete. Making really large sequences is the idea of
-	  the test and reducing that would mean, diluting the test. 
+	  the test and reducing that would mean, diluting the test.
 
 Thu Dec 13 16:20:52 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -96,8 +101,8 @@ Thu Dec 13 15:06:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * docs/compiler.html:
 
           Corrected table entry for -GIc command line option, which
-          generates copy constructors in the servant implementation 
-          template files. It does not take an argument as was indicated 
+          generates copy constructors in the servant implementation
+          template files. It does not take an argument as was indicated
           in the original table entry. Also added an entry for the -GIa
           option, which generates assignment operators in the servant
           implementation template files.
@@ -121,7 +126,7 @@ Wed Dec 12 12:54:51 2001  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 	* orbsvcs/orbsvcs/Event_Utilities.cpp:
 	  Added a new parameter to the class ACE_SupplierQOS_Factory that
 	  specifies the number of elements to initialize. The parameter
-	  defaults to zero. Previously the length of the QOS IDL structure 
+	  defaults to zero. Previously the length of the QOS IDL structure
 	  defaulted to 0 length and on each insert call would reallocate
 	  one additional slot and copy the old contents of the QOS to the
 	  new structure. For 500 MC addresses, this was expensive. The
@@ -129,8 +134,8 @@ Wed Dec 12 12:54:51 2001  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event_Utilities.h:
 	  Added a new parameter to the class ACE_SupplierQOS_Factory that
-	  specifies the number of elements to initialise. The parameter 
-	  defaults to 0. Previously the length of the QOS IDL structure 
+	  specifies the number of elements to initialise. The parameter
+	  defaults to 0. Previously the length of the QOS IDL structure
 	  defaulted to 0 length and on each insert call would reallocate
 	  one additional slot and copy the old contents of the QOS to the
 	  new structure. For 500 MC addresses, this was expensive. The
@@ -149,7 +154,7 @@ Tue Dec 12 06:55:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  came of the stack and unnecessary if the datablock came of the
 	  heap. If it came of the heap we, just duplicate the datablock
 	  and send it with no flags to the upcall. This should avoid a
-	  copy for large object references. 
+	  copy for large object references.
 
 	  This problem came to the surface from a bug report submitted by
 	  Petr Tuma <petr.tuma@mff.cuni.cz>. He was trying to send large
@@ -167,14 +172,14 @@ Tue Dec 12 06:55:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  chunks. Someday I will know why. Thanks to Petr Tuma
 	  <petr.tuma@mff.cuni.cz> for reporting this problem.  The test
 	  case that he gave us will be checked in after getting his
-	  permissions. 
+	  permissions.
 
 	* tests/DLL_ORB/Test_Server_Module.cpp: Added
 	  "ace/Service_Config.h"  to fix a compilation error in the
-	  builds. 
-	
+	  builds.
+
 	* tests/DLL_ORB/Makefile: Updated dependencies.
-	
+
 Wed Dec 12 07:25:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/ORB_Init/Portscan/Makefile.bor:
