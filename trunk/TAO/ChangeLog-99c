@@ -1,6 +1,5 @@
-Thu Apr 01 02:45:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Apr 01 03:26:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/configurations.html:
 	* TAO/tao/ORB_Core.{h,cpp}:
 	* TAO/tao/TAO_Internal.{h,i,cpp}:
 	* TAO/tao/default_client.{h,cpp}:
@@ -13,7 +12,12 @@ Thu Apr 01 02:45:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	    http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/configurations.html#programming
 
 	* Changed all svc.conf file to use TAO components as static
-	  services.
+	  services.  A perl script call tao_svcconf.pl under
+	  $ACE_ROOT/bin/ can help you convert svc.conf files.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:  Renamed
+	  svc.conf.static to svc.conf.dynamic as a sample svc.conf file
+	  that uses dynamic services.
 
 Wed Mar 31 23:32:13 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
