@@ -13,7 +13,9 @@ OBJFILES = \
 	$(OBJDIR)\AliasDef_i.obj \
 	$(OBJDIR)\ArrayDef_i.obj \
 	$(OBJDIR)\AttributeDef_i.obj \
+	$(OBJDIR)\ComponentContainer_i.obj \
 	$(OBJDIR)\ComponentDef_i.obj \
+	$(OBJDIR)\ComponentModuleDef_i.obj \
 	$(OBJDIR)\ComponentRepository_i.obj \
 	$(OBJDIR)\ConstantDef_i.obj \
 	$(OBJDIR)\ConsumesDef_i.obj \
@@ -22,7 +24,13 @@ OBJFILES = \
 	$(OBJDIR)\EmitsDef_i.obj \
 	$(OBJDIR)\EnumDef_i.obj	\
 	$(OBJDIR)\EventDef_i.obj \
+	$(OBJDIR)\EventPortDef_i.obj \
 	$(OBJDIR)\ExceptionDef_i.obj \
+	$(OBJDIR)\ExtAbsractInterfaceDef_i.obj \
+	$(OBJDIR)\ExtAttributeDef_i.obj \
+	$(OBJDIR)\ExtInterfaceDef_i.obj \
+	$(OBJDIR)\ExtLocalInterfaceDef_i.obj \
+	$(OBJDIR)\ExtValueDef_i.obj \
 	$(OBJDIR)\FactoryDef_i.obj \
 	$(OBJDIR)\FinderDef_i.obj \
 	$(OBJDIR)\FixedDef_i.obj \
@@ -34,6 +42,7 @@ OBJFILES = \
 	$(OBJDIR)\IFR_ExtendedS.obj \
         $(OBJDIR)\IFR_Service_Loader.obj \
         $(OBJDIR)\IFR_Service_Utils.obj \
+	$(OBJDIR)\InterfaceAttrExtension_i.obj \
 	$(OBJDIR)\InterfaceDef_i.obj \
 	$(OBJDIR)\IRObject_i.obj \
 	$(OBJDIR)\LocalInterfaceDef_i.obj \
@@ -41,14 +50,11 @@ OBJFILES = \
 	$(OBJDIR)\NativeDef_i.obj \
 	$(OBJDIR)\OperationDef_i.obj \
 	$(OBJDIR)\Options.obj \
-	$(OBJDIR)\PrimaryKeyDef_i.obj \
 	$(OBJDIR)\PrimitiveDef_i.obj \
 	$(OBJDIR)\ProvidesDef_i.obj \
 	$(OBJDIR)\PublishesDef_i.obj \
 	$(OBJDIR)\Repository_i.obj \
 	$(OBJDIR)\SequenceDef_i.obj \
-	$(OBJDIR)\Servant_Factory.obj \
-	$(OBJDIR)\Servant_Locator.obj \
 	$(OBJDIR)\StringDef_i.obj \
 	$(OBJDIR)\StructDef_i.obj \
 	$(OBJDIR)\tmplinst.obj \
