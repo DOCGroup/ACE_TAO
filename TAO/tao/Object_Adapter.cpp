@@ -245,112 +245,25 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START);
 
-  // Lock access to the POA for the duration of this transaction
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  // This object is magical, i.e., it has a non-trivial constructor
+  // and destructor.
+  Servant_Upcall servant_upcall (*this);
 
-  this->dispatch_servant_i (key,
-                            req,
-                            context,
-                            ACE_TRY_ENV);
-}
-
-void
-TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
-                                        CORBA::ServerRequest &req,
-                                        void *context,
-                                        CORBA_Environment &ACE_TRY_ENV)
-{
-  // Check if a non-servant upcall is in progress, and make sure it is
-  // not this thread which is making the upcall.
-  while (this->enable_locking_ &&
-         this->non_servant_upcall_in_progress_ &&
-         ! ACE_OS::thr_equal (this->non_servant_upcall_thread_,
-                              ACE_OS::thr_self ()))
-    {
-      // If so wait...
-      int result = this->non_servant_upcall_condition_.wait ();
-      if (result == -1)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
-    }
-
-  PortableServer::ObjectId id;
-  TAO_POA *poa = 0;
-
-  this->locate_poa (key,
-                    id,
-                    poa,
-                    ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Check the state of the POA Manager.
-  poa->check_poa_manager_state (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Setup for POA Current
+  // Set up state in the POA et al (including the POA Current), so
+  // that we know that this servant is currently in an upcall.
   const char *operation = req.operation ();
-  TAO_POA_Current_Impl current_context (poa,
-                                        key,
-                                        0,
-                                        operation,
-                                        this->orb_core_);
-
-  PortableServer::Servant servant = 0;
-
-  {
-    ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
-
-    servant = poa->locate_servant_i (operation,
-                                     id,
-                                     &current_context,
+  servant_upcall.prepare_for_upcall (key,
+                                     operation,
                                      ACE_TRY_ENV);
-    ACE_CHECK;
-  }
+  ACE_CHECK;
 
-  // Now that we know the servant.
-  current_context.servant (servant);
-
+  // Servant dispatch.
   {
-    // Outstanding_Requests has a magic constructor and destructor.
-    // We increment <POA::outstanding_requests_> in the constructor.
-    // We decrement <POA::outstanding_requests_> in the destructor.
-    // Note that the lock is released after
-    // <POA::outstanding_requests_> is increased and
-    // <POA::outstanding_requests_> is decreased after the lock has
-    // been reacquired.
-    Outstanding_Requests outstanding_requests (*poa,
-                                               *this);
-    ACE_UNUSED_ARG (outstanding_requests);
-
-    // Unlock for the duration of the servant upcall.  Reacquire once
-    // the upcall completes. Even though we are releasing the lock,
-    // the servant entry in the active object map is reference counted
-    // and will not get removed/deleted prematurely.
-    TAO_POA_GUARD (ACE_Lock, monitor, this->reverse_lock (), ACE_TRY_ENV);
-
-    // This class helps us by locking servants in a single threaded
-    // POA for the duration of the upcall.  Single_Threaded_POA_Lock
-    // has a magic constructor and destructor.  We acquire the servant
-    // lock in the constructor.  We release the servant lock in the
-    // destructor.
-    //
-    // Note that this lock must be acquired *after* the POA lock has
-    // been released.  This is necessary since we cannot block waiting
-    // for the servant lock while holding the POA lock.  Otherwise,
-    // the thread that wants to release this lock will not be able to
-    // do so since it can't acquire the POA lock.
-    //
-    Single_Threaded_POA_Lock single_threaded_poa_lock (*poa,
-                                                       servant);
-    ACE_UNUSED_ARG (single_threaded_poa_lock);
-
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
-    // Upcall
-    servant->_dispatch (req,
-                        context,
-                        ACE_TRY_ENV);
+    servant_upcall.servant ()->_dispatch (req,
+                                          context,
+                                          ACE_TRY_ENV);
     ACE_CHECK;
   }
 }
@@ -857,53 +770,365 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Object_Adapter::Outstanding_Requests::Outstanding_Requests (TAO_POA &poa,
-                                                                TAO_Object_Adapter &object_adapter)
-  : poa_ (poa),
-    object_adapter_ (object_adapter)
+TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_adapter)
+  : object_adapter_ (object_adapter),
+    poa_ (0),
+    servant_ (0),
+    state_ (INITIAL_STAGE),
+    id_ (),
+    current_context_ ()
 {
-  // Increase <poa->outstanding_requests_>.
-  this->poa_.increment_outstanding_requests ();
 }
 
-TAO_Object_Adapter::Outstanding_Requests::~Outstanding_Requests (void)
+void
+TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key,
+                                                        const char *operation,
+                                                        CORBA::Environment &ACE_TRY_ENV)
 {
-  // Decrease <poa->outstanding_requests_>.
-  CORBA::ULong outstanding_requests = this->poa_.decrement_outstanding_requests ();
-
-  // If locking is enabled and some thread is waiting in POA::destroy.
-  if (this->object_adapter_.enable_locking_ &&
-      outstanding_requests == 0 &&
-      this->poa_.wait_for_completion_pending_)
+  // Acquire the object adapter lock first.
+  int result = this->object_adapter_.lock ().acquire ();
+  if (result == -1)
     {
-      // Wakeup all waiting threads.
-      this->poa_.outstanding_requests_condition_.broadcast ();
+      // Locking error.
+      ACE_THROW (CORBA::OBJ_ADAPTER ());
+    }
+
+  // We have acquired the object adapater lock.  Record this for later
+  // use.
+  this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
+
+  // Check if a non-servant upcall is in progress.  If a non-servant
+  // upcall is in progress, wait for it to complete.  Unless of
+  // course, the thread making the non-servant upcall is this thread.
+  while (this->object_adapter_.enable_locking_ &&
+         this->object_adapter_.non_servant_upcall_in_progress_ &&
+         ! ACE_OS::thr_equal (this->object_adapter_.non_servant_upcall_thread_,
+                              ACE_OS::thr_self ()))
+    {
+      // If so wait...
+      result = this->object_adapter_.non_servant_upcall_condition_.wait ();
+      if (result == -1)
+        {
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
+
+  // Locate the POA.
+  this->object_adapter_.locate_poa (key,
+                                    this->id_,
+                                    this->poa_,
+                                    ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Check the state of the POA Manager.
+  this->poa_->check_poa_manager_state (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Setup current for this request.
+  this->current_context_.setup (this->poa_,
+                                key,
+                                0,
+                                operation);
+
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
+
+    // Lookup the servant.
+    this->servant_ = this->poa_->locate_servant_i (operation,
+                                                   this->id_,
+                                                   &this->current_context_,
+                                                   ACE_TRY_ENV);
+    ACE_CHECK;
+  }
+
+  // Now that we know the servant.
+  this->current_context_.servant (this->servant_);
+
+  // Increase <poa->outstanding_requests_> for the duration of the
+  // upcall.
+  //
+  // Note that the object adapter lock is released after
+  // <POA::outstanding_requests_> is increased.
+  this->poa_->increment_outstanding_requests ();
+
+  // Release the object adapter lock.
+  this->object_adapter_.lock ().release ();
+
+  // We have release the object adapater lock.  Record this for later
+  // use.
+  this->state_ = OBJECT_ADAPTER_LOCK_RELEASED;
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
+  // Lock servant (if necessary).
+  //
+  // Note that this lock must be acquired *after* the object adapter
+  // lock has been released.  This is necessary since we cannot block
+  // waiting for the servant lock while holding the object adapter
+  // lock.  Otherwise, the thread that wants to release this lock will
+  // not be able to do so since it can't acquire the object adapterx
+  // lock.
+  //
+  if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+    {
+      result = this->servant_->_single_threaded_poa_lock ().acquire ();
+
+      if (result == -1)
+        {
+          // Locking error.
+          ACE_THROW (CORBA::OBJ_ADAPTER ());
+        }
+    }
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // We have acquired the servant lock.  Record this for later use.
+  this->state_ = SERVANT_LOCK_ACQUIRED;
+
+  //
+  // After this point, <this->servant_> is ready for dispatching.
+  //
+}
+
+TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
+{
+  switch (this->state_)
+    {
+    case SERVANT_LOCK_ACQUIRED:
+
+      // Since the servant lock was acquired, we must release it.
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+      if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+        {
+          this->servant_->_single_threaded_poa_lock ().release ();
+        }
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
+      /** Fall through **/
+
+    case OBJECT_ADAPTER_LOCK_RELEASED:
+
+      // Since the object adapter lock was released, we must acquire
+      // it.
+      //
+      // Note that errors are ignored here since we cannot do much
+      // with it.
+      this->object_adapter_.lock ().acquire ();
+
+      {
+        // Decrease <poa->outstanding_requests_> now that the upcall
+        // is complete.
+        //
+        // Note that the object adapter lock is acquired before
+        // <POA::outstanding_requests_> is increased.
+        CORBA::ULong outstanding_requests =
+          this->poa_->decrement_outstanding_requests ();
+
+        // If locking is enabled and some thread is waiting in POA::destroy.
+        if (this->object_adapter_.enable_locking_ &&
+            outstanding_requests == 0 &&
+            this->poa_->wait_for_completion_pending_)
+          {
+            // Wakeup all waiting threads.
+            this->poa_->outstanding_requests_condition_.broadcast ();
+          }
+      }
+
+      /** Fall through **/
+
+    case OBJECT_ADAPTER_LOCK_ACQUIRED:
+
+      // Finally, since the object adapter lock was acquired, we must
+      // release it.
+      this->object_adapter_.lock ().release ();
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Object_Adapter::Single_Threaded_POA_Lock::Single_Threaded_POA_Lock (TAO_POA &poa,
-                                                                        PortableServer::Servant servant)
-  : poa_ (poa),
-    servant_ (servant)
-{
+TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
+  : poa_impl_ (0),
+    object_id_ (),
+    object_key_ (0),
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-  if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
-    {
-      this->servant_->_single_threaded_poa_lock ().acquire ();
-    }
+
+    cookie_ (0),
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+    servant_ (0),
+    operation_ (0),
+    previous_current_impl_ (0),
+    active_object_map_entry_ (0),
+    setup_done_ (0)
+{
 }
 
-TAO_Object_Adapter::Single_Threaded_POA_Lock::~Single_Threaded_POA_Lock (void)
+void
+TAO_POA_Current_Impl::setup (TAO_POA *impl,
+                             const TAO_ObjectKey &key,
+                             PortableServer::Servant servant,
+                             const char *operation)
+{
+  // Remember information about this upcall.
+  this->poa_impl_ = impl;
+  this->object_key_ = &key;
+  this->servant_ = servant;
+  this->operation_ = operation;
+
+  // Set the current context and remember the old one.
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+
+  this->previous_current_impl_ = tss->poa_current_impl_;
+  tss->poa_current_impl_ = this;
+
+  // Setup is complete.
+  this->setup_done_ = 1;
+}
+
+TAO_POA_Current_Impl::~TAO_POA_Current_Impl (void)
 {
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-  if (this->poa_.policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+
+  if (this->cookie_ != 0)
     {
-      this->servant_->_single_threaded_poa_lock ().release ();
+      // A recursive thread lock without using a recursive thread
+      // lock.  Non_Servant_Upcall has a magic constructor and
+      // destructor.  We unlock the Object_Adapter lock for the
+      // duration of the servant activator upcalls; reacquiring once
+      // the upcalls complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has been
+      // set.
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->poa_impl_->orb_core_.object_adapter ());
+      ACE_UNUSED_ARG (non_servant_upcall);
+
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_TRY_EX (LOCATOR)
+        {
+          PortableServer::POA_var poa = this->get_POA (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (LOCATOR);
+
+          this->poa_impl_->servant_locator_->postinvoke (this->object_id (),
+                                                         poa.in (),
+                                                         this->operation_,
+                                                         this->cookie_,
+                                                         this->servant_,
+                                                         ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (LOCATOR);
+        }
+      ACE_CATCHANY
+        {
+          // Ignore errors from servant locator ....
+        }
+      ACE_ENDTRY;
     }
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+  // Cleanup servant related stuff.
+  if (this->active_object_map_entry_ != 0)
+    {
+      // Decrement the reference count.
+      CORBA::UShort new_count = --this->active_object_map_entry_->reference_count_;
+
+      if (new_count == 0)
+        {
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY_EX (SERVANT)
+            {
+              this->poa_impl_->cleanup_servant (this->active_object_map_entry_,
+                                                ACE_TRY_ENV);
+
+              ACE_TRY_CHECK_EX (SERVANT);
+            }
+          ACE_CATCHANY
+            {
+              // Ignore errors from servant cleanup ....
+            }
+          ACE_ENDTRY;
+        }
+    }
+
+  if (this->setup_done_)
+    {
+      TAO_ORB_Core_TSS_Resources *tss =
+        TAO_ORB_CORE_TSS_RESOURCES::instance ();
+
+      // Reset the old context.
+      tss->poa_current_impl_ = this->previous_current_impl_;
+    }
+}
+
+PortableServer::POA_ptr
+TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
+{
+  PortableServer::POA_var result = this->poa_impl_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
+  return result._retn ();
+}
+
+PortableServer::ObjectId *
+TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
+{
+  // Create a new one and pass it back
+  return new PortableServer::ObjectId (this->object_id_);
+}
+
+TAO_ORB_Core &
+TAO_POA_Current_Impl::orb_core (void) const
+{
+  return this->poa_impl_->orb_core_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+PortableServer::POA_ptr
+TAO_POA_Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_POA_Current_Impl *impl = this->implementation ();
+
+  if (impl == 0)
+    {
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        0);
+    }
+
+  return impl->get_POA (ACE_TRY_ENV);
+}
+
+PortableServer::ObjectId *
+TAO_POA_Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_POA_Current_Impl *impl = this->implementation ();
+
+  if (impl == 0)
+    {
+      ACE_THROW_RETURN (PortableServer::Current::NoContext (),
+                        0);
+    }
+
+  return impl->get_object_id (ACE_TRY_ENV);
+}
+
+TAO_POA_Current_Impl *
+TAO_POA_Current::implementation (void)
+{
+  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+}
+
+TAO_POA_Current_Impl *
+TAO_POA_Current::implementation (TAO_POA_Current_Impl *new_current)
+{
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+
+  TAO_POA_Current_Impl *old = tss->poa_current_impl_;
+  tss->poa_current_impl_ = new_current;
+  return old;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
