@@ -22,6 +22,10 @@ Wed Aug 19 09:47:58 1998  David L. Levine  <levine@cs.wustl.edu>
           initializers for Times with 0, now that CORBA::ULongLong is an
           int type.
 
+        * orbsvcs/tests/Sched_Conf/Makefile: replaced explicit build
+          rule for Sched_Conf with include of rules.bin.GNU.  There's
+          no net difference on Unix, and now it builds on VxWorks.
+
 Wed Aug 19 08:07:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/debug: Fixed a couple of uses of TAO_Export to make MSVC 6.0
