@@ -92,7 +92,7 @@ void QTestApplication::exec( int msec )
 const int TotalTestTime = 5000; 
 
 // how many handlers for each event handler class should be started ?
-const int HandlersNo = 10 ; 
+const int HandlersNo = 3 ; 
 
 // base port for sending datagrams
 const u_short BaseDgramPort = 5931;
@@ -121,6 +121,8 @@ class DgramHandler: public ACE_Event_Handler
 {
 public:
     DgramHandler( ACE_Reactor *p_reactor = 0 );
+	virtual ~DgramHandler( );
+
 	int  open (const ACE_INET_Addr &local, 
 		int protocol_family=ACE_PROTOCOL_FAMILY_INET, 
 		int protocol=0, 
@@ -152,6 +154,7 @@ public:
 	typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> inherited;
 public:
 	TCPConnectionHandler( bool p_serverSide = false );
+    virtual ~TCPConnectionHandler( );
 
 	virtual int handle_output( ACE_HANDLE handle);
 	virtual int handle_input( ACE_HANDLE handle);
@@ -205,7 +208,8 @@ class TCPAcceptorHandler : public ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_A
 public:
 	typedef ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR > inherited;
 public:
-	TCPAcceptorHandler( HandlersRegister *p_handlersRegister);
+	TCPAcceptorHandler( HandlersRegister *p_handlersRegister );
+	virtual ~TCPAcceptorHandler( );
 	int make_svc_handler( TCPConnectionHandler *& sh );
 private:
 	HandlersRegister *handlersRegister_;
@@ -223,6 +227,12 @@ DgramHandler::DgramHandler( ACE_Reactor *p_reactor ):
 	expectedTriggers_( 0 )
 {
 	reference_counting_policy().value( Reference_Counting_Policy::ENABLED );
+}
+
+DgramHandler::~DgramHandler( )
+{
+	ACE_ERROR( ( LM_INFO,
+		ACE_TEXT( "virtual DgramHandler::~DgramHandler( )\n" ) ) );
 }
 
 int  DgramHandler::open (const ACE_INET_Addr &local, 
@@ -279,7 +289,7 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
 	ACE_SOCK_Dgram socket;	
 	if ( -1 == socket.open( 
 			 ACE_INET_Addr( static_cast< u_short >( 0 ), 
-				 INADDR_ANY ), 
+				 static_cast< ACE_UINT32 >( INADDR_ANY ) ), 
 			 ACE_PROTOCOL_FAMILY_INET, 0, 1 ) )
 		ACE_ERROR ( ( LM_ERROR,
 					   ACE_TEXT( "(%P) %p \n" ),
@@ -355,6 +365,12 @@ TCPConnectionHandler::TCPConnectionHandler( bool p_serverSide ):
 	reference_counting_policy().value( Reference_Counting_Policy::ENABLED );
 }
 
+TCPConnectionHandler::~TCPConnectionHandler( )
+{
+	ACE_ERROR( (LM_INFO, 
+			ACE_TEXT( "TCPConnectionHandler::~TCPConnectionHandler( )\n" ) ) );
+}
+
 int TCPConnectionHandler::handle_input( ACE_HANDLE handle)
 {
 	ACE_UNUSED_ARG( handle );
@@ -379,6 +395,10 @@ int TCPConnectionHandler::handle_input( ACE_HANDLE handle)
 
 		return 0;
 	}
+	else
+		ACE_ERROR( (LM_ERROR, 
+			ACE_TEXT( "(%P:%p" ), 
+			ACE_TEXT( "TCPConnectionHandler::handle_input call with no data on handle" ) ) );
 
 	return -1;			
 }
@@ -386,6 +406,9 @@ int TCPConnectionHandler::handle_input( ACE_HANDLE handle)
 int TCPConnectionHandler::handle_output( ACE_HANDLE handle )
 {
 	ACE_UNUSED_ARG( handle );
+	if ( !buffers_ )
+		ACE_ERROR( (LM_ERROR, 
+			ACE_TEXT( "TCPConnectionHandler::handle_output call for empty buffers" ) ) );
 	if ( 0 > sendBuffers() ) // socket broken, kill yourself
 		return -1;
 
@@ -443,19 +466,19 @@ int TCPConnectionHandler::scheduleSend( ACE_Message_Block * buffer)
 // enforce obsolete registration and removal of Event_Handler to detect bugs 
 // related with bad handler service
 //	if ( buffers_ )
-	{
-		// some buffers await sending, register write handler
-		if ( -1 == reactor()->register_handler( this, 
-				 ACE_Event_Handler::WRITE_MASK ) )
-			ACE_ERROR_RETURN ( ( LM_ERROR,
-								  ACE_TEXT( "(%P) %p \n" ),
-								  ACE_TEXT( "Cannot register TCP handler for write." ) ), 
-				-2);
+	//{
+	//	// some buffers await sending, register write handler
+	//	if ( -1 == reactor()->register_handler( this, 
+	//			 ACE_Event_Handler::WRITE_MASK ) )
+	//		ACE_ERROR_RETURN ( ( LM_ERROR,
+	//							  ACE_TEXT( "(%P) %p \n" ),
+	//							  ACE_TEXT( "Cannot register TCP handler for write." ) ), 
+	//			-2);
 
-		reactor()->schedule_wakeup( this, ACE_Event_Handler::WRITE_MASK );
-		reactor()->notify(); 
+	//	reactor()->schedule_wakeup( this, ACE_Event_Handler::WRITE_MASK );
+	//	reactor()->notify(); 
 
-	}
+	//}
 	return 0;
 }
 
@@ -608,7 +631,10 @@ int HandlersRegister::registerDgramHandlers()
 				 ACE_INET_Addr ( i + BaseDgramPort, 
                      ACE_TEXT( "127.0.0.1" ), 
                      ACE_PROTOCOL_FAMILY_INET ) ) )
-			return -1;
+			ACE_ERROR_RETURN ( ( LM_ERROR,
+								  ACE_TEXT( "(%P) %p \n" ),
+								  ACE_TEXT( "Cannot open dgram handler" ) ),
+								  -1 );
 
 	// register dgram handlers 
 	for( i = 0; i < HandlersNo; ++i )
@@ -625,21 +651,14 @@ int HandlersRegister::registerTCPHandlers()
 {
 	ACE_INET_Addr addr( BaseTCPPort );
 
-	if ( -1 == acceptor_->open( addr ) )
+	if ( -1 == acceptor_->open( addr, reactor_, 1 ) )
 		ACE_ERROR_RETURN ( ( LM_ERROR,
 							  ACE_TEXT( "(%P) %p \n" ),
 							  ACE_TEXT( "Cannot open acceptor port" ) ), 
 			-1);	
 
-	if ( -1 == reactor_->register_handler( acceptor_, ACE_Event_Handler::READ_MASK ) ) 
-		ACE_ERROR_RETURN ( ( LM_ERROR,
-							  ACE_TEXT( "(%P) %p \n" ),
-							  ACE_TEXT( "Cannot register acceptor handler" ) ), 
-			-1); 
-
-	// create tcp clients
 	int i;
-	addr.set( ACE_TEXT( "127.0.0.1" ), BaseTCPPort );
+	addr.set( BaseTCPPort, ACE_TEXT( "127.0.0.1" ) );
 
 	for( i = 0; i < HandlersNo; ++i )
 	{
@@ -665,7 +684,8 @@ int HandlersRegister::registerTCPServer( TCPConnectionHandler *handler )
 		TCPServers_[ TCPServersNo_++ ] = handler;
 		return 0;
 	}
-
+	ACE_ERROR( ( LM_ERROR,
+		ACE_TEXT( "Too many servers registered. ACE_Reactor or ACE_Acceptor broken?\n" ) ) );
 	return -1;
 }
 
@@ -808,9 +828,16 @@ int TCPAcceptorHandler::make_svc_handler( TCPConnectionHandler *& sh )
 	if ( sh ) 
 	{
 		if ( 0 != handlersRegister_->registerTCPServer( sh ) )  // for analysis
+		{
+			// release event handler		
+			reactor()->remove_handler( sh, ACE_Event_Handler::ALL_EVENTS_MASK );
+			sh->remove_reference();
+			// report error
 			ACE_ERROR_RETURN( ( LM_ERROR, 
-								  ACE_TEXT( "Cannot setup server TCPConnectionHandler\n" ) ),
-				-1 );
+								  ACE_TEXT( "Cannot register server TCPConnectionHandler\n" ) ),
+				-1 ); 
+		}
+
 	}
 	else
 		ACE_ERROR_RETURN( ( LM_ERROR, 
@@ -818,6 +845,12 @@ int TCPAcceptorHandler::make_svc_handler( TCPConnectionHandler *& sh )
 			-1 );
 
 	return 0;
+}
+
+TCPAcceptorHandler::~TCPAcceptorHandler( )
+{
+	ACE_ERROR( ( LM_INFO,
+		ACE_TEXT( "TCPAcceptorHandler::~TCPAcceptorHandler( )\n" ) ) );
 }
 
 void testNativeReactor( int argc, ACE_TCHAR *argv[] )
