@@ -1,3 +1,11 @@
+Wed Jun 30 08:37:15 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        
+          In Receiver_exec_i::ccm_activate(), changed the construction of
+          the argv argument passed to ORB_init() to eliminate a const 
+          char* to char* conversion warning.
+
 Tue Jun 29 15:34:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
