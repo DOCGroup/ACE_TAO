@@ -39,7 +39,7 @@ main (int /* argc */, char * /* argv */ [])
 
       while ((n = new_stream.recv (buf, sizeof buf)) > 0)
 	{
-	  cerr << buf << endl;
+          ACE_OS::fprintf (stderr, "%s\n", buf);
 	  ACE_OS::write (ACE_STDOUT, buf, n);
 	}
       if (n == -1)
