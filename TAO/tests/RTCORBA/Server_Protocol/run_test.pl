@@ -55,11 +55,11 @@ sub client
 
      "-ORBEndpoint uiop:// "
      ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
-     ." -p 1413566208",
+     ." -ORBsvcconf server_shmiop.conf -p 1413566208",
 
      "-ORBEndpoint uiop:// "
      ." -ORBendpoint shmiop:// -ORBendpoint iiop://"
-     ." -p 1413566210 ");
+     ." -ORBsvcconf server_shmiop.conf -p 1413566210 ");
 
 @comments = ("* ORB Default Server Protocol Policy Test\n          "
              ."(TAO's default behavior without config files): \n",
@@ -88,10 +88,10 @@ if ($^O eq "MSWin32")
          "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://",
 
          "-ORBendpoint shmiop:// -ORBendpoint iiop://"
-         ." -p 0",
+         ." -ORBsvcconf server_shmiop.conf -p 0",
 
          "-ORBendpoint shmiop:// -ORBendpoint iiop://"
-         ." -p 1413566210");
+         ." -ORBsvcconf server_shmiop.conf -p 1413566210");
 
     $comments[3] =
         "Overriding ORB Default Server Protocol Policy in the POA "

@@ -1,3 +1,14 @@
+Wed Dec 27 18:00:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Server_Protocol/run_test.pl :
+	  Updated the perl script to use server_shmiop.conf is all cases
+	  using SHMIOP.
+	
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
+	  Added the new MMAPFilePrefix option.
+	
 Wed Dec 27 17:37:39 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/Protocols_Hooks.cpp : 
