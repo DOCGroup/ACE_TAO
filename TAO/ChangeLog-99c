@@ -1,3 +1,11 @@
+Wed May 19 18:29:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Client_Strategy_Factory.h:
+	* tao/Connect.cpp: 
+	* tao/default_client.h:
+	* tao/default_client.cpp:
+	  More @@ comments
+
 Wed May 19 18:08:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.cpp:

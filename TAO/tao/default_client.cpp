@@ -53,6 +53,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
               this->iiop_profile_lock_type_ = TAO_NULL_LOCK;
           }
         }
+
       else if (ACE_OS::strcmp (argv[curarg], "-ORBclientconnectionhandler") == 0)
         {
           curarg++;
@@ -88,6 +89,13 @@ TAO_Default_Client_Strategy_Factory::create_iiop_profile_lock (void)
 
   return the_lock;
 }
+
+// @@ Alex: implement the WS and RMS methods here, similar to the
+//    create_iiop_profile_lock above...
+// @@ Alex: remember your idea of using the
+//    -ORBclientconnectionhandler option to implement the WS factory,
+//    but you need new options for the RMS...
+
 
 ACE_Creation_Strategy<TAO_Client_Connection_Handler> *
 TAO_Default_Client_Strategy_Factory::create_client_creation_strategy (void)

@@ -81,6 +81,8 @@ public:
   // the TAO_GIOP_Invocation::location_forward and the
   // TAO_GIOP_Invocation::start
 
+  // @@ Alex: the RMS and WS factory methods go here too...
+
   ACE_Creation_Strategy<TAO_Client_Connection_Handler> *create_client_creation_strategy (void);
   // Create the correct client connection creation strategy
 
