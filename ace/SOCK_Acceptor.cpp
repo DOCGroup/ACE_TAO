@@ -140,7 +140,7 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
       addr = (sockaddr *) remote_addr->get_addr ();
     }
 
-  // Handle the timeout case.
+  // Handle the case where we're doing a timed <accept>.
   if (timeout != 0)
     {
       if (ACE::handle_timed_accept (handle, timeout, restart) == -1)
@@ -149,8 +149,8 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
 	{
 	  int val = ACE::get_flags (handle);
 
-	  // Set the handle into non-blocking mode if it's not
-	  // already in it.
+	  // Set the handle into non-blocking mode if it's not already
+	  // in it.
 	  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK)
 	      && ACE::set_flags (handle, ACE_NONBLOCK) == -1)
 	    return ACE_INVALID_HANDLE;
@@ -159,13 +159,14 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
 
 	  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
 	    {
-	      // We need to stash errno here because ACE::clr_flags() may
-	      // reset it.
+	      // We need to stash errno here because <ACE::clr_flags>
+	      // may reset it.
 	      int error = errno;
 
-	      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-	      // originally.
+	      // Only disable ACE_NONBLOCK if we weren't in
+	      // non-blocking mode originally.
 	      ACE::clr_flags (handle, ACE_NONBLOCK);
+	      ACE::clr_flags (new_handle, ACE_NONBLOCK);
 	      errno = error;
 	    }
 	}

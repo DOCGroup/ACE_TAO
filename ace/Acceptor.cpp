@@ -958,9 +958,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept
       return -1;
     }
   // Activate the <svc_handler> using the designated concurrency
-  // strategy (note that this method becomes responsible for
-  // handling errors and freeing up the memory if things go
-  // awry...)
+  // strategy (note that this method becomes responsible for handling
+  // errors and freeing up the memory if things go awry...)
   else
     return this->activate_svc_handler (svc_handler);
 }
@@ -1025,7 +1024,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
 
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
-  // created handle. This is because the newly created handle will
+  // created handle.  This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
