@@ -297,7 +297,7 @@ Svc_Conf_y.cpp: Svc_Conf.y
               -e "s/y\.tab\.c/Svc_Conf_y.cpp/g" < y.tab.c > /tmp/$@; \
           cp /tmp/$@ $@; \
 	  patch < ../etc/Svc_Conf_y.cpp.diff; \
-	  echo '// $$Id$$' > Svc_Conf_Tokens.h; \
+	  echo '// $$'\I\d'$$' > Svc_Conf_Tokens.h; \
 	  cat y.tab.h >> Svc_Conf_Tokens.h; \
           $(RM) -f /tmp/$@ y.tab.c y.tab.h Svc_Conf_y.cpp.orig; \
         else \
