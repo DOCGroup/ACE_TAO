@@ -219,6 +219,19 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::alertable_handle_events (ACE_Tim
   return this->handle_events (max_wait_time);
 }
 
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivated (void)
+{
+  return this->deactivated_;
+}
+
+template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ void
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivate (int do_stop)
+{
+  this->deactivated_ = do_stop;
+  this->wakeup_all_threads ();
+}
+
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ size_t
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::size (void)
 {

@@ -62,6 +62,13 @@ public:
     // changes enabled bits).
   };
 
+  typedef int (*REACTOR_EVENT_HOOK)(void*);
+  // You can add a hook to various run_event methods and the hook will
+  // be called after handling every reactor event.  If this function
+  // returns 0, run_reactor_event_loop will check for the return value of
+  // handle_event.  If it is -1, the the run_reactor_event_loop will return
+  // (pre-maturely.)
+
   static ACE_Reactor *instance (void);
   // Get pointer to a process-wide <ACE_Reactor>.
 
@@ -74,7 +81,7 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
 
-  // = Reactor event loop management methods.
+  // = Singleton reactor event loop management methods.
 
   // Note that these method ONLY work on the "Singleton Reactor,"
   // i.e., the one returned from <ACE_Reactor::instance>.
@@ -100,6 +107,42 @@ public:
   // Report if the <ACE_Reactor::instance>'s event loop is finished.
 
   static void reset_event_loop (void);
+  // Resets the <ACE_Reactor::end_event_loop_> static so that the
+  // <run_event_loop> method can be restarted.
+
+  static int check_reconfiguration (void *);
+  // The singleton reactor is used by the service_configurator.
+  // Therefore, we must check for the reconfiguration request and
+  // handle it after handling an event.
+
+
+  // = Reactor event loop management methods.
+
+  // These methods work with an instance of a reactor.
+  virtual int run_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
+  virtual int run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK = 0);
+  // Run the event loop until the
+  // <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
+  // method returns -1 or the <end_event_loop> method is invoked.
+
+  virtual int run_reactor_event_loop (ACE_Time_Value &tv,
+                                      REACTOR_EVENT_HOOK = 0);
+  virtual int run_alertable_reactor_event_loop (ACE_Time_Value &tv,
+                                                REACTOR_EVENT_HOOK = 0);
+  // Run the event loop until the <ACE_Reactor::handle_events> or
+  // <ACE_Reactor::alertable_handle_events> methods returns -1, the
+  // <end_event_loop> method is invoked, or the <ACE_Time_Value>
+  // expires.
+
+  virtual int end_reactor_event_loop (void);
+  // Instruct the <ACE_Reactor::instance> to terminate its event loop
+  // and notifies the <ACE_Reactor::instance> so that it can wake up
+  // and close down gracefully.
+
+  virtual int reactor_event_loop_done (void);
+  // Report if the <ACE_Reactor::instance>'s event loop is finished.
+
+  virtual void reset_reactor_event_loop (void);
   // Resets the <ACE_Reactor::end_event_loop_> static so that the
   // <run_event_loop> method can be restarted.
 
@@ -475,9 +518,6 @@ protected:
 
   static int delete_reactor_;
   // Must delete the <reactor_> singleton if non-0.
-
-  static sig_atomic_t end_event_loop_;
-  // Terminate the event loop of the singleton Reactor.
 
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);

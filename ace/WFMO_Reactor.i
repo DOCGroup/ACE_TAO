@@ -821,6 +821,19 @@ ACE_WFMO_Reactor::alertable_handle_events (ACE_Time_Value *how_long)
 }
 
 ACE_INLINE int
+ACE_WFMO_Reactor::deactivated (void)
+{
+  return this->deactivated_;
+}
+
+ACE_INLINE void
+ACE_WFMO_Reactor::deactivate (int do_stop)
+{
+  this->deactivated_ = do_stop;
+  this->wakeup_all_threads ();
+}
+
+ACE_INLINE int
 ACE_WFMO_Reactor::owner (ACE_thread_t *t)
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
