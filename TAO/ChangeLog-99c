@@ -1,3 +1,13 @@
+Sun Dec 12 20:07:03 1999  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+	* orbsvcs/examples/Log/test/Makefile: 
+	* orbsvcs/examples/Log/test/BasicLog_Test.cpp
+	* orbsvcs/examples/Log/test/BasicLog_Test.h:   
+	* orbsvcs/examples/Log/test/client.cpp:
+	Additional tests for the logging service. Thanks to 
+	keith brown <kalbrown@ix.netcom.com> for sending them
+	in. 
+
 Sun Dec 12 18:00:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp (open):
