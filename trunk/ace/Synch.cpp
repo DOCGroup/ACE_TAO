@@ -624,7 +624,7 @@ ACE_Condition_Thread_Mutex::dump (void) const
 #if defined (ACE_WIN32)
   ACE_DEBUG ((LM_DEBUG, 
 	      "waiters = %d\n",
-	      this->cond_.waiters_));
+	      this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
