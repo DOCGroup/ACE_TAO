@@ -1,3 +1,9 @@
+Mon Nov 17 23:46:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* arg_shifter.cpp: 
+	fixed a bug where in new, gcc used the address of an integer 
+	reference rather than its value. weird. 
+
 Mon Nov 17 23:33:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/{be_structure,be_union}.cpp: Carlos had removed the
