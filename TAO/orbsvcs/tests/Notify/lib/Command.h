@@ -22,6 +22,11 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/CORBA_macros.h"
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_Notify_Tests_Command
  *

@@ -50,11 +50,12 @@ Notify_Structured_Push_Consumer::_connect (
 
   this->proxy_->set_qos (properties);
   this->proxy_->connect_structured_push_consumer (objref.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // give ownership to POA
-  this->_remove_ref ();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
