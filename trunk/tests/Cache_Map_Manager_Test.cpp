@@ -118,6 +118,7 @@ static int randomize_lookups = 1;
 static int purge_percent = 10;
 static LPCTSTR caching_strategy_type;
 static int caching_strategy_count = 4;
+static KEY pattern[ACE_MAX_ITERATIONS];
 
 static void
 run_iterator_cache (MAP_CACHE &cache)
@@ -230,19 +231,13 @@ find_test_cache (MAP_CACHE &cache)
 {
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("find\n")));
 
-  size_t total_entries = cache.current_size ();
-
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
-      KEY key = i;
-      if (randomize_lookups != 0)
-        key = ACE_OS::rand () % total_entries;
-
       VALUE j;
-      int result = cache.find (key, j);
+      int result = cache.find (pattern[i], j);
 
       ACE_ASSERT (result != -1);
-      ACE_ASSERT (j == key);
+      ACE_ASSERT (j == pattern[i]);
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("%d  "),
@@ -259,19 +254,13 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
 {
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("find\n")));
 
-  size_t total_entries = cache.current_size ();
-
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
-      KEY key = i;
-      if (randomize_lookups != 0)
-        key = ACE_OS::rand () % total_entries;
-
       VALUE j;
-      int result = cache.find (key, j);
+      int result = cache.find (pattern[i], j);
 
       ACE_ASSERT (result != -1);
-      ACE_ASSERT (j == key);
+      ACE_ASSERT (j == pattern[i]);
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("%d  "),
@@ -340,7 +329,8 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
 }
 
 static void
-functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
+functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy,
+                          int same_pattern)
 {
   //MAP_LRU lru;
   MAP_CACHE cache (caching_strategy);
@@ -366,14 +356,35 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
   run_iterator_cache (cache);
   run_reverse_iterator_cache (cache);
 
-  find_test_cache (cache);
+  if (same_pattern == 0)
+    {
+      // Obtain a pattern of lookups.
+      size_t total_entries = cache.current_size ();
+      
+      int k = 0; size_t i = 0;
+      for (k = 0; 
+           k < (int) ACE_MAX_ITERATIONS;
+           ++k)
+        {
+          KEY key = i;
+          if (randomize_lookups != 0)
+            pattern[k] = ACE_OS::rand () % total_entries;
+          else
+            pattern[k] = i;
 
+          ++i;
+          ACE_UNUSED_ARG (key);    
+        }
+    }
+
+  find_test_cache (cache);
+  
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
               cache.current_size ()));
-
+  
   purge_test_cache (cache);
-
+  
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
               cache.current_size ()));
@@ -383,7 +394,8 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
 }
 
 static void
-functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
+functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy,
+                               int same_pattern)
 {
   // HASH_MAP_LRU lru;
   HASH_MAP_CACHE cache (caching_strategy);
@@ -410,8 +422,28 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
   run_iterator_hash_cache (cache);
   run_reverse_iterator_hash_cache (cache);
 
-  find_test_hash_cache (cache);
+  if (same_pattern == 0)
+    {
+      // Obtain a pattern of lookups.
+      size_t total_entries = cache.current_size ();
+      int k = 0; size_t i = 0;
+      for (k = 0; 
+           k < (int) ACE_MAX_ITERATIONS;
+           ++k)
+        {
+          KEY key = i;
+          if (randomize_lookups != 0)
+            pattern[k] = ACE_OS::rand () % total_entries;
+          else
+            pattern[k] = i;
 
+          ++i;
+          ACE_UNUSED_ARG (key);     
+        }
+    }
+
+  find_test_hash_cache (cache);
+      
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
               cache.current_size ()));
@@ -496,6 +528,7 @@ main (int argc, ASYS_TCHAR *argv[])
   HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = 0;
   MAP_CACHING_STRATEGY *map_caching_strategy = 0;
 
+  int same_pattern = 0;
   switch (caching_strategy_count) 
     {
 
@@ -538,8 +571,11 @@ main (int argc, ASYS_TCHAR *argv[])
         caching_strategy_count = 1;
         map_caching_strategy = new MAP_LRU_ADAPTER;
         hash_map_caching_strategy = new HASH_MAP_LRU_ADAPTER;
-        functionality_test_cache (*map_caching_strategy);
-        functionality_test_hash_cache (*hash_map_caching_strategy);
+        functionality_test_cache (*map_caching_strategy, same_pattern);
+
+        same_pattern = 1;
+
+        functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);
         delete map_caching_strategy;
         delete hash_map_caching_strategy;
 
@@ -547,8 +583,8 @@ main (int argc, ASYS_TCHAR *argv[])
         caching_strategy_count = 2;
         map_caching_strategy = new MAP_LFU_ADAPTER;
         hash_map_caching_strategy = new HASH_MAP_LFU_ADAPTER;
-        functionality_test_cache (*map_caching_strategy);
-        functionality_test_hash_cache (*hash_map_caching_strategy);
+        functionality_test_cache (*map_caching_strategy, same_pattern);
+        functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);
         delete map_caching_strategy;
         delete hash_map_caching_strategy;
 
@@ -556,8 +592,8 @@ main (int argc, ASYS_TCHAR *argv[])
         caching_strategy_count = 3;
         map_caching_strategy = new MAP_FIFO_ADAPTER;
         hash_map_caching_strategy = new HASH_MAP_FIFO_ADAPTER;
-        functionality_test_cache (*map_caching_strategy);
-        functionality_test_hash_cache (*hash_map_caching_strategy);
+        functionality_test_cache (*map_caching_strategy, same_pattern);
+        functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);
         delete map_caching_strategy;
         delete hash_map_caching_strategy;
 
@@ -569,8 +605,8 @@ main (int argc, ASYS_TCHAR *argv[])
 
     }
 
-  functionality_test_cache (*map_caching_strategy);
-  functionality_test_hash_cache (*hash_map_caching_strategy);  
+  functionality_test_cache (*map_caching_strategy, same_pattern);
+  functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);  
   delete map_caching_strategy;
   delete hash_map_caching_strategy;
 
