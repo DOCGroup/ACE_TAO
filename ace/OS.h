@@ -4825,22 +4825,8 @@ public:
   static int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
 
   static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
-  // Win32 note: Abandoned mutexes are not treated differently. 0 is
-  // returned since the calling thread does get the ownership.
-
-  static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
-                                   int &abandoned);
-  // This method is only implemented for Win32.  For abandoned
-  // mutexes, <abandoned> is set to 1 and 0 is returned.
 
   static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
-  // Win32 note: Abandoned mutexes are not treated differently. 0 is
-  // returned since the calling thread does get the ownership.
-
-  static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
-                                      int &abandoned);
-  // This method is only implemented for Win32.  For abandoned
-  // mutexes, <abandoned> is set to 1 and 0 is returned.
 
   static int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
