@@ -1,3 +1,13 @@
+Tue Oct  3 13:27:13 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/OS.i:
+        * ace/OS.cpp:
+          Added !ACE_HAS_TSS_EMULATION to the ACE_HAS_PACE
+          checks when TSS emulation is being used. We want
+          to let ACE do the emulation instead of moving it
+          into PACE since this would involve keeping track
+          of the global TSS state.
+
 Tue Oct  3 12:25:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Thread_Exit.cpp:

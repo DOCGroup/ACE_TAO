@@ -476,11 +476,7 @@ pace_vfprintf (PACE_FILE * stream,
                const char * format,
                va_list arg)
 {
-  /*  return vfprintf (stream, format, arg); */
-  PACE_UNUSED_ARG (stream);
-  PACE_UNUSED_ARG (format);
-  PACE_UNUSED_ARG (arg);
-  return -1;
+  return vfprintf (stream, format, arg);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -490,10 +486,7 @@ int
 pace_vprintf (const char * format,
               va_list arg)
 {
-  /*  return vfprintf (format, arg); */
-  PACE_UNUSED_ARG (format);
-  PACE_UNUSED_ARG (arg);
-  return -1;
+  return vprintf (format, arg);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -504,10 +497,6 @@ pace_vsprintf (char * s,
                const char * format,
                va_list arg)
 {
-  /*  return vsprintf (s, format, arg);*/
-  PACE_UNUSED_ARG (s);
-  PACE_UNUSED_ARG (format);
-  PACE_UNUSED_ARG (arg);
-  return -1;
+  return vsprintf (s, format, arg);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
