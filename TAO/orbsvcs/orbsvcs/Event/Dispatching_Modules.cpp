@@ -11,6 +11,28 @@
 #include "Dispatching_Modules.i"
 #endif /* __ACE_INLINE__ */
 
+#include "tao/Timeprobe.h"
+
+static const char *TAO_Dispatching_Modules_Timeprobe_Description[] = 
+{ 
+  "dispatch (dequeue) the event",
+  "push_source_type: Correlation Module",
+  "Priority_Dispatching::push - priority requested",
+  "Priority_Dispatching::push - priority obtained"
+};
+
+enum 
+{
+  TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT = 5000,
+  TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE,
+  TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_REQUESTED,
+  TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Dispatching_Modules_Timeprobe_Description, 
+                                  TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT);
+
 // ************************************************************
 
 void
@@ -37,7 +59,7 @@ ACE_ES_Dispatch_Request::make_copy (RtecEventComm::EventSet &dest) const
 int
 ACE_ES_Dispatch_Request::execute (u_long &command_action)
 {
-  ACE_TIMEPROBE ("  dispatch (dequeue) the event");
+  ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT);
 
   return dispatching_module_->dispatch_event (this, command_action);
 }
@@ -222,7 +244,7 @@ void
 ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                                    CORBA::Environment &_env)
 {
-  ACE_TIMEPROBE ("  push_source_type: Correlation Module");
+  ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE);
 
   RtecScheduler::OS_Priority thread_priority;
   RtecScheduler::Sub_Priority subpriority;
@@ -231,14 +253,14 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
   if (request->rt_info () != 0)
     {
       // @@ TODO use TAO_TRY&friends
-      ACE_TIMEPROBE ("  Priority_Dispatching::push - priority requested");
+      ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_REQUESTED);
       ACE_Scheduler_Factory::server ()->priority
         (request->rt_info (),
          thread_priority,
          subpriority,
          preemption_priority,
          _env);
-      ACE_TIMEPROBE ("  Priority_Dispatching::push - priority obtained");
+      ACE_TIMEPROBE (TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_OBTAINED);
       if (_env.exception ())
         {
           return;
