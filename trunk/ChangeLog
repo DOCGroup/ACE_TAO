@@ -1,3 +1,11 @@
+Wed Nov  3 06:24:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/ftrteventchannel.mpb:
+	* bin/MakeProjectCreator/config/messaging.mpb:
+
+	  Changed to inherit from corba_messaging instead of appending
+	  corba_messaging to requires.
+
 Wed Nov  3 07:24:06 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/HTBP/htbptest.mpb:
