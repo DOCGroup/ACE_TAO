@@ -1,0 +1,174 @@
+Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
+	  the operators were missing explicit declarations in the header
+	  file (they were anyway defined in the inlined files) which
+	  created problems in builds where inlining was diabled. Please
+	  see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
+	  more details. Thanks to Marina Spivak <marina@atdesk.com> for
+	  reporting this.
+
+Fri Jul  5 18:44:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: Corrected undeclared 'select_width' errors and
+          signed/unsigned mismatch warnings.
+
+Fri Jul  5 16:14:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{h i} (send, sendto, recv, recvfrom): Change 'len' argument
+          from int to size_t.
+          Removed conditional typedef of ssize_t; it's done in Basic_Types.h.
+
+        * ace/ACE.h (recv): Filled in documentation for varargs variant.
+        * ace/ACE.cpp (send, recv): Properly convert size_t 'count' arg to int
+          iovec count for call to ACE_OS::sendv/recvv().
+          (handle_timed_accept, handle_timed_complete, handle_ready): Use
+          an int select_width for ACE_OS::select() calls to get the types
+          correct. This arg is ignored on Windows anyway.
+
+        * ace/Basic_Types.h: If ACE_HAS_SSIZE_T not defined, and Win64,
+          typedef SSIZE_T ssize_t; else use the existing int typedef.
+
+Wed Jul  3 11:09:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+          Change thread function to return ACE_THR_FUNC_RETURN, not void *.
+
+Tue Jul 02 21:43:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/XMLFilterImpl.h: One more pre/post mismatch.
+
+Tue Jul  2 16:58:55 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/XML_Types.h:
+
+          Removed unnecessary includes and fixed a typo.
+
+Tue Jul 02 16:35:19 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/Attributes.h:
+	* ACEXML/common/Locator.h: Fixed mismatched pre/post inclusions.
+
+	* ACEXML/parser/parser/Parser.cpp: Fixed compilation errors.
+
+Tue Jul  2 11:53:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-all.h: Changed definition of ACE_THR_FUNC to incorporate
+          the platform's thread function return type (DWORD on Windows,
+          void * on most others). Uses a new typedef ACE_THR_FUNC_RETURN
+          to specify the platform's thread function return type.
+
+        * ace/OS.{h i cpp} (thr_exit, thr_join): The status arg is now
+          a ACE_THR_FUNC_RETURN *.
+          Also moved remaining thread function definition type things to
+          config-all.h with the rest of them.
+
+        * ace/Base_Thread_Adapter.{h cpp} (invoke(), ace_thread_adapter()):
+        * ace/OS_Thread_Adapter.{h cpp}
+        * ace/Thread_Adapter.{h cpp} (invoke(), invoke_i()):
+          Return type changed from void * to ACE_THR_FUNC_RETURN.
+
+        * ace/Event_Handler.{cpp h} (read_adapter): Change return value from
+          void* to ACE_THR_FUNC_RETURN.
+
+        * ace/Thread_Hook.{h cpp}: ACE_Thread_Hook::start () returns
+          ACE_THR_FUNC_RETURN, not void *.
+
+        * ace/Thread.{h i} (exit, join): 'status' arg is now
+          ACE_THR_FUNC_RETURN *, not void *.
+
+        * ace/Thread_Control.{h inl cpp} (status, exit):
+        * ace/Thread_Manager.{h cpp} (exit, join): Thread exit status
+          type changed from void * to ACE_THR_FUNC_RETURN.
+
+        * ace/Task.{h cpp} (ACE_Task_Base): Return type from svc_run now
+          ACE_THR_FUNC_RETURN.
+
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.{cpp, h}:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * tests/ACE_Init_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Service_Config_DLL.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+          Change thread function to return ACE_THR_FUNC_RETURN, not void *.
+
+        * examples/C++NPv2/TP_Logging_Server.cpp (handle_input, svc):
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp (open):
+        * examples/C++NPv2/display_logfile.cpp (svc): Change
+          ACE_reinterpret_cast to ACE_static_cast. Thanks to Doug Schmidt
+          for finding this.
+
+        * examples/C++NPv2/TP_Logging_Server.h:
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Corrected use
+          of ACE_NEW_RETURN.
+
+Mon Jul  1 23:16:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * */Makefile:
+
+          Updated dependencies.
+
+Mon Jul  1 21:59:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/Attributes.h:
+        * ACEXML/common/AttributesImpl.h:
+        * ACEXML/common/Attributes_Def_Builder.h:
+        * ACEXML/common/CharStream.h:
+        * ACEXML/common/ContentHandler.h:
+        * ACEXML/common/DTDHandler.h:
+        * ACEXML/common/DTD_Manager.h:
+        * ACEXML/common/DefaultHandler.h:
+        * ACEXML/common/Element_Def_Builder.h:
+        * ACEXML/common/EntityResolver.h:
+        * ACEXML/common/Env.h:
+        * ACEXML/common/ErrorHandler.h:
+        * ACEXML/common/Exception.h:
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/HttpCharStream.h:
+        * ACEXML/common/InputSource.h:
+        * ACEXML/common/Locator.h:
+        * ACEXML/common/LocatorImpl.h:
+        * ACEXML/common/Mem_Map_Stream.h:
+        * ACEXML/common/NamespaceSupport.h:
+        * ACEXML/common/SAXExceptions.h:
+        * ACEXML/common/StrCharStream.h:
+        * ACEXML/common/Transcode.h:
+        * ACEXML/common/URL_Addr.h:
+        * ACEXML/common/Validator.h:
+        * ACEXML/common/XMLFilter.h:
+        * ACEXML/common/XMLFilterImpl.h:
+        * ACEXML/common/XMLReader.h:
+        * ACEXML/common/XML_Codecs.h:
+        * ACEXML/common/XML_Types.h:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.h:
+        * ACEXML/parser/debug_validator/Debug_DTD_Manager.h:
+        * ACEXML/parser/debug_validator/Debug_Element_Builder.h:
+        * ACEXML/parser/debug_validator/Element_Tree.h:
+        * ACEXML/parser/parser/Entity_Manager.h:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+        ACE_LACKS_PRAGMA_ONCE fixes.
+
+Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Sock_Connect.cpp (count_interfaces): Added a MacOSX-specific
+	  value for OSIOCGIFCONF.  Thanks to John Zorko <j.zorko@att.net>
+ 	  for this fix.
+
+
