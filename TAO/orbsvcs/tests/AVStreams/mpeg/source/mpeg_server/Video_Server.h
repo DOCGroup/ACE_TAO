@@ -42,103 +42,12 @@
 #include "mpeg_server/server_proto.h"
 #include "mpeg_server/Video_Control_State.h"
 #include "mpeg_server/Globals.h"
+#include "mpeg_server/Video_Control_i.h"
 
-class Video_Control_Handler : public virtual ACE_Event_Handler
-{
-  // = TITLE
-  //   Defines the event handler class for the Video Control.
-  //
-  // = DESCRIPTION
-  //   This class makes use of a TCP socket.It contains a pointer to
-  //   the current state which is implemented using the state pattern.
-public:
+class Video_Control_i;
 
-  Video_Control_Handler (int video_control_fd);
-  // Construct this handler with a control (TCP) fd
-  // %% use sock stream instead of fd
-
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  // Called when input events occur (e.g., connection or data).
-
-  virtual ACE_HANDLE get_handle (void) const;
-  // Returns the handle used by the event_handler.
-  
-  Video_Control_State *get_state (void);
-  // Accessor for the state_ 
-
-  void change_state (Video_Control_State *state);
-  // Used to change the state
-
-  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
-                                     Video_Control::INITvideoReply_out reply,
-                                     CORBA::Environment &_tao_environment);
-  
-  virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
-                                      CORBA::Long_out size,
-                                      CORBA::Environment &_tao_environment);
-
-  virtual CORBA::Boolean close (CORBA::Environment &_tao_environment);
-  
-  virtual CORBA::Boolean stat_sent (CORBA::Environment &_tao_environment);
-
-  virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para,
-                                       CORBA::Environment &_tao_environment
-                                       );
-
-  virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para,
-                                        CORBA::Environment &_tao_environment);
-
-  virtual CORBA::Boolean step (const Video_Control::STEPpara &para,
-                               CORBA::Environment &_tao_environment);
-  
-  virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
-                               CORBA::Long_out vts,
-                               CORBA::Environment &_tao_environment);
-
-  virtual CORBA::Boolean position (const Video_Control::POSITIONpara &para,
-                                   CORBA::Environment &_tao_environment);
-
-  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para,
-                                CORBA::Environment &_tao_environment);
-
-  virtual CORBA::Boolean stop (CORBA::Long cmdsn,
-                               CORBA::Environment &_tao_environment);
-
-private:
-  Video_Control_State *state_;
-  // State pattern - pointer to abstract State object
-
-  ACE_HANDLE control_handle_;
-};
-
-class Video_Control_Handler_Instance
-{
-  // = TITLE
-  //   Defines a Video_Control_Handler_Instance class which is to be
-  //   used as a singleton to give access to a Video_Control_Handler
-  //   instance to the state pattern classes.
-  //
-  // = DESCRIPTION
-  //   The Video_Control_Handler has to be set using the
-  //   set_video_control_handler method.
-public:
-  // @@ Please add comments to these methods.
-  Video_Control_Handler_Instance (void);
-  
-  void set_video_control_handler (Video_Control_Handler *h);
-  
-  Video_Control_Handler *get_video_control_handler (void);
-
-private:
-  Video_Control_Handler *video_control_handler_;
-};
-
-// Video_Control_Handler instance singleton.
-typedef ACE_Singleton <Video_Control_Handler_Instance,
-                           ACE_SYNCH_MUTEX>
-        VIDEO_CONTROL_HANDLER_INSTANCE; 
-
-class Video_Sig_Handler : public virtual ACE_Event_Handler
+class Video_Sig_Handler 
+  : public virtual ACE_Event_Handler
 {
   // = TITLE
   //   Defines a video signal handler class which registers itself with the
@@ -151,7 +60,7 @@ class Video_Sig_Handler : public virtual ACE_Event_Handler
   //   An object of this class is used to periodically send the video
   //   frames to the client using the Video_Timer_Global class.
 public:
-  Video_Sig_Handler (Video_Control_Handler *vch);
+  Video_Sig_Handler ();
 
   virtual ACE_HANDLE get_handle (void) const;
 
@@ -171,13 +80,14 @@ private:
   ACE_HANDLE handle_;
   // my handle
 
-  Video_Control_Handler *vch_;
-  // Pointer to the control handler, for accessing
+  Video_Control_i *vci_;
+  // Pointer to the Video_Control_i for accessing
   // the current state of the server.
 };
 
 class Video_Data_Handler : public virtual ACE_Event_Handler
 {
+
   // = TITLE
   //   Defines a event handler for video data using a datagram i.e UDP
   //   socket.
@@ -187,23 +97,18 @@ class Video_Data_Handler : public virtual ACE_Event_Handler
   //   reacts differently to the events based on the
   //   video_control_handler's state.
 public:
-  Video_Data_Handler (int video_data_fd,
-                      Video_Control_Handler *vch);
-  // Construct this handler with a data fd
+  Video_Data_Handler ();
+  // Constructor
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  // Called when input events occur (e.g., connection or data).
+  // Called when data shows up.
 
   virtual ACE_HANDLE get_handle (void) const;
   // Get the handle used by this event handler
 
 private:
-  ACE_HANDLE data_handle_;
-  // my handle
-
-  Video_Control_Handler *vch_;
-  // Pointer to the control handler, for accessing
-  // the current state of the server.
+  Video_Control_i *vci_;
+  
 };
 
 class Video_Server
@@ -219,41 +124,32 @@ public:
   Video_Server (void);
   // Default constructor
 
-  Video_Server (int control_fd,
-                int data_fd,
-                int rttag,
-                int max_pkt_size);
-  // constructor taking the handles
-
   ~Video_Server ();
   // Destructor
 
-  int init (int control_fd,
-            int data_fd,
-            int rttag,
-            int max_pkt_size);
+  int init (int argc,
+            char **argv,
+            CORBA::Environment &env);
   // initialize the Video Server.
 
-  int register_handlers (void);
-  // register the handlers with the reactor
-  // and set the control_handler to the WAITING state
+
+  int run (CORBA::Environment &env);
+  // Runs the ORB event loop       
 
   static void on_exit_routine(void);
 
 private:
+  
+  int initialize_orb (int argc,
+                      char **argv,
+                      CORBA::Environment &env);
+  // Initialize the orb using the orb_manager_
+  // Also registers the video_control_ object in the poa
+  // and in the naming service
 
-  ACE_Reactor *reactor_;
-  // alias Reactor ,points to ACE_Reactor::instance ()
+  TAO_ORB_Manager orb_manager_;
+  // the TAO ORB manager.
 
-  Video_Data_Handler *data_handler_;
-  // Data Socket Event Handler
-
-  Video_Control_Handler *control_handler_;
-  // Control Socket Event Handler
-
-  Video_Sig_Handler *sig_handler_;
-  // signal handler for SIGALRM to periodically send the video frames
-  // to the client
 };
 
 #endif /* MPEG_VIDEO_SERVER_H */

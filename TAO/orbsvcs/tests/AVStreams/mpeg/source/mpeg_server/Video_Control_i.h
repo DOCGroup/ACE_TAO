@@ -7,6 +7,10 @@
 #include "mpeg_shared/Video_ControlS.h"
 #include "Video_Server.h"
 
+class Video_Data_Handler;
+class Video_Sig_Handler;
+class Video_Control_State;
+
 class Video_Control_i
   : public virtual POA_Video_Control
 {
@@ -47,10 +51,41 @@ public:
   virtual CORBA::Boolean stop (CORBA::Long cmdsn,
                                CORBA::Environment &_tao_environment);
 
+  virtual CORBA::Short set_peer (const char *peer,
+                                 CORBA::Environment &_tao_environment);
+  // called by the client to inform us about it's ip and 
+  // udp address.
+
+  void change_state (Video_Control_State *state);
+  // Used to change the state
+
+  Video_Control_State *get_state (void);
+  // Accessor for the state_ 
+
   virtual ~Video_Control_i (void);
+  // Destructor
 
 protected:
-  Video_Control_Handler *get_video_control_handler (void);
+  int register_handlers (void);
+  // called by set_peer to install the data_handler and
+  // the sig_handler
+
+  ACE_Reactor *reactor_;
+  // The Reactor
+
+  Video_Control_State *state_;
+  // State pattern - pointer to abstract State object
+
+  Video_Data_Handler *data_handler_;
+  // Data Socket Event Handler
+
+  Video_Sig_Handler *sig_handler_;
+  // signal handler for SIGALRM to periodically send the video frames
+  // to the client
+
 };
+
+// Video_Control_i instance singleton.
+typedef ACE_Singleton <Video_Control_i, ACE_SYNCH_MUTEX> VIDEO_CONTROL_I;
 
 #endif /* if !defined (AV_VIDEO_CONTROL_H) */
