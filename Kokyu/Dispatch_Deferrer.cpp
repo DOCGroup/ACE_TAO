@@ -93,6 +93,8 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
 
       ++begin;
     }
+
+  return 0;
 }
 
 } //namespace Kokyu
