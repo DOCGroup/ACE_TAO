@@ -690,7 +690,7 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   this_laxity -= task_entry ().rt_info ()->worst_case_execution_time;
 
   Time that_laxity = d.deadline_;
-  this_laxity -= d.task_entry ().rt_info ()->worst_case_execution_time;
+  that_laxity -= d.task_entry ().rt_info ()->worst_case_execution_time;
 
   if (this_laxity != that_laxity)
     return (this_laxity < that_laxity) ? 1 : 0;
