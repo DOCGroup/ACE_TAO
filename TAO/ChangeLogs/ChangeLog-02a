@@ -1,62 +1,68 @@
+Thu Feb 17 13:51:03 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Let's see if this time I can get it right.  The macro name is
+          TAO_ORBSVCS_HAS_XXX not TAO_HAS_ORBSVCS_XXX.
+
 Wed Feb 16 16:55:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  Add another -I flag to make the DU C++ compiler happy.
+        * orbsvcs/orbsvcs/Makefile:
+          Add another -I flag to make the DU C++ compiler happy.
 
 Wed Feb 16 15:01:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_structure.cpp:
-	* TAO_IDL/be/be_union.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
-	  Modified generation of scoped names for arguments
-	  and return types to be compatible with scoped
-	  names where the nested name repeats after skipping
-	  one or more scopes. This was done for interfaces
-	  yesterday, these changes were to structure, exception,
-	  union, and sequence. Also used the new ACE_GLOBAL_COLONS
-	  macro where necessary to avoid SunCC 5.0 going berserk
-	  whenever it sees a construction like (::foo::...  ).
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Modified generation of scoped names for arguments
+          and return types to be compatible with scoped
+          names where the nested name repeats after skipping
+          one or more scopes. This was done for interfaces
+          yesterday, these changes were to structure, exception,
+          union, and sequence. Also used the new ACE_GLOBAL_COLONS
+          macro where necessary to avoid SunCC 5.0 going berserk
+          whenever it sees a construction like (::foo::...  ).
 
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
-	  Removed unnecessary generation of a call to the base class
-	  default constructor.
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+          Removed unnecessary generation of a call to the base class
+          default constructor.
 
 Wed Feb 16 08:36:01 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Fixed typographical error.
+          Fixed typographical error.
 
-	* docs/pluggable_protocols/index.html:
-	* tao/default_resource.cpp (init_protocol_factories):
+        * docs/pluggable_protocols/index.html:
+        * tao/default_resource.cpp (init_protocol_factories):
 
-	  Updated documentation/comments about pluggable protocol svc.conf
-	  entries.  Thanks to Gilbert Grosdidier <grodid@in2p3.fr> for
-	  motivating this update.
+          Updated documentation/comments about pluggable protocol svc.conf
+          entries.  Thanks to Gilbert Grosdidier <grodid@in2p3.fr> for
+          motivating this update.
 
 Tue Feb 15 22:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/SHMIOP_Transport.cpp (send): Changed to use the new
-	  ACE_MEM_IO::send method to send a message block chain.  This
-	  reduced the number of signaling and should improve performace.
+        * tao/SHMIOP_Transport.cpp (send): Changed to use the new
+          ACE_MEM_IO::send method to send a message block chain.  This
+          reduced the number of signaling and should improve performace.
 
 Tue Feb 15 19:53:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
-	  Changes needed to handle the new nested module use case
-	  recently added to IDL_Test.
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+          Changes needed to handle the new nested module use case
+          recently added to IDL_Test.
 
 Tue Feb 15 16:55:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
