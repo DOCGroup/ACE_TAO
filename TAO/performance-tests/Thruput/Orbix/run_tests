@@ -1,0 +1,78 @@
+#! /bin/csh
+
+rm -f results.TAO
+touch results.TAO
+
+echo "TAO throughput test"
+echo "TAO throughput test" >>results.TAO
+echo "==================="
+echo "===================" >>results.TAO
+
+
+echo "Send Struct --------------------------------------------------------" >>results.TAO
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S >>& results.TAO
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S >>& results.TAO 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  >>& results.TAO
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  >>& results.TAO
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S >>& results.TAO
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S >>& results.TAO
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S >>& results.TAO
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  >>& results.TAO
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q S  >>& results.TAO
+
+echo "Send Short ---------------------------------------------------------" >>results.TAO
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s >>& results.TAO
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s >>& results.TAO 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  >>& results.TAO
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  >>& results.TAO
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s >>& results.TAO
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s >>& results.TAO
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s >>& results.TAO
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  >>& results.TAO
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q s  >>& results.TAO
+ 
+echo "Send Long ----------------------------------------------------------" >>results.TAO
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l >>& results.TAO
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l >>& results.TAO 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l  >>& results.TAO
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l  >>& results.TAO
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l >>& results.TAO
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l >>& results.TAO
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l >>& results.TAO
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l  >>& results.TAO
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q l  >>& results.TAO
+ 
+echo "Send Octet ---------------------------------------------------------" >>results.TAO
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o >>& results.TAO
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o >>& results.TAO 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o  >>& results.TAO
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o  >>& results.TAO
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o >>& results.TAO
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o >>& results.TAO
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o >>& results.TAO
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o  >>& results.TAO
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q o  >>& results.TAO
+
+echo "Send Double --------------------------------------------------------" >>results.TAO
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d >>& results.TAO
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d >>& results.TAO 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d  >>& results.TAO
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d  >>& results.TAO
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d >>& results.TAO
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d >>& results.TAO
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d >>& results.TAO
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d  >>& results.TAO
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q d  >>& results.TAO
+
+echo "Send Char ----------------------------------------------------------" >>results.TAO
+   ./client -S 10485760 -f m -l 1024 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c >>& results.TAO
+   ./client -S 10485760 -f m -l 2048 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c >>& results.TAO 
+   ./client -S 10485760 -f m -l 4096 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c  >>& results.TAO
+   ./client -S 10485760 -f m -l 8192 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c  >>& results.TAO
+   ./client -S 10485760 -f m -l 16384 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c >>& results.TAO
+   ./client -S 10485760 -f m -l 32768 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c >>& results.TAO
+   ./client -S 10485760 -f m -l 65536 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c >>& results.TAO
+   ./client -S 10485760 -f m -l 131072 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c  >>& results.TAO
+   ./client -S 10485760 -f m -l 262144 -h merengue-atm1 -L ./results/REMOTE/sun-iiop.atm.64 -q c  >>& results.TAO
+ 
+grep "Mbit/sec\|Send" results.TAO
