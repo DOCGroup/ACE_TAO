@@ -338,7 +338,7 @@
     <P>
     <h3>SHMIOP Endpoint Overview</h3>
     <P>
-      SHMIOP endpoints in TAO have the form:
+      SHMIOP endpoints in TAO have the similar form to IIOP endpoints:
     <BLOCKQUOTE>
       <P>
         <CODE>
@@ -348,21 +348,9 @@
     <P>
       Where "<CODE>V.v</CODE>" and "<CODE>W.w</CODE>" are the SHMIOP
       protocol versions associated with the given address
-      (port).  Currently supported versions are <CODE>1.0</CODE> and
-      <CODE>1.1</CODE>.
+      (port).  Currently supported versions are <CODE>1.0</CODE>,
+      <CODE>1.1</CODE>, and <CODE>1.2</CODE>.
 
-    <P>
-      Options are separated from the addresses by a forward slash
-      '<CODE>/</CODE>'.  For instance, if an IIOP endpoint should have
-      a property foobar of 50 associated with it, then the following
-      endpoint specification could be used
-    <BLOCKQUOTE>
-      <P>
-        <CODE>
-          -ORBEndpoint shmiop://port/foobar=50
-        </CODE>
-    </BLOCKQUOTE>
-    <P>
     <h3>SHMIOP Address Format</h3>
     <P>
       SHMIOP addresses are comprised of a port number that the server
@@ -401,7 +389,13 @@
       <LI><CODE>-ORBEndpoint shmiop://1.1@</CODE>
       <LI><CODE>-ORBEndpoint shmiop://1.1@1234</CODE>
       <LI><CODE>-ORBEndpoint shmiop://1.1@,1.0@1234,1.1@</CODE>
-    </UL>
+    </UL><p>
+
+    You <font color="red">must specify the hostname</font>, however,
+    when using SHMIOP with <a href="INS.html">Interoperable Naming
+    Service</a> as you would with IIOP.  This is because SHMIOP uses
+    the hostname to determine the validity of an endpoint.  That is,
+    it will not try to connect to a remote SHMIOP endpoint locally.<p>
 
     <hr>
 
@@ -534,7 +528,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Sat Jun 15 11:30:52 CDT 2002
+Last modified: Sat Mar 22 16:47:36 Central Standard Time 2003
 <!-- hhmts end -->
   </body>
 </html>
