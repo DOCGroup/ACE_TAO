@@ -124,7 +124,7 @@ TAO_IFR_Server::init_with_orb (int argc,
 }
 
 int
-TAO_IFR_Server::fini (ACE_ENV_SINGLE_ARG_DECL)
+TAO_IFR_Server::fini (void)
 {
   ACE_TRY
     {
