@@ -514,7 +514,7 @@ ACE_IOStream<STREAM>::~ACE_IOStream (void)
 template <class STREAM> int
 ACE_IOStream<STREAM>::close (void)
 {
-  return ACE_SOCK_Stream::close ();
+  return STREAM::close ();
 }
 
 #if defined (__GNUC__)
