@@ -19,18 +19,19 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_DOMAINC_H_
-#define _TAO_IDL_ORIG_DOMAINC_H_
+#ifndef _TAO_IDL_CORBA_DOMAINC_H_
+#define _TAO_IDL_CORBA_DOMAINC_H_
 
 #include "ace/pre.h"
-#include "tao/corba.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/PolicyC.h"
+
+#include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -55,11 +56,12 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+
 #if !defined (_CORBA_DOMAINMANAGER___PTR_CH_)
 #define _CORBA_DOMAINMANAGER___PTR_CH_
 
-class CORBA_DomainManager;
-typedef CORBA_DomainManager *CORBA_DomainManager_ptr;
+  class CORBA_DomainManager;
+  typedef CORBA_DomainManager *CORBA_DomainManager_ptr;
 
 #endif /* end #if !defined */
 
@@ -67,41 +69,41 @@ typedef CORBA_DomainManager *CORBA_DomainManager_ptr;
 #if !defined (_CORBA_DOMAINMANAGER___VAR_CH_)
 #define _CORBA_DOMAINMANAGER___VAR_CH_
 
-class TAO_Export CORBA_DomainManager_var : public TAO_Base_var
-{
-public:
-  CORBA_DomainManager_var (void); // default constructor
-  CORBA_DomainManager_var (CORBA_DomainManager_ptr p) : ptr_ (p) {}
-  CORBA_DomainManager_var (const CORBA_DomainManager_var &); // copy constructor
-  ~CORBA_DomainManager_var (void); // destructor
+  class TAO_Export CORBA_DomainManager_var : public TAO_Base_var
+  {
+  public:
+    CORBA_DomainManager_var (void); // default constructor
+    CORBA_DomainManager_var (CORBA_DomainManager_ptr p) : ptr_ (p) {}
+    CORBA_DomainManager_var (const CORBA_DomainManager_var &); // copy constructor
+    ~CORBA_DomainManager_var (void); // destructor
 
-  CORBA_DomainManager_var &operator= (CORBA_DomainManager_ptr);
-  CORBA_DomainManager_var &operator= (const CORBA_DomainManager_var &);
-  CORBA_DomainManager_ptr operator-> (void) const;
+    CORBA_DomainManager_var &operator= (CORBA_DomainManager_ptr);
+    CORBA_DomainManager_var &operator= (const CORBA_DomainManager_var &);
+    CORBA_DomainManager_ptr operator-> (void) const;
 
-  operator const CORBA_DomainManager_ptr &() const;
-  operator CORBA_DomainManager_ptr &();
-  // in, inout, out, _retn
-  CORBA_DomainManager_ptr in (void) const;
-  CORBA_DomainManager_ptr &inout (void);
-  CORBA_DomainManager_ptr &out (void);
-  CORBA_DomainManager_ptr _retn (void);
-  CORBA_DomainManager_ptr ptr (void) const;
+    operator const CORBA_DomainManager_ptr &() const;
+    operator CORBA_DomainManager_ptr &();
+    // in, inout, out, _retn
+    CORBA_DomainManager_ptr in (void) const;
+    CORBA_DomainManager_ptr &inout (void);
+    CORBA_DomainManager_ptr &out (void);
+    CORBA_DomainManager_ptr _retn (void);
+    CORBA_DomainManager_ptr ptr (void) const;
 
-  // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
-  static CORBA_DomainManager_ptr duplicate (CORBA_DomainManager_ptr);
-  static void release (CORBA_DomainManager_ptr);
-  static CORBA_DomainManager_ptr nil (void);
-  static CORBA_DomainManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static CORBA_DomainManager_ptr duplicate (CORBA_DomainManager_ptr);
+    static void release (CORBA_DomainManager_ptr);
+    static CORBA_DomainManager_ptr nil (void);
+    static CORBA_DomainManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
 
-private:
-  CORBA_DomainManager_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  CORBA_DomainManager_var (const TAO_Base_var &rhs);
-  CORBA_DomainManager_var &operator= (const TAO_Base_var &rhs);
-};
+  private:
+    CORBA_DomainManager_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    CORBA_DomainManager_var (const TAO_Base_var &rhs);
+    CORBA_DomainManager_var &operator= (const TAO_Base_var &rhs);
+  };
 
 
 #endif /* end #if !defined */
@@ -110,22 +112,22 @@ private:
 #if !defined (_CORBA_DOMAINMANAGER___OUT_CH_)
 #define _CORBA_DOMAINMANAGER___OUT_CH_
 
-class TAO_Export CORBA_DomainManager_out
-{
-public:
-  CORBA_DomainManager_out (CORBA_DomainManager_ptr &);
-  CORBA_DomainManager_out (CORBA_DomainManager_var &);
-  CORBA_DomainManager_out (const CORBA_DomainManager_out &);
-  CORBA_DomainManager_out &operator= (const CORBA_DomainManager_out &);
-  CORBA_DomainManager_out &operator= (const CORBA_DomainManager_var &);
-  CORBA_DomainManager_out &operator= (CORBA_DomainManager_ptr);
-  operator CORBA_DomainManager_ptr &();
-  CORBA_DomainManager_ptr &ptr (void);
-  CORBA_DomainManager_ptr operator-> (void);
+  class TAO_Export CORBA_DomainManager_out
+  {
+  public:
+    CORBA_DomainManager_out (CORBA_DomainManager_ptr &);
+    CORBA_DomainManager_out (CORBA_DomainManager_var &);
+    CORBA_DomainManager_out (const CORBA_DomainManager_out &);
+    CORBA_DomainManager_out &operator= (const CORBA_DomainManager_out &);
+    CORBA_DomainManager_out &operator= (const CORBA_DomainManager_var &);
+    CORBA_DomainManager_out &operator= (CORBA_DomainManager_ptr);
+    operator CORBA_DomainManager_ptr &();
+    CORBA_DomainManager_ptr &ptr (void);
+    CORBA_DomainManager_ptr operator-> (void);
 
-private:
-  CORBA_DomainManager_ptr &ptr_;
-};
+  private:
+    CORBA_DomainManager_ptr &ptr_;
+  };
 
 
 #endif /* end #if !defined */
@@ -134,83 +136,83 @@ private:
 #if !defined (_CORBA_DOMAINMANAGER_CH_)
 #define _CORBA_DOMAINMANAGER_CH_
 
-// Forward Classes Declaration
-class _TAO_CORBA_DomainManager_Proxy_Impl;
-class _TAO_CORBA_DomainManager_Remote_Proxy_Impl;
-class _TAO_CORBA_DomainManager_Proxy_Broker;
-class _TAO_CORBA_DomainManager_Remote_Proxy_Broker;
+  // Forward Classes Declaration
+  class _TAO_CORBA_DomainManager_Proxy_Impl;
+  class _TAO_CORBA_DomainManager_Remote_Proxy_Impl;
+  class _TAO_CORBA_DomainManager_Proxy_Broker;
+  class _TAO_CORBA_DomainManager_Remote_Proxy_Broker;
 
-class TAO_Export CORBA_DomainManager : public virtual CORBA_Object
-{
-public:
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef CORBA_DomainManager_ptr _ptr_type;
-  typedef CORBA_DomainManager_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
+  class TAO_Export CORBA_DomainManager : public virtual CORBA::Object
+  {
+  public:
+  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef CORBA_DomainManager_ptr _ptr_type;
+    typedef CORBA_DomainManager_var _var_type;
+  #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  // the static operations
-  static CORBA_DomainManager_ptr _duplicate (CORBA_DomainManager_ptr obj);
-  static CORBA_DomainManager_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-  static CORBA_DomainManager_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-  static CORBA_DomainManager_ptr _nil (void)
-    {
-      return (CORBA_DomainManager_ptr)0;
-    }
+    // the static operations
+    static CORBA_DomainManager_ptr _duplicate (CORBA_DomainManager_ptr obj);
+    static CORBA_DomainManager_ptr _narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static CORBA_DomainManager_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    static CORBA_DomainManager_ptr _nil (void)
+      {
+        return (CORBA_DomainManager_ptr)0;
+      }
 
-  static void _tao_any_destructor (void*);
+    static void _tao_any_destructor (void*);
 
-  virtual CORBA::Policy_ptr get_domain_policy (
-      CORBA::PolicyType policy_type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    ));
+    virtual CORBA::Policy_ptr get_domain_policy (
+        CORBA::PolicyType policy_type,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
-  virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
+    virtual CORBA::Boolean _is_a (
+        const CORBA::Char *type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+    virtual void *_tao_QueryInterface (ptr_arith_t type);
 
-  virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id (void) const;
 
-private:
-  _TAO_CORBA_DomainManager_Proxy_Broker *the_TAO_CORBA_DomainManager_Proxy_Broker_;
-
-protected:
-  CORBA_DomainManager (int collocated = 0);
+  private:
+    _TAO_CORBA_DomainManager_Proxy_Broker *the_TAO_CORBA_DomainManager_Proxy_Broker_;
 
   protected:
-    // This methods travese the inheritance tree and set the
-    // parents piece of the given class in the right mode
-    virtual void CORBA_DomainManager_setup_collocation (int collocated);
+    CORBA_DomainManager (int collocated = 0);
 
-    CORBA_DomainManager (
-      TAO_Stub *objref,
-      CORBA::Boolean _tao_collocated = 0,
-      TAO_Abstract_ServantBase *servant = 0
-      );
+    protected:
+      // This methods travese the inheritance tree and set the
+      // parents piece of the given class in the right mode
+      virtual void CORBA_DomainManager_setup_collocation (int collocated);
 
-    friend class _TAO_CORBA_DomainManager_Remote_Proxy_Impl;
-    friend class _TAO_CORBA_DomainManager_ThruPOA_Proxy_Impl;
-    friend class _TAO_CORBA_DomainManager_Direct_Proxy_Impl;
+      CORBA_DomainManager (
+        TAO_Stub *objref,
+        CORBA::Boolean _tao_collocated = 0,
+        TAO_Abstract_ServantBase *servant = 0
+        );
 
-  virtual ~CORBA_DomainManager (void);
-private:
-  CORBA_DomainManager (const CORBA_DomainManager &);
-  void operator= (const CORBA_DomainManager &);
-};
+      friend class _TAO_CORBA_DomainManager_Remote_Proxy_Impl;
+      friend class _TAO_CORBA_DomainManager_ThruPOA_Proxy_Impl;
+      friend class _TAO_CORBA_DomainManager_Direct_Proxy_Impl;
+
+    virtual ~CORBA_DomainManager (void);
+  private:
+    CORBA_DomainManager (const CORBA_DomainManager &);
+    void operator= (const CORBA_DomainManager &);
+  };
 
 
 // The Proxy Implementations are used by each interface to
@@ -218,31 +220,31 @@ private:
 // an invocation logics.
 
 
-///////////////////////////////////////////////////////////////////////
-//                    Base  Impl. Declaration
-//
+  ///////////////////////////////////////////////////////////////////////
+  //                    Base  Impl. Declaration
+  //
 
-class TAO_Export _TAO_CORBA_DomainManager_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
-{
-public:
-  virtual ~_TAO_CORBA_DomainManager_Proxy_Impl (void) { }
+  class TAO_Export _TAO_CORBA_DomainManager_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
+  {
+  public:
+    virtual ~_TAO_CORBA_DomainManager_Proxy_Impl (void) { }
 
-    virtual CORBA::Policy_ptr get_domain_policy (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::PolicyType policy_type,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
+        virtual CORBA::Policy_ptr get_domain_policy (
+        CORBA::Object_ptr _collocated_tao_target_,
+        CORBA::PolicyType policy_type,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
 protected:
-  _TAO_CORBA_DomainManager_Proxy_Impl (void);
+    _TAO_CORBA_DomainManager_Proxy_Impl (void);
 
-};
-//
-//                Base  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
+  };
+  //
+  //                Base  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -258,8 +260,8 @@ public:
 
   virtual ~_TAO_CORBA_DomainManager_Remote_Proxy_Impl (void) { }
 
-    virtual CORBA::Policy_ptr get_domain_policy (
-      CORBA_Object *_collocated_tao_target_,
+  virtual CORBA::Policy_ptr get_domain_policy (
+      CORBA::Object_ptr _collocated_tao_target_,
       CORBA::PolicyType policy_type,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -317,7 +319,7 @@ public:
 
   virtual _TAO_CORBA_DomainManager_Proxy_Impl &select_proxy (
     CORBA_DomainManager *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
@@ -338,7 +340,9 @@ public:
 
 #endif /* end #if !defined */
 
-extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_DomainManager;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_DomainManager;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong SecConstruction;
 
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___PTR_CH_)
@@ -426,7 +430,7 @@ class _TAO_CORBA_ConstructionPolicy_Remote_Proxy_Impl;
 class _TAO_CORBA_ConstructionPolicy_Proxy_Broker;
 class _TAO_CORBA_ConstructionPolicy_Remote_Proxy_Broker;
 
-class TAO_Export CORBA_ConstructionPolicy: public virtual CORBA::Policy
+class TAO_Export CORBA_ConstructionPolicy: public virtual CORBA_Policy
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -454,7 +458,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual void make_domain_manager (
-      CORBA::InterfaceDef_ptr object_type,
+      CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
@@ -510,14 +514,14 @@ private:
 //
 
 class TAO_Export _TAO_CORBA_ConstructionPolicy_Proxy_Impl :
-  public virtual _TAO_CORBA_Policy_Proxy_Impl
+  public virtual CORBA_TAO_Policy_Proxy_Impl
 {
 public:
   virtual ~_TAO_CORBA_ConstructionPolicy_Proxy_Impl (void) { }
 
     virtual void make_domain_manager (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::InterfaceDef_ptr object_type,
+      CORBA::Object_ptr _collocated_tao_target_,
+      CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -541,7 +545,7 @@ protected:
 class TAO_Export _TAO_CORBA_ConstructionPolicy_Remote_Proxy_Impl :
   public virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_CORBA_Policy_Remote_Proxy_Impl
+  public virtual CORBA_TAO_Policy_Remote_Proxy_Impl
 
 {
 public:
@@ -549,9 +553,9 @@ public:
 
   virtual ~_TAO_CORBA_ConstructionPolicy_Remote_Proxy_Impl (void) { }
 
-    virtual void make_domain_manager (
-      CORBA_Object *_collocated_tao_target_,
-      CORBA::InterfaceDef_ptr object_type,
+  virtual void make_domain_manager (
+      CORBA::Object_ptr _collocated_tao_target_,
+      CORBA_InterfaceDef_ptr object_type,
       CORBA::Boolean constr_policy,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -609,7 +613,7 @@ public:
 
   virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl &select_proxy (
     CORBA_ConstructionPolicy *object,
-    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    CORBA_Environment &ACE_TRY_ENV
   );
 
 private:
@@ -630,7 +634,7 @@ public:
 
 #endif /* end #if !defined */
 
-extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_ConstructionPolicy;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_ConstructionPolicy;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -782,19 +786,21 @@ private:
 
 #endif /* end #if !defined */
 
-extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_DomainManagerList;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CORBA_DomainManagerList;
+
+
 
 // Proxy Broker Factory function pointer declarations.
 
 extern TAO_Export
 _TAO_CORBA_DomainManager_Proxy_Broker *
-(*_TAO_CORBA_DomainManager_Proxy_Broker_Factory_function_pointer) (
+(*CORBA__TAO_CORBA_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
 extern TAO_Export
 _TAO_CORBA_ConstructionPolicy_Proxy_Broker *
-(*_TAO_CORBA_ConstructionPolicy_Proxy_Broker_Factory_function_pointer) (
+(*CORBA__TAO_CORBA_ConstructionPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 

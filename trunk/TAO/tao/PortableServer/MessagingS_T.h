@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_T_H_
-#define _TAO_IDL_ORIG_MESSAGINGS_T_H_
+#ifndef _TAO_IDL_MESSAGINGS_T_H_
+#define _TAO_IDL_MESSAGINGS_T_H_
 
 #include "ace/pre.h"
 #if defined(_MSC_VER)
@@ -36,7 +36,7 @@ TAO_NAMESPACE  POA_Messaging
 {
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_PortableServer_Export ReplyHandler_tie : public ReplyHandler
+  class TAO_Export ReplyHandler_tie : public ReplyHandler
   {
   public:
     ReplyHandler_tie (T &t);

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_POLICYS_CPP_
-#define _TAO_IDL_ORIG_POLICYS_CPP_
+#ifndef _TAO_IDL_CORBA_POLICYS_CPP_
+#define _TAO_IDL_CORBA_POLICYS_CPP_
 
 #include "PolicyS.h"
 
@@ -30,9 +30,12 @@
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
-#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableInterceptor.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
@@ -51,9 +54,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 14:08:51 */
+/* starting time is 12:07:54 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/sirion/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_CORBA_Policy_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_Policy_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -148,7 +151,7 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
     }
   return 0;
 }
-/* ending time is 14:08:51 */
+/* ending time is 12:07:54 */
 static TAO_CORBA_Policy_Perfect_Hash_OpTable tao_CORBA_Policy_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -157,8 +160,9 @@ class TAO_ServerRequestInfo_CORBA_Policy_policy_type_get : public TAO_ServerRequ
 public:
   TAO_ServerRequestInfo_CORBA_Policy_policy_type_get (
     TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
     POA_CORBA_Policy *tao_impl,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   );
 
@@ -167,23 +171,23 @@ public:
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual char * target_most_derived_interface (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Boolean target_is_a (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -194,7 +198,7 @@ public:
 private:
   TAO_ServerRequestInfo_CORBA_Policy_policy_type_get (const TAO_ServerRequestInfo_CORBA_Policy_policy_type_get &);
   void operator= (const TAO_ServerRequestInfo_CORBA_Policy_policy_type_get &);
-  
+
 private:
   POA_CORBA_Policy *_tao_impl;
   CORBA::PolicyType _result;
@@ -202,10 +206,11 @@ private:
 
 TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::TAO_ServerRequestInfo_CORBA_Policy_policy_type_get (
     TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
     POA_CORBA_Policy *tao_impl,
     CORBA::Environment &
   )
-  : TAO_ServerRequestInfo (_tao_server_request),
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
     _tao_impl (tao_impl)
 {}
 
@@ -217,7 +222,7 @@ TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::arguments (CORBA::Environmen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -229,11 +234,11 @@ TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::exceptions (CORBA::Environme
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -242,11 +247,11 @@ TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::result (CORBA::Environment &
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -268,7 +273,7 @@ TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
+void
 TAO_ServerRequestInfo_CORBA_Policy_policy_type_get::result (CORBA::PolicyType result)
 {
   // Update the result.
@@ -280,8 +285,9 @@ class TAO_ServerRequestInfo_CORBA_Policy_copy : public TAO_ServerRequestInfo
 public:
   TAO_ServerRequestInfo_CORBA_Policy_copy (
     TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
     POA_CORBA_Policy *tao_impl,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   );
 
@@ -290,45 +296,46 @@ public:
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual char * target_most_derived_interface (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Boolean target_is_a (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void result (CORBA_Policy_ptr result);
+  void result (CORBA::Policy_ptr result);
 
 private:
   TAO_ServerRequestInfo_CORBA_Policy_copy (const TAO_ServerRequestInfo_CORBA_Policy_copy &);
   void operator= (const TAO_ServerRequestInfo_CORBA_Policy_copy &);
-  
+
 private:
   POA_CORBA_Policy *_tao_impl;
-  CORBA_Policy_ptr _result;
+  CORBA::Policy_ptr _result;
 };
 
 TAO_ServerRequestInfo_CORBA_Policy_copy::TAO_ServerRequestInfo_CORBA_Policy_copy (
     TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
     POA_CORBA_Policy *tao_impl,
     CORBA::Environment &
   )
-  : TAO_ServerRequestInfo (_tao_server_request),
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
     _tao_impl (tao_impl)
 {}
 
@@ -340,7 +347,7 @@ TAO_ServerRequestInfo_CORBA_Policy_copy::arguments (CORBA::Environment &ACE_TRY_
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -352,11 +359,11 @@ TAO_ServerRequestInfo_CORBA_Policy_copy::exceptions (CORBA::Environment &ACE_TRY
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ServerRequestInfo_CORBA_Policy_copy::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -365,11 +372,11 @@ TAO_ServerRequestInfo_CORBA_Policy_copy::result (CORBA::Environment &ACE_TRY_ENV
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
-  
+
   return safe_result_any._retn ();
 }
 
@@ -391,8 +398,8 @@ TAO_ServerRequestInfo_CORBA_Policy_copy::target_is_a (
   return this->_tao_impl->_is_a (id, ACE_TRY_ENV);
 }
 
-void 
-TAO_ServerRequestInfo_CORBA_Policy_copy::result (CORBA_Policy_ptr result)
+void
+TAO_ServerRequestInfo_CORBA_Policy_copy::result (CORBA::Policy_ptr result)
 {
   // Update the result.
    this->_result = result;
@@ -403,8 +410,9 @@ class TAO_ServerRequestInfo_CORBA_Policy_destroy : public TAO_ServerRequestInfo
 public:
   TAO_ServerRequestInfo_CORBA_Policy_destroy (
     TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,
     POA_CORBA_Policy *tao_impl,
-    CORBA::Environment &ACE_TRY_ENV = 
+    CORBA::Environment &ACE_TRY_ENV =
       TAO_default_environment ()
   );
 
@@ -413,44 +421,45 @@ public:
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual char * target_most_derived_interface (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Boolean target_is_a (
       const char * id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  
+
 private:
   TAO_ServerRequestInfo_CORBA_Policy_destroy (const TAO_ServerRequestInfo_CORBA_Policy_destroy &);
   void operator= (const TAO_ServerRequestInfo_CORBA_Policy_destroy &);
-  
+
 private:
   POA_CORBA_Policy *_tao_impl;
-  
+
 };
 
 TAO_ServerRequestInfo_CORBA_Policy_destroy::TAO_ServerRequestInfo_CORBA_Policy_destroy (
     TAO_ServerRequest &_tao_server_request,
+    TAO_Object_Adapter::Servant_Upcall *_tao_servant_upcall,
     POA_CORBA_Policy *tao_impl,
     CORBA::Environment &
   )
-  : TAO_ServerRequestInfo (_tao_server_request),
+  : TAO_ServerRequestInfo (_tao_server_request, _tao_servant_upcall),
     _tao_impl (tao_impl)
 {}
 
@@ -462,7 +471,7 @@ TAO_ServerRequestInfo_CORBA_Policy_destroy::arguments (CORBA::Environment &ACE_T
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -474,11 +483,11 @@ TAO_ServerRequestInfo_CORBA_Policy_destroy::exceptions (CORBA::Environment &ACE_
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ServerRequestInfo_CORBA_Policy_destroy::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -487,7 +496,7 @@ TAO_ServerRequestInfo_CORBA_Policy_destroy::result (CORBA::Environment &ACE_TRY_
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -516,53 +525,53 @@ TAO_ServerRequestInfo_CORBA_Policy_destroy::target_is_a (
 //
 
 // Factory function Implementation.
-_TAO_CORBA_Policy_Strategized_Proxy_Broker *_TAO_CORBA_Policy_Strategized_Proxy_Broker::the_TAO_CORBA_Policy_Strategized_Proxy_Broker (void)
+POA_CORBA_TAO_Policy_Strategized_Proxy_Broker *POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::the_TAO_Policy_Strategized_Proxy_Broker (void)
 {
-  static _TAO_CORBA_Policy_Strategized_Proxy_Broker strategized_proxy_broker;
+  static POA_CORBA_TAO_Policy_Strategized_Proxy_Broker strategized_proxy_broker;
   return &strategized_proxy_broker;
 }
 
-_TAO_CORBA_Policy_Strategized_Proxy_Broker::_TAO_CORBA_Policy_Strategized_Proxy_Broker (void)
+POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::POA_CORBA_TAO_Policy_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
-_TAO_CORBA_Policy_Strategized_Proxy_Broker::~_TAO_CORBA_Policy_Strategized_Proxy_Broker (void)
+POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::~POA_CORBA_TAO_Policy_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
-_TAO_CORBA_Policy_Proxy_Impl&
-_TAO_CORBA_Policy_Strategized_Proxy_Broker::select_proxy (
-    ::CORBA_Policy *object,
+CORBA_TAO_Policy_Proxy_Impl&
+POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::select_proxy (
+    ::CORBA::Policy *object,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
-_TAO_CORBA_Policy_Strategized_Proxy_Broker::create_proxy (
+void
+POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::create_proxy (
     int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
@@ -570,33 +579,24 @@ _TAO_CORBA_Policy_Strategized_Proxy_Broker::create_proxy (
         case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
-              _TAO_CORBA_Policy_ThruPOA_Proxy_Impl,
+              POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl,
               CORBA::NO_MEMORY ()
           );
           ACE_CHECK;
           break;
-          
-        case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:
-          ACE_NEW_THROW_EX (
-              this->proxy_cache_[strategy],
-              _TAO_CORBA_Policy_Direct_Proxy_Impl,
-              CORBA::NO_MEMORY ()
-          );
-          ACE_CHECK;
-          break;
-          
+
         case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
-              ::_TAO_CORBA_Policy_Remote_Proxy_Impl,
+              CORBA_TAO_Policy_Remote_Proxy_Impl,
               CORBA::NO_MEMORY ()
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -606,39 +606,37 @@ _TAO_CORBA_Policy_Strategized_Proxy_Broker::create_proxy (
 ///////////////////////////////////////////////////////////////////////
 
 
-_TAO_CORBA_Policy_Proxy_Broker *
-_TAO_CORBA_Policy_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
+CORBA_TAO_Policy_Proxy_Broker *
+CORBA_CORBA_TAO_Policy_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 {
   ACE_UNUSED_ARG (obj);
-  return ::_TAO_CORBA_Policy_Strategized_Proxy_Broker::the_TAO_CORBA_Policy_Strategized_Proxy_Broker();
+  return ::POA_CORBA_TAO_Policy_Strategized_Proxy_Broker::the_TAO_Policy_Strategized_Proxy_Broker();
 }
 
 int
-_TAO_CORBA_Policy_Proxy_Broker_Factory_Initializer (long _dummy_)
+CORBA_CORBA_TAO_Policy_Proxy_Broker_Factory_Initializer (long)
 {
-  ACE_UNUSED_ARG (_dummy_);
-  
-  _TAO_CORBA_Policy_Proxy_Broker_Factory_function_pointer = 
-    _TAO_CORBA_Policy_Proxy_Broker_Factory_function;
-  
+  CORBA_CORBA_TAO_Policy_Proxy_Broker_Factory_function_pointer =
+    CORBA_CORBA_TAO_Policy_Proxy_Broker_Factory_function;
+
   return 0;
 }
 
-static int _TAO_CORBA_Policy_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
-  _TAO_CORBA_Policy_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_CORBA_Policy_Proxy_Broker_Factory_Initializer));
+static int CORBA_CORBA_TAO_Policy_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
+  CORBA_CORBA_TAO_Policy_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, CORBA_CORBA_TAO_Policy_Proxy_Broker_Factory_Initializer));
 
 
 ///////////////////////////////////////////////////////////////////////
 //                 ThruPOA Proxy  Implementation
 //
 
-_TAO_CORBA_Policy_ThruPOA_Proxy_Impl::_TAO_CORBA_Policy_ThruPOA_Proxy_Impl (void)
+POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl::POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl (void)
 {}
 
 // ThruPOA Implementation of the IDL interface methods
 
-CORBA::PolicyType _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::policy_type (
-    CORBA_Object *_collocated_tao_target_,
+CORBA::PolicyType POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl::policy_type (
+    CORBA::Object_ptr _collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -661,22 +659,22 @@ CORBA::PolicyType _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::policy_type (
     return ACE_reinterpret_cast (
       POA_CORBA_Policy_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_Policy:1.0"
+          "IDL:omg.org/CORBA/Policy:1.0"
         )
     )->policy_type (
         ACE_TRY_ENV
       );
 }
 
-CORBA_Policy_ptr _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::copy (
-    CORBA_Object *_collocated_tao_target_,
+CORBA::Policy_ptr POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl::copy (
+    CORBA::Object_ptr _collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
-    CORBA_Policy_var _tao_retval;
+    CORBA::Policy_var _tao_retval;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
@@ -692,15 +690,15 @@ CORBA_Policy_ptr _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::copy (
     return ACE_reinterpret_cast (
       POA_CORBA_Policy_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_Policy:1.0"
+          "IDL:omg.org/CORBA/Policy:1.0"
         )
     )->copy (
         ACE_TRY_ENV
       );
 }
 
-void _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::destroy (
-    CORBA_Object *_collocated_tao_target_,
+void POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl::destroy (
+    CORBA::Object_ptr _collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -721,7 +719,7 @@ void _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::destroy (
     ACE_reinterpret_cast (
       POA_CORBA_Policy_ptr,
       servant_upcall.servant ()->_downcast (
-          "IDL:omg.org/CORBA_Policy:1.0"
+          "IDL:omg.org/CORBA/Policy:1.0"
         )
     )->destroy (
         ACE_TRY_ENV
@@ -733,7 +731,6 @@ void _TAO_CORBA_Policy_ThruPOA_Proxy_Impl::destroy (
 //           End ThruPOA Proxy Implementation
 ///////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////
 //                 Direct Proxy  Implementation
 //
@@ -742,60 +739,61 @@ _TAO_CORBA_Policy_Direct_Proxy_Impl::_TAO_CORBA_Policy_Direct_Proxy_Impl (void)
 {}
 
 CORBA::PolicyType _TAO_CORBA_Policy_Direct_Proxy_Impl::policy_type  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object_ptr _collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
-  )
+    )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
   return ACE_reinterpret_cast (
-      POA_CORBA_Policy_ptr,
-      _collocated_tao_target_->_servant ()->_downcast ("IDL:omg.org/CORBA_Policy:1.0")
-    )->policy_type (
-          ACE_TRY_ENV
-        );
-  
+           POA_CORBA_Policy_ptr,
+           _collocated_tao_target_->_servant ()->_downcast ("IDL:omg.org/CORBA/Policy:1.0")
+           )->policy_type (
+                           ACE_TRY_ENV
+                           );
+
 }
 
 CORBA_Policy_ptr _TAO_CORBA_Policy_Direct_Proxy_Impl::copy  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object_ptr _collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
-  )
+    )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
   return ACE_reinterpret_cast (
-      POA_CORBA_Policy_ptr,
-      _collocated_tao_target_->_servant ()->_downcast ("IDL:omg.org/CORBA_Policy:1.0")
-    )->copy (
-          ACE_TRY_ENV
-        );
-  
+           POA_CORBA_Policy_ptr,
+           _collocated_tao_target_->_servant ()->_downcast ("IDL:omg.org/CORBA/Policy:1.0")
+           )->copy (
+                    ACE_TRY_ENV
+                    );
+
 }
 
 void _TAO_CORBA_Policy_Direct_Proxy_Impl::destroy  (
-    CORBA_Object *_collocated_tao_target_,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+              CORBA::Object_ptr _collocated_tao_target_,
+              CORBA::Environment &ACE_TRY_ENV
+              )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
   ACE_reinterpret_cast (
-      POA_CORBA_Policy_ptr,
-      _collocated_tao_target_->_servant ()->_downcast ("IDL:omg.org/CORBA_Policy:1.0")
+    POA_CORBA_Policy_ptr,
+    _collocated_tao_target_->_servant ()->_downcast ("IDL:omg.org/CORBA/Policy:1.0")
     )->destroy (
-          ACE_TRY_ENV
-        );
-  
+                ACE_TRY_ENV
+                );
+
 }
 
 
 //
 //           End Direct Proxy Implementation
 ///////////////////////////////////////////////////////////////////////
+
 // skeleton constructor
 POA_CORBA_Policy::POA_CORBA_Policy (void)
 {
@@ -814,13 +812,17 @@ POA_CORBA_Policy::~POA_CORBA_Policy (void)
 
 void POA_CORBA_Policy::_get_policy_type_skel (
     TAO_ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void *_tao_servant_upcall,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA_Policy *_tao_impl = (POA_CORBA_Policy *)_tao_object_reference;
-  
+  POA_CORBA_Policy *_tao_impl =
+    ACE_static_cast (POA_CORBA_Policy *, _tao_object_reference);
+
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+
     CORBA::PolicyType _tao_retval = 0;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -828,41 +830,32 @@ void POA_CORBA_Policy::_get_policy_type_skel (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   TAO_ServerRequestInfo_CORBA_Policy_policy_type_get ri (
       _tao_server_request,
+      _tao_upcall,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->policy_type (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       CORBA::PolicyType _tao_retval_info = _tao_retval;
       ri.result (_tao_retval_info);
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-    {
-      ri.forward_reference (exc); 
-      _tao_vfr.send_other (
-        &ri,
-        ACE_TRY_ENV
-      );
-      ACE_TRY_CHECK;
-      _tao_server_request.forward_location (exc.forward.in ());
     }
   ACE_CATCHANY
     {
@@ -872,16 +865,23 @@ void POA_CORBA_Policy::_get_policy_type_skel (
           ACE_TRY_ENV
         );
       ACE_TRY_CHECK;
-      ACE_RE_THROW;
+
+      PortableInterceptor::ReplyStatus _tao_status =
+        ri.reply_status (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval)
     ))
@@ -893,56 +893,51 @@ void POA_CORBA_Policy::_get_policy_type_skel (
 
 void POA_CORBA_Policy::copy_skel (
     TAO_ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void *_tao_servant_upcall,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA_Policy *_tao_impl = (POA_CORBA_Policy *)_tao_object_reference;
-  
-    CORBA_Policy_var _tao_retval;
+  POA_CORBA_Policy *_tao_impl =
+    ACE_static_cast (POA_CORBA_Policy *, _tao_object_reference);
+
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+
+    CORBA::Policy_var _tao_retval;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   TAO_ServerRequestInfo_CORBA_Policy_copy ri (
       _tao_server_request,
+      _tao_upcall,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      _tao_retval = 
+      _tao_retval =
       _tao_impl->copy (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
-      CORBA_Policy_ptr _tao_retval_info = _tao_retval._retn ();
+      CORBA::Policy_ptr _tao_retval_info = _tao_retval._retn ();
       ri.result (_tao_retval_info);
       _tao_retval = _tao_retval_info;
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-    {
-      ri.forward_reference (exc); 
-      _tao_vfr.send_other (
-        &ri,
-        ACE_TRY_ENV
-      );
-      ACE_TRY_CHECK;
-      _tao_server_request.forward_location (exc.forward.in ());
     }
   ACE_CATCHANY
     {
@@ -952,16 +947,23 @@ void POA_CORBA_Policy::copy_skel (
           ACE_TRY_ENV
         );
       ACE_TRY_CHECK;
-      ACE_RE_THROW;
+
+      PortableInterceptor::ReplyStatus _tao_status =
+        ri.reply_status (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << _tao_retval.in ())
     ))
@@ -973,53 +975,48 @@ void POA_CORBA_Policy::copy_skel (
 
 void POA_CORBA_Policy::destroy_skel (
     TAO_ServerRequest &_tao_server_request,
-    void *_tao_object_reference, 
-    void * /* context */, 
+    void *_tao_object_reference,
+    void *_tao_servant_upcall,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA_Policy *_tao_impl = (POA_CORBA_Policy *)_tao_object_reference;
-  
+  POA_CORBA_Policy *_tao_impl =
+    ACE_static_cast (POA_CORBA_Policy *, _tao_object_reference);
+
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+
   _tao_server_request.argument_flag (0);
-  
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
     );
-  
+
   TAO_ServerRequestInfo_CORBA_Policy_destroy ri (
       _tao_server_request,
+      _tao_upcall,
       _tao_impl,
       ACE_TRY_ENV
     );
-  
+
   ACE_TRY
     {
       _tao_vfr.receive_request (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
 #endif /* TAO_HAS_INTERCEPTORS */
-      
+
       _tao_impl->destroy (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    }
-  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-    {
-      ri.forward_reference (exc); 
-      _tao_vfr.send_other (
-        &ri,
-        ACE_TRY_ENV
-      );
-      ACE_TRY_CHECK;
-      _tao_server_request.forward_location (exc.forward.in ());
     }
   ACE_CATCHANY
     {
@@ -1029,22 +1026,29 @@ void POA_CORBA_Policy::destroy_skel (
           ACE_TRY_ENV
         );
       ACE_TRY_CHECK;
-      ACE_RE_THROW;
+
+      PortableInterceptor::ReplyStatus _tao_status =
+        ri.reply_status (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+          || _tao_status == PortableInterceptor::USER_EXCEPTION)
+        ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 void POA_CORBA_Policy::_is_a_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* context */,
+    void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -1054,10 +1058,10 @@ void POA_CORBA_Policy::_is_a_skel (
   CORBA::String_var value;
   if (!(_tao_in >> value.out ()))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
@@ -1065,16 +1069,16 @@ void POA_CORBA_Policy::_is_a_skel (
 }
 
 void POA_CORBA_Policy::_non_existent_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* context */,
+    void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   POA_CORBA_Policy *_tao_impl = (POA_CORBA_Policy *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
@@ -1082,35 +1086,35 @@ void POA_CORBA_Policy::_non_existent_skel (
 }
 
 void POA_CORBA_Policy::_interface_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* context */,
+    void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   POA_CORBA_Policy *_tao_impl = (POA_CORBA_Policy *) _tao_object_reference;
   CORBA_InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
-  
+
   TAO_IFR_Client_Adapter *_tao_adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ()
       );
-    
+
   if (_tao_adapter == 0)
     {
       ACE_THROW (CORBA::INTF_REPOS ());
     }
-  
+
   ACE_TRY
     {
       _tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       _tao_server_request.init_reply ();
-      
+
       TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-      
+
       _tao_result =
         _tao_adapter->interfacedef_cdr_insert (
             _tao_out,
@@ -1122,7 +1126,7 @@ void POA_CORBA_Policy::_interface_skel (
       _tao_adapter->dispose (_tao_retval);
     }
   ACE_ENDTRY;
-  
+
   if (_tao_result == 0)
     {
       ACE_THROW (CORBA::MARSHAL ());
@@ -1136,9 +1140,9 @@ CORBA::Boolean POA_CORBA_Policy::_is_a (
 {
   const char *base_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA_Policy:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
       return 1;
     else
@@ -1149,38 +1153,46 @@ void* POA_CORBA_Policy::_downcast (
     const char* logical_type_id
   )
 {
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA_Policy:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Policy:1.0") == 0)
     return ACE_static_cast (POA_CORBA_Policy_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
 }
 
-void POA_CORBA_Policy::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA_Policy::_dispatch (TAO_ServerRequest &req, void *servant_upcall, CORBA::Environment &ACE_TRY_ENV)
 {
-  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this,
+                                     ACE_TRY_ENV);
 }
 
 const char* POA_CORBA_Policy::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/CORBA_Policy:1.0";
+  return "IDL:omg.org/CORBA/Policy:1.0";
 }
 
-CORBA_Policy*
+CORBA::Policy*
 POA_CORBA_Policy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-  
+
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);
   else
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
-  
+
   CORBA::Object_var obj = tmp;
-  return ::CORBA_Policy::_unchecked_narrow (obj.in ());
+
+  (void) safe_stub.release ();
+
+  return ::CORBA::Policy::_unchecked_narrow (obj.in ());
 }
 
 

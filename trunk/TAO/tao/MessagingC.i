@@ -1848,7 +1848,7 @@ Messaging::ReplyHandler::ReplyHandler (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA_Object (objref, _tao_collocated, servant)
+  : CORBA::Object (objref, _tao_collocated, servant)
 {
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
@@ -2012,12 +2012,12 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 
 }
 
-CORBA::Boolean TAO_Export 
+CORBA::Boolean TAO_Export
 operator<< (
     TAO_OutputCDR &,
     const Messaging::ReplyHandler_ptr
   );
-CORBA::Boolean TAO_Export 
+CORBA::Boolean TAO_Export
 operator>> (
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr &

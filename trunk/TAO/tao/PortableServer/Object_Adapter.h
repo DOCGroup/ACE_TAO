@@ -233,7 +233,6 @@ public:
 
   int dispatch_servant (const TAO_ObjectKey &key,
                         TAO_ServerRequest &req,
-                        void *context,
                         CORBA::Object_out forward_to,
                         CORBA_Environment &ACE_TRY_ENV);
 
@@ -294,7 +293,6 @@ public:
   virtual int priority (void) const;
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
-                        void *context, /* unused? */
                         CORBA::Object_out foward_to,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));

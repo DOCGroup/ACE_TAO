@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_CPP_
-#define _TAO_IDL_ORIG_MESSAGINGS_CPP_
+#ifndef _TAO_IDL_MESSAGINGS_CPP_
+#define _TAO_IDL_MESSAGINGS_CPP_
 
 #include "tao/orbconf.h"
 
@@ -34,9 +34,12 @@
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
-#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableInterceptor.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
+#include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableServer/ServerInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
@@ -48,8 +51,6 @@
 #include "MessagingS.i"
 #endif /* !defined INLINE */
 
-ACE_RCSID(tao, MessagingS, "$Id$")
-
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -59,9 +60,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 22:01:25 */
+/* starting time is 17:34:18 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/sirion/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -151,7 +152,7 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsign
     }
   return 0;
 }
-/* ending time is 22:01:25 */
+/* ending time is 17:34:18 */
 static TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable tao_Messaging_ReplyHandler_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -260,10 +261,8 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr obj
 }
 
 int
-Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long _dummy_)
+Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long)
 {
-  ACE_UNUSED_ARG (_dummy_);
-
   Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer =
     Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function;
 
@@ -318,7 +317,7 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 void POA_Messaging::ReplyHandler::_is_a_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* context */,
+    void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -341,7 +340,7 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
 void POA_Messaging::ReplyHandler::_non_existent_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* context */,
+    void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -358,7 +357,7 @@ void POA_Messaging::ReplyHandler::_non_existent_skel (
 void POA_Messaging::ReplyHandler::_interface_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
-    void * /* context */,
+    void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
@@ -430,9 +429,12 @@ void* POA_Messaging::ReplyHandler::_downcast (
   return 0;
 }
 
-void POA_Messaging::ReplyHandler::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyHandler::_dispatch (TAO_ServerRequest &req, void *servant_upcall, CORBA::Environment &ACE_TRY_ENV)
 {
-  this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
+  this->synchronous_upcall_dispatch (req,
+                                     servant_upcall,
+                                     this,
+                                     ACE_TRY_ENV);
 }
 
 const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
@@ -446,6 +448,8 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
+  TAO_Stub_Auto_Ptr safe_stub (stub);
+
   CORBA::Object_ptr tmp = CORBA::Object::_nil ();
 
   if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())
@@ -454,11 +458,14 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
     ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);
 
   CORBA::Object_var obj = tmp;
+
+  (void) safe_stub.release ();
+
   return ::Messaging::ReplyHandler::_unchecked_narrow (obj.in ());
 }
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-  
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* ifndef */
