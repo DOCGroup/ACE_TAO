@@ -26,6 +26,7 @@ TAO_Property_Evaluator(CosTrading::Offer& offer,
 int
 TAO_Property_Evaluator::is_dynamic_property (int index)
 {
+  CORBA::Environment env;
   int return_value = 0,
     num_properties = this->props_.length();
 
@@ -36,7 +37,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
       CORBA::Any& value = this->props_[index].value;
       CORBA::TypeCode* type = value.type();
       
-      if (type->equal(CosTradingDynamic::_tc_DynamicProp))
+      if (type->equal(CosTradingDynamic::_tc_DynamicProp, env))
 	return_value = 1;
     }
   
@@ -46,9 +47,9 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
 CORBA::Any*
 TAO_Property_Evaluator::property_value(int index,
 				       CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTradingDynamic::DPEvalFailure)
+  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
-  CORBA::Any* prop_val = CORBA::Any::_nil();
+  CORBA::Any* prop_val = 0;
   
   if (! this->is_dynamic_property(index))
     prop_val = &(this->props_[index].value);
@@ -61,11 +62,11 @@ TAO_Property_Evaluator::property_value(int index,
       CORBA::Any& value = this->props_[index].value;
 
       // Extract the DP_Struct.
-      value >>= dp_struct;
+      //value >>= dp_struct;
       dp_eval = dp_struct.eval_if;
 	  
       if (CORBA::is_nil (dp_eval))
-	throw (CosTradingDynamic::DPEvalFailure ());	    
+	TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure (), prop_val);
       else
 	{
 	  CORBA::TypeCode* type = dp_struct.returned_type;
@@ -74,13 +75,15 @@ TAO_Property_Evaluator::property_value(int index,
 	  TAO_TRY
 	    {
 	      // Retrieve the value of the dynamic property.
-	      prop_val = dp_eval->evalDP(name, type, info);
+	      prop_val = dp_eval->evalDP(name, type, info, TAO_TRY_ENV);
 	    }
-	  TAO_CATCH (CORBA::SystemException excp)
+	  TAO_CATCH (CORBA::SystemException, excp)
 	    {
-	      TAO_THROW (CosTradingDynamic::DPEvalFailure (name, type, info));
+	      TAO_THROW_RETURN
+		(CosTradingDynamic::DPEvalFailure (name, type, info),
+		 prop_val);
 	    }
-	  TAO_TRYEND;
+	  TAO_ENDTRY;
 	}
     }
 
@@ -98,7 +101,7 @@ TAO_Property_Evaluator::property_type(int index)
       // Extract type information from the DP_Struct.
       CORBA::Any& value = this->props_[index].value;
       DP_Struct dp_struct;
-      value >>= dp_struct;
+      //value >>= dp_struct;
       
       // Grab a pointer to the returned_type description
       prop_type = CORBA::TypeCode::_duplicate(dp_struct.returned_type);
@@ -114,8 +117,8 @@ TAO_Property_Evaluator_By_Name::
 TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq& properties,
 				CORBA::Environment& _env,
 				CORBA::Boolean supports_dp)
-  TAO_THROW_SPEC (CosTrading::DuplicatePropertyName,
-		  CosTrading::IllegalPropertyName)
+  TAO_THROW_SPEC ((CosTrading::DuplicatePropertyName,
+		  CosTrading::IllegalPropertyName))
   : TAO_Property_Evaluator (properties, supports_dp)
 {
   string prop_name;
@@ -175,14 +178,14 @@ is_dynamic_property(const char* property_name)
 CORBA::Any*
 TAO_Property_Evaluator_By_Name::property_value(const char* property_name,
 					       CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTradingDynamic::DPEvalFailure)
+  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
-  CORBA::Any* prop_value = CORBA::Any::_nil();
+  CORBA::Any* prop_value = 0;
   string prop_name(property_name);
   Lookup_Table_Iter lookup_iter = this->table_.find(prop_name);
 
   // If the property name is in the map, delegate evaluation to our
-  // superclass. Otherwise, through an exception.
+  // superclass. Otherwise, throw an exception.
   if (lookup_iter != this->table_.end())
     {
       int index = (*lookup_iter).second;
@@ -200,7 +203,7 @@ TAO_Property_Evaluator_By_Name::property_type(const char* property_name)
   Lookup_Table_Iter lookup_iter = this->table_.find(prop_name);
   
   // If the property name is in the map, delegate evaluation to our
-  // superclass. Otherwise, through an exception.
+  // superclass. Otherwise, throw an exception.
   if (lookup_iter != this->table_.end())
     {
       int index = (*lookup_iter).second;

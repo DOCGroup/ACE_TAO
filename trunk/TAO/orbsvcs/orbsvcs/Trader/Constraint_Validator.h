@@ -20,8 +20,6 @@
 #include <map>
 #include <string>
 
-#include "CosTradingC.h"
-#include "Constraint_Visitor.h"
 #include "Constraint_Nodes.h"
 
 class TAO_Constraint_Validator : public TAO_Constraint_Visitor

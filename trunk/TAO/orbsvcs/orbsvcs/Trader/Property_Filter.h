@@ -20,17 +20,7 @@
 #include <set>
 #include <deque>
 
-#if defined (OS_NO_NAMESPACE)
-#define map yadda
-#endif /* OS_NO_NAMESPACE */
-
-#include "ace/OS.h"
-#include "CosTradingC.h"
 #include "Trader_Base.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef map
-#endif /* OS_NO_NAMESPACE */
 
 class TAO_Property_Filter
 // = TITLE
@@ -45,13 +35,13 @@ public:
   
   TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 		       CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
-		    CosTrading::DuplicatePropertyName);
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		     CosTrading::DuplicatePropertyName));
   // Verify that the specified properties are correct.
 
   TAO_Property_Filter (const TAO_Property_Filter& prop_filter);
 
-  void filter_offer (const CosTrading::Offer& source,
+  void filter_offer (CosTrading::Offer& source,
 		     CosTrading::Offer& destination);
   // Copy the desired properties from the source offer to the
   // destination offer.

@@ -138,7 +138,7 @@ visit_exist(TAO_Unary_Constraint* unary_exist)
   TAO_Constraint* operand = unary_exist->operand();
   TAO_Expression_Type type = operand->expr_type();
   
-  if (type == IDENT)
+  if (type == TAO_IDENT)
     return_value = operand->accept(this);
 
   return return_value;
@@ -221,13 +221,13 @@ visit_div(TAO_Binary_Constraint* boolean_div)
       int right_isnt_zero = 1;
       switch(right->expr_type())
 	{
-	case UNSIGNED_INTEGER:
+	case TAO_UNSIGNED:
 	  right_isnt_zero = (CORBA::ULong)(*((TAO_Literal_Constraint*)right));
 	  break;
-	case SIGNED_INTEGER:
+	case TAO_SIGNED:
 	  right_isnt_zero = (CORBA::Long)(*((TAO_Literal_Constraint*)right));
 	  break;
-	case DOUBLE:
+	case TAO_DOUBLE:
 	  right_isnt_zero = (CORBA::Double)(*((TAO_Literal_Constraint*)right));
 	  break;
 	}
@@ -280,23 +280,24 @@ visit_in (TAO_Binary_Constraint* binary_in)
   CORBA::TypeCode* prop_type = this->extract_type(right, right_type);
   this->extract_type(left, left_type);
 
-  if (right_type == SEQUENCE)
+  if (right_type == TAO_SEQUENCE)
     {   
       int types_match = 0;
+      CORBA::Environment env;
       
       if (this->expr_returns_number (left_type))
 	{
-	  types_match = prop_type->equal (_tc_ShortSeq) ||
-	    prop_type->equal (_tc_UShortSeq) ||
-	    prop_type->equal (_tc_LongSeq) ||
-	    prop_type->equal (_tc_ULongSeq) ||
-	    prop_type->equal (_tc_DoubleSeq) ||
-	    prop_type->equal (_tc_FloatSeq);
+	  types_match = prop_type->equal (_tc_ShortSeq, env) ||
+	    prop_type->equal (_tc_UShortSeq, env) ||
+	    prop_type->equal (_tc_LongSeq, env) ||
+	    prop_type->equal (_tc_ULongSeq, env) ||
+	    prop_type->equal (_tc_DoubleSeq, env) ||
+	    prop_type->equal (_tc_FloatSeq, env);
 	}
       else if (this->expr_returns_boolean (left_type))
-	types_match = prop_type->equal (_tc_BooleanSeq);
+	types_match = prop_type->equal (_tc_BooleanSeq, env);
       else if (this->expr_returns_string (left_type))
-	types_match = prop_type->equal (_tc_StringSeq);
+	types_match = prop_type->equal (_tc_StringSeq, env);
       
       if (types_match)
 	return_value = left->accept(this);
@@ -407,7 +408,7 @@ TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
 {
   CORBA::TypeCode* return_value = 0;
   type = expr->expr_type();
-  if (type == IDENT)
+  if (type == TAO_IDENT)
     {
       TAO_Property_Constraint* prop = (TAO_Property_Constraint*) expr;
       string prop_name(prop->name());
@@ -431,7 +432,7 @@ TAO_Constraint_Validator::expr_returns_boolean(TAO_Expression_Type expr_type)
   // a boolean property, return 1.
   int return_value = 0;
   
-  if (expr_type <= BOOLEAN)
+  if (expr_type <= TAO_BOOLEAN)
     return_value = 1;
   
   return return_value;
@@ -445,8 +446,8 @@ TAO_Constraint_Validator::expr_returns_number(TAO_Expression_Type expr_type)
   // numeric property, return 1.
   int return_value = 0;
   
-  if ((expr_type >= PLUS && expr_type <= NUMBER) ||
-      (expr_type >= UNSIGNED_INTEGER && expr_type <= DOUBLE))
+  if ((expr_type >= TAO_PLUS && expr_type <= TAO_NUMBER) ||
+      (expr_type >= TAO_UNSIGNED && expr_type <= TAO_DOUBLE))
     return_value = 1;
 
   return return_value;
@@ -459,7 +460,7 @@ TAO_Constraint_Validator::expr_returns_string(TAO_Expression_Type expr_type)
   // string literal, or a property whose type is string, return 1.
   int return_value = 0;
 
-  if (expr_type == STRING)
+  if (expr_type == TAO_STRING)
     return_value = 1;
 
   return return_value;

@@ -41,12 +41,12 @@ public:
   TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
 			     const char* preference,
 			     CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::Lookup::IllegalPreference);
+    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   TAO_Preference_Interpreter(TAO_Constraint_Validator& validator,
 			     const char* preference,
 			     CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::Lookup::IllegalPreference);
+    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
 
   // Parse the preference string, determining first if it's
   // valid. Throw an IllegalPreference exception if the preference

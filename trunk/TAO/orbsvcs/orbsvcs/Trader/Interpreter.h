@@ -16,7 +16,6 @@
 #ifndef TAO_INTERPRETER_H
 #define TAO_INTERPRETER_H
 
-#include "CosTradingC.h"
 #include "Constraint.h"
 #include "Constraint_Nodes.h"
 

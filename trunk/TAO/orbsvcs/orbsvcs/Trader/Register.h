@@ -18,14 +18,15 @@
 #define ACE_REGISTER_H
 
 #include "Offer_Modifier.h"
-#include "CosTradingS.h"
 
 #include <map>
 #include <string>
 #include <deque>
 
 template <class TRADER>
-class TAO_Register : public POA_CosTrading::Register
+class TAO_Register :
+  public TAO_Trader_Components<POA_CosTrading::Register>,
+  public TAO_Support_Attributes<POA_CosTrading::Register>
   //
   // = TITLE
   //     This class implements CosTrading::Register IDL interface.
@@ -40,7 +41,7 @@ public:
 				      const char *type, 
 				      const CosTrading::PropertySeq& properties,
 				      CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::Register::InvalidObjectRef, 
 		    CosTrading::IllegalServiceType, 
 		    CosTrading::UnknownServiceType, 
@@ -49,7 +50,7 @@ public:
 		    CosTrading::PropertyTypeMismatch, 
 		    CosTrading::ReadonlyDynamicProperty, 
 		    CosTrading::MissingMandatoryProperty, 
-		    CosTrading::DuplicatePropertyName);
+		    CosTrading::DuplicatePropertyName));
 
   // BEGIN SPEC
   // The export operation is the means by which a service is
@@ -106,10 +107,10 @@ public:
   // END SPEC
  
   virtual void withdraw (const char *id, CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::IllegalOfferId, 
 		    CosTrading::UnknownOfferId, 
-		    CosTrading::Register::ProxyOfferId);
+		    CosTrading::Register::ProxyOfferId));
 
   // BEGIN SPEC
   // The withdraw operation removes the service offer from the trader
@@ -127,10 +128,10 @@ public:
   virtual CosTrading::Register::OfferInfo*
     describe (const char * id,
 	      CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::IllegalOfferId, 
 		    CosTrading::UnknownOfferId, 
-		    CosTrading::Register::ProxyOfferId);
+		    CosTrading::Register::ProxyOfferId));
 
   // BEGIN SPEC
   // The describe operation returns the information about an offered
@@ -150,7 +151,7 @@ public:
 		       const CosTrading::PropertyNameSeq& del_list, 
 		       const CosTrading::PropertySeq& modify_list,
 		       CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::NotImplemented, 
 		    CosTrading::IllegalOfferId, 
 		    CosTrading::UnknownOfferId, 
@@ -161,7 +162,7 @@ public:
 		    CosTrading::ReadonlyDynamicProperty, 
 		    CosTrading::Register::MandatoryProperty, 
 		    CosTrading::Register::ReadonlyProperty, 
-		    CosTrading::DuplicatePropertyName);
+		    CosTrading::DuplicatePropertyName));
 
   // BEGIN SPEC
   // The modify operation is used to change the description of a
@@ -219,11 +220,11 @@ public:
   virtual void withdraw_using_constraint (const char *type, 
 					  const char *constr,
 					  CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::IllegalServiceType, 
 		    CosTrading::UnknownServiceType, 
 		    CosTrading::IllegalConstraint, 
-		    CosTrading::Register::NoMatchingOffers);
+		    CosTrading::Register::NoMatchingOffers));
 
   // BEGIN SPEC
   // The withdraw_using_constraint operation withdraws a set of offers
@@ -251,10 +252,10 @@ public:
   virtual CosTrading::Register_ptr
     resolve (const CosTrading::TraderName &name,
 	     CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException, 
 		    CosTrading::Register::IllegalTraderName, 
 		    CosTrading::Register::UnknownTraderName, 
-		    CosTrading::Register::RegisterNotSupported);
+		    CosTrading::Register::RegisterNotSupported));
 
   // BEGIN SPEC
   // This operation is used to resolve a context relative name for
@@ -278,49 +279,7 @@ public:
   // return the Register interface reference to their client (another
   // trader).
   // END SPEC
-  
-  // = TraderComponents IDL interface methods.
-
-  // = CosTrading::TraderComponents methods. 
-  virtual CosTrading::Lookup_ptr lookup_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns an object reference to the Lookup interface of the trader.
-  // Returns nil if the trader does not support Lookup interface.
-  
-  virtual CosTrading::Register_ptr register_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference for the Register interface of the trader.
-  // Returns nil if the trader does not support Register interface.
-  
-  virtual CosTrading::Link_ptr link_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference for the Link interface of the trader.
-  // Returns nil if the trader does not support Link interface.
-
-  virtual CosTrading::Proxy_ptr proxy_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference to the Proxy interface of the trader.
-  // Returns nil if the trader does not support Proxy interface. 
-  
-  virtual CosTrading::Admin_ptr admin_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference for the Admin interface of the trader.
-  // Returns nil if the trader does not support Admin interface.
-
-  // = Support_Attributes IDL interface methods.
-
-  virtual CORBA::Boolean supports_modifiable_properties (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  
-  virtual CORBA::Boolean supports_dynamic_properties (CORBA::Environment& env)
-  TAO_THROW_SPEC (CORBA::SystemException);
-  
-  virtual CORBA::Boolean supports_proxy_offers (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  
-  virtual CosTrading::TypeRepository_ptr type_repos (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  
+    
   static const char* NAME;
   
 protected:
@@ -331,11 +290,11 @@ protected:
 			    TYPE_STRUCT* type_struct,
 			    CosTrading::PropertySeq& properties,
 			    CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalPropertyName, 
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName, 
 		    CosTrading::PropertyTypeMismatch, 
 		    CosTrading::ReadonlyDynamicProperty, 
 		    CosTrading::MissingMandatoryProperty, 
-		    CosTrading::DuplicatePropertyName);
+		    CosTrading::DuplicatePropertyName));
   
   // Type is a known service type.
   

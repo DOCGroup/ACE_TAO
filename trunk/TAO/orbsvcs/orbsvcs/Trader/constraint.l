@@ -17,13 +17,13 @@
 #include "Constraint_Nodes.h"
 #include "Constraint_Tokens.h"
 
-static ACE_Literal_Constraint* extract_string(const char*);
+static TAO_Literal_Constraint* extract_string(const char*);
 
-#define ACE_YY_LEX_DEBUG
+#define TAO_YY_LEX_DEBUG
 
-#ifdef ACE_CONSTRAINT_DEBUG
-#define ACE_YY_LEX_DEBUG ACE_OS::fprintf(stderr, "%s\n", yytext)
-#endif /* ACE_CONSTRAINT_DEBUG */
+#ifdef TAO_CONSTRAINT_DEBUG
+#define TAO_YY_LEX_DEBUG TAO_OS::fprintf(stderr, "%s\n", yytext)
+#endif /* TAO_CONSTRAINT_DEBUG */
 
 
 %}
@@ -41,70 +41,70 @@ unknown         [^ \t]
 
 %%
 
-min             { ACE_YY_LEX_DEBUG; return MIN; }
-max             { ACE_YY_LEX_DEBUG; return MAX; }
-first           { ACE_YY_LEX_DEBUG; return FIRST; }
-random          { ACE_YY_LEX_DEBUG; return RANDOM; }
-with            { ACE_YY_LEX_DEBUG; return WITH; }
-exist		{ ACE_YY_LEX_DEBUG; return EXIST; }
-not		{ ACE_YY_LEX_DEBUG; return NOT; }
-and		{ ACE_YY_LEX_DEBUG; return AND; }
-or		{ ACE_YY_LEX_DEBUG; return OR; }
-in		{ ACE_YY_LEX_DEBUG; return IN; }
-"~"             { ACE_YY_LEX_DEBUG; return TWIDDLE; }
-"+"		{ ACE_YY_LEX_DEBUG; return PLUS; }
-"-"		{ ACE_YY_LEX_DEBUG; return MINUS; }
-"*"		{ ACE_YY_LEX_DEBUG; return MULT; }
-"/"		{ ACE_YY_LEX_DEBUG; return DIV; }
-"<"		{ ACE_YY_LEX_DEBUG; return LT; }
-"<="		{ ACE_YY_LEX_DEBUG; return LE; }
-">"		{ ACE_YY_LEX_DEBUG; return GT; }
-">="		{ ACE_YY_LEX_DEBUG; return GE; }
-"=="		{ ACE_YY_LEX_DEBUG; return EQ; }
-"!="		{ ACE_YY_LEX_DEBUG; return NE; }
-"("             { ACE_YY_LEX_DEBUG; return LPAREN; }
-")"             { ACE_YY_LEX_DEBUG; return RPAREN; }
+min             { TAO_YY_LEX_DEBUG; return TAO_MIN; }
+max             { TAO_YY_LEX_DEBUG; return TAO_MAX; }
+first           { TAO_YY_LEX_DEBUG; return TAO_FIRST; }
+random          { TAO_YY_LEX_DEBUG; return TAO_RANDOM; }
+with            { TAO_YY_LEX_DEBUG; return TAO_WITH; }
+exist		{ TAO_YY_LEX_DEBUG; return TAO_EXIST; }
+not		{ TAO_YY_LEX_DEBUG; return TAO_NOT; }
+and		{ TAO_YY_LEX_DEBUG; return TAO_AND; }
+or		{ TAO_YY_LEX_DEBUG; return TAO_OR; }
+in		{ TAO_YY_LEX_DEBUG; return TAO_IN; }
+"~"             { TAO_YY_LEX_DEBUG; return TAO_TWIDDLE; }
+"+"		{ TAO_YY_LEX_DEBUG; return TAO_PLUS; }
+"-"		{ TAO_YY_LEX_DEBUG; return TAO_MINUS; }
+"*"		{ TAO_YY_LEX_DEBUG; return TAO_MULT; }
+"/"		{ TAO_YY_LEX_DEBUG; return TAO_DIV; }
+"<"		{ TAO_YY_LEX_DEBUG; return TAO_LT; }
+"<="		{ TAO_YY_LEX_DEBUG; return TAO_LE; }
+">"		{ TAO_YY_LEX_DEBUG; return TAO_GT; }
+">="		{ TAO_YY_LEX_DEBUG; return TAO_GE; }
+"=="		{ TAO_YY_LEX_DEBUG; return TAO_EQ; }
+"!="		{ TAO_YY_LEX_DEBUG; return TAO_NE; }
+"("             { TAO_YY_LEX_DEBUG; return TAO_LPAREN; }
+")"             { TAO_YY_LEX_DEBUG; return TAO_RPAREN; }
 TRUE		{ 
 		  yylval.constraint_ = 
-		    new ACE_Literal_Constraint((CORBA::Boolean)TRUE_CON);
-		  ACE_YY_LEX_DEBUG; return BOOLEAN;
+		    new TAO_Literal_Constraint(CORBA::B_TRUE);
+		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 FALSE		{ 
 		  yylval.constraint_ = 
-		    new ACE_Literal_Constraint((CORBA::Boolean)FALSE_CON);
-		  ACE_YY_LEX_DEBUG; return BOOLEAN;
+		    new TAO_Literal_Constraint(CORBA::B_FALSE);
+		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 {integer}	{ 
 		  yylval.constraint_ = 
-		    new ACE_Literal_Constraint((CORBA::Long)atoi(yytext));
-		  ACE_YY_LEX_DEBUG; return NUMBER; 
+		    new TAO_Literal_Constraint((CORBA::Long)atoi(yytext));
+		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
 		}
 {float}		{ 
 		  yylval.constraint_ = 
-		    new ACE_Literal_Constraint((CORBA::Double)atof(yytext));
-		  ACE_YY_LEX_DEBUG; return NUMBER; 
+		    new TAO_Literal_Constraint((CORBA::Double)atof(yytext));
+		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
 		}
 {string}	{ 
 		  yylval.constraint_ = extract_string(yytext);
-		  ACE_YY_LEX_DEBUG; return STRING; 
+		  TAO_YY_LEX_DEBUG; return TAO_STRING; 
 		}
 {ident}		{ 
 		  yylval.constraint_ = 
-		    new ACE_Property_Constraint(yytext);
-		  ACE_YY_LEX_DEBUG; return IDENT; 
+		    new TAO_Property_Constraint(yytext);
+		  TAO_YY_LEX_DEBUG; return TAO_IDENT; 
 		}
 {unknown}       { 
-                  ACE_YY_LEX_DEBUG; return UNKNOWN;
+                  TAO_YY_LEX_DEBUG; return TAO_UNKNOWN;
                 }
 %%
 
-ACE_Literal_Constraint*
+TAO_Literal_Constraint*
 extract_string(const char* total)
 {
   int prev_slash = 0, 
     ctr = 0;
   char str[BUFSIZ],
-   *tmp = total + 1;
+   *tmp = (char*) total + 1;
 
   while (*tmp != '\0')
     {
@@ -126,5 +126,5 @@ extract_string(const char* total)
     }
 
   str[ctr - 1] = '\0';
-  return new ACE_Literal_Constraint(str);
+  return new TAO_Literal_Constraint(str);
 }

@@ -17,27 +17,14 @@
 #ifndef TAO_SERVICE_TYPE_MAP_H
 #define TAO_SERVICE_TYPE_MAP_H
 
-#if defined (OS_NO_NAMESPACE)
-#define queue sillything
-#define map mommy
-#endif /* OS_NO_NAMESPACE */
-
 #include "Trader_Base.h"
-#include "Offer_Id_Iterator.h"
 #include "Monitor.h"
-#include "ace/OS.h"
 
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#undef map
-#endif /* OS_NO_NAMESPACE */
-
-#include <map>
-#include <string>
+class TAO_Offer_Id_Iterator;
 
 template <class LOCK_TYPE>
 class TAO_Service_Type_Map
-// = TITLE
+// = DESCRIPTION
 //   The TAO_Service_Type_Map encapsulates the mapping of service
 //   types to those offers exported with that service types. The
 //   underlying structure is a map of maps. The first maps maps the
@@ -93,8 +80,8 @@ public:
   
   int remove_offer (const CosTrading::OfferId offer_id,
 		    CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalOfferId,
-		    CosTrading::UnknownOfferId);
+    TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+		    CosTrading::UnknownOfferId));
 
   int remove_offer (const char* type, HUGE_NUMBER id);
   // Remove an offers whose id is <offer_id>. Returns 0 on success, -1 
@@ -104,16 +91,16 @@ public:
   
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
 				   CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalOfferId,
-		    CosTrading::UnknownOfferId);
+    TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+		    CosTrading::UnknownOfferId));
   // Lookup an offer whose offer_id is <offer_id>, and return
   // it. Otherwise, throw the appropriate exception.
 
   CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
 				   char*& type_name,
 				   CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalOfferId,
-		    CosTrading::UnknownOfferId);
+    TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+		    CosTrading::UnknownOfferId));
   // Lookup an offer whose OfferId is <offer_id> and return in
   // <type_name> the type name of the object. Type name is just a
   // pointer to a location in offer_id, so DON'T DELETE IT.
@@ -222,7 +209,7 @@ private:
 			      char* &service_type,
 			      HUGE_NUMBER& id,
 			      CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalOfferId);
+    TAO_THROW_SPEC ((CosTrading::IllegalOfferId));
   // Take in a previously generated offer id and return the type
   // and id that were used to generate the offer id.  
 

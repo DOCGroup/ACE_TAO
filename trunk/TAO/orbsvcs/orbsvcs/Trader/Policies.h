@@ -17,12 +17,11 @@
 #ifndef TAO_POLICIES_H
 #define TAO_POLICIES_H
 
-#include "CosTradingC.hh"
-#include "Trader_Base.h"
-
 // STL fun stuff.
 #include <vector>
 #include <deque>
+
+#include "Trader_Base.h"
 
 class TAO_Policies
 //
@@ -58,10 +57,10 @@ public:
   static const char * POLICY_NAMES[];
   
   TAO_Policies (TAO_Trader_Base& trader,
-		CosTrading::PolicySeq& policies,
+		const CosTrading::PolicySeq& policies,
 		CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::IllegalPolicyName,
-		    CosTrading::DuplicatePolicyName);
+    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPolicyName,
+		     CosTrading::DuplicatePolicyName));
 
   // BEGIN SPEC
   // The "policies" parameter allows the importer to specify how the
@@ -86,7 +85,7 @@ public:
   // END SPEC
   
   CORBA::ULong search_card (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "search_card" policy indicates to the trader the maximum
@@ -98,7 +97,7 @@ public:
   // END SPEC
   
   CORBA::ULong match_card (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "match_card" policy indicates to the trader the maximum
@@ -110,7 +109,7 @@ public:
   // END SPEC
   
   CORBA::ULong return_card (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "return_card" policy indicates to the trader the maximum
@@ -124,7 +123,7 @@ public:
   // = Offer consideration policies
   
   CORBA::Boolean use_modifiable_properties (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "use_modifiable_properties" policy indicates whether the
@@ -137,7 +136,7 @@ public:
   // END SPEC
   
   CORBA::Boolean use_dynamic_properties (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "use_dynamic_properties" policy indicates whether the trader
@@ -150,7 +149,7 @@ public:
   // END SPEC
   
   CORBA::Boolean use_proxy_offers (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "use_proxy_offers" policy indicates whether the trader should
@@ -162,7 +161,7 @@ public:
   // END SPEC
   
   CORBA::Boolean exact_type_match (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
   // BEGIN SPEC
   // The "exact_type_match" policy indicates to the trader whether the
@@ -174,16 +173,58 @@ public:
   // = Federated trader policies (not implemented yet)
   
   CosTrading::TraderName* starting_trader (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch,
-		    CosTrading::Lookup::InvalidPolicyValue);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+		    CosTrading::Lookup::InvalidPolicyValue));
+  // BEGIN SPEC
+  // The "starting_trader" policy facilitates the distribution of the
+  // trading service itself. It allows an importer to scope a search
+  // by choosing to explicitly navigate the links of the trading
+  // graph. If the policy is used in a query invocation it is
+  // recommended that it be the first policy-value pair; this
+  // facilitates an optimal forwarding of the query operation. A
+  // "policies" parameter need not include a value for the
+  // "starting_trader" policy. Where this policy is present, the first
+  // name component is compared against the name held in each link. If
+  // no match is found, the InvalidPolicyValue exception is
+  // raised. Otherwise, the trader invokes query() on the Lookup
+  // interface held by the named link, but passing the
+  // "starting_trader" policy with the first component removed.
+  // END SPEC
   
-  CosTrading::FollowOption link_follow_rule (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch,
-		    CosTrading::Lookup::InvalidPolicyValue);
+  CosTrading::FollowOption link_follow_rule (const char* link_name,
+					     CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
+		    CosTrading::Lookup::InvalidPolicyValue));
+  // BEGIN SPEC
+  //The "link_follow_rule" policy indicates how the client wishes
+  //links to be followed in the resolution of its query. See the
+  //discussion in "Link Follow Behavior" on page 16-16 for details. 
+  // END SPEC
+
+  // This method returns the link_follow_rule for a link whose name is 
+  // <link_name> using the following formula:
+  // if the importer specified a link_follow_rule policy
+  //      min(trader.max_follow_policy, link.limiting_follow_rule,
+  //          query.link_follow_rule)
+  // else min(trader.max_follow_policy, link.limiting_follow_rule,
+  //          trader.def_follow_policy) 
   
   CORBA::ULong hop_count (CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
 
+  // BEGIN SPEC
+  // The "hop_count" policy indicates to the trader the maximum number
+  // of hops across federation links that should be tolerated in the
+  // resolution of this query. The hop_count at the current trader is
+  // determined by taking the minimum of the trader's max_hop_count
+  // attribute and the importer's hop_count policy, if provided, or
+  // the trader's def_hop_count attribute if it is not. If the
+  // resulting value is zero, then no federated queries are
+  // permitted. If it is greater than zero, then it must be
+  // decremented before passing on to a federated trader. 
+  // END SPEC
+  
+  
   // = Return the limits applied.
   
   CosTrading::PolicyNameSeq* limits_applied (void);
@@ -203,12 +244,12 @@ private:
     
   CORBA::ULong ulong_prop (POLICY_TYPE pol,
 			   CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconclile a ULong property with its default.
   
   CORBA::Boolean boolean_prop (POLICY_TYPE pol,
 			       CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Lookup::PolicyTypeMismatch);
+    TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconcile a Boolean property with its debault.
  
   POL_QUEUE limits_;

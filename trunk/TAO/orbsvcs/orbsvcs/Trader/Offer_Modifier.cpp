@@ -32,18 +32,18 @@ TAO_Offer_Modifier (const char* type_name,
 
 void
 TAO_Offer_Modifier::
-delete_properties (CosTrading::PropertyNameSeq& deletes,
+delete_properties (const CosTrading::PropertyNameSeq& deletes,
 		   CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::Register::UnknownPropertyName, 
+  TAO_THROW_SPEC ((CosTrading::Register::UnknownPropertyName, 
 		  CosTrading::Register::MandatoryProperty,
 		  CosTrading::IllegalPropertyName,
-		  CosTrading::DuplicatePropertyName)
+		  CosTrading::DuplicatePropertyName))
 {
   PROP_NAMES delete_me;
   // Validate that the listed property names can be deleted
   for (int i = 0, length = deletes.length (); i < length; i++)
     {
-      CosTrading::PropertyName dname = deletes[i];
+      CosTrading::PropertyName dname = (char*)((const char *) deletes[i]);
       if (! TAO_Trader_Base::is_valid_identifier_name (dname))
 	TAO_THROW (CosTrading::IllegalPropertyName (dname));
       else
@@ -61,7 +61,7 @@ delete_properties (CosTrading::PropertyNameSeq& deletes,
   // Delete those properties from the offer.
   for (i = 0; i < length; i++)
     {
-      string prop_name = (char *) deletes[i];
+      string prop_name = (const char *) deletes[i];
       this->props_.erase (prop_name);
     } 
 }
@@ -70,16 +70,17 @@ void
 TAO_Offer_Modifier::
 merge_properties (const CosTrading::PropertySeq& modifies,
 		  CORBA::Environment& _env)
-    throw (CosTrading::IllegalPropertyName,
-	   CosTrading::DuplicatePropertyName,
-	   CosTrading::Register::ReadonlyProperty)
+  TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		   CosTrading::DuplicatePropertyName,
+		   CosTrading::Register::ReadonlyProperty))
 {
   PROP_NAMES modify_me;
   // Ensure that the proposed changes aren't to readonly properties or
   // otherwise invalid.
   for (int i = 0, length = modifies.length (); i < length; i++)
     {
-      const CosTrading::PropertyName mname = (const char *) modifies[i].name;
+      CosTrading::PropertyName mname =
+	(char*) ((const char *) modifies[i].name);
       if (! TAO_Trader_Base::is_valid_identifier_name (mname))
 	TAO_THROW (CosTrading::IllegalPropertyName (mname));
       else

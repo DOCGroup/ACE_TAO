@@ -17,7 +17,15 @@
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
 
-#include "CosTradingC.hh"
+#if defined (OS_NO_NAMESPACE)
+#define queue foobar
+#endif /* OS_NO_NAMESPACE */
+
+#include "orbsvcs/CosTradingC.h"
+
+#if defined (OS_NO_NAMESPACE)
+#undef queue
+#endif /* OS_NO_NAMESPACE */
 
 class TAO_Policy_Manager
 // = TITLE

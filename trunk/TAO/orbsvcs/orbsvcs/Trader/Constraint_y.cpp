@@ -1,10 +1,10 @@
 
-# line 2 "constraint.y"
+# line 2 "Trader/constraint.y"
   // $Id$
 // ========================================================================
 //
 // = LIBRARY
-//    Trading
+//    orbsvcs
 // 
 // = FILENAME
 //    constraint.y
@@ -18,40 +18,40 @@
 #include "Constraint_Nodes.h"
 
 //#define YYDEBUG 1
-# define GT 257
-# define GE 258
-# define LT 259
-# define LE 260
-# define EQ 261
-# define NE 262
-# define EXIST 263
-# define AND 264
-# define OR 265
-# define NOT 266
-# define IN 267
-# define TWIDDLE 268
-# define BOOLEAN 269
-# define PLUS 270
-# define MINUS 271
-# define MULT 272
-# define DIV 273
-# define UMINUS 274
-# define NUMBER 275
-# define RPAREN 276
-# define LPAREN 277
-# define IDENT 278
-# define STRING 279
-# define UNSIGNED_INTEGER 280
-# define SIGNED_INTEGER 281
-# define DOUBLE 282
-# define CONSTRAINT 283
-# define SEQUENCE 284
-# define UNKNOWN 285
-# define WITH 286
-# define MAX 287
-# define MIN 288
-# define FIRST 289
-# define RANDOM 290
+# define TAO_GT 257
+# define TAO_GE 258
+# define TAO_LT 259
+# define TAO_LE 260
+# define TAO_EQ 261
+# define TAO_NE 262
+# define TAO_EXIST 263
+# define TAO_AND 264
+# define TAO_OR 265
+# define TAO_NOT 266
+# define TAO_IN 267
+# define TAO_TWIDDLE 268
+# define TAO_BOOLEAN 269
+# define TAO_PLUS 270
+# define TAO_MINUS 271
+# define TAO_MULT 272
+# define TAO_DIV 273
+# define TAO_UMINUS 274
+# define TAO_NUMBER 275
+# define TAO_RPAREN 276
+# define TAO_LPAREN 277
+# define TAO_IDENT 278
+# define TAO_STRING 279
+# define TAO_UNKNOWN 280
+# define TAO_UNSIGNED 281
+# define TAO_SIGNED 282
+# define TAO_DOUBLE 283
+# define TAO_CONSTRAINT 284
+# define TAO_SEQUENCE 285
+# define TAO_WITH 286
+# define TAO_MAX 287
+# define TAO_MIN 288
+# define TAO_FIRST 289
+# define TAO_RANDOM 290
 
 #ifdef __STDC__
 #include <stdlib.h>
@@ -99,7 +99,7 @@ YYSTYPE *yyv;
 static int yymaxdepth = YYMAXDEPTH;
 # define YYERRCODE 256
 
-# line 133 "constraint.y"
+# line 133 "Trader/constraint.y"
 
 
 //extern int yydebug = 1;
@@ -178,40 +178,40 @@ typedef struct
 
 yytoktype yytoks[] =
 {
-	"GT",	257,
-	"GE",	258,
-	"LT",	259,
-	"LE",	260,
-	"EQ",	261,
-	"NE",	262,
-	"EXIST",	263,
-	"AND",	264,
-	"OR",	265,
-	"NOT",	266,
-	"IN",	267,
-	"TWIDDLE",	268,
-	"BOOLEAN",	269,
-	"PLUS",	270,
-	"MINUS",	271,
-	"MULT",	272,
-	"DIV",	273,
-	"UMINUS",	274,
-	"NUMBER",	275,
-	"RPAREN",	276,
-	"LPAREN",	277,
-	"IDENT",	278,
-	"STRING",	279,
-	"UNSIGNED_INTEGER",	280,
-	"SIGNED_INTEGER",	281,
-	"DOUBLE",	282,
-	"CONSTRAINT",	283,
-	"SEQUENCE",	284,
-	"UNKNOWN",	285,
-	"WITH",	286,
-	"MAX",	287,
-	"MIN",	288,
-	"FIRST",	289,
-	"RANDOM",	290,
+	"TAO_GT",	257,
+	"TAO_GE",	258,
+	"TAO_LT",	259,
+	"TAO_LE",	260,
+	"TAO_EQ",	261,
+	"TAO_NE",	262,
+	"TAO_EXIST",	263,
+	"TAO_AND",	264,
+	"TAO_OR",	265,
+	"TAO_NOT",	266,
+	"TAO_IN",	267,
+	"TAO_TWIDDLE",	268,
+	"TAO_BOOLEAN",	269,
+	"TAO_PLUS",	270,
+	"TAO_MINUS",	271,
+	"TAO_MULT",	272,
+	"TAO_DIV",	273,
+	"TAO_UMINUS",	274,
+	"TAO_NUMBER",	275,
+	"TAO_RPAREN",	276,
+	"TAO_LPAREN",	277,
+	"TAO_IDENT",	278,
+	"TAO_STRING",	279,
+	"TAO_UNKNOWN",	280,
+	"TAO_UNSIGNED",	281,
+	"TAO_SIGNED",	282,
+	"TAO_DOUBLE",	283,
+	"TAO_CONSTRAINT",	284,
+	"TAO_SEQUENCE",	285,
+	"TAO_WITH",	286,
+	"TAO_MAX",	287,
+	"TAO_MIN",	288,
+	"TAO_FIRST",	289,
+	"TAO_RANDOM",	290,
 	"-unknown-",	-1	/* ends search */
 };
 
@@ -220,41 +220,41 @@ char * yyreds[] =
 	"-no such reduction-",
 	"constraint : bool_or",
 	"constraint : preference",
-	"preference : MIN bool_or",
-	"preference : MAX bool_or",
-	"preference : WITH bool_or",
-	"preference : FIRST",
-	"preference : RANDOM",
-	"bool_or : bool_or OR bool_and",
+	"preference : TAO_MIN bool_or",
+	"preference : TAO_MAX bool_or",
+	"preference : TAO_WITH bool_or",
+	"preference : TAO_FIRST",
+	"preference : TAO_RANDOM",
+	"bool_or : bool_or TAO_OR bool_and",
 	"bool_or : bool_and",
-	"bool_and : bool_and AND bool_compare",
+	"bool_and : bool_and TAO_AND bool_compare",
 	"bool_and : bool_compare",
-	"bool_compare : expr_in EQ expr_in",
-	"bool_compare : expr_in NE expr_in",
-	"bool_compare : expr_in GT expr_in",
-	"bool_compare : expr_in GE expr_in",
-	"bool_compare : expr_in LT expr_in",
-	"bool_compare : expr_in LE expr_in",
+	"bool_compare : expr_in TAO_EQ expr_in",
+	"bool_compare : expr_in TAO_NE expr_in",
+	"bool_compare : expr_in TAO_GT expr_in",
+	"bool_compare : expr_in TAO_GE expr_in",
+	"bool_compare : expr_in TAO_LT expr_in",
+	"bool_compare : expr_in TAO_LE expr_in",
 	"bool_compare : expr_in",
-	"expr_in : expr_twiddle IN IDENT",
+	"expr_in : expr_twiddle TAO_IN TAO_IDENT",
 	"expr_in : expr_twiddle",
-	"expr_twiddle : expr TWIDDLE expr",
+	"expr_twiddle : expr TAO_TWIDDLE expr",
 	"expr_twiddle : expr",
-	"expr : expr PLUS term",
-	"expr : expr MINUS term",
+	"expr : expr TAO_PLUS term",
+	"expr : expr TAO_MINUS term",
 	"expr : term",
-	"term : term MULT factor_not",
-	"term : term DIV factor_not",
+	"term : term TAO_MULT factor_not",
+	"term : term TAO_DIV factor_not",
 	"term : factor_not",
-	"factor_not : NOT factor",
+	"factor_not : TAO_NOT factor",
 	"factor_not : factor",
-	"factor : LPAREN bool_or RPAREN",
-	"factor : EXIST IDENT",
-	"factor : IDENT",
-	"factor : NUMBER",
-	"factor : MINUS NUMBER",
-	"factor : STRING",
-	"factor : BOOLEAN",
+	"factor : TAO_LPAREN bool_or TAO_RPAREN",
+	"factor : TAO_EXIST TAO_IDENT",
+	"factor : TAO_IDENT",
+	"factor : TAO_NUMBER",
+	"factor : TAO_MINUS TAO_NUMBER",
+	"factor : TAO_STRING",
+	"factor : TAO_BOOLEAN",
 };
 #endif /* YYDEBUG */
 # line	1 "/usr/ccs/bin/yaccpar"
@@ -790,115 +790,115 @@ int yyparse()
 	{
 		
 case 1:
-# line 38 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(CONSTRAINT, yypvt[-0].constraint_); } break;
+# line 38 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_CONSTRAINT, yypvt[-0].constraint_); } break;
 case 2:
-# line 40 "constraint.y"
+# line 40 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 3:
-# line 44 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(MIN, yypvt[-0].constraint_); } break;
+# line 44 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_MIN, yypvt[-0].constraint_); } break;
 case 4:
-# line 46 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(MAX, yypvt[-0].constraint_); } break;
+# line 46 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_MAX, yypvt[-0].constraint_); } break;
 case 5:
-# line 48 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(WITH, yypvt[-0].constraint_); } break;
+# line 48 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_WITH, yypvt[-0].constraint_); } break;
 case 6:
-# line 50 "constraint.y"
-{ yyval.constraint_ = new ACE_Noop_Constraint(FIRST); } break;
+# line 50 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Noop_Constraint(TAO_FIRST); } break;
 case 7:
-# line 52 "constraint.y"
-{ yyval.constraint_ = new ACE_Noop_Constraint(RANDOM); } break;
+# line 52 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Noop_Constraint(TAO_RANDOM); } break;
 case 8:
-# line 56 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(OR, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 56 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_OR, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 9:
-# line 58 "constraint.y"
+# line 58 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 10:
-# line 62 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(AND, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 62 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_AND, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 11:
-# line 64 "constraint.y"
+# line 64 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 12:
-# line 68 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(EQ, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 68 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_EQ, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 13:
-# line 70 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(NE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 70 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_NE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 14:
-# line 72 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(GT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 72 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_GT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 15:
-# line 74 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(GE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 74 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_GE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 16:
-# line 76 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(LT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 76 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_LT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 17:
-# line 78 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(LE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 78 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_LE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 18:
-# line 80 "constraint.y"
+# line 80 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 19:
-# line 84 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(IN, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 84 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_IN, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 20:
-# line 86 "constraint.y"
+# line 86 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 21:
-# line 90 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(TWIDDLE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 90 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_TWIDDLE, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 22:
-# line 92 "constraint.y"
+# line 92 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 23:
-# line 96 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(PLUS, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 96 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_PLUS, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 24:
-# line 98 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(MINUS, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 98 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_MINUS, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 25:
-# line 100 "constraint.y"
+# line 100 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 26:
-# line 104 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(MULT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 104 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_MULT, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 27:
-# line 106 "constraint.y"
-{ yyval.constraint_ = new ACE_Binary_Constraint(DIV, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
+# line 106 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_DIV, yypvt[-2].constraint_, yypvt[-0].constraint_); } break;
 case 28:
-# line 108 "constraint.y"
+# line 108 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 29:
-# line 112 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(NOT, yypvt[-0].constraint_); } break;
+# line 112 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_NOT, yypvt[-0].constraint_); } break;
 case 30:
-# line 114 "constraint.y"
+# line 114 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 31:
-# line 118 "constraint.y"
+# line 118 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-1].constraint_; } break;
 case 32:
-# line 120 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(EXIST, yypvt[-0].constraint_); } break;
+# line 120 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_EXIST, yypvt[-0].constraint_); } break;
 case 33:
-# line 122 "constraint.y"
+# line 122 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 34:
-# line 124 "constraint.y"
+# line 124 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 35:
-# line 126 "constraint.y"
-{ yyval.constraint_ = new ACE_Unary_Constraint(UMINUS, yypvt[-0].constraint_); } break;
+# line 126 "Trader/constraint.y"
+{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_UMINUS, yypvt[-0].constraint_); } break;
 case 36:
-# line 128 "constraint.y"
+# line 128 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 case 37:
-# line 130 "constraint.y"
+# line 130 "Trader/constraint.y"
 { yyval.constraint_ = yypvt[-0].constraint_; } break;
 # line	532 "/usr/ccs/bin/yaccpar"
 	}

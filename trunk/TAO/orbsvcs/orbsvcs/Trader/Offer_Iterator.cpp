@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 
-// ============================================================================
+// ========================================================================
 // $Id$
 // 
 // = LIBRARY
@@ -13,7 +13,8 @@
 //    Marina Spivak <marina@cs.wustl.edu>
 //    Seth Widoff <sbw1@cs.wustl.edu>
 // 
-// ============================================================================
+// ========================================================================
+
 #define ACE_BUILD_DLL
 
 #include "Offer_Iterator.h"
@@ -29,10 +30,30 @@ TAO_Offer_Iterator::~TAO_Offer_Iterator (void)
 }
 
 void 
-TAO_Offer_Iterator::destroy (void)
-  TAO_THROW_SPEC (CORBA::SystemException)
+TAO_Offer_Iterator::destroy (CORBA::Environment& env)
+  TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::release (this);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  
+  TAO_TRY
+    {
+      PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (env,);
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (env,);
+      
+      poa->deactivate_object (id.in (), TAO_TRY_ENV);
+    }
+  TAO_CATCHANY
+    {      
+    }
+  TAO_ENDTRY;
+  
+  delete this;  
 }
 
                 

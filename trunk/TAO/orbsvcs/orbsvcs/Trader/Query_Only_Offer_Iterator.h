@@ -43,13 +43,13 @@ public:
   virtual CORBA::Boolean next_n (CORBA::ULong n, 
 				 CosTrading::OfferSeq_out offers,
 				 CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException);
+    TAO_THROW_SPEC ((CORBA::SystemException));
   // Deposit at maximum n offers into the return sequence and return 1,
   // or return 0 if the iterator is done and no offers are returned.
   
   virtual CORBA::ULong max_left (CORBA::Environment& _env) 
-    TAO_THROW_SPEC (CORBA::SystemException, 
-		    CosTrading::UnknownMaxLeft);
+    TAO_THROW_SPEC ((CORBA::SystemException, 
+		    CosTrading::UnknownMaxLeft));
   // Return the number of items left in the iterator.  
 
   void add_offer (CosTrading::OfferId offer_id,

@@ -19,9 +19,7 @@
 #ifndef TAO_LOOKUP_H
 #define TAO_LOOKUP_H
 
-#include "CosTradingS.h"
 #include "Policies.h"
-#include "Offer_Filter.h"
 #include "Offer_Filter.h"
 #include "Property_Filter.h"
 #include "Offer_Iterator.h"
@@ -29,7 +27,10 @@
 #include "Preference_Interpreter.h"
 
 template<class TRADER>
-class TAO_Lookup : public POA_CosTrading::Lookup
+class TAO_Lookup :
+  public TAO_Trader_Components<POA_CosTrading::Lookup>,
+  public TAO_Support_Attributes<POA_CosTrading::Lookup>,
+  public TAO_Import_Attributes<POA_CosTrading::Lookup>
   //
   // = TITLE
   //     This class implements CosTrading::Lookup IDL interface.
@@ -51,7 +52,7 @@ public:
 	   CosTrading::OfferIterator_out offer_itr,
 	   CosTrading::PolicyNameSeq_out limits_applied,
 	   CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::IllegalServiceType,
 		    CosTrading::UnknownServiceType,
 		    CosTrading::IllegalConstraint,
@@ -61,7 +62,7 @@ public:
 		    CosTrading::Lookup::InvalidPolicyValue,
 		    CosTrading::IllegalPropertyName,
 		    CosTrading::DuplicatePropertyName,
-		    CosTrading::DuplicatePolicyName);
+		    CosTrading::DuplicatePolicyName));
 
   // BEGIN SPEC
   // The query operation is the means by which an object can obtain
@@ -142,91 +143,6 @@ public:
   // returned.
   // END SPEC
   
-  // = CosTrading::TraderComponents methods. 
-  virtual CosTrading::Lookup_ptr lookup_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns an object reference to the Lookup interface of the trader.
-  // Returns nil if the trader does not support Lookup interface.
-  
-  virtual CosTrading::Register_ptr register_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference for the Register interface of the trader.
-  // Returns nil if the trader does not support Register interface.
-  
-  virtual CosTrading::Link_ptr link_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference for the Link interface of the trader.
-  // Returns nil if the trader does not support Link interface.
-
-  virtual CosTrading::Proxy_ptr proxy_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference to the Proxy interface of the trader.
-  // Returns nil if the trader does not support Proxy interface. 
-  
-  virtual CosTrading::Admin_ptr admin_if (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  // Returns object reference for the Admin interface of the trader.
-  // Returns nil if the trader does not support Admin interface.
-
-    // = CosTrading::ImportAttributes methods.
-  
-  virtual CORBA::ULong def_search_card (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CORBA::ULong max_search_card (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  // Search cardinality determines the maximum number of offers searched
-  // before not considering other offers. 
-  
-  virtual CORBA::ULong def_match_card (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CORBA::ULong max_match_card (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  // Match cardinality determines the maximum number of offers
-  // matched to the constraints before not considering other offers..
-  
-  virtual CORBA::ULong def_return_card (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CORBA::ULong max_return_card (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  // Return cardinality determines the maximum number of offers marked 
-  // to return before not considering other offers.
-
-  
-  virtual CORBA::ULong max_list (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CORBA::ULong def_hop_count (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CORBA::ULong max_hop_count (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CosTrading::FollowOption def_follow_policy (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  virtual CosTrading::FollowOption max_follow_policy (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
-  // = CosTrading::SupportAttributes methods.
-
-  virtual CORBA::Boolean supports_modifiable_properties (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  
-  virtual CORBA::Boolean supports_dynamic_properties (CORBA::Environment& env)
-  TAO_THROW_SPEC (CORBA::SystemException);
-  
-  virtual CORBA::Boolean supports_proxy_offers (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-  
-  virtual CosTrading::TypeRepository_ptr type_repos (CORBA::Environment& env)
-    TAO_THROW_SPEC (CORBA::SystemException);
-
   static const char* NAME;
 
   // Handy Typedefs
@@ -255,12 +171,12 @@ private:
 		       TAO_Policies& policies,
 		       LOOKUP_OFFER_LIST& ordered_offers,
 		       CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::IllegalConstraint,
+    TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
 		    CosTrading::Lookup::IllegalPreference,
 		    CosTrading::Lookup::PolicyTypeMismatch,
 		    CosTrading::Lookup::InvalidPolicyValue,
 		    CosTrading::IllegalServiceType,
-		    CosTrading::UnknownServiceType);
+		    CosTrading::UnknownServiceType));
   // This method has three phases. The first phase passes the
   // offer_map through the constraint interpreter, winnowing away
   // those offers that don't match the validated constraint. The
@@ -294,8 +210,8 @@ private:
 			 CosTrading::OfferSeq*& offers,
 			 CosTrading::OfferIterator_ptr& offer_itr,
 			 CORBA::Environment& env)
-    TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
-		    CosTrading::DuplicatePropertyName);
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		    CosTrading::DuplicatePropertyName));
   // This method takes the list of ordered offers and places a number
   // of them in the sequence of returned offers and the rest into thr
   // iterator. In addition, fill_receptacles uses the

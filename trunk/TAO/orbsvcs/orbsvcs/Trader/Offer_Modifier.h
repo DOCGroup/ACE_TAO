@@ -17,7 +17,6 @@
 #ifndef ACE_OFFER_MODIFIER_H
 #define ACE_OFFER_MODIFIER_H
 
-#include "CosTradingC.h"
 #include "Trader_Base.h"
 #include <set>
 #include <map>
@@ -38,20 +37,20 @@ public:
   // Modify an <offer> of type <type>, whose properties are described
   // by <type_struct>
   
-  void delete_properties (CosTrading::PropertyNameSeq& deletes,
+  void delete_properties (const CosTrading::PropertyNameSeq& deletes,
 			  CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::Register::UnknownPropertyName, 
+    TAO_THROW_SPEC ((CosTrading::Register::UnknownPropertyName, 
 		    CosTrading::Register::MandatoryProperty,
 		    CosTrading::IllegalPropertyName,
-		    CosTrading::DuplicatePropertyName);
+		    CosTrading::DuplicatePropertyName));
   // Delete the properties whose names were given to the
   // constructor. Ensure we don't delete mandatory properties.
 
   void merge_properties (const CosTrading::PropertySeq& modifies,
 			 CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
 		    CosTrading::DuplicatePropertyName,
-		    CosTrading::Register::ReadonlyProperty);
+		    CosTrading::Register::ReadonlyProperty));
   // Copy to the destination the union of the source and destination
   // properties. In the case of duplicate properties, update the
   // destination with the source's value.

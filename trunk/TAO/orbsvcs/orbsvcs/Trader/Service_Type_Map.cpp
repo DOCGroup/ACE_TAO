@@ -3,6 +3,7 @@
 #define TAO_SERVICE_TYPE_MAP_C
 
 #include "Service_Type_Map.h"
+#include "Offer_Id_Iterator.h"
 
 template <class LOCK_TYPE>
 TAO_Service_Type_Map<LOCK_TYPE>::TAO_Service_Type_Map (void)
@@ -14,7 +15,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::Local_Offer_Iterator*
 TAO_Service_Type_Map<LOCK_TYPE>::get_offers (const char* type)
 {
   // Construct a Local_Offer_Iterator
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), 0);
   
   Local_Offer_Iterator* iterator = 0;
   string service_type (type);
@@ -34,7 +35,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::get_offers (const char* type)
 template <class LOCK_TYPE> int
 TAO_Service_Type_Map<LOCK_TYPE>::add_type (const char* type)
 {
-  ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), -1);
 
   int return_value = -1; 
   string service_type (type);
@@ -57,7 +58,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::add_type (const char* type)
 template <class LOCK_TYPE> int
 TAO_Service_Type_Map<LOCK_TYPE>::remove_type (const char* type)
 {
-  ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), -1);
 
   int return_value = -1; 
   string service_type (type);
@@ -78,7 +79,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::
 insert_offer (const char* type,
 	      const CosTrading::Offer& offer)
 {
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), 0);
   
   char* return_value = 0;
   string service_type (type);
@@ -92,7 +93,7 @@ insert_offer (const char* type,
       OFFER_MAP &offer_map = mc.first;
       HUGE_NUMBER& starting_number = mc.second;
       
-      ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, offer_map.lock ());
+      ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map.lock (), 0);
 
       return_value = this->generate_offer_id (type, starting_number);
       offer_map[starting_number++] = offer;
@@ -105,7 +106,7 @@ template <class LOCK_TYPE> int
 TAO_Service_Type_Map<LOCK_TYPE>::
 remove_offer (const char* type, HUGE_NUMBER id)
 {
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), -1);
   
   int return_value = -1;
   SERVICE_TYPE_MAP::iterator type_iter;
@@ -118,7 +119,7 @@ remove_offer (const char* type, HUGE_NUMBER id)
       OFFER_MAP_PLUS_COUNTER& mc = (*type_iter).second;
       OFFER_MAP &offer_map = mc.first;
       
-      ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, offer_map.lock ());
+      ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map.lock (), -1);
 
       offer_iter = offer_map.find (id);
       if (offer_iter != offer_map.end ())
@@ -135,8 +136,8 @@ template <class LOCK_TYPE> int
 TAO_Service_Type_Map<LOCK_TYPE>::
 remove_offer (const CosTrading::OfferId offer_id,
 	      CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::IllegalOfferId,
-		  CosTrading::UnknownOfferId)
+  TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+		  CosTrading::UnknownOfferId))
 {
   char* stype = 0;
   HUGE_NUMBER index = -1;
@@ -145,7 +146,7 @@ remove_offer (const CosTrading::OfferId offer_id,
   TAO_CHECK_ENV_RETURN (_env, -1);
 
   if (this->remove_offer (stype, index) == -1)
-    TAO_THROW (CosTrading::UnknownOfferId (offer_id), -1);
+    TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), -1);
 
   return 0;
 }
@@ -155,15 +156,15 @@ TAO_Service_Type_Map<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id,
 	      char*& type_name,
 	      CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::IllegalOfferId,
-		  CosTrading::UnknownOfferId)
+  TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+		  CosTrading::UnknownOfferId))
 {
   HUGE_NUMBER index;
   CosTrading::Offer* offer = 0;
   this->parse_offer_id (offer_id, type_name, index, _env);
   TAO_CHECK_ENV_RETURN (_env, offer);
 
-  if ((offer = this->lookup_offer (type_name, index, _env)) == 0)
+  if ((offer = this->lookup_offer (type_name, index)) == 0)
     TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
 
   return offer;
@@ -174,8 +175,8 @@ template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Service_Type_Map<LOCK_TYPE>::
 lookup_offer (const CosTrading::OfferId offer_id,
 	      CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::IllegalOfferId,
-		  CosTrading::UnknownOfferId)
+  TAO_THROW_SPEC ((CosTrading::IllegalOfferId,
+		  CosTrading::UnknownOfferId))
 {
   char* type_name;
   HUGE_NUMBER index;
@@ -184,7 +185,7 @@ lookup_offer (const CosTrading::OfferId offer_id,
   this->parse_offer_id (offer_id, type_name, index, _env);
   TAO_CHECK_ENV_RETURN (_env, offer);
 
-  if ((offer = this->lookup_offer (type_name, index, _env)) == 0)
+  if ((offer = this->lookup_offer (type_name, index)) == 0)
     TAO_THROW_RETURN (CosTrading::UnknownOfferId (offer_id), offer);
 
   return offer;
@@ -194,7 +195,7 @@ template <class LOCK_TYPE> CosTrading::Offer*
 TAO_Service_Type_Map<LOCK_TYPE>::
 lookup_offer (const char* type, HUGE_NUMBER id)
 {
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), 0);
   
   CosTrading::Offer* return_value = 0;
   SERVICE_TYPE_MAP::iterator type_iter =
@@ -210,7 +211,7 @@ lookup_offer (const char* type, HUGE_NUMBER id)
       if (offer_iter != offer_map.end ())
 	return_value = &((*offer_iter).second);
     }
-
+  
   return return_value;
 }
 
@@ -219,7 +220,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::Random_Offer_Locator*
 TAO_Service_Type_Map<LOCK_TYPE>::lookup_offers (const char* type)
 {
   // Construct a Random_Offer_Locator.
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), 0);
   
   Random_Offer_Locator* iterator = 0;
   string service_type (type);
@@ -243,16 +244,16 @@ TAO_Service_Type_Map<LOCK_TYPE>::retrieve_all_offer_ids (void)
   // map, cramming offer_id strings into a newly constructed
   // TAO_Offer_Id_Iterator. 
   TAO_Offer_Id_Iterator* id_iterator = new TAO_Offer_Id_Iterator ();
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), 0);
   
   for (SERVICE_TYPE_MAP::iterator type_iter = this->type_map_.begin ();
        type_iter != this->type_map_.end ();
        type_iter++)
     {
-      string& service_type = (*type_iter).first;
+      char* service_type = (char *) (*type_iter).first.data ();
       OFFER_MAP& offer_map = (*type_iter).second.first;
 
-      ACE_READ_GUARD (LOCK_TYPE, ace_mon, offer_map.lock ());	  
+      ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map.lock (), 0);
       
       for (OFFER_MAP::iterator offer_iter = offer_map.begin();
 	   offer_iter != offer_map.end();
@@ -260,7 +261,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::retrieve_all_offer_ids (void)
 	{
 	  HUGE_NUMBER offer_index = (*offer_iter).first;
 	  CosTrading::OfferId_var offer_id = 
-	    this->generate_offer_id (service_type.data (), offer_index); 
+	    this->generate_offer_id (service_type, offer_index); 
 
 	  id_iterator->insert_id (offer_id);
 	}
@@ -272,7 +273,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::retrieve_all_offer_ids (void)
 template <class LOCK_TYPE> TAO_Service_Type_Map<LOCK_TYPE>::TYPE_NAME_SEQ*
 TAO_Service_Type_Map<LOCK_TYPE>::list_all_types (void)
 {
-  ACE_READ_GUARD (LOCK_TYPE, ace_mon, this->type_map_.lock ());
+  ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->type_map_.lock (), 0);
   
   CORBA::ULong i = 0;
   TYPE_NAME* type_names = TYPE_NAME_SEQ::allocbuf (this->type_map_.size ());
@@ -290,10 +291,10 @@ TAO_Service_Type_Map<LOCK_TYPE>::parse_offer_id (const char *offer_id,
 						 char*&service_type,
 						 HUGE_NUMBER& id,
 						 CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::IllegalOfferId)
+  TAO_THROW_SPEC ((CosTrading::IllegalOfferId))
 {
   // Get service type: it is everything from 17th character to the end.
-  service_type = offer_id + 16;
+  service_type = (char *) offer_id + 16;
   
   // Get id: temporarily put the end of string character where the service 
   // type starts, convert to number, replace the character back.

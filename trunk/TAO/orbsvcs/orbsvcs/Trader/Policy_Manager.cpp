@@ -76,7 +76,7 @@ TAO_Policy_Manager::starting_trader (CosTrading::TraderName* name)
 {
   CosTrading::Policy& policy = this->fetch_next_policy ();  
   policy.name = POLICY_NAMES[STARTING_TRADER];
-  policy.value <<= *name;  
+  //  policy.value <<= *name;  
 }
 
 void

@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 
-// ========================================================================
+// =====================================================================
 // $Id$
 //
 // = LIBRARY
@@ -13,7 +13,7 @@
 //    Marina Spivak <marina@cs.wustl.edu>
 //    Seth Widoff <sbw1@cs.wustl.edu>
 // 
-// ========================================================================
+// =====================================================================
 
 #if !defined (TAO_LOOKUP_C)
 #define TAO_LOOKUP_C
@@ -40,7 +40,10 @@ const char* TAO_Lookup<TRADER>::NAME = "Trader: Lookup";
 
 template <class TRADER>
 TAO_Lookup<TRADER>::TAO_Lookup (TRADER &trader)
-  : trader_ (trader)
+  : trader_ (trader),
+    TAO_Trader_Components<POA_CosTrading::Lookup> (trader.trading_components ()),
+    TAO_Support_Attributes<POA_CosTrading::Lookup> (trader.support_attributes ()),
+    TAO_Import_Attributes<POA_CosTrading::Lookup> (trader.import_attributes ())
 {
 }
 
@@ -61,17 +64,17 @@ query (const char *type,
        CosTrading::OfferIterator_out returned_offer_iterator,
        CosTrading::PolicyNameSeq_out returned_limits_applied,
        CORBA::Environment& env)
-  TAO_THROW_SPEC (CORBA::SystemException,
-		  CosTrading::IllegalServiceType,
-		  CosTrading::UnknownServiceType,
-		  CosTrading::IllegalConstraint,
-		  CosTrading::Lookup::IllegalPreference,
-		  CosTrading::Lookup::IllegalPolicyName,
-		  CosTrading::Lookup::PolicyTypeMismatch,
-		  CosTrading::Lookup::InvalidPolicyValue,
-		  CosTrading::IllegalPropertyName,
-		  CosTrading::DuplicatePropertyName,
-		  CosTrading::DuplicatePolicyName)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+		   CosTrading::IllegalServiceType,
+		   CosTrading::UnknownServiceType,
+		   CosTrading::IllegalConstraint,
+		   CosTrading::Lookup::IllegalPreference,
+		   CosTrading::Lookup::IllegalPolicyName,
+		   CosTrading::Lookup::PolicyTypeMismatch,
+		   CosTrading::Lookup::InvalidPolicyValue,
+		   CosTrading::IllegalPropertyName,
+		   CosTrading::DuplicatePropertyName,
+		   CosTrading::DuplicatePolicyName))
 {    
   // Initializing out parameters
   returned_offers = new CosTrading::OfferSeq;
@@ -87,9 +90,10 @@ query (const char *type,
   CosTrading::TypeRepository_ptr type_repos =
     support_attrs.type_repos ();
   CosTradingRepos::ServiceTypeRepository_ptr rep = 
-    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos);
+    CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, env);
+  TAO_CHECK_ENV_RETURN (env,);
   TAO_Policies policies (this->trader_, in_policies, env);
-  TAO_CHECK_ENV_RETURN (env);
+  TAO_CHECK_ENV_RETURN (env,);
 
   // If type is not found, there is nothing to consider - return.
   // Else we found the service type....proceed with lookup.
@@ -105,7 +109,7 @@ query (const char *type,
 			policies,
 			ordered_offers,
 			env);      
-  TAO_CHECK_ENV_RETURN (env);
+  TAO_CHECK_ENV_RETURN (env,);
   
   // Fill the return sequence and iterator with the bountiful results.
   this->fill_receptacles (type,
@@ -115,7 +119,7 @@ query (const char *type,
 			  returned_offers,
 			  returned_offer_iterator,
 			  env);
-  TAO_CHECK_ENV_RETURN (env);
+  TAO_CHECK_ENV_RETURN (env,);
 
   // Return the limits applied during the course of the lookup.
   returned_limits_applied = policies.limits_applied ();
@@ -131,12 +135,12 @@ perform_lookup (const char* type,
 		TAO_Policies& policies,
 		LOOKUP_OFFER_LIST& ordered_offers,
 		CORBA::Environment& env)
-  TAO_THROW_SPEC (CosTrading::IllegalConstraint,
+  TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
 		  CosTrading::Lookup::IllegalPreference,
 		  CosTrading::Lookup::PolicyTypeMismatch,
 		  CosTrading::Lookup::InvalidPolicyValue,
 		  CosTrading::IllegalServiceType,
-		  CosTrading::UnknownServiceType)
+		  CosTrading::UnknownServiceType))
 {    
   // TAO_Offer_Filter -- ensures that we don't consider offers with
   // modifiable or dynamic properties if the Trader doesn't support
@@ -147,15 +151,16 @@ perform_lookup (const char* type,
   // determines whether an offer meets those constraints.
   // TAO_Preference_Interpreter -- parses the preference string and
   // orders offers according to those constraints.
-  TYPE_STRUCT type_struct (rep->fully_describe_type (type, _env));
-  TAO_CHECK_ENV_RETURN (env);
-  TAO_Offer_Filter offer_filter (type_struct, policies);
-  TAO_Constraint_Validator validator (type_struct);
+  TYPE_STRUCT type_struct (rep->fully_describe_type (type, env));
+  TAO_CHECK_ENV_RETURN (env,);
+  TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
+  TAO_Constraint_Validator validator (type_struct.ptr ());
   TAO_Constraint_Interpreter constr_inter (validator, constraint, env);
-  TAO_CHECK_ENV_RETURN (env);
+  TAO_CHECK_ENV_RETURN (env,);
   TAO_Preference_Interpreter pref_inter (validator, preferences, env);
-  TAO_CHECK_ENV_RETURN (env);
-  CORBA::ULong return_card = policies.return_card ();
+  TAO_CHECK_ENV_RETURN (env,);
+  CORBA::ULong return_card = policies.return_card (env);
+  TAO_CHECK_ENV_RETURN (env,);
   
   // Try to find the map of offers of desired service type.
   this->lookup_one_type (type,
@@ -170,8 +175,9 @@ perform_lookup (const char* type,
   // subtypes. Additional properties on the subtype are generally
   // ignored. This is as it should be, consistent with the notions of
   // type inheritence.
-  if (! policies.exact_type_match ())
+  if (! policies.exact_type_match (env))
     {
+      TAO_CHECK_ENV_RETURN (env,);
       this->lookup_all_subtypes (type,
 				 service_type_map,
 				 rep,
@@ -179,6 +185,7 @@ perform_lookup (const char* type,
 				 pref_inter,
 				 offer_filter);
     }
+  TAO_CHECK_ENV_RETURN (env,);
 
   // Pull the matched offers out of the pref_inter in order, and stick 
   // them in a queue. The offers in the queue will be emptied into
@@ -272,11 +279,11 @@ lookup_all_subtypes (const char* type,
   list<char*> sub_types, unconsidered_types;
   CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
   TYPE_NAME_SEQ all_types (service_type_map.list_all_types ());
-
+  
   // All types save the supertype are initially unconsidered.
   sub_types.push_back ((char *) type);
   for (int i = all_types->length () - 1; i >= 0; i--)
-    unconsidered_types.push_back (all_types[i]);
+    unconsidered_types.push_back ((char*)((const char*) all_types[i]));
   unconsidered_types.remove ((char *) type);
 
   // Iterate over the remaining subtypes to locate their subtypes.
@@ -300,7 +307,7 @@ lookup_all_subtypes (const char* type,
 	  {
 	    type_struct = rep->describe_type (type_name, TAO_TRY_ENV);
 	  }
-	TAO_CATCH_ANY
+	TAO_CATCHANY
 	  {
 	    break;
 	  }
@@ -342,8 +349,8 @@ fill_receptacles (const char* type,
 		  CosTrading::OfferSeq*& offers,
 		  CosTrading::OfferIterator_ptr& offer_itr,
 		  CORBA::Environment& env)
-  TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
-		  CosTrading::DuplicatePropertyName)
+  TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		  CosTrading::DuplicatePropertyName))
 {
   // BEGIN SPEC
   // The returned offers are passed back in one of two ways (or a
@@ -360,7 +367,7 @@ fill_receptacles (const char* type,
   LOOKUP_OFFER_LIST::iterator ordered_offers_iterator = 
     ordered_offers.begin ();
   TAO_Property_Filter prop_filter (desired_props, env);
-  TAO_CHECK_ENV_RETURN (env);
+  TAO_CHECK_ENV_RETURN (env,);
   
   // RETURNING: Calculate how many offers go into the sequence
   //  Calculate how many go into the iterator
@@ -384,11 +391,8 @@ fill_receptacles (const char* type,
       // Create an iterator implementation 
       TAO_Offer_Iterator *oi =
 	this->create_offer_iterator (type, prop_filter);  
-      offer_itr = oi->_duplicate (oi);
-      
-      // Register the iterator with the orb.
-      CORBA::BOA_var boa = _boa();
-      boa->obj_is_ready (oi);
+      offer_itr = oi->_this (env);
+      TAO_CHECK_ENV_RETURN (env,);
       
       // Add to the iterator
       for (i = 0;
@@ -432,168 +436,5 @@ create_offer_iterator (const char *type,
 
   return iterator;
 }
-
-
-template <class TRADER>
-CosTrading::Lookup_ptr
-TAO_Lookup<TRADER>::lookup_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Lookup::_duplicate (this->trader_.trading_components ().lookup_if ());
-}
-
-template <class TRADER>
-CosTrading::Register_ptr
-TAO_Lookup<TRADER>::register_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Register::_duplicate (this->trader_.trading_components ().register_if ());
-}
-
-template <class TRADER>
-CosTrading::Link_ptr
-TAO_Lookup<TRADER>::link_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Link::_duplicate (this->trader_.trading_components ().link_if ());
-}
-
-template <class TRADER>
-CosTrading::Proxy_ptr
-TAO_Lookup<TRADER>::proxy_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Proxy::_duplicate (this->trader_.trading_components ().proxy_if ());
-}
-
-template <class TRADER>
-CosTrading::Admin_ptr
-TAO_Lookup<TRADER>::admin_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Admin::_duplicate (this->trader_.trading_components ().admin_if ());
-}
-
-template <class TRADER>
-CORBA::Boolean 
-TAO_Lookup<TRADER>::supports_modifiable_properties (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.support_attributes ().supports_modifiable_properties ();
-}
-  
-template <class TRADER>
-CORBA::Boolean 
-TAO_Lookup<TRADER>::supports_dynamic_properties (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.support_attributes ().supports_dynamic_properties ();
-}
-
-template <class TRADER>
-CORBA::Boolean 
-TAO_Lookup<TRADER>::supports_proxy_offers (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.support_attributes ().supports_proxy_offers ();
-}
-  
-template <class TRADER>
-CosTrading::TypeRepository_ptr 
-TAO_Lookup<TRADER>::type_repos (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::TypeRepository::_duplicate 
-    (this->trader_.support_attributes ().type_repos ());
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::def_search_card (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().def_search_card ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::max_search_card (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().max_search_card ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::def_match_card (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().def_match_card ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::max_match_card (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().max_match_card ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::def_return_card (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().def_return_card ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::max_return_card (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().max_return_card ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::max_list (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().max_list ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::def_hop_count (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().def_hop_count ();
-}
-
-template <class TRADER>
-CORBA::ULong 
-TAO_Lookup<TRADER>::max_hop_count (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().max_hop_count ();
-}
-
-template <class TRADER>
-CosTrading::FollowOption 
-TAO_Lookup<TRADER>::def_follow_policy (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().def_follow_policy ();
-}
-
-template <class TRADER>
-CosTrading::FollowOption 
-TAO_Lookup<TRADER>::max_follow_policy (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.import_attributes ().max_follow_policy ();
-}
-
 
 #endif /* TAO_LOOKUP_C */

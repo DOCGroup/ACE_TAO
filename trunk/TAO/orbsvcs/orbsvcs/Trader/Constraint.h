@@ -19,9 +19,6 @@
 
 #include "Constraint_Nodes.h"
 
-const int TRUE_CON = 1;
-const int FALSE_CON = 0;
-
 // Functions we need for parsing.
 extern int yyparse(void);
 extern void yyrestart(FILE*);

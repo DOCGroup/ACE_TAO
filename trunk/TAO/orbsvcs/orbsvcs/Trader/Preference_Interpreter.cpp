@@ -23,16 +23,16 @@ TAO_Preference_Interpreter::
 TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
 			   const char* preference,
 			   CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::Lookup::IllegalPreference)
+  TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
   : TAO_Interpreter ()
 {
   TAO_Constraint_Validator type_checker(ts);
 
   if (TAO_Interpreter::is_empty_string(preference))
-    this->root_ = new TAO_Noop_Constraint(FIRST);
+    this->root_ = new TAO_Noop_Constraint(TAO_FIRST);
   else
     {
-      if (this->build_tree(preference) != 0)
+      if (this->build_tree (preference) != 0)
 	TAO_THROW (CosTrading::Lookup::IllegalPreference (preference));	  
 
       if (type_checker.validate (this->root_) == -1)
@@ -42,15 +42,16 @@ TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* t
 
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter(TAO_Constraint_Validator& validator,
-			   const char* preference)
-  TAO_THROW (CosTrading::Lookup::IllegalPreference)
-  : TAO_Interpreter ()
+			   const char* preference,
+			   CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference))
+    : TAO_Interpreter ()
 {
   if (TAO_Interpreter::is_empty_string(preference))
-    this->root_ = new TAO_Noop_Constraint(FIRST);
+    this->root_ = new TAO_Noop_Constraint(TAO_FIRST);
   else
     {
-      if (this->build_tree(preference) != 0)
+      if (this->build_tree (preference) != 0)
 	TAO_THROW (CosTrading::Lookup::IllegalPreference (preference));	  
       
       if (validator.validate (this->root_) == -1)
@@ -103,7 +104,7 @@ remove_offer (CosTrading::OfferId& offer_id,
 
   if (offer_beg != offer_end)
     {
-      if (expr_type == WITH || expr_type == MAX)
+      if (expr_type == TAO_WITH || expr_type == TAO_MAX)
 	{
 	  offer_end--;
 	  offer_id = (*offer_end).second.first;

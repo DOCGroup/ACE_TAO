@@ -17,15 +17,24 @@
 #ifndef TAO_CONSTRAINT_EVALUATOR_H
 #define TAO_CONSTRAINT_EVALUATOR_H
 
+#include <map> 
+#include <deque>
+#include <string>
+
 #include "Property_Evaluator.h"
 #include "Constraint_Visitor.h"
 #include "Constraint_Nodes.h"
-#include "CosTradingC.h"
-#include "SequencesC.h"
 
-#include <map>
-#include <deque>
-#include <string>
+#if defined (OS_NO_NAMESPACE)
+#define queue foobar
+#endif /* OS_NO_NAMESPACE */
+
+#include "orbsvcs/SequencesC.h"
+
+#if defined (OS_NO_NAMESPACE)
+#undef queue
+#endif /* OS_NO_NAMESPACE */
+
 
 class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 //

@@ -1,11 +1,10 @@
 /* -*- C++ -*- */
 
-// $Id$
-
 // =====================================================================
-// 
+// $Id$
+//
 // = LIBRARY 
-//    Lookup
+//    orbsvcs
 //  
 // = FILENAME
 //    Constraint_Nodes.h
@@ -18,19 +17,18 @@
 #ifndef TAO_CONSTRAINT_NODES_H
 #define TAO_CONSTRAINT_NODES_H
 
-#include "CosTradingC.h"
-#include "SequencesC.h"
 #include "Constraint_Visitor.h"
 #include "Constraint_Tokens.h"
 
 #if defined (OS_NO_NAMESPACE)
-#define map foobar
+#define queue foobar
 #endif /* OS_NO_NAMESPACE */
 
-#include "ace/OS.h"
+#include "orbsvcs/CosTradingC.h"
+#include "orbsvcs/SequencesC.h"
 
 #if defined (OS_NO_NAMESPACE)
-#undef map
+#undef queue
 #endif /* OS_NO_NAMESPACE */
 
 typedef unsigned short TAO_Expression_Type;
@@ -176,14 +174,14 @@ public:
   virtual int accept(TAO_Constraint_Visitor* visitor);
 
   virtual TAO_Expression_Type expr_type(void) const
-    { return IDENT; }
+    { return TAO_IDENT; }
   
   const char* name(void) const;
   // Returns the name of the property.
   
 private:
 
-  const char* name_;
+  char* name_;
   // The name of the property.
 };
 
@@ -196,9 +194,9 @@ class TAO_Literal_Constraint : public TAO_Constraint
  public:
 
   TAO_Literal_Constraint(void)
-    : type_ (UNKNOWN) {}
+    : type_ (TAO_UNKNOWN) {}
 
-  // = Constructors for each of the various types of constructors.
+  // = Constructors for each of the various types of literals.
   
   TAO_Literal_Constraint(CORBA::Any* any);
   
@@ -264,7 +262,7 @@ class TAO_Literal_Constraint : public TAO_Constraint
 		const TAO_Literal_Constraint& right);
   
   friend int
-    operator== (const StringSeq::Sequence_string& left,
+    operator== (const StringSeq::Manager& left,
 		const TAO_Literal_Constraint& right);
   
   // = Arithmetic operators.
@@ -288,11 +286,13 @@ class TAO_Literal_Constraint : public TAO_Constraint
   friend TAO_Literal_Constraint
     operator- (const TAO_Literal_Constraint& operand);
   
-  static TAO_Expression_Type widest_type(TAO_Literal_Constraint& left,
-					 TAO_Literal_Constraint& right);
+  static TAO_Expression_Type
+    widest_type (const TAO_Literal_Constraint& left,
+		 const TAO_Literal_Constraint& right);
   // Ensure both operands are of the same simple numeric type.
   
-  static TAO_Expression_Type comparable_type(CORBA::TypeCode_ptr type);
+  static TAO_Expression_Type
+    comparable_type (CORBA::TypeCode_ptr type);
   // Determine the comparable Expression Type from the CORBA type
   
  private:
@@ -302,7 +302,7 @@ class TAO_Literal_Constraint : public TAO_Constraint
   union
   {
     char* str_;
-    CORBA::Any* any_;
+    CORBA::Any_ptr any_;
     CORBA::ULong uinteger_;
     CORBA::Long integer_;
     CORBA::Boolean bool_;

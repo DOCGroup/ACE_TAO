@@ -31,24 +31,44 @@ TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator (void)
 
 CORBA::ULong
 TAO_Offer_Id_Iterator::max_left(CORBA::Environment& env)
-  TAO_THROW_SPEC (CORBA::SystemException,
-		  CosTrading::UnknownMaxLeft)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+		  CosTrading::UnknownMaxLeft))
 {
   return this->ids_.size ();
 }
 
 void
-TAO_Offer_Id_Iterator::destroy(void)
-  TAO_THROW_SPEC (CORBA::SystemException)
+TAO_Offer_Id_Iterator::destroy(CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::release (this);
+  // Remove self from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+  
+  TAO_TRY
+    {
+      PortableServer::POA_var poa = this->_default_POA (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      PortableServer::ObjectId_var id = poa->servant_to_id (this, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      poa->deactivate_object (id.in (), TAO_TRY_ENV);
+    }
+  TAO_CATCHANY
+    {      
+    }
+  TAO_ENDTRY;
+  
+  delete this;  
 }
 
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n(CORBA::ULong n,
 			      CosTrading::OfferIdSeq_out _ids,
 			      CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
+  TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this . 
   int items_left = this->ids_.size(),

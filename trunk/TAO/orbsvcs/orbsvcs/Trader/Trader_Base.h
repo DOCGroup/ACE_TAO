@@ -19,11 +19,10 @@
 #ifndef TAO_TRADER_BASE_H
 #define TAO_TRADER_BASE_H
 
-#include "Attributes.h"
-
 #include <string>
 #include <map>
 
+#include "Attributes.h"
 
 class TAO_Export TAO_Trader_Base
   //
@@ -65,7 +64,7 @@ public:
 
   // = Accessor for trader's lock.
 
-  virtual TAO_Lock &lock (void) = 0;
+  virtual ACE_Lock &lock (void) = 0;
   // return lock that guards trader's current configuration.
 
   static CORBA::Boolean is_valid_identifier_name (const char* ident);

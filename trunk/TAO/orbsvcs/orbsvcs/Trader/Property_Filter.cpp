@@ -5,13 +5,13 @@
 TAO_Property_Filter::
 TAO_Property_Filter (const SPECIFIED_PROPS& desired_props,
 		     CORBA::Environment& _env)
-  TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
-		  CosTrading::DuplicatePropertyName)
+  TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		   CosTrading::DuplicatePropertyName))
   : policy_  (desired_props._d ())
 {
   if (this->policy_ == CosTrading::Lookup::some)
     {
-      PropertyNameSeq& prop_seq = desired_props.prop_names ();
+      const PropertyNameSeq& prop_seq = desired_props.prop_names ();
       int length = prop_seq.length ();
 
       for (int i = 0; i < length; i++)
@@ -41,7 +41,7 @@ TAO_Property_Filter (const TAO_Property_Filter& prop_filter)
 }
 
 void
-TAO_Property_Filter::filter_offer (const CosTrading::Offer& source,
+TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
 				   CosTrading::Offer& destination)
 {
   PROP_QUEUE prop_queue;
