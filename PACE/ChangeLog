@@ -1,3 +1,10 @@
+Mon Apr 16 16:17:35 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* pace/posix/socket.h: 
+	* pace/config/platform.h:
+	* include/makeinclude/rules.common.GNU:
+	  Add support for QNX, it behaves like other POSIX platforms.
+
 Wed Mar 21 09:26:38 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/socket.h:
