@@ -1,3 +1,8 @@
+Fri Dec 27 20:00:41 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/run_test.pl: Added more threads in the
+	  client to stress the ORB.
+	  
 Fri Dec 27 14:01:28 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 

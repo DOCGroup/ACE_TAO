@@ -45,17 +45,15 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("PolicyCurrent"
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       ACE_Thread_Manager mymanager;
-      Thread_Pool callback_pool(&mymanager, 10);
-
-      ORB_Task worker( orb.in( ) );
-      worker.activate(THR_NEW_LWP | THR_JOINABLE, 4);
+      Thread_Pool callback_pool (&mymanager, 10);
 
       TAO::Utils::Servant_Var<Echo_Caller> impl;
       {
@@ -92,16 +90,21 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      ORB_Task worker (orb.in ());
+      worker.activate (THR_NEW_LWP | THR_JOINABLE,
+                       4);
+
       orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      callback_pool.shutdown();
-      mymanager.wait();
-      worker.wait();
+      callback_pool.shutdown ();
+      mymanager.wait ();
+      worker.wait ();
 
-      root_poa->destroy (1, 1
+      root_poa->destroy (1,
+                         1
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -9,12 +9,16 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 use POSIX "sys_wait_h";
 
+$ENV{"PURIFYOPTIONS"}='-report-pmrs=no -leaks-at-exit=no -fds-inuse-at-exit=no -inuse-at-exit=no -thread-report-at-exit=no -search-mmaps -max_threads=200 -chain-length=20 -free-queue-length=200 -freeze-on-error=no -windows=yes -log-file=./%v-%p.pure.log -output-limit=20000000000 -show-directory -add-suppression-files=/home/dbinder/work/PURIFY-MT-SUPPRESSIONS';
 
-$iorfile = PerlACE::LocalFile ("server.ior");
+$iorfile = PerlACE::LocalFile ("server$$.ior");
 unlink $iorfile;
 
-$SV = new PerlACE::Process ("server", " -o $iorfile");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 1");
+$debuglevel = int (rand() * 6) + 1;
+
+$SV = new PerlACE::Process ("server", " -o $iorfile -ORBDebugLevel $debuglevel -ORBLogFile server.log");
+$threads = int (rand() * 6) + 1;
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -t $threads");
 
 
 $SV->Spawn ();
@@ -26,7 +30,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 250) == -1) {
 }
 
 local $start_time = time();
-local $max_running_time = 60;
+local $max_running_time = 20 * 60;
 local $elapsed = time() - $start_time;
 my $p = $SV->{'PROCESS'};
 
@@ -44,11 +48,12 @@ while (($elapsed < $max_running_time) )
   if ($pid != 0 && $? != -1) 
   {
     $SV->check_return_value ($?);
-    last;
     $server_died = 1;
+    last;
   }            
 
   $elapsed = time() - $start_time;
+  sleep (1);
 }
 
 if (!$server_died) {
