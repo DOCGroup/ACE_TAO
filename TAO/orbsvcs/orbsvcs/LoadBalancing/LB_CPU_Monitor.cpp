@@ -121,7 +121,7 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::COMPLETED_NO),
                       0);
 
-  ACE_OS::fscanf (s, "%f", &loadavg[0]);
+  fscanf (s, "%f", &loadavg[0]);
 
   (void) fclose (s);
 
