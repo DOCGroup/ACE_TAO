@@ -1,5 +1,8 @@
 Thu Jun 26 19:53:11 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
+	* ace/OS.i (strtok_r): Added check on a null string so we won't go
+ 	  past the end of a string.
+
 	* performance-tests/Misc/context_switch_time.cpp (main): Added
 	  get_env_gloval_scale_factor() at the very beginning so that high
 	  resolution timer can return correct time in millisecond.
