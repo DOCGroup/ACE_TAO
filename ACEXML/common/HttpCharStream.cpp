@@ -322,7 +322,7 @@ ACEXML_HttpCharStream::determine_encoding (void)
 
   char input[4] = {0, 0, 0, 0};
   int i = 0;
-  for (; i < 4 && input[i] != -1; ++i)
+  for (; i < 4 && input[i] != (char)-1; ++i)
     input[i] = this->stream_->peek_char(i);
   if (i < 4)
     return -1;
