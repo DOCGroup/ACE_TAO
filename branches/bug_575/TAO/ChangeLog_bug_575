@@ -1,3 +1,23 @@
+Thu Jun 28 17:16:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/Pluggable_Messaging.h: Removed all the arguments that had an
+	  TAO_ORB_Core as one of the arguments. GIOP classes hold a copy
+	  of the pointer to the ORB_Core and so it is no
+	  necessary. Removed the following methods
+	  
+	  - is_message_complete () 
+	  - message_type ()
+
+	  The message_type () method is now local to the GIOP classes and
+	  it returns the Pluggable Message type from the
+	  GIOP_Message_State. This method is now used to fill the node
+	  with the right information type about the message. 
+
+	* tao/Transport.cpp: Used the information from the node of the
+	  queue to determine the type of message before processing it. 
+	
 Thu Jun 28 15:12:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: 
