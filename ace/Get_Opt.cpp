@@ -45,7 +45,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
 ACE_Get_Opt::ACE_Get_Opt (int argc, 
 			  char **argv,
-			  char *optstring, 
+			  const char *optstring, 
 			  int skip, 
 			  int report_errors)
   : optarg (0), 

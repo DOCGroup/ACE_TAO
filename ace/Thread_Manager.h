@@ -435,8 +435,12 @@ protected:
   // = ACE_Thread_Mutex and condition variable for synchronizing termination.
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Mutex lock_;
+  // Serialize access to the <zero_cond_>.
+
   ACE_Condition_Thread_Mutex zero_cond_;
+  // Keep track of when there are no more threads.
 #endif /* ACE_HAS_THREADS */
+
 private:
   static ACE_Thread_Manager *thr_mgr_;
   // Pointer to a process-wide <ACE_Thread_Manager>.

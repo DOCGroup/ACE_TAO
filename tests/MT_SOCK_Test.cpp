@@ -13,7 +13,9 @@
 //     and ACE_SOCK_Connector classes. The test forks 30 processes or
 //     spawns 30 threads (depending upon the platform) and then
 //     executes client and server allowing them to connect and
-//     exchange data.
+//     exchange data.  Note that most of the connections will fail
+//     since we're overrunning the size of the listen queue for the
+//     acceptor-mode socket.
 //
 // = AUTHOR
 //    Doug Schmidt
@@ -202,7 +204,30 @@ spawn (void)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
 		  server_addr.get_port_number ()));
 
-#if defined (ACE_HAS_THREADS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
+      for (size_t i = 0; i < ACE_MAX_CLIENTS; i++)
+	{
+	  switch (ACE_OS::fork ("child"))
+	    {
+	    case -1:
+	      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+	      /* NOTREACHED */
+	    case 0: 
+	      client (&server_addr);
+	      exit (0);
+	      /* NOTREACHED */
+	    default:
+	      break;
+	    }
+	}
+
+      server ((void *) &peer_acceptor);
+
+      // Reap the child pids.
+      for (pid_t pid; (pid = ACE_OS::wait ()) != -1; )
+	ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaping pid %d\n", pid));
+
+#elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn 
 	  (ACE_THR_FUNC (server),
 	   (void *) &peer_acceptor,
