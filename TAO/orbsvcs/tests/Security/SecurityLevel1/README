@@ -2,93 +2,36 @@ $Id$
 
 * README *
 
+	This test checks if the SecurityLevel 1 is working
+correctly. The Security Level1 has only one method
+'get_attributes'. In this test, when a client wants to access the
+server, the server checks if the client is authorized to do so by
+getting its attributes using the get_attributes method. It then compares
+those attribute values with its own set of values and makes a decision.
 
-	In this example, the server will have some (or may be just
-one, if that will serve the purpose .. anyways since these will be
-just simple dummy methods, it shouldnt matter) methods with different
-levels of authorization. When a client wants to invoke any of these
-methods, it has to be authenticated first(I am not sure, as of now,
-the way for authenticating or the fact if this is really needed
-.. well for starters, I will leave authentication). Then based on the
-principals privilege attributes, the invocation will be
-successful or denied. 
+	The server and client certificates and private keys are
+provided. The Certificate Authority's certificate is ca.pem.
 
-This test makes use of the Current::get_attributes to get the
-attributes of the prinicipal which are used to provide or deny
-access. 
+To Run Manually:
 
+1. Set the Environment Variable SSL_CERT_FILE to ca.pem
 
-What do we do in this Example:
+ $ export SSL_CERT_FILE=ca.pem
 
-	We just provide a simple implementation of the server and
-client. The server invokes the get_attributes on the Security::Current
-object and retrieves the necessary credentials. Based on the values of
-the credentials decides if the principal of the request has the
-authority to invoke that particular request.
+2. Set SSL_CERT_DIR to this directory.
 
-	We show two cases: The server bases its decision based on only
-one Security::AttributeType .. say AccessID .. we can decide it
-depending on the attributetypes that Ossama decides for the TAO's
-family_definer etc. But, in the perl script, we run the server. Then
-we run the client with credentials which will satisfy the server and
-hence show that the authorization works in one way. Then we run
-another client with invalid credentials, and show that the access is
-denied in this case.
+ $ export SSL_CERT_DIR=$PWD
 
+3. Start the server
 
-For the test:
+$ ./server -ORBSvcConf server.conf -o ior_file &
 
-	We will check the values for all the possible attribute types that a
-server could check in the remote case. And, as in the example, run
-clients with both valid and invalid credentials.
+4  Run the client
 
-	Also, we also need to make sure that the server is actually
-returning the correct credentials and not garbling or giving some
-random values.
+$ ./client -ORBSvcConf client.conf -k file://ior_file
 
-	This will prove that
- 
-1. Authorization is working.
-2. All the attribute types which are supposed to work are working
-   properly.
-3. Authentication is already working but we could also check that once
-   again. But, authentication is not limited to the ORB. It could be
-   checked using an outside agent too.
+	The client should print out 'AUTHORIZED' if the subject of the
+client certificate matches that of the dummy certificate created by
+the server.
 
-
-	Since, the only thing that the SecurityLevel1 does is to get the
-credentials of the initiating principal, to test the implementation,
-in my view, 
-
-1. We need to see if the method is returning the correct credentials.
-2. If all the attribute types are working... ie.. show what are the
-   different types of attributes and what can be valid values for them
-   etc.
-3. We need to show how one can make use of these values to provide or
-   deny access to the initiating principal.
-
-
-definingAuthority
-
-The authority responsible for the definition of the semantics of the value of 
-the security attribute. This optional field of the attributeValue can be used 
-to resolve potential value clashes. It is defined as an Identifier which has a 
-choice of syntax. For CSI-ECMA, it is always a directoryName. 
-Page: 267
-
-* A defining authority. The field indicates the authority responsible
-for defining the encoding of the value field of the attribute. The
-defining authority is defined as an octet sequence that is a standard
-ASN.1 encoding of an OID. The entity referenced by the OID defines the
-value's encoding to/from a sequence of octets. If the defining
-authority field is empty (i.e. octet sequence of length 0), the
-defining authority is the OMG. The OMG defines all attribute values to
-be UTF-8 byte encodings of a string value.
-
-* An attribute value. The attribute value is encoded as an octet sequence. The 
-encoding is specified by the defining_authority field.
-
- An attribute type. Users may add new attribute types. Two standard
-OMG families are defined: the family of privilege attributes (family =
-1), and the family of other attributes (family = 0). Types in these
-families are listed in Table 15-25, "Attribute Values," on page 330. 
+	Could also be run using the perl script.
