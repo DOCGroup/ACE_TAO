@@ -55,7 +55,7 @@ int
 ACE_Event::wait (const ACE_Time_Value *abstime, int use_absolute_time)
 {
   return ACE_OS::event_timedwait (&this->handle_,
-                                  (ACE_Time_Value *) abstime,
+                                  const_cast <ACE_Time_Value *> (abstime),
                                   use_absolute_time);
 }
 

@@ -181,6 +181,11 @@ private:
 
   /// Pointer to the beginning of the type in this->data_;
   char *type_;
+
+private:
+  // Prevent copying
+  ACE_Name_Request (const ACE_Name_Request &);
+  ACE_Name_Request &operator= (const ACE_Name_Request &);
 };
 
 /**
