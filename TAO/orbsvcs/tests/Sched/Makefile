@@ -5,7 +5,7 @@ ifndef TAO_ROOT
 endif
 
 SRC = $(BIN:%=%$(VAR).cpp)
-LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched \
             -I$(TAO_ROOT)/orbsvcs \

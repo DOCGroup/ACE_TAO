@@ -1,19 +1,39 @@
+Sat Mar 10 11:46:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/RtEC/MCast/Makefile:
+        * tests/AVStreams/Latency/Makefile:
+        * tests/CosEvent/Basic/Makefile:
+        * tests/CosEvent/lib/Makefile:
+        * tests/EC_Custom_Marshal/Makefile:
+        * tests/FaultTolerance/IOGRManipulation/Makefile:
+        * tests/Notify/performance-tests/RedGreen/Makefile:
+        * tests/Notify/performance-tests/Throughput/Makefile:
+        * tests/Sched/Makefile:
+          More fixes to make QNX happy about the library
+          interdependencies.
+
+        * tests/FaultTolerance/IOGR/Manager.h:
+        * tests/FaultTolerance/IOGR/Manager.cpp:
+          Do not return anything from Manager::init(), exceptions are
+          raised to indicate errors, and the return value was ignored
+          anyway.
+
 Sat Mar 10 11:29:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/echo/Echo_i.cpp: Fixed a compile error in debian
-	  Linux.  
+        * examples/Simple/echo/Echo_i.cpp: Fixed a compile error in debian
+          Linux.
 
 Sat Mar 10 09:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Reverted the change made by Paul Calabrese vide "Fri Mar  9
-	  14:38:06 2001  Paul Calabrese <calabrese_p@ociweb.com>". This 
-	  change was breaking all the tests for Sequences in
-	  $TAO_ROOT/tests/Param_Test. 
+        * Reverted the change made by Paul Calabrese vide "Fri Mar  9
+          14:38:06 2001  Paul Calabrese <calabrese_p@ociweb.com>". This
+          change was breaking all the tests for Sequences in
+          $TAO_ROOT/tests/Param_Test.
 
 Sat Mar 10 02:33:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Makefile:
-	  Add the new test to the recursive Makefiles
+        * tests/Makefile:
+          Add the new test to the recursive Makefiles
 
 Sat Mar 10 02:09:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
