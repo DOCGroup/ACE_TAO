@@ -376,6 +376,31 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
     }
 }
 
+TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
+                            size_t size)
+  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+    factory_ (rhs.factory_),
+    do_byte_swap_ (rhs.do_byte_swap_),
+    good_bit_ (1)
+{
+  char* newpos = this->start_->rd_ptr();
+  if (this->start_->base () <= newpos
+      && newpos <= this->start_->end ()
+      && newpos + size <= this->start_->end ())
+    {
+      this->start_->rd_ptr (newpos);
+      this->start_->wr_ptr (newpos + size);
+
+      CORBA::Octet byte_order;
+      this->read_octet (byte_order);
+      this->do_byte_swap_ = (byte_order != TAO_ENCAP_BYTE_ORDER);
+    }
+  else
+    {
+      this->good_bit_ = 0;
+    }
+}
+
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : start_ (ACE_Message_Block::duplicate (rhs.start_)),
     factory_ (rhs.factory_),

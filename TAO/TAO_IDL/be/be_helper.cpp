@@ -1,5 +1,7 @@
 // ============================================================================
 //
+// $Id$
+//
 // = LIBRARY
 //    TAO IDL
 //
@@ -204,7 +206,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flatname, const char *suffix)
 int
 TAO_OutStream::gen_endif (void)
 {
-  *this << "\n#endif // end #if !defined\n\n";
+  *this << "\n#endif /* end #if !defined */\n\n";
   return 0;
 }
 
