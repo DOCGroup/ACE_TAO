@@ -1,3 +1,12 @@
+Thu Jul  8 11:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Added some test code for how the handle the wait result value
+
+        * tao/Transport_Connector.cpp:
+          Added more logic what to do when a not connected transport is
+          retrieved
+
 Mon Jul  5 12:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,cpp}:

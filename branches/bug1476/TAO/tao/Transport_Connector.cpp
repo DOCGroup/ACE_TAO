@@ -263,11 +263,15 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
           if (result == -1) // todo, check also for closure
             {
+			  // connection not ready yet, just use this base_transport
+         		return base_transport;
 
 
             }
           else
             {
+			  // We now have a connection
+
               // If the wait strategy wants us to be registered with the reactor
               // then we do so. If registeration is required and it succeeds,
               // #REFCOUNT# becomes two.
@@ -291,6 +295,12 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                   "could not register the connected connection in the reactor, get a new one\n"));
                     }
                 }
+			  else
+			  {
+                base_transport->is_connected(true);
+				return base_transport;
+			  }
+
             }
 // todo
 // what now then thsi is closed, then we should close it, zap it from the cache and make
