@@ -385,6 +385,35 @@ TAO_SSLIOP_Transport::messaging_init (CORBA::Octet major,
   return 1;
 }
 
+
+void
+TAO_SSLIOP_Transport::bidirectional_flag (int flag)
+{
+  this->bidirectional_flag_ = flag;
+}
+
+
+int
+TAO_SSLIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
+{
+  CORBA::Boolean byte_order;
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return -1;
+
+  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+
+  IIOP::ListenPointList listen_list;
+  if ((cdr >> listen_list) == 0)
+    return -1;
+
+  // As we have received a bidirectional information, set the flag to
+  // 1
+  this->bidirectional_flag_ = 1;
+  return this->connection_handler_->process_listen_point_list (listen_list);
+}
+
+
+
 int
 TAO_SSLIOP_Transport::process_message (void)
 {
