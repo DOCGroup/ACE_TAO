@@ -53,7 +53,7 @@ Coffee_i::description (const Coffee::Desc &description,
 // Constructor
 
 Param_Test_i::Param_Test_i (const char *coffee_name,
-                            const char *obj_name)
+                            const char *)
   : obj_ (coffee_name)
 {
 }

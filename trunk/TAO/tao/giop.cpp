@@ -745,6 +745,28 @@ extern CORBA::ExceptionList __system_exceptions;
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
+static inline const char*
+TAO_GIOP_message_name (TAO_GIOP_MsgType which)
+{
+  static const char* msgnames[] = {
+    "EndOfFile (nonstd)",
+    "Request (client)",
+    "Reply (server)",
+    "CancelRequest (client)",
+    "LocateRequest (client)",
+    "LocateReply (server)",
+    "CloseConnection (server)",
+    "MessageError (either)"
+  };
+
+  int i = (int)which;
+  i++; // Add one since EndOfFile is -1
+  if (i > sizeof(msgnames)/sizeof(msgnames[0]))
+    return "<Bad Value!>";
+  else
+    return msgnames[i];
+}
+  
 TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                              CORBA::Environment &env)
@@ -813,7 +835,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  switch (TAO_GIOP::recv_request (handler, this->stream_, env))
+  TAO_GIOP_MsgType m = TAO_GIOP::recv_request (handler, this->stream_, env);
+  switch (m)
     {
     case TAO_GIOP_Reply:
       // handle reply ... must be right one etc
@@ -851,7 +874,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // be indicative of client bugs (lost track of input stream) or
       // server bugs; maybe the request was acted on, maybe not, we
       // can't tell.
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) illegal message in response to my Request!\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) illegal GIOP message (%s) in response to my Request!\n",
+                  TAO_GIOP_message_name(m)));
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       // FALLTHROUGH ...
 
