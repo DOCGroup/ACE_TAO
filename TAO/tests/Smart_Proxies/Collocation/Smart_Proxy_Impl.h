@@ -3,6 +3,7 @@
 #define ACE_BUILD_SVC_DLL
 
 #include "DiamondC.h"
+#include "ace/svc_export.h"
 
 class ACE_Svc_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Diamond_Top_Default_Proxy_Factory
 {
