@@ -1,3 +1,12 @@
+Sat Jan 27 15:16:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/POSIX_Proactor.h: Replace ACE_Thread_Mutex with ACE_SYNCH_MUTEX 
+	  to avoid the need for conditional compilation.
+
+	* ace/SUN_Proactor.h: Don't use ACE_Condition<ACE_Thread_Mutex>
+	  but instead use the ACE_SYNCH_CONDITION, which also avoids the
+ 	  need to conditionally compile for threaded platforms.
+
 Sat Jan 27 13:29:51 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-linux.h:

@@ -108,11 +108,9 @@ protected:
   /// Specific Sun aiowait
   int wait_for_start (ACE_Time_Value * abstime);
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Condition variable .
   /// used to wait the first AIO start
-  ACE_Condition<ACE_Thread_Mutex>  condition_;
-#endif /* ACE_MT_SAFE */
+  ACE_SYNCH_CONDITION condition_;
 };
 
 #if defined (__ACE_INLINE__)
