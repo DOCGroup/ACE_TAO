@@ -1,3 +1,8 @@
+Thu Dec 21 18:12:38 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc, ace-lib.icc: Added OS_Errno.(cpp h) to the files
+          list. Thanks to Jerry Odenwelder for pointing out the need for these.
+
 Thu Dec 21 16:45:28 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/Capabilities_Test.cpp: Added missing \n to a ACE_ERROR
