@@ -9,6 +9,7 @@
 #include "Task_Stats.h"
 #include <sys/types.h>
 #include <sys/mman.h>
+#include "cpuload.h"
 
 #include <dsui.h>
 
@@ -102,6 +103,8 @@ main (int argc, char *argv[])
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
 
   task_stats.init (100000);
+
+   CPULoad::calibrate(10);
 
   int mflags = O_RDWR | O_CREAT;
   int fd;
