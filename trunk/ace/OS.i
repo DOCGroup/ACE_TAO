@@ -970,6 +970,19 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
 #endif /* !ACE_HAS_UNICODE_ONLY */
 
 
+ACE_INLINE int
+ACE_OS::shm_unlink (const char *path)
+{
+  // ACE_TRACE ("ACE_OS::shm_unlink");
+#if defined (ACE_HAS_SHM_OPEN)
+  ACE_OSCALL_RETURN (::shm_unlink (path), int, -1);
+#else  /* ! ACE_HAS_SHM_OPEN */
+  // Just used ::unlink.
+  return ACE_OS::unlink (path);
+#endif /* ! ACE_HAS_SHM_OPEN */
+}
+
+
 ACE_INLINE LPTSTR
 ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 {
@@ -1434,7 +1447,16 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 {
   // ACE_TRACE ("ACE_OS::mutex_init");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+  ACE_UNUSED_ARG (sa);
+
+  errno = 0;
+  *m = *mutex_create ();
+  return errno == 0 ? -1 : 0;
+#elif defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (sa);
@@ -1516,7 +1538,9 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_destroy");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (mutex_delete (m), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (::pthread_mutex_destroy (m), int, -1);
 #  else
@@ -1552,7 +1576,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_lock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (mutex_enter (m, 0), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (pthread_mutex_lock (m), int, -1);
@@ -1749,7 +1775,9 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 {
   // ACE_TRACE ("ACE_OS::mutex_unlock");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (mutex_exit (m), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (pthread_mutex_unlock (m), int, -1);
@@ -1912,11 +1940,13 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
   // ACE_TRACE ("ACE_OS::cond_destroy");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
+#  if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (cv_delete (cv), int, -1);
+#  elif defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (::pthread_cond_destroy (cv), int, -1);
 #  else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_cond_destroy (cv), ace_result_), int, -1);
-#  endif /* ACE_HAS_DCE_DRAFT4_THREADS */
+#  endif /* __Lynx__ && ACE_HAS_DCE_DRAFT4_THREADS */
 #elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -1930,11 +1960,15 @@ ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 {
 // ACE_TRACE ("ACE_OS::cond_init");
-  type = type;
-  name = name;
-  arg = arg;
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  errno = 0;
+  *cv = *cv_create ();
+  return errno == 0 ? -1 : 0;
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   pthread_condattr_t attributes;
   int result = -1;
 
@@ -1965,7 +1999,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_init (cv, type, arg),
                                        ace_result_),
                      int, -1);
-#endif /* ACE_HAS_STHREADS */
+#endif /* __Lynx__ && ACE_HAS_DCETHREADS && ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (type);
@@ -1980,7 +2014,9 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 {
 // ACE_TRACE ("ACE_OS::cond_signal");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (cv_signal (cv), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (::pthread_cond_signal (cv), int, -1);
 #  else
@@ -2001,7 +2037,9 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
 // ACE_TRACE ("ACE_OS::cond_broadcast");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (cv_broadcast (cv), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (::pthread_cond_broadcast (cv), int, -1);
 #  else
@@ -2026,7 +2064,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_wait");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (__Lynx_Native_Cond__)
+  ACE_OSCALL_RETURN (cv_wait (cv, external_mutex, 0), int, -1);
+#elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL_RETURN (::pthread_cond_wait (cv, external_mutex), int, -1);
 #  else
@@ -2051,6 +2091,20 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
+#if defined (__Lynx_Native_Cond__)
+  if (timeout == 0)
+    {
+      ACE_OSCALL_RETURN (cv_wait (cv, external_mutex, 0), int, -1);
+    }
+  else
+    {
+      // Note that we must convert between absolute time (which is
+      // passed as a parameter) and relative time (which is what
+      // cv_wait expects).
+      struct timeval relative_time = *timeout - ACE_OS::gettimeofday ();
+      ACE_OSCALL_RETURN (cv_wait (cv, external_mutex, &relative_time), int, -1);
+    }
+#else  /* ! __Lynx__ */
   int result;
   timespec_t ts;
 
@@ -2092,6 +2146,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     timeout->set (ts); // Update the time value before returning.
 
   return result;
+#endif /* ! __Lynx__ */
 #else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);
@@ -3027,13 +3082,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       result = ACE_OS::sema_wait (&cv->sema_,
                                   ACE_Time_Value (0, msec_timeout * 1000));
 #  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#else
+#elif defined (VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
       int ticks_per_sec = ::sysClkRateGet ();
       int ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
       result = ::semTake (cv->sema_.sema_, ticks);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || VXWORKS */
     }
 
   // Reacquire lock to avoid race conditions.
@@ -3058,7 +3113,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         }
       result = -1;
     }
-#else /* VXWORKS */
+#elif defined (VXWORKS)
   if (result == ERROR)
     {
       switch (errno)
@@ -3072,7 +3127,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         }
       result = -1;
     }
-#endif /* VXWORKS */
+#endif /* ACE_WIN32 || VXWORKS */
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   else if (external_mutex->type_ == USYNC_PROCESS)
     {
@@ -6687,6 +6742,47 @@ ACE_OS::mmap (void *addr,
     }
   else
     return addr_mapping;
+#elif defined (__Lynx__)
+  // The LynxOS 2.5.0 mmap doesn't allow operations on plain
+  // file descriptors.  So, create a shm object and use that.
+  ACE_UNUSED_ARG (sa);
+
+  char name [128];
+  sprintf (name, "%d", file_handle);
+
+  // Assumes that this was called by ACE_Mem_Map, so &file_mapping != 0.
+  // Otherwise, we don't support the incomplete LynxOS mmap implementation.
+  // We do support it by creating a hidden shared memory object, and using
+  // that for the mapping.
+  if (!file_mapping  ||
+      (*file_mapping = ::shm_open (name, O_RDWR | O_CREAT | O_TRUNC, 0600)) == -1)
+    {
+      return MAP_FAILED;
+    }
+  else
+    {
+      // The size of the shared memory object must be explicitly set on LynxOS.
+      const off_t filesize = ACE_OS::filesize (file_handle);
+      if (::ftruncate (*file_mapping, filesize) == -1)
+        {
+          return MAP_FAILED;
+        }
+      else
+        {
+          char *map = (char *) ::mmap ((ACE_MMAP_TYPE) addr, len,
+                                       prot, flags, *file_mapping, off);
+          if (map == MAP_FAILED)
+            {
+              return MAP_FAILED;
+            }
+          else
+            {
+              // Finally, copy the file contents to the shared memory object.
+              return ::read (file_handle, map, (int) filesize) == filesize
+                ? 0 : MAP_FAILED;
+            }
+        }
+    }
 #elif !defined (ACE_LACKS_MMAP)
   ACE_UNUSED_ARG (sa);
   file_mapping = file_mapping;
@@ -7016,6 +7112,23 @@ ACE_OS::open (const char *filename,
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
 #endif /* ACE_WIN32 */
+}
+
+
+ACE_INLINE ACE_HANDLE
+ACE_OS::shm_open (const char *filename,
+                  int mode,
+                  int perms,
+                  LPSECURITY_ATTRIBUTES sa)
+{
+  // ACE_TRACE ("ACE_OS::shm_open");
+#if defined (ACE_HAS_SHM_OPEN)
+  ACE_UNUSED_ARG (sa);
+  ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
+#else  /* ! ACE_HAS_SHM_OPEN */
+  // Just used ::open.
+  return ACE_OS::open (filename, mode, perms, sa);
+#endif /* ! ACE_HAS_SHM_OPEN */
 }
 
 
@@ -8873,4 +8986,3 @@ ACE_Thread_Adapter::entry_point (void)
 {
   return this->entry_point_;
 }
-
