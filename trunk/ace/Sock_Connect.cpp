@@ -8,8 +8,8 @@
 #include "ace/SString.h"
 
 #if defined (VXWORKS)
-#include <inetLib.h>
-#include <netinet/in_var.h>
+#include /**/ <inetLib.h>
+#include /**/ <netinet/in_var.h>
 extern "C" {
   extern struct in_ifaddr* in_ifaddr;
 }
