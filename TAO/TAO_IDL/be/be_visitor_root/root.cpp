@@ -59,12 +59,13 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
+  TAO_OutStream *os = this->ctx_->stream ();
+
   // If we are generating the client header file, this is the place to
   // generate the proxy broker factory function pointer declarations
   // and the extern declarations for non-defined interfaces.
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CH)
     {
-      TAO_OutStream *os = this->ctx_->stream ();
       be_interface *i = 0;
       be_interface_fwd *ifwd = 0;
       size_t index = 0;
@@ -395,9 +396,14 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       (void) tao_cg->end_client_header ();
       break;
+    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_CS:
+      *os << "\n\n";
+      break;
     default:
       break;
     }
+
   return 0;
 }
 

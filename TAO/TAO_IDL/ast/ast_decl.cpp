@@ -383,141 +383,153 @@ AST_Decl::compute_repoID (void)
     {
       return;
     }
+
+  long namelen = 4; // for the prefix "IDL:"
+  long first = I_TRUE;
+  long second = I_FALSE;
+  char *name = 0;
+  const char *prefix = this->prefix_;
+
+  // If our prefix is empty, we use the parent's, if any, which may also
+  // be empty.
+  if (ACE_OS::strcmp (prefix, "") == 0)
+    {
+      UTL_Scope *parent_scope = this->defined_in ();
+
+      if (parent_scope != 0)
+        {
+          AST_Decl *parent = ScopeAsDecl (parent_scope);
+
+          prefix = parent->prefix ();
+        }
+    }
+
+  // in the first loop compute the total length
+  namelen += ACE_OS::strlen (prefix) + 1;
+
+  if (this->version_ != 0)
+    {
+      // Version member string + ':'
+      namelen += ACE_OS::strlen (this->version_) + 1;
+    }
   else
     {
-      long namelen = 4; // for the prefix "IDL:"
-      long first = I_TRUE;
-      long second = I_FALSE;
-      char *name = 0;
+      // For ":1.0"
+      namelen += 4;
+    }
 
-      // in the first loop compute the total length
-      namelen += ACE_OS::strlen (this->prefix_) + 1;
-
-      if (this->version_ != 0)
+  for (UTL_IdListActiveIterator i (this->name ()); 
+       !i.is_done (); 
+       i.next ())
+    {
+      if (!first)
         {
-          // Version member string + ':'
-          namelen += ACE_OS::strlen (this->version_) + 1;
+          namelen += 1; // for "/"
+        }
+      else if (second)
+        {
+          first = second = I_FALSE;
+        }
+
+      // Print the identifier.
+      name = i.item ()->get_string ();
+      size_t item_len = ACE_OS::strlen (name);
+
+      if (ACE_OS::strstr (name, "_cxx_") == name)
+        {
+          namelen += (item_len - ACE_OS::strlen ("_cxx_"));
         }
       else
         {
-          // For ":1.0"
-          namelen += 4;
+          namelen += item_len;
         }
 
-      for (UTL_IdListActiveIterator i (this->name ()); 
-           !i.is_done (); 
-           i.next ())
+      if (first)
         {
-          if (!first)
+          if (ACE_OS::strcmp (name, "") != 0)
             {
-              namelen += 1; // for "/"
-            }
-          else if (second)
-            {
-              first = second = I_FALSE;
-            }
-
-          // Print the identifier.
-          name = i.item ()->get_string ();
-          size_t item_len = ACE_OS::strlen (name);
-
-          if (ACE_OS::strstr (name, "_cxx_") == name)
-            {
-              namelen += (item_len - ACE_OS::strlen ("_cxx_"));
+              // Does not start with a "".
+              first = I_FALSE;
             }
           else
             {
-              namelen += item_len;
-            }
-
-          if (first)
-            {
-              if (ACE_OS::strcmp (name, "") != 0)
-                {
-                  // Does not start with a "".
-                  first = I_FALSE;
-                }
-              else
-                {
-                  second = I_TRUE;
-                }
+              second = I_TRUE;
             }
         }
+    }
 
-      ACE_NEW (this->repoID_,
-               char[namelen + 1]);
+  ACE_NEW (this->repoID_,
+           char[namelen + 1]);
 
-      this->repoID_[0] = '\0';
+  this->repoID_[0] = '\0';
 
-      ACE_OS::sprintf (this->repoID_,
-                       "%s",
-                       "IDL:");
+  ACE_OS::sprintf (this->repoID_,
+                   "%s",
+                   "IDL:");
 
+  if (ACE_OS::strcmp (prefix, "") != 0)
+    {
       ACE_OS::strcat (this->repoID_,
-                      this->prefix_);
+                      prefix);
 
-      // Add the "/" only if there is a prefix.
-      if (ACE_OS::strcmp (this->prefix_, "") != 0)
+      ACE_OS::strcat (this->repoID_, "/");
+    }
+  
+  first = I_TRUE;
+  second = I_FALSE;
+
+  for (UTL_IdListActiveIterator j (this->name ()); 
+       !j.is_done (); 
+       j.next ())
+    {
+      if (!first)
         {
           ACE_OS::strcat (this->repoID_, "/");
         }
-
-      first = I_TRUE;
-      second = I_FALSE;
-
-      for (UTL_IdListActiveIterator j (this->name ()); 
-           !j.is_done (); 
-           j.next ())
+      else if (second)
         {
-          if (!first)
-            {
-              ACE_OS::strcat (this->repoID_, "/");
-            }
-          else if (second)
-            {
-              first = second = I_FALSE;
-            }
-
-          // Print the identifier.
-          name = j.item ()->get_string ();
-
-          if (ACE_OS::strstr (name, "_cxx_") == name)
-            {
-              ACE_OS::strcat (this->repoID_,
-                              name + ACE_OS::strlen ("_cxx_"));
-            }
-          else
-            {
-              ACE_OS::strcat (this->repoID_,
-                              name);
-            }
-
-          if (first)
-            {
-              if (ACE_OS::strcmp (name, "") != 0)
-                {
-                  // Does not start with a "".
-                  first = I_FALSE;
-                }
-              else
-                {
-                  second = I_TRUE;
-                }
-            }
+          first = second = I_FALSE;
         }
 
-      if (this->version_ != 0)
+      // Print the identifier.
+      name = j.item ()->get_string ();
+
+      if (ACE_OS::strstr (name, "_cxx_") == name)
         {
           ACE_OS::strcat (this->repoID_,
-                          ":");
-          ACE_OS::strcat (this->repoID_,
-                          this->version_);
+                          name + ACE_OS::strlen ("_cxx_"));
         }
       else
         {
           ACE_OS::strcat (this->repoID_,
-                          ":1.0");
+                          name);
         }
+
+      if (first)
+        {
+          if (ACE_OS::strcmp (name, "") != 0)
+            {
+              // Does not start with a "".
+              first = I_FALSE;
+            }
+          else
+            {
+              second = I_TRUE;
+            }
+        }
+    }
+
+  if (this->version_ != 0)
+    {
+      ACE_OS::strcat (this->repoID_,
+                      ":");
+      ACE_OS::strcat (this->repoID_,
+                      this->version_);
+    }
+  else
+    {
+      ACE_OS::strcat (this->repoID_,
+                      ":1.0");
     }
 }
 
@@ -914,7 +926,11 @@ AST_Decl::set_prefix_with_typeprefix (char *value)
   {
     case AST_Decl::NT_module:
     case AST_Decl::NT_interface:
+    case AST_Decl::NT_valuetype:
     case AST_Decl::NT_eventtype:
+    case AST_Decl::NT_struct:
+    case AST_Decl::NT_union:
+    case AST_Decl::NT_except:
       break;
     default:
       idl_global->err ()->error1 (UTL_Error::EIDL_INVALID_TYPEPREFIX,

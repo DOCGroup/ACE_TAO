@@ -76,7 +76,7 @@ be_visitor_module_sh::visit_module (be_module *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
