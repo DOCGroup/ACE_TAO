@@ -113,7 +113,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   // this->message_state_ = message_state;
 
   // Steal the buffer so that no copying is done.
-  this->reply_cdr_.steal_data (params.input_cdr_);
+  this->reply_cdr_.exchange_data_blocks (params.input_cdr_);
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.

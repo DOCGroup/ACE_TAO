@@ -451,7 +451,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
 
   // Steal the contents in to the reply CDR and loose ownership of the
   // data block.
-  params.input_cdr_.steal_data (cdr);
+  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }
@@ -475,7 +475,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
 
   // Steal the contents in to the reply CDR and loose ownership of the
   // data block.
-  params.input_cdr_.steal_data (cdr);
+  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }
