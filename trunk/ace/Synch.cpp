@@ -8,6 +8,7 @@
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
 #include "ace/Synch.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch.i"
