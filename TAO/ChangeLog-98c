@@ -19,6 +19,8 @@ Mon Mar 30 12:28:02 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/CDR.cpp (TAO_OuputCDR ctors): rearranged initializations
           to match declaration order.
 
+        * tao/t-sizes.cpp: #include "tao/corba.h" instead of "tao/orb.h".
+
 Mon Mar 30 10:28:05 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Implemented new classes to manipulate CDR streams, this classes
