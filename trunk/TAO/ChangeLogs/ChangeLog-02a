@@ -1,3 +1,9 @@
+Sat Apr 21 01:45:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+
+          Removed debug messages.
+
 Sat Apr 21 01:35:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/Performance/Makefile:
