@@ -3,15 +3,22 @@
 # This platform macros file is intended to work with
 # Digital UNIX 4.0 (OSF/1 4.0), using the cxx compiler..
 
+# Note that TAO has not been tested with debug=0 on this platform. So
+# you should be careful when turning off debug.
+
 ifeq (,$(debug))
   debug = 1
 endif
-ifeq (,$(exceptions))
-  exceptions = 1
-endif
-ifeq (,$(rtti))
-  rtti = 1
-endif
+
+# exceptions=1 is the default on this platform. exceptions=0 has not
+# been tested. See the bottom of this file for more. Turning off exceptions
+# on this platform can cause bad things to happen.
+exceptions = 1
+
+# wrapper_macros.GNU disables rtti by default. We want to test with
+# rtti=1. So the right way to fix it is to fix wrapper_macros.GNU.
+rtti = 1
+
 ifeq (,$(threads))
   threads = 1
 endif
