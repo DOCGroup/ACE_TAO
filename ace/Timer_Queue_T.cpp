@@ -13,6 +13,7 @@
 #include "ace/Timer_Queue_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor_Timer_Interface.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.i"

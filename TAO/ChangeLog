@@ -1,3 +1,8 @@
+Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/LoadBalancer/Signal_Handler.cpp:
+          Added #include Reactor.h required by recent subsetting.
+
 Wed Aug  6 20:44:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Event_Comm/Event_Comm_i.h:
