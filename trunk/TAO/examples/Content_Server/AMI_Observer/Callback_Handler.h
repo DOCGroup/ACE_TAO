@@ -21,8 +21,6 @@
 #ifndef CALLBACK_HANDLER_H
 #define CALLBACK_HANDLER_H
 
-#include "ace/pre.h"
-
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_IO.h"
 #include "Push_Web_ServerS.h"
@@ -30,6 +28,15 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 class Callback_Handler
   : public virtual POA_Web_Server::AMI_CallbackHandler,
@@ -138,6 +145,8 @@ private:
   // Flag that indicates all chunks of data have been sent.
 };
 
-#include "ace/post.h"
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif  /* CALLBACK_HANDLER_H */
