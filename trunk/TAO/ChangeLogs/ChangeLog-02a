@@ -1,3 +1,12 @@
+Thu Jan 17 10:40:57 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp
+	  (policy_type, destroy, trust):
+	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp
+	  (policy_type, destroy, qop):
+
+	  Fixed unused parameter warnings.
+
 Thu Jan 17 10:30:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
