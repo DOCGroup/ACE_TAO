@@ -37,7 +37,7 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
   if (CORBA::is_nil (dat.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-  char *str =
+  CORBA::String_var str =
     dat->get_data (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
