@@ -177,7 +177,7 @@ TimeoutClient::send (bool async,
 
       if (async)
         {
-          timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_,
+          timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_.in (),
                                                 remote_sleep, 
                                                 ACE_TRY_ENV);
         }

@@ -1,3 +1,9 @@
+Fri Mar 02 15:20:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+  * tests/AMI_Timeouts/timout_client.cpp:
+
+    Fixed a missing ".in ()" on a var type.
+
 Fri Mar  2 11:46:40 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CodecFactory.cpp (create_codec):
@@ -92,7 +98,7 @@ Fri Mar 02 07:25:50 2001  Ossama Othman  <ossama@uci.edu>
 	  Fixed a compile-time warning that occured on native exception
 	  builds.
 
-Fri Mar  2 02:18:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+Fri Mar  02 02:18:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI_Timeouts/timeout_i.cpp:
 	* tests/AMI_Timeouts/server.cpp:
