@@ -1,3 +1,7 @@
+Thu May 07 19:08:22 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.2 released.
+
 Thu May  7 14:10:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Timer_Hash_T.h: 
