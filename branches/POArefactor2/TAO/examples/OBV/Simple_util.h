@@ -23,7 +23,7 @@
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"

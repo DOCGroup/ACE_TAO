@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*balancer): taoexe, portableserver, minimum_corba {
+project(*balancer): taoexe, utils, portableserver, minimum_corba {
   avoids += repo
   exename = load_balancer
 
@@ -17,7 +17,7 @@ project(*balancer): taoexe, portableserver, minimum_corba {
   }
 }
 
-project(*server): taoserver, minimum_corba {
+project(*server): taoserver, utils, minimum_corba {
   avoids += repo
 
   Source_Files {
@@ -29,7 +29,7 @@ project(*server): taoserver, minimum_corba {
   }
 }
 
-project(*client): taoclient, portableserver, minimum_corba {
+project(*client): taoclient, utils, portableserver, minimum_corba {
   avoids += repo
   exename = client
 

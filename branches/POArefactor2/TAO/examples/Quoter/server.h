@@ -30,7 +30,7 @@
 #include "ace/Log_Msg.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "Quoter_i.h"
 #include "QuoterC.h"
 
