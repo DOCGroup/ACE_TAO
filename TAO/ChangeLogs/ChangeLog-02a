@@ -1,3 +1,25 @@
+Wed Jul 19 21:35:46 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Simple/chat/Makefile
+	* orbsvcs/LoadBalancer/Makefile
+	* orbsvcs/orbsvcs/Makefile.CosConcurrency
+	* orbsvcs/orbsvcs/Makefile.CosEvent
+	* orbsvcs/orbsvcs/Makefile.CosNaming
+	* orbsvcs/orbsvcs/Makefile.CosNotification
+	* orbsvcs/orbsvcs/Makefile.CosProperty
+	* orbsvcs/orbsvcs/Makefile.CosTime
+	* orbsvcs/orbsvcs/Makefile.CosTrading
+	* orbsvcs/orbsvcs/Makefile.DsLogAdmin
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing
+	* orbsvcs/orbsvcs/Makefile.RTEvent
+	* orbsvcs/orbsvcs/Makefile.RTOLDEvent
+	* orbsvcs/orbsvcs/Makefile.RTSched
+	* orbsvcs/orbsvcs/Makefile.RTSchedEvent
+	* orbsvcs/orbsvcs/Makefile.Svc_Utils
+	* orbsvcs/orbsvcs/Makefile.av
+
+	  Updated dependencies.
+
 Wed Jul 19 18:54:53 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
