@@ -121,9 +121,6 @@ PSRC=$(addsuffix .cpp,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   ifeq ($(LYNXTARGET),)
@@ -131,6 +128,10 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
     BUILD += CDR_Array_Test
   endif
 endif
+
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 
 ifdef purify
   #### SIGINT is used by Thread_Manager_Test.
