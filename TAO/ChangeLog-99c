@@ -1,3 +1,24 @@
+Wed Nov 17 01:45:00 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify:
+	  created a new directory for the Notification Service.
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.h:
+        * orbsvcs/orbsvcs/Notify/ID_Pool_T.i:
+	* orbsvcs/orbsvcs/Notify/NotifyPublish_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/NotifySubscribe_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_Dispatcher.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+	  created these files for the Notification Service implementation.
+
 Wed Nov 17 01:24:27 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.h (class LogRecordStore):
