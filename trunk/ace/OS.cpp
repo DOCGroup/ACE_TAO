@@ -1360,16 +1360,16 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // explicit scheduling, and a policy, too.
       if (priority != -1)
 	{
-	  ACE_SET_BITS(flags, THR_EXPLICIT_SCHED);
-	  if (ACE_BIT_DISABLED(flags, THR_SCHED_FIFO)
-	      && ACE_BIT_DISABLED(flags, THR_SCHED_RR)
-	      && ACE_BIT_DISABLED(flags, THR_SCHED_DEFAULT))
-	    ACE_SET_BITS(flags, THR_SCHED_DEFAULT);
+	  ACE_SET_BITS (flags, THR_EXPLICIT_SCHED);
+	  if (ACE_BIT_DISABLED (flags, THR_SCHED_FIFO)
+	      && ACE_BIT_DISABLED (flags, THR_SCHED_RR)
+	      && ACE_BIT_DISABLED (flags, THR_SCHED_DEFAULT))
+	    ACE_SET_BITS (flags, THR_SCHED_DEFAULT);
 	}
 
-      if (   ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
-	     || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
-	     || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
+      if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
+	  || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
+	  || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
 	{
 	  int spolicy;
 
@@ -1393,7 +1393,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #        endif /* ACE_HAS_SETKIND_NP */
 	  if (result != 0)
 	      {
-		// preserve the errno value
+		// Preserve the errno value.
 		errno = result;
 #        if defined (ACE_HAS_SETKIND_NP)
 		::pthread_attr_delete (&attr);
@@ -1429,17 +1429,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // *** Set Priority (use reasonable default priorities)
 #      if defined(ACE_HAS_PTHREADS_1003_DOT_1C)
       // If we wish to explicitly set a scheduling policy, we also
-      // have to specify a priority.
-      // We choose a "middle" priority as default.
-      // Maybe this is also necessary on other POSIX'ish implementations?
-      if ((   ACE_BIT_ENABLED(flags, THR_SCHED_FIFO)
-	      || ACE_BIT_ENABLED(flags, THR_SCHED_RR)
-	      || ACE_BIT_ENABLED(flags, THR_SCHED_DEFAULT))
+      // have to specify a priority.  We choose a "middle" priority as
+      // default.  Maybe this is also necessary on other POSIX'ish
+      // implementations?
+      if ((ACE_BIT_ENABLED (flags, THR_SCHED_FIFO)
+	   || ACE_BIT_ENABLED (flags, THR_SCHED_RR)
+	   || ACE_BIT_ENABLED (flags, THR_SCHED_DEFAULT))
 	  && priority == -1)
 	{
 	  if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
 	    priority = ACE_THR_PRI_FIFO_DEF;
-	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
+	  else if (ACE_BIT_ENABLED (flags, THR_SCHED_RR))
 	    priority = ACE_THR_PRI_RR_DEF;
 	  else // THR_SCHED_DEFAULT
 	    priority = ACE_THR_PRI_OTHER_DEF;
@@ -1452,28 +1452,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
 
 #      if defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_SETKIND_NP)
-	  sparam.sched_priority = ACE_MIN(priority, PRIORITY_MAX);
+	  sparam.sched_priority = ACE_MIN (priority, PRIORITY_MAX);
 #      elif defined(ACE_HAS_IRIX62_THREADS) || defined (ACE_HAS_PTHREADS_XAVIER)
-	  sparam.sched_priority = ACE_MIN(priority, PTHREAD_MAX_PRIORITY);
+	  sparam.sched_priority = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
 #      elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
-	  sparam.prio = ACE_MIN(priority, PTHREAD_MAX_PRIORITY);
+	  sparam.prio = ACE_MIN (priority, PTHREAD_MAX_PRIORITY);
 #      elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
 	  // The following code forces priority into range.
-	  if (ACE_BIT_ENABLED(flags, THR_SCHED_FIFO))
-	    {
-	      sparam.sched_priority = 
-		ACE_MIN(ACE_THR_PRI_FIFO_MAX, ACE_MAX(ACE_THR_PRI_FIFO_MIN, priority));
-	    }
+	  if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
+	    sparam.sched_priority = 
+	      ACE_MIN (ACE_THR_PRI_FIFO_MAX, ACE_MAX (ACE_THR_PRI_FIFO_MIN, priority));
 	  else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
-	    {
-	      sparam.sched_priority =
-		ACE_MIN(ACE_THR_PRI_RR_MAX, ACE_MAX(ACE_THR_PRI_RR_MIN, priority));
-	    }
+	    sparam.sched_priority =
+	      ACE_MIN (ACE_THR_PRI_RR_MAX, ACE_MAX (ACE_THR_PRI_RR_MIN, priority));
 	  else // Default policy, whether set or not
-	    {
-	      sparam.sched_priority =
-		ACE_MIN(ACE_THR_PRI_OTHER_MAX, ACE_MAX(ACE_THR_PRI_OTHER_MIN, priority));
-	    }
+	    sparam.sched_priority =
+	      ACE_MIN (ACE_THR_PRI_OTHER_MAX, ACE_MAX (ACE_THR_PRI_OTHER_MIN, priority));
 #      else
 	  sparam.sched_priority = priority;
 #      endif
@@ -1496,8 +1490,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      return -1;
 	    }
 #      else
-	  if ((sparam.sched_priority >= PTHREAD_MIN_PRIORITY)
-	      && (sparam.sched_priority <= PTHREAD_MAX_PRIORITY))
+	  if (sparam.sched_priority >= PTHREAD_MIN_PRIORITY
+	      && sparam.sched_priority <= PTHREAD_MAX_PRIORITY)
 	    attr.prio = sparam.sched_priority;
 	  else
 	    {
@@ -1508,7 +1502,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	}
 
       // *** Set scheduling explicit or inherited
-      if (   ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
+      if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
 	  || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
 	{
 #      if defined (ACE_HAS_SETKIND_NP)
