@@ -5,24 +5,21 @@
 #include "Notify_Event_Manager.h"
 #include "Notify_SupplierAdmin_i.h"
 
-// @@ Pradeep: be systematic about the RCSID
+ACE_RCSID(Notify, Notify_StructuredProxyPushConsumer_i, "$Id$")
 
 TAO_Notify_StructuredProxyPushConsumer_i::TAO_Notify_StructuredProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager)
-  : TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer> (supplieradmin, resource_manager)
+  :structured_proxy_inherited (supplieradmin, resource_manager)
 {
-  // @@ Pradeep: the comments...
-  // No-Op.
 }
 
 TAO_Notify_StructuredProxyPushConsumer_i::~TAO_Notify_StructuredProxyPushConsumer_i (void)
 {
-  // No-Op.
 }
 
 void
 TAO_Notify_StructuredProxyPushConsumer_i::cleanup_i (CORBA::Environment& ACE_TRY_ENV)
 {
-  TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>::cleanup_i (ACE_TRY_ENV);
+  structured_proxy_inherited::cleanup_i (ACE_TRY_ENV);
 
   this->is_destroyed_ = 1;
 }

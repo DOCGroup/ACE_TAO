@@ -6,6 +6,8 @@
 #include "Notify_Proxy_T.h"
 #include "Notify_Event_Manager.h"
 
+ACE_RCSID(Notify, Notify_Proxy_T, "$Id$")
+
 template <class SERVANT_TYPE>
 TAO_Notify_Proxy<SERVANT_TYPE>::TAO_Notify_Proxy (TAO_Notify_Resource_Manager* resource_manager)
   : resource_manager_ (resource_manager),
@@ -37,7 +39,7 @@ TAO_Notify_Proxy<SERVANT_TYPE>::cleanup_i (CORBA::Environment& /*ACE_TRY_ENV*/)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy<SERVANT_TYPE>::dispatch_update (EVENTTYPE_LIST& added_list, EVENTTYPE_LIST& removed_list, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Proxy<SERVANT_TYPE>::dispatch_update (TAO_Notify_EventType_List& added_list, TAO_Notify_EventType_List& removed_list, CORBA::Environment &ACE_TRY_ENV)
 {
   CosNotification::EventTypeSeq added (added_list.size ());
   CosNotification::EventTypeSeq removed (removed_list.size ());

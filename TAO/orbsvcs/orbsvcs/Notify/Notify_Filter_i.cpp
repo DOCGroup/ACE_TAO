@@ -4,6 +4,8 @@
 #include "Notify_Filter_i.h"
 #include "Notify_Constraint_Visitors.h"
 
+ACE_RCSID(Notify, Notify_Filter_i, "$Id$")
+
 // Implementation skeleton constructor
 TAO_Notify_Filter_i::TAO_Notify_Filter_i (void)
 {

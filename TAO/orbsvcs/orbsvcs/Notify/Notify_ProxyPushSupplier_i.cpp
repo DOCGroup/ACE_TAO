@@ -4,23 +4,23 @@
 #include "Notify_Event_Manager.h"
 #include "Notify_ConsumerAdmin_i.h"
 
+ACE_RCSID(Notify, Notify_ProxyPushSupplier_i, "$Id$")
+
 TAO_Notify_ProxyPushSupplier_i::TAO_Notify_ProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
-  :TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::ProxyPushSupplier> (consumeradmin, resource_manager),
-  notify_style_consumer_ (0)
+  :proxy_inherited (consumeradmin, resource_manager),
+   notify_style_consumer_ (0)
 {
-  // No-Op.
 }
 
 // Implementation skeleton destructor
 TAO_Notify_ProxyPushSupplier_i::~TAO_Notify_ProxyPushSupplier_i (void)
 {
-  // No-Op.
 }
 
 void
 TAO_Notify_ProxyPushSupplier_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::ProxyPushSupplier>::cleanup_i (ACE_TRY_ENV);
+  proxy_inherited::cleanup_i (ACE_TRY_ENV);
 
   this->cosec_push_consumer_ = CosEventComm::PushConsumer::_nil ();
   this->notify_push_consumer_ = CosNotifyComm::PushConsumer::_nil ();

@@ -12,19 +12,24 @@
 #include "Notify_SequenceProxyPushConsumer_i.h"
 #include "Notify_ProxyPushConsumer_i.h"
 
-// @@ Pradeep: what happened to the RCSID macro?
+#define EC_POA_NAME "EC_POA"
+// The POA name in which all the EC's live.
+
+ACE_RCSID(Notify, Notify_Resource_Manager, "$Id$")
 
 TAO_Notify_Resource_Manager::TAO_Notify_Resource_Manager (PortableServer::POA_ptr default_POA)
   :default_POA_ (PortableServer::POA::_duplicate (default_POA))
 {
-  // @@ Pradeep: this is a perfectly useless comment, don't you think?
-  // No-Op.
 }
 
 TAO_Notify_Resource_Manager::~TAO_Notify_Resource_Manager ()
 {
-  // @@ Pradeep: this is a perfectly useless comment, don't you think?
-  // No-Op.
+  this->deactivate_object(this->default_filter_factory_.in (),
+                          this->default_POA_.in (),
+                          TAO_default_environment ());
+
+  default_POA_ = PortableServer::POA::_nil ();
+  this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil ();
 }
 
 TAO_Notify_Resource_Manager*
@@ -34,11 +39,51 @@ TAO_Notify_Resource_Manager::create (PortableServer::POA_ptr default_POA, CORBA:
   ACE_NEW_THROW_EX (mgr,
                     TAO_Notify_Resource_Manager (default_POA),
                     CORBA::NO_MEMORY ());
+
+  ACE_TRY
+    {
+      mgr->init_i (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHALL
+    {
+      delete mgr;
+      mgr = 0;
+    }
+  ACE_ENDTRY;
+
   return mgr;
 }
 
+void
+TAO_Notify_Resource_Manager::init_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->default_filter_factory_ =
+    this->create_default_filter_factory_i (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CosNotifyFilter::FilterFactory_ptr
+TAO_Notify_Resource_Manager::create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV)
+{
+  TAO_Notify_FilterFactory_i* filterfactory =
+    this->create_filter_factory (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
+
+  PortableServer::ServantBase_var filterfactory_var (filterfactory);
+
+  // Init goes here.
+  // ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
+
+  CORBA::Object_var obj = this->activate_object (this->default_POA_.in (),
+                                                 filterfactory, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
+
+  return CosNotifyFilter::FilterFactory::_narrow (obj.in ());
+}
+
 TAO_Notify_EventChannel_i*
-TAO_Notify_Resource_Manager::create_event_channel (CosNotifyChannelAdmin::EventChannelFactory_ptr parent, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Resource_Manager::create_event_channel (TAO_Notify_EventChannelFactory_i* parent, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Notify_EventChannel_i* channel;
   ACE_NEW_THROW_EX (channel,
@@ -74,6 +119,13 @@ PortableServer::POA_ptr
 TAO_Notify_Resource_Manager::get_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
+}
+
+CosNotifyFilter::FilterFactory_ptr
+TAO_Notify_Resource_Manager::get_default_filter_factory (void)
+{
+  return CosNotifyFilter::FilterFactory::
+    _duplicate (this->default_filter_factory_);
 }
 
 TAO_Notify_FilterFactory_i*
@@ -159,35 +211,57 @@ TAO_Notify_Resource_Manager::create_proxy_pushconsumer (TAO_Notify_SupplierAdmin
 PortableServer::POA_ptr
 TAO_Notify_Resource_Manager::create_event_channel_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->create_generic_childPOA_i (parent_poa, ACE_TRY_ENV);
+  return this->create_generic_childPOA_i (EC_POA_NAME,
+                                          parent_poa, ACE_TRY_ENV);
 }
 
+
 PortableServer::POA_ptr
-TAO_Notify_Resource_Manager::create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Resource_Manager::create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->create_generic_childPOA_i (parent_poa, ACE_TRY_ENV);
+  char child_poa_name[BUFSIZ];
+
+  ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "SA");
+
+  return this->create_generic_childPOA_i (child_poa_name, parent_poa,
+                                          ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Resource_Manager::create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Resource_Manager::create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->create_generic_childPOA_i (parent_poa, ACE_TRY_ENV);
+  char child_poa_name[BUFSIZ];
+
+  ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "CA");
+
+  return this->create_generic_childPOA_i (child_poa_name,
+                                          parent_poa, ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Resource_Manager::create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Resource_Manager::create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->create_generic_childPOA_i (parent_poa, ACE_TRY_ENV);
+  char child_poa_name[BUFSIZ];
+
+  ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "PPC");
+
+  return this->create_generic_childPOA_i (child_poa_name,
+                                          parent_poa, ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Resource_Manager::create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Resource_Manager::create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->create_generic_childPOA_i (parent_poa, ACE_TRY_ENV);
+  char child_poa_name[BUFSIZ];
+
+  ACE_OS::sprintf (child_poa_name, "%d%s", new_poa_id, "PPS");
+
+  return this->create_generic_childPOA_i (child_poa_name,
+                                          parent_poa, ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Resource_Manager::create_generic_childPOA_i (const char* child_poa_name, PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ Pradeep: if the Notification service is ever going to be
   // persistent or fault tolerant you may need to create this stuff
@@ -220,28 +294,19 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr 
     PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy.in ());
 
   // @@ Pradeep: is it possible to use a more meaningful name?
-  char child_poa_name[BUFSIZ];
-
-  CORBA::Long poa_id = this->poa_ids_.get ();
-
-  ACE_OS::sprintf (child_poa_name, "%d", poa_id);
 
   // Create the child POA.
   PortableServer::POA_var poa_ret = poa->create_POA (child_poa_name,
                                                      manager,
                                                      policy_list,
                                                      ACE_TRY_ENV);
-  // @@ Pradeep: these guys take an ACE_TRY_ENV argument, and can
-  // raise exceptions.  WOuld you believe that?
-  idpolicy->destroy ();
+  ACE_CHECK_RETURN (PortableServer::POA::_nil());
+
+  idpolicy->destroy (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil());
+
   assignpolicy->destroy ();
-
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-
-#if 0
-  ACE_DEBUG ((LM_DEBUG, "created child poa %s", child_poa_name));
-#endif
-  this->poa_ids_.next (); // commit this id to the active list
+  ACE_CHECK_RETURN (PortableServer::POA::_nil());
 
   return poa_ret._retn ();
 }
@@ -328,7 +393,10 @@ void
 TAO_Notify_Resource_Manager::destroy_POA (PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV)
 {
   if (!CORBA::is_nil (poa))
-    poa->destroy (1,1,ACE_TRY_ENV);
+    poa->destroy (1,0,ACE_TRY_ENV);
+  // The <wait_for_completion> flag causes a deadlock when destroying the POA
+  // because we are involved in an upcall.
+  // TODO:I have to think about what the implications of not waiting are.
 }
 
 void

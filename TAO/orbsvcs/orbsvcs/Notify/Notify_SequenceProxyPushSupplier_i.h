@@ -59,7 +59,7 @@ class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Noti
   ));
 
   // @@ Pradeep: more indentation problems....
-virtual void disconnect_sequence_push_supplier (
+  virtual void disconnect_sequence_push_supplier (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -76,12 +76,15 @@ virtual void disconnect_sequence_push_supplier (
   virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
   // Deliver the update to the consumer.
 
-// = Helper methods
- virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
- // Cleanup all resources used by this object.
+  // = Helper methods
+  virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Cleanup all resources used by this object.
 
- CosNotifyComm::SequencePushConsumer_var push_consumer_;
- // The consumer that we're connect to.
+  CosNotifyComm::SequencePushConsumer_var push_consumer_;
+  // The consumer that we're connect to.
+
+  typedef TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
+    sequence_proxy_inherited;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

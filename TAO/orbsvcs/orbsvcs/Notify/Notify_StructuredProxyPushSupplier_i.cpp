@@ -4,26 +4,21 @@
 #include "Notify_StructuredProxyPushSupplier_i.h"
 #include "Notify_ConsumerAdmin_i.h"
 
-// @@ Pradeep: be systematic about the RCSID
+ACE_RCSID(Notify, Notify_StructuredProxyPushSupplier_i, "$Id$")
 
-TAO_Notify_StructuredProxyPushSupplier_i::
-     TAO_Notify_StructuredProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin,
-                                               TAO_Notify_Resource_Manager* resource_manager)
-  :TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier> (consumeradmin, resource_manager)
+TAO_Notify_StructuredProxyPushSupplier_i::TAO_Notify_StructuredProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
+  :structured_proxy_inherited (consumeradmin, resource_manager)
 {
-  // @@ Pradeep: more superflous comments..
-  //No-Op.
 }
 
 TAO_Notify_StructuredProxyPushSupplier_i::~TAO_Notify_StructuredProxyPushSupplier_i (void)
 {
-  // No-Op.
 }
 
 void
 TAO_Notify_StructuredProxyPushSupplier_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier>::cleanup_i (ACE_TRY_ENV);
+  structured_proxy_inherited::cleanup_i (ACE_TRY_ENV);
 
   this->push_consumer_ = CosNotifyComm::StructuredPushConsumer::_nil ();
 }

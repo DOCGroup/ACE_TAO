@@ -21,10 +21,10 @@
 
 #include "Notify_Types.h"
 
-class TAO_Notify_Event_Listener
+class TAO_Notify_EventListener
 {
   // = TITLE
-  //   TAO_Notify_Event_Listener
+  //   TAO_Notify_EventListener
   //
   // = DESCRIPTION
   //   An entities interested in receiving events can implement this interface
@@ -36,18 +36,18 @@ class TAO_Notify_Event_Listener
   // Callback methods to supply the event to the listener.
 };
 
-class TAO_Notify_Update_Listener
+class TAO_Notify_UpdateListener
 {
  public:
   // = TITLE
-  //   TAO_Notify_Update_Listener
+  //   TAO_Notify_UpdateListener
   //
   // = DESCRIPTION
   //   All entities interested in receiving subscription and publication
   //   change messages can implement this interface and register it with
   //   the Event Manager to receive updates.
   //
-  virtual void dispatch_update (EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void dispatch_update (TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed, CORBA::Environment &ACE_TRY_ENV) = 0;
   // Callback method to supply updates.
 };
 

@@ -5,21 +5,21 @@
 #include "Notify_Event_Manager.h"
 #include "Notify_SupplierAdmin_i.h"
 
+ACE_RCSID(Notify, Notify_SequenceProxyPushConsumer_i, "$Id$")
+
 TAO_Notify_SequenceProxyPushConsumer_i::TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager)
-  : TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer> (supplieradmin, resource_manager)
+  : sequence_proxy_inherited(supplieradmin, resource_manager)
 {
-  // No-Op.
 }
 
 TAO_Notify_SequenceProxyPushConsumer_i::~TAO_Notify_SequenceProxyPushConsumer_i (void)
 {
-  // No-Op.
 }
 
 void
 TAO_Notify_SequenceProxyPushConsumer_i::cleanup_i (CORBA::Environment& ACE_TRY_ENV)
 {
-  TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>::cleanup_i (ACE_TRY_ENV);
+  sequence_proxy_inherited::cleanup_i (ACE_TRY_ENV);
 
   this->is_destroyed_ = 1;
 }

@@ -8,6 +8,8 @@
 #include "Notify_Resource_Manager.h"
 #include "Notify_Event_Manager.h"
 
+ACE_RCSID(Notify, Notify_ConsumerAdmin_i, "$Id$")
+
 // Implementation skeleton constructor
 TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_i* myChannel, TAO_Notify_Resource_Manager* resource_manager)
   :my_channel_ (myChannel),
@@ -21,9 +23,8 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
 // Implementation skeleton destructor
 TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
 {
-  if (this->is_destroyed_ == 0)
-    this->cleanup_i ();
-
+  /* ACE_DEBUG ((LM_DEBUG,"in CA %d dtor\n", this->myID_)); */
+  this->cleanup_i ();
   this->my_channel_->consumer_admin_destroyed (this->myID_);
 }
 
@@ -42,8 +43,7 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID myID,
   my_POA_ = PortableServer::POA::_duplicate (my_POA);
 
   this->proxy_pushsupplier_POA_ = this->resource_manager_->
-    create_proxy_pushsupplier_POA (this->my_POA_.in (),
-                                   ACE_TRY_ENV);
+    create_proxy_pushsupplier_POA (this->my_POA_.in (), myID, ACE_TRY_ENV);
   ACE_CHECK;
 
   this->myID_ = myID;
@@ -72,10 +72,13 @@ TAO_Notify_ConsumerAdmin_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   this->is_destroyed_ = 1;
 
+  this->resource_manager_->destroy_POA (this->proxy_pushsupplier_POA_.in (),
+                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
   // deactivate ourselves
   this->resource_manager_->deactivate_object (this, this->my_POA_.in (),
                                               ACE_TRY_ENV);
-  this->cleanup_i (ACE_TRY_ENV);
 }
 
 void
@@ -111,7 +114,7 @@ TAO_Notify_ConsumerAdmin_i::get_filter_admin (void)
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::register_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ConsumerAdmin_i::register_listener (TAO_Notify_EventListener *listener, CORBA::Environment &ACE_TRY_ENV)
 {
   // register it.
   this->event_listener_list_.insert (listener);
@@ -124,7 +127,7 @@ TAO_Notify_ConsumerAdmin_i::register_listener (TAO_Notify_Event_Listener *listen
   removed.length (0);
 
   // copy value to the added list.
-  EVENTTYPE_LIST::ITERATOR iter (this->subscription_list_);
+  TAO_Notify_EventType_List::ITERATOR iter (this->subscription_list_);
   TAO_Notify_EventType* event_type;
 
   CORBA::ULong i = 0;
@@ -137,7 +140,7 @@ TAO_Notify_ConsumerAdmin_i::register_listener (TAO_Notify_Event_Listener *listen
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::unregister_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ConsumerAdmin_i::unregister_listener (TAO_Notify_EventListener *listener, CORBA::Environment &ACE_TRY_ENV)
 {
   this->event_listener_list_.remove (listener);
 
@@ -149,7 +152,7 @@ TAO_Notify_ConsumerAdmin_i::unregister_listener (TAO_Notify_Event_Listener *list
   added.length (0);
 
   // copy value to the added list.
-  EVENTTYPE_LIST::ITERATOR iter (this->subscription_list_);
+  TAO_Notify_EventType_List::ITERATOR iter (this->subscription_list_);
   TAO_Notify_EventType* event_type;
 
   CORBA::ULong i = 0;
@@ -162,11 +165,9 @@ TAO_Notify_ConsumerAdmin_i::unregister_listener (TAO_Notify_Event_Listener *list
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_ConsumerAdmin_i::cleanup_i (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   // Cleanup all resources..
-  this->resource_manager_->destroy_POA (this->proxy_pushsupplier_POA_.in (),
-                                        ACE_TRY_ENV);
   this->proxy_pushsupplier_POA_ = PortableServer::POA::_nil ();
   this->my_POA_ = PortableServer::POA::_nil ();
 }

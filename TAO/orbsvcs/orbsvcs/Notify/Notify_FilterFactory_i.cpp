@@ -3,6 +3,8 @@
 #include "Notify_FilterFactory_i.h"
 #include "Notify_Filter_i.h"
 
+ACE_RCSID(Notify, Notify_FilterFactory_i, "$Id$")
+
 // Implementation skeleton constructor
 TAO_Notify_FilterFactory_i::TAO_Notify_FilterFactory_i (void)
   {

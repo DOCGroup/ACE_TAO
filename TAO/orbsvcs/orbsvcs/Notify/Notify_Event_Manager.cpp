@@ -2,6 +2,8 @@
 #include "Notify_Event_Manager.h"
 #include "Notify_EventChannel_i.h"
 
+ACE_RCSID(Notify, Notify_Event_Manager, "$Id$")
+
 TAO_Notify_Event_Manager::TAO_Notify_Event_Manager (TAO_Notify_EventChannel_i* event_channel)
   :event_channel_ (event_channel)
 {
@@ -20,9 +22,9 @@ TAO_Notify_Event_Manager::init (CORBA::Environment &/*ACE_TRY_ENV*/)
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENTTYPE_LIST added_update, removed_update;
+  TAO_Notify_EventType_List added_update, removed_update;
 
   this->subscribe_for_events_i (event_listener, current, added_update,
                                 added, ACE_TRY_ENV);
@@ -39,9 +41,9 @@ TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_Event_Listener* event
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events (EVENT_LISTENER_LIST& event_listener_list, EVENTTYPE_LIST* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::subscribe_for_events (TAO_Notify_EventListener_List& event_listener_list, TAO_Notify_EventType_List* current, const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENTTYPE_LIST added_update, removed_update;
+  TAO_Notify_EventType_List added_update, removed_update;
 
   this->subscribe_for_events_i (event_listener_list, current, added_update,
                                 added, ACE_TRY_ENV);
@@ -58,9 +60,9 @@ TAO_Notify_Event_Manager::subscribe_for_events (EVENT_LISTENER_LIST& event_liste
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, EVENTTYPE_LIST& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List* current, TAO_Notify_EventType_List& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENT_LISTENER_LIST* event_listener_list;
+  TAO_Notify_EventListener_List* event_listener_list;
   TAO_Notify_EventType event_type;
 
   for (CORBA::ULong index = 0; index < added.length (); index++)
@@ -78,10 +80,10 @@ TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_Event_Listener* eve
                                                 event_listener_list) == -1)
         {
           // create the list.
-          EVENT_LISTENER_LIST* new_list;
+          TAO_Notify_EventListener_List* new_list;
 
           ACE_NEW_THROW_EX (new_list,
-                            EVENT_LISTENER_LIST (),
+                            TAO_Notify_EventListener_List (),
                             CORBA::NO_MEMORY ());
 
           // add the list to the recipient map.
@@ -102,9 +104,9 @@ TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_Event_Listener* eve
 }
 
 void
-TAO_Notify_Event_Manager::subscribe_for_events_i (EVENT_LISTENER_LIST& list_to_add, EVENTTYPE_LIST* current, EVENTTYPE_LIST& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::subscribe_for_events_i (TAO_Notify_EventListener_List& list_to_add, TAO_Notify_EventType_List* current, TAO_Notify_EventType_List& update, const CosNotification::EventTypeSeq & added, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENT_LISTENER_LIST* event_listener_list;
+  TAO_Notify_EventListener_List* event_listener_list;
   TAO_Notify_EventType event_type;
 
   for (CORBA::ULong index = 0; index < added.length (); index++)
@@ -117,10 +119,10 @@ TAO_Notify_Event_Manager::subscribe_for_events_i (EVENT_LISTENER_LIST& list_to_a
                                                 event_listener_list) == -1)
         {
           // create the list.
-          EVENT_LISTENER_LIST* new_list;
+          TAO_Notify_EventListener_List* new_list;
 
           ACE_NEW_THROW_EX (new_list,
-                            EVENT_LISTENER_LIST (),
+                            TAO_Notify_EventListener_List (),
                             CORBA::NO_MEMORY ());
 
           // add the list to the recipient map.
@@ -128,9 +130,9 @@ TAO_Notify_Event_Manager::subscribe_for_events_i (EVENT_LISTENER_LIST& list_to_a
           event_listener_list = new_list;
         }
 
-      EVENT_LISTENER_LIST::ITERATOR iter (list_to_add);
+      TAO_Notify_EventListener_List::ITERATOR iter (list_to_add);
 
-      TAO_Notify_Event_Listener** event_listener;
+      TAO_Notify_EventListener** event_listener;
 
       for (iter.first (); iter.next (event_listener); iter.advance ())
         {
@@ -155,9 +157,9 @@ TAO_Notify_Event_Manager::subscribe_for_events_i (EVENT_LISTENER_LIST& list_to_a
 }
 
 void
-TAO_Notify_Event_Manager::unsubscribe_from_events_i (TAO_Notify_Event_Listener* event_listener, EVENTTYPE_LIST* current, EVENTTYPE_LIST &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::unsubscribe_from_events_i (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List* current, TAO_Notify_EventType_List &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  EVENT_LISTENER_LIST* event_listener_list;
+  TAO_Notify_EventListener_List* event_listener_list;
   TAO_Notify_EventType event_type;
 
   for (CORBA::ULong index = 0; index < removed.length (); index++)
@@ -195,9 +197,9 @@ TAO_Notify_Event_Manager::unsubscribe_from_events_i (TAO_Notify_Event_Listener* 
 }
 
 void
-TAO_Notify_Event_Manager::unsubscribe_from_events_i (EVENT_LISTENER_LIST& list_to_add, EVENTTYPE_LIST* current, EVENTTYPE_LIST &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::unsubscribe_from_events_i (TAO_Notify_EventListener_List& list_to_add, TAO_Notify_EventType_List* current, TAO_Notify_EventType_List &update, const CosNotification::EventTypeSeq & removed, CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  EVENT_LISTENER_LIST* event_listener_list;
+  TAO_Notify_EventListener_List* event_listener_list;
   TAO_Notify_EventType event_type;
 
   for (CORBA::ULong index = 0; index < removed.length (); index++)
@@ -211,9 +213,9 @@ TAO_Notify_Event_Manager::unsubscribe_from_events_i (EVENT_LISTENER_LIST& list_t
                                                 event_listener_list) == -1)
         continue;
 
-      EVENT_LISTENER_LIST::ITERATOR iter (list_to_add);
+      TAO_Notify_EventListener_List::ITERATOR iter (list_to_add);
 
-      TAO_Notify_Event_Listener** event_listener;
+      TAO_Notify_EventListener** event_listener;
 
       for (iter.first (); iter.next (event_listener); iter.advance ())
         {
@@ -244,7 +246,7 @@ TAO_Notify_Event_Manager::push (TAO_Notify_Event& event, CORBA::Environment &ACE
 #endif
   if (!event.is_special_event_type ())
     {
-      EVENT_LISTENER_LIST* subscription_list;
+      TAO_Notify_EventListener_List* subscription_list;
       // find the subscription list for <event_type>
       if (this->event_recipient_map_.find (event.event_type (),
                                            subscription_list) == 0)
@@ -262,11 +264,11 @@ TAO_Notify_Event_Manager::push (TAO_Notify_Event& event, CORBA::Environment &ACE
 }
 
 void
-TAO_Notify_Event_Manager::dispatch_event_i (TAO_Notify_Event &event, EVENT_LISTENER_LIST* proxy_list, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::dispatch_event_i (TAO_Notify_Event &event, TAO_Notify_EventListener_List* proxy_list, CORBA::Environment &ACE_TRY_ENV)
 {
-  EVENT_LISTENER_LIST::ITERATOR iter (*proxy_list);
+  TAO_Notify_EventListener_List::ITERATOR iter (*proxy_list);
 
-  TAO_Notify_Event_Listener** event_listener;
+  TAO_Notify_EventListener** event_listener;
 
   for (iter.first (); iter.next (event_listener); iter.advance ())
     {
@@ -276,11 +278,11 @@ TAO_Notify_Event_Manager::dispatch_event_i (TAO_Notify_Event &event, EVENT_LISTE
 }
 
 void
-TAO_Notify_Event_Manager::dispatch_updates_i (UPDATE_LISTENER_LIST& update_listener_list, EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed, CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_Event_Manager::dispatch_updates_i (TAO_Notify_UpdateListener_List& update_listener_list, TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed, CORBA::Environment &ACE_TRY_ENV)
 {
-  UPDATE_LISTENER_LIST::ITERATOR iter (update_listener_list);
+  TAO_Notify_UpdateListener_List::ITERATOR iter (update_listener_list);
 
-  TAO_Notify_Update_Listener** update_listener;
+  TAO_Notify_UpdateListener** update_listener;
 
   for (iter.first (); iter.next (update_listener); iter.advance ())
     {
@@ -289,25 +291,25 @@ TAO_Notify_Event_Manager::dispatch_updates_i (UPDATE_LISTENER_LIST& update_liste
 }
 
 void
-TAO_Notify_Event_Manager::register_for_publication_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::register_for_publication_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
 {
   this->publication_change_listeners_.insert (update_listener);
 }
 
 void
-TAO_Notify_Event_Manager::register_for_subscription_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
 {
   this->subscription_change_listeners_.insert (update_listener);
 }
 
 void
-TAO_Notify_Event_Manager:: unregister_from_subscription_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager:: unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
 {
   this->subscription_change_listeners_.remove (update_listener);
 }
 
 void
-TAO_Notify_Event_Manager::unregister_from_publication_updates (TAO_Notify_Update_Listener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
+TAO_Notify_Event_Manager::unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener, CORBA::Environment& /*ACE_TRY_ENV*/)
 {
   this->publication_change_listeners_.remove (update_listener);
 }
@@ -345,8 +347,8 @@ TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventT
 {
   TAO_Notify_EventType event_type;
 
-  EVENTTYPE_LIST added_list;
-  EVENTTYPE_LIST removed_list;
+  TAO_Notify_EventType_List added_list;
+  TAO_Notify_EventType_List removed_list;
 
   CORBA::ULong len = removed.length ();
   CORBA::ULong i = 0 ;
@@ -377,26 +379,26 @@ TAO_Notify_Event_Manager::update_publication_list (const CosNotification::EventT
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Entry<TAO_Notify_EventType, EVENT_LISTENER_LIST *>;
-template class ACE_Hash_Map_Manager<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_EventListener_List *>;
+template class ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
 template class ACE_Hash<TAO_Notify_EventType>;
 template class ACE_Equal_To<TAO_Notify_EventType>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Entry<TAO_Notify_EventType, EVENT_LISTENER_LIST *>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_EventListener_List *>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
 #pragma instantiate template ACE_Hash<TAO_Notify_EventType>
 #pragma instantiate template ACE_Equal_To<TAO_Notify_EventType>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

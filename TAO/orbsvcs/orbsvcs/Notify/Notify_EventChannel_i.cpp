@@ -1,13 +1,15 @@
 // $Id$
 
 #include "Notify_EventChannel_i.h"
+#include "Notify_Resource_Manager.h"
+#include "Notify_EventChannelFactory_i.h"
 #include "Notify_SupplierAdmin_i.h"
 #include "Notify_ConsumerAdmin_i.h"
-#include "Notify_FilterFactory_i.h"
-#include "Notify_Resource_Manager.h"
 
-TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (CosNotifyChannelAdmin::EventChannelFactory_ptr my_factory, TAO_Notify_Resource_Manager* resource_manager)
-  :my_factory_ (CosNotifyChannelAdmin::EventChannelFactory::_duplicate (my_factory)),
+ACE_RCSID(Notify, Notify_EventChannel_i, "$Id$")
+
+TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i* my_factory, TAO_Notify_Resource_Manager* resource_manager)
+  :my_factory_ (my_factory),
    resource_manager_(resource_manager),
    default_op_ (CosNotifyChannelAdmin::OR_OP),
    default_id_ (0),
@@ -16,22 +18,21 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (CosNotifyChannelAdmin::Eve
    max_consumers_ (0),
    max_suppliers_ (0)
 {
-  // No-Op.
 }
 
 // Implementation skeleton destructor
 TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
 {
-  if (this->is_destroyed_ == 0)
+  /* ACE_DEBUG ((LM_DEBUG,"in EC dtor\n")); */
+  //  if (!this->is_destroyed_ == 0)
     this->cleanup_i ();
 }
 
 void
-TAO_Notify_EventChannel_i::init (const CosNotification::QoSProperties& initial_qos,
-                                 const CosNotification::AdminProperties& initial_admin,
-                                 PortableServer::POA_ptr my_POA,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::init (CosNotifyChannelAdmin::ChannelID channel_id, const CosNotification::QoSProperties& initial_qos, const CosNotification::AdminProperties& initial_admin, PortableServer::POA_ptr my_POA, CORBA::Environment &ACE_TRY_ENV)
 {
+  this->channel_id_ = channel_id;
+
   this->event_manager_ =
     this->resource_manager_->create_event_manager (this, ACE_TRY_ENV);
   ACE_CHECK;
@@ -49,40 +50,28 @@ TAO_Notify_EventChannel_i::init (const CosNotification::QoSProperties& initial_q
   this->set_admin (initial_admin, ACE_TRY_ENV);
   ACE_CHECK;
 
-  ACE_TRY
-    {
-      // Create the POA for the CA's
-      this->CA_POA_ =
-        this->resource_manager_->create_consumer_admin_POA (this->my_POA_.in (),
-                                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // Create the POA for the CA's
+  this->CA_POA_ =
+    this->resource_manager_->create_consumer_admin_POA (this->my_POA_.in (),
+                                                        channel_id,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
 
-      // Create the POA for the SA's
-      this->SA_POA_ =
-        this->resource_manager_->create_supplier_admin_POA (this->my_POA_.in (),
-                                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  // Create the POA for the SA's
+  this->SA_POA_ =
+    this->resource_manager_->create_supplier_admin_POA (this->my_POA_.in (),
+                                                        channel_id,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
 
-      // Create the default Consumer Admin. Because the ID_Pool is being used
-      // the first time here, it will generate the id 0.
+  // Create the default Consumer Admin. Because the ID_Pool is being used
+  // the first time here, it will generate the id 0.
 
-      CosNotifyChannelAdmin::AdminID id_unused;
-      this->new_for_consumers (default_op_, id_unused, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  CosNotifyChannelAdmin::AdminID id_unused;
+  this->new_for_consumers (default_op_, id_unused, ACE_TRY_ENV);
+  ACE_CHECK;
 
-      this->new_for_suppliers (default_op_, id_unused, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->default_filter_factory_ =
-        this->create_default_filter_factory_i (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHALL
-    {
-      this->cleanup_i (ACE_TRY_ENV);
-      ACE_RETHROW;
-    }
-  ACE_ENDTRY;
+  this->new_for_suppliers (default_op_, id_unused, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -95,13 +84,13 @@ TAO_Notify_EventChannel_i::get_event_manager (void)
 void
 TAO_Notify_EventChannel_i::consumer_admin_destroyed (CosNotifyChannelAdmin::AdminID CA_ID)
 {
-  consumer_admin_ids_.put (CA_ID);
+  this->consumer_admin_ids_.put (CA_ID);
 }
 
 void
 TAO_Notify_EventChannel_i::supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID SA_ID)
 {
-  supplier_admin_ids_.put (SA_ID);
+  this->supplier_admin_ids_.put (SA_ID);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
@@ -113,26 +102,14 @@ TAO_Notify_EventChannel_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_Notify_EventChannel_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_EventChannel_i::cleanup_i (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   // Cleanup all resources..
-  this->resource_manager_->destroy_POA (this->CA_POA_.in (),
-                                        ACE_TRY_ENV);
-  this->resource_manager_->destroy_POA (this->SA_POA_.in (),
-                                        ACE_TRY_ENV);
-  PortableServer::POA_var def_POA =
-    this->resource_manager_->get_default_POA ();
-
-  this->resource_manager_->
-    deactivate_object(this->default_filter_factory_.in (),
-                      def_POA.in (),
-                      ACE_TRY_ENV);
-
   this->CA_POA_ = PortableServer::POA::_nil ();
   this->SA_POA_ = PortableServer::POA::_nil ();
   this->my_POA_ =  PortableServer::POA::_nil ();
-  this->my_factory_ = CosNotifyChannelAdmin::EventChannelFactory::_nil ();
-  this->default_filter_factory_ = CosNotifyFilter::FilterFactory::_nil ();
+
+  this->my_factory_->event_channel_destroyed (this->channel_id_);
 }
 
 void
@@ -143,45 +120,22 @@ TAO_Notify_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
   this->is_destroyed_ = 1;
 
+  this->resource_manager_->destroy_POA (this->CA_POA_.in (),
+                                        ACE_TRY_ENV);
+  this->resource_manager_->destroy_POA (this->SA_POA_.in (),
+                                        ACE_TRY_ENV);
+
   // Deactivate ourselves.
   this->resource_manager_->deactivate_object (this,
                                               this->my_POA_.in (),
                                               ACE_TRY_ENV);
-  this->cleanup_i (ACE_TRY_ENV);
-}
-
-CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_EventChannel_i::create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV)
-{
-  TAO_Notify_FilterFactory_i* filterfactory =
-    this->resource_manager_->create_filter_factory (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
-
-  PortableServer::ServantBase_var filterfactory_var (filterfactory);
-
-  // Init goes here.
-  // ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
-
-  PortableServer::POA_var def_POA =
-    this->resource_manager_->get_default_POA ();
-
-  CORBA::Object_var obj = this->resource_manager_->
-    activate_object (def_POA.in (),
-                     filterfactory,
-                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
-
-  return CosNotifyFilter::FilterFactory::_narrow (obj.in ());
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &/*ACE_TRY_ENV*/)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+TAO_Notify_EventChannel_i::MyFactory (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CosNotifyChannelAdmin::EventChannelFactory
-    ::_duplicate (this->my_factory_.in ());
+  return this->my_factory_->get_ref (ACE_TRY_ENV);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -208,8 +162,7 @@ TAO_Notify_EventChannel_i::default_filter_factory (CORBA::Environment &/*ACE_TRY
                    CORBA::SystemException
                    ))
 {
-  return CosNotifyFilter::FilterFactory
-    ::_duplicate (this->default_filter_factory_.in ());
+  return this->resource_manager_->get_default_filter_factory ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr

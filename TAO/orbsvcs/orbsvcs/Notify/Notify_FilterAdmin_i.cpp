@@ -1,6 +1,8 @@
 /* -*- C++ -*- $Id$ */
 #include "orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h"
 
+ACE_RCSID(Notify, Notify_FilterAdmin_i, "$Id$")
+
 // Implementation skeleton constructor
 TAO_Notify_FilterAdmin_i::TAO_Notify_FilterAdmin_i (void)
 {

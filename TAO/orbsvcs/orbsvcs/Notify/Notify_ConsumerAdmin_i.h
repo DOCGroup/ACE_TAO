@@ -18,12 +18,16 @@
 #define TAO_NOTIFY_CONSUMERADMIN_I_H
 #include "ace/pre.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"
 #include "Notify_Types.h"
 #include "Notify_Listeners.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "notify_export.h"
 
 class TAO_Notify_EventChannel_i;
@@ -72,10 +76,10 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannel
   void deactivate_proxy_pushsupplier (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV);
   // Deactivate servant from <proxy_pushsupplier_POA_>.
 
-  void register_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV);
+  void register_listener (TAO_Notify_EventListener *listener, CORBA::Environment &ACE_TRY_ENV);
   // Register with parent for subscription updates.
 
-  void unregister_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV);
+  void unregister_listener (TAO_Notify_EventListener *listener, CORBA::Environment &ACE_TRY_ENV);
   // Unregister with parent for subscription updates.
 
   void proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
@@ -310,10 +314,10 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
   // The POA in which all our push suppliers live.
   // We create and own this POA.
 
-  EVENTTYPE_LIST subscription_list_;
+  TAO_Notify_EventType_List subscription_list_;
   // The list of event types that all our interested in receiving.
 
-  EVENT_LISTENER_LIST event_listener_list_;
+  TAO_Notify_EventListener_List event_listener_list_;
   // The list of event listeners that have registered with us
 
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
