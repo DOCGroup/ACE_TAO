@@ -61,7 +61,8 @@ template <class SVC_HANDLER> int
 TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                                                              void *arg)
 {
-  if (this->ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh) == -1)
+  if (this->ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
+                                                                         arg) == -1)
     return -1;
 
   TAO_Server_Strategy_Factory *f =
