@@ -1,38 +1,45 @@
+Mon Nov 22 11:58:25 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Account for multiple whitespace when checking for non-bool return
+          values on equality/in-equality operators.
+
 Mon Nov 22 07:44:23 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_dsrt.{cpp,h}: 
+        * Kokyu/Kokyu_dsrt.{cpp,h}:
 
           Changed the return type of
-	  DSRT_Dispatcher_Factory::create_dispatcher method from
-	  auto_ptr<DSRT_Dispatcher> to DSRT_Dispatcher*. This was causing
-	  build errors with VxWorks5.5.1_PPC85XX_GCC3.3. Thanks to Johnny
-	  Willemsen (jwillemsen@remedy.nl) for pointing this out.
+          DSRT_Dispatcher_Factory::create_dispatcher method from
+          auto_ptr<DSRT_Dispatcher> to DSRT_Dispatcher*. This was causing
+          build errors with VxWorks5.5.1_PPC85XX_GCC3.3. Thanks to Johnny
+          Willemsen (jwillemsen@remedy.nl) for pointing this out.
 
-	* Kokyu/Kokyu.h: 
+        * Kokyu/Kokyu.h:
 
-	  Changed some documentation.
-	
+          Changed some documentation.
+
 Sun Nov 21 10:34:42 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Message_Queue_T.h: Changed the access control specifier
-	  of ACE_Message_Queue_Ex::queue_ from private to protected to
- 	  enabled subclasses to access it.  Thanks to Nuno Silva
- 	  <Nuno.Silva@edisoft.pt> for this suggestion.  This change fixes
- 	  bugid 1984.
-	
+        * ace/Message_Queue_T.h: Changed the access control specifier
+          of ACE_Message_Queue_Ex::queue_ from private to protected to
+          enabled subclasses to access it.  Thanks to Nuno Silva
+          <Nuno.Silva@edisoft.pt> for this suggestion.  This change fixes
+          bugid 1984.
+
 Sat Nov 20 18:12:55 UTC 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.inl:
 
-	  Fixes for thr_getprio () on Win32. Thanks to Abhi <abhi at
-	  qualcomm.com> for motivating this fix.
+          Fixes for thr_getprio () on Win32. Thanks to Abhi <abhi at
+          qualcomm.com> for motivating this fix.
 
 Sat Nov 20 07:40:48 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* ace/DLL.cpp:
-	  Doug needs to write 500 times on the board "I will not commit
-	  before compiling."  Missing a value in a return statement from a
-	  function returning int.
+        * ace/DLL.cpp:
+          Doug needs to write 500 times on the board "I will not commit
+          before compiling."  Missing a value in a return statement from a
+          function returning int.
 
 Fri Nov 19 14:42:00 2004  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
@@ -55,21 +62,21 @@ Fri Nov 19 14:42:00 2004  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
 Fri Nov 19 18:19:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/os_include/os_errno.h: Add EPERM for Win32 that doesn't have
-	  it. For example, WinCE.
+        * ace/os_include/os_errno.h: Add EPERM for Win32 that doesn't have
+          it. For example, WinCE.
 
-	* tests/Test_Output.cpp (ACE_Test_Output::output_file()): Use
-	  reinterpret_cast, not dynamic_cast, to convert the OFSTREAM
-	  pointer. dynamic_cast isn't valid where OFSTREAM is a void*,
-	  like on WinCE.
+        * tests/Test_Output.cpp (ACE_Test_Output::output_file()): Use
+          reinterpret_cast, not dynamic_cast, to convert the OFSTREAM
+          pointer. dynamic_cast isn't valid where OFSTREAM is a void*,
+          like on WinCE.
 
-	* tests/HTBP/Reactor_Tests/server.cpp:
-	* tests/HTBP/ping/server.cpp: Use ACE_TMAIN, not main() to pick up
-	  proper signature on WinCE. Also corrected narrow/wide-char issues.
+        * tests/HTBP/Reactor_Tests/server.cpp:
+        * tests/HTBP/ping/server.cpp: Use ACE_TMAIN, not main() to pick up
+          proper signature on WinCE. Also corrected narrow/wide-char issues.
 
 Fri Nov 19 16:03:31 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/DLL.cpp: Cleaned up the code a bit since it was messy
+        * ace/DLL.cpp: Cleaned up the code a bit since it was messy
           and improved the documentation to clarify the role of
           "close_handle_on_destruction".  Also fixed a bug in
           ACE_DLL::close() since it wasn't guarding against multiple

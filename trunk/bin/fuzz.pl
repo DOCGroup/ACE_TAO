@@ -1187,8 +1187,8 @@ sub check_for_non_bool_operators ()
                 if ($found_bool == 0
                     && (/[^\w]bool\s*$/
                         || /^bool\s*$/
-                        || /\sbool\s\w/
-                        || /^bool\s\w/
+                        || /\sbool\s+\w/
+                        || /^bool\s+\w/
                         || /[^\w]return\s*$/))
                   {
                     $found_bool = 1;
