@@ -1,3 +1,9 @@
+Fri Aug 14 09:15:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosTimeBase.idl: 
+	  Removed outdated comment, thanks to David Levine for pointing
+	  this out.
+
 Thu Aug 13 17:45:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp: changed dump_schedule
