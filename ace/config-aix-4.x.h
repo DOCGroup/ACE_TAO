@@ -9,7 +9,7 @@
 #define ACE_CONFIG_H
 
 #if defined (__xlC__) || (__IBMCPP__)
-   // AIX xlC and Visual Age C++ compilers
+   // AIX xlC, IBM C/C++, and Visual Age C++ compilers
    //********************************************************************
    //
    // Compiler-related definitions.  These are set for C Set ++ V3
@@ -21,17 +21,18 @@
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #  define ACE_LACKS_PRAGMA_ONCE
 
-#  define ACE_TEMPLATES_REQUIRE_PRAGMA
+   // C Set++ 3.1 and IBM C/C++ 3.6
+#  if defined (__xlC__)
+#    define ACE_TEMPLATES_REQUIRE_PRAGMA
+#  endif
 
    // These are for Visual Age C++ only
-#  if defined (__IBMCPP__)
+#  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 #    define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #    define ACE_HAS_TYPENAME_KEYWORD
-#    if (__IBMCPP__ >= 400)
-#      undef WIFEXITED
-#      undef WEXITSTATUS
-#    endif /* __IBMCPP__ >= 400 */
+#    undef WIFEXITED
+#    undef WEXITSTATUS
 #  endif /* __IBMCPP__ */
 
 #elif defined (__GNUG__)
