@@ -12,7 +12,9 @@ Tue Apr  6 20:39:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Changed host_name[] to *host_name since null pointers were being
 	  passed into the host_name array.  Strictly speaking, host_name
-	  should thus be a pointer, not an array.
+	  should thus be a pointer, not an array.  Also cleaned up
+	  ternary operator in format_msg() by parenthesizing some
+	  expressions.
 	
 Tue Apr  6 20:19:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
