@@ -1,3 +1,16 @@
+Tue Dec 18 16:01:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS_Dirent.cpp (readdir_emulation): Fixed an "off-by-one"
+	  memory allocation error.  Thanks to Kyle Brost
+ 	  <Kyle.Brost@quest.com> for reporting this.
+
+Mon Dec 17 09:04:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.i (ctime_r): Replaced ACE_OS::strsncpy() with
+	  ACE_OS::strncpy() to fix a bug on Linux.  Thanks to Vlado
+ 	  Chovanec <Vladimir.CHOVANEC@asset.sk> for reporting this.
+	  This fixes BugID 1101.
+
 Tue Dec 18 13:04:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* bin/make_pretty.pl:
@@ -21,13 +34,13 @@ Tue Dec 18 11:11:29 2001  Steve Huston  <shuston@riverace.com>
 Mon Dec 17 18:30:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SPIPE_Acceptor.(h cpp): For Windows, use the event handle
-          instead of the pipe handle for the handle value stored in the
-          ACE_IPC_SAP class. The pipe handle is pretty useless for doing
-          anything like detecting when the pipe connect is done - the
-          event handle is what's really useful there, and it stays
-          consistent across accepts, while the pipe handle changes.
-          This change allows the get_handle() value to be registered
-          with the reactor, albeit for signal, not input.
+	  instead of the pipe handle for the handle value stored in the
+	  ACE_IPC_SAP class. The pipe handle is pretty useless for doing
+	  anything like detecting when the pipe connect is done - the
+	  event handle is what's really useful there, and it stays
+	  consistent across accepts, while the pipe handle changes.  This
+	  change allows the get_handle() value to be registered with the
+	  reactor, albeit for signal, not input.
 
 Mon Dec 17 00:13:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
