@@ -1,3 +1,9 @@
+Mon Feb 16 17:22:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Added a -s flag to use the
+	NamingService to resolve the cubit_factory flag. It still has the
+	commandline IOR and -f ior_file options.
+
 Mon Feb 16 13:29:31 1998  Brian Mendel <brian.r.mendel@boeing.com>
 
 	* tao/poa.cpp: Added SCE_HAS_TEMPLATE_TYPEDEFS_CHAR guards

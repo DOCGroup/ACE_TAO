@@ -16,6 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/corba.h"
+#include "orbsvcs/CosNamingC.h"
 #include "cubit_i.h"
 
 // Global Variables
@@ -105,6 +106,18 @@ main (int argc, char *argv[])
 			      TAO_TRY_ENV);  
       TAO_CHECK_ENV;
 
+      //Resolve the Naming Service context
+      CORBA::Object_var naming_obj =
+	orb->resolve_initial_references ("NameService");
+      if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to resolve the Name Service.\n"),
+			  2);
+
+      CosNaming::NamingContext_var naming_context = 
+        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       // Parse remaining command line and verify parameters.
       parse_args (argc, argv);
 
@@ -135,6 +148,22 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (ior_output_file, "%s", str.in());
           ACE_OS::fclose (ior_output_file);
         }
+
+      // Bind a new IDL_Cubit Name context
+      CosNaming::Name cubit_context_name (1);
+      cubit_context_name.length (1);
+      cubit_context_name[0].id = CORBA::string_dup ("IDL_Cubit");
+      CosNaming::NamingContext_var cubit_context =
+	naming_context->bind_new_context (cubit_context_name,TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      //Register the cubit_factory name with the IDL_Cubit Naming Context...
+      CosNaming::Name factory_name (1);
+      factory_name.length (1);
+      factory_name[0].id = CORBA::string_dup ("cubit_factory");
+      cubit_context->bind (factory_name,obj.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
