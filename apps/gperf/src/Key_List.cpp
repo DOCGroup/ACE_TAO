@@ -895,7 +895,7 @@ Key_List::output_binary_search_function (void)
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
     ACE_OS::printf ("%s;\n",
-	    array_type_);
+            array_type_);
 
   output_min_max ();
 
@@ -905,11 +905,11 @@ Key_List::output_binary_search_function (void)
   // Class definition if -M is *not* enabled.
   if (option[CPLUSPLUS] && !option[SKIPCLASS])
     ACE_OS::printf ("class %s {\npublic:\n"
-	    "  static %s%s%s (const char *str);\n};\n\n",
-	    option.class_name (),
-	    option[CONSTANT] ? "const " : "",
-	    return_type,
-	    option.function_name ());
+            "  static %s%s%s (const char *str);\n};\n\n",
+            option.class_name (),
+            option[CONSTANT] ? "const " : "",
+            return_type,
+            option.function_name ());
 
   // Use the inline keyword to remove function overhead.
   if (option[INLINE])
@@ -920,9 +920,9 @@ Key_List::output_binary_search_function (void)
     ACE_OS::printf ("%s::", option.class_name ());
 
   ACE_OS::printf (option[ANSI]
-	  ? "%s (const char *str)\n{\n"
-	  : "%s (str)\n     char *str;\n{\n",
-	  option.function_name ());
+          ? "%s (const char *str)\n{\n"
+          : "%s (str)\n     char *str;\n{\n",
+          option.function_name ());
 
 // Use the switch in place of lookup table.
 
@@ -933,11 +933,11 @@ Key_List::output_binary_search_function (void)
   else
     {
       if (!option[GLOBAL])
-	{
-	  if (option[LENTABLE])
-	    output_keylength_table ();
-	  output_keyword_table ();
-	}
+        {
+          if (option[LENTABLE])
+            output_keylength_table ();
+          output_keyword_table ();
+        }
     }
 
   // Logic to handle the Binary Search.
@@ -958,14 +958,14 @@ Key_List::output_binary_search_function (void)
   if (additional_code)
     {
       for (;;)
-	{
-	  int c = getchar ();
+        {
+          int c = getchar ();
 
-	  if (c == EOF)
-	    break;
-	  else
-	    putchar (c);
-	}
+          if (c == EOF)
+            break;
+          else
+            putchar (c);
+        }
     }
 
   fflush(stdout);
@@ -989,7 +989,7 @@ Key_List::output_linear_search_function (void)
   // Output type declaration now, reference it later on....
   if (option[TYPE] && !option[NOTYPE])
     ACE_OS::printf ("%s;\n",
-	    array_type_);
+            array_type_);
 
   output_min_max ();
 
@@ -999,26 +999,26 @@ Key_List::output_linear_search_function (void)
   // Class definition if -M is *not* enabled.
   if (option[CPLUSPLUS] && !option[SKIPCLASS])
     ACE_OS::printf ("class %s {\npublic:\n"
-	    "  static %s%s%s (const char *str);\n};\n\n",
-	    option.class_name (),
-	    option[CONSTANT] ? "const " : "",
-	    return_type,
-	    option.function_name ());
+            "  static %s%s%s (const char *str);\n};\n\n",
+            option.class_name (),
+            option[CONSTANT] ? "const " : "",
+            return_type,
+            option.function_name ());
 
   // Use the inline keyword to remove function overhead.
   if (option[INLINE])
     ACE_OS::printf ("inline\n");
 
   ACE_OS::printf ("%s%s\n",
-	  option[CONSTANT] ? "const " : "",
-	  return_type);
+          option[CONSTANT] ? "const " : "",
+          return_type);
   if (option[CPLUSPLUS])
     ACE_OS::printf ("%s::", option.class_name ());
 
   ACE_OS::printf (option[ANSI]
-	  ? "%s (const char *str)\n{\n"
-	  : "%s (str)\n     char *str;\n{\n",
-	  option.function_name ());
+          ? "%s (const char *str)\n{\n"
+          : "%s (str)\n     char *str;\n{\n",
+          option.function_name ());
 
   // Use the switch in place of lookup table.
 
@@ -1028,11 +1028,11 @@ Key_List::output_linear_search_function (void)
   else
     {
       if (!option[GLOBAL])
-	{
-	  if (option[LENTABLE])
-	    output_keylength_table ();
-	  output_keyword_table ();
-	}
+        {
+          if (option[LENTABLE])
+            output_keylength_table ();
+          output_keyword_table ();
+        }
     }
 
   // Logic to handle the Linear Search.
@@ -1047,14 +1047,14 @@ Key_List::output_linear_search_function (void)
   if (additional_code)
     {
       for (;;)
-	{
-	  int c = getchar ();
+        {
+          int c = getchar ();
 
-	  if (c == EOF)
-	    break;
-	  else
-	    putchar (c);
-	}
+          if (c == EOF)
+            break;
+          else
+            putchar (c);
+        }
     }
 
   ACE_OS::fflush (stdout);
@@ -1133,8 +1133,8 @@ Key_List::output_hash_function (void)
             ACE_OS::printf ("\n    ");
 
           ACE_OS::printf ("%*d,",
- 			  Key_List::field_width,
- 			  Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
+                          Key_List::field_width,
+                          Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
         }
 
       ACE_OS::printf ("\n#else");
@@ -1146,8 +1146,8 @@ Key_List::output_hash_function (void)
 
           target = ascii_to_ebcdic[count];
           ACE_OS::printf ("%*d,",
-			  Key_List::field_width,
- 			  Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
+                          Key_List::field_width,
+                          Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
         }
     }
 #  else
@@ -1169,8 +1169,8 @@ Key_List::output_hash_function (void)
 
           target = ebcdic_to_ascii[count];
           ACE_OS::printf ("%*d,",
- 			  Key_List::field_width,
- 			  Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
+                          Key_List::field_width,
+                          Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
         }
       ACE_OS::printf ("\n#else");
 
@@ -1180,8 +1180,8 @@ Key_List::output_hash_function (void)
             ACE_OS::printf ("\n    ");
 
           ACE_OS::printf ("%*d,",
- 			  Key_List::field_width,
- 			  Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
+                          Key_List::field_width,
+                          Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
         }
     }
 #endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
@@ -1659,54 +1659,54 @@ Key_List::output (void)
 
       // Get prototype for strncmp() and strcmp().
       if (!option[SKIPSTRINGH])
-	ACE_OS::printf ("#include <string.h>\n");
+        ACE_OS::printf ("#include <string.h>\n");
 
       // Output type declaration now, reference it later on....
       if (option[TYPE] && !option[NOTYPE])
-	ACE_OS::printf ("%s;\n",
-		array_type_);
+        ACE_OS::printf ("%s;\n",
+                array_type_);
 
       output_min_max ();
 
       if (option[STRCASECMP])
-	output_strcasecmp ();
+        output_strcasecmp ();
 
       // Class definition if -M is *not* enabled.
       if (option[CPLUSPLUS] && !option[SKIPCLASS])
-	ACE_OS::printf ("class %s\n{\nprivate:\n"
-		"  static unsigned int %s (const char *str, unsigned int len);\npublic:\n"
-		"  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
-		option.class_name (),
-		option.hash_name (),
-		option[CONSTANT] ? "const " : "",
-		return_type,
-		option.function_name ());
+        ACE_OS::printf ("class %s\n{\nprivate:\n"
+                "  static unsigned int %s (const char *str, unsigned int len);\npublic:\n"
+                "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
+                option.class_name (),
+                option.hash_name (),
+                option[CONSTANT] ? "const " : "",
+                return_type,
+                option.function_name ());
 
       output_hash_function ();
 
       if (option[GLOBAL])
-	if (option[SWITCH])
-	  {
-	    if (option[LENTABLE] && option[DUP])
-	      output_keylength_table ();
-	    if (option[POINTER] && option[TYPE])
-	      output_keyword_table ();
-	  }
-	else
-	  {
-	    if (option[LENTABLE])
-	      output_keylength_table ();
-	    output_keyword_table ();
-	    if (output_lookup_array () == -1)
-	      ACE_ERROR_RETURN ((LM_DEBUG,
-				 "%p\n",
-				 "output_lookup_array"),
-				-1);
-	  }
+        if (option[SWITCH])
+          {
+            if (option[LENTABLE] && option[DUP])
+              output_keylength_table ();
+            if (option[POINTER] && option[TYPE])
+              output_keyword_table ();
+          }
+        else
+          {
+            if (option[LENTABLE])
+              output_keylength_table ();
+            output_keyword_table ();
+            if (output_lookup_array () == -1)
+              ACE_ERROR_RETURN ((LM_DEBUG,
+                                 "%p\n",
+                                 "output_lookup_array"),
+                                -1);
+          }
 
       // Use the inline keyword to remove function overhead.
       if (option[INLINE])
-	ACE_OS::printf ("inline\n");
+        ACE_OS::printf ("inline\n");
 
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
@@ -1714,73 +1714,73 @@ Key_List::output (void)
                       option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
                       return_type);
       if (option[CPLUSPLUS])
-	ACE_OS::printf ("%s::", option.class_name ());
+        ACE_OS::printf ("%s::", option.class_name ());
 
       ACE_OS::printf (option[ANSI]
-	      ? "%s (const char *str, unsigned int len)\n{\n"
-	      : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
-	      option.function_name ());
+              ? "%s (const char *str, unsigned int len)\n{\n"
+              : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
+              option.function_name ());
 
       if (option[ENUM] && !option[GLOBAL])
-	ACE_OS::printf ("  enum\n    {\n"
-		"      TOTAL_KEYWORDS = %d,\n"
-		"      MIN_WORD_LENGTH = %d,\n"
-		"      MAX_WORD_LENGTH = %d,\n"
-		"      MIN_HASH_VALUE = %d,\n"
-		"      MAX_HASH_VALUE = %d,\n"
-		"      HASH_VALUE_RANGE = %d,\n"
-		"      DUPLICATES = %d,\n"
-		"      WORDLIST_SIZE = %d\n    };\n\n",
-		total_keys, min_key_len, max_key_len, min_hash_value,
-		max_hash_value, max_hash_value - min_hash_value + 1,
-		total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
+        ACE_OS::printf ("  enum\n    {\n"
+                "      TOTAL_KEYWORDS = %d,\n"
+                "      MIN_WORD_LENGTH = %d,\n"
+                "      MAX_WORD_LENGTH = %d,\n"
+                "      MIN_HASH_VALUE = %d,\n"
+                "      MAX_HASH_VALUE = %d,\n"
+                "      HASH_VALUE_RANGE = %d,\n"
+                "      DUPLICATES = %d,\n"
+                "      WORDLIST_SIZE = %d\n    };\n\n",
+                total_keys, min_key_len, max_key_len, min_hash_value,
+                max_hash_value, max_hash_value - min_hash_value + 1,
+                total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
       // Use the switch in place of lookup table.
       if (option[SWITCH])
-	output_switch ();
+        output_switch ();
       // Use the lookup table, in place of switch.
       else
-	{
-	  if (!option[GLOBAL])
-	    {
-	      if (option[LENTABLE])
-		output_keylength_table ();
-	      output_keyword_table ();
-	    }
-	  if (!option[GLOBAL])
-	    {
-	      switch (output_lookup_array ())
-		{
-		case -1:
-		  ACE_ERROR_RETURN ((LM_DEBUG,
-				     "%p\n",
-				     "output_lookup_array"),
-				    -1);
-		  /* NOTREACHED */
-		case 0:
-		  output_lookup_function ();
-		  break;
-		  /* NOTREACHED */
-		default:
-		  break;
-		  /* NOTREACHED */
-		}
-	    }
+        {
+          if (!option[GLOBAL])
+            {
+              if (option[LENTABLE])
+                output_keylength_table ();
+              output_keyword_table ();
+            }
+          if (!option[GLOBAL])
+            {
+              switch (output_lookup_array ())
+                {
+                case -1:
+                  ACE_ERROR_RETURN ((LM_DEBUG,
+                                     "%p\n",
+                                     "output_lookup_array"),
+                                    -1);
+                  /* NOTREACHED */
+                case 0:
+                  output_lookup_function ();
+                  break;
+                  /* NOTREACHED */
+                default:
+                  break;
+                  /* NOTREACHED */
+                }
+            }
           else
             output_lookup_function ();
-	}
+        }
 
       if (additional_code)
-	{
-	  for (;;)
-	    {
-	      int c = getchar ();
+        {
+          for (;;)
+            {
+              int c = getchar ();
 
-	      if (c == EOF)
-		break;
-	      else
-		putchar (c);
-	    }
-	}
+              if (c == EOF)
+                break;
+              else
+                putchar (c);
+            }
+        }
       fflush (stdout);
     }
   return 0;
@@ -1811,22 +1811,22 @@ Key_List::string_sort (void)
       List_Node *curr;
       if(ptr->link)
         {
-	  List_Node *last_node = 0;
+          List_Node *last_node = 0;
 
           for(curr = ptr->link; curr; curr = curr->link)
             {
-	      // Chnage the link to next pointer.
+              // Chnage the link to next pointer.
               curr->next = curr->link;
 
-	      // Save the pointer for the last node.
-	      if (curr->link == 0)
-		last_node = curr;
+              // Save the pointer for the last node.
+              if (curr->link == 0)
+                last_node = curr;
             }
 
-	  // Set the pointers, correctly.
-	  last_node->next = ptr->next;
+          // Set the pointers, correctly.
+          last_node->next = ptr->next;
           ptr->next = ptr->link;
-	  ptr = last_node;
+          ptr = last_node;
         }
     }
 
