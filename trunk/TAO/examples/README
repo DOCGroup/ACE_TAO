@@ -3,15 +3,34 @@ illustrate how to program with standard CORBA using TAO.  The
 individual directories contain READMEs on how to run the following
 examples:
 
-        . POA
+        . Borland 
 
-          Contains various small examples of POA features based on
-          the OMG POA specification.
+          This directory illustrates how to write a Borland C++
+          Builder application using ACE+TAO.
 
         . Callback_Quoter
 
           Illustrates how to implement distributed callbacks using
           TAO.
+
+        . Event_Comm
+
+          Another illustration of how to implement distributed
+          callbacks using TAO.
+
+        . Logging 
+
+          This example implements a simple logging service using TAO.
+
+        . POA
+
+          Contains various small examples of POA features based on
+          the OMG POA specification.
+
+        . OBV
+
+          This is a demonstration of the CORBA 2.3 valuetype feature from
+          the Object-by-Value specification.
 
         . Quoter
         
@@ -21,7 +40,14 @@ examples:
                       
         . Simple
           
-          Contains a number of very simple examples, which also
+          Contains a number of simple CORBA examples, which also
           illustrate how to write canonical Orbix/VisiBroker/OmniORB
           examples in TAO using standard CORBA features rather than
           proprietary ORB features.
+
+        . Simulator
+
+          This is a demonstration of the TAO "Distributed Object
+          Visualization Environment" (DOVE), which shows how the TAO
+          Real-time Event Service can be used to transport monitoring
+          events.
