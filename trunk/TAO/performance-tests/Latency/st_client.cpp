@@ -121,10 +121,8 @@ main (int argc, char *argv[])
         {
           ACE_hrtime_t latency_base =
             server->test_method (ACE_OS::gethrtime (), ACE_TRY_ENV);
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
-
           ACE_TRY_CHECK;
-
+          ACE_hrtime_t now = ACE_OS::gethrtime ();
           history.sample (now - latency_base);
 
           if (TAO_debug_level > 0 && i % 100 == 0)

@@ -268,18 +268,21 @@ Demux_Test_Client::run (CORBA::Environment &ACE_TRY_ENV)
         {
         case Demux_Test_Client::LINEAR:
           (void) this->run_linear_test (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::RANDOM:
           (void) this->run_random_test (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::BEST:
           (void) this->run_best_test (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (RUN);
           break;
         case Demux_Test_Client::WORST:
           (void) this->run_worst_test (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (RUN);
           break;
         }
-      ACE_TRY_CHECK_EX (RUN);
     }
   ACE_CATCHANY
     {

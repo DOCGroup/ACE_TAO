@@ -514,14 +514,9 @@ Cubit_Client::cube_oneway (int,
 {
   ACE_TRY
     {
-      {
-        ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
-
-        this->cubit_->cube_oneway (ACE_TRY_ENV);
-      }
-
+      ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
+      this->cubit_->cube_oneway (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
       this->call_count_++;
     }
   ACE_CATCHANY
@@ -540,14 +535,9 @@ Cubit_Client::cube_void (int,
 {
   ACE_TRY
     {
-      {
-        ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
-
-        this->cubit_->cube_void (ACE_TRY_ENV);
-      }
-
+      ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
+      this->cubit_->cube_void (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
       this->call_count_++;
     }
   ACE_CATCHANY
