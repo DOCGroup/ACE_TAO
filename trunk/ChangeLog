@@ -1,3 +1,9 @@
+Wed Apr 17 15:24:36 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added ORT test to the list of tests to run.
+
 Wed Apr 17 14:30:29 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/display_logfile.cpp (Logrec_Module ctor): Change
