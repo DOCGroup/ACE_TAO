@@ -1,3 +1,23 @@
+Tue Jul 29 16:27:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/be_produce.cpp (BE_produce):
+
+          Fixed a bug in launching the removing visitor.
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+
+          Added '-ORBInitRef InterfaceRepository=file://xxxxx' to
+          the command line passed to the server and tao_ifr processes.
+          On some platforms at least, the default multicast no longer
+          works at all. The server process also needs this info, since
+          the client may call _get_interface() on it.
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:
+
+          Removed '-ORBDottedDecimalAddresses 1' from the argument list
+          passed to the IFR process. This is needed only if the host
+          has no static IP address.
+
 Tue Jul 29 14:15:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
