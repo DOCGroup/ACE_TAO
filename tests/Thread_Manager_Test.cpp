@@ -15,7 +15,8 @@
 //      cancellation mechanisms.
 //
 // = AUTHOR
-//    Prashant Jain and Douglas C. Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu> 
 //
 // ============================================================================
 

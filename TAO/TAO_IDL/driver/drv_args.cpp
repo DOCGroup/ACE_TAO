@@ -856,7 +856,7 @@ DRV_check_gperf (void)
   // Just call gperf in silent mode. It will come and immly exit.
 
   // Using ACE_Process.
-  ACE_Process process_manager;
+  ACE_Process process;
   ACE_Process_Options process_options;
 
   // Set the command line for the gperf program.
@@ -866,7 +866,7 @@ DRV_check_gperf (void)
                                 idl_global->gperf_path ());
 
   // Spawn a process for gperf.
-  if (process_manager.spawn (process_options) == -1)
+  if (process.spawn (process_options) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -876,7 +876,7 @@ DRV_check_gperf (void)
 
   // Wait for gperf to complete.
   int wait_status = 0;
-  if (process_manager.wait (&wait_status) == -1)
+  if (process.wait (&wait_status) == -1)
     return -1;
   else
     {

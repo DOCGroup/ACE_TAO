@@ -134,7 +134,7 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("set_output failed")), -1); \
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) starting %s test at %D\n"), program))
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Starting %s test at %D\n"), program))
 
 #define ACE_END_TEST \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \

@@ -63,7 +63,7 @@ class ACE_Export ACE_Reactor_Notification_Strategy : public ACE_Notification_Str
   //     Used to notify an ACE_Reactor
   //
   // = DESCRIPTION
-  //     Integrates the ACE_Message_Queue notification into the
+  //     Integrates the <ACE_Message_Queue> notification into the
   //     <ACE_Reactor::notify> method.
 public:
   ACE_Reactor_Notification_Strategy (ACE_Reactor *reactor,

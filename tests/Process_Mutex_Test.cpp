@@ -33,9 +33,9 @@ static int release_mutex = 1;
 static int child_process = 0;
 static const char *mutex_name = ACE_DEFAULT_MUTEX_A;
 #if defined (__Lynx__)
-  static const unsigned int processes = 4;
+static const u_int n_processes = 4;
 #else  /* ! __Lynx__ */
-  static const unsigned int processes = ACE_MAX_PROCESSES;
+static const u_int n_processes = ACE_MAX_PROCESSES;
 #endif /* ! __Lynx__ */
 
 // Explain usage and exit.
@@ -140,15 +140,15 @@ main (int argc, ASYS_TCHAR *argv[])
       else
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test")
-                                ACE_PLATFORM_EXE_SUFFIX
+                              ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s"),
                               ACE_WIDE_STRING (mutex_name));
 
       // Spawn processes that will contend for the lock.
-      ACE_Process servers[processes];
+      ACE_Process servers[n_processes];
       size_t i;
 
-      for (i = 0; i < processes; i++)
+      for (i = 0; i < n_processes; i++)
         {
           ACE_ASSERT (servers[i].spawn (options) != -1);
           ACE_DEBUG ((LM_DEBUG,
@@ -159,7 +159,7 @@ main (int argc, ASYS_TCHAR *argv[])
           ACE_OS::sleep (1);
         }
 
-      for (i = 0; i < processes; i++)
+      for (i = 0; i < n_processes; i++)
         {
           // Wait for the process we created to exit.
           ACE_ASSERT (servers[i].wait () != -1);

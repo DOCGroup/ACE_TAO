@@ -649,9 +649,12 @@ public:
   // happened.
 
   static int terminate_process (pid_t pid);
-  // Terminate the process with id <pid>.  Note that this call is
-  // potentially dangerous to use since the process being terminated
-  // may not have a chance to cleanup before it shuts down.
+  // Terminate the process abruptly with id <pid>.  On Win32 platforms
+  // this uses <TerminateProcess> and on POSIX platforms is uses
+  // <kill> with the -9 (SIGKILL) signal, which cannot be caught or
+  // ignored.  Note that this call is potentially dangerous to use
+  // since the process being terminated may not have a chance to
+  // cleanup before it shuts down.
 
   static void unique_name (const void *object,
                            LPTSTR name,

@@ -2,7 +2,8 @@
 # $Id$
 #
 # This is the UNIX version of the one-button ACE tests.
-# Contributed by Michael Rueger <m_rueger@SYSCOMP.DE>
+# Contributed originally by Michael Rueger <m_rueger@SYSCOMP.DE> and 
+# modified substantially by the DOC group.
 #
 # It also supports remote invocation on a CHORUS/ClassiX/MVME target.
 # For that environment, these steps are required:

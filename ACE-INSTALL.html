@@ -996,8 +996,23 @@ ACE contains project files for Microsoft Visual C++ 5.0 or later
 one-button tests, and TAO with Borland C++ Builder 4.0. <P>
 
 The Borland C++ Builder 4.0 port has been done by <A
-HREF="mailto:jody@atdesk.com">Jody Hagins</A>, so contact him for any
-questions.<P>
+HREF="mailto:jody@atdesk.com">Jody Hagins</A> and <A
+HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A>.  By
+default, the ACE/TAO libraries built for Borland C++ Builder are
+intended for use with generic console or windows applications and they
+link against the corresponding C++ runtime library. Applications
+created using BCB's RAD environment, such as ChatClient, must link
+against the VCL-compatible (ie pascal-compatible) runtime library.  To
+tell the difference between these libraries the VCL-compatible ones
+have a 'p' in the suffix (i.e., 'p' for pascal).  To build VCL
+compatible libraries try
+<PRE><CODE>
+make -f Makefile.bor -DPASCAL
+</PRE></CODE>
+ 
+Please see <A
+HREF="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</A>
+for more information on building ACE+TAO with Borland C++ Builder. <P>
 
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
 confusion regarding MSVC 5 and its Service Pack 3.  Some ACE users
