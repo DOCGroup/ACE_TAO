@@ -25,7 +25,6 @@ CFG=IDL_Cubit Collocation Test - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
-# PROP WCE_FormatVersion ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -195,7 +194,7 @@ InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	tao_idl $(InputName).idl
+	..\..\..\..\..\bin\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
