@@ -1,3 +1,11 @@
+Mon Aug 16 22:15:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
+
+	  Fixed compilation errors in builds where exceptions have been
+	  turned off.
+
 Mon Aug 16 22:09:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* performance-tests/Protocols/Sender/Sender.mpc:
