@@ -458,7 +458,12 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
           // here because if something goes wrong that will reset
           // errno this will be detected by the caller (since -1 is
           // being returned...).
-          this->create_AST (sh, synch_options);
+          if (sh_copy == 0)
+            this->create_AST (sh,
+                              synch_options);
+          else
+            this->create_AST (*sh_copy,
+                              synch_options);
         }
       else
         {
@@ -466,8 +471,15 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
           ACE_Errno_Guard error (errno);
           // Make sure to close down the Channel to avoid descriptor
           // leaks.
-          if (sh)
-            sh->close (0);
+          if (sh_copy == 0)
+            {
+              if (sh)
+                sh->close (0);
+            }
+          else
+            {
+              (*sh_copy)->close (0);
+            }
         }
       return -1;
     }

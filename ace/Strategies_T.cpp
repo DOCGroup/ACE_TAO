@@ -826,7 +826,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
   if (!found)
     {
-      if (this->activate_svc_handler (sh) == -1)
+      if (this->activate_svc_handler (sh_copy) == -1)
         {
           // If an error occurs while activating the handler, the
           // <activate_svc_handler> method will close the handler.
@@ -840,6 +840,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
 
           // Reset handler.
           sh = 0;
+          sh_copy = 0;
 
           return -1;
         }
