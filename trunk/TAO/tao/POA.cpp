@@ -1756,6 +1756,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // WrongAdapter exception is raised.
       PortableServer::ObjectId system_id;
       TAO_Object_Adapter::poa_name poa_system_name;
+      CORBA::Boolean is_root = 0;
       CORBA::Boolean is_persistent = 0;
       CORBA::Boolean is_system_id = 0;
       TAO_Temporary_Creation_Time poa_creation_time;
@@ -1763,15 +1764,17 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       int result = this->parse_key (key.in (),
                                     poa_system_name,
                                     system_id,
+                                    is_root,
                                     is_persistent,
                                     is_system_id,
                                     poa_creation_time);
-      if (result != 0
-          || poa_system_name != this->system_name ()
-          || is_persistent != this->persistent ()
-          || is_system_id != this->system_id ()
-          || !this->persistent ()
-          && poa_creation_time != this->creation_time_)
+      if (result != 0 ||
+          poa_system_name != this->system_name () ||
+          is_root != this->root () ||
+          is_persistent != this->persistent () ||
+          is_system_id != this->system_id () ||
+          !this->persistent () &&
+          poa_creation_time != this->creation_time_)
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
                             0);
@@ -1844,23 +1847,27 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   TAO_ObjectKey_var key = reference->_key (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  PortableServer::ObjectId id;
+  PortableServer::ObjectId system_id;
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean persistent = 0;
-  CORBA::Boolean system_id = 0;
+  CORBA::Boolean is_root = 0;
+  CORBA::Boolean is_persistent = 0;
+  CORBA::Boolean is_system_id = 0;
   TAO_Temporary_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key.in (),
                                 poa_system_name,
-                                id,
-                                persistent,
                                 system_id,
+                                is_root,
+                                is_persistent,
+                                is_system_id,
                                 poa_creation_time);
   if (result != 0 ||
       poa_system_name != this->system_name () ||
-      persistent != this->persistent () ||
-      system_id != this->system_id () ||
-      !this->persistent () && poa_creation_time != this->creation_time_)
+      is_root != this->root () ||
+      is_persistent != this->persistent () ||
+      is_system_id != this->system_id () ||
+      !this->persistent () &&
+      poa_creation_time != this->creation_time_)
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
                         0);
@@ -1872,7 +1879,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // The object denoted by the reference does not have to be active
   // for this operation to succeed.
   PortableServer::ObjectId_var user_id;
-  if (this->active_object_map ().find_user_id_using_system_id (id,
+  if (this->active_object_map ().find_user_id_using_system_id (system_id,
                                                                user_id.out ()) == -1)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -2229,53 +2236,89 @@ TAO_POA::locate_servant_i (const char *operation,
 int
 TAO_POA::parse_key (const TAO_ObjectKey &key,
                     TAO_Object_Adapter::poa_name &poa_system_name,
-                    PortableServer::ObjectId &id,
-                    CORBA::Boolean &persistent,
-                    CORBA::Boolean &system_id,
+                    PortableServer::ObjectId &system_id,
+                    CORBA::Boolean &is_root,
+                    CORBA::Boolean &is_persistent,
+                    CORBA::Boolean &is_system_id,
                     TAO_Temporary_Creation_Time &poa_creation_time)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
 
+  // Start at zero.
   CORBA::ULong starting_at = 0;
+
+  // Get the object key octets.
   const CORBA::Octet *key_data = key.get_buffer ();
 
 #if !defined (TAO_NO_IOR_TABLE)
-  // Skip the TAO Object Key Prefix.
+  // Skip the object key prefix since we have already checked for
+  // this.
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
-#endif
+#endif /* TAO_NO_IOR_TABLE */
 
-  // Check the system id indicator
+  // Check the root indicator.
+  char root_key_type = key_data[starting_at];
+  if (root_key_type == TAO_POA::root_key_char ())
+    {
+      is_root = 1;
+    }
+  else if (root_key_type == TAO_POA::non_root_key_char ())
+    {
+      is_root = 0;
+    }
+  else
+    {
+      // Incorrect key
+      return -1;
+    }
+
+  // Skip past the system id indicator
+  starting_at += TAO_POA::root_key_type_length ();
+
+  // Check the system id indicator.
   char system_id_key_type = key_data[starting_at];
   if (system_id_key_type == TAO_POA::system_id_key_char ())
-    system_id = 1;
+    {
+      is_system_id = 1;
+    }
   else if (system_id_key_type == TAO_POA::user_id_key_char ())
-    system_id = 0;
+    {
+      is_system_id = 0;
+    }
   else
-    // Incorrect key
-    return -1;
+    {
+      // Incorrect key
+      return -1;
+    }
 
   // Skip past the system id indicator
   starting_at += TAO_POA::system_id_key_type_length ();
 
   // Assume persistent key when the POA_NO_TIMESTAMP is enabled.
-  persistent = 1;
+  is_persistent = 1;
 
 #if !defined (POA_NO_TIMESTAMP)
-
   // Check the persistence indicator
   char persistent_key_type = key_data[starting_at];
   if (persistent_key_type == TAO_POA::persistent_key_char ())
-    persistent = 1;
+    {
+      is_persistent = 1;
+    }
   else if (persistent_key_type == TAO_POA::transient_key_char ())
-    persistent = 0;
+    {
+      is_persistent = 0;
+    }
   else
-    // Incorrect key
-    return -1;
+    {
+      // Incorrect key
+      return -1;
+    }
 
   // Skip past the persistent indicator
   starting_at += TAO_POA::persistent_key_type_length ();
 
-  if (!persistent)
+  // Grab the timestamp for transient POAs.
+  if (!is_persistent)
     {
       // Take the creation time for the timestamp
       poa_creation_time.creation_time (key_data + starting_at);
@@ -2283,41 +2326,50 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
       // Skip past the timestamp
       starting_at += TAO_Creation_Time::creation_time_length ();
     }
-
 #endif /* POA_NO_TIMESTAMP */
 
+  // Calculate the size of the POA name.
   CORBA::ULong poa_name_size = 0;
-  if (!persistent)
+  if (!is_persistent)
     {
+      // Transient POAs have fixed size.
       poa_name_size = TAO_Object_Adapter::transient_poa_name_size ();
     }
-  else if (system_id)
+  else if (is_system_id)
     {
+      // System ids have fixed size.
       poa_name_size = key.length () - starting_at - TAO_Active_Object_Map::system_id_size ();
     }
   else
     {
+      // Get the size from the object key.
       ACE_OS::memcpy (&poa_name_size,
                       key_data + starting_at,
                       sizeof (poa_name_size));
       poa_name_size = ACE_NTOHL (poa_name_size);
+
       starting_at += sizeof (poa_name_size);
     }
 
-  poa_system_name.replace (poa_name_size,
-                           poa_name_size,
-                           (CORBA::Octet *) key_data + starting_at,
-                           0);
+  // For non-root POAs, grab their name.
+  if (!is_root)
+    {
+      poa_system_name.replace (poa_name_size,
+                               poa_name_size,
+                               (CORBA::Octet *) key_data + starting_at,
+                               0);
 
-  starting_at += poa_name_size;
+      starting_at += poa_name_size;
+    }
 
-  CORBA::ULong id_size = key.length () - starting_at;
+  // The rest is the system id.
+  CORBA::ULong system_id_size = key.length () - starting_at;
 
-  // Reset the Id
-  id.replace (id_size,
-              id_size,
-              (CORBA::Octet *) key_data + starting_at,
-              0);
+  // Reset <system_id>.
+  system_id.replace (system_id_size,
+                     system_id_size,
+                     (CORBA::Octet *) key_data + starting_at,
+                     0);
 
   // Success
   return 0;
@@ -2326,71 +2378,99 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
 TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
+  // Calculate the prefix size.
+  CORBA::ULong prefix_size = 0;
+#if !defined (TAO_NO_IOR_TABLE)
+  prefix_size += TAO_OBJECTKEY_PREFIX_SIZE;
+#endif /* TAO_NO_IOR_TABLE */
+
+  // If we are dealing with a persistent POA and user ids are being
+  // used, then we need to add the POA name length field to the object
+  // key. Otherwise, the POA name length can be calculated by looking
+  // at the remainder after extracting other parts of the key.
+  int add_poa_name_length =
+    this->persistent_ &&
+    !this->system_id_;
+
+  // Size required by the POA name.
+  CORBA::ULong poa_name = 0;
+
+  // Calculate the space required for the POA name.
+  CORBA::ULong poa_name_length = this->system_name_->length ();
+  if (!this->root ())
+    {
+      poa_name += poa_name_length;
+    }
+
+  // Check if we need to added the length of the POA name.
+  if (add_poa_name_length)
+    {
+      poa_name += sizeof (poa_name_length);
+    }
+
+  // Calculate the space required for the timestamp and the persistent
+  // byte.
+  CORBA::ULong creation_time = 0;
 #if !defined (POA_NO_TIMESTAMP)
-  CORBA::ULong creation_time_length = 0;
+  // Calculate the space required for the timestamp.
+  CORBA::ULong creation_time_length = TAO_Creation_Time::creation_time_length ();
   if (!this->persistent_)
     {
-      creation_time_length = TAO_Creation_Time::creation_time_length ();
+      creation_time = creation_time_length;
     }
+
+  creation_time += this->persistent_key_type_length ();
 #endif /* POA_NO_TIMESTAMP */
 
-  CORBA::ULong poa_name_length = this->system_name_->length ();
-
-  // Calculate the space required for the key
-  int buffer_size =
-#if !defined (TAO_NO_IOR_TABLE)
-    TAO_OBJECTKEY_PREFIX_SIZE +
-#endif
+  // Calculate the space required for the key.
+  CORBA::ULong buffer_size =
+    prefix_size +
+    this->root_key_type_length () +
     this->system_id_key_type_length () +
-#if !defined (POA_NO_TIMESTAMP)
-    this->persistent_key_type_length () +
-    creation_time_length +
-#endif /* POA_NO_TIMESTAMP */
-    poa_name_length +
+    creation_time +
+    poa_name +
     id.length ();
 
-  if (this->persistent_ &&
-      !this->system_id_)
-    {
-      buffer_size += sizeof (poa_name_length);
-    }
-
-  // Create the buffer for the key
+  // Create the buffer for the key.
   CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
 
-  // Keeps track of where the next infomation goes; start at 0 byte
+  // Keeps track of where the next infomation goes; start at 0 byte.
   CORBA::ULong starting_at = 0;
 
 #if !defined (TAO_NO_IOR_TABLE)
+  // Add the object key prefix.
   ACE_OS::memcpy (&buffer[starting_at],
 		  &objectkey_prefix[0],
 		  TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
-#endif
+#endif /* TAO_NO_IOR_TABLE */
 
-  // Copy the system id bit
+  // Copy the root byte.
+  buffer[starting_at] = (CORBA::Octet) this->root_key_type ();
+  starting_at += this->root_key_type_length ();
+
+  // Copy the system id byte.
   buffer[starting_at] = (CORBA::Octet) this->system_id_key_type ();
   starting_at += this->system_id_key_type_length ();
 
 #if !defined (POA_NO_TIMESTAMP)
-  // Copy the persistence bit
+  // Copy the persistence byte.
   buffer[starting_at] = (CORBA::Octet) this->persistent_key_type ();
   starting_at += this->persistent_key_type_length ();
 
+  // Then copy the timestamp for transient POAs.
   if (!this->persistent ())
     {
-      // Then copy the timestamp
       ACE_OS::memcpy (&buffer[starting_at],
                       this->creation_time_.creation_time (),
                       creation_time_length);
       starting_at += creation_time_length;
     }
-
 #endif /* POA_NO_TIMESTAMP */
 
-  if (this->persistent_ &&
-      !this->system_id_)
+  // Check if we need to added the length of the POA name.
+  if (add_poa_name_length)
     {
       poa_name_length = ACE_HTONL (poa_name_length);
       ACE_OS::memcpy (&buffer[starting_at],
@@ -2399,13 +2479,16 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
       starting_at += sizeof (poa_name_length);
     }
 
-  // Put the POA name into the buffer
-  ACE_OS::memcpy (&buffer[starting_at],
-                  this->system_name_->get_buffer (),
-                  this->system_name_->length ());
-  starting_at += this->system_name_->length ();
+  // Put the POA name into the key (for non-root POAs).
+  if (!this->root ())
+    {
+      ACE_OS::memcpy (&buffer[starting_at],
+                      this->system_name_->get_buffer (),
+                      this->system_name_->length ());
+      starting_at += this->system_name_->length ();
+    }
 
-  // Then copy the ID into the key
+  // Then copy the object id into the key.
   ACE_OS::memcpy (&buffer[starting_at],
                   id.get_buffer (),
                   id.length ());

@@ -286,20 +286,22 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
 
 void
 TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
-                                PortableServer::ObjectId &id,
+                                PortableServer::ObjectId &system_id,
                                 TAO_POA *&poa,
                                 CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean persistent = 0;
-  CORBA::Boolean system_id = 0;
+  CORBA::Boolean is_root = 0;
+  CORBA::Boolean is_persistent = 0;
+  CORBA::Boolean is_system_id = 0;
   TAO_Temporary_Creation_Time poa_creation_time;
 
   int result = TAO_POA::parse_key (key,
                                    poa_system_name,
-                                   id,
-                                   persistent,
                                    system_id,
+                                   is_root,
+                                   is_persistent,
+                                   is_system_id,
                                    poa_creation_time);
   if (result != 0)
     {
@@ -307,7 +309,8 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
     }
 
   result = this->find_poa (poa_system_name,
-                           persistent,
+                           is_persistent,
+                           is_root,
                            poa_creation_time,
                            poa,
                            ACE_TRY_ENV);
@@ -321,6 +324,7 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
 int
 TAO_Object_Adapter::find_poa (const poa_name &system_name,
                               CORBA::Boolean activate_it,
+                              CORBA::Boolean root,
                               const TAO_Temporary_Creation_Time &poa_creation_time,
                               TAO_POA *&poa,
                               CORBA_Environment &ACE_TRY_ENV)
@@ -334,6 +338,7 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
   else
     {
       return this->find_transient_poa (system_name,
+                                       root,
                                        poa_creation_time,
                                        poa);
     }
@@ -341,11 +346,20 @@ TAO_Object_Adapter::find_poa (const poa_name &system_name,
 
 int
 TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
+                                        CORBA::Boolean root,
                                         const TAO_Temporary_Creation_Time &poa_creation_time,
                                         TAO_POA *&poa)
 {
-  int result = this->transient_poa_map_->find (system_name,
+  int result = 0;
+  if (root)
+    {
+      poa = this->orb_core_.root_poa ();
+    }
+  else
+    {
+      result = this->transient_poa_map_->find (system_name,
                                                poa);
+    }
 
   if (result == 0)
     {
