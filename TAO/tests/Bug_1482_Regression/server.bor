@@ -10,7 +10,7 @@ OBJFILES = \
 	$(OBJDIR)\TestC.obj \
 	$(OBJDIR)\TestS.obj \
 	$(OBJDIR)\Hello.obj \
-	$(OBJDIR)\Server_Tesk.obj \
+	$(OBJDIR)\Server_Task.obj \
 	$(OBJDIR)\server.obj
 
 CFLAGS = \
