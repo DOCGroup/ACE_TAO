@@ -57,12 +57,14 @@ main (int, char *[])
 
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
-  long i;
 
-  for (i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
-    t_id[i] = reactor.schedule_timer (&rt[i],
-                                      (const void *) i,
-                                      ACE_Time_Value (2 * i + 1));
+  size_t i;
+  
+  for (i = 0; i < ACE_MAX_TIMERS; i++)
+    t_id[i] = reactor.schedule_timer (&rt[i], 
+				      (const void *) i, 
+				      ACE_Time_Value (2 * i + 1));
+
   while (!done)
     reactor.handle_events ();
 
