@@ -1,3 +1,14 @@
+Sat May 10 19:44:28 1997    <harrison@samba.cs.wustl.edu>
+
+	* Process.h: ACE_ProcessEx now works on Solaris and NT.  There
+	  have been some changes to the API.  ACE_ProcessEx::cl_options
+ 	  and ACE_ProcessEx::path have been combined into
+ 	  ACE_ProcessEx::command_line.  ACE_ProcessEx::command_line must
+ 	  be used to specify path and command-line arguments.  There is
+ 	  also a second ACE_ProcessEx::setenv method that allows
+ 	  applications to set environment variables in a "VAR=VALUE"
+ 	  format.
+
 Sat May 10 10:51:11 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-osf1-3.2.h: Added three new flags to the config file
