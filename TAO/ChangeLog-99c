@@ -1,3 +1,11 @@
+Tue May 11 14:17:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainS.cpp:
+	  Added some ACE_UNUSED_ARGs for generated code that has
+	  been commented out, and a marshaling exception because
+	  this method (ConstructionPolicy::make_domain_manager) is
+	  not yet implemented.
+
 Tue May 11 13:51:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html:
