@@ -1,0 +1,13 @@
+$Id$
+
+This directory contains the Core CCM IDL defintions which get split
+into different libraries.
+
+1. CIAO  - CIAO CCM client-side interface library.  Component-aware clients
+           need to link to this library.
+
+2. CIAO_Container  - CIAO CCM container interface definitions.  This library
+                     is needed by all compoment implementation.
+
+3. CIAO_Server  - CIAO CCM interface definitions for component servers and
+                  deployment framework.

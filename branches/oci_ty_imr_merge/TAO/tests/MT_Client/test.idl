@@ -1,0 +1,17 @@
+/*
+ * $Id$
+ */
+
+/// A simple interface to test the ORB
+interface Simple_Server
+{
+  /// This method is a noop, and it is used just to exercise the
+  /// critical path
+  void test_method ();
+
+  /// Shutdown the server
+  /**
+   * Provide a simple way to cleanup the test when it finishes 
+   */
+  oneway void shutdown ();
+};

@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/Strategies/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <!--  This configuration file is used to use only the default TAO -->
+ <!--  strategies  -->
+ <static id="Resource_Factory" params="-ORBProtocolFactory IIOP_Factory"/>
+</ACE_Svc_Conf>
