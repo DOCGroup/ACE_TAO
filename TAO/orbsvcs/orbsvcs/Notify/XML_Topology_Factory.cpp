@@ -145,7 +145,6 @@ namespace TAO_Notify
     return 0;
   }
 
-ACE_FACTORY_DECLARE (TAO_Notify_Persist, XML_Topology_Factory)
 ACE_FACTORY_DEFINE (TAO_Notify_Persist, XML_Topology_Factory)
 
 
