@@ -3,7 +3,7 @@ Tue Oct 28 13:11:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/ORB.cpp:
 	* tao/Service_Callbacks.cpp: 
 	  
-	  Fixed compilation errors due to a wrog casting of an int as an
+	  Fixed compilation errors due to a wrong casting of an int as an
 	  enum. VC6.o doesn't like this.
 
 Tue Oct 28 12:47:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
