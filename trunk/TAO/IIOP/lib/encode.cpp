@@ -1401,6 +1401,7 @@ TAO_Marshal_WString::encode (
 		continue;
 
 	      stream->put_wchar (0);
+	      return CORBA_TypeCode::TRAVERSE_CONTINUE;
 	    }
 	  else
 	    {

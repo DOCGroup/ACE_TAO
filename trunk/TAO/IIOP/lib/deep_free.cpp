@@ -677,6 +677,7 @@ TAO_Marshal_Sequence::deep_free(
       dmsg ("TAO_Marshal_Struct::deep_free detected error");
       return CORBA_TypeCode::TRAVERSE_STOP;
     }
+  return retval;
 }
 
 // deep_free for Array

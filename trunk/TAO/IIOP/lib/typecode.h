@@ -31,7 +31,7 @@
 #  include "ace/OS.h"
 #  include "any.h"
 
-class CDR;
+struct CDR;
 
 enum CORBA_TCKind 
 {
