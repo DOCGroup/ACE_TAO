@@ -523,7 +523,7 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
 {
   ACE_TIMEPROBE (TAO_EVENT_CHANNEL_DELIVER_EVENT_TO_CONSUMER_PROXY);
 
-  if (push_consumer_ == 0)
+  if (CORBA::is_nil (push_consumer_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Push to disconnected consumer %s\n",
                   ::ACE_ES_Consumer_Name (this->qos ())));
