@@ -1,3 +1,15 @@
+Wed Dec 18 13:36:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.mwc: Workspace definition file for ACE and it's immediate
+          subordinates, RMCast.
+
+        * tests/tests.mwc: Workspace definition for tests and tests/RMCast.
+
+        * bin/MakeProjectCreator/modules/Driver.pm (run): When processing
+          specified input files, chdir to the directory containing the file
+          so the files are read and written properly when referred to using
+          relative paths.
+
 Wed Dec 18 11:38:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-msvc-7.h: Added pragma prefix to disable
