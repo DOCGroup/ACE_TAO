@@ -65,10 +65,6 @@ endif
 # single makefile--note that we filter out any that are already present.
 VBUILD = $(IDL_SRC) $(VLIBS) $(VBIN) $(filter-out $(IDL_SRC) $(VLIBS) $(VBIN), $(BUILD))
 
-ifneq ($(IDL_SRC),)
-  $(VBIN) $(VLOBJS) $(VSHOBJS) $(VSHOBJS1): $(IDL_SRC)
-endif
-
 build.local: $(VBUILD)
 
 # By setting SUFFIXES to nothing, we turn off all implicit rules, and force

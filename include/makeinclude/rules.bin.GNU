@@ -25,6 +25,10 @@ endif # BIN
 
 VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(SRC))))
 
+ifneq ($(IDL_SRC),)
+  $(VBIN): $(IDL_SRC)
+endif
+
 # Needed for depend.
 PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 

@@ -1,3 +1,15 @@
+Fri Mar  5 01:41:54 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * ace/Node.h:
+          Added forward declaration for ACE_Unbounded_Queue_Const_Iterator.
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU:
+          Moved the IDL_SRC dependencies from rules.local.GNU to the bin
+          and lib files to get around a problem with hand crafted makefile
+          rules including all dependencies in the link line.
+
 Thu Mar  4 17:45:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_aix_ibm.GNU: For AIX 5.2, add a compile
