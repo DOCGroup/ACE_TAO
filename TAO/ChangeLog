@@ -1,3 +1,15 @@
+Sun Jul 27 17:30:14 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: Converted period
+	  argument for scheduler->set from ACE_Time_Value to
+	  RtecScheduler::Period_t to clear warnings in
+	  WinXP_MSVC_Warning_Level_4_Debug build.
+	
+	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: Used ORBSVCS_Time
+	  utility function to convert between ACE_Time_Value and
+	  TimeBase::TimeT to clear warnings in
+	  WinXP_MSVC_Warning_Level_4_Debug build.
+
 Sun Jul 27 09:06:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Stub.cpp (get_policy): Removed the check for this->policies_

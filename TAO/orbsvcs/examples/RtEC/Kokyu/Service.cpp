@@ -21,6 +21,12 @@ ACE_RCSID(EC_Examples, Service, "$Id$")
 
 int config_run = 0;
 
+inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
+{
+  //100s of nanoseconds
+  return (tv.sec () * 1000000 + tv.usec ())*10;
+}
+
 int parse_args (int argc, char *argv[]);
 
 typedef TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
@@ -149,7 +155,7 @@ main (int argc, char* argv[])
       scheduler->set (consumer_rt_info1,
                       RtecScheduler::VERY_HIGH_CRITICALITY,
                       time, time, time,
-                      time,
+                      time_val_to_period (tv),
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       time,
                       0,
@@ -168,7 +174,7 @@ main (int argc, char* argv[])
       scheduler->set (consumer_rt_info2,
                       RtecScheduler::VERY_LOW_CRITICALITY,
                       time, time, time,
-                      time,
+                      time_val_to_period (tv),
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       time,
                       0,
@@ -239,7 +245,7 @@ main (int argc, char* argv[])
       scheduler->set (supplier_rt_info1,
                       RtecScheduler::VERY_HIGH_CRITICALITY,
                       tmp, tmp, tmp,
-                      tmp,
+                      time_val_to_period (tv),
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       tmp,
                       0,
@@ -262,7 +268,7 @@ main (int argc, char* argv[])
       scheduler->set (supplier_rt_info2,
                       RtecScheduler::VERY_LOW_CRITICALITY,
                       tmp, tmp, tmp,
-                      tmp,
+                      time_val_to_period (tv),
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       tmp,
                       0,
