@@ -1,3 +1,19 @@
+Mon Dec 30 15:25:26 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/StrCharStream.cpp (open):
+	* ACEXML/common/FileCharStream.cpp (open): Changed to allow open
+	  to succeed if automatic determination of encoding fails.  This
+	  allows the "Simple parsing" feature of ACEXML to work.  Thanks
+	  to Michael F"olsl <michael.foelsl@gmx.net> for reporting the
+	  problem.
+
+	* ACEXML/examples/SAXPrint/main.cpp: Added a new option to test
+	  out ACEXML's simpling parsing feature.
+
+	* ACEXML/examples/SAXPrint/simple.svcconf.xml: Added this new
+	  "simple" XML document to test out the "Simple" parsing feature
+	  in ACEXML.
+
 Mon Dec 30 12:21:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/taoversion.mpb: Fixed the version

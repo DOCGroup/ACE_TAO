@@ -32,8 +32,7 @@ ACEXML_StrCharStream::open (const ACEXML_Char *str)
     {
       this->ptr_ = this->start_;
       this->end_ = this->start_ + ACE_OS_String::strlen (this->start_);
-      if (this->determine_encoding() == -1)
-        return -1;
+      this->determine_encoding();
       return 0;
     }
 

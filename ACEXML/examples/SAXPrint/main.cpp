@@ -20,6 +20,7 @@ usage (const ACE_TCHAR* program)
               ACE_TEXT ("  -s: Use SAXPrint_Handler (Default is Print_Handler)\n")
               ACE_TEXT ("  -l: Parse the internal strings (test the StrCharStream class)\n")
               ACE_TEXT ("  -f: Specify the filename when -l is not specified\n")
+              ACE_TEXT ("  -n: Use the \"Simple\" parsing feature\n")
               ACE_TEXT ("  -u: URL specifying the path to the file\n"),
               program));
 }
@@ -30,9 +31,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_Char* filename = 0;
   int sax = 0;                  // Use SAXPrint handler or not.
   int str = 0;
+  int simple = 0;
   ACEXML_Char* url = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("snf:lu:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -47,6 +49,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
         case 'f':
           filename = get_opt.opt_arg ();
+          break;
+        case 'n':
+          simple = 1;
           break;
         case 'u':
           url = get_opt.opt_arg();
@@ -109,16 +114,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     ACEXML_SAXPrint_Handler (name),
                       -1);
 
-    ACEXML_Parser parser;
-    ACEXML_InputSource input(stm);
-
-    parser.setContentHandler (handler);
-    parser.setDTDHandler (handler);
-    parser.setErrorHandler (handler);
-    parser.setEntityResolver (handler);
-
   ACEXML_TRY_NEW_ENV
     {
+      ACEXML_Parser parser;
+      if (simple != 0)
+        {
+          parser.setFeature (ACE_TEXT ("Simple"), 1 ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_TRY_CHECK;
+        }
+      ACEXML_InputSource input(stm);
+
+      parser.setContentHandler (handler);
+      parser.setDTDHandler (handler);
+      parser.setErrorHandler (handler);
+      parser.setEntityResolver (handler);
+
       parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
       ACEXML_TRY_CHECK;
     }
