@@ -493,17 +493,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       *this->server_header_ << "#endif\n";
       *this->server_header_ << "#define TAO_EXPORT_MACRO "
                             << be_global->skel_export_macro ();
-
-      // Generate export macro for nested classes.
-      *this->server_header_
-        << "\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
-        << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
-        << "#    undef TAO_EXPORT_NESTED_MACRO\n"
-        << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
-        << "#  define TAO_EXPORT_NESTED_MACRO "
-        << be_global->skel_export_macro ()
-        << be_nl
-        << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
     }
 
   return 0;
