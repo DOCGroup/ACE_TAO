@@ -1,3 +1,10 @@
+Sun Jun 27 18:17:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CORBA_macros.h:
+	  On platforms with native C++ exceptions we use ACE_UNUSED_ARG()
+	  in the throw macros to avoid warnings about the unused
+	  ACE_TRY_ENV variable.
+
 Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
         * ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
