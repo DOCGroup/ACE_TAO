@@ -82,12 +82,10 @@ AccountManager_i::open (const char *name,
 	  ACE_DEBUG ((LM_DEBUG,
 		      "\nAccount already exists for %s\n",
 		      name));
-
       // Generate an IOR for the result object and register it with
       // the POA.  In case the object already exists then the
       // previously generated IOR is returned.
       return result->_this ();
-
     }
   TAO_CATCHANY
     {
