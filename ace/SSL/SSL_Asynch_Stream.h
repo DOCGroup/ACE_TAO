@@ -185,11 +185,16 @@ protected:
   /// Stream state/flags
   enum Stream_Flag
     {
-      SF_STREAM_OPEN    = 0x0001, /// istream_ open OK
-      SF_REQ_SHUTDOWN   = 0x0002, /// request to SSL shutdown
-      SF_SHUTDOWN_DONE  = 0x0004, /// SSL shutdown finished
-      SF_CLOSE_NTF_SENT = 0x0008, /// Close notification sent
-      SF_DELETE_ENABLE  = 0x0010  /// Stream can be safely destroyed
+      /// istream_ open OK
+      SF_STREAM_OPEN    = 0x0001,
+      /// request to SSL shutdown
+      SF_REQ_SHUTDOWN   = 0x0002,
+      /// SSL shutdown finished
+      SF_SHUTDOWN_DONE  = 0x0004,
+      /// Close notification sent
+      SF_CLOSE_NTF_SENT = 0x0008,
+      /// Stream can be safely destroyed
+      SF_DELETE_ENABLE  = 0x0010
     };
 
   int flags_;
@@ -202,11 +207,12 @@ protected:
 
   /// The real streams which work under the ssl connection.
   /// BIO performs I/O via this streams
-
   enum BIO_Flag  // internal IO flags
     {
-      BF_EOS   = 0x01,  // end of stream
-      BF_AIO   = 0x02   // real AIO in progress
+      /// End of stream
+      BF_EOS   = 0x01,
+      /// Real AIO in progress
+      BF_AIO   = 0x02
     };
 
   /**
