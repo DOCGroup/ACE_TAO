@@ -1,5 +1,8 @@
 Tue Jan 20 09:18:31 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
+	* TAO/tao/interp.cpp: Used TAO_opaque to set the size of any
+	generic sequence.
+
 	* TAO_IDL/be/{be_operation,be_state_operation}.cpp: For return
 	value of sequences, the stub now allocates the top level storage
 	for the sequence class.
