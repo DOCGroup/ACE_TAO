@@ -2281,8 +2281,8 @@ libTAO_Strategies_la_SOURCES = \
   Strategies/UIOP_Profile.cpp \
   Strategies/UIOP_Transport.cpp \
   Strategies/advanced_resource.cpp \
-  Strategies/sciop_endpoints.cpp \
-  Strategies/uiop_endpoints.cpp
+  Strategies/sciop_endpointsC.cpp \
+  Strategies/uiop_endpointsC.cpp
 
 libTAO_Strategies_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2334,12 +2334,12 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Profile.h \
   Strategies/UIOP_Transport.h \
   Strategies/advanced_resource.h \
-  Strategies/sciop_endpoints.h \
-  Strategies/sciop_endpoints.i \
+  Strategies/sciop_endpointsC.h \
+  Strategies/sciop_endpointsC.inl \
   Strategies/sciop_endpoints.pidl \
   Strategies/strategies_export.h \
-  Strategies/uiop_endpoints.h \
-  Strategies/uiop_endpoints.i \
+  Strategies/uiop_endpointsC.h \
+  Strategies/uiop_endpointsC.inl \
   Strategies/uiop_endpoints.pidl
 
 pkgconfig_DATA += TAO_Strategies.pc
