@@ -1,3 +1,10 @@
+Sat Oct  9 14:29:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher.{h,i,cpp}:
+	* tao/Asynch_Invocation.{h,i.cpp}:
+	  Added some #if !defined (TAO_HAS_MINIMUM_CORBA)
+	  guards that I had overlooked.
+
 Sat Oct 09 14:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	
 	* tao/MessagingC.h: Added the collocation function and
