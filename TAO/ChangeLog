@@ -1,3 +1,20 @@
+Sat Aug 24 16:17:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAOACE_Static.dsw:
+	* orbsvcs/LoadBalancer/LoadManager_Static.dsp:
+	* orbsvcs/LoadBalancer/LoadMonitor_Static.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp:
+	* orbsvcs/orbsvcs/PortableGroup_Static.dsp:
+
+	  Added static library/link versions of the Load Balancer and
+	  PortableGroup related MSVC++ projects.
+
+	* orbsvcs/LoadBalancer/LoadBalancer.h:
+	* orbsvcs/LoadBalancer/LoadBalancer.cpp:
+
+	  Removed these obsolete files.  They were left over from the old
+	  load balancer prototype.
+
 Fri Aug 23 18:52:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (init):
