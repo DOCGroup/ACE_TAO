@@ -1,3 +1,12 @@
+Thu Sep  7 10:52:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/CDR_Array_Test.cpp:
+
+	  Code intended to allocate and zero and source buffer and
+	  destination buffer was actually zeroing the source buffer
+	  twice. Thanks to Johnny Willemsen <johnny.willemsen@meco.nl>
+	  for reporting this bug.
+
 Thu Sep 07 11:16:36 2000  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/WFMO_Reactor/test_network_events.cpp: Add a
