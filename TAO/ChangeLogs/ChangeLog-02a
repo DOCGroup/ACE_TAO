@@ -1,3 +1,11 @@
+Tue Feb 22 10:33:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Removed inclusion of server template header file in
+	  server header file, if tie classes are not generated.
+	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
+	  for reporting this bug.
+
 Mon Feb 21 20:43:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Asynch_Invocation.h:
