@@ -241,7 +241,6 @@ protected:
    */
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
-				  int success,
 				  const void *completion_key,
 				  u_long error);
 
@@ -396,7 +395,6 @@ protected:
   /// here.
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
-				  int success,
 				  const void *completion_key,
 				  u_long error);
 

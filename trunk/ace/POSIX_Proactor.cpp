@@ -429,7 +429,6 @@ ACE_POSIX_Proactor::handle_close (ACE_HANDLE handle,
 void
 ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
                                                u_long bytes_transferred,
-                                               int success,
                                                const void */* completion_key*/,
                                                u_long error)
 {
@@ -437,7 +436,7 @@ ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_r
     {
       // Call completion hook
       asynch_result->complete (bytes_transferred,
-                               success,
+                               error ? 0 : 1,
                                0, // No completion key.
                                error);
     }
@@ -1020,7 +1019,6 @@ int ACE_POSIX_AIOCB_Proactor::process_result_queue (void)
       this->application_specific_code
             (result,
              result->bytes_transferred(), // 0, No bytes transferred.
-             1,  // Result : True.
              0,  // No completion key.
              result->error());   //0, No error.
 
@@ -1179,7 +1177,6 @@ ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
           // Call the application code.
           this->application_specific_code (asynch_result,
                                          return_status, // Bytes transferred.
-                                         1,             // Success
                                          0,             // No completion key.
                                          error_status); // Error
         }
@@ -1290,13 +1287,11 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 void
 ACE_POSIX_AIOCB_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
                                                      u_long bytes_transferred,
-                                                     int success,
                                                      const void *completion_key,
                                                      u_long error)
 {
   ACE_POSIX_Proactor::application_specific_code (asynch_result,
                                                  bytes_transferred,
-                                                 success,
                                                  completion_key,
                                                  error);
 }
@@ -2044,7 +2039,6 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
         // Call the application code.
         this->application_specific_code (asynch_result,
                                      return_status, // Bytes transferred.
-                                     1,             // Success
                                      0,             // No completion key.
                                      error_status); // Error
       }

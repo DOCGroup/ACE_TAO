@@ -85,17 +85,11 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       result.connect_handle () == ACE_INVALID_HANDLE)
     {
       error = 1;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("%p\n"),
-                  ACE_LIB_TEXT ("ACE_Asynch_Connector::handle_connect : Invalid handle")));
     }
 
   if (result.error () != 0)
     {
       error = 1;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE_Asynch_Connector::handle_connect : result error=%d\n"),
-                  ACE_static_cast (int, result.error ())));
     }
 
   // set blocking mode 
@@ -118,15 +112,12 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
                          remote_address,
                          local_address);
 
-  // Validate remote address
-  if (!error &&
-      this->validate_new_connection_ &&
-      this->validate_new_connection (remote_address) == -1)
+  // Call validate_connection even if there was an error - it's the only
+  // way the application can learn the connect disposition.
+  if (this->validate_new_connection_ &&
+      this->validate_connection (result, remote_address, local_address) == -1)
     {
       error = 1;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("%p\n"),
-                  ACE_LIB_TEXT ("ACE_Asynch_Connector::handle_connect : Address validation failed")));
     }
 
   HANDLER *new_handler = 0;
@@ -174,11 +165,12 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
 }
 
 template <class HANDLER> int
-ACE_Asynch_Connector<HANDLER>::validate_new_connection (const ACE_INET_Addr &remote_address)
+ACE_Asynch_Connector<HANDLER>::validate_connection
+  (const ACE_Asynch_Connect::Result &,
+   const ACE_INET_Addr & /* remote_address */,
+   const ACE_INET_Addr & /* local_address */)
 {
-  ACE_UNUSED_ARG (remote_address);
-
-  // Default implemenation always validates the remote address.
+  // Default implementation always validates the remote address.
   return 0;
 }
 

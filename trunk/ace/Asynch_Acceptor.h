@@ -79,10 +79,10 @@ public:
    *                demultiplexing asynchronous accepts. If 0, the
    *                process's singleton @c ACE_Proactor is used.
    * @param validate_new_connection Optional, if non-zero, this object's
-   *                @c validate_new_connection() method is called after
+   *                @c validate_connection() method is called after
    *                the accept completes, but before the service handler's
    *                @c open() hook method is called. If @c
-   *                validate_new_connection() returns -1, the newly-accepted
+   *                validate_connection() returns -1, the newly-accepted
    *                socket is immediately closed, and the @c addresses()
    *                method is not called.
    * @param reissue_accept Optional, if non-zero (the default), a new
@@ -110,7 +110,7 @@ public:
                     int backlog = ACE_DEFAULT_BACKLOG,
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
-                    int validate_new_connection = 0,
+                    int validate_connection = 0,
                     int reissue_accept = 1,
                     int number_of_initial_accepts = -1);
 
@@ -141,6 +141,33 @@ public:
   virtual int cancel (void);
 
   /**
+   * Template method to validate peer before service is opened.
+   * This method is called after a new connection is accepted if the
+   * @a validate_connection argument to @c open() was non-zero or
+   * the @c validate_new_connection() method is called to turn this
+   * feature on.  The default implementation returns 0.  Users can
+   * reimplement this method to perform validation of the peer
+   * using it's address, running an authentication procedure (such as
+   * SSL) or anything else necessary or desireable. The return value
+   * from this method determines whether or not ACE will continue
+   * opening the service or abort the connection.
+   *
+   * @arg result    Result of the connection acceptance.
+   * @arg remote    Peer's address.
+   * @arg local     Local address connection was accepted at.
+   *
+   * @retval  -1  ACE_Asynch_Acceptor will close the connection, and
+   *              the service will not be opened.
+   * @retval  0   Service opening will proceeed.
+   */
+  virtual int validate_connection (const ACE_Asynch_Accept::Result& result,
+                                   const ACE_INET_Addr &remote,
+                                   const ACE_INET_Addr& local);
+
+  /**
+   * @deprecated Use validate_connection() instead. Will be removed after
+   * ACE 5.3.
+   *
    * Template method for address validation.
    *
    * This hook method is called after a connection is accepted if
