@@ -1,3 +1,22 @@
+Sun Mar  7 16:03:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Pluggable/PP_Test_Client.{h,cpp}:
+	* TAO/performance-tests/Pluggable/PP_Test_Server.{h,cpp}:
+	* TAO/performance-tests/Pluggable/PP_Test_i.{h,cpp}:
+	* TAO/performance-tests/Pluggable/PP_Test.idl:
+	* TAO/performance-tests/Pluggable/client.cpp:
+	* TAO/performance-tests/Pluggable/server.cpp:
+	* TAO/performance-tests/Pluggable/client.dsp:
+	* TAO/performance-tests/Pluggable/server.dsp:
+	* TAO/performance-tests/Pluggable/Pluggable.dsw:
+	* TAO/performance-tests/Pluggable/Makefile:
+	* TAO/performance-tests/Pluggable/README:
+	  New files implementing tests for pluggable protocols stuff,
+	  using ACE Timeprobes. Builds and runs fine on NT, builds
+	  with suncc, but client seg faults on ACE_OS::thr_exit().
+	  I've emailed the doc group to see if anyone can give me a
+	  hand with this bug.
+
 Sun Mar  7 10:41:58 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp:
