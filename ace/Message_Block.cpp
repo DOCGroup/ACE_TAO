@@ -492,7 +492,7 @@ ACE_Message_Block::release (void)
     // This is the case when we don't even have a valid data block
     result = this->release_i (0);
   
-  return 0;
+  return result;
 }
 
 ACE_Message_Block *

@@ -11,6 +11,8 @@ FILES	=  TS_Server_Handler \
 	   TS_Clerk_Handler \
 	   Client_Logging_Handler \
 	   Name_Handler \
+	   Server_Logging_Handler_T \
+	   Log_Message_Receiver \
 	   Server_Logging_Handler \
 	   Token_Handler \
 	   Logging_Strategy

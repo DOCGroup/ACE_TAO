@@ -7,7 +7,7 @@
 //    ace
 // 
 // = FILENAME
-//    Server_Logging_Handler_T.h 
+//    Server_Logging_Handler.h 
 //
 // = AUTHOR
 //    Doug Schmidt and Per Andersson
@@ -37,7 +37,7 @@ class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, A
   //     functionality.
 public:  
   ACE_Server_Logging_Handler_T (ACE_Thread_Manager *,
-                               LOG_MESSAGE_RECEIVER const& receiver );
+				const LOG_MESSAGE_RECEIVER &receiver );
   // Constructor.
 
 
@@ -49,8 +49,8 @@ protected:
   // Receive the logging record from a client.
 
   int open_common (void);
-  // Common parts of open function, sets hostname and diables NONBLOCK
-  // in peer called from derived classes open method.
+  // Common parts of open function, sets hostname and diables NONBLOCK in peer
+  // called from derived classes open method.
   
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static COUNTER request_count_;
@@ -59,11 +59,11 @@ protected:
 
   Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString> receiver_;
   
-  const char *host_name (void) {return receiver_.m_.fast_rep ();}
+  const char *host_name (void) { return receiver_.m_.fast_rep (); }
   // Name of the host we are connected to.
   
-  LOG_MESSAGE_RECEIVER &receiver (void) { return receiver_; }
-  // The receiver of log records.
+  LOG_MESSAGE_RECEIVER &receiver (void){ return receiver_; }
+  // The receiver of log records
 };
 
 #if !defined (ACE_HAS_TLI)
@@ -84,7 +84,7 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
   //     easily be factored into the <ACE_Strategy_Acceptor>.
 {
 public:
-  ACE_Server_Logging_Acceptor_T (void);
+  ACE_Server_Logging_Acceptor_T (void); 
   virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.
 
@@ -94,17 +94,17 @@ protected:
   
   virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
   // Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
-  // specialize this since the <LOG_MESSAGE_RECEIVER> held by this
-  // Acceptor must be passed into the <SERVER_LOGGING_HANDLER>.
+  // specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
+  // passed into the <SERVER_LOGGING_HANDLER>.
 
 private:
   Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY> receiver_;
   
-  SCHEDULE_STRATEGY &scheduling_strategy (void) { return receiver_.m_; }
+  SCHEDULE_STRATEGY& scheduling_strategy (void){ return receiver_.m_; }
   // The scheduling strategy for the service.
   
   LOG_MESSAGE_RECEIVER &receiver (void) { return receiver_; }
-  // The receiver of log records.
+  // The receiver of log records
 };
 
 template<class LOG_MESSAGE_RECEIVER> 
@@ -121,8 +121,9 @@ class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_P
 public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
-                              LOG_MESSAGE_RECEIVER const &receiver);
-  virtual int open (void * = 0);
+			      const LOG_MESSAGE_RECEIVER &receiver);
+                                  
+  virtual int open (void* = 0);
 };
 
 #if !defined (ACE_HAS_THREADS) 
@@ -147,10 +148,17 @@ class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGI
 public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
-                                  LOG_MESSAGE_RECEIVER const &receiver);
+				  const LOG_MESSAGE_RECEIVER &receiver);
   virtual int open (void * = 0);
   virtual int svc (void);
 };
 
-#endif /* ACE_SERVER_LOGGING_HANDLER_T_H */
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Server_Logging_Handler_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Server_Logging_Handler_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+#endif /* ACE_SERVER_LOGGING_HANDLER_T_H */
