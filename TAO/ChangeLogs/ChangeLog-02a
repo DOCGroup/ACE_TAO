@@ -10,7 +10,7 @@ Tue Jun 27 12:50:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  another IDL file). In a case like this, the 
 	  AST_Interface::redefine() method, called by
 	  AST_Interface::forward_redefinition_helper(), was not
-	  updating the 'defined_in" member, leading to lookup
+	  updating the 'defined_in' member, leading to lookup
 	  errors for references inside the interface definition.
 	  The scope update has now been added. Thanks to
 	  Richard Reitmeyer <richard@verecomm.com> for reporting
