@@ -20,21 +20,18 @@
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
+#include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Task_T.h"
 #include "ace/Asynch_IO.h"
 #include "HTTP_Handler.h"
-
-// Include the templates here.
-#include "HTTP_Server_T.h"
 
 // Forward declaration.
 class ACE_Proactor;
 
 #if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
-typedef LOCK_SOCK_Acceptor<ACE_Null_Mutex> HTTP_SOCK_Acceptor;
+typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> HTTP_SOCK_Acceptor;
 #else
-typedef LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> HTTP_SOCK_Acceptor;
+typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> HTTP_SOCK_Acceptor;
 #endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
 typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
@@ -124,8 +121,7 @@ class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
-                           ACE_Thread_Manager &tm,
-                           int threads);
+                           ACE_Thread_Manager &tm);
   virtual int svc (void);
 
 private:

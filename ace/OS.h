@@ -2650,6 +2650,18 @@ struct sigaction
 #define SIGIO 29
 #endif /* SIGSEGV */
 
+#if !defined (SIGUSR1)
+#define SIGUSR1 16
+#endif /* SIGUSR1 */
+
+#if !defined (SIGUSR2)
+#define SIGUSR2 17
+#endif /* SIGUSR2 */
+
+#if !defined (SIGCHLD)
+#define SIGCHLD 18
+#endif /* SIGCHLD */
+
 #if !defined (SIGCHLD)
 #define SIGCHLD 18
 #endif /* SIGCHLD */
