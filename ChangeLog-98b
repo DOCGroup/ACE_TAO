@@ -1,3 +1,9 @@
+Sat Aug 22 21:52:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/UPIPE_SAP/ex[23].cpp: Changed the
+ 	  Auto_Basic_Ptr to the Auto_Basic_Array_Ptr to avoid compilation
+ 	  problems.  Thanks to David Levine for reporting this.
+
 Sat Aug 22 20:13:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ACE-INSTALL.html: Added instructions for adding Alpha
