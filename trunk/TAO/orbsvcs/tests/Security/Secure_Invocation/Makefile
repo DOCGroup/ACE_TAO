@@ -58,7 +58,7 @@ endif  # static_libs_only = 1
 
 CLNT_LIBS += -lTAO_Security $(TAO_CLNT_LIBS)
 SRVR_LIBS += \
-  -lTAO_Security -lTAO_PortableServer $(TAO_SRVR_LIBS) -lssl -lcrypto
+  -lTAO_Security $(TAO_SRVR_LIBS) -lssl -lcrypto
 
 #----------------------------------------------------------------------------
 #       Local targets
