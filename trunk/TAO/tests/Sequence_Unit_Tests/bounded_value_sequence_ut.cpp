@@ -24,11 +24,10 @@ using namespace TAO;
 
 CORBA::ULong const MAXIMUM = 32;
 
-typedef details::value_traits<int,true> tested_element_traits;
-typedef details::bounded_allocation_traits<int,MAXIMUM,true> tested_allocation_traits;
-typedef details::range_checking<int,true> range;
-
 typedef bounded_value_sequence<int,MAXIMUM> tested_sequence;
+typedef tested_sequence::element_traits tested_element_traits;
+typedef tested_sequence::allocation_traits tested_allocation_traits;
+typedef details::range_checking<int,true> range;
 
 struct Tester
 {

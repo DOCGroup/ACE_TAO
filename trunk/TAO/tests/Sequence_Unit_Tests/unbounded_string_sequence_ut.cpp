@@ -10,7 +10,6 @@
 #include "testing_string_traits.hpp"
 #include "string_traits.hpp"
 #include "testing_allocation_traits.hpp"
-#include "allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "unbounded_string_sequence.hpp"

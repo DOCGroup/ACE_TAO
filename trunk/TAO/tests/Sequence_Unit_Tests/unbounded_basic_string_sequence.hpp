@@ -9,7 +9,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "allocation_traits.hpp"
+#include "unbounded_reference_allocation_traits.hpp"
 #include "string_traits.hpp"
 #include "generic_sequence.hpp"
 #include "string_sequence_element.hpp"
