@@ -1,3 +1,28 @@
+Tue Nov 26 22:32:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/*: A new regression for BUG
+	  1361. 
+
+	* tests/Bug_1361_Regression/client.cpp:
+	* tests/Bug_1361_Regression/Echo_Caller.cpp:
+	* tests/Bug_1361_Regression/Echo_Caller.h:
+	* tests/Bug_1361_Regression/Echo.cpp:
+	* tests/Bug_1361_Regression/Echo.h
+	* tests/Bug_1361_Regression/Makefile
+	* tests/Bug_1361_Regression/ORB_Task.cpp:
+	* tests/Bug_1361_Regression/ORB_Task.h:
+	* tests/Bug_1361_Regression/run_test.pl*
+	* tests/Bug_1361_Regression/server.cpp
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp
+	* tests/Bug_1361_Regression/Server_Thread_Pool.h
+	* tests/Bug_1361_Regression/Server_Timer.cpp
+	* tests/Bug_1361_Regression/Server_Timer.h
+	* tests/Bug_1361_Regression/shutdown.cpp
+	* tests/Bug_1361_Regression/Test.idl: 
+
+	  Thanks to Duane Binder <duane.binder@veritas.com> for donating
+	  this test case. 
+
 Tue Nov 26 16:03:52 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Basic_Regression/run_test.pl:
