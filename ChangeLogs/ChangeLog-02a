@@ -1,3 +1,14 @@
+Thu Sep  6 11:00:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp: The timer events are not included as a part
+	  of  number of active handles from wait_for_multiple_events
+	  (). The check for event_count > 0 before processing timer events
+	  was wrong. Removed the check. Thanks to Chad Elliott for
+	  pointing this out. 
+
+	  Further did some cosmetic changes like adding comments, removing
+	  comments that was not valid etc.
+
 Thu Sep  6 07:50:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: The AMI buffering test should not be run

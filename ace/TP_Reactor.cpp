@@ -160,22 +160,25 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
                                    guard);
     }
 
-  if (event_count > 0)
-    {
-      // If there are no signals and if we had received a proper
-      // event_count then first look at dispatching timeouts. We need to
-      // handle timers early since they may have higher latency
-      // constraints than I/O handlers.  Ideally, the order of
-      // dispatching should be a strategy...
-      result = this->handle_timer_events (event_count,
-                                          guard);
+  // If there are no signals and if we had received a proper
+  // event_count then first look at dispatching timeouts. We need to
+  // handle timers early since they may have higher latency
+  // constraints than I/O handlers.  Ideally, the order of
+  // dispatching should be a strategy...
 
-      if (result > 0)
-        return result;
+  // NOTE: The event count does not have the number of timers that
+  // needs dispatching. But we are still passing this along. We dont
+  // need to do that. In the future we *may* have the timers also
+  // returned through the <event_count>. Just passing that along for
+  // that day.
+  result = this->handle_timer_events (event_count,
+                                      guard);
 
-      // Else just fall through for further handling
-    }
+  if (result > 0)
+    return result;
 
+
+  // Else justgo ahead fall through for further handling
 
   if (event_count > 0)
     {
@@ -250,7 +253,7 @@ ACE_TP_Reactor::handle_signals (int & /*event_count*/,
 
 
 int
-ACE_TP_Reactor::handle_timer_events (int &event_count,
+ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
 {
   // Get the current time
@@ -264,9 +267,6 @@ ACE_TP_Reactor::handle_timer_events (int &event_count,
   if (this->timer_queue_->dispatch_info (cur_time,
                                          info))
     {
-      // Decrement the number of events that needs handling yet.
-      event_count--;
-
       // Release the token before dispatching notifies...
       guard.release_token ();
 
@@ -292,6 +292,8 @@ ACE_TP_Reactor::handle_notify_events (int &event_count,
   ACE_HANDLE notify_handle =
     this->get_notify_handle ();
 
+  int result = 0;
+
   if (notify_handle != ACE_INVALID_HANDLE)
     {
 
@@ -302,23 +304,30 @@ ACE_TP_Reactor::handle_notify_events (int &event_count,
       ACE_Notification_Buffer buffer;
 
       if (this->notify_handler_->read_notify_pipe (notify_handle,
-                                                    buffer) >= 0)
+                                                    buffer) > 0)
         {
+          // Decerement the number of event counts that still remains
+          // to be handled.
           event_count--;
 
           // Release the token before dispatching notifies...
           guard.release_token ();
 
-          this->notify_handler_->dispatch_notify (buffer);
+          // Dispatch the upcall for the notify
+          if (this->notify_handler_->dispatch_notify (buffer) > 0)
+            result = 1; // We had a successful dispatch.
 
+          // Put ourseleves in the queue
           this->renew ();
-          return 1;
         }
 
-      return 0;
+      // Read from the pipe failed..
+      return result;
     }
 
-  return 0;
+  // The notify was not in the list returned by
+  // wait_for_multiple_events ().
+  return result;
 }
 
 
@@ -340,26 +349,25 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
     {
       // Suspend the handler so that other threads don't start
       // dispatching it.
-      // Make sure we never suspend the notify_handler_ without holding
-      // the lock.
-      // @@ Actually, we don't even need to suspend the notify_handler_
-      //    here.  But let me get it to work first.
+      // NOTE: This check was performed in older versions of the
+      // TP_Reactor. Looks like it is a waste..
       if (dispatch_info.event_handler_ != this->notify_handler_)
         this->suspend_i (dispatch_info.handle_);
     }
-
-  /// Decrement the event left
-  --event_count;
 
   // Release the lock.  Others threads can start waiting.
   guard.release_token ();
 
   int result = 0;
+
   // If there was an event handler ready, dispatch it.
   if (dispatch_info.dispatch ())
     {
+      /// Decrement the event left
+      --event_count;
+
       if (this->dispatch_socket_event (dispatch_info) == 0)
-          ++result;                // Dispatched one more event
+          ++result;                // Dispatched an event
 
       int flag = 0;
 
@@ -461,6 +469,8 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
   int found_io = 0;
   ACE_HANDLE handle;
 
+  // @@todo: We can do quite a bit of code reduction here. Let me get
+  // it to work before I do this.
   {
     ACE_Handle_Set_Iterator handle_iter (this->ready_set_.wr_mask_);
 
