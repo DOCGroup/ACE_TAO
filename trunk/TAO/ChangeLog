@@ -1,3 +1,23 @@
+Thu Feb 13 15:15:29 2003  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* tao/MCAST_Parser.cpp (multicast_query): 
+          Modified the diagnostic message that Craig added with the
+	  changelog entry 
+
+	  Wed Feb 12 00:45:04 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+	  to reflect the actual service name instead of being NameService
+	  always. Added a service_name check to print out the NameService
+	  related debugging message if it is indeed NameService.
+	
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
+	  A change which I did a while ago seemed to be missing. Nanbor
+	  applied the relevant fixes for Windows. Removing the ifdefs
+	  around the same code so that even for non-windows, the whole
+	  hostname including the domain is used.
+	  
+	  
 Thu Feb 13 17:45:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* utils/catior/Makefile: Do not build if RTCORBA is turned off. 

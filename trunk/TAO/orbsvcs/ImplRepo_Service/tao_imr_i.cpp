@@ -705,13 +705,10 @@ TAO_IMR_Op_Add::run (void)
       // else use the hostname on which tao_imr is run
       char hostname[BUFSIZ];
       ACE_OS::hostname (hostname, BUFSIZ);
-#if defined (ACE_WIN32)
+
       struct hostent *hinfo = ACE_OS::gethostbyname (hostname);
 
       startup_options.location = CORBA::string_dup (hinfo->h_name);
-#else
-      startup_options.location = CORBA::string_dup (hostname);
-#endif /* ACE_WIN32 */
     }
 
   ACE_DECLARE_NEW_CORBA_ENV;

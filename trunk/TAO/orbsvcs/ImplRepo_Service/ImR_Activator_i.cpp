@@ -945,7 +945,6 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
       // register this activator (with the name of the hostname where
       // this instance is being run) with the locator.
-#if defined (ACE_WIN32)
       struct hostent *hinfo = ACE_OS::gethostbyname (hostname);
       char full_hostname[BUFSIZ];
       ACE_OS::strcpy (full_hostname, hinfo->h_name);
@@ -954,14 +953,8 @@ ImR_Activator_i::init (ACE_ENV_SINGLE_ARG_DECL)
         locator->register_activator (full_hostname,
                                      imr_obj.in ()
                                      ACE_ENV_ARG_PARAMETER);
-#else
-      CORBA::ULong reg_act =
-        locator->register_activator (hostname,
-                                     imr_obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
-#endif /* ACE_WIN32 */
       ACE_TRY_CHECK;
-
+      
       if (reg_act == 1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
