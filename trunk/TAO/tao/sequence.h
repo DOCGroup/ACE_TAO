@@ -250,4 +250,8 @@ private:
   // based on parent's release flag
 };
 
+#if defined (__ACE_INLINE__)
+#include "tao/sequence.i"
+#endif /* __ACE_INLINE__ */
+
 #endif /* TAO_SEQUENCE_H */
