@@ -1,3 +1,11 @@
+Thu Dec  5 09:58:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* docs/tutorials/Quoter/index.html:
+	* docs/tutorials/Quoter/On_Demand_Activation/index.html:
+	* docs/tutorials/Quoter/Simple/Persistent/index.html:  Fixed a 
+	  few minor typos and ommissions in the code sections, along with
+	  an html formatting problem that showed up with certain browsers.
+
 Wed Dec  4 23:40:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport.cpp: Old habits die-hard. Made a mistake while

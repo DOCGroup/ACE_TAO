@@ -45,7 +45,7 @@
       Notice that this has nothing to do with the state of the object:
       an application can create transient objects to access some
       persistent information maintained in a database.
-      For exammple,
+      For example,
       such objects can represent a different session or transaction view
       of the data.
       Similarly, some persistent object references may have no state
@@ -142,7 +142,7 @@
     <P>Next we can initialize the sequence of policies:
     </P>
  <PRE>
-    CORBA::PolicyList polices;
+    CORBA::PolicyList polices (2);
     policies.length (2);
     policies[0] =
       PortableServer::IdAssignmentPolicy::_duplicate (idassignment);

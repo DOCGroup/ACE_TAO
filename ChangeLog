@@ -1,3 +1,10 @@
+Thu Dec  5 09:58:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/config-openbsd-pthread.h:  Added 
+	  ACE_LACKS_PERFECT_MULTICAST_FILTERING 1.  This should
+	  fix the errors in the test/Multicast_Test in the 
+	  nightly autobuilds.
+
 Wed Dec  4 21:53:28 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Include <sys/pstat.h> for __hpux platform.
