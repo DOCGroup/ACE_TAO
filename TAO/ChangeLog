@@ -1,3 +1,24 @@
+Mon Jul 21 16:28:46 2003 Stephen Torri  <storri@cs.wustl.edu>
+
+	* TAO/TAOACE.dsw:
+
+	  Added Metrics.dsp to workspace.
+
+	* TAO/orbsvcs/orbsvcs/Metrics.dsp:
+	* TAO/orbsvcs/orbsvcs/Metrics/Metrics.dsp:
+	  Moved project file from Metrics subdirectory to match
+	  orbsvcs file convention in TAO/orbsvcs/orbsvcs
+
+	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.h:
+	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+	* TAO/orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.cpp:
+	
+	  Hide class behind #ifdef statements if the configuration for
+	  ACE lacks ACE_METRICS_COLLECTION and ACE_COMPILE_TIMEPORBES
+
+
 Mon Jul 21 16:24:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/append.cpp:
@@ -27,6 +48,7 @@ Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  truncated if the literal rhs was greater than
 `	  ULONG_MAX. Thanks to Scott Clarke <sclarke@ideorlando.org>
 	  for reporting the bug.
+
 
 Mon Jul 21 19:33:24 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -3,6 +3,11 @@
 #ifndef METRICS_UTILS_H
 #define METRICS_UTILS_H
 
+
+#if defined (ACE_METRICS_COLLECTION)
+
+#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
+
 #if ! defined (VXWORKS)
 
 // Comment out both of these to disable output
@@ -121,9 +126,59 @@ public:
 typedef ACE_Singleton<WSOA_Metrics_Handles, ACE_SYNCH_MUTEX>
 WSOA_METRICS_HANDLES_SINGLETON;
 
+/**
+ * NOTE: This is a simple macro which calls the appropriate registration function with the cache to
+ *       store the data from this pointer. At the ACE level there is no need to give a PROBE_TYPE
+ *       because there is only one probe type (ACE_Timeprobe).
+ *
+ * USAGE_LEVEL: TAO
+ *
+ * Q1: Where is this and the next macro used? One example is on TAO/orbsvcs/orbsvcs/Metrics. No where in the ace code.
+ *    So is this a ACE or TAO macro? 
+ *
+ * Q2: Is the function (register + METRICS_REGION) a ACE or TAO?
+ * A2: TAO. Define in Metrics_Local_Cache_T.h. The only METRICS_REGION that exists is 'base_metrics'. Used
+ *     in $TAO_ROOT/orbsvcs/orbsvcs/Metrics/Metrics_Utils.cpp
+ *
+ * @param METRICS_PTR - Initialized pointer to the Metrics_Cache. This pointer is used to register the probe
+ *                      with the associated cache.
+ * @param METIRCS_REGION - At present there is only one 'base_metrics'.
+ * @param PROBE_NAME - String name of the probe
+ * @param PROBE_TYPE - Unsigned integer representing the probe type
+ * @param METRICS_HANDLE - Variable used to contain the metrics probe handle that is the result of this function
+ *                         The type of the handle is a RtecScheduler::handle_t
+ */
+#  define REGISTER_METRICS_PROBE_RETURN(METRICS_PTR,METRICS_REGION,PROBE_NAME,PROBE_TYPE,METRICS_HANDLE) \
+do { if((METRICS_PTR->metrics_enabled())) { \
+METRICS_HANDLE = METRICS_PTR-> \
+register_##METRICS_REGION ( \
+PROBE_NAME, \
+PROBE_TYPE); \
+} } while (0)
+
+/**
+ * Same as above but instead of just reporting information to a cache there is also reference to a Metrics_Loger (TAO feature).
+ * The logger is used to record the information. The type of probe is register with the logger
+ *
+ * USAGE_LEVEL: TAO
+ */
+#  define REGISTER_METRICS_REPORTING_PROBE_RETURN(METRICS_PTR,METRICS_REGION,PROBE_NAME,PROBE_TYPE,METRICS_LOGGER_REF,METRICS_HANDLE) \
+do { if((METRICS_PTR->metrics_enabled())) { \
+METRICS_HANDLE = METRICS_PTR-> \
+register_##METRICS_REGION## ( \
+PROBE_NAME, \
+PROBE_TYPE, \
+METRICS_LOGGER_REF); \
+} } while (0)
+
+
+
 
 #if defined (__ACE_INLINE__)
 #include "Metrics_Utils.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_METRICS_COLLECTION */
 
 #endif /* METRICS_UTILS_H */

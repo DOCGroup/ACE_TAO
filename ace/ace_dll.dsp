@@ -582,6 +582,10 @@ SOURCE=.\Method_Request.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Metrics_Cache.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Msg_WFMO_Reactor.cpp
 # End Source File
 # Begin Source File
@@ -1694,6 +1698,14 @@ SOURCE=.\Method_Request.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Metrics_Cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Metrics_Cache_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Min_Max.h
 # End Source File
 # Begin Source File
@@ -2767,6 +2779,14 @@ SOURCE=.\Message_Queue.i
 # Begin Source File
 
 SOURCE=.\Message_Queue_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Metrics_Cache.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Metrics_Cache_T.i
 # End Source File
 # Begin Source File
 
