@@ -1,3 +1,13 @@
+Wed Mar 30 10:45:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp
+	  (visit_structure):
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+	  (visit_members):
+
+	  Generate a field array with "const" elements.  They should
+	  be immutable.
+
 Wed Mar 30 18:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/libraries.html:
