@@ -1906,6 +1906,25 @@ SOURCE=.\OS_String.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_TLI.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pair.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -4197,6 +4216,10 @@ SOURCE=.\OS_String.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_TLI.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pair.h
 # End Source File
 # Begin Source File
@@ -5070,6 +5093,10 @@ SOURCE=.\OS_Memory.inl
 # Begin Source File
 
 SOURCE=.\OS_String.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_TLI.inl
 # End Source File
 # Begin Source File
 

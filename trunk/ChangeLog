@@ -1,9 +1,27 @@
+Tue Jun  6 20:02:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS_TLI.cpp:
+        * ace/OS_TLI.h:
+        * ace/OS_TLI.inl:
+        * ace/config-all.h:
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/ace-dll.icc:
+        * ace/ace-lib.icc:
+        * ace/ace.icc:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Moved the TLI wrappers to ACE_OS_TLI.
+
 Tue Jun  6 17:57:14 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QOS/server.cpp: 
-	* examples/QOS/client.cpp:
-	  Changed these to reflect changes to the ACE QoS API.
-	
+        * examples/QOS/server.cpp:
+        * examples/QOS/client.cpp:
+          Changed these to reflect changes to the ACE QoS API.
+
 Tue Jun 06 15:44:03 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: added support for LynxOS 3.1.0.
