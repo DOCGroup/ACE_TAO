@@ -562,7 +562,6 @@ ACE_Service_Config::close_singletons (void)
   ACE_ReactorEx::close_singleton ();
   ACE_Proactor::close_singleton ();
   ACE_Thread_Manager::close_singleton ();
-  ACE_Allocator::close_singleton ();
 
   return 0;
 }
