@@ -2,7 +2,11 @@
 # Makefile for building	the TAO	FaultTolerance library
 #
 
+!ifndef MINIMUM_CORBA
 NAME = TAO_FaultTolerance
+!else
+!undef NAME
+!endif
 
 TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 	-I..\..	-I.. -Ge 1 -Wb,export_macro=TAO_FT_Export \

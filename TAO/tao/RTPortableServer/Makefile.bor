@@ -2,7 +2,11 @@
 # Makefile for building the TAO RTPortableServer library
 #
 
+!ifndef MINIMUM_CORBA
 NAME = TAO_RTPortableServer
+!else
+!undef NAME
+!endif
 
 OBJFILES = \
 	$(OBJDIR)\RTPortableServer.obj \
