@@ -30,6 +30,8 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+class TAO_POA;
+
 namespace TAO
 {
   namespace Portable_Server
@@ -38,7 +40,15 @@ namespace TAO
        public virtual RequestProcessingStrategy
     {
     public:
+      Default_Servant_Request_Processing_Strategy (void);
+
       virtual ~Default_Servant_Request_Processing_Strategy (void);
+
+      virtual
+      void strategy_init(
+        TAO_POA *poa,
+        TAO_Active_Object_Map* map,
+        ServantRetentionStrategy* servant_retention_strategy);
 
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
@@ -78,6 +88,7 @@ namespace TAO
                         ACE_ENV_ARG_DECL);
 
     private:
+      TAO_POA* poa_;
       PortableServer::ServantBase_var default_servant_;
     };
 

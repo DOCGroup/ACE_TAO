@@ -28,11 +28,16 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    class ServantRetentionStrategy;
+
     class TAO_PortableServer_Export IdUniquenessStrategy :
        public virtual Policy_Strategy
     {
     public:
       virtual ~IdUniquenessStrategy (void);
+
+      virtual void strategy_init (
+        ServantRetentionStrategy* servant_retention_strategy) = 0;
 
       /*
        * Validate if the  servant may be activated

@@ -35,7 +35,7 @@ namespace TAO
     public:
       virtual ~Multiple_Id_Uniqueness_Strategy (void);
 
-      void strategy_init(TAO_POA *poa);
+      void strategy_init (ServantRetentionStrategy* servant_retention_strategy);
 
       virtual bool validate (PortableServer::Servant servant,
                              int &wait_occurred_restart_call

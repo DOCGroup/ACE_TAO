@@ -17,7 +17,7 @@ namespace TAO
     }
 
     void
-    Multiple_Id_Uniqueness_Strategy::strategy_init (TAO_POA *)
+    Multiple_Id_Uniqueness_Strategy::strategy_init (ServantRetentionStrategy*)
     {
       // dependent on type create the correct strategy.
     }

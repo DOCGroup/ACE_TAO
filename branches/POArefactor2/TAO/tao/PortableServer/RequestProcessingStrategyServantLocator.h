@@ -45,7 +45,15 @@ namespace TAO
        public virtual Servant_Manager_Request_Processing_Strategy
     {
     public:
+      Servant_Locator_Request_Processing_Strategy (void);
+
       virtual ~Servant_Locator_Request_Processing_Strategy (void);
+
+      virtual
+      void strategy_init(
+        TAO_POA *poa,
+        TAO_Active_Object_Map* map,
+        ServantRetentionStrategy* servant_retention_strategy);
 
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
@@ -74,6 +82,7 @@ namespace TAO
                         ACE_ENV_ARG_DECL);
 
     private:
+      TAO_POA *poa_;
       PortableServer::ServantLocator_var servant_locator_;
     };
   }

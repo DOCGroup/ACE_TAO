@@ -41,7 +41,11 @@ namespace TAO
 
       virtual ~AOM_Only_Request_Processing_Strategy (void);
 
-      virtual void strategy_init(TAO_POA *poa);
+      virtual
+      void strategy_init(
+        TAO_POA *poa,
+        TAO_Active_Object_Map* map,
+        ServantRetentionStrategy* strategy);
 
       PortableServer::ServantManager_ptr
       get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)

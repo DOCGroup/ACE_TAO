@@ -1,3 +1,24 @@
+
+        * tao/PortableServer/IdUniquenessStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/Active_Policy_Strategies.cpp:
+          Removed the strategy_init from PolicyStrategy, pass besides the POA
+          more specific things to the strategies, so that they get exactly
+          what they need, making the strategy code much smaller. Each strategy
+          gets the things it needs, if it needs nothing, it gets nothing, if
+          its need a lot, it receives more.
+
+        * tao/PortableServer/Servant_Base.{h,cpp,i}:
+        * tao/PortableServer/Local_Servant_Base.{h,cpp,inl}:
+          Moved TAO_Local_Servant_Base to its own file
+
+        * tao/Adapter.{h,cpp}:
+        * tao/Adapter_Factory.{h,cpp}:
+        * tao/Adapter_Registry.{h,cpp}:
+        * tao/tao.moc
+          Moved Adapter Factory to its own file, corrected some errors
+
 Tue Nov  9 15:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDIR_GIOP/*:

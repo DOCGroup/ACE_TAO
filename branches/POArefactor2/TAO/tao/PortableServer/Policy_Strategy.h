@@ -32,8 +32,6 @@ namespace TAO
     {
     public:
       virtual ~Policy_Strategy (void) {};
-
-      virtual void strategy_init(TAO_POA *poa) = 0;
     };
   }
 }

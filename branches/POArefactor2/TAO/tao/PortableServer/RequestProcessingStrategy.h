@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "PolicyFactory.h"
 #include "Policy_Strategy.h"
 #include "PortableServerC.h"
 #include "ace/Service_Config.h"
@@ -44,18 +43,25 @@ namespace TAO
 }
 
 class TAO_POA;
+class TAO_Active_Object_Map;
 
 namespace TAO
 {
   namespace Portable_Server
   {
+    class ServantRetentionStrategy;
+
     class TAO_PortableServer_Export RequestProcessingStrategy :
        public virtual Policy_Strategy
     {
     public:
       virtual ~RequestProcessingStrategy (void);
 
-      virtual void strategy_init(TAO_POA *poa);
+      virtual
+      void strategy_init(
+        TAO_POA *poa,
+        TAO_Active_Object_Map* map,
+        ServantRetentionStrategy* strategy) = 0;
 
       virtual
       PortableServer::ServantManager_ptr
@@ -97,9 +103,6 @@ namespace TAO
                       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                       int &wait_occurred_restart_call
                       ACE_ENV_ARG_DECL) = 0;
-
-    protected:
-      TAO_POA* poa_;
     };
   }
 }

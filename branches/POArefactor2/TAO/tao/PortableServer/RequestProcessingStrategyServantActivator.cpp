@@ -27,7 +27,10 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Activator_Request_Processing_Strategy::Servant_Activator_Request_Processing_Strategy (void)
+    Servant_Activator_Request_Processing_Strategy::Servant_Activator_Request_Processing_Strategy (void) :
+      poa_ (0),
+      active_object_map_ (0),
+      servant_retention_strategy_ (0)
     {
     }
 
@@ -37,9 +40,13 @@ namespace TAO
 
     void
     Servant_Activator_Request_Processing_Strategy::strategy_init(
-      TAO_POA *poa)
+      TAO_POA *poa,
+      TAO_Active_Object_Map* map,
+      ServantRetentionStrategy* servant_retention_strategy)
     {
-      RequestProcessingStrategy::strategy_init (poa);
+      poa_ = poa;
+      active_object_map_ = map;
+      servant_retention_strategy_ = servant_retention_strategy;
     }
 
     PortableServer::ServantManager_ptr
@@ -180,8 +187,8 @@ namespace TAO
       if (this->poa_->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID)
         {
           int result =
-            this->poa_->active_policy_strategies().servant_retention_strategy()->is_servant_in_map (servant,
-                                     wait_occurred_restart_call);
+            this->servant_retention_strategy_->is_servant_in_map (servant,
+                                                                  wait_occurred_restart_call);
           if (result)
             error = 1;
         }
@@ -194,7 +201,7 @@ namespace TAO
       if (!error && !wait_occurred_restart_call)
         {
           TAO_Active_Object_Map::Map_Entry *entry = 0;
-          int result = this->poa_->active_policy_strategies().servant_retention_strategy()->get_aom ()->
+          int result = this->active_object_map_->
             rebind_using_user_id_and_system_id (servant,
                                                 poa_current_impl.object_id (),
                                                 system_id,
@@ -209,7 +216,7 @@ namespace TAO
       if (error || wait_occurred_restart_call)
         {
           CORBA::Boolean remaining_activations =
-            this->poa_->active_policy_strategies().servant_retention_strategy()->get_aom ()->remaining_activations (servant);
+            this->active_object_map_->remaining_activations (servant);
 
           // A recursive thread lock without using a recursive
           // thread lock.  Non_Servant_Upcall has a magic

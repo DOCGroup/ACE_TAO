@@ -35,13 +35,13 @@ namespace TAO
 
       virtual ~Unique_Id_Uniqueness_Strategy (void);
 
-      void strategy_init (TAO_POA *poa);
+      void strategy_init (ServantRetentionStrategy* servant_retention_strategy);
 
       virtual bool validate (PortableServer::Servant servant,
                              int &wait_occurred_restart_call
                              ACE_ENV_ARG_DECL);
     private:
-      TAO_POA* poa_;
+      ServantRetentionStrategy* strategy_;
     };
   }
 }

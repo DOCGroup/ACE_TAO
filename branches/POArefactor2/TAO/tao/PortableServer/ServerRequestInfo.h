@@ -281,7 +281,6 @@ protected:
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;
-
 };
 
 # if defined (__ACE_INLINE__)
