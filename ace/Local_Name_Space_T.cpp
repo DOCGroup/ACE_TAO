@@ -378,8 +378,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
   ACE_OS::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
   ACE_OS::strcat (this->context_file_, this->name_options_->database ());
 
-  ACE_DEBUG ((LM_DEBUG, "contextfile is %s\n", 
-	      this->context_file_));
+  //  ACE_DEBUG ((LM_DEBUG, "contextfile is %s\n", this->context_file_));
 
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
 
@@ -436,7 +435,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 
   return 0;
 }
-
 
 template <ACE_MEM_POOL_1, class LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
