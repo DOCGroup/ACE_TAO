@@ -38,14 +38,10 @@ TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
 }
 
 CORBA::RepositoryId
-TAO_Forwarding_Servant::_primary_interface (const PortableServer::ObjectId &oid,
-                                            PortableServer::POA_ptr poa,
-                                            CORBA::Environment &ACE_TRY_ENV)
+TAO_Forwarding_Servant::_primary_interface (const PortableServer::ObjectId & /* oid */,
+                                            PortableServer::POA_ptr /* poa */,
+                                            CORBA::Environment & /* ACE_TRY_ENV */)
 {
-  ACE_UNUSED_ARG (oid);
-  ACE_UNUSED_ARG (poa);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   return CORBA::string_dup (this->interface_repository_id_.in ());
 }
 
