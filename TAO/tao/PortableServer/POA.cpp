@@ -1157,9 +1157,10 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
   // invoke operations on the POA will receive the OBJECT_NOT_EXIST
   // exception.
 
-  // We must copy the user ids into a separate place since we cannot
-  // remove entries while iterating through the map.
-  ACE_Array<PortableServer::ObjectId> ids (this->active_object_map ().current_size ());
+  // We must copy the map entries into a separate place since we
+  // cannot remove entries while iterating through the map.
+  ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *> map_entries
+    (this->active_object_map ().current_size ());
 
   size_t counter = 0;
   TAO_Active_Object_Map::user_id_map::iterator end
@@ -1175,7 +1176,7 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
 
       if (!active_object_map_entry->deactivated_)
         {
-          ids[counter] = active_object_map_entry->user_id_;
+          map_entries[counter] = active_object_map_entry;
           ++counter;
         }
     }
@@ -1184,8 +1185,8 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
        i < counter;
        ++i)
     {
-      this->deactivate_object_i (ids[i],
-                                 ACE_TRY_ENV);
+      this->deactivate_map_entry (map_entries[i],
+                                  ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
@@ -1215,6 +1216,15 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
       ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
+  this->deactivate_map_entry (active_object_map_entry,
+                              ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+TAO_POA::deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
   // Decrement the reference count.
   CORBA::UShort new_count = --active_object_map_entry->reference_count_;
 
@@ -4397,8 +4407,8 @@ TAO_POA::imr_notify_shutdown (void)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array<PortableServer::ObjectId>;
-template class ACE_Array_Base<PortableServer::ObjectId>;
+
+template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
 
 //template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
@@ -4420,8 +4430,7 @@ template class ACE_Node<TAO_POA *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Array<PortableServer::ObjectId>
-#pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
+#pragma instantiate ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>
 
 //#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>
