@@ -2,19 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    TypeCode_Field.h
+ *  @file    TypeCode_Value_Field.h
  *
  *  $Id$
  *
- *  Header file for @c TAO::TypeCode::Field type.
+ *  Header file for @c TAO::TypeCode::Value_Field type.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
- *  @author Carlos O'Ryan
  */
 //=============================================================================
 
-#ifndef TAO_TYPECODE_FIELD_H
-#define TAO_TYPECODE_FIELD_H
+#ifndef TAO_TYPECODE_VALUE_FIELD_H
+#define TAO_TYPECODE_VALUE_FIELD_H
 
 #include /**/ "ace/pre.h"
 
@@ -36,12 +35,12 @@ namespace TAO
   namespace TypeCode
   {
     /**
-     * @struct Field
+     * @struct Value_Field
      *
-     * @brief Name/value pair for fields of an OMG IDL defined
-     *        structure or exception.
+     * @brief Name/type/visibility tuple fields of an OMG IDL defined
+     *        @c valuetype or @c eventtype.
      *
-     * A @c Field contains the corresponding name and pointer to the
+     * A @c Value_Field contains the corresponding name and pointer to the
      * @c CORBA::TypeCode for a given OMG IDL defined type.  For
      * example, the fields in following OMG IDL structure:
      *
@@ -54,10 +53,10 @@ namespace TAO
      * \endcode
      *
      * would be represented using the following statically instantiated
-     * @c TAO::TypeCode::Field array:
+     * @c TAO::TypeCode::Value_Field array:
      *
      * \code
-     *   TAO::TypeCode::Field<char const *> _tao_fields_Foo[] =
+     *   TAO::TypeCode::Value_Field<char const *> _tao_fields_Foo[] =
      *     {
      *       { "the_number", &CORBA::_tc_long },
      *       { "the_string", &CORBA::_tc_string },
@@ -66,16 +65,16 @@ namespace TAO
      *
      * The template parameter @a STRING_TYPE is either @c char
      * @c const @c * or @c CORBA::String_var.  The latter is only used
-     * when creating @c CORBA::tk_struct or @c CORBA::tk_except
+     * when creating @c CORBA::tk_value or @c CORBA::tk_event
      * @c TypeCodes dynamically, such as through the TypeCodeFactory.
      */
     template <typename STRING_TYPE>
-    struct Field
+    struct Value_Field
     {
       /// Destructor.
-      ~Field (void);
+      ~Value_Field (void);
 
-      /// Return the name of the @c Field.
+      /// Return the name of the @c Value_Field.
       /**
        * @note This method unfortunately exists so that we can
        *       retrieve the underlying string when the @a STRING_TYPE
@@ -93,14 +92,17 @@ namespace TAO
       /**
        * A pointer to the @c CORBA::TypeCode_ptr rather than the
        * @c CORBA::TypeCode_ptr itself is stored since that address is
-       * well-defined.  We may not know the value of the @c
-       * CORBA::TypeCode_ptr when creating this @c Field statically at
-       * compile-time, hence the indirection.
+       * well-defined.  We may not know the value of the
+       * @c CORBA::TypeCode_ptr when creating this @c Value_Field
+       * statically at compile-time, hence the indirection.
        *
        * @note This @c TypeCode is released upon destruction of this
-       *       @c Field.
+       *       @c Value_Field.
        */
       CORBA::TypeCode_ptr * type;
+
+      /// The visibility of the field.
+      CORBA::Visibility visibility;
 
     };
 
@@ -108,22 +110,22 @@ namespace TAO
 }  // End namespace TAO
 
 // If we didn't have to worry about better conversion sequence
-// warnings, and drop the Field<>::get_name() method, we could drop
-// the below #include directives and remove the files contained within
-// them altogether.
+// warnings, and drop the Value_Field<>::get_name() method, we could
+// drop the below #include directives and remove the files contained
+// within them altogether.
 
 #ifdef __ACE_INLINE__
-# include "tao/TypeCode_Field.inl"
+# include "tao/TypeCode_Value_Field.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/TypeCode_Field.cpp"
+# include "tao/TypeCode_Value_Field.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Field.cpp")
+# pragma implementation ("TypeCode_Value_Field.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_TYPECODE_FIELD_H */
+#endif /* TAO_TYPECODE_VALUE_FIELD_H */

@@ -2,6 +2,9 @@
 //
 // $Id$
 
+#include "TypeCode_Struct_Field.h"
+
+
 template <typename StringType,
           class FieldArrayType,
           CORBA::TCKind Kind,

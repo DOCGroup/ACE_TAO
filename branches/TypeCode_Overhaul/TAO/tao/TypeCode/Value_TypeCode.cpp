@@ -4,7 +4,7 @@
 #define TAO_VALUE_TYPECODE_CPP
 
 #include "tao/Value_TypeCode.h"
-#include "tao/TypeCode_Field.h"
+#include "tao/TypeCode_Value_Field.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Value_TypeCode.inl"
@@ -17,9 +17,9 @@ template <typename StringType,
           class RefCountPolicy>
 bool
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::tao_marshal (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::tao_marshal (
   TAO_OutputCDR & cdr) const
 {
   // A tk_value TypeCode has a "complex" parameter list type (see
@@ -39,12 +39,12 @@ TAO::TypeCode::Value<StringType,
   if (!success)
     return false;
 
-  Field<StringType> const * const begin = this->fields ();
-  Field<StringType> const * const end   = begin + this->nfields_;
+  Value_Field<StringType> const * const begin = this->fields ();
+  Value_Field<StringType> const * const end   = begin + this->nfields_;
 
-  for (Field<StringType> const * i = begin; i != end; ++i)
+  for (Value_Field<StringType> const * i = begin; i != end; ++i)
     {
-      Field<StringType> const & field = *i;
+      Value_Field<StringType> const & field = *i;
 
       if (!(cdr << field.get_name ())
           || !(cdr << *(field.type))
@@ -61,9 +61,9 @@ template <typename StringType,
           class RefCountPolicy>
 void
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::tao_duplicate (void)
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
@@ -74,9 +74,9 @@ template <typename StringType,
           class RefCountPolicy>
 void
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::tao_release (void)
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }
@@ -87,9 +87,9 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::equal_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
@@ -122,7 +122,7 @@ TAO::TypeCode::Value<StringType,
 
   for (CORBA::ULong i = 0; i < this->nfields_; ++i)
     {
-      Field<StringType> const & lhs_field = this->fields_[i];
+      Value_Field<StringType> const & lhs_field = this->fields_[i];
 
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
       CORBA::Visibility const rhs_visibility =
@@ -165,9 +165,9 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::equivalent_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
 {
@@ -220,7 +220,7 @@ TAO::TypeCode::Value<StringType,
 
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
-          Field<StringType> const & lhs_field = this->fields_[i];
+          Value_Field<StringType> const & lhs_field = this->fields_[i];
 
           CORBA::Visibility const lhs_visibility =
             lhs_field.visibility;
@@ -261,12 +261,12 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::TCKind
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::kind_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return Value_Traits<Kind>::kind;
+  return Kind;
 }
 
 template <typename StringType,
@@ -275,14 +275,14 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::get_compact_typecode_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
-  Field<StringType> * tc_fields = 0;
+  Value_Field<StringType> * tc_fields = 0;
 
-  ACE_Auto_Array_Ptr<Field<StringType> > safe_fields;
+  ACE_Auto_Array_Ptr<Value_Field<StringType> > safe_fields;
 
   if (this->nfields_ > 0)
     {
@@ -290,7 +290,7 @@ TAO::TypeCode::Value<StringType,
       // member names.
 
       ACE_NEW_THROW_EX (tc_fields,
-                        Field<StringType> [this->nfields_],
+                        Value_Field<StringType> [this->nfields_],
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
@@ -343,9 +343,9 @@ template <typename StringType,
           class RefCountPolicy>
 char const *
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::id_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::id_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
@@ -359,9 +359,9 @@ template <typename StringType,
           class RefCountPolicy>
 char const *
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::name_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::name_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
@@ -375,9 +375,9 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::ULong
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::member_count_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::member_count_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->nfields_;
@@ -389,9 +389,9 @@ template <typename StringType,
           class RefCountPolicy>
 char const *
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::member_name_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::member_name_i (
   CORBA::ULong index
   ACE_ENV_ARG_DECL) const
 {
@@ -409,9 +409,9 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::member_type_i (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::member_type_i (
   CORBA::ULong index
   ACE_ENV_ARG_DECL) const
 {
@@ -447,9 +447,9 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::ValueModifier
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::type_modifier (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::type_modifier (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->type_modifier_;
@@ -461,9 +461,9 @@ template <typename StringType,
           class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
-                      FieldArrayType,
-                      Kind,
-                      RefCountPolicy>::concrete_base_type (
+                     FieldArrayType,
+                     Kind,
+                     RefCountPolicy>::concrete_base_type (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return
