@@ -112,7 +112,10 @@ struct ip_mreq
 #define ACE_HAS_IP_MULTICAST
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
 
 #if !defined (m88k)
 // Compiler/platform has <alloca.h>

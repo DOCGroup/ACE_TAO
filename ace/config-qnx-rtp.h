@@ -59,7 +59,10 @@
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#define ACE_HAS_ALLOCA
 #define ACE_HAS_ALLOCA_H
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CLOCK_GETTIME

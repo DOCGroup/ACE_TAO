@@ -26,7 +26,10 @@
    //
 
 // Compiler does this with a builtin - it's not in libc.
-#  define ACE_HAS_ALLOCA
+// Although ACE does have alloca() on this compiler/platform combination, it is
+// disabled by default since it can be dangerous.  Uncomment the following line
+// if you ACE to use it.
+//#  define ACE_HAS_ALLOCA
 
 // Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
