@@ -24,34 +24,26 @@ LFLAGS = \
   -L$(CORE_BINDIR)
 
 LIBFILES = \
-   TAO_FTORB$(LIB_DECORATOR).lib \
-   TAO_IORManip$(LIB_DECORATOR).lib \
-   TAO_PortableServer$(LIB_DECORATOR).lib \
-   TAO_IORInterceptor$(LIB_DECORATOR).lib \
-   TAO_Valuetype$(LIB_DECORATOR).lib \
-   TAO_ObjRefTemplate$(LIB_DECORATOR).lib \
-   TAO$(LIB_DECORATOR).lib \
-   ACE$(LIB_DECORATOR).lib \
+   $(ACE_LIB) \
+   $(TAO_LIB) \
+   $(TAO_PORTABLESERVER_LIB) \
+   $(TAO_IORMANIP_LIB) \
+   $(TAO_SVC_UTILS_LIB) \
+   $(TAO_NAMING_LIB) \
+   $(TAO_FTORB_LIB)
 
 
 IDLFILES = \
    $(IDLDIR)\test.idl
 
-!ifdef STATIC
-LIB_FLAGS = -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
-DLL_FLAGS =
-!else
-LIB_FLAGS =
-DLL_FLAGS =
-!endif
-
 CFLAGS = \
-   -I..\..\..\..\orbsvcs \
-   -I..\..\..\.. \
-   -I..\..\..\..\tao \
-   -I..\..\..\..\.. \
-   $(LIB_FLAGS) \
-   $(DLL_FLAGS)
+   $(ACE_CFLAGS) \
+   $(TAO_CFLAGS) \
+   $(TAO_PORTABLESERVER_CFLAGS) \
+   $(TAO_IORMANIP_CFLAGS) \
+   $(TAO_SVC_UTILS_CFLAGS)	\
+   $(TAO_NAMING_CFLAGS) \
+   $(TAO_FTORB_CFLAGS)
 
 CPPDIR = .
 
