@@ -7,9 +7,13 @@
 
 ACE_RCSID(Notify, Notify_MT_Worker_Task, "$Id$")
 
-TAO_Notify_MT_Worker_Task::TAO_Notify_MT_Worker_Task (void)
+TAO_Notify_MT_Worker_Task::TAO_Notify_MT_Worker_Task (int n_threads, long flags, int force_active, long priority)
   :buffering_strategy_ (0),
-   queue_length_ (0)
+   queue_length_ (0),
+   n_threads_ (n_threads),
+   flags_ (flags),
+   force_active_ (force_active),
+   priority_ (priority)
 {
 }
 
@@ -22,10 +26,11 @@ int
 TAO_Notify_MT_Worker_Task::init_task (TAO_Notify_AdminProperties* const admin_properties)
 {
   // Store the admin properties...
+
   this->queue_length_ = admin_properties->queue_length ();
 
   // Make us an Active Object.
-  if (this->activate (THR_NEW_LWP) == -1)
+  if (this->activate (flags_, n_threads_, force_active_, priority_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("activate failed")), -1);
@@ -36,6 +41,8 @@ TAO_Notify_MT_Worker_Task::init_task (TAO_Notify_AdminProperties* const admin_pr
 
   this->buffering_strategy_->max_queue_length (admin_properties->max_queue_length ());
 
+  // temporary
+  this->buffering_strategy_->order_policy (CosNotification::PriorityOrder);
   return 0;
 }
 
@@ -50,7 +57,8 @@ TAO_Notify_MT_Worker_Task::shutdown (CORBA::Environment& /*ACE_TRY_ENV*/)
 int
 TAO_Notify_MT_Worker_Task::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) close of worker\n")));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) close of worker\n")));
 
   TAO_Notify_Shutdown_Command * mb = new TAO_Notify_Shutdown_Command ();
 
@@ -91,6 +99,7 @@ TAO_Notify_MT_Worker_Task::svc (void)
           // Decrement the global event count.
           (*this->queue_length_)--;
 
+          ACE_DEBUG ((LM_DEBUG, "removing from queue\n"));
           TAO_Notify_Command *command =
             ACE_dynamic_cast(TAO_Notify_Command*, mb);
 

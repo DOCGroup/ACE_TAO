@@ -44,7 +44,10 @@ class TAO_Notify_Export TAO_Notify_MT_Worker_Task : public TAO_Notify_Worker_Tas
   //
 public:
   // = Initialization and termination code
-  TAO_Notify_MT_Worker_Task (void);
+  TAO_Notify_MT_Worker_Task (int n_threads = 1,
+                             long flags = THR_NEW_LWP | THR_JOINABLE,
+                             int force_active = 0,
+                             long priority = ACE_DEFAULT_THREAD_PRIORITY);
   // Constructor.
 
   ~TAO_Notify_MT_Worker_Task ();
@@ -72,6 +75,12 @@ public:
   TAO_Notify_Property_Long* queue_length_;
   // We need to decrement the event_count_ everytime we dequeue a command
   // object.
+
+  // = Parameters to activate
+  int n_threads_;
+  long flags_;
+  int force_active_;
+  long priority_;
 };
 
 //****************************************************************************************

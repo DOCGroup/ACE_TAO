@@ -59,6 +59,8 @@ class TAO_Notify_Export TAO_Notify_EMO_Factory : public ACE_Service_Object
   virtual TAO_Notify_Worker_Task* create_lookup_task (CORBA::Environment &ACE_TRY_ENV)= 0;
   virtual TAO_Notify_Worker_Task* create_listener_eval_task (CORBA::Environment &ACE_TRY_ENV)= 0;
   virtual TAO_Notify_Worker_Task* create_dispatching_task (CORBA::Environment &ACE_TRY_ENV)= 0;
+
+  virtual void print_values (void) = 0;
 };
 
 #include "ace/post.h"

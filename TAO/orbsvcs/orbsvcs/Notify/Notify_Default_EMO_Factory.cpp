@@ -24,7 +24,11 @@ TAO_Notify_Default_EMO_Factory::TAO_Notify_Default_EMO_Factory (void)
   : mt_dispatching_ (0),
     mt_source_eval_ (0),
     mt_lookup_ (0),
-    mt_listener_eval_ (0)
+    mt_listener_eval_ (0),
+    dispatching_threads_ (1),
+    source_threads_ (1),
+    lookup_threads_ (1),
+    listener_threads_ (1)
 {
 }
 
@@ -36,9 +40,10 @@ int
 TAO_Notify_Default_EMO_Factory::init (int argc, char* argv[])
 {
   ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Default_EMO_Factory::init\n"));
+
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-
+  char *current_arg = 0;
   while (arg_shifter.is_anything_left ())
     {
       char *arg = arg_shifter.get_current ();
@@ -48,19 +53,39 @@ TAO_Notify_Default_EMO_Factory::init (int argc, char* argv[])
           this->mt_dispatching_ = 1;
           arg_shifter.consume_arg ();
         }
-      if (ACE_OS::strcasecmp (arg, "MTSourceEval") == 0)
+      else if ((current_arg = arg_shifter.get_the_parameter ("-DispatchingThreads")))
+        {
+          this->dispatching_threads_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcasecmp (arg, "-MTSourceEval") == 0)
         {
           this->mt_source_eval_ = 1;
           arg_shifter.consume_arg ();
         }
-      if (ACE_OS::strcasecmp (arg, "-MTLookup") == 0)
+      else if ((current_arg = arg_shifter.get_the_parameter ("-SourceThreads")))
+        {
+          this->source_threads_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcasecmp (arg, "-MTLookup") == 0)
         {
           this->mt_lookup_ = 1;
           arg_shifter.consume_arg ();
         }
-      if (ACE_OS::strcasecmp (arg, "-MTListenerEval") == 0)
+      else if ((current_arg = arg_shifter.get_the_parameter ("-LookupThreads")))
+        {
+          this->lookup_threads_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
+      else if (ACE_OS::strcasecmp (arg, "-MTListenerEval") == 0)
         {
           this->mt_listener_eval_ = 1;
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter ("-ListenerThreads")))
+        {
+          this->listener_threads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else
@@ -116,7 +141,8 @@ TAO_Notify_Default_EMO_Factory::create_source_eval_task (CORBA::Environment &ACE
   TAO_Notify_Worker_Task* task;
 
   if (this->mt_source_eval_ == 1)
-    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (this->source_threads_),
+                      CORBA::NO_MEMORY ());
   else
     ACE_NEW_THROW_EX (task,
                       TAO_Notify_Worker_Task (),
@@ -131,7 +157,8 @@ TAO_Notify_Default_EMO_Factory::create_lookup_task (CORBA::Environment &ACE_TRY_
   TAO_Notify_Worker_Task* task;
 
   if (this->mt_lookup_ == 1)
-    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (this->lookup_threads_),
+                      CORBA::NO_MEMORY ());
   else
     ACE_NEW_THROW_EX (task,
                       TAO_Notify_Worker_Task (),
@@ -146,7 +173,8 @@ TAO_Notify_Default_EMO_Factory::create_listener_eval_task (CORBA::Environment &A
   TAO_Notify_Worker_Task* task;
 
   if (this->mt_listener_eval_ == 1)
-    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (this->listener_threads_),
+                      CORBA::NO_MEMORY ());
   else
     ACE_NEW_THROW_EX (task,
                       TAO_Notify_Worker_Task (),
@@ -159,13 +187,49 @@ TAO_Notify_Default_EMO_Factory::create_dispatching_task (CORBA::Environment &ACE
 {
   TAO_Notify_Worker_Task* task;
 
+  int dispatching_threads_flags =
+    THR_SCHED_DEFAULT|THR_BOUND|THR_NEW_LWP;
+
+  int dispatching_threads_priority =
+    ACE_THR_PRI_OTHER_MIN;
+    //    ACE_THR_PRI_OTHER_DEF;
+  // ACE_THR_PRI_OTHER_DEF;
+
   if (this->mt_dispatching_ == 1)
-    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (), CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (task, TAO_Notify_MT_Worker_Task (this->dispatching_threads_,
+                                                       dispatching_threads_flags,
+                                                       0,
+                                                       dispatching_threads_priority),
+                      CORBA::NO_MEMORY ());
   else
     ACE_NEW_THROW_EX (task,
                       TAO_Notify_Worker_Task (),
                       CORBA::NO_MEMORY ());
   return task;
+}
+
+void
+TAO_Notify_Default_EMO_Factory::print_values (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "EMO Factory = "
+              "mt_dispatching %d "
+              "mt_source_eval %d "
+              " mt_lookup %d "
+              " mt_listener_eval %d"
+              " dispatching_threads %d "
+              " source_threads %d "
+              " lookup_threads %d "
+              " listener_threads_ %d  \n",
+              mt_dispatching_,
+              mt_source_eval_,
+              mt_lookup_,
+              mt_listener_eval_,
+              dispatching_threads_,
+              source_threads_,
+              lookup_threads_,
+              listener_threads_
+              ));
 }
 
 // ****************************************************************

@@ -57,6 +57,9 @@ TAO_Notify_Factory::init (CORBA::Environment &ACE_TRY_ENV)
                         TAO_Notify_Default_EMO_Factory (),
                         CORBA::NO_MEMORY ());
     }
+  else
+    ACE_DEBUG ((LM_DEBUG, "Loaded EMO factory\n"));
+  emo_factory_->print_values ();
 }
 
 void
