@@ -28,14 +28,14 @@
  * @class ACE_Service_Type_Impl
  *
  * @brief The abstract base class of the hierarchy that defines the
- * contents of the <ACE_Service_Repository>.  The subclasses of
- * this class allow the configuration of <ACE_Service_Objects>,
- * <ACE_Modules>, and <ACE_Streams>.
+ * contents of the ACE_Service_Repository.  The subclasses of
+ * this class allow the configuration of ACE_Service_Objects,
+ * ACE_Modules, and ACE_Streams.
  *
  * This class provides the root of the implementation hierarchy
  * of the "Bridge" pattern.  It maintains a pointer to the
  * appropriate type of service implementation, i.e.,
- * <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
+ * ACE_Service_Object, ACE_Module, or ACE_Stream.
  */
 class ACE_Export ACE_Service_Type_Impl
 {
@@ -74,7 +74,7 @@ protected:
   const ACE_TCHAR *name_;
 
   /// Pointer to object that implements the service.  This actually
-  /// points to an <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
+  /// points to an ACE_Service_Object, ACE_Module, or ACE_Stream.
   void *obj_;
 
   /// Destroy function to deallocate obj_.

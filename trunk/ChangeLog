@@ -1,3 +1,10 @@
+Fri Jul 18 17:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_IO.h:
+        * ace/Local_Tokens.h:
+        * ace/Service_Types.h:
+          Fixed doxygen warnings.
+
 Fri Jul 18 10:36:51 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * THANKS: Added Dieter Knüppel <dknueppel@datus.com> to the
