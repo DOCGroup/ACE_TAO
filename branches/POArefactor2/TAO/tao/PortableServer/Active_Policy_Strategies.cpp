@@ -11,7 +11,7 @@
 #include "ThreadPolicyC.h"
 #include "ServantRetentionPolicyC.h"
 
-#include "Thread_Strategy.h"
+#include "ThreadPolicyStrategy.h"
 #include "Request_Processing_Strategy.h"
 #include "Id_Assignment_Strategy.h"
 #include "Lifespan_Strategy.h"

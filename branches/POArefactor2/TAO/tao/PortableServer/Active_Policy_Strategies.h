@@ -14,12 +14,13 @@
 #define TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
 #include /**/ "ace/pre.h"
 
-#include "Thread_Strategy.h"
-#include "ace/CORBA_macros.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/CORBA_macros.h"
 
 class TAO_POA;
 
