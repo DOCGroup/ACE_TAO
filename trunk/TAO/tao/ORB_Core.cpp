@@ -1307,17 +1307,19 @@ TAO_ORB_Core::fini (void)
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
   // used here since the reactor should invoke each handle's
   // corresponding ACE_Event_Handler::handle_close() method to ensure
-  // that the connection is shutdown gracefully.
-
-  // @@ Will the Server_Strategy_Factory still be around by the time
-  //    this method is invoked?  Specifically, is it possible that
-  //    the Server_Strategy_Factory will already have been unloaded?
-  if (this->server_factory ()->activate_server_connections () == 0)
+  // that the connection is shutdown gracefully prior to destroying
+  // the ORB Core.
+  if (this->server_factory_ != 0
+      && this->server_factory_->activate_server_connections () == 0)
     (void) this->reactor ()->remove_handler (
                                 this->handle_set_,
                                 ACE_Event_Handler::ALL_EVENTS_MASK);
 
-  TAO_Internal::close_services ();
+  // Pass reactor back to the resource factory.
+  if (this->resource_factory_ != 0)
+    this->resource_factory_->reclaim_reactor (this->reactor_);
+
+  (void) TAO_Internal::close_services ();
 
   // @@ This is not needed since the default resource factory
   //    is statically added to the service configurator, fredk
