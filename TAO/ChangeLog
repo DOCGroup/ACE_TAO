@@ -14,7 +14,7 @@ Tue Oct 28 12:39:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  passing the pointer to another object.
 
 Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
-                          Jeff Parssons  <parsons@dre.vanderbilt.edu>
+                          Jeff Parsons  <parsons@dre.vanderbilt.edu>
 
 	This checkin is aimed at revamping the invocation code path
 	including the generated code. The design is outlined in the
