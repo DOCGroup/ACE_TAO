@@ -1,5 +1,7 @@
 Fri May 01 11:52:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.h: Forgot to redefine ASYS_INLINE after #undef it.
+
 	* ace/OS.i (last_error): On Win32, this should also update errno
  	  after calling SetLastError ().  Thanks to Steve for pointing
  	  this out.
