@@ -31,10 +31,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  // Hack to allow support of systems that don't have iostreams.
-# define ostream FILE *
+# if !defined (ACE_OSTREAM_TYPE)
+#   define ACE_OSTREAM_TYPE FILE *
+# endif /* ! ACE_OSTREAM_TYPE */
 
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+# if !defined (ACE_OSTREAM_TYPE)
+#   define ACE_OSTREAM_TYPE ostream
+# endif /* ! ACE_OSTREAM_TYPE */
 
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY)  && \
       (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
