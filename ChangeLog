@@ -1,3 +1,9 @@
+Tue Apr 15 17:53:29 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/parser/parser/Makefile:
+          When building shared library set the ACEXML_PARSER_BUILD_DLL
+          define. This fixes linker errors in the Kylix build.
+
 Tue Apr 15 17:33:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * acconfig.h:
