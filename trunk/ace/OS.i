@@ -11102,3 +11102,27 @@ ACE_OS::strenvdup (const char *str)
     return ACE_OS::strdup (str);
 #endif /* ACE_HAS_WINCE */
 }
+
+ACE_INLINE
+ACE_OS_WString::~ACE_OS_WString (void)
+{
+  delete[] this->rep_;
+}
+
+ACE_INLINE char *
+ACE_OS_WString::char_rep (void)
+{
+  return this->rep_;
+}
+
+ACE_INLINE
+ACE_OS_CString::~ACE_OS_CString (void)
+{
+  delete[] this->rep_;
+}
+
+ACE_INLINE ACE_USHORT16 *
+ACE_OS_CString::wchar_rep (void)
+{
+  return this->rep_;
+}
