@@ -8,6 +8,9 @@ Wed Mar 18 07:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/sequence{,_T}.cpp: removed some more "meaningless" const
           modifiers from casts.
 
+        * tao/typecode.cpp (private_equal): wrapped a break with
+          ACE_NOTREACHED.
+
 Wed Mar 18 02:08:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/client.cpp (~Param_Test_Client): Removed
