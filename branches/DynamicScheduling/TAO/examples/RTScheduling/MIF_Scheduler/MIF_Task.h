@@ -10,6 +10,9 @@ class MIF_Task : public Thread_Task
   MIF_Task (int importance,
 	    int start_time,
 	    int load,
+	    int iter,
+	    int dist,
+	    char *job_name,
 	    DT_Creator *dt_creator);
   
   virtual int perform_task (void);

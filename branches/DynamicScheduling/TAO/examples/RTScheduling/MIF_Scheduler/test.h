@@ -13,7 +13,7 @@
 
 class Task_Stats;
 
-class DT_Test :public ACE_Task <ACE_SYNCH>
+class DT_Test //:public ACE_Task <ACE_SYNCH>
 {
  public:
   
@@ -30,9 +30,13 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   MIF_Scheduler* scheduler (void);
 
   int activate_task (void);
-  protected:
-  /// task svc
-  virtual int svc (void);
+
+  RTScheduling::Current_ptr current (void); 
+
+/*   protected: */
+/*   /// task svc */
+/*   virtual int svc (void); */
+
 
  private:
   /// = Policies

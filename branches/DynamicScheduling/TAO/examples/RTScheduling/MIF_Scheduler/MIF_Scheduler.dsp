@@ -65,7 +65,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /I "../../../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "MIF_DT_CREATOR_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /I "../../../../" /I "../../../" /I "../../../tao/RTScheduling" /I "../../../tao/RTCORBA" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "MIF_DT_CREATOR_BUILD_DLL" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -73,7 +73,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib aced.lib taod.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib TAO_RTSchedulerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"$(ACE_ROOT)\ace" /libpath:"../../../tao" /libpath:"../../../tao/RTCORBA" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/RTScheduling"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib aced.lib taod.lib TAO_RTCORBAd.lib TAO_PortableServerd.lib TAO_RTSchedulerd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"$(ACE_ROOT)\ace" /libpath:"../../../tao" /libpath:"../../../tao/RTCORBA" /libpath:"../../../tao/PortableServer" /libpath:"../../../tao/RTScheduling" /libpath:"../../../orbsvcs/orbsvcs/"
 
 !ENDIF 
 
@@ -83,10 +83,22 @@ LINK32=link.exe
 # Name "MIF_Scheduler - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat"
+# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
 SOURCE=..\DT_Creator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\Job_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\JobC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\JobS.cpp
 # End Source File
 # Begin Source File
 
@@ -98,11 +110,27 @@ SOURCE=.\MIF_Scheduler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MIF_SchedulingC.cpp
+SOURCE=..\MIF_SchedulingC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\MIF_Task.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\POA_Holder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\Synch_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\SynchC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\SynchS.cpp
 # End Source File
 # Begin Source File
 
@@ -126,7 +154,23 @@ SOURCE=..\DT_Creator.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\Job_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\JobC.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\JobS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MIF_DT_Creator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\mif_dt_creator_export.h
 # End Source File
 # Begin Source File
 
@@ -134,11 +178,27 @@ SOURCE=.\MIF_Scheduler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MIF_SchedulingC.h
+SOURCE=..\MIF_SchedulingC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\MIF_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\POA_Holder.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\Synch_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\SynchC.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\SynchS.h
 # End Source File
 # Begin Source File
 
@@ -164,56 +224,6 @@ SOURCE=..\Thread_Task.h
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-# End Group
-# Begin Group "IDL Files"
-
-# PROP Default_Filter "idl;pidl"
-# Begin Source File
-
-SOURCE=.\MIF_Scheduling.pidl
-
-!IF  "$(CFG)" == "MIF_Scheduler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "MIF_Scheduler - Win32 Debug"
-
-# Begin Custom Build
-InputPath=.\MIF_Scheduling.pidl
-InputName=MIF_Scheduling
-
-BuildCmds= \
-	..\..\..\..\bin\tao_idl -Sc -Ge 1 $(InputName).pidl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
 # End Group
 # End Target
 # End Project
