@@ -228,7 +228,10 @@ public:
   // insert a bounded wide string
 
   void operator<<= (const CORBA_Exception &exception);
-  // insert an exception into the Any
+  // insert an exception into the Any (copying)
+
+  void operator<<= (CORBA_Exception *exception);
+  // insert an exception into the Any (non-copying)
 
   // = Special types.
 

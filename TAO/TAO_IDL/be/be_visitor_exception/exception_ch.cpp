@@ -56,8 +56,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << "class " << idl_global->stub_export_macro ()
                 << " " << node->local_name ()
                 << " : public CORBA::UserException" << be_nl;
-      *os << "{" << be_nl
-                << "public:\n\n";
+      *os << "{" << be_nl << "public:" << be_idt_nl;
 
       // generate code for field members
       if (this->visit_scope (node) == -1)
@@ -116,9 +115,12 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
       *os << be_nl
           << "// = TAO extension" << be_nl
-          << "static CORBA::Exception *_alloc (void);" << be_nl
-          << "virtual CORBA::TypeCode_ptr _type (void) const;" << be_uidt_nl
-          << "}; // exception " << node->name ()
+          << "static CORBA::Exception *_alloc (void);";
+
+      if (!node->is_local () && idl_global->tc_support ())
+        *os << be_nl <<"virtual CORBA::TypeCode_ptr _type (void) const;";
+
+      *os << be_uidt_nl << "}; // exception " << node->name ()
           << "\n" << be_nl;
 
       if (!node->is_local ())

@@ -43,7 +43,7 @@ TAO_NAMESPACE_END
 
 // default constructor
 CORBA_PolicyError::CORBA_PolicyError (void)
-  : CORBA_UserException (::_tc_CORBA_PolicyError)
+  : CORBA_UserException ("IDL:omg.org/CORBA/PolicyError:1.0")
 {
 }
 
@@ -60,7 +60,7 @@ void CORBA_PolicyError::_tao_any_destructor (void *x)
 
 // copy constructor
 CORBA_PolicyError::CORBA_PolicyError (const ::CORBA_PolicyError &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->reason = _tao_excp.reason;
 }
@@ -122,7 +122,7 @@ CORBA::Exception *CORBA_PolicyError::_alloc (void)
 CORBA_PolicyError::CORBA_PolicyError (
   CORBA::PolicyErrorCode _tao_reason
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (_tc_CORBA_PolicyError))
+  : CORBA_UserException  (CORBA::string_dup ("IDL:omg.org/CORBA/PolicyError:1.0"))
 {
     this->reason = _tao_reason;
 }
@@ -145,6 +145,12 @@ static const CORBA::Long _oc_CORBA_PolicyError[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyError (CORBA::tk_except, sizeof (_oc_CORBA_PolicyError), (char *) &_oc_CORBA_PolicyError, 0, sizeof (CORBA_PolicyError));
 CORBA::TypeCode_ptr _tc_CORBA_PolicyError = &_tc_TAO_tc_CORBA_PolicyError;
+
+CORBA::TypeCode_ptr
+CORBA_PolicyError::_type (void) const
+{
+  return _tc_CORBA_PolicyError;
+}
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -244,7 +250,7 @@ void CORBA_InvalidPolicies::_tao_seq_UShort::_tao_any_destructor (void *x)
 
 // default constructor
 CORBA_InvalidPolicies::CORBA_InvalidPolicies (void)
-  : CORBA_UserException (::_tc_CORBA_InvalidPolicies)
+  : CORBA_UserException ("IDL:omg.org/CORBA/InvalidPolicies:1.0")
 {
 }
 
@@ -261,7 +267,7 @@ void CORBA_InvalidPolicies::_tao_any_destructor (void *x)
 
 // copy constructor
 CORBA_InvalidPolicies::CORBA_InvalidPolicies (const ::CORBA_InvalidPolicies &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->indices = _tao_excp.indices;
 }
@@ -323,7 +329,7 @@ CORBA::Exception *CORBA_InvalidPolicies::_alloc (void)
 CORBA_InvalidPolicies::CORBA_InvalidPolicies (
   const CORBA_InvalidPolicies::_tao_seq_UShort & _tao_indices
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (_tc_CORBA_InvalidPolicies))
+  : CORBA_UserException  (CORBA::string_dup ("IDL:omg.org/CORBA/InvalidPolicies:1.0"))
 {
     this->indices = _tao_indices;
 }
@@ -346,6 +352,11 @@ static const CORBA::Long _oc_CORBA_InvalidPolicies[] =
 static CORBA::TypeCode _tc_TAO_tc_CORBA_InvalidPolicies (CORBA::tk_except, sizeof (_oc_CORBA_InvalidPolicies), (char *) &_oc_CORBA_InvalidPolicies, 0, sizeof (CORBA_InvalidPolicies));
 CORBA::TypeCode_ptr _tc_CORBA_InvalidPolicies = &_tc_TAO_tc_CORBA_InvalidPolicies;
 
+CORBA::TypeCode_ptr
+CORBA_InvalidPolicies::_type (void) const
+{
+  return _tc_CORBA_InvalidPolicies;
+}
 
 // default constructor
 CORBA_Policy::CORBA_Policy (void)

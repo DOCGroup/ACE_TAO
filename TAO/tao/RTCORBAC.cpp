@@ -1362,9 +1362,9 @@ RTCORBA::RTORB::InvalidThreadpool::~InvalidThreadpool (void)
 
 // copy constructor
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (const ::RTCORBA::RTORB::InvalidThreadpool &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 RTCORBA::RTORB::InvalidThreadpool&

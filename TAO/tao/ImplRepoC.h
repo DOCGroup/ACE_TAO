@@ -975,6 +975,7 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+    virtual CORBA::TypeCode_ptr _type (void) const;
 
   }; // exception ImplementationRepository::Administration::AlreadyRegistered
 
@@ -1016,6 +1017,7 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+    virtual CORBA::TypeCode_ptr _type (void) const;
 
   }; // exception ImplementationRepository::Administration::CannotActivate
 
@@ -1052,6 +1054,7 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+    virtual CORBA::TypeCode_ptr _type (void) const;
 
   }; // exception ImplementationRepository::Administration::NotFound
 
