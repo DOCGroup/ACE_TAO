@@ -1,3 +1,12 @@
+Sun Jan  2 13:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Thread_Manager_Test.cpp:
+          Fixed compile errors with VxWorks and ACE_HAS_PTHREADS
+
+        * examples/Misc/test_trace.cpp:
+          Replaced variable with name _ by trace, this fixes compile warning
+          with VxWorks.
+
 Sun Jan  2 13:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Conn_Test.cpp:
