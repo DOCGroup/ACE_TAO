@@ -1,3 +1,19 @@
+Thu May 22 10:38:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ObjectKey_Table.cpp (ObjectKey_Table): 
+	* tao/ObjectKey_Table.h: The hash value that was used as an key
+	  did not scale. We got collissions which broke down the whole
+	  model. Instead of using the hash value as the key, we now use
+	  the ObjectKey itself as the key. This turns out to be more
+	  efficient than the previous scheme and avoid collisions. 
+
+	  The other problem that came up because of the above change, is
+	  the requirement of a operator < for the ObjectKey. This was
+	  solved by the addition of a class TAO::Less_Than_ObjectKey which
+	  acts as a comparative operator. Ideally this should have been a
+	  template specialization of the parametric class ACE_Less_Than<>,
+	  but this wouldnt work so easily without breaking builds. 
+
 Wed May 21 19:57:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Acceptor.cpp (open_i): Changed to use the
