@@ -7,6 +7,7 @@
  *
  */
 #include "ORB_Task.h"
+#include "tao/Environment.h"
 
 ACE_RCSID(Bug_1270_Regression, ORB_Task, "$Id$")
 

@@ -1,3 +1,24 @@
+Thu Jan  2 00:15:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Regression/ORB_Task.cpp:
+	* tests/Bug_1020_Regression/client.cpp:
+	* tests/Bug_1270_Regression/ORB_Task.cpp:
+	* tests/Bug_1270_Regression/client.cpp:
+	* tests/Bug_1361_Regression/ORB_Task.cpp:
+	* tests/Bug_1361_Regression/client.cpp:
+	* tests/Nested_Upcall_Crash/Client_Peer.cpp:
+	* tests/Nested_Upcall_Crash/client.cpp:
+	* tests/Nested_Upcall_Crash/server.cpp:
+	* tests/Server_Connection_Purging/client.cpp: Added missing
+	  includes to keep the compilation on AIX happy. Missing header
+	  files were tao/Environment.h and ace/Reactor.h. 
+
+	* tao/Utils/Servant_Var.inl:
+	* tao/Utils/Servant_Var.h: #included ace/CORBA_Macros.h and
+	  tao/Environment.h to keep the AIX compilers happy. 
+	  
+	  Thanks to Jon Wackley for donating these patches. 
+
 Tue Dec 31 23:53:17 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/include/idl_global.h: Added missing include to get it

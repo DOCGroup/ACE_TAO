@@ -9,6 +9,7 @@
 #include "Client_Peer.h"
 #include "Clock_Ticks.h"
 #include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID(Nested_Upcall_Crash, Client_Peer, "$Id$")
 
