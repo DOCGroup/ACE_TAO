@@ -215,10 +215,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -252,9 +255,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -314,6 +314,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -473,10 +474,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -510,9 +514,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -572,6 +573,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -731,10 +733,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -768,9 +773,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -830,6 +832,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -989,10 +992,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -1026,9 +1032,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1088,6 +1091,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1247,10 +1251,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -1284,9 +1291,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1346,6 +1350,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1484,6 +1489,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1544,9 +1552,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1606,6 +1611,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1775,10 +1781,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -1812,9 +1821,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1874,6 +1880,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -2016,6 +2023,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2076,9 +2086,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2138,6 +2145,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -2310,10 +2318,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -2347,9 +2358,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2409,6 +2417,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -2568,10 +2577,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -2605,9 +2617,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2667,6 +2676,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -2805,6 +2815,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2865,9 +2878,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2927,6 +2937,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -3095,10 +3106,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -3132,9 +3146,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -3194,6 +3205,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -3336,6 +3348,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -3396,9 +3411,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -3458,6 +3470,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -3630,10 +3643,13 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/Services.i \
- $(TAO_ROOT)/tao/IORManipulation.h \
+ $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Services.i \
+ $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -3667,9 +3683,6 @@ realclean: clean
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Server_Request.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -3729,6 +3742,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
