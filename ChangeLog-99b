@@ -1,3 +1,10 @@
+Thu Aug  5 13:03:28 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (shared_free): Looks like ACE_reinterpret_cast
+	  isn't the right thing to do...  Let's just use good ol'
+ 	  fashioned C-style casts instead.  Thanks to Bala for reporting
+ 	  this.
+
 Thu Aug 05 12:05:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: moved minimum_corba
