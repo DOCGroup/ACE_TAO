@@ -1,3 +1,16 @@
+Thu May 20 21:19:44 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i: Add a method to get the byte ordering flag so
+          that serialization of UTF-16 data will be able to do the right
+          thing WRT byte ordering. This is necessary since UTF-16 byte
+          ordering (as required by CORBA) is independent of the CDR Stream
+          byte order.
+
+        * ace/Codeset_Registry.h:
+        * ace/Codeset_Symbols.h: Codeset_Symbols is a collection of
+          #defines for all the standard codeset id values.
+
 Thu May 20 18:23:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/SOCK_Dgram_Bcast_Test.cpp: When sending a datagram, only send
@@ -33,7 +46,7 @@ Wed May 19 12:14:21 2004  Steve Huston  <shuston@riverace.com>
 
 Wed May 19 08:57:24 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_Thread.inl: Fixed the ACE_OS::thr_self() call so that 
+	* ace/OS_NS_Thread.inl: Fixed the ACE_OS::thr_self() call so that
 	  it doesn't use the ACE_OSCALL_RETURN macro, which compares the
  	  return value of pthread_self() with -1 to see if the function
  	  encountered an error.  However, pthread_t may be an opaque value
