@@ -1,3 +1,10 @@
+Mon Apr 28 19:39:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Added the root README file to provide some instructions
+	  on how to play with CIAO.  Thanks to Diego Sevilla Ruiz
+	  <dsevilla@ditec.um.es> for motivating me to update the old
+	  README file and add it into the repo.
+
 Mon Apr 28 16:49:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/ComponentServer/ComponentServer.cpp (main): Fixed a gcc
