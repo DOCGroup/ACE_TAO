@@ -1,4 +1,8 @@
-//$Id$
+// $Id$
+
+#ifndef ID_POOL_T_C
+#define ID_POOL_T_C
+
 #include "ID_Pool_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -16,3 +20,5 @@ ID_Pool<ID_TYPE>::get (void)
 {
    return ++id_;
 }
+
+#endif /* ID_POOL_T_C */
