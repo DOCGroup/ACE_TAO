@@ -58,7 +58,6 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
       for (size_t i = 0; i < this->top_; i++)
 	this->stack_[i] = s.stack_[i];
     }
-  return *this;
 }
 
 template<class T>
@@ -107,7 +106,6 @@ ACE_Fixed_Stack<T, SIZE>::operator= (const ACE_Fixed_Stack<T, SIZE> &s)
       for (size_t i = 0; i < this->top_; i++)
 	this->stack_[i] = s.stack_[i];      
     }
-  return *this;
 }
 
 template<class T, size_t SIZE>
@@ -193,7 +191,6 @@ ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
       this->delete_all_nodes ();
       this->copy_all_nodes (s);
     }
-  return *this;
 }
 
 template<class T>
@@ -326,7 +323,6 @@ ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
-  return *this;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
@@ -643,7 +639,6 @@ ACE_Fixed_Set<T, SIZE>::operator= (const ACE_Fixed_Set<T, SIZE> &fs)
       for (size_t i = 0; i < this->cur_size_; i++)
 	this->search_structure_[i] = fs.search_structure_[i];
     }
-  return *this;
 }
 
 template <class T, size_t SIZE>
@@ -853,7 +848,6 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
       for (size_t i = 0; i < this->cur_size_; i++)
 	this->search_structure_[i] = bs.search_structure_[i];
     }
-  return *this;
 }
   
 template <class T>
@@ -1147,7 +1141,6 @@ ACE_Unbounded_Set<T>::operator= (const ACE_Unbounded_Set<T> &us)
       this->delete_nodes ();
       this->copy_nodes (us);
     }
-  return *this;
 }
 
 template <class T> int

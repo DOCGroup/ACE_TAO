@@ -90,15 +90,15 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
   // Perform timer-based Proxy_Handler reconnection.
 
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  // Perform Proxy_Handler termination.
+
 protected:
   enum
   {
     MAX_RETRY_TIMEOUT = 300 // 5 minutes is the maximum timeout.
   };
-
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-			    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-  // Perform Proxy_Handler termination.
 
   ACE_INET_Addr remote_addr_;
   // Address of peer.

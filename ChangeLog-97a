@@ -1,4 +1,22 @@
-Fri May  9 07:32:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Fri May  9 13:07:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* include/makeinclude/platform_aix4.2.GNU (LLIBS): Changed
+	
+	  LLIBS = -lC_r -lC -lpthreads -lbsd -ltli_r -ldl -lc_r -lm -lc $(ACELIB)
+
+	  to
+
+	  LLIBS =  -ltli_r -ldl  $(ACELIB)
+
+	  MakeC++SharedLib_r includes all the other libs automatically in
+	  the search. 
+
+	* apps/Gateway/Gateway/Proxy_Handler.h: Moved the handle_close()
+ 	  method into the public section since the Connector now calls it.
+
+	* ace/Containers.cpp: Updated all the operator= methods so
+	  that they no longer try to return *this.  Thanks to Chris Lahey
+	  for reporting this.
 
 	* ace/IOStream.h: Replaced __alpha with DIGITAL_UNIX && DEC_CXX.
 	  Thanks to Thilo for reporting this.
