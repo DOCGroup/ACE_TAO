@@ -32,8 +32,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/ARGV.h"
 #include "ace/Sched_Params.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 
 // TAO includes.
 #include "tao/corba.h"
