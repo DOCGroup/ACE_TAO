@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(RMCast) : acelib, core, exceptions, threads {
+project(RMCast) : acelib, core, threads {
   sharedname   = ACE_RMCast
   dynamicflags = ACE_RMCAST_BUILD_DLL
 
