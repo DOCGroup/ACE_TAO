@@ -4,6 +4,7 @@
 
 DIRS = \
         common \
-        parser
+        parser \
+        apps
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

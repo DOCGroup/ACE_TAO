@@ -6,6 +6,7 @@
 
 DIRS  = common \
 	parser \
+	apps \
 	tests \
 	examples
 

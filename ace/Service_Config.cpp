@@ -14,6 +14,8 @@
 #include "ace/Framework_Component.h"
 
 #include "ace/Service_Config.h"
+#include "ace/XML_Svc_Conf.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Config.i"
@@ -225,11 +227,66 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
+ACE_Service_Type *
+ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
+                                          ACE_Service_Type_Impl *o,
+                                          const ACE_SHLIB_HANDLE handle,
+                                          int active)
+{
+  ACE_Service_Type *sp = 0;
+  ACE_NEW_RETURN (sp,
+                  ACE_Service_Type (n, o, handle, active),
+                  0);
+  return sp;
+}
+
+ACE_Service_Type_Impl *
+ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
+                                              int type,
+                                              void *symbol,
+                                              u_int flags,
+                                              ACE_Service_Object_Exterminator gobbler)
+{
+  ACE_Service_Type_Impl *stp = 0;
+
+  // Note, the only place we need to put a case statement.  This is
+  // also the place where we'd put the RTTI tests, if the compiler
+  // actually supported them!
+
+  switch (type)
+    {
+    case ACE_Service_Type::SERVICE_OBJECT:
+      ACE_NEW_RETURN (stp,
+                      ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
+                                               name, flags,
+                                               gobbler),
+                      0);
+      break;
+    case ACE_Service_Type::MODULE:
+      ACE_NEW_RETURN (stp,
+                      ACE_Module_Type (symbol, name, flags),
+                      0);
+      break;
+    case ACE_Service_Type::STREAM:
+      ACE_NEW_RETURN (stp,
+                      ACE_Stream_Type (symbol, name, flags),
+                      0);
+      break;
+    default:
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("unknown case\n")));
+      break;
+    }
+  return stp;
+
+}
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 // Initialize and activate a statically linked service.
 
 int
-ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
-                                ACE_TCHAR *parameters)
+ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
+                                const ACE_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -269,7 +326,7 @@ ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
 
 int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                ACE_TCHAR parameters[])
+                                const ACE_TCHAR *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   ACE_ARGV args (parameters);
@@ -298,6 +355,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
     }
 }
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 int
 ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 {
@@ -322,12 +380,42 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
   else
     return 0;
 }
+#else
+ACE_XML_Svc_Conf *
+ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
+{
+  if (xmldll.open (ACE_LIB_TEXT ("ACEXML_XML_Svc_Conf_Parser")) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("Fail to open ACEXML_XML_Svc_Conf_Parser: %p\n"),
+                       "ACE_Service_Config::get_xml_svc_conf"),
+                      0);
+
+  void *foo;
+
+  // @@ Now this sucks..  Why can't we just pass the operation name to dll.symbol?
+  ACE_TCHAR *cdecl_str = ACE::ldname (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
+  foo = xmldll.symbol (cdecl_str);
+  delete[] cdecl_str;
+
+  // Cast the void* to long first.
+  long tmp = ACE_reinterpret_cast (long, foo);
+  ACE_XML_Svc_Conf::Factory factory = ACE_reinterpret_cast (ACE_XML_Svc_Conf::Factory, tmp);
+  if (factory == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unable to resolve factory: %p\n"),
+                       xmldll.error ()),
+                      0);
+
+  return factory ();
+}
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 int
 ACE_Service_Config::process_file (const ACE_TCHAR file[])
 {
   ACE_TRACE ("ACE_Service_Config::process_file");
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
   int result = 0;
 
   FILE *fp = ACE_OS::fopen (file,
@@ -354,8 +442,17 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
 
       (void) ACE_OS::fclose (fp);
     }
-
   return result;
+#else
+  ACE_DLL dll;
+
+  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+
+  if (xml_svc_conf.get () == 0)
+    return -1;
+
+  return xml_svc_conf->parse_file (file);
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 }
 
 int
@@ -368,6 +465,7 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
                 ACE_LIB_TEXT ("Service_Config::process_directive - %s\n"),
                 directive));
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
   ACE_UNUSED_ARG (directive);
 
   ACE_Svc_Conf_Param d (directive);
@@ -375,6 +473,16 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
   int result = ACE_Service_Config::process_directives_i (&d);
 
   return result;
+#else
+  ACE_DLL dll;
+
+  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+
+  if (xml_svc_conf.get () == 0)
+    return -1;
+
+  return xml_svc_conf->parse_string (directive);
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 }
 
 // Process service configuration requests as indicated in the queue of

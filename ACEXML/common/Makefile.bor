@@ -16,6 +16,7 @@ OBJFILES = \
         $(OBJDIR)\LocatorImpl.obj \
         $(OBJDIR)\NamespaceSupport.obj \
         $(OBJDIR)\SAXExceptions.obj \
+        $(OBJDIR)\StrCharStream.obj \
         $(OBJDIR)\Transcode.obj \
         $(OBJDIR)\Validator.obj \
         $(OBJDIR)\XMLFilterImpl.obj

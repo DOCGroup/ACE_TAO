@@ -1,3 +1,181 @@
+Wed May  8 15:15:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Merged in the XML-based Service Configurator framework.  The
+	  XML-based Service Configruator is *not* enabled by default and
+	  the merge should not affect existing applications.  We will make
+	  the XML-based Service Configurator the defualt one at some point
+	  in the future.  So you might want to try it out before that
+	  time. :) To switch current ACE to use XML Service Configurtor,
+	  Add
+
+	  #define ACE_HAS_XML_SVC_CONF
+
+	  in your <config.h>.  You can use the
+	  $(ACE_ROOT)/bin/svcconf_convert.pl to convert your existing
+	  svc.conf files to svc.conf.xml.
+
+	* ace/OS.h:
+	* ace/Parse_Node.cpp:
+	* ace/Parse_Node.h:
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.h:
+	* ace/Svc_Conf.h:
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp:
+	* tests/Service_Config_DLL.cpp: Simplified the macro check.
+
+
+	* ace/Service_Config.h:
+	* ACEXML/apps/svcconf/Svcconf.cpp: Fixed Linux compilation warnings.
+
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+	* ace/Service_Config.cpp: Added more comprehensive error messages.
+
+	* ACEXML/Makefile:
+	* ACEXML/Makefile.bor:
+	* ACEXML/apps/Makefile:
+	* ACEXML/apps/Makefile.bor:
+	* ACEXML/apps/svcconf/Makefile:
+	* ACEXML/apps/svcconf/Makefile.bor:
+	* ACEXML/parser/parser/Makefile:
+	* ace/Makefile:
+	* ace/Makefile.am:
+	* ace/Makefile.bor:
+	* ace/ace.icc:
+	* examples/ASX/CCM_App/Makefile:
+	* examples/ASX/CCM_App/Makefile.CCM_App: Added or Updated Makefiles.
+
+
+	* bin/svcconf-convert.pl: Added more debugging info printout.
+	  Fixed incorrect mapping on initializer path/path and
+	  state/params.
+
+	* ace/Service_Object.h: Added enum definition to differentiate
+	  ACE_Service_Type_Impl.  The enum values are taken from
+	  "ace/Svc_Conf_Toekns.h" so that the same service can work with
+	  both classic and XML service configurator frameworks.
+
+
+	* ace/Service_Config.h:
+	* ace/Service_Config.cpp: Added <create_service_type> and
+	  <create_service_type_impl> methods to ensure objects are
+	  allocated in consistent DLL.
+
+	* ACEXML/parser/parser/Parser.cpp: Made the exception messages
+	  more comprehensive so it's easier to determine the origins of
+	  parse errors.
+
+	* ACEXML/apps/svcconf/Svcconf_Handler.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.i:
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp: Added more implementation.
+
+	* examples/ASX/CCM_App/svc.conf.xml:
+	* netsvcs/servers/svc.conf.xml:
+	* tests/Service_Config_Test.conf.xml: Added new XML-based svc.conf files.
+
+	* tests/Service_Config_DLL.cpp: Added xml-based inline svc.conf directives.
+
+
+	* ACEXML/apps/XML_Apps.dsw: Added new workspace for XML
+	  applications.  This should contains all projects under this
+	  subdirectory.
+
+	* ACEXML/apps/svcconf/README:
+	* ACEXML/apps/svcconf/Svcconf.cpp:
+	* ACEXML/apps/svcconf/Svcconf.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+	* ACEXML/apps/svcconf/Svcconf_Handler.h:
+	* ACEXML/apps/svcconf/Svcconf_Handler.i:
+	* ACEXML/apps/svcconf/XML_Svc_Conf_Parser.dsp: Added new files
+	  that implement the parser for XML-based Service Configurator.
+
+	* bin/svcconf-convert.pl: Updated the help message.
+
+	* ace/config-all.h: Added ACE_DEFAULT_SVC_CONF_EXT to define the
+	  default file extention name for svc.conf files.  It is ".conf"
+	  when using classic Service Configurator and ".conf.xml" when
+	  using XML Service Configurator.
+
+	* tests/Service_Config_Test.cpp: Changed to use different file
+	  extension with different Service Configurator.
+
+	* tests/Service_Config_Test.conf.xml: Added the converted XML
+	  based svc.conf file.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	* ace/XML_Svc_Conf.h:
+	* ace/XML_Svc_Conf.cpp: Added abstract interface definition for
+	  DLL based XML parser.
+
+	* ace/OS.h: Defined ACE_DEFAULT_SVC_CONF_FILE to "svc.conf.xml" if
+	  ACE_USES_CLASSIC_SVC_CONF is not defined.
+
+	* ace/Service_Config.cpp: Adapt Service_Config to use XML parser
+	  to process an svc.conf.xml file.
+
+
+	* bin/generate_export_file.pl: Added code to record the flags used
+	  to generate an export file.
+
+
+	* XML/examples/svcconf/Svcconf_Handler.h:
+	* XML/examples/svcconf/Svcconf_Handler.i:
+	* XML/examples/svcconf/Svcconf_Handler.cpp: Added Svcconf handling
+	  simulation.
+
+	* XML/examples/test_docs/svcconf.dtd: Revised Svcconf DTD.
+
+
+        * XML/examples/test_docs/svcconf.dtd: Updated the DTD again.
+	  The <streamdef> tag also needed an "id" attribute.
+
+        * XML/examples/SAXPrint/main.cpp:
+        * XML/examples/SAXPrint/svc.conf.xml: Modified the sample XML to
+	  conform to the updated svcconf.dtd.
+
+        * XML/examples/svcconf/README:
+        * XML/examples/svcconf/Svcconf.dsp:
+        * XML/examples/svcconf/Svcconf.dsw:
+        * XML/examples/svcconf/Svcconf_Handler.cpp:
+        * XML/examples/svcconf/Svcconf_Handler.h:
+        * XML/examples/svcconf/Svcconf_Handler.i:
+        * XML/examples/svcconf/main.cpp: New example to test out
+	  svc.conf.xml parsing.  Not finished.
+
+
+	* XML/examples/test_docs/svcconf.dtd: Simplied the svc.conf.dtd by
+	  removing the <params> tags and making it an attribute for
+	  <initializer> and <static> tags.
+
+
+	* ace/Parse_Node.cpp:
+	* ace/Parse_Node.h:
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.h:
+	* ace/Svc_Conf.h:
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp: Decoupled old Service_Config parser from ACE.
+
+
+	* XML/examples/SAXPrint/main.cpp: Added a new test to try the new
+	  StrCharStream and switch to use ACE_Get_Opt to support more
+	  robust command line arguments.
+
+	* XML/common/StrCharStream.h:
+	* XML/common/StrCharStream.cpp: Added new CharStream class that
+	  take a null-terminated ACEXML_Char string as an input source.
+
+	* XML/common/FileCharStream.h: Removed unnecessary inclusion of
+	  "ace/streams.h".
+
+	* XML/common/Makefile:
+	* XML/common/Makefile.bor:
+	* XML/common/XML_Common.dsp: Added StrCharStream.*.
+
 Wed May  8 16:29:05 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * bin/nightlybuilds/builds.lst (STATUS):
