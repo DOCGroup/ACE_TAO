@@ -1,4 +1,7 @@
-Wed Apr 28 20:09:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Wed Apr 28 21:16:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* docs/Options.html: Removed -ORBpoa <global/tss> option since it
+	  does not make sense in the new ORB/POA architecture.
 
 	* examples/Simple/echo/server.dsp:
 	* examples/Simple/echo/client.dsp:
