@@ -39,6 +39,8 @@ run DLList_Test
 #Atomic_Op_Test: threads not supported on this platform
 #run Atomic_Op_Test                      # uses Atomic_Op
 
+run Object_Manager_Test
+
 #TSS_Test: threads are not supported on this platform
 #run TSS_Test                            # uses Task, Mutex, Guard
 

@@ -97,6 +97,7 @@ call %run_cmd% %dopure% %platform% Malloc_Test
 call %run_cmd% %dopure% %platform% Naming_Test
 rem call %run_cmd% %dopure% %platform% New_Fail_Test
 call %run_cmd% %dopure% %platform% Notify_Performance_Test
+call %run_cmd% %dopure% %platform% Object_Manager_Test
 call %run_cmd% %dopure% %platform% OrdMultiSet_Test
 call %run_cmd% %dopure% %platform% Pipe_Test
 call %run_cmd% %dopure% %platform% Priority_Buffer_Test

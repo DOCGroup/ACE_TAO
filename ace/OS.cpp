@@ -291,6 +291,133 @@ ACE_Cleanup_Info::operator!= (const ACE_Cleanup_Info &o) const
   return !(*this == o);
 }
 
+class ACE_Cleanup_Info_Node
+{
+  // = TITLE
+  //     For maintaining a list of ACE_Cleanup_Info items.
+  //
+  // = DESCRIPTION
+  //     For internal use by ACE_Object_Manager.
+public:
+  ACE_Cleanup_Info_Node (void);
+  ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
+                         ACE_Cleanup_Info_Node *next);
+  ~ACE_Cleanup_Info_Node (void);
+  ACE_Cleanup_Info_Node *insert (const ACE_Cleanup_Info &);
+private:
+  ACE_Cleanup_Info cleanup_info_;
+  ACE_Cleanup_Info_Node *next_;
+
+  friend class ACE_OS_Exit_Info;
+};
+
+ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void)
+  : cleanup_info_ (),
+    next_ (0)
+{
+}
+
+ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (const ACE_Cleanup_Info &new_info,
+                                              ACE_Cleanup_Info_Node *next)
+  : cleanup_info_ (new_info),
+    next_ (next)
+{
+}
+
+ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
+{
+  delete next_;
+}
+
+ACE_Cleanup_Info_Node *
+ACE_Cleanup_Info_Node::insert (const ACE_Cleanup_Info &new_info)
+{
+  ACE_Cleanup_Info_Node *new_node;
+
+  ACE_NEW_RETURN (new_node,
+                  ACE_Cleanup_Info_Node (new_info, this),
+                  0);
+
+  return new_node;
+}
+
+ACE_OS_Exit_Info::ACE_OS_Exit_Info (void)
+{
+  ACE_NEW (registered_objects_, ACE_Cleanup_Info_Node);
+}
+
+ACE_OS_Exit_Info::~ACE_OS_Exit_Info (void)
+{
+  delete registered_objects_;
+  registered_objects_ = 0;
+}
+
+int
+ACE_OS_Exit_Info::at_exit_i (void *object,
+                             ACE_CLEANUP_FUNC cleanup_hook,
+                             void *param)
+{
+  ACE_Cleanup_Info new_info;
+  new_info.object_ = object;
+  new_info.cleanup_hook_ = cleanup_hook;
+  new_info.param_ = param;
+
+  // Return -1 and sets errno if unable to allocate storage.  Enqueue
+  // at the head and dequeue from the head to get LIFO ordering.
+
+  ACE_Cleanup_Info_Node *new_node;
+
+  if ((new_node = registered_objects_->insert (new_info)) == 0)
+    return -1;
+  else
+    {
+      registered_objects_ = new_node;
+      return 0;
+    }
+}
+
+int
+ACE_OS_Exit_Info::find (void *object)
+{
+  // Check for already in queue, and return 1 if so.
+  for (ACE_Cleanup_Info_Node *iter = registered_objects_;
+       iter  &&  iter->next_ != 0;
+       iter = iter->next_)
+    {
+      if (iter->cleanup_info_.object_ == object)
+        {
+          // The object has already been registered.
+          return 1;
+        }
+    }
+
+  return 0;
+}
+
+void
+ACE_OS_Exit_Info::call_hooks ()
+{
+  // Call all registered cleanup hooks, in reverse order of
+  // registration.
+  for (ACE_Cleanup_Info_Node *iter = registered_objects_;
+       iter  &&  iter->next_ != 0;
+       iter = iter->next_)
+    {
+      ACE_Cleanup_Info &info = iter->cleanup_info_;
+      if (info.cleanup_hook_ == ACE_reinterpret_cast (ACE_CLEANUP_FUNC,
+                                                      ace_cleanup_destroyer))
+        // The object is an ACE_Cleanup.
+        ace_cleanup_destroyer (ACE_reinterpret_cast (ACE_Cleanup *,
+                                                     info.object_),
+                               info.param_);
+      else if (info.object_ == &ace_exit_hook_marker)
+        // The hook is an ACE_EXIT_HOOK.
+        (* ACE_reinterpret_cast (ACE_EXIT_HOOK, info.cleanup_hook_)) ();
+      else
+        (*info.cleanup_hook_) (info.object_, info.param_);
+    }
+}
+
 void
 ACE_Time_Value::dump (void) const
 {
@@ -6299,6 +6426,7 @@ void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
+  : exit_info_ ()
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
   // already been instantiated (it is likely to be one initialized by way
@@ -6454,6 +6582,10 @@ ACE_OS_Object_Manager::fini (void)
       next_ = 0;  // Protect against recursive calls.
     }
 
+  // Call all registered cleanup hooks, in reverse order of
+  // registration.
+  exit_info_.call_hooks ();
+
   // Only clean up preallocated objects when the singleton Instance is being
   // destroyed.
   if (this == instance_)
@@ -6543,6 +6675,16 @@ ACE_OS_Object_Manager::fini (void)
     instance_ = 0;
 
   return 0;
+}
+
+int ace_exit_hook_marker = 0;
+
+int
+ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func)
+{
+  return exit_info_.at_exit_i (&ace_exit_hook_marker,
+                               ACE_reinterpret_cast (ACE_CLEANUP_FUNC, func),
+                               0);
 }
 
 int
