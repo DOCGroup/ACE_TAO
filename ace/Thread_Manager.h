@@ -618,9 +618,12 @@ public:
   // supports cancellation.  Otherwise, perform a "cooperative"
   // cancellation.
 
-  // = The following method provide new functionality. They do not
-  // follow the same design as current methods. They provide new
-  // functionality.
+  // = Collect thread handles in the thread manager.  Notice that
+  //   the collected information is just a snapshot.
+  int hthread_within (ACE_hthread_t handle);
+  int thread_within (ACE_thread_t tid);
+  // Check if the thread is managed by the thread manager.  Return true if
+  // the thread is found, false otherwise.
 
   int num_tasks_in_group (int grp_id);
   // Returns the number of <ACE_Task_Base> in a group.
@@ -637,7 +640,7 @@ public:
   int thread_list (ACE_Task_Base *task,
                    ACE_thread_t thread_list[],
                    size_t n);
-  // Returns in <thread_list> a list of up to <h> thread ids in an
+  // Returns in <thread_list> a list of up to <n> thread ids in an
   // <ACE_Task_Base>.  The caller must allocate the memory for
   // <thread_list>.
 
@@ -646,6 +649,20 @@ public:
                     size_t n);
   // Returns in <hthread_list> a list of up to <n> thread handles in
   // an <ACE_Task_Base>.  The caller must allocate memory for
+  // <hthread_list>.
+
+  int thread_grp_list (int grp_id,
+                       ACE_thread_t thread_list[],
+                       size_t n);
+  // Returns in <thread_list> a list of up to <n> thread ids in a
+  // group <grp_id>.  The caller must allocate the memory for
+  // <thread_list>.
+
+  int hthread_grp_list (int grp_id,
+                        ACE_hthread_t hthread_list[],
+                        size_t n);
+  // Returns in <hthread_list> a list of up to <n> thread handles in
+  // a group <grp_id>.  The caller must allocate memory for
   // <hthread_list>.
 
   // = Set/get group ids for a particular task.
