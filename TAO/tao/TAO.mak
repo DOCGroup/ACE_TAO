@@ -31,8 +31,8 @@ NULL=nul
 ################################################################################
 # Begin Project
 # PROP Target_Last_Scanned "TAO - Win32 Debug"
-RSC=rc.exe
 MTL=mktyplib.exe
+RSC=rc.exe
 CPP=cl.exe
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -54,7 +54,6 @@ ALL : "$(OUTDIR)\TAO.dll"
 
 CLEAN : 
 	-@erase "$(INTDIR)\any.obj"
-	-@erase "$(INTDIR)\boa.obj"
 	-@erase "$(INTDIR)\cdr.obj"
 	-@erase "$(INTDIR)\client_factory.obj"
 	-@erase "$(INTDIR)\connect.obj"
@@ -77,13 +76,15 @@ CLEAN :
 	-@erase "$(INTDIR)\object.obj"
 	-@erase "$(INTDIR)\objtable.obj"
 	-@erase "$(INTDIR)\optable.obj"
+	-@erase "$(INTDIR)\orb_core.obj"
 	-@erase "$(INTDIR)\orbobj.obj"
 	-@erase "$(INTDIR)\params.obj"
+	-@erase "$(INTDIR)\poa.obj"
 	-@erase "$(INTDIR)\principa.obj"
 	-@erase "$(INTDIR)\request.obj"
-	-@erase "$(INTDIR)\roa.obj"
 	-@erase "$(INTDIR)\server_factory.obj"
 	-@erase "$(INTDIR)\svrrqst.obj"
+	-@erase "$(INTDIR)\tao_internals.obj"
 	-@erase "$(INTDIR)\tc_const.obj"
 	-@erase "$(INTDIR)\typecode.obj"
 	-@erase "$(OUTDIR)\TAO.dll"
@@ -121,7 +122,6 @@ LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  /implib:"$(OUTDIR)/TAO.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\any.obj" \
-	"$(INTDIR)\boa.obj" \
 	"$(INTDIR)\cdr.obj" \
 	"$(INTDIR)\client_factory.obj" \
 	"$(INTDIR)\connect.obj" \
@@ -144,13 +144,15 @@ LINK32_OBJS= \
 	"$(INTDIR)\object.obj" \
 	"$(INTDIR)\objtable.obj" \
 	"$(INTDIR)\optable.obj" \
+	"$(INTDIR)\orb_core.obj" \
 	"$(INTDIR)\orbobj.obj" \
 	"$(INTDIR)\params.obj" \
+	"$(INTDIR)\poa.obj" \
 	"$(INTDIR)\principa.obj" \
 	"$(INTDIR)\request.obj" \
-	"$(INTDIR)\roa.obj" \
 	"$(INTDIR)\server_factory.obj" \
 	"$(INTDIR)\svrrqst.obj" \
+	"$(INTDIR)\tao_internals.obj" \
 	"$(INTDIR)\tc_const.obj" \
 	"$(INTDIR)\typecode.obj"
 
@@ -178,7 +180,6 @@ ALL : "$(OUTDIR)\TAOd.dll"
 
 CLEAN : 
 	-@erase "$(INTDIR)\any.obj"
-	-@erase "$(INTDIR)\boa.obj"
 	-@erase "$(INTDIR)\cdr.obj"
 	-@erase "$(INTDIR)\client_factory.obj"
 	-@erase "$(INTDIR)\connect.obj"
@@ -201,13 +202,15 @@ CLEAN :
 	-@erase "$(INTDIR)\object.obj"
 	-@erase "$(INTDIR)\objtable.obj"
 	-@erase "$(INTDIR)\optable.obj"
+	-@erase "$(INTDIR)\orb_core.obj"
 	-@erase "$(INTDIR)\orbobj.obj"
 	-@erase "$(INTDIR)\params.obj"
+	-@erase "$(INTDIR)\poa.obj"
 	-@erase "$(INTDIR)\principa.obj"
 	-@erase "$(INTDIR)\request.obj"
-	-@erase "$(INTDIR)\roa.obj"
 	-@erase "$(INTDIR)\server_factory.obj"
 	-@erase "$(INTDIR)\svrrqst.obj"
+	-@erase "$(INTDIR)\tao_internals.obj"
 	-@erase "$(INTDIR)\tc_const.obj"
 	-@erase "$(INTDIR)\typecode.obj"
 	-@erase "$(INTDIR)\vc40.idb"
@@ -249,7 +252,6 @@ LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  /implib:"$(OUTDIR)/TAOd.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\any.obj" \
-	"$(INTDIR)\boa.obj" \
 	"$(INTDIR)\cdr.obj" \
 	"$(INTDIR)\client_factory.obj" \
 	"$(INTDIR)\connect.obj" \
@@ -272,13 +274,15 @@ LINK32_OBJS= \
 	"$(INTDIR)\object.obj" \
 	"$(INTDIR)\objtable.obj" \
 	"$(INTDIR)\optable.obj" \
+	"$(INTDIR)\orb_core.obj" \
 	"$(INTDIR)\orbobj.obj" \
 	"$(INTDIR)\params.obj" \
+	"$(INTDIR)\poa.obj" \
 	"$(INTDIR)\principa.obj" \
 	"$(INTDIR)\request.obj" \
-	"$(INTDIR)\roa.obj" \
 	"$(INTDIR)\server_factory.obj" \
 	"$(INTDIR)\svrrqst.obj" \
+	"$(INTDIR)\tao_internals.obj" \
 	"$(INTDIR)\tc_const.obj" \
 	"$(INTDIR)\typecode.obj"
 
@@ -322,14 +326,12 @@ LINK32_OBJS= \
 ################################################################################
 # Begin Source File
 
-SOURCE=.\boa.cpp
-DEP_CPP_BOA_C=\
+SOURCE=.\typecode.cpp
+DEP_CPP_TYPEC=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -338,6 +340,7 @@ DEP_CPP_BOA_C=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -358,23 +361,29 @@ DEP_CPP_BOA_C=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -423,6 +432,7 @@ DEP_CPP_BOA_C=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -506,13 +516,16 @@ DEP_CPP_BOA_C=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
-NODEP_CPP_BOA_C=\
+NODEP_CPP_TYPEC=\
 	".\tao\factories.h"\
 	
 
-"$(INTDIR)\boa.obj" : $(SOURCE) $(DEP_CPP_BOA_C) "$(INTDIR)"
+"$(INTDIR)\typecode.obj" : $(SOURCE) $(DEP_CPP_TYPEC) "$(INTDIR)"
 
 
 # End Source File
@@ -525,8 +538,6 @@ DEP_CPP_CDR_C=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -535,6 +546,7 @@ DEP_CPP_CDR_C=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -555,23 +567,29 @@ DEP_CPP_CDR_C=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -620,6 +638,7 @@ DEP_CPP_CDR_C=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -703,6 +722,9 @@ DEP_CPP_CDR_C=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_CDR_C=\
@@ -716,14 +738,12 @@ NODEP_CPP_CDR_C=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\connect.cpp
-DEP_CPP_CONNE=\
+SOURCE=.\client_factory.cpp
+DEP_CPP_CLIEN=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -732,6 +752,7 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -752,23 +773,29 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -817,6 +844,7 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -900,6 +928,215 @@ DEP_CPP_CONNE=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+NODEP_CPP_CLIEN=\
+	".\tao\factories.h"\
+	
+
+"$(INTDIR)\client_factory.obj" : $(SOURCE) $(DEP_CPP_CLIEN) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\connect.cpp
+DEP_CPP_CONNE=\
+	"..\..\ace\config-win32.h"\
+	{$(INCLUDE)}"\.\align.h"\
+	{$(INCLUDE)}"\.\any.h"\
+	{$(INCLUDE)}"\.\any.i"\
+	{$(INCLUDE)}"\.\cdr.h"\
+	{$(INCLUDE)}"\.\cdr.i"\
+	{$(INCLUDE)}"\.\client_factory.h"\
+	{$(INCLUDE)}"\.\client_factory.i"\
+	{$(INCLUDE)}"\.\connect.h"\
+	{$(INCLUDE)}"\.\connect.i"\
+	{$(INCLUDE)}"\.\corba.h"\
+	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
+	{$(INCLUDE)}"\.\debug.h"\
+	{$(INCLUDE)}"\.\default_client.h"\
+	{$(INCLUDE)}"\.\default_client.i"\
+	{$(INCLUDE)}"\.\default_server.h"\
+	{$(INCLUDE)}"\.\default_server.i"\
+	{$(INCLUDE)}"\.\except.h"\
+	{$(INCLUDE)}"\.\giop.h"\
+	{$(INCLUDE)}"\.\giop.i"\
+	{$(INCLUDE)}"\.\iiopobj.h"\
+	{$(INCLUDE)}"\.\iiopobj.i"\
+	{$(INCLUDE)}"\.\iioporb.h"\
+	{$(INCLUDE)}"\.\iioporb.i"\
+	{$(INCLUDE)}"\.\marshal.h"\
+	{$(INCLUDE)}"\.\marshal.i"\
+	{$(INCLUDE)}"\.\nvlist.h"\
+	{$(INCLUDE)}"\.\object.h"\
+	{$(INCLUDE)}"\.\object.i"\
+	{$(INCLUDE)}"\.\objtable.h"\
+	{$(INCLUDE)}"\.\optable.h"\
+	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
+	{$(INCLUDE)}"\.\orbconf.h"\
+	{$(INCLUDE)}"\.\orbobj.h"\
+	{$(INCLUDE)}"\.\orbobj.i"\
+	{$(INCLUDE)}"\.\params.h"\
+	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
+	{$(INCLUDE)}"\.\principa.h"\
+	{$(INCLUDE)}"\.\request.h"\
+	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
+	{$(INCLUDE)}"\.\server_factory.h"\
+	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
+	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
+	{$(INCLUDE)}"\.\svrrqst.h"\
+	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\typecode.h"\
+	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\Config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_CONNE=\
@@ -919,8 +1156,6 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -929,6 +1164,7 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -949,23 +1185,29 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1014,6 +1256,7 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1097,6 +1340,9 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_CORBA=\
@@ -1116,8 +1362,6 @@ DEP_CPP_DEBUG=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -1126,6 +1370,7 @@ DEP_CPP_DEBUG=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -1146,23 +1391,29 @@ DEP_CPP_DEBUG=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1211,6 +1462,7 @@ DEP_CPP_DEBUG=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1294,6 +1546,9 @@ DEP_CPP_DEBUG=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_DEBUG=\
@@ -1313,8 +1568,6 @@ DEP_CPP_DECOD=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -1323,6 +1576,7 @@ DEP_CPP_DECOD=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -1343,23 +1597,29 @@ DEP_CPP_DECOD=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1408,6 +1668,7 @@ DEP_CPP_DECOD=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1491,6 +1752,9 @@ DEP_CPP_DECOD=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_DECOD=\
@@ -1510,8 +1774,6 @@ DEP_CPP_DEEP_=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -1520,6 +1782,7 @@ DEP_CPP_DEEP_=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -1540,23 +1803,29 @@ DEP_CPP_DEEP_=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1605,6 +1874,7 @@ DEP_CPP_DEEP_=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1688,6 +1958,9 @@ DEP_CPP_DEEP_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_DEEP_=\
@@ -1707,8 +1980,6 @@ DEP_CPP_DEEP_F=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -1717,6 +1988,7 @@ DEP_CPP_DEEP_F=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -1737,23 +2009,29 @@ DEP_CPP_DEEP_F=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1802,6 +2080,7 @@ DEP_CPP_DEEP_F=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -1885,6 +2164,9 @@ DEP_CPP_DEEP_F=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_DEEP_F=\
@@ -1898,14 +2180,12 @@ NODEP_CPP_DEEP_F=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\encode.cpp
-DEP_CPP_ENCOD=\
+SOURCE=.\default_client.cpp
+DEP_CPP_DEFAU=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -1914,6 +2194,7 @@ DEP_CPP_ENCOD=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -1934,23 +2215,29 @@ DEP_CPP_ENCOD=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -1999,6 +2286,7 @@ DEP_CPP_ENCOD=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -2082,6 +2370,421 @@ DEP_CPP_ENCOD=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+NODEP_CPP_DEFAU=\
+	".\tao\factories.h"\
+	
+
+"$(INTDIR)\default_client.obj" : $(SOURCE) $(DEP_CPP_DEFAU) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\default_server.cpp
+DEP_CPP_DEFAUL=\
+	"..\..\ace\config-win32.h"\
+	{$(INCLUDE)}"\.\align.h"\
+	{$(INCLUDE)}"\.\any.h"\
+	{$(INCLUDE)}"\.\any.i"\
+	{$(INCLUDE)}"\.\cdr.h"\
+	{$(INCLUDE)}"\.\cdr.i"\
+	{$(INCLUDE)}"\.\client_factory.h"\
+	{$(INCLUDE)}"\.\client_factory.i"\
+	{$(INCLUDE)}"\.\connect.h"\
+	{$(INCLUDE)}"\.\connect.i"\
+	{$(INCLUDE)}"\.\corba.h"\
+	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
+	{$(INCLUDE)}"\.\debug.h"\
+	{$(INCLUDE)}"\.\default_client.h"\
+	{$(INCLUDE)}"\.\default_client.i"\
+	{$(INCLUDE)}"\.\default_server.h"\
+	{$(INCLUDE)}"\.\default_server.i"\
+	{$(INCLUDE)}"\.\except.h"\
+	{$(INCLUDE)}"\.\giop.h"\
+	{$(INCLUDE)}"\.\giop.i"\
+	{$(INCLUDE)}"\.\iiopobj.h"\
+	{$(INCLUDE)}"\.\iiopobj.i"\
+	{$(INCLUDE)}"\.\iioporb.h"\
+	{$(INCLUDE)}"\.\iioporb.i"\
+	{$(INCLUDE)}"\.\marshal.h"\
+	{$(INCLUDE)}"\.\marshal.i"\
+	{$(INCLUDE)}"\.\nvlist.h"\
+	{$(INCLUDE)}"\.\object.h"\
+	{$(INCLUDE)}"\.\object.i"\
+	{$(INCLUDE)}"\.\objtable.h"\
+	{$(INCLUDE)}"\.\optable.h"\
+	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
+	{$(INCLUDE)}"\.\orbconf.h"\
+	{$(INCLUDE)}"\.\orbobj.h"\
+	{$(INCLUDE)}"\.\orbobj.i"\
+	{$(INCLUDE)}"\.\params.h"\
+	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
+	{$(INCLUDE)}"\.\principa.h"\
+	{$(INCLUDE)}"\.\request.h"\
+	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
+	{$(INCLUDE)}"\.\server_factory.h"\
+	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
+	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
+	{$(INCLUDE)}"\.\svrrqst.h"\
+	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\typecode.h"\
+	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\Config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+NODEP_CPP_DEFAUL=\
+	".\tao\factories.h"\
+	
+
+"$(INTDIR)\default_server.obj" : $(SOURCE) $(DEP_CPP_DEFAUL) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\encode.cpp
+DEP_CPP_ENCOD=\
+	"..\..\ace\config-win32.h"\
+	{$(INCLUDE)}"\.\align.h"\
+	{$(INCLUDE)}"\.\any.h"\
+	{$(INCLUDE)}"\.\any.i"\
+	{$(INCLUDE)}"\.\cdr.h"\
+	{$(INCLUDE)}"\.\cdr.i"\
+	{$(INCLUDE)}"\.\client_factory.h"\
+	{$(INCLUDE)}"\.\client_factory.i"\
+	{$(INCLUDE)}"\.\connect.h"\
+	{$(INCLUDE)}"\.\connect.i"\
+	{$(INCLUDE)}"\.\corba.h"\
+	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
+	{$(INCLUDE)}"\.\debug.h"\
+	{$(INCLUDE)}"\.\default_client.h"\
+	{$(INCLUDE)}"\.\default_client.i"\
+	{$(INCLUDE)}"\.\default_server.h"\
+	{$(INCLUDE)}"\.\default_server.i"\
+	{$(INCLUDE)}"\.\except.h"\
+	{$(INCLUDE)}"\.\giop.h"\
+	{$(INCLUDE)}"\.\giop.i"\
+	{$(INCLUDE)}"\.\iiopobj.h"\
+	{$(INCLUDE)}"\.\iiopobj.i"\
+	{$(INCLUDE)}"\.\iioporb.h"\
+	{$(INCLUDE)}"\.\iioporb.i"\
+	{$(INCLUDE)}"\.\marshal.h"\
+	{$(INCLUDE)}"\.\marshal.i"\
+	{$(INCLUDE)}"\.\nvlist.h"\
+	{$(INCLUDE)}"\.\object.h"\
+	{$(INCLUDE)}"\.\object.i"\
+	{$(INCLUDE)}"\.\objtable.h"\
+	{$(INCLUDE)}"\.\optable.h"\
+	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
+	{$(INCLUDE)}"\.\orbconf.h"\
+	{$(INCLUDE)}"\.\orbobj.h"\
+	{$(INCLUDE)}"\.\orbobj.i"\
+	{$(INCLUDE)}"\.\params.h"\
+	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
+	{$(INCLUDE)}"\.\principa.h"\
+	{$(INCLUDE)}"\.\request.h"\
+	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
+	{$(INCLUDE)}"\.\server_factory.h"\
+	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
+	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
+	{$(INCLUDE)}"\.\svrrqst.h"\
+	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\typecode.h"\
+	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\Config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_ENCOD=\
@@ -2101,8 +2804,6 @@ DEP_CPP_EXCEP=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -2111,6 +2812,7 @@ DEP_CPP_EXCEP=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -2131,23 +2833,29 @@ DEP_CPP_EXCEP=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -2196,6 +2904,7 @@ DEP_CPP_EXCEP=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -2279,6 +2988,9 @@ DEP_CPP_EXCEP=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_EXCEP=\
@@ -2298,8 +3010,6 @@ DEP_CPP_GIOP_=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -2308,6 +3018,7 @@ DEP_CPP_GIOP_=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -2328,23 +3039,29 @@ DEP_CPP_GIOP_=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -2393,6 +3110,7 @@ DEP_CPP_GIOP_=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -2476,6 +3194,9 @@ DEP_CPP_GIOP_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_GIOP_=\
@@ -2495,8 +3216,6 @@ DEP_CPP_IIOPO=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -2505,6 +3224,7 @@ DEP_CPP_IIOPO=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -2525,23 +3245,29 @@ DEP_CPP_IIOPO=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -2590,6 +3316,7 @@ DEP_CPP_IIOPO=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -2673,6 +3400,9 @@ DEP_CPP_IIOPO=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_IIOPO=\
@@ -2692,8 +3422,6 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -2702,6 +3430,7 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -2722,23 +3451,29 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -2787,6 +3522,7 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -2870,6 +3606,9 @@ DEP_CPP_IIOPOR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_IIOPOR=\
@@ -2889,8 +3628,6 @@ DEP_CPP_INTER=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -2899,6 +3636,7 @@ DEP_CPP_INTER=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -2919,23 +3657,29 @@ DEP_CPP_INTER=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -2984,6 +3728,7 @@ DEP_CPP_INTER=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -3067,6 +3812,9 @@ DEP_CPP_INTER=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_INTER=\
@@ -3086,8 +3834,6 @@ DEP_CPP_INVOK=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -3096,6 +3842,7 @@ DEP_CPP_INVOK=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -3116,23 +3863,29 @@ DEP_CPP_INVOK=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -3181,6 +3934,7 @@ DEP_CPP_INVOK=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -3264,6 +4018,9 @@ DEP_CPP_INVOK=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_INVOK=\
@@ -3283,8 +4040,6 @@ DEP_CPP_MARSH=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -3293,6 +4048,7 @@ DEP_CPP_MARSH=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -3313,23 +4069,29 @@ DEP_CPP_MARSH=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -3378,6 +4140,7 @@ DEP_CPP_MARSH=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -3461,6 +4224,9 @@ DEP_CPP_MARSH=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_MARSH=\
@@ -3480,8 +4246,6 @@ DEP_CPP_NVLIS=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -3490,6 +4254,7 @@ DEP_CPP_NVLIS=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -3510,23 +4275,29 @@ DEP_CPP_NVLIS=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -3575,6 +4346,7 @@ DEP_CPP_NVLIS=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -3658,6 +4430,9 @@ DEP_CPP_NVLIS=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_NVLIS=\
@@ -3677,8 +4452,6 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -3687,6 +4460,7 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -3707,23 +4481,29 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -3772,6 +4552,7 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -3855,6 +4636,9 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_OBJEC=\
@@ -3874,8 +4658,6 @@ DEP_CPP_OBJTA=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -3884,6 +4666,7 @@ DEP_CPP_OBJTA=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -3904,23 +4687,29 @@ DEP_CPP_OBJTA=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -3969,6 +4758,7 @@ DEP_CPP_OBJTA=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -4052,6 +4842,9 @@ DEP_CPP_OBJTA=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_OBJTA=\
@@ -4071,8 +4864,6 @@ DEP_CPP_OPTAB=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -4081,6 +4872,7 @@ DEP_CPP_OPTAB=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -4101,23 +4893,29 @@ DEP_CPP_OPTAB=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -4166,6 +4964,7 @@ DEP_CPP_OPTAB=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -4249,6 +5048,9 @@ DEP_CPP_OPTAB=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_OPTAB=\
@@ -4262,14 +5064,12 @@ NODEP_CPP_OPTAB=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\orbobj.cpp
-DEP_CPP_ORBOB=\
+SOURCE=.\orb_core.cpp
+DEP_CPP_ORB_C=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -4278,6 +5078,7 @@ DEP_CPP_ORBOB=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -4298,23 +5099,237 @@ DEP_CPP_ORBOB=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\Config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+NODEP_CPP_ORB_C=\
+	".\tao\factories.h"\
+	
+
+"$(INTDIR)\orb_core.obj" : $(SOURCE) $(DEP_CPP_ORB_C) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\orbobj.cpp
+DEP_CPP_ORBOB=\
+	"..\..\ace\config-win32.h"\
+	".\tao_internals.i"\
+	{$(INCLUDE)}"\.\align.h"\
+	{$(INCLUDE)}"\.\any.h"\
+	{$(INCLUDE)}"\.\any.i"\
+	{$(INCLUDE)}"\.\cdr.h"\
+	{$(INCLUDE)}"\.\cdr.i"\
+	{$(INCLUDE)}"\.\client_factory.h"\
+	{$(INCLUDE)}"\.\client_factory.i"\
+	{$(INCLUDE)}"\.\connect.h"\
+	{$(INCLUDE)}"\.\connect.i"\
+	{$(INCLUDE)}"\.\corba.h"\
+	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
+	{$(INCLUDE)}"\.\debug.h"\
+	{$(INCLUDE)}"\.\default_client.h"\
+	{$(INCLUDE)}"\.\default_client.i"\
+	{$(INCLUDE)}"\.\default_server.h"\
+	{$(INCLUDE)}"\.\default_server.i"\
+	{$(INCLUDE)}"\.\except.h"\
+	{$(INCLUDE)}"\.\giop.h"\
+	{$(INCLUDE)}"\.\giop.i"\
+	{$(INCLUDE)}"\.\iiopobj.h"\
+	{$(INCLUDE)}"\.\iiopobj.i"\
+	{$(INCLUDE)}"\.\iioporb.h"\
+	{$(INCLUDE)}"\.\iioporb.i"\
+	{$(INCLUDE)}"\.\marshal.h"\
+	{$(INCLUDE)}"\.\marshal.i"\
+	{$(INCLUDE)}"\.\nvlist.h"\
+	{$(INCLUDE)}"\.\object.h"\
+	{$(INCLUDE)}"\.\object.i"\
+	{$(INCLUDE)}"\.\objtable.h"\
+	{$(INCLUDE)}"\.\optable.h"\
+	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
+	{$(INCLUDE)}"\.\orbconf.h"\
+	{$(INCLUDE)}"\.\orbobj.h"\
+	{$(INCLUDE)}"\.\orbobj.i"\
+	{$(INCLUDE)}"\.\params.h"\
+	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
+	{$(INCLUDE)}"\.\principa.h"\
+	{$(INCLUDE)}"\.\request.h"\
+	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
+	{$(INCLUDE)}"\.\server_factory.h"\
+	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
+	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
+	{$(INCLUDE)}"\.\svrrqst.h"\
+	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\tao_internals.h"\
+	{$(INCLUDE)}"\.\typecode.h"\
+	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -4365,6 +5380,7 @@ DEP_CPP_ORBOB=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -4450,6 +5466,9 @@ DEP_CPP_ORBOB=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_ORBOB=\
@@ -4469,8 +5488,6 @@ DEP_CPP_PARAM=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -4479,6 +5496,7 @@ DEP_CPP_PARAM=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -4499,23 +5517,29 @@ DEP_CPP_PARAM=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -4564,6 +5588,7 @@ DEP_CPP_PARAM=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -4647,6 +5672,9 @@ DEP_CPP_PARAM=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_PARAM=\
@@ -4660,14 +5688,12 @@ NODEP_CPP_PARAM=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\principa.cpp
-DEP_CPP_PRINC=\
+SOURCE=.\poa.cpp
+DEP_CPP_POA_C=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -4676,6 +5702,7 @@ DEP_CPP_PRINC=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -4696,23 +5723,29 @@ DEP_CPP_PRINC=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -4761,6 +5794,7 @@ DEP_CPP_PRINC=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -4844,6 +5878,215 @@ DEP_CPP_PRINC=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+NODEP_CPP_POA_C=\
+	".\tao\factories.h"\
+	
+
+"$(INTDIR)\poa.obj" : $(SOURCE) $(DEP_CPP_POA_C) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\principa.cpp
+DEP_CPP_PRINC=\
+	"..\..\ace\config-win32.h"\
+	{$(INCLUDE)}"\.\align.h"\
+	{$(INCLUDE)}"\.\any.h"\
+	{$(INCLUDE)}"\.\any.i"\
+	{$(INCLUDE)}"\.\cdr.h"\
+	{$(INCLUDE)}"\.\cdr.i"\
+	{$(INCLUDE)}"\.\client_factory.h"\
+	{$(INCLUDE)}"\.\client_factory.i"\
+	{$(INCLUDE)}"\.\connect.h"\
+	{$(INCLUDE)}"\.\connect.i"\
+	{$(INCLUDE)}"\.\corba.h"\
+	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
+	{$(INCLUDE)}"\.\debug.h"\
+	{$(INCLUDE)}"\.\default_client.h"\
+	{$(INCLUDE)}"\.\default_client.i"\
+	{$(INCLUDE)}"\.\default_server.h"\
+	{$(INCLUDE)}"\.\default_server.i"\
+	{$(INCLUDE)}"\.\except.h"\
+	{$(INCLUDE)}"\.\giop.h"\
+	{$(INCLUDE)}"\.\giop.i"\
+	{$(INCLUDE)}"\.\iiopobj.h"\
+	{$(INCLUDE)}"\.\iiopobj.i"\
+	{$(INCLUDE)}"\.\iioporb.h"\
+	{$(INCLUDE)}"\.\iioporb.i"\
+	{$(INCLUDE)}"\.\marshal.h"\
+	{$(INCLUDE)}"\.\marshal.i"\
+	{$(INCLUDE)}"\.\nvlist.h"\
+	{$(INCLUDE)}"\.\object.h"\
+	{$(INCLUDE)}"\.\object.i"\
+	{$(INCLUDE)}"\.\objtable.h"\
+	{$(INCLUDE)}"\.\optable.h"\
+	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
+	{$(INCLUDE)}"\.\orbconf.h"\
+	{$(INCLUDE)}"\.\orbobj.h"\
+	{$(INCLUDE)}"\.\orbobj.i"\
+	{$(INCLUDE)}"\.\params.h"\
+	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
+	{$(INCLUDE)}"\.\principa.h"\
+	{$(INCLUDE)}"\.\request.h"\
+	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
+	{$(INCLUDE)}"\.\server_factory.h"\
+	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
+	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
+	{$(INCLUDE)}"\.\svrrqst.h"\
+	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\typecode.h"\
+	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\Config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_PRINC=\
@@ -4863,8 +6106,6 @@ DEP_CPP_REQUE=\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -4873,6 +6114,7 @@ DEP_CPP_REQUE=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -4893,23 +6135,29 @@ DEP_CPP_REQUE=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -4958,6 +6206,7 @@ DEP_CPP_REQUE=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -5041,6 +6290,9 @@ DEP_CPP_REQUE=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_REQUE=\
@@ -5054,999 +6306,12 @@ NODEP_CPP_REQUE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\roa.cpp
-DEP_CPP_ROA_C=\
-	"..\..\ace\config-win32.h"\
-	{$(INCLUDE)}"\.\align.h"\
-	{$(INCLUDE)}"\.\any.h"\
-	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
-	{$(INCLUDE)}"\.\cdr.h"\
-	{$(INCLUDE)}"\.\cdr.i"\
-	{$(INCLUDE)}"\.\client_factory.h"\
-	{$(INCLUDE)}"\.\client_factory.i"\
-	{$(INCLUDE)}"\.\connect.h"\
-	{$(INCLUDE)}"\.\connect.i"\
-	{$(INCLUDE)}"\.\corba.h"\
-	{$(INCLUDE)}"\.\corbacom.h"\
-	{$(INCLUDE)}"\.\debug.h"\
-	{$(INCLUDE)}"\.\default_client.h"\
-	{$(INCLUDE)}"\.\default_client.i"\
-	{$(INCLUDE)}"\.\default_server.h"\
-	{$(INCLUDE)}"\.\default_server.i"\
-	{$(INCLUDE)}"\.\except.h"\
-	{$(INCLUDE)}"\.\giop.h"\
-	{$(INCLUDE)}"\.\giop.i"\
-	{$(INCLUDE)}"\.\iiopobj.h"\
-	{$(INCLUDE)}"\.\iiopobj.i"\
-	{$(INCLUDE)}"\.\iioporb.h"\
-	{$(INCLUDE)}"\.\iioporb.i"\
-	{$(INCLUDE)}"\.\marshal.h"\
-	{$(INCLUDE)}"\.\marshal.i"\
-	{$(INCLUDE)}"\.\nvlist.h"\
-	{$(INCLUDE)}"\.\object.h"\
-	{$(INCLUDE)}"\.\object.i"\
-	{$(INCLUDE)}"\.\objtable.h"\
-	{$(INCLUDE)}"\.\optable.h"\
-	{$(INCLUDE)}"\.\orb.h"\
-	{$(INCLUDE)}"\.\orbconf.h"\
-	{$(INCLUDE)}"\.\orbobj.h"\
-	{$(INCLUDE)}"\.\orbobj.i"\
-	{$(INCLUDE)}"\.\params.h"\
-	{$(INCLUDE)}"\.\params.i"\
-	{$(INCLUDE)}"\.\principa.h"\
-	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
-	{$(INCLUDE)}"\.\sequence.h"\
-	{$(INCLUDE)}"\.\server_factory.h"\
-	{$(INCLUDE)}"\.\server_factory.i"\
-	{$(INCLUDE)}"\.\stub.h"\
-	{$(INCLUDE)}"\.\svrrqst.h"\
-	{$(INCLUDE)}"\.\svrrqst.i"\
-	{$(INCLUDE)}"\.\typecode.h"\
-	{$(INCLUDE)}"\.\typecode.i"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\Config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_ROA_C=\
-	".\tao\factories.h"\
-	
-
-"$(INTDIR)\roa.obj" : $(SOURCE) $(DEP_CPP_ROA_C) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\svrrqst.cpp
-DEP_CPP_SVRRQ=\
-	"..\..\ace\config-win32.h"\
-	{$(INCLUDE)}"\.\align.h"\
-	{$(INCLUDE)}"\.\any.h"\
-	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
-	{$(INCLUDE)}"\.\cdr.h"\
-	{$(INCLUDE)}"\.\cdr.i"\
-	{$(INCLUDE)}"\.\client_factory.h"\
-	{$(INCLUDE)}"\.\client_factory.i"\
-	{$(INCLUDE)}"\.\connect.h"\
-	{$(INCLUDE)}"\.\connect.i"\
-	{$(INCLUDE)}"\.\corba.h"\
-	{$(INCLUDE)}"\.\corbacom.h"\
-	{$(INCLUDE)}"\.\debug.h"\
-	{$(INCLUDE)}"\.\default_client.h"\
-	{$(INCLUDE)}"\.\default_client.i"\
-	{$(INCLUDE)}"\.\default_server.h"\
-	{$(INCLUDE)}"\.\default_server.i"\
-	{$(INCLUDE)}"\.\except.h"\
-	{$(INCLUDE)}"\.\giop.h"\
-	{$(INCLUDE)}"\.\giop.i"\
-	{$(INCLUDE)}"\.\iiopobj.h"\
-	{$(INCLUDE)}"\.\iiopobj.i"\
-	{$(INCLUDE)}"\.\iioporb.h"\
-	{$(INCLUDE)}"\.\iioporb.i"\
-	{$(INCLUDE)}"\.\marshal.h"\
-	{$(INCLUDE)}"\.\marshal.i"\
-	{$(INCLUDE)}"\.\nvlist.h"\
-	{$(INCLUDE)}"\.\object.h"\
-	{$(INCLUDE)}"\.\object.i"\
-	{$(INCLUDE)}"\.\objtable.h"\
-	{$(INCLUDE)}"\.\optable.h"\
-	{$(INCLUDE)}"\.\orb.h"\
-	{$(INCLUDE)}"\.\orbconf.h"\
-	{$(INCLUDE)}"\.\orbobj.h"\
-	{$(INCLUDE)}"\.\orbobj.i"\
-	{$(INCLUDE)}"\.\params.h"\
-	{$(INCLUDE)}"\.\params.i"\
-	{$(INCLUDE)}"\.\principa.h"\
-	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
-	{$(INCLUDE)}"\.\sequence.h"\
-	{$(INCLUDE)}"\.\server_factory.h"\
-	{$(INCLUDE)}"\.\server_factory.i"\
-	{$(INCLUDE)}"\.\stub.h"\
-	{$(INCLUDE)}"\.\svrrqst.h"\
-	{$(INCLUDE)}"\.\svrrqst.i"\
-	{$(INCLUDE)}"\.\typecode.h"\
-	{$(INCLUDE)}"\.\typecode.i"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\Config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_SVRRQ=\
-	".\tao\factories.h"\
-	
-
-"$(INTDIR)\svrrqst.obj" : $(SOURCE) $(DEP_CPP_SVRRQ) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\tc_const.cpp
-DEP_CPP_TC_CO=\
-	"..\..\ace\config-win32.h"\
-	{$(INCLUDE)}"\.\align.h"\
-	{$(INCLUDE)}"\.\any.h"\
-	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
-	{$(INCLUDE)}"\.\cdr.h"\
-	{$(INCLUDE)}"\.\cdr.i"\
-	{$(INCLUDE)}"\.\client_factory.h"\
-	{$(INCLUDE)}"\.\client_factory.i"\
-	{$(INCLUDE)}"\.\connect.h"\
-	{$(INCLUDE)}"\.\connect.i"\
-	{$(INCLUDE)}"\.\corba.h"\
-	{$(INCLUDE)}"\.\corbacom.h"\
-	{$(INCLUDE)}"\.\debug.h"\
-	{$(INCLUDE)}"\.\default_client.h"\
-	{$(INCLUDE)}"\.\default_client.i"\
-	{$(INCLUDE)}"\.\default_server.h"\
-	{$(INCLUDE)}"\.\default_server.i"\
-	{$(INCLUDE)}"\.\except.h"\
-	{$(INCLUDE)}"\.\giop.h"\
-	{$(INCLUDE)}"\.\giop.i"\
-	{$(INCLUDE)}"\.\iiopobj.h"\
-	{$(INCLUDE)}"\.\iiopobj.i"\
-	{$(INCLUDE)}"\.\iioporb.h"\
-	{$(INCLUDE)}"\.\iioporb.i"\
-	{$(INCLUDE)}"\.\marshal.h"\
-	{$(INCLUDE)}"\.\marshal.i"\
-	{$(INCLUDE)}"\.\nvlist.h"\
-	{$(INCLUDE)}"\.\object.h"\
-	{$(INCLUDE)}"\.\object.i"\
-	{$(INCLUDE)}"\.\objtable.h"\
-	{$(INCLUDE)}"\.\optable.h"\
-	{$(INCLUDE)}"\.\orb.h"\
-	{$(INCLUDE)}"\.\orbconf.h"\
-	{$(INCLUDE)}"\.\orbobj.h"\
-	{$(INCLUDE)}"\.\orbobj.i"\
-	{$(INCLUDE)}"\.\params.h"\
-	{$(INCLUDE)}"\.\params.i"\
-	{$(INCLUDE)}"\.\principa.h"\
-	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
-	{$(INCLUDE)}"\.\sequence.h"\
-	{$(INCLUDE)}"\.\server_factory.h"\
-	{$(INCLUDE)}"\.\server_factory.i"\
-	{$(INCLUDE)}"\.\stub.h"\
-	{$(INCLUDE)}"\.\svrrqst.h"\
-	{$(INCLUDE)}"\.\svrrqst.i"\
-	{$(INCLUDE)}"\.\typecode.h"\
-	{$(INCLUDE)}"\.\typecode.i"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\Config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_TC_CO=\
-	".\tao\factories.h"\
-	
-
-"$(INTDIR)\tc_const.obj" : $(SOURCE) $(DEP_CPP_TC_CO) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\typecode.cpp
-DEP_CPP_TYPEC=\
-	"..\..\ace\config-win32.h"\
-	{$(INCLUDE)}"\.\align.h"\
-	{$(INCLUDE)}"\.\any.h"\
-	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
-	{$(INCLUDE)}"\.\cdr.h"\
-	{$(INCLUDE)}"\.\cdr.i"\
-	{$(INCLUDE)}"\.\client_factory.h"\
-	{$(INCLUDE)}"\.\client_factory.i"\
-	{$(INCLUDE)}"\.\connect.h"\
-	{$(INCLUDE)}"\.\connect.i"\
-	{$(INCLUDE)}"\.\corba.h"\
-	{$(INCLUDE)}"\.\corbacom.h"\
-	{$(INCLUDE)}"\.\debug.h"\
-	{$(INCLUDE)}"\.\default_client.h"\
-	{$(INCLUDE)}"\.\default_client.i"\
-	{$(INCLUDE)}"\.\default_server.h"\
-	{$(INCLUDE)}"\.\default_server.i"\
-	{$(INCLUDE)}"\.\except.h"\
-	{$(INCLUDE)}"\.\giop.h"\
-	{$(INCLUDE)}"\.\giop.i"\
-	{$(INCLUDE)}"\.\iiopobj.h"\
-	{$(INCLUDE)}"\.\iiopobj.i"\
-	{$(INCLUDE)}"\.\iioporb.h"\
-	{$(INCLUDE)}"\.\iioporb.i"\
-	{$(INCLUDE)}"\.\marshal.h"\
-	{$(INCLUDE)}"\.\marshal.i"\
-	{$(INCLUDE)}"\.\nvlist.h"\
-	{$(INCLUDE)}"\.\object.h"\
-	{$(INCLUDE)}"\.\object.i"\
-	{$(INCLUDE)}"\.\objtable.h"\
-	{$(INCLUDE)}"\.\optable.h"\
-	{$(INCLUDE)}"\.\orb.h"\
-	{$(INCLUDE)}"\.\orbconf.h"\
-	{$(INCLUDE)}"\.\orbobj.h"\
-	{$(INCLUDE)}"\.\orbobj.i"\
-	{$(INCLUDE)}"\.\params.h"\
-	{$(INCLUDE)}"\.\params.i"\
-	{$(INCLUDE)}"\.\principa.h"\
-	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
-	{$(INCLUDE)}"\.\sequence.h"\
-	{$(INCLUDE)}"\.\server_factory.h"\
-	{$(INCLUDE)}"\.\server_factory.i"\
-	{$(INCLUDE)}"\.\stub.h"\
-	{$(INCLUDE)}"\.\svrrqst.h"\
-	{$(INCLUDE)}"\.\svrrqst.i"\
-	{$(INCLUDE)}"\.\typecode.h"\
-	{$(INCLUDE)}"\.\typecode.i"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\Config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_TYPEC=\
-	".\tao\factories.h"\
-	
-
-"$(INTDIR)\typecode.obj" : $(SOURCE) $(DEP_CPP_TYPEC) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\any.cpp
-DEP_CPP_ANY_C=\
-	"..\..\ace\config-win32.h"\
-	{$(INCLUDE)}"\.\align.h"\
-	{$(INCLUDE)}"\.\any.h"\
-	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
-	{$(INCLUDE)}"\.\cdr.h"\
-	{$(INCLUDE)}"\.\cdr.i"\
-	{$(INCLUDE)}"\.\client_factory.h"\
-	{$(INCLUDE)}"\.\client_factory.i"\
-	{$(INCLUDE)}"\.\connect.h"\
-	{$(INCLUDE)}"\.\connect.i"\
-	{$(INCLUDE)}"\.\corba.h"\
-	{$(INCLUDE)}"\.\corbacom.h"\
-	{$(INCLUDE)}"\.\debug.h"\
-	{$(INCLUDE)}"\.\default_client.h"\
-	{$(INCLUDE)}"\.\default_client.i"\
-	{$(INCLUDE)}"\.\default_server.h"\
-	{$(INCLUDE)}"\.\default_server.i"\
-	{$(INCLUDE)}"\.\except.h"\
-	{$(INCLUDE)}"\.\giop.h"\
-	{$(INCLUDE)}"\.\giop.i"\
-	{$(INCLUDE)}"\.\iiopobj.h"\
-	{$(INCLUDE)}"\.\iiopobj.i"\
-	{$(INCLUDE)}"\.\iioporb.h"\
-	{$(INCLUDE)}"\.\iioporb.i"\
-	{$(INCLUDE)}"\.\marshal.h"\
-	{$(INCLUDE)}"\.\marshal.i"\
-	{$(INCLUDE)}"\.\nvlist.h"\
-	{$(INCLUDE)}"\.\object.h"\
-	{$(INCLUDE)}"\.\object.i"\
-	{$(INCLUDE)}"\.\objtable.h"\
-	{$(INCLUDE)}"\.\optable.h"\
-	{$(INCLUDE)}"\.\orb.h"\
-	{$(INCLUDE)}"\.\orbconf.h"\
-	{$(INCLUDE)}"\.\orbobj.h"\
-	{$(INCLUDE)}"\.\orbobj.i"\
-	{$(INCLUDE)}"\.\params.h"\
-	{$(INCLUDE)}"\.\params.i"\
-	{$(INCLUDE)}"\.\principa.h"\
-	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
-	{$(INCLUDE)}"\.\sequence.h"\
-	{$(INCLUDE)}"\.\server_factory.h"\
-	{$(INCLUDE)}"\.\server_factory.i"\
-	{$(INCLUDE)}"\.\stub.h"\
-	{$(INCLUDE)}"\.\svrrqst.h"\
-	{$(INCLUDE)}"\.\svrrqst.i"\
-	{$(INCLUDE)}"\.\typecode.h"\
-	{$(INCLUDE)}"\.\typecode.i"\
-	{$(INCLUDE)}"\ace\Acceptor.cpp"\
-	{$(INCLUDE)}"\ace\Acceptor.h"\
-	{$(INCLUDE)}"\ace\Acceptor.i"\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Atomic_Op.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\Config.h"\
-	{$(INCLUDE)}"\ace\Connector.cpp"\
-	{$(INCLUDE)}"\ace\Connector.h"\
-	{$(INCLUDE)}"\ace\Connector.i"\
-	{$(INCLUDE)}"\ace\Containers.cpp"\
-	{$(INCLUDE)}"\ace\Containers.h"\
-	{$(INCLUDE)}"\ace\Containers.i"\
-	{$(INCLUDE)}"\ace\Dynamic.h"\
-	{$(INCLUDE)}"\ace\Dynamic.i"\
-	{$(INCLUDE)}"\ace\Event_Handler.h"\
-	{$(INCLUDE)}"\ace\Event_Handler.i"\
-	{$(INCLUDE)}"\ace\Free_List.cpp"\
-	{$(INCLUDE)}"\ace\Free_List.h"\
-	{$(INCLUDE)}"\ace\Free_List.i"\
-	{$(INCLUDE)}"\ace\Get_Opt.h"\
-	{$(INCLUDE)}"\ace\Get_Opt.i"\
-	{$(INCLUDE)}"\ace\Handle_Set.h"\
-	{$(INCLUDE)}"\ace\Handle_Set.i"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Malloc.h"\
-	{$(INCLUDE)}"\ace\Malloc.i"\
-	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
-	{$(INCLUDE)}"\ace\Malloc_T.h"\
-	{$(INCLUDE)}"\ace\Malloc_T.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
-	{$(INCLUDE)}"\ace\Map_Manager.h"\
-	{$(INCLUDE)}"\ace\Map_Manager.i"\
-	{$(INCLUDE)}"\ace\Mem_Map.h"\
-	{$(INCLUDE)}"\ace\Mem_Map.i"\
-	{$(INCLUDE)}"\ace\Memory_Pool.h"\
-	{$(INCLUDE)}"\ace\Memory_Pool.i"\
-	{$(INCLUDE)}"\ace\Message_Block.h"\
-	{$(INCLUDE)}"\ace\Message_Block.i"\
-	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
-	{$(INCLUDE)}"\ace\Message_Queue.h"\
-	{$(INCLUDE)}"\ace\Message_Queue.i"\
-	{$(INCLUDE)}"\ace\Module.cpp"\
-	{$(INCLUDE)}"\ace\Module.h"\
-	{$(INCLUDE)}"\ace\Module.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\Reactor.h"\
-	{$(INCLUDE)}"\ace\Reactor.i"\
-	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
-	{$(INCLUDE)}"\ace\Service_Config.h"\
-	{$(INCLUDE)}"\ace\Service_Config.i"\
-	{$(INCLUDE)}"\ace\Service_Object.h"\
-	{$(INCLUDE)}"\ace\Service_Object.i"\
-	{$(INCLUDE)}"\ace\Service_Types.h"\
-	{$(INCLUDE)}"\ace\Service_Types.i"\
-	{$(INCLUDE)}"\ace\Shared_Object.h"\
-	{$(INCLUDE)}"\ace\Shared_Object.i"\
-	{$(INCLUDE)}"\ace\Signal.h"\
-	{$(INCLUDE)}"\ace\Signal.i"\
-	{$(INCLUDE)}"\ace\Singleton.cpp"\
-	{$(INCLUDE)}"\ace\Singleton.h"\
-	{$(INCLUDE)}"\ace\Singleton.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
-	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Strategies.h"\
-	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
-	{$(INCLUDE)}"\ace\Strategies_T.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
-	{$(INCLUDE)}"\ace\Stream_Modules.h"\
-	{$(INCLUDE)}"\ace\Stream_Modules.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
-	{$(INCLUDE)}"\ace\Svc_Handler.h"\
-	{$(INCLUDE)}"\ace\Svc_Handler.i"\
-	{$(INCLUDE)}"\ace\Synch.h"\
-	{$(INCLUDE)}"\ace\Synch.i"\
-	{$(INCLUDE)}"\ace\Synch_Options.h"\
-	{$(INCLUDE)}"\ace\Synch_T.cpp"\
-	{$(INCLUDE)}"\ace\Synch_T.h"\
-	{$(INCLUDE)}"\ace\Synch_T.i"\
-	{$(INCLUDE)}"\ace\Task.h"\
-	{$(INCLUDE)}"\ace\Task.i"\
-	{$(INCLUDE)}"\ace\Task_T.cpp"\
-	{$(INCLUDE)}"\ace\Task_T.h"\
-	{$(INCLUDE)}"\ace\Task_T.i"\
-	{$(INCLUDE)}"\ace\Thread.h"\
-	{$(INCLUDE)}"\ace\Thread.i"\
-	{$(INCLUDE)}"\ace\Thread_Manager.h"\
-	{$(INCLUDE)}"\ace\Thread_Manager.i"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
-	
-NODEP_CPP_ANY_C=\
-	".\tao\factories.h"\
-	
-
-"$(INTDIR)\any.obj" : $(SOURCE) $(DEP_CPP_ANY_C) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
 SOURCE=.\server_factory.cpp
 DEP_CPP_SERVE=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -6055,6 +6320,7 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -6075,23 +6341,29 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6140,6 +6412,7 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -6223,6 +6496,9 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_SERVE=\
@@ -6236,14 +6512,12 @@ NODEP_CPP_SERVE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\default_client.cpp
-DEP_CPP_DEFAU=\
+SOURCE=.\svrrqst.cpp
+DEP_CPP_SVRRQ=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -6252,6 +6526,7 @@ DEP_CPP_DEFAU=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -6272,23 +6547,29 @@ DEP_CPP_DEFAU=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6337,6 +6618,7 @@ DEP_CPP_DEFAU=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -6420,27 +6702,29 @@ DEP_CPP_DEFAU=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
-NODEP_CPP_DEFAU=\
+NODEP_CPP_SVRRQ=\
 	".\tao\factories.h"\
 	
 
-"$(INTDIR)\default_client.obj" : $(SOURCE) $(DEP_CPP_DEFAU) "$(INTDIR)"
+"$(INTDIR)\svrrqst.obj" : $(SOURCE) $(DEP_CPP_SVRRQ) "$(INTDIR)"
 
 
 # End Source File
 ################################################################################
 # Begin Source File
 
-SOURCE=.\default_server.cpp
-DEP_CPP_DEFAUL=\
+SOURCE=.\tao_internals.cpp
+DEP_CPP_TAO_I=\
 	"..\..\ace\config-win32.h"\
+	".\tao_internals.i"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -6449,6 +6733,7 @@ DEP_CPP_DEFAUL=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -6469,23 +6754,30 @@ DEP_CPP_DEFAUL=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\tao_internals.h"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6534,6 +6826,7 @@ DEP_CPP_DEFAUL=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -6560,6 +6853,8 @@ DEP_CPP_DEFAUL=\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
 	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Repository.h"\
+	{$(INCLUDE)}"\ace\Service_Repository.i"\
 	{$(INCLUDE)}"\ace\Service_Types.h"\
 	{$(INCLUDE)}"\ace\Service_Types.i"\
 	{$(INCLUDE)}"\ace\Shared_Object.h"\
@@ -6617,27 +6912,28 @@ DEP_CPP_DEFAUL=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
-NODEP_CPP_DEFAUL=\
+NODEP_CPP_TAO_I=\
 	".\tao\factories.h"\
 	
 
-"$(INTDIR)\default_server.obj" : $(SOURCE) $(DEP_CPP_DEFAUL) "$(INTDIR)"
+"$(INTDIR)\tao_internals.obj" : $(SOURCE) $(DEP_CPP_TAO_I) "$(INTDIR)"
 
 
 # End Source File
 ################################################################################
 # Begin Source File
 
-SOURCE=.\client_factory.cpp
-DEP_CPP_CLIEN=\
+SOURCE=.\tc_const.cpp
+DEP_CPP_TC_CO=\
 	"..\..\ace\config-win32.h"\
 	{$(INCLUDE)}"\.\align.h"\
 	{$(INCLUDE)}"\.\any.h"\
 	{$(INCLUDE)}"\.\any.i"\
-	{$(INCLUDE)}"\.\boa.h"\
-	{$(INCLUDE)}"\.\boa.i"\
 	{$(INCLUDE)}"\.\cdr.h"\
 	{$(INCLUDE)}"\.\cdr.i"\
 	{$(INCLUDE)}"\.\client_factory.h"\
@@ -6646,6 +6942,7 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\.\connect.i"\
 	{$(INCLUDE)}"\.\corba.h"\
 	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
 	{$(INCLUDE)}"\.\debug.h"\
 	{$(INCLUDE)}"\.\default_client.h"\
 	{$(INCLUDE)}"\.\default_client.i"\
@@ -6666,23 +6963,29 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\.\objtable.h"\
 	{$(INCLUDE)}"\.\optable.h"\
 	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
 	{$(INCLUDE)}"\.\orbconf.h"\
 	{$(INCLUDE)}"\.\orbobj.h"\
 	{$(INCLUDE)}"\.\orbobj.i"\
 	{$(INCLUDE)}"\.\params.h"\
 	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
 	{$(INCLUDE)}"\.\principa.h"\
 	{$(INCLUDE)}"\.\request.h"\
-	{$(INCLUDE)}"\.\roa.h"\
-	{$(INCLUDE)}"\.\roa.i"\
 	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
 	{$(INCLUDE)}"\.\server_factory.h"\
 	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
 	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
 	{$(INCLUDE)}"\.\svrrqst.h"\
 	{$(INCLUDE)}"\.\svrrqst.i"\
 	{$(INCLUDE)}"\.\typecode.h"\
 	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
 	{$(INCLUDE)}"\ace\Acceptor.i"\
@@ -6731,6 +7034,7 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Map_Manager.h"\
 	{$(INCLUDE)}"\ace\Map_Manager.i"\
@@ -6814,13 +7118,222 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
-NODEP_CPP_CLIEN=\
+NODEP_CPP_TC_CO=\
 	".\tao\factories.h"\
 	
 
-"$(INTDIR)\client_factory.obj" : $(SOURCE) $(DEP_CPP_CLIEN) "$(INTDIR)"
+"$(INTDIR)\tc_const.obj" : $(SOURCE) $(DEP_CPP_TC_CO) "$(INTDIR)"
+
+
+# End Source File
+################################################################################
+# Begin Source File
+
+SOURCE=.\any.cpp
+DEP_CPP_ANY_C=\
+	"..\..\ace\config-win32.h"\
+	{$(INCLUDE)}"\.\align.h"\
+	{$(INCLUDE)}"\.\any.h"\
+	{$(INCLUDE)}"\.\any.i"\
+	{$(INCLUDE)}"\.\cdr.h"\
+	{$(INCLUDE)}"\.\cdr.i"\
+	{$(INCLUDE)}"\.\client_factory.h"\
+	{$(INCLUDE)}"\.\client_factory.i"\
+	{$(INCLUDE)}"\.\connect.h"\
+	{$(INCLUDE)}"\.\connect.i"\
+	{$(INCLUDE)}"\.\corba.h"\
+	{$(INCLUDE)}"\.\corbacom.h"\
+	{$(INCLUDE)}"\.\corbacom.i"\
+	{$(INCLUDE)}"\.\debug.h"\
+	{$(INCLUDE)}"\.\default_client.h"\
+	{$(INCLUDE)}"\.\default_client.i"\
+	{$(INCLUDE)}"\.\default_server.h"\
+	{$(INCLUDE)}"\.\default_server.i"\
+	{$(INCLUDE)}"\.\except.h"\
+	{$(INCLUDE)}"\.\giop.h"\
+	{$(INCLUDE)}"\.\giop.i"\
+	{$(INCLUDE)}"\.\iiopobj.h"\
+	{$(INCLUDE)}"\.\iiopobj.i"\
+	{$(INCLUDE)}"\.\iioporb.h"\
+	{$(INCLUDE)}"\.\iioporb.i"\
+	{$(INCLUDE)}"\.\marshal.h"\
+	{$(INCLUDE)}"\.\marshal.i"\
+	{$(INCLUDE)}"\.\nvlist.h"\
+	{$(INCLUDE)}"\.\object.h"\
+	{$(INCLUDE)}"\.\object.i"\
+	{$(INCLUDE)}"\.\objtable.h"\
+	{$(INCLUDE)}"\.\optable.h"\
+	{$(INCLUDE)}"\.\orb.h"\
+	{$(INCLUDE)}"\.\orb_core.h"\
+	{$(INCLUDE)}"\.\orb_core.i"\
+	{$(INCLUDE)}"\.\orbconf.h"\
+	{$(INCLUDE)}"\.\orbobj.h"\
+	{$(INCLUDE)}"\.\orbobj.i"\
+	{$(INCLUDE)}"\.\params.h"\
+	{$(INCLUDE)}"\.\params.i"\
+	{$(INCLUDE)}"\.\poa.h"\
+	{$(INCLUDE)}"\.\poa.i"\
+	{$(INCLUDE)}"\.\principa.h"\
+	{$(INCLUDE)}"\.\request.h"\
+	{$(INCLUDE)}"\.\sequence.h"\
+	{$(INCLUDE)}"\.\sequence.i"\
+	{$(INCLUDE)}"\.\server_factory.h"\
+	{$(INCLUDE)}"\.\server_factory.i"\
+	{$(INCLUDE)}"\.\singletons.h"\
+	{$(INCLUDE)}"\.\stub.h"\
+	{$(INCLUDE)}"\.\stub.i"\
+	{$(INCLUDE)}"\.\svrrqst.h"\
+	{$(INCLUDE)}"\.\svrrqst.i"\
+	{$(INCLUDE)}"\.\typecode.h"\
+	{$(INCLUDE)}"\.\typecode.i"\
+	{$(INCLUDE)}"\.\varout.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
+	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Addr.h"\
+	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\Config.h"\
+	{$(INCLUDE)}"\ace\Connector.cpp"\
+	{$(INCLUDE)}"\ace\Connector.h"\
+	{$(INCLUDE)}"\ace\Connector.i"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\Get_Opt.h"\
+	{$(INCLUDE)}"\ace\Get_Opt.i"\
+	{$(INCLUDE)}"\ace\Handle_Set.h"\
+	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.h"\
+	{$(INCLUDE)}"\ace\INET_Addr.i"\
+	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.h"\
+	{$(INCLUDE)}"\ace\IPC_SAP.i"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Message_Block.h"\
+	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
+	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Reactor.h"\
+	{$(INCLUDE)}"\ace\Reactor.i"\
+	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Service_Config.h"\
+	{$(INCLUDE)}"\ace\Service_Config.i"\
+	{$(INCLUDE)}"\ace\Service_Object.h"\
+	{$(INCLUDE)}"\ace\Service_Object.i"\
+	{$(INCLUDE)}"\ace\Service_Types.h"\
+	{$(INCLUDE)}"\ace\Service_Types.i"\
+	{$(INCLUDE)}"\ace\Shared_Object.h"\
+	{$(INCLUDE)}"\ace\Shared_Object.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SOCK.h"\
+	{$(INCLUDE)}"\ace\SOCK.i"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
+	{$(INCLUDE)}"\ace\SOCK_Acceptor.i"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
+	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
+	{$(INCLUDE)}"\ace\SOCK_IO.h"\
+	{$(INCLUDE)}"\ace\SOCK_IO.i"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
+	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
+	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
+	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\Task.h"\
+	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
+	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Thread_Manager.h"\
+	{$(INCLUDE)}"\ace\Thread_Manager.i"\
+	{$(INCLUDE)}"\ace\Time_Value.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
+	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+NODEP_CPP_ANY_C=\
+	".\tao\factories.h"\
+	
+
+"$(INTDIR)\any.obj" : $(SOURCE) $(DEP_CPP_ANY_C) "$(INTDIR)"
 
 
 # End Source File
