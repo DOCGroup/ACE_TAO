@@ -25,6 +25,7 @@ CCFLAGS		+= -ptall
 #CPPFLAGS	+= -n32 -woff 1174,1209,1375,1506,1110,1552,1021,1171
 LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace"
 LDFLAGS		+= -Wl,-woff,15
+LDFLAGS		+= -Wl,-woff,85
 LIBS		+= -lpthread
 PIC		= -KPIC
 AR		= ar
