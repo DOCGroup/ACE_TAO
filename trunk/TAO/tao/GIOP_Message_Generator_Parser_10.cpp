@@ -241,7 +241,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   this->marshal_reply_status (output,
                               reply);
 
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);  // FUZZ: ignore check_for_ace_check
 
   return 1;
 }
