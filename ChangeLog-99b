@@ -1,5 +1,13 @@
 Thu Jun 17 12:46:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Conn_Test.cpp: Fixed a problem with explicit template
+ 	  instantiations so that this test will compile even if ACE isn't
+ 	  built with threads.
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: Fixed the explicit
+ 	  template instantiations so hopefully they'll work when ACE is
+ 	  compiled without threads.  Thanks to Carlos for reporting this.
+
 	* ace/SOCK_Dgram_Mcast.cpp: We needed to modify the return values
  	  of subscribe_i() so that we'd have the ability to differentiate
  	  a "short-circuit" return on NT.  Thanks to Marina for reporting
