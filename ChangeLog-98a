@@ -3,24 +3,28 @@ Wed Jan 21 10:39:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Task.cpp (activate): for builds without threads only,
           added ACE_UNUSED_ARG of stack and stack_size.
 
+        * ace/High_Res_Timer.cpp: used unsigned constants instead of
+          signed, to allow resolution of overloaded
+          ACE_U_LongLong::operator/ ().
+
 Tue Jan 20 21:15:01 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.20, released Tue Jan 20 21:15:01 1998.
 
 Tue Jan 20 20:31:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/test_config.h: 
+	* tests/test_config.h:
 	  Changed several buffer sizes from BUFSIZ to MAXPATHLEN, they
 	  were used for storing pathnames, so the later is a proper size
 	  for them.
 
 Tue Jan 20 15:54:44 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-	* ace/Timer_Heap_T.cpp: Fixed a bug that was introduced on 
-	  Sunday because of the non-use of position 0 (we have to 
-	  grow the heap one node early).  
+	* ace/Timer_Heap_T.cpp: Fixed a bug that was introduced on
+	  Sunday because of the non-use of position 0 (we have to
+	  grow the heap one node early).
 
-	* ace/Timer_Queue_T.{h,cpp}: Added a return_node () method 
+	* ace/Timer_Queue_T.{h,cpp}: Added a return_node () method
 	  which is used to return a ACE_Timer_Node back into the
 	  control of the Timer Queue after it leaves via
 	  remove_first ().
@@ -36,7 +40,7 @@ Tue Jan 20 12:49:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue Jan 20 11:57:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
+	* bin/auto_compile:
 	  Added several TAO components to the compile list.
 	  The regular expression for make errors was missing several of
 	  them.
