@@ -384,10 +384,6 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
-  int _argc = 3;
-  char *_argv[] = {"server",
-                  "-t",
-                  "1"};
 
   // Create the daemon thread in its own <ACE_Thread_Manager>.
   ACE_Thread_Manager servant_thread_manager;
