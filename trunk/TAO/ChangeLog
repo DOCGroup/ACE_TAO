@@ -1,3 +1,10 @@
+Tue Dec 30 20:32:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security.idl:
+
+	  Fixed a path to the IDL file. This should fix the compile errors
+	  in the daily builds.
+
 Tue Dec 30 19:09:46 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
