@@ -1,3 +1,8 @@
+Thu Jun 17 00:33:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/Process_Win32.pm (TimedWait):
+	  Get and return the exit status from the waited process.
+
 Wed Jun 16 22:03:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.h (ACE_OS): Removed ACE_WIDE_DL_TYPE and the wide char
