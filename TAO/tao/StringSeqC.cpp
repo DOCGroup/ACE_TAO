@@ -31,7 +31,7 @@
 
 #include "Any.h"
 #include "CDR.h"
-#include "TypeCode.h"
+#include "Typecode.h"
 
 #if !defined (_CORBA_STRINGSEQ_CS_)
 #define _CORBA_STRINGSEQ_CS_
@@ -43,30 +43,30 @@
 CORBA_StringSeq::CORBA_StringSeq (void)
 {}
 CORBA_StringSeq::CORBA_StringSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 CORBA_StringSeq::CORBA_StringSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 CORBA_StringSeq::CORBA_StringSeq (const CORBA_StringSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 CORBA_StringSeq::~CORBA_StringSeq (void) // dtor
@@ -88,7 +88,7 @@ static const CORBA::Long _oc_CORBA_StringSeq[] =
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
     0U,
 
@@ -107,30 +107,30 @@ CORBA::TypeCode_ptr _tc_CORBA_StringSeq = &_tc_TAO_tc_CORBA_StringSeq;
 CORBA_WStringSeq::CORBA_WStringSeq (void)
 {}
 CORBA_WStringSeq::CORBA_WStringSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_WString_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_WString_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 CORBA_WStringSeq::CORBA_WStringSeq (CORBA::ULong max, CORBA::ULong length, CORBA::WChar * *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_WString_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_WString_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 CORBA_WStringSeq::CORBA_WStringSeq (const CORBA_WStringSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_WString_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_WString_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 CORBA_WStringSeq::~CORBA_WStringSeq (void) // dtor
@@ -152,7 +152,7 @@ static const CORBA::Long _oc_CORBA_WStringSeq[] =
   CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_wstring, 
+    CORBA::tk_wstring,
     0U, // string length
     0U,
 
@@ -366,7 +366,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -408,7 +408,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -420,4 +420,3 @@ CORBA::Boolean operator>> (
   }
   return 0; // error
 }
-
