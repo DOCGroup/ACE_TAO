@@ -238,6 +238,12 @@ protected:
   /// The generator and parser state.
   // TAO_GIOP_Message_Generator_Parser *generator_parser_;
 
+  /// Buffer used for both the output and input CDR streams, this is
+  /// "safe" because we only one of the streams at a time.
+  char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /// Buffer where the request is placed.
+  TAO_OutputCDR out_stream_;
 };
 
 
