@@ -2,6 +2,7 @@
 #include "RT_Stub.h"
 #include "RT_Policy_i.h"
 
+#if (TAO_HAS_RT_CORBA == 1)
 
 ACE_RCSID(tao, TAO_RT_Stub, "$Id$")
 
@@ -398,3 +399,4 @@ TAO_RT_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
   return policy._retn ();
 }
 
+#endif /* TAO_HAS_RT_CORBA == 1 */
