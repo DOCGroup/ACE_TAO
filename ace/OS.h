@@ -2976,7 +2976,9 @@ typedef unsigned int size_t;
 #  define IOV_MAX 16
 # endif /* IOV_MAX */
 
+# if !defined (ACE_IOV_MAX)
 #define ACE_IOV_MAX IOV_MAX
+# endif /* ACE_IOV_MAX */
 
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
   // Header information snarfed from compiler provided header files
@@ -5955,7 +5957,7 @@ public:
    * mutex should not be a recursive one, i.e., it should only be a
    * standard mutex or an error checking mutex.
    */
-  static int mutex_lock (ACE_mutex_t *m, 
+  static int mutex_lock (ACE_mutex_t *m,
                          const ACE_Time_Value *timeout);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
