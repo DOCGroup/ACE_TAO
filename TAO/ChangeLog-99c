@@ -1,3 +1,25 @@
+Tue Jun 22 11:59:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
+  
+	C
 Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
