@@ -104,6 +104,15 @@ ifeq ($(threads),1)
     endif # ! PRELIB
 endif
 
+# support for OpenSS7 SCTP
+ifeq ($(sctp),openss7)
+  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_OPENSS7_SCTP
+  PLATFORM_SCTP_LDFLAGS=
+  PLATFORM_SCTP_LIBS= 
+endif
+
+# Eventually Other SCTP implementations will go here
+
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
 #### builds will fail due to running over that limit.  There are
 #### at least two workarounds:
