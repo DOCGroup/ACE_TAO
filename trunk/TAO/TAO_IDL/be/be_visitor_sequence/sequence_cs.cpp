@@ -210,9 +210,14 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       this->gen_varout_tmplinst (node,
                                  bt);
 
-      if (this->gen_base_class_tmplinst (node,
-                                         bt) == -1)
-        return -1;
+      // Dont generate if the type is composed of Octets
+      if (ACE_OS::strcmp (bt->nested_type_name (idl_global->root ()),
+                          "CORBA::Octet") !=0)
+        {
+          if (this->gen_base_class_tmplinst (node,
+                                             bt) == -1)
+            return -1;
+        }
     }
 
   os->gen_endif ();
@@ -839,4 +844,6 @@ be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
   *os << be_uidt_nl;
 
   os->gen_endif_AHETI ();
+
+  return 0;
 }

@@ -1,3 +1,8 @@
+Fri Apr 25 22:29:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: Added explicit
+	  template instations for the base class sequences. 
+
 Fri Apr 25 22:26:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicC.cpp:
@@ -23,6 +28,10 @@ Fri Apr 25 22:26:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/diffs/Dynamic.diff:
 	* tao/diffs/OctetSeq.diff: Updated the diff files. 
 
+	  With the above checkin a simple server and client should build
+	  without link errors when explicit template instantiations have
+	  been turned on.
+	
 Fri Apr 25 17:04:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_type.cpp:
