@@ -462,7 +462,7 @@ public:
 
   /// Initialize the ORB globals correctly, i.e., only when they
   /// haven't been initialized yet.
-  static void init_orb_globals (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  static void init_orb_globals (ACE_ENV_SINGLE_ARG_DECL);
 
   // The function used by tao to handle the "unexpected" exceptions,
   // It raises CORBA::UNKNOWN.

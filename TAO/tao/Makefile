@@ -537,8 +537,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -666,8 +665,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -815,11 +813,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl ORB_Core.h ORB.h Services.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -829,9 +827,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -851,16 +849,15 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -875,8 +872,8 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i \
- Invocation.h CDR.h Synch_Reply_Dispatcher.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i Invocation.h \
+ CDR.h Synch_Reply_Dispatcher.h \
  Reply_Dispatcher.h \
  Reply_Dispatcher.i \
  LF_Event.h \
@@ -885,10 +882,9 @@ realclean:
  GIOP_Message_Version.inl \
  operation_details.h Service_Context.h \
  Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i MProfile.h \
+ target_specification.h Object_KeyC.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i MProfile.h \
  MProfile.i Profile.h \
  Tagged_Components.h CONV_FRAMEC.h \
  CONV_FRAMEC.i \
@@ -925,8 +921,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1074,11 +1069,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl ORB_Core.h ORB.h Services.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -1088,9 +1083,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -1110,16 +1105,15 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1191,8 +1185,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1293,11 +1286,10 @@ realclean:
  IOPC.i \
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl ORB_Core.h corbafwd.h ORB.h Exception.h \
- Services.h Services.i \
- CORBA_String.h CORBA_String.inl \
- objectid.h PolicyC.h CurrentC.h \
- CurrentC.i Policy_ForwardC.h \
- Remote_Object_Proxy_Impl.h \
+ Services.h Services.i CORBA_String.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
+ Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
  Policy_Manager.h Policy_Set.h \
@@ -1306,8 +1298,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -1353,25 +1345,23 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1414,8 +1404,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Event_Handler.i Connection_Handler.h \
  LF_Event.h LF_Event.inl \
  Connection_Handler.inl Transport.h \
@@ -1566,11 +1555,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl ORB_Core.h ORB.h Services.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -1580,9 +1569,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -1602,16 +1591,15 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -1656,8 +1644,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1744,8 +1731,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1763,8 +1750,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -1815,25 +1802,24 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1876,8 +1862,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2140,8 +2125,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2199,8 +2183,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2467,8 +2450,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2555,8 +2537,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -2574,8 +2556,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -2626,25 +2608,24 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2674,11 +2655,9 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl $(ACE_ROOT)/ace/SOCK.h \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i
@@ -2713,8 +2692,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2984,8 +2962,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3101,8 +3078,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3144,8 +3120,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3275,8 +3250,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3501,8 +3475,7 @@ realclean:
  Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -3638,8 +3611,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3864,8 +3836,7 @@ realclean:
  Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -4006,8 +3977,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4134,8 +4104,7 @@ realclean:
  objectid.h \
  ORB.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  IIOP_Endpoint.i \
  IIOP_Profile.i CDR.h Environment.h \
@@ -4145,8 +4114,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -4193,25 +4162,23 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4259,8 +4226,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4414,8 +4380,7 @@ realclean:
  Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -4645,8 +4610,7 @@ realclean:
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -4669,12 +4633,10 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/SOCK.i $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Handle_Ops.h \
  $(ACE_ROOT)/ace/Handle_Ops.i \
  $(ACE_ROOT)/ace/Lib_Find.h \
@@ -4946,8 +4908,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h objectid.h CORBA_String.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h objectid.h CORBA_String.h \
  params.i TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
@@ -4961,8 +4923,7 @@ realclean:
  ValueBase.i Exception.h \
  ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h PortableInterceptorC.i \
- Parser_Registry.h \
- Parser_Registry.i \
+ Parser_Registry.h Parser_Registry.i \
  Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
@@ -5014,8 +4975,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5237,8 +5197,7 @@ realclean:
  Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -5377,8 +5336,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -5600,8 +5558,7 @@ realclean:
  Transport.inl \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -5723,8 +5680,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5834,8 +5790,7 @@ realclean:
  PolicyC.i \
  ORB.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  IIOP_Endpoint.i \
  debug.h
@@ -5870,8 +5825,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -5999,8 +5953,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -6021,8 +5974,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -6114,8 +6066,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -6133,9 +6085,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -6160,25 +6112,24 @@ realclean:
  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -6194,10 +6145,10 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i \
  Wait_On_Read.h Wait_Strategy.h \
- Wait_Strategy.inl \
- Wait_On_Reactor.h Wait_On_Leader_Follower.h Exclusive_TMS.h \
- Transport_Mux_Strategy.h \
- Muxed_TMS.h $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ Wait_Strategy.inl Wait_On_Reactor.h \
+ Wait_On_Leader_Follower.h Exclusive_TMS.h \
+ Transport_Mux_Strategy.h Muxed_TMS.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  Blocked_Connect_Strategy.h Connect_Strategy.h \
  Reactive_Connect_Strategy.h LF_Connect_Strategy.h
 
@@ -6232,8 +6183,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -6265,8 +6215,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -6486,8 +6435,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -6745,8 +6693,7 @@ realclean:
  $(ACE_ROOT)/ace/Select_Reactor_Base.h \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/Pipe.h \
- $(ACE_ROOT)/ace/Pipe.i \
+ $(ACE_ROOT)/ace/Pipe.h $(ACE_ROOT)/ace/Pipe.i \
  $(ACE_ROOT)/ace/Select_Reactor_Base.i \
  $(ACE_ROOT)/ace/Select_Reactor_T.cpp \
  $(ACE_ROOT)/ace/Timer_Heap.h \
@@ -6791,8 +6738,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -6915,8 +6861,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -7037,8 +6982,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7188,8 +7132,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7336,8 +7279,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7488,8 +7430,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7627,8 +7568,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7886,8 +7826,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -7932,8 +7871,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8036,12 +7974,8 @@ realclean:
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Exception.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
@@ -8049,6 +7983,8 @@ realclean:
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -8059,8 +7995,17 @@ realclean:
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/DLL.h \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ Exception.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8115,8 +8060,6 @@ realclean:
  $(ACE_ROOT)/ace/Malloc_T.i \
  $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Mem_Map.h \
@@ -8180,12 +8123,6 @@ realclean:
  debug.h \
  Policy_Manager.i \
  Resource_Factory.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/DLL.h \
- $(ACE_ROOT)/ace/Service_Object.i \
  params.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -8311,8 +8248,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8591,8 +8527,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -8842,8 +8777,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9132,8 +9066,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9261,8 +9194,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9403,8 +9335,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9491,8 +9422,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -9543,8 +9474,8 @@ realclean:
  Connector_Registry.i IOR_Parser.h \
  Exception.h \
  IOR_Parser.i Parser_Registry.h \
- Parser_Registry.i Object.h \
- Typecode.h Typecode.i Stub.h \
+ Parser_Registry.i Object.h Typecode.h \
+ Typecode.i Stub.h \
  MProfile.h \
  PolicyC.h \
  MProfile.i \
@@ -9653,8 +9584,7 @@ realclean:
  $(ACE_ROOT)/ace/Service_Repository.i \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
@@ -9701,8 +9631,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -9743,8 +9672,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10020,8 +9948,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10297,8 +10224,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10391,8 +10317,8 @@ realclean:
  ORB_Core.h corbafwd.h ORB.h Exception.h \
  Exception.i Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Object.i \
  CurrentC.i Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
@@ -10404,8 +10330,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -10456,25 +10382,24 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -10490,8 +10415,7 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i debug.h
 
-.obj/Encodable.o .obj/Encodable.so .shobj/Encodable.o .shobj/Encodable.so: Encodable.cpp \
- Encodable.h \
+.obj/Encodable.o .obj/Encodable.so .shobj/Encodable.o .shobj/Encodable.so: Encodable.cpp Encodable.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -10520,8 +10444,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10563,8 +10486,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10606,8 +10528,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10650,8 +10571,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10696,8 +10616,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -10739,8 +10658,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11016,8 +10934,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11315,8 +11232,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11563,8 +11479,7 @@ realclean:
  Invocation.i \
  RequestInfo_Util.h
 
-.obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp \
- Principal.h \
+.obj/Principal.o .obj/Principal.so .shobj/Principal.o .shobj/Principal.so: Principal.cpp Principal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -11593,8 +11508,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11715,8 +11629,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -11741,8 +11654,7 @@ realclean:
  Environment.i
 
 .obj/MProfile.o .obj/MProfile.so .shobj/MProfile.o .shobj/MProfile.so: MProfile.cpp MProfile.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -11767,8 +11679,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -11915,8 +11826,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12154,11 +12064,10 @@ realclean:
  GIOP_Message_Version.h \
  Messaging_SyncScopeC.h operation_details.h Service_Context.h \
  Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i \
- Asynch_Invocation.h Invocation.h \
+ target_specification.h Object_KeyC.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i Asynch_Invocation.h \
+ Invocation.h \
  Asynch_Reply_Dispatcher_Base.h \
  Transport.h \
  Transport_Descriptor_Interface.h \
@@ -12191,12 +12100,10 @@ realclean:
  TAOC.i \
  Sync_Strategies.i \
  Buffering_Constraint_Policy.h \
- Buffering_Constraint_Policy.i \
- debug.h
+ Buffering_Constraint_Policy.i debug.h
 
 .obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp Typecode.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -12221,8 +12128,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -12373,8 +12279,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12640,8 +12545,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12894,8 +12798,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12933,8 +12836,7 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -12954,8 +12856,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -13138,8 +13039,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -13393,8 +13293,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -13440,8 +13339,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13559,8 +13457,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13661,8 +13558,7 @@ realclean:
 
 .obj/Default_Protocols_Hooks.o .obj/Default_Protocols_Hooks.so .shobj/Default_Protocols_Hooks.o .shobj/Default_Protocols_Hooks.so: Default_Protocols_Hooks.cpp \
  Default_Protocols_Hooks.h $(ACE_ROOT)/ace/pre.h \
- Protocols_Hooks.h corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
+ Protocols_Hooks.h corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13688,8 +13584,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13803,8 +13698,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Default_Protocols_Hooks.i \
- PolicyC.h CurrentC.h Object.h \
+ Default_Protocols_Hooks.i PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  Object.i \
  CurrentC.i Exception.h \
@@ -13817,8 +13712,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/Messaging_SyncScopeC.o .obj/Messaging_SyncScopeC.so .shobj/Messaging_SyncScopeC.o .shobj/Messaging_SyncScopeC.so: Messaging_SyncScopeC.cpp \
- Messaging_SyncScopeC.h $(ACE_ROOT)/ace/pre.h \
- corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
+ Messaging_SyncScopeC.h $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -13844,8 +13739,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -13955,8 +13849,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -14065,10 +13958,9 @@ realclean:
  Messaging_SyncScopeC.h corbafwd.h Messaging_SyncScopeC.i \
  operation_details.h Service_Context.h \
  Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i Stub.h \
+ target_specification.h Object_KeyC.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i Stub.h \
  MProfile.h \
  PolicyC.h \
  CurrentC.h \
@@ -14191,8 +14083,8 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  ORB_Core.i \
- Stub.i Profile.h \
- Tagged_Components.h CONV_FRAMEC.h \
+ Stub.i Profile.h Tagged_Components.h \
+ CONV_FRAMEC.h \
  CONV_FRAMEC.i \
  Tagged_Components.i PolicyC.h \
  GIOP_Message_Version.h Profile.i Timeprobe.h \
@@ -14211,12 +14103,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl Connector_Registry.h Endpoint.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl Connector_Registry.h Endpoint.h \
  Endpoint.i \
- Connector_Registry.i \
- Wait_Strategy.h Wait_Strategy.inl Transport_Mux_Strategy.h \
- Bind_Dispatcher_Guard.h \
+ Connector_Registry.i Wait_Strategy.h \
+ Wait_Strategy.inl Transport_Mux_Strategy.h Bind_Dispatcher_Guard.h \
  Bind_Dispatcher_Guard.i \
  Transport_Mux_Strategy.h \
  Transport_Connector.h Transport_Connector.inl GIOP_Utils.h \
@@ -14259,8 +14150,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -14548,8 +14438,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -14851,8 +14740,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -14989,8 +14877,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -15133,8 +15020,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -15257,8 +15143,8 @@ realclean:
  GIOP_Message_Version.inl \
  operation_details.h target_specification.h \
  Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i Stub.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i Stub.h \
  MProfile.h \
  PolicyC.h \
  MProfile.i \
@@ -15396,8 +15282,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -15495,8 +15380,8 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- Any.i DynamicC.i Any.h \
- StringSeqC.h Sequence.h StringSeqC.i
+ Any.i DynamicC.i Any.h StringSeqC.h \
+ Sequence.h StringSeqC.i
 
 .obj/ClientInterceptorAdapter.o .obj/ClientInterceptorAdapter.so .shobj/ClientInterceptorAdapter.o .shobj/ClientInterceptorAdapter.so: ClientInterceptorAdapter.cpp \
  ClientInterceptorAdapter.h $(ACE_ROOT)/ace/pre.h \
@@ -15526,8 +15411,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -15652,18 +15536,18 @@ realclean:
  GIOP_Message_Version.inl \
  operation_details.h target_specification.h \
  Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i ORB_Core.h \
- ORB.h Services.h Services.i \
- CORBA_String.h CORBA_String.inl \
- objectid.h ORB.i Environment.h \
- Policy_Manager.h Policy_Set.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i ORB_Core.h ORB.h Services.h \
+ Services.i CORBA_String.h \
+ CORBA_String.inl objectid.h \
+ ORB.i Environment.h Policy_Manager.h \
+ Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -15704,8 +15588,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -15763,8 +15646,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -16040,8 +15922,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -16311,8 +16192,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -16425,14 +16305,14 @@ realclean:
  PICurrent.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
  CORBA_String.inl objectid.h \
- ORB.i Environment.h \
- Policy_Manager.h Policy_Set.h \
+ ORB.i Environment.h Policy_Manager.h \
+ Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -16473,8 +16353,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -16486,9 +16366,8 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl \
- $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -16541,8 +16420,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -16652,18 +16530,17 @@ realclean:
  PolicyC.i PortableInterceptorC.i PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp PICurrent.inl \
- ORB_Core.h ORB.h Services.h \
- Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- ORB.i Environment.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp PICurrent.inl ORB_Core.h \
+ ORB.h Services.h Services.i \
+ CORBA_String.h CORBA_String.inl \
+ objectid.h ORB.i Environment.h \
  Policy_Manager.h Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -16704,8 +16581,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -16717,9 +16594,8 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl \
- $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -16733,11 +16609,10 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i \
- ORBInitInfo.h ORBInitInfo.inl
+ $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i ORBInitInfo.h \
+ ORBInitInfo.inl
 
-.obj/DynamicC.o .obj/DynamicC.so .shobj/DynamicC.o .shobj/DynamicC.so: DynamicC.cpp DynamicC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/DynamicC.o .obj/DynamicC.so .shobj/DynamicC.o .shobj/DynamicC.so: DynamicC.cpp DynamicC.h $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
@@ -16765,8 +16640,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17042,8 +16916,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17143,8 +17016,8 @@ realclean:
  Any.i CDR.h Typecode.h ORB_Core.h \
  ORB.h Exception.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -17154,8 +17027,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -17201,25 +17074,24 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -17263,8 +17135,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17363,9 +17234,8 @@ realclean:
  Typecode.i \
  Any.i CDR.h Typecode.h
 
-.obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h \
- $(ACE_ROOT)/ace/pre.h corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
+.obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -17391,8 +17261,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17479,8 +17348,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -17498,8 +17367,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -17550,25 +17419,24 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -17582,17 +17450,16 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i \
- ORB_Table.h ORB_Table.inl \
- TAO_Internal.h default_client.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i ORB_Table.h \
+ ORB_Table.inl TAO_Internal.h \
+ default_client.h \
  Client_Strategy_Factory.h \
  default_client.i default_server.h \
  Server_Strategy_Factory.h \
- default_server.i \
- default_resource.h \
+ default_server.i default_resource.h \
  Resource_Factory.h \
- default_resource.i debug.h \
- MProfile.h MProfile.i Profile.h \
+ default_resource.i debug.h MProfile.h \
+ MProfile.i Profile.h \
  Tagged_Components.h CONV_FRAMEC.h \
  CONV_FRAMEC.i \
  Tagged_Components.i \
@@ -17652,11 +17519,10 @@ realclean:
  GIOP_Message_Version.h \
  operation_details.h Service_Context.h \
  Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i \
- BiDir_Adapter.h Collocation_Resolver.h \
+ target_specification.h Object_KeyC.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i BiDir_Adapter.h \
+ Collocation_Resolver.h \
  Collocation_Resolver.i \
  Endpoint_Selector_Factory.h Flushing_Strategy.h Request_Dispatcher.h \
  Stub_Factory.h Thread_Lane_Resources.h \
@@ -17711,8 +17577,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17768,8 +17633,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17801,8 +17665,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -17918,8 +17781,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -17971,8 +17833,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -18070,8 +17931,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- ORB_Table.inl ORB_Core.h \
- corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
+ ORB_Table.inl ORB_Core.h corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -18094,8 +17955,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -18113,9 +17974,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -18140,16 +18001,16 @@ realclean:
  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -18177,8 +18038,7 @@ realclean:
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  TAO_Export.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -18196,8 +18056,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -18442,8 +18301,7 @@ realclean:
  Leader_Follower.h \
  LF_Follower.h \
  TAO_Export.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -18461,8 +18319,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -18707,8 +18564,7 @@ realclean:
  Leader_Follower.h \
  LF_Follower.h \
  TAO_Export.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -18726,8 +18582,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -18971,8 +18826,7 @@ realclean:
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  TAO_Export.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -18990,8 +18844,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -19264,8 +19117,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -19283,8 +19135,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -19550,8 +19401,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -19569,8 +19419,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -19853,8 +19702,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -19872,8 +19720,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -20133,8 +19980,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -20235,7 +20081,6 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Resource_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -20263,6 +20108,7 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
+ Resource_Factory.h \
  TAO_Export.h \
  $(ACE_ROOT)/ace/Unbounded_Set.h \
  $(ACE_ROOT)/ace/Node.h \
@@ -20507,8 +20353,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -20558,8 +20403,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -20844,8 +20688,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -20877,8 +20720,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -20948,8 +20790,7 @@ realclean:
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  default_server.i default_client.h \
  Client_Strategy_Factory.h \
- default_client.i \
- default_resource.h \
+ default_client.i default_resource.h \
  Resource_Factory.h \
  default_resource.i IIOP_Factory.h \
  Protocol_Factory.h MCAST_Parser.h \
@@ -21081,8 +20922,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Default_Stub_Factory.h \
- Stub_Factory.h \
+ Default_Stub_Factory.h Stub_Factory.h \
  Default_Endpoint_Selector_Factory.h \
  Endpoint_Selector_Factory.h \
  Default_Protocols_Hooks.h Protocols_Hooks.h corbafwd.h \
@@ -21133,8 +20973,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -21247,25 +21086,24 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
  TAO_Export.h CurrentC.h CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
- StringSeqC.i ValueBase.h \
- ValueBase.i Exception.h \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ StringSeqC.i ValueBase.h ValueBase.i \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i PortableInterceptorC.i LocalObject.h LocalObject.i \
  PICurrent.inl TAO_Server_Request.i CDR.h Environment.h Principal.h \
  Principal.i ORB_Core.h ORB.h \
- Services.h Services.i \
- CORBA_String.h CORBA_String.inl \
- objectid.h ORB.i Policy_Manager.h \
+ Services.h Services.i CORBA_String.h \
+ CORBA_String.inl objectid.h \
+ ORB.i Policy_Manager.h \
  Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -21306,8 +21144,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -21319,9 +21156,8 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl \
- $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -21335,8 +21171,8 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i \
- Timeprobe.h $(ACE_ROOT)/ace/Timeprobe.h debug.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i Timeprobe.h \
+ $(ACE_ROOT)/ace/Timeprobe.h debug.h \
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i \
  Pluggable_Messaging.h \
@@ -21354,13 +21190,12 @@ realclean:
  Transport_Cache_Manager.inl \
  Transport_Timer.h Incoming_Message_Queue.h Incoming_Message_Queue.inl \
  Synch_Refcountable.h $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
 .obj/Typecode_Constants.o .obj/Typecode_Constants.so .shobj/Typecode_Constants.o .shobj/Typecode_Constants.so: Typecode_Constants.cpp \
  Typecode.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -21385,8 +21220,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -21573,8 +21407,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -21693,8 +21526,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -21738,8 +21570,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -21931,8 +21762,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -22215,8 +22045,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -22507,8 +22336,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -22642,8 +22470,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -22793,11 +22620,10 @@ realclean:
  Transport_Timer.h TAO_Export.h Incoming_Message_Queue.h \
  Pluggable_Messaging_Utils.h Incoming_Message_Queue.inl \
  Synch_Refcountable.h $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
-.obj/Muxed_TMS.o .obj/Muxed_TMS.so .shobj/Muxed_TMS.o .shobj/Muxed_TMS.so: Muxed_TMS.cpp \
- Muxed_TMS.h \
+.obj/Muxed_TMS.o .obj/Muxed_TMS.so .shobj/Muxed_TMS.o .shobj/Muxed_TMS.so: Muxed_TMS.cpp Muxed_TMS.h \
  $(ACE_ROOT)/ace/pre.h \
  Transport_Mux_Strategy.h \
  IOPC.h \
@@ -22828,8 +22654,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -22982,8 +22807,8 @@ realclean:
  Transport_Timer.h TAO_Export.h Incoming_Message_Queue.h \
  Pluggable_Messaging_Utils.h Incoming_Message_Queue.inl \
  Synch_Refcountable.h $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
 .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.so .shobj/Reply_Dispatcher.o .shobj/Reply_Dispatcher.so: Reply_Dispatcher.cpp \
  Reply_Dispatcher.h \
@@ -23016,8 +22841,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -23150,8 +22974,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -23404,8 +23227,7 @@ realclean:
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/Refcountable.inl TAO_Export.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -23425,8 +23247,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -23474,8 +23295,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -23745,8 +23565,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24023,8 +23842,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24034,8 +23852,8 @@ realclean:
  orbconf.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i TAO_Export.h \
- Exception.h $(ACE_ROOT)/ace/SString.h \
+ corbafwd.i TAO_Export.h Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -24304,8 +24122,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24435,8 +24252,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24695,8 +24511,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24826,8 +24641,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24959,8 +24773,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -24970,8 +24783,8 @@ realclean:
  orbconf.h \
  varbase.h \
  TAO_Export.h \
- corbafwd.i TAO_Export.h \
- Exception.h $(ACE_ROOT)/ace/SString.h \
+ corbafwd.i TAO_Export.h Exception.h \
+ $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -25237,8 +25050,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -25384,8 +25196,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -25500,8 +25311,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
@@ -25587,11 +25397,41 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  Exception.i \
  Typecode.h \
- Typecode.i
+ Typecode.i \
+ ORB.h \
+ Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Environment.h \
+ Environment.i \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ objectid.h \
+ PolicyC.h \
+ CurrentC.h \
+ Object.h \
+ Policy_ForwardC.h \
+ CDR.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ CDR.i \
+ Policy_ForwardC.i \
+ Object.i \
+ CurrentC.i \
+ Remote_Object_Proxy_Impl.h \
+ Object_Proxy_Impl.h \
+ Encodable.h \
+ PolicyC.i \
+ ORB.i
 
 .obj/DLL_ORB.o .obj/DLL_ORB.so .shobj/DLL_ORB.o .shobj/DLL_ORB.so: DLL_ORB.cpp DLL_ORB.h \
- $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25618,8 +25458,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
@@ -25798,8 +25637,7 @@ realclean:
  TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  debug.h \
- $(ACE_ROOT)/ace/ARGV.h \
- $(ACE_ROOT)/ace/ARGV.i \
+ $(ACE_ROOT)/ace/ARGV.h $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -25836,8 +25674,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -26094,8 +25931,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -26214,8 +26050,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -26353,8 +26188,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -26615,8 +26449,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -26735,8 +26568,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -26893,8 +26725,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -27064,8 +26895,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -27180,8 +27010,8 @@ realclean:
  Environment.h \
  Environment.i \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  Policy_ForwardC.h \
  CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -27199,9 +27029,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -27225,25 +27055,24 @@ realclean:
  PortableInterceptorC.i $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -27297,8 +27126,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -27434,10 +27262,9 @@ realclean:
  Messaging_SyncScopeC.h corbafwd.h Messaging_SyncScopeC.i \
  operation_details.h Service_Context.h \
  Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i Invocation.i Stub.h \
+ target_specification.h Object_KeyC.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i Invocation.i Stub.h \
  MProfile.h \
  PolicyC.h \
  CurrentC.h \
@@ -27566,8 +27393,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -27794,8 +27620,7 @@ realclean:
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -27840,8 +27665,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -27951,8 +27775,7 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -27976,8 +27799,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -28084,13 +27906,13 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Services_Activate.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
+ Services_Activate.h \
  ORB_Core.h \
  ORB.h \
  Services.h \
@@ -28234,8 +28056,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -28393,8 +28214,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -28446,8 +28266,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -28558,14 +28377,14 @@ realclean:
  ORBInitInfo.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
  CORBA_String.inl objectid.h \
- ORB.i Environment.h \
- Policy_Manager.h Policy_Set.h \
+ ORB.i Environment.h Policy_Manager.h \
+ Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -28606,24 +28425,23 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h IOPC.h \
+ Parser_Registry.i Service_Callbacks.h \
+ IOPC.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -28670,8 +28488,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -28796,8 +28613,8 @@ realclean:
  TAO_Singleton_Manager.h
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
- PolicyFactory_Registry.h $(ACE_ROOT)/ace/pre.h \
- corbafwd.h $(ACE_ROOT)/ace/CDR_Base.h \
+ PolicyFactory_Registry.h $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -28823,8 +28640,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -28993,8 +28809,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -29177,8 +28992,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -29241,8 +29055,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -29512,12 +29325,11 @@ realclean:
  $(ACE_ROOT)/ace/Default_Constants.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- Cleanup_Func_Registry.inl $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h Cleanup_Func_Registry.inl \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
@@ -29552,8 +29364,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -29611,8 +29422,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -29740,13 +29550,12 @@ realclean:
  Object.i ORB.h Exception.h \
  Exception.i Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h Object.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h Object.h \
  CurrentC.i Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
- PolicyC.i ORB.i Environment.h \
- debug.h
+ PolicyC.i ORB.i Environment.h debug.h
 
 .obj/BiDir_Adapter.o .obj/BiDir_Adapter.so .shobj/BiDir_Adapter.o .shobj/BiDir_Adapter.so: BiDir_Adapter.cpp \
  BiDir_Adapter.h \
@@ -29779,8 +29588,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -29896,8 +29704,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30025,8 +29832,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30164,8 +29970,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30314,8 +30119,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30374,8 +30178,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30523,9 +30326,9 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl Queued_Message.h LF_Event.h \
- LF_Event.inl Queued_Message.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl Queued_Message.h LF_Event.h LF_Event.inl \
+ Queued_Message.inl
 
 .obj/Reactive_Flushing_Strategy.o .obj/Reactive_Flushing_Strategy.so .shobj/Reactive_Flushing_Strategy.o .shobj/Reactive_Flushing_Strategy.so: Reactive_Flushing_Strategy.cpp \
  Reactive_Flushing_Strategy.h $(ACE_ROOT)/ace/pre.h \
@@ -30556,8 +30359,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30705,11 +30507,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl ORB_Core.h ORB.h Services.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -30719,9 +30521,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -30741,16 +30543,15 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -30802,8 +30603,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch_Options.i
 
 .obj/Reactive_Connect_Strategy.o .obj/Reactive_Connect_Strategy.so .shobj/Reactive_Connect_Strategy.o .shobj/Reactive_Connect_Strategy.so: Reactive_Connect_Strategy.cpp \
@@ -30837,8 +30637,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -30986,11 +30785,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl ORB_Core.h ORB.h Services.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -31000,9 +30799,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -31022,16 +30821,15 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -31080,8 +30878,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -31229,11 +31026,11 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl ORB_Core.h ORB.h Services.h \
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -31243,9 +31040,9 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h params.h \
- params.i TAO_Singleton_Manager.h \
+ Policy_Manager.i Resource_Factory.h \
+ params.h params.i \
+ TAO_Singleton_Manager.h \
  TAO_Singleton_Manager.inl \
  TAO_Singleton.h TAO_Singleton.inl \
  TAO_Singleton.cpp \
@@ -31265,16 +31062,15 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h Interceptor_List.h \
- Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h Interceptor_List.h Interceptor_List.inl \
+ PICurrent.h LocalObject.h PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -31332,8 +31128,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -31374,8 +31169,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -31386,11 +31180,62 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i LF_Event.h TAO_Export.h \
- LF_Event.inl Queued_Message.inl \
+ LF_Event.inl Queued_Message.inl debug.h \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp
 
 .obj/Asynch_Queued_Message.o .obj/Asynch_Queued_Message.so .shobj/Asynch_Queued_Message.o .shobj/Asynch_Queued_Message.so: Asynch_Queued_Message.cpp \
  Asynch_Queued_Message.h $(ACE_ROOT)/ace/pre.h \
@@ -31420,8 +31265,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -31432,11 +31276,62 @@ realclean:
  varbase.h \
  TAO_Export.h \
  corbafwd.i LF_Event.h TAO_Export.h \
- LF_Event.inl Queued_Message.inl \
+ LF_Event.inl Queued_Message.inl debug.h \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp
 
 .obj/Transport_Timer.o .obj/Transport_Timer.so .shobj/Transport_Timer.o .shobj/Transport_Timer.so: Transport_Timer.cpp Transport_Timer.h \
  $(ACE_ROOT)/ace/pre.h TAO_Export.h \
@@ -31465,8 +31360,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Event_Handler.i Transport.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -31615,8 +31509,8 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
 .obj/Connection_Purging_Strategy.o .obj/Connection_Purging_Strategy.so .shobj/Connection_Purging_Strategy.o .shobj/Connection_Purging_Strategy.so: Connection_Purging_Strategy.cpp \
  Connection_Purging_Strategy.h \
@@ -31628,8 +31522,7 @@ realclean:
  Connection_Purging_Strategy.inl
 
 .obj/LRU_Connection_Purging_Strategy.o .obj/LRU_Connection_Purging_Strategy.so .shobj/LRU_Connection_Purging_Strategy.o .shobj/LRU_Connection_Purging_Strategy.so: LRU_Connection_Purging_Strategy.cpp \
- LRU_Connection_Purging_Strategy.h \
- $(ACE_ROOT)/ace/pre.h \
+ LRU_Connection_Purging_Strategy.h $(ACE_ROOT)/ace/pre.h \
  Connection_Purging_Strategy.h \
  TAO_Export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -31659,8 +31552,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -31807,8 +31699,8 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
 .obj/Policy_Set.o .obj/Policy_Set.so .shobj/Policy_Set.o .shobj/Policy_Set.so: Policy_Set.cpp \
  Policy_Set.h \
@@ -31842,8 +31734,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -31977,8 +31868,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -32010,8 +31900,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -32113,8 +32002,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -32391,8 +32279,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -32664,8 +32551,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -32697,8 +32583,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -32933,8 +32818,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -32966,8 +32850,7 @@ realclean:
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/ACE.i $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -33189,8 +33072,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -33291,8 +33173,7 @@ realclean:
  Typecode.i \
  Any.i \
  IOPC.i TAO_Server_Request.h \
- corbafwd.h Tagged_Profile.h \
- GIOPC.h \
+ corbafwd.h Tagged_Profile.h GIOPC.h \
  GIOPC.i \
  Tagged_Profile.i OctetSeqC.h \
  Sequence.h OctetSeqC.i Service_Context.h \
@@ -33302,9 +33183,8 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
  TAO_Export.h CurrentC.h CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
- StringSeqC.i ValueBase.h \
- ValueBase.i Exception.h \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ StringSeqC.i ValueBase.h ValueBase.i \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
@@ -33312,14 +33192,14 @@ realclean:
  PICurrent.inl TAO_Server_Request.i ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
  CORBA_String.inl objectid.h \
- ORB.i Environment.h \
- Policy_Manager.h Policy_Set.h \
+ ORB.i Environment.h Policy_Manager.h \
+ Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -33360,8 +33240,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -33373,9 +33252,8 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl \
- $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -33421,8 +33299,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -33675,8 +33552,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
@@ -33827,8 +33703,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -33870,8 +33745,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -34130,8 +34004,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -34390,8 +34263,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -34544,8 +34416,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -34825,8 +34696,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -34959,8 +34829,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -35214,8 +35083,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -35335,14 +35203,12 @@ realclean:
  GIOP_Message_Base.i \
  operation_details.h corbafwd.h Service_Context.h \
  Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i operation_details.i GIOP_Utils.h debug.h \
- ORB_Core.h ORB.h Exception.h Services.h \
- Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ target_specification.h Object_KeyC.h \
+ Object_KeyC.i target_specification.i \
+ operation_details.i GIOP_Utils.h debug.h ORB_Core.h ORB.h Exception.h \
+ Services.h Services.i CORBA_String.h \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -35352,8 +35218,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -35399,25 +35265,23 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -35462,10 +35326,9 @@ realclean:
  Transport_Timer.h Incoming_Message_Queue.h \
  Pluggable_Messaging_Utils.h Incoming_Message_Queue.inl \
  Synch_Refcountable.h $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl LF_Strategy.h \
- LF_Strategy.inl \
- Request_Dispatcher.h
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl LF_Strategy.h \
+ LF_Strategy.inl Request_Dispatcher.h
 
 .obj/GIOP_Message_Lite.o .obj/GIOP_Message_Lite.so .shobj/GIOP_Message_Lite.o .shobj/GIOP_Message_Lite.so: GIOP_Message_Lite.cpp \
  GIOP_Message_Lite.h \
@@ -35500,8 +35363,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -35814,8 +35676,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -35930,8 +35791,7 @@ realclean:
 
 .obj/GIOP_Message_Generator_Parser_10.o .obj/GIOP_Message_Generator_Parser_10.so .shobj/GIOP_Message_Generator_Parser_10.o .shobj/GIOP_Message_Generator_Parser_10.so: \
  GIOP_Message_Generator_Parser_10.cpp \
- GIOP_Message_Generator_Parser_10.h \
- $(ACE_ROOT)/ace/pre.h \
+ GIOP_Message_Generator_Parser_10.h $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_Generator_Parser.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -35960,8 +35820,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -36084,9 +35943,8 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
  TAO_Export.h CurrentC.h CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
- StringSeqC.i ValueBase.h \
- ValueBase.i Exception.h \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ StringSeqC.i ValueBase.h ValueBase.i \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
@@ -36094,8 +35952,8 @@ realclean:
  PICurrent.inl TAO_Server_Request.i GIOP_Message_State.h \
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
- GIOP_Message_State.inl \
- CORBA_String.h CORBA_String.inl
+ GIOP_Message_State.inl CORBA_String.h \
+ CORBA_String.inl
 
 .obj/GIOP_Message_Generator_Parser_11.o .obj/GIOP_Message_Generator_Parser_11.so .shobj/GIOP_Message_Generator_Parser_11.o .shobj/GIOP_Message_Generator_Parser_11.so: \
  GIOP_Message_Generator_Parser_11.cpp \
@@ -36130,8 +35988,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -36214,8 +36071,7 @@ realclean:
 
 .obj/GIOP_Message_Generator_Parser_12.o .obj/GIOP_Message_Generator_Parser_12.so .shobj/GIOP_Message_Generator_Parser_12.o .shobj/GIOP_Message_Generator_Parser_12.so: \
  GIOP_Message_Generator_Parser_12.cpp \
- GIOP_Message_Generator_Parser_12.h \
- $(ACE_ROOT)/ace/pre.h \
+ GIOP_Message_Generator_Parser_12.h $(ACE_ROOT)/ace/pre.h \
  GIOP_Message_Generator_Parser.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -36244,8 +36100,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -36371,9 +36226,8 @@ realclean:
  $(ACE_ROOT)/ace/Array_Base.cpp PortableInterceptorC.h \
  TAO_Export.h CurrentC.h CurrentC.i \
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
- StringSeqC.i ValueBase.h \
- ValueBase.i Exception.h \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ StringSeqC.i ValueBase.h ValueBase.i \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
  Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
@@ -36395,14 +36249,14 @@ realclean:
  TimeBaseC.i TAOC.i ORB_Core.h ORB.h Services.h \
  Services.i CORBA_String.h \
  CORBA_String.inl objectid.h \
- ORB.i Environment.h \
- Policy_Manager.h Policy_Set.h \
+ ORB.i Environment.h Policy_Manager.h \
+ Policy_Set.h \
  PolicyC.h \
  Policy_Set.i \
  LocalObject.h \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -36433,8 +36287,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
@@ -36446,9 +36299,8 @@ realclean:
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl \
- $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -36462,8 +36314,8 @@ realclean:
  $(ACE_ROOT)/ace/Framework_Component_T.h \
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i \
- Transport.h Transport_Descriptor_Interface.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i Transport.h \
+ Transport_Descriptor_Interface.h \
  Transport_Descriptor_Interface.inl \
  Transport_Cache_Manager.h \
  Cache_Entries.h \
@@ -36474,8 +36326,8 @@ realclean:
  Transport_Cache_Manager.inl \
  Transport_Timer.h Incoming_Message_Queue.h Incoming_Message_Queue.inl \
  Synch_Refcountable.h $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
 .obj/GIOP_Message_Generator_Parser_Impl.o .obj/GIOP_Message_Generator_Parser_Impl.so .shobj/GIOP_Message_Generator_Parser_Impl.o .shobj/GIOP_Message_Generator_Parser_Impl.so: \
  GIOP_Message_Generator_Parser_Impl.cpp \
@@ -36511,8 +36363,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -36627,8 +36478,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -36863,8 +36713,8 @@ realclean:
  Pluggable_Messaging_Utils.i \
  Incoming_Message_Queue.inl Synch_Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
- Synch_Refcountable.inl Transport.inl
+ $(ACE_ROOT)/ace/Refcountable.inl Synch_Refcountable.inl \
+ Transport.inl
 
 .obj/GIOP_Message_Locate_Header.o .obj/GIOP_Message_Locate_Header.so .shobj/GIOP_Message_Locate_Header.o .shobj/GIOP_Message_Locate_Header.so: GIOP_Message_Locate_Header.cpp \
  GIOP_Message_Locate_Header.h \
@@ -36898,8 +36748,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -37036,8 +36885,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -37171,8 +37019,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -37443,8 +37290,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -37487,8 +37333,7 @@ realclean:
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -37594,8 +37439,8 @@ realclean:
  Tagged_Profile.i ORB_Core.h \
  corbafwd.h ORB.h Exception.h Services.h \
  Services.i CORBA_String.h \
- CORBA_String.inl objectid.h \
- PolicyC.h CurrentC.h CurrentC.i \
+ CORBA_String.inl objectid.h PolicyC.h \
+ CurrentC.h CurrentC.i \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h Encodable.h \
  PolicyC.i ORB.i Environment.h \
@@ -37605,8 +37450,8 @@ realclean:
  LocalObject.h \
  LocalObject.i \
  debug.h \
- Policy_Manager.i \
- Resource_Factory.h $(ACE_ROOT)/ace/Service_Object.h \
+ Policy_Manager.i Resource_Factory.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
@@ -37652,25 +37497,23 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
+ Parser_Registry.i Service_Callbacks.h \
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
  Cleanup_Func_Registry.h $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Array_Base.cpp Cleanup_Func_Registry.inl \
+ Object_Ref_Table.h $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
  $(ACE_ROOT)/ace/Functor_T.h \
  $(ACE_ROOT)/ace/Functor_T.i \
  $(ACE_ROOT)/ace/Functor_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h Interceptor_List.inl PICurrent.h LocalObject.h \
- PICurrent.inl $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp Interceptor_List.h \
+ Interceptor_List.inl PICurrent.h LocalObject.h PICurrent.inl \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
