@@ -70,23 +70,19 @@ run_test (void)
 
   for (i = 0; string_table[i] != 0; i++)
     {
-      if (i % 2)
-        {
-          if (list.insert_tail (&string_table[i]) == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("%p failed for %s \n"),
-                               ASYS_TEXT ("insert"),
-                               string_table[i]), -1);
-        }
-      else
-        {
-          if (list.insert_head (&string_table[i]) == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("%p failed for %s \n"),
-                               ASYS_TEXT ("insert"),
-                               string_table[i]), -1);
-        }
-
+      if (ACE_EVEN (i)
+          && list.insert_tail ((STRING) &string_table[i]) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p failed for %s \n"),
+                           ASYS_TEXT ("insert"),
+                           string_table[i]),
+                          -1);
+      else if (list.insert_head ((STRING) &string_table[i]) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("%p failed for %s \n"),
+                           ASYS_TEXT ("insert"),
+                           string_table[i]),
+                          -1);
       run_iterate (list);
     }
 

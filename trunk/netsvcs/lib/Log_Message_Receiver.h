@@ -86,15 +86,17 @@
 // Type based log message receiver
 template<ACE_SYNCH_DECL>
 class Static_Log_Message_Receiver
+{
   // = TITLE
   //  Static_Log_Message_Receiver is a simple log message receiver. It
-  //  has no instance data and only static member functions. Static/typed
-  //  based receivers are best when all LMR should do exactly the same thing.
+  //  has no instance data and only static member
+  //  functions. Static/typed based receivers are best when all LMR
+  //  should do exactly the same thing.
   //
   // = DESCRIPTION
   //  This class contains a static log_record member function that
   //  prints the content of log_records on stderr.
-{
+
 public:
   static void log_record(const char *hostname,
                          ACE_Log_Record &record);
@@ -123,27 +125,28 @@ template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;
 
 template<ACE_SYNCH_DECL>
 class Log_Message_Receiver
+{
   // = TITLE
-  //  Log_Message_Receiver is a little more complicated log message receiver.
-  //  It is instance based and have a reference counted implementation.
-  //  Log_Message_Receiver is the envelope class for Log_Message_Receiver_Impl.
-  //  The difference between Static_Log_Message_Receiver and
-  //  Log_Message_Receiver is that is possible to have instance data
-  //  in Log_Message_Receiver.
+  //  Log_Message_Receiver is a little more complicated log message
+  //  receiver.  It is instance based and have a reference counted
+  //  implementation.  Log_Message_Receiver is the envelope class for
+  //  Log_Message_Receiver_Impl.  The difference between
+  //  Static_Log_Message_Receiver and Log_Message_Receiver is that is
+  //  possible to have instance data in Log_Message_Receiver.
   //
   //  Comment:
+  //
   //  The practical usage of this is limited with the current
-  //  ACE_Server_Logging_Acceptor_T design. Since ACE_Server_Logging_Acceptor_T
-  //  will create the Log_Message_Receiver using the default constructor.
-  //  The main reason for inclusion right now is to ensure that the
-  //  code in ACE_Server_Logging_Handler_T works both with type and instance
+  //  ACE_Server_Logging_Acceptor_T design. Since
+  //  ACE_Server_Logging_Acceptor_T will create the
+  //  Log_Message_Receiver using the default constructor.  The main
+  //  reason for inclusion right now is to ensure that the code in
+  //  ACE_Server_Logging_Handler_T works both with type and instance
   //  based LMRs.
   //
-  //
   // = DESCRIPTION
-  //  This class contains a log_record member function that
-  //  prints the content of log_records on stderr.
-{
+  //  This class contains a log_record member function that prints the
+  //  content of log_records on stderr.
 public:
   Log_Message_Receiver (void);
   // Creates a new Log_Message_Receiver
@@ -163,11 +166,12 @@ private:
   Log_Message_Receiver_Impl<ACE_SYNCH_USE> *receiver_impl_;
 };
 
-// Implementation with reference count.
-
 template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
+  // = TITLE
+  // Implementation with reference count.
+
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   // Methods for handling reference count and instance lifetime

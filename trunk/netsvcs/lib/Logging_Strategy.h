@@ -10,7 +10,7 @@
 //    Logging_Strategy.h
 //
 // = AUTHOR
-//    Prashant Jain
+//    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Logging_Strategy : public ACE_Service_Object
+{
   // = TITLE
   //     This class provides the hooks to control the output produced
   //     by any of the network services.
@@ -33,18 +34,22 @@ class ACE_Logging_Strategy : public ACE_Service_Object
   //     flags, the output of other network services can be
   //     controlled. The output can be streamed to stderr, to a file,
   //     to a logging daemon, or it can be set to be "silent".
-{
 public:
   virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.
 
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
+
 private:
   void tokenize (char *flag_string);
   // Tokenize to set all the flags
+
   u_long flags_;
-  char *filename_;
+  // Flags we keep track of.
+
+  const char *filename_;
+  // File name we're logging to.
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Logging_Strategy)

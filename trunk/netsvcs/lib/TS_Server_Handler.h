@@ -27,11 +27,12 @@
 #include "ace/Time_Request_Reply.h"
 
 class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
   // = TITLE
   //    Product object created by <ACE_TS_Server_Acceptor>.
   //
   // = DESCRIPTION
-{
+
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   // = Initialization and termination.
@@ -87,10 +88,11 @@ private:
 };
 
 class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
+{
   // = TITLE
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Strategy_Acceptor>.
-{
+
 public:
   virtual int init (int argc, char *argv[]);
   // Dynamic linking hook.

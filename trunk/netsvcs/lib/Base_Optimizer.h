@@ -24,15 +24,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template<class Base, class Member>
-struct Base_Optimizer : public Base
+class Base_Optimizer : public Base
+{
   // = TITLE
   //
   // = DESCRIPTION
-  //     Thanks to Nathan Myers and Fergus Henderson for this little beauty
-{
+  //     Thanks to Nathan Myers and Fergus Henderson for this little
+  //     beauty.
+
+public:
   Base_Optimizer (void);
   Base_Optimizer (const Base &base);
-  Base_Optimizer (const Base &base, const Member &member);
+  Base_Optimizer (const Base &base,
+                  const Member &member);
 
   Member m_;
 };
