@@ -290,11 +290,11 @@ SOURCE=.\options.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Param_TestC.h
+SOURCE=.\Param_TestCli.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Param_TestS.h
+SOURCE=.\Param_TestSer.h
 # End Source File
 # Begin Source File
 
@@ -378,7 +378,7 @@ InputName=param_test
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl $(InputName).idl
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -387,7 +387,7 @@ BuildCmds= \
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -416,7 +416,7 @@ InputName=param_test
 BuildCmds= \
 	..\..\tao_idl\tao_idl $(InputName).idl
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -425,7 +425,7 @@ BuildCmds= \
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)Ser.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"

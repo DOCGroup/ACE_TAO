@@ -19,7 +19,7 @@
 #if !defined (PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H)
 #define PARAM_TEST_UNBOUNDED_STRING_SEQUENCE_H
 
-#include "param_testC.h"
+#include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //           test typedefed sequences (in our case, sequences of strings)
