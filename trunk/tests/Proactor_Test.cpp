@@ -1836,24 +1836,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   // First, set up all the defaults then let any args change them.
   both = 1;                       // client and server simultaneosly
-  //#if defined(ACE_WIN32) || defined(sun)
   duplex = 1;                     // full duplex is on
-  //#else   // Linux,IRIX - weak AIO implementation
-  // duplex = 0;                     // full duplex is off
-  //#endif
   host = ACE_LOCALHOST;           // server to connect
   port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
   max_aio_operations = 512;       // POSIX Proactor params
-  //#if defined (sun)
-  //proactor_type = SUN;            // Proactor type for SunOS
-  //threads = 1;                    // aiosuspend() not MT Safe.
-  //#else
   proactor_type = DEFAULT;        // Proactor type = default
   threads = 3;                    // size of Proactor thread pool
-  //#endif
-
   senders = 10;                   // number of senders
-
   loglevel = 0;                   // log level : only errors and highlights
   // Default transfer limit 50 messages per Sender
   xfer_limit = 50 * ACE_OS::strlen (complete_message);
