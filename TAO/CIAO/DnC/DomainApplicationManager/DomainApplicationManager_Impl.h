@@ -21,9 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "../DeploymentS.h"
 
 #include "ciao/Object_Set_T.h"
+#include "../DeploymentS.h"
+
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
 namespace CIAO
 {
@@ -35,14 +38,17 @@ namespace CIAO
    * on the domain level, i.e. across nodes. It specializes the ApplicationManager 
    * abstract interface.
    */
-  class CIAO_DOMAINAPPLICATIONMANAGER_Export DomainApplicationManager_Impl
+  //class CIAO_DOMAINAPPLICATIONMANAGER_Export DomainApplicationManager_Impl
+  class DomainApplicationManager_Impl
     : public virtual POA_Deployment::DomainApplicationManager,
       public virtual PortableServer::RefCountServantBase
   {
   public:
     /// Constructor
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
-				                           PortableServer::POA_ptr poa);
+				                           PortableServer::POA_ptr poa,
+                                   Deployment::TargetManager_ptr manager,
+                                   Deployment::DeploymentPlan & plan);
 
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
@@ -51,15 +57,24 @@ namespace CIAO
      * Below are helper methods for the DomainApplicationManager
      *
      *============================================================*/
-     /**
-     * Initialize the DomainApplicationManager. The deploymentPlan
-     * is also intitialized and cached.
+    /**
+     * Initialize the DomainApplicationManager. 
+     * (1) Set the total number of child plans.
+     * (2) Set the list of NodeManager names, which is an array of strings.
+     *     The <node_manager_names> is a pointer to an array of ACE_CString 
+     *     objets, which is allocated by the caller and deallocated by the
+     *     DomainApplicationManager destructor.
+     *     
      *
      * @@ What else do we need to initialize here?
      */
-    int init (const Deployment::DeploymentPlan & plan
-              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    int init (int num_child_plans, ACE_CString * node_manager_names);
+
+    /**
+     * Split the global (domain-level) deployment plan to a set of 
+     * local (node-level) deployment plans. 
+     */
+    int split_plan ();
 
 
     /*===========================================================
@@ -125,9 +140,31 @@ namespace CIAO
     /// Cache the ior of the previous reference
     CORBA::String_var ior_;
 
+    /// Cached TargetManager.
+    Deployment::TargetManager_var target_manager_;
+
     /// Cached deployment plan for the particular domain.
     /// The plan will be initialized when init is called.
-    Deployment::DeploymentPlan_var plan_;
+    Deployment::DeploymentPlan & plan_;
+
+    /// Cached child plans.
+    //Deployment::DeploymentPlan * child_plan_;
+
+    /// Total number of child deployment plans.
+    int num_child_plans_;
+
+    /// The list of node manager names, each of them
+    /// corresponds to one child plan.
+    ACE_CString * node_manager_names_;
+
+    /// Cached child plans in a map.
+    /// Key: NodeManager name.
+    /// Value: child deployment plan with _var type.
+    ACE_Hash_Map_Manager_Ex<ACE_CString,
+                            ::Deployment::DeploymentPlan_var,
+                            ACE_Hash<ACE_CString>,
+                            ACE_Equal_To<ACE_CString>,
+                            ACE_Null_Mutex> child_plans_info_;
   };
 }
 
