@@ -78,7 +78,9 @@ template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
 ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::reply (ACE_MESSAGE_TYPE *mb, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::reply");
-  return this->sibling ()->put_next (mb, tv);
+  ACE_UNUSED_ARG (mb);
+  ACE_UNUSED_ARG (tv);
+  return -1 ; // this->sibling ()->put_next (mb, tv);
 }
 
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE ACE_Task<ACE_SYNCH_USE> *
@@ -101,5 +103,7 @@ template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
 ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::put_next");
-  return this->next_ == 0 ? -1 : this->next_->put (msg, tv);
+  ACE_UNUSED_ARG (msg);
+  ACE_UNUSED_ARG (tv);
+  return  -1; // this->next_ == 0 ? -1 : this->next_->put (msg, tv);
 }
