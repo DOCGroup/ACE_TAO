@@ -1,3 +1,14 @@
+Sun Mar 04 09:12:40 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/InterfaceC.cpp:
+
+	  Moved inclusion of the `tao/PortableInterceptor.h' header
+	  outside of the "TAO_HAS_INTERCEPTORS" protected block.  This
+	  header must remain visible since it contains the
+	  "TAO_INTERCEPTOR" macros.  Note that this won't cause problems
+	  when portable interceptor support is disabled since those macros
+	  are always visible, too.
+
 Sun Mar  4 11:06:25 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/README:
