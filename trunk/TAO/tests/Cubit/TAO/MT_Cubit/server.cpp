@@ -198,8 +198,6 @@ Cubit_Task::initialize_orb (void)
 
       if (TAO_TRY_ENV.exception() != 0)
         {
-          // @@ Has this bug been fixed yet?!
-#if 0  // un comment when Andy fixes exception marshalling bug.
           CosNaming::NamingContext::AlreadyBound_ptr ex =
             CosNaming::NamingContext::AlreadyBound::_narrow (TAO_TRY_ENV.exception());
           if (ex != 0)
@@ -211,11 +209,6 @@ Cubit_Task::initialize_orb (void)
             }
           else
             TAO_TRY_ENV.print_exception ("bind() Cubit context object\n");
-#else
-              TAO_TRY_ENV.clear ();
-              objref = this->naming_context_->resolve (cubit_context_name,
-                                                       TAO_TRY_ENV);
-#endif /* bug */
         }
       TAO_CHECK_ENV;
 
