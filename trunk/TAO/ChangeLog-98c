@@ -1,5 +1,17 @@
 Tue Mar 31 11:05:23 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/CDR.h: 
+	* tao/CDR.cpp: 
+	* tao/decode.cpp: 
+	* tao/Typecode.cpp: 
+	  Added constructor for encapsulated streams to the TAO_InputCDR
+	  class; this was causing problems on Intel machines.
+
+	* TAO_IDL/be/be_helper.cpp: 
+	* TAO_IDL/be/be_codegen.cpp: 
+	  We end #if/#endif blocks using C style comments (/* */) as
+	  opposed to C++ style (// )
+
 	* tao/Sequence.i: 
 	* tao/Sequence.cpp: 
 	* tao/Sequence_T.i: 

@@ -2108,7 +2108,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
   // _know_ we're OK).  Then skip the byte order code.
 
   TAO_InputCDR stream (this->buffer_, this->length_,
-			     this->byte_order_);
+		       this->byte_order_);
   CORBA::TypeCode_ptr tc = 0;
 
   switch (this->kind_)

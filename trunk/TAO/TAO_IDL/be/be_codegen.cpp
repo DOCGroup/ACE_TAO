@@ -1,6 +1,8 @@
 /* -*- c++ -*- */
 // ============================================================================
 //
+// $Id$
+//
 // = LIBRARY
 //    TAO IDL
 //
@@ -300,7 +302,7 @@ TAO_CodeGen::client_stubs (const char *fname)
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_client_inline_fname () << "\"\n";
-  *this->client_stubs_ << "#endif // !defined INLINE\n\n";
+  *this->client_stubs_ << "#endif /* !defined INLINE */\n\n";
   return 0;
 }
 
@@ -434,7 +436,7 @@ TAO_CodeGen::server_skeletons (const char *fname)
   *this->server_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
   *this->server_skeletons_ << "#include \"" <<
     idl_global->be_get_server_inline_fname () << "\"\n";
-  *this->server_skeletons_ << "#endif // !defined INLINE\n\n";
+  *this->server_skeletons_ << "#endif /* !defined INLINE */\n\n";
   return 0;
 }
 
@@ -477,10 +479,10 @@ TAO_CodeGen::end_client_header (void)
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->client_header_ << "#include \"" <<
     idl_global->be_get_client_inline_fname () << "\"\n";
-  *this->client_header_ << "#endif // defined INLINE\n\n";
+  *this->client_header_ << "#endif /* defined INLINE */\n\n";
 
   // code to put the last #endif
-  *this->client_header_ << "\n#endif // if !defined\n";
+  *this->client_header_ << "\n#endif /* if !defined */\n";
   return 0;
 }
 
@@ -491,10 +493,10 @@ TAO_CodeGen::end_server_header (void)
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_header_ << "#include \"" <<
     idl_global->be_get_server_inline_fname () << "\"\n";
-  *this->server_header_ << "#endif // defined INLINE\n\n";
+  *this->server_header_ << "#endif /* defined INLINE */\n\n";
 
   // code to put the last #endif
-  *this->server_header_ << "\n#endif // if !defined\n";
+  *this->server_header_ << "\n#endif /* if !defined */\n";
   return 0;
 }
 

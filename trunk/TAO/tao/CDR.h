@@ -341,9 +341,13 @@ public:
 
   TAO_InputCDR (const TAO_InputCDR& rhs,
 		size_t size,
-		CORBA::Long offset = 0);
-  // When interpreting nested or indirected TypeCodes it is useful to
-  // make a "copy" of the stream starting in the new position.
+		CORBA::Long offset);
+  // When interpreting indirected TypeCodes it is useful to make a
+  // "copy" of the stream starting in the new position.
+
+  TAO_InputCDR (const TAO_InputCDR& rhs, size_t size);
+  // This creates an encapsulated stream, the first byte must be (per
+  // the spec) the byte order of the encapsulation.
 
   TAO_InputCDR (const TAO_OutputCDR& rhs);
   // Create an input CDR from an output CDR.

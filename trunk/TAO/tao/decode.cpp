@@ -594,12 +594,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 	if ( (continue_decoding = stream->read_ulong (tmp)) == CORBA::B_FALSE)
 	  continue;
 
-	CORBA::Octet byte_order;
-	
-	if ( !(continue_decoding = stream->read_octet (byte_order)))
-	  continue;
-
-        TAO_InputCDR str (*stream, tmp - 1, byte_order);
+        TAO_InputCDR str (*stream, tmp);
 
 	continue_decoding  = str.good_bit () && stream->skip_bytes(tmp - 1);
 
