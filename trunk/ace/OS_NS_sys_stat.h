@@ -27,6 +27,12 @@
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/Default_Constants.h" // for ACE_DEFAULT_DIR_PERMS
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
       typedef struct _stat ACE_stat;
@@ -36,33 +42,42 @@
 
 namespace ACE_OS {
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE creat (const ACE_TCHAR *filename,
                     mode_t mode);
 
   //@{ @name A set of wrappers for low-level file operations.
 
   // non-standard
+  ACE_NAMESPACE_INLINE_FUNCTION
   long filesize (ACE_HANDLE handle);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   long filesize (const ACE_TCHAR *handle);
 
 
   //@}
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int fstat (ACE_HANDLE,
              ACE_stat *);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int lstat (const char *,
              ACE_stat *);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mkdir (const ACE_TCHAR *path,
              mode_t mode = ACE_DEFAULT_DIR_PERMS);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int mkfifo (const ACE_TCHAR *file,
               mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int stat (const ACE_TCHAR *file, ACE_stat *);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   mode_t umask (mode_t cmask);
 
 } /* namespace ACE_OS */

@@ -25,12 +25,21 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
+
 namespace ACE_OS {
 
   /// This method computes the largest integral value not greater than x.
+  ACE_NAMESPACE_INLINE_FUNCTION
   double floor (double x);
 
   /// This method computes the smallest integral value not less than x.
+  ACE_NAMESPACE_INLINE_FUNCTION
   double ceil (double x);
 
 

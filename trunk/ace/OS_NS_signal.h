@@ -26,6 +26,12 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_signal.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 # if !defined (SIG_BLOCK)
 #   define SIG_BLOCK   1
@@ -61,37 +67,48 @@ namespace ACE_OS {
 
   //@{ @name A set of wrappers for Signals.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int kill (pid_t pid,
             int signum);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int pthread_sigmask (int how,
                        const sigset_t *nsp,
                        sigset_t *osp);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigaction (int signum,
                  const struct sigaction *nsa,
                  struct sigaction *osa);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigaddset (sigset_t *s,
                  int signum);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigdelset (sigset_t *s,
                  int signum);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigemptyset (sigset_t *s);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigfillset (sigset_t *s);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigismember (sigset_t *s,
                    int signum);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_SignalHandler signal (int signum,
                             ACE_SignalHandler);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigprocmask (int how,
                    const sigset_t *nsp,
                    sigset_t *osp);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int sigsuspend (const sigset_t *set);
 
   //@}

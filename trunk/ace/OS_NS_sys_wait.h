@@ -26,11 +26,18 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_wait.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
   /// Calls OS <::wait> function, so it's only portable to UNIX/POSIX
   /// platforms.
+  ACE_NAMESPACE_INLINE_FUNCTION
   pid_t wait (int * = 0);
 
   /**
@@ -42,6 +49,7 @@ namespace ACE_OS {
    * <pid> to wait on the project doesn't always work correctly
    * if the waited process has already terminated.
    */
+  ACE_NAMESPACE_INLINE_FUNCTION
   pid_t wait (pid_t pid,
               ACE_exitcode *status,
               int wait_options = 0,
@@ -55,6 +63,7 @@ namespace ACE_OS {
    * <pid> to wait on the project doesn't always work correctly
    * if the waited process has already terminated.
    */
+  ACE_NAMESPACE_INLINE_FUNCTION
   pid_t waitpid (pid_t pid,
                  ACE_exitcode *status = 0,
                  int wait_options = 0,

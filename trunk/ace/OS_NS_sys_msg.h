@@ -26,20 +26,33 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_msg.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
   //@{ @name A set of wrappers for System V message queues.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int msgctl (int msqid,
               int cmd,
               struct msqid_ds *);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int msgget (key_t key,
               int msgflg);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int msgrcv (int int_id,
               void *buf,
               size_t len,
               long type,
               int flags);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int msgsnd (int int_id,
               const void *buf,
               size_t len,

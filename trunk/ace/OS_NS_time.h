@@ -25,14 +25,19 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Basic_Types.h"
 #include "ace/os_include/os_time.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 # if defined (ACE_HAS_BROKEN_R_ROUTINES)
 #   undef ctime_r
 #   undef asctime_r
 # endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
-#include "ace/Basic_Types.h"
 
 // Type-safe, and unsigned.
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
@@ -42,7 +47,7 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 #if defined (ACE_PSOS_HAS_TIME)
 
 // Use pSOS time, wrapped . . .
-class ACE_OS_Export ACE_PSOS_Time_t
+class ACE_Export ACE_PSOS_Time_t
 {
 public:
     /// default ctor: date, time, and ticks all zeroed.
@@ -233,73 +238,97 @@ namespace ACE_OS {
 
   //@{ @name A set of wrappers for operations on time.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   char *asctime (const struct tm *tm);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   char *asctime_r (const struct tm *tm,
                    char *buf, int buflen);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int clock_gettime (clockid_t,
                      struct timespec *);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime (const time_t *t);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
 # if defined (difftime)
 #   undef difftime
 # endif /* difftime */
 
+#if !defined (ACE_LACKS_DIFFTIME)
+  ACE_NAMESPACE_INLINE_FUNCTION
+#else
+  extern ACE_Export
+#endif /* ! ACE_LACKS_DIFFTIME */
   double difftime (time_t t1,
                    time_t t0);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct tm *gmtime (const time_t *clock);
 
+  extern ACE_Export
   struct tm *gmtime_r (const time_t *clock,
                        struct tm *res);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct tm *localtime (const time_t *clock);
 
+  extern ACE_Export
   struct tm *localtime_r (const time_t *clock,
                           struct tm *res);
 
   // Get the current time.
+  extern ACE_Export
   time_t mktime (struct tm *timeptr);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int nanosleep (const struct timespec *requested,
                  struct timespec *remaining = 0);
 
 # if defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
+  extern ACE_Export
   void readPPCTimeBase (u_long &most,
                         u_long &least);
 # endif /* ACE_HAS_POWERPC_TIMER  &&  (ghs or __GNUG__) */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   size_t strftime (char *s,
                    size_t maxsize,
                    const char *format,
                    const struct tm *timeptr);
 
 #if defined (ACE_HAS_STRPTIME)
+  extern ACE_Export
   char *strptime (char *buf,
                   const char *format,
                   struct tm *tm);
 
 # if defined (ACE_LACKS_NATIVE_STRPTIME)
+  extern ACE_Export
   int strptime_getnum (char *buf, int *num, int *bi,
                        int *fi, int min, int max);
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);
 
 # if defined (timezone)
 #   undef timezone
 # endif /* timezone */
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   long timezone (void);
 
   // wrapper for time zone information.
+  ACE_NAMESPACE_INLINE_FUNCTION
   void tzset (void);
 
   //@}
