@@ -1,3 +1,16 @@
+Tue Jul 18 23:30:59 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.h
+
+	  Modified earlier changes to improve support for LynxOS
+	  signals using pace.
+
+	* ace/ACE.cpp
+	* ace/OS_Memory.h
+
+	  Use pace system calls instead of regular calls
+	  when pace is enabled.
+
 Tue Jul 18 12:55:55 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU:
@@ -6,7 +19,7 @@ Tue Jul 18 12:55:55 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Mon Jul 17 23:44:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the 
+	* ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the
 	  other files category. It really belongs to a separate category
 	  that I'll create later.
 
@@ -24,14 +37,14 @@ Mon Jul 17 05:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Jul 16 18:53:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
-        * ace/TTY_IO:  Removed the #define for ACE_BUILD_DLL, since it 
+        * ace/TTY_IO:  Removed the #define for ACE_BUILD_DLL, since it
           is already defined in the .dsp file.
 
 Sun Jul 16 19:36:17 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/QoS_Session.h:
 	* ace/QoS_Session_Impl.{cpp,h,i}:
-	* ace/SOCK_Dgram_Mcast_QoS.cpp: Changed these files to accomodate 
+	* ace/SOCK_Dgram_Mcast_QoS.cpp: Changed these files to accomodate
 	  the new QoS decorator classes.
 
 	* ace/QoS_Decorator.{cpp,h}: Added the QoS decoration for the
@@ -45,7 +58,7 @@ Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process_Manager: To fix deadlocks with the Process_Manager
 	  on UNIX applied the following fixes:
-  
+
           Use the notify() capability of the reactor from the signal
  	  handler. This allows the signal handler to notify the reactor
  	  (over a pipe) that the signal should be processed. This is done
@@ -56,19 +69,19 @@ Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	  Thanks to Roger Larsson <larssoro@hotmail.com> for contribution
  	  these fixes.
-	
-	* ace/TTY_IO: Added additional support for the ACE serial line I/O 
+
+	* ace/TTY_IO: Added additional support for the ACE serial line I/O
 	  wrapper facades.  Thanks to Martin Stack <mstack@cambertx.com>
  	  for contribution this.
 
 	* ace/Service_Repository.h,
   	* ace/Service_Object.h,
   	* ace/Service_Config.h: Added the following aliases:
-	
+
 	  #define ACE_Component ACE_Service_Object
   	  #define ACE_Component_Config ACE_Service_Config
   	  #define ACE_Component_Repository ACE_Service_Repository
-	  
+
 	  to be consistent with the terminology in the POSA2 book.
 
 Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
