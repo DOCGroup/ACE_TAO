@@ -79,7 +79,15 @@
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#if defined (ACE_HAS_GNU_REPO)
+  // -frepo causes unresolved symbols of basic_string left- and
+  // right-shift operators with ACE_HAS_STRING_CLASS.
+# if defined (ACE_HAS_STRING_CLASS)
+#   undef ACE_HAS_STRING_CLASS
+# endif /* ACE_HAS_STRING_CLASS */
+#else  /* ! ACE_HAS_GNU_REPO */
+# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+#endif /* ! ACE_HAS_GNU_REPO */
 #define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 

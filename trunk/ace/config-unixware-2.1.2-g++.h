@@ -13,6 +13,10 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
+// this must appear before its #include.
+#define ACE_HAS_STRING_CLASS
+
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
@@ -27,7 +31,6 @@
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GNU_CSTRING_H
-#define ACE_HAS_STRING_CLASS
 #define ACE_HAS_MSG
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
