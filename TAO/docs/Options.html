@@ -276,7 +276,11 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         object implementation that respects POA's current state and
         policies.   When using the <em>direct</em> strategy, method
         invocations on collocated objects become direct calls to servant
-        without checking POA's status.  Default is thru_poa.
+        without checking POA's status (which translates to better
+        performance.)  Notice that the interfaces that you wish to use
+        direct collocation with must be compiled with <code>
+        <a href="compiler.html#collocation-stubs">-Gd</a>
+        </code>. Default is thru_poa.
     </TD>
   </TR>
   <TR>
