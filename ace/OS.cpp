@@ -665,9 +665,8 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 
 // The following *printf functions aren't inline because
 // they use varargs.
-#if !defined (ACE_HAS_WINCE)
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
 {
@@ -693,7 +692,9 @@ ACE_OS::fopen (const char *filename, const char *mode)
     }
   return NULL;
 }
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
+#if defined (ACE_WIN32)
 FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
@@ -725,6 +726,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 }
 # endif /* ACE_WIN32 */
 
+#if !defined (ACE_HAS_WINCE)
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
@@ -4400,7 +4402,12 @@ ACE_OS::open (const wchar_t *filename,
     }
 
   ACE_HANDLE h = ::CreateFileW (filename, access,
+#if !defined (ACE_HAS_WINCE)
                                 FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+#else
+                                // @@ CE doesn't support FILE_SHARE_DELETE???
+                                FILE_SHARE_READ | FILE_SHARE_WRITE,
+#endif /* !ACE_HAS_WINCE */
                                 ACE_OS::default_win32_security_attributes (sa),
                                 creation,
                                 flags,

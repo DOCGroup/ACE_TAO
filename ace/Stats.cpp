@@ -270,9 +270,15 @@ ACE_Stats::print_summary (const u_int precision,
     }
   else
     {
+#if !defined (ACE_HAS_WINCE)
       ACE_OS::fprintf (file,
                        ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
                        ASYS_TEXT (strerror (overflow_)));
+#else
+      // WinCE doesn't have strerror ;(
+      ACE_OS::fprintf (file,
+                       ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW\n"));
+#endif /* ACE_HAS_WINCE */
       return -1;
     }
 }
