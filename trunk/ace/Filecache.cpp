@@ -203,7 +203,9 @@ ACE_Filecache::instance (void)
       // @@ James, please check each of the ACE_NEW_RETURN calls to
       // make sure that it is safe to return if allocation fails.
       if (ACE_Filecache::cvf_ == 0)
-        ACE_NEW_RETURN (ACE_Filecache::cvf_, ACE_Filecache, 0);
+        ACE_NEW_RETURN (ACE_Filecache::cvf_,
+                        ACE_Filecache,
+                        0);
     }
 
   return ACE_Filecache::cvf_;

@@ -465,8 +465,9 @@ ACE_Sig_Handlers_Set::instance (int signum)
   if (signum <= 0 || signum >= ACE_NSIG)
     return 0; // This will cause problems...
   else if (ACE_Sig_Handlers_Set::sig_handlers_[signum] == 0)
-    ACE_NEW_RETURN (ACE_Sig_Handlers_Set::sig_handlers_[signum], ACE_SIG_HANDLERS_SET, 0);
-
+    ACE_NEW_RETURN (ACE_Sig_Handlers_Set::sig_handlers_[signum],
+                    ACE_SIG_HANDLERS_SET,
+                    0);
   return ACE_Sig_Handlers_Set::sig_handlers_[signum];
 }
 
@@ -527,8 +528,10 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Create a new 3rd party disposition, remembering its
           // preferred signal blocking etc...;
-          ACE_NEW_RETURN (extern_sh, ACE_Sig_Adapter (sa, ++ACE_Sig_Handlers::sigkey_), -1);
-
+          ACE_NEW_RETURN (extern_sh,
+                          ACE_Sig_Adapter (sa,
+                                           ++ACE_Sig_Handlers::sigkey_),
+                          -1);
           // Add the external signal handler to the set of handlers
           // for this signal.
           if (ACE_Sig_Handlers_Set::instance (signum)->insert (extern_sh) == -1)
@@ -538,8 +541,10 @@ ACE_Sig_Handlers::register_handler (int signum,
             }
         }
       // Add our new handler at this point.
-      ACE_NEW_RETURN (ace_sig_adapter, ACE_Sig_Adapter (new_sh, ++ACE_Sig_Handlers::sigkey_), -1);
-
+      ACE_NEW_RETURN (ace_sig_adapter,
+                      ACE_Sig_Adapter (new_sh,
+                                       ++ACE_Sig_Handlers::sigkey_),
+                      -1);
       // Add the ACE signal handler to the set of handlers for this
       // signal (make sure it goes before the external one if there is
       // one of these).
@@ -750,7 +755,10 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   // ACE_Unbounded_Set...).
   ACE_Sig_Adapter *temp;
 
-  ACE_NEW_RETURN (temp, ACE_Sig_Adapter (new_sh, ++ACE_Sig_Handlers::sigkey_), 0);
+  ACE_NEW_RETURN (temp,
+                  ACE_Sig_Adapter (new_sh,
+                                   ++ACE_Sig_Handlers::sigkey_),
+                  0);
   handler_set->insert (temp);
   return *eh;
 }

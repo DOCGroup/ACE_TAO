@@ -1042,7 +1042,9 @@ ACE_WFMO_Reactor::open (size_t size,
 
   if (tq == 0)
     {
-      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Heap, -1);
+      ACE_NEW_RETURN (this->timer_queue_,
+                      ACE_Timer_Heap,
+                      -1);
       this->delete_timer_queue_ = 1;
     }
   else
@@ -1057,7 +1059,9 @@ ACE_WFMO_Reactor::open (size_t size,
 
   if (sh == 0)
     {
-      ACE_NEW_RETURN (this->signal_handler_, ACE_Sig_Handler, -1);
+      ACE_NEW_RETURN (this->signal_handler_,
+                      ACE_Sig_Handler,
+                      -1);
       this->delete_signal_handler_ = 1;
     }
   else

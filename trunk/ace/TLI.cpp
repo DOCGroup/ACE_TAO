@@ -27,7 +27,8 @@ ACE_TLI::ACE_TLI (void)
 // (jph@ccrl.nj.nec.com) for the help.
 
   this->so_opt_req.opt.maxlen = sizeof (opthdr) + sizeof (long);
-  ACE_NEW (this->so_opt_req.opt.buf, char[this->so_opt_req.opt.maxlen]);
+  ACE_NEW (this->so_opt_req.opt.buf,
+           char[this->so_opt_req.opt.maxlen]);
 
   this->so_opt_ret.opt.maxlen = sizeof (opthdr) + sizeof (long);
   this->so_opt_ret.opt.buf = new char[this->so_opt_ret.opt.maxlen];

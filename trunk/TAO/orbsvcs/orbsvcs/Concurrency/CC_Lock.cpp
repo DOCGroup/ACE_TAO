@@ -44,14 +44,13 @@ CC_Lock::lock (CORBA::Environment &)
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
   lock_held_++;
-
-  //  if (semaphore_.acquire () == -1)
-  //    TAO_THROW (CORBA::INTERNAL ());
 }
 
 CORBA::Boolean
-CC_Lock::try_lock (CORBA::Environment &TAO_IN_ENV)
+CC_Lock::try_lock (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
 
@@ -74,7 +73,7 @@ CC_Lock::try_lock (CORBA::Environment &TAO_IN_ENV)
           return 0;
         }
       else
-        TAO_THROW_RETURN (CORBA::INTERNAL (),
+        ACE_THROW_RETURN (CORBA::INTERNAL (),
                           0);
     }
   ACE_DEBUG ((LM_DEBUG,
@@ -85,17 +84,17 @@ CC_Lock::try_lock (CORBA::Environment &TAO_IN_ENV)
 }
 
 void
-CC_Lock::unlock (CORBA::Environment &TAO_IN_ENV)
+CC_Lock::unlock (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
   if (lock_held_ == 0)
-    TAO_THROW (CosConcurrencyControl::LockNotHeld());
+    ACE_THROW (CosConcurrencyControl::LockNotHeld ());
 
   int success = 0; //semaphore_.release ();
 
   if (success == -1)
-    TAO_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INTERNAL ());
 
   lock_held_--;
 
@@ -106,8 +105,9 @@ CC_Lock::unlock (CORBA::Environment &TAO_IN_ENV)
 
 void
 CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
-                      CORBA::Environment &TAO_IN_ENV)
+                      CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ACE_DEBUG ((LM_DEBUG,
               "CC_Lock::change_mode\n"));
 
@@ -116,7 +116,7 @@ CC_Lock::change_mode (CosConcurrencyControl::lock_mode new_mode,
   // write lock
 
   if (lock_held_ == 0)
-    TAO_THROW (CosConcurrencyControl::LockNotHeld());
+    ACE_THROW (CosConcurrencyControl::LockNotHeld ());
 
   this->mode_ = new_mode;
 }
@@ -146,21 +146,24 @@ CC_Lock::GetMode (void)
 }
 
 int
-CC_Lock::GetLocksHeld(void)
+CC_Lock::GetLocksHeld (void)
 {
   return this->lock_held_;
 }
 
 void
-CC_Lock::DecLocksHeld(void)
+CC_Lock::DecLocksHeld (void)
 {
   this->lock_held_--;
 }
 
 void
-CC_Lock::dump(void)
+CC_Lock::dump (void)
 {
-  printf("mode_ %i, lock_held_: %i\n", mode_, lock_held_);
+  ACE_DEBUG ((LM_DEBUG,
+              "mode_ %i, lock_held_: %i\n",
+              mode_,
+              lock_held_));
 }
 
 // The check of compatibility is a hard coded table statically
@@ -187,23 +190,23 @@ CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] 
 
 // CC_LockModeterator
 
-CC_LockModeIterator::CC_LockModeIterator(void)
+CC_LockModeIterator::CC_LockModeIterator (void)
   : current_ (CosConcurrencyControl::intention_read)
 {
 }
 
-CC_LockModeIterator::~CC_LockModeIterator(void)
+CC_LockModeIterator::~CC_LockModeIterator (void)
 {
   // Do nothing
 }
-void CC_LockModeIterator::First(void)
+void CC_LockModeIterator::First (void)
 {
   current_ = CosConcurrencyControl::intention_read;
 }
 
-void CC_LockModeIterator::Next(CORBA::Environment &TAO_IN_ENV)
+void CC_LockModeIterator::Next (CORBA::Environment &ACE_TRY_ENV)
 {
-  switch(current_)
+  switch (current_)
     {
     case CosConcurrencyControl::intention_read:
       current_ = CosConcurrencyControl::read;
@@ -218,23 +221,23 @@ void CC_LockModeIterator::Next(CORBA::Environment &TAO_IN_ENV)
       current_ = CosConcurrencyControl::write;
       break;
     case CosConcurrencyControl::write:
-      TAO_THROW(CORBA::INTERNAL ());
+      ACE_THROW (CORBA::INTERNAL ());
     default:
-      TAO_THROW(CORBA::INTERNAL ());
+      ACE_THROW (CORBA::INTERNAL ());
     }
 }
 
 CORBA::Boolean
-CC_LockModeIterator::IsDone(void)
+CC_LockModeIterator::IsDone (void)
 {
-  if(current_==CosConcurrencyControl::write)
+  if (current_==CosConcurrencyControl::write)
     return 1;
   else
     return 0;
 }
 
 CosConcurrencyControl::lock_mode
-CC_LockModeIterator::GetLockMode(void)
+CC_LockModeIterator::GetLockMode (void)
 {
   return current_;
 }

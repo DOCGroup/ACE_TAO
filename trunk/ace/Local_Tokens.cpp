@@ -40,8 +40,6 @@ ACE_Tokens::make_owner (ACE_TPQ_Entry *caller)
   this->waiters_.enqueue (caller, 0);
 }
 
-// ************************************************************
-
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 ACE_Null_Token::ACE_Null_Token (void)
 {
@@ -51,10 +49,6 @@ ACE_Null_Token::~ACE_Null_Token (void)
 {
 }
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
-// ************************************************************
-// ************************************************************
-
 
 void
 ACE_TPQ_Entry::dump (void) const
@@ -158,10 +152,6 @@ ACE_TPQ_Entry::client_id (const ASYS_TCHAR *id)
   this->client_id_[ACE_MAXCLIENTIDLEN - 1] = '\0';
 }
 
-// ************************************************************
-// ************************************************************
-// ************************************************************
-
 void
 ACE_TSS_TPQ_Entry::dump (void) const
 {
@@ -195,7 +185,10 @@ ACE_TSS_TPQ_Entry::make_TSS_TYPE (void) const
   ACE_TRACE ("ACE_TSS_TPQ_Entry::make_TSS_TYPE");
   ACE_TPQ_Entry *temp;
 
-  ACE_NEW_RETURN (temp, ACE_TPQ_Entry (this->proxy_, this->client_id_), 0);
+  ACE_NEW_RETURN (temp,
+                  ACE_TPQ_Entry (this->proxy_,
+                                 this->client_id_),
+                  0);
   return temp;
 }
 
@@ -204,10 +197,6 @@ ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * (void)
   ACE_TRACE ("ACE_TSS_TPQ_Entry::operator");
   return  (ACE_TPQ_Entry *) (*((ACE_TSS<ACE_TPQ_Entry> *) this));
 }
-
-// ************************************************************
-// ************************************************************
-// ************************************************************
 
 ACE_TPQ_Iterator::ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q)
 : current_ (q.head_)
@@ -253,10 +242,6 @@ ACE_TPQ_Iterator::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("head_ and tail_\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
-// ************************************************************
-// ************************************************************
-// ************************************************************
 
 void
 ACE_Token_Proxy_Queue::dump (void) const
@@ -413,10 +398,6 @@ ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
   // it wasn't in the list.
   return;
 }
-
-// ************************************************************
-// ************************************************************
-// ************************************************************
 
 void
 ACE_Mutex_Token::dump (void) const
@@ -652,10 +633,6 @@ ACE_Mutex_Token::is_owner (const ASYS_TCHAR *id)
   else
     return 0;
 }
-
-// ************************************************************
-// ************************************************************
-// ************************************************************
 
 void
 ACE_RW_Token::dump (void) const
@@ -1035,11 +1012,6 @@ ACE_RW_Token::is_owner (const ASYS_TCHAR *id)
   return 0;
 }
 
-// ************************************************************
-// ************************************************************
-// ************************************************************
-// 7..
-
 void
 ACE_Token_Proxy::dump (void) const
 {
@@ -1390,8 +1362,6 @@ ACE_Token_Proxy::token_acquired (ACE_TPQ_Entry *e)
 
   return;
 }
-
-// ************************************************************
 
 ACE_Token_Name::ACE_Token_Name (const ASYS_TCHAR *token_name)
 {

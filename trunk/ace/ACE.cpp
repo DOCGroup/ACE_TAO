@@ -134,7 +134,7 @@ ACE::terminate_process (pid_t pid)
                    pid);
 
   if (process_handle == ACE_INVALID_HANDLE
-      || process_handle == NULL)
+      || process_handle == 0)
     return -1;
   else
     {
@@ -175,7 +175,7 @@ ACE::process_active (pid_t pid)
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_QUERY_INFORMATION, FALSE, pid);
   if (process_handle == ACE_INVALID_HANDLE
-      || process_handle == NULL)
+      || process_handle == 0)
     return 0;
   else
     {
@@ -1046,7 +1046,9 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -1082,7 +1084,9 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -3122,8 +3126,8 @@ ACE::get_ip_interfaces (size_t &count,
                     0, 0,
                     info, sizeof(info),
                     &bytes,
-                    NULL,
-                    NULL);
+                    0,
+                    0);
   closesocket (sock);
   if (status == SOCKET_ERROR)
       return -1;
@@ -3132,7 +3136,9 @@ ACE::get_ip_interfaces (size_t &count,
   if (n_interfaces == 0)
     return 0;
 
-  ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -1);
+  ACE_NEW_RETURN (addrs,
+                  ACE_INET_Addr[n_interfaces],
+                  -1);
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
@@ -3164,55 +3170,73 @@ ACE::get_ip_interfaces (size_t &count,
 
 #else /* Winsock 2 && MSVC 5 or later */
 
-  // PharLap ETS has kernel routines to rummage through the device configs
-  // and extract the interface info. Sort of a pain in the butt, but better
-  // than trying to figure out where it moved to in the registry... :-|
+  // PharLap ETS has kernel routines to rummage through the device
+  // configs and extract the interface info. Sort of a pain in the
+  // butt, but better than trying to figure out where it moved to in
+  // the registry... :-|
 #  if defined (ACE_HAS_PHARLAP)
 #    if !defined (ACE_HAS_PHARLAP_RT)
   ACE_NOTSUP_RETURN (-1);
 #    endif /* ACE_HAS_PHARLAP_RT */
 
-  // Locate all of the IP devices in the system, saving a DEVHANDLE for
-  // each. Then allocate the ACE_INET_Addrs needed and fetch all the IP
-  // addresses.
-  // To locate the devices, try the available device name roots and increment
-  // the device number until the kernel says there are no more of that type.
-  const size_t ACE_MAX_ETS_DEVICES = 64;  /* Arbitrary, but should be enough */
-  DEVHANDLE    ip_dev[ACE_MAX_ETS_DEVICES];
+  // Locate all of the IP devices in the system, saving a DEVHANDLE
+  // for each. Then allocate the ACE_INET_Addrs needed and fetch all
+  // the IP addresses.  To locate the devices, try the available
+  // device name roots and increment the device number until the
+  // kernel says there are no more of that type.
+  const size_t ACE_MAX_ETS_DEVICES = 64;  // Arbitrary, but should be enough.
+  DEVHANDLE ip_dev[ACE_MAX_ETS_DEVICES];
   EK_TCPIPCFG *devp;
-  size_t       i, j;
-  char         dev_name[16];
+  size_t i, j;
+  char dev_name[16];
 
   count = 0;
   for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
     {
-      ACE_OS::sprintf (dev_name, "ether%d", i);    /* Ethernet */
-      if ((ip_dev[count] = EtsTCPGetDeviceHandle (dev_name)) == NULL)
+      // Ethernet.
+      ACE_OS::sprintf (dev_name,
+                       "ether%d",
+                       i);    
+      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
+      if (ip_dev[count] == 0)
         break;
     }
   for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
     {
-      ACE_OS::sprintf (dev_name, "sl%d", i);      /* SLIP */
-      if ((ip_dev[count] = EtsTCPGetDeviceHandle (dev_name)) == NULL)
+      // SLIP.
+      ACE_OS::sprintf (dev_name,
+                       "sl%d",
+                       i); 
+      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
+      if (ip_dev[count] == 0)
         break;
     }
   for (i = 0; count < ACE_MAX_ETS_DEVICES; i++, ++count)
     {
-      ACE_OS::sprintf (dev_name, "ppp%d", i);     /* PPP */
-      if ((ip_dev[count] = EtsTCPGetDeviceHandle (dev_name)) == NULL)
+      // PPP.
+      ACE_OS::sprintf (dev_name,
+                       "ppp%d",
+                       i);
+      ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
+      if (ip_dev[count] == 0)
         break;
     }
 
   if (count > 0)
-    addrs = new ACE_INET_Addr[count];
+    ACE_NEW_RETURN (addrs,
+                    ACE_INET_Addr[count],
+                    -1);
   else
     addrs = 0;
 
   for (i = 0, j = 0; i < count; i++)
     {
-      if ((devp = EtsTCPGetDeviceCfg (ip_dev[i])) != NULL)
+      devp = EtsTCPGetDeviceCfg (ip_dev[i]);
+      if (devp != 0)
         {
-          addrs[j].set (0, devp->nwIPAddress, 0);  /* Already in net order */
+          addrs[j].set (0,
+                        devp->nwIPAddress,
+                        0); // Already in net order.
           j++;
         }
       // There's no call to close the DEVHANDLE.
@@ -3248,14 +3272,14 @@ ACE::get_ip_interfaces (size_t &count,
                        raw_buffer,
                        raw_buflen))
     return -1;
-  // return buffer contains NULL delimited strings
+  // return buffer contains 0 delimited strings
 
   ACE_Tokenizer dev_names (raw_buffer);
   dev_names.delimiter (ACE_TEXT('\0'));
   int n_interfaces = 0;
 
   // Count the number of interfaces
-  while (dev_names.next () != NULL)
+  while (dev_names.next () != 0)
     n_interfaces ++;
 
   // case 1. no interfaces present, empty string? OS version change?

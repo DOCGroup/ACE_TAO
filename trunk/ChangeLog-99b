@@ -1,3 +1,34 @@
+Sat Jul  3 12:05:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Future_Set_Test.cpp (main): We were casting a const ASYS_TCHAR *
+	  to u_int, yikes!	  
+
+	* ace/RB_Tree.cpp: Cleaned up the code so it's conformant with the
+	  ACE programming style, particularly for dynamic memory
+ 	  allocation (which wasn't using ACE_NEW).
+
+	* ace/ACE.cpp (get_ip_interfaces): Cleaned up the code so it conforms
+	  to the ACE programming guidelines.
+
+	* ace/Timer_Hash_T.cpp: Fixed a number mistakes where the return
+	  value of new wasn't being checked.
+
+	* ace/Timer_Heap_T.cpp,
+  	  ace/Timer_Wheel_T.cpp: Removed the apparently extraneous parens
+ 	  used in the ACE_NEW* macros in order to keep EGCS 2.95 happy.
+  	  Thanks to Jody Hagins and Arturo Montes
+ 	  <mitosys@colomsat.com.co> for reporting this.  BTW, if this
+ 	  causes problems on any compilers please let me know.
+
+	* ace: Reformatted all the ACE_NEW* macros so they conform to
+	  ACE programming style.
+
+	* ace/Priority_Reactor.cpp: Cleaned up the code to conform to
+	  the ACE programming style.
+
+	* ace/OS.cpp (tss_base): Cleaned up a loop a bit so it conforms
+	  to the ACE programming style.
+
 Sat Jul  3 11:09:51 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
 	* ace/WIN32_Asynch_IO.cpp

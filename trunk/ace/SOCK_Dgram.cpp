@@ -283,7 +283,9 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
 #else 
-  ACE_NEW_RETURN (buf, char[length], -1);
+  ACE_NEW_RETURN (buf,
+                  char[length],
+                  -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -330,7 +332,9 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
 #else 
-  ACE_NEW_RETURN (buf, char[length], -1);
+  ACE_NEW_RETURN (buf,
+                  char[length],
+                  -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE_SOCK_Dgram::recv (buf, length, addr, flags);

@@ -239,13 +239,16 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     command_line_argv_calculated_ (0),
     command_line_buf_ (0)
 {
-  ACE_NEW (command_line_buf_, TCHAR[cobl]);
+  ACE_NEW (command_line_buf_,
+           TCHAR[cobl]);
   command_line_buf_[0] = '\0';
 
 #if !defined (ACE_HAS_WINCE)
   working_directory_[0] = '\0';
-  ACE_NEW (environment_buf_, TCHAR[ebl]);
-  ACE_NEW (environment_argv_, LPTSTR[mea]);
+  ACE_NEW (environment_buf_,
+           TCHAR[ebl]);
+  ACE_NEW (environment_argv_,
+           LPTSTR[mea]);
   environment_buf_[0] = '\0';
   environment_argv_[0] = 0;
 

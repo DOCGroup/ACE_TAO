@@ -89,7 +89,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
 
   // Create the heap array.
   ACE_NEW (this->heap_,
-           (ACE_Timer_Node_T<TYPE> *[size]));
+           ACE_Timer_Node_T<TYPE> *[size]);
 
   // Create the parallel
   ACE_NEW (this->timer_ids_,
@@ -104,7 +104,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   if (preallocate)
     {
       ACE_NEW (this->preallocated_nodes_,
-               (ACE_Timer_Node_T<TYPE>[size]));
+               ACE_Timer_Node_T<TYPE>[size]);
 
       // Add allocated array to set of such arrays for deletion
       // on cleanup.
@@ -140,10 +140,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   // Create the heap array.
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
     ACE_NEW (this->heap_,
-             (ACE_Timer_Node_T<TYPE> *[ACE_DEFAULT_TIMERS]));
+             ACE_Timer_Node_T<TYPE> *[ACE_DEFAULT_TIMERS]);
 #else
     ACE_NEW (this->heap_,
-             (ACE_Timer_Node_T<TYPE> *[this->max_size_]));
+             ACE_Timer_Node_T<TYPE> *[this->max_size_]);
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
   // Create the parallel array.
@@ -410,14 +410,14 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_NEW (new_heap,
-           (ACE_Timer_Node_T<TYPE> *[1024]));
+           ACE_Timer_Node_T<TYPE> *[1024]);
 #else
   ACE_NEW (new_heap,
-           (ACE_Timer_Node_T<TYPE> *[new_size]));
+           ACE_Timer_Node_T<TYPE> *[new_size]);
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
   ACE_NEW (new_heap,
-           (ACE_Timer_Node_T<TYPE> *[new_size]));
+           ACE_Timer_Node_T<TYPE> *[new_size]);
   ACE_OS::memcpy (new_heap,
                   this->heap_,
                   max_size_ * sizeof *new_heap);
@@ -449,10 +449,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
       // to existing list.
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
       ACE_NEW (this->preallocated_nodes_,
-               (ACE_Timer_Node_T<TYPE>[88]));
+               ACE_Timer_Node_T<TYPE>[88]);
 #else
       ACE_NEW (this->preallocated_nodes_,
-               (ACE_Timer_Node_T<TYPE>[this->max_size_]));
+               ACE_Timer_Node_T<TYPE>[this->max_size_]);
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
       // Add it to the set for later deletion
@@ -517,7 +517,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::alloc_node (void)
   // Only allocate a node if we are *not* using the preallocated heap.
   if (this->preallocated_nodes_ == 0)
     ACE_NEW_RETURN (temp,
-                    (ACE_Timer_Node_T<TYPE>),
+                    ACE_Timer_Node_T<TYPE>,
                     0);
   else
     {

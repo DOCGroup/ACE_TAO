@@ -86,7 +86,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_List_T (FUNCTOR *upcall_fun
   this->head_->set_next (this->head_);
   this->head_->set_prev (this->head_);
 
-  iterator_ = new LIST_ITERATOR(*this);
+  ACE_NEW (iterator_,
+           LIST_ITERATOR (*this));
 }
 
 
@@ -210,7 +211,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 
   return (long) temp;
 }
-
 
 // Locate and remove the single <ACE_Event_Handler> with a value of
 // <timer_id> from the timer queue.

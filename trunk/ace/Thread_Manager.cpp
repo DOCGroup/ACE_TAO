@@ -203,7 +203,11 @@ ACE_Thread_Descriptor::at_exit (void *object,
   else
    {
      ACE_At_Thread_Exit* cleanup;
-     ACE_NEW_RETURN (cleanup, ACE_At_Thread_Exit_Func (object,cleanup_hook,param), -1);
+     ACE_NEW_RETURN (cleanup,
+                     ACE_At_Thread_Exit_Func (object,
+                                              cleanup_hook,
+                                              param),
+                     -1);
      this->at_push (cleanup);
    }
 #endif /* ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
@@ -240,7 +244,8 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   this->cleanup_info_.object_ = 0;
   this->cleanup_info_.param_ = 0;
 #endif /* ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-  ACE_NEW (this->sync_, ACE_DEFAULT_THREAD_MANAGER_LOCK);
+  ACE_NEW (this->sync_,
+           ACE_DEFAULT_THREAD_MANAGER_LOCK);
 }
 
 void
@@ -334,7 +339,9 @@ ACE_Thread_Manager::instance (void)
 
       if (ACE_Thread_Manager::thr_mgr_ == 0)
         {
-          ACE_NEW_RETURN (ACE_Thread_Manager::thr_mgr_, ACE_Thread_Manager, 0);
+          ACE_NEW_RETURN (ACE_Thread_Manager::thr_mgr_,
+                          ACE_Thread_Manager,
+                          0);
           ACE_Thread_Manager::delete_thr_mgr_ = 1;
         }
     }
@@ -443,13 +450,19 @@ ACE_Thread_Exit::instance (void)
 
       if (instance_ == 0)
         {
-           ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Thread_Exit), 0);
+           ACE_NEW_RETURN (instance_,
+                           ACE_TSS_TYPE (ACE_Thread_Exit),
+                           0);
 
           // Register for destruction with ACE_Object_Manager.
 #if defined ACE_HAS_SIG_C_FUNC
-          ACE_Object_Manager::at_exit (instance_, ACE_Thread_Exit_cleanup, 0);
+          ACE_Object_Manager::at_exit (instance_,
+                                       ACE_Thread_Exit_cleanup,
+                                       0);
 #else
-          ACE_Object_Manager::at_exit (instance_, ACE_Thread_Exit::cleanup, 0);
+          ACE_Object_Manager::at_exit (instance_,
+                                       ACE_Thread_Exit::cleanup,
+                                       0);
 #endif /* ACE_HAS_SIG_C_FUNC */
         }
     }
@@ -660,7 +673,9 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (t_id == 0)
     {
       char *thr_id;
-      ACE_NEW_RETURN (thr_id, char[16], -1);
+      ACE_NEW_RETURN (thr_id,
+                      char[16],
+                      -1);
       // Mark the thread ID to show that the ACE_Thread_Manager
       // allocated it.
       thr_id[0] = ACE_THR_ID_ALLOCATED;
@@ -842,7 +857,9 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   ACE_Thread_Descriptor *thr_desc;
 
   if (td == 0)
-    ACE_NEW_RETURN (thr_desc, ACE_Thread_Descriptor, -1);
+    ACE_NEW_RETURN (thr_desc,
+                    ACE_Thread_Descriptor,
+                    -1);
   else
     thr_desc = td;
 
