@@ -781,16 +781,15 @@ CORBA_ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 
 CORBA::TypeCode_ptr
 CORBA_ExceptionList::item (CORBA::ULong slot,
-                           CORBA::Environment &TAO_IN_ENV)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::TypeCode_ptr *tc;
 
-  TAO_IN_ENV.clear ();
+  //  ACE_TRY_ENV.clear ();
 
   if (this->tc_list_.get (tc,
                           slot) == -1)
-    TAO_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                      0);
+    ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
   else
     return CORBA::TypeCode::_duplicate (*tc);
 }

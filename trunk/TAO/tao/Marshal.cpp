@@ -82,11 +82,11 @@ TAO_Marshal_Factory::~TAO_Marshal_Factory (void)
 // the kind of the typecode.
 TAO_Marshal_Object *
 TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
-                                          CORBA::Environment &TAO_IN_ENV)
+                                          CORBA::Environment &ACE_TRY_ENV)
 {
   if (tc && tc->kind_ >= 0 && tc->kind_ < CORBA::TC_KIND_COUNT)
     return this->mobj_table_[tc->kind_].obj_;
-  TAO_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
+  ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 }
 
 
