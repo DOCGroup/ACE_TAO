@@ -291,6 +291,12 @@ public:
    */
   void destroy (void);
 
+  /// Return the cached value from the ORB_Core.
+  /**
+   * This flag indicates whether the stub code should make use of the
+   * collocation opportunities that are available to the ORB.
+   */
+  CORBA::Boolean optimize_collocation_objects (void) const;
 protected:
 
   /// Destructor is to be called only through _decr_refcnt() to
@@ -401,6 +407,14 @@ protected:
   /// Forwarded IOR info
   IOP::IOR *forwarded_ior_info_;
 
+  /// TRUE if we want to take advantage of collocation optimization in
+  /// this ORB.
+  /**
+   * This should be the same value as cached in the ORB_Core. The
+   * reason for caching this helps our generated code, notably the
+   * stubs to be decoubled from ORB_Core. Please do not move it away.
+   */
+  const CORBA::Boolean collocation_opt_;
 };
 
 // Define a TAO_Stub auto_ptr class.

@@ -4,7 +4,6 @@
 
 #include "Object_T.h"
 #include "Stub.h"
-#include "ORB_Core.h"
 
 ACE_RCSID (tao,
            Object_T,
@@ -89,7 +88,7 @@ namespace TAO
 
     bool collocated =
       !CORBA::is_nil (stub->servant_orb_var ().ptr ())
-      && stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ()
+      && stub->optimize_collocation_objects ()
       && obj->_is_collocated ()
       && pbf != 0;
 

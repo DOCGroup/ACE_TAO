@@ -18,8 +18,6 @@
 
 . Bug 1476
 
-. Check for Interceptor calls..
-
 . Multiprofile IOR and fallback in case of failure
 
 . Interaction between abstract interfaces and collocation.

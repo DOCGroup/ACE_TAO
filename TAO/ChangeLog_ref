@@ -1,3 +1,23 @@
+Tue Oct 14 08:13:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.h (TAO): Fixed a typo in the
+	  documentation. 
+
+	* tao/DomainC.cpp: #included ORB_Core.h
+
+	* tao/ORB.h: Added a @@todo
+
+	* tao/Stub.h:
+	* tao/Stub.cpp:
+	* tao/Stub.i: Cached the collocation optimizattion value into the
+	  Stub. This is useful to decouple the generated code from
+	  ORB_Core. A accessor function has been added so that the
+	  generated code can use it. A minor duplication with a big win
+	  should be okay. 
+
+	* tao/Object_T.cpp: Removed ORB_Core.h inclusion. This inclusion
+	  finds its way into the generated code. 
+
 Mon Oct 14 8:02:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Base.cpp: Fixed a compile error when compiled

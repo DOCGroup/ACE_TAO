@@ -61,7 +61,7 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
   class ORB_ObjectIdList;
-  
+
   // Used at present only in Typecode_Constants.cpp, to make _tc_ORBid.
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
   typedef char * ORBid;
@@ -83,7 +83,7 @@ namespace CORBA
         TAO_SeqElem_String_Manager
       >
     ORB_ObjectIdList_var;
-  
+
   typedef
     TAO_MngSeq_Out_T<
         ORB_ObjectIdList,
@@ -91,15 +91,15 @@ namespace CORBA
         TAO_SeqElem_String_Manager
       >
     ORB_ObjectIdList_out;
-  
+
   struct ServiceInformation;
-  
+
   typedef
     TAO_Var_Var_T<
         ServiceInformation
       >
     ServiceInformation_var;
-  
+
   typedef
     TAO_Out_T<
         ServiceInformation,
@@ -555,6 +555,7 @@ namespace CORBA
 
     /// Set collocation optimization status.
     /// Get collocation optimization status.
+    /// @@todo: Who is calling this?
     void _optimize_collocation_objects (CORBA::Boolean opt);
     CORBA::Boolean _optimize_collocation_objects (void) const;
 
