@@ -1,3 +1,15 @@
+Tue Mar 01 23:54:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* ExecutionManager/Execution_Manager_Impl.cpp
+	* ciao/Deployment.idl
+	* ciao/Deployment_Core.idl
+	* ciao/NodeApplication_Impl.cpp
+
+	  Fixed bugs which caused exceptions of DomainApplicationManager
+	  when tearing down the assembly. Now all the DAnCE tools 
+	  are working fine together. 
+
 Tue Mar 01 21:39:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
 	* ExecutionManager/DAM_Map.h

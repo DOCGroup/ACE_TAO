@@ -103,7 +103,7 @@ namespace CIAO
 
           (void) this->map_.unbind_dam (plan->UUID.in ());
 
-          manager->destroyApplication (ACE_ENV_SINGLE_ARG_PARAMETER);
+          manager->destroyManager (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
 #if 0
