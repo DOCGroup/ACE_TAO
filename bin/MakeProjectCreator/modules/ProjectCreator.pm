@@ -1139,12 +1139,12 @@ sub sift_files {
       push(@$array, $saved[0]);
     }
     else {
-      my($pjname) = $self->escape_regex_special(
-                             $self->transform_file_name(
-                               $self->get_assignment('project_name')));
+      my($unescaped) = $self->transform_file_name(
+                               $self->get_assignment('project_name'));
+      my($pjname)    = $self->escape_regex_special($unescaped);
       foreach my $save (@saved) {
         my($file) = $self->escape_regex_special($save);
-        if ($pjname =~ /$file/ || $file =~ /$pjname/) {
+        if ($unescaped =~ /$file/ || $save =~ /$pjname/) {
           if (!$self->already_added($array, $save)) {
             push(@$array, $save);
           }
