@@ -35,7 +35,6 @@ static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
-int ACE_Filecache::instantiated_ = 0;
 
 void
 ACE_Filecache_Handle::init (void)
@@ -187,7 +186,7 @@ ACE_Filecache *
 ACE_Filecache::instance (void)
 {
   // Double check locking pattern.
-  if (ACE_Filecache::instantiated_ == 0)
+  if (ACE_Filecache::cvf_ == 0)
     {
       ACE_SYNCH_RW_MUTEX &lock =
         *ACE_Managed_Object<ACE_SYNCH_RW_MUTEX>::get_preallocated_object
@@ -196,14 +195,8 @@ ACE_Filecache::instance (void)
 
       // @@ James, please check each of the ACE_NEW_RETURN calls to
       // make sure that it is safe to return if allocation fails.
-      if (ACE_Filecache::instantiated_ == 0)
-        {
-          ACE_NEW_RETURN (ACE_Filecache::cvf_, ACE_Filecache, 0);
-          ACE_Filecache::instantiated_ = -1;
-          // @@ There's no cleanup routine for ACE_Filecache singleton
-          // at this moment.  Don't forget to reset <instantiated_> to
-          // 0 after destructing it.
-        }
+      if (ACE_Filecache::cvf_ == 0)
+        ACE_NEW_RETURN (ACE_Filecache::cvf_, ACE_Filecache, 0);
     }
 
   return ACE_Filecache::cvf_;

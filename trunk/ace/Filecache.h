@@ -225,10 +225,7 @@ private:
   static ACE_Filecache *cvf_;
   // The reference to the instance
 
-  static int instantiated_;
-  // Flag indicating whether <cvf_> has been instantiated or not.
-
- // = Synchronization variables.
+  // = Synchronization variables.
   ACE_SYNCH_RW_MUTEX hash_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
   ACE_SYNCH_RW_MUTEX file_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
 };

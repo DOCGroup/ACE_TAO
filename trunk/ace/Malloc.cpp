@@ -15,7 +15,6 @@
 
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
-int ACE_Allocator::instantiated_ = 0;
 
 // Controls whether the Allocator is deleted when we shut down (we can
 // only delete it safely if we created it!)  This is no longer used;
@@ -67,13 +66,13 @@ ACE_Allocator::instance (void)
 {
   //  ACE_TRACE ("ACE_Allocator::instance");
 
-  if (ACE_Allocator::instantiated_ == 0)
+  if (ACE_Allocator::allocator_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE_Allocator::instantiated_ == 0)
+      if (ACE_Allocator::allocator_ == 0)
         {
           // Have a seat.  We want to avoid ever having to delete the
           // ACE_Allocator instance, to avoid shutdown order
@@ -107,8 +106,6 @@ ACE_Allocator::instance (void)
           // ACE_Allocator::allocator_ =
           //   (ACE_New_Allocator *)
           //     new (&allocator_instance) ACE_New_Allocator;
-
-          ACE_Allocator::instantiated_ = -1;
         }
     }
 
@@ -127,7 +124,6 @@ ACE_Allocator::instance (ACE_Allocator *r)
   ACE_Allocator::delete_allocator_ = 0;
 
   ACE_Allocator::allocator_ = r;
-  ACE_Allocator::instantiated_ = (r != 0 ? -1 : 0);
   return t;
 }
 
@@ -144,7 +140,6 @@ ACE_Allocator::close_singleton (void)
       // This should never be executed.  See ACE_Allocator::instance (void).
       delete ACE_Allocator::allocator_;
       ACE_Allocator::allocator_ = 0;
-      ACE_Allocator::instantiated_ = 0;
       ACE_Allocator::delete_allocator_ = 0;
     }
 }

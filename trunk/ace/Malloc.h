@@ -124,9 +124,6 @@ private:
   static ACE_Allocator *allocator_;
   // Pointer to a process-wide <ACE_Allocator> instance.
 
-  static int instantiated_;
-  // Flag indicating whether the singleton <allocator_> has been instantiated or not.
-
   static int delete_allocator_;
   // Must delete the <allocator_> if non-0.
 };

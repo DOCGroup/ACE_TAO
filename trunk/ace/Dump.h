@@ -137,9 +137,6 @@ private:
   static ACE_ODB *instance_;
   // Singleton instance of this class.
 
-  static int instantiated_;
-  // Flag indicating whether the <instance_> has been instantiated or not.
-
   Tuple object_table_[ACE_ODB::MAX_TABLE_SIZE];
   // The current implementation is very simple-minded and will be
   // changed to be dynamic.
