@@ -347,7 +347,18 @@ main (int argc,
     case 1:
     default:
       {
+        ACE_DEBUG ((LM_DEBUG, "*************LRU Caching Strategy*****************\n"));
         caching_strategy = new LRU_CACHING_STRATEGY_ADAPTER;
+        test_connection_management (*caching_strategy);
+        delete caching_strategy;
+        
+        ACE_DEBUG ((LM_DEBUG, "*************LFU Caching Strategy*****************\n"));
+        caching_strategy = new LFU_CACHING_STRATEGY_ADAPTER;
+        test_connection_management (*caching_strategy);
+        delete caching_strategy;
+
+        ACE_DEBUG ((LM_DEBUG, "*************FIFO Caching Strategy*****************\n"));
+        caching_strategy = new FIFO_CACHING_STRATEGY_ADAPTER;
         test_connection_management (*caching_strategy);
         break;
       }
