@@ -1,6 +1,6 @@
 Thu Jan 15 12:43:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* /: Added a bunch of makefile (*.MAK) for one button
+	* /: Added a bunch of makefiles (*.MAK) for one button
  	  make-and-test on NT.
 
 	* Makefile (FILTER): Added filter to remove VC one button related
