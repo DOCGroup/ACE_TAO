@@ -151,87 +151,107 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                        "remove"),
                       -1);
   
-  TAO_TRY 
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Get ourselves a Naming service
-      this->bind_to_naming_service (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->bind_to_naming_service (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get the stream endpoint created by the child from the naming service
-      this->get_stream_endpoint (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->get_stream_endpoint (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Get the Vdev created by the child from the naming service
-      this->get_vdev (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->get_vdev (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::activate");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy::activate");
       return -1;
     }      
-  TAO_ENDTRY;
-
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 // Get ourselves a Naming service reference
 int
-TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (CORBA::Environment &env)
+TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->naming_context_.in ()) == 0)
-    return 0;
+  ACE_TRY
+    {
+      if (CORBA::is_nil (this->naming_context_.in ()) == 0)
+        return 0;
 
-  CORBA::Object_var naming_obj =
-    TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
+      CORBA::Object_var naming_obj =
+        TAO_ORB_Core_instance ()->orb ()->resolve_initial_references ("NameService");
 
-  if (CORBA::is_nil (naming_obj.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Name Service.\n"),
-                      -1);
-  this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                       env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
+      if (CORBA::is_nil (naming_obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                          -1);
+      this->naming_context_ =
+        CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 // Get the VDev created in the child process from the namingservice
 int
-TAO_AV_Endpoint_Process_Strategy::get_vdev (CORBA::Environment &env)
+TAO_AV_Endpoint_Process_Strategy::get_vdev (CORBA::Environment &ACE_TRY_ENV)
 {
-  char vdev_name [BUFSIZ];
-  ACE_OS::sprintf (vdev_name,
-                   "%s:%s:%d",
-                   "VDev",
-                   this->host_,
-                   this->pid_);
+  ACE_TRY
+    {
+      char vdev_name [BUFSIZ];
+      ACE_OS::sprintf (vdev_name,
+                       "%s:%s:%d",
+                       "VDev",
+                       this->host_,
+                       this->pid_);
 
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
 
-  // Create the name
-  CosNaming::Name VDev_Name (1);
-  VDev_Name.length (1);
-  VDev_Name [0].id = CORBA::string_dup (vdev_name);
+      // Create the name
+      CosNaming::Name VDev_Name (1);
+      VDev_Name.length (1);
+      VDev_Name [0].id = CORBA::string_dup (vdev_name);
 
-  // Get the CORBA::Object
-  CORBA::Object_var vdev =
-    this->naming_context_->resolve (VDev_Name,
-                             env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+      // Get the CORBA::Object
+      CORBA::Object_var vdev =
+        this->naming_context_->resolve (VDev_Name,
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Narrow it
-  this->vdev_ =
-    AVStreams::VDev::_narrow (vdev.in (),
-                              env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+      // Narrow it
+      this->vdev_ =
+        AVStreams::VDev::_narrow (vdev.in (),
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Check if valid
-  if (CORBA::is_nil (this->vdev_))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
-                      -1);
+      // Check if valid
+      if (CORBA::is_nil (this->vdev_))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
+                          -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy::get_vdev");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -271,40 +291,50 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
 
 // Gets the stream endpoint object reference from the naming service
 int
-TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &env)
+TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (CORBA::Environment &ACE_TRY_ENV)
 {
-  char stream_endpoint_name[BUFSIZ];
-  ACE_OS::sprintf (stream_endpoint_name,
-                   "%s:%s:%d",
-                   "Stream_Endpoint_A",
-                   this->host_,
-                   this->pid_);
+  ACE_TRY
+    {
+      char stream_endpoint_name[BUFSIZ];
+      ACE_OS::sprintf (stream_endpoint_name,
+                       "%s:%s:%d",
+                       "Stream_Endpoint_A",
+                       this->host_,
+                       this->pid_);
 
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
-  // Create the name
-  CosNaming::Name Stream_Endpoint_A_Name (1);
+      // Create the name
+      CosNaming::Name Stream_Endpoint_A_Name (1);
   
-  Stream_Endpoint_A_Name.length (1);
-  Stream_Endpoint_A_Name [0].id = CORBA::string_dup (stream_endpoint_name);
+      Stream_Endpoint_A_Name.length (1);
+      Stream_Endpoint_A_Name [0].id = CORBA::string_dup (stream_endpoint_name);
 
-  // Get the CORBA::Object
-  CORBA::Object_var stream_endpoint_a =
-    this->naming_context_->resolve (Stream_Endpoint_A_Name,
-                                    env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+      // Get the CORBA::Object
+      CORBA::Object_var stream_endpoint_a =
+        this->naming_context_->resolve (Stream_Endpoint_A_Name,
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
   
-  // Narrow the reference
-  this->stream_endpoint_a_ =
-    AVStreams::StreamEndPoint_A::_narrow (stream_endpoint_a.in (),
-                                          env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+      // Narrow the reference
+      this->stream_endpoint_a_ =
+        AVStreams::StreamEndPoint_A::_narrow (stream_endpoint_a.in (),
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
   
-  // Check for validity
-  if (CORBA::is_nil (this->stream_endpoint_a_))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
-                      -1);
+      // Check for validity
+      if (CORBA::is_nil (this->stream_endpoint_a_))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve Stream_Endpoint_A in Naming service <%s>\n"),
+                          -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
@@ -326,10 +356,10 @@ TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B (void)
 // Creates and returns a "B" type endpoint
 int
 TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
-                                           AVStreams::VDev_ptr &vdev,
-                                           CORBA::Environment &)
+                                              AVStreams::VDev_ptr &vdev,
+                                              CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
     if (this->activate () == -1)
       ACE_ERROR_RETURN ((LM_ERROR, 
@@ -338,55 +368,66 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
 
     ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
                 TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_,
-                                                                    TAO_TRY_ENV)));
-    TAO_CHECK_ENV;
+                                                                    ACE_TRY_ENV)));
+    ACE_TRY_CHECK;
     stream_endpoint = this->stream_endpoint_b_;
     vdev = this->vdev_;
   }
-  TAO_CATCHANY
+  ACE_CATCHANY
     { 
-      TAO_TRY_ENV.print_exception ("TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
+      ACE_TRY_ENV.print_exception ("TAO_AV_Endpoint_Process_Strategy_B::create_B\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
 // Gets the B type stream_endpoint from the Naming service
 int
-TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &env)
+TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (CORBA::Environment &ACE_TRY_ENV)
 {
-  char stream_endpoint_name[BUFSIZ];
-  ACE_OS::sprintf (stream_endpoint_name,
-                   "%s:%s:%d",
-                   "Stream_Endpoint_B",
-                   this->host_,
-                   this->pid_);
+  ACE_TRY
+    {
+      char stream_endpoint_name[BUFSIZ];
+      ACE_OS::sprintf (stream_endpoint_name,
+                       "%s:%s:%d",
+                       "Stream_Endpoint_B",
+                       this->host_,
+                       this->pid_);
 
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
 
-  // Create the name
-  CosNaming::Name Stream_Endpoint_B_Name (1);
+      // Create the name
+      CosNaming::Name Stream_Endpoint_B_Name (1);
   
-  Stream_Endpoint_B_Name.length (1);
-  Stream_Endpoint_B_Name [0].id = CORBA::string_dup (stream_endpoint_name);
+      Stream_Endpoint_B_Name.length (1);
+      Stream_Endpoint_B_Name [0].id = CORBA::string_dup (stream_endpoint_name);
   
-  // Get the CORBA::Object reference
-  CORBA::Object_var stream_endpoint_b =
-    this->naming_context_->resolve (Stream_Endpoint_B_Name,
-                                    env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+      // Get the CORBA::Object reference
+      CORBA::Object_var stream_endpoint_b =
+        this->naming_context_->resolve (Stream_Endpoint_B_Name,
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Narrow the reference
-  this->stream_endpoint_b_ =
-    AVStreams::StreamEndPoint_B::_narrow (stream_endpoint_b.in (),
-                                          env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+      // Narrow the reference
+      this->stream_endpoint_b_ =
+        AVStreams::StreamEndPoint_B::_narrow (stream_endpoint_b.in (),
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // Check for validity
-  if (CORBA::is_nil (this->stream_endpoint_b_))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
-                      -1);
+      // Check for validity
+      if (CORBA::is_nil (this->stream_endpoint_b_))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
+                          -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
