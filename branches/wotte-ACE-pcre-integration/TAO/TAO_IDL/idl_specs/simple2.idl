@@ -1,0 +1,28 @@
+// $Id$
+
+#include "simple.idl"
+
+
+interface simple3 : simple2 {
+    exception OVERFLOW {
+	long	a;
+	string	msg;
+    };
+    exception UNDERFLOW {
+	long	b;
+	string	msg;
+    };
+    exception BADNUM {
+	vec10	c;
+    };
+    exception USERERROR { 
+	any reason;
+    };
+    long	op3(in long a, out simple3 b, out simple2 c, out simple d)
+                      raises (OVERFLOW, UNDERFLOW, BADNUM);
+    any		op4(in any x, inout any y, out any z)
+               raises(UNDERFLOW);
+
+    oneway void	op5()
+               raises(USERERROR);
+};

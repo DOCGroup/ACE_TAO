@@ -1,0 +1,20 @@
+// $Id$
+
+#include "../common/DiffServ.idl"
+
+module DiffServ
+{
+  interface Receiver_Controller
+  {
+    void shutdown ();
+  };
+
+  component Receiver supports Receiver_Controller
+  {
+    provides test writer;
+  };
+
+  home ReceiverHome manages Receiver
+  {
+  };
+};

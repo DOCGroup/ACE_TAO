@@ -1,0 +1,18 @@
+
+Notification Service examples:
+
+This directory has examples to illustrate how to use the Notification Service
+
+Examples:
+
+Filter: A simple example to how how to do filtering of events.
+------
+An event passing through the channel encounters filters at the proxy,
+admin and channel level.This example shows how to setup filters and use them.
+
+Subscribe: A simple example to show how to specify subscription constraints.
+---------
+This example does not add any filters to keep the example simple.
+If filters are added, then they would be evaluated *after* the event type
+constraints have been met.
+Thus subscriptions are a way of provide coarse grain filtering.

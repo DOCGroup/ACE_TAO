@@ -1,0 +1,65 @@
+RedGreen Test
+
+This test will measure throughput in different configurations of the
+Notify Service.
+
+DESCRIPTION
+-----------
+The Test creates an Event Channel, one consumer admin and supplier
+admin.
+
+It connects 2 types of consumers to the consumer admin:
+A "slow" consumer that has a 1 sec "wait" in its "push" implementation
+and a "normal" consumer that returns immediately without any intensive
+processing in its "push".
+
+A supplier pushes 2 types of events to the channel. A "RED" event and
+a ""GREEN" event in a burst of RED and GREEN events alternatively.
+
+The subscriptions are specified in such a manner that the "slow"
+consumer only receives RED events while the "normal" consumer receives
+the "GREEN" events,
+
+We use a TP reactor with 4 worker threads to allow upcalls to the
+normal consumers servant proceed without having to wait for the slow
+consumer to finish. The default ORB configuration is reactive.
+
+First Run the Notify Service in the reactive mode.
+Each participant in this (supplier and both consumers) are coupled
+together because all calls are sychronous. The 1 sec wait should affect
+throughput of all 3.
+
+Next use 2 Lookup thread and check performance. The throughput
+values should increase for the supplier and normal consumer but same
+for the slow consumer.
+
+Lastly, deploy a thread each at each  proxy supplier. The Throughput
+of the normal consumer should increase dramatically.
+This is because its data path is completely decoupled from the "slow consumer".
+
+COMMAND LINE OPTIONS:
+--------------------
+"-burst_size [size]"
+
+RUNNING THE TEST:
+-----------------
+
+Test 1
+------
+
+run $TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -ORBsvcconf reactive.conf
+run RedGreen_Test
+
+
+Test 2
+------
+
+run $TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -Notify_TPReactor 2 -ORBsvcconf lookup.conf
+run RedGreen_Test
+
+
+Test 3
+------
+
+run $TAO_ROOT/orbsvcs/Notify_Service/Notify_Service -Notify_TPReactor 2 -ORBsvcconf listener.conf
+run RedGreen_Test

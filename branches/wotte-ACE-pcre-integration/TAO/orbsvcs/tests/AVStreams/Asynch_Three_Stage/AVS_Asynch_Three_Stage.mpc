@@ -1,0 +1,30 @@
+// -*- MPC -*-
+// $Id$
+
+project(*send): avstreamsexe {
+  exename  = sender
+
+  Source_Files {
+    Connection_Manager.cpp
+    sender.cpp
+  }
+}
+
+project(*dist): avstreamsexe {
+  exename  = distributer
+
+  Source_Files {
+    Connection_Manager.cpp
+    distributer.cpp
+  }
+}
+
+project(*recv): avstreamsexe {
+  exename  = receiver
+
+  Source_Files {
+    Connection_Manager.cpp
+    receiver.cpp
+  }
+}
+
