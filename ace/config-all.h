@@ -417,6 +417,10 @@
    do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
    } while (0)
+#    define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
+   do { POINTER = new(ACE_nothrow) CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; } \
+   } while (0)
 
 #  else
 
@@ -429,6 +433,11 @@
    do { try { POINTER = new CONSTRUCTOR; } \
         catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; return; } \
    } while (0)
+
+#    define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
+   do { try { POINTER = new CONSTRUCTOR; } \
+        catch (ACE_bad_alloc) { errno = ENOMEM; POINTER = 0; } \
+   } while (0)
 #  endif /* ACE_HAS_NEW_NOTHROW */
 
 #else /* ACE_NEW_THROWS_EXCEPTIONS */
@@ -440,6 +449,10 @@
 # define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
+   } while (0)
+# define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
+   do { POINTER = new CONSTRUCTOR; \
+     if (POINTER == 0) { errno = ENOMEM; } \
    } while (0)
 
 # define ACE_throw_bad_alloc \

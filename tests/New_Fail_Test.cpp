@@ -9,8 +9,8 @@
 //    New_Fail_Test.cpp
 //
 // = DESCRIPTION
-//    Checks to be sure that a failed ACE_NEW[_RETURN] doesn't end up throwing
-//    an exception up to the caller.
+//    Checks to be sure that a failed ACE_NEW[_RETURN | _NORETURN] doesn't end
+//    up throwing an exception up to the caller.
 //
 //    Note that this test doesn't get a real attempt on platforms which:
 //      1. Are known to throw exceptions when 'new' runs out of resources,
@@ -40,23 +40,31 @@ ACE_RCSID(tests, New_Fail_Test, "$Id$")
 // somewhere else in the test.
 
 // 1MB
-static const int BIG_BLOCK = 1024*1024;       
+static const int BIG_BLOCK = 1024*1024;
 
 // about 4GB max in the test
-static const int MAX_ALLOCS_IN_TEST = 4096;   
+static const int MAX_ALLOCS_IN_TEST = 4096;
 
-static void 
+static void
 try_ace_new (char **p)
 {
   ACE_NEW (*p, char[BIG_BLOCK]);
   return;
 }
 
-static char * 
+static char *
 try_ace_new_return (void)
 {
   char *p = 0;
   ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
+  return p;
+}
+
+static char *
+try_ace_new_noreturn (void)
+{
+  char *p = 0;
+  ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
 
@@ -79,9 +87,9 @@ main (int, ACE_TCHAR *[])
 
   // Use the static function addresses, to prevent warnings about the
   // functions not being used.
-  if (&try_ace_new) 
+  if (&try_ace_new)
     /* NULL */;
-  if (&try_ace_new_return) 
+  if (&try_ace_new_return)
     /* NULL */;
 #else
 
@@ -104,7 +112,7 @@ main (int, ACE_TCHAR *[])
           ACE_ERROR((LM_WARNING,
                      ACE_TEXT ("Test didn't exhaust all available memory\n")));
           // Back up to valid pointer for deleting.
-          --i;    
+          --i;
         }
       else
         {
@@ -132,7 +140,7 @@ main (int, ACE_TCHAR *[])
           ACE_ERROR ((LM_WARNING,
                       ACE_TEXT ("Test didn't exhaust all available memory\n")));
           // Back up to valid pointer.
-          --i;    
+          --i;
         }
       else
         {
@@ -140,6 +148,32 @@ main (int, ACE_TCHAR *[])
           ACE_ASSERT (errno == ENOMEM);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
+                      i));
+        }
+      while (i >= 0)
+        delete [] blocks[i--];
+
+      // Third part: test ACE_NEW_NORETURN
+      for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
+        {
+          blocks[i] = try_ace_new_noreturn ();
+          if (blocks[i] == 0)
+            break;
+        }
+
+      if (i == MAX_ALLOCS_IN_TEST)
+        {
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("Test didn't exhaust all available memory\n")));
+          // Back up to valid pointer.
+          --i;
+        }
+      else
+        {
+          ACE_ASSERT (blocks[i] == 0);
+          ACE_ASSERT (errno == ENOMEM);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),
                       i));
         }
       while (i >= 0)
