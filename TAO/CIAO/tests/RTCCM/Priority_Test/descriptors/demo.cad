@@ -10,7 +10,7 @@
       <fileinarchive name="Controller.csd"/>
     </componentfile>
     <componentfile id="com-Worker">
-      <fileinarchive name="IOB_Worker.csd"/>
+      <fileinarchive name="CB_Worker.csd"/>
     </componentfile>
   </componentfiles>
 
