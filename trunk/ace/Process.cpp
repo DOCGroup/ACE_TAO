@@ -77,7 +77,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
     {
       // Add the new environment variables to the environment context
       // of the context before doing an <execvp>.
-      for (char **user_env = options.env_argv ();
+      for (char *const *user_env = options.env_argv ();
            *user_env != 0;
            user_env++)
         if (ACE_OS::putenv (*user_env) != 0)
