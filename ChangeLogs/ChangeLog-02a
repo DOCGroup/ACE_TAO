@@ -1,3 +1,20 @@
+Tue Jan  3 10:30:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/msvc_notes.txt:
+
+          Added this file explaining some issues or explanations on how
+          ACE/TAO are set up for use with MSVC.  Mainly I'm thinking of
+          this as a place to put random stuff about ACE and TAO on MSVC.
+
+          Plus I think we need more nifty doxygen documents. ;-)  A tip of
+          the hat goes to Letha Etzkorn <letzkorn@cs.uah.edu> and 
+          Shivakumar Patil <shivakumar.patil@stdc.com> for bringing up 
+          questions that led to the dump of info to this file.
+
+        * ACE-INSTALL.html:
+
+          Added a reference to msvc_notes.txt.
+
 Wed Jan  3 09:15:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/ACE.cpp:
