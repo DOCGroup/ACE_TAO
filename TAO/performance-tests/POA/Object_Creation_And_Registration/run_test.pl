@@ -5,11 +5,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../bin';
+unshift @INC, '../../../../bin';
 require Process;
 require ACEutils;
 
-$T = Process::Create ($EXEPREFIX."registration.$EXE_EXT");
+$T = Process::Create ($EXEPREFIX."registration".$EXE_EXT, "");
 
 $client = $T->TimedWait (60);
 if ($client == -1) {
