@@ -1,3 +1,14 @@
+Thu Feb 12 11:00:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CIAO-INSTALL.html
+	* CCF/CCF/CIDL/CIDL.mpc
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+	* CCF/CCF/CompilerElements/CompilerElements.mpc
+	* CCF/CCF/IDL2/IDL2.mpc
+	* CCF/CCF/IDL3/IDL3.mpc
+
+	  Updated these files to set the static linkage.
+
 Thu Feb 12 10:31:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CCF/CCF/CCF.mwc:
