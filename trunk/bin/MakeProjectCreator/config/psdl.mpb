@@ -6,7 +6,7 @@ project {
   libs  += TAO_PSDL TAO_PSDL_Datastore
 
   Define_Custom(PSDL) {
-    dependent        = 1
+    dependent        = $(TAO_ROOT)/orbsvcs/PSS/psdl_tao
     command          = $(TAO_ROOT)/orbsvcs/PSS/psdl_tao
     libpath          = $(ACE_ROOT)/lib
     inputext         = .psdl

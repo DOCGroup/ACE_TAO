@@ -83,6 +83,9 @@ ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_l
 <%if(tao_idl)%>
 TAO_IDL = <%tao_idl%>
 <%endif%>
+<%if(tao_idl_dep)
+TAO_IDL_DEP = <%tao_idl%>
+<%endif%>
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%>
 <%endif%>
@@ -419,7 +422,7 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->command%>$(EXEEXT) -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+      ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> /bin/test <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
         .NOTPARALLEL:
       endif
 <%endif%>
@@ -432,7 +435,7 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->command%>$(EXEEXT)<%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%>
 	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
 <%if(flag_overrides(custom_type->input_file, postcommand))%>
 <%foreach(custom_type->input_file->output_files)%>

@@ -1,3 +1,25 @@
+Thu Nov 18 11:52:19 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+        * bin/MakeProjectCreator/config/psdl.mpb:
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+
+          Changed these base projects to use 'dependent' in the new manner
+          where it represents the command upon which the generated files are
+          dependent.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed to use TAO_IDL_DEP as the dependency for the idl generated
+          files.
+
+        * bin/MakeProjectCreator/config/trading_serv.mpb:
+        * bin/MakeProjectCreator/config/trading_skel.mpb:
+
+          Renamed these mpc files to mpb files.  The mpc extension works,
+          it's just a matter of consistency.
+
 Thu Nov 18 16:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/protocols.mwc:
