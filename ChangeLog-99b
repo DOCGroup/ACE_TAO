@@ -1,3 +1,11 @@
+Tue Jul 06 21:32:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/SOCK_Send_Recv_Test.cpp (server): added 5 second
+          sleep so that the code agrees with the comments :-)
+          It now passes on LynxOS.  Thanks to Steve for the fix.
+          Also, changed an exit () call to ACE_OS::exit (), and
+          changed a few C-style casts to ANSI-style casts.
+
 Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Cache_Map_Manager_T.h: Removed extra "ace/" from #pragma
@@ -13,15 +21,15 @@ Tue Jul  6 19:20:16 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Jul  6 18:21:37 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
-        * ace/Token_Request_Reply.{h,i,cpp}: 
+        * ace/Token_Request_Reply.{h,i,cpp}:
           Added ACE_TOKEN_REQUEST_HEADER_SIZE for the fixed-length portion
- 	  of ACE_Token_Request's Transfer struct, changing length
- 	  calculations accordingly.  Added two bytes to the buffer to
- 	  accomodate '\0' values after the token name and client ID.
-	
-        * ace/Remote_Tokens.cpp: Changed the check for failure when 
+          of ACE_Token_Request's Transfer struct, changing length
+          calculations accordingly.  Added two bytes to the buffer to
+          accomodate '\0' values after the token name and client ID.
+
+        * ace/Remote_Tokens.cpp: Changed the check for failure when
           receiving a reply in request_reply.
-  
+
 Tue Jul  6 18:21:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Map_Manager.cpp: Made this file conform to the ACE programming
@@ -55,39 +63,39 @@ Tue Jul  6 18:15:31 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Jul  6 17:54:52 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Strategies_T.{h,i,cpp}: Added Abstract Base class
-	  called ACE_Caching_Strategy and ACE_Caching_Strategy_Adaptor
-	  which facilitate changing of caching strategies at runtime using
-	  the External Polymorphism pattern.
-	
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Changed the signature of 
-	  the constructor and also removed the <caching_strategy_> member.
+        * ace/Caching_Strategies_T.{h,i,cpp}: Added Abstract Base class
+          called ACE_Caching_Strategy and ACE_Caching_Strategy_Adaptor
+          which facilitate changing of caching strategies at runtime using
+          the External Polymorphism pattern.
 
-	* ace/Cache_Map_Manager_T.{h, cpp}: 
- 	* ace/Hash_Cache_Map_Manager_T.{h,cpp}:
-	  Changed the signature of the constructor.This was needed to be
-	  able to use the External Polymorphism pattern.
+        * ace/Cached_Connect_Strategy_T.{h, cpp}: Changed the signature of
+          the constructor and also removed the <caching_strategy_> member.
 
-	* tests/Cache_Map_Manager_Test.cpp:
-	* tests/Cached_Conn_Test.cpp:
-	  Made necessary changes to reflect the changes above. 
-	  Thanks to Irfan of the DOC group for helping with this.
-	
+        * ace/Cache_Map_Manager_T.{h, cpp}:
+        * ace/Hash_Cache_Map_Manager_T.{h,cpp}:
+          Changed the signature of the constructor.This was needed to be
+          able to use the External Polymorphism pattern.
+
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+          Made necessary changes to reflect the changes above.
+          Thanks to Irfan of the DOC group for helping with this.
+
 Tue Jul  6 17:34:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Enabled ACE_HAS_PTHREADS_UNIX98_EXT and
           removed ACE_LACKS_RWLOCK_T for AIX 4.3. Moved some other
- 	  ACE_LACKS settings to the pre-4.3 threads section to allow
- 	  taking advantage of more capability on AIX 4.3.
+          ACE_LACKS settings to the pre-4.3 threads section to allow
+          taking advantage of more capability on AIX 4.3.
 
 Tue Jul 06 16:29:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Moved the string conversion macros before including
-	  OS.i because we also use them in the file.  Thanks to Carlos for
-	  reporting this.
+        * ace/OS.h: Moved the string conversion macros before including
+          OS.i because we also use them in the file.  Thanks to Carlos for
+          reporting this.
 
-	* OS.{h,i,cpp}:
-	* Parse_Node.cpp: Windows CE fixes.
+        * OS.{h,i,cpp}:
+        * Parse_Node.cpp: Windows CE fixes.
 
 Tue Jul 06 15:56:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
