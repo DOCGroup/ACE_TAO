@@ -1,3 +1,12 @@
+Thu Mar  4 04:28:53 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/rules.local.GNU:
+          Added a dependency rule that all objects depend on IDL_SRC, if
+          it is defined.  This makes more sense that having the resulting
+          lib or exe dependent since it's the objects that use them, or
+          more precisely, the cpp's include the headers, etc...  Thanks to
+          Bala for motivating this.
+
 Thu Mar  4 01:30:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * include/makeinclude/wrapper_macros.GNU:
