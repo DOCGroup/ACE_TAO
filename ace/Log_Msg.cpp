@@ -851,12 +851,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   ACE_TCHAR *bp = ACE_const_cast (ACE_TCHAR *, this->msg ());
   int abort_prog = 0;
   int exit_value = 0;
-  ACE_TCHAR *format;
-  ACE_ALLOCATOR_RETURN (format, ACE_OS::strdup (format_str), -1);
-  ACE_TCHAR *save_p = format; // Remember pointer for ACE_OS::free()
-
-  if (format == 0)
-    return -1;
 
   if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE))
     {
@@ -873,93 +867,148 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
         }
     }
 
-  while (*format != '\0')
+  while (*format_str != '\0')
     {
       // Copy input to output until we encounter a %, however a
       // % followed by another % is not a format specification.
 
-      if (*format != '%')
-        *bp++ = *format++;
-      else if (format[1] == '%') // An "escaped" '%' (just print one '%').
+      if (*format_str != '%')
+        *bp++ = *format_str++;
+      else if (format_str[1] == '%') // An "escaped" '%' (just print one '%').
         {
-          *bp++ = *format++;    // Store first %
-          format++;     // but skip second %
+          *bp++ = *format_str++;    // Store first %
+          format_str++;             // but skip second %
         }
       else
         {
-          ACE_TCHAR c = '\0';  // high use character
-          ACE_TCHAR *fp;       // local format pointer
-          int  wpc;             // width/precision cnt
-          const int CONTINUE = 0;
-          const int SKIP_SPRINTF = -1; // We must skip the sprintf phase
-          const int SKIP_NUL_LOCATE = -2; // Skip locating the NUL character
-          int type = CONTINUE;  // conversion type
-          int  w[2];            // width/precision vals
+          // This is most likely a format specification that ends with
+          // one of the valid options described previously. To enable full
+          // use of all sprintf capabilities, save the format specifier
+          // from the '%' up to the format letter in a new char array.
+          // This allows the full sprintf capability for padding, field
+          // widths, alignment, etc.  Any width/precision requiring a
+          // caller-supplied argument is extracted and placed as text
+          // into the format array. Lastly, we convert the caller-supplied
+          // format specifier from the ACE_Log_Msg-supported list to the
+          // equivalent sprintf specifier, and run the new format spec
+          // through sprintf, adding it to the bp string.
 
-          // % starts a format specification that ends with one of
-          // "arnPpSsdciIouxXfFeEgG".  An optional width and/or precision
-          // (indicated by an "*") may be encountered prior to the
-          // nend of the specification, each consumes an int arg.
-          // A call to sprintf() does the actual conversion.
+          const ACE_TCHAR *start_format = format_str;
+          ACE_TCHAR format[128]; // Converted format string
+          ACE_TCHAR *fp;         // Current format pointer
+          int       wp = 0;      // Width/precision extracted from args
+          int       done = 0;
+          int       skip_nul_locate = 0;
 
-          fp = format++;        // Remember beginning of format.
-          wpc = 0;              // Assume no width/precision seen.
+          fp = format;
+          *fp++ = *format_str++;   // Copy in the %
 
-          while (type == CONTINUE)
+          // Work through the format string to copy in the format
+          // from the caller. While it's going across, extract ints
+          // for '*' width/precision values from the argument list.
+          // When the real format specifier is located, change it to
+          // one recognized by sprintf, if needed, and do the sprintf
+          // call.
+
+          while (!done)
             {
-              switch (*format++)
+              done = 1;               // Unless a conversion spec changes it
+
+              switch (*format_str)
                 {
-                case 'A':
-                  type = SKIP_SPRINTF;
+                // The initial set of cases are the conversion
+                // specifiers. Copy them in to the format array.
+                // Note we don't use 'l', a normal conversion spec,
+                // as a conversion because it is a ACE_Log_Msg format
+                // specifier.
+                case '-':
+                case '+':
+                case '0':
+                case ' ':
+                case '#':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                case '.':
+                case 'L':
+                case 'h':
+                  *fp++ = *format_str;
+                  done = 0;
+                  break;
+
+                case '*':
+                  wp = va_arg (argp, int);
+                  ACE_OS::sprintf (fp, ACE_LIB_TEXT ("%d"), wp);
+                  fp += ACE_OS::strlen (fp);
+                  done = 0;
+                  break;
+
+                case 'A':             // ACE_timer_t
                   {
 #if defined (ACE_LACKS_FLOATING_POINT)
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ld"));
                     ACE_UINT32 value = va_arg (argp, ACE_UINT32);
-                    ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%ld"), value);
+                    ACE_OS::sprintf (bp, format, value);
 #else
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("f"));
                     double value = va_arg (argp, double);
-                    ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%f"), value);
+                    ACE_OS::sprintf (bp, format, value);
 #endif /* ACE_LACKS_FLOATING_POINT */
                   }
                   break;
+
                 case 'a': // Abort program after handling all of format string.
-                  type = SKIP_SPRINTF;
                   abort_prog = 1;
                   exit_value = va_arg (argp, int);
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("Aborting..."));
+                  ACE_OS::strcpy (bp, ACE_LIB_TEXT ("Aborting..."));
                   // Make sure to NULL terminate this...
                   break;
-                case 'l':
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%d"), this->linenum ());
-                  type = SKIP_SPRINTF;
+
+                case 'l':             // Source file line number
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("d"));
+                  ACE_OS::sprintf (bp, format, this->linenum ());
                   break;
-                case 'N':
-                    // @@ UNICODE
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s"),
+
+                case 'N':             // Source file name
+                  // @@ UNICODE
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::sprintf (bp, format,
                                    this->file () ?
                                           ACE_TEXT_CHAR_TO_TCHAR (this->file ())
                                         : ACE_LIB_TEXT ("<unknown file>"));
-                  type = SKIP_SPRINTF;
                   break;
-                case 'n': // Print the name of the program.
-                  type = SKIP_SPRINTF;
+
+                case 'n':             // Program name
                   // @@ UNICODE
-                  ACE_OS::strcpy (bp, ACE_Log_Msg::program_name_ ?
-                                  ACE_Log_Msg::program_name_ :
-                                  ACE_LIB_TEXT ("<unknown>"));
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::sprintf (bp, format,
+                                   ACE_Log_Msg::program_name_ ?
+                                   ACE_Log_Msg::program_name_ :
+                                   ACE_LIB_TEXT ("<unknown>"));
                   break;
-                case 'P': // Format the current process id.
-                  type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%d"),
+
+                case 'P':             // Process ID
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("d"));
+                  ACE_OS::sprintf (bp, format,
                                    ACE_static_cast (int, this->getpid ()));
                   break;
-                case 'p': // Format the string assocated with the errno value.
+
+                case 'p':             // <errno> string, ala perror()
                   {
-                    type = SKIP_SPRINTF;
                     errno = ACE::map_errno (this->errnum ());
                     if (errno >= 0 && errno < sys_nerr)
-                      ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s: %s"),
-                                       va_arg (argp, ACE_TCHAR *),
-                                       ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
+                      {
+                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+                        ACE_OS::sprintf (bp, format,
+                                         va_arg (argp, ACE_TCHAR *),
+                                         ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
+                      }
                     else
                       {
 #if defined (ACE_WIN32)
@@ -991,35 +1040,42 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           {
                             const ACE_TCHAR *message =
                               ACE::sock_error (errno);
-                            ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s: %s"),
+                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+                            ACE_OS::sprintf (bp, format,
                                              va_arg (argp, const ACE_TCHAR *),
                                              message);
                           }
                         else
                           {
-                            ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s: %s"),
+                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+                            ACE_OS::sprintf (bp, format,
                                              va_arg (argp, ACE_TCHAR *),
                                              lpMsgBuf);
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
                           }
 #elif !defined (ACE_HAS_WINCE)
+                        ACE_OS::strcpy (fp,
+                                        ACE_LIB_TEXT (
+                                                  "s: <unknown error> = %d"));
                         ACE_OS::sprintf (bp,
-                                         ACE_LIB_TEXT (
-                                           "%s: <unknown error> = %d"),
+                                         format,
                                          va_arg (argp, ACE_TCHAR *), errno);
 #endif /* ACE_WIN32 */
                       }
                     break;
                   }
+
                 case 'm': // Format the string assocated with the errno value.
                   {
-                    type = SKIP_SPRINTF;
                     errno = ACE::map_errno (this->errnum ());
                     if (errno >= 0 && errno < sys_nerr)
-                      ACE_OS::sprintf (bp,
-                                       ACE_LIB_TEXT ("%s"),
-                                       ACE_OS_String::strerror (errno));
+                      {
+                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                        ACE_OS::sprintf (bp,
+                                         format,
+                                         ACE_OS_String::strerror (errno));
+                      }
                     else
                       {
 #if defined (ACE_WIN32)
@@ -1051,19 +1107,20 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           {
                             const ACE_TCHAR *message =
                               ACE::sock_error (errno);
-                            ACE_OS::sprintf (bp,
-                                             ACE_LIB_TEXT ("%s"),
-                                             message);
+                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                            ACE_OS::sprintf (bp, format, message);
                           }
                         else
                           {
-                            ACE_OS::sprintf (bp,
-                                             ACE_LIB_TEXT ("%s"),
-                                             lpMsgBuf);
+                            ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                            ACE_OS::sprintf (bp, format, lpMsgBuf);
                             // Free the buffer.
                             ::LocalFree (lpMsgBuf);
                           }
 #elif !defined (ACE_HAS_WINCE)
+                        // Ignore the built format... if this is a problem,
+                        // this part can be changed to build another string
+                        // and pass that with the complete conversion specs.
                         ACE_OS::sprintf (bp,
                                          ACE_LIB_TEXT ("<unknown error> = %d"),
                                          errno);
@@ -1071,18 +1128,20 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       }
                     break;
                   }
+
                 case 'R': // Format the return status of the operation.
                   this->op_status (va_arg (argp, int));
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%d"), this->op_status ());
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("d"));
+                  ACE_OS::sprintf (bp, format, this->op_status ());
                   break;
 
                 case '{': // Increment the trace_depth, then indent
-                  type = SKIP_NUL_LOCATE;
+                  skip_nul_locate = 1;
                   (void) this->inc ();
                   break;
 
                 case '}': // indent, then decrement trace_depth
-                  type = SKIP_NUL_LOCATE;
+                  skip_nul_locate = 1;
                   (void) this->dec ();
                   break;
 
@@ -1092,13 +1151,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   /* fallthrough */
 
                 case 'I': // Indent with nesting_depth*width spaces
-                  type = SKIP_SPRINTF;
-                  if (!wpc)
-                    w[wpc++] = ACE_Trace::get_nesting_indent ();
-                  w[wpc-1] *= this->trace_depth_;
-                  ACE_OS::memset (bp, ' ', w[wpc-1]);
-                  bp += w[wpc - 1];
+                  // Caller can do %*I to override nesting indent, and
+                  // if %*I was done, wp has the extracted width.
+                  if (0 == wp)
+                    wp = ACE_Trace::get_nesting_indent ();
+                  wp *= this->trace_depth_;
+                  ACE_OS::memset (bp, ' ', wp);
+                  bp += wp;
                   *bp = '\0';
+                  skip_nul_locate = 1;
                   break;
 
                 case 'r': // Run (invoke) this subroutine.
@@ -1110,7 +1171,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       *bp++ = '{';
                     ACE_Log_Msg::msg_off_ =  bp - this->msg_;
 
-                    type = SKIP_SPRINTF;
                     (*va_arg (argp, PTF))();
 
                     if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
@@ -1120,17 +1180,20 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         *bp++ =  '}';
                       }
                     *bp = '\0';
-
+                    skip_nul_locate = 1;
                     ACE_Log_Msg::msg_off_ = osave;
                     break;
                   }
+
                 case 'S': // format the string for with this signal number.
                   {
                     int sig = va_arg (argp, int);
-                    type = SKIP_SPRINTF;
 #if defined (ACE_HAS_SYS_SIGLIST)
                     if (sig >= 0 && sig < ACE_NSIG)
-                      ACE_OS::strcpy (bp, _sys_siglist[sig]);
+                      {
+                        ACE_OS::strcpy (fp, ACE_LIB_TEXT (s));
+                        ACE_OS::sprintf (bp, format, _sys_siglist[sig]);
+                      }
                     else
                       ACE_OS::sprintf (bp, ACE_LIB_TEXT ("<unknown signal> %d"),
                                        sig);
@@ -1139,32 +1202,35 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_HAS_SYS_SIGLIST */
                     break;
                   }
+
                 case 'D': // Format the timestamp in month/day/year
                           // hour:minute:sec:usec format.
                   {
-                    type = SKIP_SPRINTF;
                     ACE_TCHAR day_and_time[35];
                     ACE::timestamp (day_and_time,
                                     sizeof day_and_time);
-                    ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s"), day_and_time);
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    ACE_OS::sprintf (bp, format, day_and_time);
                     break;
                   }
+
                 case 'T': // Format the timestamp in
                           // hour:minute:sec:usec format.
                   {
-                    type = SKIP_SPRINTF;
                     ACE_TCHAR day_and_time[35];
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
                     ACE_OS::sprintf (bp,
-                                     ACE_LIB_TEXT ("%s"),
+                                     format,
                                      ACE::timestamp (day_and_time,
                                                      sizeof day_and_time));
                     break;
                   }
+
                 case 't': // Format thread id.
-                  type = SKIP_SPRINTF;
 #if defined (ACE_WIN32)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
                   ACE_OS::sprintf (bp,
-                                   ACE_LIB_TEXT ("%u"),
+                                   format,
                                    ACE_static_cast(unsigned,
                                                    ACE_Thread::self ()));
 #elif defined (AIX) && (ACE_AIX_MINOR_VERS <= 2)
@@ -1178,151 +1244,120 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
                   //   this would have on that.
                   // -Steve Huston, 19-Aug-97
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"), thread_self());
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::sprintf (bp, format, thread_self());
 #elif defined (DIGITAL_UNIX)
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"),
-#if defined (ACE_HAS_THREADS)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::sprintf (bp, format,
+#  if defined (ACE_HAS_THREADS)
                                    pthread_getselfseq_np ()
-#else
+#  else
                                    ACE_Thread::self ()
-#endif /* ACE_HAS_THREADS */
+#  endif /* ACE_HAS_THREADS */
                                           );
 #else
                   ACE_hthread_t t_id;
                   ACE_Thread::self (t_id);
 
 #  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
                   // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
                   // more meaningful, readable, thread ID.  This will match
                   // the one seen in the debugger as well.
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"),
+                  ACE_OS::sprintf (bp, format,
                                    pthread_getunique_np(&t_id));
 #  elif defined (ACE_MVS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"), t_id);
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::sprintf (bp, format, t_id);
 #  else
                   // Yes, this is an ugly C-style cast, but the correct
                   // C++ cast is different depending on whether the t_id
                   // is an integral type or a pointer type. FreeBSD uses
                   // a pointer type, but doesn't have a _np function to
                   // get an integral type, like the OSes above.
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%lu"),
-                                   (unsigned long)t_id);
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lu"));
+                  ACE_OS::sprintf (bp, format, (unsigned long)t_id);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
 
 #endif /* ACE_WIN32 */
                   break;
-                case 's':
+
+                case 's':                       // String
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%ls"), va_arg (argp, wchar_t *));
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                  ACE_OS::sprintf (bp, format, va_arg (argp, wchar_t *));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
-                  type = 1 + wpc;
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                  ACE_OS::sprintf (bp, format, va_arg (argp, ACE_TCHAR *));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                   break;
-                case 'C':
-                  type = 1 + wpc;
+
+                case 'C':         // Char string, Unicode for Win32/WCHAR
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  fp[1] = 'S';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
-                  fp[1] = 's';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
+                  ACE_OS::sprintf (bp, format, va_arg (argp, ACE_TCHAR *));
                   break;
+
                 case 'W':
-                  type = 1 + wpc;
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
-                  fp[1] = 's';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
 # else /* ACE_USES_WCHAR */
-                  fp[1] = 'S';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
 # endif /* ACE_USES_WCHAR */
+                  ACE_OS::sprintf (bp, format, va_arg (argp, ACE_TCHAR *));
 #elif defined (ACE_HAS_WCHAR)
-                  type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%ls"), va_arg (argp, wchar_t *));
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                  ACE_OS::sprintf (bp, format, va_arg (argp, wchar_t *));
 #endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                   break;
-                case 'w':
-                  type = 4 + wpc;
+
+                case 'w':              // Wide character
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
-                  fp[1] = 'c';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
 # else /* ACE_USES_WCHAR */
-                  fp[1] = 'C';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
 # endif /* ACE_USES_WCHAR */
+                  ACE_OS::sprintf (bp, format, va_arg (argp, int));
 #elif defined (ACE_USES_WCHAR)
-                  type = SKIP_SPRINTF;
-                  ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%lc"), va_arg (argp, wint_t));
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lc"));
+                  ACE_OS::sprintf (bp, format, va_arg (argp, wint_t));
 #else /* ACE_WIN32 */
-                  fp[1] = 'u';  // Since this isn't really supported well
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                  ACE_OS::sprintf (bp, format, va_arg (argp, int));
 #endif /* ACE_WIN32 */
                   break;
+
                 case 'c':
-                  type = 4 + wpc;
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  fp[1] = 'C';
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+#else
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
+                  ACE_OS::sprintf (bp, format, va_arg (argp, int));
                   break;
+
                 case 'd': case 'i': case 'o':
                 case 'u': case 'x': case 'X':
-                  type = 4 + wpc; // 4, 5, 6
+                  fp[0] = *format_str;
+                  fp[1] = '\0';
+                  ACE_OS::sprintf (bp, format, va_arg (argp, int));
                   break;
+
                 case 'F': case 'f': case 'e': case 'E':
                 case 'g': case 'G':
-                  type = 7 + wpc; // 7, 8, 9
+                  fp[0] = *format_str;
+                  fp[1] = '\0';
+                  ACE_OS::sprintf (bp, format, va_arg (argp, double));
                   break;
+
                 case 'Q':
-                  type = 10 + wpc;
-                  break;
-                case '*':       // consume width/precision
-                  w[wpc++] = va_arg (argp, int);
-                  break;
-                default:
-                  // ?
-                  break;
-                }
-            }
-
-          if (type != SKIP_SPRINTF)
-            {
-              c = *format;      // Remember char before we overwrite.
-              *format = 0;      // Overwrite, terminating format.
-
-              switch (type)
-                {
-                case 1:
-                  ACE_OS::sprintf (bp, fp, va_arg (argp, ACE_TCHAR *));
-                  break;
-                case 2:
-                  ACE_OS::sprintf (bp, fp, w[0], va_arg (argp, ACE_TCHAR *));
-                  bp += w[0];
-                  type = SKIP_NUL_LOCATE;
-                  break;
-                case 3:
-                  ACE_OS::sprintf (bp, fp, w[0], w[1],
-                                   va_arg (argp, ACE_TCHAR *));
-                  bp += w[0];
-                  type = SKIP_NUL_LOCATE;
-                  break;
-                case 4:
-                  ACE_OS::sprintf (bp, fp, va_arg (argp, int));
-                  break;
-                case 5:
-                  ACE_OS::sprintf (bp, fp, w[0], va_arg (argp, int));
-                  break;
-                case 6:
-                  ACE_OS::sprintf (bp, fp, w[0], w[1], va_arg (argp, int));
-                  break;
-                case 7:
-                  ACE_OS::sprintf (bp, fp, va_arg (argp, double));
-                  break;
-                case 8:
-                  ACE_OS::sprintf (bp, fp, w[0], va_arg (argp, double));
-                  break;
-                case 9:
-                  ACE_OS::sprintf (bp, fp, w[0], w[1], va_arg (argp, double));
-                  break;
-                case 10:
 #if defined (ACE_LACKS_LONGLONG_T)
                   {
                     // This relies on the ACE_U_LongLong storage layout.
@@ -1335,24 +1370,37 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       ACE_OS::sprintf (bp, "0x%lx", lo);
                   }
 #else  /* ! ACE_LACKS_LONGLONG_T */
-                  ACE_OS::sprintf (bp,
-                                   ACE_UINT64_FORMAT_SPECIFIER,
-                                   va_arg (argp, ACE_UINT64));
+                  {
+                    const ACE_TCHAR *fmt = ACE_UINT64_FORMAT_SPECIFIER;
+                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                    ACE_OS::sprintf (bp,
+                                     format,
+                                     va_arg (argp, ACE_UINT64));
+                  }
 #endif /* ! ACE_LACKS_LONGLONG_T */
                   break;
+
+                default:
+                  // So, it's not a legit format specifier after all...
+                  // Copy from the original % to where we are now, then
+                  // continue with whatever comes next.
+                  while (start_format != format_str)
+                    *bp++ = *start_format++;
+                  *bp++ = *format_str;
+                  break;
                 }
-              *format = c;      // Restore char we overwrote.
+
+              // Bump to the next char in the caller's format_str
+              format_str++;
             }
 
-          if (type != SKIP_NUL_LOCATE)
+          if (!skip_nul_locate)
             while (*bp != '\0') // Locate end of bp.
               bp++;
         }
     }
 
   *bp = '\0'; // Terminate bp, but don't auto-increment this!
-
-  ACE_OS::free (ACE_MALLOC_T (save_p));
 
   // Check that memory was not corrupted.
   if (bp >= this->msg_ + ACE_Log_Record::MAXLOGMSGLEN)
