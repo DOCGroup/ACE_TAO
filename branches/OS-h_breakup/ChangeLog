@@ -1,3 +1,12 @@
+Fri May  3 08:20:53 UTC 2002  Don Hinton  <dhinton@ieee.org>
+	
+	* ace/ace_threads.h:
+	* ace/ace_sys_socket.h:
+
+	  Moved some socket specific includes from ace_threads.h to
+	  ace_sys_socket.h, where they belong.  Hopefully this will
+	  clear up some of the problems on the sun.
+
 Thu May  2 18:31:31 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	
 	* ace/ace_limits.h: Added ace_sys_param.h before definition of MAXNAMELEN.

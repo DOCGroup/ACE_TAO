@@ -1112,42 +1112,6 @@ protected:
 #define ACE_EVENT_T_DEFINED
 #endif /* ACE_EVENT_T_DEFINED */
 
-
-// not sure where this should go...
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
-// This part if to avoid STL name conflict with the map structure
-// in net/if.h.
-#   if defined (ACE_HAS_STL_MAP_CONFLICT)
-#     define map _Resource_Allocation_Map_
-#   endif /* ACE_HAS_STL_MAP_CONFLICT */
-#   include /**/ <net/if.h>
-#   if defined (ACE_HAS_STL_MAP_CONFLICT)
-#     undef map
-#   endif /* ACE_HAS_STL_MAP_CONFLICT */
-
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     define queue _Queue_
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include /**/ <netinet/in.h>
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     undef queue
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-
-
-#   if !defined (ACE_LACKS_TCP_H)
-#     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
-#       if defined(TCP_NODELAY)
-#         undef TCP_NODELAY
-#       endif
-#       if defined(TCP_MAXSEG)
-#         undef TCP_MAXSEG
-#       endif
-#     endif
-#     include /**/ <netinet/tcp.h>
-#   endif /* ACE_LACKS_TCP_H */
-#endif /* !ACE_WIN32 && !ACE_PSOS */
-
-
 /**
  * @class ACE_Thread_ID
  *
