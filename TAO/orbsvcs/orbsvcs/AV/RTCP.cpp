@@ -35,7 +35,7 @@
 // $Id$
 #include "ntp-time.h"
 #include "RTCP.h"
-#include "media-timer.h"
+#include "media_timer.h"
 #include "tao/debug.h"
 #include "global.h"
 #include "md5.h"
