@@ -379,6 +379,9 @@ ACE_HAS_OSF_TIMOD_H                     Platform supports the OSF TLI
 ACE_HAS_PENTIUM                         Platform is an Intel Pentium
                                         microprocessor.
 ACE_HAS_POLL                            Platform contains <poll.h>
+ACE_HAS_POSITION_INDEPENDENT_MALLOC     The ACE_Malloc<> class uses
+                                        "position-independent" features
+                                        provided by ACE_Based_Pointer<>.
 ACE_HAS_POSIX_NONBLOCK                  Platform supports POSIX
                                         O_NONBLOCK semantics
 ACE_HAS_POSIX_SEM                       Platform supports POSIX

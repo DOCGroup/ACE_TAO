@@ -34,9 +34,9 @@
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_HAS_BASED_POINTER_MALLOC)
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_BASED_POINTER_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
@@ -91,13 +91,13 @@ union ACE_Export ACE_Malloc_Header
     //    to keep track of each chunk of data when it's in the free
     //    list or in use.
   public:
-#if defined (ACE_HAS_BASED_POINTER_MALLOC)
-    ACE_Based_Pointer<ACE_Malloc_Header> *next_block_;
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+    ACE_Based_Pointer<ACE_Malloc_Header> next_block_;
     // Points to next block if on free list.
 #else 
     ACE_Malloc_Header *next_block_;
     // Points to next block if on free list.
-#endif /* ACE_HAS_BASED_POINTER_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
     size_t size_;
     // Size of this block.
