@@ -1,21 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_ConsumerControl
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   EC_ConsumerControl.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_CONSUMERCONTROL_H
 #define TAO_EC_CONSUMERCONTROL_H
@@ -31,45 +26,42 @@
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 
+/**
+ * @class TAO_EC_ConsumerControl
+ *
+ * @brief ConsumerControl
+ *
+ * Defines the interface for the consumer control strategy.
+ * This strategy handles misbehaving or failing consumers.
+ */
 class TAO_RTEvent_Export TAO_EC_ConsumerControl
 {
-  // = TITLE
-  //   ConsumerControl
-  //
-  // = DESCRIPTION
-  //   Defines the interface for the consumer control strategy.
-  //   This strategy handles misbehaving or failing consumers.
-  //
-  // = MEMORY MANAGMENT
-  //
-  // = LOCKING
-  //
-  // = TODO
-  //
 public:
+  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// parameter.
   TAO_EC_ConsumerControl (void);
-  // Constructor.  It does not assume ownership of the <event_channel>
-  // parameter.
 
+  /// destructor...
   virtual ~TAO_EC_ConsumerControl (void);
-  // destructor...
 
+  /// Activate any internal threads or timers used to poll the state of
+  /// the consumers
   virtual int activate (void);
   virtual int shutdown (void);
-  // Activate any internal threads or timers used to poll the state of
-  // the consumers
 
+  /**
+   * When pushing an event to the consumer a CORBA::OBJECT_NOT_EXIST
+   * exception was raised. The only interpretation is that the object
+   * has been destroyed.  The strategy has to (at the very least),
+   * reclaim all the resources attached to that object.
+   */
   virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy,
                                    CORBA::Environment &);
-  // When pushing an event to the consumer a CORBA::OBJECT_NOT_EXIST
-  // exception was raised. The only interpretation is that the object
-  // has been destroyed.  The strategy has to (at the very least),
-  // reclaim all the resources attached to that object.
 
+  /// Some system exception was rasied while trying to push an event.
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
                                  CORBA::SystemException &,
                                  CORBA::Environment &);
-  // Some system exception was rasied while trying to push an event.
 };
 
 #if defined (__ACE_INLINE__)

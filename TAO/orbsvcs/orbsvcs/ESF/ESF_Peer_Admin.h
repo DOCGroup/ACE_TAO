@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Peer_Admin
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Peer_Admin.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_PEER_ADMIN_H
 #define TAO_ESF_PEER_ADMIN_H
@@ -26,63 +18,76 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_ESF_Peer_Admin
+ *
+ * @brief Extend the Proxy_Admin interface to provide methods for
+ *        filtering
+ *
+ * Some Event Services that perform filtering have to propagate
+ * the consumer connect/disconnect activities to the suppliers,
+ * and vice-versa.
+ * In that scenario the ESF_Proxy_Admin<> interface is augmented
+ * with connected()/reconnected()/disconnected() operations for
+ * the proxy peers (i.e. the ProxySuppliers for the ProxyConsumers
+ * and vice-versa).
+ *
+ * <H2>Requirements</H2>
+ *
+ * In addition to the requirements imposed by ESF_Proxy_Admin<>
+ * the PROXY interface must implement:
+ *
+ * @verbatim
+ * void connected (PEER *peer, CORBA::Environment&) throw ();
+ * void reconnected (PEER *peer, CORBA::Environment&) throw ();
+ * void disconnected (PEER *peer, CORBA::Environment&) throw ();
+ * @endverbatim
+ *
+ * Similarly, the PEER interface must implement:
+ *
+ * @verbatim
+ * void connected (PROXY *proxy, CORBA::Environment&) throw ();
+ * void reconnected (PROXY *proxy, CORBA::Environment&) throw ();
+ * void disconnected (PROXY *proxy, CORBA::Environment&) throw ();
+ * @endverbatim
+ */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
 class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>
 {
-  // = TITLE
-  //   ESF_Peer_Admin
-  //
-  // = DESCRIPTION
-  //   Some Event Services that perform filtering have to propagate
-  //   the consumer connect/disconnect activities to the suppliers,
-  //   and vice-versa.
-  //   In that scenario the ESF_Proxy_Admin<> interface is augmented
-  //   with connected()/reconnected()/disconnected() operations for
-  //   the proxy peers (i.e. the ProxySuppliers for the ProxyConsumers
-  //   and vice-versa).
-  //
-  // = REQUIREMENTS
-  //   In addition to the requirements imposed by ESF_Proxy_Admin<>
-  //   the PROXY interface must implement:
-  //
-  //   void connected (PEER *peer, CORBA::Environment&) throw ();
-  //   void reconnected (PEER *peer, CORBA::Environment&) throw ();
-  //   void disconnected (PEER *peer, CORBA::Environment&) throw ();
-  //
-  //   Similarly, the PEER interface must implement:
-  //
-  //   void connected (PROXY *proxy, CORBA::Environment&) throw ();
-  //   void reconnected (PROXY *proxy, CORBA::Environment&) throw ();
-  //   void disconnected (PROXY *proxy, CORBA::Environment&) throw ();
-  //
 public:
+  /// Constructor
   TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
-  // Constructor
 
+  /// destructor
   virtual ~TAO_ESF_Peer_Admin (void);
-  // destructor
 
+  /**
+   * A <peer> has connected, this is invoked when the peer's client
+   * has invoked the connect_xxx_yyy() method.
+   * The default implementation is a no-op.
+   */
   virtual void peer_connected (PEER *peer,
                                CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC (());
-  // A <peer> has connected, this is invoked when the peer's client
-  // has invoked the connect_xxx_yyy() method.
-  // The default implementation is a no-op.
 
+  /**
+   * A <peer> has reconnected, i.e. its client has invoked the
+   * connect_xxx_yyy() method, but the peer was connected already.
+   * The default implementation delegates on the collection
+   * <reconnected> method
+   */
   virtual void peer_reconnected (PEER *peer,
                                  CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC (());
-  // A <peer> has reconnected, i.e. its client has invoked the
-  // connect_xxx_yyy() method, but the peer was connected already.
-  // The default implementation delegates on the collection
-  // <reconnected> method
 
+  /**
+   * A <peer> has been disconnected. The default implementation
+   * removes the object from the collection and deactivates the
+   * proxy.
+   */
   virtual void peer_disconnected (PEER *peer,
                                   CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_SPEC (());
-  // A <peer> has been disconnected. The default implementation
-  // removes the object from the collection and deactivates the
-  // proxy.
 };
 
 // ****************************************************************

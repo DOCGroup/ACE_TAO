@@ -1,18 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_RefCount_Guard
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+/**
+ *  @file   ESF_RefCount_Guard.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_REFCOUNT_GUARD_H
 #define TAO_ESF_REFCOUNT_GUARD_H
@@ -23,30 +18,31 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_ESF_RefCount_Guard
+ *
+ * @brief Reference count based guard.
+ *
+ * A common idiom used on event services is to increment a
+ * reference count before starting a long running operation.
+ * The system can then execute the operation without any risk of
+ * having the underlying object destroyed.  The advantage of using
+ * a reference count is that no mutex or lock needs to be held
+ * while the operation is beign executed.
+ */
 template<class T>
 class TAO_ESF_RefCount_Guard
 {
-  // = TITLE
-  //   Reference count based guard.
-  //
-  // = DESCRIPTION
-  //   A common idiom used on event services is to increment a
-  //   reference count before starting a long running operation.
-  //   The system can then execute the operation without any risk of
-  //   having the underlying object destroyed.  The advantage of using
-  //   a reference count is that no mutex or lock needs to be held
-  //   while the operation is beign executed.
-  //
 public:
+  /// Constructor
   TAO_ESF_RefCount_Guard (T &refcount);
-  // Constructor
 
+  /// Destructor
   ~TAO_ESF_RefCount_Guard (void);
-  // Destructor
 
 protected:
+  /// The reference count
   T &refcount_;
-  // The reference count
 };
 
 #if defined (__ACE_INLINE__)

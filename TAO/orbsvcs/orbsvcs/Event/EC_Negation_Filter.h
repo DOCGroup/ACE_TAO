@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Negation_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Negation_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_NEGATION_FILTER_H
 #define TAO_EC_NEGATION_FILTER_H
@@ -33,24 +23,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Negation_Filter
+ *
+ * @brief The negation filter.
+ *
+ * This filter accepts all the events rejected by its child, and
+ * rejects any events accepted by the child.
+ *
+ * <H2>Memory Management</H2>
+ * It assumes ownership of its child.
+ */
 class TAO_RTEvent_Export TAO_EC_Negation_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   The negation filter.
-  //
-  // = DESCRIPTION
-  //   This filter accepts all the events rejected by its child, and
-  //   rejects any events accepted by the child.
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of its child.
-  //
 public:
+  /// Constructor. It assumes ownership of the child.
   TAO_EC_Negation_Filter (TAO_EC_Filter* child);
-  // Constructor. It assumes ownership of the child.
 
+  /// Destructor
   virtual ~TAO_EC_Negation_Filter (void);
-  // Destructor
 
 
   // = The TAO_EC_Filter methods, please check the documentation in
@@ -84,8 +75,8 @@ private:
                               (const TAO_EC_Negation_Filter&))
 
 private:
+  /// The child
   TAO_EC_Filter* child_;
-  // The child
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Proxy_RB_Tree
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Proxy_RB_Tree.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_PROXY_RB_TREE_H
 #define TAO_ESF_PROXY_RB_TREE_H
@@ -28,6 +20,7 @@
 
 #include "ace/RB_Tree.h"
 
+/// Iterator class for a ACE_ESF_RB_Tree
 template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
@@ -48,27 +41,54 @@ private:
 
 // ****************************************************************
 
+/// Concrete Proxy collection based on ACE_RB_Tree
+/**
+ * The Event Service Framework provides several alternatives for the
+ * underlying proxy collections.
+ * This version is based on Red-Black trees that offer good insertion,
+ * removal and lookup performance, but the iteration is slightly
+ * degraded.
+ */
 template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree
 {
 public:
+  /// A typedef for the underlying implementaiton class
   typedef ACE_RB_Tree<PROXY*,int,ACE_Less_Than<PROXY*>,ACE_Null_Mutex> Implementation;
+
+  /// A typedef for the underlying iterator
   typedef TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> Iterator;
 
+  /// Constructor
   TAO_ESF_Proxy_RB_Tree (void);
 
+  /// Return the first element in the collection, or end() if there
+  /// are none
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> begin (void);
+
+  /// Return one past the last element in the collection
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end (void);
+
+  /// Return the number of elements in the collection
   size_t size (void) const;
+
+  /// Insert a new element to the collection
   void connected (PROXY *,
-                CORBA::Environment &);
+                  CORBA::Environment &);
+
+  /// Insert a new element that could be there already.
   void reconnected (PROXY *,
                     CORBA::Environment &);
+  /// Remove an element from the collection
   void disconnected (PROXY *,
                      CORBA::Environment &);
+
+  /// Shutdown the collection, i.e. remove all elements and release
+  /// resources
   void shutdown (CORBA::Environment &);
 
 private:
+  /// The underlying implementation object
   Implementation impl_;
 };
 

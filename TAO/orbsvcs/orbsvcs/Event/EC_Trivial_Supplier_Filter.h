@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_trivial_Supplier_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_trivial_Supplier_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_TRIVIAL_SUPPLIER_FILTER_H
 #define TAO_EC_TRIVIAL_SUPPLIER_FILTER_H
@@ -38,20 +28,21 @@ class TAO_EC_ProxyPushSupplier_Set;
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_Trivial_Supplier_Filter
+ *
+ * @brief A null filtering strategy.
+ *
+ * This strategy does no filtering, it is useful for backends of
+ * the CosEventChannel, testing and broadcasters; it uses the
+ * ConsumerAdmin to find all the consumers and pushes the event to
+ * all of them.
+ */
 class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
-  // = TITLE
-  //   A null filtering strategy.
-  //
-  // = DESCRIPTION
-  //   This strategy does no filtering, it is useful for backends of
-  //   the CosEventChannel, testing and broadcasters; it uses the
-  //   ConsumerAdmin to find all the consumers and pushes the event to
-  //   all of them.
-  //
 public:
+  /// Constructor
   TAO_EC_Trivial_Supplier_Filter (TAO_EC_Event_Channel* ec);
-  // Constructor
 
   // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
@@ -69,26 +60,26 @@ public:
   virtual CORBA::ULong _incr_refcnt (void);
 
 private:
+  /// The event channel, used to locate the set of consumers.
   TAO_EC_Event_Channel *event_channel_;
-  // The event channel, used to locate the set of consumers.
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_EC_Trivial_Supplier_Filter_Builder
+ *
+ * @brief Create a single Trivial_Supplier_Filter.
+ *
+ * This Factory creates a single Trivial_Supplier_Filter that is
+ * used by all the suppliers (i.e. ProxyConsumers) of an event
+ * channel.
+ */
 class TAO_RTEvent_Export TAO_EC_Trivial_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {
-  // = TITLE
-  //   Create a single Trivial_Supplier_Filter.
-  //
-  // = DESCRIPTION
-  //   This Factory creates a single Trivial_Supplier_Filter that is
-  //   used by all the suppliers (i.e. ProxyConsumers) of an event
-  //   channel.
-  //
-  //
 public:
+  /// constructor....
   TAO_EC_Trivial_Supplier_Filter_Builder (TAO_EC_Event_Channel* ec);
-  // constructor....
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
   virtual TAO_EC_Supplier_Filter*
@@ -97,8 +88,8 @@ public:
       destroy (TAO_EC_Supplier_Filter *filter);
 
 private:
+  /// The filter....
   TAO_EC_Trivial_Supplier_Filter filter_;
-  // The filter....
 };
 
 #if defined (__ACE_INLINE__)

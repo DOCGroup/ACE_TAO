@@ -1,21 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Defaults
-//
-// = DESCRIPTION
-//   In this file we set the compile time defaults for the framework.
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+/**
+ *  @file   ESF_Defaults.h
+ *
+ *  $Id$
+ *
+ * In this file we set the compile time defaults for the framework.
+ *
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_DEFAULTS_H
 #define TAO_ESF_DEFAULTS_H

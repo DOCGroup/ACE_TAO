@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Priority_Scheduling
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Priority_Scheduling.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_PRIORITY_SCHEDULING_H
 #define TAO_EC_PRIORITY_SCHEDULING_H
@@ -35,37 +25,36 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 
+/**
+ * @class TAO_EC_Priority_Scheduling
+ *
+ * @brief A scheduling strategy that uses TAO's real-time scheduler
+ *
+ * This implementation of the Scheduling_Strategy uses TAO's
+ * real-time scheduler.
+ */
 class TAO_RTSchedEvent_Export TAO_EC_Priority_Scheduling : public TAO_EC_Scheduling_Strategy
 {
-  // = TITLE
-  //   A scheduling strategy that uses TAO's real-time scheduler
-  //
-  // = DESCRIPTION
-  //   This implementation of the Scheduling_Strategy uses TAO's
-  //   real-time scheduler.
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor.
   TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
-  // Constructor.
 
+  /// Destructor
   virtual ~TAO_EC_Priority_Scheduling (void);
-  // Destructor
 
+  /// Add all the dependencies between <supplier> and <consumer>
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer,
       CORBA::Environment &ACE_TRY_ENV);
-  // Add all the dependencies between <supplier> and <consumer>
 
+  /// Initializes <qos_info> based on the QoS information for
+  /// <consumer> and the event header.
   virtual void init_event_qos (
       const RtecEventComm::EventHeader& header,
       TAO_EC_ProxyPushConsumer *consumer,
       TAO_EC_QOS_Info& qos_info,
       CORBA::Environment &ACE_TRY_ENV);
-  // Initializes <qos_info> based on the QoS information for
-  // <consumer> and the event header.
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling
@@ -73,12 +62,12 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling& operator=
                               (const TAO_EC_Priority_Scheduling&))
 
+  /// Initialize our RT_Info handle and dependencies
   void init_rt_info (CORBA::Environment& env);
-  // Initialize our RT_Info handle and dependencies
 
 private:
+  /// The scheduler we are going to use
   RtecScheduler::Scheduler_var scheduler_;
-  // The scheduler we are going to use
 };
 
 #if defined (__ACE_INLINE__)

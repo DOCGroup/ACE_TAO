@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Timeout_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Timeout_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_TIMEOUT_FILTER_H
 #define TAO_EC_TIMEOUT_FILTER_H
@@ -37,36 +27,37 @@
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 
+/**
+ * @class TAO_EC_Timeout_Filter
+ *
+ * @brief A filter based on event type/source
+ *
+ * This filter only accept events with a predefined type/source,
+ * both the source and the type can be wildcards.
+ */
 class TAO_RTEvent_Export TAO_EC_Timeout_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   A filter based on event type/source
-  //
-  // = DESCRIPTION
-  //   This filter only accept events with a predefined type/source,
-  //   both the source and the type can be wildcards.
-  //
 public:
+  /// Constructor.
   TAO_EC_Timeout_Filter (TAO_EC_Event_Channel *event_channel,
                          TAO_EC_ProxyPushSupplier *supplier,
                          const TAO_EC_QOS_Info& qos_info,
                          RtecEventComm::EventType type,
                          RtecEventComm::Time period);
-  // Constructor.
 
+  /// Destructor.
   virtual ~TAO_EC_Timeout_Filter (void);
-  // Destructor.
 
+  /// Return the QOS_Info for this Timeout filter.
   const TAO_EC_QOS_Info& qos_info (void) const;
-  // Return the QOS_Info for this Timeout filter.
 
+  /// The type of timeout event that we generate.
   RtecEventComm::EventType type (void) const;
-  // The type of timeout event that we generate.
 
+  /// Callback from the Timeout_Generator
   void push_to_proxy (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& ACE_TRY_ENV);
-  // Callback from the Timeout_Generator
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -96,24 +87,24 @@ private:
                               (const TAO_EC_Timeout_Filter&))
 
 private:
+  /// The event channel.
   TAO_EC_Event_Channel* event_channel_;
-  // The event channel.
 
+  /// The supplier that finally receives the timeout event.
   TAO_EC_ProxyPushSupplier *supplier_;
-  // The supplier that finally receives the timeout event.
 
+  /// Events "generated" by this filter use this QOS_Info.
   TAO_EC_QOS_Info qos_info_;
-  // Events "generated" by this filter use this QOS_Info.
 
+  /// The type of timeout event...
   RtecEventComm::EventType type_;
-  // The type of timeout event...
 
+  /// The period for deadline timeouts...
   RtecEventComm::Time period_;
-  // The period for deadline timeouts...
 
+  /// The ID of the timeout in the Timeout_Generator, for
+  /// cancellation.
   long id_;
-  // The ID of the timeout in the Timeout_Generator, for
-  // cancellation.
 };
 
 #if defined (__ACE_INLINE__)

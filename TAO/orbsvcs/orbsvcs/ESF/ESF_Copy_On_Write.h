@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Copy_On_Write
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/ESF/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Copy_On_Write.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_COPY_ON_WRITE_H
 #define TAO_ESF_COPY_ON_WRITE_H
@@ -32,41 +24,40 @@ class TAO_ESF_Copy_On_Write_Collection
 public:
   TAO_ESF_Copy_On_Write_Collection (void);
 
+  /// Increment and decrement the reference count
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
-  // Increment and decrement the reference count
 
+  /// The actual collection
   COLLECTION collection;
-  // The actual collection
 
 private:
+  /// The reference count
   CORBA::ULong refcount_;
-  // The reference count
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_ESF_Copy_On_Write_Read_Guard
+ *
+ * @brief TAO_ESF_Copy_On_Guard
+ *
+ * This helper class atomically increments the reference count of
+ * a TAO_ESF_Copy_On_Write_Collection and reads the current
+ * collection in the Copy_On_Write class.
+ */
 template<class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Copy_On_Write_Read_Guard
 {
-  // = TITLE
-  //   TAO_ESF_Copy_On_Guard
-  //
-  // = DESCRIPTION
-  //   This helper class atomically increments the reference count of
-  //   a TAO_ESF_Copy_On_Write_Collection and reads the current
-  //   collection in the Copy_On_Write class.
-  //
-  // = TODO
-  //
 public:
+  /// Constructor
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
   TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &mutex,
                                     Collection *&collection);
-  // Constructor
 
+  /// Destructor
   ~TAO_ESF_Copy_On_Write_Read_Guard (void);
-  // Destructor
 
   Collection *collection;
 
@@ -76,30 +67,29 @@ private:
 
 // ****************************************************************
 
+/**
+ * @class TAO_ESF_Copy_On_Write_Write_Guard
+ *
+ * @brief TAO_ESF_Copy_On_Write_Guard
+ *
+ * This helper class atomically increments the reference count of
+ * a TAO_ESF_Copy_On_Write_Collection and reads the current
+ * collection in the Copy_On_Write class.
+ */
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Copy_On_Write_Write_Guard
 {
-  // = TITLE
-  //   TAO_ESF_Copy_On_Write_Guard
-  //
-  // = DESCRIPTION
-  //   This helper class atomically increments the reference count of
-  //   a TAO_ESF_Copy_On_Write_Collection and reads the current
-  //   collection in the Copy_On_Write class.
-  //
-  // = TODO
-  //
 public:
+  /// Constructor
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
   TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
                                      ACE_SYNCH_CONDITION_T &cond,
                                      int &pending_writes,
                                      int &writing_flag,
                                      Collection*& collection);
-  // Constructor
 
+  /// Destructor
   ~TAO_ESF_Copy_On_Write_Write_Guard (void);
-  // Destructor
 
   Collection *copy;
 
@@ -113,27 +103,26 @@ private:
 
 // ****************************************************************
 
+/**
+ * @class TAO_ESF_Copy_On_Write
+ *
+ * @brief TAO_ESF_Copy_On_Write
+ *
+ * Implement the Copy_On_Write protocol
+ * The class is parametric on the kind of collection and locking
+ * mechanism used.
+ */
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Copy_On_Write : public TAO_ESF_Proxy_Collection<PROXY>
 {
-  // = TITLE
-  //   TAO_ESF_Copy_On_Write
-  //
-  // = DESCRIPTION
-  //   Implement the Copy_On_Write protocol
-  //   The class is parametric on the kind of collection and locking
-  //   mechanism used.
-  //
-  // = TODO
-  //
 public:
+  /// Constructor
   typedef TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_SYNCH_MUTEX_T> Read_Guard;
   typedef TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE> Write_Guard;
   TAO_ESF_Copy_On_Write (void);
-  // Constructor
 
+  /// Destructor
   ~TAO_ESF_Copy_On_Write (void);
-  // Destructor
 
   // = The TAO_ESF_Proxy methods
   virtual void for_each (TAO_ESF_Worker<PROXY> *worker,
@@ -149,22 +138,24 @@ public:
 private:
   typedef TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
 
+  /// A mutex to serialize access to the collection pointer.
   ACE_SYNCH_MUTEX_T mutex_;
-  // A mutex to serialize access to the collection pointer.
 
+  /// Number of pending writes
   int pending_writes_;
-  // Number of pending writes
 
+  /**
+   * If non-zero then a thread is changing the collection.  Many
+   * threads can use the collection simulatenously, but only one
+   * change it.
+   */
   int writing_;
-  // If non-zero then a thread is changing the collection.  Many
-  // threads can use the collection simulatenously, but only one
-  // change it.
 
+  /// A condition variable to wait to synchronize multiple writers.
   ACE_SYNCH_CONDITION_T cond_;
-  // A condition variable to wait to synchronize multiple writers.
 
+  /// The collection, with reference counting added
   Collection *collection_;
-  // The collection, with reference counting added
 };
 
 // ****************************************************************

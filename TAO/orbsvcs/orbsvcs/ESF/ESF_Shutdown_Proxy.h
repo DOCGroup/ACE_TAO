@@ -1,21 +1,14 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Shutdown_Proxy
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Shutdown_Proxy.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
+
 
 #ifndef TAO_ESF_SHUTDOWN_PROXY_H
 #define TAO_ESF_SHUTDOWN_PROXY_H
@@ -26,6 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// A worker to invoke the shutdown method of each proxy.
 template<class PROXY>
 class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
 {

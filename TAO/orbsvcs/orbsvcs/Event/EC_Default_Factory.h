@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Default_Factory
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Default_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_DEFAULT_FACTORY_H
 #define TAO_EC_DEFAULT_FACTORY_H
@@ -34,30 +24,29 @@
 
 #include "EC_Defaults.h"
 
+/**
+ * @class TAO_EC_Default_Factory
+ *
+ * @brief A generic factory for EC experimentation.
+ *
+ * This class allows the user to experiment with different EC
+ * configurations.  Using a command-line like interface the user
+ * can specify which strategies will this factory generate.
+ * Since the class can be dynamically loaded the strategies can be
+ * set in the service configurator file.
+ */
 class TAO_RTEvent_Export TAO_EC_Default_Factory : public TAO_EC_Factory
 {
-  // = TITLE
-  //   A generic factory for EC experimentation.
-  //
-  // = DESCRIPTION
-  //   This class allows the user to experiment with different EC
-  //   configurations.  Using a command-line like interface the user
-  //   can specify which strategies will this factory generate.
-  //   Since the class can be dynamically loaded the strategies can be
-  //   set in the service configurator file.
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor
   TAO_EC_Default_Factory (void);
-  // Constructor
 
+  /// destructor...
   virtual ~TAO_EC_Default_Factory (void);
-  // destructor...
 
+  /// Helper function to register the default factory into the service
+  /// configurator.
   static int init_svcs (void);
-  // Helper function to register the default factory into the service
-  // configurator.
 
   // = The Service_Object entry points
   virtual int init (int argc, char* argv[]);
@@ -128,6 +117,7 @@ public:
       destroy_supplier_control (TAO_EC_SupplierControl*);
 
 protected:
+  /// Several flags to control the kind of object created.
   int dispatching_;
   int filtering_;
   int supplier_filtering_;
@@ -138,25 +128,24 @@ protected:
   int supplier_collection_;
   int consumer_lock_;
   int supplier_lock_;
-  // Several flags to control the kind of object created.
 
+  /// The MT dispatching priority has several arguments that could be
+  /// controlled here...
   int dispatching_threads_;
   int dispatching_threads_flags_;
   int dispatching_threads_priority_;
   int dispatching_threads_force_active_;
-  // The MT dispatching priority has several arguments that could be
-  // controlled here...
 
+  /// Use this ORB to locate global resources.
   const char *orbid_;
-  // Use this ORB to locate global resources.
 
+  /// The consumer and supplier control policies.
   int consumer_control_;
   int supplier_control_;
-  // The consumer and supplier control policies.
 
+  /// The consumer and supplier control periods in usecs
   int consumer_control_period_;
   int supplier_control_period_;
-  // The consumer and supplier control periods in usecs
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,21 +1,13 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Event Service Framework
-//
-// = FILENAME
-//   ESF_Proxy_List
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   ESF_Proxy_List.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ *  http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_ESF_PROXY_LIST_H
 #define TAO_ESF_PROXY_LIST_H
@@ -28,32 +20,52 @@
 
 #include "ace/Containers.h"
 
+/// A concrete proxy collection.
+/**
+ * Based on the ACE_Unbounded_Set<> collection, used a double
+ * linked list internally.
+ */
 template<class PROXY>
 class TAO_ESF_Proxy_List
 {
-  // = DESCRIPTION
-  //   A concrete proxy collection.
-  //   Based on the ACE_Unbounded_Set<> collection, used a double
-  //   linked list internally.
-  //
 public:
+  /// A typedef for the underlying implementaiton class
   typedef ACE_Unbounded_Set<PROXY*> Implementation;
+
+  /// A typedef for the underlying iterator
   typedef ACE_Unbounded_Set_Iterator<PROXY*> Iterator;
 
+  /// Constructor
   TAO_ESF_Proxy_List (void);
 
+  /// Return the first element in the collection, or end() if there
+  /// are none
   ACE_Unbounded_Set_Iterator<PROXY*> begin (void);
+
+  /// Return one past the last element in the collection
   ACE_Unbounded_Set_Iterator<PROXY*> end (void);
+
+  /// Return the number of elements in the collection
   size_t size (void) const;
+
+  /// Insert a new element to the collection
   void connected (PROXY *,
-                CORBA::Environment &);
+                  CORBA::Environment &);
+
+  /// Insert a new element that could be there already.
   void reconnected (PROXY *,
                     CORBA::Environment &);
+
+  /// Remove an element from the collection
   void disconnected (PROXY *,
                      CORBA::Environment &);
+
+  /// Shutdown the collection, i.e. remove all elements and release
+  /// resources
   void shutdown (CORBA::Environment &);
 
 private:
+  /// The underlying implementation object
   ACE_Unbounded_Set<PROXY*> impl_;
 };
 
