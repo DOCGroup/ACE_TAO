@@ -11,6 +11,7 @@
 #if !defined (HPUX)
 #define HPUX
 #endif /* HPUX */
+#define HPUX_10
 
 #define ACE_HAS_BROKEN_CONVERSIONS
 #define ACE_HAS_STREAMS
