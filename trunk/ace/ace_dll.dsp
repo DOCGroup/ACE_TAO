@@ -40,6 +40,7 @@ CFG=ACE dynamic library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -13639,8 +13640,6 @@ SOURCE=.\Message_Queue.cpp
 SOURCE=.\Message_Queue_T.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-# PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
 
