@@ -3496,7 +3496,6 @@ Sun Sep 26 16:32:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Sep 26 16:37:33 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-
         * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
         * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
         * orbsvcs/tests/AVStreams/Multicast/server.cpp:

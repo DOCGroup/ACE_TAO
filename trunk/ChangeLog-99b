@@ -11,6 +11,12 @@ Wed Nov 24 14:41:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  project doesn't always work correctly if the waited process has
 	  already terminated.
 
+Wed Nov 24 08:30:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_malloc.cpp (malloc_recurse): Fixed
+	  the AMS macro to be ACE_MALLOC_STATS.  Thanks to David Levine
+ 	  for reporting this.
+
 Tue Nov 23 12:47:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc.h: Modified the definition and use of
