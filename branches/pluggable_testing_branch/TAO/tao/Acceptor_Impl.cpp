@@ -27,6 +27,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 
+#if !defined(__ACE_INLINE__)
+#include "tao/Acceptor_Impl.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(tao, Acceptor_Impl, "$Id$")
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int

@@ -6,6 +6,7 @@
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/GIOP.h"
+#include "tao/debug.h"
 
 TAO_Connector_Registry::TAO_Connector_Registry (void)
 {
