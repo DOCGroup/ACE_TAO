@@ -3,6 +3,10 @@ Fri Jan 01 18:57:22 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/Containers_T.i (ACE_Array,ACE_Array::operator=):
           added missing ACE_INLINE's.
 
+        * ace/OS.{h,cpp} (ACE_TSS_Info::operator{==,!=}): added
+          constness.  It's necessary with the ACE_Array changes,
+          with ACE_HAS_TSS_EMULATION.
+
 Fri Jan  1 12:22:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Containers_T.h:
