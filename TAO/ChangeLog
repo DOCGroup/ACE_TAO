@@ -1,3 +1,12 @@
+Thu Jan  8 11:11:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+
+          Removed an unnecessary 'const' qualifier in the body of the
+          Any inserting operator for arrays that was causing a problem
+          with BCB. Thanks to Johnny Willemsen <jwillemsen@remedy.nl> 
+          for reporting the problem.
+
 Thu Jan  8 17:11:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/ftrt_clientorb_export.h:
