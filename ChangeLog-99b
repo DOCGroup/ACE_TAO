@@ -1,7 +1,22 @@
+Tue Aug 03 13:26:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Repository.cpp (instance): Check to see if
+	  the ACE_Object_Manager is being shutting down before creating a
+	  new instance of Service_Repository.  Otherwise, we may be
+	  creating a new service repository just for shutting it down.
+	  Thanks to Doug for noticing this.
+
+	* ace/Service_Config.cpp (fini_svcs): Since it is now possible for
+	  ACE_Service_Repository::instance to return 0 during program
+	  shutdown, we must check its value before using it.
+
+	  Notice that the change assumes people don't do stupid things
+	  like initializing the Service_Config during program shutdown.
+
 Mon Aug  2 23:21:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile:
-	  Added several flags to: disable test execution, specify the list 
+	  Added several flags to: disable test execution, specify the list
 	  of build directories on the command line, send email on
 	  successful compilation, keep a more detailed history, etc.
 
