@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_PortableGroup.lib TAO_Messaging.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancing.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_CosNaming.lib TAO_PortableGroup.lib TAO_Messaging.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancing.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_CosNamingd.lib TAO_PortableGroupd.lib TAO_Messagingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Valuetyped.lib TAO_CosNamingd.lib TAO_PortableGroupd.lib TAO_Messagingd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 MFC Debug"
@@ -113,7 +113,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT BASE LINK32 /profile
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib TAO_CosNamingmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib TAO_CosNamingmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "CosLoadBalancing - Win32 MFC Release"
@@ -142,7 +142,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancing.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosLoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 

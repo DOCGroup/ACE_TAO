@@ -19,6 +19,9 @@ ACE_SHLIBS = \
 	-lTAO_PortableGroup \
 	-lTAO_CosNaming \
 	-lTAO_Messaging \
+	-lTAO_Valuetype \
+	-lTAO_ObjRefTemplate \
+	-lTAO_IORInterceptor \
 	-lTAO_PortableServer \
 	-lTAO \
 	-lACE
