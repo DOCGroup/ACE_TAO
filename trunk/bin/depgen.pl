@@ -14,8 +14,6 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # ************************************************************
 
 use strict;
-use Cwd;
-use FileHandle;
 use File::Basename;
 
 my($execPath) = getExecutePath($0);
@@ -27,7 +25,7 @@ require DependencyEditor;
 # Data Section
 # ************************************************************
 
-my($version)  = '0.6';
+my($version)  = '0.7';
 my($os)       = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
@@ -70,7 +68,7 @@ sub getExecutePath {
       $loc = dirname($prog);
     }
     else {
-      $loc = getcwd() . '/' . dirname($prog);
+      $loc = Cwd::getcwd() . '/' . dirname($prog);
     }
   }
   else {
@@ -78,7 +76,7 @@ sub getExecutePath {
   }
 
   if ($loc eq '.') {
-    $loc = getcwd();
+    $loc = Cwd::getcwd();
   }
 
   if ($loc ne '') {

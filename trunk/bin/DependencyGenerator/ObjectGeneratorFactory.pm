@@ -20,12 +20,10 @@ use NMakeObjectGenerator;
 # ************************************************************
 
 sub create {
-  my($type) = shift;
-
   switch: {
-    $type eq 'gnu'   && do { return new GNUObjectGenerator(); };
-    $type eq 'nmake' && do { return new NMakeObjectGenerator(); };
-    print STDERR "WARNING: Invalid object generator type: $type\n";
+    $_[0] eq 'gnu'   && do { return new GNUObjectGenerator(); };
+    $_[0] eq 'nmake' && do { return new NMakeObjectGenerator(); };
+    print STDERR "WARNING: Invalid object generator type: $_[0]\n";
   }
 
   return new ObjectGenerator();

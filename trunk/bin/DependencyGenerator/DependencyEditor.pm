@@ -23,9 +23,8 @@ use ObjectGeneratorFactory;
 
 sub new {
   my($class) = shift;
-  my($self)  = bless {
-                     }, $class;
-  return $self;
+  return bless {
+               }, $class;
 }
 
 
@@ -38,13 +37,12 @@ sub process {
   my($ipaths)   = shift;
   my($replace)  = shift;
   my($files)    = shift;
-  my($status)   = 0;
-  my(@options)  = ();
 
   ## Back up the original file and receive the contents
-  my(@contents) = ();
+  my($contents) = undef;
   if (-s $output) {
-    if (!$self->backup($output, \@contents)) {
+    $contents = [];
+    if (!$self->backup($output, $contents)) {
       print STDERR "ERROR: Unable to backup $output\n";
       return 1;
     }
@@ -53,17 +51,19 @@ sub process {
   ## Write out the new file
   my($fh) = new FileHandle();
   if (open($fh, ">$output")) {
-    foreach my $line (@contents) {
-      if ($line =~ /DO NOT DELETE/) {
-        last;
+    if (defined $contents) {
+      foreach my $line (@$contents) {
+        if ($line =~ /DO NOT DELETE/) {
+          last;
+        }
+        print $fh $line;
       }
-      print $fh $line;
     }
 
     print $fh "# DO NOT DELETE THIS LINE -- " . basename($0) . " uses it.\n" .
               "# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.\n\n";
 
-    my($dep) = new DependencyGenerator($macros, \@options, $ipaths,
+    my($dep) = new DependencyGenerator($macros, $ipaths,
                                        $replace, $type, $noinline);
     my($objgen) = ObjectGeneratorFactory::create($type);
     ## Sort the files so the dependencies are reproducible
@@ -77,9 +77,10 @@ sub process {
   }
   else {
     print STDERR "ERROR: Unable to open $output for output\n";
-    $status++;
+    return 1;
   }
-  return $status;
+
+  return 0;
 }
 
 

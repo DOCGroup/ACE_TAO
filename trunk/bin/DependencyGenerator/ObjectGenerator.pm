@@ -18,15 +18,14 @@ use strict;
 
 sub new {
   my($class) = shift;
-  my($self)  = bless {
-                     }, $class;
-  return $self;
+  return bless {
+               }, $class;
 }
 
 
 sub process {
-  my($self) = shift;
-  my($file) = shift;
+  #my($self) = shift;
+  #my($file) = shift;
   return ();
 }
 

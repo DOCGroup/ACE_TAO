@@ -21,9 +21,8 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($self)    = shift;
-  my($sources) = shift;
-  my($files)   = shift;
+  my($sources) = $_[1];
+  my($files)   = $_[2];
   my($total)   = 0;
 
   $$sources[0] =~ s/\//\\/g;
