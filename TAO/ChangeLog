@@ -1,3 +1,11 @@
+Thu Oct 24 19:44:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp: Fixed Release
+	  configurations.  Include paths, library paths, and library lists
+	  have been added.
+
+
 Thu Oct 24 19:32:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* Reverted the changes made in the following entries:
