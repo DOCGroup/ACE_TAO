@@ -55,7 +55,7 @@ extern CORBA_TypeCode TC_opaque;
   //
 
 
-static CORBA_TypeCode::traverse_status
+CORBA_TypeCode::traverse_status
 DEEP_FREE(
 	  CORBA_TypeCode_ptr  param,
 	  const void		*source,
@@ -69,34 +69,20 @@ DEEP_FREE(
     {
     case tk_null:
     case tk_void:
-      break;
     case tk_short:
     case tk_ushort:
-      *(CORBA_Short *)dest = *(CORBA_Short *)source;
-      break;
     case tk_long:
     case tk_ulong:
     case tk_float:
     case tk_enum:
-      *(CORBA_Long *)dest = *(CORBA_Long *)source;
-      break;
     case tk_double:
     case tk_longlong:
     case tk_ulonglong:
-      *(CORBA_LongLong *)dest = *(CORBA_LongLong *)source;
-      break;
     case tk_boolean:
-      *(CORBA_Boolean *)dest = *(CORBA_Boolean *)source;
-      break;
     case tk_char:
     case tk_octet:
-      *(CORBA_Char *)dest = *(CORBA_Char *)source;
-      break;
     case tk_longdouble:
-      *(CORBA_LongDouble *)dest = *(CORBA_LongDouble *)source;
-      break;
     case tk_wchar:
-      *(CORBA_WChar *)dest = *(CORBA_WChar *)source;
       break;
     case tk_any:
       retval = TAO_Marshal_Any::deep_free(param, source, dest, env);

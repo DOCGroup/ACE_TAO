@@ -262,6 +262,7 @@ struct ACE_Svc_Export CDR
                                                   CORBA_Environment &env);
   // Unmarshaling interpreter ... <context> really points to a <CDR>.
 
+#if 0
   CORBA_TypeCode::traverse_status deep_copy (CORBA_TypeCode_ptr tc,
                                                   const void *data,
                                                   const void *data2,
@@ -273,6 +274,7 @@ struct ACE_Svc_Export CDR
                                                   const void *data2,
                                                   CORBA_Environment &env);
   // Deallocates memory for hierarchical data structures
+#endif
 
   CDR (u_char *buf = 0,
        u_int len = 0,

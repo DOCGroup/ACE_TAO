@@ -22,6 +22,22 @@
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 
+CORBA_TypeCode::traverse_status
+DEEP_COPY(
+	  CORBA_TypeCode_ptr  param,
+	  const void		*source,
+	  const void		*dest,
+	  CORBA_Environment	&env
+	  );
+
+CORBA_TypeCode::traverse_status
+DEEP_FREE(
+	  CORBA_TypeCode_ptr  param,
+	  const void		*source,
+	  const void		*dest,
+	  CORBA_Environment	&env
+	  );
+
 class TAO_MarshalObject;
 class TAO_Marshal_Primitive;
 class TAO_Marshal_Any;
