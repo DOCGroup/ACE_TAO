@@ -43,12 +43,12 @@ TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST !Linux
-TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
-TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Private_Connection/run_test.pl:  !MINIMUM !ST
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
@@ -181,3 +181,5 @@ TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL
 TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL
+
+TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC

@@ -1,3 +1,8 @@
+Mon Jan 21 10:01:34 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+	  Added MIOP unit tests.
+
 Mon Jan 21 03:00:14 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Framework_Component.cpp (register_component):
