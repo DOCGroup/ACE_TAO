@@ -1,8 +1,9 @@
 //$Id$
 
 project(*IDL2) {
+  requires += cidl
   staticname = IDL2
-  includes += ../..
+  includes += ../.. $BOOST_ROOT/include
   Source_Files {
 	.
 	./SemanticGraph

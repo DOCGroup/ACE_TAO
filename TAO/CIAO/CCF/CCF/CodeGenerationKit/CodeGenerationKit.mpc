@@ -1,6 +1,7 @@
 //$Id$
 
 project(*CodeGenerationKit) {
+  requires += cidl
   staticname = CodeGenerationKit
   includes += ../..
 }
