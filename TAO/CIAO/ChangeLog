@@ -1,7 +1,14 @@
+Sat Jun  5 23:26:53 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+	  Tweaked a bit of the code to make it compile.
+
+	  Gan, Please look at my comments in the code.
+
 Sat Jun  5 17:24:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Change the order of member initialization in the constructors of
           AttributeEmitter and ReadonlyAttributeEmitter to match a recent
           change in the order of their class members.
