@@ -393,16 +393,18 @@ TAO_Transport_Cache_Manager::get_last_index_bind (TAO_Cache_ExtId &key,
 int
 TAO_Transport_Cache_Manager::is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
+  ACE_Recyclable_State recycle_state = entry->int_id_.recycle_state ();
+
   if (TAO_debug_level)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport_Cache_Manager::is_entry_idle_i, "
+                  "TAO (%P|%t) - Transport_Cache_Manager::is_entry_idle, "
                   "state is [%d]\n",
-                  entry->int_id_.recycle_state ()));
+                  recycle_state));
     }
 
-  if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-      entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
+  if (recycle_state == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+      recycle_state == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
     {
       return 1;
     }
