@@ -42,22 +42,22 @@ class ACE_Lock;
 class TAO_Export TAO_Protocol_Item
 {
 public:
-  /// creator method, the protocol name can only be set when the
+  /// Creator method, the protocol name can only be set when the
   /// object is created.
   TAO_Protocol_Item (const ACE_CString &name);
 
-  /// destructor that deallocates the factory object if the
+  /// Destructor that deallocates the factory object if the
   /// Protocol_Item retains ownership.
   ~TAO_Protocol_Item (void);
 
-  /// return a reference to the character representation of the protocol
+  /// Return a reference to the character representation of the protocol
   /// factories name.
   const ACE_CString &protocol_name (void);
 
-  /// return a pointer to the protocol factory.
+  /// Return a pointer to the protocol factory.
   TAO_Protocol_Factory *factory (void);
 
-  /// set the factory pointer's value.
+  /// Set the factory pointer's value.
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
@@ -66,16 +66,15 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Protocol_Item&))
 
 private:
-  /// protocol factory name.
+  /// Protocol factory name.
   ACE_CString name_;
 
-  /// pointer to factory object.
+  /// Pointer to factory object.
   TAO_Protocol_Factory *factory_;
 
-  /// whether we own (and therefore have to delete) the factory object.
+  /// Whether we own (and therefore have to delete) the factory object.
   int factory_owner_;
 };
-// typedefs for containers containing the list of loaded protocol
 
 // typedefs for containers containing the list of loaded protocol
 // factories.
@@ -133,7 +132,7 @@ public:
   ///    Locked_Data_Blocks
   virtual int use_locked_data_blocks (void) const;
 
-  /// Return an <ACE_Reactor> to be utilized.
+  /// Return an ACE_Reactor to be utilized.
   virtual ACE_Reactor *get_reactor (void);
 
   /// Reclaim reactor resources (e.g. deallocate, etc).

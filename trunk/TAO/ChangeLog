@@ -1,3 +1,9 @@
+Mon Apr 26 08:24:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resource_Factory.h:
+        * tao/Thread_Lane_Resources.{h,cpp}:
+          Improved doxygen documentation
+
 Mon Apr 26 00:33:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/Security/SSLIOP-USAGE.html:
