@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -39,13 +38,13 @@ public:
   ACE_UNIX_Addr (const sockaddr_un *, int len);
   // Creates an ACE_INET_Addr from a sockaddr_un structure.
 
-  void set (const ACE_UNIX_Addr &sa);
+  int set (const ACE_UNIX_Addr &sa);
   // Creates an ACE_UNIX_Addr from another <ACE_UNIX_Addr>.
 
-  void set (const char rendezvous_point[]);
+  int set (const char rendezvous_point[]);
   // Creates an ACE_UNIX_Addr from a string.
 
-  void set (const sockaddr_un *, int len);
+  int set (const sockaddr_un *, int len);
   // Creates an ACE_INET_Addr from a sockaddr_un structure.
 
   virtual void *get_addr (void) const;
