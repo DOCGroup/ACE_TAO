@@ -22,6 +22,14 @@
 #include "ace/Time_Value.h"
 #include "ace/IO_Cntl_Msg.h"
 
+// Forward decl.
+template <ACE_SYNCH_1>
+class ACE_Message_Queue_Iterator;
+
+// Forward decl.
+template <ACE_SYNCH_1>
+class ACE_Message_Queue_Reverse_Iterator;
+
 template <ACE_SYNCH_1>
 class ACE_Message_Queue
   // = TITLE
@@ -34,7 +42,14 @@ class ACE_Message_Queue
   //     ACE_MT_SYNCH then all operations are thread-safe.  Otherwise,
   //     if it's <ACE_NULL_SYNCH> then there's no locking overhead.
 {
+friend class ACE_Message_Queue_Iterator<ACE_SYNCH_2>;
+friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>;
 public:
+
+  typedef ACE_Message_Queue_Iterator<ACE_SYNCH_2> ITERATOR;
+  typedef ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2> REVERSE_ITERATOR;
+  // Traits 
+
   // = Default high and low water marks.
   enum 
   {
@@ -200,6 +215,72 @@ protected:
 
   ACE_SYNCH_CONDITION notfull_cond_;
   // Used to make threads sleep until the queue is no longer full.
+};
+
+template <ACE_SYNCH_1>
+class ACE_Message_Queue_Iterator
+  // = TITLE
+  //     Iterator for the ACE_Message_Queue.
+  //
+  // = DESCRIPTION
+{
+public:
+  // = Initialization method.
+  ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue);
+
+  // = Iteration methods.
+  int next (ACE_Message_Block *&entry);
+  // Pass back the <entry> that hasn't been seen in the queue.
+  // Returns 0 when all items have been seen, else 1.
+
+  int advance (void);
+  // Move forward by one element in the queue
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Message_Queue <ACE_SYNCH_1> &queue_;
+  // Message_Queue we are iterating over.
+
+  ACE_Message_Block *curr_;           
+  // Keeps track of how far we've advanced...
+};
+
+template <ACE_SYNCH_1>
+class ACE_Message_Queue_Reverse_Iterator
+  // = TITLE
+  //     Reverse Iterator for the ACE_Message_Queue.
+  //
+  // = DESCRIPTION
+{
+public:
+  // = Initialization method.
+  ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue);
+
+  // = Iteration methods.
+  int next (ACE_Message_Block *&entry);
+  // Pass back the <entry> that hasn't been seen in the queue.
+  // Returns 0 when all items have been seen, else 1.
+
+  int advance (void);
+  // Move forward by one element in the queue
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Message_Queue <ACE_SYNCH_1> &queue_;
+  // Message_Queue we are iterating over.
+
+  ACE_Message_Block *curr_;           
+  // Keeps track of how far we've advanced...
 };
 
 #if defined (__ACE_INLINE__)
