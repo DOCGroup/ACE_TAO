@@ -17,7 +17,6 @@
 #define ACE_HAS_UALARM
 
 // Needed for the threading stuff?
-#include /**/ <sched.h>
 #include /**/ <task.h>
 #define PTHREAD_MIN_PRIORITY PX_PRIO_MIN
 #define PTHREAD_MAX_PRIORITY PX_PRIO_MAX
@@ -44,6 +43,9 @@
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Scheduling functions are declared in <sched.h>
+#define ACE_NEEDS_SCHED_H
 
 // Compile using multi-thread libraries
 #if !defined (ACE_MT_SAFE)
