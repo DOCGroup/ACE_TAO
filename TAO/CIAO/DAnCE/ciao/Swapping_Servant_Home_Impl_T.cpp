@@ -249,7 +249,6 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
         return;
       }
-    ACE_DEBUG ((LM_DEBUG, "updated the map\n"));
     return;
   }
 

@@ -68,26 +68,18 @@ namespace CIAO
     Components::SessionComponent_var temp = this->get_executor ();
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-    ACE_DEBUG ((LM_DEBUG, "called passivate\n"));
-
     CORBA::Object_var objref =
       this->container_->get_objref (this);
-
-    ACE_DEBUG ((LM_DEBUG, "got the object's reference\n"));
 
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ()
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_DEBUG ((LM_DEBUG, "got the ccm object's reference\n"));
     PortableServer::ObjectId_var oid;
 
     this->container_->uninstall_component ( ccmobjref.in (),
                                             oid.out ()
                                             ACE_ENV_ARG_PARAMETER);
-    ACE_DEBUG ((LM_DEBUG, "called uninstall\n"));
     this->home_servant_->update_component_map (oid);
-    ACE_DEBUG ((LM_DEBUG, "called update\n"));
-
   }
 
   ::Components::ConnectionDescriptions *
