@@ -23,6 +23,7 @@
 #include "be_scope.h"
 #include "be_visitor.h"
 #include "be_codegen.h"
+#include "be_helper.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
 
@@ -178,40 +179,6 @@ be_type::nested_sp_type_name (be_decl *use_scope,
                             use_scope,
                             suffix,
                             prefix);
-}
-
-// *****************************
-// CODE GENERATION
-// *****************************
-
-// Generate the _var definition for ourself.
-int
-be_type::gen_var_defn (char *)
-{
-  return 0;
-}
-
-// Implementation of the _var class. All of these get generated
-// in the inline file
-int
-be_type::gen_var_impl (char *,
-                       char *)
-{
-  return 0;
-}
-
-// Generate the _out definition.
-int
-be_type::gen_out_defn (char *)
-{
-  return 0;
-}
-
-int
-be_type::gen_out_impl (char *,
-                       char *)
-{
-  return 0;
 }
 
 AST_Decl::NodeType

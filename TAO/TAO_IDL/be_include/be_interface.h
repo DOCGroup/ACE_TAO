@@ -177,28 +177,10 @@ public:
   // Generated the global hooks used for non-defined forward
   // declared interfaces, and the contructor from stub object.
 
-  virtual int gen_var_defn (char *interface_name = 0);
-  // Generate the var definition. If <interface_name> is not 0, generate
-  // the var defn for that name. Otherwise, do it for the interface you
-  // are visiting (this).
+  void gen_var_out_seq_decls (void);
+  // Generate the declarations used by the template _var, _out
+  // classes for interfaces, and by sequence template classes.
 
-  virtual int gen_var_impl (char *interface_local_name = 0,
-                            char *interface_full_name  = 0);
-  // Generate the implementation for the _var class.
-  // If any one of the argument is 0, then use the name in <this>,
-  // otherwise use the name given. Just making the class more useful.
-
-  virtual int gen_out_defn (char *interface_name = 0);
-  // Generate the out class definition. If <interface_name> is not 0,
-  // generate the out defn for that name. Otherwise, do it for the
-  // interface you are visiting (this).
-
-  virtual int gen_out_impl (char *interface_local_name = 0,
-                            char *interface_full_name = 0);
-  // Generate the out class implementation.
-  // If any one of the argument is 0, then use the name giin this
-  // node, else use the arguments.
-  //
   // Each interface (to fix names "T") also defines two help classes,
   // the "collocated" class inherits from T, but delegates on the
   // skeleton for T (usually POA_T or POA_ModuleName::T), in other
@@ -349,6 +331,12 @@ public:
   int has_mixed_parentage (void);
   // Do we have both abstract and concrete parents?
 
+  int var_out_seq_decls_gen (void) const;
+  void var_out_seq_decls_gen (int val);
+  int var_out_seq_defns_gen (void) const;
+  void var_out_seq_defns_gen (int val);
+  // Accessors for the members.
+
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
@@ -401,6 +389,10 @@ private:
 
   int has_mixed_parentage_;
   // Do we have both abstract and concrete parents?
+
+  int var_out_seq_decls_gen_;
+  int var_out_seq_defns_gen_;
+  // Have these been done already?
 };
 
 /**

@@ -218,7 +218,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     {
       return 0;
     }
-
+/*
   if (this->instantiate_sequence (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -370,8 +370,8 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     }
 
   os->gen_endif ();
+*/
   node->cli_stub_gen (1);
-
   return 0;
 }
 
