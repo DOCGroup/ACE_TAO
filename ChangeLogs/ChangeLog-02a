@@ -1,3 +1,14 @@
+Tue Mar 05 09:26:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/INET_Addr.cpp (get_host_name_i, set):
+
+	  Do not clobber errno with the h_errno value returned from
+	  gethostbyaddr_r().  They are two distinct types of errors.
+
+	  Renamed "error" to "h_errno" where appropriate to make it
+	  more obvious that errno should not be set to the value of
+	  h_errno.
+
 Tue Mar  5 05:51:44 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Process.cpp (spawn): If fork()/exec() fail, call ACE_OS::_exit()

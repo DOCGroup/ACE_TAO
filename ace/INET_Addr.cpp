@@ -277,15 +277,14 @@ ACE_INET_Addr::set (u_short port_number,
 #  else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
-      int error;
+      int h_errno;  // Not the same as errno!
 
       hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
-                                             buf, &error);
+                                             buf, &h_errno);
 #  endif /* VXWORKS */
 
       if (hp == 0)
         {
-          errno = error;
           return -1;
         }
       else
@@ -698,16 +697,12 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
           return -1;
         }
 #else
-      int error = 0;
-
 #  if defined (CHORUS) || (defined (DIGITAL_UNIX) && defined (__GNUC__))
       hostent *hp = ACE_OS::gethostbyaddr ((char *)this->ip_addr_pointer (),
                                            this->ip_addr_size (),
                                            this->get_type ());
-      if (hp == 0)
-        error = errno;  // So that the errno gets propagated back; it is
-                        // loaded from error below.
 #  else
+      int h_errno = 0;  // Not the same as errno!
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp =
@@ -716,16 +711,10 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
                                  this->get_type (),
                                  &hentry,
                                  buf,
-                                 &error);
+                                 &h_errno);
 #  endif /* CHORUS */
 
-      if (hp == 0)
-        {
-          errno = error;
-          return -1;
-        }
-
-      if (hp->h_name == 0)
+      if (hp == 0 || hp->h_name == 0)
         return -1;
 
       if (ACE_OS::strlen (hp->h_name) >= len)
