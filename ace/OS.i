@@ -9244,7 +9244,7 @@ ACE_OS::strdup (const wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::strdup");
 #   if defined (__BORLANDC__)
-  wchar_t *buffer = (wchar_t *) malloc (::strlen (s) * sizeof (wchar_t) + 1);
+  wchar_t *buffer = (wchar_t *) malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t));
   return ::wcscpy (buffer, s);
 #   else
   return ::wcsdup (s);
