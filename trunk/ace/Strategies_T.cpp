@@ -769,8 +769,8 @@ ACE_Recyclable<T>::ACE_Recyclable (void)
 
 template <class T>
 ACE_Recyclable<T>::ACE_Recyclable (const T &t, int recyclable)
-  : t_ (t),
-    recyclable_ (recyclable)
+  : recyclable_ (recyclable),
+    t_ (t)
 {
 }
 
