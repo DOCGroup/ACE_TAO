@@ -1,3 +1,10 @@
+Tue Jan 14 15:46:31 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tree.h (iterator () and const_iterator ()): added cast
+	  of NULL to link_type before assigning it to NIL;
+	  GreenHills 1.8.8 fails to compile without it.
+
+
 Tue Dec 10 20:14:56 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* bstring.h: Fixed string_char_baggage::copy() so that the pointer

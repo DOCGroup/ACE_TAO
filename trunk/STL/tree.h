@@ -207,7 +207,7 @@ public:
 /*
  * Changed by Terris
  */
-        iterator() { NIL = NULL; }
+        iterator() { NIL = (link_type) NULL; }
         bool operator==(const iterator& y) const { return node == y.node; }
         reference operator*() const { return value(node); }
         iterator& operator++() {
@@ -281,7 +281,7 @@ public:
 /*
  * Changed by Terris
  */
-        const_iterator() { NIL = NULL; }
+        const_iterator() { NIL = (link_type) NULL; }
 /*
  * Changed by Terris
  */
