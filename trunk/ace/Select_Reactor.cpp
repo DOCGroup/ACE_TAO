@@ -639,25 +639,34 @@ ACE_Select_Reactor_Notify::dump (void) const
 }
 
 int
-ACE_Select_Reactor_Notify::open (ACE_Select_Reactor *r)
+ACE_Select_Reactor_Notify::open (ACE_Select_Reactor *r,
+                                 int disable_notify_pipe)
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::open");
 
-  this->select_reactor_ = r;
+  if (disable_notify_pipe == 0)
+    {
+      this->select_reactor_ = r;
 
-  if (this->notification_pipe_.open () == -1)
-    return -1;
+      if (this->notification_pipe_.open () == -1)
+        return -1;
 
-  // There seems to be a Win32 bug with this...  Set this into
-  // non-blocking mode.
-  if (ACE::set_flags (this->notification_pipe_.read_handle (),
-                      ACE_NONBLOCK) == -1)
-    return -1;
+      // There seems to be a Win32 bug with this...  Set this into
+      // non-blocking mode.
+      if (ACE::set_flags (this->notification_pipe_.read_handle (),
+                          ACE_NONBLOCK) == -1)
+        return -1;
+      else
+        return this->select_reactor_->register_handler
+          (this->notification_pipe_.read_handle (),
+           this,
+           ACE_Event_Handler::READ_MASK);
+    }
   else
-    return this->select_reactor_->register_handler
-      (this->notification_pipe_.read_handle (),
-       this,
-       ACE_Event_Handler::READ_MASK);
+    {
+      this->select_reactor_ = 0;
+      return 0;
+    }
 }
 
 int
@@ -674,13 +683,23 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::notify");
 
-  ACE_Notification_Buffer buffer (eh, mask);
+  // Just consider this method a "no-op" if there's no
+  // <ACE_Select_Reactor> configured.
+  if (this->select_reactor_ == 0)
+    return 0;
+  else
+    {
+      ACE_Notification_Buffer buffer (eh, mask);
 
-  ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-                         (char *) &buffer,
-                         sizeof buffer,
-                         timeout);
-  return n == -1 ? -1 : 0;
+      ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
+                             (char *) &buffer,
+                             sizeof buffer,
+                             timeout);
+      if (n == -1)
+        return -1;
+      else
+        return 0;
+    }
 }
 
 // Handles pending threads (if any) that are waiting to unblock the
@@ -695,7 +714,8 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
   ACE_HANDLE read_handle =
     this->notification_pipe_.read_handle ();
 
-  if (rd_mask.is_set (read_handle))
+  if (read_handle != ACE_INVALID_HANDLE
+      && rd_mask.is_set (read_handle))
     {
       number_of_active_handles--;
       return this->handle_input (read_handle);
@@ -704,10 +724,10 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
     return 0;
 }
 
-// Special trick to unblock select() when updates occur in somewhere
-// other than the main ACE_Select_Reactor thread.  All we do is write data to
-// a pipe that the ACE_Select_Reactor is listening on.  Thanks to Paul
-// Stephenson for suggesting this approach.
+// Special trick to unblock <select> when updates occur in somewhere
+// other than the main <ACE_Select_Reactor> thread.  All we do is
+// write data to a pipe that the <ACE_Select_Reactor> is listening on.
+// Thanks to Paul Stephenson for suggesting this approach.
 
 int
 ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
@@ -727,18 +747,21 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
         {
           ssize_t remainder = sizeof buffer - n;
 
-          // If so, try to recover by reading the remainder.  If this doesn't
-          // work we're in big trouble since the input stream won't be aligned
-          // correctly.  I'm not sure quite what to do at this point.  It's
-          // probably best just to return -1.
-          if (ACE::recv (handle, ((char *) &buffer) + n, remainder) != remainder)
+          // If so, try to recover by reading the remainder.  If this
+          // doesn't work we're in big trouble since the input stream
+          // won't be aligned correctly.  I'm not sure quite what to
+          // do at this point.  It's probably best just to return -1.
+          if (ACE::recv (handle,
+                         ((char *) &buffer) + n,
+                         remainder) != remainder)
             return -1;
         }
 
-      // If eh == 0 then another thread is unblocking the ACE_Select_Reactor
-      // to update the ACE_Select_Reactor's internal structures.  Otherwise,
-      // we need to dispatch the appropriate handle_* method on the
-      // ACE_Event_Handler pointer we've been passed.
+      // If eh == 0 then another thread is unblocking the
+      // ACE_Select_Reactor to update the ACE_Select_Reactor's
+      // internal structures.  Otherwise, we need to dispatch the
+      // appropriate handle_* method on the ACE_Event_Handler pointer
+      // we've been passed.
       if (buffer.eh_ != 0)
         {
           int result = 0;
@@ -936,7 +959,8 @@ int
 ACE_Select_Reactor::open (size_t size,
                           int restart,
                           ACE_Sig_Handler *sh,
-                          ACE_Timer_Queue *tq)
+                          ACE_Timer_Queue *tq,
+                          int disable_notify_pipe)
 {
   ACE_TRACE ("ACE_Select_Reactor::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));
@@ -975,7 +999,7 @@ ACE_Select_Reactor::open (size_t size,
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
     result = -1;
-  else if (this->notify_handler_.open (this) == -1)
+  else if (this->notify_handler_.open (this, disable_notify_pipe) == -1)
     result = -1;
 
   if (result != -1)
@@ -1009,7 +1033,8 @@ ACE_Select_Reactor::set_timer_queue (ACE_Timer_Queue *timer_queue)
 }
 
 ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
-                                        ACE_Timer_Queue *tq)
+                                        ACE_Timer_Queue *tq,
+                                        int disable_notify_pipe)
   : handler_rep_ (*this),
     timer_queue_ (0),
     delete_timer_queue_ (0),
@@ -1025,8 +1050,13 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
 {
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
-  if (this->open (ACE_Select_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+  if (this->open (ACE_Select_Reactor::DEFAULT_SIZE,
+                  0,
+                  sh,
+                  tq,
+                  disable_notify_pipe) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR")));
 }
 
@@ -1035,7 +1065,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
 ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
                                         int rs,
                                         ACE_Sig_Handler *sh,
-                                        ACE_Timer_Queue *tq)
+                                        ACE_Timer_Queue *tq,
+                                        int disable_notify_pipe)
   : handler_rep_ (*this),
     timer_queue_ (0),
     delete_timer_queue_ (0),
@@ -1051,8 +1082,13 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
 {
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
-  if (this->open (size, rs, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+  if (this->open (size,
+                  rs,
+                  sh,
+                  tq,
+                  disable_notify_pipe) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR")));
 }
 

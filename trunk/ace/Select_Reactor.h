@@ -176,7 +176,7 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Event_Handler
   //     dispatched in the context of the <ACE_Select_Reactor> thread.
 public:
   // = Initialization and termination methods.
-  int open (ACE_Select_Reactor *);
+  int open (ACE_Select_Reactor *, int disable_notify_pipe);
   int close (void);
 
   int dispatch_notifications (int &number_of_active_handles,
@@ -208,12 +208,14 @@ public:
 
 private:
   ACE_Select_Reactor *select_reactor_;
-  // Keep a back pointer to the Select_Reactor.
+  // Keep a back pointer to the <ACE_Select_Reactor>.  If this value
+  // if NULL then the <ACE_Select_Reactor> has been initialized with
+  // <disable_notify_pipe>.
 
   ACE_Pipe notification_pipe_;
-  // Contains the HANDLE the Select_Reactor is listening on, as well
-  // as the HANDLE that threads wanting the attention of the
-  // Select_Reactor will write to.
+  // Contains the <ACE_HANDLE> the <ACE_Select_Reactor> is listening
+  // on, as well as the <ACE_HANDLE> that threads wanting the
+  // attention of the <ACE_Select_Reactor> will write to.
 };
 
 class ACE_Export ACE_Select_Reactor_Handler_Repository
@@ -372,19 +374,22 @@ public:
   // = Initialization and termination methods.
 
   ACE_Select_Reactor (ACE_Sig_Handler * = 0,
-                      ACE_Timer_Queue * = 0);
+                      ACE_Timer_Queue * = 0,
+                      int disable_notify_pipe = 0);
   // Initialize <ACE_Select_Reactor> with the default size.
 
   ACE_Select_Reactor (size_t size,
                       int restart = 0,
                       ACE_Sig_Handler * = 0,
-                      ACE_Timer_Queue * = 0);
+                      ACE_Timer_Queue * = 0,
+                      int disable_notify_pipe = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int open (size_t size = DEFAULT_SIZE,
                     int restart = 0,
                     ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0);
+                    ACE_Timer_Queue * = 0,
+                    int disable_notify_pipe = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
   virtual int set_sig_handler (ACE_Sig_Handler *signal_handler);
