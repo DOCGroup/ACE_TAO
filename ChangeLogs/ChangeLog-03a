@@ -1,3 +1,9 @@
+Wed May  2 18:36:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/README: Clarified that the shared memory tests now
+	  work fine on Win9x!  Thanks to Cristian Ferritti for reminding
+ 	  me to do this.
+
 Wed May  2 15:10:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.h (ACE_InputCDR): 
@@ -18,9 +24,23 @@ Wed May 02 05:40:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * bin/auto_run_tests.lst:
           Use Queued_Message_Test/run_test.pl
 
-Tue May  1 21:38:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+Wed May  2 06:31:46 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-        * THANKS: Added Carlton Teel to the hall of fame.
+	* ace/Makefile: Make it possible to set where the QTDIR is located.
+	  Thanks to Thomas Groth <groth.th@nord-com.net> for this
+ 	  enhancement.
+
+	* ace/Process.cpp (spawn): When an application running with user
+	  ID=0 (i.e. root) spawns a new process using
+ 	  ACE_Process_Manager::spawn(), which in turn calls
+ 	  ACE_Process::spawn() and tries to set a user ID and a group ID
+ 	  for the new process different from root/other, the call to
+ 	  setreuid() succeedes but the call to setregid() made thereafter
+ 	  fails, because the process has no longer UID=0 and thus it
+ 	  cannot change to a different group.  To fix this, it was
+ 	  necessary to swap the order of the calls to setreuid() and
+ 	  setregid().  Thanks to Ramiro Penataro <penataro@ll.iac.es> for
+ 	  reporting this.
 
 Tue May  1 11:05:48 2001  Ossama Othman  <ossama@uci.edu>
 

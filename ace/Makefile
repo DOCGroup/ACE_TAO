@@ -562,12 +562,18 @@ Svc_Conf_l.cpp: Svc_Conf.l
         fi
 
 # Some compilation for the QtReactor stuff. We need to run moc
-# ie. (Meta Object compiler) for our QtReactor.h. So, let me do it
+# ie. (Meta Object compiler) for our QtReactor.h. So, let's do it
 # here.
+
+ifneq ($(QTDIR),)
+  MOC = ${QTDIR}/bin/moc
+else
+  MOC = moc
+endif
 
 ifneq ($(qt_reactor),)
 QtReactor_moc.cpp: QtReactor.h
-	moc QtReactor.h >QtReactor_moc.cpp
+	$(MOC) QtReactor.h >QtReactor_moc.cpp
 endif #qt_reactor
 
 ifeq ($(SUPPRESS_DASH_G),1)

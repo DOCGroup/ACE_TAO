@@ -63,16 +63,15 @@ Wed May  2 11:26:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/POA/TIE/Makefile:
 
-          Disabled this build for SunCC 4.2. It worked before, even
-          though 4.2 does not have ACE_HAS_USING_KEYWORD defined
-          (in other words, it has no namespace support), because the
-          IDL compiler left out the #ifdef guards using the above
-          macro if the interface was declared at global scope, and the
-          only interface in the TIE example where the tie class was
-          used happened to fall into that category. This generation of
-          #ifdef guards was inconsistent, however, and now *all* tie
-          classes are left out by the preprocessor if 
-          ACE_HAS_USING_KEYWORD is not defined.
+          Disabled this build for SunCC 4.2. It worked before, even though
+ 	  4.2 does not have ACE_HAS_USING_KEYWORD defined (in other words,
+ 	  it has no namespace support), because the IDL compiler left out
+ 	  the #ifdef guards using the above macro if the interface was
+ 	  declared at global scope, and the only interface in the TIE
+ 	  example where the tie class was used happened to fall into that
+ 	  category. This generation of #ifdef guards was inconsistent,
+ 	  however, and now *all* tie classes are left out by the
+ 	  preprocessor if ACE_HAS_USING_KEYWORD is not defined.
 
 Wed May 02 05:37:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -84,8 +83,8 @@ Tue May 1 22:42:44 2001  Ossama Othman  <ossama@uci.edu>
 
         * tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
 
-          Silence the false Fuzz error about a missing ACE_CHECK by adding
-          the awful "// FUZZ: ignore check_for_ace_check" comment hack.
+	  Silence the false Fuzz error about a missing ACE_CHECK by adding
+ 	  the awful "// FUZZ: ignore check_for_ace_check" comment hack.
 
 Tue May  1 22:14:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -289,9 +288,36 @@ Mon Apr 30 16:53:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
 
+	* tao/Cache_Entries.h (relinquish_transport):
+	* tao/Cache_Entries.inl (relinquish_transport):
+
+	  New method that causes the given TAO_Cache_IntId to relinquish
+	  ownership of the TAO_Transport associated with it.  This method
+	  exists to get around some inflexibility in the
+	  Transport_Cache_Manager interface.  It should be removed once
+	  the interface is improved.
+
+	* tao/Transport_Cache_Manager.cpp (find_transport):
+
+	  Do not duplicate the TAO_Transport object after it is found.
+	  It is already duplicated during the find process.  Instead call
+	  the new TAO_Cache_IntId::relinquish_transport() method.  This
+	  change removes two locks from the critical path.  [Bug 878]
+
+<<<<<<< ChangeLog
+	* tao/IIOP_Endpoint.cpp (hash):
+=======
         * tao/Cache_Entries.h (relinquish_transport):
         * tao/Cache_Entries.inl (relinquish_transport):
+>>>>>>> 1.3407
 
+<<<<<<< ChangeLog
+	  Improved the speed of this hash operation by basing the hash on
+	  the IP address of the peer instead of computing a hash that
+	  involves some string operations (ACE::hash_pjw()).  Since this
+	  hash method is called on each invocation, i.e. in the critical
+	  path, a performance improvement should be noticeable.
+=======
           New method that causes the given TAO_Cache_IntId to relinquish
           ownership of the TAO_Transport associated with it.  This method
           exists to get around some inflexibility in the
@@ -312,6 +338,7 @@ Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
           involves some string operations (ACE::hash_pjw()).  Since this
           hash method is called on each invocation, i.e. in the critical
           path, a performance improvement should be noticeable.
+>>>>>>> 1.3407
 
         * tao/PortableServer/Servant_Base.cpp:
 
@@ -16409,10 +16436,10 @@ Fri Dec 22 14:13:46 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
           RT_Current, Priority_Mapping_Manager and RT_Policy_i.
 
           Removed the set_default_policies method. It now is in
-          Protocols_Hooks and derived classes. The default implementation
-          does nothing and the RT_Protocols_Hooks implementation does the
-          actual setting of the policies. With this change, ORB_Core doesnt
-          depend on RT_Policy_i.
+ 	  Protocols_Hooks and derived classes. The default implementation
+ 	  does nothing and the RT_Protocols_Hooks implementation does the
+ 	  actual setting of the policies. With this change, ORB_Core
+ 	  doesnt depend on RT_Policy_i.
 
           Similar is the case with get_thread_priority and
           set_thread_priority methods.
@@ -19691,10 +19718,10 @@ Wed Nov 22 16:24:52 2000  Ossama Othman  <ossama@uci.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-          Corrected typo where base class pointer was checked for
-          validity instead of the derived class pointer.  This fixes a
-          potential problem where a failed dynamic_cast would not have
-          beend etected.
+          Corrected typo where base class pointer was checked for validity
+ 	  instead of the derived class pointer.  This fixes a potential
+ 	  problem where a failed dynamic_cast would not have beend
+ 	  etected.
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
           (TAO_SSLIOP_Endpoint):

@@ -125,6 +125,16 @@ ACE_Process::spawn (ACE_Process_Options &options)
                     ACE_LIB_TEXT ("%p.\n"),
                     ACE_LIB_TEXT ("ACE_Process::spawn: setpgid failed.")));
 
+#if !defined (ACE_LACKS_SETREGID)
+      if (options.getrgid () != (uid_t) -1
+          || options.getegid () != (uid_t) -1)
+        if (ACE_OS::setregid (options.getrgid (),
+                              options.getegid ()) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("%p.\n"),
+                      ACE_LIB_TEXT ("ACE_Process::spawn: setregid failed.")));
+#endif /* ACE_LACKS_SETREGID */
+
 #if !defined (ACE_LACKS_SETREUID)
       // Set user and group id's.
       if (options.getruid () != (uid_t) -1
@@ -135,16 +145,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
                       ACE_LIB_TEXT ("%p.\n"),
                       ACE_LIB_TEXT ("ACE_Process::spawn: setreuid failed.")));
 #endif /* ACE_LACKS_SETREUID */
-
-#if !defined (ACE_LACKS_SETREGID)
-      if (options.getrgid () != (uid_t) -1
-          || options.getegid () != (uid_t) -1)
-        if (ACE_OS::setregid (options.getrgid (),
-                              options.getegid ()) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p.\n"),
-                      ACE_LIB_TEXT ("ACE_Process::spawn: setregid failed.")));
-#endif /* ACE_LACKS_SETREGID */
 
       this->child (ACE_OS::getppid ());
     }
