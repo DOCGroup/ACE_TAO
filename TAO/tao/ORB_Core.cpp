@@ -1212,6 +1212,9 @@ template class ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_P
 template class ACE_Guard<TAO_COLTBL_Lock>;
 template class ACE_Read_Guard<TAO_COLTBL_Lock>;
 template class ACE_Write_Guard<TAO_COLTBL_Lock>;
+template class ACE_Guard<ACE_SYNCH_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1251,6 +1254,9 @@ template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Guard<TAO_COLTBL_Lock>
 #pragma instantiate ACE_Read_Guard<TAO_COLTBL_Lock>
 #pragma instantiate ACE_Write_Guard<TAO_COLTBL_Lock>
+#pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
