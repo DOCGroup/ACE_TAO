@@ -399,7 +399,7 @@ DRV_check_for_include (const char* buf)
 {
   const char* r = buf;
   const char* h;
-
+  
   // Skip initial '#'.
   if (*r != '#')
     return;
@@ -422,14 +422,19 @@ DRV_check_for_include (const char* buf)
       return;
 
   // Next thing is finding the file that has been `#include'd. Skip
-  // all the blanks and tabs and reach the startng " character.
-  for (; *r != '"'; r++)
+  // all the blanks and tabs and reach the startng " or < character.
+  for (; (*r != '"') && (*r != '<'); r++)
     if (*r == '\n' || *r == '\0')
       return;
 
-  // Skip this ".
+  // Decide on the end char.
+  char end_char = '"';
+  if (*r == '<')
+    end_char = '>';
+  
+  // Skip this " or <.
   r++;
-
+  
   // Store this position.
   h = r;
 
@@ -437,8 +442,8 @@ DRV_check_for_include (const char* buf)
   if (*h == '\0')
     return;
 
-  // Find the closing " character.
-  for (; *r != '"'; r++)
+  // Find the closing " or < character.
+  for (; *r != end_char; r++)
     continue;
 
   // Make a new string for this file name.
