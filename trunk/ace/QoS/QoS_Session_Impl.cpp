@@ -140,8 +140,8 @@ rsvp_callback (rapi_sid_t sid,
 
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unknown flowspec type.\n"),
-                            0);
+                             "(%N|%l) Unknown flowspec type: %u.\n", csxp->spec_type),
+                            -1);
         };
 
       ace_qos.sending_flowspec (sending_flow);
@@ -506,7 +506,7 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unknown flowspec type.\n"),
+                         "(%N|%l) Unknown flowspec type: %u\n",flow_spec.service_type () ),
                         0);
     }
 
