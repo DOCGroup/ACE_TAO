@@ -11,7 +11,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Process_Manager.h"
 
 #include "ace/Service_Config.h"
 
@@ -821,10 +820,6 @@ int
 ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");
-
-  ACE_Process_Manager::close_singleton ();
-  // The Process Manager may be registered with the Reactor singleton
-  // so we need to close it down first.
 
   ACE_Reactor::close_singleton ();
 

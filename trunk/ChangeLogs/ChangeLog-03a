@@ -1,3 +1,17 @@
+Fri Oct 13 13:57:40 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Process_Manager.h :
+	* ace/Process_Manager.cpp :
+
+	* ace/Service_Config.h : 
+	* ace/Service_Config.cpp:
+
+          Removed dependency of Service_Config on Process_Manager by
+	  registering the Process_Manager singleton with the
+	  Object_Manager when it is instantiated. This way we need not call
+          ACE_Process_Manager::close_singleton () in Service_Config
+	  implementation.
+	
 Mon Oct  9 10:34:18 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
