@@ -113,8 +113,7 @@ rename_test (void)
 
   // Test 3: It should fail... there are no files.
   if (ACE_OS::rename (old_file, new_file) == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%p\n"), ACE_TEXT ("Rename should bomb, and did")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Rename test 3 should bomb, and did")));
   else
     {
       result = -1;
