@@ -1,3 +1,10 @@
+Fri Mar  8 19:45:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+          Use auto_ptr<> to manage dynamically-allocated Thread_Args.
+          Thanks to Chris Uzdavinis <chris@atdesk.com> for this suggestion.
+
 Thu Mar  7 16:10:02 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* include/makeincludes/platform_linux_icc.GNU,
