@@ -56,7 +56,7 @@ public:
   ~be_operation ();
   // destructor
 
-  int void_return_type ();
+  int void_return_type (void);
   // Returns 1 if the operation has a void return type.
 
   virtual int argument_count (void);
@@ -82,12 +82,12 @@ public:
   int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // returns true if we have to genrate extra code.
 
-  be_operation *marshaling ();
+  be_operation *marshaling (void);
   // returns the operation containing special marshaling information,
   // this makes sense if not all arguments get marshaled, e.g. AMI
   // sendc_ operations
 
-  be_operation *arguments ();
+  be_operation *arguments (void);
   // returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
