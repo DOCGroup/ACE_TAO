@@ -57,7 +57,9 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
     }
 
   this->ctx_->node (node); // save the node
-
+  
+  *os << be_nl;
+  
   for (unsigned long i = 0; i < node->label_list_length (); ++i)
     {
       // check if we are printing the default case
@@ -154,7 +156,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
   *os << fname << "_free (this->u_." << ub->local_name ()
       << "_);" << be_nl
       << "this->u_." << ub->local_name () << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -177,7 +179,7 @@ be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "break;" << be_uidt_nl;
+  *os << "break;" << be_uidt;
 
   return 0;
 }
@@ -205,7 +207,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
       << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -233,7 +235,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
       << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -261,7 +263,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype (be_valuetype *)
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
       << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -289,7 +291,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (be_valuetype_fwd *
       << ub->local_name () << "_;" << be_nl
       << "this->u_." << ub->local_name ()
       << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -322,7 +324,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
           << ub->local_name () << "_;" << be_nl;
       *os << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
-          << "break;" << be_uidt_nl;
+          << "break;" << be_uidt;
 
       break;
     case AST_PredefinedType::PT_pseudo:
@@ -330,7 +332,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 	        << ub->local_name () << "_);" << be_nl;
       *os << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
-          << "break;" << be_uidt_nl;
+          << "break;" << be_uidt;
 
       break;
     case AST_PredefinedType::PT_any:
@@ -338,13 +340,13 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 	        << ub->local_name () << "_;" << be_nl
           << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
-          << "break;" << be_uidt_nl;
+          << "break;" << be_uidt;
 
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
-      *os << "break;" << be_uidt_nl;
+      *os << "break;" << be_uidt;
 
       break;
     }
@@ -376,7 +378,7 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
       << "this->u_."
       << ub->local_name ()
       << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -413,7 +415,7 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
       << "this->u_."
       << ub->local_name ()
       << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }
@@ -457,7 +459,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
           << "_ = 0;" << be_nl;
    }
 
-  *os << "break;" << be_uidt_nl;
+  *os << "break;" << be_uidt;
 
   return 0;
 }
@@ -506,7 +508,7 @@ be_visitor_union_branch_public_reset_cs::visit_union (be_union *)
       << ub->local_name () << "_;" << be_nl
       << "this->u_."
       << ub->local_name () << "_ = 0;" << be_nl
-      << "break;" << be_uidt_nl;
+      << "break;" << be_uidt;
 
   return 0;
 }

@@ -47,6 +47,8 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  
+  *os << be_nl;
 
   // This visitor is used when we are generating the copy ctor and
   // assignment operator for the union.
@@ -96,7 +98,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     }
 
   *os << "}" << be_nl;
-  *os << "break;" << be_nl;
+  *os << "break;";
 
   return 0;
 }
