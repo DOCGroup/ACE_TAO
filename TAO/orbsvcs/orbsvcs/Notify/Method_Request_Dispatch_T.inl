@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Admin.h"
+#include "tao/debug.h"
 
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM> ACE_INLINE int
 TAO_Notify_Method_Request_Dispatch_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::execute_i (ACE_ENV_SINGLE_ARG_DECL)

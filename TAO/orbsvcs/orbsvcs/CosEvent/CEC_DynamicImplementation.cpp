@@ -5,6 +5,7 @@
 #include "CEC_DynamicImplementation.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
+#include "tao/debug.h"
 #include "CEC_TypedEvent.h"
 
 #if !defined(__ACE_INLINE__)
