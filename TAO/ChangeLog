@@ -1,3 +1,10 @@
+Sun Dec 28 11:18:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FT_ClientORB.bor:
+	* orbsvcs/orbsvcs/FT_ServerORB.bor:
+	* orbsvcs/orbsvcs/PortableGroup.bor:
+	  Fixed these BCB makefiles.
+
 Sun Dec 28 11:01:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging_No_ImplC.{h,cpp}:
