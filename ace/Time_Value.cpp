@@ -135,9 +135,9 @@ ACE_Time_Value::operator FILETIME () const
   file_time.dwHighDateTime = LL_100ns.hi();
 #else
   ULARGE_INTEGER _100ns;
- double _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
-                            this->tv_.tv_usec * 10) +
-                           ACE_Time_Value::FILETIME_to_timval_skew);
+  _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
+                     this->tv_.tv_usec * 10) +
+                     ACE_Time_Value::FILETIME_to_timval_skew);
 
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
