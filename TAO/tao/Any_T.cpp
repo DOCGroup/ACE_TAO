@@ -84,8 +84,14 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                       
       auto_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
 
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
@@ -167,8 +173,13 @@ TAO::Any_Impl_T<T>::widen (const CORBA::Any & any,
                       
       auto_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
 
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
@@ -261,7 +272,8 @@ TAO::Any_Array_Impl_T<T, T_forany>::extract (const CORBA::Any & any,
 
       if (narrow_impl != 0)
         {
-          _tao_elem = (const T *&) narrow_impl->value_;
+          _tao_elem = ACE_const_cast (const T *&, 
+                                      narrow_impl->value_);
           return 1;
         }
 
@@ -277,14 +289,21 @@ TAO::Any_Array_Impl_T<T, T_forany>::extract (const CORBA::Any & any,
           replacement
         );
 
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
         {
-          _tao_elem = (const T *&) replacement->value_;
+          _tao_elem = ACE_const_cast (const T *&, 
+                                      replacement->value_);
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
           return result;
@@ -438,8 +457,14 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           replacement
         );
 
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
@@ -535,8 +560,14 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
                       
       auto_ptr<TAO::Any_Basic_Impl_T<T> > replacement_safety (replacement);
 
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
@@ -643,8 +674,14 @@ TAO::Any_Special_Basic_Impl_T<T, from_T, to_T>::extract (
                       
       auto_ptr<UNSIGNED_CHAR_ANY_IMPL> replacement_safety (replacement);
 
-      TAO_InputCDR cdr (impl->_tao_get_cdr (),
-                        impl->_tao_byte_order ());
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+      TAO_InputCDR cdr (mb->data_block (),
+                        ACE_Message_Block::DONT_DELETE,
+                        mb->rd_ptr () - mb->base (),
+                        mb->wr_ptr () - mb->base (),
+                        impl->_tao_byte_order (),
+						            TAO_DEF_GIOP_MAJOR,
+						            TAO_DEF_GIOP_MINOR);
 
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 

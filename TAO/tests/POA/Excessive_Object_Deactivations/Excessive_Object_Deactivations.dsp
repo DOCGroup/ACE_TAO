@@ -94,6 +94,7 @@ SOURCE=.\Excessive_Object_Deactivations.cpp
 # Begin Source File
 
 SOURCE=.\testC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

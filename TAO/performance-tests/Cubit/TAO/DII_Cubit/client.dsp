@@ -152,6 +152,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=..\IDL_Cubit\cubitC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

@@ -94,6 +94,7 @@ SOURCE=.\Callback_i.cpp
 # Begin Source File
 
 SOURCE=.\callbackC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

@@ -215,6 +215,7 @@ SOURCE=.\INS_test_server.cpp
 # Begin Source File
 
 SOURCE=.\INSC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

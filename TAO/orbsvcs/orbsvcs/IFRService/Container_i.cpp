@@ -1993,6 +1993,12 @@ TAO_Container_i::same_as_tmp_name (const char *name)
 }
 
 void
+TAO_Container_i::tmp_name_holder (const char *name)
+{
+  TAO_Container_i::tmp_name_holder_ = name;
+}
+
+void
 TAO_Container_i::lookup_name_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,

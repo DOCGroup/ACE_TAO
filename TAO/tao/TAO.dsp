@@ -47,7 +47,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR- /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -78,7 +78,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -105,7 +105,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GR- /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -133,7 +133,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -180,6 +180,7 @@ SOURCE=.\Adapter.cpp
 # Begin Source File
 
 SOURCE=.\Any.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -220,6 +221,7 @@ SOURCE=.\Blocked_Connect_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\BoundsC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -288,6 +290,19 @@ SOURCE=.\Connector_Registry.cpp
 # Begin Source File
 
 SOURCE=.\CONV_FRAMEC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -308,6 +323,7 @@ SOURCE=.\CORBANAME_Parser.cpp
 # Begin Source File
 
 SOURCE=.\CurrentC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -356,6 +372,7 @@ SOURCE=.\DLL_Parser.cpp
 # Begin Source File
 
 SOURCE=.\DomainC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -364,6 +381,7 @@ SOURCE=.\Dynamic_Adapter.cpp
 # Begin Source File
 
 SOURCE=.\DynamicC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -384,6 +402,7 @@ SOURCE=.\Environment.cpp
 # Begin Source File
 
 SOURCE=.\Exception.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -448,6 +467,7 @@ SOURCE=.\GIOP_Utils.cpp
 # Begin Source File
 
 SOURCE=.\GIOPC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -492,6 +512,7 @@ SOURCE=.\IIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\IIOPC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -512,6 +533,7 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # Begin Source File
 
 SOURCE=.\IOPC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -592,6 +614,7 @@ SOURCE=.\MCAST_Parser.cpp
 # Begin Source File
 
 SOURCE=.\Messaging_PolicyValueC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -644,10 +667,12 @@ SOURCE=.\ObjectIdListC.cpp
 # Begin Source File
 
 SOURCE=.\ObjectReferenceTemplateC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\OctetSeqC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -700,6 +725,7 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # Begin Source File
 
 SOURCE=.\Policy_ForwardC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -716,6 +742,7 @@ SOURCE=.\Policy_Validator.cpp
 # Begin Source File
 
 SOURCE=.\PolicyC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -728,6 +755,7 @@ SOURCE=.\PollableC.cpp
 # Begin Source File
 
 SOURCE=.\PortableInterceptorC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -808,6 +836,7 @@ SOURCE=.\Services_Activate.cpp
 # Begin Source File
 
 SOURCE=.\ServicesC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -816,6 +845,7 @@ SOURCE=.\skip.cpp
 # Begin Source File
 
 SOURCE=.\StringSeqC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -864,6 +894,7 @@ SOURCE=.\TAO_Singleton_Manager.cpp
 # Begin Source File
 
 SOURCE=.\TAOC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -880,6 +911,7 @@ SOURCE=.\Thread_Lane_Resources_Manager.cpp
 # Begin Source File
 
 SOURCE=.\TimeBaseC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -952,6 +984,7 @@ SOURCE=.\Wait_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\WrongTransactionC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

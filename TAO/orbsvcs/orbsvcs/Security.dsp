@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "Security_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_SECURITY_BUILD_DLL" /D "TAO_ORBSVCS_HAS_SECURITY" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_SECURITY_BUILD_DLL" /D "TAO_ORBSVCS_HAS_SECURITY" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -128,14 +128,17 @@ SOURCE=.\Security\Security_PolicyFactory.cpp
 # Begin Source File
 
 SOURCE=.\SecurityC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\SecurityLevel1C.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\SecurityLevel2C.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -148,6 +151,7 @@ SOURCE=.\Security\SecurityManager.cpp
 # Begin Source File
 
 SOURCE=.\SecurityReplaceableC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # Begin Group "Header Files"

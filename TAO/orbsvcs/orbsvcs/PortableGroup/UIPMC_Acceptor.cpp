@@ -45,7 +45,7 @@ TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor (void)
 }
 
 int
-TAO_UIPMC_Acceptor::create_profile (const TAO_ObjectKey &,
+TAO_UIPMC_Acceptor::create_profile (const TAO::ObjectKey &,
   TAO_MProfile &,
   CORBA::Short)
 {
@@ -268,7 +268,7 @@ TAO_UIPMC_Acceptor::endpoint_count (void)
 
 int
 TAO_UIPMC_Acceptor::object_key (IOP::TaggedProfile &,
-                                TAO_ObjectKey &)
+                                TAO::ObjectKey &)
 {
   // No object key to extract.  Just return success.
   return 1;

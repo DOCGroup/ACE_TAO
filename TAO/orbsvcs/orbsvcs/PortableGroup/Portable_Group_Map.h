@@ -72,7 +72,7 @@ public:
   struct Map_Entry
   {
     /// The key.
-    TAO_ObjectKey key;
+    TAO::ObjectKey key;
 
     /// next ObjectKey in the group.
     struct Map_Entry *next;
@@ -87,13 +87,13 @@ public:
   /// Add a GroupId->ObjectKey mapping to the map.
   /// This function takes ownership of the memory pointed to be group_id
   void add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
-                                   const TAO_ObjectKey &key
+                                   const TAO::ObjectKey &key
                                    ACE_ENV_ARG_DECL);
 
 
   /// Remove a GroupId->ObjectKey mapping from the map.
   void remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* group_id,
-                                      const TAO_ObjectKey &key
+                                      const TAO::ObjectKey &key
                                       ACE_ENV_ARG_DECL);
 
   /// Dispatch a request to all of the ObjectIds that belong to

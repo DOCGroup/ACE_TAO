@@ -66,7 +66,7 @@ Test_DynEnum::run_test (void)
         }
 
       DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
-      CORBA_Any in_any1;
+      CORBA::Any in_any1;
       in_any1 <<= te;
       DynamicAny::DynAny_var dp1 =
         dynany_factory->create_dyn_any (in_any1
@@ -132,12 +132,12 @@ Test_DynEnum::run_test (void)
                             -1);
         }
 
-      CORBA_Any in_any2;
+      CORBA::Any in_any2;
       in_any2 <<= DynAnyTests::TE_THIRD;
       de2->from_any (in_any2
                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA_Any_var out_any1 = de2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var out_any1 = de2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       out_any1.in () >>= te;
 

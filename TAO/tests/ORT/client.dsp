@@ -197,6 +197,7 @@ SOURCE=.\client.cpp
 # Begin Source File
 
 SOURCE=.\ORT_testC.cpp
+# ADD CPP /GR
 # End Source File
 # End Group
 # End Target

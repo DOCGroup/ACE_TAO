@@ -57,7 +57,7 @@ TAO_InterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
   // call to remove_section (recursive = 1) will not get, and also
   // destroy the attribute's anonymous type, if any.
 
-  TAO_IFR_Generic_Utils::destroy_special<TAO_AttributeDef_i> (
+  TAO_IFR_Generic_Utils<TAO_AttributeDef_i>::destroy_special (
       "attrs",
       this->repo_,
       this->section_key_
@@ -65,7 +65,7 @@ TAO_InterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL)
     );
   ACE_CHECK;
 
-  TAO_IFR_Generic_Utils::destroy_special<TAO_OperationDef_i> (
+  TAO_IFR_Generic_Utils<TAO_OperationDef_i>::destroy_special (
       "ops",
       this->repo_,
       this->section_key_

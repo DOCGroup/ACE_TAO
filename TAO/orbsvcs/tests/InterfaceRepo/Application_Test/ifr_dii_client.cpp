@@ -267,7 +267,8 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
             if (params[i].type->kind () == CORBA::tk_float
                 && ACE_OS::strcmp (params[i].name.in (), "price") == 0)
               {
-                CORBA::Any any (CORBA::_tc_float);
+                CORBA::Any any (CORBA::_tc_float,
+                                0);
 
                 // The servant will return 0.0 if the title is not found.
                 this->req_->arguments ()->add_value (params[i].name.in (),

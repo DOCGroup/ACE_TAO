@@ -42,9 +42,11 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
 
 
 void
-TAO_Portable_Group_Map::add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
-                                                    const TAO_ObjectKey &key
-                                                    ACE_ENV_ARG_DECL)
+TAO_Portable_Group_Map::add_groupid_objectkey_pair (
+    PortableGroup::TagGroupTaggedComponent *group_id,
+    const TAO::ObjectKey &key
+    ACE_ENV_ARG_DECL
+  )
 {
   Map_Entry *new_entry;
 
@@ -95,7 +97,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (PortableGroup::TagGroupTagge
 
 void
 TAO_Portable_Group_Map::remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* /*group_id*/,
-                                                       const TAO_ObjectKey &/*key*/
+                                                       const TAO::ObjectKey &/*key*/
                                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
 
