@@ -1,3 +1,11 @@
+Mon Sep  8 23:29:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IOP_IORC.h:
+
+	  Moved HPUX-specific "#undef IOR" immediately after the last
+	  header include.  It ended up being hidden in some cases, which
+	  causes syntax errors in the `IOP_IORC.i' inline file to appear.
+
 Mon Sep  8 23:21:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile (LIBS):
