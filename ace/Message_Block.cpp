@@ -206,7 +206,7 @@ ACE_Message_Block::~ACE_Message_Block (void)
 }
 
 ACE_Data_Block::ACE_Data_Block (void)
-  : type (ACE_Message_Block::MB_DATA),
+  : type_ (ACE_Message_Block::MB_DATA),
     cur_size_ (0),
     max_size_ (0),
     flags_ (ACE_Message_Block::DONT_DELETE),
