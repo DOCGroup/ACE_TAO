@@ -31,11 +31,8 @@ class TAO_Export TAO_Policy_Factory
   //   TAO_Policy_Factory
   //
   // = DESCRIPTION
-  //   This class creates a Policy  based on the
-  //   type of the type provided.
-  // @@ Angelo, you could also mention why this class is needed, e.g.,
-  // why can't we just use ORB::create_policy for this purpose or why
-  // can't we creatte whatever policy we need directly...
+  //   This class creates a Policy  based on the type of the type provided.
+  //   This class is needed to support the policies serialization.
 
 public:
 
@@ -54,7 +51,4 @@ protected:
 
 #include "ace/post.h"
 
-#endif // defined (RTPOLICY_FACTORY_H_)
-
-// @@ Angelo, I already left you a similar comment last time in another file,
-// to use /* RTPOLICY_FACTORY_H_ */ instead of what you have above
+#endif // RTPOLICY_FACTORY_H_

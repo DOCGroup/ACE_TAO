@@ -107,8 +107,6 @@ public:
 
 protected:
 
-  // @@ Angelo, Do we want this friendship or should we just make the
-  // default constructor public?  Check with Irfan or Carlos...
   friend class TAO_Policy_Factory;
   TAO_PriorityModelPolicy (void);
   // This constructor is used by TAO_Policy_Factory when decoding
