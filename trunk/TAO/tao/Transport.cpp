@@ -126,25 +126,18 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
 TAO_Transport::~TAO_Transport (void)
 {
+  ACE_ASSERT(this->refcount() == 0);
+
   delete this->ws_;
-  this->ws_ = 0;
 
   delete this->tms_;
-  this->tms_ = 0;
 
   delete this->handler_lock_;
 
-  while (this->head_ != 0)
-    {
-      TAO_Queued_Message *i = this->head_;
-      this->head_ = i->next ();
-      i->destroy ();
-    }
-
-  // Avoid making the call if we can.  This may be redundant, unless
-  // someone called handle_close() on the connection handler from
-  // outside the TAO_Transport.
-  this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  // By the time the destructor is reached all the connection stuff
+  // *must* have been cleaned up
+  ACE_ASSERT(this->head_ == 0);
+  ACE_ASSERT(this->cache_map_entry_ == 0);
 }
 
 
@@ -280,7 +273,7 @@ TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 void
 TAO_Transport::close_connection (void)
 {
-  ACE_Event_Handler * eh = this->invalidate_event_handler ();
+  TAO_Connection_Handler * eh = this->invalidate_event_handler ();
   this->close_connection_shared (1, eh);
 }
 
@@ -344,12 +337,15 @@ TAO_Transport::connection_handler_closing (void)
   // error.  Basically all the other methods in the Transport
   // cooperate via check_event_handler_i()
 
-  (void) this->invalidate_event_handler ();
+  TAO_Connection_Handler * eh = this->invalidate_event_handler ();
   this->send_connection_closed_notifications ();
 
-  // Can't hold the lock while we release, b/c the release could
-  // invoke the destructor!  This should be the last thing we do here
-  TAO_Transport::release (this);
+  if (eh != 0)
+    {
+      // REFCNT: Matches incr_refcnt in XXX_Transport::XXX_Transport
+      // REFCNT: Only one of this or close_connection_shared() run
+      eh->decr_refcount();
+    }
 }
 
 int
@@ -669,21 +665,20 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
 void
 TAO_Transport::close_connection_i (void)
 {
-  ACE_Event_Handler * eh = this->invalidate_event_handler_i ();
+  TAO_Connection_Handler * eh = this->invalidate_event_handler_i ();
   this->close_connection_shared (1, eh);
 }
 
 void
 TAO_Transport::close_connection_no_purge (void)
 {
-  ACE_Event_Handler * eh = this->invalidate_event_handler ();
+  TAO_Connection_Handler * eh = this->invalidate_event_handler ();
   this->close_connection_shared (0, eh);
 }
 
-
 void
 TAO_Transport::close_connection_shared (int disable_purge,
-                                        ACE_Event_Handler * eh)
+                                        TAO_Connection_Handler * eh)
 {
   // Purge the entry
   if (!disable_purge)
@@ -697,30 +692,13 @@ TAO_Transport::close_connection_shared (int disable_purge,
       return;
     }
 
-  int retval = 0;
-
-  // We first try to remove the handler from the reactor. After that
-  // we destroy the handler using handle_close (). The remove handler
-  // is necessary because if the handle_closed is called directly, the
-  // reactor would be left with a dangling pointer.
-  if (this->ws_->is_registered ())
-    {
-      retval = this->orb_core_->reactor ()->remove_handler (
-                 eh,
-                 ACE_Event_Handler::ALL_EVENTS_MASK |
-                 ACE_Event_Handler::DONT_CALL);
-    }
-
-  // Yet another protocol using the Reactor. If a thread is not able
-  // to remove the handler from the Reactor, then he has no business
-  // to close down the handler.
-  if (retval == 0)
-    {
-      (void) eh->handle_close (ACE_INVALID_HANDLE,
-                               ACE_Event_Handler::ALL_EVENTS_MASK);
-    }
+  eh->close_connection ();
 
   this->send_connection_closed_notifications ();
+
+  // REFCNT: Matches incr_refcnt in XXX_Transport::XXX_Transport
+  // REFCNT: Only one of this or connection_handler_closing() run
+  eh->decr_refcount ();
 }
 
 int
@@ -1062,13 +1040,13 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) - Transport[%d]::report_invalid_event_handler"
+                  "TAO (%P|%t) - Transport[%d]::report_invalid_event_handler"
                   "(%s) no longer associated with handler [tag=%d]\n",
                   this->id (), caller, this->tag_));
     }
 }
 
-ACE_Event_Handler *
+TAO_Connection_Handler *
 TAO_Transport::invalidate_event_handler (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->handler_lock_, 0));
@@ -1078,6 +1056,14 @@ TAO_Transport::invalidate_event_handler (void)
 
 void
 TAO_Transport::send_connection_closed_notifications (void)
+{
+  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
+
+  this->send_connection_closed_notifications_i ();
+}
+
+void
+TAO_Transport::send_connection_closed_notifications_i (void)
 {
   while (this->head_ != 0)
     {
@@ -1160,6 +1146,14 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
           // server ...
           if (errno != EWOULDBLOCK && errno != ETIME)
             {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                              "fatal error in "
+                              "send_message_block_chain_i %p\n",
+                              this->id (), ""));
+                }
               return -1;
             }
         }

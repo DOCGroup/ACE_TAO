@@ -36,6 +36,13 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+  if (connection_handler_ != 0)
+    {
+      // REFCNT: Matches one of
+      // TAO_Transport::connection_handler_close() or
+      // TAO_Transport::close_connection_shared.
+      this->connection_handler_->incr_refcount();
+    }
   if (flag)
     {
       // Use the lite version of the protocol
@@ -51,8 +58,8 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
 }
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
-
 {
+  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -449,10 +456,10 @@ TAO_IIOP_Transport::get_listen_point (
   return 1;
 }
 
-ACE_Event_Handler *
+TAO_Connection_Handler *
 TAO_IIOP_Transport::invalidate_event_handler_i (void)
 {
-  ACE_Event_Handler * eh = this->connection_handler_;
+  TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
   return eh;
 }

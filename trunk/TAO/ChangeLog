@@ -1,4 +1,68 @@
-Mon Oct 21 21:51:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	Bug fix for [BUGID 1269]. Thanks to Carlos O'Ryan for donating
+	this patch.
+	
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl:
+	* tao/Connector_Impl.cpp:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.h:
+	* tao/Invocation.cpp:
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/Muxed_TMS.cpp:
+	* tao/Notify_Handler.cpp:
+	* tao/Synch_Refcountable.cpp:
+	* tao/TAO_Server_Request.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h: Changes to the ORB Core. The details are as
+	  follows 
+
+	  - It eliminates the two refcounts in the connection handler and
+	    combines as one refcount.
+
+	  - The transport_ field in the Connection_Handler class is
+ 	    atomically modified. 
+	  
+	  - Closing connections are also atomic. 
+	  
+	  - When the connection is closed all the activations in the
+	    reactor are removed. 
+
+	  For all the other gory details like the motivation for these
+	  changes, it is advised you refer to BUGID's 1202, 1269 and
+	  1270.
+	
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tao/Strategies/DIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: 
+
+	  Changes to the pluggable protocols to reflect the changes in the
+	  ORB Core.
+
+
+Mon Oct 21 21:51:07 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/DLL_ORB/Makefile.Tests_Client_Module: Added TAO_ROOT
 	  definition to fix the compileation problems.

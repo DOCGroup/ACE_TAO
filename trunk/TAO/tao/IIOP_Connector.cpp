@@ -202,6 +202,8 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
    // increment to the handler is done in make_svc_handler (). Now
    // that we dont need the reference to it anymore we can decrement
    // the refcount whether the connection is successful ot not.
+
+   // REFCNT: Matches with TAO_Connect_Strategy<>::make_svc_handler()
    svc_handler->decr_refcount ();
 
    if (result == -1)

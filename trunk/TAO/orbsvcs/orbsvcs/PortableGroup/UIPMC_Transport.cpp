@@ -35,6 +35,14 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+  if (connection_handler_ != 0)
+    {
+      // REFCNT: Matches one of
+      // TAO_Transport::connection_handler_close() or
+      // TAO_Transport::close_connection_shared.
+      this->connection_handler_->incr_refcount();
+    }
+
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
@@ -49,8 +57,8 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
 
 TAO_UIPMC_Transport::~TAO_UIPMC_Transport (void)
 {
+  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
-  this->messaging_object_ = 0;
 }
 
 ACE_Event_Handler *
@@ -544,10 +552,10 @@ TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
   return 1;
 }
 
-ACE_Event_Handler *
+TAO_Connection_Handler *
 TAO_UIPMC_Transport::invalidate_event_handler_i (void)
 {
-  ACE_Event_Handler * eh = this->connection_handler_;
+  TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
   return eh;
 }

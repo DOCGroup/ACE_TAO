@@ -8,8 +8,19 @@ ACE_RCSID (tao,
            Notify_Handler,
            "$Id$")
 
+TAO_Notify_Handler::TAO_Notify_Handler (TAO_Connection_Handler *ch,
+                                        ACE_Allocator *alloc)
+  : ACE_Event_Handler (ch->transport ()->orb_core ()->reactor ()),
+    ch_ (ch),
+    allocator_ (alloc)
+{
+  // REFCNT: Matches with Notify_Handler::~Notify_Handler()
+  this->ch_->incr_refcount ();
+}
+
 TAO_Notify_Handler::~TAO_Notify_Handler (void)
 {
+  // REFCNT: Matches with Notify_Handler::Notify_Handler()
   this->ch_->decr_refcount ();
 }
 
@@ -68,14 +79,4 @@ TAO_Notify_Handler::handle_close (ACE_HANDLE /*fd*/,
 {
   TAO_Notify_Handler::destroy_handler (this);
   return 0;
-}
-
-
-TAO_Notify_Handler::TAO_Notify_Handler (TAO_Connection_Handler *ch,
-                                        ACE_Allocator *alloc)
-  : ACE_Event_Handler (ch->transport ()->orb_core ()->reactor ()),
-    ch_ (ch),
-    allocator_ (alloc)
-{
-  this->ch_->incr_refcount ();
 }
