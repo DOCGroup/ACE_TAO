@@ -43,6 +43,7 @@
 
 #include "tao/Sequence.h"
 #include "tao/CDR.h"
+#include "tao/IOPC.h"
 
 class TAO_Transport;
 class TAO_ORB_Core;
@@ -267,6 +268,7 @@ private:
 #define TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET 0
 #define TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET 4
 
+#if 0
 // Support for Implicit ORB Service Context.
 typedef CORBA::ULong TAO_GIOP_ServiceID;
 
@@ -308,6 +310,7 @@ operator<< (TAO_OutputCDR&, const TAO_GIOP_ServiceContextList&);
 
 extern TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_GIOP_ServiceContextList&);
+#endif /* 0 */
 
 // = Reply headers
 
@@ -331,7 +334,7 @@ class TAO_GIOP_ReplyHeader
   // = TITLE
   //   This class embodies the header of a GIOP reply.
 public:
-  TAO_GIOP_ServiceContextList service_info;
+  IOP::ServiceContextList service_info;
   // Information
 
   CORBA::ULong request_id;
@@ -423,7 +426,8 @@ public:
                                        TAO_ORB_Core* orb_core);
   // Build the header for a message of type <t> into stream <msg>.
 
-  static CORBA::Boolean write_request_header (CORBA::ULong request_id,
+  static CORBA::Boolean write_request_header (const IOP::ServiceContextList& svc_ctx,
+                                              CORBA::ULong request_id,
                                               CORBA::Boolean is_roundtrip,
                                               const TAO_opaque& key,
                                               const char* opname,
@@ -476,7 +480,7 @@ public:
   static int parse_reply (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
                           TAO_GIOP_Message_State& state,
-                          TAO_GIOP_ServiceContextList& reply_ctx,
+                          IOP::ServiceContextList& reply_ctx,
                           CORBA::ULong& request_id,
                           CORBA::ULong& reply_status);
 
@@ -535,7 +539,7 @@ private:
   // Build the lightweight header for a message of type <t> into
   // stream <msg>.
 
-  static CORBA::Boolean write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
+  static CORBA::Boolean write_request_header_std (const IOP::ServiceContextList& svc_ctx,
                                                   CORBA::ULong request_id,
                                                   CORBA::Boolean is_roundtrip,
                                                   const TAO_opaque& key,
@@ -545,7 +549,7 @@ private:
   // Encode the standard header for the Request, assuming that the
   // GIOP header is already there.
 
-  static CORBA::Boolean write_request_header_lite (const TAO_GIOP_ServiceContextList& svc_ctx,
+  static CORBA::Boolean write_request_header_lite (const IOP::ServiceContextList& svc_ctx,
                                                    CORBA::ULong request_id,
                                                    CORBA::Boolean is_roundtrip,
                                                    const TAO_opaque& key,

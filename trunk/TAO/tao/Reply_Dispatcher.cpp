@@ -10,6 +10,7 @@
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
+  : reply_service_info_ ()
   //  : reply_received_ (0)
 {
 }
@@ -55,7 +56,7 @@ TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                             const TAO_GIOP_Version &version,
-                                            TAO_GIOP_ServiceContextList &reply_ctx,
+                                            IOP::ServiceContextList &reply_ctx,
                                             TAO_GIOP_Message_State *message_state)
 {
   this->reply_received_ = 1;
@@ -68,8 +69,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   // this data.
   CORBA::ULong max = reply_ctx.maximum ();
   CORBA::ULong len = reply_ctx.length ();
-  TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
-  this->reply_ctx_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
+  this->reply_service_info_.replace (max, len, context_list, 1);
 
   // Steal the buffer so that no copying is done.
   this->reply_cdr_.steal_from (message_state->cdr);
@@ -141,7 +142,7 @@ TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
                                              const TAO_GIOP_Version &version,
-                                             TAO_GIOP_ServiceContextList &reply_ctx,
+                                             IOP::ServiceContextList &reply_ctx,
                                              TAO_GIOP_Message_State *message_state)
 {
   // this->reply_received_ = 1;
@@ -154,8 +155,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   // this data.
   CORBA::ULong max = reply_ctx.maximum ();
   CORBA::ULong len = reply_ctx.length ();
-  TAO_GIOP_ServiceContext* context_list = reply_ctx.get_buffer (1);
-  this->reply_ctx_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
+  this->reply_service_info_.replace (max, len, context_list, 1);
 
   if (TAO_debug_level >= 4)
     {

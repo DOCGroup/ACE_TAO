@@ -408,6 +408,7 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->profile_,
                                    this->opname_,
                                    this->request_id_,
+                                   this->request_service_info_,
                                    1,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
@@ -789,6 +790,7 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->profile_,
                                    this->opname_,
                                    this->request_id_,
+                                   this->request_service_info_,
                                    0,
                                    this->out_stream_,
                                    ACE_TRY_ENV);

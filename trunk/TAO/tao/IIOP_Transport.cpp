@@ -10,7 +10,6 @@
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
@@ -124,6 +123,7 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
                                           const TAO_Profile* pfile,
                                           const char* opname,
                                           CORBA::ULong request_id,
+                                          const IOP::ServiceContextList &ctx,
                                           CORBA::Boolean is_roundtrip,
                                           TAO_OutputCDR &output,
                                           CORBA::Environment &ACE_TRY_ENV)
@@ -160,7 +160,8 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
   // this message, then patched shortly before it's sent).
   static CORBA::Principal_ptr principal = 0;
 
-  if (TAO_GIOP::write_request_header (request_id,
+  if (TAO_GIOP::write_request_header (ctx,
+                                      request_id,
                                       is_roundtrip,
                                       key,
                                       opname,
@@ -226,11 +227,11 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                                                 ACE_Time_Value *max_wait_time)
 {
 
-  // Notice that the message_state is only modified in one thread at a 
+  // Notice that the message_state is only modified in one thread at a
   // time because the reactor does not call handle_input() for the
   // same Event_Handler in two threads at the same time.
 
-  // Get the message state from the Transport Mux Strategy. 
+  // Get the message state from the Transport Mux Strategy.
   TAO_GIOP_Message_State* message_state =
     this->tms_->get_message_state ();
 
@@ -242,7 +243,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
                     " nil message state\n"));
       return -1;
     }
-  
+
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
                                        *message_state,
@@ -260,7 +261,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
 
   // OK, the complete message is here...
 
-  TAO_GIOP_ServiceContextList reply_ctx;
+  IOP::ServiceContextList reply_ctx;
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
 
@@ -314,7 +315,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
 int
 TAO_IIOP_Client_Transport::register_handler (void)
 {
-  // @@ It seems like this method should go away, the right reactor is 
+  // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core ()->reactor ();
   if (r == this->client_handler ()->reactor ())

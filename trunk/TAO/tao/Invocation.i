@@ -11,6 +11,12 @@ TAO_GIOP_Invocation::put_param (CORBA::TypeCode_ptr tc,
   (void) this->out_stream_.encode (tc, value, 0, ACE_TRY_ENV);
 }
 
+ACE_INLINE IOP::ServiceContextList &
+TAO_GIOP_Invocation::request_service_info (void)
+{
+  return this->request_service_info_;
+}
+
 ACE_INLINE TAO_OutputCDR &
 TAO_GIOP_Invocation::out_stream (void)
 {
@@ -27,6 +33,12 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, orb_core),
     rd_ (orb_core)
 {
+}
+
+ACE_INLINE const IOP::ServiceContextList &
+TAO_GIOP_Twoway_Invocation::reply_service_info (void) const
+{
+  return this->rd_.reply_service_info ();
 }
 
 ACE_INLINE TAO_InputCDR &

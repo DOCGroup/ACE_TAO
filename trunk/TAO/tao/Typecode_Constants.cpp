@@ -302,7 +302,9 @@ TAO_NAMESPACE_END
 
 // Internal to TAO ORB
 CORBA::TypeCode_ptr TC_opaque = 0;
+#if 0
 CORBA::TypeCode_ptr TC_ServiceContextList = 0;
+#endif /* 0 */
 CORBA::TypeCode_ptr TC_completion_status = 0;
 
 // initialize all the ORB owned TypeCode constants. This
@@ -1794,12 +1796,14 @@ TAO_TypeCodes::init (void)
     // END bytes of encapsulation 0 (sequence params)
   };
 
+#if 0
   TC_ServiceContextList =
     new CORBA::TypeCode (CORBA::tk_sequence,
                          sizeof _oc_svc_ctx_list,
                          (char *) &_oc_svc_ctx_list,
                          1,
                          sizeof (TAO_GIOP_ServiceContextList));
+#endif /* 0 */
 
   static const CORBA::ULong oc_completion_status [] =
   {
@@ -1960,7 +1964,9 @@ TAO_TypeCodes::fini (void)
   // TAO specific
   CORBA::release (TC_opaque);
 
+#if 0
   CORBA::release (TC_ServiceContextList);
+#endif /* 0 */
 
   CORBA::release (TC_completion_status);
 }

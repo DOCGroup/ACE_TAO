@@ -49,17 +49,24 @@ public:
 
   virtual int dispatch_reply (CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
-                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state) = 0;
   // Dispatch the reply. Return 1 on sucess, -1 on error.
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Get the Message State into which the reply has been read.
 
+  const IOP::ServiceContextList& reply_service_info () const;
+  // Accessing the reply service context list.
+
   virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
   // Strategy. This is valid only for the synchronous reply dispatcher
   // and only when the Leader Follower wait strategy is used.
+
+protected:
+  IOP::ServiceContextList reply_service_info_;
+  // The service context list
 };
 
 // *********************************************************************
@@ -86,12 +93,9 @@ public:
   const TAO_GIOP_Version& version (void) const;
   // Get the GIOP version.
 
-  TAO_GIOP_ServiceContextList& reply_ctx (void);
-  // Get the reply context
-
   virtual int dispatch_reply (CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
-                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state);
   // Dispatch the reply. Copy the buffers and return. Since the
   // invocation is synchronous demarshalling will take place on the
@@ -108,7 +112,7 @@ public:
   // Return the reference to the reply received flag. This will not
   // make sense in the Asynch Reply Dispatcher case, since the
   // reply will be dispatched as soon as it is available and the
-  // dispatcher will go away immediately after that. 
+  // dispatcher will go away immediately after that.
 
   virtual int leader_follower_condition_variable (TAO_Transport *);
   // Obtain the condition variable used in the Leader Follower Wait
@@ -120,9 +124,6 @@ private:
 
   TAO_GIOP_Version version_;
   // The version
-
-  TAO_GIOP_ServiceContextList reply_ctx_;
-  // The service context list
 
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
@@ -168,12 +169,9 @@ public:
   const TAO_GIOP_Version& version (void) const;
   // Get the GIOP version
 
-  TAO_GIOP_ServiceContextList& reply_ctx (void);
-  // Get the reply context
-
   virtual int dispatch_reply (CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
-                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state);
   // Dispatch the reply. This involves demarshalling the reply and
   // calling the appropriate call back hook method on the reply
@@ -189,9 +187,6 @@ private:
 
   TAO_GIOP_Version version_;
   // The version
-
-  TAO_GIOP_ServiceContextList reply_ctx_;
-  // The service context list
 
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
