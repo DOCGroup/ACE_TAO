@@ -1,3 +1,13 @@
+Wed Dec 26 14:30:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Makefile:
+	  Add new file (TAO_AMH_Response_Handler) to the Makefile.
+
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_AMH_Response_Handler.h:
+	* tao/TAO_AMH_Response_Handler.cpp:
+	  Left a number of @@ comments for Mayur.
+
 Wed Dec 26 09:00:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Protocol.h:
@@ -12,7 +22,7 @@ Tue Dec 25 22:57:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed Dec 26 10:33:35 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp: 
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
 	  Removed a duplicate template instantiation.
 
 Wed Dec 26 10:19:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -382,17 +392,17 @@ Wed Dec 26 09:16:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  ./utils/catior/catior.cpp: Replaced all uses of getopt.optarg
 	  with getopt.opt_arg().
 
-	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp (get_options): 
-	* examples/Simulator/Event_Supplier/Event_Con.cpp (get_options): 
-	* examples/Simulator/Event_Supplier/Logging_Sup.cpp (get_options): 
+	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp (get_options):
+	* examples/Simulator/Event_Supplier/Event_Con.cpp (get_options):
+	* examples/Simulator/Event_Supplier/Logging_Sup.cpp (get_options):
 	* orbsvcs/Naming_Service/NT_Naming_Server.cpp (run): Replaced all
 	  uses of getopt.optind with getopt.opt_ind().
 
 Wed Dec 26 08:14:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h: 
-	  Removed #include of Synch_T.h and added Atomic_Op.h. 
-	 
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h:
+	  Removed #include of Synch_T.h and added Atomic_Op.h.
+
 Wed Dec 26 05:16:45 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_operation_strategy.cpp:
@@ -419,14 +429,14 @@ Wed Dec 26 05:16:45 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 	* tao/PortableServer/Servant_Base.cpp:
 	* tao/PortableServer/Servant_Base.h:
 	  These files previously had all white-spaces removed from them
-	  due to an eronous script that I ran.  They are now re-indented 
+	  due to an eronous script that I ran.  They are now re-indented
 	  and re-formatted.
 
 	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
 	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
-	  Commented out the placeholder methods that were generating 
+	  Commented out the placeholder methods that were generating
 	  compile-time warnings.
-	
+
 Wed Dec 26 02:57:48 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/TAO_AMH_Response_handler.h:
@@ -454,7 +464,7 @@ Wed Dec 26 02:57:48 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 Wed Dec 26 02:16:33 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_operation_strategy.cpp:
-	* TAO_IDL/be/be_operation_strategy.cpp 
+	* TAO_IDL/be/be_operation_strategy.cpp
 	* TAO_IDL/be_include/be_codegen.h:
 	* TAO_IDL/be_include/be_operation_strategy.h:
 	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
@@ -485,7 +495,7 @@ Tue Dec 25 22:48:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.h:
 	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.inl:
 	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.cpp:
-	  Add new scheduling strategy to keep grouped events together. 
+	  Add new scheduling strategy to keep grouped events together.
 
 	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
@@ -542,7 +552,7 @@ Tue Dec 25 22:58:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Dec 25 19:44:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/text: Removed the
-	  file. Looks like this is not at all required. 
+	  file. Looks like this is not at all required.
 
 Tue Dec 25 19:35:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -648,26 +658,26 @@ Tue Dec 25 12:23:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 Tue Dec 25 08:50:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp: Removed template
-	  instantiation of ACE_Equal_To <>. This should fix g++ builds. 
+	  instantiation of ACE_Equal_To <>. This should fix g++ builds.
 
 Tue Dec 25 00:48:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h: Added a
-	  #include. 
-	
+	  #include.
+
 	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Removed a template
-	  instantiation. 
+	  instantiation.
 
 Mon Dec 24 23:53:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Muxed_TMS.cpp: Removed a template instantiation of
 	  ACE_Equal_To <ACE_UINT16>. They have now been added in Functor.h
-	  as template specializations. 
+	  as template specializations.
 
 	* tao/DynamicInterface/Context.h
 	* tao/DynamicInterface/ExceptionList.h:
 	* tao/PortableServer/Servant_Base.h: Added #include of
-	  Atomic_Op.h. 
+	  Atomic_Op.h.
 
 Mon Dec 24 16:16:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 

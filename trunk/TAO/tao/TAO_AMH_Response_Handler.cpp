@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef TAO_AMH_RESPONSE_HANDLER_CPP
-#define TAO_AMH_RESPONSE_HANDLER_CPP
-
 #include "TAO_AMH_Response_Handler.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
@@ -131,5 +128,3 @@ void TAO_AMH_Response_Handler::send_reply (void)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO_RH: message sent. \n")));
     }
 }
-
-#endif /* TAO_AMH_RESPONSE_HANDLER_CPP */
