@@ -1,3 +1,11 @@
+Wed Dec 31 15:46:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp:
+	* tests/Collocation_Tests/Collocated_Test.cpp:
+	* tests/Connection_Failure/client.cpp:
+
+	  Fixed more CXX warnings.
+
 Wed Dec 31 15:26:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
