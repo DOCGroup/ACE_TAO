@@ -25,6 +25,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
+#include "ace/Functor_String.h"
 
 /**
  * @class ACE_CapEntry
