@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,6 +14,7 @@
 
 #ifndef TAO_COLLOCATED_OBJECT_H
 #define TAO_COLLOCATED_OBJECT_H
+
 #include "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -22,11 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableServer/Servant_Base.h"
 
 #include "tao/Object.h"
 
-
-class TAO_ServantBase;
 
 /**
  * @class TAO_Collocated_Object
@@ -66,7 +66,7 @@ public:
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  virtual CORBA::Object_ptr _get_component 
+  virtual CORBA::Object_ptr _get_component
     (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -86,9 +86,11 @@ private:
   */
 };
 
+
 #if defined (__ACE_INLINE__)
 # include "Collocated_Object.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
+
 #endif /* TAO_COLLOCATED_OBJECT_H */

@@ -1,3 +1,24 @@
+Thu Feb 20 11:27:58 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/Collocated_Object.h:
+
+	  A forward declaration of TAO_ServantBase is not enough.
+	  Including "Servant_Base.h" is necessary to establish the
+	  inheritance of TAO_ServantBase from TAO_Abstract_ServantBase.
+	  TAO_Collocated_Object's constructor passes a TAO_ServantBase
+	  pointer to the CORBA::Object constructor, but that constructor
+	  expects a TAO_Abstract_ServantBase pointer, hence the need to
+	  establish the inheritance hierarchy.
+
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp (_non_existent):
+
+	  Corrected emulated exception macro usage.
+
+	* tao/PortableServer/PortableServerC.cpp:
+
+	  Fixed lingering "CORBA_" -> "CORBA::" problem for the
+	  !TAO_USE_SEQUENCE_TEMPLATES case.
+
 Thu Feb 20 11:07:01 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Thread_Lane_Resources.h:
