@@ -1,3 +1,10 @@
+Fri Jan 14 15:42:28 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (work_pending): Made the code more
+	  general such that any thread can call it, i.e., it is not
+	  limited to the owner thread.  This change alleviated the need
+	  for the specialization in TP_Reactor.
+
 Fri Jan 14 01:48:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process: Moved the command_line_argv() from the
@@ -18,7 +25,7 @@ Fri Jan 14 01:48:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  executable name and a different argv[0]. This helps us to have
 	  the name for a process to be different from the executable
 	  name. In this case, <ps> command will show the processes with
-	  different argv[0] names. 
+	  different argv[0] names.
 
 	  Therefore, we added a method called <process_name> to
  	  ACE_Process_Options to specify the executable name.  If you do
