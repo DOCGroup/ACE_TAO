@@ -5808,11 +5808,11 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
 # if defined (__FreeBSD__) || defined (CHORUS) || defined (ACE_PSOS)
-  ACE_UNUSED_ARG (set);
-  ACE_NOTSUP_RETURN (-1);
+    ACE_UNUSED_ARG (set);
+    ACE_NOTSUP_RETURN (-1);
 # elif (defined (ACE_HAS_STHREADS) && !defined (_POSIX_PTHREAD_SEMANTICS))
-  *sig = ::sigwait (set);
-  return *sig;
+    *sig = ::sigwait (set);
+    return *sig;
 # elif defined (ACE_HAS_PTHREADS)
   // LynxOS and Digital UNIX have their own hoops to jump through.
 #   if defined (__Lynx__)
@@ -5833,29 +5833,28 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
         return errno == 0  ?  *sig  :  -1;
 #     endif /* g++, for example, on DIGITAL_UNIX */
 #   else /* ! __Lynx __ && ! DIGITAL_UNIX */
-
 #     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-      *sig = ::sigwait (set);
-      return *sig;
+        *sig = ::sigwait (set);
+        return *sig;
 #     else   /* this is draft 7 or std */
-      errno = ::sigwait (set, sig);
-      return errno == 0  ?  *sig  :  -1;
+        errno = ::sigwait (set, sig);
+        return errno == 0  ?  *sig  :  -1;
 #     endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 #   endif /* ! __Lynx__ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 # elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (set);
-  ACE_NOTSUP_RETURN (-1);
+    ACE_UNUSED_ARG (set);
+    ACE_NOTSUP_RETURN (-1);
 # elif defined (VXWORKS)
-  // second arg is a struct siginfo *, which we don't need (the selected
-  // signal number is returned)
-  // third arg is timeout:  0 means forever
-  *sig = ::sigtimedwait (set, 0, 0);
-  return *sig;
+    // Second arg is a struct siginfo *, which we don't need (the
+    // selected signal number is returned).  Third arg is timeout:  0
+    // means forever.
+    *sig = ::sigtimedwait (set, 0, 0);
+    return *sig;
 # endif /* __FreeBSD__ */
 #else
-  ACE_UNUSED_ARG (set);
-  ACE_UNUSED_ARG (sig);
-  ACE_NOTSUP_RETURN (-1);
+    ACE_UNUSED_ARG (set);
+    ACE_UNUSED_ARG (sig);
+    ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
 
