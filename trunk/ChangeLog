@@ -1,3 +1,10 @@
+Fri Dec 10 11:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed usage of taoconfig.mk, we have zapped this in the idea
+          that it was not used. All the things this file set are already
+          handled by MPC
+
 Fri Dec 10 09:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Strategies_T.{h,cpp,inl}:
