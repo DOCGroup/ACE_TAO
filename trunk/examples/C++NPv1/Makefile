@@ -19,7 +19,7 @@ MKLIST = Makefile.Iterative_Logging_Server \
 	Makefile.Thread_Per_Connection_Logging_Server
 
 ## Makefile.Reactive_Logging_Server_Ex.mkfile is a dummy target which will cause
-## $(MAKE) -f Makefile.Svc_Utils to be invoked
+## $(MAKE) -f Makefile.Reactive_Logging_Server_Ex to be invoked
 %.mkfile: %
 	@echo $(MAKE) -f $< $(MKFILE_TARGET)
 	@$(MAKE) -f $< $(MKFILE_TARGET)
