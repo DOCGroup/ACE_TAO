@@ -1,4 +1,4 @@
-1997-10-30  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+Thu Oct 30 02:12:27 1997 Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tests/: Changed the directory heirarchy to the following:
 	tests/Cubit now contains all the Cubit examples, i.e. IDL_Cubit,
