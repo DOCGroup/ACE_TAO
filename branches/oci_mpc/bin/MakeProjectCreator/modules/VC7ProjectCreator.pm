@@ -67,7 +67,12 @@ sub file_sorter {
 
 sub crlf {
   my($self) = shift;
-  return "\r\n";
+  if ($^O eq 'MSWin32') {
+    return "\n";
+  }
+  else {
+    return "\r\n";
+  }
 }
 
 
