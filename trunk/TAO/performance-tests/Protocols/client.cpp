@@ -261,7 +261,7 @@ void
 Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // To get things going...
-  this->test_->method (ACE_ENV_ARG_PARAMETER);
+  this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->test_start_ =
@@ -283,7 +283,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
           continue;
         }
 
-      this->test_->method (ACE_ENV_ARG_PARAMETER);
+      this->test_->method (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_hrtime_t time_after_call =

@@ -138,6 +138,7 @@ main (int argc, char **argv)
                          "%s",
                          ior.in ());
       ACE_ASSERT (result == ACE_OS::strlen (ior));
+      ACE_UNUSED_ARG (result);
 
       ACE_OS::fclose (output_file);
 
