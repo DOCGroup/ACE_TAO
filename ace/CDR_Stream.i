@@ -24,7 +24,7 @@
 //   => shift/masks using 32bit words.
 //
 //
-// Some things you could find usefull to know if you intend to mess
+// Some things you could find useful to know if you intend to mess
 // with this optimizations for swaps:
 //
 //      * MSVC++ don't assume register values are conserved between
