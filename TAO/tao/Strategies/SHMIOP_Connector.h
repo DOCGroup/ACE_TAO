@@ -102,6 +102,9 @@ protected:
                                   ACE_Time_Value *timeout = 0);
 
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Cancel the passed cvs handler from the connector
+  int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
   //@}
 
 private:

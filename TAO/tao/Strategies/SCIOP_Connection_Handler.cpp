@@ -154,14 +154,16 @@ TAO_SCIOP_Connection_Handler::open (void*)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Connection_Handler::open, SCIOP ")
+                  ACE_TEXT ("TAO (%P|%t) - SCIOP_Connection_Handler::open, SCIOP ")
                   ACE_TEXT ("connection to peer <%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 
-  // Set the id in the transport now that we're active.
-  // Use C-style cast b/c otherwise we get warnings on lots of compilers
-  this->transport ()->id ((size_t) this->get_handle ());
+  // Set that the transport is now connected, if fails we return -1
+  // Use C-style cast b/c otherwise we get warnings on lots of
+  // compilers
+  if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+    return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS);
 
@@ -231,9 +233,7 @@ TAO_SCIOP_Connection_Handler::handle_close (ACE_HANDLE,
 int
 TAO_SCIOP_Connection_Handler::close (u_long)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
-  this->transport ()->remove_reference ();
-  return 0;
+  return this->close_handler ();
 }
 
 int
