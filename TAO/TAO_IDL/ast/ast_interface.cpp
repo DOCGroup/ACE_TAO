@@ -942,6 +942,8 @@ AST_Interface::redefine (AST_Interface *from,
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
   this->set_file_name (idl_global->filename ());
+  this->ifr_added_ = from->ifr_added_;
+  this->ifr_fwd_added_ = from->ifr_fwd_added_;
 }
 
 AST_Interface **

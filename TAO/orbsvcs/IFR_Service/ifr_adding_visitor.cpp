@@ -566,72 +566,51 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          // No previous IFR entry.
-          if (i->is_defined ())
-            {
-              // We are in the BE at this point, so if the interface has
-              // been defined anywhere in the IDL file, we will see it here.
-              // In that case, we might as well go ahead and process it.
-              if (i->ast_accept (this) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface_fwd -")
-                      ACE_TEXT (" failed to accept visitor\n")
-                    ),  
-                    -1
-                  );
-                }
-            }
-          else
-            {
-              // The forward declared interface is not defined anywhere
-              // in this IDL file, so we just create an empty entry to
-              // be populated by some other IDL file.
-              CORBA_InterfaceDefSeq bases (0);
-              bases.length (0);
+          // The forward declared interface is not defined anywhere
+          // in this IDL file, so we just create an empty entry to
+          // be populated by some other IDL file.
+          CORBA_InterfaceDefSeq bases (0);
+          bases.length (0);
 
-              CORBA_Container_ptr current_scope = CORBA_Container::_nil ();
-          
-              if (be_global->ifr_scopes ().top (current_scope) == 0)
+          CORBA_Container_ptr current_scope = CORBA_Container::_nil ();
+      
+          if (be_global->ifr_scopes ().top (current_scope) == 0)
+            {
+              if (i->is_local ())
                 {
-                  if (i->is_local ())
-                    {
-                      this->ir_current_ =
-                        current_scope->create_local_interface (
-                                           i->repoID (),
-                                           i->local_name ()->get_string (),
-                                           this->gen_version (i),
-                                           bases,
-                                           ACE_TRY_ENV
-                                         );
-                    }
-                  else
-                    {
-                      this->ir_current_ =
-                        current_scope->create_interface (
-                                           i->repoID (),
-                                           i->local_name ()->get_string (),
-                                           this->gen_version (i),
-                                           bases,
-                                           ACE_TRY_ENV
-                                         );
-                    }
-
-                  ACE_TRY_CHECK;
+                  this->ir_current_ =
+                    current_scope->create_local_interface (
+                                       i->repoID (),
+                                       i->local_name ()->get_string (),
+                                       this->gen_version (i),
+                                       bases,
+                                       ACE_TRY_ENV
+                                     );
                 }
               else
                 {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface_fwd -")
-                      ACE_TEXT (" scope stack is empty\n")
-                    ),  
-                    -1
-                  );
+                  this->ir_current_ =
+                    current_scope->create_interface (
+                                       i->repoID (),
+                                       i->local_name ()->get_string (),
+                                       this->gen_version (i),
+                                       bases,
+                                       ACE_TRY_ENV
+                                     );
                 }
+
+              ACE_TRY_CHECK;
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("visit_interface_fwd -")
+                  ACE_TEXT (" scope stack is empty\n")
+                ),  
+                -1
+              );
             }
         }
       else
@@ -662,23 +641,6 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                 -1
               );
             }
-          else if (i->is_defined () && i->ifr_added_ == 0)
-            {
-              // The existing IFR entry is from a previous forward declaration,
-              // possible from another IDL file. In any case, if the full
-              // definition has not been processed, we might as well do it now.
-              if (i->ast_accept (this) == -1)
-                {
-                  ACE_ERROR_RETURN ((
-                      LM_ERROR,
-                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-                      ACE_TEXT ("visit_interface_fwd -")
-                      ACE_TEXT (" failed to accept visitor\n")
-                    ),  
-                    -1
-                  );
-                }
-            } 
         }
 
       i->ifr_fwd_added_ = 1;
@@ -954,7 +916,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
             {
               CORBA_Contained_var prev_type_def =
                 be_global->repository ()->lookup_id (type->repoID (),
-                                                      ACE_TRY_ENV);
+                                                     ACE_TRY_ENV);
               ACE_TRY_CHECK;
 
               this->ir_current_ = 
