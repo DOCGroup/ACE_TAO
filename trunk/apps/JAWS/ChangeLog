@@ -1,3 +1,8 @@
+Tue Feb 25 18:58:26 2003  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* clients/WebSTONE/src/cgi-send:
+	  Removed pre-compiled binary for MIPS (R3000 of all things!)
+
 Wed Dec 26 09:35:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* clients/Blobby/Options.cpp
