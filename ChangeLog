@@ -1,3 +1,12 @@
+Thu Dec 18 08:45:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Generate vc71 for the ace alone. We used to generate vc7 project
+	  files. But now we generate vc71. Theoretically we shouldn't need
+	  to generate this. But this is not the time to argue with Steve H
+	  ;)! Will do after the beta goes out!
+
 Wed Dec 17 12:54:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/TMCast/Group.cpp:

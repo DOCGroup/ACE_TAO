@@ -761,11 +761,11 @@ sub generate_makefiles () {
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
     &ex ("cd ACE_wrappers/ace; \
-        ../bin/mwc.pl -type vc7 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
+        ../bin/mwc.pl -type vc71 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
         ../bin/mwc.pl -type em3 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
         chmod 0644 *.vcproj *.vcp *.sln *.vcw");
     &ex ("cd ACE_wrappers/tests; \
-      ../bin/mwc.pl -type vc7 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
+      ../bin/mwc.pl -type vc71 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
       ../bin/mwc.pl -type em3 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
         chmod 0644 *.vcproj *.vcp *.sln *.vcw");
   }
