@@ -1,8 +1,20 @@
+Thu Jul 22 10:10:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SecurityLevel3.idl:
+
+	  Commented out "truncatable" valuetype keyword.  TAO_IDL
+	  currently does not support this feature.
+
+	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.cpp
+	  (get_target_credentials):
+
+	  Fixed unused argument warnings.
+
 Wed Jul 21 12:55:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-        
-          Updated checks for valid name identifier (passed as an 
+
+          Updated checks for valid name identifier (passed as an
           argument to a create_*_tc() method) to conform to the
           latest CORBA spec (3.0.3, formal/04-03-01) which rejects
           a null string and accepts an empty string. Thanks to
@@ -20,9 +32,9 @@ Wed Jul 21 08:55:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/ULongLongSeqA.cpp:
         * tao/WCharSeqA.cpp:
         * tao/WStringSeqA.cpp:
-        
+
           New files overlooked in the checkin of
-          
+
           Tue Jul 20 15:08:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jul 20 21:54:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
@@ -33,7 +45,7 @@ Tue Jul 20 21:54:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 Tue Jul 20 15:45:43 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/corba.h:
-        
+
           Added includes of the new sequences stub header files. Thanks
           again to Frank Pilhofer <fp@mc.com> for the reminder.
 
@@ -86,7 +98,7 @@ Tue Jul 20 15:08:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/WCharSeq.pidl:
         * tao/WStringSeq.pidl:
 
-          New files, .pidl files containing sequences of basic types 
+          New files, .pidl files containing sequences of basic types
           that were not already added to TAO, and the associated generated
           files. Thanks to Frank Pilhofer <fp@mc.com> for urging us to
           add the remaining sequences of basic types to TAO. This closes
