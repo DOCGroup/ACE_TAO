@@ -1,3 +1,8 @@
+Wed Apr 18 10:25:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Changed the name of the -config option
+	  for SUNCC5.1.  Removed the dot and replaced it with a '_'.
+
 Wed Apr 18 05:23:53 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/Config_Test.cpp: Fixed several warnings related to 
