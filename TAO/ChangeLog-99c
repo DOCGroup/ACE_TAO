@@ -1,3 +1,9 @@
+Sun May  9 12:47:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	* docs/releasenotes/OBV.html:
+	  Added template for the OBV release notes.	
+
 Sun May 09 11:26:57 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/examples/Callback_Quoter/Makefile
