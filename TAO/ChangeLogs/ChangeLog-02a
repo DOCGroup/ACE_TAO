@@ -1,3 +1,81 @@
+Mon Feb 11 16:32:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PICurrent.h:
+
+	  Disable the "C4251" warning in MSVC++ builds.  MSVC++ is being
+	  too paranoid about a class it thinks should be exported.
+
+	  (Table):
+
+	  The underlying slot table is now an array of CORBA::Anys.  The
+	  memory management headaches of using an array of pointers to
+	  void were becoming too much of a hassle.  This was motivated by
+	  memory leak and fix reported by Grig <grig@plesk.com>.
+
+	  (tsc_to_rsc_):
+
+	  New flag that indicates if the TSC is to be copied to the RSC.
+	  If false, then the RSC must be deep copied upon leaving the
+	  request scope and entering the thread scope.  This is necessary
+	  since the RSC slot table is no longer available upon leaving the
+	  thread scope, meaning that a logical copy is not enough.
+
+	* tao/PICurrent.cpp (~TAO_PICurrent_Impl):
+
+	  No longer any need to deallocate the elements of the underlying
+	  slot table since it contains "first class citizens," i.e. they
+	  will automatically be cleaned up when the array is destroyed.
+
+	  (get_slot):
+
+	  Updated to retrieve data from an array of CORBA::Anys instead of
+	  an array of pointers to void.
+
+	  (set_slot, copy):
+
+	  The switch to an array of CORBA::anys greatly simplifies these
+	  methods.  It also happens to fix a memory leak and improves the
+	  efficiency of the code.
+
+	  (~TAO_PICurrent_Guard):
+
+	  Set the "peer" in the TSC when logically copying from the
+	  contents of the TSC to the RSC.  The TSC may have to callback on
+	  the RSC (i.e. the "peer") if the TSC is modified after it has
+	  been logically copied to the RSC.  Fixes a problem where the RSC
+	  and TSC were not treated as separate entities due to the logical
+	  copying that occurs.
+
+	* tests/Portable_Interceptors/PICurrent/ServerORBInitializer.cpp
+	  (post_init):
+
+	  Pass a reference to the PICurrent object down to the server
+	  request interceptor created in this method.  The interceptor
+	  will invoke methods on the PICurrent at a later time.  Saves a
+	  resolve_initial_references() call in the critical path.
+
+	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.h
+	  (pi_current_):
+
+	  Cache a reference to the PICurrent object.
+	
+	* tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp
+	  (send_reply):
+
+	  Added another test that verifies that the RSC and TSC are
+	  treated as a separate entities.  This is necessary since TAO
+	  logically copies the contents of the TSC to the RSC, and only
+	  deep copies if the contents of either are about to be modified.
+
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
+	  (send_request):
+
+	  Corrected debugging output.
+
+	* tests/Portable_Interceptors/PICurrent/README:
+
+	  New file that explains what the test does.
+
 Mon Feb 11 18:20:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/ORT/ORT_test_IORInterceptor.h: 
@@ -13,7 +91,6 @@ Mon Feb 11 18:02:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Oneways_Invoking_Twoways/Sender_i.h:
 	* orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h: More fuzz errors. 
-	
 
 Mon Feb 11 17:56:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -33,8 +110,8 @@ Mon Feb 11 16:04:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Message_Generator_Parser_10.h:
 	* tao/GIOP_Message_Generator_Parser_11.h:
 	* tao/GIOP_Message_Generator_Parser_12.h: Removed the #pragma
-	  warning (push) from the above files as they are needed in the
-	  first place. Thanks to Ossama for pointing these out. 
+	  warning (push) from the above files as they are not needed in
+	  the first place. Thanks to Ossama for pointing these out. 
 
 Sun Feb 10 13:16:45 2002  Carlos O'Ryan  <coryan@uci.edu>
 
