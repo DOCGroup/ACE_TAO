@@ -1,3 +1,16 @@
+Mon Oct 26 12:01:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: 
+	  Replaced the final "return 0;", because other compilers,
+          such as g++, warned without it.  But now, it's wrapped with
+          ACE_NOTREACHED.
+
 Mon Oct 26 09:57:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp: 
