@@ -285,6 +285,7 @@ ifneq ($(LIB),)
 <%endif%>
 <%endif%>
 all: idl_stubs
+<%source_files%>: idl_stubs
 endif
 
 <%endif%>
@@ -405,6 +406,7 @@ GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_o
 ifneq ($(GENERATED_DIRTY),)
 .PRECIOUS: $(GENERATED_DIRTY)
 all: $(GENERATED_DIRTY)
+<%source_files%>: $(GENERATED_DIRTY)
 endif
 
 <%endif%>
