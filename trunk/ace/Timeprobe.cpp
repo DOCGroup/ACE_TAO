@@ -22,8 +22,8 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
     max_size_ (size),
     current_size_ (0)
 {
-  void *space = this->allocator_->malloc ((sizeof(timeprobe_t)) * this->max_size_);
-  this->timeprobes_ = new ((timeprobe_t *) space) timeprobe_t[this->max_size_];
+  void *space = this->allocator_->malloc ((sizeof (ACE_timeprobe_t)) * this->max_size_);
+  this->timeprobes_ = new ((ACE_timeprobe_t *) space) ACE_timeprobe_t[this->max_size_];
 
 #ifdef VXWORKS
   if (sysProcNumGet () == 0)
@@ -41,7 +41,7 @@ template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::~ACE_Timeprobe (void)
 {
   for (u_long i = 0; i < this->max_size_; i++)
-    this->timeprobes_[i].timeprobe_t::~timeprobe_t ();
+    this->timeprobes_[i].ACE_timeprobe_t::~ACE_timeprobe_t ();
 
   this->allocator_->free (this->timeprobes_);
 }
@@ -54,7 +54,7 @@ ACE_Timeprobe<ACE_LOCK>::timeprobe (u_long event)
   ACE_ASSERT (this->current_size_ < this->max_size_);
 
   this->timeprobes_[this->current_size_].event_.event_number_ = event;
-  this->timeprobes_[this->current_size_].event_type_ = timeprobe_t::NUMBER;
+  this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::NUMBER;
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
@@ -77,7 +77,7 @@ ACE_Timeprobe<ACE_LOCK>::timeprobe (const char *event)
   ACE_ASSERT (this->current_size_ < this->max_size_);
 
   this->timeprobes_[this->current_size_].event_.event_description_ = event;
-  this->timeprobes_[this->current_size_].event_type_ = timeprobe_t::STRING;
+  this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::STRING;
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
@@ -98,7 +98,7 @@ ACE_Timeprobe<ACE_LOCK>::event_descriptions (const char **descriptions,
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  Event_Descriptions events;
+  ACE_Event_Descriptions events;
   events.descriptions_ = descriptions;
   events.minimum_id_ = minimum_id;
 
@@ -153,7 +153,7 @@ ACE_Timeprobe<ACE_LOCK>::print_times (void)
 template <class ACE_LOCK> const char *
 ACE_Timeprobe<ACE_LOCK>::find_description_i (u_long i)
 {
-  if (this->timeprobes_[i].event_type_ == timeprobe_t::STRING)
+  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING)
     return this->timeprobes_[i].event_.event_description_;
   else
     {
@@ -182,7 +182,7 @@ ACE_Timeprobe<ACE_LOCK>::sort_event_descriptions_i (void)
        i++)
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
-      Event_Descriptions min_entry = *iterator;
+      ACE_Event_Descriptions min_entry = *iterator;
 
       for (;
            iterator != this->event_descriptions_.end ();

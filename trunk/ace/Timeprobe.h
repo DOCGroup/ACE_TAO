@@ -8,6 +8,54 @@
 
 #include "ace/Malloc.h"
 
+// = Event Descriptions
+struct ACE_Event_Descriptions
+{  
+  const char **descriptions_;
+  // Event descriptions
+
+  u_long minimum_id_;
+  // Minimum id of this description set
+
+  int operator== (const ACE_Event_Descriptions &rhs) const
+  {
+    return 
+      this->minimum_id_ == rhs.minimum_id_ &&
+      this->descriptions_ == rhs.descriptions_;
+  }
+  // Comparison
+};
+
+// = Time probe record
+struct ACE_timeprobe_t
+{
+  union event
+  {
+    u_long event_number_;
+    const char *event_description_;
+  };
+  // Events are record as strings or numbers
+
+  enum event_type
+  {
+    NUMBER,
+    STRING
+  };
+  // Type of event
+
+  event event_;
+  // Event
+
+  event_type event_type_;
+  // Event type
+
+  ACE_hrtime_t time_;
+  // Timestamp
+
+  ACE_thread_t thread_;
+  // Id of thread posting the time probe
+};
+
 template <class ACE_LOCK>
 class ACE_Timeprobe
 {
@@ -80,25 +128,7 @@ protected:
   typedef ACE_Timeprobe<ACE_LOCK> SELF;
   // Self
 
-  // = Event Descriptions
-  struct Event_Descriptions
-  {  
-    const char **descriptions_;
-    // Event descriptions
-
-    u_long minimum_id_;
-    // Minimum id of this description set
-
-    int operator== (const Event_Descriptions &rhs) const
-    {
-      return 
-        this->minimum_id_ == rhs.minimum_id_ &&
-        this->descriptions_ == rhs.descriptions_;
-    }
-    // Comparison
-  };
-
-  typedef ACE_Unbounded_Set<Event_Descriptions> EVENT_DESCRIPTIONS;
+  typedef ACE_Unbounded_Set<ACE_Event_Descriptions> EVENT_DESCRIPTIONS;
   // We can hold multiple event description tables
 
   EVENT_DESCRIPTIONS event_descriptions_;
@@ -120,37 +150,7 @@ protected:
   void sort_event_descriptions_i (void);
   // Sort event descriptions
 
-  // = Time probe record
-  struct timeprobe_t
-  {
-    union event
-    {
-      u_long event_number_;
-      const char *event_description_;
-    };
-    // Events are record as strings or numbers
-
-    enum event_type
-    {
-      NUMBER,
-      STRING
-    };
-    // Type of event
-
-    event event_;
-    // Event
-
-    event_type event_type_;
-    // Event type
-
-    ACE_hrtime_t time_;
-    // Timestamp
-
-    ACE_thread_t thread_;
-    // Id of thread posting the time probe
-  };
-
-  timeprobe_t *timeprobes_;
+  ACE_timeprobe_t *timeprobes_;
   // Time probe slots
 
   ACE_Allocator *allocator_;
@@ -216,15 +216,15 @@ typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> ACE_TIMEPROBE_WITH_LOCKING;
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>;
 template class ACE_Function_Timeprobe<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> >;
-template class ACE_Unbounded_Set_Iterator<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>;
-template class ACE_Unbounded_Set<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>;
-template class ACE_Node<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>;
+template class ACE_Unbounded_Set_Iterator<ACE_Event_Descriptions>;
+template class ACE_Unbounded_Set<ACE_Event_Descriptions>;
+template class ACE_Node<ACE_Event_Descriptions>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
 #pragma instantiate ACE_Function_Timeprobe<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX> >
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>
-#pragma instantiate ACE_Unbounded_Set<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>
-#pragma instantiate ACE_Node<ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>::Event_Descriptions>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Descriptions>
+#pragma instantiate ACE_Unbounded_Set<ACE_Event_Descriptions>
+#pragma instantiate ACE_Node<ACE_Event_Descriptions>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // If ACE_TSS_TIMEPROBES is defined, store the ACE_Timeprobe singleton
@@ -271,7 +271,7 @@ template class ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
 #  define ACE_TIMEPROBE_RESET
 #  define ACE_TIMEPROBE(id)
 #  define ACE_TIMEPROBE_PRINT
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) ACE_UNUSED_ARG (descriptions)
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static const char **ace_timeprobe_##descriptions##_dummy = descriptions
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES */
