@@ -1,3 +1,10 @@
+Wed May  3 10:38:36 2000  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+	  Fixed memory leaks. Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for providing
+	  the fixes.
+
 Wed May  3 00:49:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* Updated all the dependencies.
@@ -724,7 +731,7 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
           to extract ObjectKey from IOP::IOR and IOP::TaggedProfile.
 
         * tao/Pluggable.h: Added a virtual function, object_key (), that
-	  would extract an ObjectKey from an IOP::TaggedProfile. 
+	  would extract an ObjectKey from an IOP::TaggedProfile.
 
         * tao/IIOP_Acceptor.cpp:
         * tao/IIOP_Acceptor.h:
@@ -739,7 +746,7 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  info that is being stored. This is necessary as different
 	  protocol implementations could encapsulate different types of
 	  info in its profile which is a part of the server exhibited
-	  IOR. 
+	  IOR.
 
         * tao/IIOP_Profile.cpp:
         * tao/IIOP_Profile.h:
@@ -756,7 +763,7 @@ Fri Apr 28 21:22:44 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  thrown. If we have received a LOC_NEEDS_ADDRESSING, we need to
 	  change the addressing mode and restart the request. This is
 	  something similar to LOCATION_FORWARD, but here we store only a
-	  flag to indicate what addressing mode to use so that subsequent 
+	  flag to indicate what addressing mode to use so that subsequent
           invocations would use the right addressing mode.
 
         * tao/MProfile.h:
