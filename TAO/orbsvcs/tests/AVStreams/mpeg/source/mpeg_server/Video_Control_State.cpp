@@ -111,12 +111,11 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
     /* write the first SH, GOP and IFrame to VIDEO_SINGLETON::instance ()->serviceSocket (TCP),
        using code for SendPacket () */
   {
-    int tmpSocket = VIDEO_SINGLETON::instance ()->videoSocket;
    
+    //    ~~ He sends the first frame thru the connected TCP socket,
+    // we replace it to send thru the UDP data socket instead!!
     if (VIDEO_SINGLETON::instance ()->live_source) StartPlayLiveVideo ();
-   
-    VIDEO_SINGLETON::instance ()->videoSocket = VIDEO_SINGLETON::instance ()->serviceSocket;
-   
+      
     if (VIDEO_SINGLETON::instance ()->live_source) {
       int frame = 0;
       VIDEO_SINGLETON::instance ()->SendPicture (&frame);
@@ -128,8 +127,6 @@ Video_Control_State::init_video (const Video_Control::INITvideoPara &init_para,
       fprintf (stderr, "VS: VIDEO_SINGLETON::instance ()->video_format %d not supported.\n",
                VIDEO_SINGLETON::instance ()->video_format);
     }
-    VIDEO_SINGLETON::instance ()->videoSocket = tmpSocket;
-   
     if (VIDEO_SINGLETON::instance ()->live_source) StopPlayLiveVideo ();
   }
   return CORBA::B_TRUE;

@@ -48,21 +48,20 @@ class AV_Svc_Handler;
 
 // @@ We should probably try to replace the ACE_Acceptor with the
 // ACE_Strategy_Acceptor using the ACE_Process_Strategy... 
-class AV_Acceptor 
-  : public virtual ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR>
-{
-  // = TITLE
-  //   This defines a AV_Acceptor which is an Acceptor and
-  //   overrides the make_svc_handler method of the Acceptor.
-  //
-  // = DESCRIPTION
-  //   This class overrides the Acceptor's make_svc_handler so that a
-  //   AV_Svc_Handler can be created with a non-default constructor.
-public:  
-  virtual int make_svc_handler (AV_Svc_Handler *&sh);
-  // Create a new <AV_Svc_Handler> passing 'this' to the service
-  // handler.
-};
+//   : public virtual ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR>
+// {
+//   // = TITLE
+//   //   This defines a AV_Acceptor which is an Acceptor and
+//   //   overrides the make_svc_handler method of the Acceptor.
+//   //
+//   // = DESCRIPTION
+//   //   This class overrides the Acceptor's make_svc_handler so that a
+//   //   AV_Svc_Handler can be created with a non-default constructor.
+// public:  
+//   virtual int make_svc_handler (AV_Svc_Handler *&sh);
+//   // Create a new <AV_Svc_Handler> passing 'this' to the service
+//   // handler.
+// };
 
 class AV_Svc_Handler 
   : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -77,8 +76,7 @@ class AV_Svc_Handler
   //   depending on the connection request.
 public:
   // = Initialization method.
-  AV_Svc_Handler (ACE_Reactor * = 0,
-                    AV_Acceptor * = 0);
+  AV_Svc_Handler (ACE_Thread_Manager *t = 0);
 
   virtual int open (void *);
   // Perform the work of the SVC_HANDLER. Called by the acceptor
@@ -108,12 +106,8 @@ private:
   ACE_INET_Addr client_data_addr_;
   // Data (UDP) Address of the client.
 
-  AV_Acceptor *acceptor_;
-  // Pointer to the Acceptor that created us so that we can remove it
-  // from the <ACE_Reactor> when we <fork>.
-
-  // @@ need a similar component for audio!
   Video_Server *vs_;
+  // @@ need a similar component for audio!
 };
 
 class AV_Server_Sig_Handler 
@@ -186,13 +180,20 @@ private:
   // @@ Why are some of these data members pointers and others
   // objects?  Shouldn't we be consistent here?
 
-  TAO_Naming_Server naming_server_;
+  // TAO_Naming_Server naming_server_;
   // the TAO naming server
 
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
-  AV_Acceptor acceptor_;
+  // %% need to comment!!
+  //  typedef ACE_Strategy_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
+  //  typedef ACE_Thread_Strategy <AV_Svc_Handler> AV_THREAD_STRATEGY;
+  typedef ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR> AV_ACCEPTOR;
+  //  AV_THREAD_STRATEGY thread_strategy_;
+  // the strategy
+  
+  AV_ACCEPTOR acceptor_;
   // the acceptor
 
   AV_Server_Sig_Handler signal_handler_;
