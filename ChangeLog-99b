@@ -1,8 +1,12 @@
+Fri Mar 19 15:41:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added CE fix.
+
 Fri Mar 19 15:03:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
 	* ace/CDR_Stream.i:
-	* ace/CDR_Stream.cpp: 
+	* ace/CDR_Stream.cpp:
 	  Changed CDR to ACE_CDR.
 	  Fixed ACE_InputCDR constructor when receiving a linked list of
 	  Message_Blocks.
