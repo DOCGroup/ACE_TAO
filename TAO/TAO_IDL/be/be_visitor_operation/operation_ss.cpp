@@ -393,12 +393,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                             -1);
         }
 
-      AST_Decl::NodeType nt = bt->base_node_type ();
-      AST_PredefinedType *pdt = 0;
-      AST_PredefinedType::PredefinedType pt = AST_PredefinedType::PT_void;
-
       if (bt->size_type () == AST_Type::VARIABLE
-          || nt == AST_Decl::NT_array)
+          || bt->node_type () == AST_Decl::NT_array)
         {
           *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl
               << "_tao_ri.result (_tao_retval_info);" << be_nl
