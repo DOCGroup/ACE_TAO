@@ -685,7 +685,7 @@ ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *& tv)
 	return *this;
 }
 
-#if (ACE_HAS_STRING_CLASS)
+#if defined (ACE_HAS_STRING_CLASS)
 
 // A simple string operator.  The base iostream has 'em for char* but
 // that isn't always the best thing for a String.  If we don't provide
