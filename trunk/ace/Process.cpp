@@ -1,6 +1,6 @@
-#define ACE_BUILD_DLL
 // $Id$
 
+#define ACE_BUILD_DLL
 #include "ace/Process.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
@@ -8,6 +8,303 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Process.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_Tokenizer::ACE_Tokenizer (char *buffer)
+  : buffer_ (buffer),
+    index_ (0),
+    delimiter_index_ (0),
+    preserves_index_ (0)
+{
+}
+
+int
+ACE_Tokenizer::delimiter (char d)
+{
+  if (delimiter_index_ == MAX_DELIMITERS)
+    return -1;
+
+  delimiters_[delimiter_index_].delimiter_ = d;
+  delimiters_[delimiter_index_].replace_ = 0;
+  delimiter_index_++;
+  return 0;
+}
+
+int
+ACE_Tokenizer::delimiter_replace (char d, char replacement)
+{
+  if (delimiter_index_ == MAX_DELIMITERS)
+    return -1;
+
+  delimiters_[delimiter_index_].delimiter_ = d;
+  delimiters_[delimiter_index_].replacement_ = replacement;
+  delimiters_[delimiter_index_].replace_ = 1;
+  delimiter_index_++;
+  return 0;
+}
+
+int 
+ACE_Tokenizer::preserve_designators (char start, char stop, int strip)
+{
+  if (preserves_index_ == MAX_PRESERVES)
+    return -1;
+
+  preserves_[preserves_index_].start_ = start;
+  preserves_[preserves_index_].stop_ = stop;
+  preserves_[preserves_index_].strip_ = strip;
+  preserves_index_++;
+  return 0;
+}
+
+int 
+ACE_Tokenizer::is_delimiter (char d, int &replace, char &r)
+{
+  replace = 0;
+
+  for (int x=0; x < delimiter_index_; x++)
+    if (delimiters_[x].delimiter_ == d)
+      {
+	if (delimiters_[x].replace_)
+	  {
+	    r = delimiters_[x].replacement_;
+	    replace = 1;
+	  }
+	return 1;
+      }
+
+  return 0;
+}
+
+int 
+ACE_Tokenizer::is_preserve_designator (char start, char &stop, int &strip)
+{
+  for (int x=0; x < preserves_index_; x++)
+    if (preserves_[x].start_ == start)
+      {
+	stop = preserves_[x].stop_;
+	strip = preserves_[x].strip_;
+	return 1;
+      }
+
+  return 0;
+}
+
+const char *
+ACE_Tokenizer::next (void)
+{
+  // Check if the previous pass was the last one in the buffer.
+  if (index_ == -1)
+    {
+      index_ = 0;
+      return 0;
+    }
+
+  char replacement;
+  int replace;
+  char *next_token;
+
+  // Skip all leading delimiters.
+  while (1)
+    {
+      // Check for end of string.
+      if (buffer_[index_] == '\0')
+	{
+	  // If we hit EOS at the start, return 0.
+	  index_ = 0;
+	  return 0;
+	}
+
+      if (this->is_delimiter (buffer_[index_], replace, replacement))
+	index_++;
+      else
+	break;
+    } 
+
+  // When we reach this point, buffer_[index_] is a non-delimiter and
+  // not EOS - the start of our next_token.
+  next_token = buffer_ + index_;
+
+  // A preserved region is it's own token.
+  char stop;
+  int strip;
+  if (this->is_preserve_designator (buffer_[index_], stop, strip))
+    {
+      while (++index_)
+	{
+	  if (buffer_[index_] == '\0')
+	    {
+	      index_ = -1;
+	      goto EXIT_LABEL;
+	    }
+	      
+	  if (buffer_[index_] == stop)
+	    break;
+	}
+
+      if (strip)
+	{
+	  // Skip start preserve designator.
+	  next_token += 1;
+	  // Zap the stop preserve designator.
+	  buffer_[index_] = '\0';
+	  // Increment to the next token.
+	  index_++;
+	}
+      else
+	next_token = buffer_ + index_;
+      
+      goto EXIT_LABEL;
+    }
+
+  // Step through finding the next delimiter or EOS.
+  while (1)
+    {
+      // Advance pointer.
+      index_++;
+
+      // Check for end of string.
+      if (buffer_[index_] == '\0')
+	{
+	  index_ = -1;
+	  goto EXIT_LABEL;
+	}
+
+      // Check for delimiter.
+      if (this->is_delimiter (buffer_[index_], replace, replacement))
+	{
+	  // Replace the delimiter.
+	  if (replace != 0)
+	    buffer_[index_] = replacement;
+
+	  // Move the pointer up and return.
+	  index_++;
+	  goto EXIT_LABEL;
+	}
+
+      // A preserve designator signifies the end of this token.
+      if (this->is_preserve_designator (buffer_[index_], stop, strip))
+	goto EXIT_LABEL;
+    }
+
+EXIT_LABEL:
+  return next_token;
+}
+
+// ************************************************************
+
+ACE_ProcessEx::ACE_ProcessEx (void)
+#if !defined (ACE_WIN32)
+  : child_id_ (0)
+#endif /* !defined (ACE_WIN32) */
+{
+#if defined (ACE_WIN32)
+  ACE_OS::memset ((void *) &this->process_info_, 
+		  0, sizeof this->process_info_);
+#endif /* ACE_WIN32 */
+}
+
+ACE_ProcessEx::~ACE_ProcessEx (void)
+{
+#if defined (ACE_WIN32)
+  // Free resources allocated in kernel.
+  ACE_OS::close (this->process_info_.hThread);
+  ACE_OS::close (this->process_info_.hProcess);
+#endif /* ACE_WIN32 */
+}
+
+pid_t
+ACE_ProcessEx::start (ACE_Process_Options &options)
+{
+#if defined (ACE_WIN32)
+  BOOL fork_result = 
+    ::CreateProcess (options.path (),
+		     options.cl_options_buf (), // command-line options
+		     options.get_process_attributes (),
+		     options.get_thread_attributes (),
+		     options.handle_inheritence (),
+		     options.new_console (),
+		     options.env_buf (), // environment variables
+		     options.working_directory (),
+		     options.startup_info (),
+		     &process_info_);
+
+  if (fork_result) // If success.
+    return 0;
+  else
+    // CreateProcess failed.
+    return -1;
+#else /* ACE_WIN32 */
+  // Fork the new process.
+  this->child_id_ = ACE_OS::fork (options.path ());
+
+  switch (this->child_id_)
+    {
+    case -1:
+      // Error.
+      return -1;
+    case 0:
+      // Child process.
+      {
+	if (stdin_ != ACE_INVALID_HANDLE
+	    && ACE_OS::dup2 (stdin_, ACE_STDIN) == -1)
+	  return -1;
+	else if (stdout_ != ACE_INVALID_HANDLE
+		 && ACE_OS::dup2 (stdout_, ACE_STDOUT) == -1)
+	  return -1;
+	else if (stderr_ != ACE_INVALID_HANDLE
+		 && ACE_OS::dup2 (stderr_, ACE_STDERR) == -1)
+	  return -1;
+
+	// If we must, set the working directory for the child process.
+	if (options.working_directory () != 0)
+	  ::chdir (options.working_directory ());
+
+	// Child process executes the command.
+	int result;
+      
+	if (envp == 0)
+	  // Not sure if options.path () will work.
+	  result = ACE_OS::execvp (options.path (), 
+				   options.argv_cl_options ()); // command-line args
+	else
+	  result = ACE_OS::execve (options.path (),
+				   options.argv_cl_options (), // command-line args
+				   options.argv_env ()); // environment variables
+
+	if (result == -1)
+	  // If the execv fails, this child needs to exit.
+	  ACE_OS::exit (errno);
+
+	return 0;
+      }
+
+    default:
+      // Server process.  The fork succeeded.
+      return this->child_id_;
+    }
+#endif /* ACE_WIN32 */
+}
+
+int
+ACE_ProcessEx::wait (void)
+{
+#if defined (ACE_WIN32)
+  return ::WaitForSingleObject (process_info_.hProcess, INFINITE);
+#else /* ACE_WIN32 */
+  return ACE_OS::waitpid (this->child_id_, 0, 0);
+#endif /* ACE_WIN32 */
+}
+
+int
+ACE_ProcessEx::wait (const ACE_Time_Value &tv)
+{
+#if defined (ACE_WIN32)
+  return ::WaitForSingleObject (process_info_.hProcess, tv.msec ());
+#else /* ACE_WIN32 */
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_WIN32 */
+}
+
+// ************************************************************
 
 int
 ACE_Process::wait (void)
@@ -25,7 +322,8 @@ ACE_Process::ACE_Process (void)
 #else /* ACE_WIN32 */
   : stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
-    stderr_ (ACE_INVALID_HANDLE)
+    stderr_ (ACE_INVALID_HANDLE),
+    child_id_ (0)
 #endif /* ACE_WIN32 */
 {
 #if defined (ACE_WIN32)
@@ -232,4 +530,254 @@ ACE_Process::ACE_Process (char *argv[],
     ACE_ERROR ((LM_ERROR, "%p\n", "set_handles"));
   else if (this->start (argv, envp) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "start"));
+}
+
+// ************************************************************
+
+ACE_Process_Options::ACE_Process_Options (int ie,
+					  int cobl)
+  : cl_options_ (0),
+#if defined (ACE_WIN32)
+    new_console_ (FALSE),
+    handle_inheritence_ (TRUE),
+    set_handles_called_ (0),
+    process_attributes_ (NULL),
+    thread_attributes_ (NULL),
+    inherit_environment_ (ie),
+    environment_inherited_ (0),
+#else /* ACE_WIN32 */
+    stdin_ (ACE_INVALID_HANDLE),
+    stdout_ (ACE_INVALID_HANDLE),
+    stderr_ (ACE_INVALID_HANDLE),
+#endif /* ACE_WIN32 */
+    environment_buf_index_ (0),
+    environment_argv_index_ (0)
+{
+  cl_options_ = new char[cobl];
+  if (cl_options_ == 0)
+    ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_Process_Options::ACE_Process_Options"));
+  cl_options_[0] = '\0';
+
+  working_directory_[0] = '\0';
+  path_[0] = '\0';
+  environment_buf_[0] = '\0';
+  
+#if defined (ACE_WIN32)
+  ACE_OS::memset ((void *) &this->startup_info_, 
+		  0, 
+		  sizeof this->startup_info_);
+  this->startup_info_.cb = sizeof this->startup_info_;
+#endif /* ACE_WIN32 */
+}
+
+#if defined (ACE_WIN32)
+void
+ACE_Process_Options::inherit_environment (void)
+{
+  // Ensure only once execution.
+  if (environment_inherited_)
+    return;
+  environment_inherited_ = 1;
+
+  // Get the existing environment.
+  char *existing_environment = ::GetEnvironmentStrings ();
+
+  int index = 0;
+
+  while (existing_environment[index] != '\0')
+    {
+      int len = ACE_OS::strlen (existing_environment + index);
+
+      // Add the string to our env buffer.
+      if (this->setenv_i (existing_environment+index, len) == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "%p.\n",
+		      "ACE_Process_Options::ACE_Process_Options"));
+	  break;
+	}
+
+      // Skip to the next word.
+      index += len + 1;
+    }
+
+  ::FreeEnvironmentStrings (existing_environment);
+}
+#endif /* ACE_WIN32 */
+
+int
+ACE_Process_Options::setenv (const char *variable_name,
+			     const char *format, ...)
+{
+  char stack_buf[1024];
+
+  // Start varargs.
+  va_list argp;
+  va_start (argp, format);
+
+  char newformat[1024];
+
+  // Add in the variable name.
+  ACE_OS::sprintf (newformat, "%s=\"%s\"", variable_name, format);
+
+  // Add the rest of the varargs.
+  ::vsprintf (stack_buf, newformat, argp);
+
+  // End varargs.
+  va_end (argp);
+
+  // Append the string to are environment buffer.
+  if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
+    return -1;
+
+#if defined (ACE_WIN32)
+  if (inherit_environment_)
+    this->inherit_environment ();
+#endif /* ACE_WIN32 */
+
+  return 0;
+}
+
+int
+ACE_Process_Options::setenv_i (LPTSTR assignment, int len)
+{
+  // Add one for the null char.
+  len++;
+
+  // Check if we're out of room.
+  if ((len + environment_buf_index_) >= ENVIRONMENT_BUFFER)
+    return -1;
+
+  // Copy the new environment string.
+  ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
+		  assignment, len);
+
+  // Update the argv array.
+  environment_argv_[environment_argv_index_++] = 
+    environment_buf_ + environment_buf_index_;
+  environment_argv_[environment_argv_index_] = 0;
+
+  // Update our index.
+  environment_buf_index_ += len;
+  
+  // Make sure the buffer is null-terminated.
+  environment_buf_[environment_buf_index_] = '\0';
+  return 0;
+}
+
+ACE_Process_Options::~ACE_Process_Options (void)
+{
+#if defined (ACE_WIN32)
+  if (set_handles_called_)
+    {
+      ::CloseHandle (startup_info_.hStdInput);
+      ::CloseHandle (startup_info_.hStdOutput);
+      ::CloseHandle (startup_info_.hStdError);
+      set_handles_called_ = 0;
+    }
+#endif /* ACE_WIN32 */
+
+  delete cl_options_;
+}
+
+int
+ACE_Process_Options::set_handles (ACE_HANDLE std_in,
+				  ACE_HANDLE std_out,
+				  ACE_HANDLE std_err)
+{
+#if defined (ACE_WIN32)
+  this->set_handles_called_ = 1;
+
+  // Tell the new process to use our std handles.
+  this->startup_info_.dwFlags = STARTF_USESTDHANDLES;
+
+  if (std_in == ACE_INVALID_HANDLE)
+    std_in = ACE_STDIN;
+  if (std_out == ACE_INVALID_HANDLE)
+    std_out = ACE_STDOUT;
+  if (std_err == ACE_INVALID_HANDLE)
+    std_err = ACE_STDERR;
+
+  if (!::DuplicateHandle (::GetCurrentProcess(),
+			  std_in,
+			  ::GetCurrentProcess(),
+			  &this->startup_info_.hStdInput,
+			  NULL,
+			  TRUE,
+			  DUPLICATE_SAME_ACCESS))
+    return -1;
+
+  if (!::DuplicateHandle (::GetCurrentProcess(),
+			  std_out,
+			  ::GetCurrentProcess(),
+			  &this->startup_info_.hStdOutput,
+			  NULL,
+			  TRUE,
+			  DUPLICATE_SAME_ACCESS))
+    return -1;
+
+  if (!::DuplicateHandle (::GetCurrentProcess(),
+			  std_err,
+			  ::GetCurrentProcess(),
+			  &this->startup_info_.hStdError,
+			  NULL,
+			  TRUE,
+			  DUPLICATE_SAME_ACCESS))
+    return -1;
+#else /* ACE_WIN32 */
+  this->stdin_ = std_in;
+  this->stdout_ = std_out;
+  this->stderr_ = std_err;
+#endif /* ACE_WIN32 */
+
+  return 0; // Success.
+}
+
+void
+ACE_Process_Options::cl_options (const char *format, ...)
+{
+  // Store all ... args in argp.
+  va_list argp;
+  va_start (argp, format);
+
+  // sprintf the format and args into cl_options_.
+  ::vsprintf (cl_options_, format, argp);
+
+  // Useless macro.
+  va_end (argp);
+}
+
+char **
+ACE_Process_Options::cl_options_argv (void)
+{
+  // This tokenizer will replace all spaces with end-of-string
+  // characters and will preserve text between "" and '' pairs.
+  ACE_Tokenizer parser (cl_options_);
+  parser.delimiter_replace (' ', '\0');
+  parser.preserve_designators ('\"', '\"');
+  parser.preserve_designators ('\'', '\'');
+
+  int x = 0;
+  do
+    {
+      cl_options_argv_[x] = parser.next ();
+    }
+  while (cl_options_argv_[x] != 0 && 
+	 ++x < MAX_COMMAND_LINE_OPTIONS);
+			
+  return 0;
+}
+
+char **
+ACE_Process_Options::env_argv (void)
+{
+  return environment_argv_;
+}
+
+LPTSTR 
+ACE_Process_Options::env_buf (void)
+{
+  if (environment_buf_[0] == '\0')
+    return 0;
+  else
+    return environment_buf_;
 }
