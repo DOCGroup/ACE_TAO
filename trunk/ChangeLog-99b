@@ -15,7 +15,9 @@ Fri Mar  5 03:25:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  the "ACE Way[TM]" of defining inline functions is the "Right
 	  Way[TM]".  The motto of the change is, always put inline
 	  functions in .i files (even for template specialization)
-	  otherwise, they'll become regular functions.
+	  otherwise, they'll become regular functions.  If you really need
+	  to put function definitions within class definitions, mark
+	  inline function explicitly.
 
 	  Thanks to Andy Marchewka <AndyM@who.net> for noticing the
 	  performance differences between ACE_Thread_Mutex_Guard and (old)
