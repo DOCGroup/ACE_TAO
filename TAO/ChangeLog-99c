@@ -1,98 +1,105 @@
+Mon Apr 12 14:19:45 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * LifeCycle_Service/Makefile,tests/Property/Makefile,
+          Trading_Service/Makefile,tests/Trading/Makefile:
+          only build if the orbsvcs library was built with the
+          necessary component.
+
 Mon Apr 12 14:09:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* tao/Servant_Base.h :
-	* tao/Server_Request.i :
-	* tao/Operation_Table.h :
-	* tao/Servant_Base.cpp:
-	* tao/Server_Request.cpp :
-	* tao/Operation_Table.cpp : Committed again the changes related to
-	Removing strlen calculation for the Operation Name from the
-	critical path. Length as it is obtained during demarshalling is
-	stored in the IIOP_Request object and passed to the Perfect Hash's
-	find operation. ACE_CString is used to store the operation as
-	opposed char *. Thanks to Irfan for suggesting this change.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * tao/Servant_Base.h :
+        * tao/Server_Request.i :
+        * tao/Operation_Table.h :
+        * tao/Servant_Base.cpp:
+        * tao/Server_Request.cpp :
+        * tao/Operation_Table.cpp : Committed again the changes related to
+        Removing strlen calculation for the Operation Name from the
+        critical path. Length as it is obtained during demarshalling is
+        stored in the IIOP_Request object and passed to the Perfect Hash's
+        find operation. ACE_CString is used to store the operation as
+        opposed char *. Thanks to Irfan for suggesting this change.
 
 Mon Apr 12 13:41:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Timeprobe.h:
-	* tao/Connect.cpp:
-	* tao/Invocation.cpp:
-	  Added four new timeprobes to measure client outgoing
-	  process time and server process time. Whereas the 
-	  pluggable protocols timeprobes were a subset of the
-	  regular timeprobes, these are a disjoint set. If both
-	  the pluggable and minimal timeprobes macros are 
-	  uncommented in Timeprobe.h, pluggable will override.
+        * tao/Timeprobe.h:
+        * tao/Connect.cpp:
+        * tao/Invocation.cpp:
+          Added four new timeprobes to measure client outgoing
+          process time and server process time. Whereas the
+          pluggable protocols timeprobes were a subset of the
+          regular timeprobes, these are a disjoint set. If both
+          the pluggable and minimal timeprobes macros are
+          uncommented in Timeprobe.h, pluggable will override.
 
 Mon Apr 12 12:37:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Stub.cpp: 
-	  Added missing template instantiations.
+        * tao/Stub.cpp:
+          Added missing template instantiations.
 
 Mon Apr 12 10:38:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/MessagingC.cpp:
-	* tao/PolicyC.cpp:
-	  Removed warnings about unused variables, the variables are
-	  required for platforms without native C++ exceptions.
+        * tao/MessagingC.cpp:
+        * tao/PolicyC.cpp:
+          Removed warnings about unused variables, the variables are
+          required for platforms without native C++ exceptions.
 
-	* docs/Options.html:
-	  Fixed description of the ORBinputcdrallocator option.
+        * docs/Options.html:
+          Fixed description of the ORBinputcdrallocator option.
 
 Mon Apr 12 09:52:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Makefile:
-	  Keep working on the CORBA Messaging framework.
+        * tao/Makefile:
+          Keep working on the CORBA Messaging framework.
 
-	* tao/orbconf.h:
-	* tao/ORB.h:
-	* tao/ORB.cpp: 
-	  Added support for "PolicyCurrent" and "ORBPolicyManager" into
-	  resolve_initial_references()
+        * tao/orbconf.h:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Added support for "PolicyCurrent" and "ORBPolicyManager" into
+          resolve_initial_references()
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
-	  Added methods to set and query the TSS PolicyCurrent and the
-	  per-ORB PolicyManager.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Added methods to set and query the TSS PolicyCurrent and the
+          per-ORB PolicyManager.
 
-	* tao/Object.h:
-	* tao/Object.cpp:
-	  Implemented the standard methods to access and query policies,
-	  but they just delegate on the TAO_Stub methods.
+        * tao/Object.h:
+        * tao/Object.cpp:
+          Implemented the standard methods to access and query policies,
+          but they just delegate on the TAO_Stub methods.
 
-	* tao/Stub.h:
-	* tao/Stub.cpp:
-	  Added methods to set and query the policies.
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+          Added methods to set and query the policies.
 
-	* tao/Policy_Manager.h:
-	* tao/Policy_Manager.i:
-	* tao/Policy_Manager.cpp:
-	  Simple implementation of the CORBA::PolicyManager and
-	  CORBA::PolicyCurrent interfaces. There is a helper class shared
-	  between both implementations that is also used by the
-	  corresponding methods in CORBA::Object (and TAO_Stub).
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.i:
+        * tao/Policy_Manager.cpp:
+          Simple implementation of the CORBA::PolicyManager and
+          CORBA::PolicyCurrent interfaces. There is a helper class shared
+          between both implementations that is also used by the
+          corresponding methods in CORBA::Object (and TAO_Stub).
 
-	* tao/MessagingC.cpp:
-	  Added missing template instantiation
+        * tao/MessagingC.cpp:
+          Added missing template instantiation
 
-	* tests/Param_Test/Makefile:
-	* examples/Event_Comm/Makefile:
-	* examples/Quoter/Makefile:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
-	* performance-tests/Pluggable/Makefile:
-	* performance-tests/Thruput/TAO/Makefile:
-	  Removed extra rules to compile .idl files, they were giving me
-	  headaches when running parallel compiles.
+        * tests/Param_Test/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/Quoter/Makefile:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * performance-tests/Pluggable/Makefile:
+        * performance-tests/Thruput/TAO/Makefile:
+          Removed extra rules to compile .idl files, they were giving me
+          headaches when running parallel compiles.
 
 Mon Apr 12 03:30:18 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp (gen_extraction):
-	  modified ACE_static_cast to ACE_dynamic_cast to fix a compile
-	  error on SunCC 5.0 when casting to void* from non-void pointer.
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp (gen_extraction):
+          modified ACE_static_cast to ACE_dynamic_cast to fix a compile
+          error on SunCC 5.0 when casting to void* from non-void pointer.
           Thanks to Darren Whobrey <whobrey@fecit.co.uk> for reporting
-	  this bug.
+          this bug.
 
 Mon Apr 12 00:26:31 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -100,157 +107,157 @@ Mon Apr 12 00:26:31 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Apr 11 23:55:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Param_Test/driver.cpp
-	* tests/Param_Test/multdim_array.cpp
-	* tests/Param_Test/param_test.idl
-	* tests/Param_Test/param_test_i.cpp
-	* tests/Param_Test/param_test_i.h
-	  Temporarily comments out test code for Multi-dimensional arrays
- 	  due to nasty compile bugs on NT.
+        * tests/Param_Test/driver.cpp
+        * tests/Param_Test/multdim_array.cpp
+        * tests/Param_Test/param_test.idl
+        * tests/Param_Test/param_test_i.cpp
+        * tests/Param_Test/param_test_i.h
+          Temporarily comments out test code for Multi-dimensional arrays
+          due to nasty compile bugs on NT.
 
 Sun Apr 11 19:38:39 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
-	* orbsvcs/orbsvcs/Persistent_Naming_Context.{h, cpp}
-	* orbsvcs/orbsvcs/Persistent_Context_Index_T.cpp
-	  Changed the use of the <index> variable name to <context_index>
- 	  to avoid conflict with the macro of the same name.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+        * orbsvcs/orbsvcs/Persistent_Naming_Context.{h, cpp}
+        * orbsvcs/orbsvcs/Persistent_Context_Index_T.cpp
+          Changed the use of the <index> variable name to <context_index>
+          to avoid conflict with the macro of the same name.
 
 Sun Apr 11 18:29:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Client):
- 	  Fixed the use of ACE_Thread_Mutex to ACE_SYNCH_MUTEX to ensure
- 	  this will run properly on non-threaded platforms.  Thanks to
- 	  Alex for reporting this.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Client):
+          Fixed the use of ACE_Thread_Mutex to ACE_SYNCH_MUTEX to ensure
+          this will run properly on non-threaded platforms.  Thanks to
+          Alex for reporting this.
 
 Sun Apr 11 15:36:33 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp
-	* examples/POA/DSI/Database_i.h
-	  Fixed some warnings on IRIX
+        * examples/POA/DSI/Database_i.cpp
+        * examples/POA/DSI/Database_i.h
+          Fixed some warnings on IRIX
 
 Sun Apr 11 11:45:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
-	  Added missing template instantiation.
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+          Added missing template instantiation.
 
 Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Param_Test/multdim_array.cpp:
-	* tests/Param_Test/multdim_array.h
-	* tests/Param_Test/Makefile
-	* tests/Param_Test/driver.cpp
-	* tests/Param_Test/options.cpp
-	* tests/Param_Test/param_test.idl
-	* tests/Param_Test/param_test_i.cpp
-	* tests/Param_Test/param_test_i.h
-	* tests/Param_Test/tests.h: Added a new test case for
-	  multi-dimensional array checking.
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/multdim_array.h
+        * tests/Param_Test/Makefile
+        * tests/Param_Test/driver.cpp
+        * tests/Param_Test/options.cpp
+        * tests/Param_Test/param_test.idl
+        * tests/Param_Test/param_test_i.cpp
+        * tests/Param_Test/param_test_i.h
+        * tests/Param_Test/tests.h: Added a new test case for
+          multi-dimensional array checking.
 
 Sat Apr 10 14:26:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tao/POA.cpp: Removed #POA_NO_TIMESTAMP according to Irfan's
-	suggestion to get things to work on Soalris.
+        * tao/POA.cpp: Removed #POA_NO_TIMESTAMP according to Irfan's
+        suggestion to get things to work on Soalris.
 
 Fri Apr  9 22:18:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* tao/Servant_Base.h :
-	* tao/Server_Request.i :
-	* tao/Operation_Table.h :
-	* tao/Servant_Base.cpp:
-	* tao/Server_Request.cpp :
-	* tao/Operation_Table.cpp :
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * tao/Servant_Base.h :
+        * tao/Server_Request.i :
+        * tao/Operation_Table.h :
+        * tao/Servant_Base.cpp:
+        * tao/Server_Request.cpp :
+        * tao/Operation_Table.cpp :
 
-	Reverted the earlier changes related to saving strlen calculation
-	on the critical path.
+        Reverted the earlier changes related to saving strlen calculation
+        on the critical path.
 
 Fri Apr  9 17:49:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Server_Request.h:
-	* tao/Server_Request.i:
-	  Removed extra <const> in return type. The return was by-value,
-	  no sense in putting const in that case. Further, some compilers
-	  bark when you do so.
+        * tao/Server_Request.h:
+        * tao/Server_Request.i:
+          Removed extra <const> in return type. The return was by-value,
+          no sense in putting const in that case. Further, some compilers
+          bark when you do so.
 
 Fri Apr  9 17:14:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* rules.tao.GNU:
-	  Fixed typos in the alternative extensions for generated files.
+        * rules.tao.GNU:
+          Fixed typos in the alternative extensions for generated files.
 
 Fri Apr  9 16:23:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/README:
-	  Added a short blurb about persistent Naming Service
+        * orbsvcs/orbsvcs/Naming/README:
+          Added a short blurb about persistent Naming Service
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp: Removed
- 	  the use of nested typedefs, as this was breaking old g++
- 	  compiler.  Surrounded Debug statements by <if>.  Added a return
- 	  statement to avoid warnings.
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp: Removed
+          the use of nested typedefs, as this was breaking old g++
+          compiler.  Surrounded Debug statements by <if>.  Added a return
+          statement to avoid warnings.
 
-	* orbsvcs/Naming_Service/README: Added description of persistence
- 	  command-line option.
+        * orbsvcs/Naming_Service/README: Added description of persistence
+          command-line option.
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Changed the order
- 	  of arguments in <init> method and constructor, to avoid breaking
- 	  old code with the addition of the new parameter.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Changed the order
+          of arguments in <init> method and constructor, to avoid breaking
+          old code with the addition of the new parameter.
 
 Fri Apr 09 16:19:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (create_object_key and parse_key): We must include
-	  the persistent bit even when the POA_NO_TIMESTAMP is defined.
-	  Otherwise, we won't know which POA map to search. Thanks to Russ
-	  Noseworthy for reporting this.
+        * tao/POA.cpp (create_object_key and parse_key): We must include
+          the persistent bit even when the POA_NO_TIMESTAMP is defined.
+          Otherwise, we won't know which POA map to search. Thanks to Russ
+          Noseworthy for reporting this.
 
 Fri Apr  9 15:20:10 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
-	* tao/Servant_Base.h (TAO_ServantBase):
-	* tao/Server_Request.i (operation):
-	* tao/Operation_Table.h (TAO_Operation_Table):
-	* tao/Servant_Base.cpp:
-	* tao/Server_Request.cpp (retval_):
-	* tao/Operation_Table.cpp (TAO_Dynamic_Hash_OpTable): Removed
- 	  strlen calculation for the Operation Name from the critical
- 	  path. Length as it is obtained during demarshalling is stored in
- 	  the IIOP_Request object and passed to the Perfect Hash's find
- 	  operation.
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+        * tao/Servant_Base.h (TAO_ServantBase):
+        * tao/Server_Request.i (operation):
+        * tao/Operation_Table.h (TAO_Operation_Table):
+        * tao/Servant_Base.cpp:
+        * tao/Server_Request.cpp (retval_):
+        * tao/Operation_Table.cpp (TAO_Dynamic_Hash_OpTable): Removed
+          strlen calculation for the Operation Name from the critical
+          path. Length as it is obtained during demarshalling is stored in
+          the IIOP_Request object and passed to the Perfect Hash's find
+          operation.
 
 Fri Apr 09 12:52:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp (_is_a): Removed
-	  ACE_UNUSED_ARG(named_value_1) since named_value_1 was removed.
+        * examples/POA/DSI/Database_i.cpp (_is_a): Removed
+          ACE_UNUSED_ARG(named_value_1) since named_value_1 was removed.
 
 Fri Apr  9 14:29:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.{h,cpp}: Changed the argument of the static dump()
- 	  function from const value to const reference. Thanks to Ulf
- 	  Jaehrig <jaehrig@desys.com> for suggesting this.
+        * tao/Any.{h,cpp}: Changed the argument of the static dump()
+          function from const value to const reference. Thanks to Ulf
+          Jaehrig <jaehrig@desys.com> for suggesting this.
 
 Fri Apr  9 13:28:06 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	Added the following .xls files :
+        Added the following .xls files :
 
-	* TAO/performance-tests/Demux/operation_demux2d.xls
-	* TAO/performance-tests/Demux/operation_demux3d.xls
-	* TAO/performance-tests/Demux/servant_dispatch2d.xls
-	* TAO/performance-tests/Demux/servant_dispatch3d.xls
-	* TAO/performance-tests/Demux/poa_lookup2d.xls
-	* TAO/performance-tests/Demux/poa_lookup3d.xls
+        * TAO/performance-tests/Demux/operation_demux2d.xls
+        * TAO/performance-tests/Demux/operation_demux3d.xls
+        * TAO/performance-tests/Demux/servant_dispatch2d.xls
+        * TAO/performance-tests/Demux/servant_dispatch3d.xls
+        * TAO/performance-tests/Demux/poa_lookup2d.xls
+        * TAO/performance-tests/Demux/poa_lookup3d.xls
 
-	Updated the following .dsp files to incorporate the recent file
-	name changes for Time service server and clerk.
+        Updated the following .dsp files to incorporate the recent file
+        name changes for Time service server and clerk.
 
         * Time_Service_{Server,Clerk}.dsp
 
 Fri Apr  9 11:30:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/default_server.cpp:
-	* tao/default_client.cpp:
-	* tao/ORB_Core.cpp: Removed ACE_STATIC_SVC_REQUIRE.
+        * tao/default_server.cpp:
+        * tao/default_client.cpp:
+        * tao/ORB_Core.cpp: Removed ACE_STATIC_SVC_REQUIRE.
 
-	* tao/TAO_Internal.cpp (open_services): Added in TAO's default
-	  static services here.
+        * tao/TAO_Internal.cpp (open_services): Added in TAO's default
+          static services here.
 
 Fri Apr 09 08:19:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -272,7 +279,7 @@ Fri Apr  9 00:49:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
         * examples/POA/On_Demand_Activation/server.cpp (main),
         * examples/POA/On_Demand_Activation/Servant_Activator.cpp,
         * examples/POA/On_Demand_Activation/Servant_Locator.cpp: Made some
-	  cosmetic changes.  Basically changed some ACE_TRY macros
+          cosmetic changes.  Basically changed some ACE_TRY macros
 
 Fri Apr  9 00:04:45 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
@@ -284,12 +291,12 @@ Fri Apr  9 00:04:45 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 Thu Apr  8 23:12:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Server): Added
- 	  a default value of 0 to the persistence_location so that the
- 	  code will build again...
+          a default value of 0 to the persistence_location so that the
+          code will build again...
 
         * tao/ORB.cpp: Rewrote the multicast_query() method to test a
- 	  theory about what might be causing the problem on NT.  Thanks to
- 	  Margaret Reitz <margaret@veritas.com> for motivating this.
+          theory about what might be causing the problem on NT.  Thanks to
+          Margaret Reitz <margaret@veritas.com> for motivating this.
 
 Thu Apr 08 18:45:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
