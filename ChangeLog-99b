@@ -1,11 +1,10 @@
-Wed Jul 07 12:27:32 1999  David L. Levine  <levine@cs.wustl.edu>
+Wed Jul  7 13:27:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ace/config-lynxos.h: added ACE_LACKS_FORK for PowerPC
-          only.  This cleans up most of the remaining test problems
-          on LynxOS/PPC.
-
-Wed Jul  7 11:40:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
+	* ace/Malloc.h: Renamed the macro ACE_MALLOC_ALIGN to
+	  ACE_MALLOC_PADDING, which is more descriptive.  However, I've
+ 	  retained ACE_MALLOC_ALIGN for backwards compatibility to keep
+ 	  Steve Huston happy ;-).
+  
         * Fixed a typo in the TAO-mail.html program where ace-*
           should have been tao-*.  Thanks to Pedro Alves Ferreira
           <pedro.ferreira@inescn.pt> for reporting this.
@@ -13,6 +12,12 @@ Wed Jul  7 11:40:39 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * Fixed all vestiages of "BUG-REPORT-FORM" to say
           "PROBLEM-REPORT-FORM."  Thanks to Neil B. Cohen <nbc@cisco.com>
           for reporting this.
+
+Wed Jul 07 12:27:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added ACE_LACKS_FORK for PowerPC
+          only.  This cleans up most of the remaining test problems
+          on LynxOS/PPC.
 
 Wed Jul 07 11:26:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
