@@ -101,6 +101,13 @@
 # undef STDERR
 #endif /* __Lynx__ */
 
+#if defined (THREAD)
+// This workaround is necessary for nasty libraries that #define
+// THREAD 1.
+#define ACE_THREAD_HACK THREAD
+#undef THREAD
+#endif /* THREAD */
+
 class ACE_Export ACE_Log_Msg_Callback
 {
   // = TITLE
@@ -229,7 +236,6 @@ public:
   void sync (const ASYS_TCHAR *program_name);
   // Call after doing a <fork> to resynchronize the process id and
   // <program_name> variables.
-  // @@ Does this function mean anything on Windows?
 
   // = Set/get methods.  Note that these are non-static and thus will
   // be thread-specific.
@@ -332,8 +338,8 @@ public:
 
   typedef enum
   {
-          THREAD,
-          PROCESS
+    PROCESS = 0,
+    THREAD = 1
   } MASK_TYPE;
 
   // = Get/set the priority mask.
@@ -523,7 +529,8 @@ private:
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
 
-// #if defined (__ACE_INLINE__)
-// #include "ace/Log_Msg.i"
-// #endif /* __ACE_INLINE__ */
+#if defined (ACE_THREAD_HACK)
+#define THREAD ACE_THREAD_HACK
+#undef ACE_THREAD_HACK
+#endif /* ACE_THREAD_HACK */
 #endif /* ACE_LOG_MSG_H */
