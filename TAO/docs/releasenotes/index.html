@@ -197,7 +197,7 @@ the program.  Unfortunately the schedule information cannot be
 downloaded from the service right now.</LI>
 
 <LI>
-TAO <A HREF="#naming">Naming Service</A> is used to locate the various
+TAO <A HREF="#nservices">Naming Service</A> is used to locate the various
 services: the Event Channel itself, the Scheduling Service, etc.</LI>
 
 </UL>
@@ -232,7 +232,6 @@ It could be interesting to "save" the schedule computation in some
 persistent form, so startup cost are lower too.</LI>
 
 </UL>
-
 <P>For general documentation on the Event Service please read
 <A HREF="http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz">
 The Design and Performance of a Real-time CORBA Event Service</A>.
@@ -256,8 +255,8 @@ Service, below are the basic instructions to run it:</P>
 	remember to give a different port to each one,
 	using the <CODE>-ORBport</CODE> option.</LI>
 
-<LI> If you want real-time behavior on Solari you may need to run
-	this programs as root; on the other hand, this particular
+<LI> If you want real-time behavior on Solaris you may need to run
+	these programs as root; on the other hand, this particular
 	example really has no priority inversion, since only one
 	thread runs at a time.</LI>
 
@@ -346,11 +345,29 @@ Point of contact: <A HREF="mailto:sergio@cs.wustl.edu">Sergio
 Flores-Gaitan</A> and <A HREF="mailto:marina@cs.wustl.edu">Marina
 Spivak</A><P>
 
-<P>Current status:
+<P>Current status (as of Dec 10th):
 <UL>
 <LI>
-This implementation works with TAO.</LI>
+The Naming Service implementation is complete.</LI>
 </UL>
+
+<P>Known problems:
+<UL>
+<LI>
+The bind_new_context() call is not working correctly.  This is getting looked at and will be resolved soon.
+</LI>
+</UL>
+
+<P>Future work:
+<UL>
+<LI>
+Currently the bindings are stored as a table in memory.  Future work will include a persistent database to store the bindings.</LI>
+</UL>
+
+<P>For general documentation on the Naming Service please read
+<A HREF="ftp://www.omg.org/pub/docs/formal/97-07-12.pdf">
+The Naming Service Specification</A>.
+
 
 <!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/releasenotes/trader.html" -->
 <HR>
