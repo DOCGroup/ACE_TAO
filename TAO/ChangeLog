@@ -1,3 +1,11 @@
+Sat Dec 13 09:05:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+
+	  Do not build when minimum_corba is enabled since they use some
+	  of the full POA features.
+
 Sat Dec 13 08:50:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/RTScheduling/VoidData/Makefile:
