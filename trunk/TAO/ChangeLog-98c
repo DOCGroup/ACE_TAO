@@ -1,3 +1,9 @@
+Tue Jun 09 12:52:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (add_to_collocation_table): ACE_Hash_Addr must
+ 	  be created with recyclable flag set to 1 otherwise the
+ 	  Hash_Map_Manager can't find the object.
+
 Tue Jun 09 11:43:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: added newline to

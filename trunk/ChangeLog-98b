@@ -1,3 +1,7 @@
+Tue Jun 09 12:50:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE_Library.mak: Added Stats.cpp.
+
 Tue Jun 09 11:51:17 1998 Chris Gill  <cdgill@tango.cs.wustl.edu>
 
 	* tests/MM_Shared_Memory_Test: added a null pointer check so
