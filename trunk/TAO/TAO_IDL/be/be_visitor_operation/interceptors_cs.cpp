@@ -133,7 +133,8 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
         }
     }
 
-  *os << " (const char *_tao_operation," << be_nl
+  *os << " (" << be_idt << be_idt_nl
+      << "const char *_tao_operation," << be_nl
       << "IOP::ServiceContextList &_tao_service_context_list," << be_nl
       << "CORBA::Object *_tao_target";
 
@@ -156,7 +157,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
 
   delete visitor;
   os->indent ();
-  *os << ")" << be_nl;
+  *os << be_uidt_nl << ")" << be_uidt_nl;
 
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.

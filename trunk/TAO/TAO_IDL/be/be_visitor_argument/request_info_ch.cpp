@@ -68,7 +68,7 @@ int be_visitor_args_request_info_ch::visit_argument (be_argument *node)
     }
 
   // As we visit each type we print out the &.
-  *os << " " << node->local_name () << "_;\n";
+  *os << " " << node->local_name () << "_;" << be_nl;
 
   return 0;
 }
@@ -101,8 +101,11 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
             *os  << "_slice) *";
           }
         else
-          *os << "const " << this->type_name (node) << "_slice *";
-      break;
+          {
+            *os << "const " << this->type_name (node) << "_slice *";
+          }
+
+        break;
       }
     case AST_Argument::dir_INOUT:
       {
@@ -112,12 +115,15 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << "_slice) *";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << "_slice) *";
           }
         else
-          *os << this->type_name (node) << "_slice *";
+          {
+            *os << this->type_name (node) << "_slice *";
+          }
+
         break;
       }
     case AST_Argument::dir_OUT:
@@ -128,12 +134,15 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
                                  || scope->node_type () == AST_Decl::NT_union ))
           {
             *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os  << "_out) ";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << "_out) ";
           }
         else
-          *os << this->type_name (node, "_out");
+          {
+            *os << this->type_name (node, "_out");
+          }
+
         break;
       }
 
@@ -145,19 +154,78 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
 int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  be_type *bt; // type to use
 
+  // use the typedefed name if that is the one used in the IDL defn
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  // ACE_NESTED_CLASS macros needed for MSVC. Note we are particluarly checking
+  // for those types which get generated as a class in C++.
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << this->type_name (node)<< " &";
-      break;
+      {
+        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+        
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+                                 || scope->node_type () == AST_Decl::NT_union ))
+          {
+            *os << "const ACE_NESTED_CLASS (";
+            *os << scope->name () << ",";
+            *os << bt->local_name ();
+	          *os  << ") &";
+          }
+        else
+          {
+            *os << "const " << this->type_name (node) << " &";
+          }
+
+        break;
+      }
     case AST_Argument::dir_INOUT:
-      *os << this->type_name (node) << " &";
-      break;
+      {
+        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+        
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+                                 || scope->node_type () == AST_Decl::NT_union ))
+          {
+            *os << "ACE_NESTED_CLASS (";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << ") &";
+          }
+        else
+          {
+            *os << this->type_name (node) << " &";
+          }
+
+        break;
+      }
     case AST_Argument::dir_OUT:
-      *os << this->type_name (node, "_out");
-      break;
+      {
+        be_decl* scope = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+        
+        if (bt->is_nested () && (scope->node_type () == AST_Decl::NT_interface 
+                                 || scope->node_type () == AST_Decl::NT_union ))
+          {
+            *os << "ACE_NESTED_CLASS (";
+	          *os << scope->name () << ",";
+	          *os << bt->local_name ();
+	          *os  << "_out)";
+          }
+        else
+          {
+            *os << this->type_name (node, "_out");
+          }
+
+        break;
+      }
+
     }
+
   return 0;
 }
 

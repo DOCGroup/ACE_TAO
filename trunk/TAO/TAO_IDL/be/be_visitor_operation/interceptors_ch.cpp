@@ -347,7 +347,6 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   // void since we can't have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
-      os->indent ();
       *os << "void result (";
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
