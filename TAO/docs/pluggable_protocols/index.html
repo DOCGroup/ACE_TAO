@@ -87,7 +87,8 @@ Overview of Implementation of Pluggable Protocols for TAO</A>
 
 <P>
 There are several basic implementation details that should be followed when
-implementing pluggable protocols for TAO. This section describes them.
+implementing pluggable protocols for TAO. This section describes
+them.
 
 <P>
 
@@ -188,6 +189,14 @@ source files. The only things that had to be changed for UIOP were the protocol
 prefix, address format and URL style IOR format. Each of these pluggable protocol
 characteristics is documented later in this documentation.</LI>
 </OL>
+
+<P>
+<H3><FONT COLOR=RED><STRONG>NOTE:</STRONG></FONT> It is <EM>not</EM> necessary
+to make any changes to ACE or TAO to implement a pluggable
+protocol.  In fact, doing so would defeat the goal of having a
+truly pluggable protocol.</H3>
+
+<P>
 The next section goes into detail about TAO's pluggable protocol framework components
 and their public interfaces.
 
@@ -199,7 +208,7 @@ Pluggable Protocol Framework Components</A>
 </H1>
 
 <P>
-In order for a pluggable protocol to usable by TAO without making any modifications
+In order for a pluggable protocol to be usable by TAO <STRONG><EM>without</EM></STRONG> making any modifications
 to TAO itself, it must be implemented to provide the functionality dictated
 by TAO's pluggable protocols framework interface. This functionality is implemented
 within several components, namely the <TT>Acceptor</TT>, <TT>Connector</TT>,
@@ -3080,7 +3089,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 20:57:50 CST 1999
+Last modified: Thu Dec 16 21:13:57 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
