@@ -134,7 +134,7 @@ public:
   {
     ACE_TRACE ("Client::init");
 
-    char *r_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+    const char *r_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
     ACE_UPIPE_Addr remote_addr (r_addr);
 
