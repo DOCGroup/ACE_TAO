@@ -1,3 +1,10 @@
+Wed May 26 11:54:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+	  Fixed extractor for pseudo objects (at least for
+	  the two cases TypeCode and Object. A case for
+	  ValueBase is still TODO).
+
 Wed May 26 10:28:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
