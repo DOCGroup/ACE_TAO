@@ -143,6 +143,19 @@ ACE_Thread_Descriptor_Base::state (void)
   return thr_state_;
 }
 
+// Reset this base descriptor.
+ACE_INLINE void
+ACE_Thread_Descriptor_Base::reset (void)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor_Base::reset");
+  this->thr_id_ = ACE_OS::NULL_thread;
+  this->thr_handle_ = ACE_OS::NULL_hthread;
+  this->grp_id_ = 0;
+  this->thr_state_ = ACE_Thread_Manager::ACE_THR_IDLE;
+  this->task_ = 0;
+  this->flags_ = 0;
+}
+
 // Unique thread id.
 ACE_INLINE ACE_thread_t
 ACE_Thread_Descriptor::self (void)
@@ -183,6 +196,26 @@ ACE_Thread_Descriptor::get_next (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::get_next");
   return ACE_static_cast (ACE_Thread_Descriptor *, this->next_);
+}
+
+// Reset this thread descriptor
+ACE_INLINE void
+ACE_Thread_Descriptor::reset (ACE_Thread_Manager *tm)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::reset");
+  this->ACE_Thread_Descriptor_Base::reset ();
+#if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+  this->cleanup_info_.cleanup_hook_ = 0;
+  this->cleanup_info_.object_ = 0;
+  this->cleanup_info_.param_ = 0;
+#else /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+  this->at_exit_list_ = 0;
+    // Start the at_exit hook list.
+  this->tm_ = tm;
+    // Setup the Thread_Manager.
+  this->log_msg_ = 0;
+  this->terminated_ = 0;
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 }
 
 // Set the exit status.

@@ -241,11 +241,6 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
-#if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-  this->cleanup_info_.cleanup_hook_ = 0;
-  this->cleanup_info_.object_ = 0;
-  this->cleanup_info_.param_ = 0;
-#endif /* ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   ACE_NEW (this->sync_,
            ACE_DEFAULT_THREAD_MANAGER_LOCK);
 }
@@ -254,7 +249,9 @@ void
 ACE_Thread_Descriptor::acquire_release (void)
 {
   // Just try to acquire the lock then release it.
+#if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
   if (ACE_BIT_DISABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_SPAWNED))
+#endif /* ACE_THREAD_MANAGER_USES_SAFE_SPAWN */
     {
       this->sync_->acquire ();
       // Acquire the lock before removing <td> from the thread table.  If
@@ -602,9 +599,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
-  auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
-  new_thr_desc->thr_state_ = ACE_THR_IDLE;
   // Get a "new" Thread Descriptor from the freelist.
+  auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
+
+  // Reset thread descriptor status
+  new_thr_desc->reset (this);
 
   ACE_Thread_Adapter *thread_args = 0;
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -837,9 +836,15 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   ACE_Thread_Descriptor *thr_desc;
 
   if (td == 0)
+    {
     ACE_NEW_RETURN (thr_desc,
                     ACE_Thread_Descriptor,
                     -1);
+#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
+    thr_desc->tm_ = this;
+    // Setup the Thread_Manager.
+#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
+  }
   else
     thr_desc = td;
 
@@ -847,22 +852,9 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
   thr_desc->thr_handle_ = t_handle;
   thr_desc->grp_id_ = grp_id;
   thr_desc->task_ = task;
-#if defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-  thr_desc->cleanup_info_.cleanup_hook_ = 0;
-  thr_desc->cleanup_info_.object_ = 0;
-  thr_desc->cleanup_info_.param_ = 0;
-#else /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
-  thr_desc->at_exit_list_ = 0;
-  // Start the at_exit hook list.
-  thr_desc->tm_ = this;
-  // Setup the Thread_Manager.
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   thr_desc->flags_ = flags;
 
   this->thr_list_.insert_head (thr_desc);
-#if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-  thr_desc->terminated_ = 0;
-#endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   ACE_SET_BITS (thr_desc->thr_state_, thr_state);
   thr_desc->sync_->release ();
 
