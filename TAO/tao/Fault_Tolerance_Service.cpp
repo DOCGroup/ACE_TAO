@@ -47,3 +47,14 @@ TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
 
   return;
 }
+
+CORBA::Long
+TAO_Fault_Tolerance_Service::retention_id (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->ft_object_retention_id_lock_,
+                            0));
+
+  return ++this->ft_object_retention_id_;
+}

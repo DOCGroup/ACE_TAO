@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/PortableGroupC.h"
-
+#include "ace/Unbounded_Set.h"
 
 /**
  * @class TAO_PG_MemberInfo

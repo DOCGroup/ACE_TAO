@@ -252,9 +252,9 @@ TAO_Singleton_Manager::fini (void)
   // Restore the old unexpected exception handler since TAO will no
   // longer be handling exceptions.  Allow the application to once
   // again handle unexpected exceptions.
-# if !defined (_MSC_VER) \
-     && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
-     && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+# if (!defined (_MSC_VER) \
+      && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
+      && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)) || defined (ghs)
   (void) std::set_unexpected (this->old_unexpected_);
 # else
   (void) set_unexpected (this->old_unexpected_);
@@ -307,9 +307,9 @@ TAO_Singleton_Manager::_set_unexpected (TAO_unexpected_handler u)
   // transforms all unexpected exceptions to CORBA::UNKNOWN, which of
   // course requires the TypeCode constants and system exceptions to
   // have been initialized.
-# if !defined (_MSC_VER) \
-     && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
-     && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+# if (!defined (_MSC_VER) \
+      && defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) \
+      && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)) || defined (ghs)
   this->old_unexpected_ = std::set_unexpected (u);
 # else
   this->old_unexpected_ = set_unexpected (u);

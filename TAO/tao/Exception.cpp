@@ -5,6 +5,7 @@
 
 #include "ace/streams.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Malloc_Allocator.h"
 #include "tao/Exception.h"
 #include "tao/Typecode.h"
 #include "tao/Environment.h"

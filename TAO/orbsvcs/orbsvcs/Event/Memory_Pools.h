@@ -22,6 +22,7 @@
 
 #include "Event_Channel.h"
 #include "Dispatching_Modules.h"
+#include "ace/Malloc.h"
 
 // ************************************************************
 

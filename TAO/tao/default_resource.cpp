@@ -23,6 +23,8 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Memory_Pool.h"
+#include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
