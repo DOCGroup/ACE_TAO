@@ -1,3 +1,9 @@
+Wed Aug 19 08:25:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/Timer_Service.cpp: Changed
+ 	  Timer_Service_2 to Timer_Service_1 since it was a typo.  Thanks
+ 	  to Irfan for reporting this.
+
 Tue Aug 18 22:10:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-fsu-pthread.h,config-hpux-10.x.h,config-mit-pthread.h,
