@@ -14,6 +14,42 @@ provided by SCTP via ACE's SOCK_SEQPACK_Connector,
 SOCK_SEQPACK_Association and SOCK_SEQPACK_Acceptor wrapper-facade
 classes.
 
+The following table provides a summary of relationships between two main
+Linux SCTP implementations (OpenSS7 and LKSCTP), and ACE Wrapper Facades
+support that is provided. Built on top of the ACE Wrapper Facade support is
+the SCIOP support in TAO. SCIOP works identically on both OpenSS7 and
+LKSCTP implementations. Please read additional README* files listed below.
+
+-------------------------------------------------------------------------------
+    SCTP      Transport          Transport                ACE
+   Protocol    Service            Service               Wrapper
+    Impl.       Type           Characteristics          Facades
+ ------------------------------------------------------------------------------
+ OpenSS7     SOCK_SEQPACKET    {Connected,      ACE_SOCK_SEQPACKET_Acceptor
+                                Reliable,       ACE_SOCK_SEQPACKET_Connector 
+                                Messages}       ACE_SOCK_SEQPACKET_Association
+ 
+ OpenSS7      SOCK_STREAM      {Connected,      ACE_SOCK_Acceptor(IPPROTO_SCTP)
+                                Reliable,       ACE_SOCK_Connector(IPPROTO_SCTP)
+                                Byte Stream}    ACE_SOCK_Stream(IPPROTO_SCTP)
+ 
+ OpenSS7       SOCK_RDM        {Connectionless,      NOT IMPLEMENTED IN ACE
+                                Reliable,     
+                                Messages}     
+ 
+ 
+ LKSCTP      SOCK_SEQPACKET    {Connectionless,         NOT USED IN ACE  
+                                UNRELIABLE,        
+                                Messages}        
+ 
+ LKSCTP      SOCK_STREAM      {Connected,       ACE_SOCK_SEQPACKET_Acceptor
+                                Reliable,       ACE_SOCK_SEQPACKET_Connector 
+                                Messages}       ACE_SOCK_SEQPACKET_Association 
+                                                ACE_SOCK_Acceptor(IPPROTO_SCTP)
+                                                ACE_SOCK_Connector(IPPROTO_SCTP)
+                                                ACE_SOCK_Stream(IPPROTO_SCTP)
+
+
 Additional information can be found in the following README files also
 located in this directory.
 
