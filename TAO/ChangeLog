@@ -1,3 +1,11 @@
+Wed Nov 26 12:04:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Content_Server/SMI_Iterator/Makefile:
+	* examples/Logging/Makefile:
+	* examples/ior_corbaloc/Makefile:
+
+	  Do not build them if CosNaming is not built.
+
 Wed Nov 26 11:48:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Scheduling_Service/Makefile:
