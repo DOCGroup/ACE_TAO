@@ -1,3 +1,13 @@
+Thu Nov  9 12:11:52 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Makefile (UTILS_FILES): 
+	  Modified the Makefile to help when building subsetted shared
+	  libraries. Specifically, moved Addr, INET_Addr, and Sock_Connect
+	  into the Sockets component.  That removes the dependancy of the
+	  Utilities and Sockets components on the non-socket IPC component.  
+
+       Committing on behalf of Phil Mesnier <mesnier_p@ociweb.com>
+
 Thu Nov  9 10:38:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Makefile:
