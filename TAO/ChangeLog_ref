@@ -8,8 +8,8 @@ Thu Oct 16 11:31:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
 	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h: No reason for
 	  this class to inherit from Default_Selectors. Just removed the
-	  cpuipling and made this class inherit from the root base of the
-	  invocation endpoint selectors. 
+	  coupling and made this class inherit from the root base of the
+	  invocation endpoint selectors hierarchy.
 
 Thu Oct 16 09:37:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
