@@ -25,10 +25,8 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (
     message_size_ (0),
     request_id_ (0),
     more_fragments_ (0),
-    missing_data_ (0),
-    message_status_ (TAO_GIOP_WAITING_FOR_HEADER)
+    missing_data_ (0)
 {
-
 }
 
 
@@ -91,10 +89,6 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
       this->parse_fragment_header (buf,
                                    incoming.length ());
     }
-
-  // The GIOP header has been parsed. Set the status to wait for
-  // payload
-  this->message_status_ = TAO_GIOP_WAITING_FOR_PAYLOAD;
 
   return 0;
 }

@@ -27,6 +27,16 @@ TAO_GIOP_Message_State::byte_order (void) const
   return this->byte_order_;
 }
 
+ACE_INLINE void
+TAO_GIOP_Message_State::reset (void)
+{
+  this->message_type_ = 0;
+  this->message_size_ = 0;
+  this->more_fragments_ = 0;
+  this->request_id_ = 0;
+  this->missing_data_ = 0;
+}
+
 #if 0
 ACE_INLINE int
 TAO_GIOP_Message_State::message_fragmented (void)
@@ -37,12 +47,7 @@ TAO_GIOP_Message_State::message_fragmented (void)
   return 0;
 }
 
-ACE_INLINE void
-TAO_GIOP_Message_State::reset (int /*reset_contents*/)
-{
-  this->message_size = 0;
-  this->more_fragments = 0;
-}
+
 
 ACE_INLINE CORBA::Boolean
 TAO_GIOP_Message_State::header_received (void) const

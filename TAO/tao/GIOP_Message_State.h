@@ -34,15 +34,8 @@ class TAO_GIOP_Message_Base;
  *
  * @brief Generic definitions for Message States.
  *
- * @@Bala: More documentation please...
- *
- * This  represents the state of the incoming GIOP message
- * As the ORB processes incoming messages it needs to keep track of
- * how much of the message has been read, if there are any
- * fragments following this message etc.
+ *  This helps to establish the state of the incoming messages.
  */
-
-
 
 class TAO_Export TAO_GIOP_Message_State
 {
@@ -52,19 +45,6 @@ public:
   TAO_GIOP_Message_State (TAO_ORB_Core *orb_core,
                           TAO_GIOP_Message_Base *base);
 
-  enum TAO_GIOP_Message_Status
-  {
-    /// The header of the message hasn't shown up yet.
-    TAO_GIOP_WAITING_FOR_HEADER = 0,
-
-    /// The payload hasn't fully shown up in the yet
-    TAO_GIOP_WAITING_FOR_PAYLOAD,
-
-    /// The message read has got multiple requests
-    TAO_GIOP_MULTIPLE_MESSAGES
-  };
-
-  /// @@Bala: Documentation please...
   /// Parse the message header.
   int parse_message_header (ACE_Message_Block &incoming);
 
@@ -77,13 +57,14 @@ public:
   /// Return the byte order information
   CORBA::Octet byte_order (void) const;
 
+  /// Reset the state..
+  void reset (void);
+
 private:
 
   friend class TAO_GIOP_Message_Base;
 
-
-
-  /// @@Bala: Documentation please...
+  /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
 
   /// Checks for the magic word 'GIOP' in the start of the incoing
@@ -114,6 +95,7 @@ private:
 
 private:
 
+  // GIOP version information..
   TAO_GIOP_Message_Version giop_version_;
 
   /// 0 = big, 1 = little
@@ -134,7 +116,7 @@ private:
    * chain is reassembled into the main message block that is sent
    * along
    */
-  ACE_Message_Block fragmented_messages;
+  //  ACE_Message_Block fragmented_messages;
 
 
   /**
@@ -148,11 +130,11 @@ private:
    *    3) Even if we allowed that at this layer the CDR classes are
    *       not prepared to handle that.
    */
-  CORBA::Octet first_fragment_byte_order;
+  //  CORBA::Octet first_fragment_byte_order;
 
   /// The GIOP version for the first fragment
   /// @@ Same as above, all GIOP versions must match.
-  TAO_GIOP_Message_Version first_fragment_giop_version;
+  // TAO_GIOP_Message_Version first_fragment_giop_version;
 
   /**
    * If the messages are chained this represents the message type for
@@ -160,16 +142,13 @@ private:
    * fragment and the upper level needs to know if it is a request,
    * locate request or what).
    */
-  CORBA::Octet first_fragment_message_type;
+  // CORBA::Octet first_fragment_message_type;
 
   /// (Requests and Replys)
   CORBA::Octet more_fragments_;
 
   /// Missing data
   CORBA::ULong missing_data_;
-
-  /// @@Bala: Documentation??
-  TAO_GIOP_Message_Status  message_status_;
 };
 
 
