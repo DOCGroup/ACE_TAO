@@ -68,58 +68,11 @@
 
 TAO_NAMESPACE  CORBA
 {
-  
-  // TAO_IDL - Generated from
-  // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
-
-  typedef void* VoidData;
-#if !defined (_CORBA_THREAD_CANCELLED_CH_)
-#define _CORBA_THREAD_CANCELLED_CH_
-  
-  class TAO_RTScheduler_Export THREAD_CANCELLED : public CORBA::UserException
-  {
-  public:
-    
-    THREAD_CANCELLED (void);
-    THREAD_CANCELLED (const THREAD_CANCELLED &);
-    ~THREAD_CANCELLED (void);
-
-    THREAD_CANCELLED &operator= (const THREAD_CANCELLED &);
-    
-    static void _tao_any_destructor (void *);
-    
-    static THREAD_CANCELLED *_downcast (CORBA::Exception *);
-    static CORBA::Exception *_alloc (void);
-
-    virtual CORBA::Exception *_tao_duplicate (void) const;
-
-    virtual void _raise (void);
-
-    virtual void _tao_encode (
-        TAO_OutputCDR &
-        ACE_ENV_ARG_DECL_NOT_USED
-      ) const;
-    
-    virtual void _tao_decode (
-        TAO_InputCDR &
-        ACE_ENV_ARG_DECL_NOT_USED
-      );
-    
-    // TAO_IDL - Generated from
-    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-    
-    virtual CORBA::TypeCode_ptr _type (void) const;
-  };
-  
-  // TAO_IDL - Generated from
-  // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_THREAD_CANCELLED;
-
-#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+
+  typedef void* VoidData;
 
 }
 TAO_NAMESPACE_CLOSE // module CORBA
@@ -1606,14 +1559,6 @@ TAO_NAMESPACE  RTScheduling
 TAO_NAMESPACE_CLOSE // module RTScheduling
 
 // TAO_IDL - Generated from
-// C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_RTScheduler_Export void operator<<= (CORBA::Any &, const CORBA::THREAD_CANCELLED &); // copying version
-TAO_RTScheduler_Export void operator<<= (CORBA::Any &, CORBA::THREAD_CANCELLED*); // noncopying version
-TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::THREAD_CANCELLED *&); // deprecated
-TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::THREAD_CANCELLED *&);
-
-// TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_RTScheduler_Export void operator<<= (CORBA::Any &, RTScheduling::ThreadAction_ptr); // copying
@@ -1690,12 +1635,6 @@ TAO_RTScheduler_Export CORBA::Boolean operator>>= (const CORBA::Any &, const RTS
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ch.cpp:52
-
-TAO_RTScheduler_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::THREAD_CANCELLED &);
-TAO_RTScheduler_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::THREAD_CANCELLED &);
 
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64

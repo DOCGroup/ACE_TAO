@@ -14,7 +14,7 @@ module CORBA
     // C++:  void*
     // Java: Object
 		
-    exception THREAD_CANCELLED {};
+   // exception THREAD_CANCELLED {};
 };
 
 module RTScheduling
@@ -65,7 +65,7 @@ module RTScheduling
             (in string        name,
              in CORBA::Policy sched_param,
              in CORBA::Policy implicit_sched_param)
-            raises ( UNSUPPORTED_SCHEDULING_DISCIPLINE );
+            raises (UNSUPPORTED_SCHEDULING_DISCIPLINE );
 
         void update_scheduling_segment
             (in string       name,
