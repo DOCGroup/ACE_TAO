@@ -23,7 +23,7 @@ public:
   //@{
   void response (Test::TimeStamp,
                  CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC (());
   //@}
 
 private:
