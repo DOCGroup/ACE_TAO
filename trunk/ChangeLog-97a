@@ -1,7 +1,8 @@
 Wed May 21 16:15:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{config-irix6.2*.h,README}: removed ACE_LACKS_IOSTREAM_SETGET
-	  because tests won't build with it.
+	  because tests won't build with it.  Also, added
+	  ACE_LACKS_SIGNED_CHAR.
 
 	* ace/IOStream.h: removed "const" from PUT_PROT of
 	  u_char * and void *.  This should allow the IOStream test
