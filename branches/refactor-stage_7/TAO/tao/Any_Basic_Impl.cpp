@@ -14,11 +14,11 @@ ACE_RCSID (tao,
 namespace TAO
 {
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
-                                  const void *value)
+                                  void *value)
     : Any_Impl (0, tc),
       kind_ (tc->kind_)
   {
-    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind, 
+    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
                                             this->kind_);
 
     switch (tckind)
@@ -79,19 +79,19 @@ namespace TAO
     Any_Basic_Impl *new_impl = 0;
     ACE_NEW (new_impl,
              Any_Basic_Impl (tc,
-                             value));
+                             ACE_const_cast (void *, value)));
     any.replace (new_impl);
   }
 
   CORBA::Boolean
-  Any_Basic_Impl::extract (const CORBA::Any &any, 
+  Any_Basic_Impl::extract (const CORBA::Any &any,
                            CORBA::TypeCode_ptr tc,
                            void *_tao_elem)
   {
     ACE_TRY_NEW_ENV
       {
         CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
-        CORBA::Boolean _tao_equiv = 
+        CORBA::Boolean _tao_equiv =
           any_tc->equivalent (tc
                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -115,7 +115,7 @@ namespace TAO
                 return 0;
               }
 
-            Any_Basic_Impl::assign_value (_tao_elem, 
+            Any_Basic_Impl::assign_value (_tao_elem,
                                           narrow_impl);
             return 1;
           }
@@ -137,7 +137,7 @@ namespace TAO
 
         if (result == 1)
           {
-            Any_Basic_Impl::assign_value (_tao_elem, 
+            Any_Basic_Impl::assign_value (_tao_elem,
                                           replacement);
             ACE_const_cast (CORBA::Any &, any).replace (replacement);
             replacement_safety.release ();
@@ -158,7 +158,7 @@ namespace TAO
   CORBA::Boolean
   Any_Basic_Impl::marshal_value (TAO_OutputCDR &cdr)
   {
-    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind, 
+    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
                                             this->kind_);
 
     switch (tckind)
@@ -197,7 +197,7 @@ namespace TAO
   CORBA::Boolean
   Any_Basic_Impl::demarshal_value (TAO_InputCDR &cdr)
   {
-    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind, 
+    CORBA::TCKind tckind = ACE_static_cast (CORBA::TCKind,
                                             this->kind_);
 
     switch (tckind)
@@ -253,7 +253,7 @@ namespace TAO
     {
       case CORBA::tk_longlong:
         {
-          const CORBA::LongLong tmp = ACE_CDR_LONGLONG_INITIALIZER;
+          CORBA::LongLong tmp = ACE_CDR_LONGLONG_INITIALIZER;
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
                           0);
@@ -262,7 +262,7 @@ namespace TAO
         break;
       case CORBA::tk_longdouble:
         {
-          const CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+          CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
                           0);
@@ -335,4 +335,3 @@ namespace TAO
     }
   }
 }
-
