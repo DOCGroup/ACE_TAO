@@ -6,10 +6,10 @@
 #include "ace/Synch.h"
 
 /* Barrier is a simple wrapper for the ACE_Barrier synchronization
-   class.  The ACE_Barrier is already pretty easy to use but I thought 
+   class.  The ACE_Barrier is already pretty easy to use but I thought
    I'd wrap it up to create just a bit more abstraction at the
-   application level.
- */
+   application level.  */
+
 class Barrier
 {
 public:
@@ -41,7 +41,7 @@ public:
     
 protected:
   // The number of threads we're synching
-  ACE_Atomic_Op<ACE_Mutex,u_int> threads_;
+  ACE_Atomic_Op<ACE_Mutex, u_int> threads_;
 
   // The ACE_Barrier that does all of the work
   ACE_Barrier *barrier_;
