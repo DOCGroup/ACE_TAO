@@ -10,6 +10,9 @@ Sun Apr 07 10:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/POA/POA_BiDir/Makefile.bor:
           Corrected makefile
 
+        * examples/POA/POA_BiDir/POA_BiDir.cpp (main): Fixed a compiler
+          error in Win32.
+
 Sat Apr 06 22:24:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Policy_Validator.cpp: #included debug.h. This should fix
