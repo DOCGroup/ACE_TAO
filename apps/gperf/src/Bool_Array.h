@@ -40,28 +40,38 @@ typedef int STORAGE_TYPE;
 class Bool_Array 
 {
   // = TITLE
-  //   Efficient lookup table abstraction implemented as an Generation
-  //   Number Array.  
+  //   Efficient lookup table abstraction implemented as a "Generation
+  //   Number" Array.
   //
   // = DESCRIPTION
-  //   Uses an Generation Numbering implementation to save on
+  //   Uses a "Generation Numbering" implementation to minimize
   //   initialization time.
 public:
+  // = Initialization and termination methods.
   Bool_Array (void);
-  ~Bool_Array (void);
+  // Constructor.
 
-  void init (STORAGE_TYPE *buffer, STORAGE_TYPE s);
-  int  find (int hash_value);
+  ~Bool_Array (void);
+  // Destructor.
+
+  void init (STORAGE_TYPE *buffer,
+             STORAGE_TYPE s);
+  // Initialize the array (requires O(n) time).
+
+  int find (int value);
+  // Locate the <value> in the array (requires O(1) time).
+
   void reset (void);
+  // Reinitializes the array (requires O(1) time).
 
 private:
-  STORAGE_TYPE *storage_array;    
-  // Initialization of the index space. 
+  STORAGE_TYPE *storage_array_;    
+  // Initialization of the index space.
 
-  STORAGE_TYPE  generation_number; 
+  STORAGE_TYPE  generation_number_; 
   // Keep track of the current Generation. 
 
-  int size;             
+  int size_;
   // Keep track of array size. 
 };
 
