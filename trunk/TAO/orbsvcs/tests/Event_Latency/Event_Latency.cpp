@@ -1,6 +1,5 @@
 // $Id$
 
-#include <limits.h>
 #if defined (quantify)
 # include <quantify.h>
 #endif /* quantify */
