@@ -6,7 +6,7 @@ Mon Jul 22 17:52:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  the TSS to global pool. The message block makes things to crash
 	  horribly, especially at places that you have no clue about. 
 	
-	* tao/Transport.cpp: Do not reset the allocators since ot is not
+	* tao/Transport.cpp: Do not reset the allocators since it is not
 	  required. 
 
 Tue Jul 16 07:06:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
