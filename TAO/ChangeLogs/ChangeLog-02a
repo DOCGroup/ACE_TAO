@@ -1,3 +1,13 @@
+Mon Nov 20 05:34:07 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Private_Connection/Makefile:
+
+	  Updated dependencies.
+
+	* tests/RTCORBA/Private_Connection/server.cpp (test_method):
+
+	  Fixed unused arg warning.
+
 Mon Nov 20 05:16:40 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp
@@ -5,7 +15,7 @@ Mon Nov 20 05:16:40 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/Connection_Cache_Manager.cpp:
 
 	  Added more debugging info, bumped up the level on some debugging
-	  messages. 
+	  messages.
 
 Mon Nov 20 05:04:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 

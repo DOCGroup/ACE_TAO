@@ -32,7 +32,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (CORBA::Environment &ACE_TRY_ENV)
+Test_i::test_method (CORBA::Environment &/* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -103,7 +103,7 @@ create_object (PortableServer::POA_ptr poa,
                CORBA::Environment &ACE_TRY_ENV)
 {
   // Register with poa.
-  PortableServer::ObjectId_var id = 
+  PortableServer::ObjectId_var id =
     poa->activate_object (server_impl, ACE_TRY_ENV);
 
   ACE_CHECK_RETURN (-1);
@@ -117,7 +117,7 @@ create_object (PortableServer::POA_ptr poa,
   CORBA::String_var ior =
     orb->object_to_string (server.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-  
+
   ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
 
   // Print ior to the file.
@@ -168,7 +168,7 @@ main (int argc, char *argv[])
       // Servants.
       Test_i server_impl1 (orb.in ());
       Test_i server_impl2 (orb.in ());
-      
+
       // Create Objects.
       int result;
       result = create_object (root_poa.in (),
