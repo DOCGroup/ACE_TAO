@@ -1,3 +1,8 @@
+Wed Aug 26 12:11:23 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the _out warnings 
+	  given by the SunCC compiler. Thanks to David for the fix.
+
 Mon Aug 24 15:07:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cubit/TAO_IDL_Cubit/{client,server}.dsp: Added RTI_IO.cpp

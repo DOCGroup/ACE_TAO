@@ -173,6 +173,44 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   CORBA::Boolean met_qos;
   CORBA::String_var named_vdev;
 
+  // "AV/AVStreams_i.cpp", line 183: Warning (Anachronism): Temporary used for non-const reference, now obsolete.
+  // "AV/AVStreams_i.cpp", line 183: Note: Type "CC -migration" for more on anachronisms.
+  // "AV/AVStreams_i.cpp", line 183: Warning (Anachronism): The copy constructor for argument the_vdev of type AVStreams::VDev_out should take const AVStreams::VDev_out&.
+  // "AV/AVStreams_i.cpp", line 198: Warning (Anachronism): Temporary used for non-const reference, now obsolete.
+  // "AV/AVStreams_i.cpp", line 198: Warning (Anachronism): The copy constructor for argument the_vdev of type AVStreams::VDev_out should take const AVStreams::VDev_out&.
+  // 4 Warning(s) detected.
+  // To overcome the above warning we define _out variable for the
+  // vdev and use them instead .out ().
+
+#if defined (__SUNPRO_CC)
+  AVStreams::VDev_out vdev_a_out (this->vdev_a_);
+  AVStreams::VDev_out vdev_b_out (this->vdev_b_);
+
+  this->stream_endpoint_a_ =
+    a_party-> create_A (this->_this (env),
+                        vdev_a_out,
+                        the_qos,
+                        met_qos,
+                        named_vdev.inout (),
+                        the_flows,
+                        env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) TAO_StreamCtrl::create_A: succeeded\n"));
+
+  // Request b_party to create the endpoint and vdev
+
+  this->stream_endpoint_b_ =
+    b_party-> create_B (this->_this (env),
+                        vdev_b_out,
+                        the_qos,
+                        met_qos,
+                        named_vdev.inout (),
+                        the_flows,
+                        env);
+  TAO_CHECK_ENV_RETURN (env, 1);
+#else /* !__SUNPRO_CC */ 
   this->stream_endpoint_a_ =
     a_party-> create_A (this->_this (env),
                         this->vdev_a_.out (),
@@ -197,6 +235,8 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                         the_flows,
                         env);
   TAO_CHECK_ENV_RETURN (env, 1);
+
+#endif /* !__SUNPRO_CC */
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
