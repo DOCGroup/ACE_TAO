@@ -2,7 +2,9 @@ Tue Dec 10 10:20:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* ace/Synch.cpp: Commented out couple of lines in the dump
 	  function that was causing build errors from the checkin "Mon Dec
-	  9 18:54:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>" 
+	  9 18:54:09 2002  Douglas C. Schmidt
+	  <schmidt@ace.cs.wustl.edu>". Fixed the return type of the
+	  implementation to match the declaration.
 
 Mon Dec  9 18:54:09 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
