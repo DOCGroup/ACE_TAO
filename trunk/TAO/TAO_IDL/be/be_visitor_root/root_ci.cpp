@@ -44,8 +44,8 @@ int
 be_visitor_root_ci::init (void)
 {
   // first open the client-side inline file for writing
-  if (tao_cg->start_client_inline (idl_global->be_get_client_inline_fname ())
-      == -1)
+  if (tao_cg->start_client_inline (be_global->be_get_client_inline_fname ())
+        == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_root_ci - "

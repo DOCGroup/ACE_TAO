@@ -107,63 +107,11 @@ IDL_GlobalData::IDL_GlobalData (void)
       n_allocated_idl_files_ (0),
       pd_parse_state (PS_NoState),
       pd_idl_src_file (0),
-      changing_standard_include_files_ (1),
-      skel_export_macro_ (0),
-      skel_export_include_ (0),
-      stub_export_macro_ (0),
-      stub_export_include_ (0),
-      pch_include_ (0),
-      pre_include_ (0),
-      post_include_ (0),
-      client_hdr_ending_ (ACE::strnew ("C.h")),
-      client_stub_ending_ (ACE::strnew ("C.cpp")),
-      client_inline_ending_ (ACE::strnew ("C.i")),
-      server_hdr_ending_ (ACE::strnew ("S.h")),
-      implementation_hdr_ending_ (ACE::strnew ("I.h")),
-      implementation_skel_ending_ (ACE::strnew ("I.cpp")),
-      impl_class_prefix_ (ACE::strnew ("")),
-      impl_class_suffix_ (ACE::strnew ("_i")),
-      server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
-      server_skeleton_ending_ (ACE::strnew ("S.cpp")),
-      server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
-      server_inline_ending_ (ACE::strnew ("S.i")),
-      server_template_inline_ending_ (ACE::strnew ("S_T.i")),
       gperf_path_ (0),
-      output_dir_ (0),
       temp_dir_ (0),
-      any_support_ (I_TRUE),
-      tc_support_ (I_TRUE),
-#ifdef IDL_HAS_VALUETYPE
-      obv_support_ (I_FALSE), // maybe I_TRUE
-      obv_opt_accessor_ (0),
-#else
-      obv_support_ (I_FALSE), // ever
-#endif
-      gen_impl_files_ (I_FALSE),
-      gen_copy_ctor_ (I_FALSE),
-      gen_assign_op_ (I_FALSE),
-      gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
-      gen_direct_collocation_ (I_FALSE),
-#ifdef ACE_HAS_EXCEPTIONS
-      exception_support_ (I_TRUE),
-#else
-      exception_support_ (I_FALSE),
-#endif
-      use_raw_throw_ (I_FALSE),
-      opt_tc_ (I_FALSE),
-      case_diff_error_ (I_TRUE),
-      ami_call_back_ (I_FALSE),
-      gen_tie_classes_ (I_TRUE),
-#if (TAO_HAS_SMART_PROXIES == 1)
-      gen_smart_proxies_ (I_TRUE)
-#else
-      gen_smart_proxies_ (I_FALSE)
-#endif /* TAO_HAS_SMART_PROXIES == 1*/
-
-
-
+      obv_support_ (I_FALSE),
+      case_diff_error_ (I_TRUE)
 {
-
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
   // Use ACE_GPERF if $ACE_ROOT hasn't been set or won't be set
@@ -207,6 +155,10 @@ IDL_GlobalData::IDL_GlobalData (void)
     }
 }
 
+IDL_GlobalData::~IDL_GlobalData (void)
+{  
+}
+
 // Get or set scopes stack
 UTL_ScopeStack *
 IDL_GlobalData::scopes (void)
@@ -226,6 +178,7 @@ IDL_GlobalData::root (void)
 {
   return this->pd_root;
 }
+
 void
 IDL_GlobalData::set_root (AST_Root *r)
 {
@@ -238,6 +191,7 @@ IDL_GlobalData::gen (void)
 {
   return this->pd_gen;
 }
+
 void
 IDL_GlobalData::set_gen (AST_Generator *g)
 {
@@ -250,6 +204,7 @@ IDL_GlobalData::err (void)
 {
   return this->pd_err;
 }
+
 void
 IDL_GlobalData::set_err (UTL_Error *e)
 {
@@ -262,6 +217,7 @@ IDL_GlobalData::err_count (void)
 {
   return this->pd_err_count;
 }
+
 void
 IDL_GlobalData::set_err_count (long c)
 {
@@ -274,6 +230,7 @@ IDL_GlobalData::lineno (void)
 {
   return this->pd_lineno;
 }
+
 void
 IDL_GlobalData::set_lineno (long n)
 {
@@ -286,11 +243,17 @@ IDL_GlobalData::filename (void)
 {
   return this->pd_filename;
 }
+
 void
 IDL_GlobalData::set_filename (UTL_String *s)
 {
   if (this->pd_filename != 0)
-    delete this->pd_filename;
+    {
+      this->pd_filename->destroy ();
+      delete this->pd_filename;
+      this->pd_filename = 0;
+    }
+
   this->pd_filename = s;
 }
 
@@ -300,11 +263,17 @@ IDL_GlobalData::main_filename (void)
 {
   return this->pd_main_filename;
 }
+
 void
 IDL_GlobalData::set_main_filename (UTL_String *n)
 {
   if (this->pd_main_filename != 0)
-    delete this->pd_main_filename;
+    {
+      this->pd_main_filename->destroy ();
+      delete this->pd_main_filename;
+      this->pd_main_filename = 0;
+    }
+
   this->pd_main_filename = n;
 }
 
@@ -314,11 +283,17 @@ IDL_GlobalData::real_filename (void)
 {
   return this->pd_real_filename;
 }
+
 void
 IDL_GlobalData::set_real_filename (UTL_String *n)
 {
   if (this->pd_real_filename != 0)
-    delete this->pd_real_filename;
+    {
+      this->pd_real_filename->destroy ();
+      delete this->pd_real_filename;
+      this->pd_real_filename = 0;
+    }
+
   this->pd_real_filename = n;
 }
 
@@ -328,11 +303,13 @@ IDL_GlobalData::imported (void)
 {
   return this->pd_in_main_file ? I_FALSE : pd_import;
 }
+
 idl_bool
 IDL_GlobalData::import (void)
 {
   return this->pd_import;
 }
+
 void
 IDL_GlobalData::set_import (idl_bool is_in)
 {
@@ -345,6 +322,7 @@ IDL_GlobalData::in_main_file (void)
 {
   return this->pd_in_main_file;
 }
+
 void
 IDL_GlobalData::set_in_main_file (idl_bool is_in)
 {
@@ -357,6 +335,7 @@ IDL_GlobalData::stripped_filename (void)
 {
   return this->pd_stripped_filename;
 }
+
 void
 IDL_GlobalData::set_stripped_filename (UTL_String *nm)
 {
@@ -372,6 +351,7 @@ IDL_GlobalData::prog_name (void)
 {
   return this->pd_prog_name;
 }
+
 void
 IDL_GlobalData::set_prog_name (const char *pn)
 {
@@ -384,6 +364,7 @@ IDL_GlobalData::cpp_location (void)
 {
   return this->pd_cpp_location;
 }
+
 void
 IDL_GlobalData::set_cpp_location (const char *l)
 {
@@ -396,6 +377,7 @@ IDL_GlobalData::compile_flags (void)
 {
   return this->pd_compile_flags;
 }
+
 void
 IDL_GlobalData::set_compile_flags (long cf)
 {
@@ -408,6 +390,7 @@ IDL_GlobalData::be (void)
 {
   return this->pd_be;
 }
+
 void
 IDL_GlobalData::set_be (const char *nbe)
 {
@@ -421,11 +404,15 @@ IDL_GlobalData::local_escapes (void)
 {
   return this->pd_local_escapes;
 }
+
 void
 IDL_GlobalData::set_local_escapes (const char *e)
 {
   if (this->pd_local_escapes != 0)
-    ACE_OS::free (this->pd_local_escapes);
+    {
+      ACE_OS::free (this->pd_local_escapes);
+    }
+
   this->pd_local_escapes = ACE_OS::strdup (e);
 }
 
@@ -435,6 +422,7 @@ IDL_GlobalData::indent (void)
 {
   return this->pd_indent;
 }
+
 void
 IDL_GlobalData::set_indent (UTL_Indenter *i)
 {
@@ -541,7 +529,7 @@ IDL_GlobalData::set_n_include_file_names (unsigned long n)
 }
 
 unsigned long
-IDL_GlobalData::n_include_file_names()
+IDL_GlobalData::n_include_file_names (void)
 {
   return pd_n_include_file_names;
 }
@@ -747,558 +735,6 @@ void IDL_GlobalData::idl_src_file(UTL_String *s)
   this->pd_idl_src_file = s;
 }
 
-// To switch between changing or non-changing standard include files
-// include files, so that #include statements can be
-// generated with ""s or <>s respectively, for the standard include
-// files (e.g. tao/corba.h)
-void
-IDL_GlobalData::changing_standard_include_files (size_t changing)
-{
-  this->changing_standard_include_files_ = changing;
-}
-
-size_t
-IDL_GlobalData::changing_standard_include_files (void)
-{
-  return this->changing_standard_include_files_;
-}
-
-/************ Helper functions **************/
-static const char*
-be_change_idl_file_extension (UTL_String* idl_file,
-                              const char *new_extension,
-                              int base_name_only = 0)
-{
-  // @@ This shouldn't happen anyway; but a better error handling
-  // mechanism is needed.
-  if (idl_file == 0 || new_extension == 0)
-    return 0;
-
-  static char fname[MAXPATHLEN];
-  ACE_OS::memset (fname, 0, MAXPATHLEN);
-
-  // Get the char* from the UTL_String.
-  const char* string = idl_file->get_string ();
-
-  // Get the base part of the filename, we try several extensions
-  // before giving up.
-  const char *base = 0;
-
-  static const char* extensions[] = {
-    ".idl",
-    ".pidl",
-    ".IDL",
-    ".PIDL"
-  };
-  static int nextensions = sizeof(extensions)/sizeof(extensions[0]);
-
-  for (int k = 0; k < nextensions; ++k)
-    {
-      base = ACE_OS::strstr (string, extensions[k]);
-      if (base != 0)
-        break;
-    }
-  if (base == 0)
-    return 0;
-
-  if ((!base_name_only) && (idl_global->output_dir () != 0))
-    {
-      // Path info should also be added to fname.
-
-      // Add path and "/".
-      ACE_OS::sprintf (fname, "%s/", idl_global->output_dir ());
-
-      // Append the base part to fname.
-      ACE_OS::strncpy (fname + strlen (fname), string, base - string);
-    }
-  else
-    // Base_name_only or no putput_dir specified by user. JUST put the
-    // base part to fname.
-    ACE_OS::strncpy (fname, string, base - string);
-
-  // Turn '\' and '\\' into '/'.
-  char* i = fname;
-  for (char* j = fname; *j != 0; ++i, ++j)
-    {
-      if (*j == '\\')
-        {
-          *i = '/';
-          if (*(j+1) == '\\')
-            ++j;
-        }
-      else
-        *i = *j;
-    }
-  *i = 0;
-
-  // Append the newextension.
-  ACE_OS::strcat (fname, new_extension);
-
-  return fname;
-}
-
-const char *
-IDL_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
-                                   int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->client_hdr_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_client_stub (UTL_String *idl_file_name)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->client_stub_ending ());
-}
-
-const char *
-IDL_GlobalData::be_get_client_inline (UTL_String *idl_file_name,
-                                      int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->client_inline_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
-                                   int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_hdr_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
-                                   int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->implementation_hdr_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_implementation_skel (UTL_String *idl_file_name,
-                                   int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->implementation_skel_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_template_hdr (UTL_String *idl_file_name,
-                                            int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_template_hdr_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_skeleton (UTL_String *idl_file_name)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_skeleton_ending ());
-}
-
-const char *
-IDL_GlobalData::be_get_server_template_skeleton (UTL_String *idl_file_name,
-                                                 int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_template_skeleton_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_inline (UTL_String *idl_file_name,
-                                      int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_inline_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_template_inline (UTL_String *idl_file_name,
-                                               int base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       idl_global->server_template_inline_ending (),
-                                       base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_client_hdr_fname (int base_name_only)
-{
-  return be_get_client_hdr (idl_global->stripped_filename (),
-                            base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_client_stub_fname ()
-{
-  return be_get_client_stub (idl_global->stripped_filename ());
-}
-
-const char *
-IDL_GlobalData::be_get_client_inline_fname (int base_name_only)
-{
-  return be_get_client_inline (idl_global->stripped_filename (),
-                               base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_hdr_fname (int base_name_only)
-{
-  return be_get_server_hdr (idl_global->stripped_filename (),
-                            base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_implementation_hdr_fname (int base_name_only)
-{
-  return be_get_implementation_hdr (idl_global->stripped_filename (),
-                            base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_implementation_skel_fname (int base_name_only)
-{
-  return be_get_implementation_skel (idl_global->stripped_filename (),
-                            base_name_only);
-}
-
-
-const char *
-IDL_GlobalData::be_get_server_template_hdr_fname (int base_name_only)
-{
-  return be_get_server_template_hdr (idl_global->stripped_filename (),
-                                     base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_skeleton_fname ()
-{
-  return be_get_server_skeleton (idl_global->stripped_filename ());
-}
-/*
-const char *
-IDL_GlobalData::be_get_implementation_hdr_fname ()
-{
-  return be_get_implementation_hdr (idl_global->stripped_filename ());
-}
-*/
-
-const char *
-IDL_GlobalData::be_get_implementation_skeleton_fname ()
-{
-  return be_get_implementation_skel (idl_global->stripped_filename ());
-}
-
-
-const char *
-IDL_GlobalData::be_get_server_template_skeleton_fname (int base_name_only)
-{
-  return be_get_server_template_skeleton (idl_global->stripped_filename (),
-                                          base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_inline_fname (int base_name_only)
-{
-  return be_get_server_inline (idl_global->stripped_filename (),
-                               base_name_only);
-}
-
-const char *
-IDL_GlobalData::be_get_server_template_inline_fname (int base_name_only)
-{
-  return be_get_server_template_inline (idl_global->stripped_filename (),
-                                        base_name_only);
-}
-
-const char*
-IDL_GlobalData::skel_export_macro (void) const
-{
-  if (this->skel_export_macro_ == 0)
-    return "";
-  return this->skel_export_macro_;
-}
-
-void
-IDL_GlobalData::skel_export_macro (const char *s)
-{
-  this->skel_export_macro_ = ACE_OS::strdup (s);
-}
-
-const char*
-IDL_GlobalData::skel_export_include (void) const
-{
-  return this->skel_export_include_;
-}
-
-void
-IDL_GlobalData::skel_export_include (const char *s)
-{
-  this->skel_export_include_ = ACE_OS::strdup (s);
-}
-
-const char*
-IDL_GlobalData::stub_export_macro (void) const
-{
-  if (this->stub_export_macro_ == 0)
-    return "";
-  return this->stub_export_macro_;
-}
-
-void
-IDL_GlobalData::stub_export_macro (const char *s)
-{
-  this->stub_export_macro_ = ACE_OS::strdup (s);
-}
-
-const char*
-IDL_GlobalData::stub_export_include (void) const
-{
-  return this->stub_export_include_;
-}
-
-void
-IDL_GlobalData::stub_export_include (const char *s)
-{
-  this->stub_export_include_ = ACE_OS::strdup (s);
-}
-
-const char*
-IDL_GlobalData::pch_include (void) const
-{
-  return this->pch_include_;
-}
-
-void
-IDL_GlobalData::pch_include (const char *s)
-{
-  this->pch_include_ = ACE_OS::strdup (s);
-}
-
-const char*
-IDL_GlobalData::pre_include (void) const
-{
-  return this->pre_include_;
-}
-
-void
-IDL_GlobalData::pre_include (const char *s)
-{
-  this->pre_include_ = ACE_OS::strdup (s);
-}
-
-const char*
-IDL_GlobalData::post_include (void) const
-{
-  return this->post_include_;
-}
-
-void
-IDL_GlobalData::post_include (const char *s)
-{
-  this->post_include_ = ACE_OS::strdup (s);
-}
-
-// Set the client_hdr_ending.
-void
-IDL_GlobalData::client_hdr_ending (const char* s)
-{
-  delete [] this->client_hdr_ending_;
-  this->client_hdr_ending_ = ACE::strnew (s);
-}
-
-// Get the client_hdr_ending.
-const char*
-IDL_GlobalData::client_hdr_ending (void) const
-{
-  return this->client_hdr_ending_;
-}
-
-void
-IDL_GlobalData::client_inline_ending  (const char* s)
-{
-  delete [] this->client_inline_ending_;
-  this->client_inline_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::client_inline_ending (void) const
-{
-  return this->client_inline_ending_;
-}
-
-// Set the client_stub_ending.
-void
-IDL_GlobalData::client_stub_ending (const char* s)
-{
-  delete [] this->client_stub_ending_;
-  this->client_stub_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::client_stub_ending (void) const
-{
-  return this->client_stub_ending_;
-}
-
-void
-IDL_GlobalData::server_hdr_ending (const char* s)
-{
-  delete [] this->server_hdr_ending_;
-  this->server_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::server_hdr_ending (void) const
-{
-  return this->server_hdr_ending_;
-}
-
-void
-IDL_GlobalData::implementation_hdr_ending (const char* s)
-{
-  delete [] this->implementation_hdr_ending_;
-  this->implementation_hdr_ending_ = ACE::strnew (s);
-}
-
-void
-IDL_GlobalData::implementation_skel_ending (const char* s)
-{
-  delete [] this->implementation_skel_ending_;
-  this->implementation_skel_ending_ = ACE::strnew (s);
-}
-
-
-void
-IDL_GlobalData::impl_class_prefix (const char* s)
-{
-  delete [] this->impl_class_prefix_;
-  this->impl_class_prefix_ = ACE::strnew (s);
-}
-
-void
-IDL_GlobalData::impl_class_suffix (const char* s)
-{
-  delete [] this->impl_class_suffix_;
-  this->impl_class_suffix_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::impl_class_prefix (void) const
-{
-  return this->impl_class_prefix_;
-}
-
-const char*
-IDL_GlobalData::implementation_hdr_ending (void) const
-{
-  return this->implementation_hdr_ending_;
-}
-
-
-const char*
-IDL_GlobalData::impl_class_suffix (void) const
-{
-  return this->impl_class_suffix_;
-}
-
-const char*
-IDL_GlobalData::implementation_skel_ending (void) const
-{
-  return this->implementation_skel_ending_;
-}
-
-
-
-void
-IDL_GlobalData::server_template_hdr_ending (const char* s)
-{
-  delete [] this->server_template_hdr_ending_;
-  this->server_template_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::server_template_hdr_ending (void) const
-{
-  return this->server_template_hdr_ending_;
-}
-
-void
-IDL_GlobalData::server_skeleton_ending (const char* s)
-{
-  delete [] this->server_skeleton_ending_;
-  this->server_skeleton_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::server_skeleton_ending (void) const
-{
-  return this->server_skeleton_ending_;
-}
-
-void
-IDL_GlobalData::server_template_skeleton_ending (const char* s)
-{
-  delete [] this->server_template_skeleton_ending_;
-  this->server_template_skeleton_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::server_template_skeleton_ending (void) const
-{
-  return this->server_template_skeleton_ending_;
-}
-
-void
-IDL_GlobalData::server_inline_ending (const char* s)
-{
-  delete [] this->server_inline_ending_;
-  this->server_inline_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::server_inline_ending (void) const
-{
-  return this->server_inline_ending_;
-}
-
-void
-IDL_GlobalData::server_template_inline_ending (const char* s)
-{
-  delete [] this->server_template_inline_ending_;
-  this->server_template_inline_ending_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::server_template_inline_ending (void) const
-{
-  return this->server_template_inline_ending_;
-}
-
-void
-IDL_GlobalData::output_dir (const char* s)
-{
-  delete [] this->output_dir_;
-  this->output_dir_ = ACE::strnew (s);
-}
-
-const char*
-IDL_GlobalData::output_dir (void) const
-{
-  return this->output_dir_;
-}
-
 void
 IDL_GlobalData::temp_dir (const char* s)
 {
@@ -1337,43 +773,7 @@ IDL_GlobalData::gperf_path (void) const
   return this->gperf_path_;
 }
 
-void
-IDL_GlobalData::any_support (idl_bool val)
-{
-  this->any_support_ = val;
-}
-
-idl_bool
-IDL_GlobalData::any_support (void)
-{
-  return this->any_support_;
-}
-
-void
-IDL_GlobalData::tc_support (idl_bool val)
-{
-  this->tc_support_ = val;
-}
-
-idl_bool
-IDL_GlobalData::tc_support (void)
-{
-  return this->tc_support_;
-}
-
 #ifdef IDL_HAS_VALUETYPE
-void
-IDL_GlobalData::obv_opt_accessor (idl_bool val)
-{
-  this->obv_opt_accessor_ = val;
-}
-
-idl_bool
-IDL_GlobalData::obv_opt_accessor (void)
-{
-  return this->obv_opt_accessor_;
-}
-
 void
 IDL_GlobalData::obv_support (idl_bool val)
 {
@@ -1385,102 +785,6 @@ idl_bool
 IDL_GlobalData::obv_support (void)
 {
   return this->obv_support_;
-}
-
-void
-IDL_GlobalData::gen_impl_files (idl_bool val)
-{
-  this->gen_impl_files_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_impl_files (void)
-{
-  return this->gen_impl_files_;
-}
-
-void
-IDL_GlobalData::gen_copy_ctor (idl_bool val)
-{
-  this->gen_copy_ctor_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_copy_ctor (void)
-{
-  return this->gen_copy_ctor_;
-}
-
-void
-IDL_GlobalData::gen_assign_op (idl_bool val)
-{
-  this->gen_assign_op_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_assign_op (void)
-{
-  return this->gen_assign_op_;
-}
-
-void
-IDL_GlobalData::gen_thru_poa_collocation (idl_bool val)
-{
-  this->gen_thru_poa_collocation_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_thru_poa_collocation (void)
-{
-  return this->gen_thru_poa_collocation_;
-}
-
-void
-IDL_GlobalData::gen_direct_collocation (idl_bool val)
-{
-  this->gen_direct_collocation_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_direct_collocation (void)
-{
-  return this->gen_direct_collocation_;
-}
-
-void
-IDL_GlobalData::exception_support (idl_bool val)
-{
-  this->exception_support_ = val;
-}
-
-idl_bool
-IDL_GlobalData::exception_support (void)
-{
-  return this->exception_support_;
-}
-
-void 
-IDL_GlobalData::use_raw_throw (idl_bool val)
-{
-  this->use_raw_throw_ = val;
-}
-
-idl_bool
-IDL_GlobalData::use_raw_throw (void)
-{
-  return this->use_raw_throw_;
-}
-
-void
-IDL_GlobalData::opt_tc (idl_bool val)
-{
-  this->opt_tc_ = val;
-}
-
-idl_bool
-IDL_GlobalData::opt_tc (void)
-{
-  return this->opt_tc_;
 }
 
 void
@@ -1496,37 +800,34 @@ IDL_GlobalData::case_diff_error (void)
 }
 
 void
-IDL_GlobalData::ami_call_back (idl_bool val)
+IDL_GlobalData::destroy (void)
 {
-  this->ami_call_back_ = val;
+  if (this->pd_filename != 0)
+    {
+      this->pd_filename->destroy ();
+      delete this->pd_filename;
+      this->pd_filename = 0;
+    }
+
+  if (this->pd_main_filename != 0)
+    {
+      this->pd_main_filename->destroy ();
+      delete this->pd_main_filename;
+      this->pd_main_filename = 0;
+    }
+
+  if (this->pd_real_filename != 0)
+    {
+      this->pd_real_filename->destroy ();
+      delete this->pd_real_filename;
+      this->pd_real_filename = 0;
+    }
+
+  if (this->pd_stripped_filename != 0)
+    {
+      this->pd_stripped_filename->destroy ();
+      delete this->pd_stripped_filename;
+      this->pd_stripped_filename = 0;
+    }
 }
 
-idl_bool
-IDL_GlobalData::ami_call_back (void)
-{
-  return this->ami_call_back_;
-}
-
-void
-IDL_GlobalData::gen_tie_classes (idl_bool val)
-{
-  this->gen_tie_classes_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_tie_classes (void)
-{
-  return this->gen_tie_classes_;
-}
-
-void
-IDL_GlobalData::gen_smart_proxies (idl_bool val)
-{
-  this->gen_smart_proxies_ = val;
-}
-
-idl_bool
-IDL_GlobalData::gen_smart_proxies (void)
-{
-  return this->gen_smart_proxies_;
-}

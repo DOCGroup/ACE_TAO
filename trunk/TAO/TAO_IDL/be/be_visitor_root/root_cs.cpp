@@ -44,8 +44,8 @@ int
 be_visitor_root_cs::init (void)
 {
   // first open the file
-  if (tao_cg->start_client_stubs (idl_global->be_get_client_stub_fname ())
-      == -1)
+  if (tao_cg->start_client_stubs (be_global->be_get_client_stub_fname ())
+        == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_cs - "

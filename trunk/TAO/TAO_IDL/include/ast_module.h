@@ -79,7 +79,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_Module : public virtual AST_Decl, public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl, 
+                                     public virtual UTL_Scope
 {
 public:
   // Operations
@@ -121,6 +122,9 @@ public:
   // Called by lookup_by_name_local, to check for declaration
   // in a previous opening of this module.
   AST_Decl *look_in_previous (Identifier *e);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
 private:
   friend void fe_populate(AST_Module *m);

@@ -156,7 +156,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   os->indent ();
   // Here I still need to generate the other methods + private args
   *os << " virtual Dynamic::ParameterList * arguments (";
-    if (!idl_global->exception_support ())
+    if (!be_global->exception_support ())
       {
         *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
             <<be_idt_nl << " TAO_default_environment ())" 
@@ -170,7 +170,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
         << be_uidt_nl << be_nl;
   os->indent ();
   *os << "virtual Dynamic::ExceptionList * exceptions ( ";
-    if (!idl_global->exception_support ())
+    if (!be_global->exception_support ())
       {
         *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
             <<be_idt_nl << " TAO_default_environment ())" 
@@ -183,7 +183,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
         << be_uidt_nl << be_nl;
     os->indent ();
     *os << "virtual CORBA::Any * result (";
-    if (!idl_global->exception_support ())
+    if (!be_global->exception_support ())
       {
         *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
             <<be_idt_nl << " TAO_default_environment ())" 

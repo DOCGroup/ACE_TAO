@@ -85,23 +85,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(util, utl_strlist, "$Id$")
 
-/*
- * Constructor(s)
- */
-
+// Constructor
 UTL_StrList::UTL_StrList(UTL_String *s, UTL_StrList *cdr)
 	   : UTL_List(cdr),
 	     pd_car_data(s)
 {
 }
 
-/*
- * Private operations
- */
+// Destructor
+UTL_StrList::~UTL_StrList (void)
+{
+}
 
-/*
- * Public operations
- */
+// Public operations
 
 // Get list item
 UTL_String *
@@ -133,6 +129,26 @@ UTL_StrList::copy()
   if (tail() == NULL)
     return new UTL_StrList(head(), NULL);
   return new UTL_StrList(head(), (UTL_StrList *) tail()->copy());
+}
+
+void
+UTL_StrList::destroy (void)
+{
+  UTL_String *str = 0;
+  UTL_StrlistActiveIterator *i = 0;
+  ACE_NEW (i,
+           UTL_StrlistActiveIterator (this));
+
+  while (!(i->is_done ()))
+    {
+      str = i->item ();
+      str->destroy ();
+      delete str;
+      str = 0;
+      i->next ();
+    }
+
+  delete i;
 }
 
 // AST Dumping

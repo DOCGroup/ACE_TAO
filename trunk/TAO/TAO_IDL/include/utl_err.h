@@ -78,7 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-class   UTL_Error
+class TAO_IDL_FE_Export UTL_Error
 {
 public:
   enum ErrorCode {

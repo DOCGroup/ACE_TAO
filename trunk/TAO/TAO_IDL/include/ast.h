@@ -78,6 +78,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from idl.hh
 */
 
+// This is to remove "inherits via dominance" warnings from MSVC.
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
 #include        "utl_scoped_name.h"     // Define UTL_ScopedName
 
 #include        "ast_decl.h"            // class AST_Decl
@@ -88,7 +96,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "ast_type.h"            // class AST_Type
 #include        "ast_concrete_type.h"   // class AST_ConcreteType
-#include        "ast_predefined_type.h"// class AST_PredefinedType
+#include        "ast_predefined_type.h" // class AST_PredefinedType
 #include        "ast_module.h"          // class AST_Module
 #include        "ast_root.h"            // class AST_Root
 #include        "ast_interface.h"       // class AST_Interface
@@ -108,13 +116,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_array.h"           // class AST_Array
 #include        "ast_sequence.h"        // class AST_Sequence
 #include        "ast_string.h"          // class AST_String
-#include        "ast_typedef.h" // class AST_Typedef
+#include        "ast_typedef.h"         // class AST_Typedef
 #include        "ast_native.h"          // class AST_Native
 
 #include        "utl_list.h"            // class UTL_List
-#include        "utl_strlist.h" // class UTL_StrList
+#include        "utl_strlist.h"         // class UTL_StrList
 #include        "utl_exprlist.h"        // class UTL_ExprList
 
 #include        "ast_generator.h"       // class AST_Generator
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif           // _AST_AST_HH

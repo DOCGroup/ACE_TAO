@@ -69,10 +69,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // idl_global.hh
 //
-// Defines a class containing all global data for the compiler.
-// Can be subclassed in BEs to store more data
+// Defines a class containing all front end global data.
 
-class IDL_GlobalData
+class TAO_IDL_FE_Export IDL_GlobalData
 {
 public:
   // Types
@@ -202,84 +201,85 @@ public:
   };
 
   // Constructor
-  IDL_GlobalData();
-  virtual ~IDL_GlobalData() {}
+  IDL_GlobalData (void);
+  // Destructor
+  virtual ~IDL_GlobalData (void);
 
   // Operations
-  virtual UTL_ScopeStack   *scopes();              // Scopes stack
-  virtual void             set_scopes(UTL_ScopeStack *);
-                                                   // Set it
+  virtual UTL_ScopeStack   *scopes (void);              // Scopes stack
+  virtual void             set_scopes (UTL_ScopeStack *);
+                                                        // Set it
 
-  virtual AST_Root         *root();                // Root of AST
-  virtual void             set_root(AST_Root *);   // Set it
+  virtual AST_Root         *root (void);                // Root of AST
+  virtual void             set_root (AST_Root *);       // Set it
 
-  virtual AST_Generator    *gen();                 // Generator
-  virtual void             set_gen(AST_Generator *);// Set it
+  virtual AST_Generator    *gen (void);                 // Generator
+  virtual void             set_gen (AST_Generator *);   // Set it
 
-  virtual UTL_Error        *err();                 // Error reporter
-  virtual void             set_err(UTL_Error *);   // Set it
+  virtual UTL_Error        *err (void);                 // Error reporter
+  virtual void             set_err (UTL_Error *);       // Set it
 
-  virtual long             err_count();            // How many errors?
-  virtual void             set_err_count(long);    // Set it
+  virtual long             err_count (void);            // How many errors?
+  virtual void             set_err_count (long);        // Set it
 
-  virtual long             lineno();               // Where in file?
-  virtual void             set_lineno(long);       // Set it
+  virtual long             lineno (void);               // Where in file?
+  virtual void             set_lineno (long);           // Set it
 
-  virtual UTL_String       *filename();            // What file?
-  virtual void             set_filename(UTL_String *); // Set it
+  virtual UTL_String       *filename (void);            // What file?
+  virtual void             set_filename (UTL_String *); // Set it
 
-  virtual UTL_String       *main_filename();       // What's the main
-                                                   // file name?
-  virtual void             set_main_filename(UTL_String *);
-                                                   // Set it
+  virtual UTL_String       *main_filename (void);       // What's the main
+                                                        // file name?
+  virtual void             set_main_filename (UTL_String *);
+                                                        // Set it
 
-  virtual UTL_String       *real_filename();       // What's the real
-                                                   // file name?
-  virtual void             set_real_filename(UTL_String *);
-                                                   // Set it
+  virtual UTL_String       *real_filename (void);       // What's the real
+                                                        // file name?
+  virtual void             set_real_filename (UTL_String *);
+                                                        // Set it
 
-  virtual UTL_String       *stripped_filename();   // Stripped filename
-  virtual void             set_stripped_filename(UTL_String *);  // Set it
+  virtual UTL_String       *stripped_filename (void);   // Stripped filename
+  virtual void             set_stripped_filename (UTL_String *);  // Set it
 
-  virtual idl_bool         imported();             // Are we imported?
-  virtual idl_bool         import();               // Is import on?
-  virtual void             set_import(idl_bool);   // Set it
+  virtual idl_bool         imported (void);             // Are we imported?
+  virtual idl_bool         import (void);               // Is import on?
+  virtual void             set_import (idl_bool);       // Set it
 
-  virtual idl_bool         in_main_file();         // Are we?
-  virtual void             set_in_main_file(idl_bool);     // Set it
+  virtual idl_bool         in_main_file (void);         // Are we?
+  virtual void             set_in_main_file (idl_bool); // Set it
 
-  virtual const char       *prog_name(void);           // Invoked as..
-  virtual void             set_prog_name(const char *);  // Set it
+  virtual const char       *prog_name (void);           // Invoked as..
+  virtual void             set_prog_name (const char *);  // Set it
 
-  virtual const char       *cpp_location(void);     // Where's CPP?
-  virtual void             set_cpp_location(const char *);// Set it
+  virtual const char       *cpp_location (void);        // Where's CPP?
+  virtual void             set_cpp_location (const char *);// Set it
 
-  virtual long             compile_flags(void);   // What flags are on?
-  virtual void             set_compile_flags(long);// Turn some on or off
+  virtual long             compile_flags (void);        // What flags are on?
+  virtual void             set_compile_flags (long);    // Turn some on or off
 
-  virtual const char       *be(void);                  // Get BE to use
-  virtual void             set_be(const char *);         // Set it
+  virtual const char       *be (void);                  // Get BE to use
+  virtual void             set_be (const char *);       // Set it
 
-  virtual char             *local_escapes(void);       // Get local escapes
-  virtual void             set_local_escapes(const char *);// Set it
+  virtual char             *local_escapes (void);       // Get local escapes
+  virtual void             set_local_escapes (const char *);// Set it
 
-  virtual UTL_Indenter     *indent();              // Get indenter
-  virtual void             set_indent(UTL_Indenter *);
-                                                   // Set it
+  virtual UTL_Indenter     *indent (void);              // Get indenter
+  virtual void             set_indent (UTL_Indenter *);
+                                                        // Set it
 
-  virtual UTL_StrList      *pragmas();             // Get pragmas
-  virtual void             set_pragmas(UTL_StrList *);// Set it
+  virtual UTL_StrList      *pragmas (void);             // Get pragmas
+  virtual void             set_pragmas (UTL_StrList *); // Set it
 
-  virtual idl_bool         read_from_stdin();      // Reading from stdin?
-  virtual void             set_read_from_stdin(idl_bool); // Set it
+  virtual idl_bool         read_from_stdin (void);      // Reading from stdin?
+  virtual void             set_read_from_stdin (idl_bool); // Set it
 
-  virtual void             store_include_file_name(UTL_String *);
+  virtual void             store_include_file_name (UTL_String *);
 
-  virtual UTL_String       **include_file_names();   // Array of file names
-  virtual void             set_include_file_names(UTL_String **); // Set it
+  virtual UTL_String       **include_file_names (void); // Array of file names
+  virtual void             set_include_file_names (UTL_String **); // Set it
 
-  virtual unsigned long    n_include_file_names(); // How many
-  virtual void             set_n_include_file_names(unsigned long n);
+  virtual unsigned long    n_include_file_names (void); // How many
+  virtual void             set_n_include_file_names (unsigned long n);
 
   // = Access methods to deal with other IDL files included in the main
   //   IDL file. These IDL files are exactly the same strings that are
@@ -304,215 +304,18 @@ public:
   // ignored by the preprocessor.
   virtual void validate_included_idl_files (void);
 
-  virtual ParseState            parse_state();          // What state we're in
-  virtual void                  set_parse_state(ParseState s); // Set it
+  virtual ParseState parse_state (void);    // What state we're in
+  virtual void set_parse_state (ParseState s); // Set it
 
   // Convert from a predefined type to an expression type
   virtual AST_Expression::ExprType
   PredefinedTypeToExprType (AST_PredefinedType::PredefinedType);
 
-  /**************** Added to serve the back end *************/
-  virtual UTL_String                *idl_src_file();
+  virtual UTL_String                *idl_src_file (void);
   // Returns the IDL source file being compiled.
 
-  virtual void                  idl_src_file(UTL_String *);
+  virtual void                  idl_src_file (UTL_String *);
   // Set the source IDL file that is being parsed.
-
-  virtual void changing_standard_include_files (size_t changing);
-  virtual size_t changing_standard_include_files (void);
-  // To switch between changing or non-changing standard include
-  // files (e.g. tao/corba.h)  so that #include statements can be
-  // generated with ""s or <>s respectively.
-
-
-  // Helper functions that generate the file names for the C++ mapping
-  // generated code.
-  // The parameter <base_name_only> set to 0 (no base name, but full
-  // name with output dir path, is useful, when I just want just the
-  // base name to use in #include's etc.
-  static const char  *be_get_client_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_client_stub_fname ();
-  static const char  *be_get_client_inline_fname (int base_name_only = 0);
-  static const char  *be_get_server_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_implementation_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_implementation_skel_fname (int base_name_only = 0);
-  static const char  *be_get_server_template_hdr_fname (int base_name_only = 0);
-  static const char  *be_get_server_skeleton_fname ();
-  static const char  *be_get_implementation_skeleton_fname ();
-  //  static const char  *be_get_implementation_hdr_fname ();
-  static const char  *be_get_server_template_skeleton_fname (int base_name_only = 0);
-  static const char  *be_get_server_inline_fname (int base_name_only = 0);
-  static const char  *be_get_server_template_inline_fname (int base_name_only = 0);
-
-  // Helper functions: obtain the names of each generated file given
-  // the IDL file name.
-  // The parameter <base_name_only> set to 0 (no base name, but full
-  // name with output dir path, is useful, when I just want just the
-  // base name to use in #include's etc.
-  static const char *be_get_client_hdr (UTL_String *idl_file_name,
-                                        int base_name_only = 0);
-  static const char *be_get_client_stub (UTL_String *idl_file_name);
-  static const char *be_get_client_inline (UTL_String *idl_file_name,
-                                           int base_name_only = 0);
-  static const char *be_get_server_hdr (UTL_String *idl_file_name,
-                                        int base_name_only = 0);
-  static const char *be_get_implementation_hdr (UTL_String *idl_file_name,
-                                        int base_name_only = 0);
-  static const char *be_get_implementation_skel (UTL_String *idl_file_name,
-                                        int base_name_only = 0);
-  static const char *be_get_server_template_hdr (UTL_String *idl_file_name,
-                                                 int base_name_only = 0);
-  static const char *be_get_server_skeleton (UTL_String *idl_file_name);
-  static const char *be_get_server_template_skeleton (UTL_String *idl_file_name,
-                                                      int base_name_only = 0);
-  static const char *be_get_server_inline (UTL_String *idl_file_name,
-                                           int base_name_only = 0);
-  static const char *be_get_server_template_inline (UTL_String *idl_file_name,
-                                                    int base_name_only = 0);
-
-  virtual const char* skel_export_macro (void) const;
-  // returns the macro name for exporting server side classes in Win32
-  // DLL.
-
-  virtual void skel_export_macro (const char* s);
-  // set the macro name for export server side classes in Win32 DLL.
-
-  virtual const char* skel_export_include (void) const;
-  // returns the name of the include file that contains the server
-  // side export macro definition.
-
-  virtual void skel_export_include (const char* s);
-  // set the name of the include file that contains the server side
-  // export macro definition.
-
-  virtual const char* stub_export_macro (void) const;
-  // returns the macro name for exporting client side classes in Win32
-  // DLL.
-
-  virtual void stub_export_macro (const char* s);
-  // set the macro name for export client side classes in Win32 DLL.
-
-  virtual const char* stub_export_include (void) const;
-  // returns the name of the include file that contains the client
-  // side export macro definition.
-
-  virtual void stub_export_include (const char* s);
-  // set the name of the include file that contains the client side
-  // export macro definition.
-
-  virtual const char* pch_include (void) const;
-  // returns the name of the include file to be used for precompiled
-  // header support.
-
-  virtual void pch_include (const char* s);
-  // set the name of the include file to be used for precompiled
-  // header support.
-
-  virtual const char* pre_include (void) const;
-  // returns the name of the include file to be put at the top of
-  // every header file.
-
-  virtual void pre_include (const char* s);
-  // set the name of the include file to be put at the top of every
-  // header file.
-
-  virtual const char* post_include (void) const;
-  // returns the name of the include file to be put at the bottom of
-  // every header file.
-
-  virtual void post_include (const char* s);
-  // set the name of the include file to be put at the bottom of every
-  // header file.
-
-  // = Set and get methods for different file name endings.
-
-  virtual void client_hdr_ending (const char* s);
-  // Set the client_hdr_ending.
-
-  virtual const char* client_hdr_ending (void) const;
-  // Get the client_hdr_ending.
-
-  virtual void client_inline_ending (const char* s);
-  // Set the client_inline_ending.
-
-  virtual const char* client_inline_ending (void) const;
-  // Get the client_inline_ending.
-
-  virtual void  client_stub_ending (const char* s);
-  // Set the client_stub_ending.
-
-  virtual const char* client_stub_ending (void) const;
-  // Get the client_stub_ending.
-
-  virtual void server_hdr_ending (const char* s);
-  // Set the server_hdr_ending.
-
-  virtual const char* server_hdr_ending (void) const;
-  // Get the server_hdr_ending.
-
-  virtual void implementation_hdr_ending (const char* s);
-  // Set the implementation_hdr_ending.
-
-  virtual void impl_class_prefix (const char* s);
-  // Set the implementation class prefix.
-
-  virtual void impl_class_suffix (const char* s);
-  // Set the implementation class suffix.
-
-  virtual void implementation_skel_ending (const char* s);
-  // Set the implementation_skel_ending.
-
-  virtual const char* implementation_hdr_ending (void) const;
-  // Get the implementation_hdr_ending.
-
-  virtual const char* impl_class_prefix (void) const;
-  //Get implementation class prefix
-
-  virtual const char* impl_class_suffix (void) const;
-  //Get implementation class suffix
-
-  virtual const char* implementation_skel_ending (void) const;
-  // Get the implementation_skel_ending.
-
-  virtual void server_template_hdr_ending (const char* s);
-  // Set the server_template_hdr_ending.
-
-  virtual const char* server_template_hdr_ending (void) const;
-  // Get the server_template_hdr_ending.
-
-  virtual void server_skeleton_ending (const char* s);
-  // Set the server_skeleton_ending.
-
-  virtual const char* server_skeleton_ending (void) const;
-  // Get the server_skeleton_ending.
-
-  virtual void server_template_skeleton_ending (const char* s);
-  // Set the server_template_skeleton_ending.
-
-  virtual const char* server_template_skeleton_ending (void) const;
-  // Get the server_template_skeleton_ending.
-
-  virtual void server_inline_ending (const char* s);
-  // Set the server_inline_ending.
-
-  virtual const char* server_inline_ending (void) const;
-  // Get the server_inline_ending.
-
-  virtual void server_template_inline_ending (const char* s);
-  //  Set the server_template_inline_ending.
-
-  virtual const char* server_template_inline_ending (void) const;
-  // Get the server_template_inline_ending.
-
-  virtual void output_dir (const char* s);
-  // Set the directory where all the IDL-Compiler-Generated files are
-  // to be kept. Default  is current directory from which the
-  // <tao_idl> is called.
-
-  virtual const char* output_dir (void) const;
-  // Get the directory where all the IDL-Compiler-Generated files are
-  // to be kept. Default  is current directory from which the
-  // <tao_idl> is called.
 
   virtual void temp_dir (const char* s);
   // Set the directory where the IDL compiler can keep all its temp
@@ -530,76 +333,13 @@ public:
   virtual const char* gperf_path (void) const;
   // Get the path for the perfect hashing program (GPERF).
 
-  virtual void any_support (idl_bool);
-  // enable suppressing any support    ?T.Kuepper: suppressed?
-
-  virtual idl_bool any_support (void);
-  // check if Any support is suppressed  ? enabled ?
-
-  virtual void tc_support (idl_bool);
-  // enable suppressing TypeCode support
-
-  virtual idl_bool tc_support (void);
-  // check if TypeCode support is suppressed
-
 #ifdef IDL_HAS_VALUETYPE
-  virtual void obv_opt_accessor (idl_bool);
-  virtual idl_bool obv_opt_accessor (void);
-
   virtual void obv_support (idl_bool);
   // set enable/disable OBV (Valuetype) support
 #endif /* IDL_HAS_VALUETYPE */
 
   virtual idl_bool obv_support (void);
   // check if OBV (Valuetype) support is enabled
-
-  virtual void gen_impl_files (idl_bool);
-  //enable generation of implementation files
-
-  virtual idl_bool gen_impl_files (void);
-  // check if we want to generate implementation files
-
-  virtual void gen_copy_ctor (idl_bool);
-  //enable generation of copy constructor
-
-  virtual idl_bool gen_copy_ctor (void);
-  //check if we want to generate the copy constructor
-
-  virtual void gen_assign_op (idl_bool);
-  //enable the generation of the assignment operator
-
-  virtual idl_bool gen_assign_op (void);
-  //check if we want to generate the assignment operator
-
-  virtual void gen_thru_poa_collocation (idl_bool);
-  // set whether we want to generate Thru_POA collocation stubs.
-
-  virtual idl_bool gen_thru_poa_collocation (void);
-  // check if we want to generate Thru_POA collocation stubs.
-
-  virtual void gen_direct_collocation (idl_bool);
-  // set whether we want to generate Direct collocation stubs.
-
-  virtual idl_bool gen_direct_collocation (void);
-  // check if we want to generate Direct collocation stubs.
-
-  virtual void exception_support (idl_bool);
-  // enable real C++ exceptions
-
-  virtual idl_bool exception_support (void);
-  // check if real C++ exception support is to be enabled
-
-  virtual void use_raw_throw (idl_bool);
-  // enable replacement of 'ACE_THROW_SPEC' with 'throw'.
-
-  virtual idl_bool use_raw_throw (void);
-  // check if raw 'throw' generation option is set.
-
-  virtual void opt_tc (idl_bool);
-  // enable optimized typecodes
-
-  virtual idl_bool opt_tc (void);
-  // check if TypeCodes need be optimized
 
   virtual void case_diff_error (idl_bool);
   // report an error (1) for indentifiers in the same scope
@@ -608,25 +348,8 @@ public:
   virtual idl_bool case_diff_error (void);
   // are we strict about case-only differences or not?
 
-  virtual void ami_call_back (idl_bool value);
-  // To enable or disable AMI call back feature of the Messaging
-  // specification in the generated code.
-
-  virtual idl_bool ami_call_back (void);
-  // Return the flag.
-
-  virtual void gen_tie_classes (idl_bool value);
-  // Toggle the generation of tie classes and files.
-
-  virtual idl_bool gen_tie_classes (void);
-  // Return the flag.
-
-  virtual void gen_smart_proxies (idl_bool value);
-  // To enable or disable AMI call back feature of the Messaging
-  // specification in the generated code.
-
-  virtual idl_bool gen_smart_proxies (void);
-  // Return the flag.
+  virtual void destroy (void);
+  // Cleanup function.
 
 private:
   // Data
@@ -673,126 +396,21 @@ private:
 
   UTL_String                *pd_idl_src_file;       // IDL source file.
 
-  size_t  changing_standard_include_files_;
-  // To switch between changing or non-changing standard include
-  // files (e.g. tao/corba.h)  so that #include statements can be
-  // generated with ""s or <>s respectively.
-
-  char* skel_export_macro_;
-  char* skel_export_include_;
-  char* stub_export_macro_;
-  char* stub_export_include_;
-  char* pch_include_;
-  char* pre_include_;
-  char* post_include_;
-
-  // Client's header file name ending. Default is "C.h".
-  char*  client_hdr_ending_;
-
-  // Client's stub's file name ending. Default is "C.cpp".
-  char* client_stub_ending_;
-
-  // Client's inline file name ending. Default is "C.i".
-  char* client_inline_ending_;
-
-  // Server's hdr file name ending. Default is "S.h".
-  char* server_hdr_ending_;
-
-  // Implementation's hdr file name ending. Default is "I.h".
-  char* implementation_hdr_ending_;
-
- // Implementation's skeleton file name ending. Default is "I.cpp".
-  char* implementation_skel_ending_;
-
-  //Implementaion class prefix
-  char* impl_class_prefix_;
-
-  //Implementation class suffix
-  char* impl_class_suffix_;
-
-  // Server's template hdr file name ending. Default is "S_T.h".
-  char* server_template_hdr_ending_;
-
-  // Server's skeleton file name ending. Default is "S.cpp".
-  char* server_skeleton_ending_;
-
-  // Server's template skeleton file name ending. Default is
-  // "S_T.cpp".
-  char* server_template_skeleton_ending_;
-
-  // Server's inline file name ending. Default is "S.i".
-  char* server_inline_ending_;
-
-  // Server's template inline file name ending. Default is "S_T.i".
-  char* server_template_inline_ending_;
-
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
   char* gperf_path_;
 
 
-  char* output_dir_;
-  // Directory where all the IDL-Compiler-Generated files are to be
-  // kept. Default value is 0 for this string which means the current
-  // directory from which the <tao_idl> is called.
-
   char* temp_dir_;
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
 
-  idl_bool any_support_;
-  // do we support Any operators?
-
-  idl_bool tc_support_;
-  // do we support typecodes?
-
   idl_bool obv_support_;
   // do we support OBV (Valuetype)?
-
-  idl_bool obv_opt_accessor_;
-  // do we optimize valuetype accessors?
-
-  idl_bool gen_impl_files_;
-  // are we generating implementation files?
-
-  idl_bool gen_copy_ctor_;
-  // are we generating the copy constructor?
-
-  idl_bool gen_assign_op_;
-  // are we generating the assignment operator?
-
-  idl_bool gen_thru_poa_collocation_;
-  // are we generating Thru_POA collocated stubs?
-
-  idl_bool gen_direct_collocation_;
-  // are we generating Direct collocated stubs?
-
-  idl_bool exception_support_;
-  // do we support real C++ exceptions (strict mapping) for stubs/skeletons?
-
-  idl_bool use_raw_throw_;
-  // Another possible option if the above is TRUE.
-
-  idl_bool opt_tc_;
-  // do we generate optimized typecodes?
 
   idl_bool case_diff_error_;
   // do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
-
-  idl_bool ami_call_back_;
-  // Flag to indicate whether the AMI Call back feature of the
-  // Messaging specification should be enabled for the generated files
-  // or not.
-
-  idl_bool gen_tie_classes_;
-  // Flag to indicate whether we generate the tie classes and
-  // files or not.
-
-  idl_bool gen_smart_proxies_;
-  // Flag to indicate whether smart proxies classes will be generated
-  // or not.
-
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

@@ -1,22 +1,19 @@
 //
 // $Id$
 //
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 ACE_RCSID(be, be_union_label, "$Id$")
 
-
-/*
- * BE_UnionLabel
- */
 be_union_label::be_union_label()
 {
 }
-be_union_label::be_union_label(AST_UnionLabel::UnionLabel ul,
+be_union_label::be_union_label (AST_UnionLabel::UnionLabel ul,
 			       AST_Expression *v)
-	      : AST_UnionLabel(ul, v)
+  : AST_UnionLabel (ul, 
+                    v)
 {
 }
 

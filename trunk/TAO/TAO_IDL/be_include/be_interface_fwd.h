@@ -65,6 +65,9 @@ public:
                             char *full_name = 0);
   // generate the _out implementation
 
+  virtual void destroy (void);
+  // Cleanup function.
+
   // Visiting
   virtual int accept (be_visitor* visitor);
 

@@ -804,6 +804,11 @@ AST_Module::look_in_previous (Identifier *e)
   return 0;
 }
 
+void
+AST_Module::destroy (void)
+{
+}
+
 /*
  * Narrowing methods
  */

@@ -25,20 +25,22 @@
 
 ACE_RCSID(be, be_constant, "$Id$")
 
-/*
- * BE_Constant
- */
 be_constant::be_constant (void)
 {
   this->size_type (be_decl::FIXED);
 }
 
 be_constant::be_constant (AST_Expression::ExprType et,
-			  AST_Expression *v,
+			                    AST_Expression *v,
                           UTL_ScopedName *n,
                           UTL_StrList *p)
-  : AST_Constant (et, v, n, p),
-    AST_Decl (AST_Decl::NT_const, n, p)
+  : AST_Constant (et, 
+                  v, 
+                  n, 
+                  p),
+    AST_Decl (AST_Decl::NT_const, 
+              n, 
+              p)
 {
   this->size_type (be_decl::FIXED);
 }

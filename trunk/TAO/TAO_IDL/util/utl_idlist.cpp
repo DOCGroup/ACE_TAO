@@ -85,56 +85,71 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(util, utl_idlist, "$Id$")
 
-/*
- * Constructor(s)
- */
-
-UTL_IdList::UTL_IdList (Identifier *s, UTL_IdList *cdr)
+// Constructor
+UTL_IdList::UTL_IdList (Identifier *s, 
+                        UTL_IdList *cdr)
   : UTL_List ((UTL_List *) cdr),
     pd_car_data (s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
+// Public operations
 
 // Copy a list
 UTL_List *
 UTL_IdList::copy ()
 {
-  if (tail () == NULL)
-    return (UTL_List *) new UTL_IdList (new Identifier (head ()->get_string ()), NULL);
-  return (UTL_List *) new UTL_IdList (new Identifier (head ()->get_string ()), (UTL_IdList *) tail ()->copy ());
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier (this->head ()->get_string ()),
+                  0);
+
+  UTL_IdList *retval = 0;
+
+  if (this->tail () == 0)
+    {
+      ACE_NEW_RETURN (retval,
+                      UTL_IdList (id, 
+                                  0),
+                      0);
+    }
+  else
+    {
+      ACE_NEW_RETURN (retval,
+                      UTL_IdList (id,
+                                  (UTL_IdList *) this->tail ()->copy ()),
+                      0);
+    }
+
+  return (UTL_List *) retval;
 }
 
 // Get list item
 Identifier *
 UTL_IdList::head ()
 {
-    return pd_car_data;
+  return pd_car_data;
 }
 
 // Get last item of this list
 Identifier *
 UTL_IdList::last_component ()
 {
-  if (tail()== NULL)
-    return head ();
-  return ((UTL_IdList *) tail ())->last_component ();
+  if (this->tail ()== 0)
+    return this->head ();
+  return ((UTL_IdList *) this->tail ())->last_component ();
 }
 
 // AST Dumping
 void
 UTL_IdList::dump (ostream &o)
 {
-  UTL_IdListActiveIterator	*i = new UTL_IdListActiveIterator (this);
-  long				first = I_TRUE;
-  long				second = I_FALSE;
+  UTL_IdListActiveIterator *i = 0;
+  ACE_NEW (i,
+           UTL_IdListActiveIterator (this));
+
+  long first = I_TRUE;
+  long second = I_FALSE;
 
   while (!(i->is_done ()))
     {
@@ -152,30 +167,44 @@ UTL_IdList::dump (ostream &o)
         }
       i->next ();
     }
+
+  delete i;
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
+void
+UTL_IdList::destroy (void)
+{
+  Identifier *id = 0;
+  UTL_IdListActiveIterator *i = 0;
+  ACE_NEW (i,
+           UTL_IdListActiveIterator (this));
+
+  while (!(i->is_done ()))
+    {
+      id = i->item ();
+
+      if (id != 0)
+        {
+          id->destroy ();
+          delete id;
+          id = 0;
+        }
+
+      i->next ();
+    }
+
+  delete i;
+}
 
 // UTL_IdList active iterator
 
-/*
- * Constructor
- */
-
+// Constructor
 UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
     : UTL_ListActiveIterator (s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
+// Public operations
 
 // Get current item
 Identifier *
@@ -186,6 +215,3 @@ UTL_IdListActiveIterator::item ()
     return ((UTL_IdList *) source)->head ();
 }
 
-/*
- * Redefinition of inherited virtual operations
- */

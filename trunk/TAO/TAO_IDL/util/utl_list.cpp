@@ -85,94 +85,81 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(util, utl_list, "$Id$")
 
-/*
- * Constructor(s)
- */
-
-UTL_List::UTL_List(UTL_List *c)
-	: pd_cdr_data(c) 
+// Constructor
+UTL_List::UTL_List (UTL_List *c)
+	: pd_cdr_data (c) 
 {
 }
 
-/*
- * Private operations
- */
+// Destructor
+UTL_List::~UTL_List (void)
+{
+//  delete this->pd_cdr_data;
+//  this->pd_cdr_data = 0;
+}
+
+// Private operations
 
 // Compute list length
 long
-UTL_List::list_length(long n)
+UTL_List::list_length (long n)
 {
   if (pd_cdr_data == NULL)
     return n;
   else
-    return pd_cdr_data->list_length(n+1);
+    return pd_cdr_data->list_length (n+1);
 }
 
-/*
- * Public operations
- */
+// Public operations
 
 // Smash last cdr with l
 void
-UTL_List::nconc(UTL_List *l)
+UTL_List::nconc (UTL_List *l)
 {
   if (pd_cdr_data == NULL)
     pd_cdr_data = l;
   else
-    pd_cdr_data->nconc(l);
+    pd_cdr_data->nconc (l);
 }
 
-/*
- * Override this operation to copy lists of other types
- */
-// Copy a list
+// Override this operation to copy lists of other types
 UTL_List *
-UTL_List::copy()
+UTL_List::copy ()
 {
   if (pd_cdr_data == NULL)
-    return new UTL_List(NULL);
-  return new UTL_List(pd_cdr_data->copy());
+    return new UTL_List (NULL);
+
+  return new UTL_List (pd_cdr_data->copy ());
 }
 
 // Get next list
 UTL_List *
-UTL_List::tail()
+UTL_List::tail ()
 {
   return pd_cdr_data;
 }
 
 // Set next list
 void
-UTL_List::set_tail(UTL_List *l)
+UTL_List::set_tail (UTL_List *l)
 {
-  pd_cdr_data = l;
+  this->pd_cdr_data = l;
 }
 
 // Compute list length
 long
-UTL_List::length()
+UTL_List::length ()
 {
-  return list_length(1);
+  return list_length (1);
 }
-
-/*
- * Redefinition of inherited virtual operations
- */
 
 // UTL_List active iterator
 
-/*
- * Constructor
- */
-
-UTL_ListActiveIterator::UTL_ListActiveIterator(UTL_List *s)
-		      : source(s)
+// Constructor
+UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
+  : source (s)
 {
 }
-
-/*
- * Private operations
- */
 
 /*
  * Public operations
@@ -180,20 +167,16 @@ UTL_ListActiveIterator::UTL_ListActiveIterator(UTL_List *s)
 
 // Is iterator done?
 long
-UTL_ListActiveIterator::is_done()
+UTL_ListActiveIterator::is_done ()
 {
   return (source == NULL) ? I_TRUE : I_FALSE;
 }
 
 // Advance to next item
 void
-UTL_ListActiveIterator::next()
+UTL_ListActiveIterator::next ()
 {
   if (source != NULL)
-    source = source->tail();
+    source = source->tail ();
 }
-
-/*
- * Redefinition of inherited operations
- */
 

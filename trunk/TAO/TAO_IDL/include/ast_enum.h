@@ -76,7 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_Enum : public virtual AST_ConcreteType, public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Enum : public virtual AST_ConcreteType, 
+                                   public virtual UTL_Scope
 {
 public:
   // Operations
@@ -105,6 +106,9 @@ public:
 
   // Get value to be assigned to next enumerator
   virtual unsigned long         next_enum_val();
+
+  // Cleanup function.
+  virtual void destroy (void);
 
 private:
   // Data

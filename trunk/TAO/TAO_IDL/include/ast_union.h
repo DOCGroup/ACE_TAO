@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_Union : public virtual AST_Structure
+class TAO_IDL_FE_Export AST_Union : public virtual AST_Structure
 {
 public:
   // Operations

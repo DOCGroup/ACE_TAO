@@ -95,7 +95,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // IMPL_NARROW_METHODSn where n is 0,1,2 and 3 are provided.
 // DEF_NARROW_METHODSn where n is 0,1,2 and 3 are provided.
 
-extern  char    *type_id_to_string(long);
+extern char *type_id_to_string(long);
 
 #define DEF_NARROW_METHODS0(TYPE)\
 static  int     type_id(); \

@@ -95,6 +95,9 @@ public:
   // cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
 
+  virtual void destroy (void);
+  // Clean up allocated members.
+
   // Visiting
   virtual int accept (be_visitor* visitor);
 

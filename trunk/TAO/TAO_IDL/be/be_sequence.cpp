@@ -27,29 +27,31 @@
 ACE_RCSID(be, be_sequence, "$Id$")
 
 
-/*
- * BE_Sequence
- */
 be_sequence::be_sequence (void)
   : mt_ (be_sequence::MNG_UNKNOWN)
 {
-  this->size_type (be_decl::VARIABLE); // always the case
-  this->has_constructor (I_TRUE);      // always the case
+  // Always the case.
+  this->size_type (be_decl::VARIABLE);
+  this->has_constructor (I_TRUE);
 }
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
                           idl_bool local,
                           idl_bool abstract)
-  : AST_Sequence (v, t, t->is_local () || local, abstract),
+  : AST_Sequence (v, 
+                  t, 
+                  t->is_local () || local, 
+                  abstract),
     AST_Decl (AST_Decl::NT_sequence,
-              NULL,
-              NULL),
-    COMMON_Base (t->is_local () || local, abstract),
+              0,
+              0),
+    COMMON_Base (t->is_local () || local, 
+                 abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
-  // check if we are bounded or unbounded. An expression value of 0 means
-  // unbounded
+  // Check if we are bounded or unbounded. An expression value of 0 means
+  // unbounded.
   if (v->ev ()->u.ulval == 0)
     {
       this->unbounded_ = I_TRUE;
@@ -59,9 +61,11 @@ be_sequence::be_sequence (AST_Expression *v,
       this->unbounded_ = I_FALSE;
     }
 
-  this->size_type (be_decl::VARIABLE); // a sequence data type is always
-                                       // VARIABLE
-  this->has_constructor (I_TRUE);      // always the case
+  // A sequence data type is always VARIABLE.
+  this->size_type (be_decl::VARIABLE);
+
+  // Always the case.
+  this->has_constructor (I_TRUE);
 }
 
 idl_bool
@@ -70,17 +74,22 @@ be_sequence::unbounded (void) const
   return this->unbounded_;
 }
 
-// helper to create_name
+// Helper to create_name.
 char *
 be_sequence::gen_name (void)
 {
   char namebuf [NAMEBUFSIZE];
-  be_type *bt; // base type;
+  be_type *bt = 0; // Base type.
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
-  // retrieve the base type
+  // Reset the buffer.
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  // Retrieve the base type.
   bt = be_type::narrow_from_decl (this->base_type ());
-  if (!bt)
+
+  if (bt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_sequence::"
@@ -88,13 +97,13 @@ be_sequence::gen_name (void)
                          "bad base type\n"),
                         0);
     }
+
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      // our base type is an anonymous sequence
-      be_sequence *seq;
-      seq = be_sequence::narrow_from_decl (bt);
+      // Our base type is an anonymous sequence.
+      be_sequence *seq = be_sequence::narrow_from_decl (bt);
 
-      if (!seq)
+      if (seq == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_sequence::"
@@ -115,64 +124,84 @@ be_sequence::gen_name (void)
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
       parent->add_sequence (seq);
-      ACE_OS::sprintf (namebuf, "_tao_seq_%s", seq->gen_name ());
+      ACE_OS::sprintf (namebuf, 
+                       "_tao_seq_%s", 
+                       seq->gen_name ());
     }
   else
     {
-      ACE_OS::sprintf (namebuf, "_tao_seq_%s", bt->local_name ()->get_string ());
+      ACE_OS::sprintf (namebuf, 
+                       "_tao_seq_%s", 
+                       bt->local_name ()->get_string ());
     }
-  // append the size (if any)
-  if (!this->unbounded_)
+
+  // Append the size (if any).
+  if (this->unbounded_ == 0)
     {
       ACE_OS::sprintf (namebuf,
                        "%s_%lu",
                        namebuf,
                        this->max_size ()->ev ()->u.ulval);
     }
+
   return ACE_OS::strdup (namebuf);
 }
 
-// create a name for ourselves
+// Create a name for ourselves.
 int
 be_sequence::create_name (be_typedef *node)
 {
   static char namebuf [NAMEBUFSIZE];
-  UTL_ScopedName *n = NULL;
-  be_decl *scope; // scope in which we are defined
+  UTL_ScopedName *n = 0;
 
-  // if there is a typedef node, we use its name as our name
+  // Scope in which we are defined.
+  be_decl *scope = 0;
+
+  // If there is a typedef node, we use its name as our name.
   if (node)
     {
       n = (UTL_ScopedName *)node->name ()->copy ();
-      this->set_name (n); // set our name
+      this->set_name (n);
     }
   else
     {
+      // Reset the buffer.
+      ACE_OS::memset (namebuf, 
+                      '\0', 
+                      NAMEBUFSIZE);
 
-      ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
-      ACE_OS::strcpy (namebuf, this->gen_name ()); // generate a local name
+      // Generate a local name.
+      ACE_OS::strcpy (namebuf, 
+                      this->gen_name ());
 
-      // now see if we have a fully scoped name and if so, generate one
+      // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
 
       scope = be_scope::narrow_from_scope (us)->decl ();
 
-      if (scope)
+      if (scope != 0)
         {
-          // make a copy of the enclosing scope's  name
-          n = (UTL_ScopedName *)scope->name ()->copy () ;
+          // Make a copy of the enclosing scope's name.
+          n = (UTL_ScopedName *) scope->name ()->copy ();
 
-          // add our local name as the last component
-          n->nconc (
-              new UTL_ScopedName (
-                  new Identifier (ACE_OS::strdup (namebuf),
-                                  1,
-                                  0,
-                                  I_FALSE),
-                  NULL
-                )
-            );
-          // set the fully scoped name
+          Identifier *id = 0;
+          ACE_NEW_RETURN (id,
+                          Identifier (ACE_OS::strdup (namebuf),
+                                      1,
+                                      0,
+                                      I_FALSE),
+                          -1);
+
+          UTL_ScopedName *conc_name = 0;
+          ACE_NEW_RETURN (conc_name,
+                          UTL_ScopedName (id,
+                                          0),
+                          -1);
+
+          // Add our local name as the last component.
+          n->nconc (conc_name);
+
+          // Set the fully scoped name.
           this->set_name (n);
         }
       else
@@ -182,6 +211,7 @@ be_sequence::create_name (be_typedef *node)
           return -1;
         }
     }
+
   return 0;
 }
 
@@ -189,22 +219,26 @@ be_sequence::create_name (be_typedef *node)
 be_sequence::MANAGED_TYPE
 be_sequence::managed_type (void)
 {
-  if (this->mt_ == be_sequence::MNG_UNKNOWN) // not calculated yet
+  if (this->mt_ == be_sequence::MNG_UNKNOWN) // Not calculated yet.
     {
-      be_type  *bt, *prim_type; // base types
+      // Base types.
+      be_type *bt = 0;
+      be_type *prim_type = 0;
 
       bt = be_type::narrow_from_decl (this->base_type ());
 
       if (bt->node_type () == AST_Decl::NT_typedef)
         {
-          // get the primitive base type of this typedef node
+          // Get the primitive base type of this typedef node.
           be_typedef *t = be_typedef::narrow_from_decl (bt);
           prim_type = t->primitive_base_type ();
         }
       else
-        prim_type = bt;
+        {
+          prim_type = bt;
+        }
 
-      // determine if we need a managed type and which one
+      // Determine if we need a managed type and which one.
       switch (prim_type->node_type ())
         {
         case AST_Decl::NT_interface:
@@ -219,17 +253,22 @@ be_sequence::managed_type (void)
           break;
         case AST_Decl::NT_pre_defined:
           {
-            be_predefined_type *bpd = be_predefined_type::narrow_from_decl
-              (prim_type);
+            be_predefined_type *bpd = 
+              be_predefined_type::narrow_from_decl (prim_type);
+
             if (bpd->pt () == AST_PredefinedType::PT_pseudo)
               {
-                // if this pseudo is a CORBA::Object, then the managed type is
-                // an objref
+                // If this pseudo is a CORBA::Object, then the managed type is
+                // an objref.
                 if (!ACE_OS::strcmp (bpd->local_name ()->get_string (),
                                      "Object"))
-                  this->mt_ = be_sequence::MNG_OBJREF;
+                  {
+                    this->mt_ = be_sequence::MNG_OBJREF;
+                  }
                 else
-                  this->mt_ = be_sequence::MNG_PSEUDO;
+                  {
+                    this->mt_ = be_sequence::MNG_PSEUDO;
+                  }
               }
             else
               {
@@ -239,25 +278,26 @@ be_sequence::managed_type (void)
           break;
         default:
           this->mt_ = be_sequence::MNG_NONE;
-        } // end of switch
+        }
     }
+
   return this->mt_;
 }
 
-/*
- * Add this be_sequence to the locally defined types in this scope
- */
+// Add this be_sequence to the locally defined types in this scope
 AST_Sequence *
 be_sequence::fe_add_sequence (AST_Sequence *t)
 {
-  if (t == NULL)
-    return NULL;
+  if (t == 0)
+    {
+      return 0;
+    }
 
   this->add_to_local_types(t);
   return t;
 }
 
-// overridden method
+// Overridden method
 be_decl *
 be_sequence::decl (void)
 {
@@ -275,87 +315,108 @@ const char *
 be_sequence::instance_name ()
 {
   static char namebuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
-  be_type *bt;
+  be_type *bt = 0;
   bt = be_type::narrow_from_decl (this->base_type ());
-  if (!bt)
+
+  if (bt == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_sequence_ch::"
                   "gen_instantiate_name - "
                   "Bad element type\n"));
+
       return namebuf;
     }
 
-  // generate the class name
+  // Generate the class name.
 
-  // the base type after removing all the aliases
+  // The base type after removing all the aliases.
   be_type  *prim_type = bt;
+
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      // get the primitive base type of this typedef node
+      // Get the primitive base type of this typedef node.
       be_typedef *t = be_typedef::narrow_from_decl (bt);
       prim_type = t->primitive_base_type ();
     }
 
-  // generate the appropriate sequence type
+  // Generate the appropriate sequence type.
   switch (this->managed_type ())
     {
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
       if (this->unbounded ())
-        ACE_OS::sprintf (namebuf,
-                         "_TAO_Unbounded_Object_Sequence_%s",
-                         this->flat_name());
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Unbounded_Object_Sequence_%s",
+                           this->flat_name ());
+        }
       else
-        ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_Object_Sequence_%s_%lu",
-                         this->flat_name(),
-                         this->max_size ()->ev()->u.ulval);
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_Object_Sequence_%s_%lu",
+                           this->flat_name (),
+                           this->max_size ()->ev ()->u.ulval);
+        }
       break;
-    case be_sequence::MNG_STRING: // sequence of strings
+    case be_sequence::MNG_STRING:
       if (this->unbounded ())
-        ACE_OS::sprintf (namebuf,
-                         "TAO_Unbounded_String_Sequence");
+        {
+          ACE_OS::sprintf (namebuf,
+                           "TAO_Unbounded_String_Sequence");
+        }
       else
-        ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_String_Sequence_%s",
-                         this->flat_name());
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_String_Sequence_%s",
+                           this->flat_name  ());
+        }
       break;
-    case be_sequence::MNG_WSTRING: // sequence of wstrings
+    case be_sequence::MNG_WSTRING:
       if (this->unbounded ())
-        ACE_OS::sprintf (namebuf,
-                         "TAO_Unbounded_WString_Sequence");
+        {
+          ACE_OS::sprintf (namebuf,
+                           "TAO_Unbounded_WString_Sequence");
+        }
       else
-        ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_WString_Sequence_%s",
-                         this->flat_name());
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_WString_Sequence_%s",
+                           this->flat_name ());
+        }
       break;
-    default: // not a managed type
+    default: // Not a managed type.
       if (this->unbounded ())
         {
           // TAO provides extensions for octet sequences, first find out
           // if the base type is an octet (or an alias for octet)
           be_predefined_type *predef =
             be_predefined_type::narrow_from_decl (prim_type);
-          if (predef != 0 &&
-              predef->pt() == AST_PredefinedType::PT_octet)
-            ACE_OS::sprintf (namebuf,
-                             "TAO_Unbounded_Sequence<CORBA::Octet>");
+
+          if (predef != 0 
+              && predef->pt() == AST_PredefinedType::PT_octet)
+            {
+              ACE_OS::sprintf (namebuf,
+                               "TAO_Unbounded_Sequence<CORBA::Octet>");
+            }
           else
-            ACE_OS::sprintf (namebuf,
-                             "_TAO_Unbounded_Sequence_%s",
-                             this->flat_name());
-                             // or prim_type->flat_name ());
-          // ACE_DEBUG ((LM_DEBUG, "testing.... %d, %d = <%s>\n",
-          // predef, predef->pt (), namebuf));
+            {
+              ACE_OS::sprintf (namebuf,
+                               "_TAO_Unbounded_Sequence_%s",
+                               this->flat_name ());
+            }
         }
       else
-        ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_Sequence_%s_%lu",
-                          this->flat_name(),
-                          this->max_size()->ev()->u.ulval);
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_Sequence_%s_%lu",
+                            this->flat_name (),
+                            this->max_size ()->ev ()->u.ulval);
+        }
       break;
     }
 
@@ -365,9 +426,9 @@ be_sequence::instance_name ()
 idl_bool
 be_sequence::in_recursion (be_type *node)
 {
-  if (!node)
+  if (node == 0)
     {
-      // there has to be a parameter
+      // There has to be a parameter
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_sequence::")
                          ACE_TEXT ("in_recursion - ")
@@ -376,6 +437,7 @@ be_sequence::in_recursion (be_type *node)
     }
 
   be_type *type = be_type::narrow_from_decl (this->base_type ());
+
   if (!type)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -385,12 +447,25 @@ be_sequence::in_recursion (be_type *node)
                         0);
     }
 
-  if (!ACE_OS::strcmp (node->full_name (), type->full_name ()))
-    // they match
-    return 1;
+  if (!ACE_OS::strcmp (node->full_name (), 
+                       type->full_name ()))
+    {
+      // They match.
+      return 1;
+    }
   else
-    // not in recursion
-    return 0;
+    {
+      // Not in recursion.
+      return 0;
+    }
+}
+
+void
+be_sequence::destroy (void)
+{
+  // Call the destroy methods of our base classes.
+  be_scope::destroy ();
+  be_type::destroy ();
 }
 
 // Narrowing

@@ -69,8 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // nr_extern.hh - Defines entry points provided by narrowing
 
-// Convert between an UTL_Scope and an AST_Decl
-extern  AST_Decl        *ScopeAsDecl(UTL_Scope *s);
-extern  UTL_Scope       *DeclAsScope(AST_Decl *d);
+// Convert between an UTL_Scope and an AST_Decl.
+extern TAO_IDL_FE_Export AST_Decl *ScopeAsDecl (UTL_Scope *s);
+extern TAO_IDL_FE_Export UTL_Scope *DeclAsScope (AST_Decl *d);
 
 #endif  // _NR_EXTERN_NR_EXTERN_HH

@@ -81,23 +81,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #define IDL_HAS_VALUETYPE
 
-#include        "intlmacros.h"          // Define macros for intl'ion
-
-#include        <stdlib.h>              // POSIX standard defns
-#include        <ctype.h>               // External functions
-
-#include        <sys/types.h>           // POSIX standard types
-
+#include        "TAO_IDL_FE_Export.h"   // Defines export macro
 #include        "idl_narrow.h"          // IDL Narrowing mechanism
-
-#include        "idl_defines.h" // Constants for IDL compiler
+#include        "idl_defines.h"         // Constants for IDL compiler
 #include        "idl_fwd.h"             // Forward decls of classes
-
 #include        "idl_bool.h"            // Defines boolean for IDL
-
 #include        "utl_string.h"          // Defines utility string class
 #include        "utl_identifier.h"      // Defines utility identifier class
-#include        "ast.h"         // AST classes
+#include        "ast.h"                 // AST classes
 #include        "util.h"                // Utility classes
 
 #endif           // _IDL_IDL_HH

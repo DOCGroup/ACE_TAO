@@ -90,7 +90,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << be_idt_nl << "throw (";
   else
     *os << be_idt_nl << "ACE_THROW_SPEC ((";
@@ -127,7 +127,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       delete ei;
     } // end of if
 
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << be_uidt_nl << ")"<< be_uidt;
   else
     *os << be_uidt_nl << "))"<< be_uidt;
@@ -144,7 +144,7 @@ be_visitor_operation::gen_environment_var ()
   static const char *null_env_decl = "";
 
   // check if we are generating stubs/skeletons for true C++ exception support
-  if (idl_global->exception_support ())
+  if (be_global->exception_support ())
     {
       return ace_try_env_decl;
     }

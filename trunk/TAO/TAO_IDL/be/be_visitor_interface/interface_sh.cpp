@@ -76,7 +76,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "_ptr;" << be_nl;
 
   // now generate the class definition
-  *os << "class " << idl_global->skel_export_macro ()
+  *os << "class " << be_global->skel_export_macro ()
       << " " << namebuf << " : ";
   if (node->n_inherits () > 0)
     {
@@ -202,7 +202,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt_nl << "};\n\n";
   ctx = *this->ctx_;
   // generate the collocated class
-  if (idl_global->gen_thru_poa_collocation ())
+  if (be_global->gen_thru_poa_collocation ())
     {
       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
@@ -219,7 +219,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       visitor = 0;
     }
 
-  if (idl_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
@@ -237,7 +237,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       visitor = 0;
     }
 
-  if (idl_global->gen_tie_classes ())
+  if (be_global->gen_tie_classes ())
     {
       // generate the TIE class.
       ctx = *this->ctx_;

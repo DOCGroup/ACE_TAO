@@ -92,13 +92,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ace/Containers.h"
 #include        "ace/Process.h"
 
-/*
- * BE includes
- */
+// BE includes
 
 #include        "be_decl.h"             // class BE_Decl
 #include        "be_scope.h"            // class BE_Scope
 #include        "be_generator.h"        // BE generator class
+
+#include        "be_global.h"           // global data for back end
+#include        "be_extern.h"           // pointer to global BE data object
+
 #include        "be_type.h"
 #include        "be_predefined_type.h"  // class BE_PredefinedType
 #include        "be_module.h"           // class BE_Module

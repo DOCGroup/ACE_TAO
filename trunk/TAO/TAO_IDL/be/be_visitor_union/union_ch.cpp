@@ -64,7 +64,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       *os << "class " << node->local_name () << ";" << be_nl;
       *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
-      *os << "class " << idl_global->stub_export_macro () << " "
+      *os << "class " << be_global->stub_export_macro () << " "
           << node->local_name () << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl

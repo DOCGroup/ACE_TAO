@@ -62,26 +62,27 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _DRV_EXTERN_DRV_EXTERN_HH
 #define _DRV_EXTERN_DRV_EXTERN_HH
 
-// drv_extern.h - External functions for the IDL compiler driver program
+// External functions for the IDL compiler driver program
 
 // Functions
 
-extern void             DRV_init ();
-extern void             DRV_parse_args (long, char **);
-extern void             DRV_usage ();
+extern void DRV_init (void);
+extern void DRV_parse_args (long, char **);
+extern void DRV_usage (void);
 
-extern void             DRV_pre_proc (const char *myfile);
+extern void DRV_pre_proc (const char *myfile);
 
-extern void             DRV_cpp_init ();
-extern void             DRV_cpp_putarg (const char *str);
-extern void             DRV_cpp_new_location (const char *new_loc);
+extern void DRV_cpp_init (void);
+extern void DRV_cpp_putarg (const char *str);
+extern void DRV_cpp_new_location (const char *new_loc);
 
-extern void             DRV_fork();
-extern int              DRV_check_gperf ();
-extern void             DRV_check_for_include (const char* buf);
+extern void DRV_fork (void);
+extern int DRV_check_gperf (void);
+extern void DRV_check_for_include (const char* buf);
+
 #endif           // _DRV_EXTERN_DRV_EXTERN_HH

@@ -80,7 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Forward declaration of active iterator for UTL_ScopeStack
 class   UTL_ScopeStackActiveIterator;
 
-class   UTL_ScopeStack
+class TAO_IDL_FE_Export UTL_ScopeStack
 {
 public:
   // Operations
@@ -124,7 +124,7 @@ private:
 };
 
 // Active iterator for UTL_ScopeStack
-class   UTL_ScopeStackActiveIterator
+class TAO_IDL_FE_Export UTL_ScopeStackActiveIterator
 {
 public:
   // Operations
