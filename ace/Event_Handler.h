@@ -132,7 +132,12 @@ public:
 
   enum
     {
+      /// The handler is not resumed at all. Could lead to deadlock..
+      ACE_EVENT_HANDLER_NOT_RESUMED = -1,
+      /// The reactor takes responsibility of resuming the handler and
+      /// is the default
       ACE_REACTOR_RESUMES_HANDLER = 0,
+      /// The application takes responsibility of resuming the handler
       ACE_APPLICATION_RESUMES_HANDLER
     };
   /* Called to figure out whether the handler needs to resumed by the

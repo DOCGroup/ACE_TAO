@@ -1,3 +1,17 @@
+Tue Nov 12 14:12:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	This is a hackish fix for BUG 1361. Please see
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361 
+	for details of this problem
+	
+	* ace/TP_Reactor.cpp (handle_socket_events): A hack to prevent
+	  BUG 1361 from surfacing for applications like TAO, using the
+	  TP_Reactor. This fix basically ensures that resume_i () is
+	  not called naively. 
+
+	* ace/Event_Handler.h: Added a enum type which could be could be
+	  used by  the TP_Reactor.
+	  
 Tue Nov 12 11:53:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Change FIFO_Test from !MSVC to !Win32 to
