@@ -1,3 +1,12 @@
+Sun Mar 13 20:19:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+
+	  Fixed compilation errors introduced by this change 
+
+	  Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+	
 Sun Mar 13 20:16:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Thread_Lane_Resources.cpp:
@@ -91,7 +100,7 @@ Fri Mar 11 02:53:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fixed compilation errors in protocols other than IIOP.
 
-Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>g
 
 	This checkin is mainly to address a problem with ORB
         shutdown. The problem shows up when a client ORB with RW strategy
