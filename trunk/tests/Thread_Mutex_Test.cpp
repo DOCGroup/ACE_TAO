@@ -25,7 +25,11 @@ ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#if !defined (ACE_HAS_MUTEX_TIMEOUTS)
+
 static int reported_notsup = 0;
+
+#endif
 
 
 static void *
