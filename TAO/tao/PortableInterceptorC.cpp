@@ -1444,7 +1444,7 @@ CORBA::Boolean PortableInterceptor::RequestInfo::response_expected (
   }
 return _tao_retval;
 }
-
+# if (TAO_HAS_CORBA_MESSAGING == 1)
 Messaging::SyncScope PortableInterceptor::RequestInfo::sync_scope (
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1503,7 +1503,7 @@ Messaging::SyncScope PortableInterceptor::RequestInfo::sync_scope (
   }
 return _tao_retval;
 }
-
+#endif  /* TAO_HAS_CORBA_MESSAGING */
 PortableInterceptor::ReplyStatus PortableInterceptor::RequestInfo::reply_status (
     CORBA::Environment &ACE_TRY_ENV
   )
