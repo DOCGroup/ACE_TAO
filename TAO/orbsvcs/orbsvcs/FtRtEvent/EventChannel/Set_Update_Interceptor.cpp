@@ -59,7 +59,7 @@ TAO_Set_Update_Interceptor::send_request (
 
       IOP::ServiceContext* sc;
 
-      if ((a >>= sc) ==0)
+      if (((*a) >>= sc) ==0)
         return;
 
       ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);

@@ -1,3 +1,13 @@
+Sat Jan  3 23:56:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+
+	  The last checkin actually broke g++ builds. Slightly corrected
+	  the fix by calling the cast operator so that it works in both 
+	  the compilers. 
+
 Sat Jan  3 11:23:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/Collocation/Collocation.dsp:
