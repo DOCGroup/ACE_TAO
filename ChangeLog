@@ -427,11 +427,10 @@ Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
 
 Tue Feb 11 17:14:56 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/TTY_IO.cpp: Fixed several problems with DTR enabling.  Thanks to 
+	* ace/TTY_IO.cpp: Fixed several problems with DTR enabling.  Thanks to
 	  Ray Limpus <ray.limpus@boeing.com> for reporting this.
 
 Thu Feb  6 16:36:18 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Bound_Ptr.{h,i}: Made the get() method const.  Thanks to
 	  Chris Kohlhoff for reporting this.
-  
