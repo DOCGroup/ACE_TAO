@@ -23,11 +23,14 @@
 
 #include "orbsvcs/CosNotifyCommS.h"
 #include "orbsvcs/FT_NotifierC.h"
-#include "orbsvcs/FT_ReplicationManagerC.h"
-#include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 
 namespace TAO
 {
+
+  ///////////////////////
+  // Forward declarations
+  class FT_FaultAnalyzer;
+
   /**
   * Implement the CosNotifyComm::StructuredPushConsumer interface.
   *
@@ -65,7 +68,7 @@ namespace TAO
     int init (
       PortableServer::POA_ptr poa,
       FT::FaultNotifier_ptr fault_notifier,
-      FT::ReplicationManager_ptr replication_manager
+      TAO::FT_FaultAnalyzer * fault_analyzer
       ACE_ENV_ARG_DECL);
 
     /**
@@ -85,47 +88,6 @@ namespace TAO
     * Accessor for the number of notifications we have received.
     */
     size_t notifications () const;
-
-  public:
-
-    /////////////////////////
-    // Implementation methods
-  private:
-
-    /**
-    * Validate event type to make sure it is one we can handle.
-    */
-    int validate_event_type (
-      const CosNotification::StructuredEvent & event);
-
-    /**
-    * Analyze a fault event.
-    */
-    int analyze_fault_event (
-      const CosNotification::StructuredEvent & event,
-      TAO::FT_FaultEventDescriptor & fault_event_desc
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
-
-    /// Helper functions for fault analysis.
-    char* extract_type_id (const CORBA::Any& val);
-    FT::ObjectGroupId extract_object_group_id (const CORBA::Any& val);
-
-    int get_membership_style (
-      const FT::Properties & properties,
-      FT::MembershipStyleValue & membership_style);
-
-    int get_replication_style (
-      const FT::Properties & properties,
-      FT::ReplicationStyleValue & replication_style);
-
-    int get_minimum_number_replicas (
-      const FT::Properties & properties,
-      FT::MinimumNumberReplicasValue & minimum_number_replicas);
-
-    int get_initial_number_replicas (
-      const FT::Properties & properties,
-      FT::InitialNumberReplicasValue & initial_number_replicas);
 
   public:
 
@@ -180,8 +142,8 @@ namespace TAO
     /// The FaultNotifier's object reference.
     FT::FaultNotifier_var fault_notifier_;
 
-    /// The ReplicationManager's object reference.
-    FT::ReplicationManager_var replication_manager_;
+    /// Application-specific Fault Analyzer.
+    TAO::FT_FaultAnalyzer * fault_analyzer_;
 
     /// ConsumerId assigned by the notifier.
     FT::FaultNotifier::ConsumerId consumer_id_;

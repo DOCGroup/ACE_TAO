@@ -133,6 +133,7 @@ unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
+unlink $replmgr_ior;
 unlink $ready_file;
 unlink $client_data;
 
@@ -142,8 +143,8 @@ my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_
 my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -l loc2 -i type1 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
-my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
-my($REPLM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $replmgr_ior -f $notifier_ior");
+my($CONS) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r$replica1_ior,$replica2_ior");
+my($REPLM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $replmgr_ior -f file://$notifier_ior");
 
 my($CL);
 if (simulated) {
@@ -276,6 +277,7 @@ unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
+unlink $replmgr_ior;
 unlink $ready_file;
 
 #client's work file

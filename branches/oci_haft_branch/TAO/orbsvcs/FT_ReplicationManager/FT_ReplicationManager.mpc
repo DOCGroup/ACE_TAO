@@ -6,6 +6,9 @@ project : taoserver, orbsvcsexe, fault_tolerance, iormanip, ftorb {
     FT_Property_Validator.cpp
     FT_FaultConsumer.cpp
     FT_FaultEventDescriptor.cpp
+    FT_FaultAnalyzer.cpp
+    FT_DefaultFaultAnalyzer.cpp
+    FT_ReplicationManagerFaultAnalyzer.cpp
   }
 }
 

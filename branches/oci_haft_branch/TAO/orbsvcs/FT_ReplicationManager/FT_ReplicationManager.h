@@ -114,9 +114,6 @@ namespace TAO
       const PortableGroup::Criteria & the_criteria,
       CORBA::UShort & initial_number_replicas) const;
 
-    /// Read and IOR from a file.
-    int readIORFile (const char * filename, CORBA::String_var & ior);
-
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
         FT::FaultNotifier_ptr fault_notifier
@@ -477,14 +474,11 @@ namespace TAO
 
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
-    const char * fault_notifier_ior_file_;
+    const char * fault_notifier_ior_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
 
-    /// A dummy test IOGR used for unit testing (and its group id)
-    CORBA::Object_var test_iogr_;
-    FT::ObjectGroupId test_iogr_group_id_;
   };
 
 } // namespace TAO
