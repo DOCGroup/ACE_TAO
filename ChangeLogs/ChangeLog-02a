@@ -1,5 +1,8 @@
 Tue Jun 26 16:22:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/OS_TLI.h: Zapped a dummy declaration of struct rlimit { }.
+	  Thanks to Bala for reporting this.
+
 	* ace/TLI_*, OS_TLI.*: Added a number of fixes for TLI so that it'll
 	  compile properly on Win32 platforms.  Thanks to Andreas Geisler
  	  <andreas.geisler@erls.siemens.de> for reporting this.
