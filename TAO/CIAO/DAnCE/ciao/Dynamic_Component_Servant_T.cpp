@@ -67,7 +67,6 @@ namespace CIAO
         servant->remove ();
         component_removed_ = 1;
       }
-    ACE_DEBUG ((LM_DEBUG, "flag at remove is %d\n", component_removed_));
   }
 
   template <typename COMP_SVNT,

@@ -163,7 +163,6 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure))
   {
-    ACE_DEBUG ((LM_DEBUG, "creating the component\n"));
     return this->create (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
