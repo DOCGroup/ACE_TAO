@@ -138,8 +138,10 @@ TAO_ServerRequest::init_reply (void)
   reply_params.is_dsi_ = this->is_dsi_;
   reply_params.dsi_nvlist_align_ = this->dsi_nvlist_align_;
 
-  // Send back the reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  // Pass in the service context list.  We are sending back what we
+  // received in the Request.  (RTCORBA relies on it.  Check before
+  // modifying...) marina
+  reply_params.service_context_notowned (&this->service_info ());
 
   // Are we going to marshall any data with the reply?
   reply_params.argument_flag_ = this->argument_flag_;
@@ -191,8 +193,10 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // leave a comment why this is important!
   reply_params.svc_ctx_.length (0);
 
-  // Send back the reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  // Pass in the service context list.  We are sending back what we
+  // received in the Request.  (RTCORBA relies on it.  Check before
+  // modifying...) marina
+  reply_params.service_context_notowned (&this->service_info ());
 
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
@@ -251,8 +255,9 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
       reply_params.request_id_ = this->request_id_;
       reply_params.svc_ctx_.length (0);
 
-      // Send back the reply service context.
-      reply_params.service_context_notowned (&this->reply_service_info ());
+      // Send back the service context we received.  (RTCORBA relies on
+      // this).
+      reply_params.service_context_notowned (&this->service_info ());
 
       // We are going to send some data
       reply_params.argument_flag_ = 1;

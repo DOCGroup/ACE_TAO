@@ -605,8 +605,9 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
           reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
           reply_params.svc_ctx_.length (0);
 
-          // Send back the reply service context list.
-          reply_params.service_context_notowned (&request.reply_service_info ());
+          // Sending back the same service context list we received in the
+          // Request.  (Important for RT CORBA).
+          reply_params.service_context_notowned (&request.service_info ());
 
           // Make the GIOP header and Reply header
           this->generate_reply_header (*this->output_,
@@ -640,7 +641,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
           result = this->send_reply_exception (transport,
                                                orb_core,
                                                request_id,
-                                               &request.reply_service_info (),
+                                               &request.service_info (),
                                                &ACE_ANY_EXCEPTION);
           if (result == -1)
             {
@@ -700,7 +701,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
           result = this->send_reply_exception (transport,
                                                orb_core,
                                                request_id,
-                                               &request.reply_service_info (),
+                                               &request.service_info (),
                                                &exception);
           if (result == -1)
             {
