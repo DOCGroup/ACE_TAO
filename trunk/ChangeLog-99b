@@ -1,3 +1,8 @@
+Tue Jun 15 12:26:06 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp: Added template instantiations for
+ 	  ACE_Reference_Pair and ACE_Cache_Map_Reverse_Iterator.
+
 Tue Jun 15 11:59:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-qnx-neutrino.h: removed a handful of #defines
