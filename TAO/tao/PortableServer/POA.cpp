@@ -32,6 +32,7 @@ ACE_RCSID (PortableServer,
 #include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
 #include "ace/OS_NS_wchar.h"
+#include "ace/OS_NS_sys_time.h"
 
 #include "PortableGroup_Hooks.h"
 
