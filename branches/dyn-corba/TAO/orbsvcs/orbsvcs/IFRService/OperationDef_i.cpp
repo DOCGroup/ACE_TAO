@@ -511,9 +511,6 @@ TAO_OperationDef_i::exceptions_i (ACE_ENV_SINGLE_ARG_DECL )
     {
       ACE_TString field_name, type_path;
       ACE_Configuration::VALUETYPE type;
-      u_int kind = 0;
-      CORBA::DefinitionKind def_kind = CORBA::dk_none;
-      ACE_Configuration_Section_Key except_key;
 
       while (this->repo_->config ()->enumerate_values (excepts_key,
                                                        index++,
