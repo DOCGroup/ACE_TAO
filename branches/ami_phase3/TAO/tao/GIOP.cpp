@@ -230,7 +230,7 @@ TAO_GIOP::dump_msg (const char *label,
         message_name = names [slot];
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
       ACE_DEBUG ((LM_DEBUG,
-                  "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
+                  "(%P | %t):%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
                   label,
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],

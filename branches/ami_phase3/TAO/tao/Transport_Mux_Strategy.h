@@ -76,6 +76,19 @@ public:
 
   virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
   // Destroy a CDR stream.
+
+  virtual int idle_after_send (TAO_Transport *) = 0;
+  // Request has been just sent, but the reply is not received. Idle
+  // the transport now.
+  
+  virtual int idle_after_reply (TAO_Transport *) = 0;
+  // Request is sent and the reply is received. Idle the transport
+  // now. 
+
+  virtual int reply_received (const CORBA::ULong request_id) = 0;
+  // Check whether the reply has been receieved for the request with
+  // <request_id>. Return 0 if no, 1 on yes and -1 if the request_id
+  // is invalid or there are some errors.
 };
 
 // *********************************************************************
@@ -117,6 +130,19 @@ public:
 
   virtual void destroy_message_state (TAO_GIOP_Message_State *);
   // No op in this strategy.
+
+  virtual int idle_after_send (TAO_Transport *transport);
+  // Request has been just sent, but the reply is not received. Idle
+  // the transport now.
+  
+  virtual int idle_after_reply (TAO_Transport *transport);
+  // Request is sent and the reply is received. Idle the transport
+  // now. 
+  
+  virtual int reply_received (const CORBA::ULong request_id);
+  // Check whether the reply has been receieved for the request with
+  // <request_id>. Return 0 if no, 1 on yes and -1 if the request_id
+  // is invalid or there are errors.
 
 protected:
   CORBA::ULong request_id_generator_;
@@ -172,6 +198,19 @@ public:
 
   virtual void destroy_message_state (TAO_GIOP_Message_State *);
   // No op in this strategy.
+
+  virtual int idle_after_send (TAO_Transport *transport);
+  // Request has been just sent, but the reply is not received. Idle
+  // the transport now.
+  
+  virtual int idle_after_reply (TAO_Transport *transport);
+  // Request is sent and the reply is received. Idle the transport
+  // now. 
+
+  virtual int reply_received (const CORBA::ULong request_id);
+  // Check whether the reply has been receieved for the request with
+  // <request_id>. Return 0 if no, 1 on yes and -1 if the request_id
+  // is invalid or there are errors.
 
 protected:
   CORBA::ULong request_id_generator_;

@@ -49,6 +49,13 @@ public:
 
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Get the Message State into which the reply has been read. 
+
+  // virtual int reply_received (void) const;
+  // Return the reply received flag.
+
+  // protected:
+  // int reply_received_;
+  // Reply received flag.
 };
 
 // *********************************************************************
@@ -89,6 +96,9 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void) const;
   // Return the message state of this invocation.
 
+  virtual TAO_InputCDR &reply_cdr (void) const;
+  // Return the reply CDR.
+
 private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
@@ -101,6 +111,14 @@ private:
 
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
+  // @@ Carlos : message_state should go away. All we need is the reply
+  //    cdr. Is that rite? (Alex).
+
+  TAO_InputCDR *reply_cdr_;
+  // CDR where the reply message is placed. 
+  // @@ Carlos : You mentioned that wherever this is used, we should
+  //    make sure we dont do any copying. I havent taken care of this
+  //    yet. (Alex).
 };
 
 // *********************************************************************
@@ -154,6 +172,8 @@ private:
 
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
+  // @@ Carlos : message_state should go away. All we need is the reply
+  //    cdr. Is that rite? (Alex).
 
   const TAO_Reply_Handler_Skeleton reply_handler_skel_;
   // Skeleton for the call back method in the Reply Handler.
