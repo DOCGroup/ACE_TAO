@@ -1,14 +1,16 @@
 // $Id$
-#include "AV_Core.h"
-#include "Transport.h"
-#include "FlowSpec_Entry.h"
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/AV_Core.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/Transport.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
-#include "UDP.h"
-#include "TCP.h"
-#include "RTP.h"
-#include "RTCP.h"
-#include "sfp.h"
+#include "orbsvcs/AV/UDP.h"
+#include "orbsvcs/AV/TCP.h"
+#include "orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTCP.h"
+#include "orbsvcs/AV/sfp.h"
+
+
 
 //------------------------------------------------------------
 // TAO_AV_Core
@@ -112,7 +114,7 @@ TAO_AV_Core::reactor (void)
 int
 TAO_AV_Core::init (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa,
-                   CORBA::Environment &env)
+                   CORBA::Environment&)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Core::init "));
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -343,7 +345,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
         //        int index = flow_spec.length () + 1;
         int index = new_flowspec.length ();
         flow_spec.length (index);
-        for (unsigned int j = 0; j < new_flowspec.length (); j++)
+        for (i = 0; i < index; i++)
           {
             flow_spec [j] = new_flowspec [j];
           }
