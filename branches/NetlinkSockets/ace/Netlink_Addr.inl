@@ -2,7 +2,7 @@
 
 // -*- C++ -*-
 //
-// Netlink_Addr.inl,v 4.1 2004/10/10  jwillemsen Exp
+// Netlink_Addr.inl,v 4.1 2004/10/10 raz
 
 #include /* */   "ace/OS_NS_string.h"
 #include /* */   "ace/Global_Macros.h"
