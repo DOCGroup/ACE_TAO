@@ -44,7 +44,7 @@ public:
   int init (int argc, char *argv[]);
   // Initialize the client communication endpoint with server.
 
-  void Client_i::test_for_secure_universal_time (void);
+  void test_for_secure_universal_time (void);
   // This test throws an exception that the operation
   // <secure_universal_time> has not been currently implemented in the
   // given server.
