@@ -85,24 +85,41 @@ Client::svc (void)
                                this->argv_,
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      // activate the client MMDevice with the ORB
+      this->orb_manager_.activate (&this->client_mmdevice_,
+                                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (this->bind_to_server () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, 
+                           "(%P|%t) Error binding to the naming service\n"),
+                          -1);
+      
+      // wait for the other clients to finish binding
+      this->barrier_->wait ();
+      
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) All threads finished, starting tests.\n"));
+      
+      AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
+      AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
+      // Bind the client and server mmdevices.
+      
+      this->streamctrl_.bind_devs
+        (this->client_mmdevice_._this (TAO_TRY_ENV),
+         this->server_mmdevice_.in (),
+         the_qos.inout (),
+         the_flows.in (),
+         TAO_TRY_ENV);
+      
+      TAO_CHECK_ENV;
     }
-  
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client");
+      TAO_TRY_ENV.print_exception ("streamctrl.bind_devs:");
       return -1;
     }
   TAO_ENDTRY;
   
-  if (this->bind_to_server () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) Error binding to the naming service\n"),
-                      -1);
-  
-  // wait for the other clients to finish binding
-  this->barrier_->wait ();
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) All threads finished, starting tests.\n"));
   return 0;
 }
 
@@ -193,11 +210,11 @@ main (int argc, char **argv)
   while ((c = opts ()) != -1)
     switch (c)
       {
-      case 'n':
+      case 't':
       thread_count = (u_int) ACE_OS::atoi (opts.optarg);
       continue;
       default:
-        ACE_DEBUG ((LM_DEBUG, "Usage: %s -n number_of_threads\n"));
+        ACE_DEBUG ((LM_DEBUG, "Usage: %s -t number_of_threads\n"));
       }
 
   ACE_Barrier *barrier;
@@ -227,5 +244,4 @@ main (int argc, char **argv)
   
   ACE_Thread_Manager::instance ()->wait ();
 
-  
 }
