@@ -1,3 +1,8 @@
+Mon Mar 16 14:28:34 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/orbconf.h: cleaned up #define of TAO_ALIGNMENT_MAGIC_NUMBER,
+          to allow it to be overridden.
+
 Mon Mar 16 10:47:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/cdr.h: 
