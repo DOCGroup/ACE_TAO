@@ -1,3 +1,8 @@
+Fri Dec 22 14:00:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-all.h: On HP-UX 11, when figuring ACE_bad_alloc exception
+          class, account for older compilers that don't define __HP_aCC.
+
 Fri Dec 22 12:56:06 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ACE.cpp (process_active): Call CloseHandle before return to
