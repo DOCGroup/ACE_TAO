@@ -1,5 +1,16 @@
 Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
 
+	* tests/Endpoint_Per_Priority/client.cpp
+	  Modified client to use TAO::ClientPriorityPolicy to make sure
+	  profiles with correct priorities will be used  for invocations
+	  to preserve priorities end-to-end.
+	
+	* tests/Endpoint_Per_Priority/server.cpp:
+	  Added comments.
+	
+	* tests/Endpoint_Per_Priority/run_test.pl:
+	  Fixed the script to use the right command-line arguments.
+
 	* tao/Client_Priority_Policy.cpp
 	* tao/Client_Priority_Policy.h
 	* tao/Client_Priority_Policy.i
