@@ -513,7 +513,8 @@ class ACE_Double_Linked_List_Iterator
   //     addresses directly, which (IMHO) seems to break the
   //     encasulation.  Notice <class T> must delcare
   //     ACE_Double_Linked_List<T> and
-  //     ACE_Double_Linked_List_Iterator as friend classes.
+  //     ACE_Double_Linked_List_Iterator as friend classes and class T
+  //     should also have data members T* next_ and T* prev_.
 public:
   // = Initialization method.
   ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &);
