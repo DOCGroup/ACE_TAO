@@ -346,15 +346,14 @@ ACE_OS::gethostbyname (const char *name)
   static int first_addr;
   static char *hostaddr[2];
 
-  first_addr = ::hostGetByName ((char *) name);
-
+  ACE_OSCALL (::hostGetByName ((char *) name), int, -1, first_addr);
   if (first_addr == -1)
     return 0;
 
   hostaddr[0] = (char *) &first_addr;
   hostaddr[1] = 0;
 
-  // might not be official: just echo input arg.
+  // Might not be official: just echo input arg.
   ret.h_name = (char *) name;
   ret.h_addrtype = AF_INET;
   ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
@@ -381,11 +380,11 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 
   if (::hostGetByAddr (htonl (*(unsigned long int *) addr), name) != 0)
     {
-      // errno will have been set to S_hostLib_UNKNOWN_HOST
+      // errno will have been set to S_hostLib_UNKNOWN_HOST.
       return 0;
     }
 
-  // might not be official: just echo input arg.
+  // Might not be official: just echo input arg.
   hostaddr[0] = (char *) addr;
   hostaddr[1] = 0;
 
@@ -395,6 +394,104 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
   ret.h_addr_list = hostaddr;
 
   return &ret;
+}
+
+struct hostent *
+ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
+                         hostent *result, ACE_HOSTENT_DATA buffer,
+                         int *h_errnop)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyaddr_r");
+  if (length != 4 || type != AF_INET)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+
+  if (ACE_OS::netdb_acquire ())
+    return 0;
+  else
+    {
+      // buffer layout:
+      // buffer[0-3]: h_addr_list[0], the first (and only) addr.
+      // buffer[4-7]: h_addr_list[1], the null terminator for the h_addr_list.
+      // buffer[8]: the name of the host, null terminated.
+
+      // Call ::hostGetByAddr (), which puts the (one) hostname into
+      // buffer.
+      if (::hostGetByAddr (htonl (*(u_long *) addr), &buffer[8]) == 0)
+        {
+          // Store the return values in result.
+          result->h_name = &buffer[8];  // null-terminated host name
+          result->h_addrtype = AF_INET;
+          result->h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN.
+
+          result->h_addr_list = (char **) buffer;
+          // Might not be official: just echo input arg.
+          result->h_addr_list[0] = (char *) addr;
+          // Null-terminate the list of addresses.
+          result->h_addr_list[1] = 0;
+          // And no aliases, so null-terminate h_aliases.
+          result->h_aliases = &result->h_addr_list[1];
+        }
+      else
+        {
+          // errno will have been set to S_hostLib_UNKNOWN_HOST.
+          result = 0;
+        }
+    }
+
+  ACE_OS::netdb_release ();
+  *h_errnop = errno;
+  return result;
+}
+
+struct hostent *
+ACE_OS::gethostbyname_r (const char *name, hostent *result,
+                         ACE_HOSTENT_DATA buffer,
+                         int *h_errnop)
+{
+  // ACE_TRACE ("ACE_OS::gethostbyname_r");
+
+  if (ACE_OS::netdb_acquire ())
+    return 0;
+  else
+    {
+      int addr;
+      ACE_OSCALL (::hostGetByName ((char *) name), int, -1, addr);
+
+      if (addr == -1)
+        {
+          // errno will have been set to S_hostLib_UNKNOWN_HOST
+          result = 0;
+        }
+      else
+        {
+          // Might not be official: just echo input arg.
+          result->h_name = (char *) name;
+          result->h_addrtype = AF_INET;
+          result->h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
+
+          // buffer layout:
+          // buffer[0-3]: h_addr_list[0], pointer to the addr.
+          // buffer[4-7]: h_addr_list[1], null terminator for the h_addr_list.
+          // buffer[8-11]: the first (and only) addr.
+
+          // Store the address list in buffer.
+          result->h_addr_list = (char **) buffer;
+          // Store the actual address _after_ the address list.
+          result->h_addr_list[0] = (char *) &result->h_addr_list[2];
+          result->h_addr_list[2] = (char *) htonl (addr);
+          // Null-terminate the list of addresses.
+          result->h_addr_list[1] = 0;
+          // And no aliases, so null-terminate h_aliases.
+          result->h_aliases = &result->h_addr_list[1];
+        }
+    }
+
+  ACE_OS::netdb_release ();
+  *h_errnop = errno;
+  return result;
 }
 #endif /* VXWORKS */
 
