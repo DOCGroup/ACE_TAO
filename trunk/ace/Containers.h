@@ -685,6 +685,10 @@ template <class T> class ACE_DLList_Iterator;
 template <class T>
 class ACE_DLList_Node
 {
+  // = TITLE
+  //     Implementation of element in a DL list.  Needed for
+  //     ACE_Double_Linked_List.
+
   friend class ACE_DLList<T>;
   friend class ACE_DLList_Iterator<T>;
 
@@ -706,10 +710,20 @@ public:
 template <class T>
 class ACE_DLList : private ACE_Double_Linked_List< ACE_DLList_Node<T> >
 {
+  // = TITLE
+  //     A double-linked list container class.
+  //
+  // = DESCRIPTION
+  //     This implementation uses ACE_Double_Linked_List to perform
+  //     the logic behind this container class.  It delegates all of its
+  //     calls to ACE_Double_Linked_List.
+
   friend class ACE_DLList_Node<T>;
   friend class ACE_DLList_Iterator<T>;
+
 public:
 
+  // = Define some traits.
   typedef ACE_Double_Linked_List< ACE_DLList_Node<T> > 
           DLList;
   typedef ACE_DLList_Node<T> 
@@ -718,49 +732,92 @@ public:
           DLList_ITERATOR;
 
   void operator= (ACE_DLList<T> &l);
+  // Delegates to ACE_Double_Linked_List.
 
   // = Check boundary conditions.
+
   int is_empty (void) const;
+  // Delegates to ACE_Double_Linked_List.
   int is_full (void) const;
+  // Delegates to ACE_Double_Linked_List.
 
   // = Classic queue operations.
 
   T *insert_tail (T *new_item);
+  // Delegates to ACE_Double_Linked_List.
+
   T *insert_head (T *new_item);
+  // Delegates to ACE_Double_Linked_List.
+
   T* delete_head (void);
+  // Delegates to ACE_Double_Linked_List.
+
   T *delete_tail (void);
+  // Delegates to ACE_Double_Linked_List.
 
   // = Additional utility methods.
 
   void reset (void);
+  // Delegates to ACE_Double_Linked_List.
+
   int get (T *&item, size_t index = 0);
+  // Delegates to ACE_Double_Linked_List.
+
   size_t size (void) const;
+  // Delegates to ACE_Double_Linked_List.
+
   void dump (void) const;
+  // Delegates to ACE_Double_Linked_List.
 
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Initialization and termination methods.
+
   ACE_DLList (ACE_Allocator *alloc = 0);
+  // Delegates to ACE_Double_Linked_List.
+
   ACE_DLList (ACE_DLList<T> &l);
+  // Delegates to ACE_Double_Linked_List.
+
   ~ACE_DLList (void);
+  // Deletes the list starting from the head.
 };
 
 template <class T>
 class ACE_DLList_Iterator : private ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >
 {
+  // = TITLE
+  //     A double-linked list container class iterator.
+  //
+  // = DESCRIPTION
+  //     This implementation uses ACE_Double_Linked_List_Iterator to
+  //     perform the logic behind this container class.  It delegates
+  //     all of its calls to ACE_Double_Linked_List_Iterator.
+
   friend class ACE_DLList<T>;
   friend class ACE_DLList_Node<T>;
+
 public:
+
   // = Initialization method.
   ACE_DLList_Iterator (ACE_DLList<T> &l);
 
   // = Iteration methods.
 
   T *next (void) const;
+  // Delegates to ACE_Double_Linked_List_Iterator.
+
   int advance (void);
+  // Delegates to ACE_Double_Linked_List_Iterator.
+
   int first (void);
+  // Delegates to ACE_Double_Linked_List_Iterator.
+
   int done (void) const;
+  // Delegates to ACE_Double_Linked_List_Iterator.
+
   void dump (void) const;
+  // Delegates to ACE_Double_Linked_List_Iterator.
 
   ACE_ALLOC_HOOK_DECLARE;
 };
