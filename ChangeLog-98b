@@ -1,3 +1,15 @@
+Sun Nov 01 21:18:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (upcall): Before handle_input is called
+ 	  because of FD_CLOSE, we check the return value of handle_input
+ 	  because of FD_READ. If the user had returned -1, we won't call
+ 	  handle_input again.  Thanks to Gonzalo Diethelm
+	  <Gonzalo.Diethelm@jda.cl> for suggesting this change.
+
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp
+	  (handle_input): Changed this method to keep reading from the
+ 	  socket until EWOULDBLOCK occurs.
+
 Sun Nov  1 17:32:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Hash_Map_Manager_Test.cpp (run_test): Oops, we need to
