@@ -1,228 +1,233 @@
+Sun Oct  3 19:28:08 2004  Olli Savia  <ops@iki.fi>
+
+        * utils/catior/catior.cpp:
+          Replaced isdigit() and isxdigit() with ACE versions.
+
 Sun Oct  3 13:38:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Wait_Strategy.h:
+        * tao/Wait_Strategy.h:
 
-	  Added a new pure virtual method, can_process_upcalls ().  
-	
-	* tao/Wait_On_LF_No_Upcall.cpp:
-	* tao/Wait_On_LF_No_Upcall.h:
-	* tao/Wait_On_Leader_Follower.cpp:
-	* tao/Wait_On_Leader_Follower.h:
-	* tao/Wait_On_Reactor.cpp:
-	* tao/Wait_On_Reactor.h:
-	* tao/Wait_On_Read.cpp:
-	* tao/Wait_On_Read.h:
+          Added a new pure virtual method, can_process_upcalls ().
 
-	  Implementation for can_process_upcalls (). This method returns
-	  true for all the Wait strategies but for
-	  Wait_On_LF_No_Upcall. Only the Wait_On_LF_No_Upcall returns
-	  false since the semantics of the class are so. 
-	
- 	* tao/Connection_Handler.cpp:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Read.h:
 
-	  Use the can_process_upcalls () in handle_input_eh () instead of
-	  the checks in place there. This check invariably resulted in a
-	  TSS access which seem to slow down things quite a bit. This was
-	  based on my profiler. I am not sure whether this is going to
-	  show up any conclusive results in our stat pages.
-	
-	* tao/Transport.h:
-	* tao/Transport.inl:
+          Implementation for can_process_upcalls (). This method returns
+          true for all the Wait strategies but for
+          Wait_On_LF_No_Upcall. Only the Wait_On_LF_No_Upcall returns
+          false since the semantics of the class are so.
 
-	  Removed the acts_as_server () call since the functionality is
-	  replaced by the new pure virtual method in Wait_Strategy.
+        * tao/Connection_Handler.cpp:
+
+          Use the can_process_upcalls () in handle_input_eh () instead of
+          the checks in place there. This check invariably resulted in a
+          TSS access which seem to slow down things quite a bit. This was
+          based on my profiler. I am not sure whether this is going to
+          show up any conclusive results in our stat pages.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+
+          Removed the acts_as_server () call since the functionality is
+          replaced by the new pure virtual method in Wait_Strategy.
 
 Sat Oct  2 17:03:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/Default_Policy_Validator.cpp:
 
-	  Should be tha last (famous last word) of the remaining problems
-	  with wrong macro usage.
+          Should be tha last (famous last word) of the remaining problems
+          with wrong macro usage.
 
 Sat Oct  2 16:28:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Protocols/receiver.cpp:
-	* performance-tests/Protocols/sender.cpp:
-	* performance-tests/Protocols/distributor.cpp:
-	
-	  Fixed completely busted usage environment macros. The builds
-	  should start getting cleared soon.
+        * performance-tests/Protocols/receiver.cpp:
+        * performance-tests/Protocols/sender.cpp:
+        * performance-tests/Protocols/distributor.cpp:
+
+          Fixed completely busted usage environment macros. The builds
+          should start getting cleared soon.
 
 Sat Oct  2 13:09:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/PSS/PSDL.mpc:
+        * orbsvcs/PSS/PSDL.mpc:
 
-	  Added requires += dummy for the following reasons (1) PSS is
-	  completely broken and  requires lot of work and (2) the MPC file
-	  has an issue which we need to report it to Chad. In the meantime
-	  I am commenting the test out from the builds so that we could
-	  save some CPU cycles for an unusable thingy.
+          Added requires += dummy for the following reasons (1) PSS is
+          completely broken and  requires lot of work and (2) the MPC file
+          has an issue which we need to report it to Chad. In the meantime
+          I am commenting the test out from the builds so that we could
+          save some CPU cycles for an unusable thingy.
 
 Sat Oct  2 03:24:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
-	* tao/Messaging/Messaging_Policy_i.cpp:
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	* tao/RTPortableServer/RT_POA.cpp:
-	* tao/RTPortableServer/RT_Policy_Validator.cpp:
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/SCIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
 
-	  Calls to get_cached_policy, client_protocol_properties_at_orb_level, 
-	  and server_protocol_properties_at_orb_level need environmnet
-	  variables to be passed. This should fix a bunch of compilation
-	  errors in builds with exceptions disabled. 
+          Calls to get_cached_policy, client_protocol_properties_at_orb_level,
+          and server_protocol_properties_at_orb_level need environmnet
+          variables to be passed. This should fix a bunch of compilation
+          errors in builds with exceptions disabled.
 
 Sat Oct  2 01:33:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Protocols/sender.cpp:
+        * performance-tests/Protocols/sender.cpp:
 
-	  Fixed a compile error in our daily builds.
+          Fixed a compile error in our daily builds.
 
 Fri Oct  1 23:06:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+        * tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
 
-	  Pass the environment variable while calling get_cached_policies
-	  (). This should fix compile errors in our minimum builds.
+          Pass the environment variable while calling get_cached_policies
+          (). This should fix compile errors in our minimum builds.
 
 Fri Oct  1 19:48:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
 
-	  Add env macros before invoking
-	  client_protocol_properties_at_orb_level and
-	  server_protocol_properties_at_orb_level.
-	
-	* tao/PortableServer/POA_Policy_Set.h:
-	* tao/PortableServer/POA_Policy_Set.i:
+          Add env macros before invoking
+          client_protocol_properties_at_orb_level and
+          server_protocol_properties_at_orb_level.
 
-	  Added env variables get_cached_policy ().
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/PortableServer/POA_Policy_Set.i:
+
+          Added env variables get_cached_policy ().
 
 Fri Oct  1 19:26:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Cleanup from my last set of fixes.
+          Cleanup from my last set of fixes.
 
 Fri Oct  1 18:41:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Policy_Manager.h:
-	* tao/Policy_Manager.i:
-	* tao/Policy_Set.cpp:
-	* tao/Policy_Set.h:
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.i:
+        * tao/Policy_Set.cpp:
+        * tao/Policy_Set.h:
 
-	  The get_cached_policy () did not have the environment variables
-	  populated. This is essential to get things to be very sane. 
+          The get_cached_policy () did not have the environment variables
+          populated. This is essential to get things to be very sane.
 
 Fri Oct  1 11:40:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Changed to refer to $(ACE_BUILDDIR)/Kokyu/libKokyu.la instead of
-	  -lKokyu.
+          Changed to refer to $(ACE_BUILDDIR)/Kokyu/libKokyu.la instead of
+          -lKokyu.
 
 Fri Oct  1 11:29:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Fault_Detector/Fault_Detector.mpc:
-	* orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
+        * orbsvcs/Fault_Detector/Fault_Detector.mpc:
+        * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
 
-	  Changed to inherit from core so that executables will be
-	  installed.
+          Changed to inherit from core so that executables will be
+          installed.
 
 Fri Oct  1 18:22:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp (get_policy_including_current):
+        * tao/ORB_Core.cpp (get_policy_including_current):
 
-	  Some more problems that missed the last checkin.
+          Some more problems that missed the last checkin.
 
 Fri Oct  1 18:13:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Default_Protocols_Hooks.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h:
-	* tao/Remote_Invocation.cpp:
-	* tao/Stub.cpp:
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/Remote_Invocation.cpp:
+        * tao/Stub.cpp:
 
-	  Fixed improper use of exception macros.
+          Fixed improper use of exception macros.
 
 Fri Oct  1 17:25:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Policy_i.h (create_transport_protocol_property):
+        * tao/RTCORBA/RT_Policy_i.h (create_transport_protocol_property):
 
-	  Made the second argument to defaul to zero. This fix may not be
-	  right. Need to run this by  Irfan. Until then some of the
-	  compilation failures will be fixed.
+          Made the second argument to defaul to zero. This fix may not be
+          right. Need to run this by  Irfan. Until then some of the
+          compilation failures will be fixed.
 
 Thu Sep 30 17:08:43 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
 
-	  Transport.h needs to be included.
+          Transport.h needs to be included.
 
 Thu Sep 30 16:53:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/Protocols_Hooks.h:
+        * tao/Protocols_Hooks.h:
 
-	  Added export directives to the class declarations.
+          Added export directives to the class declarations.
 
-	* tao/Connection_Handler.{h,inl} (TAO_Connection_Handler):
+        * tao/Connection_Handler.{h,inl} (TAO_Connection_Handler):
 
-	  Gave the set_dscp_codepoint() method a default no-op
-	  implementation.  This way local protocols will not have to
-	  bother overwriting this method.
+          Gave the set_dscp_codepoint() method a default no-op
+          implementation.  This way local protocols will not have to
+          bother overwriting this method.
 
-	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}:
-	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}:
+        * tao/Strategies/UIOP_Connection_Handler.{h,cpp}:
+        * tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}:
 
-	  Removed no-op implementation of set_dscp_codepoint().
+          Removed no-op implementation of set_dscp_codepoint().
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.{h,cpp}:
 
-	  SSLIOP::Util::setup_handler_state no longer needed.  However, a
-	  helper for resolving the current is needed and was added.
+          SSLIOP::Util::setup_handler_state no longer needed.  However, a
+          helper for resolving the current is needed and was added.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.{h,cpp}:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.{h,cpp}:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.{h,cpp}:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.{h,cpp}:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{h,cpp}:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.{h,cpp}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.{h,cpp}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.{h,cpp}:
 
-	  The void * arg parameter that was being passed to
-	  TAO_Creation_Strategy is no longer necessary.  Service handlers
-	  now figure out protocol properties when they are created.
+          The void * arg parameter that was being passed to
+          TAO_Creation_Strategy is no longer necessary.  Service handlers
+          now figure out protocol properties when they are created.
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.{h,cpp}:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.{h,cpp}:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.{h,cpp}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.{h,cpp}:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.{h,cpp}:
 
-	  TAO_{Protocol Name}_Properties was removed.  <arg> parameter
-	  that was used to pass information between acceptor/connector and
-	  service handler was removed. open() was modified to get the
-	  protocol properties from the correct place.
+          TAO_{Protocol Name}_Properties was removed.  <arg> parameter
+          that was used to pass information between acceptor/connector and
+          service handler was removed. open() was modified to get the
+          protocol properties from the correct place.
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
 
-	  Added missing semicolon.
+          Added missing semicolon.
 
 Thu Sep 30 07:19:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Removed references to taoConf.
+          Removed references to taoConf.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Removed taoConf.sh from AC_CONFIG_FILES.
+          Removed taoConf.sh from AC_CONFIG_FILES.
 
-	* taoConf.sh.in:
+        * taoConf.sh.in:
 
-	  Removed file.
+          Removed file.
 
 Wed Sep 29 21:17:51 MST 2004  Trevor Fields <fields_t@ociweb.com>
 
@@ -251,401 +256,401 @@ Wed Sep 29 21:17:51 MST 2004  Trevor Fields <fields_t@ociweb.com>
 
 Wed Sep 29 18:27:32 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* performance-tests/Protocols/altq.conf:
+        * performance-tests/Protocols/altq.conf:
 
-	  File for setting priority queuing on a ALTQ router for DiffServ
-	  testing.
+          File for setting priority queuing on a ALTQ router for DiffServ
+          testing.
 
 Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	  The following changes were made to accommodate the setting of
-	  protocol properties for non-IIOP protocols.  IIOP is part of the
-	  TAO library while the other protocols are part of the Strategies
-	  library. Protocol properties is part of RTCORBA.  Protocol
-	  properties for IIOP were implemented poorly and if the same
-	  model was followed for the other protocols, it would create a
-	  coupling of the RTCORBA and the Strategies libraries.
+          The following changes were made to accommodate the setting of
+          protocol properties for non-IIOP protocols.  IIOP is part of the
+          TAO library while the other protocols are part of the Strategies
+          library. Protocol properties is part of RTCORBA.  Protocol
+          properties for IIOP were implemented poorly and if the same
+          model was followed for the other protocols, it would create a
+          coupling of the RTCORBA and the Strategies libraries.
 
-	  The other major change here is how policies are retrieved.  The
-	  Policy Set implementation is nice and powerful, providing quick
-	  access to policy evaluated in the critical path.  These features
-	  were not being used consistently and there was a lot of code
-	  duplication.  These changes also clean things up.
+          The other major change here is how policies are retrieved.  The
+          Policy Set implementation is nice and powerful, providing quick
+          access to policy evaluated in the critical path.  These features
+          were not being used consistently and there was a lot of code
+          duplication.  These changes also clean things up.
 
-	  Also a lot of policy related code - what policies are set, when
-	  they are set and when they are evaluated - was also fixed.
+          Also a lot of policy related code - what policies are set, when
+          they are set and when they are evaluated - was also fixed.
 
-	* tao/RTCORBA/RTCORBA.pidl:
+        * tao/RTCORBA/RTCORBA.pidl:
 
-	  Added these two local interfaces:
+          Added these two local interfaces:
 
-	  # UserDatagramProtocolProperties
-	  # StreamControlProtocolProperties.
+          # UserDatagramProtocolProperties
+          # StreamControlProtocolProperties.
 
-	  Updated SharedMemoryProtocolProperties to include all the TCP
-	  related parameters.  The implementation was also changed
-	  accordingly.
+          Updated SharedMemoryProtocolProperties to include all the TCP
+          related parameters.  The implementation was also changed
+          accordingly.
 
-	  Added the following methods to create the different protocol
-	  properties:
+          Added the following methods to create the different protocol
+          properties:
 
-	  # create_unix_domain_protocol_properties()
-	  # create_shared_memory_protocol_properties()
-	  # create_user_datagram_protocol_properties()
-	  # create_stream_control_protocol_properties()
+          # create_unix_domain_protocol_properties()
+          # create_shared_memory_protocol_properties()
+          # create_user_datagram_protocol_properties()
+          # create_stream_control_protocol_properties()
 
-  	* tao/RTCORBA/RTCORBAC.{h,cpp}:
+        * tao/RTCORBA/RTCORBAC.{h,cpp}:
 
-	  Added code to match the changes in the pidl file.
+          Added code to match the changes in the pidl file.
 
-	* RTCORBA/RT_ORB.{h,cpp}:
+        * RTCORBA/RT_ORB.{h,cpp}:
 
-	  Added code for implementing changes in the pidl file.
+          Added code for implementing changes in the pidl file.
 
-	* tao/RTCORBA/RT_Policy_i.{h,cpp}:
+        * tao/RTCORBA/RT_Policy_i.{h,cpp}:
 
-	  To make things consistent, TAO_TCP_Properties,
-	  TAO_Unix_Domain_Properties, and TAO_SMEM_Properties were renamed
-	  to TAO_TCP_Protocol_Properties,
-	  TAO_UnixDomain_Protocol_Properties, and
-	  TAO_SharedMemory_Protocol_Properties respectively.  These two
-	  classes were added: TAO_UserDatagram_Protocol_Properties and
-	  TAO_StreamControl_Protocol_Properties.  Also default constructor
-	  parameters were removed.  If one does not know what parameters
-	  one of these should be created with, he should use the
-	  TAO_Protocol_Properties_Factory to create these classes.
+          To make things consistent, TAO_TCP_Properties,
+          TAO_Unix_Domain_Properties, and TAO_SMEM_Properties were renamed
+          to TAO_TCP_Protocol_Properties,
+          TAO_UnixDomain_Protocol_Properties, and
+          TAO_SharedMemory_Protocol_Properties respectively.  These two
+          classes were added: TAO_UserDatagram_Protocol_Properties and
+          TAO_StreamControl_Protocol_Properties.  Also default constructor
+          parameters were removed.  If one does not know what parameters
+          one of these should be created with, he should use the
+          TAO_Protocol_Properties_Factory to create these classes.
 
-	  TAO_Protocol_Properties_Factory::create_transport_protocol_property()
-	  was changed to require that the ORB_Core is passed in since we
-	  need to use the user passed command line parameters to
-	  initialize the protocol properties.
+          TAO_Protocol_Properties_Factory::create_transport_protocol_property()
+          was changed to require that the ORB_Core is passed in since we
+          need to use the user passed command line parameters to
+          initialize the protocol properties.
 
-	  TAO_ServerProtocolPolicy::hook() and
-	  TAO_ClientProtocolPolicy::hook() were removed.
+          TAO_ServerProtocolPolicy::hook() and
+          TAO_ClientProtocolPolicy::hook() were removed.
 
-	* tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}:
-	* tao/Default_Protocols_Hooks.{h,cpp):
-	* tao/Protocols_Hooks.{h,cpp}:
+        * tao/RTCORBA/RT_Protocols_Hooks.{h,cpp}:
+        * tao/Default_Protocols_Hooks.{h,cpp):
+        * tao/Protocols_Hooks.{h,cpp}:
 
-	  - Removed client_protocols_hook and server_protocols_hook.
-	  These 'hooks' were trying to be generic across protocols, but
-	  really were specific to IIOP.
+          - Removed client_protocols_hook and server_protocols_hook.
+          These 'hooks' were trying to be generic across protocols, but
+          really were specific to IIOP.
 
-	  - Removed update_client_protocol_properties and
-	  update_server_protocol_properties since they were very poorly
-	  written. Expanding these methods to other protocols would add a
-	  dependency from RTCORBA to the Strategies library.
+          - Removed update_client_protocol_properties and
+          update_server_protocol_properties since they were very poorly
+          written. Expanding these methods to other protocols would add a
+          dependency from RTCORBA to the Strategies library.
 
-	  - Removed the set_default_policies method.  It took all the
-	  protocols that the ORB knows about, made client and server
-	  protocol properties from them and set them as default ORB
-	  policies.  The server protocol properties were being overridden
-	  in set_default_server_protocol_policy() so that only the
-	  protocols requested by the user are in the default protocol
-	  properties and not all the protocols that the ORB knows about.
-	  Client protocol properties were never used and were always
-	  ignored.  Therefore, this method was removed.  This method was
-	  also removed from ORB_Core::init().
+          - Removed the set_default_policies method.  It took all the
+          protocols that the ORB knows about, made client and server
+          protocol properties from them and set them as default ORB
+          policies.  The server protocol properties were being overridden
+          in set_default_server_protocol_policy() so that only the
+          protocols requested by the user are in the default protocol
+          properties and not all the protocols that the ORB knows about.
+          Client protocol properties were never used and were always
+          ignored.  Therefore, this method was removed.  This method was
+          also removed from ORB_Core::init().
 
-	  - Added the following methods and classes were added:
+          - Added the following methods and classes were added:
 
-	  # TAO_IIOP_Protocol_Properties
-	  # TAO_UIOP_Protocol_Properties
-	  # TAO_SHMIOP_Protocol_Properties
-	  # TAO_DIOP_Protocol_Properties
-	  # TAO_SCIOP_Protocol_Properties
-	  # client_protocol_properties_at_orb_level()
-	  # server_protocol_properties_at_orb_level()
+          # TAO_IIOP_Protocol_Properties
+          # TAO_UIOP_Protocol_Properties
+          # TAO_SHMIOP_Protocol_Properties
+          # TAO_DIOP_Protocol_Properties
+          # TAO_SCIOP_Protocol_Properties
+          # client_protocol_properties_at_orb_level()
+          # server_protocol_properties_at_orb_level()
 
           These classes and methods are used to set connection handler
-	  properties at creation time.  These classes and methods in the
-	  Protocols_Hooks allow us to decouple the RTCORBA library from
-	  the Strategies library.
+          properties at creation time.  These classes and methods in the
+          Protocols_Hooks allow us to decouple the RTCORBA library from
+          the Strategies library.
 
-	  Also the following were added to set network priority during
-	  sending of packets.
+          Also the following were added to set network priority during
+          sending of packets.
 
-	  # set_client_network_priority()
-	  # set_server_network_priority()
+          # set_client_network_priority()
+          # set_server_network_priority()
 
-	* tao/ORB_Core.{h,cpp}:
+        * tao/ORB_Core.{h,cpp}:
 
-	  Added the following methods:
+          Added the following methods:
 
-	  # get_policy() - Get a policy; first, check the ORB-level Policy
-	  Manager, then check the ORB defaults.
+          # get_policy() - Get a policy; first, check the ORB-level Policy
+          Manager, then check the ORB defaults.
 
-	  # get_policy_including_current() - Get a policy; first, check
-	  the thread current, then check the ORB-level Policy Manager,
-	  then check the ORB defaults.
+          # get_policy_including_current() - Get a policy; first, check
+          the thread current, then check the ORB-level Policy Manager,
+          then check the ORB defaults.
 
-	  # get_cached_policy() - Get a cached policy; first, check the
-	  ORB-level Policy Manager, then check the ORB defaults.
+          # get_cached_policy() - Get a cached policy; first, check the
+          ORB-level Policy Manager, then check the ORB defaults.
 
-	  # get_cached_policy_including_current() - Get a cached policy;
-	  first, check the thread current, then check the ORB-level Policy
-	  Manager, then check the ORB defaults.
+          # get_cached_policy_including_current() - Get a cached policy;
+          first, check the thread current, then check the ORB-level Policy
+          Manager, then check the ORB defaults.
 
-	  Removed the following custom methods that are replaced with the
-	  above general methods:
+          Removed the following custom methods that are replaced with the
+          above general methods:
 
-	  # stubless_relative_roundtrip_timeout()
-	  # stubless_connection_timeout()
-	  # stubless_sync_scope()
+          # stubless_relative_roundtrip_timeout()
+          # stubless_connection_timeout()
+          # stubless_sync_scope()
 
           Also, get_protocols_hooks() was made simplier as the initiation
-	  of the protocols hooks was moved explicitly to
-	  ORB_Core::init(). This also allowed the removal of the
-	  environment being passed to this function.  The use of
-	  get_protocols_hooks() was updated in the following files:
+          of the protocols hooks was moved explicitly to
+          ORB_Core::init(). This also allowed the removal of the
+          environment being passed to this function.  The use of
+          get_protocols_hooks() was updated in the following files:
 
-	  # IIOP_Connection_Handler.cpp
-	  # Remote_Invocation.cpp
-	  # PortableServer/Object_Adapter.cpp
-	  # RTCORBA/RT_Current.cpp
-	  # RTCORBA/RT_Invocation_Endpoint_Selectors.cpp
-	  # RTPortableServer/RT_Servant_Dispatcher.cpp
+          # IIOP_Connection_Handler.cpp
+          # Remote_Invocation.cpp
+          # PortableServer/Object_Adapter.cpp
+          # RTCORBA/RT_Current.cpp
+          # RTCORBA/RT_Invocation_Endpoint_Selectors.cpp
+          # RTPortableServer/RT_Servant_Dispatcher.cpp
 
-	* tao/Remote_Invocation.cpp:
+        * tao/Remote_Invocation.cpp:
 
-	  In send_message(), we figure out if we need to set dscp on the
-	  client produced network packets.  Then we ask the Connection
-	  Handler to go ahead and set the dscp on the socket if needed.
+          In send_message(), we figure out if we need to set dscp on the
+          client produced network packets.  Then we ask the Connection
+          Handler to go ahead and set the dscp on the socket if needed.
 
-	* tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.cpp:
 
-	  The following is how things used to happen:
+          The following is how things used to happen:
 
-	  - First we get the client protocol properties in effect in
-	  TAO_IIOP_Transport::send_message() and figure out whether the
-	  network priority needs to be set.
+          - First we get the client protocol properties in effect in
+          TAO_IIOP_Transport::send_message() and figure out whether the
+          network priority needs to be set.
 
-	  - Then just before we send the message out, we set the dcsp on
-	  the socket if needed.
+          - Then just before we send the message out, we set the dcsp on
+          the socket if needed.
 
-	  These steps are correct but were spread out in mutiple functions
-	  executed at different times.  This amount of complexity was
-	  unwarranted.
+          These steps are correct but were spread out in mutiple functions
+          executed at different times.  This amount of complexity was
+          unwarranted.
 
-	  All these are now down in one place:
-	  Remote_Invocation::send_message().
+          All these are now down in one place:
+          Remote_Invocation::send_message().
 
-	* tao/IIOP_Connection_Handler.{h,cpp}:
+        * tao/IIOP_Connection_Handler.{h,cpp}:
 
-	  # TAO_IIOP_Properties class was removed since the
-	  IIOP_Properties are no longer being passed from the Connector
-	  and Acceptor to the Connection Handler.  Instead the protocol
-	  properties are retrieved when the the Connection Handler is
-	  created.  The previous method was flawed becaused any updates to
-	  the properties by the user were not considered when the protocol
-	  properties were set.  With this changes, any updates will get
-	  used.
+          # TAO_IIOP_Properties class was removed since the
+          IIOP_Properties are no longer being passed from the Connector
+          and Acceptor to the Connection Handler.  Instead the protocol
+          properties are retrieved when the the Connection Handler is
+          created.  The previous method was flawed becaused any updates to
+          the properties by the user were not considered when the protocol
+          properties were set.  With this changes, any updates will get
+          used.
 
-	  # update_protocol_properties() method was removed since protocol
-	  properties are no longer updated in this manner.
+          # update_protocol_properties() method was removed since protocol
+          properties are no longer updated in this manner.
 
-	  # IPDSFIELD_DSCP_DEFAULT was moved to ORB_Constants.h since it
-	  is used my multiple protocols, not just IIOP.
+          # IPDSFIELD_DSCP_DEFAULT was moved to ORB_Constants.h since it
+          is used my multiple protocols, not just IIOP.
 
-	* tao/Acceptor_Impl.{h,cpp}:
-	* tao/Connector_Impl.{h,cpp}:
-	* tao/IIOP_Acceptor.{h,cpp}:
-	* tao/IIOP_Connector.{h,cpp}:
+        * tao/Acceptor_Impl.{h,cpp}:
+        * tao/Connector_Impl.{h,cpp}:
+        * tao/IIOP_Acceptor.{h,cpp}:
+        * tao/IIOP_Connector.{h,cpp}:
 
-	  The void * arg parameter that was being passed to
-	  TAO_Creation_Strategy is no longer necessary.  Service handlers
-	  now figure out protocol properties when they are created.
+          The void * arg parameter that was being passed to
+          TAO_Creation_Strategy is no longer necessary.  Service handlers
+          now figure out protocol properties when they are created.
 
-	* tao/Connection_Handler.h (set_dscp_codepoint):
+        * tao/Connection_Handler.h (set_dscp_codepoint):
 
-	  Made set_dscp_codepoint() a pure virtual method in the base
-	  class.  Super classes for remote protocols (e.g., IIOP)
-	  implement this method; for local protocols this is a no-op.
+          Made set_dscp_codepoint() a pure virtual method in the base
+          class.  Super classes for remote protocols (e.g., IIOP)
+          implement this method; for local protocols this is a no-op.
 
-	* tao/Object.{h,cpp}:
-	* tao/LocalObject.{h,cpp}:
-	* tao/RTCORBA/RT_Stub.{h,cpp}:
+        * tao/Object.{h,cpp}:
+        * tao/LocalObject.{h,cpp}:
+        * tao/RTCORBA/RT_Stub.{h,cpp}:
 
-	  _get_cached_policy() has added and _get_client_policy() was removed.
+          _get_cached_policy() has added and _get_client_policy() was removed.
 
-	* tao/Stub.{h,cpp}:
+        * tao/Stub.{h,cpp}:
 
-	  Removed the following methods since they can be easily replace
-	  with one new method get_cached_policy():
+          Removed the following methods since they can be easily replace
+          with one new method get_cached_policy():
 
-	  # relative_roundtrip_timeout()
-	  # sync_scope()
-	  # buffering_constraint()
-	  # connection_timeout()
+          # relative_roundtrip_timeout()
+          # sync_scope()
+          # buffering_constraint()
+          # connection_timeout()
 
-	  Also removed get_client_policy() since it was not useful.  Also,
-	  the get_policy() method was streamlined.
+          Also removed get_client_policy() since it was not useful.  Also,
+          the get_policy() method was streamlined.
 
-	* tao/RTCORBA/RT_Stub.{h,cpp}:
+        * tao/RTCORBA/RT_Stub.{h,cpp}:
 
-	  effective_priority_banded_connection() and
-	  effective_client_protocol() were made private.  The user should
-	  simply use the get_policy() or the get_cached_policy()
-	  interface.  All the necessary smarts of returning the correct
-	  policy are now in this method.
+          effective_priority_banded_connection() and
+          effective_client_protocol() were made private.  The user should
+          simply use the get_policy() or the get_cached_policy()
+          interface.  All the necessary smarts of returning the correct
+          policy are now in this method.
 
-	  Specialized funtion private_connection(), client_protocol() and
-	  priority_banded_connection() were removed.
+          Specialized funtion private_connection(), client_protocol() and
+          priority_banded_connection() were removed.
 
-	  Call to priority_banded_connection() was replaced by
-	  TAO_Stub::get_cached_policy(TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION)
-	  and call to client_protocol() was replaced by
-	  TAO_Stub::get_cached_policy(TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL).
+          Call to priority_banded_connection() was replaced by
+          TAO_Stub::get_cached_policy(TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION)
+          and call to client_protocol() was replaced by
+          TAO_Stub::get_cached_policy(TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL).
 
-	* tao/RTPortableServer/RT_POA.cpp (server_protocol):
+        * tao/RTPortableServer/RT_POA.cpp (server_protocol):
 
-	  This method was removed.  ORB level policies are already
-	  included in the POA policy set when the POA is created.
-	  Therefore, there is no need to check at the ORB level.
+          This method was removed.  ORB level policies are already
+          included in the POA policy set when the POA is created.
+          Therefore, there is no need to check at the ORB level.
 
-	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp
-	  (pre_invoke_remote_request):
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp
+          (pre_invoke_remote_request):
 
-	  Special treatment of IIOP was removed.  The code for setting up
-	  dscp was generalized to work with any protocol.
+          Special treatment of IIOP was removed.  The code for setting up
+          dscp was generalized to work with any protocol.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Removed several unused lierals, including
-	  TAO_CLIENT_PRIORITY_POLICY_TYPE,
-	  TAO_BUFFERING_CONSTRAINT_POLICY_TYPE,
-	  TAO_CONNECTION_TIMEOUT_POLICY_TYPE,
-	  TAO_RT_PRIORITY_MODEL_POLICY_TYPE,
-	  TAO_RT_THREADPOOL_POLICY_TYPE,
-	  TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE,
-	  TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE, and
-	  TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE
+          Removed several unused lierals, including
+          TAO_CLIENT_PRIORITY_POLICY_TYPE,
+          TAO_BUFFERING_CONSTRAINT_POLICY_TYPE,
+          TAO_CONNECTION_TIMEOUT_POLICY_TYPE,
+          TAO_RT_PRIORITY_MODEL_POLICY_TYPE,
+          TAO_RT_THREADPOOL_POLICY_TYPE,
+          TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE,
+          TAO_RT_PRIVATE_CONNECTION_POLICY_TYPE, and
+          TAO_RT_PRIORITY_BANDED_CONNECTION_POLICY_TYPE
 
-	  TAO_RT_SERVER_PROTOCOL_POLICY_TYPE was not removed since it is
-	  needed for a check in the Policy Set, though it should really
-	  not be here though; We should find a different way to handle the
-	  check in the Policy Set.
+          TAO_RT_SERVER_PROTOCOL_POLICY_TYPE was not removed since it is
+          needed for a check in the Policy Set, though it should really
+          not be here though; We should find a different way to handle the
+          check in the Policy Set.
 
-	* tao/Messaging/Messaging_PolicyFactory.cpp (create_policy):
-	* tao/Messaging/Messaging_ORBInitializer.cpp (register_policy_factories):
+        * tao/Messaging/Messaging_PolicyFactory.cpp (create_policy):
+        * tao/Messaging/Messaging_ORBInitializer.cpp (register_policy_factories):
 
-	  TAO_BUFFERING_CONSTRAINT_POLICY_TYPE was replaced by
-	  TAO::BUFFERING_CONSTRAINT_POLICY_TYPE.
+          TAO_BUFFERING_CONSTRAINT_POLICY_TYPE was replaced by
+          TAO::BUFFERING_CONSTRAINT_POLICY_TYPE.
 
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
 
-	  Call to TAO_RT_Endpoint_Utils::client_protocol_policy() was
-	  replaced by
-	  TAO_RT_Endpoint_Utils::policy(TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL).
+          Call to TAO_RT_Endpoint_Utils::client_protocol_policy() was
+          replaced by
+          TAO_RT_Endpoint_Utils::policy(TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL).
 
-	  Call to rt_stub->exposed_priority_model() was replaced by
-	  rt_stub->get_cached_policy(TAO_CACHED_POLICY_PRIORITY_MODEL).
+          Call to rt_stub->exposed_priority_model() was replaced by
+          rt_stub->get_cached_policy(TAO_CACHED_POLICY_PRIORITY_MODEL).
 
-	  Call to TAO_RT_Endpoint_Utils::priority_bands_policy() was
-	  replaced by
-	  TAO_RT_Endpoint_Utils::policy(TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION).
+          Call to TAO_RT_Endpoint_Utils::priority_bands_policy() was
+          replaced by
+          TAO_RT_Endpoint_Utils::policy(TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION).
 
-	  Call to rt_stub->private_connection() was replaced by
-	  rt_stub->get_cached_policy(TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION).
+          Call to rt_stub->private_connection() was replaced by
+          rt_stub->get_cached_policy(TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION).
 
-	* tao/RTCORBA/RT_Endpoint_Utils.{h,cpp}:
+        * tao/RTCORBA/RT_Endpoint_Utils.{h,cpp}:
 
-	  priority_bands_policy() and client_protocol_policy() were
-	  replaced by one general policy() method.
+          priority_bands_policy() and client_protocol_policy() were
+          replaced by one general policy() method.
 
-	* tao/Messaging/Messaging_Policy_i.cpp (TAO_RelativeRoundtripTimeoutPolicy::hook):
+        * tao/Messaging/Messaging_Policy_i.cpp (TAO_RelativeRoundtripTimeoutPolicy::hook):
 
-	  Call to orb_core->stubless_relative_roundtrip_timeout() was
-	  replaced by
-	  orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT)
-	  and stub->relative_roundtrip_timeout() was replaced by
-	  stub->get_cached_policy(TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT).
+          Call to orb_core->stubless_relative_roundtrip_timeout() was
+          replaced by
+          orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT)
+          and stub->relative_roundtrip_timeout() was replaced by
+          stub->get_cached_policy(TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT).
 
-	* tao/Messaging/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy::hook):
+        * tao/Messaging/Messaging_Policy_i.cpp (TAO_Sync_Scope_Policy::hook):
 
-	  Call to orb_core->stubless_sync_scope() was replaced by
-	  orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_SYNC_SCOPE)
-	  and call to stub->sync_scope() was replaced by
-	  stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE).
+          Call to orb_core->stubless_sync_scope() was replaced by
+          orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_SYNC_SCOPE)
+          and call to stub->sync_scope() was replaced by
+          stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE).
 
-	* tao/Messaging/Connection_Timeout_Policy_i.cpp (hook):
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp (hook):
 
-	  Call to orb_core->stubless_connection_timeout() was replaced by
-	  orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_CONNECTION_TIMEOUT)
-	  and stub->connection_timeout() was replaced by
-	  stub->get_cached_policy(TAO_CACHED_POLICY_CONNECTION_TIMEOUT).
+          Call to orb_core->stubless_connection_timeout() was replaced by
+          orb_core->get_cached_policy_including_current(TAO_CACHED_POLICY_CONNECTION_TIMEOUT)
+          and stub->connection_timeout() was replaced by
+          stub->get_cached_policy(TAO_CACHED_POLICY_CONNECTION_TIMEOUT).
 
-	* tao/Sync_Strategies.cpp (buffering_constraints_reached):
+        * tao/Sync_Strategies.cpp (buffering_constraints_reached):
 
-	  Call to stub->buffering_constraint() was replaced by
-	  stub->get_cached_policy(TAO_CACHED_POLICY_BUFFERING_CONSTRAINT).
+          Call to stub->buffering_constraint() was replaced by
+          stub->get_cached_policy(TAO_CACHED_POLICY_BUFFERING_CONSTRAINT).
 
-	* tao/Strategies/DIOP_Connection_Handler.{h,cpp}:
-	* tao/Strategies/SCIOP_Connection_Handler.{h,cpp}:
-	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}:
-	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}:
+        * tao/Strategies/DIOP_Connection_Handler.{h,cpp}:
+        * tao/Strategies/SCIOP_Connection_Handler.{h,cpp}:
+        * tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}:
+        * tao/Strategies/UIOP_Connection_Handler.{h,cpp}:
 
-	  TAO_{Protocol Name}_Properties was removed.  <arg> parameter
-	  that was used to pass information between acceptor/connector and
-	  service handler was removed. open() was modified to get the
-	  protocol properties from the correct place.
-	  set_dscp_codepoint() was added/modified.
-	  enable_network_priority() and update_protocol_properties() were
-	  removed.
+          TAO_{Protocol Name}_Properties was removed.  <arg> parameter
+          that was used to pass information between acceptor/connector and
+          service handler was removed. open() was modified to get the
+          protocol properties from the correct place.
+          set_dscp_codepoint() was added/modified.
+          enable_network_priority() and update_protocol_properties() were
+          removed.
 
-	* tao/Strategies/DIOP_Connector.{h,cpp}:
-	* tao/Strategies/SCIOP_Connector.{h,cpp}:
-	* tao/Strategies/SHMIOP_Connector.{h,cpp}:
-	* tao/Strategies/UIOP_Connector.{h,cpp}:
-	* tao/Strategies/DIOP_Acceptor.{h,cpp}:
-	* tao/Strategies/SCIOP_Acceptor.{h,cpp}:
-	* tao/Strategies/SHMIOP_Acceptor.{h,cpp}:
-	* tao/Strategies/UIOP_Acceptor.{h,cpp}:
+        * tao/Strategies/DIOP_Connector.{h,cpp}:
+        * tao/Strategies/SCIOP_Connector.{h,cpp}:
+        * tao/Strategies/SHMIOP_Connector.{h,cpp}:
+        * tao/Strategies/UIOP_Connector.{h,cpp}:
+        * tao/Strategies/DIOP_Acceptor.{h,cpp}:
+        * tao/Strategies/SCIOP_Acceptor.{h,cpp}:
+        * tao/Strategies/SHMIOP_Acceptor.{h,cpp}:
+        * tao/Strategies/UIOP_Acceptor.{h,cpp}:
 
-	  Removed init_tcp_properties.  Removed {Protocol Name}_Properties
-	  from both the Connector and Acceptor.  Removed passing of the
-	  protocol properties from the Connector and Acceptor to the
-	  service handler.
+          Removed init_tcp_properties.  Removed {Protocol Name}_Properties
+          from both the Connector and Acceptor.  Removed passing of the
+          protocol properties from the Connector and Acceptor to the
+          service handler.
 
-	* tao/Strategies/SCIOP_Connector.{h,cpp}:
+        * tao/Strategies/SCIOP_Connector.{h,cpp}:
 
-	  We need to specify an empty ACE_Multihomed_INET_Addr to
-	  connect() for it to succeed.
+          We need to specify an empty ACE_Multihomed_INET_Addr to
+          connect() for it to succeed.
 
-	* TAO/tests/RTCORBA/Server_Protocol/server_iiop_shmiop.conf:
-	* TAO/tests/RTCORBA/Server_Protocol/server_iiop_uiop.conf:
-	* TAO/tests/RTCORBA/Server_Protocol/run_test.pl:
+        * TAO/tests/RTCORBA/Server_Protocol/server_iiop_shmiop.conf:
+        * TAO/tests/RTCORBA/Server_Protocol/server_iiop_uiop.conf:
+        * TAO/tests/RTCORBA/Server_Protocol/run_test.pl:
 
-	  Added a couple of new conf file and updated the run_test.pl to
-	  extend the scenarios in this test.
+          Added a couple of new conf file and updated the run_test.pl to
+          extend the scenarios in this test.
 
-	* TAO/tests/RTCORBA/Server_Protocol/server.cpp:
+        * TAO/tests/RTCORBA/Server_Protocol/server.cpp:
 
-	  Brought the printing of the protocols up-to-date.
+          Brought the printing of the protocols up-to-date.
 
-	* TAO/tests/RTCORBA/Diffserv/README:
+        * TAO/tests/RTCORBA/Diffserv/README:
 
-	  Updated documentation.
+          Updated documentation.
 
-	* TAO/tests/RTCORBA/Client_Protocol/server.cpp:
+        * TAO/tests/RTCORBA/Client_Protocol/server.cpp:
 
-	  create_transport_protocol_property() now needs the ORB Core.
+          create_transport_protocol_property() now needs the ORB Core.
 
-	* TAO/performance-tests/Protocols:
+        * TAO/performance-tests/Protocols:
 
-	  - Several changes to sender.cpp to make the test more
-	  comprehensive.
+          - Several changes to sender.cpp to make the test more
+          comprehensive.
 
-	  - Simple run_test.pl added so that a simple version of the test
-	  can be executed.
+          - Simple run_test.pl added so that a simple version of the test
+          can be executed.
 
 Wed Sep 29 19:09:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  Added generation of exception specification for
-	  ciao_postactivate () and ciao_preactivate (). This should fix
-	  compilation errors in the scoreboard.
+          Added generation of exception specification for
+          ciao_postactivate () and ciao_preactivate (). This should fix
+          compilation errors in the scoreboard.
 
 Wed Sep 29 12:09:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
