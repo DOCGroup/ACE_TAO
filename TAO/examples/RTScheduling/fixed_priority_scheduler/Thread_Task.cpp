@@ -1,33 +1,33 @@
 //$Id$
 
 #include "Thread_Task.h"
-
 #include "ace/Atomic_Op.h"
+#include "test.h"
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 
-Thread_Task::Thread_Task (RTScheduling::Current_ptr current,
-			  FP_Scheduling::SegmentSchedulingParameterPolicy_ptr sched_param,
+Thread_Task::Thread_Task (int importance,
 			  int start_time,
-			  int load,
-			  long flags)
+			  int load)
 {
-  this->current_ = RTScheduling::Current::_narrow (current);
-  this->sched_param_ = FP_Scheduling::SegmentSchedulingParameterPolicy::_duplicate (sched_param);
+  
   this->load_ = load;
   this->start_time_ = start_time;
-  this->flags_ = flags;
-
+  this->importance_ = importance;
   this->count_ = ++thread_count.value_i ();
 }
 
 
 int
-Thread_Task::activate_task (ACE_Barrier* barrier)
+Thread_Task::activate_task (RTScheduling::Current_ptr current,
+			    long flags,
+			    ACE_Barrier* barrier)
 {
-  this->barrier_ = barrier;
-  
-  if (this->activate (flags_,
+  barrier_ = barrier;
+   
+  current_ = RTScheduling::Current::_narrow (current);	
+
+  if (this->activate (flags,
 		      1) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
@@ -63,11 +63,13 @@ Thread_Task::svc (void)
 	      "After Thread_Task::svc \n"));
       
   this->barrier_->wait ();
+  FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
+    DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance_);
 
   const char * name = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
   this->current_->begin_scheduling_segment (name,
-					    this->sched_param_.in (),
+					    sched_param.in (),
 					    implicit_sched_param
 					    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
