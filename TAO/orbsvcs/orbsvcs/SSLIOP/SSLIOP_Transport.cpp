@@ -365,10 +365,10 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
                 n = this->handler_->peer ().sendv_n (iov,
                                                      iovcnt);
               else
-                n = ACE::writev (this->handler_->peer ().get_handle (),
-                                 iov,
-                                 iovcnt,
-                                 max_wait_time);
+                // @@ No timeouts!!!
+                n = this->handler_->peer ().sendv_n (iov,
+                                                     iovcnt
+                                                     /*, max_wait_time */);
 
               if (n <= 0)
                 return n;
@@ -410,10 +410,10 @@ TAO_SSLIOP_Transport::recv (char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
 
-  return ACE::recv_n (this->handler_->peer ().get_handle (),
-                      buf,
-                      len,
-                      max_wait_time);
+  // @@ No timeouts!
+  return this->handler_->peer ().recv_n (buf,
+                                         len
+                                         /* , max_wait_time */);
 }
 
 // Default action to be taken for send request.

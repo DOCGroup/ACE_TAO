@@ -45,8 +45,8 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
   int r =
     ::SSL_write (this->ssl_, ACE_static_cast (const char*, buf), n);
 
-  ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - %d/%d\n",
-              r, n));
+  // ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::send - %d/%d\n",
+  //             r, n));
   return r;
 }
 
@@ -73,8 +73,8 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   int r =
     ::SSL_read (this->ssl_, ACE_static_cast (char *, buf), n);
 
-  ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - %d/%d\n",
-              r, n));
+  // ACE_DEBUG ((LM_DEBUG, "ACE_SSL_SOCK_Stream::recv - %d/%d\n",
+  //              r, n));
   return r;
 }
 
