@@ -147,7 +147,7 @@ protected:
   <font color=red>/* And since you shouldn't access a member variable directly,
     neither should you set (mutate) it.  Although it might seem silly
     to do it this way, you'll thank yourself for it later.  */</font>
-  void client_acceptor (Client_Acceptor *client_acceptor)
+  void client_acceptor (Client_Acceptor *_client_acceptor)
   { 
     this->client_acceptor_ = _client_acceptor; 
   }
