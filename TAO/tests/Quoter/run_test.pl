@@ -92,10 +92,10 @@ sub client
 			           $clport,
 			           $ior);
 
-#	Win32::Process::Create ($CL, "client.exe",
-#	                        $exe, 1, 0, ".");
-	system ($exe);
-
+	for ($j = 0; $j < $n; $j++)
+	{
+		system ($exe);
+	}
 }
 
 # Parse the arguments
