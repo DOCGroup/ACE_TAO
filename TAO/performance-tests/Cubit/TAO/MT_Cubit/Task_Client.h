@@ -36,7 +36,8 @@
 #if defined (ACE_LACKS_FLOATING_POINT)
 #define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
-// the following is just temporal, until we finish the sqrt()  implementation.
+// the following is just temporary, until we finish the sqrt()
+// implementation.
 #define sqrt(X) (1)
 #endif /* ACE_LACKS_FLOATING_POINT */
 
@@ -60,9 +61,7 @@ func (u_int i)
 
 enum Cubit_Datatypes
 {
-  // = The various datatypes which the client and the server can
-  // exchange.
-  
+  // = The various datatypes the client and the server can exchange.
   CB_OCTET,
   CB_SHORT,
   CB_LONG,

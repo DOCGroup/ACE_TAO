@@ -60,8 +60,8 @@ Task_State::Task_State (int argc, char **argv)
           break;
         case CB_SHORT:
         default:
-          datatype_ = CB_SHORT;
           ACE_DEBUG ((LM_DEBUG, "Testing Shorts\n"));
+          datatype_ = CB_SHORT;
           break;
         }
       continue;
@@ -91,12 +91,12 @@ Task_State::Task_State (int argc, char **argv)
 
   if (ior_file_ != 0)
     {
-      FILE *iorFile = ACE_OS::fopen (ior_file_, "r");
+      FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
       char buf[BUFSIZ];
       int i = 0;
       int j = 0;
 
-      while (ACE_OS::fgets (buf, BUFSIZ, iorFile) != 0)
+      while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0)
 	{ 
 	  j = ACE_OS::strlen (buf); 
 	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
@@ -104,7 +104,7 @@ Task_State::Task_State (int argc, char **argv)
 	  i++;  
 	}
 
-      ACE_OS::fclose (iorFile);
+      ACE_OS::fclose (ior_file);
     }
 
   // thread_count_ + 1 because there is one utilization thread also
@@ -134,7 +134,9 @@ Client::put_ave_latency (int ave_latency, u_int thread_id)
 }
 
 void
-Client::put_latency (double *jitter, double latency, u_int thread_id)
+Client::put_latency (double *jitter,
+                     double latency,
+                     u_int thread_id)
 {
   ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, ts_->lock_));
 
@@ -142,9 +144,13 @@ Client::put_latency (double *jitter, double latency, u_int thread_id)
   ts_->global_jitter_array_[thread_id] = jitter;
 
 #if defined (ACE_LACKS_FLOATING_POINT)
-  ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %u\n", latency));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) My latency was %u\n",
+              latency));
 #else
-  ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %f\n", latency));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) My latency was %f\n",
+              latency));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
 }
 
@@ -168,7 +174,7 @@ Client::get_low_priority_latency (void)
 int
 Client::get_latency (u_int thread_id)
 {
-  return ts_->ave_latency_ [thread_id];
+  return ts_->ave_latency_[thread_id];
 }
 
 double
@@ -184,12 +190,13 @@ Client::get_high_priority_jitter (void)
   // each latency has from the average
   for (u_int i = 0; i < ts_->loop_count_; i ++)
     {
-      double difference = ts_->global_jitter_array_ [0][i] - average;
+      double difference =
+        ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
     }
   
-  // return the square root of the sum of the differences computed
-  // above, i.e. jitter
+  // Return the square root of the sum of the differences computed
+  // above, i.e. jitter.
   return sqrt (jitter);
 }
 
@@ -202,8 +209,8 @@ Client::get_low_priority_jitter (void)
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_. 
 
-  // we first compute the sum of the squares of the differences
-  // each latency has from the average
+  // We first compute the sum of the squares of the differences each
+  // latency has from the average.
   for (u_int j = 1; j < ts_->start_count_; j ++)
     for (u_int i = 0; i < ts_->loop_count_; i ++)
       {
@@ -211,15 +218,16 @@ Client::get_low_priority_jitter (void)
         jitter += difference * difference;
       }
 
-  // return the square root of the sum of the differences computed
-  // above, i.e. jitter
+  // Return the square root of the sum of the differences computed
+  // above, i.e. jitter.
   return sqrt (jitter);
 }
 
 int
 Client::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Thread created\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t) Thread created\n"));
 
   u_int thread_id;
   Cubit_ptr cb = 0;
@@ -240,12 +248,12 @@ Client::svc (void)
   ACE_OS::strcpy (tmp_buf,
                   tmp_args.buf ());
 
-  // Add the argument
+  // Add the argument.
   ACE_OS::strcat (tmp_buf,
                   " -ORBobjrefstyle url ");
 
   // Convert back to argv vector style.
-  ACE_ARGV tmp_args2(tmp_buf);
+  ACE_ARGV tmp_args2 (tmp_buf);
   int argc = tmp_args2.argc ();
 
   char *const *argv = tmp_args2.argv ();
@@ -300,39 +308,37 @@ Client::svc (void)
           }
       }
     else
-      {
-        switch (thread_id)
-          {
-          case CB_40HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG,
-                        "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            frequency = CB_40HZ_CONSUMER_RATE;
-            break;
-          case CB_20HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            frequency = CB_20HZ_CONSUMER_RATE;
-            break;
-          case CB_10HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            frequency = CB_10HZ_CONSUMER_RATE;
-            break;
-          case CB_5HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            frequency = CB_5HZ_CONSUMER_RATE;
-            break;
-          case CB_1HZ_CONSUMER:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
-                        "my id is %d.\n", thread_id));
-            frequency = CB_1HZ_CONSUMER_RATE;
-            break;
-          default:
-            ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
-          }
-      }
+      switch (thread_id)
+        {
+        case CB_40HZ_CONSUMER:
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Im the high priority client, "
+                      "my id is %d.\n", thread_id));
+          frequency = CB_40HZ_CONSUMER_RATE;
+          break;
+        case CB_20HZ_CONSUMER:
+          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+                      "my id is %d.\n", thread_id));
+          frequency = CB_20HZ_CONSUMER_RATE;
+          break;
+        case CB_10HZ_CONSUMER:
+          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+                      "my id is %d.\n", thread_id));
+          frequency = CB_10HZ_CONSUMER_RATE;
+          break;
+        case CB_5HZ_CONSUMER:
+          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+                      "my id is %d.\n", thread_id));
+          frequency = CB_5HZ_CONSUMER_RATE;
+          break;
+        case CB_1HZ_CONSUMER:
+          ACE_DEBUG ((LM_DEBUG, "(%t) Im the high priority client, "
+                      "my id is %d.\n", thread_id));
+          frequency = CB_1HZ_CONSUMER_RATE;
+          break;
+        default:
+          ACE_DEBUG ((LM_DEBUG, "(%t) Invalid Thread ID.\n", thread_id));
+        }
 
     TAO_TRY
       {
@@ -359,7 +365,9 @@ Client::svc (void)
 
             char *buffer;
             int l = ACE_OS::strlen (ts_->key_) + 3;
-            ACE_NEW_RETURN (buffer, char[l], -1);
+            ACE_NEW_RETURN (buffer,
+                            char[l],
+                            -1);
 
             ACE_OS::sprintf (buffer,
                              "%s%02d",
@@ -371,10 +379,11 @@ Client::svc (void)
             cubit_name.length (1);
             cubit_name[0].id = CORBA::string_dup (buffer);
 
-            objref = this->mt_cubit_context_->resolve (cubit_name, TAO_TRY_ENV);
+            objref = this->mt_cubit_context_->resolve (cubit_name,
+                                                       TAO_TRY_ENV);
 
-            if ( (TAO_TRY_ENV.exception () != 0) 
-                 || CORBA::is_nil (objref.in ()) )
+            if (TAO_TRY_ENV.exception () != 0
+                || CORBA::is_nil (objref.in ()))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             " (%t) resolve() returned nil\n"));
@@ -389,7 +398,7 @@ Client::svc (void)
               }
           }
 
-        if ( (naming_success == CORBA::B_FALSE) && (ts_->factory_ior_ != 0) )
+        if (naming_success == CORBA::B_FALSE && ts_->factory_ior_ != 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
@@ -407,18 +416,21 @@ Client::svc (void)
             // Narrow the CORBA::Object reference to the stub object,
             // checking the type along the way using _is_a.
             Cubit_Factory_var cb_factory =
-              Cubit_Factory::_narrow (objref.in (), TAO_TRY_ENV);
+              Cubit_Factory::_narrow (objref.in (), 
+                                      TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
             if (CORBA::is_nil (cb_factory.in ()))
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Create cubit factory failed\n"), 1);
+                                 "Create cubit factory failed\n"),
+                                1);
 
             ACE_DEBUG ((LM_DEBUG,
                         "(%t) >>> Factory binding succeeded\n"));
 
 
-	    char * tmp_ior = cb_factory->create_cubit (thread_id, TAO_TRY_ENV);
+	    char * tmp_ior = cb_factory->create_cubit (thread_id,
+                                                       TAO_TRY_ENV);
 	    TAO_CHECK_ENV;
 
 	    if (tmp_ior == 0)
@@ -436,7 +448,7 @@ Client::svc (void)
           }
         else
           {
-            char * my_ior = ts_->iors_[thread_id];
+            char *my_ior = ts_->iors_[thread_id];
 
             if (my_ior == 0)
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -456,12 +468,14 @@ Client::svc (void)
 
         // Narrow the CORBA::Object reference to the stub object,
         // checking the type along the way using _is_a.
-        cb = Cubit::_narrow (objref.in (), TAO_TRY_ENV);
+        cb = Cubit::_narrow (objref.in (),
+                             TAO_TRY_ENV);
         TAO_CHECK_ENV;
 
         if (CORBA::is_nil (cb))
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Create cubit failed\n"), 1);
+                             "Create cubit failed\n"),
+                            1);
 
         ACE_DEBUG ((LM_DEBUG, 
                     "(%t) Binding succeeded\n"));
@@ -471,7 +485,8 @@ Client::svc (void)
         TAO_CHECK_ENV;
 
         ACE_DEBUG ((LM_DEBUG,
-                    "(%t) CUBIT OBJECT connected <%s>\n", str.in ()));
+                    "(%t) CUBIT OBJECT connected <%s>\n",
+                    str.in ()));
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%t) Waiting for other threads to "
@@ -495,8 +510,12 @@ Client::svc (void)
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) **** USING ONEWAY CALLS ****\n"));
 
-  int result = this->run_tests (cb, ts_->loop_count_, thread_id,
-				ts_->datatype_, frequency);
+  // Perform the tests.
+  int result = this->run_tests (cb,
+                                ts_->loop_count_,
+                                thread_id,
+				ts_->datatype_,
+                                frequency);
 
   if (result == -1)
     return -1;
@@ -508,7 +527,8 @@ Client::svc (void)
       cb->shutdown (env);
       if (env.exception () != 0)
         {
-          ACE_ERROR ((LM_ERROR, "Shutdown of the server failed!\n"));
+          ACE_ERROR ((LM_ERROR,
+                      "Shutdown of the server failed!\n"));
           env.print_exception ("shutdown() call failed.\n");
         }
     }
@@ -553,7 +573,8 @@ Client::run_tests (Cubit_ptr cb,
       ACE_Time_Value delta_t; 
 
       timer_.start (); 
-      // ACE_OS::ACE_HRTIMER_START; not using sysBench when CHORUS defined
+      // ACE_OS::ACE_HRTIMER_START; not using sysBench when CHORUS
+      // defined.
 
       if (ts_->oneway_ == 0)
         {
@@ -582,7 +603,6 @@ Client::run_tests (Cubit_ptr cb,
                                        env.exception ()),
                                       2);
                   }
-
                 arg_octet = arg_octet * arg_octet * arg_octet;
 
                 if (arg_octet != ret_octet)
@@ -594,9 +614,8 @@ Client::run_tests (Cubit_ptr cb,
                     error_count++;
                   }
                 call_count++;
+                break;
               }
-            break;
-
             case CB_SHORT:
               // Cube a short.
               {
@@ -806,7 +825,8 @@ Client::run_tests (Cubit_ptr cb,
 				 0,
                                  thread_id);
 	      ACE_DEBUG ((LM_DEBUG,
-			  "*** Warning: Latency is less than or equal to zero.  Precision may have been lost.\n"));
+			  "*** Warning: Latency is less than or equal to zero."
+                          "  Precision may have been lost.\n"));
 	    }
         }
       ACE_DEBUG ((LM_DEBUG, 
