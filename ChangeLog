@@ -1,3 +1,15 @@
+Tue Nov 23 14:06:41 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.inl:
+          Three problems in ACE_OS::thr_getprio on Windows:
+          1) GetThreadPriority doesn't fail so the check for errors is
+             unnecessary.
+          2) On the other hand GetPriorityClass may fail.
+             The check for errors from GetPriortyClass was incorrect.
+          3) GetPriorityClass takes a process handle not a thread handle
+             so it was always failing.
+
+
 Tue Nov 23 10:35:41 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ASNMP/asnmp/address.cpp:
