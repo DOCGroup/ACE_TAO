@@ -1351,10 +1351,10 @@ public:
   virtual void disconnect_push_supplier (CORBA::Environment &);
   // The consumer is disconnecting.
 
-  virtual void suspend (CORBA::Environment &);
+  virtual void suspend_connection (CORBA::Environment &);
   // Stop forwarding events to the calling consumer.
 
-  virtual void resume (CORBA::Environment &);
+  virtual void resume_connection (CORBA::Environment &);
   // Resume forwarding events to the calling consumer.
 
   // = Event Channel operations.
