@@ -1,3 +1,21 @@
+Sat Jan 25 20:30:23 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-sunos5.5-sunc++-4.1.h: commented out ACE_HAS_EXCEPTIONS
+	  #define because -noex is required with it, and that causes core
+	  dump during thread exit on multiprocessor UltraSparcs.
+
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU: added -noex
+	  back because of core dump during thread exit on multiprocessor
+	  UltraSparcs.
+
+	* examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp,
+	  examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp (control):
+	  added "default" case to switch statement to eliminate compiler
+	  warnings about enumeration values not being handled in switch.
+
+	* examples/ASX/UPIPE_Event_Server/event_server.cpp (consumer):
+	  removed unused variable "iter".
+
 Sat Jan 25 12:50:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Updated all the cond_timedwait() and cond_wait()
