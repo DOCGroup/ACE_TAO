@@ -188,7 +188,7 @@ TAO_Collocated_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
                                          "_component",
                                          forward_to.out ()
                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (_tao_retval.retn ());
+      ACE_CHECK_RETURN (_tao_retval._retn ());
       return servant_upcall.servant ()->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
