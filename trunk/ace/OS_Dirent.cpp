@@ -27,7 +27,7 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
   return dir;
 }
 
-ACE_INLINE void
+void
 ACE_OS_Dirent::closedir (DIR *d)
 {
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
@@ -37,7 +37,7 @@ ACE_OS_Dirent::closedir (DIR *d)
   d->started_reading_ = 0;
 }
 
-ACE_INLINE struct dirent *
+struct dirent *
 ACE_OS_Dirent::readdir (DIR *d)
 {
   if (!d->started_reading_)
