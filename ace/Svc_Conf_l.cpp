@@ -928,7 +928,7 @@ case 25:
 ACE_YY_RULE_SETUP
 #line 90 "Svc_Conf.l"
 ACE_SVC_CONF_ECHO;
-	ACE_YY_BREAK
+//	ACE_YY_BREAK
 
 	case ACE_YY_END_OF_BUFFER:
 		{
