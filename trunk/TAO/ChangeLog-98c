@@ -1,3 +1,18 @@
+1998-09-20  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* TAO/tests/Simple/bank : Checked in the final versions of the following files :
+        	/Account_i.cpp
+        	/Account_i.h
+        	/AccountManager_i.cpp
+        	/AccountManager_i.h
+        	/Server_i.cpp
+        	/Server_i.h
+        	/Client_i.cpp
+        	/Client_i.h
+        	/server.cpp
+        	/client.cpp
+        	/Bank.idl
+
 Sun Sep 20 20:38:05 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* tao/corba.h: added TAO_TRY_THROW macro, which should be used
