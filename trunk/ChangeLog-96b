@@ -1,3 +1,12 @@
+Fri Oct 25 23:16:16 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Memory_Pool: Fixed this stuff so that it works even when C++
+ 	  compilers can't grok template typedefs.
+
+	* ace: Put all the macros that handle the fact that many C++
+ 	  compilers have broken template implementations into one place
+	  (OS.h), rather than having this spread out in many files.
+
 Sat Oct 19 12:33:56 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* added ACE threads mappings to VxWorks 5.2 tasks in OS.*.
