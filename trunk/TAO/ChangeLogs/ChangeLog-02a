@@ -1,41 +1,38 @@
+Tue Jun 06 17:26:41 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Pluggable.cpp (send_buffered_messages): If we are successful
+	  in sending the queued data, reset the queue appropriately.
+
 Tue Jun 06 14:53:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* ORB_Core.cpp
-
-	- Updated method invocation on TAO_Profile to reflect the 
-	change done on the TAO_Profile class.
+	* tao/ORB_Core.cpp: Updated method invocation on TAO_Profile to
+	  reflect the change done on the TAO_Profile class.
 
 Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
-	
+
 	* tao/Profile.cpp
 	* tao/Profile.h
-	* tao/Profile.i 
-	
-	- Changed signature of policy list accessors. And added new
-	protected method to handle the "lazy" creation of the policy
-	list.
-        
-        - Added guard to check if the CORBA Messaging support is
-        enbabled. 
-	
-	* tao/RTCORBAC.h
+	* tao/Profile.i
 
-	- Added CDR encoding support to class ProtocolProperties.	
+	  Changed signature of policy list accessors. And added new
+	  protected method to handle the "lazy" creation of the policy
+	  list.
 
+          Added guard to check if the CORBA Messaging support is enbabled.
 
-	* tao/RTCORBAC.cpp
+	* tao/RTCORBAC.h: Added CDR encoding support to class
+	  ProtocolProperties.
 
-	- Changed return value in ProtocolProperties::_tao_encode()
-	and ProtocolProperties::_tao_encode().
-	
+	* tao/RTCORBAC.cpp: Changed return value in
+	  ProtocolProperties::_tao_encode() and
+	  ProtocolProperties::_tao_encode().
 
 	* tao/RT_Policy_i.h
 	* tao/RT_Policy_i.cpp
 
-	- Added class TAO_ProtocolPropertiesFactory, and a
-         TAO_GIOPProperties. The factory is needed to create the right
-         Property durin demarsharling.
-	
+	  Added class TAO_ProtocolPropertiesFactory, and a
+	  TAO_GIOPProperties. The factory is needed to create the right
+	  Property durin demarsharling.
 
 Tue Jun  6 14:28:19 2000  Chris Cleeland  <cleeland@cs.wustl.edu>
 

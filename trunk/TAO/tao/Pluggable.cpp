@@ -24,12 +24,12 @@ ACE_RCSID(tao, Pluggable, "$Id$")
 // ****************************************************************
 
 // Constructor.
-TAO_Transport::TAO_Transport (CORBA::ULong tag,
-                              TAO_ORB_Core *orb_core)
-  : tag_ (tag),
-    orb_core_ (orb_core),
-    buffering_queue_ (0),
-    buffering_timer_id_ (0)
+  TAO_Transport::TAO_Transport (CORBA::ULong tag,
+                                TAO_ORB_Core *orb_core)
+    : tag_ (tag),
+      orb_core_ (orb_core),
+      buffering_queue_ (0),
+      buffering_timer_id_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -71,28 +71,28 @@ TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
   size_t bytes_transferred = 0;
   result = this->send (queued_message,
                        max_wait_time,
-		       &bytes_transferred);
+                       &bytes_transferred);
 
   // Cannot send completely: timed out.
   if (result == -1 &&
       errno == ETIME)
     {
       if (bytes_transferred > 0)
-	{
-	  // If successful in sending some or all of the data, reset
-	  // the queue appropriately.
-	  this->reset_queued_message (queued_message,
-				      bytes_transferred);
+        {
+          // If successful in sending some of the data, reset the
+          // queue appropriately.
+          this->reset_queued_message (queued_message,
+                                      bytes_transferred);
 
-	  // Indicate some success.
-	  return bytes_transferred;
-	}
+          // Indicate some success.
+          return bytes_transferred;
+        }
 
       // Since we queue up the message, this is not an error.  We can
       // try next time around.
       return 1;
     }
-  
+
   // EOF or other errors.
   if (result == -1 ||
       result == 0)
@@ -100,6 +100,10 @@ TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
       this->dequeue_all ();
       return -1;
     }
+
+  // If successful in sending data, reset the queue appropriately.
+  this->reset_queued_message (queued_message,
+                              bytes_transferred);
 
   // Everything was successfully delivered.
   return result;
@@ -233,7 +237,7 @@ TAO_Transport::start_request (TAO_ORB_Core *,
                               TAO_Target_Specification & /*spec */,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
 }
@@ -244,7 +248,7 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
                              TAO_Operation_Details & /* */,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
 }
@@ -354,11 +358,11 @@ TAO_Connector::make_mprofile (const char *string,
   if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_MPROFILE_CREATION_ERROR,
-          0),
-        CORBA::COMPLETED_NO),
-      -1);
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_MPROFILE_CREATION_ERROR,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        -1);
       // Error while setting the MProfile size!
     }
 
@@ -411,11 +415,11 @@ TAO_Connector::make_mprofile (const char *string,
           if (mprofile.give_profile (profile) == -1)
             {
               ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                CORBA_SystemException::_tao_minor_code (
-                  TAO_MPROFILE_CREATION_ERROR,
-                  0),
-                CORBA::COMPLETED_NO),
-              -1);
+                                  CORBA_SystemException::_tao_minor_code (
+                                     TAO_MPROFILE_CREATION_ERROR,
+                                     0),
+                                  CORBA::COMPLETED_NO),
+                                -1);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }
