@@ -984,7 +984,7 @@ Thu May 20 09:42:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ftruncate): use ACE_OS::fcntl instead of ::fcntl.
 
-        Thanks to Joe Golio <Joe.Golio@xylan.com> for reporting that
+        Thanks to an anonymous ACE user for reporting that
         these functions weren't using ACE_OS::fcntl.
 
 Wed May 19 23:50:18 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
