@@ -1,3 +1,19 @@
+Sun Oct 22 17:30:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.i:
+
+          wcslen was used directly here, changed it to 
+          ACE_OS_String::strlen.
+
+        * ace/ace_wchar.inl:
+
+          Moved around some of the inline functions to 
+          remove warnings.
+
+        * ace/config-vxworks5.x.h:
+
+          Added all the ACE_LACKE_WCS* that VxWorks needs.
+
 Sun Oct 22 17:22:32 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/OS_Test.cpp:
