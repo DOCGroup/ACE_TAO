@@ -135,13 +135,12 @@ dnl header when doing an AC_TRY_COMPILE.
 dnl Usage: ACE_USE_TEMP_FILE(TEMP-FILE-TO-CREATE, COMMANDS-THAT-WILL-USE-IT)
 AC_DEFUN(ACE_USE_TEMP_FILE, dnl
 [
- if test -f ${srcdir}/$1; then
-   mv ${srcdir}/$1 ${srcdir}/$1.conf
-   touch ${srcdir}/$1
- fi
 
- if test -f ./$1; then
-   mv ./$1 ./$1.conf
+ test -f ${srcdir}/$1 && mv ${srcdir}/$1 ${srcdir}/$1.conf
+ touch ${srcdir}/$1
+
+ if test ${srcdir}/$1 != "./$1"; then
+   test -f ./$1 && mv ./$1 ./$1.conf
    touch ./$1
  fi
 
@@ -153,10 +152,12 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
    rm ${srcdir}/$1
  fi
 
- if test -f ./$1.conf; then
-   mv ./$1.conf ./$1
- else
-   rm ./$1
+ if test ${srcdir}/$1 != "./$1"; then
+   if test -f ./$1.conf; then
+     mv ./$1.conf ./$1
+   else
+     rm ./$1
+   fi
  fi
 ])
 
