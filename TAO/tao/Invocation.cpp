@@ -26,8 +26,7 @@ static const char *TAO_Invocation_Timeprobe_Description[] =
     "GIOP_Invocation::start - enter",
     "GIOP_Invocation::start - leave",
     "GIOP_Invocation::start - connect",
-    "GIOP_Invocation::start - start_msg",
-    "GIOP_Invocation::start - request_hdr"
+    "GIOP_Invocation::start - start_msg"
   };
 
 enum
@@ -38,8 +37,7 @@ enum
     TAO_GIOP_INVOCATION_START_ENTER,
     TAO_GIOP_INVOCATION_START_LEAVE,
     TAO_GIOP_INVOCATION_START_CONNECT,
-    TAO_GIOP_INVOCATION_START_START_MSG,
-    TAO_GIOP_INVOCATION_START_REQUEST_HDR
+    TAO_GIOP_INVOCATION_START_START_MSG
   };
 
 
@@ -213,8 +211,6 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->request_id_ = this->transport_->request_id ();
 
   countdown.update ();
-
-  ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
 
 // Send request.
