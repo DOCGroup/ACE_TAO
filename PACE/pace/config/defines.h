@@ -24,7 +24,4 @@
 #include "pace/config/utility.h"
 #include "pace/config/features.h"
 
-/* Temporary <luther@cs.wustl.edu> */
-#include "pace/config/temp.h"
-
 #endif /* PACE_CONFIG_DEFINES_H */
