@@ -1,8 +1,64 @@
+Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RTCORBA.pidl
+	* tao/RTPOA.pidl
+	* tao/IOP.pidl:
+	  Added all idl from RT CORBA 1.0 spec.
+
+	* tao/IOPC.cpp
+	* tao/IOPC.h:
+	  Modified to include RT CORBA related items.
+
+	* tao/diffs/RTCORBAC.h.diff
+	* tao/diffs/RTCORBAC.i.diff
+	* tao/diffs/RTCORBAC.cpp.diff:
+	  Patches to the code generated from RTCORBA.pidl (see
+	  RTCORBA.pidl for the description of why patches are needed.)
+
+	* tests/Endpoint_Per_Priority/client.cpp
+	* tao/POA.h
+	* tao/Priority_Mapping.h:
+	  Discontinue use of rtcorbafwd.* files, use new RTCORBA* files
+	  instead.
+
+	* tao/RT_Policy_i.cpp
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.i
+	* tao/RT_Mutex.h
+	* tao/RT_Mutex.i
+	* tao/RT_Mutex.cpp
+	* tao/RT_ORB.h
+	* tao/RT_ORB.cpp
+	* tao/RT_ORB.i
+	  Implementations & placeholders for interfaces from
+	  RTCORBA.pidl.
+
+	* tao/RT_Current.cpp
+	* tao/RT_Current.h
+	* tao/RT_Current.i
+	  Changed to incorporate RTCORBA.pidl generated code.
+
+	* tao/orbconf.h
+	* tao/Policy_Manager.cpp
+	* tao/Policy_Manager.h
+	* tao/Policy_Manager.i
+	  1) TAO_Policy_Manager_Impl::copy_from wasn't exception-safe:
+	  fixed.  2) Added support for RT CORBA policies.
+
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
+	* tao/Makefile:
+	  Incorporate all addition/changes listed above.
+
+	* tests/Endpoint_Per_Priority/run_test.pl:
+	  Turned debugging off in the script, which was mistakenly added
+	  by oci during 4/7/00 modification.
+
 Mon May 22 17:48:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp:
 	  Added two missing options to the 'usage' ouput -
-	  -H perfect_hash	(force perfect hashing. Even 
+	  -H perfect_hash	(force perfect hashing. Even
 				 though it's the default, I
 				 guess someone might want to
 				 use it just to remind themselves)

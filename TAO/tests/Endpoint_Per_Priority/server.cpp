@@ -48,14 +48,8 @@ main (int argc, char *argv[])
   int policy = ACE_SCHED_FIFO;
   int flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_FIFO;
   int priority =
-    (ACE_Sched_Params::priority_min (policy)
-     + ACE_Sched_Params::priority_max (policy)) / 2;
+     ACE_Sched_Params::priority_max (policy);
 
-  priority = ACE_Sched_Params::next_priority (policy,
-                                              priority);
-
-  priority = ACE_Sched_Params::next_priority (policy,
-                                              priority);
 
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   if (ACE_OS::sched_params (ACE_Sched_Params (policy,

@@ -537,6 +537,14 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (IOP)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, UnknownExceptionInfo, 9)
 TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::ULong)
+TAO_NAMESPACE_BEGIN (IOP)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, RTCorbaPriority, 10)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (const CORBA::ULong)
+TAO_NAMESPACE_BEGIN (IOP)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, RTCorbaPriorityRange, 11)
+TAO_NAMESPACE_END
 void operator<<= (CORBA::Any &_tao_any, const IOP::TaggedProfile &_tao_elem) // copying
 {
     TAO_OutputCDR stream;

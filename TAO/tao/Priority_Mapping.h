@@ -25,7 +25,7 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/rtcorbafwd.h"
+#include "tao/RTCORBAC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
