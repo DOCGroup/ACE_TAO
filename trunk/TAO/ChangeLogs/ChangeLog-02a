@@ -1,3 +1,11 @@
+Fri Nov 17 16:33:39 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  Updated the Portable Interceptor release notes with information
+	  about all of the recently implemented Portable Interceptor
+	  features and improvements.
+
 Fri Nov 17 14:48:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/LoadBalancing/Makefile:
