@@ -25,7 +25,8 @@ ACE_RCSID(tao, Object, "$Id$")
 
 CORBA_Object::~CORBA_Object (void)
 {
-  this->protocol_proxy_->_decr_refcnt ();
+  if (this->protocol_proxy_)
+    this->protocol_proxy_->_decr_refcnt ();
 }
 
 CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
@@ -88,7 +89,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   // Loop until we succeed or we raise an exception.
   // @@ Nanbor: Do we still need to clear the environment variable?
-  //  ACE_TRY_ENV.clear ();         
+  //  ACE_TRY_ENV.clear ();
   for (;;)
     {
       _tao_call.start (ACE_TRY_ENV);
