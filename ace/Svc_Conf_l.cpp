@@ -20,7 +20,6 @@
 
 #ifdef __cplusplus
 
-#include /**/ <stdlib.h>
 #include "ace/OS.h"
 #include "ace/Object_Manager.h"
 

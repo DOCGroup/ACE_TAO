@@ -1,3 +1,7 @@
+Mon Oct 22 17:55:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/Svc_Conf_l.cpp: Remove include of stdlib.h, fix g++/Solaris build
+
 Mon Oct 22 15:50:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Chris Hughes name to the Hall of Fame
