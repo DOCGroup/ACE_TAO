@@ -1,3 +1,9 @@
+Wed Aug 12 12:05:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/POA.cpp: 
+	  Added several missing template instantiations for the new
+	  Hash_Map_Manager.
+
 Wed Aug 12 12:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.{h, cpp}
