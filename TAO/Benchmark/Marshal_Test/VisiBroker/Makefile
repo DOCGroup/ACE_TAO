@@ -59,6 +59,6 @@ marshalC.h marshalS.h marshalC.cpp marshalS.cpp: marshal.idl
 	$(IDL) $(IDLFLAGS) $< 
 
 clean:
-	rm -f core *.o *~ client server *C.cpp *S.cpp *S.h *C.h
+	$(RM) core *.o *~ client server *C.cpp *S.cpp *S.h *C.h
 	$(MAKE) realclean
 
