@@ -5,6 +5,17 @@ Sat Aug  8 09:37:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  definition of struct in_addr is not portable after all. Maybe
 	  there is a set of macros to make it portable?
 
+	* ace/ACE.h: 
+	* ace/ACE.cpp: 
+	  Returning <const char* const> is unnecesary; and gives no more
+	  guarantees that <const char*>, plus it gives warnings in
+	  IRIX/MIPSPro compilers.
+
+	* ace/Synch.cpp: 
+	  Removed explicit instantiations of ACE_Guard<ACE_Null_Mutex>,
+	  the class is specialized so no instantiation is necessary. Same
+	  thing for ACE_Write_Guard and ACE_Read_Guard.
+
 Fri Aug  7 23:18:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: 

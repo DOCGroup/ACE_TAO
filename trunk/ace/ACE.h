@@ -47,7 +47,7 @@ public:
   // E.g., the "19" in ACE 4.3.19.  Returns 0 for "stable" (non-beta) releases.
 
   // = C++ compiler version information.
-  static const char* const compiler_name (void);
+  static const char* compiler_name (void);
   // E.g., the "SunPro C++" in SunPro C++ 4.32.0
 
   static u_int compiler_major_version (void);
