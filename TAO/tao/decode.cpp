@@ -581,7 +581,13 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
           // @@ (CJC) Does IIOP_Object duplicate 'type_hint' below so that
           // we can safely free it?  It does now!
           objdata = new IIOP_Object (type_hint);
-          CORBA::string_free (type_hint);
+
+	  // @@ (coryan) The IIOP_Object created here has a String_var
+	  // member to keep the string, this member is constructed
+	  // using type_hint, at that time a plain (char*). Hence the
+	  // string is *not* copied and it cannot be released, so the
+	  // following line is commented out:
+          // CORBA::string_free (type_hint);
 
           IIOP::Profile     *profile = &objdata->profile;
 
