@@ -96,7 +96,7 @@ test (ACE_Configuration *config)
                                 ACE_TEXT ("stvalue"),
                                 stvalue))
     return -6;
-  else if (stvalue != "second stvaluetest")
+  else if (stvalue != ACE_TEXT ("second stvaluetest"))
     return -7;
 
   u_int intvalue;
@@ -135,7 +135,7 @@ test (ACE_Configuration *config)
                                     name,
                                     type))
     {
-      if (name == "stvalue")
+      if (name == ACE_TEXT ("stvalue"))
         {
           if (type != ACE_Configuration::STRING)
             return -12;
@@ -143,7 +143,7 @@ test (ACE_Configuration *config)
             return -12;
           found[0] = 1;
         }
-      else if (name == "intvalue")
+      else if (name == ACE_TEXT ("intvalue"))
         {
           if (type != ACE_Configuration::INTEGER)
             return -13;
@@ -151,7 +151,7 @@ test (ACE_Configuration *config)
             return -13;
           found[1] = 1;
         }
-      else if (name == "binvalue")
+      else if (name == ACE_TEXT ("binvalue"))
         {
           if (type != ACE_Configuration::BINARY)
             return -14;
@@ -352,11 +352,11 @@ build_config_object (ACE_Configuration& cfg)
     return -2;
   else if (cfg.set_string_value (NetworkSection,
                                  ACE_TEXT ("Delay"),
-                                 ACE_TString ("FALSE")))
+                                 ACE_TString (ACE_TEXT ("FALSE"))))
     return -3;
   else if (cfg.set_string_value (NetworkSection,
                                  ACE_TEXT ("DestIPAddress"),
-                                 ACE_TString ("localhost")))
+                                 ACE_TString (ACE_TEXT ("localhost"))))
     return -4;
   else if (cfg.set_integer_value (NetworkSection,
                                   ACE_TEXT ("DestPort"),
@@ -376,7 +376,7 @@ build_config_object (ACE_Configuration& cfg)
 
   if (cfg.set_string_value (LoggerSection,
                             ACE_TEXT ("Heading"),
-                            ACE_TString ("ACE - Adaptive Communication Environment")))
+                            ACE_TString (ACE_TEXT ("ACE - Adaptive Communication Environment"))))
     return -8;
   else if (cfg.set_integer_value (LoggerSection,
                                   ACE_TEXT ("SeekIndex"),
@@ -388,15 +388,15 @@ build_config_object (ACE_Configuration& cfg)
     return -10;
   else if (cfg.set_string_value (LoggerSection,
                                  ACE_TEXT ("Justification"),
-                                 ACE_TString ("left_justified")))
+                                 ACE_TString (ACE_TEXT ("left_justified"))))
     return -11;
   else if (cfg.set_string_value (LoggerSection,
                                  ACE_TEXT ("LogFilePath"),
-                                 ACE_TString ("log/")))
+                                 ACE_TString (ACE_TEXT ("log/"))))
     return -12;
   else if (cfg.set_string_value (LoggerSection,
                                  ACE_TEXT ("TransactionFilePath"),
-                                 ACE_TString ("data/")))
+                                 ACE_TString (ACE_TEXT ("data/"))))
     return -13;
 
   if (cfg.open_section (root,
