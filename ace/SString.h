@@ -92,7 +92,7 @@ public:
   ACE_USHORT16 *ushort_rep (void) const;
 };
 
-ACE_Export ACE_INLINE
+ACE_INLINE ACE_Export
 ACE_NS_WString operator + (const ACE_NS_WString &,
                            const ACE_NS_WString &);
 /**
