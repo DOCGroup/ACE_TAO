@@ -34,7 +34,7 @@ ACE_SSL_Connector<SVH, PR_CO_2>::handle_input (ACE_HANDLE handle)
   //    implementation ever changes, this method may be needed.
 
   int result = 0;
-  AST * ast = 0;
+  ACE_Connector<SVH, PR_CO_2>::AST * ast = 0;
 
   if (this->handler_map_.find (handle, ast) == 0)
     {
@@ -53,7 +53,7 @@ ACE_SSL_Connector<SVH, PR_CO_2>::handle_input (ACE_HANDLE handle)
           if (this->connector ().complete (new_stream, 0, tv) == 0)
             return this->ACE_Connector<SVH, PR_CO_2>::handle_output (handle);
         }
-      
+
       if (errno != EWOULDBLOCK)
         // Connection failed.  Cleanup resources.
         return this->ACE_Connector<SVH, PR_CO_2>::handle_input (handle);
@@ -70,7 +70,7 @@ ACE_SSL_Connector<SVH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   // The TCP connection has completed.  Now complete the SSL
   // connection/handshake.
 
-  AST * ast = 0;
+  ACE_Connector<SVH, PR_CO_2>::AST * ast = 0;
   if (this->handler_map_.find (handle, ast) == 0)
     {
       ACE_SSL_SOCK_Stream & new_stream = ast->svc_handler ()->peer ();
@@ -131,7 +131,7 @@ ACE_SSL_Strategy_Connector<SVH, PR_CO_2>::handle_input (ACE_HANDLE handle)
   //    implementation ever changes, this method may be needed.
 
   int result = 0;
-  AST * ast = 0;
+  ACE_Connector<SVH, PR_CO_2>::AST * ast = 0;
 
   if (this->handler_map_.find (handle, ast) == 0)
     {
@@ -150,7 +150,7 @@ ACE_SSL_Strategy_Connector<SVH, PR_CO_2>::handle_input (ACE_HANDLE handle)
           if (this->connector ().complete (new_stream, 0, tv) == 0)
             return this->ACE_Connector<SVH, PR_CO_2>::handle_output (handle);
         }
-      
+
       if (errno != EWOULDBLOCK)
         // Connection failed.  Cleanup resources.
         return this->ACE_Connector<SVH, PR_CO_2>::handle_input (handle);
@@ -174,7 +174,7 @@ ACE_SSL_Strategy_Connector<SVH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   // The TCP connection has completed.  Now complete the SSL
   // connection/handshake.
 
-  AST * ast = 0;
+  ACE_Connector<SVH, PR_CO_2>::AST * ast = 0;
   if (this->handler_map_.find (handle, ast) == 0)
     {
       ACE_SSL_SOCK_Stream & new_stream = ast->svc_handler ()->peer ();
