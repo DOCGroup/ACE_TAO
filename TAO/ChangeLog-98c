@@ -3,6 +3,9 @@ Thu Mar 26 21:24:59 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/ORB.*,corba.h (CORBA_ORB::shutdown): uninlined, so that
           ORB.i can be #included properly.
 
+        * tao/CDR.{h,cpp},GIOP.{h,cpp},corba.h: #include the .i file
+          in the .h/.cpp files instead of corba.h.
+
         * TAO_IDL/fe/y.tab.cpp: wrapped a couple of assignments in
           conditionals with parens.
 
