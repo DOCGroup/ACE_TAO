@@ -2929,6 +2929,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_THREADPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_THREADPOLICY__TRAITS_CH_
   
@@ -2949,6 +2951,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY__TRAITS_CH_
@@ -3013,6 +3017,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_CH_
   
@@ -3076,6 +3082,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
 #define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
   
@@ -3096,6 +3104,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_
@@ -3180,6 +3190,8 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (_PORTABLESERVER_CURRENT__TRAITS_CH_)
 #define _PORTABLESERVER_CURRENT__TRAITS_CH_
