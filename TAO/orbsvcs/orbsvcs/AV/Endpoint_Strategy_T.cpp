@@ -479,30 +479,30 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
       ACE_TRY_CHECK;
       this->vdev_->_remove_ref (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Child_Process::register_vdev");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-  ACE_TRY_EX (bind)
-    {
-      // Register the vdev with the naming server.
-      this->naming_context_->bind (this->vdev_name_,
-                                   vdev_obj,
-                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (bind);
-    }
-  ACE_CATCH (CosNaming::NamingContext::AlreadyBound,ex)
-    {
-      // If the object was already there, replace the older reference
-      // with this one
-      this->naming_context_->rebind (this->vdev_name_,
-                                     vdev_obj,
-                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      ACE_TRY_EX (bind)
+        {
+          // Register the vdev with the naming server.
+          this->naming_context_->bind (this->vdev_name_,
+                                       vdev_obj,
+                                       ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (bind);
+        }
+      ACE_CATCH (CosNaming::NamingContext::AlreadyBound,ex)
+        {
+          // If the object was already there, replace the older reference
+          // with this one
+          this->naming_context_->rebind (this->vdev_name_,
+                                         vdev_obj,
+                                         ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_AV_Child_Process::register_vdev");
+          return -1;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
     }
   ACE_CATCHANY
     {
