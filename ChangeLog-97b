@@ -1,5 +1,9 @@
 Wed Oct 29 01:25:54 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* tests/Conn_Test.cpp: Modified Conn_Test to fully integrate
+ 	  Irfan's new LOCK_SOCK_Acceptor.  This new implementation is
+ 	  truly the "mother of all Conn_Tests" ;-).
+
 	* ace/LOCK_SOCK_Acceptor.cpp (lock): Added a lock() accessor
  	  method to the new ACE_LOCK_SOCK_Acceptor so that we can remove
  	  the lock (somehow).
