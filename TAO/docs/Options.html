@@ -939,7 +939,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       into the native OS priority range, but in some operating systems
       the range depends on the scheduling policy used.
       Valid values are <B>SCHED_OTHER</B>, <B>SCHED_FIFO</B> and
-      <B>SCHED_RR</B>.  Default to <B>SCHED_OTHER</B>. Note that in
+      <B>SCHED_RR</B>.  Defaults to <B>SCHED_OTHER</B>. Note that in
       some operating systems some of
       the scheduling policies require super user privileges.
   </TD>
@@ -955,16 +955,18 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 <TR>
   <TD><CODE>-ORBPriorityMapping</CODE> <EM>mapping_type</EM></TD>
   <TD><a name="-ORBPriorityMapping"></a>
-      Select the priority mapping to use.
-      The default resource factory provide two priority mapping
-      implementations, <B>linear</B> selects a linear mapping between
+
+      Select the priority mapping to use.  There are three priority
+      mappings provided by TAO: the <B>linear</B> mapping maps between
       the CORBA range of priorities and the native range of
-      priorities for the selected scheduling policy.
-      The <B>direct</B> mapping maps the first <B>n</B> CORBA
-      priorities to the range of native priorities,
-      where <B>n</B> is the number of native priorities.
-      In all the operating systems where TAO is supported the range of
-      CORBA priorities is larger than the native set.
+      priorities; the <B>direct</B> mapping maps CORBA priorities
+      directly to native priorities; and the <B>continuous</B> maps
+      the first <i>n</i> CORBA priorities to the range of native
+      priorities, where <i>n</i> is the number of native priorities.
+
+      Defaults to <B>direct</B>.  Note that <B>continuous</B> was
+      previously referred to as <B>direct</B>.
+
   </TD>
 </TR>
 

@@ -19,21 +19,26 @@ Test combines and tests several RT policies in different ways.
 
 - In addition to testing servants in the RootPOA and in a simple child
   POA, the following policy combinations are tested in this example:
-  ________________________________________
+  ________________________________________________________________________________
 
-  Thread-pool    BANDS   PRIORITY MODEL
-  ________________________________________
+  Thread-pool    BANDS   PRIORITY MODEL    Client Priority    Server Priority
+  ________________________________________________________________________________
 
-  Default Pool     NO   CLIENT_PROPAGATED
-  Default Pool     NO   SERVER_DECLARED
-  Without Lanes    NO   CLIENT_PROPAGATED
-  Without Lanes    NO   SERVER_DECLARED
-  With Lanes       NO   CLIENT_PROPAGATED
-  With Lanes       NO   SERVER_DECLARED
-  Default Pool    YES   CLIENT_PROPAGATED
-  Default Pool    YES   SERVER_DECLARED
-  Without Lanes   YES   CLIENT_PROPAGATED
-  Without Lanes   YES   SERVER_DECLARED
-  With Lanes      YES   CLIENT_PROPAGATED
-  With Lanes      YES   SERVER_DECLARED
+  Default Pool     NO   CLIENT_PROPAGATED        3                  3
+  Default Pool     NO   SERVER_DECLARED          3                  5
+  Without Lanes    NO   CLIENT_PROPAGATED        1                  1
+  Without Lanes    NO   SERVER_DECLARED          1                  5
+  With Lanes       NO   CLIENT_PROPAGATED        2                  2
+  With Lanes       NO   SERVER_DECLARED          3                  5
+  Default Pool    YES   CLIENT_PROPAGATED        3                  3
+  Default Pool    YES   SERVER_DECLARED          1                  5
+  Without Lanes   YES   CLIENT_PROPAGATED        1                  1
+  Without Lanes   YES   SERVER_DECLARED          3                  5
+  With Lanes      YES   CLIENT_PROPAGATED        3                  2
+  With Lanes      YES   SERVER_DECLARED          1                  5
+
+  where the priorities are relative to the minimum priority of the
+  thread scheduling policy used for the test.
+
+- This test uses the -ORBPriorityMapping continuous option.
 

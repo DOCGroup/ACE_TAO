@@ -48,7 +48,10 @@ TAO_RT_ORB_Loader::init (int argc,
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "linear") == 0)
+                                    "continuous") == 0)
+              priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_CONTINUOUS;
+            else if (ACE_OS::strcasecmp (name,
+                                         "linear") == 0)
               priority_mapping_type = TAO_RT_ORBInitializer::TAO_PRIORITY_MAPPING_LINEAR;
             else if (ACE_OS::strcasecmp (name,
                                          "direct") == 0)

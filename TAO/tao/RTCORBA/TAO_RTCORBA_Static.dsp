@@ -95,6 +95,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter "i,inl"
 # Begin Source File
 
+SOURCE=.\Continuous_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Priority_Mapping.i
 # End Source File
 # Begin Source File
@@ -153,6 +157,10 @@ SOURCE=.\Thread_Pool.i
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h"
+# Begin Source File
+
+SOURCE=.\Continuous_Priority_Mapping.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.h
@@ -249,6 +257,10 @@ SOURCE=.\Thread_Pool.h
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp"
+# Begin Source File
+
+SOURCE=.\Continuous_Priority_Mapping.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\Direct_Priority_Mapping.cpp

@@ -19,6 +19,7 @@ ACE_RCSID (TAO, RT_ORBInitializer, "$Id$")
 #include "RT_ORB_Loader.h"
 #include "RT_Stub_Factory.h"
 #include "RT_Endpoint_Selector_Factory.h"
+#include "Continuous_Priority_Mapping.h"
 #include "Linear_Priority_Mapping.h"
 #include "Direct_Priority_Mapping.h"
 #include "RT_ORB.h"
@@ -91,6 +92,10 @@ TAO_RT_ORBInitializer::pre_init (
   TAO_Priority_Mapping *pm;
   switch (this->priority_mapping_type_)
     {
+    case TAO_PRIORITY_MAPPING_CONTINUOUS:
+      ACE_NEW (pm,
+               TAO_Continuous_Priority_Mapping (sched_policy));
+      break;
     case TAO_PRIORITY_MAPPING_LINEAR:
       ACE_NEW (pm,
                TAO_Linear_Priority_Mapping (sched_policy));

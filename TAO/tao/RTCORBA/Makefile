@@ -25,6 +25,7 @@ ifeq ($(corba_messaging),1)
 
 
 CPP_SRCS += \
+  Continuous_Priority_Mapping \
   Direct_Priority_Mapping \
   Linear_Priority_Mapping \
   RT_Thread_Lane_Resources_Manager \

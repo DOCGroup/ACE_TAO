@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "testS.h"
+#include "tao/ORB_Core.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
@@ -74,10 +75,10 @@ test_i::prioritized_method (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "test_i::prioritized_method suppose to run at priority %d "
-              "and is running at priority %d\n",
-              this->server_priority_,
-              priority));
+              "test_i::prioritized_method: client = %d server = %d (should be %d)\n",
+              this->client_priority_,
+              priority,
+              this->server_priority_));
 
   ACE_ASSERT (this->server_priority_ == priority);
 }
@@ -185,7 +186,7 @@ public:
                                          const char *test_name,
                                          CORBA::Environment &ACE_TRY_ENV);
 
-  void test_default_lane_poa (CORBA::Short server_priority,
+  void test_default_pool_poa (CORBA::Short server_priority,
                               CORBA::Short client_priority,
                               server::test_function function,
                               const char *test_name,
@@ -234,25 +235,25 @@ public:
                                        const char *test_name,
                                        CORBA::Environment &ACE_TRY_ENV);
 
-  void test_default_lane_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
+  void test_default_pool_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_no_lanes_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_lanes_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
 
-  void test_default_lane_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
+  void test_default_pool_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_no_lanes_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_lanes_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV);
 
-  void test_default_lane_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
+  void test_default_pool_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_no_lanes_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_lanes_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
 
-  void test_default_lane_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
+  void test_default_pool_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
 
   void test_no_lanes_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV);
 
@@ -342,7 +343,7 @@ server::test_child_poa (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-server::test_default_lane_poa (CORBA::Short server_priority,
+server::test_default_pool_poa (CORBA::Short server_priority,
                                CORBA::Short client_priority,
                                server::test_function function,
                                const char *test_name,
@@ -370,10 +371,10 @@ server::test_bands_poa (CORBA::PolicyList &policies,
 
   bands[0].low = default_thread_priority;
   bands[0].high = default_thread_priority;
-  bands[1].low = ::server_priority;
-  bands[1].high = ::server_priority;
-  bands[2].low = ::client_priority;
-  bands[2].high = ::client_priority;
+  bands[1].low = ::server_priority - 1;
+  bands[1].high = ::server_priority + 1;
+  bands[2].low = ::client_priority - 1;
+  bands[2].high = ::client_priority + 1;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -546,12 +547,12 @@ server::test_bands_client_propagated_poa (CORBA::PolicyList &policies,
 }
 
 void
-server::test_default_lane_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV)
+server::test_default_pool_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->test_default_lane_poa (::client_priority,
-                               ::client_priority,
+  this->test_default_pool_poa (::client_priority + 1,
+                               ::client_priority + 1,
                                &server::test_no_bands_client_propagated_poa,
-                               "default_lane_no_bands_client_propagated",
+                               "default_pool_no_bands_client_propagated",
                                ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -579,12 +580,12 @@ server::test_lanes_no_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_E
 }
 
 void
-server::test_default_lane_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV)
+server::test_default_pool_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->test_default_lane_poa (::client_priority - 1,
-                               ::client_priority - 1,
+  this->test_default_pool_poa (::client_priority + 1,
+                               ::client_priority + 1,
                                &server::test_bands_client_propagated_poa,
-                               "default_lane_bands_client_propagated",
+                               "default_pool_bands_client_propagated",
                                ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -604,7 +605,7 @@ void
 server::test_lanes_bands_client_propagated_poa (CORBA::Environment &ACE_TRY_ENV)
 {
   this->test_lanes_poa (::client_priority,
-                        ::client_priority,
+                        ::client_priority + 1,
                         &server::test_bands_client_propagated_poa,
                         "lanes_bands_client_propagated",
                         ACE_TRY_ENV);
@@ -684,12 +685,12 @@ server::test_bands_server_declared_poa (CORBA::PolicyList &policies,
 }
 
 void
-server::test_default_lane_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
+server::test_default_pool_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->test_default_lane_poa (::server_priority,
-                               ::client_priority,
+  this->test_default_pool_poa (::server_priority,
+                               ::client_priority + 1,
                                &server::test_no_bands_server_declared_poa,
-                               "default_lane_no_bands_server_declared",
+                               "default_pool_no_bands_server_declared",
                                ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -698,7 +699,7 @@ void
 server::test_no_lanes_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 {
   this->test_no_lanes_poa (::server_priority,
-                           ::client_priority,
+                           ::client_priority - 1,
                            &server::test_no_bands_server_declared_poa,
                            "no_lanes_no_bands_server_declared",
                            ACE_TRY_ENV);
@@ -709,7 +710,7 @@ void
 server::test_lanes_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 {
   this->test_lanes_poa (::server_priority,
-                        ::client_priority,
+                        ::client_priority + 1,
                         &server::test_no_bands_server_declared_poa,
                         "lanes_no_bands_server_declared",
                         ACE_TRY_ENV);
@@ -717,12 +718,12 @@ server::test_lanes_no_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV
 }
 
 void
-server::test_default_lane_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
+server::test_default_pool_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->test_default_lane_poa (::server_priority,
-                               ::client_priority,
+  this->test_default_pool_poa (::server_priority,
+                               ::client_priority - 1,
                                &server::test_bands_server_declared_poa,
-                               "default_lane_bands_server_declared",
+                               "default_pool_bands_server_declared",
                                ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -731,7 +732,7 @@ void
 server::test_no_lanes_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 {
   this->test_no_lanes_poa (::server_priority,
-                           ::client_priority,
+                           ::client_priority + 1,
                            &server::test_bands_server_declared_poa,
                            "no_lanes_bands_server_declared",
                            ACE_TRY_ENV);
@@ -742,7 +743,7 @@ void
 server::test_lanes_bands_server_declared_poa (CORBA::Environment &ACE_TRY_ENV)
 {
   this->test_lanes_poa (::server_priority,
-                        ::client_priority,
+                        ::client_priority - 1,
                         &server::test_bands_server_declared_poa,
                         "lanes_bands_server_declared",
                         ACE_TRY_ENV);
@@ -775,6 +776,25 @@ main (int argc, char **argv)
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // The following sets the current thread to the lowest priority
+      // for this scheduling policy.  This will give us the biggest
+      // range on NT since the default priority is 0 where as the
+      // lowest priority is -15.
+      ACE_hthread_t current_thread;
+      ACE_Thread::self (current_thread);
+
+      long sched_policy =
+        orb->orb_core ()->orb_params ()->sched_policy ();
+
+      int minimum_priority =
+        ACE_Sched_Params::priority_min (sched_policy);
+
+      int result =
+        ACE_Thread::setprio (current_thread,
+                             minimum_priority);
+      if (result != 0)
+        return result;
+
       object =
         orb->resolve_initial_references ("RTCurrent",
                                          ACE_TRY_ENV);
@@ -790,12 +810,12 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       client_priority =
-        default_thread_priority + 1;
-
-      server_priority =
         default_thread_priority + 2;
 
-      int result =
+      server_priority =
+        default_thread_priority + 5;
+
+      result =
         parse_args (argc, argv);
       if (result != 0)
         return result;
@@ -825,10 +845,10 @@ main (int argc, char **argv)
       server.test_child_poa (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      server.test_default_lane_no_bands_client_propagated_poa (ACE_TRY_ENV);
+      server.test_default_pool_no_bands_client_propagated_poa (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      server.test_default_lane_no_bands_server_declared_poa (ACE_TRY_ENV);
+      server.test_default_pool_no_bands_server_declared_poa (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       server.test_no_lanes_no_bands_client_propagated_poa (ACE_TRY_ENV);
@@ -843,10 +863,10 @@ main (int argc, char **argv)
       server.test_lanes_no_bands_server_declared_poa (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      server.test_default_lane_bands_client_propagated_poa (ACE_TRY_ENV);
+      server.test_default_pool_bands_client_propagated_poa (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      server.test_default_lane_bands_server_declared_poa (ACE_TRY_ENV);
+      server.test_default_pool_bands_server_declared_poa (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       server.test_no_lanes_bands_client_propagated_poa (ACE_TRY_ENV);

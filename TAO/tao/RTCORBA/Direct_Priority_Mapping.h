@@ -31,7 +31,6 @@
 
 class TAO_RTCORBA_Export TAO_Direct_Priority_Mapping : public TAO_Priority_Mapping
 {
-  //
   // = TITLE
   //   A simple implementation of the Priority_Mapping interface
   //
