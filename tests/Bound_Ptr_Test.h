@@ -20,8 +20,6 @@
 #ifndef ACE_TESTS_BOUND_PTR_TEST_H
 #define ACE_TESTS_BOUND_PTR_TEST_H
 
-#if defined (ACE_HAS_THREADS)
-
 #include "ace/Activation_Queue.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Synch.h"
@@ -38,6 +36,8 @@ struct Printer
   const char *message_;
   static size_t instance_count_;
 };
+
+#if defined (ACE_HAS_THREADS)
 
 typedef ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
 
