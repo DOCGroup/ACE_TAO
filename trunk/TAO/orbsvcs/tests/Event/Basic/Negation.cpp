@@ -172,6 +172,9 @@ main (int argc, char* argv[])
 
       negation_consumer.dump_results (200, 5);
       regular_consumer.dump_results (100, 5);
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
