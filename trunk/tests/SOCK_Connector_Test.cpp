@@ -30,10 +30,10 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+#if !defined (ACE_LACKS_GETHOSTENT)
 // Determine if a host exists, is reachable, and is up.
 // Attempt a blocking connection to it; if it succeeds,
 // then the host exists, is reachable, and is up.
-
 static u_int
 host_is_up (ASYS_TCHAR hostname[])
 {
@@ -51,6 +51,7 @@ host_is_up (ASYS_TCHAR hostname[])
   sock.close ();
   return status == 0  ?  1  :  0;
 }
+#endif /* ! ACE_LACKS_GETHOSTENT */
 
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
