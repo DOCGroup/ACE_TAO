@@ -89,11 +89,11 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\consumerC.cpp
+SOURCE=.\ConsumerC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerS.cpp
+SOURCE=.\ConsumerS.cpp
 # End Source File
 # Begin Source File
 
@@ -121,19 +121,19 @@ SOURCE=.\Supplier_Timer_Handler.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\consumerC.h
+SOURCE=.\ConsumerC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerC.i
+SOURCE=.\ConsumerC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerS.h
+SOURCE=.\ConsumerS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerS.i
+SOURCE=.\ConsumerS.i
 # End Source File
 # Begin Source File
 

@@ -97,7 +97,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-          // last argument - is always CORBA::Environment
+          // last argument - is always TAO_ENV_ARG_DECL
           *os << env_decl;
           break;
         default:

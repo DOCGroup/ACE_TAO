@@ -144,7 +144,7 @@ InputPath=.\Hash_Replica.idl
 InputName=Hash_Replica
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 Hash_Replica.idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -183,7 +183,7 @@ InputPath=.\Hash_Replica.idl
 InputName=Hash_Replica
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl.exe -Ge 1 Hash_Replica.idl
+	..\..\..\..\bin\tao_idl.exe -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

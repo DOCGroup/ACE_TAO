@@ -81,6 +81,10 @@ public:
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   //@}
 
+  /// Retrieve the SSLIOP::SSL component associated with the endpoints
+  /// set up by this acceptor.
+  const SSLIOP::SSL &ssl_component (void) const;
+
 private:
 
   /// Implement the common part of the open*() methods.

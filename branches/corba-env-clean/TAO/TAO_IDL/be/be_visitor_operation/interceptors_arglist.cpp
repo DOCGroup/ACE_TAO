@@ -58,7 +58,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the CORBA::Environment parameter for the alternative mapping
+  // generate the TAO_ENV_ARG_PARAMETER for the alternative mapping
   if (!be_global->exception_support ())
     {
       switch (this->ctx_->state ())

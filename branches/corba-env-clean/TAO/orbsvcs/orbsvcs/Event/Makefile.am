@@ -37,6 +37,7 @@ libTAO_Event_la_SOURCES = \
         EC_Filter_Builder.cpp \
         EC_Gateway.cpp \
         EC_Gateway_UDP.cpp \
+        ECG_Mcast_EH.cpp \
         EC_Null_Factory.cpp \
         EC_ObserverStrategy.cpp \
         EC_Per_Supplier_Filter.cpp \

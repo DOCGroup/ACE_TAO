@@ -67,7 +67,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Generate the CORBA::Environment parameter for the alternative mapping.
+  // Generate the TAO_ENV_ARG_DECL parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
       // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
@@ -80,12 +80,12 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-          // Last argument - is always CORBA::Environment.
+          // Last argument - is always TAO_ENV_ARG_DECL.
           *os << env_decl << "_WITH_DEFAULTS" << be_nl
               << be_uidt_nl << ")";
           break;
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
-          // Last argument - is always CORBA::Environment.
+          // Last argument - is always TAO_ENV_ARG_DECL.
           *os << env_decl << ")";
           break;
         default:

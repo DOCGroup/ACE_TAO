@@ -329,13 +329,21 @@ TAO_SSLIOP_Transport::get_listen_point (
     ACE_dynamic_cast (TAO_SSLIOP_Acceptor *,
                       acceptor);
 
-  // Get the array of endpoints serviced by <iiop_acceptor>
+  if (ssliop_acceptor == 0)
+    return -1;
+
+  // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
+  // SSLIOP_Acceptor.
   const ACE_INET_Addr *endpoint_addr =
     ssliop_acceptor->endpoints ();
 
   // Get the count
   size_t count =
     ssliop_acceptor->endpoint_count ();
+
+  // The SSL port is stored in the SSLIOP::SSL component associated
+  // with the SSLIOP_Acceptor.
+  const SSLIOP::SSL &ssl = ssliop_acceptor->ssl_component ();
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
@@ -365,9 +373,7 @@ TAO_SSLIOP_Transport::get_listen_point (
                         -1);
     }
 
-  for (size_t index = 0;
-       index != count;
-       index++)
+  for (size_t index = 0; index < count; ++index)
     {
       if (local_addr.get_ip_address()
           == endpoint_addr[index].get_ip_address())
@@ -382,7 +388,11 @@ TAO_SSLIOP_Transport::get_listen_point (
           // same interface
           IIOP::ListenPoint &point = listen_point_list[len];
           point.host = CORBA::string_dup (local_interface.in ());
-          point.port = endpoint_addr[index].get_port_number ();
+
+          // All endpoints, if more than one, serviced by the
+          // SSLIOP_Acceptor should be listening on the same port (due
+          // to the bind to the INADDR_ANY address).
+          point.port = ssl.port;
         }
     }
 

@@ -103,10 +103,10 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (be_operation *node)
 
   // Generate the actual code for the stub. However, if any of the argument
   // types is "native", we flag a MARSHAL exception.
-  // last argument - is always CORBA::Environment
+  // last argument - is always TAO_ENV_ARG_PARAMETER
   *os << "{" << be_idt_nl;
 
-/* This shall go away as soon as we drop the suppress_env transition
+/* This shall go away as soon as we drop the include_env switch
    (2001-10-29 oliver.kellogg@t-online.de)                           =======*/
   // Deal with differences between IDL mapping for true C++ exceptions and
   // alternate mapping. Since our code uses the ACE_TRY_ENV variable in a

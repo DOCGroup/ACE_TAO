@@ -92,15 +92,15 @@ RTP_Packet::RTP_Packet(unsigned char padding,
                        ACE_UINT32 ssrc,
                        unsigned char csrc_count,
                        ACE_UINT32 *csrc_list,
-        	       char *data,
-        	       ACE_UINT16 data_size)
+                       char *data,
+                       ACE_UINT16 data_size)
   :extension_bytes_(0)
 {
   //size of header (in octets) without contributing sources
   ACE_UINT16 size = 3*4;
   int index = 0;
 
-  if (data_size > RTP_MTU-12) 
+  if (data_size > RTP_MTU-12)
   {
     data_size = RTP_MTU-12;
     ACE_DEBUG ((LM_DEBUG, "\n(%N,%l) RTP_Packet: Warning - packet truncated\n"));
@@ -596,7 +596,13 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
 {
   this->sequence_num_ = ACE_OS::rand ();
   this->timestamp_offset_ = ACE_OS::rand ();
-  this->ssrc_ = TAO_AV_RTCP::alloc_srcid ((unsigned int)this);
+
+  char buf [BUFSIZ];
+  int result = ACE_OS::hostname (buf, BUFSIZ);
+  unsigned long ipaddr = 0;
+  if (result == 0)
+    ipaddr = ACE_OS::inet_addr (buf);
+  this->ssrc_ = TAO_AV_RTCP::alloc_srcid (ipaddr);
 
   this->frame_.size (2 * this->transport_->mtu ());
 }

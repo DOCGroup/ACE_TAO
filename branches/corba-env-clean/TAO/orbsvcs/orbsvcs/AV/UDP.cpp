@@ -91,7 +91,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
 
       if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
-          qos.QoSParams[i].property_value >>= dscp; 
+          qos.QoSParams[i].property_value >>= dscp;
           dscp_flag=1;
           // DSCP value can only be 6 bits wide
           if(!((dscp >= 0) && (dscp <= 63)))
@@ -109,9 +109,9 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
           // IP Diffserv byte
           if(!((ecn >= 0) && (ecn <= 3)))
             {
-              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn)); 
+              ACE_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               ecn = 0;
-            }	
+            }   
 
         }
     }
@@ -139,8 +139,8 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
            if(ret < 0 )
              {
                 ACE_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
-	     }
-	}
+             }
+        }
       return ret;
 }
 
@@ -429,6 +429,11 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                                                        local_addr,
                                                        this->entry_->is_multicast (),
                                                        TAO_AV_UDP_Connection_Setup::ACCEPTOR);
+
+          if( result < 0)
+          {
+             ACE_DEBUG((LM_DEBUG,"(%N,%l) Error during connection setup: %d\n", result));
+          }
 
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name ());
