@@ -1,7 +1,7 @@
 // IOStream.cpp
 // $Id$
 #if !defined (ACE_IOSTREAM_C)
-#define ACE_MAP_IOSTREAM_C
+#define ACE_IOSTREAM_C
 
 #define ACE_BUILD_DLL
 #include "ace/IOStream.h"
