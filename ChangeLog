@@ -1,6 +1,10 @@
+Mon Jul 22 12:20:21 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * THANKS: Added Sean Ogle to the hall of fame.
+
 Mon Jul 22 09:19:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Aded Kew Whitney and Colin Weaver to the hall of fame. 
+	* THANKS: Aded Kew Whitney and Colin Weaver to the hall of fame.
 
 Sat Jul 20 08:53:05 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
@@ -125,7 +129,7 @@ Wed Jul 17 03:50:56 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 	* include/makeinclude/wrapper_macros.GNU:
 
 	  Removed PACE.
-	
+
 Tue Jul 16 14:19:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp:
