@@ -257,6 +257,20 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
+  // @@ Priyanka, you never initialize the "adapter_state_" attribute
+  //    in the above member initializer list!!  This means the
+  //    adapter_state_ variable has garbage in it to begin with!!!  I
+  //    suggest initializing it to PortableInterceptor::HOLDING since
+  //    TAO's POA always starts out in that state.
+  //
+  //    Another problem is that you never change the state until the
+  //    POA is destroyed.  At some point, the POA becomes ACTIVE.
+  //    This is hard to find out since the POA simply checks the
+  //    POAManager state to figure out if it is active.  Also, be
+  //    careful not to call this->adapter_state_changed(...,
+  //    ...ACTIVE) if the adapter_manager_state_changed(...,
+  //    ...ACTIVE) has already been called.
+
   // Parse the policies that are used in the critical path in
   // a cache.
   this->cached_policies_.update (this->policies_
@@ -745,6 +759,17 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   this->cleanup_in_progress_ = 1;
 
+  // @@ Priyanka, it looks like you should be doing the following
+  //    here:
+  //
+  //      this->adapter_state_ = PortableInterceptor::INACTIVE;
+  //      this->adapter_state_changed (s,
+  //                                   this->adapter_state_
+  //                                   ACE_ENV_ARG_PARAMETER);
+  //      ACE_CHECK;
+  //
+  //    See Section 21.5.2.2 "Adapter States" for details.
+
   // This operation destroys the POA and all descendant POAs. The POA
   // so destroyed (that is, the POA with its name) may be re-created
   // later in the same process. (This differs from the
@@ -760,7 +785,6 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
     }
-
 
   // @@ Priyanka, why are you allocating this sequence on the heap.
   //    Not only is it unnecessary to do so, but it is expensive.
@@ -796,6 +820,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       seq_obj_ref_template_var[i] = child_at;
       ++i;
 
+      // @@ Priyanka, this is redundant.  The below call already does
+      //    that.
       child_poa->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
       child_poa->destroy_i (etherealize_objects,
@@ -861,20 +887,20 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       this->complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-  this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
+      this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
-  // @@ Priyanka, once you fix the sequence instantiation so that it
-  //    is stack instantiated, you can remove the broken cast you use
-  //    below and simply pass the sequence as an "in" parameter,
-  //    i.e. just pass it in without a cast.  Note that you'll need to
-  //    fix the adapter_state_changed() signature to accept a
-  //       "const PortableInterceptor::ObjectReferenceTemplateSeq &"
-  //    Hence no need to introduce pointers or casts.
-  this->adapter_state_changed (
-     (const PortableInterceptor::ObjectReferenceTemplateSeq *)seq_obj_ref_template,
-      this->adapter_state_);
-  // @@ Priyanka, once you add the missing ACE_ENV_ARG_PARAMETER to
-  //    the above call, don't forget the ACE_CHECK here.
+      // @@ Priyanka, once you fix the sequence instantiation so that
+      // it is stack instantiated, you can remove the broken cast you
+      // use below and simply pass the sequence as an "in" parameter,
+      // i.e. just pass it in without a cast.  Note that you'll need
+      // to fix the adapter_state_changed() signature to accept a
+      // "const PortableInterceptor::ObjectReferenceTemplateSeq &".
+      // Hence, no need to introduce pointers or casts.
+      this->adapter_state_changed (
+        (const PortableInterceptor::ObjectReferenceTemplateSeq *)seq_obj_ref_template,
+        this->adapter_state_);
+      // @@ Priyanka, once you add the missing ACE_ENV_ARG_PARAMETER
+      // to the above call, don't forget the ACE_CHECK here.
     }
   else
     {
@@ -964,6 +990,15 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
   // attach the name to the sequence and go further till the final
   // name is the name of RootPOA and stop there.
   // @@ TAO_OBJID_ROOTPOA
+  //
+  // @@ Priyanka, judging from Section 21.5.2.1 "Adapter Names" in the
+  //    spec, you're putting the adapter names in the reverse order.
+  //    In particular, it states
+  //        "the adapter name shall be the sequence of names starting
+  //         with the root POA that is required to reach the POA using
+  //         the find_POA call"
+  //    Assuming that my interpretation is correct.  The below code is
+  //    incorrect.
   while (ACE_OS::strcmp (current_poa_name.in (),
                          TAO_DEFAULT_ROOTPOA_NAME) != 0)
     {
@@ -3682,6 +3717,8 @@ TAO_POA::tao_establish_components (ACE_ENV_SINGLE_ARG_DECL)
 
 }
 
+// @@ Priyanka, this first parameter should be a
+//    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
 void
 TAO_POA::establish_components (PortableInterceptor::IORInfo *info
                                ACE_ENV_ARG_DECL)
@@ -3741,6 +3778,8 @@ TAO_POA::establish_components (PortableInterceptor::IORInfo *info
   return;
 }
 
+// @@ Priyanka, this first parameter should be a
+//    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
 void
 TAO_POA::components_established_i (PortableInterceptor::IORInfo *info
                                    ACE_ENV_ARG_DECL)

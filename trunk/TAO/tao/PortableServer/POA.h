@@ -248,6 +248,8 @@ public:
 
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
+  // @@ Priyanka, this first parameter should be a
+  //    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
   void establish_components (PortableInterceptor::IORInfo *info
                              ACE_ENV_ARG_DECL);
 
@@ -743,6 +745,8 @@ protected:
 
   TAO_Active_Object_Map &active_object_map (void) const;
 
+  // @@ Priyanka, this first parameter should be a
+  //    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
   void components_established_i (PortableInterceptor::IORInfo *info
                                  ACE_ENV_ARG_DECL);
 
