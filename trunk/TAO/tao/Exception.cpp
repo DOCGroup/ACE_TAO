@@ -293,6 +293,12 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_EEXIST_MINOR_CODE;
     case EINVAL:
       return TAO_EINVAL_MINOR_CODE;
+    case ECOMM:
+      return TAO_ECOMM_MINOR_CODE;
+    case ECONNRESET:
+      return TAO_ECONNRESET_MINOR_CODE;
+    case ENOTSUP:
+      return TAO_ENOTSUP_MINOR_CODE;
     default:
       // Mask off bottom 7 bits and return them.
       return errno_value & 0x7F;
@@ -438,6 +444,15 @@ CORBA_SystemException::_info (void) const
           break;
         case TAO_EINVAL_MINOR_CODE:
           errno_indication = "EINVAL";
+          break;
+        case TAO_ECOMM_MINOR_CODE:
+          errno_indication = "ECOMM";
+          break;
+        case TAO_ECONNRESET_MINOR_CODE:
+          errno_indication = "ECONNRESET";
+          break;
+        case TAO_ENOTSUP_MINOR_CODE:
+          errno_indication = "EENOTSUP";
           break;
         default:
           {

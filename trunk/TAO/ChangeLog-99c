@@ -1,36 +1,41 @@
+Sun Aug 08 21:09:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h,Exception.cpp: added minor code support
+          for ECOMM, ECONNRESET, and ENOTSUP errnos. [Bug 216]
+
 Sun Aug  8 15:44:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Transport_Mux_Strategy.cpp:
-	  Removed unreachable statement.
+        * tao/Transport_Mux_Strategy.cpp:
+          Removed unreachable statement.
 
-	* tao/IORC.cpp:
-	* tao/IORManipulation.cpp:
-	* tao/IOR_LookupTable.cpp:
-	* tao/ObjectIDList.h:
-	* tao/ObjectIDList.cpp:
-	  Removed cyclic dependencies on corba.h, this may fix the
-	  problems with g++ 2.7.2.X
+        * tao/IORC.cpp:
+        * tao/IORManipulation.cpp:
+        * tao/IOR_LookupTable.cpp:
+        * tao/ObjectIDList.h:
+        * tao/ObjectIDList.cpp:
+          Removed cyclic dependencies on corba.h, this may fix the
+          problems with g++ 2.7.2.X
 
-	* TAO_IDL/Makefile:
-	* examples/POA/Loader/Makefile:
-	* examples/POA/On_Demand_Activation/Makefile:
-	* examples/POA/On_Demand_Loading/Makefile:
-	* orbsvcs/tests/ImplRepo/Makefile:
-	* performance-tests/Cubit/COOL/IDL_Cubit/Makefile:
-	* performance-tests/Cubit/COOL/MT_Cubit/Makefile:
-	* performance-tests/Cubit/Orbix/base_server/Makefile:
-	* performance-tests/Cubit/Orbix/client/Makefile:
-	* performance-tests/Cubit/Orbix/factory_client/Makefile:
-	* performance-tests/Cubit/Orbix/tpool/Makefile:
-	* performance-tests/Cubit/Orbix/tpr/Makefile:
-	* performance-tests/Cubit/Orbix/tps/Makefile:
-	* performance-tests/Thruput/COOL/Makefile:
-	* performance-tests/Thruput/CORBAplus/Makefile:
-	* performance-tests/Thruput/TAO/Makefile:
-	* tests/Makefile:
-	* utils/catior/Makefile:
-	* utils/nslist/Makefile:
-	  Removed rules.lib.GNU because it wasn't used.
+        * TAO_IDL/Makefile:
+        * examples/POA/Loader/Makefile:
+        * examples/POA/On_Demand_Activation/Makefile:
+        * examples/POA/On_Demand_Loading/Makefile:
+        * orbsvcs/tests/ImplRepo/Makefile:
+        * performance-tests/Cubit/COOL/IDL_Cubit/Makefile:
+        * performance-tests/Cubit/COOL/MT_Cubit/Makefile:
+        * performance-tests/Cubit/Orbix/base_server/Makefile:
+        * performance-tests/Cubit/Orbix/client/Makefile:
+        * performance-tests/Cubit/Orbix/factory_client/Makefile:
+        * performance-tests/Cubit/Orbix/tpool/Makefile:
+        * performance-tests/Cubit/Orbix/tpr/Makefile:
+        * performance-tests/Cubit/Orbix/tps/Makefile:
+        * performance-tests/Thruput/COOL/Makefile:
+        * performance-tests/Thruput/CORBAplus/Makefile:
+        * performance-tests/Thruput/TAO/Makefile:
+        * tests/Makefile:
+        * utils/catior/Makefile:
+        * utils/nslist/Makefile:
+          Removed rules.lib.GNU because it wasn't used.
 
 Fri Aug 06 21:45:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
