@@ -1,8 +1,3 @@
-Thu Jul  8 12:25:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Token.h (acquire, renew): Added comments to state the
-	  <timeout> values are absolute times in these methods.
-
 Thu Jul  8 11:33:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Based_Pointer_Repository.cpp (unbind): Rearranged the

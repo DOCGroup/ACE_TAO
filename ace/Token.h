@@ -109,6 +109,7 @@ public:
   // thing to do (since it makes it possible for shared data to be
   // changed unexpectedly) so use with caution...
   // This method maintians the original token priority.
+  // As in acquire(), the <timeout> value is an absolute time.
 
   int tryacquire (void);
   // Become interface-compliant with other lock mechanisms (implements
