@@ -14,22 +14,31 @@
 class ACE_ES_Reactor_Task;
 
 class TAO_ORBSVCS_Export ACE_Task_Manager 
-// = TITLE
-//   Singleton class for the pool of ACE_ReactorTask.
-//
-// = DESCRIPTION
-//   The EventChannel uses a pool of ACE_ReactorTask to handle the
-//   dispatching of Events. In real-time multi-threaded enviroments
-//   this maps to a different thread per priority.
-//   This class offers a centralized access point to those tasks and
-//   some related services.
-//
 {
+  //
+  // = TITLE
+  //  Manager for the pool of ACE_ReactorTask.
+  //
+  // = DESCRIPTION
+  //   The EventChannel uses a pool of ACE_ReactorTask to handle the
+  //   dispatching of timeouts. In real-time multi-threaded enviroments
+  //   this maps to a different thread per priority.
+  //   This class offers a centralized access point to those tasks and
+  //   some related services.
+  //
 public:
-  typedef ACE_ES_Reactor_Task ReactorTask;
+  ACE_Task_Manager (void);
+  // Create the Task_Manager.
 
-  static ACE_Task_Manager* instance();
-  // Returns the singleton.
+  void activate (void);
+  // Activate the threads, it waits until the threads are up and
+  // running.
+
+  void shutdown (void);
+  // Deactivate the threads, it waits until all the threads have
+  // terminated.
+
+  typedef ACE_ES_Reactor_Task ReactorTask;
 
   ReactorTask* GetReactorTask(RtecScheduler::OS_Priority priority);
   // Obtain the ReactorTask for the given priority.
@@ -39,14 +48,11 @@ public:
   // Returns a global ThreadManager for the Task pool.
 
 private:
-  friend class ACE_Singleton<ACE_Task_Manager,ACE_SYNCH_MUTEX>;
-  ACE_Task_Manager();
-
-  void initialize();
-
-private:
   ReactorTask *reactorTasks[ACE_Scheduler_MAX_PRIORITIES];
+  // The set of ReactorTasks
+
   ACE_RT_Thread_Manager thr_mgr;
+  // The thread manager.
 };
 
 #if defined (__ACE_INLINE__)

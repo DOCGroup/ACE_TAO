@@ -255,9 +255,6 @@ Latency_Consumer::shutdown (void)
       // Disconnect from the push supplier.
       this->suppliers_->disconnect_push_supplier (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
-      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
@@ -659,11 +656,6 @@ Latency_Supplier::shutdown (void)
 
       if (master_)
         {
-          // @@ TODO: Do this portably (keeping the ORB_ptr returned from
-          // ORB_init)
-          channel_admin_->destroy (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
           TAO_ORB_Core_instance ()->orb ()->shutdown ();
         }
     }
@@ -938,6 +930,11 @@ main (int argc, char *argv [])
           TAO_CHECK_ENV;
         }
       delete [] consumer;
+
+      // @@ TODO: Do this portably (keeping the ORB_ptr returned from
+      // ORB_init)
+      ec->destroy (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ACE_TIMEPROBE_PRINT;
     }

@@ -177,9 +177,12 @@ public:
          CONSUMER = 1, SUPPLIER = 2,
          SHUTDOWN = CONSUMER | SUPPLIER };
 
-  ACE_EventChannel (u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE);
+  ACE_EventChannel (CORBA::Boolean activate_threads = CORBA::B_TRUE,
+		    u_long type = ACE_DEFAULT_EVENT_CHANNEL_TYPE);
   // Construction of the given <type>.  Check the **_CHANNEL
   // enumerations defined below.
+  // By default we activate the threads on construction, but it is
+  // possible to create the EC first and activate the threads later.
 
   virtual ~ACE_EventChannel (void);
   // Calls destroy.
@@ -222,6 +225,9 @@ public:
   void report_disconnect (u_long);
   // Consumer or supplier disconnected.
 
+  void activate (void);
+  // Activate the internal threads of the EC
+
   void shutdown (void);
   // Do not call this.  The last module has shut down.
 
@@ -240,6 +246,8 @@ public:
   // The consumer (or supplier) list has changed, thus the EC has to
   // inform any gateways it has.
   // TODO: currently we only support consumer gateways.
+
+  ACE_Task_Manager* task_manager (void) const;
 
 private:
   ACE_RTU_Manager *rtu_manager_;
@@ -262,6 +270,11 @@ private:
 
   Gateway_Set gwys_;
   // Keep the set of Gateways, i.e. connections to peer EC.
+
+  ACE_Task_Manager* task_manager_;
+  // @@ TODO: change that class and object name.
+  // This object handles the threads related to timers, is a bad name,
+  // but this is not the opportunity to change it.
 };
 
 // ************************************************************

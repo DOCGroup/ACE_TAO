@@ -32,17 +32,15 @@ module RtecEventChannelAdmin {
   };
 
   interface ProxyPushConsumer: RtecEventComm::PushConsumer {
-    oneway void connect_push_supplier(
+    void connect_push_supplier(
 		in RtecEventComm::PushSupplier push_supplier,
-		in SupplierQOS qos);
-        // raises(AlreadyConnected);
+		in SupplierQOS qos) raises(AlreadyConnected);
   };
 
   interface ProxyPushSupplier: RtecEventComm::PushSupplier {
-    oneway void connect_push_consumer(
+    void connect_push_consumer(
 		in RtecEventComm::PushConsumer push_consumer,
-		in ConsumerQOS qos);
-      // raises(AlreadyConnected, TypeError);
+		in ConsumerQOS qos) raises(AlreadyConnected, TypeError);
   };
 
   // TODO: Find out the exception specs for the following interface's
@@ -64,7 +62,7 @@ module RtecEventChannelAdmin {
     ConsumerAdmin for_consumers();
     SupplierAdmin for_suppliers();
 
-    void destroy();
+    void destroy ();
   };
 
 };

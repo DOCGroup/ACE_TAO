@@ -230,7 +230,7 @@ class TAO_ORBSVCS_Export ACE_ES_Priority_Timer : public ACE_Event_Handler
 //    ReactorEx dispatching the timers for its given priority.
 {
 public:
-  ACE_ES_Priority_Timer (void);
+  ACE_ES_Priority_Timer (ACE_Task_Manager* task_manager);
   // Default construction.
 
   int connected (RtecScheduler::handle_t rt_info);
@@ -256,6 +256,9 @@ private:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *act);
   // Casts <act> to ACE_ES_Timer_ACT and calls execute.
+
+  ACE_Task_Manager* task_manager_;
+  // The pointer to the manager for the timer threads.
 };
 
 // ************************************************************
@@ -312,7 +315,7 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
     {
       // Add the timer to the task's dependency list.
       RtecScheduler::handle_t timer_rtinfo =
-        ACE_Task_Manager::instance()->GetReactorTask (preemption_priority)->rt_info ();
+        this->task_manager_->GetReactorTask (preemption_priority)->rt_info ();
 
       TAO_TRY
         {
@@ -334,8 +337,7 @@ ACE_ES_Priority_Timer::schedule_timer (RtecScheduler::handle_t rt_info,
   ACE_Time_Value tv_interval;
   ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, interval);
 
-  return ACE_Task_Manager::instance()->
-    GetReactorTask (preemption_priority)->
+  return this->task_manager_->GetReactorTask (preemption_priority)->
     get_reactor ().schedule_timer (this,
                                    (void *) act,
                                    tv_delta, tv_interval);
@@ -347,7 +349,7 @@ ACE_ES_Priority_Timer::cancel_timer (RtecScheduler::OS_Priority preemption_prior
 {
   const void *vp;
 
-  int result = ACE_Task_Manager::instance()->
+  int result = this->task_manager_->
     GetReactorTask (preemption_priority)->
     get_reactor ().cancel_timer (id, &vp);
 
@@ -605,7 +607,8 @@ ACE_Push_Consumer_Proxy::shutdown (void)
 
 // ************************************************************
 
-ACE_EventChannel::ACE_EventChannel (u_long type)
+ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
+				    u_long type)
   : rtu_manager_ (0),
     type_ (type),
     state_ (INITIAL_STATE),
@@ -614,19 +617,24 @@ ACE_EventChannel::ACE_EventChannel (u_long type)
   consumer_module_ = new ACE_ES_Consumer_Module (this);
   // RtecEventChannelAdmin::ConsumerAdmin_duplicate(consumer_module_);
 
-  ACE_NEW(dispatching_module_,
-          ACE_ES_Priority_Dispatching(this, THREADS_PER_DISPATCH_QUEUE));
+  ACE_NEW (this->task_manager_, ACE_Task_Manager);
+
+  ACE_NEW (this->dispatching_module_,
+	   ACE_ES_Priority_Dispatching(this, THREADS_PER_DISPATCH_QUEUE));
 
   correlation_module_ = new ACE_ES_Correlation_Module (this);
   subscription_module_ = new ACE_ES_Subscription_Module (this);
   supplier_module_ = new ACE_ES_Supplier_Module (this);
-  timer_ = new ACE_ES_Priority_Timer;
+  ACE_NEW (this->timer_, ACE_ES_Priority_Timer (this->task_manager_));
 
   consumer_module_->open (dispatching_module_);
   dispatching_module_->open (consumer_module_, correlation_module_);
   correlation_module_->open (dispatching_module_, subscription_module_);
   subscription_module_->open (correlation_module_, supplier_module_);
   supplier_module_->open (subscription_module_);
+
+  if (activate_threads)
+    this->activate ();
 }
 
 ACE_EventChannel::~ACE_EventChannel (void)
@@ -643,7 +651,8 @@ ACE_EventChannel::~ACE_EventChannel (void)
       ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_EventChannel::~ACE_EventChannel"));
     }
   TAO_ENDTRY;
-  // @@ TODO: Shouldn't we use _release() instead?
+  // @@ TODO: Some of this objects are servants, IMHO we should
+  // deactivate them (there is no implicit deactivation in the POA).
   delete rtu_manager_;
   delete consumer_module_;
   delete dispatching_module_;
@@ -651,12 +660,14 @@ ACE_EventChannel::~ACE_EventChannel (void)
   delete subscription_module_;
   delete supplier_module_;
   delete timer_;
+
+  delete this->task_manager_;
 }
 
 void
-ACE_EventChannel::destroy (CORBA::Environment &_env)
+ACE_EventChannel::destroy (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (_env);
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
   ACE_ES_GUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
@@ -697,13 +708,21 @@ ACE_EventChannel::destroy (CORBA::Environment &_env)
 }
 
 void
+ACE_EventChannel::activate (void)
+{
+  this->dispatching_module_->activate ();
+  this->task_manager_->activate ();
+}
+
+void
 ACE_EventChannel::shutdown (void)
 {
   // @@ TODO: Find a portable way to shutdown the ORB, on Orbix we have
   // to call deactive_impl () on a CORBA::POA is that the portable
   // way?
   // With TAO we need access to the ORB (to call shutdown() on it).
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+  this->task_manager_->shutdown ();
+  this->dispatching_module_->shutdown ();
 }
 
 void
@@ -3156,7 +3175,8 @@ ACE_ES_Supplier_Module::push (ACE_Push_Supplier_Proxy *proxy,
 
 // ************************************************************
 
-ACE_ES_Priority_Timer::ACE_ES_Priority_Timer (void)
+ACE_ES_Priority_Timer::ACE_ES_Priority_Timer (ACE_Task_Manager* tm)
+  : task_manager_ (tm)
 {
 }
 
@@ -3189,7 +3209,7 @@ ACE_ES_Priority_Timer::connected (RtecScheduler::handle_t rt_info)
   TAO_ENDTRY;
 
   // Just make sure the ORB allocates resources for this priority.
-  if (ACE_Task_Manager::instance()->GetReactorTask (preemption_priority) == 0)
+  if (this->task_manager_->GetReactorTask (preemption_priority) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
                        "ACE_ES_Priority_Timer::connected"), -1);
 

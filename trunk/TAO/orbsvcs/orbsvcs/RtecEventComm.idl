@@ -75,11 +75,11 @@ module RtecEventComm {
 
   interface PushConsumer {
     oneway void push (in EventSet data);
-    oneway void disconnect_push_consumer(); 
+    void disconnect_push_consumer(); 
   };
 
   interface PushSupplier {
-    oneway void disconnect_push_supplier();
+    void disconnect_push_supplier();
   };
 
 };

@@ -1,7 +1,7 @@
 #
 # $Id$
 #
-# Extract a histogram, minium, maximum and average from a file,
+# Extract a histogram, minimum, maximum and average from a file,
 # filtering by a given RE.
 #
 

@@ -7,7 +7,7 @@ ACE_Task_Manager::GetReactorTask(RtecScheduler::OS_Priority priority)
 {
   if (reactorTasks[priority] == 0)
     {
-      initialize();
+      this->activate ();
       //ACE_ERROR_RETURN ((LM_ERROR,
       //"%p no reactor task for priority %d.\n", 
       //"ACE_Task_Manager::GetReactor",
@@ -20,11 +20,6 @@ ACE_Task_Manager::GetReactorTask(RtecScheduler::OS_Priority priority)
 ACE_INLINE ACE_RT_Thread_Manager* ACE_Task_Manager::ThrMgr()
 {
   return &thr_mgr;
-}
-
-ACE_INLINE ACE_Task_Manager* ACE_Task_Manager::instance()
-{
-  return ACE_Singleton<ACE_Task_Manager,ACE_SYNCH_MUTEX>::instance();
 }
 
 
