@@ -372,7 +372,6 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          int length = ACE_OS::strlen (buffer);
           ACE_TCHAR* end = ACE_OS::strrchr(buffer, ACE_TEXT(']'));
           if(!end)
           {
