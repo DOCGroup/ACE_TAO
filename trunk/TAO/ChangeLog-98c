@@ -1,3 +1,38 @@
+Wed Nov 12 14:28:48 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_union.cpp: Fixed a problem where the front end
+	would not give any error if there were duplicate case labels. This
+	was happening since an overloaded == operator taking an
+	AST_Expression* was not getting called. Instead a simple
+	comparison of addresses was taking place. We now use the "compare"
+	method defined on the AST_Expression class to fix this problem.
+
+	* TAO_IDL/be/be_interface.cpp: Removed some code under #if 0. The
+	noteworthy change, however, has to do with code that gets
+	generated for the "_is_a_skel". Some compilers were issuing a
+	warning saying "unused argument obj". Since we cannot change the
+	signature of the generated "_is_a_skel", we use the trick of
+	generatung ACE_UNUSED_ARG (obj); in the code. Some other
+	formatting changes made.
+
+	* TAO_IDL/be/be_operation.cpp: Some very minor changes so that the
+	generated code is properly indented.
+
+	* tao/{iiopobj,object,stub}.h, iiopobj.cpp: Changed the return
+	type of _get_name to return a heap-allocated "char *". In the
+	earlier case we were erroneously returning a pointer to local
+	array. This was a change I made a couple of days back to deal with
+	the fact that object keys are octet arrays and are not null
+	terminated. Now we take the object key and make a NULL terminated
+	copy in a heap allocated string. It is the caller's responsibility
+	to free this.
+
+	* tao/tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Used string_free to
+	free the string returned by _get_name.
+
+	* tao/tests/Thruput/client.cpp: _narrow now uses the additional
+	env parameter.
+
 Wed Nov 12 09:22:47 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/tao_internals.cpp (open_services): added ACE_UNUSED_ARGs
