@@ -1,6 +1,37 @@
+Mon Jun  3 16:11:12 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/FileCharStream.cpp:
+
+          Fixed a memory leak.
+
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/HttpCharStream.h:
+        * ACEXML/common/Makefile:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/Mem_Map_Stream.h:
+        * ACEXML/common/URL_Addr.cpp:
+        * ACEXML/common/URL_Addr.h:
+
+          Functionality needed by the parser to fetch URI's (DTDs etc)
+          from the web. This is a simple http_get implementation and
+          doesn't work for https URLs (which can be fixed easily provided
+          there is interest).
+
+        * ACEXML/common/Parser.cpp:
+
+          Fixed a typo.
+
+        * ACEXML/tests/HttpCharStream_Test.cpp:
+        * ACEXML/tests/Makefile:
+
+          New regression test to test fetching of URI's from the web by
+          the parser.
+
+
 Mon Jun  3 06:21:57 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Removed 
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Removed
 	  unnecessary 'return;' calls.
 
 Mon Jun  3 07:23:56 UTC 2002  Don Hinton  <dhinton@ieee.org>
@@ -29,7 +60,7 @@ Sun Jun  2 15:34:41 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	* ace/DLL_Manager.{h,cpp}:
 	* ace/Framework_Component.cpp:
 
-	  Changed ACE_DLL_Manager to use ACE_Unmanaged_Singleton so that it can be 
+	  Changed ACE_DLL_Manager to use ACE_Unmanaged_Singleton so that it can be
 	  explicitely closed by ACE_Framework_Repository after ACE_Service_Config
 	  is closed.  Improved error messages.  Thanks to Steve Huston for finding
 	  this.
@@ -73,7 +104,7 @@ Fri May 31 13:35:41 2002  Steve Huston  <shuston@riverace.com>
 
 Fri May 31 11:07:25 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Modified this 
+	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Modified this
 	  so use pointers rather than references to simplify things in
 	  the book.
 
@@ -104,10 +135,10 @@ Thu May 30 16:45:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	instead.
 
 Thu May 30 9:15:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-  
+
         Thanks to Edan Ayal <edanayal@yahoo.com> and Alex Libman
 	<AlexL@rumblegroup.com> for the following fixes.
-  
+
         * ACE_WIN32_Asynch_Read_Stream_Result::complete ()
 	  ACE_WIN32_Asynch_Write_Stream_Result::complete ()
  	  ACE_WIN32_Asynch_Write_Dgram_Result::complete
@@ -122,14 +153,14 @@ Thu May 30 9:15:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  ACE_WIN32_Asynch_Read_File::read ()
 	  ACE_POSIX_Asynch_Read_Stream::read ()
 	  ACE_POSIX_Asynch_Read_File::read ()
-	  Added check for enough space in message block 
+	  Added check for enough space in message block
 	  bytes_to_read <= mb->space()
 
 	* ACE_WIN32_Asynch_Write_Stream::write ()
 	  ACE_WIN32_Asynch_Write_File::write ()
 	  ACE_POSIX_Asynch_Write_Stream::write ()
 	  ACE_POSIX_Asynch_Write_File::write ()
-	  Added check for correct length of message block 
+	  Added check for correct length of message block
 	  bytes_to_write <= mb->length()
 
 	* ACE_WIN32_Asynch_Read_Stream::readv ()
@@ -145,8 +176,8 @@ Thu May 30 9:15:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  blocks improved readability and logic
 
 Thu May 30 08:48:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-  
-	* ace/Configuration_Import_Export.cpp (squish): 
+
+	* ace/Configuration_Import_Export.cpp (squish):
 	  Replaced (*cp == ' ') || (*cp == '\t') || (*cp == '\n') || (*cp
  	  == '\r')) with isspace (*cp).  Thanks to Gonzalo A. Diethelm
  	  <gonzalo.diethelm@aditiva.com> and Dave Steele
@@ -154,14 +185,14 @@ Thu May 30 08:48:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Thu May 30 11:53:05 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/DLL_Manager.cpp:  Fixed Fuzz errors.  Thanks to Johnny 
+	* ace/DLL_Manager.cpp:  Fixed Fuzz errors.  Thanks to Johnny
 	  Willemsen for pointing this out.
 
 Thu May 30 11:40:45 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_DLL.bor:
 
-	  Fixed cut-n-paste error that caused the symbols not to be 
+	  Fixed cut-n-paste error that caused the symbols not to be
 	  exported.  Should fix the Borland builds.
 
 Thu May 30 10:18:27 UTC 2002  Don Hinton  <dhinton@ieee.org>
@@ -172,29 +203,29 @@ Thu May 30 10:18:27 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Framework_Component_DLL.cpp:
 
-	  Added ACE_DLL_UNLOAD_POLICY declaration specifying LAZY unloading.  
-	  Changed an errant ACE_LIB_TEXT macro to ACE_TEXT. 
+	  Added ACE_DLL_UNLOAD_POLICY declaration specifying LAZY unloading.
+	  Changed an errant ACE_LIB_TEXT macro to ACE_TEXT.
 
 	* ace/config-all.h:
 
 	  Added the dll unloading policies mentioned below as well as an
 	  ACE_DLL_UNLOAD_POLICY macro dlls can use to set/export their own
-	  policy.  If no policy is exported, the current per-process policy 
+	  policy.  If no policy is exported, the current per-process policy
 	  is used.
 
 	* ace/DLL_Manager.{h,cpp}:
 
 	  Renamed unload_strategy to unload_policy and moved the policy
-	  definitions to config-all.h so that they can be used without 
-	  including DLL_Manager.h (which includes OS.h, etc...). 
+	  definitions to config-all.h so that they can be used without
+	  including DLL_Manager.h (which includes OS.h, etc...).
 
 	  Refactored the unloading policies and implemented the per-dll
 	  case by probing the dll for a "_get_dll_unload_policy" function
-	  that returns the dll specific policy--if the dll chose to 
+	  that returns the dll specific policy--if the dll chose to
 	  implement it.
 
 	  Added missing template instantiations.
-	
+
 	* ace/DLL.{h,cpp} (symbol):
 	* ace/DLL_Manager.{h,cpp} (symbol):
 

@@ -27,7 +27,7 @@ ACEXML_FileCharStream::~ACEXML_FileCharStream (void)
 int
 ACEXML_FileCharStream::open (const ACEXML_Char *name)
 {
-  delete this->filename_;
+  delete[] this->filename_;
   this->filename_ = 0;
 
   this->infile_ = ACE_OS::fopen (name, ACE_LIB_TEXT ("r"));
