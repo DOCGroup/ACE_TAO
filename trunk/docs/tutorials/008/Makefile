@@ -22,6 +22,7 @@ include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
@@ -30,7 +31,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 Indent : #
 	for i in $(SRC) $(HDR) ; do \
-		indent -npsl -l80 -fca -fc1 -cli0 -cdb < $$i | \
+		indent -npsl -bli0 -l80 -fca -fc1 -cli0 -cdb < $$i | \
 			sed -e 's/: :/::/g'  \
 			    -e 's/^.*\(public:\)/\1/' \
 			    -e 's/^.*\(protected:\)/\1/' \
