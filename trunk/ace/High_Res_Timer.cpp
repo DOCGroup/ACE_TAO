@@ -289,7 +289,7 @@ void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
   // Same as above.
-  nanoseconds = this->total_ * (1000u / this->global_scale_factor ());
+  nanoseconds = this->total_ / this->global_scale_factor () * 1000u;
 }
 
 #if !defined (ACE_HAS_WINCE)
