@@ -159,6 +159,23 @@ Syntax Tree
 [IDEA]: Use interface repository model as a base for Syntax Tree hierarchy.
 
 
+Common Syntax Tree traversal Design Ideas/Decision
+--------------------------------------------------
+
+[IDEA] If we specify Syntax Tree traversal facility then we will be able
+       to specify (or even plug dynamically) Syntax Tree traversal agents
+       that may not only generate something but also annotate or modify 
+       Syntax Tree. We are already using this technique for a number of
+       features (e.g. AMI, IDL3 extension, what else?) but all these agents
+       are hardwired inside TAO IDLC. If we have this facility then we will
+       be able to produce modular and highly extensible design. Notes:
+
+       - Some traversal agents can change Syntax Tree so that it will be
+         unusable by some later traversal agents. So maybe the more 
+         generic approach would be to produce new Syntax Tree?
+
+[IDEA] Need a generic name for "Syntax Tree Traversal Agents". What about
+       "Syntax Tree Traverser"?
 
 
 Executor Mapping Generator
