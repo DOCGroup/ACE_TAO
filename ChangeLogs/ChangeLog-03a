@@ -1,3 +1,14 @@
+Tue Oct 24 13:54:49 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile (TEMPLATE_FILES):
+
+	  Added missing Test_and_Set source file to the list.
+
+	* ace/Makefile.am (libACE_Utils_la_SOURCES, HEADER_FILES,
+	  INLINE_FILES, TEMPLATE_FILES):
+
+	  Updated these lists of sources with the newly added sources.
+
 Tue Oct 24 12:05:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/OS_String.inl:
