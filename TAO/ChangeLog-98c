@@ -1,3 +1,9 @@
+Thu Oct 15 13:22:39 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO/tests/Param_Test/param_test_i.cpp:
+          Added a Param_Test:: qualifier to declaration of
+          PathSpec_var rPathSpec - got rid of a compile error. 
+
 Thu Oct 15 10:49:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.27 released.
