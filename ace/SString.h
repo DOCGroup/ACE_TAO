@@ -40,7 +40,9 @@ class ACE_Export ACE_CString
   //   constructed from or assigned an empty string (with first
   //   element of '\0'), then it is _not_ allocated new space.
   //   Instead, its internal representation is set equal to a global
-  //   empty string.
+  //   empty string.  CAUTION: in cases when ACE_CString is
+  //   constructed from provided buffer with release parameter set to 0, ACE_CString
+  //   is not guaranteed to be '\0' terminated.
 public:
   static const int npos;
   // No position constant

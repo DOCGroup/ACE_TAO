@@ -14,9 +14,6 @@ ACE_CString::ACE_CString (ACE_Allocator *alloc)
     release_ (0)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
-
-  //@@ Is this needed here?
-  this->set (0, 0, 0);
 }
 
 // Constructor that actually copies memory.
@@ -238,8 +235,25 @@ ACE_CString::compare (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::compare");
 
-  // @@Is this correct? (i.e. for the case when they are of unequal length)
-  return ACE_OS::strncmp (this->rep_, s.rep_, this->len_);
+  // We can't just pass both strings to strcmp, since they are not
+  // guaranteed to be null-terminated.
+
+  // Pick smaller of the two lengths and perform the comparison.
+  int smaller_length = (this->len_ < s.len_) ? this->len_ : s.len_;
+  int result = ACE_OS::strncmp (this->rep_,
+                                s.rep_,
+                                smaller_length);
+
+  if (result != 0 || s.len_ == this->len_)
+    return result;
+
+  else
+    // we need to differentiate based on length
+    if (this->len_ > s.len_)
+      return (this->rep_[smaller_length] - '\0');
+
+    else
+      return ('\0' - s.rep_[smaller_length]);
 }
 
 ACE_INLINE int
