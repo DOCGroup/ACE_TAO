@@ -4,20 +4,20 @@
 // Service_Object.i
 
 ACE_INLINE ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *so)
-  : service_object_ (so) 
+  : service_object_ (so)
 {
 }
 
-ACE_INLINE ACE_Service_Object_Ptr::~ACE_Service_Object_Ptr (void) 
-{ 
+ACE_INLINE ACE_Service_Object_Ptr::~ACE_Service_Object_Ptr (void)
+{
   this->service_object_->fini ();
   delete this->service_object_;
 }
 
 ACE_INLINE ACE_Service_Object *
-ACE_Service_Object_Ptr::operator-> () 
-{ 
-  return this->service_object_; 
+ACE_Service_Object_Ptr::operator-> ()
+{
+  return this->service_object_;
 }
 
 ACE_INLINE const ASYS_TCHAR *
@@ -51,7 +51,7 @@ ACE_Service_Type::handle (void) const
   return this->handle_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Service_Type::name (const ASYS_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
@@ -64,7 +64,7 @@ ACE_Service_Type::name (const ASYS_TCHAR *n)
 #endif /* !ACE_HAS_MOSTLY_UNICODE_APIS */
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Service_Type::type (const ACE_Service_Type_Impl *o, int enabled)
 {
   ACE_TRACE ("ACE_Service_Type::type");
@@ -72,14 +72,14 @@ ACE_Service_Type::type (const ACE_Service_Type_Impl *o, int enabled)
   ((ACE_Service_Type *) this)->active_ = enabled;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Service_Type::handle (const ACE_SHLIB_HANDLE h)
 {
   ACE_TRACE ("ACE_Service_Type::handle");
   this->handle_ = h;
 }
 
-ACE_INLINE int  
+ACE_INLINE int
 ACE_Service_Type::active (void) const
 {
   ACE_TRACE ("ACE_Service_Type::active");
@@ -91,4 +91,11 @@ ACE_Service_Type::active (int turnon)
 {
   ACE_TRACE ("ACE_Service_Type::active");
   this->active_ = turnon;
+}
+
+ACE_INLINE int
+ACE_Service_Type::fini_called (void) const
+{
+  ACE_TRACE ("ACE_Service_TYpe::fini_called");
+  return this->fini_already_called_;
 }
