@@ -50,6 +50,7 @@ public:
 private:
   TARGET *target_;
 
+  // g++ 2.7.2.3 on Solaris needs this copy constructor declaration:
   ACE_UNIMPLEMENTED_FUNC (ACE_PushConsumer_Adapter (const ACE_PushConsumer_Adapter &))
 };
 
@@ -73,6 +74,7 @@ public:
 private:
   TARGET *target_;
 
+  // g++ 2.7.2.3 on Solaris needs this copy constructor declaration:
   ACE_UNIMPLEMENTED_FUNC (ACE_PushSupplier_Adapter (const ACE_PushSupplier_Adapter &))
 };
 
