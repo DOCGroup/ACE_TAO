@@ -1,3 +1,10 @@
+Thu Jun 03 00:30:00 Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* ace/RW_Process_Mutex.h (ACE_RW_Process_Mutex): 
+	* ace/RW_Process_Mutex.cpp (ACE_RW_Process_Mutex): 
+	Appended file mode to mutex constructor to solve the difficulties 
+	reported by "Bae-Sik Chon" <baesikchon@yahoo.com>
+
 Wed Jun  2 07:30:56 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_Thread.cpp:

@@ -22,13 +22,9 @@ ACE_RW_Process_Mutex::unique_name (void)
 }
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (const ACE_TCHAR *name,
-                                            int flags)
-  : lock_ (name ? name : this->unique_name (), flags
-#if defined (ACE_WIN32)
-           , ACE_DEFAULT_OPEN_PERMS)
-#else
-           , S_IRUSR | S_IWUSR)
-#endif /* ACE_WIN32 */
+                                            int flags,
+	                                        mode_t mode )
+  : lock_ (name ? name : this->unique_name (), flags, mode)
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }
