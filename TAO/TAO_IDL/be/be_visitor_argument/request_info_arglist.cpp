@@ -48,6 +48,7 @@ int be_visitor_args_request_info_arglist::visit_argument (be_argument *node)
 
   // retrieve the type
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -302,35 +303,25 @@ int be_visitor_args_request_info_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->width () == (long) sizeof (char))
+  switch (this->direction ())
     {
-      switch (this->direction ())
+    case AST_Argument::dir_IN:
+      *os << "const " << this->type_name (node);
+      break;
+    case AST_Argument::dir_INOUT:
+      *os << this->type_name (node) << "&";
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->width () == (long) sizeof (char))
         {
-        case AST_Argument::dir_IN:
-          *os << "const char *";
-          break;
-        case AST_Argument::dir_INOUT:
-          *os << "char *&";
-          break;
-        case AST_Argument::dir_OUT:
-          *os << "CORBA::String_out";
-          break;
+          *os << "CORBA::String_out ";
         }
-    }
-  else
-    {
-      switch (this->direction ())
+      else
         {
-        case AST_Argument::dir_IN:
-          *os << "const CORBA::WChar *";
-          break;
-        case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *&";
-          break;
-        case AST_Argument::dir_OUT:
-          *os << "CORBA::WString_out";
-          break;
+          *os << "CORBA::WString_out ";
         }
+
+      break;
     }
 
   return 0;

@@ -58,7 +58,7 @@ public:
 
   // = Load_Balancer::Object_Group_Factory idl methods.
 
-  Load_Balancer::Object_Group_ptr make_round_robin (const char * id
+  Load_Balancer::Object_Group_ptr make_round_robin (const Load_Balancer::Group_ID id
                                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group));
@@ -68,7 +68,7 @@ public:
   // factory, and hasn't been destroyed, a <duplicate_group>
   // exception is thrown.
 
-  Load_Balancer::Object_Group_ptr make_random (const char * id
+  Load_Balancer::Object_Group_ptr make_random (const Load_Balancer::Group_ID id
                                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group));
@@ -78,7 +78,7 @@ public:
   // factory, and hasn't been destroyed, a <duplicate_group>
   // exception is thrown.
 
-  Load_Balancer::Object_Group_ptr resolve (const char * id
+  Load_Balancer::Object_Group_ptr resolve (const Load_Balancer::Group_ID id
                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_group));
@@ -115,7 +115,7 @@ private:
   // = Helper methods.
 
   Load_Balancer::Object_Group_ptr make_group (int random,
-                                              const char * id
+                                              const Load_Balancer::Group_ID id
                                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::duplicate_group));
@@ -183,7 +183,7 @@ public:
   // group already contains a member with the same <Member_ID>, a
   // <duplicate_member> exceptions is thrown.
 
-  void unbind (const char * id
+  void unbind (const Load_Balancer::Member_ID id
                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_member));
@@ -199,7 +199,7 @@ public:
   // ``round robin.''  If the group contains no members, <no_such_member>
   // exception is thrown.
 
-  CORBA::Object_ptr resolve_with_id (const char * id
+  CORBA::Object_ptr resolve_with_id (const Load_Balancer::Member_ID id
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_member));
@@ -294,7 +294,7 @@ public:
   ~RR_Object_Group (void);
   // Destructor.
 
-  void unbind (const char * id
+  void unbind (const Load_Balancer::Member_ID id
                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Load_Balancer::no_such_member));

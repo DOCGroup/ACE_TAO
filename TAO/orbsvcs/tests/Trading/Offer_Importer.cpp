@@ -83,7 +83,9 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       CosTrading::Link::LinkInfo_var link_info =
-        link_if->describe_link (link_name_seq[0u] ACE_ENV_ARG_PARAMETER);
+        link_if->describe_link (ACE_const_cast (const CosTrading::LinkName,
+                                                link_name_seq[0u].in ())
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CosTrading::Lookup_ptr lookup_if = link_info->target.in ();
@@ -181,9 +183,12 @@ perform_queries_with_policies (const TAO_Policy_Creator& policies
           CosTrading::OfferIterator_out offer_iterator_out (offer_iterator_ptr);
           CosTrading::PolicyNameSeq_out limits_applied_out (limits_applied_ptr);
 
-          this->lookup_->query (TT_Info::QUERIES[i][0],
-                                TT_Info::QUERIES[i][1],
-                                TT_Info::QUERIES[i][2],
+          this->lookup_->query (ACE_const_cast (const CosTrading::ServiceTypeName,
+                                                TT_Info::QUERIES[i][0]),
+                                ACE_const_cast (const CosTrading::Constraint,
+                                                TT_Info::QUERIES[i][1]),
+                                ACE_const_cast (const CosTrading::Lookup::Preference,
+                                                TT_Info::QUERIES[i][2]),
                                 policies.policy_seq (),
                                 desired_props,
                                 8,

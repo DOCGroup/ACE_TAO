@@ -203,8 +203,13 @@ int
 be_visitor_operation_interceptors_info_rettype::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = this->ctx_->alias ();
 
-  if (node->width () == (long) sizeof (char))
+  if (bt != 0)
+    {
+      *os << bt->name ();
+    }
+  else if (node->width () == (long) sizeof (char))
     {
       *os << "char *";
     }

@@ -382,7 +382,7 @@ int be_visitor_exception_ctor::visit_sequence (be_sequence *node)
 
 int be_visitor_exception_ctor::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->width () == (long) sizeof (char))
     {
