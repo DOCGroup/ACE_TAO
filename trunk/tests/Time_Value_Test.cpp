@@ -108,15 +108,18 @@ test_ace_u_longlong (void)
   // The hi part of ull6 will be lost in the following, because
   // the quotient has only 32 bits.
   errors += check_ace_u_longlong ("ull6 / 1",
-                                  (ACE_U_LongLong) (ull6 / 1),
+                                  (ACE_U_LongLong) (ull6 / 1u),
                                   0, 0x20);
 
   // There's apparently a small loss in precision in
   // ACE_U_LongLong::operator/.  It calculates
   // ull6 / 0xd0000 as 0x13b013b4 instead of 0x13b04ec4.
   errors += check_ace_u_longlong ("ull6 / 0x10000 / 0xd",
-                                  (ACE_U_LongLong) (ull6 / 0x10000 / 0xd),
+                                  (ACE_U_LongLong) (ull6 / 0x10000u / 0xd),
                                   0, 0x13b04ec4);
+
+  ACE_OS::fprintf (stderr, "%lx\n",
+                   (0xffffffffu - 0xd0000 + 1) / 0xd0000 * 0xfff4  +  0xfff4  +  0x20 / 0xd0000 + ((0xffffffffu - 0xd0000 + 1) % 0xd0000 * 0));
 
   errors += check_ace_u_longlong ("ull6 % 5",
                                   (ACE_U_LongLong) (ull6 % 5),
