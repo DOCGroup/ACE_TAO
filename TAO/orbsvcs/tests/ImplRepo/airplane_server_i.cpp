@@ -3,15 +3,15 @@
 #include "airplane_server_i.h"
 
 #include "tao/IORTable/IORTable.h"
-#include "tao/ImR_Client/ImR_Client_Adapter_Impl.h"
+#include "tao/ImR_Client/ImR_Client.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (ImplRepo, 
-           airplane_server_i, 
+ACE_RCSID (ImplRepo,
+           airplane_server_i,
            "$Id$")
 
 // The server name of the Aiprlane Server
