@@ -1,3 +1,14 @@
+Thu Sep 27 17:12:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/File_IO/client.cpp: 
+	* tests/File_IO/server.cpp: scaled this program down as it was
+	  creating problems  with our daily builds on many
+	  platforms. Retained the essence of the prgoram though. We now run
+	  only 2 threads on the server end 4 threads on the client
+	  end. We now request only 128 K of data (ie. twice the normal
+	  socket buffer size). Hopefully this will go well on all
+	  platforms. 
+
 Thu Sep 27 16:23:34 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Smart_Proxies/SmartProxies_Static.dsp:
