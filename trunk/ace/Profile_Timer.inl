@@ -8,6 +8,9 @@
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
 #  if defined (ACE_HAS_PRUSAGE_T)
+
+#    include "ace/OS_NS_stropts.h"
+
 ACE_INLINE int
 ACE_Profile_Timer::start (void)
 {
