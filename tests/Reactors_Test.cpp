@@ -112,7 +112,7 @@ Test_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) svc\n"));
 
-  for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_OS::thr_yield ();
 

@@ -103,71 +103,71 @@ Worker_Task::svc (void)
       // contents (i.e., the Data_Block portion), it just makes a copy
       // of the header and reference counts the data.
       if (this->next () != 0)
-	ACE_ASSERT (this->put_next (mb->duplicate ()) != -1);
+        ACE_ASSERT (this->put_next (mb->duplicate ()) != -1);
 
       // If there's no next() Task to send to, then we'll consume the
       // message here.
       else if (length > 0)
-	{
-	  int current_count = ACE_OS::atoi (mb->rd_ptr ());
-	  int i;
+        {
+          int current_count = ACE_OS::atoi (mb->rd_ptr ());
+          int i;
 
-	  ACE_ASSERT (count == current_count);
+          ACE_ASSERT (count == current_count);
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing %d duplicates\n",
-		      current_count));
+          ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing %d duplicates\n",
+                      current_count));
 
-	  ACE_Message_Block *dup;
+          ACE_Message_Block *dup;
 
-	  // Enqueue <current_count> duplicates with msg_priority == 1.
-	  for (i = current_count; i > 0; i--)
-	    {
-	      ACE_ALLOCATOR_RETURN (dup, mb->duplicate (), -1);
-	      // Set the priority to be greater than "normal"
-	      // messages.  Therefore, all of these messages should go
-	      // to the "front" of the queue, i.e., ahead of all the
-	      // other messages that are being enqueued by other
-	      // threads.
-	      dup->msg_priority (1);
+          // Enqueue <current_count> duplicates with msg_priority == 1.
+          for (i = current_count; i > 0; i--)
+            {
+              ACE_ALLOCATOR_RETURN (dup, mb->duplicate (), -1);
+              // Set the priority to be greater than "normal"
+              // messages.  Therefore, all of these messages should go
+              // to the "front" of the queue, i.e., ahead of all the
+              // other messages that are being enqueued by other
+              // threads.
+              dup->msg_priority (1);
 
-	      ACE_ASSERT (this->msg_queue ()->enqueue_prio
-			  (dup,
-			   // Don't block indefinitely if we flow control...
-			   (ACE_Time_Value *) &ACE_Time_Value::zero) != -1);
-	    }
+              ACE_ASSERT (this->msg_queue ()->enqueue_prio
+                          (dup,
+                           // Don't block indefinitely if we flow control...
+                           (ACE_Time_Value *) &ACE_Time_Value::zero) != -1);
+            }
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) dequeueing %d duplicates\n",
-		      current_count));
+          ACE_DEBUG ((LM_DEBUG, "(%t) dequeueing %d duplicates\n",
+                      current_count));
 
-	  // Dequeue the same <current_count> duplicates.
-	  for (i = current_count; i > 0; i--)
-	    {
-	      ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
-	      ACE_ASSERT (count == ACE_OS::atoi (dup->rd_ptr ()));
-	      ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
-	      ACE_ASSERT (dup->msg_priority () == 1);
-	      dup->release ();
-	    }
+          // Dequeue the same <current_count> duplicates.
+          for (i = current_count; i > 0; i--)
+            {
+              ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
+              ACE_ASSERT (count == ACE_OS::atoi (dup->rd_ptr ()));
+              ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
+              ACE_ASSERT (dup->msg_priority () == 1);
+              dup->release ();
+            }
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n",
-		      count,
-		      length,
-		      mb->msg_priority (),
-		      length - 2, // remove the trailing "\n\0"
-		      mb->rd_ptr ()));
-	}
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n",
+                      count,
+                      length,
+                      mb->msg_priority (),
+                      length - 2, // remove the trailing "\n\0"
+                      mb->rd_ptr ()));
+        }
 
       // We're responsible for deallocating this.
       mb->release ();
 
       if (length == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%t) in iteration %d, queue len = %d, got NULL message, exiting\n",
-		      count, this->msg_queue ()->message_count ()));
-	  break;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) in iteration %d, queue len = %d, got NULL message, exiting\n",
+                      count, this->msg_queue ()->message_count ()));
+          break;
+        }
     }
 
   // Note that the ACE_Task::svc_run () method automatically removes
@@ -184,7 +184,7 @@ Worker_Task::Worker_Task (void)
 
 static int
 produce (Worker_Task &worker_task,
-	 ACE_Allocator *alloc_strategy)
+         ACE_Allocator *alloc_strategy)
 {
   ACE_Message_Block *mb;
 
@@ -198,33 +198,33 @@ produce (Worker_Task &worker_task,
 
       // Allocate a new message.
       ACE_NEW_RETURN (mb,
-		      ACE_Message_Block (n, // size
-					 ACE_Message_Block::MB_DATA, // type
-					 0, // cont
-					 0, // data
-					 alloc_strategy, // allocator
-					 &lock_adapter_, // locking strategy
-					 0), // priority
-		      -1);
+                      ACE_Message_Block (n, // size
+                                         ACE_Message_Block::MB_DATA, // type
+                                         0, // cont
+                                         0, // data
+                                         alloc_strategy, // allocator
+                                         &lock_adapter_, // locking strategy
+                                         0), // priority
+                      -1);
 
       // Copy buf into the Message_Block and update the wr_ptr ().
       mb->copy (buf, n);
 
       // Pass the message to the Worker_Task.
       if (worker_task.put (mb,
-			   // Don't block indefinitely if we flow control...
-			   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-	ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+                           // Don't block indefinitely if we flow control...
+                           (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+        ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
     }
 
   // Send a shutdown message to the waiting threads and exit.
   ACE_DEBUG ((LM_DEBUG,
-	      "\n(%t) sending shutdown message\n"));
+              "\n(%t) sending shutdown message\n"));
 
   ACE_NEW_RETURN (mb,
-		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
-				     0, 0, alloc_strategy, &lock_adapter_),
-		  -1);
+                  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
+                                     0, 0, alloc_strategy, &lock_adapter_),
+                  -1);
 
   if (worker_task.put (mb) == -1)
     ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
@@ -288,15 +288,15 @@ main (int, char *[])
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) Start Message_Block_Test using %s allocation strategy\n",
-		  alloc_struct[i].name_));
+                  "(%t) Start Message_Block_Test using %s allocation strategy\n",
+                  alloc_struct[i].name_));
 
       // Create the worker tasks.
       Worker_Task worker_task[ACE_MAX_THREADS] ;
 
       // Link all the tasks together into a simple pipeline.
-      for (int j = 1; j < ACE_MAX_THREADS; j++)
-	worker_task[j - 1].next (&worker_task[j]);
+      for (size_t j = 1; j < ACE_MAX_THREADS; j++)
+        worker_task[j - 1].next (&worker_task[j]);
 
       ptime.start ();
       // Generate messages and pass them through the pipeline.
@@ -305,20 +305,20 @@ main (int, char *[])
       // Wait for all the threads to reach their exit point.
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) waiting for worker tasks to finish...\n"));
+                  "(%t) waiting for worker tasks to finish...\n"));
 
       ACE_Thread_Manager::instance ()->wait ();
       ptime.stop ();
       ptime.elapsed_time (alloc_struct[i].et_);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "(%t) destroying worker tasks\n"));
+                  "(%t) destroying worker tasks\n"));
     }
 
   for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
     ACE_DEBUG ((LM_DEBUG,
-		"Elapsed time using %s allocation strategy: %f sec\n",
-		alloc_struct[i].name_, alloc_struct[i].et_.real_time));
+                "Elapsed time using %s allocation strategy: %f sec\n",
+                alloc_struct[i].name_, alloc_struct[i].et_.real_time));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Exiting...\n"));
 #else
@@ -327,4 +327,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
