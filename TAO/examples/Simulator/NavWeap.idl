@@ -14,7 +14,7 @@
 //     Chris Gill <cdgill@cs.wustl.edu>
 // ========================================================================================================= 
 
-#include "CosTimeBase.idl"
+#include "TimeBase.idl"
 
 struct Navigation {
 	long position_latitude;
