@@ -25,6 +25,7 @@ BIN =   Aio_Platform_Test \
         Collection_Test \
 	Config_Test \
         Conn_Test \
+	Dirent_Test \
         DLList_Test \
         DLL_Test\
         Enum_Interfaces_Test \
