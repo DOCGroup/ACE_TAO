@@ -203,10 +203,12 @@ Options::init (int argc, ACE_TCHAR *argv[])
         }
     }
 
+#if defined (ACE_WIN32)
   // Load any arguments from the registry
 
   if (this->load_registry_options (orb_args) != 0)
     return -1;
+#endif /* ACE_WIN32 */
 
   // Make another pass to catch any ImR arguments that may be in the
   // registry
