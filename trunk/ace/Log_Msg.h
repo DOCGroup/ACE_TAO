@@ -116,7 +116,7 @@ class ACE_Export ACE_Log_Msg_Callback
   //     Your log() routine is called with an instance of
   //     ACE_Log_Record.  From this class, you can get the log
   //     message, the verbose log message, message type, message
-  //     priority, and so on. 
+  //     priority, and so on.
   //
   //     Remember that there is one Log_Msg object per thread.
   //     Therefore, you may need to register your callback object with
@@ -184,7 +184,7 @@ public:
   static void disable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);
   // Clears the flag from the default priority mask used to
   // initialize ACE_Log_Msg instances.
- 
+
   static void enable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);
   // Sets the flag in the default priority mask used to initialize
   // ACE_Log_Msg instances.
@@ -321,10 +321,16 @@ public:
   void start_tracing (void);
   int  tracing_enabled (void);
 
+  typedef enum
+  {
+          THREAD,
+          PROCESS
+  } MASK_TYPE;
+
   // = Get/set the priority mask.
-  u_long priority_mask (void);
+  u_long priority_mask (MASK_TYPE = THREAD);
   // Get the current <ACE_Log_Priority> mask.
-  u_long priority_mask (u_long);
+  u_long priority_mask (u_long, MASK_TYPE = THREAD);
   // Set the <ACE_Log_Priority> mask, returns original mask.
 
   int log_priority_enabled (ACE_Log_Priority log_priority);
@@ -451,13 +457,18 @@ private:
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   u_long priority_mask_;
-  // Keeps track of all the <ACE_Log_Priority> values that are
-  // currently enabled.  Default is for all logging priorities to be
-  // enabled.
+  // Keeps track of all the per-thread <ACE_Log_Priority> values that
+  // are currently enabled.  Default is for all logging priorities to
+  // be enabled.
 
   // = The following fields are *not* kept in thread-specific storage.
 
   // We only want one instance for the entire process!
+
+  static u_long process_priority_mask_;
+  // Keeps track of all the per-process <ACE_Log_Priority> values that
+  // are currently enabled.  Default is for all logging priorities to
+  // be enabled.
 
   static const ASYS_TCHAR *program_name_;
   // Records the program name.
