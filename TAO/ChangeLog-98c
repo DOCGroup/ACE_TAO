@@ -1,3 +1,11 @@
+Wed Dec 02 18:33:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Exception (completed): The name of the function (both
+ 	  accessor and modifier) should be completed(), not completion().
+
+	  Thanks to Steve Totten <totten_s@ociweb.com> for pointing this
+ 	  out.
+
 Wed Dec  2 17:40:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
 	* performance-tests/Thruput/TAO/ttcp_decl.h: forgot to add this
