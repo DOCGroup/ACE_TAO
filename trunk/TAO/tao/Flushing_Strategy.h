@@ -12,14 +12,16 @@
 
 #ifndef TAO_FLUSHING_STRATEGY_H
 #define TAO_FLUSHING_STRATEGY_H
+
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Time_Value;
 class TAO_Transport;
 class TAO_Queued_Message;
 
@@ -66,4 +68,5 @@ public:
 };
 
 #include "ace/post.h"
+
 #endif  /* TAO_FLUSHING_STRATEGY_H */
