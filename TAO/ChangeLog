@@ -1,3 +1,9 @@
+Thu Jan 20 16:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+          Updated debug messages so that we use the same formatting throughtout
+          TAO
+
 Thu Jan 20 06:42:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
