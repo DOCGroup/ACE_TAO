@@ -1,3 +1,9 @@
+Mon Jan 11 12:37:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Dereferenced the _var pointers in the following.
+	* orbsvcs/Time_Service/Server_i.cpp (init_IR):
+	* orbsvcs/Time_Service/Server_i.cpp (create_server):
+
 Mon Jan 11 02:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h (TAO_THROW_ENV_RETURN): Forgot to removed
