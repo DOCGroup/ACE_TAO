@@ -92,8 +92,7 @@ public:
    */
   virtual TAO_Transport* connect (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface *desc,
-                                  ACE_Time_Value *timeout,
-                                  bool block = true
+                                  ACE_Time_Value *timeout
                                   ACE_ENV_ARG_DECL);
 
   /// Create a profile for this protocol and initialize it based on the
@@ -118,8 +117,7 @@ protected:
 
   virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
                                           TAO_Transport_Descriptor_Interface &desc,
-                                          ACE_Time_Value *timeout,
-                                          bool block = true) = 0;
+                                          ACE_Time_Value *timeout) = 0;
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);

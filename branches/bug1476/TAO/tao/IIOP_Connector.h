@@ -89,8 +89,7 @@ protected:
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0,
-                                  bool block = true);
+                                  ACE_Time_Value *timeout = 0);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h

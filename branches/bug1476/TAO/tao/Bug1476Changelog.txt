@@ -1,3 +1,20 @@
+Thu Jul  1 12:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connector.{h,cpp}:
+          Removed the block argument from the make_connection and connect
+          method again, if we should get a connected transport or not can be
+          retrieved from the ProfileTransportResolver
+
+        * tao/Transport_Connector.cpp:
+          In case we get a transport from the cache that is not connected,
+          call wait with zero time. We have to add more functionality here
+          to handle the closing of that transport, and check the
+          implementation what we do when we can't register the wait strategy
+          with the reactor
+
+        * tao/IIOP_Connector.{h,cpp}:
+          Added better handling of blocking or non-blocking connects.
+
 Thu Jul  1 10:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,inl}:

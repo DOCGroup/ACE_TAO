@@ -8,6 +8,8 @@
 #include "debug.h"
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
+#include "Wait_Strategy.h"
+#include "Connection_Handler.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -213,8 +215,7 @@ TAO_Connector::make_mprofile (const char *string,
 TAO_Transport*
 TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         TAO_Transport_Descriptor_Interface *desc,
-                        ACE_Time_Value *timeout,
-                        bool block
+                        ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   if ((this->set_validate_endpoint (desc->endpoint ()) == -1) || desc == 0)
@@ -240,41 +241,69 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                       base_transport->id ()));
         }
 
+      // If we get a transport that is connected we can just use that, if not
+      // not, we must see if it is maybe now connected, in case of an
+      // intermediate close we have to remove that transport from the cache
+      // and try to create a new one
+      if (base_transport->is_connected())
+        {
+          // No need to _duplicate since things are taken care within the
+          // cache manager.
+          return base_transport;
+        }
+      else
+        {
 // todo block
-      if (!base_transport->is_connected())
-      {
-        // We have a tranport that is not connected, we have to do something
-        // here
-		  this->active_connect_strategy_->wait(base_transport->connection_handler(), 0);
+          // We have a transport that is not connected, just do a wait of zero
+          // time to see if it is maybe now connected
+          // here
+          ACE_Time_Value zero(ACE_Time_Value::zero);
+          int result = this->active_connect_strategy_->wait(base_transport->connection_handler(),
+                                                            &zero);
+
+          if (result == -1) // todo, check also for closure
+            {
+
+
+            }
+          else
+            {
+              // If the wait strategy wants us to be registered with the reactor
+              // then we do so. If registeration is required and it succeeds,
+              // #REFCOUNT# becomes two.
+              result = base_transport->wait_strategy ()->register_handler ();
+
+              // Registration failures.
+              if (result != 0)
+                {
+                  // Purge from the connection cache.
+                  base_transport->purge_entry ();
+
+// is this right, see iiop_connector
+                  // Close the handler.
+                  base_transport->connection_handler()->close_connection ();
+
+                  if (TAO_debug_level > 0)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  "TAO (%P|%t) - TAO_Connector::connect, "
+                                  "could not register the connected connection in the reactor, get a new one\n"));
+                    }
+                }
+            }
 // todo
 // what now then thsi is closed, then we should close it, zap it from the cache and make
 		  // a new connection
-
       }
-
-      // No need to _duplicate since things are taken care within the
-      // cache manager.
-      return base_transport;
     }
 
   // @@TODO: This is not the right place for this!
   // Purge connections (if necessary)
   this->orb_core_->lane_resources ().transport_cache ().purge ();
 
-// todo pass block
-//  bool block = true;
-  TAO_Transport* transport = 0;
-  transport = this->make_connection (r,
-                                     *desc,
-                                     timeout,
-                                     block);
-      if (transport == 0 && !block)
-      {
-        // We didn't wait until the connection was ready, and we have now a
-        // transport
-      }
-
-   return transport;
+  return this->make_connection (r,
+                                *desc,
+                                timeout);
 }
 
 

@@ -6,6 +6,7 @@
 #include "Protocols_Hooks.h"
 #include "Connect_Strategy.h"
 #include "Thread_Lane_Resources.h"
+#include "Profile_Transport_Resolver.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
 #include "ace/OS_NS_strings.h"
@@ -132,10 +133,9 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 }
 
 TAO_Transport *
-TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
+TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                      TAO_Transport_Descriptor_Interface &desc,
-                                     ACE_Time_Value *timeout,
-                                     bool block)
+                                     ACE_Time_Value *timeout)
 {
   TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (desc.endpoint ());
 
@@ -159,17 +159,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-// if we don't block, then we should have reactor and not time when calling
-// connect.
-   if (!block)
-   {
+  // If we don't need to return a completely connected transport we overrule the
+  // timeout to zero.
+  if (!r->connected())
+    {
       synch_options.set (ACE_Synch_Options::USE_REACTOR,
-  ACE_Time_Value::zero);
-   }
+                         ACE_Time_Value::zero);
+    }
 
   TAO_IIOP_Connection_Handler *svc_handler = 0;
-
-// @todo JW handlhere here the block
 
   // Connect.
   int result =
@@ -178,13 +176,14 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                    synch_options);
 
   // The connect() method creates the service handler and bumps the
-  // #REFCOUNT# up one extra.  There are three possibilities from
+  // #REFCOUNT# up one extra.  There are four possibilities from
   // calling connect(): (a) connection succeeds immediately - in this
   // case, the #REFCOUNT# on the handler is two; (b) connection
   // completion is pending - in this case, the #REFCOUNT# on the
   // handler is also two; (c) connection fails immediately - in this
   // case, the #REFCOUNT# on the handler is one since close() gets
-  // called on the handler.
+  // called on the handler; (d) the connect immediately returns when we
+  // have specified that it shouldn't block.
   //
   // The extra reference count in
   // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
@@ -195,39 +194,54 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // another thread pick up the completion and potentially deletes the
   // handler before we get a chance to increment the reference count.
 
-  // No immediate result.  Wait for completion.
   if (result == -1 && errno == EWOULDBLOCK)
     {
-      if (TAO_debug_level > 2)
+      // We just issued connect and don't want to block, just call wait with zero
+      // timeout
+      if (!r->connected())
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                      "going to wait for connection completion on local"
-                      "handle [%d]\n",
-                      svc_handler->get_handle ()));
+          // Wait for connection completion.
+          ACE_Time_Value zero(ACE_Time_Value::zero);
+          result =
+            this->active_connect_strategy_->wait (svc_handler,
+                                                  &zero);
+
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - IIOP_Connector::make_connection"
+                          "wait done for handle[%d], result = %d\n",
+                          svc_handler->get_handle (), result));
+            }
+
+          // When the wait returns -1, the transport is not connected, else it is
+          svc_handler->transport ()->is_connected(result != -1);
         }
-
-if (block)
-{
-      // Wait for connection completion.
-      result =
-        this->active_connect_strategy_->wait (svc_handler,
-                                              max_wait_time);
-}
-else
-{
-
-  // call method above according to bala with ace_time_value zeor
-  result =0;
-   svc_handler->transport ()->is_connected(false);
-}
-
-      if (TAO_debug_level > 2)
+      else
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - IIOP_Connector::make_connection"
-                      "wait done for handle[%d], result = %d\n",
-                      svc_handler->get_handle (), result));
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                          "going to wait for connection completion on local"
+                          "handle [%d]\n",
+                          svc_handler->get_handle ()));
+            }
+
+          // Wait for connection completion.
+          result =
+            this->active_connect_strategy_->wait (svc_handler,
+                                                  timeout);
+
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                          "wait done for handle[%d], result = %d\n",
+                          svc_handler->get_handle (), result));
+            }
+
+          svc_handler->transport ()->is_connected(true);
         }
 
       // There are three possibilities when wait() returns: (a)
@@ -244,7 +258,7 @@ else
       // In case of failures and close() has not be called.
       if (result == -1 && !closed)
         {
-         // First, cancel from connector.
+          // First, cancel from connector.
           this->base_connector_.cancel (svc_handler);
 
           // Double check to make sure the handler has not been closed
@@ -277,15 +291,7 @@ else
                   svc_handler->close ();
                 }
             }
-    }
-    }
-
-  if (!block)
-    {
-      // We shouldn't block, so it can be that the connection is not
-      // established yet
-
-      // todo
+        }
     }
 
   // Irrespective of success or failure, remove the extra #REFCOUNT#.
@@ -347,7 +353,7 @@ else
   // #REFCOUNT# becomes two.
 // this also gives problems when we do it on a not connected trasnport
   if (transport->is_connected())
-  retval =  transport->wait_strategy ()->register_handler ();
+    retval = transport->wait_strategy ()->register_handler ();
 
   // Registration failures.
   if (retval != 0)
