@@ -134,7 +134,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
       // Generate the typecode decl for this typedef node.
       // @@ NW: !bt->is_local () is a hack.  There should be a way to
       // propagate bt's info up to typedef.
-      if (!node->imported ())
+      if (!node->imported () && !node->is_local () && !bt->is_local ())
         {
           be_visitor *visitor;
           be_visitor_context ctx (*this->ctx_);

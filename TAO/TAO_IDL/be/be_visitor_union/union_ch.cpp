@@ -18,11 +18,11 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
+
 #include "be_visitor_union.h"
-#include "be_visitor_typecode/typecode_decl.h"
 
 ACE_RCSID(be_visitor_union, union_ch, "$Id$")
 
@@ -66,17 +66,20 @@ int be_visitor_union_ch::visit_union (be_union *node)
           << "{" << be_nl
           << "public:" << be_idt_nl
 
-      // Generate default and copy constructors.
+        // Generate default and copy constructors.
           << node->local_name () << " (void);" << be_nl
           << node->local_name () << " (const " << node->local_name ()
           << " &);" << be_nl
-      // Generate destructor.
+        // Generate destructor.
           << "~" << node->local_name () << " (void);" << be_nl;
 
-      *os << "static void _tao_any_destructor (void*);"
-          << be_nl << be_nl;
+      if (!node->is_local ())
+        {
+          *os << "static void _tao_any_destructor (void*);"
+              << be_nl << be_nl;
+        }
 
-      // Generate assignment operator.
+        // Generate assignment operator.
       *os << node->local_name () << " &operator= (const "
           << node->local_name () << " &);" << be_nl << be_nl;
 
@@ -88,23 +91,32 @@ int be_visitor_union_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_ch::"
                              "visit_union - "
-                             "bad disciminant type\n"), 
-                            -1);
+                             "bad disciminant type\n"), -1);
         }
 
       // The discriminant type may have to be defined here if it was an enum
       // declaration inside of the union statement.
 
       ctx.state (TAO_CodeGen::TAO_UNION_DISCTYPEDEFN_CH);
-      be_visitor_union_discriminant_ch visitor (&ctx);
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-      if (bt->accept (&visitor) == -1)
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_union_ch::"
+                             "visit_union - "
+                             "bad visitor\n"), -1);
+        }
+
+      if (bt->accept (visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_ch::"
                              " visit_union - "
                              "codegen for discriminant failed\n"), -1);
         }
+
+      delete visitor;
 
       // Generate the _var_type typedef
       // but we must protect against certain versions of g++.
@@ -173,22 +185,22 @@ int be_visitor_union_ch::visit_union (be_union *node)
       *os << "// TAO extension." << be_nl;
       *os << "void _reset (" << bt->nested_type_name (node)
           << ", CORBA::Boolean /* finalize */);" << be_nl;
-      *os << "// Frees any allocated storage." << be_uidt_nl;
+      *os << "// Frees any allocated storage." << be_nl << be_nl;
       *os << "}; //" << node->name () << be_nl << be_nl;
 
-      if (be_global->tc_support ())
+      if (!node->is_local ())
         {
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          be_visitor_typecode_decl tc_visitor (&ctx);
+          visitor = tao_cg->make_visitor (&ctx);
 
-          if (tc_visitor.visit_union (node) == -1)
+          if (!visitor || (node->accept (visitor) == -1))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_union_ch::"
                                  "visit_union - "
-                                 "TypeCode declaration failed\n"), 
-                                -1);
+                                 "TypeCode declaration failed\n"
+                                 ), -1);
             }
         }
 
@@ -203,8 +215,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_ch::"
                              "visit_union - "
-                             "codegen for _var\n"), 
-                            -1);
+                             "codegen for _var\n"), -1);
         }
 
       os->gen_endif ();
@@ -221,8 +232,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_union_ch::"
                                  "visit_union - "
-                                 "codegen for _out\n"), 
-                                -1);
+                                 "codegen for _out\n"), -1);
             }
         }
       else
@@ -232,6 +242,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
         }
 
       os->gen_endif ();
+
       node->cli_hdr_gen (I_TRUE);
     }
 

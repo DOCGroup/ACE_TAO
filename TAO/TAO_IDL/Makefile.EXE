@@ -222,7 +222,8 @@ endif # !def TAO_IDL_PREPROCESSOR
  $(ACE_ROOT)/ace/Containers_T.cpp \
  include/utl_err.h include/utl_indenter.h include/global_extern.h \
  include/fe_extern.h include/drv_private.h include/drv_extern.h \
- be_include/be.h $(ACE_ROOT)/ace/Singleton.h \
+ be_include/be.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \
@@ -780,7 +781,8 @@ endif # !def TAO_IDL_PREPROCESSOR
  include/utl_err.h include/utl_indenter.h include/idl_extern.h \
  include/fe_extern.h include/ast_extern.h include/nr_extern.h \
  include/global_extern.h include/drv_private.h include/drv_extern.h \
- be_include/be.h $(ACE_ROOT)/ace/Singleton.h \
+ be_include/be.h \
+ $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Object_Manager.h \

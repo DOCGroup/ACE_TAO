@@ -103,12 +103,6 @@ DRV_init (void)
 #elif defined (ACE_CC_PREPROCESSOR)
   idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
 #else
-# if defined (ACE_WIN32)
-  // Without this, if we get here, tao_idl will hang.
-  ACE_ERROR ((LM_ERROR,
-              "No valid path to preprocessor\n"));
-  exit (0);
-# endif /* ACE_WIN32 */
   // Just default to cc
   idl_global->set_cpp_location ("cc");
 #endif /* TAO_IDL_PREPROCESSOR */

@@ -1,9 +1,0 @@
-// $Id$
-
-module ObjectReferenceTemplate
-{
-  interface ORT_test
-  {
-    boolean request_server ();
-  };
-};

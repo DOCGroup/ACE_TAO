@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_IDL_BE_LIBs.lib TAO_IDL_FE_LIBs.lib aces.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\Release\tao_idl_static.exe" /libpath:"..\..\ace"
+# ADD LINK32 TAO_IDL_BE_LIBs.lib TAO_IDL_FE_LIBs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\Release\tao_idl_static.exe" /libpath:"..\..\ace"
 # SUBTRACT LINK32 /pdb:none /map
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler Static - Win32 Static Debug"
@@ -77,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_IDL_FE_LIBsd.lib TAO_IDL_BE_LIBsd.lib acesd.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl_static.exe" /pdbtype:sept /libpath:"..\..\ace"
+# ADD LINK32 TAO_IDL_FE_LIBsd.lib TAO_IDL_BE_LIBsd.lib acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl_static.exe" /pdbtype:sept /libpath:"..\..\ace"
 # SUBTRACT LINK32 /pdb:none /nodefaultlib
 
 !ENDIF 

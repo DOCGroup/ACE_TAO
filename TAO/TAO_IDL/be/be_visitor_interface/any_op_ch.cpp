@@ -19,9 +19,10 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
+
 #include "be_visitor_interface.h"
 
 ACE_RCSID(be_visitor_interface, any_op_ch, "$Id$")
@@ -44,36 +45,29 @@ be_visitor_interface_any_op_ch::~be_visitor_interface_any_op_ch (void)
 int
 be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 {
-  if (node->cli_hdr_any_op_gen ()
-      || node->imported ())
-    {
-      return 0;
-    }
+  if (node->cli_hdr_any_op_gen () ||
+      node->imported () ||
+      node->is_local ())
+    return 0;
 
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the Any <<= and >>= operator declarations.
   os->indent ();
-
   *os << "// Any operators for interface " << node->name () << be_nl;
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
-      << "_ptr); // copying" << be_nl;
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
-      << "_ptr *); // non-copying" << be_nl;
+      << "_ptr);" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
-      << node->name () << "_ptr &);\n";
+      << node->name () << " *&);\n";
 
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_any_op_ch::"
-                         "visit_interface - "
-                         "codegen for scope failed\n"), 
-                        -1);
+                         "(%N:%l) be_visitor_interface_any_op_ch::visit_interface - "
+                         "codegen for scope failed\n"), -1);
     }
 
 
