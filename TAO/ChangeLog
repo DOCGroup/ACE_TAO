@@ -1,3 +1,10 @@
+Sun Feb 29 22:10:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Environment.i (release ()):
+
+	  Removed an unneeded check for null pointer. Thanks to Gabriele
+	  Trombetti<gabtromb@isis.vanderbilt.edu> for pointing this out. 
+
 Sun Feb 29 20:00:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ObjectKey_Table.cpp:
