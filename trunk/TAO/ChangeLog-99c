@@ -1,3 +1,64 @@
+Sat Jun 19 15:46:22 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	One more step Generating Reply Handler skeleton code in the client
+	header file. Again, this will get enabled only when the TAO_IDL is
+	called with the -GC flag.  
+
+	* TAO_IDL/be/be_visitor_argument/ami_handler_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
+
+	* TAO_IDL/be/be_visitor_interface/ami_handler_ch.cpp:
+
+	* TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_operation_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_arglist_ch.cpp:
+
+	* TAO_IDL/be_include/be_visitor_argument/ami_arglist.h:
+	* TAO_IDL/be_include/be_visitor_argument/ami_handler_arglist.h:
+
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_ch.h:
+
+	* TAO_IDL/be_include/be_visitor_operation/ami_ch.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_arglist.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_arglist.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_operation_ch.h:
+
+	Added all these files. 
+
+	Rename the arglist_* to meaningful *_arglist unformly with
+	meaningful names. 
+  
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_visitor_argument.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/ami_handler_fwd_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist_ami.cpp:
+	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ami_cs.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_argument.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_fwd_ch.h:
+	* TAO_IDL/be_include/be_visitor_interface/ami_handler_fwd_ci.h:
+
+	Changes for the above work.
+  
+	* TAO_IDL/be/be_visitor_argument/arglist_ami.cpp:
+   	* TAO_IDL/be/be_visitor_operation/arglist_ami.cpp:
+	* be_include/be_visitor_argument/arglist_ami.h:
+   	* be_include/be_visitor_operation/arglist_ami.h:
+  
+  	Removed these files since they have been renamed already. 
+  
 Sat Jun 19 15:43:38 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Cubit/TAO/DII_Cubit/client.dsp:
