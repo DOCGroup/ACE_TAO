@@ -1,3 +1,11 @@
+Fri Apr  9 12:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+        
+          Added usage message for the option to generate debug file/line#
+          info for implementation classes. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out the oversight.
+
 Fri Apr  9 12:28:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll (idl_store_pragma):
