@@ -15,7 +15,7 @@
 #define CCM_COMPONENT_IDL
 
 #include "CCM_Event.idl"
-#include <tao/IFR_Client/IFR_Base.pidl>
+#include "tao/IFR_Client/IFR_Base.pidl"
 
 module Components
 {

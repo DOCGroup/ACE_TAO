@@ -1,3 +1,13 @@
+Fri Dec 20 20:32:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Component.idl:
+	* ciao/CCM_Container.idl:
+	* ciao/Container_Base.cpp:
+	* ciao/Makefile.client:
+	* ciao/Makefile.container:
+	* ciao/Makefile.server: Fixed compilation erros and Makefiles on
+	  Linux. 
+
 Thu Dec 19 20:44:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/README:

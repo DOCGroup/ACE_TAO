@@ -139,7 +139,7 @@ CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
     ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
 
   Components::HomeExecutorBase_var home_executor = hcreator ();
-  if (CORBA::is_nil (home_executor))
+  if (CORBA::is_nil (home_executor.in ()))
     ACE_THROW_RETURN (Components::Deployment::InstallationFailure (), 0);
 
   PortableServer::Servant home_servant = screator (home_executor.in (),
@@ -154,7 +154,7 @@ CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  Components::CCMHome_var homeref = Components::CCMHome::_narrow (objref
+  Components::CCMHome_var homeref = Components::CCMHome::_narrow (objref.in ()
                                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
