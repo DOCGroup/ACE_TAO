@@ -175,7 +175,7 @@ char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #define ACE_INIT_LOG(NAME) \
   ASYS_TCHAR temp[MAXPATHLEN]; \
   ACE_OS::sprintf (temp, ASYS_TEXT ("%s%s%s"), \
-                   ACE_SYS_TEXT (ACE_LOG_DIRECTORY_A), \
+                   ASYS_TEXT (ACE_LOG_DIRECTORY_A), \
                    ACE::basename (NAME, ASYS_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)), \
                    ASYS_TEXT (ACE_LOG_FILE_EXT_NAME_A)); \
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) Deleting old log file %s (if any)\n\n"), temp)); \
