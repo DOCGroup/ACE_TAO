@@ -63,6 +63,8 @@ while($status == 0 && $elapsed < $max_running_time)
     $SV->Kill ();
     $SV->TimedWait (5);
     
+    unlink $iorfile;
+    
     $SV->Spawn ();
 
     if (PerlACE::waitforfile_timed ($iorfile, $server_startup_wait_time) == -1)
@@ -79,6 +81,8 @@ while($status == 0 && $elapsed < $max_running_time)
     $client2 = $CL2->WaitKill ($client_wait_time * 2);
     $client3 = $CL3->WaitKill ($client_wait_time * 2);
     $server = $SV->WaitKill (5); # should be down already
+
+    unlink $iorfile;
 
     if ($client1)
     {
@@ -106,7 +110,5 @@ while($status == 0 && $elapsed < $max_running_time)
 
     $elapsed = time() - $start_time;
 }
-
-unlink $iorfile;
 
 exit $status;
