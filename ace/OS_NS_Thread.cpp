@@ -1957,10 +1957,8 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                      int, -1);
 #elif defined (ACE_HAS_STHREADS)
   return ACE_OS::set_scheduling_params (sched_params, id);
-#elif defined (ACE_HAS_PTHREADS) \
-           && ( !defined (ACE_LACKS_SETSCHED) \
-              || defined( ACE_TANDEM_T1248_PTHREADS) )
-#elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_SETSCHED)
+#elif defined (ACE_HAS_PTHREADS) && \
+      (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS))
   ACE_UNUSED_ARG (id);
   if (sched_params.quantum () != ACE_Time_Value::zero)
     {
