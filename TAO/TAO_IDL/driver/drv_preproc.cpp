@@ -175,6 +175,34 @@ DRV_get_line (FILE *f)
     return I_TRUE;
 }
 
+// Store include paths from the environment variable, if any.
+void
+DRV_store_env_include_paths (void)
+{
+  ACE_Env_Value<char*> incl_paths ("INCLUDE",
+                                   (char *) 0);
+  const char *aggr_str = incl_paths;
+
+  if (aggr_str != 0)
+    {
+      char separator;
+#if defined (ACE_WIN32)
+      separator = ';';
+#else
+      separator = ':';
+#endif
+      ACE_CString aggr_cstr (aggr_str);
+      ssize_t pos;
+
+      do 
+        {
+          pos = aggr_cstr.find (separator);
+          idl_global->add_include_path (aggr_cstr.substr (0, pos).fast_rep ());
+          aggr_cstr = aggr_cstr.substr (pos + 1);
+        } while (pos != ACE_String_Base_Const::npos);
+    }
+}
+
 // Initialize the cpp argument list.
 void
 DRV_cpp_init (void)

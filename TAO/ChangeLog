@@ -1,3 +1,17 @@
+Mon Mar  3 15:12:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+        * TAO_IDL/include/drv_extern.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Modified scheme for validating included files. This change
+          was motivated by errors in include file generation when
+          files whose path names are substrings of each other are
+          on opposite sides of a conditional include.
+
 Mon Mar  3 11:43:01 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
