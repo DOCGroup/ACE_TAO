@@ -1,3 +1,23 @@
+Mon Oct 25 23:19:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Changed DsLogAdmin_Serv project to omit Log/PersistantStore.cpp.
+	  As of this writing, there is no way to configure the logging
+	  service to use the persistant version of the log record store,
+	  so it only serves to bloat the shared library/DLL.
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+
+	  Changed hash map to store Any_var's instead of Any pointers to
+	  avoid memory leak.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+	  Changed TAO_Log_i::remove_old_records() to return if
+	  max_record_life_ == 0, which indicates infinite lifetime.
+
 Mon Oct 25 23:30:26 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
