@@ -1,4 +1,7 @@
-Tue Jan 12 17:02:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jan 12 19:52:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added more info on dynamically linking
+	  run-time libraries.
 
 	* ace/SOCK_IO.{h,i,cpp} (sendv,recvv,sendv_n,recvv_n): Renamed
 	  vector send/recv.  There were name clashing since these methods
