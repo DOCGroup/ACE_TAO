@@ -1,3 +1,9 @@
+Mon Jan  5 19:16:40 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/Makefile.alt:
+
+	  Added updated generators to the build.
+
 Mon Jan  5 18:48:54 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Test/IDL2/Traversal/Recreate/Makefile.alt:
