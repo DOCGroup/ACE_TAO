@@ -1,3 +1,18 @@
+Fri Aug 20 12:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.pidl:
+        * tao/IORInterceptor/IORInfo.pidl:
+          Moved AdapterState constants from IORInfo to PortableInterceptor
+          file
+
+        * tao/PortableInterceptorC.h:
+        * tao/IORInterceptor/IORInfoC.{h,cpp,inl}:
+          Updated these files with changes above
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POAManager.cpp:
+          No need anymore to include IORInfoC.h to get AdapterState constants
+
 Fri Aug 20 12:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
