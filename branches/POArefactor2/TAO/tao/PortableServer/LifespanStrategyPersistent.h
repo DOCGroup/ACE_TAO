@@ -58,7 +58,10 @@ namespace TAO
 
       virtual ::PortableServer::LifespanPolicyValue type() const;
 
+      virtual bool use_imr () const;
+
     private:
+      bool use_imr_;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

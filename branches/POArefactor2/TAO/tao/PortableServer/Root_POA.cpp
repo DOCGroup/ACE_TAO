@@ -2026,10 +2026,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  if (this->is_persistent ())
-// @todo Johnny, check the use of use_imr_ here
-//  if (this->use_imr_
-//      && this->active_policy_strategies_.lifespan_strategy()->persistent ())
+  if (this->active_policy_strategies_.lifespan_strategy()->use_imr ())
     {
       // Check to see if we alter the IOR.
       CORBA::Object_var imr =

@@ -109,6 +109,12 @@ namespace TAO
       }
     }
 
+    bool
+    LifespanStrategyTransient::use_imr () const
+    {
+      return false;
+    }
+
     ::PortableServer::LifespanPolicyValue
     LifespanStrategyTransient::type() const
     {

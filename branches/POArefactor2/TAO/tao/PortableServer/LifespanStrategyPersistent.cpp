@@ -51,7 +51,7 @@ namespace TAO
       CORBA::ULong& starting_at)
     {
       // Copy the persistence byte.
-      buffer[starting_at] = (CORBA::Octet) this->key_type ();
+      buffer[starting_at] = static_cast<CORBA::Octet> (this->key_type ());
       starting_at += this->key_type_length ();
     }
 
@@ -82,7 +82,12 @@ namespace TAO
 
       if (adapter != 0)
         {
+          bool old_use_imr = this->use_imr_;
+          this->use_imr_ = false;
+
           adapter->imr_notify_startup (this->poa_ ACE_ENV_ARG_PARAMETER);
+
+          this->use_imr_ = old_use_imr;
         }
     }
 
@@ -111,7 +116,8 @@ namespace TAO
         }
     }
 
-    LifespanStrategyPersistent::LifespanStrategyPersistent()
+    LifespanStrategyPersistent::LifespanStrategyPersistent() :
+      use_imr_ (true)
     {
     }
 
@@ -129,6 +135,12 @@ namespace TAO
     LifespanStrategyPersistent::type() const
     {
       return ::PortableServer::PERSISTENT;
+    }
+
+    bool
+    LifespanStrategyPersistent::use_imr () const
+    {
+      return use_imr_;
     }
   } /* namespace Portable_Server */
 } /* namespace TAO */

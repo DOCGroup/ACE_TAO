@@ -57,6 +57,8 @@ namespace TAO
 
       virtual ::PortableServer::LifespanPolicyValue type() const;
 
+      virtual bool use_imr () const;
+
     private:
       TAO::Portable_Server::Creation_Time creation_time_;
     };

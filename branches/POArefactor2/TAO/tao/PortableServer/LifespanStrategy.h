@@ -75,6 +75,8 @@ namespace TAO
 
       virtual ::PortableServer::LifespanPolicyValue type() const = 0;
 
+      virtual bool use_imr () const = 0;
+
     protected:
       TAO_Root_POA *poa_;
     };
