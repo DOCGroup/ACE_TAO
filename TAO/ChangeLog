@@ -1,3 +1,9 @@
+Tue Feb  1 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Service/*C.{h,cpp,inl}:
+        * tao/IFR_Service/*A.{cpp}:
+          Regenerated with the latest version of the TAO_IDL compiler
+
 Tue Feb  1 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.h:
