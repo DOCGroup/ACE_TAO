@@ -99,8 +99,6 @@ public:
   /// Set the POA to use when creating object references.
   void poa (PortableServer::POA_ptr p);
 
-private:
-
   /// Call delete_object() on all factories use to create members in a
   /// given object group.
   /**
@@ -113,16 +111,19 @@ private:
                         CORBA::Boolean ignore_exceptions
                         ACE_ENV_ARG_DECL);
 
+private:
+
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
   void populate_object_group (
-         CORBA::ULong fcid,
+         const CORBA::ULong fcid,
          PortableGroup::ObjectGroup_ptr object_group,
          const PortableServer::ObjectId & oid,
          const char * type_id,
          const PortableGroup::FactoryInfos &factory_infos,
-         const PortableGroup::InitialNumberMembersValue initial_number_members
+         const PortableGroup::InitialNumberMembersValue initial_number_members,
+         TAO_PG_Factory_Set & factory_set
          ACE_ENV_ARG_DECL);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.

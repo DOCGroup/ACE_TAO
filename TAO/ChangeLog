@@ -1,3 +1,52 @@
+Tue Oct 15 19:49:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp:
+
+	  New guard implementation designed to improve exception safety
+	  when creating object groups.  It is used internally by the
+	  TAO_PG_GenericFactory class.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+	  (delete_object_i):
+
+	  Made this method public so that the new TAO_PG_Group_Guard class
+	  may invoke it.
+
+	  (populate_object_group):
+
+	  Made factory creation ID argument "const" to prevent subtle bugs
+	  from being potentially introduced in the future.
+
+	  This method now accepts a reference to the factory set
+	  associated with a given factory creation ID.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (create_object):
+
+	  The factory set is now instantiated in this method and passed to
+	  the populate_object_group() method.  This change was necessary
+	  to improve exception safety when cleaning up resources created
+	  during a failed attempt at creating an object group.
+
+	  Use a TAO_PG_Group_Guard to improve exception safety in the
+	  presence of a failed object group creation attempt.
+
+	  (delete_object):
+
+	  Upon successful destruction of remote object group members
+	  through their corresponding factories, unbind the factory set
+	  that contained those factories from the internal factory map.
+	  Closes a resource leak.
+
+	  (process_criteria):
+
+	  If the desired minimum number of members is less than the number
+	  of supplied GenericFactorys, add a new element containing the
+	  name and value of the MinimumNumberMembers property to the unmet
+	  criteria sequence that is the attribute of the
+	  PortableGroup::CannotMeetCriteria exception to be thrown.
+
 Tue Oct 15 17:34:07 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
