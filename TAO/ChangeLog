@@ -1,3 +1,10 @@
+Tue Jan  6 11:13:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Messaging/Messaging.pidl:
+
+	  Removed the #ifdef of NO_VALUE, since that condition is totally
+	  unnecessary now.
+
 Mon Jan  5 19:09:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/default_resource.cpp:

@@ -49,19 +49,11 @@ module Messaging
   //
   // Exception Delivery in the Callback Model
   //
-#if defined(NO_VALUE)
-  struct ExceptionHolder {
-    boolean         is_system_exception;
-    boolean         byte_order;
-    CORBA::OctetSeq marshaled_exception;
-  };
-#else
   valuetype ExceptionHolder {
     public boolean         is_system_exception;
     public boolean         byte_order;
     public CORBA::OctetSeq marshaled_exception;
   };
-#endif
 
   //
   // Base interface for the Callback model
