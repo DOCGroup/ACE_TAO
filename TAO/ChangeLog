@@ -1,3 +1,7 @@
+Tue Oct 15 17:25:04 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/Makefile: Updated dependencies.
+
 Tue Oct 15 17:03:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Abstract_Interface/server.cpp:
@@ -41,7 +45,7 @@ Tue Oct 15 13:34:15 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
 	  Changes to make a typeprefix directive in an inner scope override
 	  one in an outer scope, even if the outer scope directive comes later
-	  in the IDL file. These changes were documented in, but mistakenly 
+	  in the IDL file. These changes were documented in, but mistakenly
 	  left out of
 
 	  Mon Oct 14 15:44:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
@@ -97,7 +101,7 @@ Mon Oct 14 18:52:06 2002  Ossama Othman  <ossama@uci.edu>
 	  Accept an "initial number of members" value.  It will be used
 	  when creating the initial object group members via the
 	  infrastructure.
-	
+
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
 	  (create_object, process_criteria):
 
@@ -182,7 +186,7 @@ Mon Oct 14 15:44:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
 
-	  Fixed mistakes in code generation for sequences of valuetypes. 
+	  Fixed mistakes in code generation for sequences of valuetypes.
 	  Thanks to Sean M. Paus <spaus@cdtd.saic.com> for pointing out
 	  the problem.
 
