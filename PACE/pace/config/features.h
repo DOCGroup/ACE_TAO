@@ -39,6 +39,11 @@
 #  define PACE_MT_SAFE 1
 # endif /* PACE_MT_SAFE */
 
+/* Turn on multithreading. */
+# if !defined (_MT)
+# define _MT
+# endif /* _MT */
+
 #endif /* WIN32 */
 
 #endif /* PACE_CONFIG_FEATURES_H */

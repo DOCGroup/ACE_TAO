@@ -1,3 +1,13 @@
+Tue Aug 22 12:44:09 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/features.h (_MT):
+
+	  Added to support multithreading.
+
+	* pace/win32/pthread.c (pthread_create):
+
+	  Completed using basic _beginthreadex.
+
 Mon Aug 21 20:34:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/features.h:
