@@ -1,9 +1,37 @@
+Sun Dec 29 18:38:03 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/File_Parser.h: Removed the endofline()
+ 	  method declaration -- it doesn't seem to be defined anywhere.
+
+	* ace/OS.h: Added an ACE_INT32 to complement the ACE_UINT32.
+
+	* netsvcs/lib: Cleaned up all the ACE network services by removing
+ 	  their SIGINT signal handler.  This was interferring with the
+ 	  main event loop's ability to shutdown...
+
+	* apps/Gateway/Gateway: Once again changed the name of
+ 	  *IO_Handler* to *Proxy_Handler* since these things are really
+ 	  proxies, in the COS sense!
+
+	* ace/Service_Record.cpp: Tidied up the implementation of
+ 	  ACE_Module_Type::fini() so that it doesn't try to call fini() on
+ 	  NULL pointers.  Also, rather than explicitly deleting the reader
+ 	  and writer Tasks, we call ACE_Module<>::close(), which knows how
+ 	  to take care of all this stuff.
+
+	* ace/Module.cpp: Added an extra parameter to close_i() so that we
+ 	  can correctly pass the value of "flags" from close() in order to
+ 	  prevent deleting tasks when we don't want to do this.
+
+	* ace/Module.cpp: There was a bug in the open() method
+ 	  since we were potentially deleting reader_q and writer_q twice
+ 	  if memory allocation failed.
+
 Sat Dec 28 19:02:13 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/ACE.cpp: Changed the implementation of ldfind() so that it
- 	  doesn't try to add the DLL prefix (e.g., "lib") unless given a
- 	  relative pathname.  In other words, we never try to modify the
- 	  prefix for an absolute pathname.  This is necessary to keep lots
+ 	  doesn't try to add the DLL prefix (e.g., "lib") unless it
+ 	  doesn't match filename.  This is necessary to keep lots
  	  of existing svc.conf files from breaking.
 
 	* ace/Event_Handler.h: Added a new ACCEPT_MASK for use with the

@@ -94,7 +94,7 @@ public:
 
 protected:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle SIGINT.
+  // Handle SIGPIPE.
 
   static void stderr_output (int = 0);
   
@@ -147,7 +147,7 @@ class ACE_TS_Clerk_Processor : public ACE_Connector <ACE_TS_Clerk_Handler, ACE_S
   //    computing a synchronized system time.
 {
 public:
-  ACE_TS_Clerk_Processor ();
+  ACE_TS_Clerk_Processor (void);
   // Default constructor
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -172,9 +172,6 @@ protected:
   virtual int suspend (void);
   virtual int resume (void);
   
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Handle SIGINT.
-
 private:
   int parse_args (int argc, char *argv[]);
   // Parse svc.conf arguments.
@@ -234,14 +231,6 @@ ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
   this->time_info_.sequence_num_ = 0;
 }
 
-// This is called when a <send> to a server fails...
-int
-ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
-{
-  ACE_TRACE ("ACE_TS_Clerk_Handler::handle_signal");
-  return 0;
-}
-
 // Set the connection state
 void
 ACE_TS_Clerk_Handler::state (ACE_TS_Clerk_Handler::State state)
@@ -283,6 +272,15 @@ ACE_TS_Clerk_Handler::timeout (void)
     this->timeout_ = this->max_timeout_;
 
   return old_timeout;
+}
+
+// This is called when a <send> to the logging server fails...
+
+int
+ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
+{
+  ACE_TRACE ("ACE_TS_Clerk_Handler::handle_signal");
+  return -1;
 }
 
 // Set the max timeout delay.
@@ -651,14 +649,8 @@ ACE_TS_Clerk_Processor::init (int argc, char *argv[])
 #if !defined (ACE_WIN32)
   // Ignore SIPPIPE so each Output_Channel can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+#endif /* ACE_WIN32 */
 
-  // Register ourselves to receive SIGINT and SIGPIPE
-  // so we can shut down gracefully via signals.
-  if (ACE_Service_Config::reactor ()->register_handler (SIGINT,
-							this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
-		       "register_handler"), -1);
-#endif
   ACE_Synch_Options &synch_options = this->blocking_semantics_ == 0 
     ? ACE_Synch_Options::asynch : ACE_Synch_Options::synch;
 
@@ -800,16 +792,6 @@ int
 ACE_TS_Clerk_Processor::resume (void)
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::resume");
-  return 0;
-}
-
-// Signal the server to shutdown gracefully.
-
-int
-ACE_TS_Clerk_Processor::handle_signal (int, siginfo_t *, ucontext_t *)
-{
-  ACE_TRACE ("ACE_TS_Clerk_Processor::handle_signal");
-  ACE_Service_Config::end_reactor_event_loop ();
   return 0;
 }
 

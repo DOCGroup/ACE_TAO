@@ -27,13 +27,13 @@ ACE_Module<ACE_SYNCH_2>::writer (ACE_Task<ACE_SYNCH_2> *q,
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::writer");
 
   // Close and maybe delete old writer
-  this->close_i (1);
+  this->close_i (1, flags);
 
   this->q_pair_[1] = q;
   if (q != 0)
     ACE_CLR_BITS (q->flags_, ACE_Task_Flags::ACE_READER);
 	
-  // don't allow the caller to change the reader status
+  // Don't allow the caller to change the reader status.
   ACE_SET_BITS (flags_, (flags & M_DELETE_WRITER));
 }
 
@@ -44,7 +44,7 @@ ACE_Module<ACE_SYNCH_2>::reader (ACE_Task<ACE_SYNCH_2> *q,
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::reader");
 
   // Close and maybe delete old writer
-  this->close_i (0);
+  this->close_i (0, flags);
 
   this->q_pair_[0] = q;
   if (q != 0)
@@ -76,23 +76,24 @@ ACE_Module<ACE_SYNCH_2>::open (const char *mod_name,
   this->name (mod_name);
   this->arg_ = arg;
 
-  // we may already have readers and/or writers
+  // We may already have readers and/or writers.
   if (this->reader ())
-    this->close_i (0);
+    this->close_i (0, M_DELETE_READER);
 
   if (this->writer ())
-    this->close_i (1);
+    this->close_i (1, M_DELETE_WRITER);
 
+  if (writer_q == 0) 
+    {
+      writer_q = new ACE_Thru_Task<ACE_SYNCH_2>;
+      ACE_SET_BITS (flags, M_DELETE_WRITER);
+    }
 
-  if (writer_q == 0) {
-    writer_q = new ACE_Thru_Task<ACE_SYNCH_2>;
-    ACE_SET_BITS (flags, M_DELETE_WRITER);
-  }
-
-  if (reader_q == 0) {
-    reader_q = new ACE_Thru_Task<ACE_SYNCH_2>;
-    ACE_SET_BITS (flags, M_DELETE_READER);
-  }
+  if (reader_q == 0) 
+    {
+      reader_q = new ACE_Thru_Task<ACE_SYNCH_2>;
+      ACE_SET_BITS (flags, M_DELETE_READER);
+    }
 
   this->reader (reader_q);
   this->writer (writer_q);
@@ -102,21 +103,20 @@ ACE_Module<ACE_SYNCH_2>::open (const char *mod_name,
   writer_q->mod_ = this;
 
   // Save the flags
-  ACE_SET_BITS (flags_, flags);
+  this->flags_ = flags;
 
   // Make sure that the memory is allocated before proceding.
   if (writer_q == 0 || reader_q == 0)
     {
-      this->close_i (0);
-      this->close_i (1);
+      // These calls will delete writer_q and/or reader_q, if
+      // necessary.
+      this->close_i (0, M_DELETE_READER);
+      this->close_i (1, M_DELETE_WRITER);
 
       // Reset back pointers.
-      reader_q->mod_ = NULL;
-      writer_q->mod_ = NULL;
+      reader_q->mod_ = 0;
+      writer_q->mod_ = 0;
 
-      delete writer_q;
-      delete reader_q;
-		
       errno = ENOMEM;
       return -1;
     }
@@ -140,6 +140,7 @@ ACE_Module<ACE_SYNCH_2>::sibling (ACE_Task<ACE_SYNCH_2> *orig)
 
 template <ACE_SYNCH_1>
 ACE_Module<ACE_SYNCH_2>::ACE_Module (void)
+  : flags_ (0)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::ACE_Module");
   this->name ("<unknown>");
@@ -164,6 +165,7 @@ ACE_Module<ACE_SYNCH_2>::ACE_Module (const char *mod_name,
 				     ACE_Task<ACE_SYNCH_2> *reader_q, 
 				     void *args,
 				     int flags /* = M_DELETE */) 
+  : flags_ (0)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::ACE_Module");
 
@@ -183,21 +185,22 @@ ACE_Module<ACE_SYNCH_2>::close (int flags /* = M_DELETE_NONE */)
 
   ACE_SET_BITS (flags_, flags);
 
-  if (this->close_i (0) == -1)
+  if (this->close_i (0, flags) == -1)
     result = -1;
 
-  if (this->close_i (1) == -1)
+  if (this->close_i (1, flags) == -1)
     result = -1;
 
   return result;
 }
 
 template <ACE_SYNCH_1> int
-ACE_Module<ACE_SYNCH_2>::close_i (int which)
+ACE_Module<ACE_SYNCH_2>::close_i (int which,
+				  int flags)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_2>::close_i");
 
-  if (this->q_pair_[which] == NULL)
+  if (this->q_pair_[which] == 0)
     return 0;
 
   // Copy task pointer to prevent problems when ACE_Task::close
@@ -206,26 +209,28 @@ ACE_Module<ACE_SYNCH_2>::close_i (int which)
 
   // Change so that close doesn't get called again from the task base.
 
-  // Now close the task
+  // Now close the task.
   int result = 0;
 
-  if (task->module_closed() == -1)
+  if (task->module_closed () == -1)
     result = -1;
 
   task->flush ();
   task->next (0);
 
   // Should we also delete it ?
-  if (ACE_BIT_ENABLED (flags_, which+1) ) {
-    // Only delete the Tasks if there aren't any more threads
-    // running in them.
-    if (task->thr_count() == 0)
-      delete task;
-  }
+  if (flags != M_DELETE_NONE 
+      && ACE_BIT_ENABLED (flags_, which + 1))
+    {
+      // Only delete the Tasks if there aren't any more threads
+      // running in them.
+      if (task->thr_count () == 0)
+	delete task;
+    }
 
-  // Set the tasks pointer to NULL so that we don't try to close()
+  // Set the tasks pointer to 0 so that we don't try to close()
   // this object again if the destructor gets called.
-  this->q_pair_[which] = NULL;
+  this->q_pair_[which] = 0;
 
   // Finally remove the delete bit.
   ACE_CLR_BITS (flags_, which + 1);

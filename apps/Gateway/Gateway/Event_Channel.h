@@ -17,7 +17,7 @@
 #if !defined (ACE_EVENT_CHANNEL)
 #define ACE_EVENT_CHANNEL
 
-#include "IO_Handler_Connector.h"
+#include "Proxy_Handler_Connector.h"
 
 template <class SUPPLIER_HANDLER, class CONSUMER_HANDLER>
 class ACE_Svc_Export ACE_Event_Channel : public ACE_Event_Handler
@@ -70,22 +70,22 @@ private:
   int debug_;
   // Are we debugging?
 
-  IO_Handler_Connector *connector_;
+  Proxy_Handler_Connector *connector_;
   // This is used to establish the connections actively.
 
   int socket_queue_size_;
   // Size of the socket queue (0 means "use default").
 
   // = Make life easier by defining typedefs.
-  typedef ACE_Map_Manager<CONN_ID, IO_Handler *, MAP_MUTEX> CONNECTION_MAP;
-  typedef ACE_Map_Iterator<CONN_ID, IO_Handler *, MAP_MUTEX> CONNECTION_MAP_ITERATOR;
-  typedef ACE_Map_Entry<CONN_ID, IO_Handler *> CONNECTION_MAP_ENTRY;
+  typedef ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX> CONNECTION_MAP;
+  typedef ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX> CONNECTION_MAP_ITERATOR;
+  typedef ACE_Map_Entry<ACE_INT32, Proxy_Handler *> CONNECTION_MAP_ENTRY;
 
   CONNECTION_MAP connection_map_;
-  // Table that maps Connection IDs to IO_Handler *'s.
+  // Table that maps Connection IDs to Proxy_Handler *'s.
 
-  Consumer_Map consumer_map_;
-  // Map that associates event addresses to a set of Consumer_Handler
+  Event_Forwarding_Discriminator efd_;
+  // Map that associates event addresses to a set of Consumer_Proxy
   // *'s.
 };
 

@@ -1,6 +1,6 @@
-// This server daemon collects, formats, and displays logging
 // $Id$
 
+// This server daemon collects, formats, and displays logging
 // information forwarded from client daemons running on other hosts in
 // the network.  In addition, this example illustrates how to use the
 // ACE_Reactor, ACE_Acceptor, ACE_Singleton, and ACE_Test_and_Set

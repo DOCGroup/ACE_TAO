@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #	@(#)Makefile	1.1	10/18/96
 #
-#	Makefile for the peer portion of the communication gateway
+#	Makefile for the Peer portion of the Gateway application
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 
 BIN   	= peerd
 
-FILES  	= Gateway_Handler 
+FILES  	= Peer
 
 LSRC	= $(addsuffix .cpp,$(FILES))
 LOBJ	= $(addsuffix .o,$(FILES))
@@ -46,7 +46,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Gateway_Handler.o .shobj/Gateway_Handler.so: Gateway_Handler.cpp \
+.obj/Peer.o .shobj/Peer.so: Peer.cpp \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
  $(WRAPPER_ROOT)/ace/OS.h \
@@ -59,7 +59,7 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
- Gateway_Handler.h \
+ Peer.h \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \

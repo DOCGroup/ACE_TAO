@@ -28,11 +28,11 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_File_Entry &entry,
     }
 
   // Get the logic id.
-  if ((read_result = this->getint (entry.logical_id_)) != FP::SUCCESS)
+  if ((read_result = this->getint (entry.supplier_id_)) != FP::SUCCESS)
     return read_result;
 
   // Get the payload type.
-  if ((read_result = this->getint (entry.payload_type_)) != FP::SUCCESS)
+  if ((read_result = this->getint (entry.type_)) != FP::SUCCESS)
     return read_result;
 
   // get all the destinations.
@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
 {
   if (argc != 4) {
 //    ACE_ERROR_RETURN ((LM_ERROR, "%s filename\n", argv[0]), -1);
-    cerr << argv[0] << " CCfilename RTfilename Mapfilename.\n";
+    cerr << argv[0] << " CCfilename filename Mapfilename.\n";
     exit (1);
   }
   FP_RETURN_TYPE result;
@@ -130,30 +130,30 @@ int main (int argc, char *argv[])
     }
   CCfile.close();
 
-  Consumer_Config_File_Entry RTentry;
-  Consumer_Config_File_Parser RTfile;
+  Consumer_Config_File_Entry entry;
+  Consumer_Config_File_Parser file;
 
-  RTfile.open (argv[2]);
+  file.open (argv[2]);
 
   line_number = 0;
 
   printf ("\nConnID\tLogic\tPayload\tDestinations\n");
 
   // Read config file line at a time.
-  while ((result = RTfile.read_entry (RTentry, line_number)) != EOF)
+  while ((result = file.read_entry (entry, line_number)) != EOF)
     {
       if (result != FP::SUCCESS)
 	cerr << "Error at line " << line_number << endl;
       else 
 	{
 	  printf ("%d\t%d\t%d\t%d\t",
-		  RTentry.conn_id_, RTentry.logical_id_, RTentry.payload_type_);
-	  while (--RTentry.total_destinations_ >= 0)
-	    printf ("%d,", RTentry.destinations_[RTentry.total_destinations_]);
+		  entry.conn_id_, entry.supplier_id_, entry.type_);
+	  while (--entry.total_destinations_ >= 0)
+	    printf ("%d,", entry.destinations_[entry.total_destinations_]);
 	  printf ("\n");
 	}
     }
-  RTfile.close();
+  file.close();
 
   return 0;
 }

@@ -1699,8 +1699,10 @@ typedef fd_set ACE_FD_SET_TYPE;
 // Necessary to support the Alphas, which have 64 bit longs and 32 bit
 // ints...
 typedef u_int ACE_UINT32;
+typedef int ACE_INT32;
 #else
 typedef u_long ACE_UINT32;
+typedef long ACE_INT32;
 #endif /* ACE_HAS_64BIT_LONGS */
 
 #if !defined (ETIMEDOUT) && defined (ETIME)
