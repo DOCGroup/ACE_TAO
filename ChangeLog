@@ -1,3 +1,12 @@
+Sat Jun  5 09:06:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/RMCast/RMCast_IO_UDP.i: Added a fix so that the transmitter
+	  no longer hangs waiting for the acknowledgement unicast response
+ 	  messages.  The recipients were transmitting acknowledgements,
+ 	  but the transmitter was listening to the socket that was bound
+ 	  to a specific multicast address.  Thanks to Dave Craig
+ 	  <dwcraig@qualcomm.com> for this fix.
+
 Thu Jun  3 23:21:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dirent_Selector.cpp (close):
