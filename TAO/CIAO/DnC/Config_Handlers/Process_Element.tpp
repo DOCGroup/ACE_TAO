@@ -9,6 +9,7 @@
 //=====================================================================
 
 #include "Process_Element.h"
+#include "Config_Handlers/Config_Error_Handler.h"
 #include "Utils.h"
 #include <iostream>
 #include <memory>
@@ -26,71 +27,81 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 Process_Function <DATA>* func,
                                 REF_MAP& id_map)
 {
-  // the number of attributes
-  int length = named_node_map->getLength();
-  // iterate the attributes
-  for (int j = 0; j < length; ++j)
+  try
     {
-      DOMNode* attribute_node = named_node_map->item (j);
-      XStr strattrnodename (attribute_node->getNodeName ());
-      char* aceattrnodevalue_ch =
-        XMLString::transcode (attribute_node->getNodeValue ());
-      ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
-      XMLString::release (&aceattrnodevalue_ch);
-
-      // if xmi::id is given process the element and bind the value
-      if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+      // the number of attributes
+      int length = named_node_map->getLength();
+      // iterate the attributes
+      for (int j = 0; j < length; ++j)
         {
-          (*func) (doc, iter, data);
-          id_map.bind (aceattrnodevalue, value);
-        }
-      // if href is given find out the referenced position
-      // and process the element
-      else if (strattrnodename == XStr (ACE_TEXT ("href")))
-        {
-          XMLURL xml_url (aceattrnodevalue.c_str ());
-          XMLURL result (aceattrnodevalue.c_str ());
-          std::string url_string = aceattrnodevalue.c_str ();
-          char* doc_path_ch =
-            XMLString::transcode ( doc->getDocumentURI ());
-          ACE_TString doc_path = doc_path_ch;
-          XMLString::release (&doc_path_ch);
-          XMLCh* rel_str =
-            (XMLString::transcode (doc_path.c_str ()));
-          result.makeRelativeTo
-            (rel_str);
-          char* final_url_ch =
-            XMLString::transcode (result.getURLText ());
-          ACE_TString final_url = final_url_ch;
-          XMLString::release (&final_url_ch);
-          XMLString::release (&rel_str);
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          char* aceattrnodevalue_ch =
+            XMLString::transcode (attribute_node->getNodeValue ());
+          ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
+          XMLString::release (&aceattrnodevalue_ch);
 
-          DOMDocument* href_doc;
-
-          std::auto_ptr<DOMBuilder> parser (CIAO::Config_Handler::Utils::create_parser  ());
-		  
-          if (xml_url.isRelative ())
+          // if xmi::id is given process the element and bind the value
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
             {
-			  
-              href_doc = parser->parseURI (final_url.c_str ());
+              (*func) (doc, iter, data);
+              id_map.bind (aceattrnodevalue, value);
             }
-          else
+          // if href is given find out the referenced position
+          // and process the element
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
             {
-              href_doc = parser->parseURI (url_string.c_str ());
-            }
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              char* doc_path_ch =
+                XMLString::transcode ( doc->getDocumentURI ());
+              ACE_TString doc_path = doc_path_ch;
+              XMLString::release (&doc_path_ch);
+              XMLCh* rel_str =
+                (XMLString::transcode (doc_path.c_str ()));
+              result.makeRelativeTo
+                (rel_str);
+              char* final_url_ch =
+                XMLString::transcode (result.getURLText ());
+              ACE_TString final_url = final_url_ch;
+              XMLString::release (&final_url_ch);
+              XMLString::release (&rel_str);
 
-          DOMDocumentTraversal* traverse = href_doc;
-          DOMNode* root = (href_doc->getDocumentElement ());
-          unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-            DOMNodeFilter::SHOW_TEXT;
-          DOMNodeIterator* href_iter = traverse->createNodeIterator
-            (root,
-             filter,
-             0,
-             true);
-          href_iter->nextNode ();
-          (*func) (href_doc, href_iter, data);
+              DOMDocument* href_doc;
+
+              std::auto_ptr<DOMBuilder> parser (
+                      CIAO::Config_Handler::Utils::create_parser  ());
+
+              CIAO::Config_Handler::Config_Error_Handler handler;
+              parser->setErrorHandler(&handler);
+                      
+              if (xml_url.isRelative ())
+                {
+                  href_doc = parser->parseURI (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = parser->parseURI (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse = href_doc;
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                (root,
+                 filter,
+                 0,
+                 true);
+              href_iter->nextNode ();
+              (*func) (href_doc, href_iter, data);
+            }
         }
+    }
+  catch (...)
+    {
+      ACE_DEBUG ((LM_DEBUG, "caught DOM exception\n"));
     }
 }
 

@@ -38,10 +38,11 @@ namespace CIAO
         }
 
       char *msg = XMLString::transcode(domError.getMessage());
+      char *url = XMLString::transcode (domError.getLocation()->getURI());
       ACE_Auto_Basic_Array_Ptr<char> cleanup_msg (msg);
       ACE_ERROR ((LM_ERROR, "while processing resource '%s', "
                   "Line %d, Position %d : %s\n",
-                  domError.getLocation()->getURI(),
+                  url,
                   domError.getLocation()->getLineNumber(),
                   domError.getLocation()->getColumnNumber(),
                   msg));
