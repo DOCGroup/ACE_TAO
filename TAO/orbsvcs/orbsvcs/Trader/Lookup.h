@@ -21,10 +21,11 @@
 
 #include "Policies.h"
 #include "Offer_Filter.h"
-#include "Property_Filter.h"
 #include "Offer_Iterator.h"
 #include "Constraint_Interpreter.h"
 #include "Preference_Interpreter.h"
+
+#include <list>
 
 template<class TRADER>
 class TAO_Lookup :
@@ -155,7 +156,8 @@ private:
   typedef TRADER::LOCAL_OFFER_ITER LOCAL_OFFER_ITER;
   typedef TRADER::SERVICE_TYPE_MAP SERVICE_TYPE_MAP;
   typedef pair<CosTrading::OfferId, CosTrading::Offer*> OFFER;
-  typedef deque <OFFER> LOOKUP_OFFER_LIST;
+  typedef deque<OFFER> LOOKUP_OFFER_LIST;
+  typedef list<string> TYPE_LIST;
 
   TAO_Offer_Iterator*
     create_offer_iterator (const char *type,
