@@ -1,3 +1,10 @@
+Thu Oct 31 12:07:51 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp: 
+	* orbsvcs/orbsvcs/Notify/Sequence/EventBatch.cpp: 
+
+	  Fixed debian build compile warnings.
+	
 Thu Oct 31 11:58:24 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/EC_MT_Mcast/MCast.cpp: Fixed compile error in
