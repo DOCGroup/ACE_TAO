@@ -29,7 +29,7 @@ struct TAO_operation_db_entry
   // skeleton pointer
 };
 
-class ACE_Svc_Export TAO_Operation_Table
+class TAO_Export TAO_Operation_Table
   // = TITLE
   //     Abstract class for maintaining and lookup of CORBA IDL
   //     operation names. 
@@ -55,7 +55,7 @@ public:
 typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> 
         OP_MAP_MANAGER;
 
-class ACE_Svc_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
+class TAO_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
   // = TITLE
   // Dynamic Hashing scheme for CORBA IDL operation name lookup
 {
@@ -87,7 +87,7 @@ private:
   // The hash table data structure
 };
 
-struct ACE_Svc_Export TAO_Linear_OpTable_Entry
+struct TAO_Export TAO_Linear_OpTable_Entry
   // = TITLE
   //   Table entry for linear search lookup strategy.
 {
@@ -104,7 +104,7 @@ struct ACE_Svc_Export TAO_Linear_OpTable_Entry
   // destructor
 };
 
-class ACE_Svc_Export TAO_Linear_OpTable : public TAO_Operation_Table
+class TAO_Export TAO_Linear_OpTable : public TAO_Operation_Table
 // @@ Please comment me.
 {
 public:
@@ -138,7 +138,7 @@ private:
   // the table itself
 };
 
-struct ACE_Svc_Export TAO_Active_Demux_OpTable_Entry
+struct TAO_Export TAO_Active_Demux_OpTable_Entry
   // = TITLE
   //   Active Demux lookup table entry.
 {
@@ -152,7 +152,7 @@ struct ACE_Svc_Export TAO_Active_Demux_OpTable_Entry
   // destructor
 };
 
-class ACE_Svc_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
+class TAO_Export TAO_Active_Demux_OpTable : public TAO_Operation_Table
   // = TITLE
   //   Implements the active demultiplexed lookup strategy. The key is
   //   assumed to provide an index directly into the internal table.
@@ -187,11 +187,11 @@ private:
   // internal lookup table
 };
 
-class ACE_Svc_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
+class TAO_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
 {
 };
 
-class ACE_Svc_Export TAO_Operation_Table_Parameters
+class TAO_Export TAO_Operation_Table_Parameters
 // @@ Please comment me.
 {
 public:
@@ -236,7 +236,7 @@ private:
 typedef ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX> 
         TAO_OP_TABLE_PARAMETERS;
 
-class ACE_Svc_Export TAO_Operation_Table_Factory
+class TAO_Export TAO_Operation_Table_Factory
   // = TITLE
   //   Factory for producing operation table lookup objects based on
   //   the enumerated value of strategy held by the parameters.

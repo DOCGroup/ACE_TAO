@@ -28,7 +28,7 @@ class TAO_Server_Connection_Handler;
 #define TAO_LOCAL_INLINE ACE_INLINE
 #endif /* ! __ACE_INLINE__ */
 
-class ACE_Svc_Export TAO_ORB_Parameters
+class TAO_Export TAO_ORB_Parameters
   // = TITLE
   //    Parameters that are specific to the ORB.  These parameters can
   //    be for the client, the server, or for both.
@@ -85,7 +85,7 @@ typedef enum
   TAO_USER_DEFINED
 } TAO_Demux_Strategy;
 
-class ACE_Svc_Export TAO_OA_Parameters
+class TAO_Export TAO_OA_Parameters
   // = TITLE
   //    Parameters specific to an Object Adapter.  By definition, this
   //    is only on the server side, since a client does not have an

@@ -19,7 +19,7 @@
 #if !defined (TAO_EXCEPT_H)
 #  define TAO_EXCEPT_H
 
-class ACE_Svc_Export CORBA_Exception : public IUnknown
+class TAO_Export CORBA_Exception : public IUnknown
   // = TITLE
   //   CORBA2-specified exception hierarchy.
   //
@@ -66,7 +66,7 @@ private:
   // Serialize access to reference count.
 };
 
-class ACE_Svc_Export CORBA_UserException : public CORBA_Exception
+class TAO_Export CORBA_UserException : public CORBA_Exception
   // = TITLE
   //   User exceptions are those defined by application developers
   //   using OMG-IDL.
@@ -79,7 +79,7 @@ protected:
   // Copy and assignment operators.
 };
 
-class ACE_Svc_Export CORBA_SystemException : public CORBA_Exception
+class TAO_Export CORBA_SystemException : public CORBA_Exception
   // = TITLE
   //   System exceptions are those defined in the CORBA spec; OMG-IDL
   //   defines these.
@@ -113,7 +113,7 @@ private:
 // inside the ORB.  All minor codes should be symbolically catalogued.
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-class ACE_Svc_Export CORBA_ ## name : public CORBA_SystemException { \
+class TAO_Export CORBA_ ## name : public CORBA_SystemException { \
 public: \
   CORBA_ ## name (CORBA::CompletionStatus completed, \
                   CORBA::ULong code = 0xffff0000L) \
@@ -150,7 +150,7 @@ TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 
 #undef	TAO_SYSTEM_EXCEPTION
 
-class ACE_Svc_Export CORBA_Environment
+class TAO_Export CORBA_Environment
 {
   // = TITLE
   // A CORBA_Environment is a way to automagically ensure that

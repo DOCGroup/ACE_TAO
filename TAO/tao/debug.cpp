@@ -18,8 +18,8 @@
 #define funlockfile(f)
 #endif /* ACE_HAS_PTHREADS */
 
-u_int ACE_Svc_Export TAO_debug_level	= 0;
-char * ACE_Svc_Export TAO_debug_filter	= "l";
+u_int TAO_Export TAO_debug_level	= 0;
+char * TAO_Export TAO_debug_filter	= "l";
 
 static FILE *debug_stream = stderr;
 
@@ -104,7 +104,7 @@ setup (void)
 #	error "unknown OS platform"
 #endif /* OS-specific initialization */
 
-void ACE_Svc_Export
+void TAO_Export
 dmsg_filter (const char *_FAR categories,
 	     const char *_FAR fmt,
 	     ...)
@@ -146,7 +146,7 @@ dmsg_filter (const char *_FAR categories,
 #endif /* _WIN32 */
 }
 
-void ACE_Svc_Export
+void TAO_Export
 dmsg_filter (u_int level, 
 	     const char *_FAR fmt, 
 	     ...)
@@ -171,7 +171,7 @@ dmsg_filter (u_int level,
 #endif /* _WIN32 */
 }
 
-void ACE_Svc_Export
+void TAO_Export
 dmsg_v (const char *_FAR fmt, 
 	...)
 {
@@ -192,7 +192,7 @@ dmsg_v (const char *_FAR fmt,
 #endif /* _WIN32 */
 }
 
-void ACE_Svc_Export
+void TAO_Export
 _dmsg_x (CORBA::Environment _FAR	&env,
 	 const char *_FAR info)
 {
@@ -217,7 +217,7 @@ _dmsg_x (CORBA::Environment _FAR	&env,
 #endif /* _WIN32 */
 }
 
-void ACE_Svc_Export
+void TAO_Export
 dmsg_opaque (char *_FAR label,
 	     u_char *_FAR buffer,
 	     u_long len)
@@ -268,7 +268,7 @@ dmsg_opaque (char *_FAR label,
 #endif /* _WIN32 */
 }
 
-void ACE_Svc_Export
+void TAO_Export
 dmsg_opaque_full (char *_FAR label,
 		  const u_char *_FAR buffer,
 		  u_long len)
