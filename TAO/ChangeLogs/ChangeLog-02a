@@ -1,3 +1,85 @@
+Tue Oct 10 16:59:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAOACE_Static.dsw: Updated some project dependencies.
+
+	* TAO_IDL/be_include/TAO_IDL_BE_Export.h:
+	* TAO_IDL/include/TAO_IDL_FE_Export.h:
+	* examples/POA/Generic_Servant/generic_servant_export.h:
+	* orbsvcs/IFR_Service/TCF_Export.h:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/rtec_cosec_export.h:
+	* orbsvcs/orbsvcs/orbsvcs_export.h:
+	* orbsvcs/orbsvcs/svc_utils_export.h:
+	* orbsvcs/orbsvcs/AV/AV_export.h:
+	* orbsvcs/orbsvcs/Concurrency/concurrency_export.h:
+	* orbsvcs/orbsvcs/CosEvent/event_export.h:
+	* orbsvcs/orbsvcs/ESF/esf_export.h:
+	* orbsvcs/orbsvcs/ETCL/etcl_export.h:
+	* orbsvcs/orbsvcs/Event/event_export.h:
+	* orbsvcs/orbsvcs/Event/old_event_export.h:
+	* orbsvcs/orbsvcs/Event/sched_event_export.h:
+	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
+	* orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+	* orbsvcs/orbsvcs/Log/log_export.h:
+	* orbsvcs/orbsvcs/Naming/naming_export.h:
+	* orbsvcs/orbsvcs/Notify/notify_export.h:
+	* orbsvcs/orbsvcs/Property/property_export.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h:
+	* orbsvcs/orbsvcs/Sched/sched_export.h:
+	* orbsvcs/orbsvcs/Security/security_export.h:
+	* orbsvcs/orbsvcs/Time/time_export.h:
+	* orbsvcs/orbsvcs/Trader/trading_export.h:
+	* orbsvcs/tests/CosEvent/lib/cectest_export.h:
+	* orbsvcs/tests/Event/lib/ectest_export.h:
+	* orbsvcs/tests/Notify/lib/notify_test_export.h:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/rtcorba_common_export.h
+	* tao/TAO_Export.h:
+	* tao/ior_corbaloc_export.h:
+	* tao/ior_corbaname_export.h:
+	* tao/DynamicAny/dynamicany_export.h:
+	* tao/IORManipulation/ior_manip_export.h:
+	* tao/IORTable/iortable_export.h:
+	* tao/PortableServer/portableserver_export.h:
+	* tests/Collocation/diamond_export.h:
+	* tests/Collocation/stub_export.h:
+	* tests/Object_Loader/OLT_Export.h:
+	* tests/Smart_Proxies/Collocation/diamond_export.h:
+	* tests/Smart_Proxies/Collocation/stub_export.h: Added a new macro
+	  TAO_AS_STATIC_LIBS that controls the default value of a whole
+	  slew of BLAH_HAS_DLL values so we can build and use static TAO
+	  libraries easily.  Notice that you can still override the value
+	  of BLAH_HAS_DLL.  Thanks to Darrell for writing a made-to-order
+	  script that makes my life easier.
+
+	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/tao_idl_static.dsp:
+	* orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+	* orbsvcs/Naming_Service/Naming_Server_static.dsp:
+	* orbsvcs/orbsvcs/AV_Static.dsp:
+	* orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+	* orbsvcs/orbsvcs/CosEvent_Static.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+	* orbsvcs/orbsvcs/CosNaming_Static.dsp:
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+	* orbsvcs/orbsvcs/CosProperty_Static.dsp:
+	* orbsvcs/orbsvcs/CosTime_Static.dsp:
+	* orbsvcs/orbsvcs/CosTrading_Static.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+	* orbsvcs/orbsvcs/LoadBalancing_Static.dsp:
+	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTOLDEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTSchedEvent_Static.dsp:
+	* orbsvcs/orbsvcs/RTSched_Static.dsp:
+	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/IORTable/TAO_IORTable_Static.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp: Changed the
+	  ten thousand kinds of BLAH_HAS_DLL to use ACE_AS_STATIC_LIBS and
+	  TAO_AS_STATIC_LIBS.  Also fixed a bunch of the broken project
+	  files.  Many of these static project configurations were
+	  completely broken.
+
 Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
@@ -7,7 +89,7 @@ Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added missing insertion/extraction operators for
 	  Any_var and bounded wstrings. Thanks to
 	  Mateu Batle <mbatle@iname.com> for reporting
-	  this bug. Also made cosmetic changes to all Any 
+	  this bug. Also made cosmetic changes to all Any
 	  files.
 
 	* tao/ifrfwd.h:
@@ -29,13 +111,13 @@ Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  TAO_ClientRequest_Info_CORBA_ConstructionPolicy_make_domain_manager.
 	  The generated code has already been fixed in the IDL compiler.
 
-	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for reporting 
+	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for reporting
 	  the above pair of bugs.
 
 	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
 
-	  While investigatiing the last bug above, came across another 
-	  mismatch of the same type, for interfaces and pseudo objects, 
+	  While investigatiing the last bug above, came across another
+	  mismatch of the same type, for interfaces and pseudo objects,
 	  but only on the skeleton side.
 
 Tue Oct 10 14:15:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -7089,17 +7171,17 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
         * tao/Policy{C,S}.cpp:
           Removed interceptor points from invocations.
 
-        * TAO/tao/Makefile: updated dependencies.
-        * TAO/tao/TAO.dsp:
-        * TAO/tao/TAO_Static.dsp:
+        * tao/Makefile: updated dependencies.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
           Updated the NT projects.
 
         Removed the old interceptor files:
 
-        * TAO/tao/Interceptor.{h, i, cpp}:
-        * TAO/tao/InterceptorC.{h, i, cpp}:
-        * TAO/tao/Interceptor.pidl
-        * TAO/tests/Interceptors
+        * tao/Interceptor.{h, i, cpp}:
+        * tao/InterceptorC.{h, i, cpp}:
+        * tao/Interceptor.pidl
+        * tests/Interceptors
           All the above are no longer available!
 
         The following are tests to check out how well this feature
@@ -7155,7 +7237,7 @@ Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
           This is a benchamrking test used and explained in
           http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
 
-        * TAO/docs/interceptor.html:
+        * docs/interceptor.html:
           updated documentation to reflect these changes.
           Thanks to Nanbor for brainstorming and guidance,
           Jeff for help on nitty-gritty IDL bugs and Doug on helping to
@@ -13041,19 +13123,19 @@ Tue Jun 06 21:21:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Jun 06 20:59:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * TAO/test/ExposedPolicies:
-        * TAO/test/ExposedPolicies/Counter.idl:
-        * TAO/test/ExposedPolicies/ExposedPolicies.dsw:
+        * test/ExposedPolicies:
+        * test/ExposedPolicies/Counter.idl:
+        * test/ExposedPolicies/ExposedPolicies.dsw:
 
-        * TAO/test/ExposedPolicies/Server:
-        * TAO/test/ExposedPolicies/Server/Server.cpp:
-        * TAO/test/ExposedPolicies/Server/Counter_i.h:
-        * TAO/test/ExposedPolicies/Server/Counter_i.cpp:
-        * TAO/test/ExposedPolicies/Server/Server.dsp:
+        * test/ExposedPolicies/Server:
+        * test/ExposedPolicies/Server/Server.cpp:
+        * test/ExposedPolicies/Server/Counter_i.h:
+        * test/ExposedPolicies/Server/Counter_i.cpp:
+        * test/ExposedPolicies/Server/Server.dsp:
 
-        * TAO/test/ExposedPolicies/Client:
-        * TAO/test/ExposedPolicies/Client/Client.cpp:
-        * TAO/test/ExposedPolicies/Client/Client.dsp:
+        * test/ExposedPolicies/Client:
+        * test/ExposedPolicies/Client/Client.cpp:
+        * test/ExposedPolicies/Client/Client.dsp:
 
           Added test for Client Exposed Policies.
 
@@ -16996,20 +17078,20 @@ Tue Apr 25 19:25:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         Mon Apr 24 14:41:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-                * TAO/tao/LocalObject.cpp:
-                * TAO/tao/LocalObject.h: Fixed _is_equivalent's signature.
+                * tao/LocalObject.cpp:
+                * tao/LocalObject.h: Fixed _is_equivalent's signature.
 
-                * TAO/tao/Makefile:
-                * TAO/tao/Makefile.am:
-                * TAO/tao/Makefile.bor: Added LocalObject.
+                * tao/Makefile:
+                * tao/Makefile.am:
+                * tao/Makefile.bor: Added LocalObject.
 
-                * TAO/tao/Object.h:
-                * TAO/tao/Object.i: Fixed some inlining problems on old gcc.
+                * tao/Object.h:
+                * tao/Object.i: Fixed some inlining problems on old gcc.
 
-                * TAO/tests/Interceptors/client.cpp:
-                * TAO/tests/Interceptors/server.cpp:
-                * TAO/tests/Interceptors/interceptors.cpp:
-                * TAO/tests/Interceptors/interceptors.h: Fixed gcc specific
+                * tests/Interceptors/client.cpp:
+                * tests/Interceptors/server.cpp:
+                * tests/Interceptors/interceptors.cpp:
+                * tests/Interceptors/interceptors.h: Fixed gcc specific
                   problems (like not able to use a var in place of ptr.)
 
         Mon Apr 24 03:40:36 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -17590,113 +17672,113 @@ Sun Apr 23 16:15:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * TAO/TAO_IDL/ast/ast_module.cpp:
-        * TAO/TAO_IDL/be/be_exception.cpp:
-        * TAO/TAO_IDL/be/be_sequence.cpp:
-        * TAO/TAO_IDL/be/be_structure.cpp:
-        * TAO/TAO_IDL/be/be_union.cpp:
-        * TAO/TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp:
-        * TAO/TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
-        * TAO/TAO_IDL/be/be_visitor_operation/arglist.cpp:
-        * TAO/TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-        * TAO/TAO_IDL/util/utl_global.cpp:
-        * TAO/examples/Load_Balancing_persistent/Identity_Client.cpp:
-        * TAO/examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
-        * TAO/examples/Logging/Logger_i.cpp:
-        * TAO/examples/Simple/time-date/server.cpp:
-        * TAO/orbsvcs/IFR_Service/TCF_Loader.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/Options.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/Options.h:
-        * TAO/orbsvcs/ImplRepo_Service/tao_imr.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
-        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.cpp:
-        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.h:
-        * TAO/orbsvcs/Naming_Service/Naming_Service.cpp:
-        * TAO/orbsvcs/Naming_Service/Naming_Service.h:
-        * TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp:
-        * TAO/orbsvcs/orbsvcs/AV/RTCP.cpp:
-        * TAO/orbsvcs/orbsvcs/AV/RTP.cpp:
-        * TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
-        * TAO/orbsvcs/orbsvcs/AV/UDP.cpp:
-        * TAO/orbsvcs/orbsvcs/AV/sfp.cpp:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-        * TAO/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Naming_Utils.h:
-        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
-        * TAO/orbsvcs/orbsvcs/Trader/Trader.cpp:
-        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-        * TAO/performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
-        * TAO/tao/Acceptor_Registry.cpp:
-        * TAO/tao/Any.cpp:
-        * TAO/tao/Connector_Registry.cpp:
-        * TAO/tao/DomainS.cpp:
-        * TAO/tao/Environment.cpp:
-        * TAO/tao/Exception.cpp:
-        * TAO/tao/GIOP_Message_Accept_State.cpp:
-        * TAO/tao/GIOP_Message_Acceptors.cpp:
-        * TAO/tao/GIOP_Message_Base.cpp:
-        * TAO/tao/GIOP_Message_Connectors.cpp:
-        * TAO/tao/GIOP_Message_Lite.cpp:
-        * TAO/tao/GIOP_Server_Request.cpp:
-        * TAO/tao/GIOP_Utils.cpp:
-        * TAO/tao/IIOP_Acceptor.cpp:
-        * TAO/tao/IIOP_Connect.cpp:
-        * TAO/tao/IIOP_Connector.cpp:
-        * TAO/tao/IIOP_Factory.cpp:
-        * TAO/tao/IIOP_Lite_Factory.cpp:
-        * TAO/tao/IIOP_Profile.cpp:
-        * TAO/tao/IIOP_Transport.cpp:
-        * TAO/tao/Invocation.cpp:
-        * TAO/tao/Leader_Follower.cpp:
-        * TAO/tao/Leader_Follower.i:
-        * TAO/tao/Messaging_Policy_i.cpp:
-        * TAO/tao/NVList.cpp:
-        * TAO/tao/ORB.cpp:
-        * TAO/tao/ORB_Core.cpp:
-        * TAO/tao/Object.cpp:
-        * TAO/tao/Operation_Table.cpp:
-        * TAO/tao/POA.cpp:
-        * TAO/tao/POAS.cpp:
-        * TAO/tao/Pluggable.cpp:
-        * TAO/tao/Pluggable_Messaging.cpp:
-        * TAO/tao/Pool_Per_Endpoint.cpp:
-        * TAO/tao/Reactor_Per_Priority.cpp:
-        * TAO/tao/Reply_Dispatcher.cpp:
-        * TAO/tao/Request.cpp:
-        * TAO/tao/SHMIOP_Acceptor.cpp:
-        * TAO/tao/SHMIOP_Acceptor.h:
-        * TAO/tao/SHMIOP_Connect.cpp:
-        * TAO/tao/SHMIOP_Connector.cpp:
-        * TAO/tao/SHMIOP_Factory.cpp:
-        * TAO/tao/SHMIOP_Profile.cpp:
-        * TAO/tao/SHMIOP_Transport.cpp:
-        * TAO/tao/Stub.cpp:
-        * TAO/tao/Stub.i:
-        * TAO/tao/TAO.cpp:
-        * TAO/tao/Transport_Mux_Strategy.cpp:
-        * TAO/tao/Typecode.cpp:
-        * TAO/tao/UIOP_Connector.cpp:
-        * TAO/tao/UIOP_Factory.cpp:
-        * TAO/tao/UIOP_Lite_Factory.cpp:
-        * TAO/tao/UIOP_Profile.cpp:
-        * TAO/tao/UIOP_Transport.cpp:
-        * TAO/tao/ValueBase.cpp:
-        * TAO/tao/Wait_Strategy.cpp:
-        * TAO/tao/append.cpp:
-        * TAO/tao/default_client.cpp:
-        * TAO/tao/default_resource.cpp:
-        * TAO/tao/default_server.cpp:
-        * TAO/tao/qt_resource.cpp:
-        * TAO/tao/skip.cpp:
-        * TAO/tao/xt_resource.cpp:
-        * TAO/tests/Smart_Proxies/server.cpp:
-        * TAO/tests/Smart_Proxies/On_Demand/server.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * examples/Logging/Logger_i.cpp:
+        * examples/Simple/time-date/server.cpp:
+        * orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+        * orbsvcs/ImplRepo_Service/tao_imr.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Any.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/DomainS.cpp:
+        * tao/Environment.cpp:
+        * tao/Exception.cpp:
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Utils.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connect.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Factory.cpp:
+        * tao/IIOP_Lite_Factory.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IIOP_Transport.cpp:
+        * tao/Invocation.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/Leader_Follower.i:
+        * tao/Messaging_Policy_i.cpp:
+        * tao/NVList.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp:
+        * tao/Operation_Table.cpp:
+        * tao/POA.cpp:
+        * tao/POAS.cpp:
+        * tao/Pluggable.cpp:
+        * tao/Pluggable_Messaging.cpp:
+        * tao/Pool_Per_Endpoint.cpp:
+        * tao/Reactor_Per_Priority.cpp:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Request.cpp:
+        * tao/SHMIOP_Acceptor.cpp:
+        * tao/SHMIOP_Acceptor.h:
+        * tao/SHMIOP_Connect.cpp:
+        * tao/SHMIOP_Connector.cpp:
+        * tao/SHMIOP_Factory.cpp:
+        * tao/SHMIOP_Profile.cpp:
+        * tao/SHMIOP_Transport.cpp:
+        * tao/Stub.cpp:
+        * tao/Stub.i:
+        * tao/TAO.cpp:
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/Typecode.cpp:
+        * tao/UIOP_Connector.cpp:
+        * tao/UIOP_Factory.cpp:
+        * tao/UIOP_Lite_Factory.cpp:
+        * tao/UIOP_Profile.cpp:
+        * tao/UIOP_Transport.cpp:
+        * tao/ValueBase.cpp:
+        * tao/Wait_Strategy.cpp:
+        * tao/append.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        * tao/qt_resource.cpp:
+        * tao/skip.cpp:
+        * tao/xt_resource.cpp:
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
 
           Made the appropriate changes based on the Wide Character support
           I did in ACE.  Mainly just renaming the ASYS_* macros to their
@@ -17736,10 +17818,10 @@ Fri Apr 21 20:13:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Apr 21 19:41:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.h:
-        * TAO/orbsvcs/ImplRepo_Service/Options.cpp:
-        * TAO/orbsvcs/ImplRepo_Service/Options.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
 
           The ImR now pings a server right after starting it up.  It will
           not forward the client until after the server responds to a ping
@@ -18249,9 +18331,9 @@ Tue Apr 18 22:43:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * TAO/TAO_IDL/ast/ast_generator.cpp:
-        * TAO/TAO_IDL/be/be_generator.cpp:
-        * TAO/tao/Timeprobe.h:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * tao/Timeprobe.h:
 
           Changed inc_user_config.h to config-all.h (see ACE's changelog
           entry for more info).
