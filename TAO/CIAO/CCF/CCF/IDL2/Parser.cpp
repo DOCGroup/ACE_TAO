@@ -35,6 +35,7 @@ namespace CCF
           ABSTRACT   ("abstract"   ),
           ATTRIBUTE  ("attribute"  ),
           CONST      ("const"      ),
+          ENUM       ("enum"       ),
           EXCEPTION  ("exception"  ),
           FACTORY    ("factory"    ),
           IN         ("in"         ),
@@ -87,6 +88,18 @@ namespace CCF
           act_attribute_name (
             f.attribute (), &SemanticAction::Attribute::name),
 
+          // Enum
+          //
+          //
+          act_enum_begin (
+            f.enum_ (), &SemanticAction::Enum::begin),
+
+          act_enum_enumerator (
+            f.enum_ (), &SemanticAction::Enum::enumerator),
+
+          act_enum_end (
+            f.enum_ (), &SemanticAction::Enum::end),
+
 
           // Exception
           //
@@ -102,7 +115,6 @@ namespace CCF
 
           act_exception_end (
             f.exception (), &SemanticAction::Exception::end),
-
 
           // Include
           //
@@ -279,6 +291,7 @@ namespace CCF
       declaration =
           abstract_type_decl
         | const_decl
+        | enum_decl
         | exception_decl
         | extension
         | local_type_decl
@@ -466,6 +479,21 @@ namespace CCF
         ;
 
       string_const_expr = string_literal;
+
+
+      // enum
+      //
+      //
+      enum_decl =
+           ENUM
+        >> simple_identifier[act_enum_begin]
+        >> LBRACE
+        >> enumerator_decl >> *(COMMA >> enumerator_decl)
+        >> RBRACE
+        >> SEMI[act_enum_end]
+        ;
+
+      enumerator_decl = identifier[act_enum_enumerator];
 
       // interface
       //

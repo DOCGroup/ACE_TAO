@@ -5,8 +5,8 @@
 #ifndef CCF_IDL2_TRAVERSAL_ATTRIBUTE_HPP
 #define CCF_IDL2_TRAVERSAL_ATTRIBUTE_HPP
 
-#include "CCF/IDL2/Traversal/Elements.hpp"
 #include "CCF/IDL2/SemanticGraph/Attribute.hpp"
+#include "CCF/IDL2/Traversal/Elements.hpp"
 
 namespace CCF
 {
