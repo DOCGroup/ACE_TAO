@@ -34,7 +34,7 @@ namespace TAO
   namespace SSLIOP
   {
     // OpenSSL @c SSL structure traits specialization.
-    
+    template <>
     struct OpenSSL_traits< ::SSL >
     {
       /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference

@@ -72,7 +72,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::~OpenSSL_st_var (void)
 template <typename T> ACE_INLINE TAO::SSLIOP::OpenSSL_st_var<T> &
 TAO::SSLIOP::OpenSSL_st_var<T>::operator= (T * st)
 {
-  TAO::SSLIOP::OpenSSL_traits<T>::::release (this->st_);
+  TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
   this->st_ = st;
   return *this;
 }
