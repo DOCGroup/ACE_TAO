@@ -1,3 +1,7 @@
+Thu Sep  5 12:13:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/common/URL_Addr.inl: Removed ACE_RCSID - it's in URL_Addr.cpp.
+
 Wed Sep  4 17:50:27 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.pl: Change run time limit from 300 to 400 seconds.

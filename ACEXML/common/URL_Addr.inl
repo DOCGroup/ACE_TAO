@@ -2,7 +2,6 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(common, ACEXML_URL_Addr, "$Id$");
 
 ACE_INLINE size_t
 ACEXML_URL_Addr::calculate_length (int ipaddr_format) const
