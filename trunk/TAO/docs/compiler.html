@@ -58,7 +58,7 @@ pathname if the compiler is not within your <code>$PATH</code>.
 
 TAO_IDL also defines a set of default command line options passed to
 the preprocessor depending on which platform TAO_IDL is compiled.  The
-environment variable <CODE>TAO_IDL_DEFAULT_CPP_FLAGS</CDOE> allows you
+environment variable <CODE>TAO_IDL_DEFAULT_CPP_FLAGS</CODE> allows you
 to alter the command line optiona passed to the preprocessor.  You can
 use it to alter the default options for the preprocessor and specify
 things like include directories and how the preprocessor is invoked.
@@ -67,8 +67,7 @@ Two flags that won't get overwritten by the environment variable are
 the preprocessor.
 
 <HR><P>
-<h3>
-Operation Demuxing Strategies</h3>
+<h3>Operation Demuxing Strategies</h3>
 
 The server skeleton can use different demuxing strategies to match the
 incoming operation with the correct operation at the servant.  TAO's
@@ -106,6 +105,27 @@ the following:
 Note that if you can't use perfect hashing for some reason the next
 best operation demuxing strategy is binary search, which can be
 configured using TAO's IDL compiler <A HREF="#options">options</A>.<P>
+
+<hr><p>
+<h3><a name="collocation-stubs">Collocation Strategies</a></h3>
+
+TAO_IDL can generate collocated stubs using two different collocation
+strategies.  It also allows you to supress/enable the generation of
+the stubs of a particular strategy.  To gain great flexibility at
+run-time, you can gereate stubs for both collocation strategies
+(using both '<a href="#Gp"><code>-Gp</code></a>' and '<a
+href="#Gd"><code>-Gd</code></a>' flags at the same time) and defer the
+determination of collocation strategy until run-time.  On the other
+hand, if you want to minimize the footprint of your program, you might
+want to pre-determine the collocation strategy you want and only
+generate the right collocated stubs (or not generating any at all using
+both  '<a href="#Sp"><code>-Sp</code></a>' and '<a
+href="#Sd"><code>-Sd</code></a>' flags at the same time if
+it's a pure client.)  See our <a
+href="http://www.cs.wustl.edu/~schmidt/C++-report-col18.ps.gz">collocation
+paper</a> for a detail discussion on the collocation support in
+TAO.<p>
+
 
 <HR><P>
 <h3><A NAME="options">TAO's IDL Compiler Options</A></h3>
