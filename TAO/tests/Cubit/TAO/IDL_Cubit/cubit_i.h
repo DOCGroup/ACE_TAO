@@ -13,12 +13,12 @@
 // 
 // ============================================================================
 
-#if !defined (_CUBIT_I_HH)
-#define	_CUBIT_I_HH
+#if !defined (_CUBIT_I_H)
+#define	_CUBIT_I_H
 
 #include "cubitS.h"
 
-// Forward declarations
+// Forward declarations.
 class Cubit_i;
 
 // Typedefs.
@@ -26,13 +26,14 @@ typedef Cubit_i *Cubit_i_ptr;
 typedef Cubit_i_ptr Cubit_i_ref;
 
 class Cubit_i : public POA_Cubit
+{
   // = TITLE
-  //    Illustrates how to integrate a servant with the
-  //    generated skeleton.
+  //    Illustrates how to integrate a servant with the generated
+  //    skeleton.
+  //
   // = DESCRIPTION
   //    Implementation of the cubit example at the servant side.
   //    Cubes an octet, short, long, struct and union.
-{
 public:
   Cubit_i (const char *obj_name = 0);
   // Constructor
@@ -69,30 +70,30 @@ public:
   // Shutdown routine.
 };
 
-
 class Cubit_Factory_i;
 
 typedef Cubit_Factory_i *Cubit_Factory_i_ptr;
 
 class Cubit_Factory_i: public POA_Cubit_Factory
-  // =TITLE
-  //  Cubit_Factory_i
-  //
-  // DESCRIPTION
-  //  factory object returning the cubit objrefs
 {
+  // = TITLE
+  //   Cubit_Factory_i
+  //
+  // = DESCRIPTION
+  //   Factory object returning the cubit objrefs
 public:
   Cubit_Factory_i (void);
-  // constructor
+  // Constructor.
 
   ~Cubit_Factory_i (void);
-  // destructor
+  // Destructor.
 
-  virtual Cubit_ptr make_cubit (const char *key, CORBA::Environment &env);
-  // make the cubit object whose key is "key"
+  virtual Cubit_ptr make_cubit (const char *key,
+                                CORBA::Environment &env);
+  // Make the cubit object whose key is "key".
 
 private:
   Cubit_i my_cubit_;
 };
 
-#endif /* _CUBIT_I_HH */
+#endif /* _CUBIT_I_H */

@@ -133,10 +133,10 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 		       CORBA::Environment &)
 {
   if (output.ptr () == 0)
-    {
-      output = new Cubit::vector (input.length ());
-    }
+    output = new Cubit::vector (input.length ());
+
   output->length (input.length ());
+
   for (CORBA::ULong i = 0; i < input.length (); ++i)
     {
       CORBA::Long x = input[i];
@@ -144,20 +144,16 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
     }
 }
 
-
 // Shutdown.
 
 void Cubit_i::shutdown (CORBA::Environment &env)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (env);
 
-  ACE_DEBUG ((LM_DEBUG, "%s",
-	      "I have been asked to shut down "
-	      ));
+  ACE_DEBUG ((LM_DEBUG, 
+              "%s",
+	      "I have been asked to shut down "));
 	      
-  //  dmsg ("I've been asked to shut down...");
-
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
