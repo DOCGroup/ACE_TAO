@@ -48,7 +48,7 @@ CIAO::Map_Key_Cookie::extract (::Components::Cookie *ck,
 CORBA::ValueBase *
 CIAO::Map_Key_Cookie_init::create_for_unmarshal (void)
 {
-  CORBA_ValueBase *ret_val = 0;
+  CORBA::ValueBase *ret_val = 0;
   ACE_NEW_RETURN (
       ret_val,
       CIAO::Map_Key_Cookie,

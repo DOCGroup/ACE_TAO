@@ -19,8 +19,8 @@
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
 #define CIAO_REGISTER_VALUE_FACTORY(ORB,FACTORY,VALUETYPE)       {\
-        CORBA_ValueFactory factory = new FACTORY; \
-        CORBA_ValueFactory prev_factory = \
+        CORBA::ValueFactory factory = new FACTORY; \
+        CORBA::ValueFactory prev_factory = \
           ORB->register_value_factory \
           (VALUETYPE::_tao_obv_static_repository_id (), \
            factory); \

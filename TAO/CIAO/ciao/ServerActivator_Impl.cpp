@@ -51,6 +51,11 @@ CIAO::ServerActivator_Impl::init (const char *server_location,
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (spawn_delay); // @@ We need to use this argumetn
+                                // later to determine is a
+                                // ComponentServer has been spawned
+                                // successfully.
+
   if (server_location == 0)
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
 
@@ -105,6 +110,8 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
                    Components::CreateFailure,
                    Components::InvalidConfiguration))
 {
+  ACE_UNUSED_ARG (config);      // This will be used later.
+
   ACE_DEBUG ((LM_DEBUG, "CIAO::ServerActivator_Impl::create_component_server\n"));
 
   ::Components::Deployment::ComponentServer_var retval;
