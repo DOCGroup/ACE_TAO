@@ -72,11 +72,11 @@ private:
   // Generation number of <index_> slot in the active map.
 };
 
-// Include the templates here.
-#include "ace/Active_Map_Manager_T.h"
-
 #if defined (__ACE_INLINE__)
 #include "ace/Active_Map_Manager.i"
 #endif /* __ACE_INLINE__ */
+
+// Include the templates here.
+#include "ace/Active_Map_Manager_T.h"
 
 #endif /* ACE_ACTIVE_MAP_MANAGER_H */
