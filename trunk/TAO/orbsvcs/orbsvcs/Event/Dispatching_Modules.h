@@ -24,6 +24,7 @@
 #define ACE_DISPATCHING_MODULES_H
 #include "ace/pre.h"
 
+#include "ace/Reactor_Notification_Strategy.h"
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Event/ReactorTask.h"
 #include "orbsvcs/Event/Event_Manip.h"
