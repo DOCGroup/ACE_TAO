@@ -52,9 +52,8 @@ ACE_RCSID (tests,
 
 #endif /* defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) */
 
-// Proactor Type (UNIX only, Win32 ignored) 0-default, 1 -AIOCB,
-// 2-SIG, 3-SUN, 4-CALLBACK
-typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CALLBACK } ProactorType;
+// Proactor Type (UNIX only, Win32 ignored)
+typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CB } ProactorType;
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
@@ -235,12 +234,12 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 #  endif /* sun */
 
 #  if defined (__sgi)
-    case CALLBACK:
+    case CB:
       ACE_NEW_RETURN (proactor,
                       ACE_POSIX_CB_Proactor (max_op),
                       -1);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Create Proactor Type = CALLBACK\n")));
+                  ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
       break;
 #  endif
 
@@ -1289,7 +1288,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
       ACE_TEXT ("\n-t <Proactor type> UNIX-only, Win32-default always:")
       ACE_TEXT ("\n    a AIOCB")
       ACE_TEXT ("\n    i SIG")
-      ACE_TEXT ("\n    c CALLBACK")
+      ACE_TEXT ("\n    c CB")
       ACE_TEXT ("\n    s SUN")
       ACE_TEXT ("\n    d default")
       ACE_TEXT ("\n-d <duplex mode 1-on/0-off>")
@@ -1334,7 +1333,7 @@ set_proactor_type (const ACE_TCHAR *ptype)
       return 1;
 #endif /* sun */
     case 'C':
-      proactor_type = CALLBACK;
+      proactor_type = CB;
       return 1;
     default:
       break;
