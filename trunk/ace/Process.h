@@ -172,8 +172,6 @@ protected:
   // Ensures once only call to inherit environment.
 
   STARTUPINFO startup_info_;
-  int set_handles_called_;
-  // Is 1 if stdhandles was called.
 
   BOOL handle_inheritence_;
   // Default TRUE.
@@ -198,6 +196,9 @@ protected:
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
 #endif /* ACE_WIN32 */
+
+  int set_handles_called_;
+  // Is 1 if stdhandles was called.
 
   int environment_buf_index_;
   // Pointer into environment_buf_.  This should point to the next
