@@ -55,9 +55,9 @@ private:
 Client_Task::Client_Task (int argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_("file://test.ior")
   , iterations_(1000)
 {
+  this->ior_ = ACE_const_cast (char*, "file://test.ior");
 }
 
 

@@ -69,6 +69,7 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
   Timer_Handler *handler = new Timer_Handler (send_time);
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
 
+  // We assume the schedule_timer method is thread-safe
   reactor->schedule_timer (handler,
                            (void *) Test::AMH_RoundtripResponseHandler::_duplicate (_tao_rh),
                            ACE_Time_Value (0, this->sleep_time_));
