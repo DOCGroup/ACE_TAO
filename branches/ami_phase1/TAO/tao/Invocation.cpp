@@ -699,11 +699,9 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // Bind.
   retval = this->transport_->bind_reply_dispatcher (this->request_id_,
                                                     &this->rd_);
-  // @@ Alex: you cannot raise a SystemException, you must pick a
-  //    particular one, depending on why it failed it may be a:
-  //    COMM_FAILURE, TRANSIENT, NO_MEMORY or something else.
   if (retval == -1)
-    ACE_THROW_RETURN (CORBA::SystemException,
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                       CORBA::COMPLETED_MAYBE),
                       -1);
 
   // This blocks until the response is read.  In the current version,
