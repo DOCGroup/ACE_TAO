@@ -1,3 +1,19 @@
+Fri Sep 22 12:01:06 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.h (ACE_ULongLong):
+
+	  This class does't use the ACE_ALLOC_HOOK_DEFINE macro so there
+	  was no point in using the corresponding ACE_ALLOC_HOOK_DECLARE
+	  macro.  Removed ACE_ALLOC_HOOK_DECLARE from the ACE_ULongLong
+	  class.
+
+	* ace/OS.h:
+	* ace/config-all.h:
+
+	  Moved ACE_ALLOC_HOOK* macros to `ace/config-all.h' so that it
+	  isn't necessary to include `ace/OS.h' just to pull in the
+	  definition of those macros.
+
 Fri Sep 22 13:02:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-all.h: Enable ACE_ONLY_LATEST_AND_GREATEST by default.

@@ -354,8 +354,6 @@ typedef ACE_UINT16 ACE_USHORT16;
     void hi (const ACE_UINT32 hi);
     void lo (const ACE_UINT32 lo);
 
-    ACE_ALLOC_HOOK_DECLARE;
-
   private:
     union
       {
