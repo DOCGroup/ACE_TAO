@@ -165,7 +165,10 @@ dnl AC_PROG_INSTALL
 
 dnl Special handling for some UNIX variants and Cygwin32
 AC_AIX
-AC_ISC_POSIX
+
+dnl This test replaces the obsolete AC_ISC_POSIX kludge.
+AC_CHECK_LIB(cposix, strerror, [LIBS="$LIBS -lcposix"])
+
 AC_MINIX
 AC_CYGWIN
 
@@ -224,7 +227,7 @@ AC_ARG_ENABLE(debug,
               ],)
 
 AC_ARG_ENABLE(exceptions,
-              [  --enable-exceptions     enable C++ exception handling   [default=yes]],
+              [  --enable-exceptions     enable C++ exception handling   [default=no]],
               [
                case "${enableval}" in
                 yes)
@@ -255,7 +258,7 @@ changequote([, ])dnl
                esac
               ],
               [
-               ace_user_enable_exceptions=yes
+               ace_user_enable_exceptions=no
               ])
 
 
@@ -353,7 +356,7 @@ AC_ARG_ENABLE(optimize,
                   ace_user_enable_optimize=yes
                   ;;
                 no)
-                  AC_MSG_WARN(Optimization configure support not implemented yet.)
+                  AC_MSG_WARN(Optimization configure support not fully implemented yet.)
                   ;;
                 *)
                   AC_MSG_ERROR(bad value ${enableval} for --enable-optimize)
@@ -362,6 +365,24 @@ AC_ARG_ENABLE(optimize,
               ],
               [
                ace_user_enable_optimize=yes
+              ])
+
+AC_ARG_ENABLE(pi-malloc,
+              [  --enable-pi-malloc      enable position indep. malloc   [default=yes]],
+              [
+               case "${enableval}" in
+                yes)
+                  AC_DEFINE(ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+                  ;;
+                no)
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-pi-malloc)
+                  ;;
+               esac
+              ],
+              [
+               AC_DEFINE(ACE_HAS_POSITION_INDEPENDENT_MALLOC)
               ])
 
 AC_ARG_ENABLE(probe,
@@ -3951,13 +3972,64 @@ if test "$ac_cv_func_sem_init" = yes &&
    test "$ace_has_sthreads" != yes; then
   AC_DEFINE(ACE_HAS_POSIX_SEM)
 
-  AC_CHECK_FUNC(sem_open,,) dnl
-  AC_CHECK_FUNC(sem_close,,) dnl
+  AC_CHECK_FUNC(sem_open,
+    [
+     dnl Check if it works!  For example, in glibc 2.x sem_open exists
+     dnl but it appears to be a stub.  However, it isn't listed as a
+     dnl stub in <gnu/stubs.h> so the configure script thinks it is
+     dnl implemented!
+     ACE_CACHE_CHECK(if sem_open works,
+       ace_cv_sem_open_works,
+       [
+        AC_TRY_RUN(
+          [
+#ifndef ACE_LACKS_SYS_TYPES_H
+#include <sys/types.h>
+#endif
 
-  if test "$ac_cv_func_sem_open" != yes ||
-     test "$ac_cv_func_sem_close" != yes; then
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <stddef.h>  /* for definition of "NULL" */
+
+#include <semaphore.h>
+
+#ifndef SEM_FAILED
+# define SEM_FAILED ((sem_t *) -1)
+#endif
+
+int
+main ()
+{
+  sem_t *s = 0;
+
+  s = sem_open ("ace_semaphore_foo", O_CREAT | O_EXCL, 0600, 1);
+
+  if (s == SEM_FAILED)
+    return -1;  /* FAILURE */
+
+  if (sem_close (s) != 0)
+    return -1;  /* Something went wrong! */
+
+  return 0;
+}
+          ],
+          [
+           ace_cv_sem_open_works=yes
+          ],
+          [
+           ace_cv_sem_open_works=no
+          ],
+          [
+           dnl action if cross-compiling
+           ace_cv_sem_open_works=yes
+          ])
+       ],, AC_DEFINE(ACE_LACKS_NAMED_POSIX_SEM))
+    ],
+    [
      AC_DEFINE(ACE_LACKS_NAMED_POSIX_SEM)
-  fi
+    ]) dnl
+
 fi dnl check for POSIX Semaphore functions
 
 dnl
@@ -4529,100 +4601,41 @@ dnl Now check if select will actually take int* arguments
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 
-dnl Check if setrlimit() takes an enum as 1st argument (a)
-AC_CACHE_CHECK(if setrlimit() takes an enum as 1st argument (a),
-  ace_cv_lib_posix_setrlimit_enum_1_a,[
-    ace_cv_lib_posix_setrlimit_enum_1_a=no
-    AC_TRY_COMPILE([#include <sys/resource.h>],
-      [enum __rlimit_resource rsrc;
-       const struct rlimit* rlp;
-       setrlimit(rsrc, rlp);],
-      ace_cv_lib_posix_setrlimit_enum_1_a=yes)
-  ])
+dnl Check if setrlimit() takes an enum as 1st argument
+ACE_CHECK_SETRLIMIT_ENUM
 
-dnl Check if setrlimit() takes an enum as 1st argument (b)
-AC_CACHE_CHECK(if setrlimit() takes an enum as 1st argument (b),
-  ace_cv_lib_posix_setrlimit_enum_1_b,[
-    ace_cv_lib_posix_setrlimit_enum_1_b=no
-    AC_TRY_COMPILE([#include <sys/resource.h>],
-      [enum __rlimit_resource rsrc;
-       struct rlimit* rlp;
-       setrlimit(rsrc, rlp);],
-      ace_cv_lib_posix_setrlimit_enum_1_b=yes)
-  ])
-
-if test "$ace_cv_lib_posix_setrlimit_enum_1_a" = yes ||
-   test "$ace_cv_lib_posix_setrlimit_enum_1_b" = yes; then
-  AC_DEFINE(ACE_HAS_RLIMIT_RESOURCE_ENUM, enum __rlimit_resource)
-fi
-
-dnl These two tests fail (i.e. pass when they shouldn't) when compiling with
-dnl GCC/G++ since the compiler treats passing a const to a non-const argument
-dnl as a warning and not as an error since the const is simply discarded.
-dnl To correct this problem, we use "-Werror" which converts all warnings
-dnl to errors, whenever we are compiling with G++.
-dnl                                      -Ossama
+dnl This test fails (i.e. passes when it shouldn't) when compiling with
+dnl GCC/G++ since the compiler treats passing a const to a non-const
+dnl argument as a warning and not as an error since the const is
+dnl simply discarded.  To correct this problem, we use "-Werror" which
+dnl converts all warnings to errors, whenever we are compiling with
+dnl G++.
+dnl        -Ossama
 
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
-dnl Check if setrlimit() takes a const pointer as 2nd argument (a)
-AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd argument (a),
-  ace_cv_lib_posix_setrlimit_const_2_a,[
+dnl Check if setrlimit() takes a const pointer as 2nd argument
+ACE_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd argument,
+  ace_cv_lib_posix_setrlimit_const_2,[
     AC_TRY_COMPILE(
       [
 #include <sys/resource.h>
       ],
       [
-       int rsrc;
-       const struct rlimit* rlp;
-       setrlimit(rsrc, rlp);
+       const struct rlimit* rlp = 0;
+       setrlimit(RLIMIT_CPU, rlp);
       ],
       [
-       ace_cv_lib_posix_setrlimit_const_2_a=yes
+       ace_cv_lib_posix_setrlimit_const_2=yes
       ],
       [
-       ace_cv_lib_posix_setrlimit_const_2_a=no
+       ace_cv_lib_posix_setrlimit_const_2=no
       ])
-  ])
-
-dnl Check if setrlimit() takes a const pointer as 2nd argument (b)
-AC_CACHE_CHECK(if setrlimit() takes a const pointer as 2nd argument (b),
-  ace_cv_lib_posix_setrlimit_const_2_b,[
-    ace_cv_lib_posix_setrlimit_const_2_b=no
-    AC_TRY_COMPILE([#include <sys/resource.h>],
-      [enum __rlimit_resource rsrc;
-       const struct rlimit* rlp;
-       setrlimit(rsrc, rlp);],
-      ace_cv_lib_posix_setrlimit_const_2_b=yes)
-  ])
-
-if test "$ace_cv_lib_posix_setrlimit_const_2_a" != yes &&
-   test "$ace_cv_lib_posix_setrlimit_const_2_b" != yes; then
-  AC_DEFINE(ACE_HAS_BROKEN_SETRLIMIT)
-fi
+  ],, [AC_DEFINE(ACE_HAS_BROKEN_SETRLIMIT)])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 dnl Check if getrusage() takes an enum as 1st argument
-if test "$ac_cv_func_getrusage" = yes; then
-  ACE_CACHE_CHECK(if getrusage() takes an enum as 1st argument,
-    ace_cv_lib_posix_getrusage_enum_1,[
-      AC_TRY_COMPILE(
-        [
-#include <sys/resource.h>
-        ],
-        [
-         enum __rusage_who who;
-         struct rusage* rup;
-         getrusage(who, rup);
-        ],
-        [
-         ace_cv_lib_posix_getrusage_enum_1=yes
-        ],
-        [
-         ace_cv_lib_posix_getrusage_enum_1=no
-        ])
-    ], AC_DEFINE(ACE_HAS_RUSAGE_WHO_ENUM, enum __rusage_who),)
-fi
+ACE_CHECK_GETRUSAGE_ENUM
 
 dnl TODO: This doesn't work.
 dnl The compiler in linux just issues a warning, and the test passes!!!
@@ -5625,7 +5638,7 @@ if test "$ac_cv_func_ctime_r" = yes; then
 #endif
        ],
        [
-        const time_t *t ;
+        const time_t *t = 0;
         char *buf;
         ctime_r(t, buf);
        ],
@@ -5668,8 +5681,8 @@ if test "$ace_cv_struct_msghdr" = yes; then
         ])
   ])
 
-  ACE_CACHE_CHECK(if struct msghdr has a msg_accrights_len member,
-    ace_cv_lib_posix_struct_msghdr_has_msg_accrights_len,[
+  ACE_CACHE_CHECK(if struct msghdr has a msg_accrightslen member,
+    ace_cv_lib_posix_struct_msghdr_has_msg_accrightslen,[
       AC_TRY_COMPILE(
         [
 #ifndef ACE_LACKS_SYS_TYPES_H
@@ -5682,17 +5695,17 @@ if test "$ace_cv_struct_msghdr" = yes; then
          mh.msg_accrightslen = 0;
         ],
         [
-         ace_cv_lib_posix_struct_msghdr_has_msg_accrights_len=yes
+         ace_cv_lib_posix_struct_msghdr_has_msg_accrightslen=yes
         ],
         [
-         ace_cv_lib_posix_struct_msghdr_has_msg_accrights_len=no
+         ace_cv_lib_posix_struct_msghdr_has_msg_accrightslen=no
         ])
   ])
 
 dnl Check for 4.4 BSD style struct msghdr members
 dnl The following test should only be run if the above two testsfail.
   if test "$ace_cv_lib_posix_struct_msghdr_has_msg_accrights" = no &&
-     test "$ace_cv_lib_posix_struct_msghdr_has_msg_accrights_len" = no; then
+     test "$ace_cv_lib_posix_struct_msghdr_has_msg_accrightslen" = no; then
     AC_DEFINE(ACE_LACKS_MSG_ACCRIGHTS)
     ACE_CACHE_CHECK(for 4.4 BSD style struct msghdr,
       ace_cv_lib_4_4bsd_msghdr,[
@@ -5819,7 +5832,7 @@ dnl       correctly?
 dnl                      -Ossama
 dnl Do not run this test if we are using a cross-compiler.
 if test "$cross_compiling" != yes; then
-  AC_SYS_RESTARTABLE_SYSCALLS
+  ACE_SYS_RESTARTABLE_SYSCALLS
   if test "$ac_cv_sys_restartable_syscalls" = yes; then
     AC_DEFINE(ACE_HAS_SIGNAL_SAFE_OS_CALLS)
   fi
@@ -5838,7 +5851,7 @@ ACE_CACHE_CHECK(for ctime() macro,
 #endif
 
 #if defined (ctime)
-        ACE_CTIME_MACRO
+  ACE_CTIME_MACRO
 #endif
      ],
      [
@@ -5874,7 +5887,7 @@ ACE_CACHE_CHECK(for reentrant function macros,
     defined (asctime_r) || \
     defined (rand_r) || \
     defined (getpwnam_r)
-        ACE_R_MACROS
+  ACE_R_MACROS
 #endif
      ],
      [
@@ -5897,11 +5910,11 @@ ACE_CACHE_CHECK(for sig{empty fill add del}set macros,
 #include <signal.h>
 
 #if defined (sigemptyset) && \
-          defined (sigfillset) && \
-          defined (sigaddset) && \
-          defined (sigdelset) && \
-          defined (sigismember)
-        ACE_SIG_MACROS
+    defined (sigfillset) && \
+    defined (sigaddset) && \
+    defined (sigdelset) && \
+    defined (sigismember)
+  ACE_SIG_MACROS
 #endif
      ],
      [
@@ -5923,21 +5936,21 @@ ACE_CACHE_CHECK(for open() mode masks,
 #include <sys/stat.h>
 #include <fcntl.h>
 
-       /* These are ORed so that ACE will not redefine
-          any of them if any of them exist. */
+/* These are ORed so that ACE will not redefine any of them if any of
+   them exist. */
 #if defined (S_IRWXU) || \
-           defined (S_IRUSR) || \
-           defined (S_IWUSR) || \
-           defined (S_IXUSR) || \
-           defined (S_IRWXG) || \
-           defined (S_IRGRP) || \
-           defined (S_IWGRP) || \
-           defined (S_IXGRP) || \
-           defined (S_IRWXO) || \
-           defined (S_IROTH) || \
-           defined (S_IWOTH) || \
-           defined (S_IXOTH)
-          ACE_OPEN_MODE_MASKS_EXIST
+    defined (S_IRUSR) || \
+    defined (S_IWUSR) || \
+    defined (S_IXUSR) || \
+    defined (S_IRWXG) || \
+    defined (S_IRGRP) || \
+    defined (S_IWGRP) || \
+    defined (S_IXGRP) || \
+    defined (S_IRWXO) || \
+    defined (S_IROTH) || \
+    defined (S_IWOTH) || \
+    defined (S_IXOTH)
+  ACE_OPEN_MODE_MASKS_EXIST
 #endif
       ],
       [
@@ -5961,7 +5974,7 @@ ACE_CACHE_CHECK(for POSIX O_NONBLOCK semantics,
 #include <fcntl.h>
 
 #if defined (O_NONBLOCK)
-          ACE_POSIX_O_NONBLOCK
+  ACE_POSIX_O_NONBLOCK
 #endif
       ],
       [
@@ -6749,15 +6762,79 @@ CFLAGS="$ACE_CFLAGS $X_CFLAGS $CFLAGS"
 CPPFLAGS="$ACE_CPPFLAGS $CPPFLAGS"
 LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
 
-dnl These tests should be performed _after_ the bulk of the ACE macros
-dnl have been defined.
+dnl The following tests should be performed _after_ the bulk of the
+dnl ACE macros have been defined.
+
+dnl Flush the cache so that it is easier to debug the configure script
+dnl if the following integrity check fails.
+AC_CACHE_SAVE
+
+dnl Verify the integrity of the current configuration.
+ACE_CACHE_CHECK(if generated ACE configuration is usable,
+  ace_cv_configuration_is_usable,
+  [
+   dnl We want an empty ace/config.h to prevent multiple defines
+   dnl with Autoconf's confdefs.h
+   ACE_USE_TEMP_FILE(ace/config.h,
+     [
+      dnl Now run the compilation test
+      ACE_TRY_COMPILE([-I. -I${srcdir}],
+        [
+#if defined(ACE_UINT64_TYPEDEF)
+  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
+#endif /* ACE_UINT64_TYPEDEF */
+
+#include "ace/OS.cpp"
+        ],
+        [
+         int a=0; a += 1;
+        ],
+        [
+         ace_cv_configuration_is_usable=yes
+        ],
+        [
+         ace_cv_configuration_is_usable=no
+        ])
+     ])
+  ],
+  [
+   dnl Looks good! Do nothing.
+   dnl It appears that ace/OS.cpp compiled.  If it didn't compile then
+   dnl there would be no chance that the rest of ACE would compile.
+  ],
+  [
+   AC_MSG_ERROR(
+     [
+The generated configuration appears to be unusable.  Please verify
+that your system path and environment variables are correct.  If they
+appear to be correct then please send the maintainer of this configure
+script:
+   Ossama Othman <othman@cs.wustl.edu>
+the \`config.log' file and the following information:
+
+  ACE \`configure' Script Information
+  ==================================
+  RCS ID: \$Id$
+  C++ Compiler:       $CXX
+  C++ Preprocessor:   $CXXCPP
+  C++ Flags:          $CXXFLAGS
+  Preprocessor Flags: $CPPFLAGS
+  Linker:             $LD
+  Linker Flags:       $LDFLAGS
+  Libraries:          $LIBS
+  System type information:
+    Build:  $build
+    Host:   $host
+    Target: $target
+     ])
+  ])
 
 dnl Check for ACE iostream support
 ACE_CACHE_CHECK(for ACE iostream support,
   ace_cv_feature_ace_iostream,
   [
    dnl We want an empty ace/config.h to prevent multiple defines
-   dnl with Autocnf's confdefs.h
+   dnl with Autoconf's confdefs.h
    ACE_USE_TEMP_FILE(ace/config.h,
      [
       dnl Now run the compilation test

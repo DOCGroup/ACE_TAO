@@ -31,7 +31,7 @@ dnl Assume all subsets will be built, including the full ACE library.
 dnl If any of the components is explicitly enabled or disabled by the user
 dnl then do NOT build the full ACE library.
 AC_ARG_ENABLE(lib-all,
-              [  --enable-lib-all        build all ACE components        [default=yes]],
+              [  --enable-lib-all        build all ACE components        [default=no]],
               [
                case "${enableval}" in
                 yes)
@@ -46,7 +46,7 @@ AC_ARG_ENABLE(lib-all,
                esac
               ],
               [
-               ace_user_enable_lib_all=yes
+               ace_user_enable_lib_all=no
               ])
 
 AC_ARG_ENABLE(lib-full,

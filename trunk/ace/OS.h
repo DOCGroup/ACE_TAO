@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -10,7 +10,7 @@
 //   OS.h
 //
 // = AUTHOR
-//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
+//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. Miller
 //   <stophph@diku.dk>, and a cast of thousands...
 //
 // ============================================================================
@@ -258,7 +258,15 @@ typedef long      id_t;
   // ACE inlining has been explicitly disabled.  Implement
   // internally within ACE by undefining __ACE_INLINE__.
 #   undef __ACE_INLINE__
+# elif defined (__ACE_INLINE__)
+#   define ACE_INLINE inline
+#   if !defined (ACE_HAS_INLINED_OSCALLS)
+#     define ACE_HAS_INLINED_OSCALLS
+#   endif /* !ACE_HAS_INLINED_OSCALLS */
+# else
+#   define ACE_INLINE
 # endif /* ! ACE_NO_INLINE */
+
 
 # if !defined (ACE_DEFAULT_CLOSE_ALL_HANDLES)
 #   define ACE_DEFAULT_CLOSE_ALL_HANDLES 1
@@ -1220,15 +1228,6 @@ private:
 # else
 #   define ACE_SPRINTF_ADAPTER(X) X
 # endif /* ACE_HAS_CHARPTR_SPRINTF */
-
-# if defined (__ACE_INLINE__)
-#   define ACE_INLINE inline
-#   if !defined (ACE_HAS_INLINED_OSCALLS)
-#     define ACE_HAS_INLINED_OSCALLS
-#   endif /* !ACE_HAS_INLINED_OSCALLS */
-# else
-#   define ACE_INLINE
-# endif /* __ACE_INLINE__ */
 
 // Default address for shared memory mapped files and SYSV shared memory
 // (defaults to 64 M).
@@ -8318,19 +8317,6 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #   define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
-# if defined (ACE_HAS_INLINED_OSCALLS)
-#   if defined (ACE_INLINE)
-#     undef ACE_INLINE
-#   endif /* ACE_INLINE */
-#   define ACE_INLINE inline
-#   include "ace/OS.i"
-# endif /* ACE_HAS_INLINED_OSCALLS */
-
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
-    // This needs to come here to avoid problems with circular dependencies.
-#   include "ace/Log_Msg.h"
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
-
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
 // quantities.
@@ -8519,5 +8505,14 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #define ACE_SIGRTMIN 0
 #define ACE_SIGRTMAX 0
 #endif /* ACE_HAS_AIO_CALLS */
+
+# if !defined (ACE_HAS_MINIMAL_ACE_OS)
+    // This needs to come here to avoid problems with circular dependencies.
+#   include "ace/Log_Msg.h"
+# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+
+#if defined (ACE_HAS_INLINED_OSCALLS)
+# include "ace/OS.i"
+#endif  /* ACE_HAS_INLINED_OSCALLS */
 
 #endif  /* ACE_OS_H */

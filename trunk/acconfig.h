@@ -295,16 +295,16 @@
 /* Platform also has __TEXT defined */
 #undef ACE_HAS_TEXT_MACRO_CONFLICT
 
-/* Platform has void (*)(...) prototype for pthread_key_create() destructor
-   (e.g., LynxOS). */
+/* Platform has void (*)(...) prototype for pthread_key_create()
+   destructor (e.g., LynxOS). */
 #undef ACE_HAS_STDARG_THR_DEST
 
-/* Used when users want to compile ACE with STL and STL map class conflicts
-   with <net/if.h> map struct. */
+/* Used when users want to compile ACE with STL and STL map class
+   conflicts with <net/if.h> map struct. */
 #undef ACE_HAS_STL_MAP_CONFLICT
 
-/* Used when users want to compile ACE with STL and STL queue class conflicts
-   with <netinet/in.h> queue struct. */
+/* Used when users want to compile ACE with STL and STL queue class
+   conflicts with <netinet/in.h> queue struct. */
 #undef ACE_HAS_STL_QUEUE_CONFLICT
 
 /* Platform/compiler supports Win32 structural exceptions */
@@ -342,8 +342,8 @@
 /* Platform doesn't cast MAP_FAILED to a (void *). */
 #undef ACE_HAS_BROKEN_MAP_FAILED
 
-/* Compiler/platform doesn't support namespaces (or the support is not fully
-   implemented.) */
+/* Compiler/platform doesn't support namespaces (or the support is not
+   fully implemented.) */
 #undef ACE_HAS_BROKEN_NAMESPACES
 
 /* Compiler has integer overflow problem with bit-shift operations. */
@@ -397,21 +397,21 @@
 /* OS/compiler omits the const from the sendmsg() prototype. */
 #undef ACE_HAS_BROKEN_SENDMSG
 
-/* OS/compiler omits the const from the rlimit parameter in the setrlimit()
-   prototype. */
+/* OS/compiler omits the const from the rlimit parameter in the
+   setrlimit() prototype. */
 #undef ACE_HAS_BROKEN_SETRLIMIT
 
 /* Compiler/platform has the wrong prototype for t_error(), i.e.,
    t_error(char *) rather than t_error(const char *). */
 #undef ACE_HAS_BROKEN_T_ERROR
 
-/* platform define struct timespec members as ts_sec and ts_nsec instead of
-   tv_sec and tv_nsec.  This is highly non-portable.  Currently only
-   FreeBSD 2.1.x uses it. */
+/* platform define struct timespec members as ts_sec and ts_nsec
+   instead of tv_sec and tv_nsec.  This is highly non-portable.
+   Currently only FreeBSD 2.1.x uses it. */
 #undef ACE_HAS_BROKEN_TIMESPEC_MEMBERS
 
-/* OS/compiler omits the const from the iovec parameter in the writev()
-   prototype. */
+/* OS/compiler omits the const from the iovec parameter in the
+   writev() prototype. */
 #undef ACE_HAS_BROKEN_WRITEV
 
 /* OS header files have some problems with XTI (HP/UX 11). */
@@ -451,8 +451,8 @@
    readdir_r, etc. */
 #undef ACE_HAS_DIRENT
 
-/* For platforms, e.g., RedHat 4.2/Linux 2.0.30/Alpha, that don't declare dl*
-   functions as extern "C" in dlfcn.h.*/
+/* For platforms, e.g., RedHat 4.2/Linux 2.0.30/Alpha, that don't
+   declare dl* functions as extern "C" in dlfcn.h.*/
 #undef ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 
 /* Build ACE using the frigging PC DLL nonsense... */
@@ -464,19 +464,19 @@
 /* Platform has Fast-Light (FL) toolkit installed */
 #undef ACE_HAS_FL
 
-/* Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must be
-   defined, except on Win32) */
+/* Platform supports getpagesize() call (otherwise, ACE_PAGE_SIZE must
+   be defined, except on Win32) */
 #undef ACE_HAS_GETPAGESIZE
 
 /* Platform supports the getrusage() system call. */
 #undef ACE_HAS_GETRUSAGE
 
-/* Platform has a getrusage () prototype in sys/resource.h that differs from
-   the one in ace/OS.i. */
+/* Platform has a getrusage () prototype in sys/resource.h that
+   differs from the one in ace/OS.i. */
 #undef ACE_HAS_GETRUSAGE_PROTO
 
-/* GNUC 2.7.3 mistakenly takes the template definition as the place where an
-   inline function of an argument class is first used. */
+/* GNUC 2.7.3 mistakenly takes the template definition as the place
+   where an inline function of an argument class is first used. */
 #undef ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
 
 /* Denotes that GNU has cstring.h as standard which redefines memchr() */
@@ -541,17 +541,19 @@
 /* Use native implementation of memchr(). */
 #undef ACE_HAS_MEMCHR
 
-/* Avoid #including ace/streams.h in OS.h.  Users must include ace/streams.h,
-   <iostream>, or <iostream.h> explicitly in their code.  Some platforms, such
-   as g++/VxWorks, have trouble compiling templates and iostreams header
-   because of static variables in the stream headers.  This flag will also
-   avoid extra compilation and runtime overheads on some platforms. */
+/* Avoid #including ace/streams.h in OS.h.  Users must include
+   ace/streams.h, <iostream>, or <iostream.h> explicitly in their code.
+   Some platforms, such as g++/VxWorks, have trouble compiling templates
+   and iostreams header because of static variables in the stream
+   headers.  This flag will also avoid extra compilation and runtime
+   overheads on some platforms. */
 #undef ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
 
-/* Some files, such as ace/streams.h, want to include new style C++ stream
-   headers.  These headers are iomanip, ios, iostream, istream, ostream,
-   fstream and streambuf.  If _all_ of these headers aren't available, then
-   assume that only iostream.h and fstream.h are available. */
+/* Some files, such as ace/streams.h, want to include new style C++
+   stream headers.  These headers are iomanip, ios, iostream, istream,
+   ostream, fstream and streambuf.  If _all_ of these headers aren't
+   available, then assume that only iostream.h and fstream.h are
+   available. */
 #undef ACE_USES_OLD_IOSTREAMS
 
 /* Platform supports Microsoft Foundation Classes */
@@ -566,15 +568,15 @@
 /* Sockets may be called in multi-threaded programs */
 #undef ACE_HAS_MT_SAFE_SOCKETS
 
-/* Platform uses non-const char * in calls to gethostbyaddr, gethostbyname,
-   getservbyname */
+/* Platform uses non-const char * in calls to gethostbyaddr,
+   gethostbyname, getservbyname */
 #undef ACE_HAS_NONCONST_GETBY
 
 /* Platform has a non-const parameter to msgsnd() (e.g., SCO). */
 #undef ACE_HAS_NONCONST_MSGSND
 
-/* Platform's select() uses non-const timeval* (only found on Linux right
-   now) */
+/* Platform's select() uses non-const timeval* (only found on Linux
+   right now) */
 #undef ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 /* Platform has "old" GNU compiler,  i.e. does not completely support
@@ -587,12 +589,12 @@
 /* Uses ctime_r & asctime_r with only two parameters vs. three. */
 #undef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
-/* Platform, e.g., Solaris 2.5, only supports SCHED_OTHER POSIX scheduling
-   policy. */
+/* Platform, e.g., Solaris 2.5, only supports SCHED_OTHER POSIX
+   scheduling policy. */
 #undef ACE_HAS_ONLY_SCHED_OTHER
 
-/* Use the semaphore implementation of ACE_Message_Queue rather than the
-   emulated condition variable (NT and VxWorks). */
+/* Use the semaphore implementation of ACE_Message_Queue rather than
+   the emulated condition variable (NT and VxWorks). */
 #undef ACE_HAS_OPTIMIZED_MESSAGE_QUEUE
 
 /* Platform has Orbix CORBA implementation */
@@ -607,10 +609,15 @@
 /* Platform contains <poll.h> */
 #undef ACE_HAS_POLL
 
+/* The ACE_Malloc<> class uses "position-independent" features
+   provided by ACE_Based_Pointer<>. */
+#undef ACE_HAS_POSITION_INDEPENDENT_MALLOC
+
 /* Platform supports POSIX O_NONBLOCK semantics */
 #undef ACE_HAS_POSIX_NONBLOCK
 
-/* Platform supports POSIX real-time semaphores (e.g., VxWorks and Solaris) */
+/* Platform supports POSIX real-time semaphores (e.g., VxWorks and
+   Solaris) */
 #undef ACE_HAS_POSIX_SEM
 
 /* Platform supports the POSIX struct timespec type */
@@ -657,8 +664,8 @@
 /* Quantify'ing.  Defined on command line. */
 #undef ACE_HAS_QUANTIFY
 
-/* Platform will recurse infinitely on thread exits from TSS cleanup routines
-   (e.g., AIX) */
+/* Platform will recurse infinitely on thread exits from TSS cleanup
+   routines (e.g., AIX) */
 #undef ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 
 /* Platform supports reentrant functions (i.e., all the POSIX *_r
@@ -668,13 +675,14 @@
 /* Compiler typedefs wchar with char. */
 #undef ACE_HAS_WCHAR_TYPEDEFS_CHAR
 
-/* Solaris for intel uses macros for fstat() and stat(), these are wrappers for
-   _fxstat() and _xstat() uses of the macros.  Causes compile and runtime
-   problems. */
+/* Solaris for intel uses macros for fstat() and stat(), these are
+   wrappers for _fxstat() and _xstat() uses of the macros.  Causes
+   compile and runtime problems. */
 #undef ACE_HAS_X86_STAT_MACROS
 
-/* Platform has support for multi-byte character support compliant with the
-   XPG4 Worldwide Portability Interface wide-character classification. */
+/* Platform has support for multi-byte character support compliant
+   with the XPG4 Worldwide Portability Interface wide-character
+   classification. */
 #undef ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 /* No system support for replacing any previous mappings. */
@@ -694,10 +702,10 @@
    CMSG_DATA (cmsg) macro. */
 #undef ACE_LACKS_CMSG_DATA_MACRO
 
-/* Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its cmsghdr structure does
-   not contain an 'unsigned char cmsg_data[0]' member.  (This may be
-   'unsigned char __cmsg_data[0]' on some platforms, in which case we need
-   another macro.) */
+/* Platform has ACE_HAS_4_4BSD_SENDMSG_RECVMSG but its cmsghdr
+   structure does not contain an 'unsigned char cmsg_data[0]' member.
+   (This may be 'unsigned char __cmsg_data[0]' on some platforms, in
+   which case we need another macro.) */
 #undef ACE_LACKS_CMSG_DATA_MEMBER
 
 /* Compiler/platform lacks the standard C library qsort() function */
@@ -709,8 +717,8 @@
 /* Platform lacks fsync() */
 #undef ACE_LACKS_FSYNC
 
-/* Compiler does not support dynamic_cast.  Usually used
-   with ACE_HAS_ANSI_CASTS */
+/* Compiler does not support dynamic_cast.  Usually used with
+   ACE_HAS_ANSI_CASTS */
 #undef ACE_LACKS_RTTI
 
 /* Platform lacks readdir_r() */
@@ -728,8 +736,9 @@
 /* Iostreams are not supported adequately on the given platform. */
 #undef ACE_LACKS_IOSTREAM_TOTALLY
 
-/* Platform does not support reentrant netdb functions (getprotobyname_r,
-   getprotobynumber_r, gethostbyaddr_r, gethostbyname_r, getservbyname_r). */
+/* Platform does not support reentrant netdb functions
+   (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
+   gethostbyname_r, getservbyname_r). */
 #undef ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
 /* Platform supports the POSIX regular expression library */
@@ -738,8 +747,8 @@
 /* Platform has special header for select(). */
 #undef ACE_HAS_SELECT_H
 
-/* For Win32: Use Select_Reactor as default implementation of Reactor instead
-   of WFMO_Reactor. */
+/* For Win32: Use Select_Reactor as default implementation of Reactor
+   instead of WFMO_Reactor. */
 #undef ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL
 
 /* Compiler/platform defines a union semun for SysV shared memory */
@@ -757,12 +766,12 @@
 /* Platform has bug with sigismember() (HP/UX 11). */
 #undef ACE_HAS_SIGISMEMBER_BUG
 
-/* Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and
-   FreeBSD) */
+/* Platform/compiler has macros for sig{empty,fill,add,del}set (e.g.,
+   SCO and FreeBSD) */
 #undef ACE_HAS_SIG_MACROS
 
-/* Platform supports the Win32 SignalObjectAndWait() function (WinNT 4.0 and
-   beyond). */
+/* Platform supports the Win32 SignalObjectAndWait() function (WinNT
+   4.0 and beyond). */
 #undef ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
 /* Automatically restart OS system calls when EINTR occurs */
@@ -854,14 +863,14 @@
 /* Compiler/platform supports SVR4 dynamic linking semantics */
 #undef ACE_HAS_SVR4_DYNAMIC_LINKING
 
-/* Compiler/platform supports SVR4 gettimeofday() prototype but doesn't have
-   a prototype */
+/* Compiler/platform supports SVR4 gettimeofday() prototype but
+   doesn't have a prototype */
 #undef ACE_HAS_SVR4_GETTIMEOFDAY
 
-/* Compiler/platform supports SVR4 signal typedef */
+/* Compiler/platform supports SVR4 signal typedef. */
 #undef ACE_HAS_SVR4_SIGNAL_T
 
-/* Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff)... */
+/* Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff), */
 #undef ACE_HAS_SVR4_TLI
 
 /* HP/UX has an undefined syscall for GETRUSAGE... */
@@ -902,8 +911,8 @@
    (e.g. "template <>" syntax.) */
 #undef ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
 
-/* Compiler implements templates that support typedefs inside of classes used
-   as formal arguments to a template class. */
+/* Compiler implements templates that support typedefs inside of
+   classes used as formal arguments to a template class. */
 #undef ACE_HAS_TEMPLATE_TYPEDEFS
 
 /* Platform has terminal ioctl flags like TCGETS and TCSETS. */
@@ -916,8 +925,8 @@
    (e.g., WinNT). */
 #undef ACE_HAS_THREAD_SAFE_ACCEPT
 
-/* Platform has thread_self() rather than pthread_self() (e.g., DCETHREADS
-   and AIX) */
+/* Platform has thread_self() rather than pthread_self() (e.g.,
+   DCETHREADS and AIX) */
 #undef ACE_HAS_THREAD_SELF
 
 /* Compiler/platform has thread-specific storage */
@@ -986,8 +995,8 @@
 /* Compiler supports the new using keyword for C++ namespaces. */
 #undef ACE_HAS_USING_KEYWORD
 
-/* Prints out console message in ACE_NOTSUP.  Useful for tracking down origin
-   of ACE_NOTSUP. */
+/* Prints out console message in ACE_NOTSUP.  Useful for tracking down
+   origin of ACE_NOTSUP. */
 #undef ACE_HAS_VERBOSE_NOTSUP
 
 /* Platform requires void * for mmap(). */
@@ -1019,8 +1028,8 @@
 /* Platform lacks access() (e.g., VxWorks and Chorus) */
 #undef ACE_LACKS_ACCESS
 
-/* Platform can not build ace/IOStream{,_T}.cpp.  This does not necessarily
-   mean that the platform does not support iostreams. */
+/* Platform can not build ace/IOStream{,_T}.cpp.  This does not
+   necessarily mean that the platform does not support iostreams. */
 #undef ACE_LACKS_ACE_IOSTREAM
 
 /* Platform lacks condition variables (e.g., Win32 and VxWorks) */
@@ -1034,8 +1043,8 @@
    though it supports pthreads! */
 #undef ACE_LACKS_CONDATTR_PSHARED
 
-/* Platform uses struct strbuf * rather than const struct strbuf * (e.g.,
-   HP/UX 10.x) */
+/* Platform uses struct strbuf * rather than const struct strbuf *
+   (e.g., HP/UX 10.x) */
 #undef ACE_LACKS_CONST_STRBUF_PTR
 
 /* Platform forgot const in cond_timewait (e.g., HP/UX). */
@@ -1044,8 +1053,8 @@
 /* Platform lacks difftime() implementation */
 #undef ACE_LACKS_DIFFTIME
 
-/* Platform lacks the exec() family of system calls (e.g., Win32, VxWorks,
-   Chorus) */
+/* Platform lacks the exec() family of system calls (e.g., Win32,
+   VxWorks, Chorus) */
 #undef ACE_LACKS_EXEC
 
 /* Platform lacks file locking mechanism */
@@ -1139,19 +1148,19 @@
 /* Platform lacks native strptime() implementation. */
 #undef ACE_LACKS_NATIVE_STRPTIME
 
-/* Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks, Chorus,
-   and SCO UNIX) */
+/* Platform/compiler lacks {get,set}rlimit() function (e.g., VxWorks,
+   Chorus, and SCO UNIX) */
 #undef ACE_LACKS_RLIMIT
 
 /* Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem) */
 #undef ACE_LACKS_RLIMIT_PROTOTYPE
 
-/* Platform lacks POSIX prototypes for certain System V functions like shared
-   memory and message queues. */
+/* Platform lacks POSIX prototypes for certain System V functions like
+   shared memory and message queues. */
 #undef ACE_LACKS_POSIX_PROTOTYPES
 
-/* Platform lacks POSIX prototypes for certain System V functions like shared
-   memory and message queues. */
+/* Platform lacks POSIX prototypes for certain System V functions like
+   shared memory and message queues. */
 #undef ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 /* Compiler doesn't support placement operator new(size_t, void *). */
@@ -1345,8 +1354,9 @@
 /* The bind() call will not select the port if it's 0. */
 #undef ACE_LACKS_WILDCARD_BIND
 
-/* Renames "main (int, char *[])", for platforms such as g++/VxWorks that
-   don't allow main.  Requires the use of ACE_HAS_NONSTATIC_OBJECT_MANAGER. */
+/* Renames "main (int, char *[])", for platforms such as g++/VxWorks
+   that don't allow main.  Requires the use of
+   ACE_HAS_NONSTATIC_OBJECT_MANAGER. */
 #undef ACE_MAIN
 
 /* Compile using multi-thread libraries */
@@ -1362,8 +1372,8 @@
 /* Required by platforms with small default stacks. */
 #undef ACE_NEEDS_HUGE_THREAD_STACKSIZE
 
-/* OS has LWPs, and when the priority of a bound thread is set, then the LWP
-   priority must be set also. */
+/* OS has LWPs, and when the priority of a bound thread is set, then
+   the LWP priority must be set also. */
 #undef ACE_NEEDS_LWP_PRIO_SET
 
 /* Platform doesn't define readv, so use our own */
@@ -1400,31 +1410,32 @@
 /* Platform uses int for select() rather than fd_set */
 #undef ACE_SELECT_USES_INT
 
-/* Compiler's template mechanism must use a pragma.  This is used for AIX's
-   C++ compiler. */
+/* Compiler's template mechanism must use a pragma.  This is used for
+   AIX's C++ compiler. */
 #undef ACE_TEMPLATES_REQUIRE_PRAGMA
 
-/* Compiler's template mechanim must see source code (i.e., .cpp files).  This
-   is used for GNU G++. */
+/* Compiler's template mechanim must see source code (i.e., .cpp
+   files).  This is used for GNU G++. */
 #undef ACE_TEMPLATES_REQUIRE_SOURCE
 
-/* Compiler's template instantiation mechanism supports the use of explicit
-   C++ specializations for all used templates. This is also used for GNU G++
-   if you don't use the "repo" patches. */
+/* Compiler's template instantiation mechanism supports the use of
+   explicit C++ specializations for all used templates. This is also
+   used for GNU G++ if you don't use the "repo" patches. */
 #undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 /* Compiler's template instantiation mechanism supports the use of
-   "#pragma instantiate".  Edison Design Group compilers, e.g., SGI C++ and
-   Green Hills 1.8.8 and later, support this. */
+   "#pragma instantiate".  Edison Design Group compilers, e.g., SGI
+   C++ and Green Hills 1.8.8 and later, support this. */
 #undef ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 
-/* Compiler requires a definition for a "hidden" function, e.g., a private,
-   unimplemented copy constructor or assignment operator.  The SGI C++
-   compiler needs this, in template classes, with
+/* Compiler requires a definition for a "hidden" function, e.g., a
+   private, unimplemented copy constructor or assignment operator.
+   The SGI C++ compiler needs this, in template classes, with
    ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA. */
 #undef ACE_NEEDS_FUNC_DEFINITIONS
 
-/* Device the platform uses for TCP on TLI.  Only needed if not /dev/tcp. */
+/* Device the platform uses for TCP on TLI.  Only needed if not
+   /dev/tcp. */
 #undef ACE_TLI_TCP_DEVICE
 
 /* The OS/platform supports the poll() event demultiplexor */
@@ -1445,7 +1456,6 @@
 /* A parameter list indicating the version of WinSock (e.g., "1, 1" is
    version 1.1). */
 #undef ACE_WSOCK_VERSION
-
 
 
 /*   @BOTTOM@   */

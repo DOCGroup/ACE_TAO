@@ -17,7 +17,6 @@ SUBDIRS = man3 html
 
 EXTRA_DIST = acewindex.html
 
-## FIXME!
+
 acewindex.html:
-	touch $@
-##	$(top_srcdir)/bin/html-windex < windex > acewindex.html
+	$(top_srcdir)/generate_html_windex $(top_srcdir)/man/man3/ACE*.3

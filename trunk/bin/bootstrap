@@ -67,6 +67,26 @@ else
    $ACE_ROOT/bin/class2man $ACE_HEADERS > /dev/null)
 fi  # test -f man/man3/ACE.3
 
+# Regenerate the man pages lists in the man page Makefiles.
+
+if test -f man/man3/Makefile.am && test -f man/html/Makefile.am; then
+  echo 'Inserting ACE man page lists into appropriate Makefile.am files.'
+  ACE_MAN_PAGES=`(cd man/man3 && echo *.3)`
+  ACE_HTML_MAN_PAGES=`echo $ACE_MAN_PAGES | sed -e 's/.3$/.html/g'`
+  (cd man/man3; \
+   eval "sed -e 's/^man_MANS =.*$/man_MANS = $ACE_MAN_PAGES/' Makefile.am > \
+     Makefile.am.new"; \
+   mv Makefile.am.new Makefile.am)
+  (cd man/html; \
+   eval "sed -e 's/^html_DATA =.*$/html_DATA = $ACE_HTML_MAN_PAGES/' \
+     Makefile.am > Makefile.am.new"; \
+   mv Makefile.am.new Makefile.am)
+else
+  test -f man/man3/Makefile.am || echo 'man/man3/Makefile.am is missing!'
+  test -f man/html/Makefile.am || echo 'man/html/Makefile.am is missing!'
+fi  # test -f man/man3/Makefile.am && test -f man/html/Makefile.am
+
+
 else
   echo ACE must be bootstrapped from the top-level ACE source directory.
   exit 1;

@@ -653,14 +653,14 @@ sub create_kit () {
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz ACE+TAO.zip && " .
         "$dispose ACE+TAO.tar.gz ACE+TAO.zip $dest";
-      $archives = "ACE+TAO.tar.gz ACE+TAO.zip";
+      $archives .= "ACE+TAO.tar.gz ACE+TAO.zip";
     } else {
       $build_command .= 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz && " .
         "$dispose ACE+TAO.tar.gz $dest";
-      $archives = "ACE+TAO.tar.gz";
+      $archives .= "ACE+TAO.tar.gz";
     }
   }
 

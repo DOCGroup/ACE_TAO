@@ -12,11 +12,11 @@
 ## needed to process this file.
 AUTOMAKE_OPTIONS = 1.4
 
-## Exclude non-ACE man pages
-## The distribution must be first be bootstrapped by running
-## `bin/bootstrap' from the top-level source directory before the
-## following will work.
-man_MANS := $(shell echo ACE*.3)
+## The man page listing (man_MANS) is inserted by the `bootstrap'
+## script.  Don't bother editing this list since it is automatically
+## generated. 
+
+man_MANS =
 
 MAINTAINERCLEANFILES = $(man_MANS)
 
