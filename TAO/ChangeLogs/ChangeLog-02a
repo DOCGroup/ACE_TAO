@@ -1,3 +1,11 @@
+Sun Jan 13 16:19:24 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp (pre_init):
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
+	  (pre_init):
+
+	  Corrected erroneous comments.
+
 Sun Jan 13 15:22:10 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* docs/releasenotes/index.html (MIOP): Added a section for
@@ -257,25 +265,13 @@ Sat Jan 12 21:14:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  etc.
 
 	* orbsvcs/orbsvcs/FT_CORBA.idl: Has only the service layer
-<<<<<<< ChangeLog
 	  interfaces.
 
 	* orbsvcs/orbsvcs/Makefile.FTORB: A new file for the TAO_FTORB
 	  library.
 
 	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated this file.
-=======
-	  interfaces.
 
-	* orbsvcs/orbsvcs/Makefile.FTORB: A new file for the TAO_FTORB
-	  library.
->>>>>>> 1.4695
-
-<<<<<<< ChangeLog
-=======
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated this file.
-
->>>>>>> 1.4695
 	* orbsvcs/orbsvcs/Makefile: Added the new Makefile.
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
