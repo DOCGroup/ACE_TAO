@@ -128,6 +128,11 @@ public:
   size_t length (void) const;
 
   /// Get a copy of the underlying representation.
+  /**
+   * This method allocates memory for a copy of the string and returns
+   * a pointer to the new area. The caller is responsible for freeing
+   * the memory when finished; use delete []
+   */
   CHAR *rep (void) const;
 
   /**

@@ -1,3 +1,41 @@
+Fri May 24 10:18:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * bin/auto_compile: Don't bail out if the only CVS conflict is
+          in ChangeLog or THANKS.
+
+        * ace/CDR_Stream.h (ACE_InputCDR): Added comments clarifying
+          the behavior of the ctor that takes a const ACE_Message_Block *.
+          Thanks to Alexander Maack for motivating this.
+
+        * examples/C++NPv2/display_logfile.cpp (svc): Fix memory leak
+          (thanks to Alexander Maack for reporting this) and don't lose
+          the host name in the data if demarshaling has to be aborted to
+          go read more data from the file.
+
+        * examples/C++NPv2/Logging_Acceptor_Ex.h:
+        * examples/C++NPv2/Logging_Event_Handler_Ex.h: Remove trailing ';'
+          on inlined methods; Changed to match book.
+
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp: Changed to
+          match book.
+
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.{h cpp}:
+        * examples/C++NPv2/Service_Reporter.{h cpp}:
+        * examples/C++NPv2/Configurable_Logging_Server.{cpp mak}:
+          Example code from Chapter 5 of C++NPv2 (Service Configurator).
+
+        * examples/C++NPv2/Makefile: Added new examples.
+
+        * THANKS: Added Alexander Maack to the Hall of Fame.
+
+        * ace/Reactor.h: Mark run[_alertable]_event_loop, end_event_loop,
+          event_loop_done, and reset_event_loop static methods deprecated
+          in favor of calling the non-static methods on
+          ACE_Reactor::instance().  Thanks to Don Hinton for motivating this.
+
+        * ace/String_Base.h (rep): Added note that directs the caller to free
+          the returned memory.
+
 Mon May 13 19:15:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.h: Doxygen-ized comments for open(), and

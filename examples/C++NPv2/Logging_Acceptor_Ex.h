@@ -20,7 +20,7 @@ public:
 
   // Simple constructor to pass ACE_Reactor to base class.
   Logging_Acceptor_Ex (ACE_Reactor *r = ACE_Reactor::instance ())
-    : Logging_Acceptor (r) {};
+    : Logging_Acceptor (r) {}
 
   int handle_input (ACE_HANDLE) {
     Logging_Event_Handler_Ex *peer_handler = 0;
@@ -35,7 +35,7 @@ public:
       return -1;
     }
     return 0;
-  };
+  }
 };
 
 #endif /* _LOGGING_ACCEPTOR_EX_H */
