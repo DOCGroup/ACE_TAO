@@ -10,10 +10,6 @@
 #include "ORB_Core.h"
 #include "Thread_Lane_Resources.h"
 
-#if !defined (__ACE_INLINE__)
-# include "IIOP_Transport.i"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
