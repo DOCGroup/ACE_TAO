@@ -25,7 +25,7 @@ extern "C" {
 
 #ifndef PACE_TCHAR
 #define PACE_TCHAR
-  typedef char PACE_TCHAR;
+  typedef char pace_tchar;
 #endif /* PACE_TCHAR */
 
 #ifndef PACE_HANDLE
@@ -145,5 +145,3 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SYS_TYPES_H_WIN32 */
-
-
