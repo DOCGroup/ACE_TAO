@@ -1,8 +1,5 @@
-// $Id$
 // -*- C++ -*-
-
-#if !defined (QUOTER_CLIENT_H)
-#define QUOTER_CLIENT_H
+// $Id$
 
 // ============================================================================
 //
@@ -19,6 +16,9 @@
 //    Darrell Brunsch
 //
 // ============================================================================
+
+#if !defined (QUOTER_CLIENT_H)
+#define QUOTER_CLIENT_H
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -94,6 +94,11 @@ private:
 
 class Quoter_Task : public ACE_Task<ACE_SYNCH>
 {
+  // = TITLE
+  //    @@@ Write this
+  //
+  // = DESCRIPTION
+  //    @@@ Write this
 public:
   Quoter_Task (int argc, char **argv);
 
