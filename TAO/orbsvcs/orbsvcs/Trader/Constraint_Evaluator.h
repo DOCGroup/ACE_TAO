@@ -17,7 +17,6 @@
 #ifndef TAO_CONSTRAINT_EVALUATOR_H
 #define TAO_CONSTRAINT_EVALUATOR_H
 
-#include "Trader_T.h"
 #include "Property_Evaluator.h"
 #include "Constraint_Visitor.h"
 #include "Constraint_Nodes.h"
