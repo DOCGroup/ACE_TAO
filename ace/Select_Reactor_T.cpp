@@ -545,7 +545,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
       this->delete_timer_queue_ = 0;
     }
 
-  this->notify_handler_->close ();
+  if (this->notify_handler_ != 0)
+    this->notify_handler_->close ();
 
   if (this->delete_notify_handler_)
     {
