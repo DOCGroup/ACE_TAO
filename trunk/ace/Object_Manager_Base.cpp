@@ -13,6 +13,7 @@ ACE_RCSID(ace, Object_Manager_Base, "$Id$")
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_stdio.h"
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)

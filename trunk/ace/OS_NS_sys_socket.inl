@@ -4,6 +4,9 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_sys_uio.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_QoS.h"
+#include "ace/Global_Macros.h"
 
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;

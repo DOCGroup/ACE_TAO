@@ -9,6 +9,10 @@ ACE_RCSID(ace, OS_NS_sys_uio, "$Id$")
 # include "ace/OS_NS_sys_uio.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+
 # if defined (ACE_LACKS_READV)
 
 // "Fake" readv for operating systems without it.  Note that this is
