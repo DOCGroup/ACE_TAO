@@ -28,22 +28,6 @@
 #include "orbsvcs/AV/Policy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
-
-class FTP_Client_Callback : public TAO_AV_Callback
-{
-  // = TITLE
-  //    Defines the client applcation callback.
-  //   
-  // = DESCRIPTION
-  //    This class can override the methods of 
-  //    the TAO_AV_Callback to do application 
-  //    specific processing. 
-public:
-  FTP_Client_Callback (void);
-  //Constructor
-};
-
-
 class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
   // = TITLE
@@ -68,7 +52,7 @@ public:
   // Set protocol object corresponding to the transport protocol chosen.
   
 protected:
-  FTP_Client_Callback callback_;
+  TAO_AV_Callback callback_;
   // reference to the cllient application callback.
 };
 
@@ -104,7 +88,7 @@ public:
   TAO_StreamCtrl* streamctrl (void);
   // The stream control interface that manages the stream set up
 
-  char *flowname (void);
+  ACE_CString flowname (void);
   // name of the flow set up.
   
   int frame_rate (void);
@@ -135,10 +119,10 @@ private:
   int argc_;
   char **argv_;
 
-  const char *filename_;
+  ACE_CString filename_;
   // File from which data is read.
 
-  const char *address_;
+  ACE_CString address_;
   // Address of the ftp client host machine or a multicast address - Default is
   // UDP multicast addess
 
@@ -148,10 +132,10 @@ private:
   FILE *fp_;
   // File handle of the file read from.
 
-  char *protocol_;
+  ACE_CString protocol_;
   // Selected protocol - default is UDP
 
-  char *flowname_;
+  ACE_CString flowname_;
     
   int use_sfp_;
   // If set to 1 then use sfp as the flow carrier protocol.

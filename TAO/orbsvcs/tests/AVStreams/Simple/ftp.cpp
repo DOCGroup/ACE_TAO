@@ -10,10 +10,6 @@ ACE_High_Res_Timer last_frame_sent_time;
 ACE_Time_Value inter_frame_time;
 // The time that should lapse between two consecutive frames sent.
 
-FTP_Client_Callback::FTP_Client_Callback (void)
-{
-}
-
 FTP_Client_StreamEndPoint::FTP_Client_StreamEndPoint (void)
 {
 }
@@ -40,9 +36,9 @@ FTP_Client_StreamEndPoint::set_protocol_object (const char *,
 Client::Client (void)
   :client_mmdevice_ (&endpoint_strategy_),
    count_ (0),
-   address_ (ACE_OS::strdup ("224.9.9.2:12345")),
+   address_ ("224.9.9.2:12345"),
    fp_ (0),
-   protocol_ (ACE_OS::strdup ("UDP")),
+   protocol_ ("UDP"),
    frame_rate_ (30)
 {
   this->mb.size (BUFSIZ);
@@ -70,13 +66,13 @@ Client::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_OS::strdup (opts.optarg);
+          this->filename_.set (opts.optarg);
           break;
         case 'a':
-          this->address_ = ACE_OS::strdup (opts.optarg);
+          this->address_.set (opts.optarg);
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (opts.optarg);
+          this->protocol_.set (opts.optarg);
           break;
 	case 'r':
 	  this->frame_rate_ = ACE_OS::atoi (opts.optarg);
@@ -101,7 +97,7 @@ Client::file (void)
   return this->fp_;
 }
 
-char*
+ACE_CString
 Client::flowname (void)
 {
   return this->flowname_;
@@ -175,12 +171,12 @@ Client::init (int argc,
 
   
   // Open file to read.
-  this->fp_ = ACE_OS::fopen (this->filename_,
+  this->fp_ = ACE_OS::fopen (this->filename_.c_str (),
 			     "r");
   if (this->fp_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
 		       "Cannot open output file %s\n",
-		       this->filename_),
+		       this->filename_.c_str ()),
 		      -1);
   
   // Resolve the object reference of the server from the Naming Service.
@@ -190,35 +186,27 @@ Client::init (int argc,
                       -1);
   
   // Create the Flow protocol name
-  char flow_protocol_str [BUFSIZ];
+  ACE_CString flow_protocol_str;
   if (this->use_sfp_)
-    ACE_OS::strcpy (flow_protocol_str,
-		    "sfp:1.0");
+    flow_protocol_str.set ("sfp:1.0");
   else
-    ACE_OS::strcpy (flow_protocol_str,
-		    "");
+    flow_protocol_str.set ("");
   
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
   
   // Set the address of the ftp client.
-  ACE_INET_Addr addr (this->address_);
+  ACE_INET_Addr addr (this->address_.c_str ());
   
-  // Initialize the flowname
-  ACE_NEW_RETURN (this->flowname_,
-		  char [BUFSIZ],
-		  0);
-  
-  ACE_OS::sprintf (this->flowname_,
-		   "Data_%s",
-		   this->protocol_);
+  this->flowname_.set ("Data_");
+  this->flowname_ += this->protocol_;
   
   // Create the forward flow specification to describe the flow.
-  TAO_Forward_FlowSpec_Entry entry (this->flowname_,
+  TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
 				    "IN",
 				    "USER_DEFINED",
-				    flow_protocol_str,
-				    this->protocol_,
+				    flow_protocol_str.c_str (),
+				    this->protocol_.c_str (),
 				    &addr);
   
   AVStreams::flowSpec flow_spec (1);
