@@ -1,3 +1,13 @@
+Tue Mar 13 23:50:02 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.dsp: 
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.dsp: 
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.dsp: 
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Simple_Three_Stage.dsw: 
+	* orbsvcs/tests/AVStreams/AVStreams.dsw:
+
+	  Added files to enable builds on windows.
+
 Tue Mar 13 22:54:45 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Three_Stage/sender.cpp: 
