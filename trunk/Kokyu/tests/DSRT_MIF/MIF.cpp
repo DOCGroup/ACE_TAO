@@ -32,7 +32,7 @@ public:
         if (errno == ENOTSUP)
           {
             ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT ("getprior not supported on this platform\n")
+                       ACE_TEXT ("getprio not supported on this platform\n")
                        ));
             return 0;
           }
@@ -64,6 +64,8 @@ int main (int,char**)
   auto_ptr<Kokyu::DSRT_Dispatcher>
     disp (Kokyu::Dispatcher_Factory::create_DSRT_dispatcher (config_info));
 
+  ACE_DEBUG ((LM_DEBUG, "after create_dispatcher\n" ));
+
   ACE_ASSERT (disp.get () != 0);
 
   Kokyu::QoSDescriptor qos1, qos2, qos3;
@@ -78,9 +80,29 @@ int main (int,char**)
 
   long flags = THR_BOUND | THR_SCHED_FIFO;
 
-  mytask1.activate(flags);
-  mytask2.activate(flags);
-  mytask3.activate(flags);
+  if (mytask1.activate (flags) == -1)
+    {
+      flags = THR_BOUND;
+      if (mytask1.activate (flags) == -1)
+        ACE_ERROR ((LM_ERROR,
+                        "EC (%P|%t) cannot activate task\n"));
+    }
+
+  if (mytask2.activate (flags) == -1)
+    {
+      flags = THR_BOUND;
+      if (mytask2.activate (flags) == -1)
+        ACE_ERROR ((LM_ERROR,
+                        "EC (%P|%t) cannot activate task\n"));
+    }
+
+  if (mytask3.activate (flags) == -1)
+    {
+      flags = THR_BOUND;
+      if (mytask3.activate (flags) == -1)
+        ACE_ERROR ((LM_ERROR,
+                        "EC (%P|%t) cannot activate task\n"));
+    }
 
   while(1){}
 
