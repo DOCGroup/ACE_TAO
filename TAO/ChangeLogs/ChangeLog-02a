@@ -10,7 +10,7 @@ Tue Jun 12 17:31:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Removed a link in the debug version to the RTCORBA library.
 
-        * RTCORBA/TAO_RTCORBA.dsp:
+        * tao/RTCORBA/TAO_RTCORBA.dsp:
 
           Added RTCORBA.h and RTCORBA.cpp to the project.
 
