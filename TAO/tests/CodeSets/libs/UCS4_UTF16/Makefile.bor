@@ -2,8 +2,7 @@
 # $Id$
 #
 
-DIRS = \
-        IBM1047_ISO8859 \
-        UCS4_UTF16
+MAKEFILES = \
+        CodeSets_Libs_UCS4_UTF16.bor
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

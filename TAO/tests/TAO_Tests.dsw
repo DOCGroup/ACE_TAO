@@ -566,6 +566,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name IBM1047_ISO8859
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CodeSets_Libs_UCS4_UTF16
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -581,6 +584,21 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name IBM1047_ISO8859
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CodeSets_Libs_UCS4_UTF16
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CodeSets_Libs_UCS4_UTF16"=.\CodeSets\libs\UCS4_UTF16\CodeSets_libs_UCS4_UTF16.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -2288,4 +2306,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-

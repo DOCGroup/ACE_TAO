@@ -1,0 +1,25 @@
+# $Id$
+
+#
+# Makefile for building the UCS4_UTF16 library
+#
+
+NAME = UCS4_UTF16
+
+OBJFILES = \
+	$(OBJDIR)\WUCS4_UTF16_Factory.obj \
+	$(OBJDIR)\WUCS4_UTF16_Translator.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	-DOLT_BUILD_DLL=1
+
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>
