@@ -109,7 +109,7 @@ public:
 
 private:
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  ACE_Asynch_Accept acceptor_;
+  ACE_Asynch_Acceptor acceptor_;
   ACE_HANDLE handle_;
 #endif /* defined (ACE_WIN32) */
 };
