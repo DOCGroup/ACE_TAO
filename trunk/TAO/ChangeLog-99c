@@ -1,3 +1,9 @@
+Thu Nov 11 19:46:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+	  Fixed a couple of memory leaks in the test, thanks to Jovan
+	  Kilibarda <jovank@realtimeint.com> for reporting this bug.
+
 Thu Nov 11 17:18:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* Exception.h:
