@@ -3878,7 +3878,7 @@ operator>> (
 
 // ****************************************************************
 
-#if defined (TAO_HAS_AMI_POLLER)6
+#if defined (TAO_HAS_AMI_POLLER)
 
 ACE_INLINE CORBA::Boolean
 operator<< (
