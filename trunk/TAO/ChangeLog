@@ -1,3 +1,27 @@
+Wed June 25 14:46:19 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
+	  Added load_ep () method to read an address file (if available)
+	  to get the sender and receiver endpoints for each flow that is
+	  set up. The address file has entries in the format:
+	  Flowname/Sender_Host:Port/Reciever_Host:Port. If the address
+	  file or endpoints are not specified then the connection manager
+	  uses INADDR_ANY for the endpoints.
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Sender.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Sender.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Receiver.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Receiver.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Distributer.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Distributer.cpp:
+	  Added additional parameter -a <address_file> to the command line
+	  arguments to specify the endpoint address file from which to
+	  load the flow endpoint addresses. Also, made a call to the
+	  Connection_Manager::load_ep () method that reads the address
+	  file and stores the endpoint addresses for each speficied flow
+	  in a hash map.
+
 Wed Jun 25 12:38:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/tao.mpc:
