@@ -12,17 +12,14 @@
 
 #ifndef TAO_DISPATCHER_TASK_H
 #define TAO_DISPATCHER_TASK_H
-#include /**/ "ace/pre.h"
-#include "ace/OS.h"
+#include "ace/pre.h"
+#include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task.h"
-
-#include "kokyu_export.h"
-#include "Kokyu.h"
+#include "Kokyu_defs.h"
 
 namespace Kokyu
 {
@@ -102,5 +99,5 @@ private:
 #include "Dispatcher_Task.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* DISPATCHER_TASK_H */
