@@ -12,6 +12,188 @@
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_Tokenizer::ACE_Tokenizer (LPTSTR buffer)
+  : buffer_ (buffer),
+    index_ (0),
+    preserves_index_ (0),
+    delimiter_index_ (0)
+{
+}
+
+int
+ACE_Tokenizer::delimiter (TCHAR d)
+{
+  if (delimiter_index_ == MAX_DELIMITERS)
+    return -1;
+
+  delimiters_[delimiter_index_].delimiter_ = d;
+  delimiters_[delimiter_index_].replace_ = 0;
+  delimiter_index_++;
+  return 0;
+}
+
+int
+ACE_Tokenizer::delimiter_replace (TCHAR d, TCHAR replacement)
+{
+  if (delimiter_index_ == MAX_DELIMITERS)
+    return -1;
+
+  delimiters_[delimiter_index_].delimiter_ = d;
+  delimiters_[delimiter_index_].replacement_ = replacement;
+  delimiters_[delimiter_index_].replace_ = 1;
+  delimiter_index_++;
+  return 0;
+}
+
+int 
+ACE_Tokenizer::preserve_designators (TCHAR start, TCHAR stop, int strip)
+{
+  if (preserves_index_ == MAX_PRESERVES)
+    return -1;
+
+  preserves_[preserves_index_].start_ = start;
+  preserves_[preserves_index_].stop_ = stop;
+  preserves_[preserves_index_].strip_ = strip;
+  preserves_index_++;
+  return 0;
+}
+
+int 
+ACE_Tokenizer::is_delimiter (TCHAR d, int &replace, TCHAR &r)
+{
+  replace = 0;
+
+  for (int x=0; x < delimiter_index_; x++)
+    if (delimiters_[x].delimiter_ == d)
+      {
+	if (delimiters_[x].replace_)
+	  {
+	    r = delimiters_[x].replacement_;
+	    replace = 1;
+	  }
+	return 1;
+      }
+
+  return 0;
+}
+
+int 
+ACE_Tokenizer::is_preserve_designator (TCHAR start, TCHAR &stop, int &strip)
+{
+  for (int x=0; x < preserves_index_; x++)
+    if (preserves_[x].start_ == start)
+      {
+	stop = preserves_[x].stop_;
+	strip = preserves_[x].strip_;
+	return 1;
+      }
+
+  return 0;
+}
+
+LPTSTR
+ACE_Tokenizer::next (void)
+{
+  // Check if the previous pass was the last one in the buffer.
+  if (index_ == -1)
+    {
+      index_ = 0;
+      return 0;
+    }
+
+  TCHAR replacement;
+  int replace;
+  LPTSTR next_token;
+
+  // Skip all leading delimiters.
+  while (1)
+    {
+      // Check for end of string.
+      if (buffer_[index_] == '\0')
+	{
+	  // If we hit EOS at the start, return 0.
+	  index_ = 0;
+	  return 0;
+	}
+
+      if (this->is_delimiter (buffer_[index_], replace, replacement))
+	index_++;
+      else
+	break;
+    } 
+
+  // When we reach this point, buffer_[index_] is a non-delimiter and
+  // not EOS - the start of our next_token.
+  next_token = buffer_ + index_;
+
+  // A preserved region is it's own token.
+  TCHAR stop;
+  int strip;
+  if (this->is_preserve_designator (buffer_[index_], stop, strip))
+    {
+      while (++index_)
+	{
+	  if (buffer_[index_] == '\0')
+	    {
+	      index_ = -1;
+	      goto EXIT_LABEL;
+	    }
+	      
+	  if (buffer_[index_] == stop)
+	    break;
+	}
+
+      if (strip)
+	{
+	  // Skip start preserve designator.
+	  next_token += 1;
+	  // Zap the stop preserve designator.
+	  buffer_[index_] = '\0';
+	  // Increment to the next token.
+	  index_++;
+	}
+      else
+	next_token = buffer_ + index_;
+      
+      goto EXIT_LABEL;
+    }
+
+  // Step through finding the next delimiter or EOS.
+  while (1)
+    {
+      // Advance pointer.
+      index_++;
+
+      // Check for delimiter.
+      if (this->is_delimiter (buffer_[index_], replace, replacement))
+	{
+	  // Replace the delimiter.
+	  if (replace != 0)
+	    buffer_[index_] = replacement;
+
+	  // Move the pointer up and return.
+	  index_++;
+	  goto EXIT_LABEL;
+	}
+
+      // A preserve designator signifies the end of this token.
+      if (this->is_preserve_designator (buffer_[index_], stop, strip))
+	goto EXIT_LABEL;
+
+      // Check for end of string.
+      if (buffer_[index_] == '\0')
+	{
+	  index_ = -1;
+	  goto EXIT_LABEL;
+	}
+    }
+
+EXIT_LABEL:
+  return next_token;
+}
+
+// ************************************************************
+
 ACE_ALLOC_HOOK_DEFINE(ACE_CString)
 
 char ACE_CString::NULL_CString_ = '\0';
@@ -19,6 +201,7 @@ const int ACE_CString::npos = -1;
 const int ACE_SString::npos = -1;
 const int ACE_WString::npos = -1;
 
+#if !defined (ACE_HAS_WINCE)
 ostream &
 operator<< (ostream &os, const ACE_CString &cs)
 {
@@ -32,6 +215,7 @@ operator<< (ostream &os, const ACE_SString &ss)
   os << ss.fast_rep ();
   return os;
 }
+#endif /* !ACE_HAS_WINCE */
 
 ACE_WString 
 operator+ (const ACE_WString &s, const ACE_WString &t)

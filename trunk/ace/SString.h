@@ -438,6 +438,109 @@ private:
 
 ACE_Export ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 
+// ************************************************************
+
+class ACE_Export ACE_Tokenizer
+{
+  // = TITLE
+  //    Tokenizer
+  //
+  // = DESCRIPTION
+  //    Tokenizes a buffer.  Allows application to set delimiters and
+  //    preserve designators.  Does not allow special characters, yet
+  //    (e.g., printf ("\"like a quoted string\"").
+public:
+  ACE_Tokenizer (LPTSTR buffer);
+  // <buffer> will be parsed.
+
+  int delimiter (TCHAR d);
+  // <d> is a delimiter.  Returns 0 on success, -1 if there is no
+  // memory left.
+
+  int delimiter_replace (TCHAR d, TCHAR replacement);
+  // <d> is a delimiter and, when found, will be replaced by
+  // <replacement>.  Returns 0 on success, -1 if there is no memory
+  // left.
+
+  int preserve_designators (TCHAR start, TCHAR stop, int strip=1);
+  // For instance, quotes, or '(' and ')'.  Returns 0 on success, -1
+  // if there is no memory left.  If <strip> == 1, then the preserve
+  // designators will be stripped from the tokens returned by next.
+
+  LPTSTR next (void);
+  // Returns the next token.
+
+  enum { 
+    MAX_DELIMITERS=16,
+    MAX_PRESERVES=16
+  };
+
+protected:
+  int is_delimiter (TCHAR d, int &replace, TCHAR &r);
+  // Returns 1 if <d> is a delimiter, 0 otherwise.  If <d> should be
+  // replaced with <r>, <replace> is set to 1, otherwise 0.
+
+  int is_preserve_designator (TCHAR start, TCHAR &stop, int &strip);
+  // If <start> is a start preserve designator, returns 1 and sets
+  // <stop> to the stop designator.  Returns 0 if <start> is not a
+  // preserve designator.
+ 
+private:
+  LPTSTR buffer_;
+  int index_;
+
+  class Preserve_Entry
+  {
+    // = TITLE
+    //    Preserve Entry
+    //
+    // = DESCRIPTION
+    //    Defines a set of characters that designate an area that
+    //    should not be parsed, but should be treated as a complete
+    //    token.  For instance, in: (this is a preserve region), start
+    //    would be a left paren -(- and stop would be a right paren
+    //    -)-.  The strip determines whether the designators should be
+    //    removed from the token.
+  public:
+    TCHAR start_;
+    // E.g., "(".
+    TCHAR stop_;
+    // E.g., ")".
+    int strip_;
+    // Whether the designators should be removed from the token.
+  };
+
+  Preserve_Entry preserves_[MAX_PRESERVES];
+  // The application can specify MAX_PRESERVES preserve designators. 
+
+  int preserves_index_;
+  // Pointer to the next free spot in preserves_.
+
+  class Delimiter_Entry
+  {
+    // = TITLE
+    //    Delimiter Entry
+    //
+    // = DESCRIPTION
+    //    Describes a delimiter for the tokenizer.
+  public:
+    TCHAR delimiter_;
+    // Most commonly a space ' '.
+    TCHAR replacement_;
+    // What occurrences of delimiter_ should be replaced with.
+    int replace_;
+    // Whether replacement_ should be used.  This should be replaced
+    // with a technique that sets replacement_ = delimiter by
+    // default.  I'll do that next iteration.
+  };
+
+  Delimiter_Entry delimiters_[MAX_DELIMITERS];
+  // The tokenizer allows MAX_DELIMITERS number of delimiters.
+
+  int delimiter_index_;
+  // Pointer to the next free space in delimiters_.
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */
