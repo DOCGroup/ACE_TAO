@@ -8,7 +8,6 @@
  *
  *   Utility classes for the TAO pluggable messaging framework.
  *
- *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -24,6 +23,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+class TAO_Transport;
 
 /**
  * @class TAO_Pluggable_Reply_Params_Base
@@ -88,23 +90,19 @@ protected:
  *
  * @brief TAO_Pluggable_Connector_Params
  *
- * This represents a set of data that would be received by the
- * connector from the acceptor.
  */
 class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base
 {
 public:
   /// Constructor.
-  TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
-
-  /* @todo: There is a way out clear this off from stack. Need to look
-     into that after 1.2
-  */
+  TAO_Pluggable_Reply_Params (TAO_Transport *t);
 
   /// The stream with the non-demarshaled reply. This stream will be
   /// passed up to the stubs to demarshal the parameter values.
-  TAO_InputCDR input_cdr_;
+  TAO_InputCDR *input_cdr_;
+
+  TAO_Transport *transport_;
 };
 
 // @@ Bala: this is a GIOPism too, there is no such thing as locate
