@@ -48,8 +48,6 @@ endif
 LDFLAGS      += -L$(TAO_ROOT)/tao/PortableServer -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
 TAO_IDLFLAGS += -Ge 1 -Sc
 
-LDLIBS = -lTAO_PortableServer -lTAO
-
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -65,7 +63,7 @@ all: idl_stubs
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
 $(BIN): $(addprefix $(VDIR), $(OBJS))
-	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(TAO_SRVR_LIBS) $(VLDLIBS) $(POSTLINK)
 
 realclean: clean 
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
