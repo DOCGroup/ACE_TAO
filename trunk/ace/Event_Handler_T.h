@@ -26,7 +26,7 @@
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
 template <class T>
-class ACE_Export ACE_Event_Handler_T : public ACE_Event_Handler
+class ACE_Event_Handler_T : public ACE_Event_Handler
 {
   // = TITLE
   //     Enable a class that doesn't inherit from the
