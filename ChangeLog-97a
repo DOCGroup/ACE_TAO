@@ -1,3 +1,36 @@
+Sun Mar 30 12:52:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Malloc.h: The block begining with:
+	  #if defined (ACE_MALLOC_STATS)
+	  and ending with end of struct ACE_Malloc_Stats
+	  must be moved (up) after line 107
+
+	  Thanks to Sandro Doro <alex@aureus.sublink.org> for pointing
+ 	  this out.
+
+	* ace/Malloc_T.cpp: The line
+	  this->malloc_stats_.dump ();
+	  must be changed in:
+	  this->cb_ptr_->malloc_stats_.dump ();
+
+	  Thanks to Sandro Doro <alex@aureus.sublink.org> for pointing
+ 	  this out.
+
+	* ace/Malloc_T.cpp: the line
+	  this->cb_ptr_->malloc_stats_.print ();    // print not exists
+	  may be changed in:
+	  this->cb_ptr_->malloc_stats_.dump ();
+
+	  Thanks to Sandro Doro <alex@aureus.sublink.org> for pointing
+ 	  this out.
+
+	* ace/Malloc_T.h: Added "virtual" to the ACE_New_Allocator methods
+ 	  to reinforce the fact that they are indeed virtual.  Thanks to
+ 	  Sandro Doro <alex@aureus.sublink.org> for pointing this out.
+
+	* ace/Malloc.h: Added "virtual" to the ACE_New_Allocator methods
+ 	  to reinforce the fact that they are indeed virtual.
+
 Sat Mar 29 20:26:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: moved #defin of RTLD_LAZY after #include of dlfcn.h.
