@@ -1,3 +1,9 @@
+Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
+
+	* ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined ACE_LACKS_IOSTREAM_TOTALLY.
+        Use ftell instead of fseek in order to get the current file length.
+        Thanks to Kim ByeongSu <kcando at kcando dot org> for pointing it out.
+
 Sat Jan 22 21:13:11 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
 	* tests/Test_Output.cpp(close): Fixed when ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose
