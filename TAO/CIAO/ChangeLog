@@ -1,3 +1,10 @@
+Mon Feb 14 14:52:32 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NEWS
+
+          Updated the NEWS file by adding support for parsing
+          hierarchical assembly of component descriptors.
+
 Sun Feb 13 13:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Release:

@@ -37,5 +37,8 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.5
  . Tools and utilities for developing and debugging components and
    applications. (Kitty)
 
- . support etting attribute values on Component through XML and
+ . Support adding attribute values on Component through XML and
    DAnCE configurator. (Gan and Kitty)
+
+ . Support parsing XML descriptors which describes the hierarchical
+   assembly of components model. (Ming Xiong)
