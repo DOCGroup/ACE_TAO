@@ -15,7 +15,7 @@
  *   this is:
  *
  *   tao_idl
- *       -o orig -Gp -Gd -Ge 1 -GT
+ *       -o orig -Gp -Gd -Ge 1 -GT -Sc
  *       -Wb,export_macro=TAO_Messaging_Export
  *       -Wb,export_include=messaging_export.h
  *       -Wb,pre_include="ace/pre.h"
@@ -28,15 +28,13 @@
  *
  *   Apply patches using the following commands:
  *
- *   patch < diffs/TAO_ExtC.h.diff
- *   patch < diffs/TAO_ExtC.i.diff
- *   patch < diffs/TAO_ExtC.cpp.diff
+ *   patch < diffs/TAO_ExtC.diff
  *
  *   @note The diffs were generated with these commands:
  *
- *   diff -wBbu orig/TAO_ExtC.h TAO_ExtC.h > diffs/TAO_ExtC.diff
- *   diff -wBbu orig/TAO_ExtC.i TAO_ExtC.i >> diffs/TAO_ExtC.diff
- *   diff -wBbu orig/TAO_ExtC.cpp TAO_ExtC.cpp >> diffs/TAO_ExtC.diff
+ *   for i in TAO_ExtC{C,S}.{h,i,cpp}; do
+ *     diff -uBbw orig/$i $i;
+ *   done > diffs/TAO_ExtC.diff
  */
 // ================================================================
 
