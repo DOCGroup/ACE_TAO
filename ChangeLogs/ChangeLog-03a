@@ -1,3 +1,23 @@
+Sat Apr 29 14:15:12 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * bin/clean_dsp.pl:
+
+          Was still some bugs in this script.  In general, beware
+          of using it.  There is no guarantess that it does or ever
+          will work.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          Having said that, I went and used it on these project files
+          anyway.  Reduced their size by a good 50%.
+
+        * ace/ace_dll_ce.dsp:
+
+          Made the x86 emulation release configuration build correctly
+          by ingoring default libraries.  Also cleaned this dsp, which
+          had an improvement of 98%.  
+
 Sat Apr 29 13:20:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * apps/drwho/PMS_All.cpp:
