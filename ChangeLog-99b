@@ -7,6 +7,10 @@ Thu Jun 10 12:47:52 1999  David L. Levine  <levine@cs.wustl.edu>
           automatic detection of AIO support, based on existence
           of /usr/lib/librt.so.
 
+        * include/makeinclude/platform_linux_lxpthread.GNU: add
+          -lrt to LIBS only if $(PLATFORM_AIO_SUPPORT) is equal to
+          -DACE_HAS_AIO_CALLS.
+
         Thanks to Jake Hamby <jehamby@anobject.com> for reporting that
         not all Linux platforms have AIO support.
 
