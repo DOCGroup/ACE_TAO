@@ -29,6 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "dynamicinterface_export.h"
 
 class CORBA_ExceptionList;
@@ -147,6 +149,7 @@ private:
 # include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_CORBA_EXCEPTIONLIST_H */
 

@@ -5,6 +5,8 @@
 
 ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #include "tao/Stub.h"
 #include "tao/Principal.h"
 #include "tao/Object_KeyC.h"
@@ -14,7 +16,6 @@ ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
 #if !defined (__ACE_INLINE__)
 # include "DII_Invocation.inl"
 #endif /* ! __ACE_INLINE__ */
-
 
 void
 TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
@@ -75,3 +76,4 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   return TAO_INVOKE_OK;
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
