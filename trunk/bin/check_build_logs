@@ -24,16 +24,7 @@ if ( "$ostype" =~ /(solaris)|(SunOS)/i ) {
 }
 
 $ENV{'LD_LIBRARY_PATH'} = '/opt/SUNWspro_5.0/dt/lib:/usr/openwin/lib:/usr/lib:/project/danzon/pkg/egcs/lib:' unless $ENV{'LD_LIBRARY_PATH'};
-$ENV{'MAIL'} = '/var/mail/levine';
 $ENV{'TMPDIR'} = '/tmp';
-$ENV{'ARCH'} = 'sun4';
-$ENV{'HOSTNAME'} = 'danzon';
-$ENV{'HOSTTYPE'} = 'sparc';
-$ENV{'HZ'} = '100';
-$ENV{'MACHTYPE'} = 'sparc-sun-solaris2.5.1';
-$ENV{'NOMHNPROC'} = '1';
-$ENV{'OSTYPE'} = 'solaris2.5.1';
-#### $ENV{'TERM'} = 'vt100';
 $ENV{'USER'} = $ENV{'LOGNAME'};
 
 my $log_directory = '/project/danzontmp/levine/build-logs';
@@ -85,7 +76,7 @@ chdir $log_directory  ||
 #### Grep the log files for problems.
 ####
 my @output = ();
-open (EGREP, "egrep -n \'Error|errors|[^a]Stop|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files |")  ||
+open (EGREP, "egrep -n \'Error|errors|[^a]Stop|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files /dev/null |")  ||
   die "$0: unable to open egrep\n";
 while (<EGREP>) {
   push @output, $_ unless /calls, 0 errors$/  ||  /Found non-pic R_SPARC/;
@@ -122,4 +113,3 @@ if ($#output == -1) {
     unlink $tmp_file;
   }
 }
-

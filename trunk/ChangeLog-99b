@@ -1,3 +1,9 @@
+Thu Sep 02 11:04:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: added /dev/null to egrep invocation
+          so that it always shows the file name.  Thanks to Doug for
+          reporting this.
+
 Thu Sep 02 11:02:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-qnx-neutrino.h: added ACE_LACKS_SOCKET_BUFSIZ.
