@@ -28,7 +28,9 @@ main (int argc, char *argv[])
 
   // The following won't work on MVS OpenEdition...
   ACE_Sig_Action sig1 ((ACE_SignalHandler) ACE_Trace::start_tracing, SIGUSR1);
+  ACE_UNUSED_ARG (sig1);
   ACE_Sig_Action sig2 ((ACE_SignalHandler) ACE_Trace::stop_tracing, SIGUSR2);
+  ACE_UNUSED_ARG (sig2);
 
 #if defined (ACE_MT_SAFE)
   int n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
