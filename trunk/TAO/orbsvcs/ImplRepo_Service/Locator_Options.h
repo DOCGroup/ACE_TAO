@@ -72,7 +72,7 @@ public:
 
   int save_registry_options();
 
-  const ACE_TString& cmdline(void) const;
+  const char* cmdline(void) const;
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.

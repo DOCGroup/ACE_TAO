@@ -145,7 +145,7 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Options& opts ACE_ENV_A
 int
 ImR_Activator_i::init (Options& opts ACE_ENV_ARG_DECL)
 {
-  ACE_ARGV av(opts.cmdline().c_str());
+  ACE_ARGV av(opts.cmdline());
   int argc = av.argc();
 
   CORBA::ORB_var orb =

@@ -62,7 +62,7 @@ public:
   /// Save the command line arguments as registry settings. (Windows only)
   int save_registry_options ();
 
-  const ACE_CString& cmdline(void) const;
+  const char* cmdline(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR

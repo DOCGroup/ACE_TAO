@@ -445,9 +445,9 @@ Options::service_command(void) const
   return this->service_command_;
 }
 
-const ACE_CString&
+const char*
 Options::cmdline(void) const {
-  return this->cmdline_;
+  return this->cmdline_.c_str ();
 }
 
 const ACE_CString&

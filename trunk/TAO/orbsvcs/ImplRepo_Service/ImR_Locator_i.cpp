@@ -160,7 +160,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
 int
 ImR_Locator_i::init(Options& opts ACE_ENV_ARG_DECL)
 {
-  ACE_ARGV av(opts.cmdline().c_str());
+  ACE_ARGV av(opts.cmdline());
   int argc = av.argc();
   char** argv = av.argv();
 
