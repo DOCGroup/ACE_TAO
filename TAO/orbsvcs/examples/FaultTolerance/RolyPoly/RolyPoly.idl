@@ -8,8 +8,8 @@ interface RolyPoly
   {
     string s;
   };
-  
+
   short number (inout string m) raises (E);
-  
+
   oneway void shutdown ();
 };

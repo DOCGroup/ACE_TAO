@@ -76,7 +76,7 @@ namespace TAO
       FT::ObjectGroupId group_id
       );
     /**
-     * destructor.  
+     * destructor.
      * Non-virtual because this class does not take part in
      * inheritence.
      */
