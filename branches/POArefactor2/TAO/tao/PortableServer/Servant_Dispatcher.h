@@ -73,7 +73,6 @@ public:
                                TAO_ORB_Core &orb_core,
                                TAO_Object_Adapter *object_adapter
                                ACE_ENV_ARG_DECL) = 0;
-
 };
 
 #include /**/ "ace/post.h"

@@ -286,6 +286,8 @@ public:
     persistent_poa_system_map persistent_poa_system_map_;
   };
 
+  friend Active_Hint_Strategy;
+
   /**
    * @class No_Hint_Strategy
    *
@@ -313,6 +315,8 @@ public:
                                        const poa_name &system_name);
 
   };
+
+  friend No_Hint_Strategy;
 
 protected:
 
@@ -371,9 +375,10 @@ protected:
   /// Strategy for dispatching a request to a servant.
   TAO_Servant_Dispatcher *servant_dispatcher_;
 
-public:
-
+  /// Persistent POA map
   persistent_poa_name_map *persistent_poa_name_map_;
+
+  /// Transient POA map
   transient_poa_map *transient_poa_map_;
 
 protected:
