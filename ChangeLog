@@ -1,3 +1,9 @@
+Fri May 03 20:29:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Only set INSBIN, INSLIB, INSMAN and INSINC when they are not set
+          yet. This way these can be overruled in a makefile.
+
 Fri May 03 08:38:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.cpp (ssl_library_init):
