@@ -98,7 +98,14 @@ class TAO_ORBSVCS_Export NS_NamingContext : public POA_CosNaming::NamingContext
   // This implementation of NamingContext uses ACE thread-safe Hash
   // Map for storage and manipulation of name-object bindings.
   
-  CosNaming::NamingContext_ptr tie_ref_;
+  ACE_Lock *lock_;
+  // Lock to serialize access to the underlying data structure.  
+  // This is a lock adapter that hides the type of lock, which may be
+  // a null lock, if the ORB decides it is not needed.
+
+  // CosNaming::NamingContext_ptr tie_ref_;
+  // @@ I think this is not needed anymore, since we can obtain the 
+  //    object reference from _this().
   // Stores CORBA object reference to the TIE object this object
   // implements.  This is needed to implement the <destroy> method.
 };
@@ -115,7 +122,7 @@ class TAO_ORBSVCS_Export NS_BindingIterator : public POA_CosNaming::BindingItera
 {
  public:
   // = Intialization and termination methods.
-  NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter);
+  NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter, ACE_Lock * lock);
   // constructor.
 
   ~NS_BindingIterator (void);
@@ -134,6 +141,10 @@ class TAO_ORBSVCS_Export NS_BindingIterator : public POA_CosNaming::BindingItera
  private:
   NS_NamingContext::HASH_MAP::ITERATOR *hash_iter_;
   // A pointer to the hash map iterator.
+
+  ACE_Lock *lock_;
+  // lock passed on from NS_NamingContext to serialize access 
+  //   to the internal data structure.
 }; 
 
 #endif /* COSNAMING_I_H */

@@ -21,6 +21,12 @@ NS_NamingContext::NS_NamingContext (void)
   // Deal with faults.
   if (context_.open (NS_MAP_SIZE) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
+
+  // Enable this whenever create_servant_lock() gets committed. @@
+  // this->lock_ = TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ();
+
+  // this is temporal.  Lock will be obtained from the ORB core.
+  this->lock_ = new ACE_Lock_Adapter<ACE_Null_Mutex> ();
 }
 
 NS_NamingContext::~NS_NamingContext (void)
@@ -39,7 +45,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
   // resolve
   CORBA::Object_ptr cont_ref = resolve (comp_name, _env);
 
-  // Deal with exceptions in resolve: basicly, add the last component
+  // Deal with exceptions in resolve: basically, add the last component
   // of the name to <rest_of_name> and rethrow.
   if (_env.exception () != 0)
     {
@@ -79,6 +85,11 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 			CORBA::Object_ptr obj,
 			CORBA::Environment &_env)
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
   int result = 0;
   _env.clear ();
 
@@ -139,7 +150,13 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
 			  CORBA::Object_ptr obj,
 			  CORBA::Environment &_env)
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
   int result = 0;
+  _env.clear ();
 
   // Get the length of the name.
   CORBA::ULong len = n.length ();
@@ -192,7 +209,13 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
 				CosNaming::NamingContext_ptr nc,
 				CORBA::Environment &_env)
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
   int result = 0;
+  _env.clear ();
 
   // Get the length of the name.
   CORBA::ULong len = n.length ();
@@ -247,6 +270,13 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
 				  CosNaming::NamingContext_ptr nc,
 				  CORBA::Environment &_env)
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
+  _env.clear ();
+
   // Get the length of the name.
   CORBA::ULong len = n.length ();
 
@@ -289,6 +319,14 @@ CORBA::Object_ptr
 NS_NamingContext::resolve (const CosNaming::Name& n,
 			   CORBA::Environment &_env)
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, CORBA::Object::_nil ());
+  
+  // clear the environment.
+  _env.clear ();
+
   // get the length of the name
   CORBA::ULong len = n.length ();
 
@@ -361,7 +399,12 @@ void
 NS_NamingContext::unbind (const CosNaming::Name& n,
 			  CORBA::Environment &_env)
 {
-  // if (do_operation (n, CORBA::_nil (), NS_NamingContext::unbind) == 0)
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
+  _env.clear ();
 
   // get the length of the name
   CORBA::ULong len = n.length ();
@@ -405,7 +448,8 @@ CosNaming::NamingContext_ptr
 NS_NamingContext::new_context (CORBA::Environment &_env) 
 {
   NS_NamingContext *c = new NS_NamingContext;
-
+  // (1) do we have to duplicate () the object reference???!
+  // (2) Also, how about memory leaks?
   return c->_this (_env);
 }
     
@@ -430,23 +474,34 @@ NS_NamingContext::bind_new_context (const CosNaming::Name& n,
 void
 NS_NamingContext::destroy (CORBA::Environment &_env)
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
+  _env.clear ();
+
   if (context_.current_size () != 0)
     {
       _env.clear ();
       _env.exception (new CosNaming::NamingContext::NotEmpty);
       return;
     }
-
-  // Destroy context.
-  CORBA::release (tie_ref_);
 }
     
 void 
 NS_NamingContext::list (CORBA::ULong how_many, 
 			CosNaming::BindingList_out bl, 
 			CosNaming::BindingIterator_out bi, 
-			CORBA::Environment &) 
+			CORBA::Environment &_env) 
 {
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+
+  _env.clear ();
+
   // Dynamically allocate hash map iterator.
   NS_NamingContext::HASH_MAP::ITERATOR *hash_iter =
     new NS_NamingContext::HASH_MAP::ITERATOR (context_);
@@ -460,13 +515,20 @@ NS_NamingContext::list (CORBA::ULong how_many,
      {
        NS_BindingIterator *bind_iter;
        
-       ACE_NEW (bind_iter, NS_BindingIterator (hash_iter));
+       bind_iter = new NS_BindingIterator (hash_iter, this->lock_);
+       
+       // Allocation error, this is handled as in ACE_NEW.  We don't use it to
+       //   be able to set the environment exception variable.
+       if (bind_iter == 0)
+	 {
+	   errno = ENOMEM;
+	   _env.clear ();
+	   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+	   return;
+	 }
 
-       // @@ ????
+       bi = bind_iter->_this (_env);
 
-       ACE_UNUSED_ARG (bind_iter);
-
-       //  bind_iter->initialize (bi);
        CosNaming::BindingIterator::_duplicate (bi);
 
        n = how_many;
@@ -507,9 +569,11 @@ NS_NamingContext::list (CORBA::ULong how_many,
     delete hash_iter;
 }
 
-NS_BindingIterator::NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter)
+NS_BindingIterator::NS_BindingIterator (NS_NamingContext::HASH_MAP::ITERATOR *hash_iter, 
+					ACE_Lock * lock)
+  : hash_iter_ (hash_iter),
+    lock_ (lock)
 {
-  hash_iter_ = hash_iter;
 }
 
 NS_BindingIterator::~NS_BindingIterator (void)
@@ -521,13 +585,20 @@ CORBA::Boolean
 NS_BindingIterator::next_one (CosNaming::Binding_out b,
 			      CORBA::Environment &_env)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (_env);
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-  if (hash_iter_->done ()) {
-    b = new CosNaming::Binding;
-    return 0;
-  }
+  _env.clear ();
+
+  if (hash_iter_->done ()) 
+    {
+      // @@ Marina, why would we want to allocate a binding when the 
+      //    iteration is done?
+      b = new CosNaming::Binding;
+      return 0;
+    }
   else
     {
       b = new CosNaming::Binding;
@@ -553,13 +624,18 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 			    CosNaming::BindingList_out bl,
 			    CORBA::Environment &_env)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (_env);
+  // if Guard fails to get the lock, the environment must be set.
+  _env.clear ();
+  _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-  if (hash_iter_->done ()) {
-    bl = new CosNaming::BindingList;
-    return 0;
-  }
+  _env.clear ();
+
+  if (hash_iter_->done ()) 
+    {
+      bl = new CosNaming::BindingList;
+      return 0;
+    }
   else
     {
       // Statically allocate a BindingList.
@@ -592,8 +668,17 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 	    }
 	}
 
-      // Marina, please check for failed memory allocation.
+      // if mem allocation fails, the environment must be set to throw
+      //   an exception.
+      _env.clear ();
+      _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+
+      // Check for failed memory allocation.
       ACE_NEW_RETURN (bl, CosNaming::BindingList (bindings), 0);
+      
+      // if allocation went well, clear the exception.
+      _env.clear ();  
+      
       return 1;
     }
 }
@@ -601,15 +686,9 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 void
 NS_BindingIterator::destroy (CORBA::Environment &_env)
 {
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (_env);
-
-  //  CORBA::release (tie_ref_);
+  // @@ Not sure if this is the correct way to do this.
+  CORBA::release (this->_this (_env));
 }
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// These templates will specialized in libACE.* if the platforms does
-// not define ACE_MT_SAFE.
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
@@ -624,4 +703,3 @@ template class  ACE_Hash_Map_Reverse_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex
 #pragma instantiate ACE_Hash_Map_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_MT_SAFE */
