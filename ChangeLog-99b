@@ -7,6 +7,9 @@ Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
        * ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_TYPENAME_KEYWORD for
          aC++.
 
+       * tests/DLL_Test.cpp: Enable on HP-UX.  Generalize the library
+         prefix/suffix with the platform definitions from OS.h.
+
 Tue Mar  2 12:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
        * ace/IOStream_T.{cpp, h}: Fixed some line breaks that were 
