@@ -80,7 +80,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy ()
 }
 
 CORBA::Boolean
-TAO_PriorityModelPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
+TAO_PriorityModelPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
   // Note the field are encoded according to
   // the order specified in the spec. see p. 4.7.3
@@ -94,7 +94,7 @@ TAO_PriorityModelPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
 }
 
 CORBA::Boolean
-TAO_PriorityModelPolicy::_tao_decode(TAO_InputCDR &in_cdr)
+TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
 
   CORBA::Boolean b = (in_cdr >> priority_model_);
@@ -103,7 +103,6 @@ TAO_PriorityModelPolicy::_tao_decode(TAO_InputCDR &in_cdr)
 
   priority_model_ = RTCORBA::SERVER_DECLARED;
   server_priority_ = 0;
-
 
   return 0;
 
@@ -373,28 +372,28 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 // Method for serialization support.
 
 CORBA::Boolean
-TAO_TCP_Properties::_tao_encode(TAO_OutputCDR & out_cdr)
+TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
 {
-  if( !(out_cdr << send_buffer_size_) )
+  if (!(out_cdr << send_buffer_size_ ))
     return 0;
 
-  if( !(out_cdr << recv_buffer_size_) )
+  if (!(out_cdr <<  recv_buffer_size_ ))
     return 0;
 
-  if( !(out_cdr << keep_alive_) )
+  if (!(out_cdr.write_boolean (keep_alive_)))
     return 0;
 
-  if( !(out_cdr << dont_route_) )
+  if (!(out_cdr.write_boolean (dont_route_)))
     return 0;
 
-  if( !(out_cdr << no_delay_) )
+  if (!(out_cdr.write_boolean ( no_delay_)))
     return 0;
 
   return 1;
 }
 
 CORBA::Boolean
-TAO_TCP_Properties::_tao_decode(TAO_InputCDR &in_cdr)
+TAO_TCP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 {
   if( !(in_cdr >> this->send_buffer_size_) )
     return 0;
@@ -404,13 +403,13 @@ TAO_TCP_Properties::_tao_decode(TAO_InputCDR &in_cdr)
 
 
 
-  if (in_cdr.read_boolean(this->keep_alive_))
+  if (in_cdr.read_boolean (this->keep_alive_))
     return 0;
 
-  if( in_cdr.read_boolean(this->dont_route_) )
+  if( in_cdr.read_boolean (this->dont_route_) )
     return 0;
 
-  if( in_cdr.read_boolean(this->no_delay_) )
+  if( in_cdr.read_boolean (this->no_delay_) )
     return 0;
 
 
@@ -490,17 +489,17 @@ CORBA::Boolean
 TAO_ServerProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
 
-  CORBA::Boolean is_write_ok = out_cdr << protocols_.length();
+  CORBA::Boolean is_write_ok = out_cdr << protocols_.length ();
 
-  for (CORBA::ULong i = 0; ( i < protocols_.length() ) && is_write_ok; i++)
+  for (CORBA::ULong i = 0; ( i < protocols_.length () ) && is_write_ok; i++)
     {
       is_write_ok = out_cdr << protocols_[i].protocol_type;
 
       if (is_write_ok)
-        is_write_ok = protocols_[i].orb_protocol_properties->_tao_encode(out_cdr);
+        is_write_ok = protocols_[i].orb_protocol_properties->_tao_encode (out_cdr);
 
       if (is_write_ok)
-        is_write_ok = protocols_[i].transport_protocol_properties->_tao_encode(out_cdr);
+        is_write_ok = protocols_[i].transport_protocol_properties->_tao_encode (out_cdr);
     }
 
   return is_write_ok;
@@ -512,7 +511,7 @@ TAO_ServerProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
   CORBA::ULong length;
   CORBA::Boolean is_read_ok = in_cdr >> length;
 
-  protocols_.length(length);
+  protocols_.length (length);
 
  for (CORBA::ULong i = 0; ( i < length ) && is_read_ok; i++)
    {
@@ -520,25 +519,23 @@ TAO_ServerProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
      is_read_ok = in_cdr >> id;
 
      protocols_[i].orb_protocol_properties =
-       TAO_ProtocolPropertiesFactory::create_orb_protocol_property (id);
+       TAO_Proto_Properties_Factory::create_orb_protocol_property (id);
 
      protocols_[i].transport_protocol_properties =
-       TAO_ProtocolPropertiesFactory::create_orb_protocol_property (id);
+       TAO_Proto_Properties_Factory::create_orb_protocol_property (id);
 
      if (is_read_ok)
        {
          if (is_read_ok && (protocols_[i].orb_protocol_properties.ptr () == 0))
-           is_read_ok = protocols_[i].orb_protocol_properties->_tao_decode(in_cdr);
+           is_read_ok = protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
 
          if (is_read_ok && (protocols_[i].transport_protocol_properties.ptr () == 0))
-           is_read_ok = protocols_[i].transport_protocol_properties->_tao_decode(in_cdr);
+           is_read_ok = protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
        }
    }
 
  return is_read_ok;
 }
-
-
 
 
 
@@ -612,24 +609,24 @@ TAO_GIOP_Properties::~TAO_GIOP_Properties ( )
 
 
 RTCORBA::ProtocolProperties*
-TAO_ProtocolPropertiesFactory::create_transport_protocol_property (IOP::ProfileId id)
+TAO_Proto_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id)
 {
- RTCORBA::ProtocolProperties* property = 0;
-
+  RTCORBA::ProtocolProperties* property = 0;
+  
   if (id == IOP::TAG_INTERNET_IOP)
     ACE_NEW_RETURN (property, TAO_TCP_Properties, 0);
-
+  
   return property;
 }
 
 RTCORBA::ProtocolProperties*
-TAO_ProtocolPropertiesFactory::create_orb_protocol_property (IOP::ProfileId id)
+TAO_Proto_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id)
 {
   RTCORBA::ProtocolProperties* property = 0;
-
+  
   if (id == IOP::TAG_INTERNET_IOP)
     ACE_NEW_RETURN (property, TAO_GIOP_Properties, 0);
-
+  
   return property;
 }
 

@@ -129,8 +129,8 @@ public:
 
 private:
 
-  void _create_policy_list (int length);
-  // @@ Angelo, remove the leading underscore from the method name.
+  void create_policy_list (int length);
+
 
 private:
   TAO_MProfile *forward_to_i (void);

@@ -83,10 +83,10 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
-  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object
   
-  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation
 
 protected:
@@ -221,10 +221,10 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
-  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object
   
-  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation
 
 protected:
@@ -282,10 +282,10 @@ public:
   ///////////////////////////////////////////////////////////////
   // CDR Encoder/Decoder
 
-  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object
   
-  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation
 
 
@@ -435,35 +435,38 @@ private:
   CORBA::Boolean no_delay_;
 };
 
-class  TAO_ProtocolPropertiesFactory;
+class  TAO_Proto_Properties_Factory;
 
 class TAO_Export TAO_GIOP_Properties : public RTCORBA::GIOPProtocolProperties
 {
   virtual ~TAO_GIOP_Properties ();
 protected:
-  friend class TAO_Export TAO_ProtocolPropertiesFactory;
+  friend class TAO_Export TAO_Proto_Properties_Factory;
   TAO_GIOP_Properties ();
 };
 
-class TAO_Export TAO_ProtocolPropertiesFactory {
-
+class TAO_Export TAO_Proto_Properties_Factory {
+  
 public:
- 
-    static RTCORBA::ProtocolProperties* create_transport_protocol_property (IOP::ProfileId id);
-    // created the proper ProtocolProperties subclass that matches 
-    // the IOP::ProfileId. Actually at each IOP::ProfileId corresponds
-    // a couple of protocol properties one that describes the transport
-    // protocol and one that describes the ORB protocol.
-    
-    static RTCORBA::ProtocolProperties* create_orb_protocol_property (IOP::ProfileId id);
-    // created the proper ProtocolProperties subclass that matches 
-    // the IOP::ProfileId. Actually at each IOP::ProfileId corresponds
-    // a couple of protocol properties one that describes the transport
-    // protocol and one that describes the ORB protocol.
+  
+  static RTCORBA::ProtocolProperties* create_transport_protocol_property (IOP::ProfileId id);
+  // Creates the proper ProtocolProperties subclass that matches 
+  // the IOP::ProfileId. 
+  // NOTE: At each IOP::ProfileId corresponds a couple of protocol 
+  // properties one that describes the transport protocol and one 
+  // that describes the ORB protocol.
+  
+  static RTCORBA::ProtocolProperties* create_orb_protocol_property (IOP::ProfileId id);
+  // Creates the proper ProtocolProperties subclass that matches 
+  // the IOP::ProfileId. 
+  // NOTE: At each IOP::ProfileId corresponds a couple of protocol 
+  // properties one that describes the transport protocol and one 
+  // that describes the ORB protocol.
 
 protected:
-  TAO_ProtocolPropertiesFactory ();
+  TAO_Proto_Properties_Factory ();
 };
+
 #if defined (__ACE_INLINE__)
 #include "tao/RT_Policy_i.i"
 #endif /* __ACE_INLINE__ */

@@ -1,3 +1,29 @@
+Wed Jun 07 13:19:56 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Profile.cpp
+	* tao/Profile.h
+	* tao/PolicyC.cpp
+	* tao/PolicyC.h
+	* tao/Policy_Factory.cpp
+	* tao/Policy_Factory.h
+	* tao/Policy_Factory.i
+
+	  TAO-ization, i.e., made some aesthetic change to make
+	  the code follow more closely  TAO's coding rule.
+
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.cpp
+
+	  Renamed class <TAO_ProtocolPropertiesFactory> to 
+	  <TAO_Proto_Properties_Factory>.
+	  
+	  TAO-ization, i.e., made some aesthetic change to make
+	  the code follow more closely  TAO's coding rule.
+
+	  Made a change to use <write_boolean> and <read_boolean>
+	  instead of the CDR streaming operator in 
+	  <TAO_TCP_Properties::_tao_encode>.
+
 Wed Jun 07 01:32:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (parse_policy): Added code to handle
