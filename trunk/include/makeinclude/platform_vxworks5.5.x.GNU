@@ -26,8 +26,8 @@ rtti ?= 1
 threads ?= 1
 exceptions ?= 0
 
-shared_libs ?= 0
-static_libs ?= 1
+shared_libs =
+static_libs = 1
 versioned_so ?= 0
 
 # VxWorks doesn't have rwho
