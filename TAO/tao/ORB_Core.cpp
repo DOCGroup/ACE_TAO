@@ -31,6 +31,7 @@
 #include "BiDir_Adapter.h"
 
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
@@ -1141,8 +1142,7 @@ TAO_ORB_Core::fini (void)
     }
 
   // Finalize lane resources.
-  this->thread_lane_resources_manager ()->finalize ();
-  delete this->thread_lane_resources_manager_;
+  this->thread_lane_resources_manager ().finalize ();
 
   // Pass reactor back to the resource factory.
   if (this->resource_factory_ != 0)
@@ -1311,12 +1311,12 @@ TAO_ORB_Core::resource_factory (void)
   return this->resource_factory_;
 }
 
-TAO_Thread_Lane_Resources_Manager *
+TAO_Thread_Lane_Resources_Manager &
 TAO_ORB_Core::thread_lane_resources_manager (void)
 {
   // Check if there is a cached reference.
   if (this->thread_lane_resources_manager_ != 0)
-    return this->thread_lane_resources_manager_;
+    return *this->thread_lane_resources_manager_;
 
   // If not, look in the service repository for an instance.
   this->thread_lane_resources_manager_ =
@@ -1326,7 +1326,7 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
   // Initialize the resources.
   this->thread_lane_resources_manager_->initialize (*this);
 
-  return this->thread_lane_resources_manager_;
+  return *this->thread_lane_resources_manager_;
 }
 
 TAO_Stub_Factory *
@@ -2013,15 +2013,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
-  // This method should only be called by servers, so now we set up
-  // for listening!
-
-  int ret = this->open (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
-
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
 
@@ -2220,18 +2211,10 @@ TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-// Set up listening endpoints.
-int
-TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
-{
-  // Open lane resources.
-  return this->thread_lane_resources_manager ()->open (ACE_TRY_ENV);
-}
-
 TAO_Thread_Lane_Resources &
 TAO_ORB_Core::lane_resources (void)
 {
-  return this->thread_lane_resources_manager ()->lane_resources ();
+  return this->thread_lane_resources_manager ().lane_resources ();
 }
 
 void

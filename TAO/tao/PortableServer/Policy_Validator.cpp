@@ -2,13 +2,15 @@
 
 #include "Policy_Validator.h"
 #include "tao/Environment.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(tao, POA, "$Id$")
 
 TAO_POA_Policy_Validator *TAO_POA_Policy_Validator::last_ = 0;
 
-TAO_POA_Policy_Validator::TAO_POA_Policy_Validator (void)
-  : next_ (0)
+TAO_POA_Policy_Validator::TAO_POA_Policy_Validator (TAO_ORB_Core &orb_core)
+  : orb_core_ (orb_core),
+    next_ (0)
 {
   // No-Op.
 }
@@ -48,5 +50,3 @@ TAO_POA_Policy_Validator::legal_policy (CORBA::PolicyType type)
   return (this->legal_policy_impl (type) ||
           ((this->next_ != 0) && this->next_->legal_policy_impl (type)));
 }
-
-

@@ -26,12 +26,13 @@
 
 // Forward declarations.
 class TAO_Policy_Set;
+class TAO_ORB_Core;
 
 class TAO_PortableServer_Export TAO_POA_Policy_Validator
 {
 public:
   /// Constructor.
-  TAO_POA_Policy_Validator (void);
+  TAO_POA_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   virtual ~TAO_POA_Policy_Validator (void);
@@ -68,6 +69,8 @@ protected:
 
   virtual CORBA::Boolean legal_policy_impl (CORBA::PolicyType type) = 0;
 
+  TAO_ORB_Core &orb_core_;
+
 private:
   TAO_POA_Policy_Validator *next_;
   static TAO_POA_Policy_Validator *last_;
@@ -75,5 +78,3 @@ private:
 
 #include "ace/post.h"
 #endif /* TAO_POLICY_VALIDATOR_H_ */
-
-

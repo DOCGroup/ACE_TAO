@@ -16,6 +16,7 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
@@ -385,6 +386,20 @@ TAO_POA::create_POA_i (const char *adapter_name,
                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
+  // Check to see if the user has specfied a thread pool policy.
+  CORBA::Policy_var policy =
+    tao_policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
+
+  // If a thread pool policy was specified, then this POA will be run
+  // by an RT thread pool.  Resources for RT threads pools are opened
+  // during the creation of the thread pool.
+  //
+  // However, if the thread pool was not specified, this POA will be
+  // run by the default thread pool.  Therefore, we have to make sure
+  // that the resources for the default thread pool are open.
+  if (CORBA::is_nil (policy.in ()))
+    this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // If any of the policy objects specified are not valid for the ORB
   // implementation, if conflicting policy objects are specified, or
@@ -3232,9 +3247,6 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                         CORBA::Short priority,
                         CORBA_Environment &ACE_TRY_ENV)
 {
-  (void) this->orb_core_.open (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
   CORBA::PolicyList_var client_exposed_policies =
     this->client_exposed_policies (priority,
                                    ACE_TRY_ENV);

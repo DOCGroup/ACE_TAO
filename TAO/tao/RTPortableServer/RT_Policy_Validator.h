@@ -31,7 +31,7 @@ class TAO_RTPortableServer_Export TAO_POA_RT_Policy_Validator
 {
 public:
   /// Constructor.
-  TAO_POA_RT_Policy_Validator (TAO_ORB_Core *orb_core);
+  TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_POA_RT_Policy_Validator (void);
@@ -60,13 +60,7 @@ private:
 
   void validate_priorities (TAO_Policy_Set &policies,
                             CORBA::Environment &ACE_TRY_ENV);
-
-
-private:
-  TAO_ORB_Core *orb_core_;
 };
 
 #include "ace/post.h"
 #endif /* TAO_RT_POLICY_VALIDATOR_H_ */
-
-

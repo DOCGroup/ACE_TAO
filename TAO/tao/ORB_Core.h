@@ -398,7 +398,7 @@ public:
   TAO_Protocols_Hooks *protocols_hooks (void);
 
   /// Returns a pointer to the Thread Lane Resources Manager.
-  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager (void);
+  TAO_Thread_Lane_Resources_Manager &thread_lane_resources_manager (void);
 
   /// Returns a pointer to the Stub factory.
   TAO_Stub_Factory *stub_factory (void);
@@ -871,11 +871,6 @@ public:
   /// Return the array of IOR interceptors specific to this ORB.
   TAO_IORInterceptor_List::TYPE & ior_interceptors (void);
   //@}
-
-  /// Set up the ORB Core's acceptor to listen on the
-  /// previously-specified port for requests.  Returns -1 on failure,
-  /// otherwise 0.
-  int open (CORBA::Environment &ACE_TRY_ENV);
 
   /// Call the bidir_giop library to parse the policy.
   int parse_bidir_policy (CORBA::Policy_ptr policy,
