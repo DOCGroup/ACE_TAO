@@ -83,9 +83,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (driver, 
-           drv_preproc, 
+
+ACE_RCSID (driver,
+           drv_preproc,
            "$Id$")
+
 
 static long argcount = 0;
 static long max_argcount = 128;
@@ -125,7 +127,7 @@ DRV_cpp_expand_output_arg (const char *filename)
 {
   if (output_arg_format != 0)
     {
-      delete [] ACE_const_cast (char *, arglist[output_arg_index]);
+      delete [] const_cast<char *> (arglist[output_arg_index]);
       arglist[output_arg_index] = 0;
 
       char *output_arg = 0;
@@ -199,7 +201,7 @@ DRV_store_env_include_paths (void)
       ACE_CString aggr_cstr (aggr_str);
       ssize_t pos;
 
-      do 
+      do
         {
           pos = aggr_cstr.find (separator);
           idl_global->add_include_path (aggr_cstr.substr (0, pos).fast_rep ());
@@ -215,7 +217,7 @@ DRV_cpp_init (void)
   const char *cpp_loc, *cpp_args;
 
   // See if TAO_IDL_PREPROCESSOR is defined.
-  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR", 
+  ACE_Env_Value<char*> preprocessor ("TAO_IDL_PREPROCESSOR",
                                      (char *) 0);
 
   // Set cpp_loc to the built in location, unless it has been overriden by
@@ -232,8 +234,8 @@ DRV_cpp_init (void)
 
       if (cpp_path != 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Warning: The environment variable "
+          ACE_ERROR ((LM_WARNING,
+                      "WARNING: The environment variable "
                       "CPP_LOCATION has been deprecated.\n"
                       "         Please use TAO_IDL_PREPROCESSOR "
                       "instead.\n"));
@@ -271,7 +273,7 @@ DRV_cpp_init (void)
     }
   else
     {
-      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment 
+      // Check for the deprecated TAO_IDL_DEFAULT_CPP_FLAGS environment
       // variable.
       ACE_Env_Value<char*> args2 ("TAO_IDL_DEFAULT_CPP_FLAGS",
                                   (char *) 0);
@@ -308,7 +310,7 @@ DRV_cpp_init (void)
           // TAO_IDL_INCLUDE_DIR should be in quotes,
           // e.g. "/usr/local/include/tao"
 
-          ACE_OS::strcat (option, 
+          ACE_OS::strcat (option,
                           TAO_IDL_INCLUDE_DIR);
 #else
           char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
@@ -346,13 +348,11 @@ DRV_cpp_init (void)
                 }
               else
                 {
-                  ACE_ERROR ((
-                      LM_ERROR,
-                      "Note: The environment variables "
-                      "TAO_ROOT and ACE_ROOT are not defined.\n"
-                      "      TAO_IDL may not be able to "
-                      "locate orb.idl\n"
-                    ));
+                  ACE_ERROR ((LM_WARNING,
+                              "NOTE: The environment variables "
+                              "TAO_ROOT and ACE_ROOT are not defined.\n"
+                              "      TAO_IDL may not be able to "
+                              "locate orb.idl\n"));
 
                   ACE_OS::strcat (option, ".");
                 }
@@ -371,7 +371,7 @@ DRV_cpp_init (void)
   for (size_t arg_cnt = 0; arg_cnt < (size_t)arglist.argc (); ++arg_cnt)
     {
       // Check for an argument that specifies the preprocessor's output file.
-      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0 
+      if (ACE_OS::strstr (arglist[arg_cnt], "%s") != 0
           && output_arg_format == 0)
         {
           output_arg_format = ACE::strnew (arglist[arg_cnt]);
@@ -519,33 +519,30 @@ DRV_get_orb_idl_includes (void)
   ACE_CString orb_idl_path (idl_global->tao_root ());
   orb_idl_path += "/orb.idl";
   FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
-  
+
   while (DRV_get_line (fd))
     {
       // Find the included .pidl files and add them to
       // the included IDL file list.
       DRV_check_for_include (drv_line);
     }
-    
+
   ACE_OS::fclose (fd);
 }
 
 // Copy to a file.
 static void
 DRV_copy_input (FILE *fin,
-                char *fn,
+                FILE *f,
+                const char *fn,
                 const char *orig_filename)
 {
-  FILE *f = ACE_OS::fopen (fn, "w");
-
   if (f == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s%s%s",
+                  "%s: cannot open temp file \"%s\" for writing\n",
                   idl_global->prog_name (),
-                  ": cannot open temp file ",
-                  fn,
-                  " for writing\n"));
+                  fn));
 
       ACE_OS::exit (99);
     }
@@ -590,7 +587,7 @@ DRV_copy_input (FILE *fin,
 
   while (DRV_get_line (fin))
     {
-      // Print the line to the temp file.
+      // Print the line to the temporary file.
       ACE_OS::fprintf (f,
                        "%s\n",
                        drv_line);
@@ -602,9 +599,21 @@ DRV_copy_input (FILE *fin,
       DRV_check_for_include (drv_line);
     }
 
-  // Close the temp file.
+  // Close the temporary file.
   ACE_OS::fclose (f);
 }
+
+#ifdef ACE_LACKS_MKSTEMP
+static void
+DRV_copy_input (FILE *fin,
+                const char *fn,
+                const char *orig_filename)
+{
+  FILE *f = ACE_OS::fopen (fn, "w");
+
+  ::DRV_copy_input (fin, f, fn, orig_filename);
+}
+#endif  /* ACE_LACKS_MKSTEMP */
 
 // Strip down a name to the last component,
 // i.e. everything after the last '/' or '\' character.
@@ -638,56 +647,107 @@ DRV_stripped_name (char *fn)
 }
 
 // File names.
-static char     tmp_file[128];
-static char     tmp_ifile[128];
+static char tmp_file [MAXPATHLEN + 1] = { 0 };
+static char tmp_ifile[MAXPATHLEN + 1] = { 0 };
 
 // Pass input through preprocessor.
 void
 DRV_pre_proc (const char *myfile)
 {
-  long  readfromstdin = I_FALSE;
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (readfromstdin);
-
   const char* tmpdir = idl_global->temp_dir ();
 
-  ACE_OS::strcpy (tmp_file, 
-                  tmpdir);
-  ACE_OS::strcpy (tmp_ifile, 
-                  tmpdir);
+  static const char tao_idlf_template[] = "tao-idlf_XXXXXX";
+  static const char tao_idli_template[] = "tao-idli_XXXXXX";
+  static const char temp_file_extension[] = ".cpp";
 
-  ACE_OS::strcat (tmp_file, 
-                  "idlf_XXXXXX");
-  ACE_OS::strcat (tmp_ifile, 
-                  "idli_XXXXXX");
+  const size_t tlen = ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension);
 
-  (void) ACE_OS::mktemp (tmp_file); 
-  ACE_OS::strcat (tmp_file, 
-                  ".cc");
-  (void) ACE_OS::mktemp (tmp_ifile); 
-  ACE_OS::strcat (tmp_ifile, 
-                  ".cc");
+  // Prevent a buffer overrun.
+  if (tlen + sizeof (tao_idlf_template) > sizeof (tmp_file)
+      || tlen + sizeof (tao_idli_template) > sizeof (tmp_ifile))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s: temporary path/filename length is greater than "
+                  "length allowed by platform\n",
+                  idl_global->prog_name ()));
+
+      return;
+    }
+
+  ACE_OS::strcpy (tmp_file,  tmpdir);
+  ACE_OS::strcpy (tmp_ifile, tmpdir);
+
+  // Append temporary filename template to temporary directory.
+  ACE_OS::strcat (tmp_file,  tao_idlf_template);
+  ACE_OS::strcat (tmp_ifile, tao_idli_template);
+
+  // Fill in temporary filename template.
+#ifdef ACE_LACKS_MKSTEMP
+
+  (void) ACE_OS::mktemp (tmp_file);
+  (void) ACE_OS::mktemp (tmp_ifile);
+
+  // Append C++ source file extension.
+  ACE_OS::strcat (tmp_file,  temp_file_extension);
+  ACE_OS::strcat (tmp_ifile, temp_file_extension);
+
+  char * t_file  = tmp_file;
+  char * t_ifile = tmp_ifile;
+
+#else
+  int tf_fd = ACE_OS::mkstemp (tmp_file);
+  int ti_fd = ACE_OS::mkstemp (tmp_ifile);
+
+  if (tf_fd == -1 || ti_fd == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s: Unable to create temporary file: %m\n",
+                  idl_global->prog_name ()));
+
+      return;
+    }
+
+  static char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
+  static char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
+
+  // Append C++ source file extension.  Temporary files will be renamed
+  // to these filenames.
+  ACE_OS::strcpy (tmp_cpp_file,  tmp_file);
+  ACE_OS::strcpy (tmp_cpp_ifile, tmp_ifile);
+  ACE_OS::strcat (tmp_cpp_file,  temp_file_extension);
+  ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
+
+  char * t_file  = tmp_cpp_file;
+  char * t_ifile = tmp_cpp_ifile;
+
+  // Rename temporary files so that they have extensions accepted
+  // by the preprocessor.
+
+#endif  /* ACE_LACKS_MKSTEMP */
 
   UTL_String *tmp = 0;
 
   if (strcmp (myfile, "standard input") == 0)
     {
+      DRV_copy_input (stdin,
+#ifndef ACE_LACKS_MKSTEMP
+                      ACE_OS::fdopen (ti_fd, "w"),
+#endif  /* !ACE_LACKS_MKSTEMP */
+                      tmp_ifile,
+                      "standard input");
+
       ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
+               UTL_String (t_ifile));
       idl_global->set_main_filename (tmp);
 
       ACE_NEW (tmp,
-               UTL_String (DRV_stripped_name (tmp_ifile)));
+               UTL_String (DRV_stripped_name (t_ifile)));
       idl_global->set_stripped_filename (tmp);
 
       ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
+               UTL_String (t_ifile));
       idl_global->set_real_filename (tmp);
 
-      DRV_copy_input (stdin,
-                      tmp_ifile,
-                      "standard input");
 
       idl_global->set_read_from_stdin (I_TRUE);
     }
@@ -695,6 +755,9 @@ DRV_pre_proc (const char *myfile)
     {
       FILE *fd = ACE_OS::fopen (myfile, "r");
       DRV_copy_input (fd,
+#ifndef ACE_LACKS_MKSTEMP
+                      ACE_OS::fdopen (ti_fd, "w"),
+#endif  /* !ACE_LACKS_MKSTEMP */
                       tmp_ifile,
                       myfile);
       ACE_OS::fclose (fd);
@@ -711,7 +774,7 @@ DRV_pre_proc (const char *myfile)
       idl_global->set_stripped_filename (tmp);
 
       ACE_NEW (tmp,
-               UTL_String (tmp_ifile));
+               UTL_String (t_ifile));
       idl_global->set_real_filename (tmp);
     }
 
@@ -724,14 +787,29 @@ DRV_pre_proc (const char *myfile)
   ACE_Process_Options cpp_options (1,       // Inherit environment.
                                    TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
 
-  DRV_cpp_expand_output_arg (tmp_file);
-  DRV_cpp_putarg (tmp_ifile);
+  DRV_cpp_expand_output_arg (t_file);
+  DRV_cpp_putarg (t_ifile);
   DRV_cpp_putarg (0); // Null terminate the arglist.
 
   cpp_options.command_line (arglist);
 
-  /// Remove any existing output file.
-  (void) ACE_OS::unlink (tmp_file);
+#ifndef ACE_LACKS_MKSTEMP
+  // Rename temporary files so that they have extensions accepted
+  // by the preprocessor.  Renaming is (supposed to be) an atomic
+  // operation so we shouldn't be susceptible to attack.
+  if (ACE_OS::rename (tmp_file, t_file) != 0
+      || ACE_OS::rename (tmp_ifile, t_ifile) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s: Unable to rename temporary file: %m\n",
+                  idl_global->prog_name ()));
+
+      return;
+    }
+#endif  /* !ACE_LACKS_MKSTEMP */
+
+  // Remove any existing output file.
+  (void) ACE_OS::unlink (t_file);
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
@@ -740,18 +818,16 @@ DRV_pre_proc (const char *myfile)
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
       // us.
-      fd = ACE_OS::open (tmp_file,
+      fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,
                          ACE_DEFAULT_FILE_PERMS);
 
       if (fd == ACE_INVALID_HANDLE)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s%s%s%s",
+                      "%s: cannot open temp file \"%s\" for writing\n",
                       idl_global->prog_name (),
-                      ": cannot open temp file ",
-                      tmp_file,
-                      " for writing\n"));
+                      t_file));
 
           return;
         }
@@ -762,11 +838,9 @@ DRV_pre_proc (const char *myfile)
   if (process.spawn (cpp_options) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s%s%s",
+                  "%s: spawn of \"%s\" failed\n",
                   idl_global->prog_name (),
-                  ": spawn of ",
-                  arglist[0],
-                  " failed\n"));
+                  arglist[0]));
 
       return;
     }
@@ -777,11 +851,9 @@ DRV_pre_proc (const char *myfile)
       if (ACE_OS::close (fd) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s%s%s%s",
+                      "%s: cannot close temp file \"%s\" on parent\n",
                       idl_global->prog_name (),
-                      ": cannot close temp file",
-                      tmp_file,
-                      " on parent\n"));
+                      t_file));
 
           return;
         }
@@ -796,9 +868,8 @@ DRV_pre_proc (const char *myfile)
   if (process.wait (&status) == ACE_INVALID_PID)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s",
-                  idl_global->prog_name (),
-                  ": wait for child process failed\n"));
+                  "%s: wait for child process failed\n",
+                  idl_global->prog_name ()));
 
       return;
     }
@@ -811,11 +882,9 @@ DRV_pre_proc (const char *myfile)
           errno = WEXITSTATUS ((status));
 
           ACE_ERROR ((LM_ERROR,
-                      "%s%s%s%s",
+                      "%s: preprocessor \"%s\" returned with an error\n",
                       idl_global->prog_name (),
-                      ": preprocessor ",
-                      arglist[0],
-                      " returned with an error\n"));
+                      arglist[0]));
 
           ACE_OS::exit (1);
         }
@@ -826,11 +895,9 @@ DRV_pre_proc (const char *myfile)
       errno = EINTR;
 
       ACE_ERROR ((LM_ERROR,
-                  "%s%s%s%s",
+                  "%s: preprocessor \"%s\" appears to have been interrupted\n",
                   idl_global->prog_name (),
-                  ": preprocessor ",
-                  arglist[0],
-                  " appears to have been interrupted\n"));
+                  arglist[0]));
 
       ACE_OS::exit (1);
     }
@@ -838,24 +905,23 @@ DRV_pre_proc (const char *myfile)
   // version the current process would exit if the pre-processor
   // returned with error.
 
-  FILE *yyin = ACE_OS::fopen (tmp_file, "r");
+  FILE *yyin = ACE_OS::fopen (t_file, "r");
 
   if (yyin == NULL)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s %s\n",
+                  "%s: Could not open cpp output file \"%s\"\n",
                   idl_global->prog_name (),
-                  ": Could not open cpp output file",
-                  tmp_file));
+                  t_file));
 
       ACE_OS::exit (99);
     }
 
-  FE_set_yyin (ACE_reinterpret_cast (File *, yyin));
+  FE_set_yyin (reinterpret_cast<File *> (yyin));
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FILE *preproc = ACE_OS::fopen (tmp_file, "r");
+      FILE *preproc = ACE_OS::fopen (t_file, "r");
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;
 
@@ -864,7 +930,7 @@ DRV_pre_proc (const char *myfile)
           ACE_ERROR ((LM_ERROR,
                       "%s: Could not open cpp output file: %s\n",
                       idl_global->prog_name (),
-                      tmp_file));
+                      t_file));
 
           ACE_OS::exit (99);
         }
@@ -894,25 +960,23 @@ DRV_pre_proc (const char *myfile)
       ACE_OS::fclose (preproc);
     }
 
-  if (ACE_OS::unlink (tmp_ifile) == -1)
+  if (ACE_OS::unlink (t_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s %s\n",
+                  "%s: Could not remove cpp input file \"%s\"\n",
                   idl_global->prog_name (),
-                  ": Could not remove cpp input file",
-                  tmp_ifile));
+                  t_ifile));
 
       ACE_OS::exit (99);
     }
 
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
-  if (ACE_OS::unlink (tmp_file) == -1)
+  if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s%s %s\n",
+                  "%s: Could not remove cpp output file \"%s\"\n",
                   idl_global->prog_name (),
-                  ": Could not remove cpp output file",
-                  tmp_file));
+                  t_file));
 
       ACE_OS::exit (99);
     }

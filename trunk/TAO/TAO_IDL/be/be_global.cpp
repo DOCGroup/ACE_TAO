@@ -40,7 +40,7 @@ BE_GlobalData::BE_GlobalData (void)
     post_include_ (0),
     client_hdr_ending_ (ACE::strnew ("C.h")),
     client_stub_ending_ (ACE::strnew ("C.cpp")),
-    client_inline_ending_ (ACE::strnew ("C.i")),
+    client_inline_ending_ (ACE::strnew ("C.inl")),
     server_hdr_ending_ (ACE::strnew ("S.h")),
     implementation_hdr_ending_ (ACE::strnew ("I.h")),
     implementation_skel_ending_ (ACE::strnew ("I.cpp")),
@@ -49,8 +49,8 @@ BE_GlobalData::BE_GlobalData (void)
     server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
     server_skeleton_ending_ (ACE::strnew ("S.cpp")),
     server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
-    server_inline_ending_ (ACE::strnew ("S.i")),
-    server_template_inline_ending_ (ACE::strnew ("S_T.i")),
+    server_inline_ending_ (ACE::strnew ("S.inl")),
+    server_template_inline_ending_ (ACE::strnew ("S_T.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
@@ -969,4 +969,3 @@ BE_GlobalData::gen_anyop_files (idl_bool val)
 {
   this->gen_anyop_files_ = val;
 }
-
