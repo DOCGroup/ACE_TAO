@@ -368,19 +368,16 @@ Log_i::query_i (const char *constraint,
           break;
         }
 
-      ACE_DEBUG ((LM_DEBUG,"Query::id = %ull, Time = %ull\n",
-                  hash_entry->int_id_.id,
-                  hash_entry->int_id_.time));
-
       // Use an evaluator.
       TAO_Log_Constraint_Evaluator evaluator (hash_entry->int_id_);
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
       {
-        ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %ull, Time = %ull\n",
-                    hash_entry->int_id_.id,
-                    hash_entry->int_id_.time));
+        if (TAO_debug_level > 0)
+          ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+                      hash_entry->int_id_.id,
+                      hash_entry->int_id_.time));
 
         (*rec_list)[count] = hash_entry->int_id_;
         // copy the log record.
