@@ -1,19 +1,19 @@
 Wed Mar 28 08:18:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
-        * orbsvcs/orbsvcs/AV/UDP.h
-        * orbsvcs/orbsvcs/AV/AVStreams_i.h
-        * orbsvcs/orbsvcs/AV/Transport.h
-        * orbsvcs/orbsvcs/AV/TCP.h
-        * orbsvcs/orbsvcs/AV/RTP.h
-        * orbsvcs/orbsvcs/AV/RTCP.h
-        * orbsvcs/orbsvcs/AV/Protocol_Factory.h
-        * orbsvcs/orbsvcs/AV/Policy.h
-        * orbsvcs/orbsvcs/AV/MCast.h
-        * orbsvcs/orbsvcs/AV/Flows_T.h
-        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h
-        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h
-        * orbsvcs/orbsvcs/AV/AV_Core.h
-        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h
+        * orbsvcs/orbsvcs/AV/UDP.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/Transport.h:
+        * orbsvcs/orbsvcs/AV/TCP.h:
+        * orbsvcs/orbsvcs/AV/RTP.h:
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.h:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/AV/MCast.h:
+        * orbsvcs/orbsvcs/AV/Flows_T.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
           Converted commenting style to doxygen, added some comments.
 
 Wed Mar 28 06:15:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -734,27 +734,16 @@ Sun Mar 25 11:17:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           change.
 
 Sun Mar 25 08:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
-<<<<<<< ChangeLog
 
-        * orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
-
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
-          guards  in the files. This should fix a small compilation
-          problem in LYNX-I386 builds.
-=======
-
-        * orbsvcs/orbsvcs/Makefile.RTSched: Added guards for old g++.
+        * orbsvcs/orbsvcs/Makefile.RTSched:
+	  Added guards for old g++.
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.h:
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Removed redundant
-          guards  in the files. This should fix a small compilation
-          problem in LYNX-I386 builds.
->>>>>>> 1.2956
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+	  Removed redundant guards  in the files. This should fix a small
+	  compilation problem in LYNX-I386 builds.
 
 Sun Mar 25 07:42:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
