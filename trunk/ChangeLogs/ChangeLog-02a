@@ -1,3 +1,16 @@
+Tue Jul 11 14:21:51 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (ACE_Log_Msg::log): Added an ACE_Errno_Guard to
+          prevent errors in this function from destroying errno. This function
+          should be benign, just reporting, and leaving errno alone for
+          further checks/logging by apps.
+
+Tue Jul 11 14:20:35 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Send_Recv_Test.cpp: Added some additional output
+          to replace an assert - helps track problems quicker. Thanks to
+          David Levine for this suggestion.
+
 Tue Jul 11 11:06:45 2000  Craig Rodrigues <rodrigc@mediaone.net>
 
         * ace/config-linux-common.h: in glibc 2.2, the function
