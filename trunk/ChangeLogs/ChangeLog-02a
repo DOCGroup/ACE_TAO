@@ -1,3 +1,31 @@
+Sat Jun  3 17:00:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Added two new tests:
+          - a check to see if a file ends with a newline
+          - a check to detect use of TCHAR, LPTSTR, LPCTSR, TEXT
+            ASYS_TEXT, and ASYS_TCHAR
+        
+          Changed to look at more files, including those ending with
+          .cc, .c, .pl, .htm, .html, .hxx, .cxx, .hpp, .idl and .pidl.  
+          
+          Changed to keep track of the number of errors and warnings
+          and prints out the totals at the end of the run.  Also will
+          exit with an exit code of 1 if there are any errors.
+
+          Added a new flag, -c, which will tell fuzz.pl to get the list
+          of files from ARGV instead of from searching or cvs.
+
+          Finally, also added support for the usage of 
+          "FUZZ: disable check_for_xxxx" and
+          "FUZZ: enable check_for_xxxx" in files so the detection can 
+          be turned off for files where the "offending" usage is needed.
+          This can be used with:
+          - check_for_inline
+          - check_for_math_include
+          - check_for_tchar
+
 Fri Jun 02 22:33:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Priority_Reactor.cpp (init_bucket): Removed extra inline
