@@ -69,7 +69,7 @@ TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
   this->maximum_ = max;
   this->length_ = length;
   if (this->buffer_ && this->release_ == CORBA::B_TRUE)
-    TAO_Unbounded_Sequence<T>::freebuf (this->buffer_);
+    TAO_Unbounded_Sequence<T>::freebuf ((T *) this->buffer_);
   this->buffer_ = data;
   this->release_ = release;
 }

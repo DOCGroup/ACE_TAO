@@ -45,7 +45,7 @@ struct TAO_Param_Data_Skel
   //   the value is a pointer to data such as a struct, sequence, or
   //   union.  (The CORBA C++ mapping doesn't require that for all
   //   "out" structs; only those of "variable size".)  If this value
-  //   is nonzero, the value passed to do_call() must be the address
+  //   is nonzero, the value passed to do_static_call() must be the address
   //   of a pointer.
 
 {
