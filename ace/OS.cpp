@@ -2342,7 +2342,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 #else
   return ::pread (handle, buf, nbyte, offset);
 #endif /* ACE_WIN32 */  
-#elif (ACE_HAS_THREADS)
+#elif defined (ACE_HAS_THREADS)
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_os_monitor_lock, -1);
 
   if (ACE_OS::lseek (handle, offset, SEEK_SET) == -1)
