@@ -1,3 +1,10 @@
+Tue Dec 16 18:29:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/README: 
+	* docs/orbsvcs.html: 
+	  Started up the documentation for TAO services, at this point
+	  only the directory hierarchy is explained.
+
 Tue Dec 16 08:49:11 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_codegen.h: Added three more states for
