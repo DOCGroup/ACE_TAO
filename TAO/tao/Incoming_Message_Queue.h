@@ -141,6 +141,7 @@ public:
   /// heap and returns a pointer to the duplicated node.
   static TAO_Queued_Data* duplicate (TAO_Queued_Data &qd);
 
+public:
   /// The message block that contains the message.
   ACE_Message_Block *msg_block_;
 
@@ -175,6 +176,8 @@ private:
   static void replace_data_block (ACE_Message_Block &mb);
 
 private:
+
+  /// The allocator used to allocate this class.
   ACE_Allocator *allocator_;
 };
 

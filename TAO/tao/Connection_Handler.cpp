@@ -24,7 +24,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
    pending_upcalls_ (1),
    reference_count_ (1),
    pending_upcall_lock_ (0)
-
 {
   // NOTE: Why should the refcount be
   // @@todo: We need to have a distinct option/ method in the resource
@@ -47,6 +46,7 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
   TAO_Transport::release (this->transport_);
 
   delete this->pending_upcall_lock_;
+  this->pending_upcall_lock_ = 0;
 }
 
 

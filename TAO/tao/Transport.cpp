@@ -19,7 +19,7 @@
 #include "Thread_Lane_Resources.h"
 #include "debug.h"
 #include "Resume_Handle.h"
-
+#include "Notify_Handler.h"
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 
@@ -661,7 +661,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::handle_input\n",
+                  "TAO (%P|%t) - Transport[%d]::handle_input_i\n",
                   this->id ()));
     }
 
@@ -762,7 +762,6 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
     }
 
   // Make a node of the message block..
-  // @@todo: Not teh right allocator......
   TAO_Queued_Data qd (&message_block,
                       this->orb_core_->transport_message_buffer_allocator ());
 
@@ -1397,7 +1396,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
     }
 
   // See if the message in the head of the queue is complete...
-  if (this->incoming_message_queue_.is_head_complete () == 1)
+  if (this->incoming_message_queue_.is_head_complete () > 0)
     {
       // Get the message on the head of the queue..
       TAO_Queued_Data *qd =
@@ -1413,46 +1412,27 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
         }
       // Now that we have pulled out out one message out of the queue,
       // check whether we have one more message in the queue...
-      if (this->incoming_message_queue_.is_head_complete () == 1)
+      if (this->incoming_message_queue_.is_head_complete () > 0)
         {
-          // Get the event handler..
-          ACE_Event_Handler *eh = this->event_handler_i ();
-          if (eh == 0)
-            return -1;
-
-          if (this->ws_->is_registered ())
+          if (TAO_debug_level > 0)
             {
-              // Get the reactor associated with the event handler
-              ACE_Reactor *reactor = eh->reactor ();
-              if (reactor == 0)
-                return -1;
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - Transport[%d]::process_queue_head, "
+                          "notify reactor\n",
+                          this->id ()));
 
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Transport[%d]::process_queue_header, "
-                              "notify to Reactor\n",
-                              this->id ()));
-                }
+            }
+          int retval =
+            this->notify_reactor ();
 
+          if (retval == 1)
+            {
               // Let the class know that it doesn't need to resume  the
               // handle..
               rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
-
-              // Send a notification to the reactor...
-              int retval = reactor->notify (eh,
-                                            ACE_Event_Handler::READ_MASK);
-
-              if (retval < 0 && TAO_debug_level > 2)
-                {
-                  // @@todo: need to think about what is the action that
-                  // we can take when we get here.
-                  ACE_DEBUG ((LM_DEBUG,
-                              "TAO (%P|%t) - Transport[%d]::process_queue_head, "
-                              "notify to the reactor failed..\n",
-                              this->id ()));
-                }
             }
+          else if (retval < 0)
+            return -1;
         }
       else
         {
@@ -1475,6 +1455,58 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
   return 1;
 }
 
+int
+TAO_Transport::notify_reactor (void)
+{
+  if (!this->ws_->is_registered ())
+    return 0;
+
+  ACE_Event_Handler *eh =
+    this->event_handler_i ();
+
+  if (eh == 0)
+    return -1;
+
+  // Get the reactor associated with the event handler
+  ACE_Reactor *reactor =
+    this->orb_core ()->reactor ();
+
+  if (reactor == 0)
+    return -1;
+
+  // NOTE: Instead of creating the handler seperately, it would be
+  // awesome if we  could create the handler when we create the
+  // TAO_Queued_Data. That would save us an allocation.
+  TAO_Notify_Handler *nh =
+    TAO_Notify_Handler::create_handler (
+        this->connection_handler_i (),
+        this->orb_core ()->transport_message_buffer_allocator ());
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::notify_reactor, "
+                  "notify to Reactor\n",
+                  this->id ()));
+    }
+
+
+  // Send a notification to the reactor...
+  int retval = reactor->notify (nh,
+                                ACE_Event_Handler::READ_MASK);
+
+  if (retval < 0 && TAO_debug_level > 2)
+    {
+      // @@todo: need to think about what is the action that
+      // we can take when we get here.
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::process_queue_head, "
+                  "notify to the reactor failed..\n",
+                  this->id ()));
+    }
+
+  return 1;
+}
 
 int
 TAO_Transport::queue_is_empty (void)
