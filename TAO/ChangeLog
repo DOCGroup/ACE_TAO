@@ -1,3 +1,13 @@
+Thu Jan 15 16:14:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/RTCosScheduling/testSched_export.h:
+        * orbsvcs/performance-tests/RTEvent/lib/rtec_perf_export.h:
+        * docs/tutorials/Quoter/idl/quoter_common_export.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859_export.h:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_export.h:
+          Added check for TAO_AS_STATIC_LIBS for setting the export flags for
+          proper building of static libraries.
+
 Thu Jan 15 08:12:14 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/tao_idl.mpc:
