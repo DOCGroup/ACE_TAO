@@ -30,16 +30,30 @@ class ROA;
 typedef ROA* ROA_ptr;
 class TAO_OA_Connection_Handler;
 
+// This is a quick hack to avoid having to unravel the intracacies of
+// the all the hairy order interdepencies that currently exist in TAO.
+#if ! defined (__ACE_INLINE__)
+#define LOCAL_INLINE
+#else
+#define LOCAL_INLINE ACE_INLINE
+#endif /* ! __ACE_INLINE__ */
+
 class ACE_Svc_Export TAO_ORB_Parameters
 // = TITLE
 //    Parameters that are specific to the ORB.  These parameters can be
 //    for the client, the server, or for both.
 {
 public:
-  void addr (ACE_INET_Addr &addr);
+  LOCAL_INLINE TAO_ORB_Parameters (void);
+  // Constructor
+  
+  LOCAL_INLINE ~TAO_ORB_Parameters (void);
+  // Destructor
+  
+  LOCAL_INLINE void addr (ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
-  ACE_INET_Addr addr (void);
+  LOCAL_INLINE ACE_INET_Addr addr (void);
   // Get the address on which we're listening.
 
 private:
@@ -68,30 +82,35 @@ class ACE_Svc_Export TAO_OA_Parameters
 //    parameters.
 {
 public:
-  // This should move to TAO_ORB_Parameters
+  LOCAL_INLINE TAO_OA_Parameters (void);
+  // Constructor
+
+  LOCAL_INLINE ~TAO_OA_Parameters (void);
+  // Destructor
+  
   void demux_strategy (const char *strategy);
   // Specify the demultiplexing strategy to be used via <{strategy}>.
   // Valid values are one of (case matters) "linear", "dynamic_hash",
   // "user_def", or "active_demux".  If the value is not valid, then
   // <Dynamic Hash> is used as a default.
   
-  void demux_strategy (TAO_Demux_Strategy s);
+  LOCAL_INLINE void demux_strategy (TAO_Demux_Strategy s);
   // Specify the demultiplexing strategy to be used.
   
-  TAO_Demux_Strategy demux_strategy (void);
+  LOCAL_INLINE TAO_Demux_Strategy demux_strategy (void);
   // Return the demultiplexing strategy being used.
 
-  void userdef_lookup_strategy (TAO_Object_Table *&ot);
+  LOCAL_INLINE void userdef_lookup_strategy (TAO_Object_Table *&ot);
   // provide a way for user defined object key lookup strategies to be plugged
   // in 
 
-  TAO_Object_Table *userdef_lookup_strategy (void);
+  LOCAL_INLINE TAO_Object_Table *userdef_lookup_strategy (void);
   // return the lookup strategy
 
-  void tablesize (CORBA::ULong tablesize);
+  LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
   // set the table size for lookup table
 
-  CORBA::ULong tablesize (void);
+  LOCAL_INLINE CORBA::ULong tablesize (void);
   // get the table size for the lookup table
 
 private:

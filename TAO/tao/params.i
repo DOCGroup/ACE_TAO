@@ -3,16 +3,9 @@ TAO_OA_Parameters::TAO_OA_Parameters (void)
 {
 }
 
-ACE_INLINE void
-TAO_ORB_Parameters::addr (ACE_INET_Addr &addr)
+ACE_INLINE
+TAO_OA_Parameters::~TAO_OA_Parameters (void)
 {
-  this->addr_ = addr;
-}
-
-ACE_INLINE ACE_INET_Addr
-TAO_ORB_Parameters::addr (void)
-{
-  return this->addr_;
 }
 
 ACE_INLINE void
@@ -55,3 +48,26 @@ TAO_OA_Parameters::userdef_lookup_strategy (void)
   // return the lookup strategy
   return ot_;
 }
+
+ACE_INLINE
+TAO_ORB_Parameters::TAO_ORB_Parameters (void)
+{
+}
+
+ACE_INLINE
+TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
+{
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::addr (ACE_INET_Addr &addr)
+{
+  this->addr_ = addr;
+}
+
+ACE_INLINE ACE_INET_Addr
+TAO_ORB_Parameters::addr (void)
+{
+  return this->addr_;
+}
+

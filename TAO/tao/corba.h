@@ -95,9 +95,9 @@
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"
-#include "tao/Orb_Core.h"
 
 // TAO specific includes
+#include "tao/Orb_Core.h"
 #include "tao/connect.h"
 #include "tao/objtable.h"
 #include "tao/optable.h"
@@ -142,6 +142,9 @@
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"
 #include "tao/Orb_Core.i"
+#endif /* __ACE_INLINE__ */
+
+#if defined (__ACE_INLINE__)
 #endif /* __ACE_INLINE__ */
 
 #include "tao/singletons.h"
