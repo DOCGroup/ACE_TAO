@@ -1920,18 +1920,24 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
 
     case CORBA::tk_value:
       mcount = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN ((CORBA::TypeCode_ptr)0);
+      ACE_CHECK_RETURN ((CORBA::TypeCode::_nil ()));
 
       {
         // Double checked locking...
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                           this->private_state_->mutex_, 0);
         if (this->private_state_->tc_member_type_list_known_)
+        {
           if (slot < mcount)
-            return  this->private_state_->tc_member_type_list_[slot];
+            {
+              return  this->private_state_->tc_member_type_list_[slot];
+            }
           else
-            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                              CORBA::TypeCode::_nil ());
+            {
+              ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                                CORBA::TypeCode::_nil ());
+            }
+        }
 
         // the first time in. Precompute and store types of all members
 
@@ -1946,36 +1952,47 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
         // number of value members
         CORBA::ULong tc_kind_holder;
         CORBA::TCKind tc_kind;
+
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // Name
-            || !stream.skip_ulong ()        // ValueModifier
-            || !stream.read_ulong(tc_kind_holder)) // Base's TCKind
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            CORBA::TypeCode::_nil ());
+            || !stream.skip_short ()        // ValueModifier
+            || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
+          {
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                              CORBA::TypeCode::_nil ());
+          }
+
         tc_kind = ACE_static_cast (CORBA::TCKind, tc_kind_holder);
 
         // The tc_kind can be either tk_null or tk_value.
         // In the latter case we should skip encapsulation or
         // indirection - whatever comes in.
         CORBA::ULong encap_length;
+
         if (tc_kind != CORBA::tk_null)
           {
-            if (!stream.read_ulong(encap_length))
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                CORBA::TypeCode::_nil ());
+            if (!stream.read_ulong (encap_length))
+              {
+                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                                  CORBA::TypeCode::_nil ());
+              }
 
             if (encap_length != 0xffffffff) // check for indirection
               {
                 if (!stream.skip_bytes (encap_length))
-                  ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                    CORBA::TypeCode::_nil ());
+                  {
+                    ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                                      CORBA::TypeCode::_nil ());
+                  }
               }
           }
 
         // Now skip member count.
         if (!stream.skip_ulong ())
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                            CORBA::TypeCode::_nil ());
+          {
+            ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                              CORBA::TypeCode::_nil ());
+          }
 
         // compute the typecodes for all the members and
         // return the required one.
@@ -1983,8 +2000,10 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
           // the ith entry will have the typecode of the ith guy
           {
             if (!stream.skip_string ())  // skip the name
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                CORBA::TypeCode::_nil ());
+              {
+                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                                  CORBA::TypeCode::_nil ());
+              }
 
             CORBA::TypeCode_ptr& member_type =
               this->private_state_->tc_member_type_list_[i];
@@ -1994,25 +2013,31 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
                                           ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-            if (!stream.skip_ulong ())  // skip member visibility
-              ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                CORBA::TypeCode::_nil ());
+            if (!stream.skip_short ())  // skip member visibility
+              {
+                ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
+                                  CORBA::TypeCode::_nil ());
+              }
           }
 
         this->private_state_->tc_member_type_list_known_ = 1;
 
         if (slot < mcount)
-          return this->private_state_->tc_member_type_list_[slot];
+          {
+            return this->private_state_->tc_member_type_list_[slot];
+          }
         else
-          ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
-                            CORBA::TypeCode::_nil ());
+          {
+            ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
+                              CORBA::TypeCode::_nil ());
+          }
       }
       ACE_NOTREACHED (break;)
 
     default:
       // bad kind
       ACE_THROW_RETURN (CORBA::TypeCode::BadKind (),
-                        (CORBA::TypeCode_ptr)0);
+                        CORBA::TypeCode::_nil ());
     }
 }
 
