@@ -1,3 +1,7 @@
+Wed Mar 12 17:05:52 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/config-linux-lxpthreads.h: Added ACE_HAS_IP_MULTICAST.
+
 Wed Mar 12 16:07:07 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (gethrtime): Added support for VxWorks and
