@@ -1,3 +1,8 @@
+Mon May 31 16:28:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	  Added and updated some comments.
+
 Mon May 31 16:13:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: if ACE_COMPONENTS is equal to FOR_TAO,
