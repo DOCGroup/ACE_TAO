@@ -1,3 +1,8 @@
+Mon Jan 28 08:39:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * performance-tests/Makefile.bor:
+          Updated BCB makefile with changes in Latency tests
+
 Sun Jan 27 14:35:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Pluggable.cpp (make_mprofile):
