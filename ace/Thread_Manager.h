@@ -174,7 +174,7 @@ public:
   int grp_id (void);
   // Group ID.
 
-  ACE_Thread_State state (void);
+  ACE_UINT32 state (void);
   // Current state of the thread.
 
   ACE_Task_Base *task (void);
@@ -191,7 +191,7 @@ protected:
   int grp_id_;
   // Group ID.
 
-  ACE_Thread_State thr_state_;
+  ACE_UINT32 thr_state_;
   // Current state of the thread.
 
   ACE_Task_Base *task_;
@@ -324,9 +324,6 @@ private:
   ACE_DEFAULT_THREAD_MANAGER_LOCK *sync_;
   // Registration lock to prevent premature removal of thread descriptor.
 
-  int registered_;
-  // Keep track of registration status.
-
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   int terminated_;
   // Keep track of termination status.
@@ -375,6 +372,35 @@ public:
 #if !defined (__GNUG__)
   typedef int (ACE_Thread_Manager::*ACE_THR_MEMBER_FUNC)(ACE_Thread_Descriptor *, int);
 #endif /* !__GNUG__ */
+
+  // These are the various states a thread managed by the
+  // <Thread_Manager> can be in.
+  enum
+  {
+    ACE_THR_IDLE = 0x00000000,
+    // Uninitialized.
+
+    ACE_THR_SPAWNED = 0x00000001,
+    // Created but not yet running.
+
+    ACE_THR_RUNNING = 0x00000002,
+    // Thread is active (naturally, we don't know if it's actually
+    // *running* because we aren't the scheduler...).
+
+    ACE_THR_SUSPENDED = 0x00000004,
+    // Thread is suspended.
+
+    ACE_THR_CANCELLED = 0x00000008,
+    // Thread has been cancelled (which is an indiction that it needs to
+    // terminate...).
+
+    ACE_THR_TERMINATED = 0x00000010,
+    // Thread has shutdown, but the slot in the thread manager hasn't
+    // been reclaimed yet.
+
+    ACE_THR_JOINING = 0x10000000
+    // Join operation has been invoked on the thread by thread manager.
+  };
 
   // = Initialization and termination methods.
   ACE_Thread_Manager (size_t preaolloc = 0,
@@ -704,7 +730,7 @@ protected:
   // Insert a thread in the table (checks for duplicates).
 
   int append_thr (ACE_thread_t t_id, ACE_hthread_t,
-                  ACE_Thread_State,
+                  ACE_UINT32,
                   int grp_id,
                   ACE_Task_Base *task = 0,
                   long flags = 0,
@@ -722,8 +748,9 @@ protected:
   // = The following four methods implement a simple scheme for
   // operating on a collection of threads atomically.
 
-  int check_state (ACE_Thread_State state,
-                   ACE_thread_t thread);
+  int check_state (ACE_UINT32 state,
+                   ACE_thread_t thread,
+                   int enable = 1);
   // Efficiently check whether <thread> is in a particular <state>.
   // This call updates the TSS cache if possible to speed up
   // subsequent searches.

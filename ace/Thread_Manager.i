@@ -95,7 +95,7 @@ ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base (void)
   : thr_id_ (ACE_OS::NULL_thread),
     thr_handle_ (ACE_OS::NULL_hthread),
     grp_id_ (0),
-    thr_state_ (ACE_THR_IDLE),
+    thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE),
     task_ (0)
 {
 }
@@ -135,7 +135,7 @@ ACE_Thread_Descriptor_Base::grp_id (void)
 }
 
 // Current state of the thread.
-ACE_INLINE ACE_Thread_State
+ACE_INLINE ACE_UINT32
 ACE_Thread_Descriptor_Base::state (void)
 {
   ACE_TRACE ("ACE_Thread_Descriptor_Base::state");
