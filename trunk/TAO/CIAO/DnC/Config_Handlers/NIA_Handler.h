@@ -64,7 +64,7 @@ namespace CIAO
       /// Process the package configuration
       void process_NamedImplementationArtifact (::Deployment::NamedImplementationArtifact &nia);
 
-      /// Process the label attribute
+      /// Process the name attribute
       void process_name (const XMLCh* name, ::Deployment::NamedImplementationArtifact &nia);
 
     private:

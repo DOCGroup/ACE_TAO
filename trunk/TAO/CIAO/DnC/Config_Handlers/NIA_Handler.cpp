@@ -63,7 +63,7 @@ namespace CIAO
           XStr node_name (node->getNodeName());
           if (node_name == XStr (ACE_TEXT ("name")))
             {
-              // Fetch the text node which contains the "label"
+              // Fetch the text node which contains the "name"
 	      node = this->iter_->nextNode();
 	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), nia);
@@ -95,7 +95,7 @@ namespace CIAO
         }
     }
 
-  }
-}
+  }  // namespace Config_Handler
+}  // namespace CIAO
 
 #endif /* NIA_HANDLER_C */

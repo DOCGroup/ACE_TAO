@@ -17,6 +17,7 @@
 
 #include "IAD_Handler.h"
 #include "IR_Handler.h"
+#include "Utils.h"
 
 #include <iostream>
 
@@ -32,7 +33,7 @@ namespace CIAO
      */
 
      void ResourceUsageKind_Handler::process_ResourceUsageKind
-        (DOMNodeIterator *iter, ::Deployment::ResourceUsageKind &ruq)
+        (DOMNodeIterator *iter, ::Deployment::ResourceUsageKind &kind)
      {
        // -- ResourceUsageKind enum
        XStr none                    ("None");

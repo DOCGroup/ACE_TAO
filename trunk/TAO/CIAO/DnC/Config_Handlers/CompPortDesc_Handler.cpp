@@ -86,28 +86,28 @@ namespace CIAO
 	    {
 	      /// Fetch the text node which contains the "provider"
 	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText* node);
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
 	      this->process_provider (text->getNodeValue(), compportdesc);
 	    }
 	  else if (node_name == XStr (ACE_TEXT ("exclusiveProvider")))
 	    {
 	      /// Fetch the text node which contains the "exclusiveProvider"
 	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText* node);
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
 	      this->process_exclusiveProvider (text->getNodeValue(), compportdesc);
 	    }
 	  else if (node_name == XStr (ACE_TEXT ("exclusiveUser")))
 	    {
 	      /// Fetch the text node which contains the "exclusiveUser"
 	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText* node);
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
 	      this->process_exclusiveUser (text->getNodeValue(), compportdesc);
 	    }
 	  else if (node_name == XStr (ACE_TEXT ("optional")))
 	    {
 	      /// Fetch the text node which contains the "optional"
 	      node = this->iter_->nextNode();
-	      DOMText* text = ACE_reinterpret_cast (DOMText* node);
+	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
 	      this->process_optional (text->getNodeValue(), compportdesc);
 	    }
 	  else
@@ -139,11 +139,16 @@ namespace CIAO
     }
 
     /// handle supportedType attribute
-    void process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc)
+    void process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (supportedType)
 	{
-	  compportdesc.supportedType = XMLString::transcode (supportedType);
+	  // increase the length of the sequence
+	  CORBA::ULong i (compportdesc.supportedType.length ());
+	  compportdesc.supportedType.length (i + 1);
+
+	  // push back the last item
+	  compportdesc.supportedType[i] = XMLString::transcode (supportedType);
 	}
     }
 
@@ -166,7 +171,7 @@ namespace CIAO
     }
 
     /// handle exclusiveUser attribute
-    void process_exclusiveUser (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc)
+    void process_exclusiveUser (const XMLCh* exclusiveUser, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (exclusiveUser)
 	{
@@ -175,7 +180,7 @@ namespace CIAO
     }
 
     /// handle optional attribute
-    void process_optional (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc)
+    void process_optional (const XMLCh* optional, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (optional)
 	{
