@@ -3,7 +3,8 @@ Fri Jan  2 16:29:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 	* orbsvcs/Event_Service/GPlot_File.cpp:
 	* orbsvcs/Event_Service/Event_Channel.cpp:
 	* orbsvcs/Scheduling_Service/Scheduler.cpp:
-	* tao/connect.cpp:
+	* tao/connect.cpp:  Added missing explicit template
+	  instantiations.
 
 Fri Jan 02 10:24:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
