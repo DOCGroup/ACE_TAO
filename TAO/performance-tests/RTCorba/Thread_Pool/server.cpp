@@ -78,6 +78,8 @@ static const char *ior_output_file = "ior";
 static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;
 static CORBA::ULong number_of_lanes = 0;
+static RTCORBA::Priority default_thread_priority = 0;
+static RTCORBA::Priority pool_priority = ACE_INT16_MIN;
 
 static const char *bands_file = "empty-file";
 static const char *lanes_file = "empty-file";
@@ -86,7 +88,7 @@ int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
-                        "b:hl:n:o:s:" // server options
+                        "b:f:hl:n:o:s:" // server options
                         "c:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" // client options
                         );
   int c;
@@ -96,6 +98,10 @@ parse_args (int argc, char *argv[])
       {
       case 'b':
         bands_file = get_opts.optarg;
+        break;
+
+      case 'f':
+        pool_priority = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'l':
@@ -139,6 +145,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
                            "\t-b <bands file> (defaults to %s)\n"
+                           "\t-f <pool priority> (defaults to %d)\n"
                            "\t-h <help: shows options menu>\n"
                            "\t-l <lanes file> (defaults to %s)\n"
                            "\t-n <number of lanes> (defaults to %d)\n"
@@ -147,6 +154,7 @@ parse_args (int argc, char *argv[])
                            "\n",
                            argv [0],
                            bands_file,
+			   default_thread_priority,
                            lanes_file,
                            number_of_lanes,
                            ior_output_file,
@@ -199,11 +207,6 @@ main (int argc, char *argv[])
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
-
       fudge_priorities (orb.in ());
 
       CORBA::Object_var object =
@@ -240,9 +243,14 @@ main (int argc, char *argv[])
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      RTCORBA::Priority default_thread_priority =
+      default_thread_priority =
         current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      int result =
+        parse_args (argc, argv);
+      if (result != 0)
+        return result;
 
       CORBA::ULong stacksize = 0;
       CORBA::Boolean allow_request_buffering = 0;
@@ -265,13 +273,6 @@ main (int argc, char *argv[])
                                              allow_borrowing,
                                              policies,
                                              ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          policies.length (policies.length () + 1);
-          policies[policies.length () - 1] =
-            rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                                  default_thread_priority,
-                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else if (ACE_OS::strcmp (lanes_file, "empty-file") != 0)
@@ -304,21 +305,18 @@ main (int argc, char *argv[])
 
           if (result != 0)
             return result;
-
-          policies.length (policies.length () + 1);
-          policies[policies.length () - 1] =
-            rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                                  default_thread_priority,
-                                                  ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
       else
         {
+	  if (pool_priority == ACE_INT16_MIN)
+	    pool_priority = 
+	      default_thread_priority;
+	  
           RTCORBA::ThreadpoolId threadpool_id =
             rt_orb->create_threadpool (stacksize,
                                        static_threads,
                                        dynamic_threads,
-                                       default_thread_priority,
+                                       pool_priority,
                                        allow_request_buffering,
                                        max_buffered_requests,
                                        max_request_buffer_size,
@@ -337,6 +335,13 @@ main (int argc, char *argv[])
         root_poa->create_implicit_activation_policy
         (PortableServer::IMPLICIT_ACTIVATION,
          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      policies.length (policies.length () + 1);
+      policies[policies.length () - 1] =
+	rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+					      default_thread_priority,
+					      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =

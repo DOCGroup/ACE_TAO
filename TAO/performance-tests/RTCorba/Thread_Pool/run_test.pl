@@ -14,28 +14,46 @@ $experiment_timeout = 300;
 $iorfile_timeout = 10;
 
 $min_rate = 100; 
-$max_rate = 100;
-#$max_rate = 250;
+$max_rate = 250;
 $rate_increment = 25;
 
-$min_work = 10; 
-$max_work = 15;
-#$max_work = 50;
-$work_increment = 5;
+for ($rate = $min_rate, $i = 0; 
+     $rate <= $max_rate; 
+     $rate += $rate_increment, $i += 1)
+{
+   @rates[$i] = $rate;
+}
+
+$min_work = 150; 
+$max_work = 410;
+$work_increment = 10;
+
+for ($work = $min_work, $i = 0; 
+     $work <= $max_work; 
+     $work += $work_increment, $i += 1)
+{
+   @works[$i] = $work;
+}
 
 $min_thread = 0; 
-$max_thread = 2;
-#$max_thread = 10;
+$max_thread = 10;
 $thread_increment = 1;
 
-#@workers = (1, 2, 3, 5, 10, 15, 20);
-@workers = (1, 2);
+for ($thread = $min_thread, $i = 0; 
+     $thread <= $max_thread; 
+     $thread += $thread_increment, $i += 1)
+{
+   @threads[$i] = $thread;
+}
+
+@workers = (1, 2, 3, 5, 10, 15, 20);
 
 $results_directory = "results";
 
 @test_types = 
     (
      "rates", 
+     "work",
      "workers",
      "workers-2",
      "work-nolanes",
@@ -44,12 +62,16 @@ $results_directory = "results";
      "thread-nolanes",
      "thread-lanes-increase",
      "thread-lanes-decrease",
+     "work-pool-high",
+     "work-pool-medium",
+     "work-pool-low",
+     "work-pool-zero",
      );
 
 $iorfile = "ior";
-$work = 10;
-$time_for_test = 1;
-$max_throughput_timeout = 1;
+$work = 30;
+$time_for_test = 10;
+$max_throughput_timeout = 5;
 
 # Parse the arguments
 for ($i = 0; $i <= $#ARGV; $i++) {
@@ -59,10 +81,38 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
         print STDERR "\t-h shows options menu\n";
 
-        print STDERR "\t-a test types (";
+        print STDERR "\t-tests: defaults to (";
         for $test_type (@test_types)
         {
             print STDERR "$test_type, ";
+        }
+        print STDERR ")\n";
+
+        print STDERR "\t-rates: defaults to (";
+        for $rate (@rates)
+        {
+            print STDERR "$rate, ";
+        }
+        print STDERR ")\n";
+
+        print STDERR "\t-works: defaults to (";
+        for $work (@works)
+        {
+            print STDERR "$work, ";
+        }
+        print STDERR ")\n";
+
+        print STDERR "\t-workers: defaults to (";
+        for $worker (@workers)
+        {
+            print STDERR "$worker, ";
+        }
+        print STDERR ")\n";
+
+        print STDERR "\t-threads: defaults to (";
+        for $thread (@threads)
+        {
+            print STDERR "$thread, ";
         }
         print STDERR ")\n";
 
@@ -78,8 +128,24 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
         exit;
     }
-    elsif ($ARGV[$i] eq "-a") {
+    elsif ($ARGV[$i] eq "-tests") {
       @test_types = split (',', $ARGV[$i + 1]);
+      $i++;
+    }
+    elsif ($ARGV[$i] eq "-rates") {
+      @rates = split (',', $ARGV[$i + 1]);
+      $i++;
+    }
+    elsif ($ARGV[$i] eq "-works") {
+      @works = split (',', $ARGV[$i + 1]);
+      $i++;
+    }
+    elsif ($ARGV[$i] eq "-workers") {
+      @workers = split (',', $ARGV[$i + 1]);
+      $i++;
+    }
+    elsif ($ARGV[$i] eq "-threads") {
+      @threads = split (',', $ARGV[$i + 1]);
       $i++;
     }
     elsif ($ARGV[$i] eq "-o") 
@@ -119,6 +185,11 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
          server => "-n 1", 
      },
      {
+         description => "work",
+         server => "-s 3 -f 32767", 
+#        server => "-n 1", 
+     },
+     {
          description => "workers",
          server => "-n 1", 
      },
@@ -150,6 +221,22 @@ $fixed_client_args = "-w $work -t $time_for_test -z $max_throughput_timeout";
          description => "thread-lanes-decrease",
          server => "-l three-lanes-with-best-effort -b three-bands-with-best-effort", 
      },
+     {
+         description => "work-pool-high",
+         server => "-s 3 -f 32767", 
+     },
+     {
+         description => "work-pool-medium",
+         server => "-s 3 -f 21844", 
+     },
+     {
+         description => "work-pool-low",
+         server => "-s 3 -f 10922", 
+     },
+     {
+         description => "work-pool-zero",
+         server => "-s 3 -f 0", 
+     },
      );
 
 for $test (@configurations)
@@ -159,11 +246,26 @@ for $test (@configurations)
     #
     if ($test->{description} eq "rates")
     {
-        for ($rate = $min_rate, $i = 0; 
-             $rate <= $max_rate; 
-             $rate += $rate_increment, $i += 1)
+        $i = 0;
+        for $rate (@rates)
         {
             $test->{clients}[$i] = "-r $rate $fixed_client_args";
+            $i++;
+        }
+
+        $test->{clients}[$i - 1] .= " -x 1";
+    }
+
+    #
+    # setup work test
+    #
+    elsif ($test->{description} eq "work")
+    {
+	$i = 0;
+	for $work (@works)
+        {
+            $test->{clients}[$i] = "-w $work -c 1 -r empty-file -t $time_for_test -z $max_throughput_timeout";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -190,11 +292,11 @@ for $test (@configurations)
     #
     elsif ($test->{description} eq "work-nolanes")
     {
-        for ($work = $min_work, $i = 0; 
-             $work <= $max_work; 
-             $work += $work_increment, $i += 1)
+	$i = 0;
+	for $work (@works)
         {
             $test->{clients}[$i] = "-w $work -r increasing-rates -u 1000 -t $time_for_test -z $max_throughput_timeout";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -205,11 +307,26 @@ for $test (@configurations)
     #
     elsif ($test->{description} eq "work-lanes-increase")
     {
-        for ($work = $min_work, $i = 0; 
-             $work <= $max_work; 
-             $work += $work_increment, $i += 1)
+	$i = 0;
+	for $work (@works)
         {
             $test->{clients}[$i] = "-w $work -r increasing-rates -t $time_for_test -z $max_throughput_timeout";
+	    $i++;
+        }
+
+        $test->{clients}[$i - 1] .= " -x 1";
+    }
+
+    elsif ($test->{description} eq "work-pool-high" or
+	   $test->{description} eq "work-pool-medium" or
+	   $test->{description} eq "work-pool-low" or
+	   $test->{description} eq "work-pool-zero")
+    {
+	$i = 0;
+	for $work (@works)
+        {
+            $test->{clients}[$i] = "-w $work -r rates -t $time_for_test -z $max_throughput_timeout";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -220,11 +337,11 @@ for $test (@configurations)
     #
     elsif ($test->{description} eq "work-lanes-decrease")
     {
-        for ($work = $min_work, $i = 0; 
-             $work <= $max_work; 
-             $work += $work_increment, $i += 1)
+	$i = 0;
+	for $work (@works)
         {
             $test->{clients}[$i] = "-w $work -r decreasing-rates -t $time_for_test -z $max_throughput_timeout";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -235,11 +352,11 @@ for $test (@configurations)
     #
     elsif ($test->{description} eq "thread-nolanes")
     {
-        for ($thread = $min_thread, $i = 0; 
-             $thread <= $max_thread; 
-             $thread += $thread_increment, $i += 1)
+	$i = 0;
+	for $thread (@threads)
         {
             $test->{clients}[$i] = "-c $thread -r increasing-rates -u 1000 $fixed_client_args";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -250,11 +367,11 @@ for $test (@configurations)
     #
     elsif ($test->{description} eq "thread-lanes-increase")
     {
-        for ($thread = $min_thread, $i = 0; 
-             $thread <= $max_thread; 
-             $thread += $thread_increment, $i += 1)
+	$i = 0;
+	for $thread (@threads)
         {
             $test->{clients}[$i] = "-c $thread -r increasing-rates $fixed_client_args";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
@@ -265,11 +382,11 @@ for $test (@configurations)
     #
     elsif ($test->{description} eq "thread-lanes-decrease")
     {
-        for ($thread = $min_thread, $i = 0; 
-             $thread <= $max_thread; 
-             $thread += $thread_increment, $i += 1)
+	$i = 0;
+	for $thread (@threads)
         {
             $test->{clients}[$i] = "-c $thread -r decreasing-rates $fixed_client_args";
+	    $i++;
         }
 
         $test->{clients}[$i - 1] .= " -x 1";
