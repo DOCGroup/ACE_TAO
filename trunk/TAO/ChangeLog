@@ -1,3 +1,10 @@
+Tue Jun 24 11:54:29 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp  (bind_new_context): 
+	
+	  Fixed compile errors where there was a return with no value.
+	  This only caused problems on a few platforms for some reason.
+
 Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	Simple example to show how to use RTCORBA Lanes with RT Notification.
@@ -20,7 +27,7 @@ Tue Jun 24 11:34:53 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
 	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
 
-	Task to run ORB::run method.
+	  Task to run ORB::run method.
 	
 	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
 	* orbsvcs/examples/Notify/Lanes/Supplier.h:

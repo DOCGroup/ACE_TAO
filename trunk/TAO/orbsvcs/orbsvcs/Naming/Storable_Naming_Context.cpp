@@ -984,12 +984,13 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
   // Open the backing file
   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (CosNamgin::NamingContext::_nil ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                      CosNaming::NamingContext::_nil ());
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the operation on
@@ -1007,7 +1008,7 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
       return context->bind_new_context (simple_name ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
     }
   // If we received a simple name, we need to bind it in this context.
   else 
