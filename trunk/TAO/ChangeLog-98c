@@ -1,3 +1,12 @@
+Sat Jan 17 16:07:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be_include/be_visitor_args.h: 
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	  New visitors to generate collocated classes (only used on the
+	  POA branch) and the arguments declaration.
+	
 Fri Jan 16 23:38:38 1998    <coryan@MILONGA>
 
 	* tao/decode.cpp: 
