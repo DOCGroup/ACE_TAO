@@ -38,7 +38,7 @@ ACE_Token_Acceptor::parse_args (int argc, char *argv[])
 {
   ACE_TRACE ("ACE_Token_Acceptor::parse_args");
 
-  this->service_port_ = ACE_DEFAULT_SERVER_PORT;
+  u_short svc_port = ACE_DEFAULT_SERVER_PORT;
 
   ACE_LOG_MSG->open ("Token Service");
 
@@ -49,7 +49,7 @@ ACE_Token_Acceptor::parse_args (int argc, char *argv[])
       switch (c)
         {
         case 'p':
-          this->service_port_ = ACE_OS::atoi (get_opt.opt_arg ());
+          svc_port = static_cast<u_short> (ACE_OS::atoi (get_opt.opt_arg ()));
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,7 +58,7 @@ ACE_Token_Acceptor::parse_args (int argc, char *argv[])
         }
     }
 
-  this->service_addr_.set (this->service_port_);
+  this->service_addr_.set (svc_port);
   return 0;
 }
 
