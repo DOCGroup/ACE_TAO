@@ -8,6 +8,13 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (void)
   return ++this->value_;
 }
 
+template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_LOCK &
+ACE_Atomic_Op<ACE_LOCK, TYPE>::lock (void)
+{
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::lock");
+  return this->lock_;
+}
+
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+= (const TYPE &i)
 {

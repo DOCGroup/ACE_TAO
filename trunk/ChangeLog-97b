@@ -1,3 +1,9 @@
+Fri Oct 17 18:34:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Atomic_Op.i (lock): Added an accessor to ACE_Atomic_Op to
+ 	  return a reference to the underlying lock.  Thanks to Janusz
+ 	  Stopa <jstopa@Bear.COM> for suggesting this.
+
 Fri Oct 17 15:36:26 1997    <nw1@CHA-CHA>
 
 	* ACE/config-win32-common.h: Added a directive to disable warning
