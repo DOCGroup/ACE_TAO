@@ -32,7 +32,7 @@ dnl things going with the auto{conf,make}/libtool integration into the
 dnl ACE source tree.
 
 dnl Platform specific flags
-case "$target" in
+case "$host" in
   *aix3*)
     AC_DEFINE([AIX])
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
@@ -153,7 +153,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     dnl _MODERN_C_ : Enable modern features in SGI C++ compiler
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_SGI_MP_SOURCE -D_MODERN_C_"
 
-    case "$target" in
+    case "$host" in
       *irix6.2*)
         dnl Recent versions of IRIX do not appear to require this macro.
         if test "$ace_user_enable_threads" = yes; then
@@ -330,7 +330,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
                                                        # filename
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_PATH_MAX=256" # Num. bytes in
                                                        # pathname (excl. NULL)
-    case "$target" in
+    case "$host" in
       i[[3456]]86*)
         if test "$GXX" = yes; then
           # Neutrino defines memcpy as a macro on x86, which then
@@ -375,12 +375,12 @@ AH_TEMPLATE([ACE_INT64_FORMAT_SPECIFIER],
 AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],
 [Define to the *printf format specifier (e.g. "%llu") for the 64 bit signed integer type])dnl
 
-case "$target_os" in
+case "$host_os" in
 darwin*)
   AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
   ;;
 netbsd*)
-  case "$target_cpu" in
+  case "$host_cpu" in
     x86_64)
       AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
       AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
@@ -406,7 +406,7 @@ esac])
 AC_DEFUN([ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING],
 [AC_CACHE_CHECK([whether platform lacks perfect multicast filtering],
   [ace_cv_lacks_perfect_multicast_filtering],
-  [case "$target_os" in
+  [case "$host_os" in
   darwin* | freebsd* | netbsd* | openbsd* | qnx*)
     ace_cv_lacks_perfect_multicast_filtering=yes ;;
   *)
@@ -437,7 +437,7 @@ fi
 AC_DEFUN([ACE_FUNC_IOCTL_ARGTYPES],
 [AC_CACHE_CHECK([types of arguments for ioctl()],
   [ace_cv_func_ioctl_arg2],
-  [case "$target_os" in
+  [case "$host_os" in
    darwin* | freebsd* | netbsd* | openbsd*)
     ace_cv_func_ioctl_arg2="unsigned long" ;;
    *)
