@@ -4,6 +4,7 @@ Mon May 25 15:54:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Protected the file against multiple inclusion.
 
 	* tao/Makefile: 
+	* tao/orbsvcs/orbsvcs/Makefile: 
 	  Updated dependencies.
 
 Sat Apr 18 01:27:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
