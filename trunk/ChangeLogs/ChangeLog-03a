@@ -1,3 +1,10 @@
+Wed Aug 21 11:04:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Object_Manager.cpp (init): Changed to return failure (-1) if
+	  ACE_Object_Manager fail to acquire the TSS ACE_Log_Msg instance
+	  for whatever reason.  Thanks to fedyakin_01
+	  <jeremya@artifact-entertainment.com> for suggesting the fix.
+
 Wed Aug 21 07:43:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Addr.{h,i}:
