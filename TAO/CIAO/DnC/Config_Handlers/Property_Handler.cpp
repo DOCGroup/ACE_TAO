@@ -40,7 +40,7 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                       char*  attr_node_value_ch = 
                         XMLString::transcode (attr_node->getNodeValue ());
                       ACE_TString attr_node_value = attr_node_value_ch;
-                      auto_ptr<char> cleanup_char (attr_node_value_ch);
+                      XMLString::release (attr_node_value_ch);
                       if (attr_node_name = XStr (ACE_TEXT ("href")))
                         {
                           XMLURL url (attr_node_value.c_str ());

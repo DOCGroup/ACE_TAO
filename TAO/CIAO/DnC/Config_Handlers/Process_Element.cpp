@@ -65,12 +65,10 @@ DOMDocument* create_document (const char *url)
   DOMDocument* doc = parser->parseURI (url);
   auto_ptr<DOMDocument> cleanup_doc (doc);
   ACE_TString root_node_name;
-  char * root_node_name_ch;
-
-  root_node_name_ch = XMLString::transcode
+  char* root_node_name_ch = XMLString::transcode
     (doc->getDocumentElement ()->getNodeName ());
   root_node_name = root_node_name_ch;
-  auto_ptr<char> cleanup_char (root_node_name_ch);
+  XMLString::release (&root_node_name_ch);
 
   return doc;
 }
@@ -102,7 +100,7 @@ process_refs(DOMNode*& node,
           char* aceattrnodevalue_ch = XMLString::transcode
             (attribute_node->getNodeValue ());
           ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
-          auto_ptr<char> cleanup_char (aceattrnodevalue_ch);
+          XMLString::release (aceattrnodevalue_ch);
           if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
               //index = index + 1;
@@ -133,7 +131,7 @@ process_ref(DOMNode*& node,
           char* aceattrnodevalue_ch = XMLString::transcode
             (attribute_node->getNodeValue ());
           ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
-          auto_ptr<char> cleanup_char (aceattrnodevalue_ch);
+          XMLString::release (aceattrnodevalue_ch);
           if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
               //index = index + 1;
