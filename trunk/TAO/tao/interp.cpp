@@ -248,34 +248,61 @@ static table_element table [CORBA::TC_KIND_COUNT] =
     TC_KIND_COUNT
   };
   
-#if defined (unix) || defined (VXWORKS)
+#if defined (unix) || defined (VXWORKS) || defined (ACE_WIN32)
 // @@ Chris, can you please put this magic number macro in a more
 // prominent place (e.g., in a header file somewhere?  
 #define TAO_ALIGNMENT_MAGIC_NUMBER 64
-#define setup_entry(x,t) \
-    { \
+#define declare_entry(x,t) \
     	struct align_struct_ ## t { \
     	    x one; \
       	    char dummy [TAO_ALIGNMENT_MAGIC_NUMBER + 1 - sizeof(x)]; \
     	    x two; \
-    	}; \
- 	\
+    	}
+
+#define setup_entry(x,t) \
+    { \
 	align_struct_ ## t	 align; \
 	table [t].size = sizeof (x); \
 	table [t].alignment = \
 		(char *) &align.two - (char *) &align.one - TAO_ALIGNMENT_MAGIC_NUMBER; \
     }
 
-#else	// PC "fixed" alignment
+#else	// "Fixed" byte alignment
 #define setup_entry(x,t) \
     { \
 	table [t].size = sizeof (x); \
 	table [t].alignment = 1; \
     }
 
-#endif /* defined (unix) || defined (VXWORKS) */
+#endif /* defined (unix) || defined (VXWORKS) || defined (ACE_WIN32) */
 
 // Fills in fixed size and alignment values.
+
+declare_entry (CORBA::Short, tk_short);
+declare_entry (CORBA::Long, tk_long);
+declare_entry (CORBA::UShort, tk_ushort);
+declare_entry (CORBA::ULong, tk_ulong);
+
+declare_entry (CORBA::Float, tk_float);
+declare_entry (CORBA::Double, tk_double);
+
+declare_entry (CORBA::Boolean, tk_boolean);
+declare_entry (CORBA::Char, tk_char);
+declare_entry (CORBA::Octet, tk_octet);
+declare_entry (CORBA::Any, tk_any);
+
+declare_entry (CORBA::TypeCode_ptr, tk_TypeCode);
+declare_entry (CORBA::Principal_ptr, tk_Principal);
+declare_entry (CORBA::Object_ptr, tk_objref);
+
+declare_entry (CORBA::String, tk_string);
+declare_entry (CORBA::OctetSeq, tk_sequence);
+
+declare_entry (CORBA::LongLong, tk_longlong);
+declare_entry (CORBA::ULongLong, tk_ulonglong);
+declare_entry (CORBA::LongDouble, tk_longdouble);
+declare_entry (CORBA::WChar, tk_wchar);
+declare_entry (CORBA::WString, tk_wstring);
 
 void
 __TC_init_table (void)
