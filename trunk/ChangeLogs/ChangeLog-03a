@@ -1,3 +1,7 @@
+Fri Aug 24 23:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added File_IO test to our daily builds. 
+
 Fri Aug 24 23:12:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.h: 
