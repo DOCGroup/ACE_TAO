@@ -9,6 +9,8 @@
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
 #include "tao/Connector_Registry.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/Transport_Mux_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -206,7 +208,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Obtain unique request id from the RMS.
-  this->request_id_ = this->transport_->request_id ();
+  this->request_id_ = this->transport_->tms()->request_id ();
 
   countdown.update ();
 }
@@ -590,8 +592,9 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // preallocated reply dispatcher.
 
   // Bind.
-  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
-                                                        &this->rd_);
+  int retval =
+    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+                                               &this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -643,21 +646,9 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   int reply_error =
-    this->transport_->wait_for_reply (this->max_wait_time_,
-                                      this->rd_.reply_received ());
+    this->transport_->wait_strategy ()->wait (this->max_wait_time_,
+                                              this->rd_.reply_received ());
 
-  // Do the wait loop till we receive the reply for this invocation.
-  // while (reply_error != -1 &&
-  //        this->transport_->reply_received (this->request_id_) != 1)
-  //   {
-  //     // @@ Hack to init the Leader-Follower state, so that we can
-  //     //    wait again. (Alex).
-  //     // this->transport_->wait_strategy ()->sending_request (this->orb_core_,
-  //     //                                                  1);
-  //
-  //     // Wait for reply.
-  //     reply_error = this->transport_->wait_for_reply ();
-  //   }
 
   if (TAO_debug_level > 0 && this->max_wait_time_ != 0)
     {
@@ -698,7 +689,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   //    Can you make sure we don't forget to do that on exceptions
   //    and/or errors.
   //    BTW, think about native exceptions where if the exception is
-  //    raised in the wait_for_reply() method you won't get a chance
+  //    raised in the wait() method you won't get a chance
   //    to do that kind of error handling.  Do you really need
   //    exceptions in the transport objects?
 
@@ -834,8 +825,9 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // preallocated reply dispatcher.
 
   // Bind.
-  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
-                                                        &this->rd_);
+  int retval =
+    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+                                               &this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -879,15 +871,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Wait for the reply.
 
   int reply_error =
-    this->transport_->wait_for_reply (this->max_wait_time_,
-                                      this->rd_.reply_received ());
-
-  //   // Do the wait loop, till we receive the reply for this invocation.
-  //   while (reply_error != -1 &&
-  //          this->transport_->reply_received (this->request_id_) != 1)
-  //     {
-  //       reply_error = this->transport_->wait_for_reply ();
-  //     }
+    this->transport_->wait_strategy ()->wait (this->max_wait_time_,
+                                              this->rd_.reply_received ());
 
   // Check the reply error.
   if (reply_error == -1)

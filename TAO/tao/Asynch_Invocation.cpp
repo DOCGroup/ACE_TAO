@@ -100,8 +100,9 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // Register a reply dispatcher for this Asynch_Invocation. Use the
   // heap allocated reply dispatcher.
 
-  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
-                                                        this->rd_);
+  int retval =
+    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+                                               this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
