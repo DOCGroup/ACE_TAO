@@ -14,16 +14,14 @@ else {
 
 @directories = ();
 
-# Make sure to list these in opposite order (first to be compiled
-# should be last).
-@ace_dirs = ("$ACE_ROOT/ace",
-             "$ACE_ROOT/apps", 
-             "$ACE_ROOT/ASNMP", 
-             "$ACE_ROOT/examples", 
-             "$ACE_ROOT/netsvcs", 
-             "$ACE_ROOT/performance-tests", 
-             "$ACE_ROOT/tests", 
-             "$ACE_ROOT/websvcs");
+@ace_dirs = ("$ACE_ROOT\\ace",
+             "$ACE_ROOT\\apps", 
+             "$ACE_ROOT\\ASNMP", 
+             "$ACE_ROOT\\examples", 
+             "$ACE_ROOT\\netsvcs", 
+             "$ACE_ROOT\\performance-tests", 
+             "$ACE_ROOT\\tests", 
+             "$ACE_ROOT\\websvcs");
 
 $verbose = 0;
 $print_status = 0;
@@ -243,6 +241,11 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $use_custom_dir = 1;
 	push @directories, @ace_dirs;
     }
+    elsif ($ARGV[0] =~ '-TAO') {       # Build TAO and its programs
+        print "Building TAO\n" if ( $verbose );
+        $use_custom_dir = 1;
+	push @directories, ("$ACE_ROOT\\TAO");
+    }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
         shift;
         print "Adding directory $ARGV[0]\n" if ( $verbose );
@@ -286,6 +289,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "\n";
         print "-CORE      = Build the Core libraries\n";
         print "-ACE       = Build ACE and its programs\n";
+        print "-TAO       = Build TAO and its programs\n";
         print "-dir <dir> = Compile custom directories\n";
         print "\n";
         print "-rebuild   = Rebuild All\n";
