@@ -62,12 +62,12 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
       
       if (events.length == 0)
 	{
-	    System.err.println ("No events");
+	  System.err.println ("No events");
 	}
       else
 	{
 	  total_received_++;
-
+	  
 	  for (int i = 0; i < events.length; ++i)
 	    {
 	      if(events[i].type_ == ACE_ES_EVENT_NOTIFICATION) 
@@ -117,7 +117,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	
 	RtecEventComm.Event disjunction_designator_ = 
 	  new RtecEventComm.Event (ACE_ES_DISJUNCTION_DESIGNATOR,  0, 
-				     1,        // ttl
+				   1,        // ttl
 				   new TimeBase.ulonglong (0,0),
 				   new TimeBase.ulonglong (0,0),
 				   new TimeBase.ulonglong (0,0),
@@ -149,7 +149,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	
 	
 	RtecEventChannelAdmin.ConsumerQOS qos = new RtecEventChannelAdmin.ConsumerQOS (dependencies_); 
-	  
+	
 	
 	// The channel administrator is the event channel we got from the invocation
 	// of this routine
@@ -168,7 +168,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	
 	System.out.println ("Registered the consumer successfully.");
 	
-	 
+	
       }
       catch (RtecScheduler.UNKNOWN_TASK e)
 	{
