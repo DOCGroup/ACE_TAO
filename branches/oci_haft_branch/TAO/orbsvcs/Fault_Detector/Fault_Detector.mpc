@@ -1,0 +1,11 @@
+project : taoserver, fault_tolerance {
+  exename  = Fault_Detector
+  Source_Files {
+    Detector_i.cpp
+    Fault_Detector.cpp
+    Fault_Detector_Main.cpp
+    FT_DetectorFactory_i.cpp
+    PG_Property_Set_Helper.cpp
+  }
+}
+
