@@ -24,8 +24,9 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  // The first step Initialize the ORB
+  // The first step -- Initialize the ORB.
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB_init");
@@ -52,7 +53,8 @@ main (int argc, char **argv)
 
   // TAO specific threading policy
   policies[0] =
-    root_poa->create_TAO_POA_locking_policy (PortableServer::USE_THREAD_LOCK, env);
+    root_poa->create_TAO_POA_locking_policy (PortableServer::USE_THREAD_LOCK,
+                                             env);
 
   if (env.exception () != 0)
     {
