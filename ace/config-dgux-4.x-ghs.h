@@ -177,11 +177,6 @@
 // Platform doesn't have timespec_t data type.
 #define ACE_LACKS_TIMESPEC_T
 
-// Platform doesn't correctly support signed char
-#define ACE_LACKS_SIGNED_CHAR
-
-#define ACE_LACKS_ACE_IOSTREAM
-
 // Use the poll() event demultiplexor rather than select().
 //#define ACE_USE_POLL
 
