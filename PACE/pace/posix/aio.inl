@@ -24,12 +24,7 @@ PACE_INLINE
 int
 pace_aio_error (const pace_aiocb * aiocbp)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return aio_error ((struct aiocb *) aiocbp);
-#else
-  return aio_error (aiocbp);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
+  return aio_error (PACE_NONCONST_ARG_CAST (struct aiocb *) aiocbp);
 }
 
 PACE_INLINE
@@ -56,17 +51,12 @@ pace_aio_return (pace_aiocb * aiocbp)
 PACE_INLINE
 int
 pace_aio_suspend (const pace_aiocb * const list[],
-                 int nent,
-                 const pace_timespec * timeout)
+                  int nent,
+                  const pace_timespec * timeout)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return aio_suspend ((struct aiocb **) list,
+  return aio_suspend (PACE_NONCONST_ARG_CAST (struct aiocb **) list,
                       nent,
-                      (struct timespec *) timeout);
-#else
-  return aio_suspend (list, nent, timeout);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
+                      PACE_NONCONST_ARG_CAST (struct timespec *) timeout);
 }
 
 PACE_INLINE
@@ -83,10 +73,6 @@ pace_lio_listio (int mode,
                  int nent,
                  pace_sigevent * sig)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return lio_listio (mode, (struct aiocb **) list, nent, sig);
-#else
-  return lio_listio (mode, list, nent, sig);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
+  return lio_listio (mode, PACE_NONCONST_ARG_CAST (struct aiocb **) list,
+                     nent, sig);
 }
