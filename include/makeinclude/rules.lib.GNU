@@ -126,6 +126,7 @@ $(VSHLIB): shr.o
 ifneq (,$(RANLIB))
 	-$(RANLIB) $@
 endif # RANLIB
+	$(RM) shr.o 
 
 shr.o: $(VSHOBJS1)
 else

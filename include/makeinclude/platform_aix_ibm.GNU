@@ -24,6 +24,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq (,$(buildbits))
+  buildbits = 32
+endif
 
 # First, find out which compiler we're building with. The settings we
 # use for compiling, as well as how to build shared libraries, depend on
@@ -93,9 +96,14 @@ ifeq ($(XLCVERSION),0x0306)
  rtti = 0
 else
  ifeq ($(XLCVERSION),0x0500)
-  CCFLAGS    += -qflag=w:w
+  CCFLAGS    += -qflag=w:w -qsuppress=1540-1102:1500-010
   DLD         = $(CXX) -qmkshrobj
   SOFLAGS     = $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
+  ifeq ($(buildbits),64)
+    DLD     += -q64
+    CCFLAGS += -q64
+    ARFLAGS += -X 64
+  endif
  else
   CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
  endif

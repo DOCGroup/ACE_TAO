@@ -1,4 +1,33 @@
-Wed Jun 20 17:31:32 2001  Jeff Parsons <parsons@cs.wustl.edu>
+Thu Jun 21 08:00:01 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/Gateway/Peer/Peer.h:
+        * apps/JAWS/clients/Blobby/Blob.h:
+        * apps/JAWS/clients/Caching/http_handler.h:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:   
+        * examples/Connection/misc/test_upipe.cpp:
+
+         Moved #include "ace/Connector.h" to be after #include
+         "ace/SOCK_Connector.h" to fix compile error on AIX, Visual
+          Age C++ 5.
+
+        * apps/JAWS/server/Makefile:
+
+          Move include of wrapper_macros.GNU below the check of the
+          ACE_BUILD_COMPONENTS to avoid a warning about overriding commands
+          for target libJAWS.a for AIX, Visual Age C++, 5.
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+
+          Added warning suppression for possible use of uninitialized
+          variables and possible infinite loops.  Added support for 64 bit
+          builds with Visual Age C++ 5.
+
+       * include/makeinclude/rules.lib.GNU:
+
+          Fixed shared lib making rule.  Remove shr.o after building the lib
+          to make sure subsequent builds are correct.
+
+Wed Jun 20 17:31:32 2001  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * ace/CDR_Base.cpp:
         * ace/CDR_Base.h:

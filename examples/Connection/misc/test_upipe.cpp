@@ -6,9 +6,9 @@
 // ACE_UPIPEs.
 
 #include "ace/Acceptor.h"
-#include "ace/Connector.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
+#include "ace/Connector.h"
 #include "ace/UPIPE_Addr.h"
 
 ACE_RCSID(misc, test_upipe, "$Id$")

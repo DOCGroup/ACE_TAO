@@ -35,8 +35,6 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
 ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
@@ -48,6 +46,7 @@ ifeq (Utils,$(findstring Utils,$(ACE_BUILD_COMPONENTS)))
   endif # ! FOR_TAO
 endif # ! Utils
 
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
