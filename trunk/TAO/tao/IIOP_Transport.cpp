@@ -180,12 +180,11 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
       if (tph != 0)
         {
-          /*
-            int send_buffer_size;
-            int recv_buffer_size;
-            int no_delay;
-            int enable_network_priority;
-          */
+          ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+
+          if (this->check_event_handler_i ("IIOP_Transport::send_request")
+              == -1)
+            return -1;
 
           const char protocol[] = "iiop";
           const char * protocol_type = protocol;
@@ -268,7 +267,7 @@ TAO_IIOP_Transport::send_message_shared (TAO_Stub *stub,
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-    if (this->check_event_handler_i ("Transport::send_message_shared") == -1)
+    if (this->check_event_handler_i ("IIOP_Transport::send_message_shared") == -1)
       return -1;
 
     if (TAO_debug_level > 6)
@@ -346,6 +345,18 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   // As we have received a bidirectional information, set the flag to
   // 1 (i.e., non-originating side)
   this->bidirectional_flag (1);
+
+  // Just make sure that the connection handler is sane before we go
+  // head and do anything with it.
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->handler_lock_,
+                    -1);
+
+  if (this->check_event_handler_i ("IIOP_Transport::tear_listen_point_list")
+      == -1)
+    return -1;
+
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
@@ -368,10 +379,15 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
       // Check whether it is a IIOP acceptor
       if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
         {
-          // @@ Why isn't the return value checked!
-          //      -Ossama
-          this->get_listen_point (listen_point_list,
-                                  *acceptor);
+          if (this->get_listen_point (listen_point_list,
+                                      *acceptor) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "TAO (%P|%t) - IIOP_Transport::set_bidir_info, ",
+                          "error getting listen_point \n"));
+
+              return;
+            }
         }
     }
 
@@ -410,16 +426,28 @@ TAO_IIOP_Transport::get_listen_point (
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
+  {
+    // Just make sure that the connection handler is sane before we go
+    // head and do anything with it.
+    ACE_GUARD_RETURN (ACE_Lock,
+                      ace_mon,
+                      *this->handler_lock_,
+                      -1);
 
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local ")
+    if (this->check_event_handler_i ("IIOP_Transport::get_listen_point")
+        == -1)
+      return -1;
+
+    if (this->connection_handler_->peer ().get_local_addr (local_addr)
+        == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) Could not resolve local ")
                          ACE_TEXT ("host address in ")
-                         ACE_TEXT ("get_listen_point()\n")),
-                        -1);
-    }
+                           ACE_TEXT ("get_listen_point()\n")),
+                          -1);
+      }
+  }
 
   // Note: Looks like there is no point in sending the list of
   // endpoints on interfaces on which this connection has not
