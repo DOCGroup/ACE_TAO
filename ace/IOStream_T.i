@@ -22,7 +22,7 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
                                ACE_Time_Value * tv)
 {
   this->timeout_ = 0;
-  errno = ESUCCESS;
+  errno = 0;
   ssize_t rval = peer_->recv (buf, len, flags, tv);
   if (errno == ETIME)
     this->timeout_ = 1;
@@ -36,7 +36,7 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
                                  ACE_Time_Value *tv)
 {
   this->timeout_ = 0;
-  errno = ESUCCESS;
+  errno = 0;
   ssize_t rval = peer_->recv_n (buf, len, flags, tv);
   if (errno == ETIME)
     this->timeout_ = 1;
