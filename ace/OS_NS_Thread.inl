@@ -3700,9 +3700,6 @@ ACE_OS::thr_getprio (ACE_hthread_t id, int &priority, int &policy)
 # elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
 
-  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
-    return -1;
-
   priority = ::GetThreadPriority (id);
 
   if (priority == THREAD_PRIORITY_ERROR_RETURN
