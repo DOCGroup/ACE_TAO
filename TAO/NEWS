@@ -4,8 +4,6 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
   strict policy enforcement
 
-- (Johnny/Ossama) Bug 1476-SyncScope::NONE blocks during connects
-
 - (Johnny/Ossama) Location Forwarding fixes
 
 - (Ossama) Typecode refactoring fixes
@@ -31,6 +29,12 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (OCI) [hopeful] Notification Service EventReliability and ConnectionReliability QoS
 
 - (OCI) better compatibility with JDK orb
+
+USER VISIBLE CHANGES THAT WILL BE VISIBLE BETWEEN TAO-1.4.1 and TAO-1.4.2
+====================================================
+
+. ORB
+  - Bug 1476-SyncScope::NONE blocks during connects
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
 ====================================================
