@@ -1,3 +1,9 @@
+Sat Dec  2 00:19:38 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added RTCORBA/Explicit_Binding test.
+
 Fri Dec 01 21:17:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Thread_Manager.cpp:
