@@ -1,3 +1,9 @@
+Mon Apr 14 15:02:25 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/OBV/TC_Alignment/client.dsp:
+	* tests/OBV/TC_Alignment/client.dsp:
+	  Fixed custom build dependencies in release configuration.
+
 Mon Apr 14 14:07:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/tests/Bug_1395_Regression/client.dsp:
