@@ -709,7 +709,7 @@ public:
   // deadlock efficiently when <ACE_Event_Handlers> are used in
   // multiple threads.
 
-  void dump (void) const;
+  virtual void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
