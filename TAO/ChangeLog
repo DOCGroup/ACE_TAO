@@ -1,17 +1,29 @@
+Mon Oct  7 10:14:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/examples/Log/Basic/Makefile:
+	* orbsvcs/examples/Log/Event/Makefile:
+	* orbsvcs/examples/Log/Notify/Makefile:
+	* orbsvcs/examples/Log/RTEvent/Makefile:
+
+	  Fixed order library link order.
+
+	  Corrected TAO_ORBSVCS component checks where appropriate.
+	  Addresses some minimum CORBA build issues.
+
 Mon Oct  7 17:07:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/PortableServer/Servant_Base.cpp:
 	  Remove explicit template instantiations for ACE_Atomic_Op.
 	  They are now being instantiated in ACE.
- 
+
 Mon Oct  7 17:45:02 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile: 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile: 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile: 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile: 
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
 
-	  Fixed order of LDLIBS.	
+	  Fixed order of LDLIBS.
 
 Sun Oct  6 09:35:07 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -72,7 +84,7 @@ Fri Oct  4 19:31:51 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 Fri Oct 04 19:23:08 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/Object_Adapter.cpp (init): 
+	* tao/PortableServer/Object_Adapter.cpp (init):
 	* tao/PortableServer/PortableServer.cpp: Moved the registration of
 	  PortableServer_ORBInitializer with the
 	  PortableInterceptor::ORBInitializer to the
@@ -84,32 +96,32 @@ Fri Oct 04 19:23:08 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 Fri Oct  4 18:07:35 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw: 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsp: 
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsp:
 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsw: 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsp: 
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsp:
 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsw: 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp: 
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp:
 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsw: 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsp: 
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsw:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsp:
 
-	* orbsvcs/Logging_Service/Logging_Service.dsw: 
+	* orbsvcs/Logging_Service/Logging_Service.dsw:
 
 	  Files added.
 
 Fri Oct  4 18:03:17 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsw: 
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsw:
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsp:
 
 	  Files added.
 
 Fri Oct  4 17:56:04 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/examples/Log/Basic/Client.dsw: 
+	* orbsvcs/examples/Log/Basic/Client.dsw:
 	* orbsvcs/examples/Log/Basic/Client.dsp:
 
 	* orbsvcs/examples/Log/Event/Simple.dsw:
@@ -124,11 +136,11 @@ Fri Oct  4 17:56:04 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Consumer.dsp:
 	* orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Supplier.dsp:
 
-	  Files added.	
+	  Files added.
 
 Fri Oct  4 17:52:17 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/orbsvcs/RTEventLog.dsp: 
+	* orbsvcs/orbsvcs/RTEventLog.dsp:
 	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
 	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
 
@@ -141,13 +153,13 @@ Fri Oct  4 17:52:17 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 Fri Oct  4 17:50:06 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* TAOACE.dsw: 
+	* TAOACE.dsw:
 
 	  New projects added - DsLogAdmin
 	                       DsEventLogAdmin
 	                       DsNotifyAdmin
 	                       RTEventLog
-	
+
 	* orbsvcs/orbsvcs/orbsvcs.dsw
 
 	  New projects added - DsLogAdmin
@@ -161,55 +173,55 @@ Fri Oct  4 17:50:06 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 Fri Oct  4 14:01:05 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp: 
-	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h: 
-	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp: 
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
 
 	  Emulated exceptions fixed.
 
 Fri Oct  4 13:56:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp: 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
 
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp: 
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
 
 	  Emulated exceptions fixed.
 
 Fri Oct  4 13:51:22 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/examples/Log/Basic/main.cpp: 
+	* orbsvcs/examples/Log/Basic/main.cpp:
 	* orbsvcs/examples/Log/Basic/TLS_Client.cpp:
-	* orbsvcs/examples/Log/Basic/TLS_Client.h:	
+	* orbsvcs/examples/Log/Basic/TLS_Client.h:
 
-	* orbsvcs/examples/Log/Event/Event_Consumer.cpp: 
-	* orbsvcs/examples/Log/Event/Event_Consumer.h: 
+	* orbsvcs/examples/Log/Event/Event_Consumer.cpp:
+	* orbsvcs/examples/Log/Event/Event_Consumer.h:
 	* orbsvcs/examples/Log/Event/Event_Supplier.cpp:
 	* orbsvcs/examples/Log/Event/Event_Supplier.h:
 
-	* orbsvcs/examples/Log/Notify/Notify_Consumer.cpp: 
-	* orbsvcs/examples/Log/Notify/Notify_Consumer.h: 
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.cpp:
+	* orbsvcs/examples/Log/Notify/Notify_Consumer.h:
 	* orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
 	* orbsvcs/examples/Log/Notify/Notify_Supplier.h:
 
-	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp: 
-	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h: 
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp:
+	* orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.h:
 	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
 	* orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.h:
 
-	  Emulated exceptions fixed.	
+	  Emulated exceptions fixed.
 
 Fri Oct  4 13:41:44 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp: 
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
 	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
@@ -230,7 +242,7 @@ Fri Oct  4 13:41:44 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
 	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h: 
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
 	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
 	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
 	* orbsvcs/orbsvcs/Log/EventLog_i.h:
@@ -847,7 +859,7 @@ Thu Sep 26 08:57:51 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	  Logging_Service extended to include event logging.
 	  4 separate services each in its own directory as below.
-	
+
 	* orbsvcs/Logging_Service/Basic_Logging_Service/README:
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
@@ -863,7 +875,7 @@ Thu Sep 26 08:57:51 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
 	* orbsvcs/Logging_Service/Notify_Logging_Service/README:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:	
+	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
 
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
@@ -872,7 +884,7 @@ Thu Sep 26 08:57:51 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	  Files above added as part of new Telecom Log Service.
 
 Thu Sep 26 09:15:18 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
-	
+
 	* orbsvcs/examples/Log:
 
 	  Examples of the 4 Logging Services
@@ -907,7 +919,7 @@ Thu Sep 26 13:50:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Transport.cpp (close_connection_shared):  Make a check for
 	  the return value from the remove_handler_i () call before
 	  calling handle_close (). Thanks to Eric Malenfant
-	  <EMalenfant@interstarinc.com> for suggesting this. 
+	  <EMalenfant@interstarinc.com> for suggesting this.
 
 	  Eric mentions that doesnt show up the BUG 1020  problem. But
 	  local testing here doesnt tell so. I still see some core dumps

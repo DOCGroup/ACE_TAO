@@ -18,7 +18,7 @@ BIN2 =  Notify_Consumer \
 	Notify_Supplier
 
 PSRC=$(addsuffix .cpp,$(BIN2))
-LDLIBS = -lTAO_CosNotification -lTAO_DsNotifyLogAdmin -lACE -lTAO -lTAO_DsLogAdmin -lTAO_PortableServer  -lTAO_CosNaming   
+LDLIBS = -lTAO_DsNotifyLogAdmin -lTAO_DsLogAdmin -lTAO_CosNotification -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
@@ -34,7 +34,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Log,$(findstring Log,$(TAO_ORBSVCS)))
+ifeq (NotifyLog,$(findstring NotifyLog,$(TAO_ORBSVCS)))
   ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
     BIN = $(BIN2)
   endif # Naming
