@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -57,12 +57,16 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     " (void) // default constructor" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::" << node->local_name () <<
-    " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
-      << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
-  *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)" << be_nl;
-  *os << "{}" << be_nl << be_nl;
+  if (! node->is_local_interface ())
+    {
+      *os << "ACE_INLINE" << be_nl;
+      *os << node->name () << "::" << node->local_name () <<
+        " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
+          << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
+      *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)"
+          << be_nl;
+      *os << "{}" << be_nl << be_nl;
+    }
 
   *os << "ACE_INLINE" << be_nl;
   *os << node->name () << "::~" << node->local_name () <<

@@ -245,11 +245,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       be_visitor_context ctx (*this->ctx_);
       be_visitor *visitor = 0;
+
       // Don't support smart proxies for local interfaces.
       if (! node->is_local_interface ())
         {
           // Smart Proxy related classes.
-
           ctx.state (TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH);
           visitor = tao_cg->make_visitor (&ctx);
           if (!visitor || (node->accept (visitor) == -1))
@@ -267,22 +267,25 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
       os->gen_endif ();
 
-      // by using a visitor to declare and define the TypeCode, we have the
-      // added advantage to conditionally not generate any code. This will be
-      // based on the command line options. This is still TO-DO
-      // be_visitor *visitor;
-      visitor = 0;
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (! node->is_local_interface ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_ch::"
-                             "visit_interface - "
-                             "TypeCode declaration failed\n"
-                             ), -1);
-        }
+          // by using a visitor to declare and define the TypeCode, we
+          // have the added advantage to conditionally not generate
+          // any code. This will be based on the command line
+          // options. This is still TO-DO be_visitor *visitor;
+          visitor = 0;
+          ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface_ch::"
+                                 "visit_interface - "
+                                 "TypeCode declaration failed\n"
+                                 ), -1);
+            }
 
+        }
       node->cli_hdr_gen (I_TRUE);
     } // if !cli_hdr_gen
 

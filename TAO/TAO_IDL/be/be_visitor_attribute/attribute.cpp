@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_attribute.h"
 
@@ -70,9 +70,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
 
   // first the "get" operation
-  be_operation *op = new be_operation (node->field_type (), 
+  be_operation *op = new be_operation (node->field_type (),
                                        AST_Operation::OP_noflags,
-                                       node->name (), 
+                                       node->name (),
                                        0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->set_defined_in (node->defined_in ());
@@ -80,13 +80,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Get the strategy from the attribute and hand it over
   // to the operation
   delete op->set_strategy (node->get_get_strategy ());
-  
+
   be_visitor_context ctx (*this->ctx_);
 
   // this switch statement eliminates the need for different classes that have
   // exactly the same code except different states.
   switch (this->ctx_->state ())
     {
+    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_H:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_H);
+      break;
+    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_S:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_S);
+      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
@@ -122,7 +128,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
-      break;    
+      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
       break;
@@ -182,7 +188,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   // Do nothing for readonly attributes.
   if (node->readonly ())
-    return 0;  
+    return 0;
 
   // Create the set method.
 
@@ -199,9 +205,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                                       0);
   arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // create the operation
-  op = new be_operation (rt, 
+  op = new be_operation (rt,
                          AST_Operation::OP_noflags,
-                         node->name (), 
+                         node->name (),
                          0);
   op->set_name ((UTL_IdList *) node->name ()->copy ());
   op->set_defined_in (node->defined_in ());
@@ -267,7 +273,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  
+
   // Change the state depending on the kind of node strategy
   ctx.state (op->next_state (ctx.state ()));
 
@@ -309,7 +315,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       visitor = 0;
     }
 
-  
+
   delete op;
   delete rt;
   delete arg;

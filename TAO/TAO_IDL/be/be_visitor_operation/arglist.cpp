@@ -166,6 +166,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS:

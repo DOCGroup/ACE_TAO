@@ -292,13 +292,20 @@ be_visitor_module::visit_interface (be_interface *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_MODULE_CH:
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
+      if (! node->is_local_interface ())
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_CH);
+      else
+        ctx.state (TAO_CodeGen::TAO_LOCAL_INTERFACE_H);
       break;
     case TAO_CodeGen::TAO_MODULE_CI:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_CI);
       break;
     case TAO_CodeGen::TAO_MODULE_CS:
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_CS);
+      if (! node->is_local_interface ())
+        ctx.state (TAO_CodeGen::TAO_INTERFACE_CS);
+      else
+        ctx.state (TAO_CodeGen::TAO_LOCAL_INTERFACE_S);
+      break;
       break;
     case TAO_CodeGen::TAO_MODULE_SH:
       ctx.state (TAO_CodeGen::TAO_INTERFACE_SH);
@@ -395,7 +402,7 @@ be_visitor_module::visit_interface (be_interface *node)
       delete visitor;
       visitor = 0;
     }
-      
+
   return 0;
 }
 
@@ -549,7 +556,7 @@ be_visitor_module::visit_valuetype (be_valuetype *node)
 
   // Do addtional "extra" code generation if necessary
   if (node->has_extra_code_generation (ctx.state ()))
-    {   
+    {
       // Change the state depending on the kind of node strategy
       ctx.state (node->next_state (ctx.state (), 1));
 
