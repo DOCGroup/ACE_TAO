@@ -1,3 +1,15 @@
+Wed Oct 17 23:56:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test.dsp:
+
+	  Proactor test contributed by Alexander Libman
+	  <alibman@baltimore.com>.
+
+	* tests/tests.dsw:
+
+	  Added Proactor_Test project to the tests workspace.
+
 Wed Oct 17 18:59:53 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * include/makeinclude/install.bor:
