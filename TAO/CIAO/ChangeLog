@@ -1,38 +1,58 @@
+Thu May 27 22:16:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDeviceE.idl:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplayE.idl:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h:
+        * examples/handcrafted/BasicSP_EC/EC/ECE.idl:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
+
+	  Removed these files from the Repo. Please be careful when you
+	  commit files and please double check EVEN you have done make
+	  realclean!
+
+
 Thu May 27 22:14:18 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* tools/static_configurator/Static_Configurator.mpc: 
-	* tools/static_configurator/Static_Configurator.h: 
-	* tools/static_configurator/Static_Configurator.cpp: 
-	* tools/static_configurator/Static_Assembly_Visitors.cpp: 
-	* tools/static_configurator/Static_Assembly_Parser.cpp: 
-	
+	* tools/static_configurator/Static_Configurator.mpc:
+	* tools/static_configurator/Static_Configurator.h:
+	* tools/static_configurator/Static_Configurator.cpp:
+	* tools/static_configurator/Static_Assembly_Visitors.cpp:
+	* tools/static_configurator/Static_Assembly_Parser.cpp:
+
 	  Made changes related to performance measurement of static
 	  configuration mechanisms.
 
-	* tools/Segment_Timer/Segment_Timer_Export.h: 
-	* tools/Segment_Timer/Segment_Timer.{cpp,h,mpc}: 
-	* tools/Segment_Timer/README: 
+	* tools/Segment_Timer/Segment_Timer_Export.h:
+	* tools/Segment_Timer/Segment_Timer.{cpp,h,mpc}:
+	* tools/Segment_Timer/README:
 
 	  Adding segment timer files. This class is used in the
 	  performance measurements of static and dynamic configurations.
 
-	* tools/RTComponentServer/RTComponentServer.mpc: 
-	* tools/Assembly_Deployer/Assembly_Visitors.cpp: 
-	* tools/Assembly_Deployer/Assembly_Manager.cpp: 
-	* tools/Assembly_Deployer/Assembly_Impl.cpp: 
-	* tools/Assembly_Deployer/Assembly_Deployer.mpc: 
-	
+	* tools/RTComponentServer/RTComponentServer.mpc:
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+
 	  Made changes related to performance measurement of dynamic
 	  configuration mechanisms.
-	
+
 Thu May 27 18:39:10 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
-        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
 
           Redefine the Hash map to make all the artifacts (NodeManager,
           NodeApplicationManager, NodeApplication, Connections) handy
-          to use. Changed all the member functions to reflect this 
+          to use. Changed all the member functions to reflect this
           change.
 
 Thu May 27 17:45:26 2004  Tao Lu  <lu@dre.vanderbilt.edu>
