@@ -307,7 +307,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 // For COM -- IUnknown operations
 
 // {A201E4C3-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_IIOP_Object,
+TAO_DEFINE_GUID (IID_IIOP_Object,
 0xa201e4c3, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 ULONG
@@ -342,7 +342,7 @@ IIOP_Object::Release (void)
 // IIOP_OBJECT ... this one
 //
 TAO_HRESULT
-IIOP_Object::QueryInterface (REFIID riid,
+IIOP_Object::QueryInterface (TAO_REFIID riid,
                              void **ppv)
 {
   *ppv = 0;

@@ -33,11 +33,11 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // {77420086-F276-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_IIOP_ServerRequest,
+TAO_DEFINE_GUID (IID_IIOP_ServerRequest,
 0x77420086, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 // {4B48D881-F7F0-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_CORBA_ServerRequest,
+TAO_DEFINE_GUID (IID_CORBA_ServerRequest,
 0x4b48d881, 0xf7f0, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA_ServerRequest *
@@ -175,7 +175,7 @@ IIOP_ServerRequest::Release (void)
 }
 
 TAO_HRESULT
-IIOP_ServerRequest::QueryInterface (REFIID riid,
+IIOP_ServerRequest::QueryInterface (TAO_REFIID riid,
                                     void **ppv)
 {
   ACE_ASSERT (this->refcount_ > 0);
