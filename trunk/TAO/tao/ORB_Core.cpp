@@ -1219,17 +1219,17 @@ TAO_ORB_Core::fini (void)
   if (this->resource_factory_ != 0)
     this->resource_factory_->reclaim_reactor (this->reactor_);
 
+  (void) TAO_Internal::close_services ();
+
+  delete this->reactor_registry_;
+
   if (this->message_block_dblock_allocator_)
-        this->message_block_dblock_allocator_->remove ();
-    delete this->message_block_dblock_allocator_;
+    this->message_block_dblock_allocator_->remove ();
+  delete this->message_block_dblock_allocator_;
 
   if (this-> message_block_buffer_allocator_)
     this->message_block_buffer_allocator_->remove ();
     delete this->message_block_buffer_allocator_;
-
-  (void) TAO_Internal::close_services ();
-
-  delete this->reactor_registry_;
 
   // @@ This is not needed since the default resource factory
   //    is statically added to the service configurator, fredk
