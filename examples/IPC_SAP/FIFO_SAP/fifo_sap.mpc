@@ -13,7 +13,7 @@ project(*server) : aceexe {
 }
 
 project(*Msg_Client) : aceexe {
-  exename = FIFO-Msg-client.cpp
+  exename = FIFO-Msg-client
   Source_Files {
     FIFO-Msg-client.cpp
   }
