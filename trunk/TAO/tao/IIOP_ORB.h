@@ -43,11 +43,6 @@ public:
                                   CORBA::Environment &env);
   // Convert an object reference to an IOR stringified form.
 
-  TAO_HRESULT QueryInterface (REFIID riid, 
-                              void **ppv);
-  // COM stuff - get the underlying IUnknown object based on the riid.
-  // @@ (IRFAN) Can we remove this COM stuff?!
-
   // = ACCESSORS
   void use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.

@@ -301,32 +301,6 @@ IIOP_ORB::string_to_object (CORBA::String str,
   return obj;
 }
 
-// COM IUnknown support
-
-// {A201E4C4-F258-11ce-9598-0000C07CA898}
-DEFINE_GUID (IID_IIOP_ORB,
-0xa201e4c4, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-
-TAO_HRESULT
-IIOP_ORB::QueryInterface (REFIID riid,
-                          void **ppv)
-{
-  *ppv = 0;
-
-  if (IID_CORBA_ORB == riid
-      || IID_IIOP_ORB == riid
-      || IID_TAO_IUnknown == riid)
-    *ppv = this;
-
-  // XXX gotta aggregate ...
-
-  if (*ppv == 0)
-    return ResultFromScode (TAO_E_NOINTERFACE);
-
-  (void) AddRef ();
-  return TAO_NOERROR;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<IIOP_ORB, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

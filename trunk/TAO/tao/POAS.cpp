@@ -8,7 +8,6 @@
 #include "tao/corba.h"
 #include "POAS.h"
 
-// @@ Irfan, should this be moved into the corba.h file?
 #if !defined (__ACE_INLINE__)
 #include "POAS.i"
 #endif // !defined INLINE

@@ -83,7 +83,8 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
-  if (poa_current
+
+  if (poa_current != 0
       && poa_current->in_upcall ()
       && this == poa_current->servant ())
     {
@@ -159,8 +160,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   // exception.
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
-  // @@ Irfan, I'm not sure that I did the right thing here...please
-  // double-check my logic! (cjc)
+
   if (poa_current == 0
       || !poa_current->in_upcall ()
       || this != poa_current->servant ())

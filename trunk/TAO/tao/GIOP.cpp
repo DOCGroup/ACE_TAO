@@ -1133,7 +1133,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         // Make sure a new connection is used next time.
         this->handler_->close ();
-        this->handler_ = 0; // @@ not sure this is correct!
+        this->handler_ = 0; 
         // We may not need to do this since TAO_GIOP_Invocations
         // get created on a per-call basis. For now we'll play it safe.
       }

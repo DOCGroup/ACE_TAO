@@ -728,7 +728,7 @@ public:
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
 
-class TAO_Export CORBA_ORB : public TAO_IUnknown
+class TAO_Export CORBA_ORB
 {
   // = TITLE
   //   ORB pseudo-objref.
@@ -840,15 +840,6 @@ public:
   // ORB will not normally return OBJECT_NOT_EXIST unless the POA
   // reports that fault.
 
-  // = <IUnknown> Support
-  //
-  // Stuff required for COM IUnknown support ... this class is
-  // intended to be inherited by others, which will provide some more
-  // of the CORBA/COM support.  Implementations of this "CORBA::ORB"
-  // class must know how to create stringify/destringify their
-  // objrefs, as well as how to marshal and unmarshal them ... as well
-  // as provide their own QueryInterface.
-
   int run (const ACE_Time_Value &tv);
   // This is the same as the more "standard" <run> method, except that
   // you don't need to put the & in front of <tv>.
@@ -857,6 +848,10 @@ public:
   // Establish connectsion to each of the comma-separated
   // <{host}>:<{port}> combinations specified in <connections>.
 
+  // This class is intended to be inherited by others, which will
+  // provide some more of the CORBA support.  Implementations of this
+  // "CORBA::ORB" class must know how to create stringify/destringify
+  // their objrefs, as well as how to marshal and unmarshal them.
   ULONG AddRef (void);
   ULONG Release (void);
 
@@ -981,7 +976,6 @@ extern "C" TAO_Export const TAO_IID IID_CORBA_ServerRequest;
 extern "C" TAO_Export const TAO_IID IID_IIOP_ServerRequest;
 extern "C" TAO_Export const TAO_IID IID_STUB_Object;
 extern "C" TAO_Export const TAO_IID IID_IIOP_Object;
-extern "C" TAO_Export const TAO_IID IID_IIOP_ORB;
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.

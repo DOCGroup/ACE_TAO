@@ -11,7 +11,6 @@
 #include "POAC.h"
 #include "POAS.h"
 
-// @@ Irfan, should this be moved into the corba.h file?
 #if !defined (__ACE_INLINE__)
 #include "POAC.i"
 #endif // !defined INLINE
