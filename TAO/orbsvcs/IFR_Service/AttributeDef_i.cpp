@@ -159,10 +159,10 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
   IR::AttributeDescription ad;
 
   ad.name = this->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (ad);
 
   ad.id = this->id (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (ad);
 
   ACE_TString container_id;
 
@@ -173,13 +173,13 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
   ad.defined_in = container_id.c_str ();
 
   ad.version = this->version (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (ad);
 
   ad.type = this->type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (ad);
 
   ad.mode = this->mode (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (ad);
 
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
   int index = 0;
@@ -264,7 +264,7 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
                                key);
 
       get_ed.type = impl.type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (ad);
 
       get_ed_seq[i] = get_ed;
     }
