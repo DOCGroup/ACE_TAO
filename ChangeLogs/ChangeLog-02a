@@ -1,3 +1,18 @@
+Tue May  9 09:01:24 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Export/README: (added)
+        * examples/Export/dll.cpp: (added)
+        * examples/Export/dll.h: (added)
+        * examples/Export/export_dll.dsp: (added)
+        * examples/Export/export_test.dsw: (added)
+        * examples/Export/run_test.pl: (added)
+        * examples/Export/test.cpp: (added)
+        * examples/Export/test.dsp: (added)
+        * examples/Export/test_export.h: (added)
+
+          The export example is an example of how to use the ACE_Export
+          type macros for DLLs.
+
 Mon May  8 14:37:32 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Task.h: Cleaned up the documentation so that it will
