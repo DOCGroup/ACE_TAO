@@ -1,3 +1,10 @@
+Wed Aug  7 11:59:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/PSS/Client.dsp: 
+	* orbsvcs/examples/PSS/Server.dsp:
+	* orbsvcs/examples/PSS/Simple_Naming.dsp:
+	  Updated the release configurations.
+
 Wed Aug  7 10:50:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (set_dscp_codepoint):
