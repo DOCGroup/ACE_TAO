@@ -74,11 +74,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -87,22 +87,22 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        Test::Roundtrip::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
       for (int j = 0; j < 100; ++j)
         {
           ACE_hrtime_t start = 0;
-          (void) roundtrip->test_method (start TAO_ENV_ARG_PARAMETER);
+          (void) roundtrip->test_method (start ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -125,10 +125,10 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var owner_transfer(roundtrip_handler_impl);
 
       Test::AMI_RoundtripHandler_var roundtrip_handler =
-        roundtrip_handler_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        roundtrip_handler_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -138,9 +138,9 @@ main (int argc, char *argv[])
            // Invoke asynchronous operation....
            roundtrip->sendc_test_method (roundtrip_handler.in (),
                                          ACE_OS::gethrtime ()
-                                         TAO_ENV_ARG_PARAMETER);
-           if (orb->work_pending (TAO_ENV_SINGLE_ARG_PARAMETER))
-              orb->perform_work (TAO_ENV_SINGLE_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
+           if (orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER))
+              orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
 
            ACE_TRY_CHECK;
          }
@@ -149,7 +149,7 @@ main (int argc, char *argv[])
 
        while (roundtrip_handler_impl->pending_callbacks ())
          {
-           orb->perform_work (tv TAO_ENV_ARG_PARAMETER);
+           orb->perform_work (tv ACE_ENV_ARG_PARAMETER);
            ACE_TRY_CHECK;
          }
 
@@ -165,13 +165,13 @@ main (int argc, char *argv[])
                                              test_end - test_start,
                                              niterations);
 
-      roundtrip->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      roundtrip->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

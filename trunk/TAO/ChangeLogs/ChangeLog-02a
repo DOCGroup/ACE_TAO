@@ -1,3 +1,49 @@
+Wed Jan 30 21:08:22 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:
+	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.h:
+	* performance-tests/Latency/AMH/Single_Threaded/client.cpp:
+	* performance-tests/Latency/AMH/Single_Threaded/server.cpp:
+	* performance-tests/Latency/AMI/Roundtrip.cpp:
+	* performance-tests/Latency/AMI/Roundtrip.h:
+	* performance-tests/Latency/AMI/Roundtrip_Handler.cpp:
+	* performance-tests/Latency/AMI/Roundtrip_Handler.h:
+	* performance-tests/Latency/AMI/Server_Task.cpp:
+	* performance-tests/Latency/AMI/client.cpp:
+	* performance-tests/Latency/AMI/server.cpp:
+	* performance-tests/Latency/DII/Roundtrip.cpp:
+	* performance-tests/Latency/DII/Roundtrip.h:
+	* performance-tests/Latency/DII/client.cpp:
+	* performance-tests/Latency/DII/server.cpp:
+	* performance-tests/Latency/DSI/Roundtrip.cpp:
+	* performance-tests/Latency/DSI/Roundtrip.h:
+	* performance-tests/Latency/DSI/client.cpp:
+	* performance-tests/Latency/DSI/server.cpp:
+	* performance-tests/Latency/Deferred/Roundtrip.cpp:
+	* performance-tests/Latency/Deferred/Roundtrip.h:
+	* performance-tests/Latency/Deferred/client.cpp:
+	* performance-tests/Latency/Deferred/server.cpp:
+	* performance-tests/Latency/Single_Threaded/Roundtrip.cpp:
+	* performance-tests/Latency/Single_Threaded/Roundtrip.h:
+	* performance-tests/Latency/Single_Threaded/client.cpp:
+	* performance-tests/Latency/Single_Threaded/server.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/Client_Task.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/Client_Task.h:
+	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.h:
+	* performance-tests/Latency/Thread_Per_Connection/client.cpp:
+	* performance-tests/Latency/Thread_Per_Connection/server.cpp:
+	* performance-tests/Latency/Thread_Pool/Client_Task.cpp:
+	* performance-tests/Latency/Thread_Pool/Client_Task.h:
+	* performance-tests/Latency/Thread_Pool/Roundtrip.cpp:
+	* performance-tests/Latency/Thread_Pool/Roundtrip.h:
+	* performance-tests/Latency/Thread_Pool/Worker_Thread.cpp:
+	* performance-tests/Latency/Thread_Pool/client.cpp:
+	* performance-tests/Latency/Thread_Pool/server.cpp:
+
+	  Conversion to the ACE_ENV_ macros.
+	  Thanks to Johnny Willemsen for keeping an eye out.
+
 Wed Jan 30 13:38:03 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/examples/Notify/Subscribe/Subscribe.h (RefCountServantBase): Fixed
