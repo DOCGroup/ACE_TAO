@@ -62,15 +62,13 @@ public:
 			size_t prealloc = ACE_DEFAULT_FREE_LIST_PREALLOC, 
                         size_t lwm = ACE_DEFAULT_FREE_LIST_LWM, 
                         size_t hwm = ACE_DEFAULT_FREE_LIST_HWM, 
-                        size_t inc = ACE_DEFAULT_FREE_LIST_INC,
-                        LOCK *mutex = 0);
+                        size_t inc = ACE_DEFAULT_FREE_LIST_INC);
   // Constructor takes a <mode> (i.e., ACE_FREE_LIST_WITH_POOL or
   // ACE_PURE_FREE_LIST), a count of the number of nodes to
   // <prealloc>, a low and high water mark (<lwm> and <hwm>) that
   // indicate when to allocate more nodes, an increment value (<inc>)
   // that indicates how many nodes to allocate when the list must
-  // grow, and a pointer to a <mutex> that is used to determine the
-  // synchronization properties of the free list.
+  // grow.
 
   virtual ~ACE_Locked_Free_List (void);
   // Destructor - removes all the elements from the free_list.
@@ -88,12 +86,6 @@ public:
 
   virtual void resize (size_t newsize);
   // Resizes the free list to <newsize>.
-
-  LOCK &get_mutex (void); 
-  // Returns a reference to the mutex.
-  
-  void set_mutex (LOCK &mutex);
-  // Sets the mutex to <mutex>.
 
 protected:
   virtual void alloc (size_t n);
@@ -121,11 +113,8 @@ protected:
   size_t size_;
   // Keeps track of the size of the list.
 
-  LOCK *mutex_; 
+  LOCK mutex_; 
   // Synchronization variable for <ACE_Timer_Queue>.
-
-  int delete_mutex_;
-  // flag to remember ownership of the mutex.
 
 private:
   // = Don't allow these operations for now.
