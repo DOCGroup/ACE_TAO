@@ -67,7 +67,11 @@ JAVA=jvc.exe
 # Name "ServiceConfigurator - Java Virtual Machine Debug"
 # Begin Source File
 
-SOURCE=.\mainTest.java
+SOURCE=.\reloadTest.java
+# End Source File
+# Begin Source File
+
+SOURCE=.\suspendTest.java
 # End Source File
 # Begin Source File
 
