@@ -1,3 +1,9 @@
+Mon Oct  5 22:12:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Options.html: 
+	* docs/configurations.html: 
+	  Added a few comments for the latest options.
+
 Mon Oct 05 21:43:26 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.17 released.
