@@ -6255,13 +6255,6 @@ CORBA::Boolean operator>>= (
 # pragma instantiate TAO::Any_Dual_Impl_T<PortableServer::POAList>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<PortableServer::ObjectId>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<PortableServer::ObjectId>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // TAO_IDL - Generated from
