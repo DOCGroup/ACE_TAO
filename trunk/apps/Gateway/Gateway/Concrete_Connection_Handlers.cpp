@@ -27,19 +27,19 @@ Consumer_Handler::handle_input (ACE_HANDLE)
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
 			"(%t) Peer has failed unexpectedly for Consumer_Handler %d\n",
-			this->id ()), 
+			this->connection_id ()), 
                         -1);
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
 			"(%t) Peer has shutdown unexpectedly for Consumer_Handler %d\n",
-			this->id ()), 
+			this->connection_id ()), 
                         -1);
       /* NOTREACHED */
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
 			"(%t) Consumer is erroneously sending input to Consumer_Handler %d\n",
-			this->id ()), 
+			this->connection_id ()), 
                         -1);
       /* NOTREACHED */
     }
@@ -71,7 +71,8 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
     {
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) queueing activated on handle %d to routing id %d\n",
-                 this->get_handle (), this->id ()));
+                 this->get_handle (),
+                  this->connection_id ()));
 
       // ACE_Queue in *front* of the list to preserve order.
       if (this->msg_queue ()->enqueue_head 
@@ -91,8 +92,10 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
 ssize_t
 Consumer_Handler::send (ACE_Message_Block *event)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) sending %d bytes to Consumer %d\n",
-	      event->length (), this->id ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) sending %d bytes to Consumer %d\n",
+	      event->length (),
+              this->connection_id ()));
 
   ssize_t len = event->length ();
   ssize_t n = this->peer ().send (event->rd_ptr (), len);
@@ -156,7 +159,8 @@ Consumer_Handler::handle_output (ACE_HANDLE)
             {
               ACE_DEBUG ((LM_DEBUG, 
 			  "(%t) queueing deactivated on handle %d to routing id %d\n",
-                         this->get_handle (), this->id ()));
+                          this->get_handle (), 
+                          this->connection_id ()));
 
 
               if (ACE_Reactor::instance ()->cancel_wakeup 
@@ -332,7 +336,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 	      return -1;
 	    }
 
-          Event_Key event_addr (this->id (), 
+          Event_Key event_addr (this->connection_id (), 
                                 event->header_.type_);
           // Copy the forwarding address from the Event_Key into
           // forward_addr.
@@ -378,7 +382,8 @@ Supplier_Handler::handle_input (ACE_HANDLE)
       this->state (Connection_Handler::FAILED);
       ACE_ERROR_RETURN ((LM_ERROR, 
 			"(%t) Peer has closed down unexpectedly for Input Connection_Handler %d\n", 
-                        this->id ()), -1);
+                        this->connection_id ()), 
+                        -1);
       /* NOTREACHED */
     case -1:
       if (errno == EWOULDBLOCK)
@@ -388,8 +393,9 @@ Supplier_Handler::handle_input (ACE_HANDLE)
         {
           this->state (Connection_Handler::FAILED);
           ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p for Input Connection_Handler %d\n", 
-			    "Peer has failed unexpectedly",
-                           this->id ()), -1);
+                             "Peer has failed unexpectedly",
+                             this->connection_id ()),
+                            -1);
         }
       /* NOTREACHED */
     default:
@@ -510,7 +516,7 @@ Thr_Consumer_Handler::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) shutting down threaded Consumer_Handler %d on handle %d\n", 
-		  this->id (),
+		  this->connection_id (),
                   this->get_handle ()));
 
       this->peer ().close ();
@@ -589,7 +595,7 @@ Thr_Supplier_Handler::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) shutting down threaded Supplier_Handler %d on handle %d\n",
-                  this->id (),
+                  this->connection_id (),
                   this->get_handle ()));
 
       this->peer ().close ();

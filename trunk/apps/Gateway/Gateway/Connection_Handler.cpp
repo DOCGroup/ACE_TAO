@@ -5,12 +5,12 @@
 #include "Concrete_Connection_Handlers.h"
 
 void
-Connection_Handler::id (ACE_INT32 id)
+Connection_Handler::connection_id (CONNECTION_ID id)
 {
-  this->id_ = id;
+  this->connection_id_ = id;
 }
 
-ACE_INT32
+CONNECTION_ID
 Connection_Handler::connection_id (void)
 {
   return this->connection_id_;
@@ -37,7 +37,7 @@ Connection_Handler::Connection_Handler (void)
 Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
   : remote_addr_ (pci.remote_port_, pci.host_),
     local_addr_ (pci.local_port_),
-    id_ (pci.connection_id_),
+    connection_id_ (pci.connection_id_),
     total_bytes_ (0),
     state_ (Connection_Handler::IDLE),
     timeout_ (1),

@@ -77,7 +77,7 @@ public:
   void initiate_connector (void);
   // Actively initiate connections to the Peers.
 
-  void initiate_acceptors (void);
+  int initiate_acceptors (void);
   // Passively initiate the <Peer_Acceptor>s for Consumer and
   // Suppliers.
 

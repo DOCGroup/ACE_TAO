@@ -190,9 +190,8 @@ main (int argc, char *argv[])
       else
         {
           ACE_DEBUG ((LM_DEBUG, 
-                      "%d\t%d\t%d\t%d\t",
+                      "%d\t%d\t",
                       entry.connection_id_,
-                      entry.supplier_id_,
                       entry.type_));
 
           while (--entry.total_consumers_ >= 0)
