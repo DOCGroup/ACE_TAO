@@ -5,7 +5,6 @@
 optimize = 1
 
 # For pthreads support on FreeBSD, you need
-# -D_POSIX_THREADS
 
 debug = 1
 versioned_so = 1
