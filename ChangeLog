@@ -1,3 +1,12 @@
+Thu Sep 23 12:07:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/ACE.cpp:
+	* ace/ACE.h:
+
+	  Changed buffer version of ACE::crc32 to take a void * argument
+	  (to avoid requiring callers to cast non-char data structures),
+	  and a size_t length.
+
 Thu Sep 23 13:24:54 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/tests/tests.mpc:
