@@ -265,7 +265,7 @@ protected:
                          ACE_CString &iiop_endpoint);
   // Set the endpoint
 
-  int init (int& argc, char ** argv);
+  int init (int &argc, char **argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
   // called by <CORBA::ORB_init>.
 

@@ -50,9 +50,25 @@ public:
   // Initialize the ORB/root POA, using the supplied command line
   // arguments or the default ORB components.  Returns -1 on failure.
 
+  int init (int &argc,
+            char *argv[],
+            const char *orb_name,
+            CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Initialize the ORB/root POA, using the supplied command line
+  // arguments or the default ORB components.  Returns -1 on failure.
+
   int init_child_poa (int &argc,
                       char *argv[],
-                      char *poa_name,
+                      const char *poa_name,
+                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Creates a child poa under the root poa with PERSISTENT and
+  // USER_ID policies.  Call this if you want a <child_poa> with the
+  // above policies, otherwise call init.  Returns -1 on failure.
+
+  int init_child_poa (int &argc,
+                      char *argv[],
+                      const char *poa_name,
+                      const char *orb_name,
                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Creates a child poa under the root poa with PERSISTENT and
   // USER_ID policies.  Call this if you want a <child_poa> with the
