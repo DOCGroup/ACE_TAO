@@ -94,6 +94,10 @@
     Recently Completed Work:
 
     <UL>
+      <li>Added optimization for collocated objects.  This
+          optimization enables TAO to bypass communication layers and
+          talks to collocated objects directly.</li>
+
       <li>Broke the tight coupling between <code>CORBA_Object</code>
       and <code>IIOP_Object</code> so that multiple
       <code>CORBA_Object</code>s can share a single
@@ -128,7 +132,7 @@
 
       <li>Fixed the <b>LOCATION_FORWARD</b> capabilities to work as
       described in the CORBA 2.1 and the POA specification.</li>
-      
+
       <li>Fixed problem in the IDL Cubit example which caused the
       server to dump core when dealing with <code>_out</code> sequence
       types <em>ONLY</em> when compiled with G++.  It seems that G++
@@ -324,6 +328,8 @@
     Current Work:
 
     <UL>
+      <li>Adding a new -ORB option to turn on/off collocation
+          optimization.
       <LI>
 	<p>Verify that, in the ORB-per-thread concurrency model,
 	  it's possible to have a factory in each thread that creates
@@ -351,7 +357,7 @@
       <LI>Support new concurrency models, e.g., Thread-per-Request,
       thread pool, etc..</LI>
 
-    </UL> 
+    </UL>
 
     Future work:
     <UL>
@@ -362,7 +368,7 @@
 	  connection cache.  Basically, we want to be able to "hold" a
 	  service handler for a string of requests.  And, of course,
 	  do this in a portable manner.</LI>
-	  
+
 	  <li>Replace all uses of <code>new</code> and
 	  <code>delete</code> with allocators that can be put into
 	  TSS.  The main motivation for this is to eliminate lock
