@@ -252,7 +252,7 @@ ACE::strsplit_r (char *str,
 const char *
 ACE::execname (const char *old_name)
 {
-#if defined (ACE_HAS_WIN32)
+#if defined (ACE_WIN32)
   if (ACE_OS::strstr (old_name, ".exe") == 0)
     {
       char *new_name;
@@ -274,7 +274,7 @@ ACE::execname (const char *old_name)
 
       return new_name;
     }
-#endif /* ACE_HAS_WIN32 */
+#endif /* ACE_WIN32 */
   return old_name;
 }
 
@@ -332,7 +332,7 @@ ACE::strsplit_r (wchar_t *str,
 const wchar_t *
 ACE::execname (const wchar_t *old_name)
 {
-#if defined (ACE_HAS_WIN32)
+#if defined (ACE_WIN32)
   if (ACE_OS::strstr (old_name, L".exe") == 0)
     {
       wchar_t *new_name;
@@ -354,7 +354,7 @@ ACE::execname (const wchar_t *old_name)
 
       return new_name;
     }
-#endif /* ACE_HAS_WIN32 */
+#endif /* ACE_WIN32 */
   return old_name;
 }
 #endif /* ACE_HAS_UNICODE */
