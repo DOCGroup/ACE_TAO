@@ -1,3 +1,10 @@
+Mon Dec  9 15:43:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connection_Handler.cpp (handle_input_eh): Use a cached
+	  transport id instead of calling id () when printing out
+	  ACE_DEBUG statements. Thanks to Duane Binder for reporting the
+	  problem.
+
 Mon Dec  9 14:51:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/LF_Connect_Strategy.cpp (wait): Cosmetic fixes to the debug
