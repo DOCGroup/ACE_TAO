@@ -344,9 +344,11 @@ include $(TAO_ROOT)/taoconfig.mk
 # @@ Can we generalize this to something like this:
 # $(MANAGED_PIDL).target:
 # 	......
+dynamic.target:
+ 	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb, export_macro=TAO_Export Dynamic.idl; \
+	 $(RM) -f DynamicS.* DynamicS_T.*; 
+.PHONY dynamic.target:
 interceptor.target:
-        $(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb, export_macro=TAO_Export Dynamic.idl; \
-        $(RM) -f DynamicS.* DynamicS_T.*; \
 	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export PortableInterceptor.idl; \
 	$(RM) -f PortableInterceptorS.* PortableInterceptorS_T.*; \
 	patch < diffs/PortableInterceptorC.h.diff; \
@@ -593,17 +595,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -980,17 +982,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -1233,15 +1235,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -1466,15 +1468,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -1986,21 +1988,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -2228,21 +2230,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -2430,22 +2432,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
  Stub.i \
  NVList.h \
  NVList.i \
- Interceptor.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -2621,12 +2622,21 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  Object_Adapter.h \
  Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
@@ -2650,8 +2660,6 @@ realclean:
  poa_macros.h \
  POAS.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
  POAS.i \
@@ -2699,7 +2707,6 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- PortableInterceptor.h \
  ORB.i \
  Stub.i \
  GIOP_Server_Request.h \
@@ -2912,17 +2919,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -3210,21 +3217,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -3455,17 +3462,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -3862,17 +3869,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -4144,17 +4151,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -4360,19 +4367,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -4714,17 +4721,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -5019,17 +5026,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -5273,17 +5280,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -5542,17 +5549,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -5815,17 +5822,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -6099,17 +6106,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -6386,17 +6393,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -6689,13 +6696,13 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
  DynamicC.i \
+ MessagingC.h \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -6987,17 +6994,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -7238,17 +7245,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -7504,17 +7511,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -7784,17 +7791,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -7994,19 +8001,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -8364,17 +8371,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -8677,17 +8684,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -8937,17 +8944,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -9209,17 +9216,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -9435,17 +9442,17 @@ realclean:
  IORManipulation.h \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -9777,17 +9784,17 @@ realclean:
  Services.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -9941,21 +9948,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -10151,21 +10158,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -10383,17 +10390,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -10906,17 +10913,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -11071,17 +11078,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -11234,17 +11241,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -11392,21 +11399,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -11555,21 +11562,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -11721,17 +11728,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -11954,17 +11961,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -12447,21 +12454,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -12714,13 +12721,13 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -12975,13 +12982,13 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -13172,19 +13179,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -13329,21 +13336,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -13739,17 +13746,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -13952,13 +13959,13 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -14144,15 +14151,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -14351,15 +14358,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -14902,17 +14909,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -15289,17 +15296,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -15508,17 +15515,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -15666,21 +15673,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -15956,21 +15963,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -16118,21 +16125,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -16585,21 +16592,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -16874,6 +16881,9 @@ realclean:
  corbafwd.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ Object.h \
+ Object.i \
+ DynamicC.h \
  IOPC.h \
  CDR.h \
  CDR.i \
@@ -16885,15 +16895,18 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  IOPC.i \
- Object.h \
- Object.i \
- Exception.h \
- Exception.i \
+ DynAnyC.h \
+ Any.h \
  Environment.h \
  Environment.i \
- MessagingC.h \
- Any.h \
  Any.i \
+ Exception.h \
+ Exception.i \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PolicyC.h \
@@ -16902,57 +16915,16 @@ realclean:
  PolicyC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- ORB.h \
- IOR_LookupTable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- Servant_Base.h \
- POAC.h \
- POAC.i \
- Servant_Base.i \
- IORS.i \
- ORB.i \
- DynAnyC.h \
- DynAnyC.i \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i
 
 .obj/PortableInterceptorC.o .obj/PortableInterceptorC.so .shobj/PortableInterceptorC.o .shobj/PortableInterceptorC.so: PortableInterceptorC.cpp \
- PortableInterceptorC.h $(ACE_ROOT)/ace/pre.h \
- orbconf.h \
+ PortableInterceptorC.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -16970,12 +16942,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- IOPC.h \
- CDR.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -17031,9 +16997,14 @@ realclean:
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
+ orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  corbafwd.i \
+ Object.h \
+ Object.i DynamicC.h \
+ IOPC.h \
+ CDR.h \
  CDR.i \
  Sequence.h \
  Managed_Types.h \
@@ -17043,24 +17014,25 @@ realclean:
  Sequence_T.i \
  Sequence_T.cpp \
  IOPC.i \
- Object.h \
- Object.i \
- Exception.h \
- Exception.i \
+ DynAnyC.h \
+ Any.h \
  Environment.h \
  Environment.i \
- MessagingC.h \
- Any.h \
  Any.i \
- TimeBaseC.h \
+ Exception.h \
+ Exception.i \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i DynamicC.i \
+ MessagingC.h TimeBaseC.h \
  TimeBaseC.i \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  PolicyC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
+ PollableC.h MessagingC.i \
+ PortableInterceptorC.i \
+ corba.h \
  ORB.h \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -17103,16 +17075,144 @@ realclean:
  PortableInterceptorC.h \
  PortableInterceptor.i \
  ORB.i \
- DynAnyC.h \
- DynAnyC.i \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
- PortableInterceptorC.i
+ NVList.h \
+ NVList.i \
+ Principal.h \
+ Principal.i \
+ Request.h \
+ Context.h \
+ Context.i \
+ MessagingC.h \
+ Request.i \
+ Server_Request.h \
+ Object_KeyC.h \
+ Object_KeyC.i \
+ Server_Request.i \
+ LocalObject.h \
+ LocalObject.i \
+ POA.h \
+ Object_Adapter.h \
+ Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
+ $(ACE_ROOT)/ace/Map_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Active_Map_Manager.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Map_T.i \
+ $(ACE_ROOT)/ace/Map_T.cpp \
+ Key_Adapters.i \
+ Server_Strategy_Factory.h \
+ poa_macros.h \
+ POAS.h \
+ POA_CORBA.h \
+ DomainC.h \
+ DomainC.i \
+ POAS.i \
+ Active_Object_Map.h \
+ Active_Object_Map.i \
+ Object_Adapter.i \
+ POAManager.h \
+ POAManager.i \
+ rtcorbafwd.h \
+ rtcorbafwd.i \
+ POA.i \
+ Stub.h \
+ Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ Pluggable.i \
+ MProfile.h \
+ Profile.h \
+ Tagged_Components.h \
+ CONV_FRAMEC.h \
+ CONV_FRAMEC.i \
+ Tagged_Components.i \
+ Profile.i \
+ MProfile.i \
+ Stub.i \
+ params.h \
+ params.i \
+ ORB_Core.h \
+ Policy_Manager.h \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Protocol_Factory.h \
+ ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ Operation_Table.h \
+ debug.h \
+ Client_Strategy_Factory.h \
+ Invocation.h \
+ Reply_Dispatcher.h \
+ GIOP_Message_State.h \
+ Pluggable_Messaging.h \
+ Pluggable_Messaging_Utils.h \
+ Pluggable_Messaging_Utils.i \
+ Pluggable_Messaging.i \
+ GIOP_Message_State.i \
+ Reply_Dispatcher.i \
+ TAOC.h \
+ TAOC.i \
+ operation_details.h \
+ target_specification.h \
+ target_specification.i \
+ operation_details.i \
+ Invocation.i \
+ InconsistentTypeCodeC.h \
+ DynAny_i.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
+ ObjectIDList.h \
+ ObjectIDList.i \
+ WrongTransactionC.h \
+ InterfaceC.h \
+ ifrfwd.h \
+ BoundsC.h \
+ BoundsC.i \
+ MessagingS.h \
+ TimeBaseS.h \
+ TimeBaseS_T.h \
+ TimeBaseS_T.i \
+ TimeBaseS_T.cpp \
+ TimeBaseS.i \
+ MessagingS_T.h \
+ MessagingS_T.i \
+ MessagingS_T.cpp \
+ MessagingS.i
 
 .obj/DynamicC.o .obj/DynamicC.so .shobj/DynamicC.o .shobj/DynamicC.so: DynamicC.cpp DynamicC.h \
  $(ACE_ROOT)/ace/pre.h \
- ORB.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -17193,35 +17293,9 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
  corbafwd.i \
- Exception.h \
- Exception.i \
- IOR_LookupTable.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Services.h \
+ IOPC.h \
+ CDR.h \
+ CDR.i \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
@@ -17229,42 +17303,16 @@ realclean:
  Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- Services.i \
- IORManipulation.h \
- Object.h \
- Object.i \
- IORS.h \
- IORC.h \
+ IOPC.i \
+ DynAnyC.h \
+ Any.h \
  Environment.h \
  Environment.i \
- CDR.h \
- CDR.i \
- IORC.i \
- Servant_Base.h \
- POAC.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- PolicyC.i \
- POAC.i \
- Servant_Base.i \
- IORS.i \
- PortableInterceptor.h \
- PortableInterceptorC.h \
- IOPC.h \
- IOPC.i \
- MessagingC.h \
- Any.h \
+ Object.h \
+ Object.i \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- PortableInterceptorC.i \
- PortableInterceptor.i \
- ORB.i \
- DynAnyC.h \
+ Exception.h \
+ Exception.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i DynamicC.i
@@ -17500,21 +17548,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -17739,21 +17787,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -18010,21 +18058,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -18299,21 +18347,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -18507,21 +18555,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -18851,17 +18899,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -19153,13 +19201,13 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
  DynamicC.i \
+ MessagingC.h \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -19484,19 +19532,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -19775,21 +19823,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -19964,17 +20012,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -20149,19 +20197,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -20339,21 +20387,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -21737,17 +21785,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -21894,21 +21942,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -22202,19 +22250,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -22663,11 +22711,11 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
  DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
  DynamicC.i \
+ MessagingC.h \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -22862,17 +22910,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- Typecode.h \
- Typecode.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -23789,17 +23837,17 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
+ DynamicC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
+ DynAnyC.i \
+ DynamicC.i \
+ MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -23965,21 +24013,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -24224,13 +24272,13 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -24637,15 +24685,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -24925,15 +24973,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -25092,15 +25140,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -25267,15 +25315,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -25423,21 +25471,21 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
  IOPC.h \
  IOPC.i \
- MessagingC.h \
+ DynAnyC.h \
  Any.h \
  Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i
@@ -25622,15 +25670,15 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
  MessagingC.h \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
  MessagingC.i \
- DynamicC.h \
- DynAnyC.h \
- DynAnyC.i \
- DynamicC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -26384,19 +26432,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -26635,19 +26683,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -26818,19 +26866,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -27221,19 +27269,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -27454,19 +27502,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -27714,19 +27762,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \
@@ -27919,19 +27967,19 @@ realclean:
  IORS.i \
  PortableInterceptor.h \
  PortableInterceptorC.h \
- MessagingC.h \
- Any.h \
- Any.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- MessagingC.i \
  DynamicC.h \
  DynAnyC.h \
+ Any.h \
+ Any.i \
  DynAnyC.i \
  Typecode.h \
  Typecode.i \
  DynamicC.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
  PortableInterceptorC.i \
  PortableInterceptor.i \
  ORB.i \

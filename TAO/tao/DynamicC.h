@@ -11,8 +11,11 @@
 #define _TAO_IDL_DYNAMICC_H_
 //Added
 #include "tao/corbafwd.h"
+//#include "tao/ORB.h"
 #include "tao/IOPC.h"
 #include "tao/DynAnyC.h"
+
+
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
