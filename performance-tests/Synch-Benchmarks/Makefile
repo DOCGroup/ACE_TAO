@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS	= Synch_Lib Perf_Test
+DIRS	= Synch_Lib Perf_Test Base_Test
 
 BIN	= synch_driver
 
