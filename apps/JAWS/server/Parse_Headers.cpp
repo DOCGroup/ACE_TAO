@@ -1,6 +1,6 @@
 // $Id$
 
-#include "apps/JAWS/server/Parse_Headers.h"
+#include "Parse_Headers.h"
 
 
 // Implementation of class Headers

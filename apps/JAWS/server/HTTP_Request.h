@@ -8,7 +8,7 @@
 class ACE_Message_Block;
 
 #include "ace/OS.h"
-#include "apps/JAWS/server/Parse_Headers.h"
+#include "Parse_Headers.h"
 
 class HTTP_Request 
 {

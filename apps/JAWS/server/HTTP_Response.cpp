@@ -17,11 +17,11 @@
 #include "ace/Process.h"
 #include "ace/Mem_Map.h"
 
-#include "apps/JAWS/server/HTTP_Response.h"
-#include "apps/JAWS/server/HTTP_Request.h"
-#include "apps/JAWS/server/HTTP_Helpers.h"
-#include "apps/JAWS/server/HTTP_Config.h"
-#include "apps/JAWS/server/IO.h"
+#include "HTTP_Response.h"
+#include "HTTP_Request.h"
+#include "HTTP_Helpers.h"
+#include "HTTP_Config.h"
+#include "IO.h"
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
   : io_(io), request_(request)
