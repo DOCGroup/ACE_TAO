@@ -140,16 +140,16 @@
 #define ACE_DB(X) X
 #endif /* ACE_NDEBUG */
 
-// ACE_NO_HEAP_CHECK macro can be used to suppress false report of 
+// ACE_NO_HEAP_CHECK macro can be used to suppress false report of
 // memory leaks. It turns off the built-in heap checking until the
-// block is left. The old state will then be restored
-// Only used for Win32 (in the moment).
-#if defined(ACE_WIN32)
+// block is left. The old state will then be restored Only used for
+// Win32 (in the moment).
+#if defined (ACE_WIN32)
 #if defined (_DEBUG)
 class ACE_No_Heap_Check 
 {
 public:
-  ACE_No_Heap_Check() 
+  ACE_No_Heap_Check (void) 
     : old_state (_CrtSetDbgFlag (_CRTDBG_REPORT_FLAG))
   { _CrtSetDbgFlag (old_state & ~_CRTDBG_ALLOC_MEM_DF);}
   ~ACE_No_Heap_Check (void) { _CrtSetDbgFlag (old_state);}
