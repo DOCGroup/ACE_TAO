@@ -61,7 +61,7 @@ TAO_FT_Invocation_Endpoint_Selector::next (TAO_GIOP_Invocation *
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This method is DEPRECATED!\n")));
   // if (invocation->stub_->next_profile_retry () == 0)
-  //     ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
+  //     ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
   //                                  CORBA::COMPLETED_NO));
 }
 
@@ -177,7 +177,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint_i(
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
-  ACE_THROW_RETURN (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
+  ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                       CORBA::COMPLETED_NO),
                     0);
 }

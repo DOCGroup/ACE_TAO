@@ -1,3 +1,8 @@
+Mon Sep  2 16:20:08 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+	  Change TAO_OMG_VMCID to CORBA::OMGVMCID.
+
 Mon Sep  2 09:09:30 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time): 
