@@ -21,11 +21,14 @@ public class ImageApp extends Applet
     this.setupButtonPanel ();
     this.add ("Center", this.imageCanvas_);
     // Check if we are running in test mode
-    String testInFile = getParameter ("testInFile");
-    if (testInFile != null)
+    String testFile = getParameter ("testFile");
+    if (testFile != null)
       {
-	String testOutFile = getParameter ("testOutFile");
-	this.tester_ = new Tester (testInFile, testOutFile, this);
+	String server = getParameter ("server");
+	String portString = getParameter ("port");
+	int port = (new Integer (portString)).intValue ();
+
+	this.tester_ = new Tester (testFile, server, port, this);
 	System.out.println ("Initializing tester...");
       }    
   }
