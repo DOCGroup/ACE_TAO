@@ -1,11 +1,23 @@
+Wed Jan 23 13:09:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.h:
+
+	  Fixed a "fuzz" error related to a filename mismatch.
+
+	  Declare the class attributes after the class methods to more
+	  closely match ACE/TAO programming styles and common C++
+	  conventions.  Darn Java programmers!
+
+	  Wrapped overly long lines in class documentation.
+
 Wed Jan 23 12:06:37 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO/tao/Makefile: 
 	* TAO/tao/Makefile.bor: 
 	* TAO/tao/PortableServer/Makefile: 
 	* TAO/tao/PortableServer/Makefile.bor:
-	  Updated the files with the changes of moving the AMH_Response_Handler
-	  files from tao/ tao/PortableServer
+	  Updated the files with the changes of moving the
+	  AMH_Response_Handler files from `tao' and `tao/PortableServer'.
 
 Wed Jan 23 12:03:01 2002  Carlos O'Ryan  <coryan@uci.edu>
 
