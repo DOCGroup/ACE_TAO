@@ -47,12 +47,12 @@ public:
   /// The destructor
   virtual ~TAO_IOR_Parser (void);
 
-  /// Return 1 if <ior_string> starts with a prefix known to this IOR
+  /// Return 1 if @a ior_string starts with a prefix known to this IOR
   /// parser
   virtual int match_prefix (const char *ior_string) const = 0;
 
   /**
-   * Parse the <ior> argument and return an object reference.
+   * Parse the @a ior argument and return an object reference.
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
