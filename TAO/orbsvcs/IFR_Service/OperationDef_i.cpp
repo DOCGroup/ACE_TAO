@@ -545,10 +545,10 @@ TAO_OperationDef_i::make_description (
   IR::OperationDescription od;
 
   od.name = this->name (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   od.id = this->id (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -558,13 +558,13 @@ TAO_OperationDef_i::make_description (
   od.defined_in = container_id.c_str ();
 
   od.version = this->version (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   od.result = this->result (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   od.mode = this->mode (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (od);
 
   IR::ContextIdSeq_var cid_seq = this->contexts (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -651,7 +651,7 @@ TAO_OperationDef_i::make_description (
                                    type_key);
 
           od.exceptions[i].type = impl.type (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          ACE_CHECK_RETURN (od);
         }
     }
   else
