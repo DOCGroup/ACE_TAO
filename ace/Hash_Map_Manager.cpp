@@ -156,13 +156,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
               this->allocator_->free (hold_ptr);
             }
 
-          // Now deal with the sentinel by explicitly calling the
-          // destructor.
-#ifdef HPUX_11
-          (&table_[i])->ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
-#else
-          table_[i].ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
-#endif
+          ACE_Hash_Map_Entry<EXT_ID, INT_ID> &entry = table_[i];
+          entry.ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
         }
 
       // Free table memory
