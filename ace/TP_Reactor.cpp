@@ -532,7 +532,7 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
 int
 ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
 {
-  ACE_TRACE ("ACE_TP_Reactor::notify_handle");
+  ACE_TRACE ("ACE_TP_Reactor::dispatch_socket_event");
 
   ACE_HANDLE handle = dispatch_info.handle_;
   ACE_Event_Handler *event_handler = dispatch_info.event_handler_;
@@ -575,13 +575,13 @@ ACE_TP_Reactor::resumable_handler (void)
   return 1;
 }
 
-ACE_INLINE int
+int
 ACE_TP_Reactor::handle_events (ACE_Time_Value &max_wait_time)
 {
-  return ACE_Select_Reactor::handle_events (max_wait_time);
+  return ACE_Select_Reactor::handle_events (&max_wait_time);
 }
 
-ACE_INLINE int
+int
 ACE_TP_Reactor::mask_ops (ACE_Event_Handler *eh,
                           ACE_Reactor_Mask mask,
                           int ops)
@@ -589,7 +589,7 @@ ACE_TP_Reactor::mask_ops (ACE_Event_Handler *eh,
   return this->mask_ops (eh->get_handle (), mask, ops);
 }
 
-ACE_INLINE void
+void
 ACE_TP_Reactor::notify_handle (ACE_HANDLE,
                                ACE_Reactor_Mask,
                                ACE_Handle_Set &,
