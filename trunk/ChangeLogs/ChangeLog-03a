@@ -1,3 +1,11 @@
+Fri Feb  4 15:11:53 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: New config file to handle building on
+          HP-UX 11.00 with aCC, CC, or g++ (tested on 2.95.2). This file
+          will be the new file for this platform when autoconf is not used.
+          The other config-hpux-11* files will go away soon (maybe before
+          ACE 5.1 is released).
+
 Fri Feb  4 15:56:31 2000  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_gcc.GNU: Added -fstrict-prototype
