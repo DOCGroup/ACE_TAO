@@ -1393,6 +1393,14 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
       TAO_Queued_Data *qd =
         this->incoming_message_queue_.dequeue_head ();
 
+      if (TAO_debug_level > 3)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO(%P|%t) - Transport[%d]::process_queue_head"
+                      " the size of the queue is [%d]",
+                      this->id (),
+                      this->incoming_message_queue_.queue_length ()));
+        }
       // Now that we have pulled out out one message out of the queue,
       // check whether we have one more message in the queue...
       if (this->incoming_message_queue_.is_head_complete () == 1)
