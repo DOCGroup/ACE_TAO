@@ -350,5 +350,35 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     ;;
 esac
 
+ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
+
 dnl End ACE_SET_PLATFORM_MACROS
+])
+
+
+# ACE_CHECK_PERFECT_MULTICAST_FILTERING
+#
+# Checks whether platform lacks "perfect" multicast filtering.
+#
+# FIXME: Is it possible to write a portable feature test, or is checking
+#        the the target OS the best we can do?
+# 
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING],
+[AC_CACHE_CHECK([whether platform lacks perfect multicast filtering],
+  [ace_cv_lacks_perfect_multicast_filtering],
+  [case "$target_os" in
+  darwin* | freebsd* | netbsd* | openbsd* | qnx*)
+    ace_cv_lacks_perfect_multicast_filtering=yes ;;
+  *)
+    ace_cv_lacks_perfect_multicast_filtering=no ;;
+  esac])
+    
+if test $ace_cv_lacks_perfect_multicast_filtering = yes; then
+  AC_DEFINE([ACE_LACKS_PERFECT_MULTICAST_FILTERING], 1,
+[Define to 1 if platform lacks IGMPv3 "perfect" filtering of multicast 
+datagrams at the socket level.  If defined, ACE_SOCK_Dgram_Mcast will bind 
+the first joined multicast group to the socket, and all future joins on that
+socket will fail with an error.])
+fi
 ])

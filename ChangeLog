@@ -1,3 +1,9 @@
+Mon Aug 23 17:37:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/platform.m4:
+
+	  Add check for ACE_LACKS_PERFECT_MULTICAST_FILTERING.
+
 Mon Aug 23 16:33:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
