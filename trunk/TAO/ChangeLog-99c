@@ -1,3 +1,9 @@
+Thu Apr 29 09:34:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
+          check to see that the executables exist before trying
+          to them (and wait for the ior file to be created).
+
 Thu Apr 29 06:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Context.cpp: removed ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>

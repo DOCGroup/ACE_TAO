@@ -48,6 +48,15 @@ threads=`expr $1 + 1`
 
 
 ########
+######## Make sure that the executables have been built.
+########
+if [ ! -f ./server  -o  ! -f ./client ]; then
+  echo $0: 'server and/or client need to be built!'
+  exit -1
+fi
+
+
+########
 ######## Enable signal handler.
 ########
 trap 'kill -15 $server_pid; /bin/rm -f $ior_file; exit 0' 0 1 2 15
