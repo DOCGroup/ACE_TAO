@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
  *          Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -49,7 +49,7 @@ public:
   /// <ACE_Timer_List>.
   /**
    * This timer gets dispatched via a signal, rather than by a user
-   * calling <expire>.  Note that interval timers are not implemented
+   * calling expire().  Note that interval timers are not implemented
    * yet.
    */
   long schedule (ACE_Event_Handler *type,
@@ -57,7 +57,7 @@ public:
                  const ACE_Time_Value &future_time,
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
-  /// Cancel the <timer_id> and pass back the <act> if an address is
+  /// Cancel the @a timer_id and pass back the @a act if an address is
   /// passed in.
   int cancel (long timer_id, const void **act = 0);
 
@@ -159,7 +159,7 @@ public:
   ACE_thread_t thr_id (void) const;
 
   /**
-   * We override the default <activate> method so that we can ensure
+   * We override the default activate() method so that we can ensure
    * that only a single thread is ever spawned.  Otherwise, too many
    * weird things can happen...
    */
