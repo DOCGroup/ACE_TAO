@@ -28,7 +28,7 @@ const CORBA_TypeCode_ptr _tc_CORBA_Null = (CORBA_TypeCode_ptr) &tc_null;
 CORBA_TypeCode_ptr
 CORBA_TypeCode::_nil ()
 {
-    return &tc_null;
+  return &tc_null;
 }
 
 static CORBA_TypeCode tc_void (tk_void);
