@@ -145,7 +145,12 @@ is equivalent to:
 </CODE></blockquote>
 Notice the single quotes (') in the latter option specification.  Single
 quotes are needed to prevent the shell from interpreting text after the
-semi-colon as another command to run.
+semi-colon as another command to run.<P>
+If an endpoint is specified without an <CODE>addr</CODE> such as the following:
+<blockquote><CODE>
+-ORBendpoint uiop://
+</CODE></blockquote>
+then a default endpoint will be created for the specified protocol.
 </TD></TR>
 
 <TR>
