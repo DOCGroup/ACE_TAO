@@ -4,6 +4,9 @@ Tue Jan 12 10:59:58 1999  David L. Levine  <levine@cs.wustl.edu>
           libedgenoe.a, so that a symlink in $(GHS_DIR) is no longer necessary.
           Thanks to Steve Kay for reporting this.
 
+        * ace/config-mklinux.h: removed ACE_HAS_SOCKLEN_T, addedUSE_XOPEN.
+          Thanks to Andreas Tobler <toa@pop.agri.ch> for these updates.
+
 Tue Jan 12 08:44:11 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * ace/Acceptor.cpp (handle_close):
