@@ -4,8 +4,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "../Segment_Timer/Segment_Timer.h"
 
-extern Segment_Timer segment_timers[MAX_TIMERS];
-
 int CIAO::Static_Configurator::configure(
                    CORBA::ORB_ptr orb,
                    Components::Deployment::ComponentServer_ptr component_server,
