@@ -116,25 +116,24 @@ Gateway::run (int argc, char* argv[])
       gateway.init(supplier_event_channel.in(), consumer_event_channel.in());
 
       PortableServer::ObjectId_var gateway_oid =
-         poa->activate_object(&gateway);
+         poa->activate_object(&gateway ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var gateway_obj =
-         poa->id_to_reference(gateway_oid.in());
+         poa->id_to_reference(gateway_oid.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
        RtecEventChannelAdmin::Observer_var obs =
-         RtecEventChannelAdmin::Observer::_narrow(gateway_obj.in());
+         RtecEventChannelAdmin::Observer::_narrow(gateway_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
        RtecEventChannelAdmin::Observer_Handle local_ec_obs_handle =
-         consumer_event_channel->append_observer (obs.in ());
+         consumer_event_channel->append_observer (obs.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
       orb->run ();
-      ACE_TRY_CHECK;
 
       // Destroy the POA
       poa->destroy (1, 0 ACE_ENV_ARG_PARAMETER);
