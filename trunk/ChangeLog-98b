@@ -1,3 +1,13 @@
+
+Fri Nov 20 23:40:12 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/00[567]/client_handler.cpp :
+	* docs/tutorials/00[56]/page0[45].html
+	* docs/tutorials/007/page0[56].html
+	Rework the interaction of handle_input(), handle_close() and
+	close().  I had this all wrong by making handle_close() invoke
+	remove_handler() when it was unnecessary.
+	
 Fri Nov 20 22:12:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Makefile: Added an entry for DLL.{h,cpp}.

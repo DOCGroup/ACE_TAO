@@ -30,6 +30,7 @@ Client_Handler::Client_Handler (void)
 
 Client_Handler::~Client_Handler (void)
 {
+    this->peer().close();
 }
 
 /*
@@ -47,18 +48,6 @@ int Client_Handler::concurrency(void)
 Thread_Pool * Client_Handler::thread_pool(void)
 {
 	return this->client_acceptor()->thread_pool();
-}
-
-/*
-   The destroy() method hasn't changed since we wrote it back in Tutorial 5.
- */
-void Client_Handler::destroy (void)
-{
-  this->peer ().close ();
-
-  this->reactor ()->remove_handler (this, REMOVE_MASK );
-
-  delete this;
 }
 
 /*
@@ -94,21 +83,45 @@ int Client_Handler::open (void *_acceptor)
 }
 
 /*
-   As mentioned in the header, the typical way to close an object in a threaded
-   context is to invoke it's close() method.  Since we already have a handle_close()
-   method built to cleanup after us, we'll just forward the request on to that
-   object.
+   The destroy() method will remove us from the reactor (with the
+   DONT_CALL flag set!) and then free our memory.  This allows us to
+   be closed from outside of the reactor context without any danger.
  */
+void Client_Handler::destroy (void)
+{
+    this->reactor ()->remove_handler (this, REMOVE_MASK );
+    delete this;
+}
+
+/*
+  As mentioned in the header, the typical way to close an object in a
+  threaded context is to invoke it's close() method.  We use the
+  destroy() method to clean up after ourselves.
+*/
 int Client_Handler::close(u_long flags)
 {
-	this->handle_close(ACE_INVALID_HANDLE,0);
-
+    this->destroy();
+    
 	/*
 	   Don't forward the close() to the baseclass!  handle_close() above has
 	   already taken care of delete'ing.  Forwarding close() would cause that
 	   to happen again and things would get really ugly at that point!
 	 */
 	return 0;
+}
+
+/*
+  We will be called when handle_input() returns -1.  That's our queue
+  to delete ourselves to prevent memory leaks.
+ */
+int Client_Handler::handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask)
+{
+  ACE_UNUSED_ARG (_handle);
+  ACE_UNUSED_ARG (_mask);
+
+  delete this;
+  
+  return 0;
 }
 
 /*
@@ -179,15 +192,6 @@ int Client_Handler::handle_input (ACE_HANDLE _handle)
      Return the result of process()
    */
   return(rval);
-}
-
-int Client_Handler::handle_close (ACE_HANDLE _handle, ACE_Reactor_Mask _mask)
-{
-  ACE_UNUSED_ARG (_handle);
-  ACE_UNUSED_ARG (_mask);
-
-  this->destroy ();
-  return 0;
 }
 
 /*

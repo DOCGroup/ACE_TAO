@@ -129,11 +129,11 @@ sub addFile {
 
         foreach $file (@file)
           {
-               print FILE "<PRE>\n" ;
                if( $#file > 0 )
                  {
                    print FILE "<HR width=50%><P><center>$file</center><HR width=50%>\n";
                  }
+               print FILE "<PRE>\n" ;
                open(INPUT,"<$file") || die "Cannot open $file for read\n";
                # Do some substitutes on each line to try and get the output to
                # look like it does in fontified emacs.
