@@ -1,3 +1,9 @@
+Tue Dec  2 08:17:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.h:
+          Fixed incorrect exception macro usage to fix emulated exception
+          build.
+
 Tue Dec  2 07:56:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Worker.h:
