@@ -1047,10 +1047,6 @@ int main (int argc, char *argv[])
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
-  else
-    return cubit_client.run ();
 
-  return 0;
+  return cubit_client.run ();
 }
-
-
