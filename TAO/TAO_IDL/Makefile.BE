@@ -10380,8 +10380,10 @@ realclean: clean
  be_include/be_visitor_exception/cdr_op_cs.h \
  be/be_visitor_exception/exception.cpp \
  be/be_visitor_exception/exception_ch.cpp \
+ be_include/be_visitor_typecode/typecode_decl.h \
  be/be_visitor_exception/exception_ci.cpp \
  be/be_visitor_exception/exception_cs.cpp \
+ be_include/be_visitor_typecode/typecode_defn.h \
  be/be_visitor_exception/exception_ctor.cpp \
  be/be_visitor_exception/ctor_assign.cpp \
  be/be_visitor_exception/any_op_ch.cpp \
@@ -10844,8 +10846,10 @@ realclean: clean
  be_include/be_visitor_interface/amh_rh_ss.h \
  be/be_visitor_interface/interface.cpp \
  be/be_visitor_interface/interface_ch.cpp \
+ be_include/be_visitor_typecode/typecode_decl.h \
  be/be_visitor_interface/interface_ci.cpp \
  be/be_visitor_interface/interface_cs.cpp \
+ be_include/be_visitor_typecode/typecode_defn.h \
  be/be_visitor_interface/interface_sh.cpp \
  be/be_visitor_interface/interface_ih.cpp \
  be/be_visitor_interface/interface_si.cpp \
@@ -10942,8 +10946,7 @@ realclean: clean
  be/be_visitor_interface/amh_rh_sh.cpp
 
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -11461,8 +11464,7 @@ realclean: clean
  be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp
 
 .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -12120,21 +12122,7 @@ realclean: clean
  be_include/be_visitor_operation/amh_rh_sh.h \
  be_include/be_visitor_operation/amh_rh_ss.h \
  be/be_visitor_operation/operation.cpp \
- be/be_visitor_operation/arglist.cpp \
- be/be_visitor_operation/argument.cpp \
- be/be_visitor_operation/argument_invoke.cpp \
- be/be_visitor_operation/argument_marshal.cpp \
- be/be_visitor_operation/thru_poa_collocated_sh.cpp \
- be/be_visitor_operation/thru_poa_collocated_ss.cpp \
- be/be_visitor_operation/direct_collocated_sh.cpp \
- be/be_visitor_operation/direct_collocated_ss.cpp \
- be/be_visitor_operation/exceptlist_cs.cpp \
- be/be_visitor_operation/operation_ch.cpp \
- be/be_visitor_operation/operation_cs.cpp \
- be/be_visitor_operation/operation_sh.cpp \
- be/be_visitor_operation/operation_ih.cpp \
- be/be_visitor_operation/operation_ss.cpp \
- be_include/be_visitor_argument.h \
+ be/be_visitor_operation/arglist.cpp be_include/be_visitor_argument.h \
  be_include/be_visitor_argument/argument.h \
  be_include/be_visitor_argument/arglist.h \
  be_include/be_visitor_argument/vardecl_ss.h \
@@ -12151,6 +12139,19 @@ realclean: clean
  be_include/be_visitor_argument/request_info_ss.h \
  be_include/be_visitor_argument/request_info_result.h \
  be_include/be_visitor_argument/request_info_arglist.h \
+ be/be_visitor_operation/argument.cpp \
+ be/be_visitor_operation/argument_invoke.cpp \
+ be/be_visitor_operation/argument_marshal.cpp \
+ be/be_visitor_operation/thru_poa_collocated_sh.cpp \
+ be/be_visitor_operation/thru_poa_collocated_ss.cpp \
+ be/be_visitor_operation/direct_collocated_sh.cpp \
+ be/be_visitor_operation/direct_collocated_ss.cpp \
+ be/be_visitor_operation/exceptlist_cs.cpp \
+ be/be_visitor_operation/operation_ch.cpp \
+ be/be_visitor_operation/operation_cs.cpp \
+ be/be_visitor_operation/operation_sh.cpp \
+ be/be_visitor_operation/operation_ih.cpp \
+ be/be_visitor_operation/operation_ss.cpp \
  be/be_visitor_operation/operation_is.cpp \
  be/be_visitor_operation/rettype.cpp \
  be/be_visitor_operation/rettype_is.cpp \
@@ -13087,6 +13088,7 @@ realclean: clean
  be/be_visitor_structure/structure_ch.cpp \
  be/be_visitor_structure/structure_ci.cpp \
  be/be_visitor_structure/structure_cs.cpp \
+ be_include/be_visitor_typecode/typecode_defn.h \
  be/be_visitor_structure/any_op_ch.cpp \
  be/be_visitor_structure/any_op_cs.cpp \
  be/be_visitor_structure/cdr_op_ch.cpp \
@@ -13723,16 +13725,16 @@ realclean: clean
  be/be_visitor_union/discriminant_ch.cpp \
  be/be_visitor_union/discriminant_ci.cpp \
  be/be_visitor_union/discriminant_cs.cpp be/be_visitor_union/union.cpp \
- be/be_visitor_union/union_ch.cpp be/be_visitor_union/union_ci.cpp \
- be/be_visitor_union/union_cs.cpp \
+ be/be_visitor_union/union_ch.cpp \
+ be_include/be_visitor_typecode/typecode_decl.h \
+ be/be_visitor_union/union_ci.cpp be/be_visitor_union/union_cs.cpp \
  be_include/be_visitor_typecode/typecode_defn.h \
  be/be_visitor_union/any_op_ch.cpp be/be_visitor_union/any_op_cs.cpp \
  be/be_visitor_union/cdr_op_ch.cpp be/be_visitor_union/cdr_op_ci.cpp \
  be/be_visitor_union/cdr_op_cs.cpp
 
 .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
- include/idl.h \
- $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
