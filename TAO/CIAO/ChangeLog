@@ -1,10 +1,20 @@
+Tue Jun  1 10:12:46 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/RepositoryManager.idl:
+        * DnC/RepositoryManager/RepositoryManager.mpc:
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/RepositoryManager_Impl.h:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Made a first-cut check-i for repository manager.
+
 Tue Jun  1 10:01:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* examples/OEP/BasicSP/BMDevice/BMDevice.cidl: 
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl: 
+	* examples/OEP/BasicSP/BMDevice/BMDevice.cidl:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl:
 
 	  Included BasicSP.idl to fix problems during static linking.
-	
+
 Tue Jun  1 00:42:56 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/DnC_Dump.cpp:
