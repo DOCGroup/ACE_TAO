@@ -9,14 +9,10 @@
 #define ACE_CONFIG_H
 #include "ace/pre.h"
 
-#if defined (__xlC__) || (__IBMCPP__)
+#if defined (__xlC__) || defined (__IBMCPP__)
    // AIX xlC, IBM C/C++, and Visual Age C++ compilers
    //********************************************************************
    //
-   // Compiler-related definitions.  These are set for C Set ++ V3
-#  if !defined (ACE_HAS_EXCEPTIONS)
-#    define ACE_HAS_EXCEPTIONS
-#  endif
 
    // Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
@@ -32,7 +28,9 @@
 
    // C Set++ 3.1 and IBM C/C++ 3.6
 #  if defined (__xlC__)
-#    define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+#    if (__xlC__ < 0x0500)
+#      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+#    endif /* __xlC__ < 0x0500 */
 #    define ACE_TEMPLATES_REQUIRE_PRAGMA
      // If compiling without thread support, turn off ACE's thread capability.
 #    if !defined (_THREAD_SAFE)

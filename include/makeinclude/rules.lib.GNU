@@ -119,8 +119,19 @@ endif # RANLIB
 ifdef SHLIBBUILD
 $(VSHLIB): $(VSHOBJS)
 else
+ifeq (1,$(aix_build))
+$(VSHLIB): shr.o
+	$(AR) $(ARFLAGS) $@ $?
+	-chmod a+rx $@
+ifneq (,$(RANLIB))
+	-$(RANLIB) $@
+endif # RANLIB
+
+shr.o: $(VSHOBJS1)
+else
 $(VSHLIB): $(VSHOBJS1)
-endif
+endif  # aix_build
+endif  # SHLIBBUILD
 ifdef PRELIB
 	$(PRELIB)
 endif
