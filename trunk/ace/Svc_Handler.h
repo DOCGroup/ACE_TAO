@@ -141,9 +141,12 @@ public:
   // call this method directly, so use <destroy> instead, unless you
   // know for sure that you've allocated the object dynamically.
 
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *, void *);
   // This operator is necessary to complement the class-specific
-  // operator new above.
+  // operator new above.  Unfortunately, it's not portable to all C++
+  // compilers...
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
   void shutdown (void);
   // Close down the descriptor and unregister from the Reactor

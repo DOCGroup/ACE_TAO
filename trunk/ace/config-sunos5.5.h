@@ -42,6 +42,8 @@
      // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
 #    define _RWSTD_NO_EXCEPTIONS 1
 #  endif /* ! ACE_HAS_EXCEPTIONS */
+# elif (__SUNPRO_CC == 0x420)
+# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 

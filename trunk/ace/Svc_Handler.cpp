@@ -32,6 +32,7 @@ ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t n,
   return p;
 }
 
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *,
                                                           void *)
@@ -39,6 +40,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *,
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::delete (NOOP, 2 parameters)");
   return;
 }
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 template <PR_ST_1, ACE_SYNCH_DECL> void *
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
