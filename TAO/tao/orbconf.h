@@ -329,6 +329,17 @@ const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #  endif  /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif  /* !TAO_HAS_UIOP */
 
+// Default SCIOP Settings
+#if !defined (TAO_HAS_SCIOP)
+#  if defined (ACE_HAS_SCTP)
+#    define TAO_HAS_SCIOP 1
+#    define TAO_DEF_SCIOP_MAJOR 1
+#    define TAO_DEF_SCIOP_MINOR 0
+#  else
+#    define TAO_HAS_SCIOP 0
+#  endif  /* ACE_HAS_SCTP */
+#endif  /* !TAO_HAS_SCIOP */
+
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 # if !defined (TAO_HAS_SHMIOP)
 #   define TAO_HAS_SHMIOP 1
