@@ -255,7 +255,6 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // @@ Until we can support multihomed machines correctly we must
   //    pick the "default interface" and only listen on that IP
   //    address.
-
   this->host_ = this->address_.get_host_name ();
 
   return this->open_i (orb_core,
@@ -292,7 +291,6 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                   -1);
 
   // We only accept connection on localhost.
-  //  ACE_INET_Addr local_addr (addr.get_port_number (), ACE_TEXT ("localhost"));
   if (this->base_acceptor_.open (this->address_,
                                  reactor,
                                  this->creation_strategy_,
@@ -301,7 +299,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
+                    ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
                     ACE_TEXT ("cannot open acceptor")));
       return -1;
     }
@@ -317,34 +315,60 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
-                    ACE_TEXT ("cannot get local addr")));
+                    ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, %p\n\n"),
+                    ACE_TEXT ("cannot get local addr\n")));
       return -1;
     }
 
-  // This will be the actualy host name of the original endpoint.
-  ACE_TCHAR tmp_host[MAXHOSTNAMELEN+1];
-  if (this->address_.get_host_name (tmp_host,
-                                    sizeof tmp_host) != 0)
+  // If the ORB is instructed to use dotted decimal addresses, we respect that
+  // also for shmiop
+  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("\n\nTAO (%P|%t) SHMIOP_Acceptor::open_i - %p\n\n"),
-                    ACE_TEXT ("cannot cache hostname")));
-      return -1;
-    }
-  this->host_ = ACE_TEXT_ALWAYS_CHAR(tmp_host);
+      // Get the ip address, we get the remote addr to put in the IOR, don't
+      // calls get_host_addr() directly on address_, we then get the internal
+      // address back
+      const char *tmp = this->address_.get_remote_addr().get_host_addr ();
 
-  (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
+      if (tmp == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - ")
+                        ACE_TEXT ("SHMIOP_Acceptor::open_i, ")
+                        ACE_TEXT ("- %p, "),
+                        ACE_TEXT ("cannot determine hostname\n")));
+          return -1;
+        }
+
+      this->host_ = tmp;
+    }
+  else
+    {
+      // This will be the actualy host name of the original endpoint.
+      ACE_TCHAR tmp_host[MAXHOSTNAMELEN+1];
+
+      if (this->address_.get_host_name (tmp_host,
+                                        sizeof tmp_host) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, - %p\n"),
+                        ACE_TEXT ("cannot cache hostname\n")));
+          return -1;
+        }
+      this->host_ = ACE_TEXT_ALWAYS_CHAR(tmp_host);
+    }
+
   // This avoids having child processes acquire the listen socket thereby
   // denying the server the opportunity to restart on a well-known endpoint.
   // This does not affect the aberrent behavior on Win32 platforms.
+  (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
 
   if (TAO_debug_level > 5)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nTAO (%P|%t) SHMIOP_Acceptor::open_i - ")
-                  ACE_TEXT ("listening on %s using: <localhost:%u>\n"),
+                  ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, ")
+                  ACE_TEXT ("listening on : <%s:%u>\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(this->host_.c_str ()),
                   this->address_.get_port_number ()));
     }
@@ -374,7 +398,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - SHMIOP_Profile::decode, v%d.%d\n"),
                     major,
                     minor));
       }
@@ -391,8 +415,8 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) TAO_SHMIOP_Acceptor::object_key - ")
-                      ACE_TEXT ("error while decoding host/port")));
+                      ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::object_key, ")
+                      ACE_TEXT ("error while decoding host/port\n")));
         }
       return -1;
     }
@@ -494,7 +518,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
