@@ -1,5 +1,23 @@
 // $Id$
 
+// ============================================================================
+//
+// = LIBRARY
+//    examples/Misc
+//
+// = FILENAME
+//    test_trace.cpp
+//
+// = DESCRIPTION
+//    This example illustrates how to use the ACE tracing feature and
+//    also illustrates how to redirect the output to a file.
+//
+// = AUTHOR
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+//    Irfan Pyarali <irfan@cs.wustl.edu> 
+//
+// ============================================================================
+
 // Enable tracing
 #define ACE_NTRACE 0
 
@@ -11,7 +29,9 @@ ACE_RCSID(Misc, test_trace, "$Id$")
 static void
 foo (int max_depth)
 {
-  ACE_Trace _ ("void foo (void)", __LINE__, __FILE__);
+  ACE_Trace _ ("void foo (void)",
+               __LINE__,
+               __FILE__);
 
   if (max_depth > 0)
     foo (max_depth - 1);
@@ -26,7 +46,9 @@ main (int argc, char *argv[])
   if (argc > 2)
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
 
-  ACE_Trace _ ("int main (int argc, char *argv[])", __LINE__, __FILE__);
+  ACE_Trace _ ("int main (int argc, char *argv[])",
+               __LINE__,
+               __FILE__);
 
   // The following won't work on MVS OpenEdition...
   ACE_Sig_Action sig1 ((ACE_SignalHandler) ACE_Trace::start_tracing, SIGUSR1);
@@ -40,7 +62,10 @@ main (int argc, char *argv[])
   if (ACE_Thread::spawn_n (n_threads, ACE_THR_FUNC (foo), 
 			   (void *) MAX_DEPTH, 
 			   THR_BOUND | THR_DETACHED) != n_threads)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "spawn_n"),
+                      -1);
   ACE_OS::thr_exit (0);
 #else
   for (;;)
