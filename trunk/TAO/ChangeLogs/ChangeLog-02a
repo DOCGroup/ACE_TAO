@@ -1,3 +1,22 @@
+Thu Sep 28 14:35:32 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/Makefile:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/README:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/RedGreen_Test.cpp:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/RedGreen_Test.h: 
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/main.cpp:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/listener.conf:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/lookup.conf:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/reactive.conf:
+	* orbsvcs/tests/Notify/performance_tests/RedGreen/svc.conf: 
+	* orbsvcs/tests/Notify/performance_tests/Throughput/Makefile:
+	* orbsvcs/tests/Notify/performance_tests/Throughput/README:
+	* orbsvcs/tests/Notify/performance_tests/Throughput/Throughput.cpp:
+	* orbsvcs/tests/Notify/performance_tests/Throughput/Throughput.h:
+
+	  Added 2 performance tests for Notify. These tests are
+	  under-construction.
+
 Thu Sep 28 13:22:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
