@@ -1,0 +1,161 @@
+// $Id$
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Implementation Repository</title>
+  </head>
+
+  <body text = "#000000" 
+    link="#000fff"
+    vlink="#ffofof"
+    bgcolor="#ffffff">
+
+    <h3>Implementation Repository</h3>
+    <P> In the previous example, the client must contact the server
+      atleast once. If the server has been moved to a different host or
+      port or if the server is down, binding between the client and
+      the server fails. Indirect binding through an external location
+      broker like the Implementation Repository solves this problem. 
+    </P>
+    <P>An implementation repository maintains a data structure known
+      as a server table to keep track of the servers. It maintains a 
+      registry of known servers, records which server is currently 
+      running on which host and at which port number and starts
+      servers on demand if they are registered to do so. 
+    </P>
+    <P> When a server
+      creates a persistent reference, it sets the address and port
+      number in the profile body of the IOR to point at the
+      implementation repository that is responsible for the server. 
+      When a client uses this IOR, it gets connected to the
+      implementation repository, provided the implementation
+      repository is not down. The repository decodes this IOR and uses
+      the POA name from the object key to index into its server
+      table. The repository replies with the current addressing
+      information of the actual server. The client now sends the
+      request to the actual server. 
+    </P>
+    <P>In this example, lets proceed to modify our previous stock
+      factory example to support indirect binding through an
+      implementation repository. 
+    </P>
+    <P>The only thing we have to do for this is to register our
+      childPOA with the implementation repository.
+    </P>
+    <PRE>
+       orb->_tao_add_to_IOR_table ("childPOA", stock_factory.in ());
+    </PRE>
+    <P> Then, we stringify all the object references as usual and
+      print them out. 
+    </P>
+    <PRE>
+       CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
+    </PRE>
+    <H3>Exercise</H3>
+    Modify the <a href=../Server/server.cpp>server.cpp</a> in the simple
+    server to  create the persistent child POA.
+    You can use the same 
+    <a href=../Quoter.idl>Quoter.idl</a>
+    <a href=../Server/Stock_i.h>Stock_i.h</a>
+    <a href=../Server/Stock_i.cpp>Stock_i.cpp</a>
+    <a href=../Server/Stock_Factory_i.h>Stock_Factory_i.h</a>
+    <a href=../Server/Stock_Factory_i.cpp>Stock_Factory_i.cpp</a>
+    <a href=../Client/Client.cpp>Client.cpp</a>
+    You can use this <a href=../Persistent/Makefile>Makefile</a>.
+    <H3>Solution</H3>
+    Compare your server.cpp with <a href = server.cpp>server.cpp</a> file. 
+    
+    <H3>TESTING</H3>
+    <P>Before proceeding with anything, we would want the
+      implementation repository to be up and running. So, lets do that
+      first. 
+    </P>
+    <PRE>
+       $ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
+
+          TAO Implementation Repository
+    </PRE>
+    <P>The IOR of the implementation repository is written to the
+      implrepo.ior. The <CODE>ORBobjrefstyle URL</CODE> tells to write
+      the IOR in the URL format. Set ImplRepo_Service to
+      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service</CODE>
+    </P>
+    <P>So, now the implementation repository is ready to register
+      servers and POAs.
+    </P>
+    <H4>SERVER SIDE</H4>
+    <P> The first step would be to register our server with the
+      implementation repository so that the server can communicate
+      with the latter.
+    </P>
+    <PRE>
+       $tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior add childPOA -c
+       "./server -ORBUseIMR 1 -ORBobjrefstyle URL -ORBInitRef 
+       ImplRepoService=file://implrepo.ior"
+
+          Successfully registered server <childPOA>
+    </PRE>
+    <P> What does this mean? The <CODE>-ORBInitRef</CODE> option allows the
+      specification of an object reference for an initial
+      service. <CODE>implrepo.ior</CODE> contains the IOR for the
+      IMR. We want to add  <CODE>childPOA</CODE> of our server to it. 
+      The <CODE>-ORBUseIMR</CODE> option tells the server to use the
+      IMR for notification of startup and shutdown of the server. 
+      Set <CODE>tao_imr</CODE> to
+      <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr</CODE>
+    </P>
+    <P>The next step would be to generate a simple IOR for the server
+      which can be used with the IMR. 
+    </P>
+    <PRE>
+       $tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior ior
+       childPOA -f stock_factory.ior 
+
+         iioploc://1.1@doc.ece.uci.edu:2690/childPOA
+    </PRE>
+    <P> The <CODE>-f</CODE> option lets us write the ior to
+      stock_factory.ior. With this, the interactions between the
+      server and the IMR is complete.
+    </P>
+    <P> Now lets run our client and see whats happening. First run the
+      client as usual.
+    </P>
+    <PRE>
+       ./client file://stock_factory.ior MSFT RHAT
+
+       The price of a stock in "Microsoft, Inc." is $91
+       The price of a stock in "RedHat, Inc." is $210
+    </PRE>
+    <P> Lets shutdown the server and then run the client.
+    </P>
+    <PRE>
+       $tao_imr -ORBInitRef ImplRepoService=file://implrepo.ior
+       shutdown childPOA
+
+         Successfully shutdown server <childPOA>
+
+       ./client file://stock_factory.ior MSFT RHAT
+
+         The price of a stock in "RedHat, Inc." is $210
+         The price of a stock in "Microsoft, Inc." is $91
+    </PRE>
+    <H3>More Reading</H3>
+    <P>The Implementation Repository</A> is described in detail 
+     <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/implrepo/index.html">here</A>. 
+      </P>
+      <P>The <A HREF="http://www.triodia.com/staff/michi-henning.html">Henning</A> and <A HREF="http://www.iona.com/hyplan/vinoski/">Vinoski</A> 
+      <A HREF="http://www.iona.com/hyplan/vinoski/#book">CORBA book</A> discusses POA policies in detail.  Likewise, 
+      the Schmidt and Vinoski 
+      <A HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">columns</A> in C++ Report also include several articles about the POA.  Finally,
+      the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> 
+      distribution includes <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/examples/POA">examples</A> that illustrate how
+      to use the POA policies.
+    </P>
+    <hr>
+    <address><a href="mailto:pgontla@ece.uci.edu">Priyanka Gontla</a></address>
+<!-- Created: Wed Mar 29 17:35:30 PST 2000 -->
+<!-- hhmts start -->
+Last modified: Fri Apr 14 18:12:40 PDT 2000
+<!-- hhmts end -->
+  </body>
+</html>
