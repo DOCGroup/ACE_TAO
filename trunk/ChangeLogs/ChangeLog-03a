@@ -4,10 +4,11 @@ Sat Jan 26 14:40:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
           Added compiler and linker flags for new XML library
 
         * XML/common/Makefile.bor:
-        * XML/parser/parser.Makefile.bor
-          Added BCB makefiles for the new XML library. Another few
-          must be created before the XML parser is completely build with
-          BCB
+        * XML/parser/parser.Makefile.bor:
+        * XML/Makefile.bor:
+        * XML/parser/Makefile.bor:
+        * XML/tests/Makefile.bor:
+          Added BCB makefiles for the new XML library.
 
 Fri Jan 25 19:58:41 2002  Steve Huston  <shuston@riverace.com>
 
