@@ -1,3 +1,8 @@
+Mon Jan  3 11:31:35 2005  Dale Wilson  <wilson_d@ociweb.com>
+
+        * NEWS:
+          Additional info on Notification Service changes.
+
 Mon Jan  3 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp (open):
@@ -6,8 +11,8 @@ Mon Jan  3 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly: Changed the use of
-	  TMCast to ACE_TMCast.  Thanks to J.T. Conklin for pointing out
+        * orbsvcs/examples/FaultTolerance/RolyPoly: Changed the use of
+          TMCast to ACE_TMCast.  Thanks to J.T. Conklin for pointing out
  	  the inconsistency.
 
 Sun Jan  2 21:26:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -25,24 +30,24 @@ Sun Jan  2 21:26:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Jan  2 14:21:21 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/unbounded_object_reference_sequence.hpp:
-	  Implement unbounded sequences of object references.
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence.hpp:
+          Implement unbounded sequences of object references.
 
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	* tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
-	  Add a new unit test (still in progress) to test the object
-	  reference sequences.
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+          Add a new unit test (still in progress) to test the object
+          reference sequences.
 
-	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
-	  Fixed a performance bug in length(...), the sequence was
-	  reallocated and grown when not strictly needed.
-	  Document in more detail why some code is not exception-safe, and
-	  why it may not matter (applications that could depend on it are
-	  non-conforming.)
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp:
+          Fixed a performance bug in length(...), the sequence was
+          reallocated and grown when not strictly needed.
+          Document in more detail why some code is not exception-safe, and
+          why it may not matter (applications that could depend on it are
+          non-conforming.)
 
-	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
-	  Add missing #include.
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+          Add missing #include.
 
 Sun Jan  2 12:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -83,9 +88,9 @@ Sat Jan  1 13:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 31 22:10:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
-	* orbsvcs/orbsvcs/Time_Utilities.cpp:
-	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
 
           Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/..."
           in files where it was missed or was inadvertantly reintroduced.
