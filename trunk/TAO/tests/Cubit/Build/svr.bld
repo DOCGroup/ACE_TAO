@@ -2,7 +2,9 @@
 default:
 	program
 	:debuglevel=multi
-../svr.cpp
+../TAO/svr.cpp
 	C++
-../cubit.cpp
+cubit_i.cpp
+	C++
+cubitS.cpp
 	C++

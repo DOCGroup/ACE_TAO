@@ -25,9 +25,8 @@
 
 u_int ACE_Svc_Export TAO_debug_level	= 0;
 char * ACE_Svc_Export TAO_debug_filter	= "l";
-#if defined(TAO_NEEDS_UNUSED_VARIABLES)
+
 static FILE *debug_stream = stderr;
-#endif /* TAO_NEEDS_UNUSED_VARIABLES */
 
 // The rest of this file is not needed without -DDEBUG, and unless the
 // vfprintf () call is available it can't work.
@@ -207,7 +206,7 @@ _dmsg_x (CORBA::Environment _FAR	&env,
   flockfile (debug_stream);
   emit_prefix (debug_stream);
   ACE_OS::fprintf (debug_stream, "exception '%s' at '%s'\n", ex->id (), info);
-  if (env.exception_type () == SYSTEM_EXCEPTION) 
+  if (env.exception_type () == CORBA::SYSTEM_EXCEPTION) 
     {
       CORBA::SystemException *sysex = (CORBA::SystemException *) ex;
 
