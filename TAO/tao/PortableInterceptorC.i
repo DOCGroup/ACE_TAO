@@ -122,7 +122,7 @@
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableInterceptor::ForwardRequest &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
   {
     // now marshal the members (if any)
     if (
@@ -152,7 +152,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,PortableInterceptor::Fo
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableInterceptor::InvalidSlot &_tao_aggregate)
 {
   // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
+  if (strm << _tao_aggregate._rep_id ())
     return 1;
   else
     return 0;

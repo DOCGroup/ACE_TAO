@@ -6,13 +6,15 @@
 ACE_RCSID(DynamicInterface, Unknown_User_Exception, "$Id$")
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0"),
+  : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
+                         "UnknownUserException"),
     exception_ (0)
 {
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
-  : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0")
+  : CORBA_UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
+                         "UnknownUserException")
 {
   ACE_NEW (this->exception_,
            CORBA_Any (ex));
@@ -21,7 +23,8 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
 CORBA_UnknownUserException::CORBA_UnknownUserException (
     const CORBA_UnknownUserException& e
   )
-  : CORBA_UserException (e._id ())
+  : CORBA_UserException (e._rep_id (),
+                         e._name ())
 {
   ACE_NEW (this->exception_,
            CORBA_Any (*e.exception_));

@@ -1899,7 +1899,8 @@ const char* IOP::Codec::_interface_repository_id (void) const
 
 // Default constructor.
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0")
+  : CORBA_UserException ("IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0",
+                         "InvalidTypeForEncoding")
 {
 }
 
@@ -1910,7 +1911,8 @@ IOP::Codec::InvalidTypeForEncoding::~InvalidTypeForEncoding (void)
 
 // Copy constructor.
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (const ::IOP::Codec::InvalidTypeForEncoding &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._rep_id (),
+                         _tao_excp._name ())
 {
 }
 
@@ -1931,7 +1933,7 @@ void IOP::Codec::InvalidTypeForEncoding::_tao_any_destructor (void *_tao_void_po
 IOP::Codec::InvalidTypeForEncoding *
 IOP::Codec::InvalidTypeForEncoding::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (InvalidTypeForEncoding *, exc);
     }
@@ -2028,7 +2030,8 @@ CORBA::TypeCode_ptr IOP::Codec::InvalidTypeForEncoding::_type (void) const
 
 // Default constructor.
 IOP::Codec::FormatMismatch::FormatMismatch (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0")
+  : CORBA_UserException ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0",
+                         "FormatMismatch")
 {
 }
 
@@ -2039,7 +2042,8 @@ IOP::Codec::FormatMismatch::~FormatMismatch (void)
 
 // Copy constructor.
 IOP::Codec::FormatMismatch::FormatMismatch (const ::IOP::Codec::FormatMismatch &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._rep_id (),
+                         _tao_excp._name ())
 {
 }
 
@@ -2060,7 +2064,7 @@ void IOP::Codec::FormatMismatch::_tao_any_destructor (void *_tao_void_pointer)
 IOP::Codec::FormatMismatch *
 IOP::Codec::FormatMismatch::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (FormatMismatch *, exc);
     }
@@ -2153,7 +2157,8 @@ CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_type (void) const
 
 // Default constructor.
 IOP::Codec::TypeMismatch::TypeMismatch (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0")
+  : CORBA_UserException ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0",
+                         "TypeMismatch")
 {
 }
 
@@ -2164,7 +2169,8 @@ IOP::Codec::TypeMismatch::~TypeMismatch (void)
 
 // Copy constructor.
 IOP::Codec::TypeMismatch::TypeMismatch (const ::IOP::Codec::TypeMismatch &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._rep_id (),
+                         _tao_excp._name ())
 {
 }
 
@@ -2185,7 +2191,7 @@ void IOP::Codec::TypeMismatch::_tao_any_destructor (void *_tao_void_pointer)
 IOP::Codec::TypeMismatch *
 IOP::Codec::TypeMismatch::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (TypeMismatch *, exc);
     }
@@ -2732,7 +2738,8 @@ const char* IOP::CodecFactory::_interface_repository_id (void) const
 
 // Default constructor.
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0")
+  : CORBA_UserException ("IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0",
+                         "UnknownEncoding")
 {
 }
 
@@ -2743,7 +2750,8 @@ IOP::CodecFactory::UnknownEncoding::~UnknownEncoding (void)
 
 // Copy constructor.
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (const ::IOP::CodecFactory::UnknownEncoding &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._rep_id (),
+                         _tao_excp._name ())
 {
 }
 
@@ -2764,7 +2772,7 @@ void IOP::CodecFactory::UnknownEncoding::_tao_any_destructor (void *_tao_void_po
 IOP::CodecFactory::UnknownEncoding *
 IOP::CodecFactory::UnknownEncoding::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (UnknownEncoding *, exc);
     }

@@ -147,7 +147,7 @@ CORBA::Environment::exception_type (void) const
   // are system exceptions ... except for a couple that are related to
   // TypeCodes.
 
-  const char *id = this->exception_->_id ();
+  const char *id = this->exception_->_rep_id ();
 
   if ((ACE_OS::strncmp (id,
                         sysex_prefix,
@@ -166,7 +166,7 @@ CORBA_Environment::exception_id (void) const
   if (this->exception_ == 0)
     return 0;
 
-  return this->exception_->_id ();
+  return this->exception_->_rep_id ();
 }
 
 // Diagnostic utility routine: describe the exception onto the
@@ -178,7 +178,7 @@ CORBA::Environment::print_exception (const char *info,
 {
   if (this->exception_)
     {
-      const char *id = this->exception_->_id ();
+      const char *id = this->exception_->_rep_id ();
 
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %s\n"),
