@@ -1,3 +1,10 @@
+Sat Dec 29 18:32:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp (main): Cleaned up the
+	  exception handling code to match the same format used in the
+ 	  ../Naming_Service/Naming_Server.cpp.  Thanks to Venkita for
+ 	  reporting this.
+
 Sat Dec 29 15:53:30 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Makefile: Updated the Makefile to 
