@@ -62,7 +62,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
 ifeq ($(shared_libs),1)
 ifneq ($(SHLIB),)
-CPPFLAGS     += -DTAO_LOG_BUILD_DLL
+CPPFLAGS     += -DTAO_NOTIFYLOG_BUILD_DLL
 endif
 endif
 ifeq ($(static_libs),1)
