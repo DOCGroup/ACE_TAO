@@ -1511,11 +1511,12 @@ TAO_YY_RULE_SETUP
 {
                   /* Skip the quotes */
                   char *tmp = ace_tao_yytext;
-#if defined (__SUNPRO_CC)
-                  tmp[strlen (tmp) - 2] = '\0';
-#else
+                  for(int i = strlen(tmp) - 1; i >= 0; --i) {
+                    if (isspace(tmp[i])) {
+                      tmp[i] = '\0';
+                    }
+                  }
                   tmp[strlen (tmp) - 1] = '\0';
-#endif
                   ACE_NEW_RETURN (tao_yylval.sval,
                                   UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
