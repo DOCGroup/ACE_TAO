@@ -1,3 +1,9 @@
+Mon Nov 13 16:50:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp:
+
+	  Removed unused arguments.
+
 Mon Nov 13 14:35:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Reply_Dispatcher.cpp:
