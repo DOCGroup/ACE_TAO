@@ -42,6 +42,12 @@ namespace TAO
     {
     }
 
+    CORBA::Boolean
+    Transient_Lifespan_Strategy::is_persistent (void) const
+    {
+      return false;
+    }
+
     bool
     Transient_Lifespan_Strategy::validate (
       CORBA::Boolean is_persistent,

@@ -125,38 +125,33 @@ namespace TAO
                               ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
-      virtual
-      void
-      cleanup_servant (
+
+      virtual void cleanup_servant (
         TAO_Active_Object_Map_Entry *active_object_map_entry
         ACE_ENV_ARG_DECL);
 
-      virtual
-      PortableServer::ObjectId *
-      servant_to_id (PortableServer::Servant servant
-                     ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantNotActive,
-                   PortableServer::POA::WrongPolicy));
+      virtual PortableServer::ObjectId *servant_to_id (
+        PortableServer::Servant servant
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantNotActive,
+                           PortableServer::POA::WrongPolicy));
 
-      virtual
-      CORBA::Object_ptr
-      servant_to_reference (PortableServer::Servant servant
-                            ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                      PortableServer::POA::ServantNotActive,
-                      PortableServer::POA::WrongPolicy));
+      virtual CORBA::Object_ptr servant_to_reference (
+        PortableServer::Servant servant
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ServantNotActive,
+                           PortableServer::POA::WrongPolicy));
 
-      virtual
-      CORBA::Object_ptr create_reference (
+      virtual CORBA::Object_ptr create_reference (
         const char *intf,
         CORBA::Short priority
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy));
 
-      virtual
-      CORBA::Object_ptr create_reference_with_id (
+      virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
         const char *intf,
         CORBA::Short priority
@@ -164,15 +159,13 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::WrongPolicy));
 
-      virtual
-      int rebind_using_user_id_and_system_id (
+      virtual int rebind_using_user_id_and_system_id (
         PortableServer::Servant servant,
         const PortableServer::ObjectId &user_id,
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall);
 
-      virtual
-      CORBA::Boolean servant_has_remaining_activations (
+      virtual CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant);
 
     protected:

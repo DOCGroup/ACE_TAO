@@ -62,8 +62,7 @@ namespace TAO
       CORBA::ULong key_type_length (void) const;
 
       /// Do we have set persistent or not,
-      /// @todo this is a temporary method that has to be removed later
-      virtual CORBA::Boolean persistent (void) const = 0;
+      virtual CORBA::Boolean is_persistent (void) const = 0;
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) = 0;
 

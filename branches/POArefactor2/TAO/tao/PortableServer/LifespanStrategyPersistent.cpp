@@ -46,6 +46,12 @@ namespace TAO
       return 'P';
     }
 
+    CORBA::Boolean
+    Persistent_Lifespan_Strategy::is_persistent (void) const
+    {
+      return true;
+    }
+
     void
     Persistent_Lifespan_Strategy::create_key (
       CORBA::Octet *buffer,
@@ -91,7 +97,7 @@ namespace TAO
                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa->active_policy_strategies().servant_retention_strategy()->deactivate_object (id.in() ACE_ENV_ARG_PARAMETER);
+          tao_poa->deactivate_object_i (id.in() ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }

@@ -1349,6 +1349,12 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id
   ACE_CHECK;
 }
 
+CORBA::Boolean
+TAO_POA::is_persistent (void) const
+{
+  return active_policy_strategies_.lifespan_strategy()->is_persistent ();
+}
+
 CORBA::Object_ptr
 TAO_POA::create_reference (const char *intf
                            ACE_ENV_ARG_DECL)
@@ -1800,7 +1806,7 @@ TAO_POA::set_id (void)
   // key. Otherwise, the POA name length can be calculated by looking
   // at the remainder after extracting other parts of the key.
   int add_poa_name_length =
-    this->active_policy_strategies_.lifespan_strategy()->persistent () &&
+    this->is_persistent () &&
     !this->system_id ();
 
   // Size required by the POA name.
@@ -2123,7 +2129,7 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
-  if (this->active_policy_strategies_.lifespan_strategy()->persistent ())
+  if (this->is_persistent ())
 // @todo Johnny, check the use of use_imr_ here
 //  if (this->use_imr_
 //      && this->active_policy_strategies_.lifespan_strategy()->persistent ())

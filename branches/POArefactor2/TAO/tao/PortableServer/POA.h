@@ -485,6 +485,14 @@ public:
     PortableServer::Servant servant,
     int &wait_occurred_restart_call);
 
+  void deactivate_object_i (const PortableServer::ObjectId &oid
+                            ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ObjectNotActive,
+                   PortableServer::POA::WrongPolicy));
+
+  CORBA::Boolean is_persistent (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -616,12 +624,6 @@ protected:
 
   void wait_for_completions (CORBA::Boolean wait_for_completion
                              ACE_ENV_ARG_DECL);
-
-  void deactivate_object_i (const PortableServer::ObjectId &oid
-                            ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ObjectNotActive,
-                   PortableServer::POA::WrongPolicy));
 
   CORBA::Object_ptr create_reference_i (const char *intf,
                                         CORBA::Short priority

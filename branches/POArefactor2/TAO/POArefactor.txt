@@ -1,3 +1,13 @@
+Tue Nov 16 10:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategy*.{h,cpp}:
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.h
+          Renamed persistent to is_persistent on the lifespan strategy and
+          implemented it in the cpp file. Added is_persistent to the POA and
+          use this method instead of the lifespan strategy directly
+
 Tue Nov 16 10:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyPersistent.cpp:

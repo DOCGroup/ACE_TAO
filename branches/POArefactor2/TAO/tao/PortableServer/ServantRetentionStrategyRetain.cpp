@@ -60,7 +60,7 @@ namespace TAO
       ACE_NEW_THROW_EX (active_object_map,
                         TAO_Active_Object_Map (!poa->system_id (),
                                                !poa->allow_multiple_activations (),
-                                               poa->active_policy_strategies().lifespan_strategy()->persistent (),
+                                               poa->is_persistent (),
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                                ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());

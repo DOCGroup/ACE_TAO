@@ -36,26 +36,21 @@ namespace TAO
 
       virtual ~Persistent_Lifespan_Strategy (void);
 
-      virtual
-      void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
 
-      virtual
-      void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
       char key_type (void) const;
 
-      virtual CORBA::Boolean persistent (void) const
-      {
-        return true;
-      }
+      virtual CORBA::Boolean is_persistent (void) const;
 
       CORBA::ULong key_length (void) const;
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
 
-      virtual
-      bool validate (CORBA::Boolean is_persistent,
-                     const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
+      virtual bool
+      validate (CORBA::Boolean is_persistent,
+                const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
 
     private:
       /// @name Implementation repository related methods

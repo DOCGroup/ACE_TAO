@@ -35,18 +35,13 @@ namespace TAO
 
       virtual ~Transient_Lifespan_Strategy (void);
 
-      virtual
-      void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
 
-      virtual
-      void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+      virtual void notify_shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
       char key_type (void) const;
 
-      virtual CORBA::Boolean persistent (void) const
-      {
-        return false;
-      }
+      virtual CORBA::Boolean is_persistent (void) const;
 
       CORBA::ULong key_length (void) const;
 
