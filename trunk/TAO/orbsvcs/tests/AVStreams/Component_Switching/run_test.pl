@@ -21,16 +21,16 @@ $makefile = PerlACE::LocalFile ("input");
 
 unlink $nsior;
 
-$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBSkipServiceConfigOpen -o $nsior");
-$SV1  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
-$SV2  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
-$SV3  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
-$RE1 = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
-$RE2 = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
-$DI1 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI2 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI3 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
-$DI4 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
+$SV1  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 1");
+$SV2  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 1");
+$SV3  = new PerlACE::Process ("sender", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r 1");
+$RE1 = new PerlACE::Process ("receiver", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
+$RE2 = new PerlACE::Process ("receiver", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
+$DI1 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI2 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI3 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI4 = new PerlACE::Process ("distributer", "-ORBSvcConf components_svc.conf -ORBInitRef NameService=file://$nsior -s sender -r distributer");
 
 print STDERR "\nReceiver 1 --> Receiver 2 --> Distributer 1 --> Sender1 --> Distributer 2 --> Distributer 3 --> Sender2 --> Sender3 --> Distributer4\n\n";
 

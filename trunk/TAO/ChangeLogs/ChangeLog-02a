@@ -1,3 +1,11 @@
+Tue Jul 17 16:24:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl:
+        * orbsvcs/tests/AVStreams/Component_Switching/svc.conf: (removed)
+        * orbsvcs/tests/AVStreams/Component_Switching/components_svc.conf: (added)
+          Renamed svc.conf to components_svc.conf to fix problems
+          in statically compiled builds. 
+
 Tue Jul 17 14:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Single_Read/client.cpp:
