@@ -26,7 +26,7 @@ TAO_Client_Connection_Handler::in_use (CORBA::Boolean flag)
 {
   in_use_ = flag;
 }
-
+/*
 // @@ Chris, shouldn't we protect this stuff with some type of #ifdef
 // for platforms that lack template specialization?  
 // Template specializations that allow the cached connection manager
@@ -44,4 +44,5 @@ ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::compare_i (const AC
 {
   return a1 != a2;
 }
+*/
 
