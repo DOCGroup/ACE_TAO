@@ -12,7 +12,9 @@ Thu May 22 10:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  exposed to clients to allow them to invoke methods transparently
 	  on members of that object group. 
 	  
-	  Hence returning a null-object would break the LoadBalancer.
+	  Hence returning a null-object would break the
+	  LoadBalancer. Thanks to Ossama for reporting and explaining the
+	  source of the problem.
 
 Thu May 22 10:38:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
