@@ -263,7 +263,7 @@ main (int argc , char *argv[])
           "IDL:omg.org/Messaging/ReplyHandler:1.0",
           "IDL:omg.org/CORBA/Object:1.0"
         };
-        
+
         for (int i = 0; i != sizeof (base)/sizeof (base[0]); ++i)
           {
             if (!x._is_a (base[i]))
@@ -271,39 +271,36 @@ main (int argc , char *argv[])
                 ++error_count;
                 ACE_DEBUG ((LM_DEBUG,
                            "something_handler::_is_a should return true for %s\n",
-                           base[i]));                               
+                           base[i]));
               }
           }
 
-        if (x._downcast (base[0])
-            != static_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
+        if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
           {
             ++error_count;
             ACE_DEBUG( (LM_DEBUG,
-                       "mismatch in downcast for %s\n", 
+                       "mismatch in downcast for %s\n",
                         base[0]));
           }
-          
-        if (x._downcast (base[1])
-            != static_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
+
+        if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
           {
             ++error_count;
             ACE_DEBUG ((LM_DEBUG,
-                       "mismatch in downcast for %s\n", 
-                       base[0]));
+                       "mismatch in downcast for %s\n",
+                       base[1]));
           }
-          
-        if (x._downcast (base[2])
-            != static_cast<POA_Messaging::ReplyHandler*> (&x))
+
+        if (!dynamic_cast<POA_Messaging::ReplyHandler*> (&x))
           {
             ++error_count;
             ACE_DEBUG ((LM_DEBUG,
-                       "mismatch in downcast for %s\n", 
+                       "mismatch in downcast for %s\n",
                        base[2]));
           }
       }
 
-      // Testing (de)marshaling of IDL union values 
+      // Testing (de)marshaling of IDL union values
       // under duplicate and default case labels.
 
       Field field;
@@ -324,7 +321,7 @@ main (int argc , char *argv[])
         }
 
       const char *str = outfield->value.strValue ();
-      
+
       if (ACE_OS::strcmp (str, "duplicate case label test string") != 0)
         {
           ++error_count;
@@ -345,7 +342,7 @@ main (int argc , char *argv[])
         }
 
       str = outfield->value.defstr ();
-      
+
       if (ACE_OS::strcmp (str, "default case test string") != 0)
         {
           ++error_count;
