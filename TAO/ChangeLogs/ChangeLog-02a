@@ -1,3 +1,22 @@
+Thu Nov 23 12:33:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+        * orbsvcs/tests/ior_corbaname/README:
+        * tests/ior_corbaloc/README:
+
+          Updated to reflect the correct syntax.
+
+        * tests/ior_corbaloc/client.cpp :
+        * tests/ior_corbaloc/ior_corbaloc_client_i.cpp :
+
+          Corrected the way exceptions are propagated.
+
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.cpp :
+
+          Fixed the syntax format of corbaloc: type URL.
+          Thanks to  Craig Rodrigues <rodrigc@mediaone.net> for
+          pointing this out.
+
 Thu Nov 23 12:18:06 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (~TAO_ORB_Core_TSS_Resources):

@@ -15,12 +15,12 @@ To test manually:
 
 3. Run the client as one of these.
 
- a)	./client corbaname://doc.ece.uci.edu:12345
+ a)	./client corbaname:doc.ece.uci.edu:12345
 	
 	CORBANAME style URL is used and the protocol used to 
 	contact the naming context is <iiop> implicitly.
 	
- b)	./client corbaname:iiop://doc.ece.uci.edu:12345
+ b)	./client corbaname:iiop:doc.ece.uci.edu:12345
 
 	CORBANAME style URL is used and the protocol used to 
 	contact the naming context is <iiop>.
