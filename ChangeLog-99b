@@ -1,21 +1,21 @@
 Wed Apr 28 09:02:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SString: Clarified the comments a bit to avoid confusion.
-  	  Also, moved the definition of ACE_SString to AFTER ACE_CString
- 	  and ACE_WString since they are more general.  Thanks to Kevin
- 	  Lyda <kevin.lyda@trintech.com> for reporting this.
+        * ace/SString: Clarified the comments a bit to avoid confusion.
+          Also, moved the definition of ACE_SString to AFTER ACE_CString
+          and ACE_WString since they are more general.  Thanks to Kevin
+          Lyda <kevin.lyda@trintech.com> for reporting this.
 
 Tue Apr 27 20:59:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/clients/Naming: Moved the README file into the Client/
- 	  directory since that's what it described.
+        * netsvcs/clients/Naming: Moved the README file into the Client/
+          directory since that's what it described.
 
-	* netsvcs/clients/Naming/Client/Client_Test.cpp: Reformatted some
- 	  code to conform to ACE programming guidelines.
+        * netsvcs/clients/Naming/Client/Client_Test.cpp: Reformatted some
+          code to conform to ACE programming guidelines.
 
-	* ace/Naming_Context.cpp (parse_args): Oops, fixed a braino
- 	  related to strcmp().  Thanks to Valery Arkhangorodsky
- 	  <avalery@balisoft.com> for reporting this.
+        * ace/Naming_Context.cpp (parse_args): Oops, fixed a braino
+          related to strcmp().  Thanks to Valery Arkhangorodsky
+          <avalery@balisoft.com> for reporting this.
 
 Tue Apr 27 18:00:31 1999  Steve Huston  <shuston@riverace.com>
 
@@ -24,11 +24,11 @@ Tue Apr 27 18:00:31 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 27 17:36:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* m4/threads.m4: 
+        * m4/threads.m4:
 
-	  Restructured thread detection test so that it properly detects
-	  threads on platforms that provide PTHREADS backward compatibility
-	  macros, such as Digital Unix 4.0 and 5.0.
+          Restructured thread detection test so that it properly detects
+          threads on platforms that provide PTHREADS backward compatibility
+          macros, such as Digital Unix 4.0 and 5.0.
 
 Tue Apr 27 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -45,106 +45,106 @@ Tue Apr 27 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Apr 27 16:30:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/UNIX_Addr.h (ACE_UNIX_Addr): 
+        * ace/UNIX_Addr.h (ACE_UNIX_Addr):
 
-	  Corrected typographical error in comment.
+          Corrected typographical error in comment.
 
 Tue Apr 27 12:57:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in: 
+        * configure.in:
 
-	  Removed `tests/log/Makefile' from the list of files to
-	  generate (i.e. removed from AC_OUTPUT macro call).
+          Removed `tests/log/Makefile' from the list of files to
+          generate (i.e. removed from AC_OUTPUT macro call).
 
-	* tests/Makefile.am: 
+        * tests/Makefile.am:
 
-	  Corrected a typo.  I neglected to add "_SOURCES" to the end
-	  of the Collection_Test source variable variable.  Also added
-	  more missing tests to the list of test programs.  Commented out
-	  Cache_Manager_Test.  It appears to need a header that doesn't
-	  exist.
+          Corrected a typo.  I neglected to add "_SOURCES" to the end
+          of the Collection_Test source variable variable.  Also added
+          more missing tests to the list of test programs.  Commented out
+          Cache_Manager_Test.  It appears to need a header that doesn't
+          exist.
 
-	* ace/Makefile.am (pkginclude_HEADERS): 
+        * ace/Makefile.am (pkginclude_HEADERS):
 
-	  Removed `Timer_Queue.i' from the list of headers.
+          Removed `Timer_Queue.i' from the list of headers.
 
-	* bin/autogen:
-	* bin/bootstrap: 
+        * bin/autogen:
+        * bin/bootstrap:
 
-	  Renamed the `autogen' script to `bootstrap'.
+          Renamed the `autogen' script to `bootstrap'.
 
 Tue Apr 27 11:54:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Temorarily removed my experimental C++ libtool support so that
-	  I can get a semi-working test distribution out on the net.
+          Temorarily removed my experimental C++ libtool support so that
+          I can get a semi-working test distribution out on the net.
 
-	* ltconfig:
-	* ltmain.sh:
+        * ltconfig:
+        * ltmain.sh:
 
-	  Reverted to more stable version, i.e. w/o my C++ support.
+          Reverted to more stable version, i.e. w/o my C++ support.
 
-	* m4/threads.m4:
+        * m4/threads.m4:
 
-	  Added KAI C++ thread flag check.
-	
+          Added KAI C++ thread flag check.
+
 Tue Apr 27 11:45:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Collection_Test.cpp (main): Added some additional array
-	  tests and fixed template instantiation errors.  Thanks to David
-	  Levine for pointing them out.
+        * tests/Collection_Test.cpp (main): Added some additional array
+          tests and fixed template instantiation errors.  Thanks to David
+          Levine for pointing them out.
 
-	* ace/OS.h (ACE_DES_FREE): Changed all the ACE_DES* macros to
-	  check for zero pointers.  Thanks to Torsten Kuepper
-	  <kuepper2@uni-wuppertal.de> for pointing this bug out.
-	
+        * ace/OS.h (ACE_DES_FREE): Changed all the ACE_DES* macros to
+          check for zero pointers.  Thanks to Torsten Kuepper
+          <kuepper2@uni-wuppertal.de> for pointing this bug out.
+
 Tue Apr 27 11:08:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Basic_Types.h: Forced KAI compiler to use ACE_U_LongLong if
-	  ACE_LACKS_LONGLONG_T is defined.
+        * ace/Basic_Types.h: Forced KAI compiler to use ACE_U_LongLong if
+          ACE_LACKS_LONGLONG_T is defined.
 
-	* ace/DLL.cpp:
-	* ace/Service_Config.i:
-	* ace/Service_Object.i:
-	* ace/INET_Addr.cpp: Some CE related changes.
+        * ace/DLL.cpp:
+        * ace/Service_Config.i:
+        * ace/Service_Object.i:
+        * ace/INET_Addr.cpp: Some CE related changes.
 
 Tue Apr 27 00:03:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Collection_Test.cpp (main): Added test code for ACE_Array.
+        * tests/Collection_Test.cpp (main): Added test code for ACE_Array.
 
 Mon Apr 26 23:55:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Reverse_Lock): Removed constructor that
-	  created the lock.  There were two reasons for this: (a) it was
-	  unrealistic that the reverse lock would own and create the
-	  regular lock and (b) this constructor made it impossible that
-	  ACE_Reverse_Lock can be used with ACE_Lock (the abstract
-	  class).  Thanks to Carlos for pointing this out.
+        * ace/Synch_T.h (class ACE_Reverse_Lock): Removed constructor that
+          created the lock.  There were two reasons for this: (a) it was
+          unrealistic that the reverse lock would own and create the
+          regular lock and (b) this constructor made it impossible that
+          ACE_Reverse_Lock can be used with ACE_Lock (the abstract
+          class).  Thanks to Carlos for pointing this out.
 
 Mon Apr 26 21:43:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Makefile.am (pkginclude_HEADERS, libACE_IPC_la_SOURCES):
+        * ace/Makefile.am (pkginclude_HEADERS, libACE_IPC_la_SOURCES):
 
-	  Added ATM_Addr sources to these variables.
+          Added ATM_Addr sources to these variables.
 
-	* ace/Makefile.am (EXTRA_libACE_la_SOURCES):
+        * ace/Makefile.am (EXTRA_libACE_la_SOURCES):
 
-	  Accidentally removed this variable.  It is needed for
-	  conditionally built sources, such as `gethrtime.cpp'.
+          Accidentally removed this variable.  It is needed for
+          conditionally built sources, such as `gethrtime.cpp'.
 
-	* tests/Makefile.am:
+        * tests/Makefile.am:
 
-	  Added newly added tests to the list of test programs to be built.
-	  Changed "noinst_PROGRAMS" variable to "check_PROGRAMS" so that
-	  tests only get built when a `make check' is issued by the user.
+          Added newly added tests to the list of test programs to be built.
+          Changed "noinst_PROGRAMS" variable to "check_PROGRAMS" so that
+          tests only get built when a `make check' is issued by the user.
 
 Mon Apr 26 19:29:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/Reverse_Lock_Test.cpp (main):
+        * tests/Reverse_Lock_Test.cpp (main):
 
-	  ACE_START_TEST macro had "Thread_Mutex_Test" instead of
-	  "Reverse_Lock_Test."
+          ACE_START_TEST macro had "Thread_Mutex_Test" instead of
+          "Reverse_Lock_Test."
 
 Mon Apr 26 17:01:22 1999  Steve Huston  <shuston@riverace.com>
 
@@ -165,29 +165,29 @@ Mon Apr 26 17:01:22 1999  Steve Huston  <shuston@riverace.com>
 
 Mon Apr 26 16:43:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Asynch_IO_Impl.h (ACE_Asynch_[Read|Write]_File_Impl):
-	  Declared the read/write pure virtual methods of
-	  ACE_Asynch_[Read|Write]_Stream_Impl again in these class to
-	  avoid KAI compiler's overwriting pure virtual function
-	  warnings.
+        * ace/Asynch_IO_Impl.h (ACE_Asynch_[Read|Write]_File_Impl):
+          Declared the read/write pure virtual methods of
+          ACE_Asynch_[Read|Write]_Stream_Impl again in these class to
+          avoid KAI compiler's overwriting pure virtual function
+          warnings.
 
 Mon Apr 26 10:54:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/High_Res_Timer.h:
-	  Moved the static method hrtime_to_tv to the public section. It
-	  is useful outside this class.
+        * ace/High_Res_Timer.h:
+          Moved the static method hrtime_to_tv to the public section. It
+          is useful outside this class.
 
-	* ace/Synch_T.cpp:
-	  The default constructor for ACE_Reverse_Lock should not allocate
-	  the locking mechanism, otherwise it cannot work with ACE_Lock.
+        * ace/Synch_T.cpp:
+          The default constructor for ACE_Reverse_Lock should not allocate
+          the locking mechanism, otherwise it cannot work with ACE_Lock.
 
 Mon Apr 26 07:30:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (fstat): Changed to use CE's implementation and added
-	  some features that're supported on other Win32 platforms.  The
-	  original implementation for Win32 closed down the file handle
-	  accidentally which is not a "Good Thing[TM]".  Thanks to Dominic
-	  Williams <dom@connected-place.co.uk> for pointing this out.
+        * ace/OS.i (fstat): Changed to use CE's implementation and added
+          some features that're supported on other Win32 platforms.  The
+          original implementation for Win32 closed down the file handle
+          accidentally which is not a "Good Thing[TM]".  Thanks to Dominic
+          Williams <dom@connected-place.co.uk> for pointing this out.
 
 Sun Apr 25 21:35:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -456,7 +456,7 @@ Wed Apr 21 16:35:21 1999  Steve Huston  <shuston@riverace.com>
         * tests/New_Fail_Test.cpp: Test to be sure that the ACE_NEW[_RETURN]
           stuff works correctly when heap is exhausted.
         * tests/Makefile: Added New_Fail_Test.
-	* tests/tests.dsw, New_Fail_Test.dsp: Add new test to MSVC.
+        * tests/tests.dsw, New_Fail_Test.dsp: Add new test to MSVC.
 
 Wed Apr 21 15:35:44 1999  Steve Huston  <shuston@riverace.com>
 
