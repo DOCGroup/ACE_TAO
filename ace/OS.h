@@ -2582,9 +2582,9 @@ typedef unsigned int size_t;
 
 #   include /**/ <new.h>
 
-#   if !defined (ACE_PSOS_DIAB_MIPS)
-#   include /**/ <signal.h>
-#   endif /* ACE_PSOS_DIAB_MIPS */
+#   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
+#     include /**/ <signal.h>
+#   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
 
 #   include /**/ <errno.h>
 
