@@ -977,7 +977,7 @@ public:
   TAO_Tokenizer (char *string,char delimiter);
   // constructor.
 
-  parse (char *string,char delimiter);
+  int parse (char *string,char delimiter);
   // parses the string and tokenizes it.
 
   char *token (void);
