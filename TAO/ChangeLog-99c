@@ -1,3 +1,12 @@
+Wed Jun  9 16:26:55 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Changed one branch of >>= (to_object) to reflect
+	  the change in CORBA 2.3 - namely that the caller
+	  is responsible for release of the result of this
+	  call. The other branch already had this behavior.
+	  Also added an ACE_NEW check in that other branch.
+
 Wed Jun 09 16:03:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Default_Servant/client.cpp
