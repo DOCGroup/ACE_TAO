@@ -575,17 +575,12 @@ QtReactor_moc.cpp: QtReactor.h
 	$(MOC) QtReactor.h >QtReactor_moc.cpp
 endif #qt_reactor
 
-ifeq ($(SUPPRESS_DASH_G),1)
-#### Build this target without -g on some platforms.
-  $(COMPILE-NO_DASH_G.cc) -o $@ $<
-endif # SUPPRESS_DASH_G
-
 ifeq ($(CHORUS),1)
   ifeq ($(CC),$(GHS_DIR)/build -driver ch68)
     #### Build this target without -g, because it causes ghs 1.8.8 to core
     #### dump.
     $(VDIR)Select_Reactor.o .obj/Select_Reactor.so .shobj/Select_Reactor.o .shobj/Select_Reactor.so:
-    $(COMPILE-NO_DASH_G.cc) -o $@ $<
+	$(COMPILE-NO_DASH_G.cc) -o $@ $<
   endif # CC
 endif # CHORUS
 
