@@ -294,9 +294,9 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 
         navigation_.utilization =       0.0;
         navigation_.overhead =          0.0;
-        navigation_.arrival_time =      ORBSVCS_Time::zero;
-        navigation_.completion_time =   ORBSVCS_Time::zero;
-        navigation_.computation_time =  ORBSVCS_Time::zero;
+        navigation_.arrival_time =      ORBSVCS_Time::zero ();
+        navigation_.completion_time =   ORBSVCS_Time::zero ();
+        navigation_.computation_time =  ORBSVCS_Time::zero ();
         navigation_.update_data =       update_data_;
 
 
@@ -350,9 +350,9 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.weapon5_status = 0;
         weapons_.utilization =       0.0;
         weapons_.overhead =          0.0;
-        weapons_.arrival_time =      ORBSVCS_Time::zero;
-        weapons_.completion_time  =  ORBSVCS_Time::zero;
-        weapons_.computation_time =  ORBSVCS_Time::zero;
+        weapons_.arrival_time =      ORBSVCS_Time::zero ();
+        weapons_.completion_time  =  ORBSVCS_Time::zero ();
+        weapons_.computation_time =  ORBSVCS_Time::zero ();
         weapons_.update_data =       update_data_;
 
 
