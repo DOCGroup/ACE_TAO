@@ -3,6 +3,22 @@
 
 // Service_Object.i
 
+ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *so)
+  : service_object_ (so) 
+{
+}
+
+ACE_Service_Object_Ptr::~ACE_Service_Object_Ptr (void) 
+{ 
+  this->service_object_->fini (); 
+}
+
+ACE_Service_Object *
+ACE_Service_Object_Ptr::operator-> () 
+{ 
+  return this->service_object_; 
+}
+
 ACE_INLINE const void *
 ACE_Service_Type::object (void) const
 {
