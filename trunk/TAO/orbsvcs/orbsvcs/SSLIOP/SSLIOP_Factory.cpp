@@ -4,8 +4,7 @@
 #include "SSLIOP_ORBInitializer.h"
 #include "ace/OS_NS_strings.h"
 
-#include "orbsvcs/Security/Security_ORBInitializer.h"  // @todo:
-                                                       // should go away
+#include "orbsvcs/orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
 
 #include "tao/debug.h"
 
