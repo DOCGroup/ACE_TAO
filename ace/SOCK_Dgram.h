@@ -43,10 +43,9 @@ public:
   // dgram that will accept datagrams at the <local> address.
 
   ACE_SOCK_Dgram (const ACE_Addr &local,
-                  const ACE_QoS_Params &qos_params,
-                  int protocol_family = PF_INET,
-                  int protocol = 0,
-                  ACE_Protocol_Info *protocolinfo = 0,
+                  int protocol_family,
+                  int protocol,
+                  ACE_Protocol_Info *protocolinfo,
                   ACE_SOCK_GROUP g = 0,
                   u_long flags = 0,
                   int reuse_addr = 0);
@@ -62,10 +61,9 @@ public:
   // dgram that will accept datagrams at the <local> address.
 
   int open (const ACE_Addr &local,
-            const ACE_QoS_Params &qos_params,
-            int protocol_family = PF_INET,
-            int protocol = 0,
-            ACE_Protocol_Info *protocolinfo = 0,
+            int protocol_family,
+            int protocol,
+            ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
             int reuse_addr = 0);
