@@ -39,6 +39,7 @@ public:
                               PortableServer::Servant servant,
                               CORBA_Environment &env);
   // Activate the servant with the supplied object_name
+  // Call multiple times to activate multiple objects.
 
   int run (CORBA_Environment &env);
   // Run the ORB event loop
