@@ -1,3 +1,17 @@
+Tue Feb 10 16:28:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * cidlc/CIDLC.vcproj:
+        
+          Added '..' to include paths, to pick up inclusion of 
+          ciao/Version.h.
+          
+        * cidlc/ServantHeaderGenerator.cpp:
+        * cidlc/ServantSourceGenerator.cpp:
+        
+          Fixed errors in generated environment variables. Thanks to 
+          Edward Mulholland <emulholl@atl.lmco.com> for reporting the
+          problems.
+
 Tue Feb 10 14:54:48 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ciao/Container_Impl.h: 
