@@ -433,7 +433,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // Calculate the bytes that needs to be copied in the queue...
       size_t copy_len =  state.payload_size ();
 
-      // If teh data that needs to be copied is more than that is
+      // If the data that needs to be copied is more than that is
       // available to us ..
       if (copy_len > incoming.length ())
         {
