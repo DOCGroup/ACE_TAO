@@ -1,3 +1,13 @@
+Tue Jan 18 17:26:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	  Fixed a memory leak in recursive unions. The fix also
+	  removes leaks in unions that contain anonymous 
+	  sequences. 
+	* tao/DynStruct_i.cpp:
+	  Fixed some mismatched forms of ACE_CHECK that I added
+	  earlier today.
+
 Tue Jan 18 13:04:24 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
