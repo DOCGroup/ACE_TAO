@@ -478,7 +478,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
     : token_ (*this),
       lock_adapter_ (token_),
       deactivated_ (0)
-
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -505,7 +504,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
    int disable_notify_pipe,
    ACE_Reactor_Notify *notify)
     : token_ (*this),
-      lock_adapter_ (token_)
+      lock_adapter_ (token_),
+      deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
