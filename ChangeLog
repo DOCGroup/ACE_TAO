@@ -1,47 +1,47 @@
 Mon Oct 11 09:52:40 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/config-qnx-rtp-62x.h:
-	Set ACE_LACKS_CUSERID.
+        * ace/config-qnx-rtp-62x.h:
+        Set ACE_LACKS_CUSERID.
 
 Mon Oct 11 10:14:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
-	* tests/SV_Shared_Memory_Test.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
 
-	  Changed to #include ace/SV_Sempahore_Complex.h, which had been
-	  implicitly included via Memory_Pool.h, even though it was not
-	  needed by the interface or implementation.
+          Changed to #include ace/SV_Sempahore_Complex.h, which had been
+          implicitly included via Memory_Pool.h, even though it was not
+          needed by the interface or implementation.
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Updated.
+          Updated.
 
-	* ace/Local_Memory_Pool.cpp:
-	* ace/Local_Memory_Pool.h:
-	* ace/MMAP_Memory_Pool.cpp:
-	* ace/MMAP_Memory_Pool.h:
-	* ace/Pagefile_Memory_Pool.cpp:
-	* ace/Pagefile_Memory_Pool.h:
-	* ace/Pagefile_Memory_Pool.inl:
-	* ace/Sbrk_Memory_Pool.cpp:
-	* ace/Sbrk_Memory_Pool.h:
-	* ace/Shared_Memory_Pool.cpp:
-	* ace/Shared_Memory_Pool.h:
+        * ace/Local_Memory_Pool.cpp:
+        * ace/Local_Memory_Pool.h:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Pagefile_Memory_Pool.cpp:
+        * ace/Pagefile_Memory_Pool.h:
+        * ace/Pagefile_Memory_Pool.inl:
+        * ace/Sbrk_Memory_Pool.cpp:
+        * ace/Sbrk_Memory_Pool.h:
+        * ace/Shared_Memory_Pool.cpp:
+        * ace/Shared_Memory_Pool.h:
 
-	  New files.
+          New files.
 
-	* ace/Memory_Pool.cpp:
-	* ace/Memory_Pool.inl:
-	* ace/Memory_Pool.h:
+        * ace/Memory_Pool.cpp:
+        * ace/Memory_Pool.inl:
+        * ace/Memory_Pool.h:
 
-	  Split apart Memory_Pool.{cpp,h,inl} into a separate set of files
-	  for each class and "outlining" inlined virtual functions.  Since
-	  the implementations are related by interface, not inheritance;
-	  locating them all in the same file typically results in static
-	  footprint bloat.
+          Split apart Memory_Pool.{cpp,h,inl} into a separate set of files
+          for each class and "outlining" inlined virtual functions.  Since
+          the implementations are related by interface, not inheritance;
+          locating them all in the same file typically results in static
+          footprint bloat.
 
-	  Removed Memory_Pool.{cpp,inl}.
+          Removed Memory_Pool.{cpp,inl}.
 
 Mon Oct 10 12:48:03 2004  Martin Corino  <mcorino@remedy.nl>
 
@@ -58,60 +58,60 @@ Mon Oct 10 9:43:03 2004  Martin Corino  <mcorino@remedy.nl>
 >>>>>>> 4.7747
 Sat Oct  9 23:08:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/acexml.mpb:
+        * bin/MakeProjectCreator/config/acexml.mpb:
 
-	  Added a "requires += acexml" MPC project flag.  Allows
-	  generation of Automake conditionals in MPC generated Makefile.am
-	  files.
+          Added a "requires += acexml" MPC project flag.  Allows
+          generation of Automake conditionals in MPC generated Makefile.am
+          files.
 
-	* bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/global.features:
 
-	  Enable support ACEXML by default.  This was previously the
-	  implicit default.  It must be now be explicit in order to
-	  correctly support features like the new "--with-acexml"
-	  configure script option described below.
+          Enable support ACEXML by default.  This was previously the
+          implicit default.  It must be now be explicit in order to
+          correctly support features like the new "--with-acexml"
+          configure script option described below.
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Added new "--with-acexml" configure script option.  It allows a
-	  user to enable (the default) or disable support for ACEXML.
+          Added new "--with-acexml" configure script option.  It allows a
+          user to enable (the default) or disable support for ACEXML.
 
 Sat Oct  9 13:55:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
-	* bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
-	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb:
 
-	  Fixed library ordering issues. This should fix a few link errors
-	  in CIAO static builds.
+          Fixed library ordering issues. This should fix a few link errors
+          in CIAO static builds.
 
 Fri Oct  8 23:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_stdlib.cpp (mkstemp_emulation):
+        * ace/OS_NS_stdlib.cpp (mkstemp_emulation):
 
-	  We only care about UTF-8 / ASCII characters in generated
-	  filenames.  A UTF-16 or UTF-32 character could potentially cause
-	  a very large space to be searched in the do/while() loop that
-	  generated alphanumeric characters, greatly slowing down this
-	  mkstemp() implementation.  It is more practical to limit the
-	  search space to UTF-8 / ASCII characters (i.e. 127 characters).
+          We only care about UTF-8 / ASCII characters in generated
+          filenames.  A UTF-16 or UTF-32 character could potentially cause
+          a very large space to be searched in the do/while() loop that
+          generated alphanumeric characters, greatly slowing down this
+          mkstemp() implementation.  It is more practical to limit the
+          search space to UTF-8 / ASCII characters (i.e. 127 characters).
 
 Fri Oct  8 18:40:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/ssl.mpc: Removed the automake-specific part. The MPC-supplied
-	  openssl.mpb file now includes the automake libs/includes that were
-	  here.
+        * ace/SSL/ssl.mpc: Removed the automake-specific part. The MPC-supplied
+          openssl.mpb file now includes the automake libs/includes that were
+          here.
 
-	* examples/NT_Service/NT_Service.mpc: Inherit from the winregistry
-	  project. Makes this require winregistry. Although not strictly
-	  correct, it's close enough. Probably would be more correct to
-	  rename winregistry to windows, but I won't rock the boat today.
+        * examples/NT_Service/NT_Service.mpc: Inherit from the winregistry
+          project. Makes this require winregistry. Although not strictly
+          correct, it's close enough. Probably would be more correct to
+          rename winregistry to windows, but I won't rock the boat today.
 
-	* m4/ace.m4: Don't emit ACE_NTRACE unless the user specifically
-	  says --enable-trace. ace/config-all.h knows how to default
-	  tracing correctly. Also, for --enable-tracing, set ACE_NTRACE
-	  to 0; for disable tracing, set ACE_NTRACE to 1.
+        * m4/ace.m4: Don't emit ACE_NTRACE unless the user specifically
+          says --enable-trace. ace/config-all.h knows how to default
+          tracing correctly. Also, for --enable-tracing, set ACE_NTRACE
+          to 0; for disable tracing, set ACE_NTRACE to 1.
 
 Fri Oct  8 06:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -121,37 +121,37 @@ Fri Oct  8 06:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct  7 17:32:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Malloc_Allocator.cpp:
-	* ace/Malloc_Allocator.inl:
+        * ace/Malloc_Allocator.cpp:
+        * ace/Malloc_Allocator.inl:
 
           Moved all virtual methods from *.inl to *.cpp.
 
 Thu Oct  7 16:45:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* bin/MakeProjectCreator/config/global.features: Added uses_wchar = 0
-	  as a default. Says not to use ACE_USES_WCHAR. No affect on
-	  ACE_HAS_WCHAR (a platform's ability to handle wide-char). This
-	  setting is primarily to avoid those areas of ACE's examples that
-	  aren't coded to work correctly with both narrow and wide chars.
+        * bin/MakeProjectCreator/config/global.features: Added uses_wchar = 0
+          as a default. Says not to use ACE_USES_WCHAR. No affect on
+          ACE_HAS_WCHAR (a platform's ability to handle wide-char). This
+          setting is primarily to avoid those areas of ACE's examples that
+          aren't coded to work correctly with both narrow and wide chars.
 
-	* apps/drwho/drwho.mpc:
-	* apps/gperf/src/gperf.mpc:
-	* apps/gperf/tests/gperf_test.mpb:
-	* apps/soreduce/soreduce.mpc:
-	* examples/C++NPv1/C++NPv1.mpc:
-	* examples/C++NPv2/C++NPv2.mpc:
-	  Added "avoids += uses_wchar" to projects that don't builds cleanly
-	  with ACE_USES_WCHAR. For drwho/gperf/soreduce, they weren't designed
-	  for wide-char use and the changes to make them so are widespread.
-	  For C++NPv1/2, there's code that would need to change, but is used
-	  in the book prior to where narrow/wide char handling is introduced.
-	  To keep the code in sync with the books, just don't try to build
-	  this on wide-char builds.
+        * apps/drwho/drwho.mpc:
+        * apps/gperf/src/gperf.mpc:
+        * apps/gperf/tests/gperf_test.mpb:
+        * apps/soreduce/soreduce.mpc:
+        * examples/C++NPv1/C++NPv1.mpc:
+        * examples/C++NPv2/C++NPv2.mpc:
+          Added "avoids += uses_wchar" to projects that don't builds cleanly
+          with ACE_USES_WCHAR. For drwho/gperf/soreduce, they weren't designed
+          for wide-char use and the changes to make them so are widespread.
+          For C++NPv1/2, there's code that would need to change, but is used
+          in the book prior to where narrow/wide char handling is introduced.
+          To keep the code in sync with the books, just don't try to build
+          this on wide-char builds.
 
-	* m4/ace.m4: Added new configure option, --with-uses-wchar. If yes,
-	  then ACE_USES_WCHAR is set. Defaults to no.
+        * m4/ace.m4: Added new configure option, --with-uses-wchar. If yes,
+          then ACE_USES_WCHAR is set. Defaults to no.
 
-	* m4/config_h.m4: Added AH_TEMPLATE for ACE_USES_WCHAR.
+        * m4/config_h.m4: Added AH_TEMPLATE for ACE_USES_WCHAR.
 
 Thu Oct  7 11:42:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
