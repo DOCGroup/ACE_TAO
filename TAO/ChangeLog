@@ -1,3 +1,10 @@
+Sun Feb 29 10:15:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Makefile*:
+	* performance-tests/Makefile*:
+
+    	  Regenerated dependencies using old g++-dep script.
+
 Sun Feb 29 10:34:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Advanced/ch_18/Makefile:
