@@ -211,17 +211,6 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
       return -1;
     }
 
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing transport %d\n"),
-                    this->id ()));
-      return -1;
-    }
-
   return 1;
 }
 
