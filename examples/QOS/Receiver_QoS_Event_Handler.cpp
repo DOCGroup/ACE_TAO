@@ -81,6 +81,7 @@ Receiver_QoS_Event_Handler::handle_input (ACE_HANDLE)
 int
 Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
 {
+  ACE_UNUSED_ARG (fd);
 
   ACE_DEBUG ((LM_DEBUG,
               "\nReceived a QOS event. Inside handle_qos ()\n"));

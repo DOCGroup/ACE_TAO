@@ -14,9 +14,9 @@ QoS_Util::QoS_Util (int argc,
                     char *argv[])
   : argc_ (argc),
     argv_ (argv),
+    source_port_ (SENDER_PORT),
     protocol_ (IPPROTO_UDP),
-    multicast_flag_ (0),
-    source_port_ (SENDER_PORT)
+    multicast_flag_ (0)
 {
   ACE_NEW (this->mult_session_addr_,
            ACE_INET_Addr (ACE_DEFAULT_MULTICAST_PORT));

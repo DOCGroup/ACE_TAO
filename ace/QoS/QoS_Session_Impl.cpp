@@ -39,6 +39,12 @@ rsvp_callback (rapi_sid_t sid,
                void *args
                )
 {
+  ACE_UNUSED_ARG (sid);
+  ACE_UNUSED_ARG (style_id);
+  ACE_UNUSED_ARG (filter_spec_no);
+  ACE_UNUSED_ARG (filter_spec_list);
+  ACE_UNUSED_ARG (ad_spec_no);
+  ACE_UNUSED_ARG (ad_spec_list);
 
   if (args == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -156,6 +162,8 @@ rsvp_callback (rapi_sid_t sid,
   // Set the updated ACE_QoS for the RSVP callback argument(QoS session).
   qos_session->qos (ace_qos);
 
+  // @@ what is the meaning of the return value. RAPI docs don't say anything!
+  return 0;
 }
 
 // Constructor.
@@ -199,7 +207,9 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
 int
 ACE_RAPI_Session::close (void)
 {
-  if (rsvp_error = rapi_release(this->session_id_))
+  this->rsvp_error = rapi_release(this->session_id_);
+
+  if (rsvp_error == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Can't release RSVP session:\n\t%s\n",
                        rapi_errlist[rsvp_error]),
@@ -207,7 +217,7 @@ ACE_RAPI_Session::close (void)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "rapi session with id %d released successfully.\n",
-               this->session_id_));
+                this->session_id_));
   return 0;
 }
 
@@ -217,6 +227,7 @@ ACE_RAPI_Session::qos (ACE_SOCK *socket,
                        const ACE_QoS &ace_qos)
 {
   ACE_UNUSED_ARG (socket);
+  ACE_UNUSED_ARG (qos_manager);
 
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
