@@ -1,3 +1,9 @@
+Tue Sep 29 21:14:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (open): Grab a lock from the Object_Manager when
+	  O_APPEND is defined to simulate atomic behavior on most UNIX
+	  platforms.  Thanks to Irfan.
+
 Tue Sep 29 19:16:57 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/007/thread_pool.h
