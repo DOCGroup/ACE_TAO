@@ -13,7 +13,12 @@
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// Needed for ostream& operator<< (ostream &os, const CORBA::Exception &e)
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"

@@ -93,7 +93,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_indenter.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_interface, 
@@ -991,21 +990,21 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_abstract ())
     {
-      o << "abstract ";
+      this->dump_i (o, "abstract ");
     }
   else if (this->is_local ())
     {
-      o << "local ";
+      this->dump_i (o, "local ");
     }
 
-  o << "interface ";
+  this->dump_i (o, "interface ");
 
   this->local_name ()->dump (o);
-  o << " ";
+  this->dump_i (o, " ");
 
   if (this->pd_n_inherits > 0)
     {
-      o << ": ";
+      this->dump_i (o, ": ");
 
       for (long i = 0; i < this->pd_n_inherits; ++i)
         {
@@ -1013,17 +1012,17 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 
           if (i < this->pd_n_inherits - 1)
             {
-              o << ", ";
+              this->dump_i (o, ", ");
             }
         }
     }
 
-  o << " {\n";
+  this->dump_i (o, " {\n");
 
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
 
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 // This serves for interfaces, valuetypes, components and eventtypes.

@@ -291,6 +291,8 @@ protected:
   // If we are a scope, do we contain a wstring at some level?
 
 protected:
+  void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const ;
+
   void compute_repoID (void);
   // Computes the repoID.
 

@@ -1,3 +1,70 @@
+Mon Nov 10 20:15:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * tao/CORBA_String.cpp:
+        * tao/Exception.cpp:
+        * tao/ORB_Core.cpp:
+          Fixed FUZZ errors.
+
+        * tao/ClientRequestInfo.cpp:
+          Removed #include streams.h.
+
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_identifier.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_indenter.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        * TAO_IDL/util/utl_strlist.cpp:
+          Added #include steams.h.
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/include/ast_decl.h:
+          Added dump_i() method to hide use of ostream, obviating the need
+          to #include streams.h in every file.
+
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_component.cpp:
+        * TAO_IDL/ast/ast_component_fwd.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_eventtype.cpp:
+        * TAO_IDL/ast/ast_eventtype_fwd.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_fwd.cpp:
+        * TAO/TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_valuetype_fwd.cpp:
+          Removed #include streams.h and changed ostream& << calls to use
+          new dump_i() method.  Removing streams.h will reduce compile
+          times and footprint and since dump calls are for debugging, they
+          won't effect performance.
+
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Added #include os_ctype.h.
+
+        * TAO_IDL/include/utl_identifier.h:
+        * TAO_IDL/include/utl_indenter.h:
+          Changed #include streams.h to iosfwd.h.
+
 Mon Nov 10 13:19:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_union.cpp:

@@ -93,7 +93,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_indenter.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_module, 
@@ -1589,12 +1588,12 @@ AST_Module::fe_add_native (AST_Native *t)
 void
 AST_Module::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "module ";
+  this->dump_i (o, "module ");
   this->local_name ()->dump (o);
-  o << " {\n";
+  this->dump_i (o, " {\n");
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 

@@ -77,7 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_exception, 
@@ -422,12 +421,12 @@ AST_Exception::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Exception::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "exception ";
+  this->dump_i (o, "exception ");
   this->local_name ()->dump (o);
-  o << " {\n";
+  this->dump_i (o, " {\n");
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 int

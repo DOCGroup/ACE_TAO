@@ -71,7 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_enum, 
@@ -313,18 +312,18 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 
   if (this->is_local ())
     {
-      o << "(local) ";
+      this->dump_i (o, "(local) ");
     }
   else if (this->is_abstract ())
     {
-      o << "(abstract) ";
+      this->dump_i (o, "(abstract) ");
     }
 
-  o << "enum ";
+  this->dump_i (o, "enum ");
 
   this->local_name ()->dump (o);
 
-  o << " {\n";
+  this->dump_i (o, " {\n");
 
   // Must increment the iterator explicitly inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();)
@@ -335,13 +334,13 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 
       if (!i.is_done ())
         {
-          o << ", ";
+          this->dump_i (o, ", ");
         }
     }
 
   idl_global->indent ()->skip_to (o);
 
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 int

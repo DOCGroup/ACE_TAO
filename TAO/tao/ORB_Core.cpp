@@ -36,7 +36,13 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/streams.h"
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// Needed to set ACE_LOG_MSG::msg_ostream()
+// FUZZ: disable check_for_streams_include
+#  include "ace/streams.h"
+#endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
+
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
