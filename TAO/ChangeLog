@@ -1,3 +1,8 @@
+Mon Apr 28 09:13:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RTKokyuEvent.dsp: Added the xxx_BUILD_DLL
+	  preprocessor definition to get rid of compile warnings on MSVC.
+
 Mon Apr 28 07:05:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/PortableServerC.i (demarshal_value): Added
