@@ -51,6 +51,7 @@ public:
    */
   Task_Activator (int priority,
                   int scheduling_class,
+                  int nthreads,
                   Task *task);
 
   /// Destructor

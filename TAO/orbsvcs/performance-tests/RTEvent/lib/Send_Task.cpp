@@ -14,6 +14,7 @@ ACE_RCSID(TAO_PERF_RTEC, Send_Task, "$Id$")
 Send_Task::Send_Task (void)
   : iterations_ (0)
   , period_in_usecs_ (0)
+  , startup_sleep_ (0)
   , event_type_ (0)
   , event_source_ (0)
   , barrier_ (0)
@@ -24,6 +25,7 @@ Send_Task::Send_Task (void)
 void
 Send_Task::init (int iterations,
                  int period_in_usecs,
+                 int startup_sleep,
                  int event_type,
                  int event_source,
                  Supplier *supplier,
@@ -31,6 +33,7 @@ Send_Task::init (int iterations,
 {
   this->iterations_ = iterations;
   this->period_in_usecs_ = period_in_usecs;
+  this->startup_sleep_ = startup_sleep;
   this->event_type_ = event_type;
   this->event_source_ = event_source;
   this->supplier_ = Servant_var<Supplier>::duplicate (supplier);
@@ -52,11 +55,15 @@ Send_Task::svc (void)
 
   this->barrier_->wait ();
 
+  ACE_Time_Value startup (0, this->startup_sleep_);
+  ACE_OS::sleep (startup);
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - Thread started, "
               "iterations = %d, period = %d, event_type = %d\n",
               this->iterations_, this->period_in_usecs_,
               this->event_type_));
+
 
   int start_i = 0;
   if (this->iterations_ == 0)
@@ -79,12 +86,11 @@ Send_Task::svc (void)
       if ((i + 1) % 1000 == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) - Thread has sent %d messages\n",
+                      "(%P|%t) - Thread has sent %d messages @ %T\n",
                       i + 1));
         }
 
       ACE_Time_Value period (0, this->period_in_usecs_);
-
       ACE_OS::sleep (period);
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);

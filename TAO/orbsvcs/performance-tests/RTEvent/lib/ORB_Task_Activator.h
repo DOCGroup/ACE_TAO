@@ -28,6 +28,7 @@ public:
   /// Constructor
   ORB_Task_Activator (int priority,
                       int scheduling_class,
+                      int nthreads,
                       ORB_Task *task);
 
   /// Destructor, stop the task and wait for it

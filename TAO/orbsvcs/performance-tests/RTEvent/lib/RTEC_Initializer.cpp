@@ -21,6 +21,9 @@ RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
                           RTCORBA_Setup * rtcorba_setup
                           ACE_ENV_ARG_DECL_NOT_USED)
 {
+#if 1
+  auto_ptr<TAO_EC_Factory> factory (new TAO_EC_Default_Factory);
+#else
   auto_ptr<TAO_EC_Factory> factory;
   if (rtcorba_setup == 0)
     {
@@ -31,6 +34,7 @@ RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
       factory = auto_ptr<TAO_EC_Factory> (new TAO_EC_RTCORBA_Factory (new TAO_EC_Default_Factory,
                                                                       rtcorba_setup->lanes ()));
     }
+#endif /* 0 */
 
   TAO_EC_Event_Channel_Attributes attr (consumer_poa,
                                         supplier_poa);

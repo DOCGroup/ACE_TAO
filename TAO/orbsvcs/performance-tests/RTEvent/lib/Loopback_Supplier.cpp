@@ -16,6 +16,7 @@ Loopback_Supplier::Loopback_Supplier (CORBA::Long experiment_id,
   : experiment_id_ (experiment_id)
   , response_type_ (response_type)
   , default_POA_ (PortableServer::POA::_duplicate (poa))
+  , counter_ (0)
 {
 }
 
@@ -94,6 +95,16 @@ Loopback_Supplier::push (const RtecEventComm::EventSet &source
     if (CORBA::is_nil (this->proxy_consumer_.in ()))
       return;
     proxy = this->proxy_consumer_;
+
+#if 0
+    this->counter_ += source.length ();
+    if ((this->counter_ + 1) % 1000 == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) - Loopback (%d) sending %d messages\n",
+                    this->response_type_, this->counter_ + 1));
+      }
+#endif /* 0 */
   }
 
   // ACE_DEBUG ((LM_DEBUG, "Loopback_Supplier::push (%P|%t)\n"));

@@ -10,8 +10,7 @@ ACE_INLINE
 Send_Task_Stopper::Send_Task_Stopper (int priority,
                                       int scheduling_class,
                                       Send_Task *task)
-  : Task_Activator<Send_Task> (priority,
-                               scheduling_class,
+  : Task_Activator<Send_Task> (priority, scheduling_class, 1,
                                task)
 {
 }

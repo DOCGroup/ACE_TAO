@@ -31,7 +31,8 @@ class TAO_RTEC_Perf_Export RTCORBA_Setup
 public:
   /// Constructor
   RTCORBA_Setup (CORBA::ORB_ptr orb,
-                 const RT_Class &rtclass
+                 const RT_Class &rtclass,
+                 int nthreads
                  ACE_ENV_ARG_DECL);
 
   /// Return the thread pool lanes appropriate for the benchamrks
@@ -47,11 +48,12 @@ private:
 private:
   RTCORBA::PriorityMappingManager_var priority_mapping_manager_;
 
-  auto_ptr<RTCORBA::PriorityMapping> priority_mapping_;
-
   RTCORBA::ThreadpoolLanes lanes_;
 
   RTCORBA::Priority process_priority_;
+
+  /// Just a plain pointer, the ORB owns the memory...
+  RTCORBA::PriorityMapping *priority_mapping_;
 };
 
 #if defined(__ACE_INLINE__)

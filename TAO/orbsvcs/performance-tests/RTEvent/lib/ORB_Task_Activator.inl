@@ -9,9 +9,11 @@
 ACE_INLINE
 ORB_Task_Activator::ORB_Task_Activator (int priority,
                                         int scheduling_class,
+                                        int nthreads,
                                         ORB_Task *task)
   : Task_Activator<ORB_Task> (priority,
                               scheduling_class,
+                              nthreads,
                               task)
 {
 }
