@@ -22,10 +22,15 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#includ "ace/Sync.h"
+#include "ace/Synch.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
+
+#include "orbsvcs/LoadBalancingC.h"
+
+#include "LB_Redirect_Table.h"
+
 
 /**
  * @class TAO_LB_RPMS_Monitor_Interceptor
@@ -44,7 +49,7 @@ class TAO_LB_RPMS_Monitor_Interceptor
 public:
 
   /// Constructor
-  TAO_LB_RPMS_Monitor (void);
+  TAO_LB_RPMS_Monitor_Interceptor (void);
 
   /**
    * @name Methods Required by the ServerRequestInterceptor
@@ -103,7 +108,7 @@ public:
   //@{
 
   /// Return the current average load (requests per second).
-  CORBA::Float current_load (void) const;
+  CORBA::Float current_load (void);
 
   /// Force redirection of requests for targets with the given
   /// RepositoryId to the target pointed to by the given object
@@ -130,10 +135,6 @@ private:
   /// atomically.
   TAO_SYNCH_MUTEX lock_;
 
-  /// Flag that if set true will cause this interceptor to redirect
-  /// all requests back to the load balancer.
-  CORBA::Boolean redirect_requests_;
-
   /// The number of requests received at the location this interceptor
   /// resides in the current measurement interval.
   CORBA::ULong request_count_;
@@ -141,10 +142,9 @@ private:
   // The start of the current measurement interval.
   ACE_Time_Value interval_start_;
 
-  /// Reference to the Load Balancer.
-  LoadBalancing::ReplicationManager_var lb_;
-
-
+  /// Table that contains all registered "redirects," i.e. object
+  /// references used when redirecting the client to another target.
+  TAO_LB_Redirect_Table redirect_table_;
 
 };
 

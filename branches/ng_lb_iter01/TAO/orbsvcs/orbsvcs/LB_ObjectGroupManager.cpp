@@ -10,9 +10,14 @@ ACE_RCSID (LoadBalancing,
 #include "LB_ObjectGroupManager.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "LB_ObjectGroup_Map.h"
+
+
 TAO_LB_ObjectGroupManager::TAO_LB_ObjectGroupManager (
-  TAO_LB_ObjectGroup_Map *map)
-  : object_group_map_ (map)
+  TAO_LB_PropertyManager &property_manager,
+  TAO_LB_ObjectGroup_Map &map)
+  : property_mangager_ (property_manager),
+    object_group_map_ (map)
 {
 }
 
@@ -31,7 +36,8 @@ TAO_LB_ObjectGroupManager::create_member (
                    LoadBalancing::InvalidCriteria,
                    LoadBalancing::CannotMeetCriteria))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::ObjectGroup::_nil ());
 }
 
 LoadBalancing::ObjectGroup_ptr
@@ -45,7 +51,8 @@ TAO_LB_ObjectGroupManager::add_member (
                    LoadBalancing::MemberAlreadyPresent,
                    LoadBalancing::ObjectNotAdded))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::ObjectGroup::_nil ());
 }
 
 LoadBalancing::ObjectGroup_ptr
@@ -57,7 +64,8 @@ TAO_LB_ObjectGroupManager::remove_member (
                    LoadBalancing::ObjectGroupNotFound,
                    LoadBalancing::MemberNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::ObjectGroup::_nil ());
 }
 
 LoadBalancing::ObjectGroup_ptr
@@ -71,7 +79,8 @@ TAO_LB_ObjectGroupManager::set_primary_member (
                    LoadBalancing::PrimaryNotSet,
                    LoadBalancing::BadReplicationStyle))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::ObjectGroup::_nil ());
 }
 
 LoadBalancing::Locations *
@@ -81,7 +90,7 @@ TAO_LB_ObjectGroupManager::locations_of_members (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 LoadBalancing::ObjectGroupId
@@ -91,7 +100,7 @@ TAO_LB_ObjectGroupManager::get_object_group_id (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW (CORBA::NO_IMPLEMENT (), 0);
 }
 
 LoadBalancing::ObjectGroup_ptr
@@ -101,7 +110,8 @@ TAO_LB_ObjectGroupManager::get_object_group_ref (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::ObjectGroup::_nil ());
 }
 
 CORBA::Object_ptr
@@ -113,5 +123,6 @@ TAO_LB_ObjectGroupManager::get_member_ref (
                    LoadBalancing::ObjectGroupNotFound,
                    LoadBalancing::MemberNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    CORBA::Object::_nil ());
 }

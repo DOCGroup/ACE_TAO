@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 #include "LB_Minimum_Dispersion.h"
-#include "ReplicaProxy.h"
+//#include "ReplicaProxy.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Minimum_Dispersion,
@@ -14,22 +14,6 @@ TAO_LB_Minimum_Dispersion_Strategy::TAO_LB_Minimum_Dispersion_Strategy (void)
 
 TAO_LB_Minimum_Dispersion_Strategy::~TAO_LB_Minimum_Dispersion_Strategy (void)
 {
-  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
-                     guard,
-                     this->lock_));
-
-  TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
-  TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
-
-  // @@ Bad deactivation!
-
-  for (TAO_LB_ReplicaProxySetIterator i = begin;
-       i != end;
-       ++i)
-    {
-      // Decrease reference count on each proxy servant in the set.
-      (*i)->_remove_ref ();
-    }
 }
 
 CORBA::Object_ptr

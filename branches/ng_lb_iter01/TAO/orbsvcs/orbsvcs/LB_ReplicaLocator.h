@@ -25,7 +25,7 @@
 #include "tao/PortableServer/PortableServerC.h"
 
 // Forward declaration.
-class TAO_LB_LoadBalancer;
+class TAO_LoadBalancing_ReplicationManager_i;
 
 /**
  * @class TAO_LB_ReplicaLocator

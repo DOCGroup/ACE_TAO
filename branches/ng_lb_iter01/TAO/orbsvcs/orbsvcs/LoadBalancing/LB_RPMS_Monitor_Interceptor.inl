@@ -1,9 +1,9 @@
 // -*- C++ -*-
 
 ACE_INLINE CORBA::Float
-TAO_LB_RPMS_Monitor_Interceptor::current_load (void) const
+TAO_LB_RPMS_Monitor_Interceptor::current_load (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
   ACE_Time_Value elapsed_time =
     ACE_OS::gettimeofday () - this->interval_start_;

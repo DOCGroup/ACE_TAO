@@ -22,9 +22,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "LB_ObjectGroup_Map.h"
+
 /// Forward declarations.
 class TAO_LB_PropertyManager;
-class TAO_LB_ObjectGroup_Map;
 
 /**
  * @class TAO_LB_ObjectGroupManager
@@ -40,7 +41,7 @@ class TAO_LB_ObjectGroupManager
 public:
 
   /// Constructor.
-  TAO_LB_ObjectGroupManager (TAO_LB_ObjectGroup_Map *map);
+  TAO_LB_ObjectGroupManager (TAO_LB_ObjectGroup_Map &map);
 
   /**
    * @name TAO_LoadBalancer::ObjectGroupManager methods

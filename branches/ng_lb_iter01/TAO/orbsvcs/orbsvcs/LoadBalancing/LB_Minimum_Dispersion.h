@@ -43,7 +43,7 @@ typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySet
  * @brief Minimum Dispersion load balancing strategy
  */
 class TAO_LoadBalancing_Export TAO_LB_Minimum_Dispersion_Strategy
-  : public TAO_LB_LoadBalancing_Strategy
+  : public TAO_LB_Balancing_Strategy
 {
 public:
 

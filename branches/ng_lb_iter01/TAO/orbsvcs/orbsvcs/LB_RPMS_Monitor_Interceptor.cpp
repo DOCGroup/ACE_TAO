@@ -7,7 +7,7 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
-#if defined (__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 # include "LB_RPMS_Monitor_Interceptor.inl"
 #endif /* __ACE_INLINE__ */
 
@@ -15,10 +15,9 @@ ACE_RCSID (LoadBalancing,
 TAO_LB_RPMS_Monitor_Interceptor::TAO_LB_RPMS_Monitor_Interceptor (
   CORBA::Object_ptr object_group)
   : lock_ (),
-    redirect_table_ (),
     request_count_ (0),
     interval_start_ (ACE_OS::gettimeofday ()),
-    object_group_ ()
+    redirect_table_ ()
 {
 }
 
@@ -63,7 +62,7 @@ TAO_LB_RPMS_Monitor_Interceptor::receive_request_service_contexts (
 
 void
 TAO_LB_RPMS_Monitor_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri
+    PortableInterceptor::ServerRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
@@ -72,7 +71,7 @@ TAO_LB_RPMS_Monitor_Interceptor::receive_request (
 
 void
 TAO_LB_RPMS_Monitor_Interceptor::send_reply (
-    PortableInterceptor::ServerRequestInfo_ptr ri
+    PortableInterceptor::ServerRequestInfo_ptr
     TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
