@@ -18,12 +18,6 @@ namespace {
   typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
   typedef TAO_Reconfig_Scheduler<TAO_EDF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_EDF_SCHED_TYPE;
 
-  inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
-  {
-    //100s of nanoseconds
-    return (tv.sec () * 1000000 + tv.usec ())*10;
-  }
-
   POA_RtecScheduler::Scheduler*
     create_scheduler(const char* schedule_discipline)
   {
@@ -291,7 +285,28 @@ Kokyu_EC::add_supplier_with_timeout(
 {
   add_supplier(supplier_impl,supp_entry_point,supp_type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  add_timeout_consumer(supplier_impl,timeout_consumer_impl,timeout_entry_point,period,crit,imp ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
 
+///Takes ownership of Timeout_Consumer
+void
+Kokyu_EC::add_timeout_consumer(
+                               Supplier * supplier_impl,
+                               Timeout_Consumer * timeout_consumer_impl,
+                               const char * timeout_entry_point,
+                               ACE_Time_Value period,
+                               RtecScheduler::Criticality_t crit,
+                               RtecScheduler::Importance_t imp
+                               ACE_ENV_ARG_DECL
+                               )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   , RtecScheduler::UNKNOWN_TASK
+                   , RtecScheduler::INTERNAL
+                   , RtecScheduler::SYNCHRONIZATION_FAILURE
+                   ))
+{
   RtecEventChannelAdmin::ProxyPushSupplier_var timeout_supplier_proxy;
   RtecEventComm::PushConsumer_var safe_timeout_consumer;
 

@@ -10,7 +10,7 @@
 //   Consumer
 //
 // = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
+//   Bryan Thrall
 //
 // ============================================================================
 
@@ -20,6 +20,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "Supplier.h"
+#include "Service_Handler.h"
 #include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,10 +43,10 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   and it is up to the driver program to use the right one.
   //
 public:
-  Consumer (ACE_Time_Value& worktime, Supplier *fwddest = 0);
+  Consumer (ACE_Time_Value& worktime, Supplier *fwddest = 0, Service_Handler *handler = 0);
   // Constructor
 
-  Consumer (Supplier *fwddest = 0);
+  Consumer (Supplier *fwddest = 0, Service_Handler *handler = 0);
   // Constructor
 
   // = The RtecEventComm::PushConsumer methods
@@ -62,12 +63,18 @@ public:
   void rt_info(RtecScheduler::handle_t consumer_rt_info);
   RtecScheduler::handle_t rt_info(void) const;
 
+  void handler(Service_Handler * handler);
+
+  Service_Handler * handler(void) const;
+
 private:
   int deadline_missed_;
   ACE_Time_Value worktime_;
 
   Supplier *fwddest_;
   RtecScheduler::handle_t rt_info_;
+
+  Service_Handler * handler_;
 };
 
 #endif /* CONSUMER_H */

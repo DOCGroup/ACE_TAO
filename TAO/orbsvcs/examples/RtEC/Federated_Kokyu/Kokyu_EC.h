@@ -18,6 +18,12 @@ public:
 
     virtual ~Kokyu_EC(void);
 
+    ACE_INLINE static RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
+    {
+      //100s of nanoseconds
+      return (tv.sec () * 1000000 + tv.usec ())*10;
+    }
+
     int init(const char* schedule_discipline, PortableServer::POA_ptr poa);
 
     virtual RtEventChannelAdmin::handle_t register_consumer (
@@ -96,6 +102,23 @@ public:
                        , RtecScheduler::INTERNAL
                        , RtecScheduler::SYNCHRONIZATION_FAILURE
                        ));
+
+  ///Takes ownership of Timeout_Consumer
+  void add_timeout_consumer(
+                            Supplier * supplier_impl,
+                            Timeout_Consumer * timeout_consumer_impl,
+                            const char * timeout_entry_point,
+                            ACE_Time_Value period,
+                            RtecScheduler::Criticality_t crit,
+                            RtecScheduler::Importance_t imp
+                            ACE_ENV_ARG_DECL
+                            )
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     , RtecScheduler::UNKNOWN_TASK
+                     , RtecScheduler::INTERNAL
+                     , RtecScheduler::SYNCHRONIZATION_FAILURE
+                     ));
 
     ///Takes ownership of Supplier
     void add_supplier(
