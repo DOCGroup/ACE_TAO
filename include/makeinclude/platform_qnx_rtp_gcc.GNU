@@ -1,29 +1,35 @@
-# $Id$
+# platform_qnx_rtp_gcc.GNU,v 1.11 2003/08/09 04:43:51 dhinton Exp
 
 # QNX/RTP hosted, using gcc-2.95.2
 
-
+nto_version := $(shell uname -a | awk '{ gsub("\\.","", $$3 ); print $$3;}')
+CCFLAGS += -DACE_NTO_VERS=$(nto_version)
+CFLAGS += -DACE_NTO_VERS=$(nto_version)
 inline = 1
-debug = 1
-optimize = 1
-exceptions = 1
+debug ?= 1
+optimize ?= 1
+exceptions ?= 1
 
 ifeq ($(exceptions),1)
   CCFLAGS += -fexceptions
   LDFLAGS += -fexceptions
 else
-  CCLAGS += -fno-exceptions
-  LDLAGS += -fno-exceptions
+  CCFLAGS += -fno-exceptions
+  LDFLAGS += -fno-exceptions
 endif # ! exceptions
 
-pipes ?= 1
+ifeq ($(inline),1)
+  CCFLAGS += -finline-functions
+else
+  CCFLAGS += -fno-inline
+endif # inline
 
 CC      = gcc
 CXX     = g++
 
-DCFLAGS += -gstabs
+DCFLAGS += -gdwarf-2
 
-CFLAGS  += -W -Wall -Wpointer-arith
+CFLAGS  += -pipe -W -Wall -Wpointer-arith
 
 DLD     = $(CXX)
 LD      = $(CXX)

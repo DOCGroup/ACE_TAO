@@ -254,7 +254,7 @@ class ACE_Timeout_Manager;
 #   elif defined (__QNX__)
 #     include "ace/os_include/sys/os_uio.h"
 #     include "ace/os_include/sys/os_ipc.h"
-#     include "ace/os_include:sys/os_time.h"
+#     include "ace/os_include/sys/os_time.h"
 #     include "ace/os_include/sys/os_wait.h"
 #     include "ace/os_include/sys/os_resource.h"
 #     include "ace/os_include/os_pwd.h"
