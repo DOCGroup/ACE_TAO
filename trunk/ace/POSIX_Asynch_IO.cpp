@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/POSIX_Asynch_IO.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
@@ -1733,16 +1735,15 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
 
   result->set_bytes_transferred (0);
   result->set_error (sockerror);
+
+  // This previously just did a "return -1" and let handle_close() clean
+  // things up. However, this entire object may be gone as a result of
+  // the application's completion handler, so don't count on 'this' being
+  // legitimate on return from post_result().
+  // remove_io_handler() contains flag DONT_CALL
+  this->posix_proactor ()->get_asynch_pseudo_task ().remove_io_handler (fd);
   this->post_result (result, this->flg_open_);
-
-  return -1;
-
-  //ACE_Asynch_Pseudo_Task & task =
-  //       this->posix_proactor()->get_asynch_pseudo_task();
-
-  //task.remove_io_handler ( fd );
-
-  //return 0;
+  return 0;
 }
 
 
