@@ -11,21 +11,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name gperf_lib
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "gperf_lib"=.\gperf_lib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################
