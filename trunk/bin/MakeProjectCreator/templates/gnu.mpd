@@ -133,7 +133,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%> $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%libs%>,$(findstring $(lib),$(foreach libpath,<%libpaths%> /usr/lib $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%libs%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif

@@ -1,3 +1,16 @@
+Sat Aug 14 14:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/templates/gnu.mpd:
+	  
+	  Add /usr/lib as a path for library check. If the location of the
+	  library is not specified by the application, the compiler,
+	  linker and loader knows where to look in for *nix based
+	  systems. So should our library checker.Without this applications
+	  MPC file starts pointing to /usr/lib to locate libraries like
+	  PCAP and XERCES, which can be installed with system
+	  libraries. It is bad to see installation specific thingies
+	  making its way up the order.
+
 Sat Aug 14 09:28:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/CDR_Base.h (ACE_CDR::Boolean):
