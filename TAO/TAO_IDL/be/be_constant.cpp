@@ -29,17 +29,24 @@ ACE_RCSID (be,
            "$Id$")
 
 be_constant::be_constant (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Constant (),
+    be_decl ()
 {
 }
 
 be_constant::be_constant (AST_Expression::ExprType et,
 			                    AST_Expression *v,
                           UTL_ScopedName *n)
-  : AST_Constant (et,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_const,
+              n),
+    AST_Constant (et,
                   v,
                   n),
-    AST_Decl (AST_Decl::NT_const,
-              n)
+    be_decl (AST_Decl::NT_const,
+             n)
 {
 }
 

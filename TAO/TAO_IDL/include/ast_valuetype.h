@@ -21,7 +21,8 @@ public:
                  long n_supports,
                  AST_Interface *supports_concrete,
                  idl_bool abstract,
-                 idl_bool truncatable);
+                 idl_bool truncatable,
+                 idl_bool custom);
 
   virtual ~AST_ValueType (void);
 
@@ -37,6 +38,7 @@ public:
   AST_Interface *supports_concrete (void) const;
 
   idl_bool truncatable (void) const;
+  idl_bool custom (void) const;
 
   // Cleanup function.
   virtual void destroy (void);
@@ -59,6 +61,7 @@ protected:
   AST_Interface *pd_supports_concrete;
 
   idl_bool pd_truncatable;
+  idl_bool pd_custom;
 
   virtual AST_Factory *fe_add_factory (AST_Factory *f);
 };

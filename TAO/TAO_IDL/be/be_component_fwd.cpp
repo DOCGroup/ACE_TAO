@@ -25,20 +25,32 @@ ACE_RCSID (be,
            "$Id$")
 
 be_component_fwd::be_component_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd (),
+    AST_ComponentFwd (),
+    be_type (),
+    be_interface_fwd ()
 {
   this->size_type (AST_Type::VARIABLE);
 }
 
 be_component_fwd::be_component_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
-  : be_interface_fwd (dummy,
-                      n),
-    AST_ComponentFwd (dummy,
-                       n),
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_component_fwd,
+              n),
+    AST_Type (AST_Decl::NT_component_fwd,
+              n),
     AST_InterfaceFwd (dummy,
                       n),
-    AST_Decl (AST_Decl::NT_component_fwd,
-              n)
+    AST_ComponentFwd (dummy,
+                      n),
+    be_type (AST_Decl::NT_component_fwd,
+             n),
+    be_interface_fwd (dummy,
+                      n)
 {
   this->size_type (AST_Type::VARIABLE);
 }

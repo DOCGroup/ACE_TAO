@@ -215,7 +215,7 @@ TAO_Out_T<T,T_var>::TAO_Out_T (T_var & p)
 template<typename T, typename T_var>
 ACE_INLINE
 TAO_Out_T<T,T_var>::TAO_Out_T (const TAO_Out_T<T,T_var> & p)
-  : ptr_ (ACE_const_cast (THIS_OUT_TYPE &, p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 template<typename T, typename T_var>
@@ -223,7 +223,7 @@ ACE_INLINE
 TAO_Out_T<T,T_var> &
 TAO_Out_T<T,T_var>::operator= (const TAO_Out_T<T,T_var> & p)
 {
-  this->ptr_ = ACE_const_cast (THIS_OUT_TYPE &, p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 

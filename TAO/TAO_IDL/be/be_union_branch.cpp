@@ -33,22 +33,29 @@ ACE_RCSID (be,
            "$Id$")
 
 be_union_branch::be_union_branch (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_UnionBranch (),
+    be_decl ()
 {
 }
 
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
                                   UTL_ScopedName *n)
-  : AST_UnionBranch (ll,
-                     ft,
-                     n),
+  : COMMON_Base (ft->is_local (),
+                 ft->is_abstract ()),
+    AST_Decl (AST_Decl::NT_union_branch,
+              n),
     AST_Field (AST_Decl::NT_union_branch,
                ft,
                n),
-    AST_Decl (AST_Decl::NT_union_branch,
-              n),
-    COMMON_Base (ft->is_local (),
-                 ft->is_abstract ())
+    AST_UnionBranch (ll,
+                     ft,
+                     n),
+    be_decl (AST_Decl::NT_union_branch,
+             n)
 {
 }
 

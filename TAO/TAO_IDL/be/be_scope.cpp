@@ -22,7 +22,8 @@ ACE_RCSID (be,
 
 // Default Constructor.
 be_scope::be_scope (void)
-  : comma_ (0)
+  : UTL_Scope (),
+    comma_ (0)
 {
 }
 

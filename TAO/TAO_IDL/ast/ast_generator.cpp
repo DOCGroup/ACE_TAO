@@ -255,7 +255,8 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
                                  long n_supports,
                                  AST_Interface *supports_concrete,
                                  idl_bool abstract,
-                                 idl_bool truncatable)
+                                 idl_bool truncatable,
+                                 idl_bool custom)
 {
   AST_ValueType *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -269,7 +270,8 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
                                  n_supports,
                                  supports_concrete,
                                  abstract,
-                                 truncatable),
+                                 truncatable,
+                                 custom),
                   0);
 
   // The following helps with OBV_ namespace generation.
@@ -297,6 +299,7 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
                                                  0,
                                                  0,
                                                  abstract,
+                                                 I_FALSE,
                                                  I_FALSE);
 
   AST_ValueTypeFwd *retval = 0;
@@ -319,7 +322,8 @@ AST_Generator::create_eventtype (UTL_ScopedName *n,
                                  long n_supports,
                                  AST_Interface *supports_concrete,
                                  idl_bool abstract,
-                                 idl_bool truncatable)
+                                 idl_bool truncatable,
+                                 idl_bool custom)
 {
   AST_EventType *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -333,7 +337,8 @@ AST_Generator::create_eventtype (UTL_ScopedName *n,
                                  n_supports,
                                  supports_concrete,
                                  abstract,
-                                 truncatable),
+                                 truncatable,
+                                 custom),
                   0);
 
   // The following helps with OBV_ namespace generation.
@@ -361,6 +366,7 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
                                                  0,
                                                  0,
                                                  abstract,
+                                                 I_FALSE,
                                                  I_FALSE);
 
   AST_EventTypeFwd *retval = 0;

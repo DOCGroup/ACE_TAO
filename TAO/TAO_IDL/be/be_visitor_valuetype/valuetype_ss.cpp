@@ -161,19 +161,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       << "(void) safe_stub.release ();" << be_nl
       << "return ";
 
-  if (concrete->is_nested ())
-    {
-      UTL_Scope *parent_scope = concrete->defined_in ();
-      AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
-
-      *os << "ACE_NESTED_CLASS ("
-          << parent_decl->name () << ", "
-          << concrete->local_name ();
-    }
-  else
-    {
-      *os << concrete->name ();
-    }
+  *os << concrete->name ();
 
   *os << "::_unchecked_narrow (obj.in ());"
       << be_uidt_nl

@@ -82,8 +82,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID (ast, ast_field, "$Id$")
 
 AST_Field::AST_Field (void)
-         : pd_field_type (0),
-           pd_visibility (vis_NA)
+  : COMMON_Base (),
+    AST_Decl (),
+    pd_field_type (0),
+    pd_visibility (vis_NA)
 {
 }
 
@@ -91,7 +93,8 @@ AST_Field::AST_Field (void)
 AST_Field::AST_Field (AST_Type *ft,
                       UTL_ScopedName *n,
                       Visibility vis)
-  : AST_Decl (AST_Decl::NT_field,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_field,
               n),
     pd_field_type (ft),
     pd_visibility (vis)

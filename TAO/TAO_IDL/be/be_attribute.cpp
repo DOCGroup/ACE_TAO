@@ -27,6 +27,11 @@ ACE_RCSID (be,
            "$Id$")
 
 be_attribute::be_attribute (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_Attribute (),
+    be_decl ()
 {
   be_operation_default_strategy *bods = 0;
 
@@ -44,18 +49,20 @@ be_attribute::be_attribute (idl_bool ro,
                             UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Attribute (ro,
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_attr,
+              n),
+    AST_Field (AST_Decl::NT_attr,
+               ft,
+               n),
+    AST_Attribute (ro,
                    ft,
                    n,
                    local,
                    abstract),
-    AST_Field (AST_Decl::NT_attr,
-               ft,
-               n),
-    AST_Decl (AST_Decl::NT_attr,
-              n),
-    COMMON_Base (local,
-                 abstract)
+    be_decl (AST_Decl::NT_attr,
+             n)
 {
   be_operation_default_strategy *bods = 0;
 

@@ -36,7 +36,7 @@ public:
   ~TAO_Array_Var_Base_T (void);
   
   T_slice & operator[] (CORBA::ULong index);
-  const T_slice & operator[] (CORBA::ULong index) const;
+  T_slice const & operator[] (CORBA::ULong index) const;
   operator T_slice * const & () const; 
   
   // in, inout, out, _retn 

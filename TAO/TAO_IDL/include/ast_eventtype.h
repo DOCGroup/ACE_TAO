@@ -21,7 +21,8 @@ public:
                  long n_supports,
                  AST_Interface *supports_concrete,
                  idl_bool abstract,
-                 idl_bool truncatable);
+                 idl_bool truncatable,
+                 idl_bool custom);
 
   virtual ~AST_EventType (void);
 

@@ -83,21 +83,31 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Exception::AST_Exception (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure ()
 {
 }
 
 AST_Exception::AST_Exception (UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Structure (AST_Decl::NT_except,
-                   n,
-                   local,
-                   abstract),
-    UTL_Scope (AST_Decl::NT_except),
+  : COMMON_Base (local,
+                 abstract),
     AST_Decl (AST_Decl::NT_except,
               n),
-    COMMON_Base (local,
-                 abstract)
+    AST_Type (AST_Decl::NT_except,
+              n),
+    AST_ConcreteType (AST_Decl::NT_except,
+                      n),
+    UTL_Scope (AST_Decl::NT_except),
+    AST_Structure (AST_Decl::NT_except,
+                   n,
+                   local,
+                   abstract)
 {
 }
 

@@ -82,7 +82,12 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Structure::AST_Structure (void)
-  : member_count_ (-1),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    member_count_ (-1),
     local_struct_ (-1)
 {
 }
@@ -90,13 +95,17 @@ AST_Structure::AST_Structure (void)
 AST_Structure::AST_Structure (UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (AST_Decl::NT_struct,
-             n),
-   UTL_Scope (AST_Decl::NT_struct),
-   COMMON_Base (local,
-                abstract),
-   member_count_ (-1),
-   local_struct_ (-1)
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (AST_Decl::NT_struct,
+              n),
+    AST_Type (AST_Decl::NT_struct,
+              n),
+    AST_ConcreteType (AST_Decl::NT_struct,
+                      n),
+    UTL_Scope (AST_Decl::NT_struct),
+    member_count_ (-1),
+    local_struct_ (-1)
 {
 }
 
@@ -104,13 +113,17 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                               UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
- : AST_Decl (nt,
-             n),
-   UTL_Scope (nt),
-   COMMON_Base (local,
-                abstract),
-   member_count_ (-1),
-   local_struct_ (-1)
+  : COMMON_Base (local,
+                 abstract),
+    AST_Decl (nt,
+              n),
+    AST_Type (nt,
+              n),
+    AST_ConcreteType (nt,
+                      n),
+    UTL_Scope (nt),
+    member_count_ (-1),
+    local_struct_ (-1)
 {
 }
 

@@ -15,13 +15,19 @@ ACE_RCSID( ast,
            "$Id$")
 
 AST_StructureFwd::AST_StructureFwd (void)
-  : pd_full_definition (0)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    pd_full_definition (0)
 {
 }
 
 AST_StructureFwd::AST_StructureFwd (AST_Structure *dummy,
                                     UTL_ScopedName *n)
-  : AST_Decl (AST_Decl::NT_struct_fwd,
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_struct_fwd,
+              n),
+    AST_Type (AST_Decl::NT_struct_fwd,
               n),
     pd_full_definition (dummy)
 {

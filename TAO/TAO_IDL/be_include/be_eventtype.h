@@ -44,7 +44,8 @@ public:
                 long n_supports,
                 AST_Interface *supports_concrete,
                 idl_bool abstract,
-                idl_bool truncatable);
+                idl_bool truncatable,
+                idl_bool custom);
   // Constructor that sets its scoped name <n>, a list of inherited valuetypes
   // and supported interfaces <ih>, and the number of inherited interfaces <nih>
 

@@ -29,19 +29,25 @@ ACE_RCSID (be,
            "$Id$")
 
 be_field::be_field (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    be_decl ()
 {
 }
 
 be_field::be_field (AST_Type *ft,
                     UTL_ScopedName *n,
                     Visibility vis)
-  : AST_Field (ft,
-               n,
-               vis),
+  : COMMON_Base (ft->is_local (),
+                 ft->is_abstract ()),
     AST_Decl (AST_Decl::NT_field,
               n),
-    COMMON_Base (ft->is_local (),
-                 ft->is_abstract ())
+    AST_Field (ft,
+               n,
+               vis),
+    be_decl (AST_Decl::NT_field,
+             n)
 {
 }
 

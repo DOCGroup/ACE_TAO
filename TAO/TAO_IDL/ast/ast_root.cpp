@@ -81,14 +81,19 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Root::AST_Root (void)
+	: COMMON_Base (),
+    AST_Decl (),
+	  UTL_Scope (),
+    AST_Module ()
 {
 }
 
 AST_Root::AST_Root (UTL_ScopedName *n)
-	: AST_Module (n),
+	: COMMON_Base (),
     AST_Decl (AST_Decl::NT_root,
               n),
-	  UTL_Scope (AST_Decl::NT_root)
+	  UTL_Scope (AST_Decl::NT_root),
+    AST_Module (n)
 {
 }
 

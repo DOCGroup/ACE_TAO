@@ -26,21 +26,34 @@ ACE_RCSID (be,
            "$Id$")
 
 be_union_fwd::be_union_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_StructureFwd (),
+    AST_Type (),
+    AST_UnionFwd (),
+    be_decl (),
+    be_type (),
+    be_structure_fwd ()
 {
 }
 
 be_union_fwd::be_union_fwd (AST_Union *dummy,
                             UTL_ScopedName *n)
-  : be_structure_fwd (dummy,
-                      n),
-    AST_UnionFwd (dummy,
-                  n),
+  : COMMON_Base (),
+    AST_Decl (AST_Decl::NT_union_fwd,
+              n),
     AST_StructureFwd (dummy,
                       n),
     AST_Type (AST_Decl::NT_union_fwd,
               n),
-    AST_Decl (AST_Decl::NT_union_fwd,
-              n)
+    AST_UnionFwd (dummy,
+                  n),
+    be_decl (AST_Decl::NT_union_fwd,
+             n),
+    be_type (AST_Decl::NT_union_fwd,
+             n),
+    be_structure_fwd (dummy,
+                      n)
 {
 }
 

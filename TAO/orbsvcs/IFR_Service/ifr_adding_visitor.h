@@ -21,10 +21,13 @@
 #define TAO_IFR_ADDING_VISITOR_H
 
 #include "ifr_visitor.h"
+#include "tao/IFR_CLient/IFR_ComponentsC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class UTL_ExceptList;
 
 class ifr_adding_visitor : public ifr_visitor
 {
@@ -64,6 +67,24 @@ public:
 
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
   // Visit valuetype_fwd.
+
+  virtual int visit_component (AST_Component *node);
+  // Visit component.
+
+  virtual int visit_component_fwd (AST_ComponentFwd *node);
+  // Visit component_fwd
+
+  virtual int visit_eventtype (AST_EventType *node);
+  // Visit valuetype.
+
+  virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
+  // Visit valuetype_fwd
+
+  virtual int visit_home (AST_Home *node);
+  // Visit component home.
+
+  virtual int visit_factory (AST_Factory *node);
+  // Visit a factory construct.
 
   virtual int visit_structure (AST_Structure *node);
   // Visit a structure.
@@ -129,11 +150,116 @@ protected:
                         ACE_ENV_ARG_DECL);
   // Code encapsulated out of visit_valuetype().
 
+  int create_component_def (AST_Component *node
+                            ACE_ENV_ARG_DECL);
+  // Code encapsulated out of visit_component().
+
+  int create_home_def (AST_Home *node
+                       ACE_ENV_ARG_DECL);
+  // Code encapsulated out of visit_home().
+
+  int create_event_def (AST_EventType *node
+                        ACE_ENV_ARG_DECL);
+  // Code encapsulated out of visit_eventtype().
+
   void get_referenced_type (AST_Type *node
                             ACE_ENV_ARG_DECL);
   // Utility method to update ir_current_ for struct members, union
   // members, operation parameters and operation return types.
 
+  void fill_base_value (CORBA::ValueDef_ptr &result,
+                        AST_ValueType *node
+                        ACE_ENV_ARG_DECL);
+
+  void fill_base_component (CORBA::ComponentIR::ComponentDef_ptr &result,
+                            AST_Component *node
+                            ACE_ENV_ARG_DECL);
+
+  void fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
+                       AST_Home *node
+                       ACE_ENV_ARG_DECL);
+
+  void fill_managed_component (CORBA::ComponentIR::ComponentDef_ptr &result,
+                               AST_Home *node
+                               ACE_ENV_ARG_DECL);
+
+  void fill_primary_key (CORBA::ValueDef_ptr &result,
+                         AST_Home *node
+                         ACE_ENV_ARG_DECL);
+
+  void fill_abstract_base_values (CORBA::ValueDefSeq &result,
+                                  AST_ValueType *node
+                                  ACE_ENV_ARG_DECL);
+
+  void fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
+                                  AST_Interface *node
+                                  ACE_ENV_ARG_DECL);
+
+  void fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
+                                  AST_Interface *node
+                                  ACE_ENV_ARG_DECL);
+
+  void fill_interfaces (CORBA::InterfaceDefSeq &result,
+                        AST_Interface **list,
+                        CORBA::Long length
+                        ACE_ENV_ARG_DECL);
+
+  void fill_initializers (CORBA::ExtInitializerSeq &result,
+                          AST_ValueType *node
+                          ACE_ENV_ARG_DECL);
+
+  void fill_get_exceptions (CORBA::ExceptionDefSeq &result,
+                            AST_Attribute *node
+                            ACE_ENV_ARG_DECL);
+
+  void fill_set_exceptions (CORBA::ExceptionDefSeq &result,
+                            AST_Attribute *node
+                            ACE_ENV_ARG_DECL);
+
+  void fill_exceptions (CORBA::ExceptionDefSeq &result,
+                        AST_Decl *node
+                        ACE_ENV_ARG_DECL);
+
+  void fill_exceptions (CORBA::ExceptionDefSeq &result,
+                        UTL_ExceptList *list
+                        ACE_ENV_ARG_DECL);
+
+  void fill_params (CORBA::ParDescriptionSeq &result,
+                    AST_Operation *node
+                    ACE_ENV_ARG_DECL);
+
+  void visit_all_provides (AST_Component *node,
+                           CORBA::ComponentIR::ComponentDef_ptr c
+                           ACE_ENV_ARG_DECL);
+
+  void visit_all_uses (AST_Component *node,
+                       CORBA::ComponentIR::ComponentDef_ptr c
+                       ACE_ENV_ARG_DECL);
+
+  void visit_all_emits (AST_Component *node,
+                        CORBA::ComponentIR::ComponentDef_ptr c
+                        ACE_ENV_ARG_DECL);
+
+  void visit_all_publishes (AST_Component *node,
+                            CORBA::ComponentIR::ComponentDef_ptr c
+                            ACE_ENV_ARG_DECL);
+
+  void visit_all_consumes (AST_Component *node,
+                           CORBA::ComponentIR::ComponentDef_ptr c
+                           ACE_ENV_ARG_DECL);
+
+  void visit_all_factories (AST_Home *node,
+                            CORBA::ComponentIR::HomeDef_ptr h
+                            ACE_ENV_ARG_DECL);
+
+  void visit_all_finders (AST_Home *node,
+                          CORBA::ComponentIR::HomeDef_ptr h
+                          ACE_ENV_ARG_DECL);
+
+  void expand_id (ACE_CString &str,
+                  const char *local_name);
+
+protected:
   CORBA::IDLType_var ir_current_;
   // Holder for the IR object most recently created or looked up by
   // the visitor. This makes it accessible by visitor methods that

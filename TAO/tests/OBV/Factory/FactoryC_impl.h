@@ -44,12 +44,18 @@ public:
 
   virtual OBV_FactoryTest::Value2* create_default (
       CORBA::ULong id
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
   virtual OBV_FactoryTest::Value2* create (
       CORBA::ULong id,
       const OBV_FactoryTest::BaseValue::BV_Data & data
-      );
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
 
 public:
 

@@ -99,6 +99,9 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Module::AST_Module (void)
+ : AST_Decl (),
+   UTL_Scope (),
+   pd_has_nested_valuetype (0)
 {
 }
 

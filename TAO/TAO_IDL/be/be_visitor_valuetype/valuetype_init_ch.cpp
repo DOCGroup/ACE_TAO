@@ -86,8 +86,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Virtual destructor.
-  os << "virtual ~" << node->local_name () << "_init (void);"
-     << be_nl << be_nl;
+  os << "virtual ~" << node->local_name () << "_init (void);";
 
 
   if (this->visit_valuetype_scope (node) == -1)
@@ -102,7 +101,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // Generate _downcast method.
   os << be_nl << be_nl
      << "static " << node->local_name () << "_init* "
-     << "_downcast (CORBA::ValueFactoryBase* );";
+     << "_downcast (CORBA::ValueFactoryBase *);";
 
   if (factory_style == FS_CONCRETE_FACTORY)
     {
@@ -155,7 +154,8 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 
 
   // STEP I: Generate preambule.
-  os << "virtual " << vt->local_name () << "* ";
+  os << be_nl << be_nl
+     << "virtual " << vt->local_name () << "* ";
 
   // STEP 2: Generate the operation name.
   os << node->local_name ();
@@ -175,7 +175,7 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
     }
 
   // Make pure virtual.
-  os << " = 0;" << be_nl;
+  os << " = 0;";
 
   return 0;
 }

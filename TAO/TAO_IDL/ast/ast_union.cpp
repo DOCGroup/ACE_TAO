@@ -91,6 +91,13 @@ ACE_RCSID (ast,
            "$Id$")
 
 AST_Union::AST_Union (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    default_index_ (-2)
 {
 }
 
@@ -98,11 +105,18 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_ScopedName *n,
                       idl_bool local,
                       idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_union,
-             n),
-    UTL_Scope (AST_Decl::NT_union),
-    COMMON_Base (local,
+  : COMMON_Base (local,
                  abstract),
+    AST_Decl (AST_Decl::NT_union,
+              n),
+    AST_Type (AST_Decl::NT_union,
+              n),
+    AST_ConcreteType (AST_Decl::NT_union,
+                      n),
+    UTL_Scope (AST_Decl::NT_union),
+    AST_Structure (n,
+                   local,
+                   abstract),
     default_index_ (-2)
 {
   this->default_value_.computed_ = -2;

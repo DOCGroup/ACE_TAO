@@ -85,7 +85,10 @@ ACE_RCSID (ast,
 
 // Constructor(s) and destructor.
 AST_Attribute::AST_Attribute (void)
-  : pd_readonly (I_TRUE),
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    pd_readonly (I_TRUE),
     pd_get_exceptions (0),
     pd_set_exceptions (0)
 {
@@ -96,13 +99,13 @@ AST_Attribute::AST_Attribute (idl_bool ro,
                               UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Field (AST_Decl::NT_attr,
-               ft,
-               n),
+  : COMMON_Base (local,
+                 abstract),
     AST_Decl (AST_Decl::NT_attr,
               n),
-    COMMON_Base (local,
-                 abstract),
+    AST_Field (AST_Decl::NT_attr,
+               ft,
+               n),
     pd_readonly (ro),
     pd_get_exceptions (0),
     pd_set_exceptions (0)

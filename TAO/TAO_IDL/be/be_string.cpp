@@ -28,6 +28,12 @@ ACE_RCSID (be,
            "$Id$")
 
 be_string::be_string (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_String (),
+    be_decl (),
+    be_type ()
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
@@ -37,13 +43,20 @@ be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName *n,
                       AST_Expression *v,
                       long width)
-  : AST_String (nt,
+  : COMMON_Base (),
+    AST_Decl (nt,
+              n,
+              I_TRUE),
+    AST_Type (nt,
+              n),
+    AST_String (nt,
                 n,
                 v,
                 width),
-    AST_Decl (nt,
-              n,
-              I_TRUE)
+    be_decl (nt,
+             n),
+    be_type (nt,
+             n)
 {
 }
 

@@ -1165,7 +1165,7 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
   switch (def_kind)
   {
     case CORBA::dk_Attribute:
-      repo_id += "CORBA/AttributeDef:";
+      repo_id += "CORBA/ExtAttributeDef:";
       break;
     case CORBA::dk_Constant:
       repo_id += "CORBA/ConstantDef:";
@@ -1174,16 +1174,16 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
       repo_id += "CORBA/ExceptionDef:";
       break;
     case CORBA::dk_Interface:
-      repo_id += "CORBA/InterfaceDef:";
+      repo_id += "CORBA/ExtInterfaceDef:";
       break;
     case CORBA::dk_AbstractInterface:
-      repo_id += "CORBA/AbstractInterfaceDef:";
+      repo_id += "CORBA/ExtAbstractInterfaceDef:";
       break;
     case CORBA::dk_LocalInterface:
-      repo_id += "CORBA/LocalInterfaceDef:";
+      repo_id += "CORBA/ExtLocalInterfaceDef:";
       break;
     case CORBA::dk_Module:
-      repo_id += "CORBA/ModuleDef:";
+      repo_id += "CORBA/ComponentIR/ModuleDef:";
       break;
     case CORBA::dk_Operation:
       repo_id += "CORBA/OperationDef:";
@@ -1222,7 +1222,7 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
       repo_id += "CORBA/FixedDef:";
       break;
     case CORBA::dk_Value:
-      repo_id += "CORBA/ValueDef:";
+      repo_id += "CORBA/ExtValueDef:";
       break;
     case CORBA::dk_ValueBox:
       repo_id += "CORBA/ValueBoxDef:";

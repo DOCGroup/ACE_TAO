@@ -635,6 +635,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                 0,
                                 0,
                                 0,
+                                0,
                                 0),
                   0);
 
