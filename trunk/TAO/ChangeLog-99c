@@ -3,6 +3,11 @@ Wed Jul 21 08:55:12 1999  Steve Huston  <shuston@riverace.com>
         * TAO_IDL/driver/drv_preproc.cpp: For IBM C++ 3.6, add -qflag=w:w
           to preprocessor options to quiet invalid #pragma info messages.
 
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp
+          (TAO_RSE_Dependency_Visitor ctor): Removed extraneous type scoping
+          from arg list to compile on HP-UX aC++. Thanks to Brian Wallis for
+          this fix.
+
 Wed Jul 21 05:04:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (shutdown): Instead of wapup_all_thread, we need to
