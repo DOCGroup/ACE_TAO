@@ -9,13 +9,16 @@ ifndef exceptions
   exceptions = 1
 endif
 ifeq (,$(debug))
-  debug = 1
+  debug = 0
 endif
 ifeq (,$(optimize))
   optimize = 1
 endif
 ifeq (,$(threads))
   threads = 1
+endif
+ifeq (,$(static_libs_only))
+  static_libs_only=1
 endif
 
 PLATFORM_XT_CPPFLAGS=
@@ -49,7 +52,7 @@ PLATFORM_AIO_SUPPORT := \
 CC  = pgcc
 CXX = pgCC
 
-CFLAGS  += 
+CFLAGS  += --one_instantiation_per_object --prelink_objects -Wc,-tused
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
@@ -77,8 +80,8 @@ PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv
 RANLIB  = @true
-SOFLAGS += $(CPPFLAGS) -shared $(PIC)
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
+SOFLAGS += $(CPPFLAGS) -shared $(PIC) --one_instantiation_per_object --prelink_objects
+SOBUILD = $(COMPILE.cc) $(PIC) --one_instantiation_per_object --prelink_objects -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
 
