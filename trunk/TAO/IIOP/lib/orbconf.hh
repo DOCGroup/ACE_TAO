@@ -22,7 +22,9 @@
 #include <ace/OS.h>
 
 /* Define if you have the <widec.h> header file.  */
-// #define HAVE_WIDEC_H 1
+#if !defined(linux)
+#  define HAVE_WIDEC_H 1
+#endif
 
 /* Define to `int' if <sys/types.h> doesn't define.  */
 /* #undef pid_t */
