@@ -1,3 +1,8 @@
+Tue May 20 11:11:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Makefile: Added -lTAO_SmartProxies to the
+	  link line.
+
 Mon May 19 15:41:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/Makefile:
