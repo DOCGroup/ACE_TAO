@@ -45,8 +45,6 @@ class TAO_Queued_Data;
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
 public:
-  //  friend class TAO_GIOP_Message_Reactive_Handler;
-
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
@@ -68,7 +66,7 @@ public:
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &cdr);
 
-  /// Write the RequestHeader in to the <cdr> stream.
+  /// Write the RequestHeader in to the @a cdr stream.
   virtual int generate_locate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
@@ -83,7 +81,7 @@ public:
 
   /// This method reads the message on the connection. Returns 0 when
   /// there is short read on the connection. Returns 1 when the full
-  /// message is read and handled. Returns -1 on errors. If <block> is
+  /// message is read and handled. Returns -1 on errors. If @a block is
   /// 1, then reply is read in a blocking manner.
   virtual int read_message (TAO_Transport *transport,
                             int block = 0,
@@ -102,18 +100,18 @@ public:
   /// message block.
   virtual ssize_t missing_data (ACE_Message_Block &message_block);
 
-  /* Extract the details of the next message from the <incoming>
-   * through <qd>. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in <incoming>.
+  /* Extract the details of the next message from the @a incoming
+   * through @a qd. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in @a incoming.
    */
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd);
 
-  /// Check whether the node <qd> needs consolidation from <incoming>
+  /// Check whether the node @a qd needs consolidation from @a incoming.
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming);
 
-  /// Get the details of the message parsed through the <qd>.
+  /// Get the details of the message parsed through the @a qd.
   virtual void get_message_data (TAO_Queued_Data *qd);
 
   /// @@Bala:Docu??
@@ -127,14 +125,12 @@ public:
 
 
   /// Parse the reply message that we received and return the reply
-  /// information though <reply_info>
+  /// information through @a reply_info
   virtual int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
       TAO_Queued_Data *qd);
 
-
-
-  /// Generate a reply message with the exception <ex>.
+  /// Generate a reply message with the exception @a ex.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
@@ -147,13 +143,13 @@ public:
   virtual TAO_OutputCDR &out_stream (void);
 protected:
 
-  /// Processes the <GIOP_REQUEST> messages
+  /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,
                        TAO_InputCDR &input,
                        TAO_OutputCDR &output,
                        TAO_GIOP_Message_Generator_Parser *);
 
-  /// Processes the <GIOP_LOCATE_REQUEST> messages
+  /// Processes the GIOP_LOCATE_REQUEST messages
   int process_locate_request (TAO_Transport *transport,
                               TAO_InputCDR &input,
                               TAO_OutputCDR &output,
@@ -179,15 +175,15 @@ protected:
 
 private:
 
-  /// Writes the GIOP header in to <msg>
-  /// NOTE: If the GIOP header happens to change in the future, we can
+  /// Writes the GIOP header in to @a msg
+  /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
   int write_protocol_header (TAO_GIOP_Message_Type t,
                              TAO_OutputCDR &msg);
 
-  /// Make a <GIOP_LOCATEREPLY> and hand that over to the transport so
+  /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
   /// that it can be sent over the connection.
-  /// NOTE:As on date 1.1 & 1.2 seem to have similar headers. Till an
+  /// @note As on date 1.1 & 1.2 seem to have similar headers. Till an
   /// unmanageable difference comes let them be implemented here.
   int make_send_locate_reply (TAO_Transport *transport,
                               TAO_GIOP_Locate_Request_Header &request,
@@ -203,7 +199,7 @@ private:
                               TAO_Transport *transport,
                               void *ctx);
 
-  /// We must send a LocateReply through <transport>, this request
+  /// We must send a LocateReply through @a transport, this request
   /// resulted in some kind of exception.
   int send_reply_exception (TAO_Transport *transport,
                             TAO_OutputCDR &cdr,
@@ -222,15 +218,14 @@ private:
   virtual int is_ready_for_bidirectional (TAO_OutputCDR &msg);
 
   /// Creates a new node for the queue with a message block in the
-  /// node of size <sz>..
+  /// node of size @a sz.
   TAO_Queued_Data *make_queued_data (size_t sz);
 
 private:
-
   /// Cached ORB_Core pointer...
   TAO_ORB_Core *orb_core_;
 
-  /// Thr message handler object that does reading and parsing of the
+  /// The message handler object that does reading and parsing of the
   /// incoming messages
   TAO_GIOP_Message_State message_state_;
 
@@ -238,9 +233,6 @@ private:
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
 
 protected:
-  /// The generator and parser state.
-  // TAO_GIOP_Message_Generator_Parser *generator_parser_;
-
   /// Buffer used for both the output and input CDR streams, this is
   /// "safe" because we only one of the streams at a time.
   char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
