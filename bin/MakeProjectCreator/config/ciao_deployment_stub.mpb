@@ -4,5 +4,5 @@
 project : portableserver {
   after += Deployment_stub
   libs  += Deployment_stub
-  includes += $(CIAO_ROOT)/DnC/Core
+  includes += $(CIAO_ROOT)/DnC/ciao $(CIAO_ROOT)/DnC
 }
