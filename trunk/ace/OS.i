@@ -8418,9 +8418,7 @@ ACE_OS::thr_yield (void)
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ::pace_sched_yield ();
 #elif defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  ::thr_yield ();
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_STD)
   // Note - this is a POSIX.4 function - not a POSIX.1c function...
   ::sched_yield ();
@@ -8429,6 +8427,8 @@ ACE_OS::thr_yield (void)
 #   else    /* Draft 4 and 7 */
   ::pthread_yield ();
 #   endif  /* ACE_HAS_PTHREADS_STD */
+# elif defined (ACE_HAS_STHREADS)
+  ::thr_yield ();
 # elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
 # elif defined (VXWORKS)
