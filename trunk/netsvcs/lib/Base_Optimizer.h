@@ -5,20 +5,20 @@
 //
 // = LIBRARY
 //    netsvcs
-// 
+//
 // = FILENAME
-//    Base_Optimizer.h 
+//    Base_Optimizer.h
 //
 // = AUTHOR
 //    Per Andersson.
-// 
+//
 // ============================================================================
 
 #if !defined (BASE_OPTIMIZER_H)
 #define BASE_OPTIMIZER_H
 
-template<class Base, class Member> 
-struct Base_Optimizer : Base
+template<class Base, class Member>
+struct Base_Optimizer : public Base
 // = TITLE
 //
 // = DESCRIPTION
@@ -31,21 +31,21 @@ struct Base_Optimizer : Base
   Member m_;
 };
 
-template<class Base, class Member> inline 
-Base_Optimizer<Base, Member>::Base_Optimizer (void) 
+template<class Base, class Member> inline
+Base_Optimizer<Base, Member>::Base_Optimizer (void)
 {
 }
 
-template<class Base, class Member> inline 
+template<class Base, class Member> inline
 Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base,
-					      const Member &member) 
+                                              const Member &member)
   : Base (base),
     m_ (member)
 {
 }
 
-template<class Base, class Member> inline 
-Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base) 
+template<class Base, class Member> inline
+Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base)
   : Base (base)
 {
 }
