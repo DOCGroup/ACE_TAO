@@ -326,6 +326,27 @@ flag_overrides  Used to determine flags that have been overridden on a per
 custom_types    The list of custom file types that may have been defined
                 in the mpc file or a base project.
 
+Workspaces
+----------
+Workspaces (mwc files) can have assignments similar to projects.  There are
+currently only two assignments allowed.
+
+The first is 'cmdline'.  The values given to the cmdline assignment will be
+processed as command line options, but only to the projects that are
+contained within the workspace (or the scope of the assignment).  The only
+valid command line options for cmdline are -base, -global, -include, -ti,
+-template, -static, -static_only, -relative, -notoplevel, -value_template
+and -value_project.
+
+The second assignment is 'implicit'.  This assignment takes two different
+types of values.  It takes a boolean value (0 or 1) to indicate that an
+implicit project should be created in directories that contain no mpc file,
+but contain project related files (source, headers, etc.).  The default
+value for implicit is 0.  It also takes a charater string that represents a
+base project (similar to the -base option).  In this case, implicit is
+enabled and each implicitly generate project file will have the base project
+or base projects (when addition is used) when the project is created.
+
 Defaulting Behavior
 -------------------
 1) If a project name is not specified
