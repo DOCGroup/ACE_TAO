@@ -766,7 +766,7 @@ Configuration for Homogenous Systems<a NAME="homogenous"></a></h3>
       <p>Many real-time applications run on homogenous environments, TAO (and
       ACE) can take advantage of this fact by simplifying the server side demarshaling;
       to enable this feature you have to edit the <tt>$ACE_ROOT/ace/OS.h</tt>
-      file and enable the macro <font size=-1>ACE</font><tt>_DISABLE_SWAP_ON_READ</tt>.
+      file and enable the macro <tt>ACE_DISABLE_SWAP_ON_READ</tt>.
       <p>In this systems it is also common that server and the client startup
       and shutdown simultaneously, in those circumstances there is no need to
       check the timestamps in the POA, another macro (<tt>POA_NO_TIMESTAMP</tt>)
