@@ -1009,11 +1009,11 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
       if (fd != -1)
         {
 #   if defined(__BORLANDC__)
-          FILE *fp = _fdopen (fd, ACE_const_cast (char *, mode));
+          FILE *fp = ::_fdopen (fd, ACE_const_cast (char *, mode));
 #   elif defined (ACE_USES_WCHAR)
-          FILE *fp = _wfdopen (fd, mode);
+          FILE *fp = ::_wfdopen (fd, mode);
 #   else
-          FILE *fp = _fdopen (fd, mode);
+          FILE *fp = ::fdopen (fd, mode);
 #   endif /* defined(__BORLANDC__) */
           if (fp != NULL)
             return fp;
