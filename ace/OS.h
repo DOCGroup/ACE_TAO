@@ -4165,14 +4165,9 @@ union semun
 // Max size of an ACE Token client ID.
 # define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
+//
 // Create some useful typedefs.
-
-// Typedef for the null handler func.
-extern "C"
-{
-typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo*,void*);
-}
-
+//
 typedef const char **SYS_SIGLIST;
 typedef void *(*ACE_THR_FUNC)(void *);
 // This is for C++ static methods.
@@ -4235,6 +4230,12 @@ struct ACE_Export siginfo_t
   // Array of Win32 HANDLEs all of which have become signaled.
 };
 # endif /* ACE_HAS_SIGINFO_T */
+
+// Typedef for the null handler func.
+extern "C"
+{
+  typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo_t*,void*);
+}
 
 # if !defined (ACE_HAS_UCONTEXT_T)
 typedef int ucontext_t;
