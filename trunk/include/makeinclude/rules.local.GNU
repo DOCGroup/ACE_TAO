@@ -140,7 +140,7 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			$(RM) $(@); ln -s -f $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			$(RM) $(@); ln -s $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
