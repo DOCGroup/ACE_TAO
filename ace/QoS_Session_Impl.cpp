@@ -3,8 +3,8 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/QoS_Session_Impl.h"
 #include "ace/SOCK.h"
+#include "ace/QoS_Session_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/QoS_Session_Impl.i"
