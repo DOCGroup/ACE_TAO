@@ -8,17 +8,17 @@
 
   <instance>
     <name>PalletConveyorManager</name>
-    <node>Windows2000</node>
+    <node>WindowsXP</node>
   </instance>
 
   <instance>
     <name>ManagementWorkInstructions</name>
-    <node>WindowsPRO</node>
+    <node>WindowsXP</node>
   </instance>
 
   <instance>
     <name>RobotManager</name>
-    <node>Solaris</node>
+    <node>RedHatLinux</node>
   </instance>
 
   <instance>
