@@ -135,7 +135,6 @@ public:
    *
    * If <map> is non-zero and IPv6 support has been compiled in,
    * then this address will be set to the IPv4-mapped IPv6 address of it.
-   * IPv6 address of it.
    */
   int set (u_short port_number,
            ACE_UINT32 ip_addr = INADDR_ANY,

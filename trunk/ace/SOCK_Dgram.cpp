@@ -122,7 +122,9 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 #endif /* ACE_HAS_IPV6 */
           )
         {
-          if (ACE::bind_port (this->get_handle (), 0, protocol_family) == -1)
+          if (ACE::bind_port (this->get_handle (), 
+			      INADDR_ANY, 
+			      protocol_family) == -1)
             error = 1;
         }
     }
