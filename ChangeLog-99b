@@ -1,34 +1,41 @@
+Mon Sep 06 07:25:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: added ACE_Export to ACE_OS_Exit_Info class
+          declaration.  It shouldn't be necessary, but
+          Dmitry Goldshtain <Goldshtain@bank.gov.ua> reports that
+          Builder 4 needs it.
+
 Mon Sep 06 03:31:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Signal_Test.cpp (run_test): Removed a redundant use of
-	  ACE_UNUSED_ARG (synchronous_signal_handler).  Thanks to KCC 3.3e
-	  for pointing this out.
+        * tests/Signal_Test.cpp (run_test): Removed a redundant use of
+          ACE_UNUSED_ARG (synchronous_signal_handler).  Thanks to KCC 3.3e
+          for pointing this out.
 
 Mon Sep  6 01:03:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Threads/Makefile (BIN): Added process_manager.cpp
-	  back into the list of programs that get built automagically.
+        * examples/Threads/Makefile (BIN): Added process_manager.cpp
+          back into the list of programs that get built automagically.
 
         * ace/Process_Manager: Added some new patches from Dave Madden
-	  <dhm@mersenne.com> that continue to improve the
- 	  ACE_Process_Manager and make it portable between NT and UNIX.
+          <dhm@mersenne.com> that continue to improve the
+          ACE_Process_Manager and make it portable between NT and UNIX.
 
-	* examples/Threads: Readded process_manager.cpp now that
-	  Dave Madden <dhm@mersenne.com> has updated it.
+        * examples/Threads: Readded process_manager.cpp now that
+          Dave Madden <dhm@mersenne.com> has updated it.
 
 Sun Sep 05 23:52:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (WIFEXITED,WEXITSTATUS): On platforms that do not
-	  define these macros, we should always assume the child process
-	  exit properly because the return status does not tell us how the
-	  process exited.  Likewise, the WEXITSTATUS macro should simply
-	  return the status we got from ACE_OS::wait because it only
-	  contains the exit status of child process.
+        * ace/OS.h (WIFEXITED,WEXITSTATUS): On platforms that do not
+          define these macros, we should always assume the child process
+          exit properly because the return status does not tell us how the
+          process exited.  Likewise, the WEXITSTATUS macro should simply
+          return the status we got from ACE_OS::wait because it only
+          contains the exit status of child process.
 
 Sun Sep  5 23:40:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/QOS: Continued to improve the coding style so it'll
-	  look like normal "ACE" code.
+        * examples/QOS: Continued to improve the coding style so it'll
+          look like normal "ACE" code.
 
 Sun Sep 05 21:32:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
