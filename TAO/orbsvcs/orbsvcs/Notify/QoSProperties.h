@@ -43,6 +43,9 @@ public:
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq);
 
+  /// This version initializes the base from our members
+  void init ();
+
   /// Populate <qos_properties> with all properties from this object. Returns -1 on error.
   int copy (TAO_Notify_QoSProperties& qos_properties);
 
@@ -61,17 +64,41 @@ public:
 
   /// Pacing Interval
   const TAO_Notify_Property_Time& pacing_interval (void) const;
+  ///= Accessors
+
+  const TAO_Notify_Property_Short& event_reliability (void) const;
+  const TAO_Notify_Property_Short& connection_reliability (void) const;
+  const TAO_Notify_Property_Short& priority (void) const;
+  const TAO_Notify_Property_Time& timeout (void) const;
+  const TAO_Notify_Property_Boolean& stop_time_supported (void) const;
+  const TAO_Notify_Property_Long& max_events_per_consumer (void) const;
+
+  // The non-const accessors are used during topology load
+  TAO_Notify_Property_Short& event_reliability (void);
+  TAO_Notify_Property_Short& connection_reliability (void);
+  TAO_Notify_Property_Short& priority (void);
+  TAO_Notify_Property_Time& timeout (void);
+  TAO_Notify_Property_Boolean& stop_time_supported (void);
+  TAO_Notify_Property_Long& maximum_batch_size (void);
+  TAO_Notify_Property_Time& pacing_interval (void);
+  TAO_Notify_Property_Long& max_events_per_consumer (void);
 
 protected:
   /// Return 1 if <value> is unsupported.
   int unsupported (ACE_CString& name);
 
-  enum {UNSUPPORTED_PROPERTY_COUNT = 3};
+  enum {UNSUPPORTED_PROPERTY_COUNT = 1};
 
   ///= Unsupported Properties.
   ACE_CString unsupported_[UNSUPPORTED_PROPERTY_COUNT];
 
   ///= Supported properties
+
+  /// Event Reliability
+  TAO_Notify_Property_Short event_reliability_;
+
+  /// Connection Reliability
+  TAO_Notify_Property_Short connection_reliability_;
 
   /// Priority
   TAO_Notify_Property_Short priority_;
@@ -84,6 +111,9 @@ protected:
 
   /// Maximum Batch Size
   TAO_Notify_Property_Long maximum_batch_size_;
+
+  /// Maximum Events (queue length) Per Consumer
+  TAO_Notify_Property_Long max_events_per_consumer_;
 
   /// Pacing Interval
   TAO_Notify_Property_Time pacing_interval_;

@@ -1,0 +1,12 @@
+project(*Supplier): notifytest {
+  Source_Files {
+    Supplier.cpp
+  }
+}
+
+project(*Consumer): notifytest {
+  Source_Files {
+    Consumer.cpp
+  }
+}
+

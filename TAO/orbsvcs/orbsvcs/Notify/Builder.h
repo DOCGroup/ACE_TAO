@@ -26,11 +26,14 @@
 #include "orbsvcs/NotifyExtC.h"
 
 #include "AdminProperties.h"
+#include "Topology_Object.h"
 
 class TAO_Notify_EventChannelFactory;
 class TAO_Notify_EventChannel;
 class TAO_Notify_SupplierAdmin;
 class TAO_Notify_ConsumerAdmin;
+class TAO_Notify_ProxyConsumer;
+class TAO_Notify_ProxySupplier;
 class TAO_Notify_FilterFactory;
 class TAO_Notify_Object;
 
@@ -66,6 +69,13 @@ public:
                        , CosNotifyChannelAdmin::ChannelID_out id
                        ACE_ENV_ARG_DECL);
 
+
+  virtual TAO_Notify_EventChannel *
+  build_event_channel (TAO_Notify_EventChannelFactory* ecf
+                       , const CosNotifyChannelAdmin::ChannelID id
+                       ACE_ENV_ARG_DECL);
+
+
   /// Build ConsumerAdmin
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
   build_consumer_admin (TAO_Notify_EventChannel* ec
@@ -73,11 +83,29 @@ public:
                         , CosNotifyChannelAdmin::AdminID_out id
                         ACE_ENV_ARG_DECL);
 
+  /// Build ConsumerAdmin during topology restore
+  /// TODO: this returns a reference to the actual type
+  /// to accomodate loadable builder/factory there should
+  /// be an appropriate base class for it to return.
+  virtual TAO_Notify_ConsumerAdmin *
+  build_consumer_admin (TAO_Notify_EventChannel* ec
+                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
+                        ACE_ENV_ARG_DECL);
+
   /// Build SupplierAdmin
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
-  build_supplier_admin (TAO_Notify_EventChannel* ec
+  build_supplier_admin (TAO_Notify_EventChannel * ec
                         , CosNotifyChannelAdmin::InterFilterGroupOperator op
                         , CosNotifyChannelAdmin::AdminID_out id
+                        ACE_ENV_ARG_DECL);
+
+  /// Build ConsumerAdmin during topology restore
+  /// TODO: this returns a reference to the actual type
+  /// to accomodate loadable builder/factory there should
+  /// be an appropriate base class for it to return.
+  virtual TAO_Notify_SupplierAdmin *
+  build_supplier_admin (TAO_Notify_EventChannel * ec
+                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
                         ACE_ENV_ARG_DECL);
 
   /// Build ProxyConsumer
@@ -88,12 +116,26 @@ public:
                , const CosNotification::QoSProperties & initial_qos
                ACE_ENV_ARG_DECL);
 
+  /// Reload ProxyConsumer
+  virtual TAO_Notify_ProxyConsumer *
+  build_proxy (TAO_Notify_SupplierAdmin* sa
+               , CosNotifyChannelAdmin::ClientType ctype
+               , const CosNotifyChannelAdmin::ProxyID proxy_id
+               ACE_ENV_ARG_DECL);
+
   /// Build ProxySupplier.
   virtual CosNotifyChannelAdmin::ProxySupplier_ptr
   build_proxy (TAO_Notify_ConsumerAdmin* ca
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
                , const CosNotification::QoSProperties & initial_qos
+               ACE_ENV_ARG_DECL);
+
+  /// Reload ProxySupplier.
+  virtual TAO_Notify_ProxySupplier *
+  build_proxy (TAO_Notify_ConsumerAdmin* ca
+               , CosNotifyChannelAdmin::ClientType ctype
+               , const CosNotifyChannelAdmin::ProxyID proxy_id
                ACE_ENV_ARG_DECL);
 
   /// Build CosEC style ProxySupplier.
@@ -111,15 +153,15 @@ public:
 
   /// Apply Thread Pools.
   virtual void apply_thread_pool_concurrency (
-      TAO_Notify_Object& object, 
-      const NotifyExt::ThreadPoolParams& tp_params 
+      TAO_Notify_Object& object,
+      const NotifyExt::ThreadPoolParams& tp_params
       ACE_ENV_ARG_DECL
     );
 
   /// Apply Thread Pools with Lanes.
   virtual void apply_lane_concurrency (
-      TAO_Notify_Object& object, 
-      const NotifyExt::ThreadPoolLanesParams& tpl_params 
+      TAO_Notify_Object& object,
+      const NotifyExt::ThreadPoolLanesParams& tpl_params
       ACE_ENV_ARG_DECL
     );
 };

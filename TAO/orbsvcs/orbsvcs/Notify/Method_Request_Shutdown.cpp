@@ -18,7 +18,7 @@ TAO_Notify_Method_Request_Shutdown::~TAO_Notify_Method_Request_Shutdown ()
 {
 }
 
-TAO_Notify_Method_Request*
+TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Shutdown::copy (void)
 {
   return new TAO_Notify_Method_Request_Shutdown (this->task_);

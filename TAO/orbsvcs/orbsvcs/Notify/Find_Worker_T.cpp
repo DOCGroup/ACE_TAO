@@ -18,7 +18,7 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::TAO_Notify_Fin
 }
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> TYPE*
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
 {
   this->id_ = id;
 
@@ -29,7 +29,7 @@ TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (TAO_Noti
 }
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> INTERFACE_PTR
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
 {
   this->find (id, container ACE_ENV_ARG_PARAMETER);
 

@@ -23,13 +23,13 @@
 #include "ace/Null_Condition.h"
 #include "ace/Message_Queue.h"
 
-#include "orbsvcs/TimeBaseC.h"
+#include "orbsvcs/orbsvcs/TimeBaseC.h"
 
 #include "Property.h"
 #include "Property_T.h"
 #include "AdminProperties.h"
 
-class TAO_Notify_Method_Request;
+class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_QoSProperties;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
@@ -62,11 +62,11 @@ public:
 
   /// Enqueue according the enqueing strategy.
   /// Return -1 on error else the number of items in the queue.
-  int enqueue (TAO_Notify_Method_Request& method_request);
+  int enqueue (TAO_Notify_Method_Request_Queueable& method_request);
 
   /// Dequeue batch. This method will block for @a abstime if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
-  int dequeue (TAO_Notify_Method_Request* &method_request,
+  int dequeue (TAO_Notify_Method_Request_Queueable* &method_request,
                const ACE_Time_Value *abstime);
 
   /// Shutdown
@@ -83,7 +83,7 @@ public:
 
 protected:
   /// Apply the Order Policy and queue. return -1 on error.
-  int queue (TAO_Notify_Method_Request& method_request);
+  int queue (TAO_Notify_Method_Request_Queueable& method_request);
 
   /// Discard as per the Discard Policy.
   int discard (void);

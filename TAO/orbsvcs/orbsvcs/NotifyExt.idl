@@ -83,12 +83,55 @@ module NotifyExt
       unsigned long max_request_buffer_size;
   };
 
-  /*
-   * Extend the EventChannelFactory to have a shutdown method.
+  /**
+   * \brief An interface which gets registered with a ReconnectionRegistry.
+   *
+   * A supplier or consumer must implement this interface in order to
+   * allow the Notification Service to attempt to reconnect to it after
+   * a failure.  The supplier or consumer must register its instance of
+   * this interface with the ReconnectionRegistry.
    */
-  interface EventChannelFactory : CosNotifyChannelAdmin::EventChannelFactory
+  interface ReconnectionCallback
+  {
+    /// Perform operations to reconnect to the Notification Service
+    /// after a failure.
+    void reconnect (in Object new_connection);
+
+    /// Check to see if the ReconnectionCallba ck is alive
+    boolean is_alive ();
+  };
+
+  /**
+   * \brief An interface that handles registration of suppliers and consumers.
+   *
+   * This registry should be implemented by an EventChannelFactory and
+   * will call the appropriate reconnect methods for all ReconnectionCallback
+   * objects registered with it.
+   */
+  interface ReconnectionRegistry
+  {
+    typedef long ReconnectionID;
+    ReconnectionID register_callback(in ReconnectionCallback reconection);
+
+    void unregister_callback (in ReconnectionID id);
+
+    /// Check to see if the ReconnectionRegistry is alive
+    boolean is_alive ();
+  };
+
+  /**
+   * Extend the EventChannelFactory to have a shutdown method
+   * and a Reconnection Registry
+   */
+  interface EventChannelFactory
+    : CosNotifyChannelAdmin::EventChannelFactory
+    , ReconnectionRegistry
   {
     void destroy ();
+    /// save topology: for diagnostic and testing purposes
+    /// Normal topology save is automatic when connectivity persistence
+    /// is configured.
+    void save_topology();
   };
 
   interface ConsumerAdmin : CosNotifyChannelAdmin::ConsumerAdmin

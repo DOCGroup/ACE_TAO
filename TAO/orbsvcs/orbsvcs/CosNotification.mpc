@@ -48,8 +48,7 @@ project(CosNotification) : orbsvcslib, core, event {
 
   Template_Files {
   }
- 
-  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+
   Resource_Files{
     CosNotification.rc
   }
@@ -116,7 +115,7 @@ project(CosNotification_Skel) : orbsvcslib, core, notification, event_skel, port
   }
 }
 
-project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany, etcl {
+project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, dynamicany, etcl{
   sharedname   = TAO_CosNotification_Serv
   dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
   tagchecks   += Notify
@@ -131,6 +130,7 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
     Notify {
       Notify/Admin.cpp
       Notify/AdminProperties.cpp
+      Notify/Bit_Vector.cpp
       Notify/Buffering_Strategy.cpp
       Notify/Builder.cpp
       Notify/Consumer.cpp
@@ -138,6 +138,7 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/CosNotify_Initializer.cpp
       Notify/CosNotify_Service.cpp
       Notify/Default_Factory.cpp
+      Notify/Delivery_Request.cpp
       Notify/ETCL_Filter.cpp
       Notify/ETCL_FilterFactory.cpp
       Notify/Event.cpp
@@ -154,6 +155,7 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/Method_Request_Lookup.cpp
       Notify/Method_Request_Shutdown.cpp
       Notify/Method_Request_Updates.cpp
+      Notify/Name_Value_Pair.cpp
       Notify/Notify_Constraint_Interpreter.cpp
       Notify/Notify_Constraint_Visitors.cpp
       Notify/Notify_Default_Collection_Factory.cpp
@@ -163,6 +165,7 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/Notify_EventChannelFactory_i.cpp
       Notify/Object.cpp
       Notify/Peer.cpp
+      Notify/Persistent_File_Allocator.cpp
       Notify/POA_Helper.cpp
       Notify/Properties.cpp
       Notify/PropertySeq.cpp
@@ -171,14 +174,23 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/ProxyConsumer.cpp
       Notify/ProxySupplier.cpp
       Notify/QoSProperties.cpp
+      Notify/Random_File.cpp
       Notify/Reactive_Task.cpp
       Notify/Refcountable.cpp
+      Notify/Reconnection_Registry.cpp
+      Notify/Routing_Slip.cpp
+      Notify/Routing_Slip_Persistence_Manager.cpp
+      Notify/Routing_Slip_Queue.cpp
       Notify/Subscription_Change_Worker.cpp
       Notify/Supplier.cpp
       Notify/SupplierAdmin.cpp
+      Notify/Standard_Event_Persistence.cpp
       Notify/ThreadPool_Task.cpp
       Notify/Timer_Queue.cpp
       Notify/Timer_Reactor.cpp
+      Notify/Topology_Loader.cpp
+      Notify/Topology_Object.cpp
+      Notify/Topology_Saver.cpp
       Notify/Worker_Task.cpp
       Notify/Any/AnyEvent.cpp
       Notify/Any/CosEC_ProxyPushConsumer.cpp
@@ -199,6 +211,23 @@ project(CosNotification_Serv) : orbsvcslib, core, notification_skel, dynamicany,
       Notify/Structured/StructuredPushSupplier.cpp
     }
   }
+
+  Template_Files {
+  }
+}
+
+//project(CosNotification_Persist) : orbsvcslib, core, notification, event_skel, portableserver, acexml {
+project(CosNotification_Persist) : notification_serv, acexml {
+  sharedname   = TAO_CosNotification_Persist
+  dynamicflags = TAO_NOTIFY_PERSIST_BUILD_DLL
+
+  IDL_Files {
+  }
+  Source_Files {
+      Notify/XML_Loader.cpp
+      Notify/XML_Saver.cpp
+      Notify/XML_Topology_Factory.cpp
+    }
 
   Template_Files {
   }

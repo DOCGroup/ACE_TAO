@@ -20,31 +20,81 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Method_Request.h"
+#include "Event.h"
+#include "ProxySupplier.h"
+#include "tao/Basic_Types.h"
+#include "ace/CORBA_macros.h"
+#include "Delivery_Request.h"
 
 /**
  * @class TAO_Notify_Method_Request_Event
  *
- * @brief A method request for storing events.
+ * @brief A base class for all Method Requests that are associated with events.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event : public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
 public:
-  /// Constuctor
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Event_var& event);
+  /// Construct from event
+  TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
 
+  /// Construct from a delivery request
+  TAO_Notify_Method_Request_Event (
+    const TAO_Notify::Delivery_Request_Ptr & delivery_request);
+
+  /// Construct from another Method Request
+  /// Event is passed separately because it may be a copy of the one in request.
+  TAO_Notify_Method_Request_Event (const TAO_Notify_Method_Request_Event & rhs,
+    const TAO_Notify_Event * event);
+
+public:
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Event ();
 
-  /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Obtain the event.
-  const TAO_Notify_Event_var& event (void);
+  const TAO_Notify_Event * event() const;
+  void complete ();
+  unsigned long sequence ();
+  bool should_retry ();
 
 protected:
-  /// The event.
-  const TAO_Notify_Event_var event_;
+
+  /// The Event
+  const TAO_Notify_Event * event_;
+
+  /// Pointer to the routing slip's delivery request (if any)
+  TAO_Notify::Delivery_Request_Ptr delivery_request_;
+};
+
+/***************************************************************/
+
+/**
+ * @class TAO_Notify_Method_Request_Event_Queueable
+ *
+ * @brief A method request for storing events.
+ *
+ */
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Queueable
+  : public TAO_Notify_Method_Request_Queueable
+  , public TAO_Notify_Method_Request_Event
+{
+public:
+  /// Constuctor
+  /// Not the event_var is passed as a separate parameter to avoid throwing
+  /// exceptions from the constructor if it's necessary to copy the event.
+  TAO_Notify_Method_Request_Event_Queueable (
+    const TAO_Notify_Method_Request_Event & prev_request,
+    const TAO_Notify_Event_var & event_var);
+
+  TAO_Notify_Method_Request_Event_Queueable (
+    TAO_Notify::Delivery_Request_Ptr & request);
+
+  /// Destructor
+  virtual ~TAO_Notify_Method_Request_Event_Queueable ();
+
+  /// satisfy the pure virtual method.  Should never be called.
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+private:
+  TAO_Notify_Event_var event_var_;
 };
 
 #if defined (__ACE_INLINE__)

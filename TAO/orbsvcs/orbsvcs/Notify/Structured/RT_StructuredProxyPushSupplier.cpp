@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 
 #include "tao/debug.h"
+#include "../Method_Request_Dispatch.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_StructuredProxyPushSupplier.inl"
@@ -35,11 +36,11 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
 }
 
 void
-TAO_Notify_RT_StructuredProxyPushSupplier::push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      event->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
+      request.event()->push (this->event_forwarder_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -72,14 +73,3 @@ TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_E
   ACE_ENDTRY;
 }
 
-void
-TAO_Notify_RT_StructuredProxyPushSupplier::push (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  this->push (event.get () ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  this->push_no_filtering (event.get () ACE_ENV_ARG_PARAMETER);
-}

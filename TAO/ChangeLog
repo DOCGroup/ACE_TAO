@@ -1,3 +1,729 @@
+Thu Nov 18 12:39:59 2004  Ciju John  <john_c@ociweb.com>
+
+        * TAO-INSTALL.html:
+          Fixed a older cvs conflict entry.
+
+        * tao/UTF16_BOM_Factory.cpp
+        * tao/Messaging/Asynch_Invocation.cpp
+          Fixed explict template initiation compile failures.
+
+        * MakeProjectCreator/config/notify.mpb
+        * MakeProjectCreator/config/notify_serv.mpb
+          Notification modules rename updates.
+
+        * orbsvcs/tests/Notify/Reconnecting
+        * orbsvcs/tests/Notify/XML_Persistence
+        * orbsvcs/tests/Notify/ThreadPool
+        * orbsvcs/tests/Notify/Lanes
+          New Notification tests being added.
+
+Fri Oct 29 10:53:56 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Don't write IOR file until Notification Service
+          is *really* ready to run.
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+
+          Add Event reloading and restarting.  Passes Reconnection test.
+          There is a lot of debug output still turned on so some housecleaning
+          is definately in order.
+
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+          Add additional diagnostic information to track down problems
+          revealed by test.
+
+
+Wed Oct 27 11:59:01 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.inl:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Bit_Vector.h:
+        * orbsvcs/orbsvcs/Notify/Bit_Vector.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.h:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.h:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnect_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Reconnect_Worker_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.h:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/Save_Persist_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Save_Persist_Worker_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Loader.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.inl:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Saver.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.h:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Topology_Factory.h:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Topology_Factory.cpp:
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/event.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_topo.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_topo.conf:
+
+        * orbsvcs/tests/Notify/Unit/TestBasicTypes.cpp:
+
+          Rename namespace used in OCI reliable notification service work
+          from TAO_NOTIFY to TAO_Notify (note case).
+          Integrate event reliability.
+          Status: Normal event delivery still works.
+          Reliable event delivery being tested.
+          Reload events after failure, not merged yet.
+
+
+Mon Oct 25 20:41:00 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+          Rename Method_Request classes for consistency and self-documentation.
+          Naming convention:
+          Base classes have no suffix (i.e. TAO_Notify_Method_Request)
+          Uncopied classes (on stack) keep their No_Copy suffix.
+          Copied classes (on heap) have a _Queueable suffix.
+
+
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.cpp:
+          Removed these files.
+
+Mon Oct 25 14:51:09 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          CosNotification_Serv: Add dependancy on svc_utils
+          CosNotification_Serv: Add Method_Dispatch_Base and Method_Lookup_Base
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+          Use "DEBUG_LEVEL" to enable "local debug messages" consistently.
+
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Saver.h:
+          Change export library name.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.h:
+        * orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
+          Create a common base class for Method_Requests that deal with events.
+          Use it instead of the *Dispatch_T and *Lookup_T templates.
+          Use inheritance and virtual methods rather than function overloading
+          to distinguish copied events from uncopied events.  This allowed a lot
+          of duplicate code to be removed (not to mention the duplicate template
+          expansions) and avoided the need to do everything twice in the routing slip
+          family of objects.
+
+          The event now "knows" whether it's been copied to the heap.  The copy_on_heap
+          method is supported by all events and returns a pointer to the copied event.
+          As a side effect this eliminates the possibility that multiple heap copies
+          of the event will be created (the TAO_Notify_Method_Request_No_Copy_Ex may
+          have avoided multiple copies but it was hard to tell.)
+          Because the ACE Refcounted_Auto_Ptr is not very smart, I switched to using
+          TAO_Notify_Refcount_Guard_T which is smarter, but strangely named.  I also beefed
+          up *Refcount_Guard" to allow null construction (for inclusion in collections) and
+          semantically correct copies.  The result is that there is no need for all the refcount
+          pointers an event to be aware of each other.  It is safe to create a new refcount pointer
+          given only a pointer to the heap-copy of the event.
+
+          Change the event delivery logic in the consumer so that a delivery failure can
+          cause an event to be kept on a queue for the consumer rather than discarding the
+          event and deleting the consumer.  This will be needed to support persistent events.
+          An unfortunate side effect is I used a simple queue rather than a Buffering_Strategy
+          to hold these events pending delivery.  As a result there are cases in which the
+          delivery policy specified by QoS parameters may not work exactly right.  This can
+          be fixed in the future by adding the missing functionality to Buffering Strategy.
+
+          Status as of this checkin:  The notification service and the RT notification service
+          build without warnings (with or without simulated exceptions) All tests passed by
+          the DOC group head branch also pass with these changes.
+
+        * orbsvcs/tests/Notify/Basic/MultiTypes.cpp:
+          It was spinning waiting for incoming messages.  I made it wait instead.
+          I also added a comment about a potential timing problem that showed up
+          during debugging.  This will not happen in a "real" test so I didn't fix it.
+
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+          Fix trailing 'x' (also done in head branch)
+
+Wed Oct 20 11:38:11 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.inl:
+          Add copy constructor and operator =.
+
+Tue Oct 19 10:43:28 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.cpp:
+          Removed these files.
+          Replacing template-based with inheritence-based copy managament.
+          The problem with a template based approach (other than the
+          obscurity of overloading methods based on raw vs smart
+          pointer (some comments would have been nice!)) is the
+          source code explosion.  Because the distinction
+          between Event * and Event_var is meaningful, every stage of the
+          process has to provide (at least) two methods to preserve this
+          distinction even when this stage doesn't care.
+          This became a problem in adding event persistence because it
+          meant that the event persistence stuff would also have to preserve
+          this "state-by-pointer-type" info.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.cpp:
+          Added these files.
+
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+          Now derived from *_Base rather than _T<x,x,x,x>
+
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+          The distinction that the templates were attempting to preserve
+          was whether or not the event had been copied to the heap.
+          The goal was to keep the event on the stack as long as possible,
+          but make a copy on the heap when it became necessary to queue the
+          event for later processing or for another thread.
+
+          This is now handled by providing a virtual "Event::copy_on_heap" method.
+          A event on the stack makes a copy and returns a pointer to it.
+          A event on the heap just returns a pointer to itself.
+
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.inl:
+          The pointer to events was based on Refcountable_Auto_Ptr which is
+          not smart enough to have two pointers to the same object unless one
+          was created from the other.  Event was changed to be a Refcountable
+          object and Refcountable_Guard was extended to allow null pointers,
+          thereby allowing it to be contained in a collection.  Asserts protect
+          null Refcountable_Guards from misuse.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+          Eliminate overridden-by-pointer-type methods that are
+          no longer needed.  Use copy_on_heap when necessary.
+
+
+Mon Oct 18 15:21:49 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+          Build issues.
+
+Mon Oct 18 10:29:48 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.inl:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Builder.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Factory.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Notify_Service.inl:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.inl:
+        * orbsvcs/orbsvcs/Notify/RT_Properties.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl:
+          .inl's should not include their own .h
+
+Mon Oct 18 10:11:47 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Bit_Vector.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+          Change export library name
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+          Change export library name
+          Use 1.4 naming convention for pointers.
+
+
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+          Change export library name
+          Use renamed Random_File.
+
+
+        * orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Find_Worker_T.cpp:
+          Make it const correct.
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+          Use V1.4 naming convention for object id.
+
+
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.inl:
+          .inl's should not include their own .h
+
+
+Tue Oct 12 14:10:43 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.inl:
+          Pick up Event Persistence files missed during
+          previous merge.
+
+        * orbsvcs/orbsvcs/Notify/Random_File.h:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+          Rename Persistent_File->Random_File
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Method.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File.cpp:
+
+          Removed these files.
+
+
+Mon Oct 11 14:39:15 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/tests/Notify/Unit/Notify_Unit.mpc:
+        * orbsvcs/tests/Notify/Unit/TestBasic.h:
+        * orbsvcs/tests/Notify/Unit/TestBasic.cpp:
+        * orbsvcs/tests/Notify/Unit/TestBasicTypes.h:
+        * orbsvcs/tests/Notify/Unit/TestBasicTypes.cpp:
+        * orbsvcs/tests/Notify/Unit/TestBuilder.h:
+        * orbsvcs/tests/Notify/Unit/TestBuilder.cpp:
+        * orbsvcs/tests/Notify/Unit/TestQoS.h:
+        * orbsvcs/tests/Notify/Unit/TestQoS.cpp:
+        * orbsvcs/tests/Notify/Unit/UnitTester.h:
+        * orbsvcs/tests/Notify/Unit/main.cpp:
+        * orbsvcs/tests/Notify/Unit/readme:
+        * orbsvcs/tests/Notify/Unit/run_test.pl:
+        * orbsvcs/tests/Notify/Unit/start_ns.pl:
+          Copy Unit test from OCI branch.  Needs work.
+Thu Oct  7 09:40:51 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ChangeLog_pnotify:
+
+        * docs/notification/reliability.html:
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.inl:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.h:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.inl:
+        * orbsvcs/orbsvcs/Notify/AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/AllocTracker.h:
+        * orbsvcs/orbsvcs/Notify/Bit_Vector.h:
+        * orbsvcs/orbsvcs/Notify/Bit_Vector.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/Builder.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.h:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Event_Persistence_Strategy.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.h:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.h:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.inl:
+        * orbsvcs/orbsvcs/Notify/ID_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.h:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.inl:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.inl:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Notify/Peer.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Properties.inl:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.h:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.inl:
+        * orbsvcs/orbsvcs/Notify/PropertySeq.cpp:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.h:
+        * orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
+        * orbsvcs/orbsvcs/Notify/Property_T.h:
+        * orbsvcs/orbsvcs/Notify/Property_T.inl:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy_T.cpp:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.h:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.inl:
+        * orbsvcs/orbsvcs/Notify/QoSProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnect_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Reconnect_Worker_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.h:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.inl:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.cpp:
+        * orbsvcs/orbsvcs/Notify/Save_Persist_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Save_Persist_Worker_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Loader.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.inl:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Saver.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/notify_persist_export.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+
+        * orbsvcs/orbsvcs/NotifyExt.idl:
+
+        * orbsvcs/tests/Notify/PluggableTopology/PlugTop.mpc:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.h:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Topology_Factory.h:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Topology_Factory.cpp:
+        * orbsvcs/tests/Notify/PluggableTopology/main.cpp:
+        * orbsvcs/tests/Notify/PluggableTopology/plugtop_export.h:
+        * orbsvcs/tests/Notify/PluggableTopology/plugtop_ns.conf:
+
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.h:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/README:
+        * orbsvcs/tests/Notify/Reconnecting/Reconnecting.mpc:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.h:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/event.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_topo.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_topo.conf:
+        * orbsvcs/tests/Notify/Reconnecting/run_test.pl:
+
+        * orbsvcs/tests/Notify/XML_Persistence/XML_Persistence.mpc:
+        * orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+        * orbsvcs/tests/Notify/XML_Persistence/run_test.pl:
+        * orbsvcs/tests/Notify/XML_Persistence/svc.conf:
+
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+
+        Merge OCI's Notification Service Changes into DOC group.
+        Connectivity (i.e. topology) persistence is working
+        Event persistence is not, yet.
+
 Fri Nov 19 12:46:00 2004    Gary Maxey  <gary.maxey@hp.com>
 
         * tests/CodeSets/simple/run_test.pl
