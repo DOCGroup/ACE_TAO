@@ -1,3 +1,11 @@
+Mon Jun 24 07:26:41 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Timer_Queue_Adapters.cpp:
+	* ace/Timer_Queue_Adapters.h: Changed uses of ACE_Recursive_Thread_Mutex
+	  to ACE_RECURSIVE_SYNCH_MUTEX so things will work properly on
+ 	  single-threaded configurations.  Thanks to Craig Rodrigues for
+ 	  reporting this.
+
 Mon Jun 24 12:07:00 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/RMCast/RMCast_IO_UDP.cpp: Remove ACE_SOCK_Dgram_Ex template instantiation.

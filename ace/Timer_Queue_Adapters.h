@@ -143,7 +143,7 @@ public:
   virtual void deactivate (void);
 
   /// Access the locking mechanism, useful for iteration.
-  ACE_Recursive_Thread_Mutex &mutex (void);
+  ACE_SYNCH_RECURSIVE_MUTEX &mutex (void);
 
   /// @deprecated Access the implementation queue, useful for iteration.
   /// Use the method that returns a pointer instead
