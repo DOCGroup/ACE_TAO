@@ -1,3 +1,11 @@
+Sat Jul 17 14:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+          Fixed compile errors in wchar build
+
 Sat Jul 17 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/NonBlocking_Conn_Test.cpp:
