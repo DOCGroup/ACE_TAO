@@ -1,7 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_LONGLONG_T)
+#if defined (ACE_USES_ACE_U_LONGLONG)
+
 ACE_INLINE
 ACE_U_LongLong::ACE_U_LongLong (const ACE_UINT32 lo, const ACE_UINT32 hi)
   : hi_ (hi), lo_ (lo)
@@ -156,4 +157,4 @@ ACE_U_LongLong::operator-= (const ACE_U_LongLong &ll)
   return *this;
 }
 
-#endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
+#endif /* ACE_USES_ACE_U_LONGLONG */

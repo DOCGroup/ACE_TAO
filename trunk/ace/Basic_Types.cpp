@@ -7,7 +7,7 @@
 # include "ace/Basic_Types.i"
 #endif /* ! __ACE_INLINE__ */
 
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_LONGLONG_T)
+#if defined (ACE_USES_ACE_U_LONGLONG)
 void
 ACE_U_LongLong::output (FILE *file) const
 {
@@ -16,4 +16,4 @@ ACE_U_LongLong::output (FILE *file) const
   else
     ACE_OS::fprintf (file, "0x%lx", lo_);
 }
-#endif /* ! ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
+#endif /* ACE_USES_ACE_U_LONGLONG */
