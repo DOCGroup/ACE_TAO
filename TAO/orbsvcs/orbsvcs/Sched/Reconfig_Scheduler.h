@@ -24,11 +24,11 @@
 #include "Reconfig_Sched_Utils.h"
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
-class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler : 
+class TAO_ORBSVCS_Export TAO_Reconfig_Scheduler :
   public POA_RtecScheduler::Scheduler
 {
   // = TITLE
-  //   A servant for RtecScheduler::Scheduler that can be initialized 
+  //   A servant for RtecScheduler::Scheduler that can be initialized
   //   and run solely with precomputed scheduling information, but is also
   //   designed to perform efficient recomputation of scheduling info
   //   in the face of run-time changes to RT_Infos in the schedule.
@@ -55,7 +55,7 @@ public:
                           int dependency_count,
                           ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
                           u_long stability_flags);
-  // Constructor. Initialize the scheduler from POD_Config_Info, POD_RT_Info, 
+  // Constructor. Initialize the scheduler from POD_Config_Info, POD_RT_Info,
   // and POD_Dependency arrays, plus schedule stability flags.
 
   int init (int config_count,
@@ -66,7 +66,7 @@ public:
             ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
             u_long stability_flags,
             CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException, 
+    TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::SYNCHRONIZATION_FAILURE,
@@ -184,7 +184,7 @@ protected:
   // @@ TBD - use a memento to save and restore scheduler state without
   //          breaking encapsulation, particularly of these flags.
 
-  enum Stability_Flags 
+  enum Stability_Flags
   {
     // This should always be zero.
     SCHED_ALL_STABLE = 0x00UL,
@@ -206,7 +206,7 @@ protected:
 
     // This should be the disjunction of
     // all the individual stability flags.
-    SCHED_NONE_STABLE = 
+    SCHED_NONE_STABLE =
       SCHED_UTILIZATION_NOT_STABLE |
       SCHED_PRIORITY_NOT_STABLE |
       SCHED_CONFIG_NOT_STABLE |
@@ -215,15 +215,15 @@ protected:
   // Flags indicating stability conditions of schedule.
 
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-	                              RtecScheduler::RT_Info*, 
-                                  ACE_Hash<RtecScheduler::handle_t>, 
-                                  ACE_Equal_To<RtecScheduler::handle_t>, 
+	                              RtecScheduler::RT_Info*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
+                                  ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> RT_INFO_MAP;
   // Type of map used for O(1) lookup of RT_Infos by their handles.
 
   typedef ACE_RB_Tree<char *,
                       RtecScheduler::RT_Info*,
-                      ACE_Less_Than<char *>, 
+                      ACE_Less_Than<char *>,
                       ACE_LOCK> RT_INFO_TREE;
   // Type of tree used for O(log n) lookup of RT_Infos by their names.
 
@@ -235,8 +235,8 @@ protected:
   // Type of map used for O(1) lookup of Config_Infos by their priorities.
 
   typedef ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
-                                  RtecScheduler::Dependency_Set*, 
-                                  ACE_Hash<RtecScheduler::handle_t>, 
+                                  RtecScheduler::Dependency_Set*,
+                                  ACE_Hash<RtecScheduler::handle_t>,
                                   ACE_Equal_To<RtecScheduler::handle_t>,
                                   ACE_LOCK> DEPENDENCY_SET_MAP;
   // Type of map used for O(1) lookup of RT_Info
@@ -248,8 +248,8 @@ protected:
     TAO_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME,
                      RtecScheduler::INTERNAL));
-  // Internal method to create an RT_Info.  If it does not exist, 
-  // a new RT_Info is created and inserted into the schedule, 
+  // Internal method to create an RT_Info.  If it does not exist,
+  // a new RT_Info is created and inserted into the schedule,
   // and the handle of the new RT_Info is returned.
   // If the RT_Info already exists, an exception is thrown.
 
@@ -268,7 +268,7 @@ protected:
   virtual RtecScheduler::handle_t lookup_i (const char * entry_point,
                                             CORBA::Environment &_env)
     TAO_THROW_SPEC((CORBA::SystemException));
-  // Internal method to look up a handle for an RT_Info, and return 
+  // Internal method to look up a handle for an RT_Info, and return
   // its handle, or an exception if it's not present.
 
   virtual void priority_i (RtecScheduler::handle_t handle,
@@ -356,11 +356,11 @@ protected:
   // Map for O(1) lookup of RT_Infos by handle.
 
   DEPENDENCY_SET_MAP calling_dependency_set_map_;
-  // Map for O(1) lookup of RT_Info dependency 
+  // Map for O(1) lookup of RT_Info dependency
   // set by the caller operation's handle.
 
   DEPENDENCY_SET_MAP called_dependency_set_map_;
-  // Map for O(1) lookup of RT_Info dependency 
+  // Map for O(1) lookup of RT_Info dependency
   // set by the called operation's handle.
 
   RtecScheduler::handle_t next_handle_;
@@ -402,8 +402,7 @@ protected:
 
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Reconfig_Scheduler.i"
+#include "Reconfig_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_RECONFIG_SCHEDULER_H */
-
