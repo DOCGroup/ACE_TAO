@@ -29,6 +29,7 @@ OBJFILES = \
 	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\ClientRequestInfo.obj \
+	$(OBJDIR)\Connection_Descriptor_Interface.obj \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\CONV_FRAMEC.obj \
 	$(OBJDIR)\CONV_FRAMES.obj \

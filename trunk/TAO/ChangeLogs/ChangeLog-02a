@@ -1,10 +1,14 @@
+Sun Nov 19 00:03:21 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Makefile.bor
+
 Sat Nov 18 23:30:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Fixed compile errors
-	  that came up because of the changes 
-          Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu> 
+	  that came up because of the changes
+          Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 Sat Nov 18 19:50:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
