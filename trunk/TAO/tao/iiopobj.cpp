@@ -278,14 +278,10 @@ IIOP_Object::QueryInterface (REFIID riid,
 }
 
 //TAO extensions
-char *
+const char *
 IIOP_Object::_get_name (CORBA::Environment &)
 {
-  char *name = CORBA::string_alloc (this->profile.object_key.length);
-  ACE_OS::memcpy (name,
-                  this->profile.object_key.buffer,
-                  this->profile.object_key.length);
-  return name;
+  return (const char *) this->profile.object_key.buffer;
 }
 
 // It will usually be used by the _bind call.

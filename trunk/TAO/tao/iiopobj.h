@@ -218,8 +218,11 @@ public:
   HRESULT __stdcall QueryInterface (REFIID type_id,
 				    void **ppv);
 
-  virtual char *_get_name (CORBA::Environment &env);
-  // Get the underlying object key.
+  virtual const char *_get_name (CORBA::Environment &env);
+  // Get the underlying object key, which is stored as a
+  // NUL-terminated character string.  Note that this does not
+  // allocate any new memory, so this return value should not be
+  // changed by the caller.
 
   IIOP::Profile profile;
   // @@ Please document me (this should be private).
