@@ -7,6 +7,7 @@ Mon Jan 31 11:59:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/RS_Handler.cpp:
 	* DAnCE/Config_Handlers/Requirement_Handler.cpp:
 	* DAnCE/Config_Handlers/SP_Handler.cpp:
+	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
 	* ciao/Container_Impl.cpp:
 	* performance-tests/Protocols/Controller/Controller.cpp:
 	* tools/RTComponentServer/RTConfig_Manager.cpp:
