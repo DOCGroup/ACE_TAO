@@ -11,7 +11,7 @@
 #define CompImplDesc_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "DeploymentC.h"
+#include "../Core/DeploymentC.h"
 #include "Config_Handler_export.h"
 #include "Basic_Handler.h"
 
