@@ -1,3 +1,14 @@
+Fri Jun 29 11:41:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/client.cpp:
+	* tests/Big_Reply/server.cpp: Relaxed the tests a bit. The server
+	  now sends only 7MB of data. TAO has this problem of sending one
+	  large 8MB data chunk. So got this down to 7MB. The client now
+	  requests for data only 10 times instead of 1000 times. After the
+	  bug fix in bug 575 branch, it was observed that fetching 10MB of
+	  data for a long time slows down the machine a lot. Looks like it
+	  is a TCP'ism.
+
 Fri Jun 29 09:06:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitInfo.h (TAO_ORBInitInfo_var):
