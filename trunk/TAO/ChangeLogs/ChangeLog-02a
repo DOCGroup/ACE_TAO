@@ -1,3 +1,11 @@
+Wed Apr 18 16:28:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          
+          Reverted change below until I can find the problem it
+          was causing with normal running of the IDL compiler.
+
 Wed Apr 18 15:24:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
