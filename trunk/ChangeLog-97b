@@ -1,4 +1,20 @@
-Fri Sep  5 01:14:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Fri Sep  5 14:51:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Threads/process_manager.cpp (sig_handler): Fixed a bug
+ 	  where the thread was exiting if no more children existed.
+  	  Thanks to Avraham Nash <ANash@Engagetech.com> for reporting
+ 	  this.
+
+	* ace/Handle_Set: Added the following performance enhancements:
+
+	  . Assignment operator to optimize size == 0.
+
+	  . min_handle to manage the case when the Handle_Set start in
+	    handle different of zero.
+
+	  . A new iterator algorithm tuned for select function calls.
+
+	  Thank to Arturo for these enhancements.
 
 	* ace/config-aix-4.1.x.h: Added ACE_LACKS_TIMESPEC_T.  Thanks to
  	  Rob Head (rhead@virtc.com) for reporting this.
