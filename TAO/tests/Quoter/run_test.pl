@@ -12,7 +12,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use Process;
 
-$nsiorfile = "qns_ior";
+$nsiorfile = "theior";
 
 # number of threads to use for multithreaded clients or servers
 
@@ -218,8 +218,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
 name_server ();
 sleep $sleeptime;
 read_nsior ();
-
-die;
 
 server ();
 sleep $sleeptime;
