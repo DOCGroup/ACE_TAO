@@ -21,12 +21,12 @@ Benchmark::done (void)
 int
 Benchmark::thr_id (void)
 {
-#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
   // This invokes the thread-specific storage smart pointer.
   return this->id_->thr_id ();
 #else
   return ACE_Thread::self ();
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 }
 
 void
@@ -66,7 +66,7 @@ Benchmark::svc_run (Benchmark *bp)
   return (void *) (bp->svc () == -1 ? -1 : 0);
 }
 
-#if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
 /* static */
 MT_INT Thr_ID::thread_id_ (0);
 
@@ -91,5 +91,5 @@ Thr_ID::thr_id (int i)
 template class ACE_TSS<Thr_ID>;
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS || VXWORKS */
 #endif /* ACE_HAS_THREADS */
