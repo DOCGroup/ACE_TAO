@@ -217,11 +217,14 @@ public:
   // non-0 then <ACE_Thread::exit> is called to exit the thread, in
   // which case <status> is passed as the exit value of the thread.
 
-  int wait (const ACE_Time_Value *timeout = 0);
+  int wait (const ACE_Time_Value *timeout = 0,
+	    int abandon_detached_threads = 0);
   // Block until there are no more threads running in the
   // <Thread_Manager> or <timeout> expires.  Note that <timeout> is
   // treated as "absolute" time.  Returns 0 on success and -1 on
-  // failure.
+  // failure.  If <abandon_detached_threads> is set, wait will first
+  // check thru its thread list for threads with THR_DETACHED or
+  // THR_DAEMON flags set and remove these threads.
 
   int wait_grp (int grp_id);
   // Block until there are no more threads running in a group.
