@@ -1,3 +1,17 @@
+Sun Mar 18 16:28:03 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.h:
+	* tao/corbafwd.h:
+
+	  Added missing CODESET_INCOMPATIBLE and BAD_QOS to the list of
+	  CORBA system exceptions (see CORBA 2.4.2 spec).
+
+	* tao/Exception.cpp (_tao_get_omg_exception_description):
+
+	  Return the description of the OMG minor code for a given
+	  CORBA::SystemException.  Descriptions correspond to those found
+	  in the CORBA 2.4.2 spec.  [Bug 827]
+
 Sun Mar 18 18:09:05 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Param_Test/ub_any_seq.cpp (init_parameters):
