@@ -881,8 +881,9 @@ public:
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */
-  static RTCORBA::ProtocolProperties *create_transport_protocol_property (IOP::ProfileId id,
-                                                                          TAO_ORB_Core *orb_core);
+  static RTCORBA::ProtocolProperties *create_transport_protocol_property (
+      IOP::ProfileId id,
+      TAO_ORB_Core *orb_core = 0);
 
   /**
    * Creates the proper orb ProtocolProperties subclass for
