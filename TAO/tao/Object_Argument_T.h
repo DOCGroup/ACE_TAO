@@ -107,6 +107,8 @@ namespace TAO
   {
   public:
 
+    Ret_Object_Argument_T (void);
+
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
