@@ -88,41 +88,30 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl
-      << "size_t ," << be_nl
+      << "size_t op_len," << be_nl
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
+      << "TAO_Collocated_Skeleton collocated_skel;" << be_nl << be_nl
+      << "if (obj->_servant ()->_find (" << be_idt << be_idt << be_idt
+      << "op," << be_nl
+      << "collocated_skel," << be_nl
+      << "strategy," << be_nl
+      << "op_len) == -1)" << be_uidt << be_uidt << be_nl
+      << "ACE_THROW (CORBA::BAD_OPERATION ());" << be_uidt_nl << be_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
-      << "switch (strategy)" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      *os << "case TAO::TAO_CS_THRU_POA_STRATEGY:" << be_idt_nl
-          << "// Here is where we need table lookups." << be_nl;
-
-      this->gen_thru_poa_operations (node, os);
-
-      *os << "break;" << be_uidt_nl;
-    }
-
-  if (be_global->gen_direct_collocation ())
-    {
-      *os << "case TAO::TAO_CS_DIRECT_STRATEGY:" << be_idt_nl;
-
-      this->gen_direct_operations (node, os);
-
-      *os << "break;" << be_uidt_nl;
-    }
-
-  *os << "default:" << be_idt_nl
-      << "ACE_THROW (CORBA::INTERNAL ());" << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}" << be_uidt
-      << "\n#if (TAO_HAS_MINIMUM_CORBA == 0)" << be_nl
+      << "collocated_skel (" << be_idt_nl
+      << "obj," << be_nl
+      << "forward_obj," << be_nl
+      << "args, " << be_nl
+      << "num_args" << be_nl
+      << "ACE_ENV_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "#if (TAO_HAS_MINIMUM_CORBA == 0)" << be_nl
       << "ACE_CATCH (PortableServer::ForwardRequest, forward_request)"
       << be_idt_nl
       << "{" << be_idt_nl
@@ -139,11 +128,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "}" << be_uidt
       << "\n#endif /* TAO_HAS_MINIMUM_CORBA */" << be_nl
       << "ACE_ENDTRY;" << be_nl
-      << "ACE_UNUSED_ARG (obj);" << be_nl
-      << "ACE_UNUSED_ARG (forward_obj);" << be_nl
-      << "ACE_UNUSED_ARG (args);" << be_nl
-      << "ACE_UNUSED_ARG (num_args);" << be_nl
-      << "ACE_UNUSED_ARG (op);" <<  be_uidt_nl
+      << "ACE_CHECK;" << be_uidt_nl
       << "}";
 
   *os << be_nl << be_nl
