@@ -96,10 +96,6 @@ SOURCE=.\any.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\boa.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\cdr.cpp
 # End Source File
 # Begin Source File
@@ -188,7 +184,7 @@ SOURCE=.\optable.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Orb_Core.cpp
+SOURCE=.\orb_core.cpp
 # End Source File
 # Begin Source File
 
@@ -197,6 +193,10 @@ SOURCE=.\orbobj.cpp
 # Begin Source File
 
 SOURCE=.\params.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\poa.cpp
 # End Source File
 # Begin Source File
 
