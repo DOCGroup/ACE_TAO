@@ -49,9 +49,9 @@ test (ACE_Process_Mutex *pm)
 static void
 spawn (void)
 {
-#if !defined (ACE_WIN32)
   char *name = "hello";
 
+#if !defined (ACE_WIN32)
   switch (ACE_OS::fork ())
     {
     case -1:

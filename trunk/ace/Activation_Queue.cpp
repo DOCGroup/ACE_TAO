@@ -44,17 +44,20 @@ ACE_Method_Object *
 ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
 {
   ACE_Message_Block *mb;
-  ACE_Method_Object *mo;
 
   // Dequeue the message.
-  this->queue_->dequeue_head (mb, tv);
+  if (this->queue_->dequeue_head (mb, tv) != -1)
+    {
 
-  // Get the method object.
-  mo = (ACE_Method_Object *) mb->base ();
+      // Get the method object.
+      ACE_Method_Object *mo = (ACE_Method_Object *) mb->base ();
 
-  // Delete the message block.
-  delete mb;
-  return mo;
+      // Delete the message block.
+      delete mb;
+      return mo;
+    }
+  else
+    return 0;
 }
 
 int 
@@ -67,4 +70,3 @@ ACE_Activation_Queue::enqueue (ACE_Method_Object *mo,
 
   return this->queue_->enqueue (mb, tv);
 }
-

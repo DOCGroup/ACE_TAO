@@ -1,17 +1,69 @@
-Tue Nov 19 21:14:15 1996  David L. Levine  <levine@cs.wustl.edu>
-
-	* performance-tests/Synch-Benchmarks/Benchmark.{h,cpp}:
- 	  use thread ID class for VxWorks as well as Pthreads
-
-	* OS.i, config-{osf1-4.0,sunos5.[45]}-g++.h:
- 	  moved Gnu #include <cstring> out of config files and into OS.i
-
-	* ace/Svc_Conf_l.cpp: added #include of ace/OS.h for HPUX and VxWorks
-
-	* ace/Token.cpp: reordered initializations in Ace_Queue_Entry ctor
-	  to match declaration order
-
 Tue Nov 19 00:06:57 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TTY_IO.h: Added the ACE_Export macro before the ACE_TTY_IO
+ 	  class to make things work correctly for Win32 DLLs.  Thanks
+	  to William L. Gerecke <gerecke@rayva.org> for fixing this.
+
+	* ace/OS.h: Improved the support for RLIMIT_NOFILE.  Thanks to
+ 	  Alan Stewart <axs2@osi.com> for reporting this.
+
+	* ace/OS.h: Removed the following code from OS.h because
+	  it is causing problems on some platforms:
+
+	  #if (!defined (timespec) && !defined (m88k))
+	  #define timestruc_t struct timespec
+	  #endif /* timespec */
+
+	  Thanks to Fred LeBar for reporting this.
+
+	* ace/OS.cpp (thr_create): Needed to create an
+ 	  ACE_OS::NULL_hthread so that we can assign the "NULL thread
+ 	  handle" on POSIX platforms.  Thanks to Alan Stewart
+ 	  <axs2@osi.com> for reporting this.
+
+	* ace/OS.i: The HP/UX C++ compiler is unable to grok inline
+ 	  functions with multiple returns.  So I recoded the
+ 	  ACE_OS::event* methods to avoid this.  Thanks to Alan Stewart
+ 	  <axs2@osi.com> for reporting this.
+
+	* ace/OS.h: Moved the "undef" of t_errno until after the inclusion
+ 	  of mman.h and dlfcn.h to prevent problems with DU4.0a.  Thanks
+ 	  to David Trumble <trumble@steosf.nio.dec.com> for reporting
+ 	  this.
+
+	* ace/Pipe.cpp (open): Fixed a typo where
+ 	  this->ACE_SOCK::set_option() was being used instead of
+ 	  writer.set_option().  Thanks to Tilo Christ
+ 	  <christ@swl.fh-heilbronn.de> for reporting this.
+
+	* ace/Message_Queue.h: Fixed a bug where 
+	
+	  ACE_Message_Queue <ACE_SYNCH_1> &queue_;
+
+	  should be:
+
+	  ACE_Message_Queue <ACE_SYNCH_2> &queue_;	  
+
+	  Thanks to Rick Orr <rorr@costello.den.csci.csc.com> for
+ 	  reporting this.
+
+	* apps/Makefile: Updated the Makefile so that it no longer tries
+ 	  to look for Synch-Benchmarks.  Thanks to Amos Shapira
+ 	  <amos@dsi.co.il> for reporting this.
+
+	* ace/Activation_Queue.cpp (dequeue): Added a sanity check to make
+ 	  sure that we actually deleted the first element in the queue.
+  	  Thanks to Andres Kruse <Andres.Kruse@cern.ch> for reporting
+ 	  this.
+
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU: Added a
+ 	  minor change to remove the libACE.a archive prior to creating a
+ 	  new one.  This works around bugs with the SunOS 4.x C++
+ 	  compiler.  Thanks to Andres Kruse <Andres.Kruse@cern.ch> for
+ 	  reporting this.
+
+	* ace/Malloc_T.cpp (avail_chunks): Added Fred LeBar's code and
+ 	  comments for computing the available chunks.
 
 	* tests/Mutex_Test.cpp: Rewrote the Mutex_Test so that it behaves
  	  correctly on UNIX and Win32.  Thanks to Irfan for reporting the
@@ -26,6 +78,20 @@ Tue Nov 19 00:06:57 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  ACE. This fixes a nasty problem that otherwise arises when
  	  compiling on SunOS 5.x.  Thanks to Hanan Herzog
  	  <hanan@wallenda.stanford.edu> for reporting this.
+
+Tue Nov 19 21:14:15 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/Benchmark.{h,cpp}:
+ 	  use thread ID class for VxWorks as well as Pthreads.
+
+	* OS.i, config-{osf1-4.0,sunos5.[45]}-g++.h: Moved GNU
+	  #include <cstring> out of config files and into OS.i.
+
+	* ace/Svc_Conf_l.cpp: added #include of ace/OS.h for HPUX and
+	  VxWorks.
+
+	* ace/Token.cpp: reordered initializations in Ace_Queue_Entry
+	  ctor to match declaration order.
 
 Mon Nov 18 00:47:27 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

@@ -10,8 +10,7 @@
 
 INFO  = README
 
-DIRS  = Synch-Benchmarks \
-	Gateway 
+DIRS  = Gateway 
 
 # The following directory isn't compiled by default since haven't
 # finished integrating it into ACE...

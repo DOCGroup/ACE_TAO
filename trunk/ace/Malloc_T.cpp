@@ -454,29 +454,31 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::find (const char *name, void *&pointer)
 }
 
 // Returns a count of the number of available chunks that can hold
-// <size> byte allocations.
+// <size> byte allocations.  Function can be used to determine if you
+// have reached a water mark. This implies a fixed amount of allocated 
+// memory.
+//
+// @param size - the chunk size of that you would like a count of
+// @return function returns the number of chunks of the given size 
+//          that would fit in the currently allocated memory
 
 template <ACE_MEM_POOL_1, class LOCK> size_t
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks (size_t size) const
 {
-  ACE_READ_GUARD_RETURN (LOCK, ace_mon, (LOCK &) this->lock_, 0);
+  ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::avail_chunks");
+
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, (LOCK &) this->lock_, -1);
 
   size_t count = 0;
   // Avoid dividing by 0...
   size = size == 0 ? 1 : size;
-  const size_t sizeof_oversize = sizeof (ACE_Malloc_Header) / size;
     
   for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_; 
-       ; 
+       currp != this->cb_ptr_->freep_;
        currp = currp->s_.next_block_)
-    {
-      if (currp->s_.size_ * sizeof (ACE_Malloc_Header) >= sizeof_oversize)
-	// How many will fit in this block.
-	count += currp->s_.size_ * sizeof_oversize;
-            
-      if (currp == this->cb_ptr_->freep_)
-	break;
-    }
+    // calculate how many will fit in this block.
+    if (currp->s_.size_ * sizeof (ACE_Malloc_Header) >= size)
+      count += currp->s_.size_ * sizeof (ACE_Malloc_Header) / size; 
 
   return count;
 }
