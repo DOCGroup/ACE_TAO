@@ -111,9 +111,6 @@ public:
   CORBA::ORB_ptr  orb (void);
   // return the underlying ORB
 
-  TAO_POA *oa (void);
-  // return the Object Adapter
-
   //
   // = TAO extensions
   // meant to be used internally.
@@ -238,7 +235,7 @@ private:
   // Unique identifier for a request
 
   TAO_Tagged_Profile profile_;
-  // The tagged profile that has the addressing information 
+  // The tagged profile that has the addressing information
 
   CORBA::Principal_var requesting_principal_;
   // Identifies the requester

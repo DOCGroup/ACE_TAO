@@ -138,12 +138,6 @@ TAO_GIOP_ServerRequest::orb (void)
   return this->orb_core_->orb ();
 }
 
-TAO_POA *
-TAO_GIOP_ServerRequest::oa (void)
-{
-  return this->orb_core_->root_poa ();
-}
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
@@ -422,15 +416,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
 CORBA::Object_ptr
 TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
 {
-  CORBA::PolicyList_var client_exposed_policies =
-    this->oa ()->client_exposed_policies (TAO_DEFAULT_PRIORITY,
-                                          ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_POA_Current_Impl *pci = TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
-  return this->orb ()->key_to_object (this->object_key (),
-                                      0,
-                                      client_exposed_policies._retn (),
-                                      0,
-                                      1,
-                                      ACE_TRY_ENV);
+  return pci->poa ()->id_to_reference (pci->object_id (), ACE_TRY_ENV);
 }

@@ -154,9 +154,6 @@ public:
 
   // = Extensions.
 
-  virtual TAO_POA *oa (void) = 0;
-  // get the Object Adapter
-
   virtual CORBA::ORB_ptr  orb (void) = 0;
   // get the underlying ORB
 
