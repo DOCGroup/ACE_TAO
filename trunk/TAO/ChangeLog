@@ -1,3 +1,12 @@
+Mon Oct 14 17:35:56 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+
+          Modified these files to correspond with changes to generated code in
+
+          Mon Oct 14 15:44:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
 Mon Oct 14 17:15:23 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
 	* tests/IDL_Test/repo_id_mod.idl:
