@@ -22,10 +22,6 @@
 #include "Attributes_T.h"
 #include "Trader.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 template <class TRADER, class MAP_LOCK_TYPE>
 class TAO_Link : 
   public TAO_Trader_Components <POA_CosTrading::Link>,
@@ -198,10 +194,5 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Link.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
-
 
 #endif /* TAO_LINK_H */
