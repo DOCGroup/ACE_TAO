@@ -453,7 +453,8 @@ class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T
 public:
   
   // = Traits.
-  typedef IMPLEMENTATION implementation;
+  typedef IMPLEMENTATION 
+          implementation;
 
   ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
   // Constructor.  
@@ -498,9 +499,12 @@ class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 public:
 
   // = Traits.
-  typedef ACE_Map_Impl_Iterator_Adapter<value_type, ITERATOR, ENTRY> iterator_impl;
-  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<value_type, REVERSE_ITERATOR, ENTRY> reverse_iterator_impl;
-  typedef IMPLEMENTATION implementation;
+  typedef ACE_Map_Impl_Iterator_Adapter<value_type, ITERATOR, ENTRY> 
+          iterator_impl;
+  typedef ACE_Map_Impl_Reverse_Iterator_Adapter<value_type, REVERSE_ITERATOR, ENTRY> 
+          reverse_iterator_impl;
+  typedef IMPLEMENTATION 
+          implementation;
 
   // = Initialization and termination methods.
   ACE_Map_Impl (ACE_Allocator *alloc = 0);
