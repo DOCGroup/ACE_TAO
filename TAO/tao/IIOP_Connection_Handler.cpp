@@ -237,11 +237,6 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   return 0;
 }
 
-ACE_HANDLE
-TAO_IIOP_Connection_Handler::fetch_handle (void)
-{
-  return this->get_handle ();
-}
 
 int
 TAO_IIOP_Connection_Handler::resume_handler (void)
