@@ -178,9 +178,9 @@ static void TestUnsignedInteger32()
   u1 = def; // unsigned long
   ACE_ASSERT(u1 == def);
   u1 = us; // unsigned short
-  ACE_ASSERT(u1 == us);
+  ACE_ASSERT(u1 == static_cast<unsigned long> (us));
   u1 = si; // unsigned short
-  ACE_ASSERT(u1 == si);
+  ACE_ASSERT(u1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32 */
 }
 
