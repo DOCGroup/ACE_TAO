@@ -371,6 +371,11 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
 }
 
 ACE_INLINE
+ACE_Managed_Process::ACE_Managed_Process (void)
+{
+}
+
+ACE_INLINE
 ACE_Managed_Process::~ACE_Managed_Process (void)
 {
 }
