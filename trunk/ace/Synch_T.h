@@ -82,7 +82,11 @@ class ACE_Test_and_Set : public ACE_Event_Handler
   //
   // = DESCRIPTION
   //     This class keeps track of the status of <is_set_>, which can
-  //     be set based on various events (such as receipt of a signal).
+  //     be set based on various events (such as receipt of a
+  //     signal).  This class is derived from <ACE_Event_Handler> so
+  //     that it can be "signaled" by a Reactor when a signal occurs.
+  //     We assume that <TYPE> is a data type that can be assigned the
+  //     value 0 or 1.
 public:
   ACE_Test_and_Set (TYPE initial_value = 0);
 
@@ -90,9 +94,12 @@ public:
   // Returns true if we are set, else false.
 
   TYPE set (TYPE);
-  // Sets the <set_> status, returning 
+  // Sets the <is_set_> status, returning the original value of
+  // <is_set_>.
 
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, 
+			     siginfo_t * = 0, 
+			     ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
 
@@ -101,6 +108,7 @@ private:
   // Keeps track of our state.
 
   LOCK lock_;
+  // Protect the state from race conditions.
 };
 
 template <class LOCK, class TYPE>

@@ -61,7 +61,7 @@ public:
 
   // = Search structure operations.
 
-  ACE_Event_Handler *find (size_t index);
+  ACE_Event_Handler *find (size_t index) const;
   // Return the <ACE_Event_Handler *> associated with <index>.  Return
   // 0 if <index> is invalid.
 

@@ -49,7 +49,7 @@ private:
   size_t id_;
   // ID passed in by Thread_Handler constructor.
 
-  sig_atomic_t shutdown_;
+  static sig_atomic_t shutdown_;
   // Shutting down.
 
   // = Timing variables.
@@ -60,6 +60,9 @@ private:
   static ACE_Time_Value interval_;
 };
 
+// Shutdown flag.
+sig_atomic_t Thread_Handler::shutdown_ = 0;
+
 // Delay factor for timer-driven I/O.
 ACE_Time_Value Thread_Handler::delay_;
 
@@ -69,7 +72,6 @@ ACE_Time_Value Thread_Handler::interval_;
 Thread_Handler::Thread_Handler (int delay, 
 				int interval,
 				int n_threads)
-  : shutdown_ (0)
 {
   delay_.set (delay);
   interval_.set (interval);
@@ -110,23 +112,6 @@ Thread_Handler::Thread_Handler (int delay,
   ACE_Thread::sigsetmask (SIG_UNBLOCK, sig_set);
 }
 
-// Test stdin handling (can use select to demultiplex HANDLEs)
-
-int
-Thread_Handler::handle_input (ACE_HANDLE handle)
-{
-  char buf[BUFSIZ];
-  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
-
-  if (n > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%t) %*s", n, buf));
-      return this->notify ();
-    }
-  else
-    return -1;
-}
-
 int
 Thread_Handler::notify (ACE_Time_Value *timeout)
 {
@@ -142,6 +127,29 @@ Thread_Handler::notify (ACE_Time_Value *timeout)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
 
   return 0;
+}
+
+// Test stdin handling (can use select to demultiplex HANDLEs)
+
+int
+Thread_Handler::handle_input (ACE_HANDLE handle)
+{
+  char buf[BUFSIZ];
+  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+
+  if (n > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%t) %*s", n, buf));
+
+      // Only wait up to 10 milliseconds to notify the Reactor.
+      ACE_Time_Value timeout (0, 10 * 1000);
+
+      if (this->notify (&timeout) == -1)
+	ACE_ERROR ((LM_DEBUG, "(%t), %p\n", "notify"));
+      return 0;
+    }
+  else
+    return -1;
 }
 
 // Perform a task that will test the ACE_Reactor's multi-threading
@@ -160,8 +168,10 @@ Thread_Handler::svc (void)
       ACE_Time_Value timeout (0, 10 * 1000);
 
       if (notify (&timeout) == -1)
-	ACE_DEBUG ((LM_DEBUG, "(%t) %p\n", "notify()"));
+	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "notify"));
     }
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) exiting svc\n"));
   return 0;
 }
 
