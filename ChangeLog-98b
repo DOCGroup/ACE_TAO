@@ -20,7 +20,9 @@ Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
           XtReactor_Test.cpp:
           changed Log_Priority of "not supported" messages to LM_INFO.
           Hopefully, it will help avoid confusion, especially among
-          new ACE users.
+          new ACE users.  Thanks to Gonzo for suggesting this.
+
+        * tests/run_tests.sh: added ACE version number printouts.
 
 Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
