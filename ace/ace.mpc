@@ -16,6 +16,8 @@ project : acelib, core {
       OS_String.cpp
       OS_TLI.cpp
       OS_Errno.cpp
+      ARGV.cpp
+      Argv_Type_Converter.cpp
       Base_Thread_Adapter.cpp
       OS_Thread_Adapter.cpp
       OS_Log_Msg_Attributes.cpp
@@ -31,8 +33,6 @@ project : acelib, core {
       ACE.cpp
       Active_Map_Manager.cpp
       Arg_Shifter.cpp
-      ARGV.cpp
-      Argv_Type_Converter.cpp
       Capabilities.cpp
       Containers.cpp
       Configuration.cpp
