@@ -1,3 +1,9 @@
+Tue Jun 30 13:13:21 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (open): Made sure that size does not exceed
+ 	  MAXIMUM_WAIT_OBJECTS.  Thanks to Dr. Schmidt for pointing this
+ 	  out.
+
 Tue Jun 30 11:45:12 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Message_Queue_T.cpp: Added explicit class names where needed
