@@ -10,7 +10,7 @@
 #include "IORC.h"
 #include "tao/Typecode.h"
 #include "tao/Any.h"
-#include  "tao/ORB.h"
+#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 #include "IORC.i"
@@ -570,8 +570,6 @@ const char* TAO_IOP::TAO_IOR_Property::_interface_repository_id (void) const
 }
 
 
-
-
 // default constructor
 TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
 {}
@@ -768,8 +766,6 @@ const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
 {
   return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
 }
-
-
 
 void operator<<= (CORBA::Any &_tao_any, const TAO_IOP::EmptyProfileList &_tao_elem) // copying
 {

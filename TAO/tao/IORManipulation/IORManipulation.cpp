@@ -306,9 +306,10 @@ TAO_IOR_Manipulation_impl::set_primary (
                       0);
 
   // Make sure we have only one profile in IOR1
-  if (ior1->_stubobj ()->base_profiles ().profile_count () > 1)
+  // @@ Will fail if the object has been
+  /*if (ior1->_stubobj ()->base_profiles ().profile_count () > 1)
     ACE_THROW_RETURN (TAO_IOP::MultiProfileList (),
-                      0);
+    0);*/
 
   // Call the callback object to do the rest of the processing.
   return prop->set_primary (ior1,
