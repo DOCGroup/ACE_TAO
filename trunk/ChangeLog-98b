@@ -25,22 +25,25 @@ Fri Oct 30 11:53:16 1998  David L. Levine  <levine@cs.wustl.edu>
           But, it's perfectly repeatable.  And, we can live without
           ACE_HAS_POSIX_SEM.
 
+        * tests/run_tests.sh: really commented out Thread_Pool_Reactor_Test.
+          It _wasn't_ commented out in the 4.6 release.
+
 Fri Oct 30 09:23:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SString.h: Cleaned up the ACE_SString comments to be more
- 	  helpful.  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
-	  motivating this.
+        * ace/SString.h: Cleaned up the ACE_SString comments to be more
+          helpful.  Thanks to Ivan Murphy <Ivan.Murphy@med.siemens.de> for
+          motivating this.
 
 Thu Oct 29 22:19:19 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/ACE-FMM.html:
-	  Updated from Bob's latest version.  Thanks Bob!
+        * docs/ACE-FMM.html:
+          Updated from Bob's latest version.  Thanks Bob!
 
 Thu Oct 29 21:13:41 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/016/Condition_i.cpp:
-	  Fixed messed-up the signature on
-	    Condition::operator Condition::value_t(void)
+        * docs/tutorials/016/Condition_i.cpp:
+          Fixed messed-up the signature on
+            Condition::operator Condition::value_t(void)
 
 Thu Oct 29 18:51:19 1998  Steve Huston  <shuston@riverace.com>
 
