@@ -9,12 +9,13 @@ ACE_RCSID(lib, TAO_Activation_Manager, "$id$")
 #include "Name.h"
 
 TAO_NS_Activation_Manager::TAO_NS_Activation_Manager (void)
-  : active_suppliers_ (0)
-    , active_consumers_ (0)
-    , active_done_ (lock_)
-    , ior_output_file_ (0)
-    , started_ (0)
-    , started_condition_ (lock_)
+  : barrier_ (0)
+  , active_suppliers_ (0)
+  , active_consumers_ (0)
+  , active_done_ (lock_)
+  , ior_output_file_ (0)
+  , started_ (0)
+  , started_condition_ (lock_)
 {
   LOOKUP_MANAGER->_register (this);
 }

@@ -26,7 +26,7 @@ class Notify_Push_Consumer: public TAO_Notify_StructuredPushConsumer
 public:
   Notify_Push_Consumer (const char* name);
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
+  void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr ec,
                 CORBA::Boolean isFilter
                 ACE_ENV_ARG_DECL)
