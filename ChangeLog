@@ -1,3 +1,25 @@
+Fri Jun  6 06:37:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Set ACE_SHLIB instead of ACELIB and set it before the include of
+          wrapper_macros.GNU
+
+        * ACEXML/apps/svcconf/Makefile.ACEXML_XML_Svc_Conf_Parser:
+        * ACEXML/common/Makefile.ACEXML:
+        * ACEXML/examples/SAXPrint/Makefile.SAXPrint:
+        * ACEXML/parser/parser/Makefile.ACEXML_Parser:
+        * ACEXML/tests/Makefile.ContentHandler_Test:
+        * ACEXML/tests/Makefile.HttpCharStream_Test:
+        * ACEXML/tests/Makefile.NamespaceSupport_Test:
+        * ACEXML/tests/Makefile.Transcoder_Test:
+          Regenerated these makefiles based on the change above. This fixes the
+          Kylix/Cygwin/MinGW link errors.
+
+        * ACEXML/common/Attributes_Def_Builder.cpp
+        * ACEXML/common/Element_Def_Builder.cpp
+          Added explicit template instantiations in case the ACE autoptr
+          is used. This fixes unresolved externals with VxWorks 5.5
+
 Fri Jun  6 06:12:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao_rtevent.doxygen:
