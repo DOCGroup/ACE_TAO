@@ -45,6 +45,7 @@ endif
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
+
 .obj/Test_URL_Addr.o .obj/Test_URL_Addr.so .shobj/Test_URL_Addr.o .shobj/Test_URL_Addr.so: Test_URL_Addr.cpp \
  $(ACE_ROOT)/websvcs/lib/URL_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
@@ -58,9 +59,9 @@ endif
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
