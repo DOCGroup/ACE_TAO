@@ -178,6 +178,15 @@ Test_Supplier::svc ()
               TAO_CHECK_ENV;
             }
           this->throughput_.sample ();
+
+          if (TAO_debug_level > 0
+              && i % 100 == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "ECT_Supplier (%P|%t): %d bursts sent\n",
+                          i));
+            }
+
           ACE_Time_Value tv (0, this->burst_pause_);
           ACE_OS::sleep (tv);
         }
