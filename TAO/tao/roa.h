@@ -92,20 +92,6 @@ public:
 		     void *context,
 		     CORBA_Environment &env);
     
-  void get_request (CORBA_Boolean use_threads,
-		    struct timeval *tvp,	// should be an ACE_Time_Value
-		    CORBA_Environment &env);
-
-  void get_request (CORBA_BOA::dsi_handler,
-		    void check_forward (CORBA_OctetSeq &,
-					CORBA_Object_ptr &,
-					void *,
-					CORBA_Environment &),
-		    CORBA_Boolean,
-		    void *,
-		    timeval *,
-		    CORBA_Environment &);
-
   void please_shutdown (CORBA_Environment &env);
 
   // = COM IUnknown Support

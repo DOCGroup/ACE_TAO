@@ -126,28 +126,6 @@ public:
   //   such as maintaining persistent tables keyed by references to
   //   objects that may no longer exist.
     
-  virtual void get_request (CORBA_Boolean use_threads,
-			   struct timeval *tvp,
-			   CORBA_Environment &env) = 0;
-  // Get/handle requests ... this starts processing a request, or
-  // times out.
-  // 
-  // If the "use threads" flag is FALSE, then any request processing
-  // will have completed when the call returns.
-  // 
-  // If the "use threads" flag is TRUE, then applications may see
-  // concurrent execution of method code (and processing may not be
-  // complete when this call returns).  This value is only legal in
-  // environments which support threads.
-  // 
-  // Normal timeout semantics apply: if the timeval pointer is NULL
-  // the call will not time out.  Otherwise the value pointed to is
-  // the minimum amount of time that will elapse before this call
-  // returns.
-  // 
-  // Reports INITIALIZE exception if no DIR was registered.  Reports
-  // BAD_INV_ORDER if this is shutting down.
-
   virtual void please_shutdown (CORBA_Environment &env) = 0;
   // Please Shutdown -- reject all further incoming requests, and
   // allow all currently active calls (e.g. "this one") to complete.
