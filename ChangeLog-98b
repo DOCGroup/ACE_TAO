@@ -1,5 +1,9 @@
 Fri Jul 17 07:32:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * Makefile (CONTROLLED_FILES): added ACE-inheritance.{pdf,ps}.gz
+          to distribution.  Thanks to Gabriel Lima <gali@enea.se> for
+          reporting their absence.  Also, add COPYING to distribution.
+
         * ace/IO_SAP.cpp (enable): removed unreachable break statement.
 
 Thu Jul 16 18:28:31 1998  Steve Huston  <shuston@riverace.com>
