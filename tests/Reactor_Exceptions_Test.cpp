@@ -182,7 +182,7 @@ main (int argc, ASYS_TCHAR *argv[])
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
-  ACE_SOCK_Dgram dgram ((ACE_INET_Addr &) ACE_Addr::sap_any);
+  ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &));
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
     dgram.send (ASYS_TEXT ("Hello"),
