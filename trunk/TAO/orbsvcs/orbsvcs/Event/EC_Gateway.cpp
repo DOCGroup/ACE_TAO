@@ -39,7 +39,7 @@ TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 {
 }
 
-void 
+void
 TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                            RtecScheduler::Scheduler_ptr rmt_sched,
@@ -48,12 +48,12 @@ TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
                            const char* rmt_name,
                            CORBA::Environment &TAO_IN_ENV)
 {
-  this->rmt_ec_ = 
+  this->rmt_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (rmt_ec);
-  this->lcl_ec_ = 
+  this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
 
-  this->rmt_info_ = 
+  this->rmt_info_ =
     rmt_sched->create (rmt_name, TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0) return;
 
@@ -154,7 +154,7 @@ TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& 
   for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
     {
       sub.dependencies[i].rt_info = this->rmt_info_;
-      
+
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
       RtecEventComm::EventSourceID sid =
         sub.dependencies[i].event.header.source;
@@ -229,7 +229,7 @@ TAO_EC_Gateway_IIOP::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& 
               && h.type < ACE_ES_EVENT_UNDEFINED))
         continue;
       pub.publications[c].event.header = h;
-      pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero;
+      pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero ();
       pub.publications[c].dependency_info.dependency_type =
         RtecScheduler::TWO_WAY_CALL;
       pub.publications[c].dependency_info.number_of_calls = 1;

@@ -18,7 +18,7 @@ static const char *TAO_Reactor_Task_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_REACTOR_TASK_WAITING_FOR_EVENTS = 5300,
   TAO_REACTOR_TASK_EVENTS_HANDLED
 };
@@ -81,12 +81,12 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
             this->scheduler_->set
               (rt_info_,
                RtecScheduler::VERY_HIGH_CRITICALITY,
-               ORBSVCS_Time::zero,
-               ORBSVCS_Time::zero,
-               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero (),
+               ORBSVCS_Time::zero (),
+               ORBSVCS_Time::zero (),
                period,
                RtecScheduler::VERY_LOW_IMPORTANCE,
-               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero (),
                1,
                RtecScheduler::OPERATION,
                TAO_TRY_ENV);
@@ -94,12 +94,12 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period_t &period)
             ACE_Scheduler_Factory::server()->set
               (rt_info_,
                RtecScheduler::VERY_HIGH_CRITICALITY,
-               ORBSVCS_Time::zero,
-               ORBSVCS_Time::zero,
-               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero (),
+               ORBSVCS_Time::zero (),
+               ORBSVCS_Time::zero (),
                period,
                RtecScheduler::VERY_LOW_IMPORTANCE,
-               ORBSVCS_Time::zero,
+               ORBSVCS_Time::zero (),
                1,
                RtecScheduler::OPERATION,
                TAO_TRY_ENV);

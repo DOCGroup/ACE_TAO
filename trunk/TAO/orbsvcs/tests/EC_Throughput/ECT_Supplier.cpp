@@ -152,8 +152,8 @@ Test_Supplier::svc ()
 
       ACE_hrtime_t t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
-      event[0].header.ec_recv_time = ORBSVCS_Time::zero;
-      event[0].header.ec_send_time = ORBSVCS_Time::zero;
+      event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
+      event[0].header.ec_send_time = ORBSVCS_Time::zero ();
 
       event[0].data.x = 0;
       event[0].data.y = 0;

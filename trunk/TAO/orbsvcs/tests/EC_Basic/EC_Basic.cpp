@@ -493,8 +493,8 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
 
   ACE_hrtime_t t = ACE_OS::gethrtime ();
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
-  e.header.ec_recv_time = ORBSVCS_Time::zero;
-  e.header.ec_send_time = ORBSVCS_Time::zero;
+  e.header.ec_recv_time = ORBSVCS_Time::zero ();
+  e.header.ec_send_time = ORBSVCS_Time::zero ();
 
   e.data.x = 0;
   e.data.y = 0;
@@ -831,8 +831,8 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 
     ACE_hrtime_t t = ACE_OS::gethrtime ();
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
-    e.header.ec_recv_time = ORBSVCS_Time::zero;
-    e.header.ec_send_time = ORBSVCS_Time::zero;
+    e.header.ec_recv_time = ORBSVCS_Time::zero ();
+    e.header.ec_send_time = ORBSVCS_Time::zero ();
 
     e.data.x = 0;
     e.data.y = 0;
@@ -848,8 +848,8 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 
     ACE_hrtime_t t = ACE_OS::gethrtime ();
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
-    e.header.ec_recv_time = ORBSVCS_Time::zero;
-    e.header.ec_send_time = ORBSVCS_Time::zero;
+    e.header.ec_recv_time = ORBSVCS_Time::zero ();
+    e.header.ec_send_time = ORBSVCS_Time::zero ();
 
     e.data.x = 0;
     e.data.y = 0;
@@ -865,8 +865,8 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 
     ACE_hrtime_t t = ACE_OS::gethrtime ();
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
-    e.header.ec_recv_time = ORBSVCS_Time::zero;
-    e.header.ec_send_time = ORBSVCS_Time::zero;
+    e.header.ec_recv_time = ORBSVCS_Time::zero ();
+    e.header.ec_send_time = ORBSVCS_Time::zero ();
 
     e.data.x = 0;
     e.data.y = 0;
@@ -879,8 +879,8 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
 
     ACE_hrtime_t t = ACE_OS::gethrtime ();
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
-    e.header.ec_recv_time = ORBSVCS_Time::zero;
-    e.header.ec_send_time = ORBSVCS_Time::zero;
+    e.header.ec_recv_time = ORBSVCS_Time::zero ();
+    e.header.ec_send_time = ORBSVCS_Time::zero ();
 
     e.data.x = 0;
     e.data.y = 0;
