@@ -1,3 +1,7 @@
+Mon Apr 30 12:56:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst : Removed RAPI of the scoreboard.
+
 Sun Apr 29 15:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* bin/auto_run_tests.lst:
