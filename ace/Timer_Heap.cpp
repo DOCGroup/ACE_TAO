@@ -303,7 +303,7 @@ ACE_Timer_Heap::alloc_node (void)
   if (this->preallocated_nodes_ == 0)
     ACE_NEW_RETURN (temp,
 		    ACE_Timer_Node,
-		    -1);
+		    0);
   else
     {
       temp = this->preallocated_nodes_freelist_;

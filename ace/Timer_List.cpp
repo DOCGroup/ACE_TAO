@@ -46,6 +46,18 @@ ACE_Timer_List::is_empty (void) const
   return this->head_ == 0;
 }
 
+ACE_Timer_Node *
+ACE_Timer_List::alloc_node (void)
+{
+  return new ACE_Timer_Node;
+}
+
+void
+ACE_Timer_List::free_node (ACE_Timer_Node *node)
+{
+  delete node;
+}
+
 // Returns earliest time in a non-empty list.
 
 const ACE_Time_Value &
@@ -67,7 +79,7 @@ ACE_Timer_List::~ACE_Timer_List (void)
   while (curr != 0)
     {
       ACE_Timer_Node *next = curr->next_;
-      delete curr;
+      this->free_node (curr);
       curr = next;
     }
 }
@@ -132,14 +144,15 @@ ACE_Timer_List::schedule (ACE_Event_Handler *handler,
   if (this->is_empty () || future_time < this->earliest_time ())
     {
       // Place at the beginning of the list.
-      ACE_NEW_RETURN (this->head_, 
-		      ACE_Timer_Node (handler, 
-				      arg, 
-				      future_time,
-				      interval, 
-				      this->head_,
-				      timer_id),
-		      -1);
+      ACE_Timer_Node *temp = this->alloc_node ();
+
+      // Use operator placement new.
+      this->head_ = new (temp) ACE_Timer_Node (handler, 
+					       arg, 
+					       future_time,
+					       interval, 
+					       this->head_,
+					       timer_id);
       return timer_id;
     }
 
@@ -156,14 +169,15 @@ ACE_Timer_List::schedule (ACE_Event_Handler *handler,
 	  after = after->next_;
 	}
 
-      ACE_NEW_RETURN (prev->next_,
-		      ACE_Timer_Node (handler, 
-				      arg, 
-				      future_time,
-				      interval, 
-				      after,
-				      timer_id),
-		      -1);
+      ACE_Timer_Node *temp = this->alloc_node ();
+
+      // Use operator placement new.
+      prev->next_ = new (temp) ACE_Timer_Node (handler, 
+					       arg, 
+					       future_time,
+					       interval, 
+					       after,
+					       timer_id);
       return timer_id;
     }
 }
@@ -210,7 +224,7 @@ ACE_Timer_List::cancel (int timer_id,
       if (arg != 0)
 	*arg = curr->arg_;
 
-      delete curr;
+      this->free_node (curr);
       return 1;
     }
   else
@@ -239,13 +253,13 @@ ACE_Timer_List::cancel (ACE_Event_Handler *handler)
 	  if (prev == 0)
 	    {
 	      this->head_ = curr->next_;
-	      delete curr;
+	      this->free_node (curr);
 	      curr = this->head_;
 	    }
 	  else
 	    {
 	      prev->next_ = curr->next_;
-	      delete curr;
+	      this->free_node (curr);
 	      curr = prev->next_;
 	    }
 	}
