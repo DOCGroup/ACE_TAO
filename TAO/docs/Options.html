@@ -169,18 +169,18 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         Sets of endpoints may be specified using multiple <CODE>-ORBEndpoint</CODE>
         options or by delimiting endpoints with a semi-colon (;).  For example,
         <blockquote><CODE>
-        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock
+        -ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://:10002
         </CODE></blockquote>
         is equivalent to:
         <blockquote><CODE>
-        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock'
+        -ORBEndpoint 'iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://:1002'
         </CODE></blockquote>
         Notice the single quotes (') in the latter option specification.  Single
         quotes are needed to prevent the shell from interpreting text after the
         semi-colon as another command to run.<P>
         If an endpoint is specified without an <CODE>addr</CODE> such as the following:
         <blockquote><CODE>
-        -ORBEndpoint uiop://
+        -ORBEndpoint uiop:// -ORBEndpoint shmiop://
         </CODE></blockquote>
         then a default endpoint will be created for the specified protocol.
         <P>
@@ -365,7 +365,14 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
 
   <TR>
     <TD><CODE>-ORBDefaultInitRef</CODE> <EM>IOR prefix</EM></TD>
-    <TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' ('|' for UIOP pluggable protocol) and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is iioploc.</TD>
+    <TD><A name="-ORBDefaultInitRef"></a> This argument allows
+        resolution of initial references not explicitly specified with
+        -ORBInitRef. It requires a URL prefix that, after appending a
+        slash '/' ('|' for UIOP pluggable protocol) and a simple
+        object key, forms a new URL to identify an initial object
+        reference. The URL prefix format currently supported is
+        iioploc.
+    </TD>
   </TR>
 
   <TR>
@@ -528,8 +535,9 @@ The default is <code>select_mt</code></TD>
   <TD><CODE>-ORBProtocolFactory</CODE> <EM>factory</EM></TD>
   <TD><a name="-ORBProtocolFactory"></a>
       Specify which pluggable protocol factory to load.  By default,
-      the factories for the IIOP and UIOP protocols (<code>IIOP_Factory</code>
-      and <code>UIOP_Factory</code>, respectively) are loaded.
+      the factories for the IIOP, UIOP and, SHMIOP protocols
+      (<code>IIOP_Factory</code>, <code>UIOP_Factory</code> and,
+      <code>SHMIOP_Factory</code> respectively) are loaded.
       <p>
       For example, if some protocol called <em><code>Foo</code></em> whose
       factory was called <em><code>Foo_Factory</code></em> was available,
