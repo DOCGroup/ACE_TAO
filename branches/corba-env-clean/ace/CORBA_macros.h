@@ -78,7 +78,6 @@
 // ACE_THROW_INT should not be used by the user.
 # define ACE_THROW_INT(EXCEPTION) \
     do { \
-      ACE_UNUSED_ARG(ACE_TRY_ENV); \
       throw EXCEPTION; \
     } while (0)
 
@@ -86,7 +85,6 @@
 // used within try blocks.
 # define ACE_THROW(EXCEPTION) \
     do { \
-      ACE_UNUSED_ARG(ACE_TRY_ENV); \
       throw EXCEPTION; \
     } while (0)
 
@@ -95,14 +93,12 @@
 #   define ACE_THROW_RETURN(EXCEPTION, RETV) \
       do \
         { \
-          ACE_UNUSED_ARG(ACE_TRY_ENV); \
           throw EXCEPTION; \
           return RETV; \
         } while (0)
 # else /* WIN32 */
 #   define ACE_THROW_RETURN(EXCEPTION,RETV) \
       do { \
-        ACE_UNUSED_ARG(ACE_TRY_ENV); \
         throw EXCEPTION; \
       } while (0)
 # endif /* WIN32 */
