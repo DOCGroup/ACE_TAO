@@ -521,6 +521,26 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
     }
 }
 
+// Constructor that allocates empty memory
+
+ACE_WString::ACE_WString (size_t len, 
+			  ACE_Allocator *alloc)
+  : allocator_ (alloc)
+{
+  ACE_TRACE ("ACE_WString::ACE_WString");
+
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Service_Config::alloc ();
+
+  this->len_ = len;
+  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
+
+  ACE_OS::memset (this->rep_, 0, len * sizeof (ACE_USHORT16));
+
+  // null terminate 
+  this->rep_[this->len_] = 0;
+}
+
 size_t
 ACE_WString::length (void) const
 {
@@ -568,6 +588,23 @@ ACE_WString::operator = (const ACE_WString &s)
       ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_,
 		      this->len_ * sizeof (ACE_USHORT16));
     }
+}
+
+void 
+ACE_WString::resize (size_t len)
+{
+  ACE_TRACE ("ACE_WString::resize");
+
+  // Only reallocate if we don't have enough space...
+  if (this->len_ < len)
+    {
+      this->allocator_->free (this->rep_);
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((len + 1) * sizeof (ACE_USHORT16));
+    }
+
+  this->len_ = len;
+  ACE_OS::memset (this->rep_, 0, this->len_ * sizeof (ACE_USHORT16));
+  this->rep_[this->len_] = 0;
 }
 
 // Concat operator (does copy memory).

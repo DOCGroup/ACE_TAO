@@ -105,14 +105,28 @@ ACE_Registry_Name_Space::resolve (const ACE_WString &name,
 				  ACE_WString &value, 
 				  char *&type)
 {
-  ACE_Registry::Object object;
-  int result = this->context_.resolve (name.fast_rep (), object);
+  // This object will be used to query the size of the data. 
+  // Note: The query_object.data will be null for this invocation.
+  ACE_Registry::Object query_object;
+  int result = this->context_.resolve (name.fast_rep (), query_object);
   if (result != 0)
     return result;
 
-  ACE_WString string ((ACE_USHORT16 *) object.data (),
-		      object.size () / sizeof (ACE_USHORT16));
-  value = string;
+  // Resize the value passed by the user 
+  // Note: -1 is used because the size includes the null terminator
+  value.resize ((query_object.size () - 1) / sizeof (ACE_USHORT16));
+
+  // Represent new space as an ACE_Registry::Object
+  ACE_Registry::Object object ((void *) value.fast_rep (),
+			       query_object.size (),
+			       REG_SZ);
+
+  result = this->context_.resolve (name.fast_rep (), object);
+  if (object.size () != query_object.size ())
+    return -1;
+  if (result != 0)
+    return result;
+
   return 0;
 }
 

@@ -906,7 +906,7 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
   // While there are more entries to be added to the list
   while (how_many > 0)
     {
-      TCHAR string [ACE_Registry::Naming_Context::MAX_CONTEXT_NAME_SIZE];
+      TCHAR string [ACE_Registry::Naming_Context::MAX_OBJECT_NAME_SIZE];
       u_long size = sizeof string / sizeof (TCHAR);
       long result = ::RegEnumValue (this->parent_->naming_context (). key(),
 				    this->index_,
