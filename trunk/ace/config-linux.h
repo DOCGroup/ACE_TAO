@@ -51,20 +51,6 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #endif
 
-#include /**/ <pthread.h>
-
-#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
-   // glibc 2.2.x or better has pthread_mutex_timedlock()
-#  define ACE_HAS_MUTEX_TIMEOUTS
-#  if !defined (_XOPEN_SOURCE) \
-   || (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) < 600)
-// pthread_mutex_timedlock() prototype is not visible if _XOPEN_SOURCE
-// is not >= 600 (i.e. for XPG6).
-extern "C" int pthread_mutex_timedlock (pthread_mutex_t *mutex,
-                                        const struct timespec * abstime);
-#  endif  /* _XOPEN_SOURCE && _XOPEN_SOURCE < 600 */
-#endif  /* (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) */
-
 #endif  /* ACE_MT_SAFE */
 
 

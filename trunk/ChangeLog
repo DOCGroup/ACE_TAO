@@ -1,3 +1,16 @@
+Wed Jun 25 03:47:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-linux.h:
+        * ace/os_include/os_pthread.h:
+          Removed include of pthread.h from config-linux.h and moved the
+          pthread_mutex_timedlock() declaration to os_pthread.h.
+
+        * tests/Makefile.tests:
+          Added special build rule when on hpux that changes the link
+          order, i.e., main.o comes before x_Test.o.  Hopefully this
+          will clear up linker errors on Hp with the gcc compiler that
+          started appearing after the tests directory was reorganized.
+
 Tue Jun 24 18:38:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* bin/tao_other_tests.lst:
