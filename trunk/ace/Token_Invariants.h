@@ -208,6 +208,12 @@ protected:
 
   RWLOCK_COLLECTION rwlock_collection_;
   // MUTEX_COLLECTION maintains a mapping from token names to mutexes.
+
+  static ACE_TOKEN_CONST::MUTEX creation_lock_;
+  // Lock the creation of the Singleton.
+  
+  static ACE_Token_Invariant_Manager *instance_;
+  // Singleton pointer.
 };
 
 #if defined (__ACE_INLINE__)
@@ -215,3 +221,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_TOKEN_INVARIANTS_H */
+
