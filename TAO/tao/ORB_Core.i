@@ -134,9 +134,10 @@ TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
 }
 
 // Template specializations that allow the cached connection manager
-// to work better.
+// to work better.  Older versions of g++, such as 2.7.2.3, can't
+// deal with them, though.
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  (!defined (__GNUG__) || (__GNUC__ > 2 || __GNUC_MINOR__ >= 90))
 # if defined (__ACE_INLINE__) || (!defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && !defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA))
 ACE_INLINE size_t
 ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
@@ -144,7 +145,7 @@ ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
   return addr.get_ip_address () + addr.get_port_number ();
 }
 # endif /* __ACE_INLINE__ */
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && egcs, if __GNUG__ */
 
 ACE_INLINE ACE_Allocator*
 TAO_ORB_Core::data_block_allocator (void)
@@ -157,4 +158,3 @@ TAO_ORB_Core::cdr_buffer_allocator (void)
 {
   return &this->cdr_buffer_allocator_;
 }
-
