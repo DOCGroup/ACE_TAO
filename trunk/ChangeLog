@@ -1,3 +1,11 @@
+Wed Aug 21 22:22:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/msvc_auto_compile.pl (Build_Core):
+
+	  Removed "LoadBalancing_Static.dsp" from the list of static
+	  library projects to build.  That MSVC++ project was for the old
+	  load balancer, and no longer exists.
+
 Thu Aug 22 03:50:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/performance_stats.sh:
