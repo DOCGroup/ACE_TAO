@@ -2,7 +2,8 @@ Fri Oct  3 20:53:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * examples/RTScheduling/RTS.dsw:
 	* tests/RTScheduling/RTS.dsw: 
-          Added them with new names so that cvs doesn't barf.
+          Added them with new names. Adding with the old names could
+	  make cvs barf again.
        
 Fri Oct  3 20:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
