@@ -31,9 +31,8 @@
 #include <unistd.h>
 
 // Configuration-specific #defines:
-// 1) g++ with pthreads,
-// 2) cxx with pthreads, or
-// 3) cxx with DCE threads?
+// 1) g++ or cxx
+// 2) pthreads or DCE threads
 #if defined (__GNUG__)
   // g++ with pthreads
 # define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
@@ -41,10 +40,12 @@
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 # define ACE_TEMPLATES_REQUIRE_SOURCE
+# define ACE_HAS_ONEARG_SIGWAIT
 #else /* ! __GNUG__ */
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 # define DEC_CXX
+#endif /* ! __GNUG__ */
 # if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
     // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
 #   define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
@@ -87,7 +88,6 @@
 #   define ACE_LACKS_SIGNED_CHAR
 #   define ACE_LACKS_SYSV_MSQ_PROTOS
 # endif /* _POSIX_C_SOURCE < 199506L */
-#endif /* ! __GNUG__ */
 
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 // NOTE: ACE_HAS_64BIT_LONGS is deprecated.  Instead, use ACE_SIZEOF_LONG == 8.
