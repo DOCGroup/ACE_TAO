@@ -44,9 +44,13 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   peer_addr.get_host_name (mblk->wr_ptr (), MAXHOSTNAMELEN);
   mblk->wr_ptr (strlen (mblk->wr_ptr ()) + 1); // Go past name
 
-  // Create a CDR stream to parse the 8-byte header.
-  ACE_InputCDR cdr (8);
-  if (logging_peer_.recv_n (cdr.rd_ptr (), 8, MSG_PEEK) == 8) {
+  ACE_Message_Block *payload = new ACE_Message_Block (8);
+  if (logging_peer_.recv_n (payload->wr_ptr (), 8) == 8) {
+    payload->wr_ptr (8);               // Reflect addition of 8 bytes
+
+    // Create a CDR stream to parse the 8-byte header.
+    ACE_InputCDR cdr (payload);
+
     // Extract the byte-order and use helper methods to
     // disambiguate octet, booleans, and chars.
     ACE_CDR::Boolean byte_order;
@@ -60,21 +64,20 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
     cdr >> length;
 
     // Ensure there's sufficient room for log record payload.
-    // After grow(), the original 8 bytes are gone, but since
-    // we only peeked at them, they'll get re-read.
-    length += 8;
-    cdr.grow (length);
+    payload->size (length + 8);
 
     // Use <recv_n> to obtain the contents.
-    if (logging_peer_.recv_n (cdr.rd_ptr (), length) > 0) {
-      // Obtain the message block underlying the CDR stream and
-      // chain it via the contination field.
-      mblk->cont (cdr.steal_contents ());
+    if (logging_peer_.recv_n (payload->wr_ptr (), length) > 0) {
+      payload->wr_ptr (length);   // Reflect additional bytes
+      // Chain the payload to mblk via the contination field.
+      mblk->cont (payload);
       return length;
     }
   }
   // Error cases end up here, so we need to release the memory to
   // prevent a leak.
+  payload->release ();
+  payload = 0;
   mblk->release ();
   mblk = 0;
   return -1;
