@@ -181,31 +181,6 @@ ACE_ES_Dispatching_Base::dispatch_queue_closed (ACE_ES_Dispatch_Queue *q)
   ACE_UNUSED_ARG (q);
 }
 
-// Just forward the request.  This is basically a hook for the RTU
-// stuff. 
-ACE_INLINE int
-ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
-					 u_long &command_action)
-{
-  TAO_TRY
-    {
-      // Forward the request.
-      up_->push (request, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      ACE_ERROR ((LM_ERROR, "ACE_ES_Dispatching_Base::dispatch_event unknown exception.\n"));
-    }
-  TAO_ENDTRY;
-
-  // Tell our caller to release the request.
-  command_action = ACE_RT_Task_Command::RELEASE;
-
-  // Return zero so our calling thread does not exit.
-  return 0;
-}
-
 // ************************************************************
 
 #if defined (ACE_WIN32)

@@ -144,6 +144,33 @@ ACE_ES_Dispatching_Base::shutdown (void)
 	      "EC (%t) ACE_ES_Dispatching_Base module shutting down.\n"));
 }
 
+// Just forward the request.  This is basically a hook for the RTU
+// stuff. 
+int
+ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
+					 u_long &command_action)
+{
+  TAO_TRY
+    {
+      // Forward the request.
+      up_->push (request, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      // No exceptions should be raised (push is a oneway) but we try
+      // to print something useful anyway.
+      TAO_TRY_ENV.print_exception ("ACE_ES_Dispatching_Base::dispatch_event");
+    }
+  TAO_ENDTRY;
+
+  // Tell our caller to release the request.
+  command_action = ACE_RT_Task_Command::RELEASE;
+
+  // Return zero so our calling thread does not exit.
+  return 0;
+}
+
 // ************************************************************
 
 ACE_ES_Priority_Dispatching::ACE_ES_Priority_Dispatching (ACE_EventChannel *channel)
@@ -674,7 +701,9 @@ ACE_ES_RTU_Dispatching::dispatch_event (ACE_ES_Dispatch_Request *request,
     }
   TAO_CATCHANY
     {
-      ACE_ERROR ((LM_ERROR, "ACE_ES_RTU_Dispatching::dispatch_event unknown exception.\n"));
+      // No exceptions should be raised (push is a oneway) but we try
+      // to print something useful anyway.
+      TAO_TRY_ENV.print_exception ("ACE_ES_Dispatching_Base::dispatch_event");
     }
   TAO_ENDTRY;
 
