@@ -1,3 +1,9 @@
+Sat Sep 04 20:24:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Handle_Gobbler.i (close_remaining_handles,free_handles):
+          moved the function definitions ahead of their first use in
+          the file.
+
 Sat Sep 04 20:17:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Pipe.cpp (open): added ACE_UNUSED_ARG (buffer_size)
@@ -25,7 +31,7 @@ Sat Sep 04 12:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (shm_open,close,filesize,ftruncate,mmap): moved
           these functions up in the file so that they're defined before
-          being used by ACE_OS::sema_init.
+          being used by ACE_OS::sema_init ().
 
 Fri Sep  3 11:57:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

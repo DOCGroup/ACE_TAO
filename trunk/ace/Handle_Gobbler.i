@@ -1,9 +1,47 @@
 // $Id$
 
+inline void
+ACE_Handle_Gobbler::close_remaining_handles (void)
+{
+  HANDLE_SET::iterator iterator =
+    this->handle_set_.begin ();
+
+  HANDLE_SET::iterator end =
+    this->handle_set_.end ();
+
+  for (;
+       iterator != end;
+       ++iterator)
+    {
+      ACE_OS::close (*iterator);
+    }
+}
+
 inline
 ACE_Handle_Gobbler::~ACE_Handle_Gobbler (void)
 {
   this->close_remaining_handles ();
+}
+
+inline int
+ACE_Handle_Gobbler::free_handles (size_t n_handles)
+{
+  HANDLE_SET::iterator iterator =
+    this->handle_set_.begin ();
+
+  HANDLE_SET::iterator end =
+    this->handle_set_.end ();
+
+  for (;
+       iterator != end && n_handles > 0;
+       ++iterator, --n_handles)
+    {
+      int result = ACE_OS::close (*iterator);
+      if (result != 0)
+        return result;
+    }
+
+  return 0;
 }
 
 inline int
@@ -40,42 +78,4 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
 #endif /* ACE_WIN32 */
 
   return result;
-}
-
-inline int
-ACE_Handle_Gobbler::free_handles (size_t n_handles)
-{
-  HANDLE_SET::iterator iterator =
-    this->handle_set_.begin ();
-
-  HANDLE_SET::iterator end =
-    this->handle_set_.end ();
-
-  for (;
-       iterator != end && n_handles > 0;
-       ++iterator, --n_handles)
-    {
-      int result = ACE_OS::close (*iterator);
-      if (result != 0)
-        return result;
-    }
-
-  return 0;
-}
-
-inline void
-ACE_Handle_Gobbler::close_remaining_handles (void)
-{
-  HANDLE_SET::iterator iterator =
-    this->handle_set_.begin ();
-
-  HANDLE_SET::iterator end =
-    this->handle_set_.end ();
-
-  for (;
-       iterator != end;
-       ++iterator)
-    {
-      ACE_OS::close (*iterator);
-    }
 }
