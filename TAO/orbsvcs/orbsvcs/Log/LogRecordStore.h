@@ -94,13 +94,6 @@ class LogRecordStore
   int purge_old_records (void);
   // Deletes "old" records from the store.
 
-  DsLogAdmin::RecordList_ptr query (const char *constraint,
-                                    DsLogAdmin::Iterator_out& i,
-                                    CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidConstraint));
-  // Do the query operation.
-
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
     DsLogAdmin::LogRecord, ACE_Null_Mutex> LOG_RECORD_HASH_MAP;
   typedef ACE_Hash_Map_Iterator <DsLogAdmin::LogId,
@@ -114,20 +107,12 @@ class LogRecordStore
   typedef LOG_RECORD_HASH_MAP LOG_RECORD_STORE;
   // Don't want to be tied to hash maps!.
 
-  /*
-  const LOG_RECORD_STORE_ITER& get_record_iter_start (void);
-  // Returns the record has map start iterator.
-
-  const LOG_RECORD_STORE_ITER& get_record_iter_end (void);
-  // Returns the record has map end iterator.
-  */
-
-  LOG_RECORD_STORE& get_storage (void);
+  LogRecordStore::LOG_RECORD_STORE& get_storage (void);
   // Get the underlying storage.
   // @@ return a const ref? we don't want anyone to modify the storage.
  protected:
 
-  LOG_RECORD_HASH_MAP rec_hash_;
+  LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
   // The hash of LogRecord ids to LogRecord 's
 
   DsLogAdmin::RecordId maxid_;

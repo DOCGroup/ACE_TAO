@@ -3,7 +3,8 @@
 #ifndef TAO_INTERPRETER_UTILS_CPP
 #define TAO_INTERPRETER_UTILS_CPP
 
-#include "Interpreter_Utils_T.h"
+#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.h"
+#include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 
 template <class OPERAND_TYPE> CORBA::Boolean
 TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)

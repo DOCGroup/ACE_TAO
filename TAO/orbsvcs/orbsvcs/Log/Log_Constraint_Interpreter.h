@@ -20,6 +20,7 @@
 #include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/orbsvcs/Trader/Interpreter.h"
+#include "orbsvcs/orbsvcs/DsLogAdminC.h"
 
 class TAO_Constraint_Evaluator;
 
