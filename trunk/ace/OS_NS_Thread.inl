@@ -1087,13 +1087,15 @@ ACE_OS::event_timedwait (ACE_event_t *event,
           if (use_absolute_time == 0)
             absolute_timeout += ACE_OS::gettimeofday ();
 
-          if (ACE_OS::cond_timedwait (&event->condition_,
-                                      &event->lock_,
-                                      &absolute_timeout) != 0)
-            {
-              result = -1;
-              error = errno;
-            }
+          while (event->is_signaled_ == 0)
+            if (ACE_OS::cond_timedwait (&event->condition_,
+                                        &event->lock_,
+                                        &absolute_timeout) != 0)
+              {
+                result = -1;
+                error = errno;
+                break;
+              }
 
           event->waiting_threads_--;
         }
@@ -1142,18 +1144,19 @@ ACE_OS::event_wait (ACE_event_t *event)
             // AUTO: reset state
             event->is_signaled_ = 0;
         }
-      else
-        // event is currently not signaled
+      else // event is currently not signaled
         {
           event->waiting_threads_++;
 
-          if (ACE_OS::cond_wait (&event->condition_,
-                                 &event->lock_) != 0)
-            {
-              result = -1;
-              error = errno;
-              // Something went wrong...
-            }
+          while (event->is_signaled_ == 0)
+            if (ACE_OS::cond_wait (&event->condition_,
+                                   &event->lock_) != 0)
+              {
+                result = -1;
+                error = errno;
+                // Something went wrong...
+                break;
+              }
 
           event->waiting_threads_--;
         }

@@ -27,7 +27,6 @@
 #  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_HAS_THREADS */
 
-
 class ACE_Reactor;
 
 /**
