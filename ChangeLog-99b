@@ -1,9 +1,15 @@
+Fri Jul 09 10:49:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Message_Queue_Test.cpp (main): changed success
+          message from timed dequeue test to not contain "timedout",
+          because that trips run_tests.check.
+
 Fri Jul 09 10:25:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Shared_Memory_MM.h (ACE_Shared_Memory_MM): Changed the
-	  filename parameter from a non-const string to a const string.
-	  Thanks to Ulf Jaehrig <jaehrig@desys.com> for pointing out this
-	  problem.
+        * ace/Shared_Memory_MM.h (ACE_Shared_Memory_MM): Changed the
+          filename parameter from a non-const string to a const string.
+          Thanks to Ulf Jaehrig <jaehrig@desys.com> for pointing out this
+          problem.
 
 Fri Jul 09 03:31:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
