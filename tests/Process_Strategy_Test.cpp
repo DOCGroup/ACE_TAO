@@ -359,3 +359,23 @@ main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Accept_Strategy<Counting_Service, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<Counting_Service>;
+template class ACE_Concurrency_Strategy<Counting_Service>;
+template class ACE_Guard<ACE_File_Lock>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+template class ACE_Module<ACE_NULL_SYNCH>;
+template class ACE_Process_Strategy<Counting_Service>;
+template class ACE_Read_Guard<ACE_File_Lock>;
+template class ACE_Scheduling_Strategy<Counting_Service>;
+template class ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_TSS<ACE_Dynamic>;
+template class ACE_Task<ACE_NULL_SYNCH>;
+template class ACE_Thru_Task<ACE_NULL_SYNCH>;
+template class ACE_Write_Guard<ACE_File_Lock>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
