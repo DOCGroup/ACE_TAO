@@ -61,7 +61,7 @@ TAO_MCAST_Parser::parse_string (const char *ior,
                                  orb,
                                  timeout,
                                  ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   return object;
 }
