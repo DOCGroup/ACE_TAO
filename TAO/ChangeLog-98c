@@ -1,7 +1,14 @@
+Thu Jun 25 11:18:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+	
+	* TAO_IDL/tao_idl.dsp:  Removed the use of CPP_PATH altogether.  
+	  The location now defaults to "C:\Program Files\DevStudio\bin\cl.exe".  
+	  If this is not the case, then use the environment variable 
+	  CPP_LOCATION to override it.  
+
 Thu Jun 25 10:53:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/NestedUpcall/NestedUpCalls_Test.cpp: Removed unnecessary
-	Backing store code. 
+	  Backing store code. 
 
 Thu Jun 25 08:44:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
@@ -15,8 +22,8 @@ Thu Jun 25 08:44:03 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	  thanks to David Levine for pinpointing this.
 
 	* tao/IIOP_Object.i: A newline was missing at the end of the file
-	which resulted in a huge number of compile errors from SunCC. This
-	is now fixed.
+	  which resulted in a huge number of compile errors from SunCC. This
+	  is now fixed.
 
 	* tao/append.cpp: Unused variables in Union::append removed.
 
@@ -42,22 +49,22 @@ Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
  	  Moved the _reset method to the union_ci.cpp file
 
 	* TAO_IDL/be/be_visitor_union_branch/{public_access_cs,
-	public_reset_cs, public_assign_cs, public_ci}.cpp:
+	  public_reset_cs, public_assign_cs, public_ci}.cpp:
 
-	The generated code now has to use the named underlying union. SO
-	every field must now be accessed as u_.<field>.
+	  The generated code now has to use the named underlying union. SO
+	  every field must now be accessed as u_.<field>.
 
 	* tao/Union.h:
 
-	Added a pure virtual method returning pointer to void. This will
-	be overridden by subclasses and a pointer to the discriminant will
-	be returned.
+	  Added a pure virtual method returning pointer to void. This will
+	  be overridden by subclasses and a pointer to the discriminant will
+	  be returned.
 
 	* tao/{encode, decode}.cpp (TAO_Marshal_Union::{encode, decode}):
 
-	We now use the _discriminant () method on the union class to
-	access the discriminant. This is much safer than simply casting
-	it.
+	  We now use the _discriminant () method on the union class to
+	  access the discriminant. This is much safer than simply casting
+	  it.
 
 Wed Jun 24 21:41:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
@@ -154,18 +161,18 @@ Wed Jun 24 15:49:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 Wed Jun 24 14:29:56 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
-	Updated the Trader portion of the releasnotes.
+	  Updated the Trader portion of the releasnotes.
 
 Wed Jun 24 12:02:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/POA/RootPOA/RootPOA.cpp (main): Replaced the exception
-	checking/printing code by TAO_CHECK_ENV_PRINT_RETURN.
+	  checking/printing code by TAO_CHECK_ENV_PRINT_RETURN.
 
 Wed Jun 24 11:52:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/corba.h: Added the exception macros
- 	TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) and
-	TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING).
+ 	  TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) and
+	  TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING).
 
 Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -180,26 +187,26 @@ Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 Wed Jun 24 11:13:32 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_codegen.h: Added a new state for resetting
-	the appropriate element of a union.
+	  the appropriate element of a union.
 
 	* TAO_IDL/be_include/be_visitor_union_branch/public_reset_cs.h:
-	Added a new visitor that generates code for resetting elements of
-	a union. This is required in 3 scenarios: (1) for destructor, (2)
-	for union's assignment operator, and (3) individual modifier
-	operations in which a new value is set. This will require freeing
-	of previous value.
+	  Added a new visitor that generates code for resetting elements of
+	  a union. This is required in 3 scenarios: (1) for destructor, (2)
+	  for union's assignment operator, and (3) individual modifier
+	  operations in which a new value is set. This will require freeing
+	  of previous value.
 
 	  *NOTE* this is a new file.
 
 	* TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h:
-	Added a bunch of methods to the visitor that visit the
-	"type". This was necessary since simple assignment is not
-	anough. We must ensure that old values are freed and the
-	assignment results in deep copies wherever necessary. All this is
-	required for the assignment operator of the union.
+	  Added a bunch of methods to the visitor that visit the
+	  "type". This was necessary since simple assignment is not
+	  enough. We must ensure that old values are freed and the
+	  assignment results in deep copies wherever necessary. All this is
+	  required for the assignment operator of the union.
 
 	* TAO_IDL/be/be_interpretive.cpp: Handled the newly added case for
-	the union reset visitor.
+	  the union reset visitor.
 
 	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
 	  TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
@@ -274,8 +281,8 @@ Wed Jun 24 11:13:32 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	  *NOTE* this is a new file.
 
 	* tao/decode.cpp: Released the IIOP_Object that is created during
-	the ObjRef::decode method. This was necessary to overcome a
-	memory leak. Thanks to Irfan and Jeff.
+	  the ObjRef::decode method. This was necessary to overcome a
+	  memory leak. Thanks to Irfan and Jeff.
 
 
 Wed Jun 24 09:56:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -325,8 +332,8 @@ Tue Jun 23 12:34:23 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbsvcs/orbsvcs/Makefile:
 	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
 	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	Merged Attributes(_T).{h,cpp} into the above files. Updated the
-	Makefile.
+	  Merged Attributes(_T).{h,cpp} into the above files. Updated the
+	  Makefile.
 
 Tue Jun 23 12:18:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -404,16 +411,16 @@ Mon Jun 22 20:32:25 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
         * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
         * orbsvcs/orbsvcs/Makefile:
-        By having related classes share a file, reduced the number of
-        files in the Trading Service by half. Updated the Makefile to
-        reflect the changes.
+          By having related classes share a file, reduced the number of
+          files in the Trading Service by half. Updated the Makefile to
+          reflect the changes.
 
         * orbsvcs/tests/Trading/Makefile:
         * orbsvcs/tests/Trading/Offer_Exporter.cpp:
         * orbsvcs/tests/Trading/Offer_Importer.cpp:
         * orbsvcs/tests/Trading/TT_Info.cpp:
         * orbsvcs/tests/Trading/export_test.cpp:
-        Updated the Trading tests to use the new header file scheme.
+          Updated the Trading tests to use the new header file scheme.
 
 Mon Jun 22 11:54:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -496,9 +503,9 @@ Mon Jun 22 11:12:54 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Jun 22 09:19:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: The typecode
-        declarations now have the appropriate export macro generated for
-        them. This is required for the DLLs. Seth Widoff pointed out this
-        requirement.
+          declarations now have the appropriate export macro generated for
+          them. This is required for the DLLs. Seth Widoff pointed out this
+          requirement.
 
 Mon Jun 22 00:09:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -518,20 +525,20 @@ Sun Jun 21 16:29:49 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
 
         * tao/ORB.cpp:
         * tao/Params.cpp:
-        Wasn't initializing Params::trading_service_{ior,port}_ or
-        CORBA_ORB::trading_service_.
+          Wasn't initializing Params::trading_service_{ior,port}_ or
+          CORBA_ORB::trading_service_.
 
 Sun Jun 21 14:36:26 1998  Seth Benjamin Widoff  <sbw1@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/*.*:
-        Trading Service now compiles without warnings or link errors on
-        Windows NT (MSVC++).
+          Trading Service now compiles without warnings or link errors on
+          Windows NT (MSVC++).
 
 Sun Jun 21 08:39:38 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * tests/Param_Test/tests.cpp: Removed a bunch of warnings related
-        to creation of a temporary when a var or ptr type is passed as an
-        out parameter.
+          to creation of a temporary when a var or ptr type is passed as an
+          out parameter.
 
 Sat Jun 20 14:22:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -705,12 +712,12 @@ Fri Jun 19 09:56:55 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/client.cpp:
         * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
         * tests/Cubit/TAO/MT_Cubit/server.cpp:
-        (1) Minor aesthetic changes and code cleanup.
-        (2) Changes to the utilization tests of the server and client.  We
-        now make the utilization "scavenger" thread run for a determined
-        period of time and report the number of computations performed.
-        The client thread that performs CORBA calls also reports the
-        number of calls performed.
+          (1) Minor aesthetic changes and code cleanup.
+          (2) Changes to the utilization tests of the server and client.  We
+          now make the utilization "scavenger" thread run for a determined
+          period of time and report the number of computations performed.
+          The client thread that performs CORBA calls also reports the
+          number of calls performed.
 
 Fri Jun 19 07:25:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -765,7 +772,7 @@ Thu Jun 18 14:17:35 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Property_Evaluator.cpp:
         * orbsvcs/orbsvcs/Trader/Register.cpp:
         * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-        Eliminated warnings on NT compilation.
+          Eliminated warnings on NT compilation.
 
 Thu Jun 18 14:07:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -834,18 +841,18 @@ Thu Jun 18 09:34:18 1998  David L. Levine  <levine@cs.wustl.edu>
 Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL: Massive restructuring of directories for be_include and
-        the "be" directories. Since each individual file was getting too big
-        with a large number of visitors, we have now subdivided them and
-        grouped them under individual subdirectories.
+          the "be" directories. Since each individual file was getting too big
+          with a large number of visitors, we have now subdivided them and
+          grouped them under individual subdirectories.
 
-        The original header files (e.g., be_include/be_visitor_interface.h),
-        now only include their subdivided header files. This way the rest of
-        the code does not need to "#include" every individual file. They
-        still deal with the higher level include files only. This avoids
-        any modification of existing code.
+          The original header files (e.g., be_include/be_visitor_interface.h),
+          now only include their subdivided header files. This way the rest of
+          the code does not need to "#include" every individual file. They
+          still deal with the higher level include files only. This avoids
+          any modification of existing code.
 
-        The new directory structure for the be_include directory and the
-        newly added files are shown below:
+          The new directory structure for the be_include directory and the
+          newly added files are shown below:
 
 
                 be_visitor_argument/arglist.h
@@ -969,14 +976,14 @@ Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
                 be_visitor_union_branch/public_ci.h
                 be_visitor_union_branch/public_cs.h
 
-        The same logic of breaking up individual files and grouping them
-        under individual subdirectories is used for the be_visitor_*.cpp
-        files. Each individual file "#include"s their individual
-        subfiles. This way, we do not have to modify the Makefile to
-        compile individual file. In addition, the Makefile would have
-        required each individual subdirectory in its VPATH. Furthermore,
-        it does not compile files with the same name in different
-        directories. The new structure is shown below.
+          The same logic of breaking up individual files and grouping them
+          under individual subdirectories is used for the be_visitor_*.cpp
+          files. Each individual file "#include"s their individual
+          subfiles. This way, we do not have to modify the Makefile to
+          compile individual file. In addition, the Makefile would have
+          required each individual subdirectory in its VPATH. Furthermore,
+          it does not compile files with the same name in different
+          directories. The new structure is shown below.
 
                 be_visitor_argument/arglist.cpp
                 be_visitor_argument/argument.cpp
@@ -1172,20 +1179,20 @@ Wed Jun 17 23:21:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
 Wed Jun 17 17:07:12 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/README: added new options with
-        explanations.
+          explanations.
 
         * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
         * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
         * tests/Cubit/TAO/MT_Cubit/client.cpp: Changed the utilization
-        test to bound the test by time instead of by number of requests.
+          test to bound the test by time instead of by number of requests.
 
         * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
         * tests/Cubit/TAO/MT_Cubit/client.cpp:
         * tests/Cubit/TAO/MT_Cubit/server.cpp:Minor changes to cleanup
-        code.
+          code.
 
         * tests/Cubit/TAO/MT_Cubit/README: Updated the options and
-        explanation of the options.
+          explanation of the options.
 
 Wed Jun 17 16:58:26 1998 Michael Kircher <mk1@cs.wustl.edu>
 
@@ -1253,31 +1260,31 @@ Wed Jun 17 11:46:49 1998  David L. Levine  <levine@cs.wustl.edu>
 Tue Jun 16 17:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be_include/be_interface.h: Added a helper called
-        "collocated_ctor_helper" that will be passed to the
-        traverse_inheritance_graph to generate calls to the CTORs of each
-        and every base class in the viryal inheritance hierarchy
+          "collocated_ctor_helper" that will be passed to the
+          traverse_inheritance_graph to generate calls to the CTORs of each
+          and every base class in the viryal inheritance hierarchy
 
         * TAO_IDL/be/be_interface.cpp: Added code for
-        collocated_ctor_helper method.
+          collocated_ctor_helper method.
 
         * TAO_IDL/be/be_visitor_interface.cpp: In the constructor for the
-        collocated class, we now call the interface node's
-        traverse_inheritance_graph with collocated_ctor_helper method as
-        the callback. This will generate calls to the ctors of all the
-        base classes in the entire class hierarchy.
+          collocated class, we now call the interface node's
+          traverse_inheritance_graph with collocated_ctor_helper method as
+          the callback. This will generate calls to the ctors of all the
+          base classes in the entire class hierarchy.
 
         * TAO_IDL/be/be_visitor_exception.cpp: On suggestions by Irfan,
-        the generated code no more duplicates the typecode. Instead, it
-        will be the receipient's responsibility to duplicate the typecode
-        for the exceptions.
+          the generated code no more duplicates the typecode. Instead, it
+          will be the receipient's responsibility to duplicate the typecode
+          for the exceptions.
 
         * TAO_IDL/be/be_visitor_union_branch.cpp: A quick fix has been
-        made in the generated modifier functions. We now make sure that
-        memory is allocated to pointer union members if they were not
-        already set. Note that this solution is simply a quick fix to
-        allow making progress for IDl using unions. We still need to make
-        sure that old storage is freed. Will be done in the next attempt.
-        Thanks to Seth for reporting the problem.
+          made in the generated modifier functions. We now make sure that
+          memory is allocated to pointer union members if they were not
+          already set. Note that this solution is simply a quick fix to
+          allow making progress for IDl using unions. We still need to make
+          sure that old storage is freed. Will be done in the next attempt.
+          Thanks to Seth for reporting the problem.
 
 Tue Jun 16 16:52:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -1334,26 +1341,26 @@ Tue Jun 16 15:10:11 1998  Chris GIll <cdgill@cs.wustl.edu>
 Tue Jun 16 13:50:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/test/AVStreams/mpeg/source/server/augmented_server.{h,cpp}:
-        This new version of the AVStreams demo server, augmented_server,
-        exports an offer to the Trading Service containing a reference to the
-        MMDevice and a number of properties describing the MMDevice.
+          This new version of the AVStreams demo server, augmented_server,
+          exports an offer to the Trading Service containing a reference to the
+          MMDevice and a number of properties describing the MMDevice.
 
         * orbsvcs/test/AVStreams/mpeg/source/server/Machine_Properties.{h,cpp}:
         * orbsvcs/test/AVStreams/mpeg/source/server/Video_Repository.{h,cpp}:
-        Dynamic Property callback handlers that supply values
-        for AV server machine performance, and the names and descriptions
-        of movies offered by the AV server.
+          Dynamic Property callback handlers that supply values
+          for AV server machine performance, and the names and descriptions
+          of movies offered by the AV server.
 
         * orbsvcs/test/AVStreams/mpeg/source/server/Property_Exporter.{h,cpp}:
-        Utility to make it simpler for the augmented_server to export an
-        offer to the Trading Service.
+          Utility to make it simpler for the augmented_server to export an
+          offer to the Trading Service.
 
 Tue Jun 16 14:44:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-        *orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
-        Added acceptor code to accept connection from the java GUI.
-        Added code to read the MMDevice ior and movie name from the
-        socket to java GUI.
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+          Added acceptor code to accept connection from the java GUI.
+          Added code to read the MMDevice ior and movie name from the
+          socket to java GUI.
 
 1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
@@ -1468,21 +1475,21 @@ Fri Jun 12 19:34:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 Fri Jun 12 16:53:49 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_decl.cpp (gen_name2long): Michael found out that
-        the TAO_IDL compiler was generating non-portable code for the
-        TypeCode arrays of longs for the RepoID and the name. After
-        discussions with Doug and Irfan, we have decided to always
-        generate the arrays in network order (big endian) and add an
-        ACE_NTOHL macro as the static array is initialized. This way there
-        won't be any run-time penalty. At the same time, the code will be
-        portable.
+          the TAO_IDL compiler was generating non-portable code for the
+          TypeCode arrays of longs for the RepoID and the name. After
+          discussions with Doug and Irfan, we have decided to always
+          generate the arrays in network order (big endian) and add an
+          ACE_NTOHL macro as the static array is initialized. This way there
+          won't be any run-time penalty. At the same time, the code will be
+          portable.
 
         * TAO_IDL/{be_enum, be_exception, be_interface, be_structure,
-        be_typedef, be_union, be_predefined_type, be_field, be_enum_val,
-        be_union_branch}.cpp: Added the call to ACE_NTOHL macro for the
-        arrays of long that are generated for TypeCodes.
+          be_typedef, be_union, be_predefined_type, be_field, be_enum_val,
+          be_union_branch}.cpp: Added the call to ACE_NTOHL macro for the
+          arrays of long that are generated for TypeCodes.
 
         * tests/Param_Test/params.idl: Added interface definition for
-        tests for arrays. This is still not working at this time.
+          tests for arrays. This is still not working at this time.
 
 Fri Jun 12 15:39:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -1491,9 +1498,9 @@ Fri Jun 12 15:39:41 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Fri Jun 12 15:01:16 1998  Marina Igorevna Spivak  <marina@flamenco.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: Added _env parameter to
-        <get_context> helper method, and added the check of environment in
-        all methods using <get_context>.  This is to allow exceptions
-        propagate back.
+          <get_context> helper method, and added the check of environment in
+          all methods using <get_context>.  This is to allow exceptions
+          propagate back.
 
 1998-06-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
@@ -1577,52 +1584,52 @@ Thu Jun 11 18:22:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Thu Jun 11 16:45:11 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_array.cpp: (gen_encapsulation, gen_encap_len):
-        Added code that generates the TypeCode and encapsulations for
-        Arrays.
+          Added code that generates the TypeCode and encapsulations for
+          Arrays.
 
-        be_array::gen_forany_{defn,impl}: Added a "nocopy ()" method that
-        returns the "nocopy" flag. This is useful for the <<+ and >>=
-        operators.
+          be_array::gen_forany_{defn,impl}: Added a "nocopy ()" method that
+          returns the "nocopy" flag. This is useful for the <<+ and >>=
+          operators.
 
-        Also, removed a lot of code that was commented out.
+          Also, removed a lot of code that was commented out.
 
         * TAO_IDL/be_include/be_visitor_array.h
           TAO_IDL/be/be_visitor_array.cpp: These are newly added files.
 
-        Added a bunch of visitors that generate code for Arrays. As of now
-        only typedefined arrays have been handled. Work is still going on
-        for anonymous arrays.
+          Added a bunch of visitors that generate code for Arrays. As of now
+          only typedefined arrays have been handled. Work is still going on
+          for anonymous arrays.
 
         * TAO_IDL/Makefile: Added be_visitor_array.cpp for compilation
 
         * TAO_IDL/be/be_interpretive.cpp: Added cases for the Array
-        visitors.
+          visitors.
 
         * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
-        be_visitor_interface, be_visitor_sequence, be_visitor_structure,
-        be_visitor_typedef, be_visitor_union}.cpp: Fixed an error in the
-        generate code for the "non copying" and "copying" versions of the
-        <<= operators.
+          be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+          be_visitor_typedef, be_visitor_union}.cpp: Fixed an error in the
+          generate code for the "non copying" and "copying" versions of the
+          <<= operators.
 
         * TAO_IDL/be/be_visitor_interface.cpp: After discussions with
-        Irfan, we now use POA_var as a data member inside the generated
-        TIE classes. In addition, the code for the _default_POA, which
-        previously was incorrect, is now fixed.
+          Irfan, we now use POA_var as a data member inside the generated
+          TIE classes. In addition, the code for the _default_POA, which
+          previously was incorrect, is now fixed.
 
         * TAO_IDL/be/be_visitor_sequence.cpp: We now always create a name
-        for the sequence node even when it is imported. The reason we have
-        to do this is that an imported sequence node may very well be used
-        in another IDL file. Thus, while code generation, if the name was
-        not set, then it resulted in seg faults. Thanks to John Geiss"
-        <jtgb@eci-esyst.com> for reporting the problem.
+          for the sequence node even when it is imported. The reason we have
+          to do this is that an imported sequence node may very well be used
+          in another IDL file. Thus, while code generation, if the name was
+          not set, then it resulted in seg faults. Thanks to John Geiss"
+          <jtgb@eci-esyst.com> for reporting the problem.
 
         * TAO_IDL/be/be_visitor_typedef.cpp: For typedefs of a typedef to
-        an array, we simply generate the typedefs for the _var, _out,
-        _forany types. In addition, inline functions for the _alloc, _dup,
-        _copy, and _free are generated.
+          an array, we simply generate the typedefs for the _var, _out,
+          _forany types. In addition, inline functions for the _alloc, _dup,
+          _copy, and _free are generated.
 
         * orbsvcs/orbsvcs/Makefile: In the realclean target, added the
-        *_T.* files that need to be cleaned.
+          *_T.* files that need to be cleaned.
 
 Thu Jun 11 15:32:02 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
@@ -1632,7 +1639,7 @@ Thu Jun 11 15:32:02 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/client.cpp:
         * tests/Cubit/TAO/MT_Cubit/cubit_i.{h,cpp}:
         * tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added the server utilization
-        test.  Use "-U" on both the client and the server.
+          test.  Use "-U" on both the client and the server.
 
 Thu Jun 11 15:26:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -1820,11 +1827,11 @@ Tue Jun 09 16:18:54 1998  David L. Levine  <levine@cs.wustl.edu>
 Tue Jun  9 15:57:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader: The Trading Service now uses ACE
-        containers rather than stl containers.
+          containers rather than stl containers.
 
         * orbsvcs/orbsvcs/Makefile: Since all stl containers in the
-        Trading Service have been replaced with ACE analogues, I've
-        updated the orbsvcs Makefile to eliminate the stl dependency.
+          Trading Service have been replaced with ACE analogues, I've
+          updated the orbsvcs Makefile to eliminate the stl dependency.
 
 Tue Jun 09 15:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -1833,8 +1840,8 @@ Tue Jun 09 15:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
 Tue Jun  9 15:14:09 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
-        generated code for the variable declaration of return types for
-        type Anys in the skeletons. Fixed.
+          generated code for the variable declaration of return types for
+          type Anys in the skeletons. Fixed.
 
 Tue Jun  9 13:29:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
@@ -8026,7 +8033,7 @@ Tue Feb 17 04:08:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Setting the
           CPP_PATH has been causing a lot of nasty trouble on NT.  I
           changed this function to allow overwriting the internal c++
-          compiler location at run time usingCPP_LOCATION.  If someone
+          compiler location at run time using CPP_LOCATION.  If someone
           forgets to set the CPP_PATH when compiling tao_idl, one can
           make tao_idl work by defining this environment variable to
           something like:
