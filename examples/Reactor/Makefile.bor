@@ -3,6 +3,8 @@
 #
 
 DIRS = \
-        Multicast
+        Dgram \
+        Multicast \
+        Ntalker
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
