@@ -340,17 +340,17 @@ TAO_Stub::parse_policies (CORBA::Environment &ACE_TRY_ENV)
 
   for (unsigned int i = 0; i < length; ++i)
     {
-      if (((*policy_list)[i]->policy_type () ==
+      if (((policy_list)[i]->policy_type () ==
            RTCORBA::PRIORITY_MODEL_POLICY_TYPE))
-        this->exposed_priority_model ((*policy_list)[i].in ());
+        this->exposed_priority_model ((policy_list)[i].in ());
 
-      else if (((*policy_list)[i]->policy_type () ==
+      else if (((policy_list)[i]->policy_type () ==
                 RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE))
-        this->exposed_priority_banded_connection ((*policy_list)[i].in ());
+        this->exposed_priority_banded_connection ((policy_list)[i].in ());
 
-      else if (((*policy_list)[i]->policy_type () ==
+      else if (((policy_list)[i]->policy_type () ==
                 RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE))
-        this->exposed_client_protocol ((*policy_list)[i].in ());
+        this->exposed_client_protocol ((policy_list)[i].in ());
     }
 
   this->are_policies_parsed_ = 1;
