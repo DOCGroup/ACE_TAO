@@ -274,7 +274,6 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "                       , command" << be_nl
       << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "                       , servant_upcall" << be_nl
-      << "                       , impl" << be_nl
       << "                       , exceptions" << be_nl
       << "                       , nexceptions"
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl << be_nl
