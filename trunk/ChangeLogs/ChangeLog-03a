@@ -1,19 +1,25 @@
+Fri Jul 07 17:17:21 2000  George Reid <greid@entrenet.com>
+
+        * ace/config-mvs.h: long long support was introduced in os/390
+          version 2.6, so only #define ACE_LACKS_LONGLONG_T with
+          if __COMPILER_VER__ < 0x22060000.
+
 Fri Jul  7 09:47:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (open_common): Don't 
-	  pass in the length to the ACE_CString constructor -- just let is
- 	  copy what's already there.  Thanks to Valery Arkhangorodsky
- 	  <valerya@servicesoft.com> for reporting this.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (open_common): Don't
+          pass in the length to the ACE_CString constructor -- just let is
+          copy what's already there.  Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for reporting this.
 
-	* ace/ACE.cpp (timestamp): Make sure to insert a NUL byte at the
-	  end of yeartmp and timetmp.  Thanks to David Levine and Purify
- 	  for reporting this.
+        * ace/ACE.cpp (timestamp): Make sure to insert a NUL byte at the
+          end of yeartmp and timetmp.  Thanks to David Levine and Purify
+          for reporting this.
 
 Fri Jul 07 09:36:05 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp (handle_client):
           cast result of ACE_OS::getpid () to int, and print as an int, to
- 	  avoid compiler warning about mismatched format specifier.
+          avoid compiler warning about mismatched format specifier.
 
 Thu Jul  6 10:36:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
