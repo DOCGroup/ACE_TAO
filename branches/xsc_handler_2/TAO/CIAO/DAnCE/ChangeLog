@@ -1,3 +1,13 @@
+Tue Mar 02 14:28:11 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* BMDisplay/BMDisplay.idl
+	* descriptors/HUDisplay.cid
+	* descriptors/NavDisplay.ccd
+
+	  Added a multiplex receptacle to the BMDisplay component.
+	  This is a place holder to test "users multipe" feature.
+	  Modified descriptors to reflect this change as well.
+
 Tue Mar 01 23:54:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
 	* DomainApplicationManager/DomainApplicationManager_Impl.cpp
