@@ -1,3 +1,8 @@
+Sun Feb 15 00:20:28 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * docs/releasenotes/ftcorba_services.html:
+          Added reference to FTRTEC.
+
 Sat Feb 14 15:10:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
@@ -16,7 +21,7 @@ Sat Feb 14 13:24:03 2004  Steve Totten  <totten_s@ociweb.com>
 
         * docs/releasenotes/index.html:
         * docs/releasenotes/ftcorba_services.html (added):
-          Added documentation of the basic FT CORBA services.  See 
+          Added documentation of the basic FT CORBA services.  See
           Sun Dec 21 19:35:44 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 Fri Feb 13 17:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -25,19 +30,19 @@ Fri Feb 13 17:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Any_Impl.h:
 
 	  Added a mutex around refcounting to address problems as outlined
-	  in 
+	  in
 
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1728
-	 
+
 	  Thanks to Torsten Kuepper for reporting the problem.
 
 Fri Feb 13 15:34:22 EST 2004 Kevin Bryan <bryank@cs.uri.edu>
-	
+
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.cpp
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i
-        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp 
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h
 
           Fixed 64-bit unsafe pointer arithmetic.
@@ -47,18 +52,18 @@ Fri Feb 13 15:34:22 EST 2004 Kevin Bryan <bryank@cs.uri.edu>
 Fri Feb 13 12:19:58 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Synch_Invocation.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
         * tao/Exception.cpp:
-        
+
           Added deprecations to the TAO_specific _type() method
           for exceptions. They are no longer used anywhere in ORB
           code.
-          
+
         * docs/compiler.html:
-        
+
           Updated the table entry for the -St command line option,
           pointing out that its use is incompatible with the
           presence of user exceptions. Thanks to Oliver Kellogg
