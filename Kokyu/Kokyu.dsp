@@ -8,12 +8,12 @@ CFG=Kokyu_DLL - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Kokyu_DLL.mak".
+!MESSAGE NMAKE /f "Kokyu.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Kokyu_DLL.mak" CFG="Kokyu_DLL - Win32 Debug"
+!MESSAGE NMAKE /f "Kokyu.mak" CFG="Kokyu_DLL - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -51,7 +51,7 @@ RSC=rc.exe
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Kokyu.bsc"
+# ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
 # ADD LINK32 ace.lib /nologo /dll /machine:I386 /out:"..\bin\Kokyu.dll" /libpath:"../ace"
@@ -79,7 +79,7 @@ LINK32=link.exe
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o"Kokyu.bsc"
+# ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib /nologo /dll /debug /machine:I386 /out:"..\bin\Kokyud.dll" /pdbtype:sept /libpath:"../ace"
@@ -107,15 +107,11 @@ SOURCE=.\Dispatcher_Task.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Dispatcher_Impl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Schedulers.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Kokyu.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu_defs.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -135,15 +131,11 @@ SOURCE=.\Dispatcher_Task.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Dispatcher_Impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Schedulers.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Kokyu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu_defs.h
 # End Source File
 # Begin Source File
 
@@ -198,7 +190,20 @@ SOURCE=.\Dispatcher_Task.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Dispatcher_Impl.i
+SOURCE=.\DSRT_Dispatch_Item_T.i
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl_T.i
 
 !IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
 
@@ -212,6 +217,101 @@ SOURCE=.\DSRT_Dispatcher_Impl.i
 # Begin Source File
 
 SOURCE=.\Kokyu.i
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu_defs.i
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu_dsrt.i
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\DSRT_Direct_Dispatcher_Impl_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatch_Item_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Sched_Queue_T.cpp
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu_dsrt.cpp
 
 !IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
 

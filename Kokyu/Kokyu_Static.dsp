@@ -179,10 +179,6 @@ SOURCE=.\Dispatcher_Task.i
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatch_Item_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Dispatcher_Impl.i
 
 !IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
 
@@ -196,6 +192,15 @@ SOURCE=.\DSRT_Dispatcher_Impl.i
 # Begin Source File
 
 SOURCE=.\DSRT_Dispatcher_Impl_T.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -213,10 +218,28 @@ SOURCE=.\Kokyu.i
 # Begin Source File
 
 SOURCE=.\Kokyu_defs.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\Kokyu_dsrt.i
+
+!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Template Files"
