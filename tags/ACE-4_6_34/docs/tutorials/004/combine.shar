@@ -1,0 +1,216 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 1999-01-24 11:50 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/004'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    591 -rw-rw-r-- hdr
+#     18 -rw-rw-r-- bodies
+#    702 -rw-rw-r-- page01.pre
+#    961 -rw-rw-r-- page01.pst
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh21744; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hdr ==============
+if test -f 'hdr' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hdr' '(file already exists)'
+else
+  $echo 'x -' extracting 'hdr' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hdr' &&
+<HTML>
+<HEAD>
+X   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+X   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+X   <META NAME="Author" CONTENT="James CE Johnson">
+X   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+X   <TITLE>ACE Tutorial 004</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+X
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 004</FONT></B></CENTER>
+X
+<CENTER><B><FONT SIZE=+2>A much more clever Client</FONT></B></CENTER>
+X
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 0117142999 'hdr' &&
+  chmod 0664 'hdr' ||
+  $echo 'restore of' 'hdr' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hdr:' 'MD5 check failed'
+f129543602285ef632d3ae560999a4db  hdr
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
+    test 591 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '591,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
+else
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=1
+client.cpp
+SHAR_EOF
+  $shar_touch -am 0117142999 'bodies' &&
+  chmod 0664 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'bodies:' 'MD5 check failed'
+d02fcd98e57e40350f82497be4ac0e0c  bodies
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 18 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '18,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pre ==============
+if test -f 'page01.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
+X
+<P>Ok, so the last time around, we learned how to create a simple client
+that can send a chunk of data.  A cooler thing to do is to overload
+the C++ put operator (&lt;&lt;) to put some data for us.  That's what
+we're going to do this time.  (This tutorial is actually where ACE_IOStream
+was born.)
+<P>
+Kirthika says:
+<UL>
+The cool thing about this "cooler" client is how we use a C++ trick for
+streaming incoming data by using the operator<<() method. Also the
+Connector portion is wrapped in the open() method which now takes in the 
+server hostname and port. The result is a cleaner looking client which
+successfully interacts with the server when connection is established.
+</UL>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 0124114799 'page01.pre' &&
+  chmod 0664 'page01.pre' ||
+  $echo 'restore of' 'page01.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pre:' 'MD5 check failed'
+b1fef664f58233e14943041ed2765830  page01.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
+    test 702 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '702,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pst ==============
+if test -f 'page01.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pst' &&
+<HR WIDTH="100%">
+X
+<P>Ok, now we're done with that.  As you can see, it really isn't
+so hard to create an object that makes sending data much more "natural"
+than the typical send() or send_n() invocation.  You can even build
+up arbitrary objects and do some neat tricks with C++ templates to stream
+their data out as well.  (We may go into that a little later.) 
+Of course, writting the full implementation such that these streams are
+interchangable with the standard C++ ostreams is quite a bit more difficult. 
+In addition, there are a lot of optimizations that this client would benefit
+from!
+X
+<P>As an exercise to the reader (don't you hate those!) I challenge you
+to write the server side of this.  You can take a  look at IOStream_Test
+in the ACE distribution if you get stuck...
+X
+<P>If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
+the <A HREF="Makefile">Makefile</A>,
+and <A HREF="00SetEnv">Environment
+settings</A>.
+X
+<P>
+SHAR_EOF
+  $shar_touch -am 0124114999 'page01.pst' &&
+  chmod 0664 'page01.pst' ||
+  $echo 'restore of' 'page01.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pst:' 'MD5 check failed'
+63a7bcf418c9dd35d92caa17a6a4af7b  page01.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pst'`"
+    test 961 -eq "$shar_count" ||
+    $echo 'page01.pst:' 'original size' '961,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh21744
+exit 0

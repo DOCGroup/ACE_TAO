@@ -1,0 +1,165 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 2</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "The Message Queue"</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 2</FONT><FONT COLOR="#000099"></FONT>
+
+<P><FONT COLOR="#000099">#include</FONT><FONT COLOR="#006600"> "ace/Message_Queue.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT><FONT COLOR="#006600"> "ace/Get_Opt.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> "<FONT COLOR="#006600">ace/Malloc_T.h"</FONT>
+<BR><FONT COLOR="#000099">#define</FONT> <FONT COLOR="#663366">SIZE_BLOCK
+1</FONT>
+
+<P>class Args{
+<BR>public:
+<BR>Args(int argc, char*argv[],int&amp; no_msgs, ACE_Message_Queue&lt;ACE_NULL_SYNCH>*
+&amp;mq){
+<BR>&nbsp;ACE_Get_Opt get_opts(argc,argv,"h:l:t:n:xsd");
+<BR>&nbsp;while((opt=get_opts())!=-1)
+<BR>&nbsp; switch(opt){
+<BR>&nbsp; case 'n':
+<BR>&nbsp;&nbsp;<FONT COLOR="#FF0000"> //set the number of messages we
+wish to enqueue and dequeue</FONT>
+<BR>&nbsp;&nbsp; no_msgs=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"Number of Messages %d \n",no_msgs));
+<BR>&nbsp;&nbsp; break;
+
+<P>&nbsp; case 'h':
+<BR>&nbsp;&nbsp; <FONT COLOR="#FF0000">//set the high water mark</FONT>
+<BR>&nbsp;&nbsp; hwm=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; mq->high_water_mark(hwm);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"High Water Mark %d msgs \n",hwm));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 'l':
+<BR>&nbsp;&nbsp;<FONT COLOR="#FF0000"> //set the low water mark</FONT>
+<BR>&nbsp;&nbsp; lwm=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; mq->low_water_mark(lwm);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"Low Water Mark %d msgs \n",lwm));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; default:
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_ERROR, "Usage -n&lt;no. messages> -h&lt;hwm>
+-l&lt;lwm>\n"));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; }
+<BR>&nbsp;}
+
+<P>private:
+<BR>&nbsp;int opt;
+<BR>&nbsp;int hwm;
+<BR>&nbsp;int lwm;
+<BR>};
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P>class QTest{
+<BR>public:
+<BR>QTest(int argc, char*argv[]){
+<BR><FONT COLOR="#FF0000">&nbsp;//First create a message queue of default
+size.</FONT>
+<BR>&nbsp;if(!(this->mq_=new ACE_Message_Queue&lt;ACE_NULL_SYNCH> ()))
+<BR>&nbsp; ACE_DEBUG((LM_ERROR,"Error in message queue initialization \n"));
+<BR>&nbsp;
+<BR>&nbsp;<FONT COLOR="#FF0000">//Use the arguments to set the water marks
+and the no of messages</FONT>
+<BR>&nbsp;args_ = new Args(argc,argv,no_msgs_,mq_);
+<BR>&nbsp;}
+<BR>int start_test(){
+<BR>&nbsp; for(int i=0; i&lt;no_msgs_;i++){
+<BR>&nbsp;<FONT COLOR="#FF0000">//Create a new message block of data buffer
+size 1</FONT>
+<BR>&nbsp;ACE_Message_Block * mb= new ACE_Message_Block(SIZE_BLOCK);
+<BR>&nbsp;
+<BR><FONT COLOR="#FF0000">&nbsp;//Insert data into the message block using
+the rd_ptr</FONT>
+<BR>&nbsp;*mb->wr_ptr()=i;
+<BR>&nbsp;
+<BR>&nbsp;<FONT COLOR="#FF0000">//Be careful to advance the wr_ptr</FONT>
+<BR>&nbsp;mb->wr_ptr(1);
+
+<P><FONT COLOR="#FF0000">&nbsp;//Enqueue the message block onto the message
+queue</FONT>
+<BR>&nbsp;if(this->mq_->enqueue_prio(mb)==-1){
+<BR>&nbsp; ACE_DEBUG((LM_ERROR,"\nCould not enqueue on to mq!!\n"));
+<BR>&nbsp; return -1;
+<BR>&nbsp; }
+<BR>&nbsp;
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"EQd data: %d\n",*mb->rd_ptr()));
+<BR>&nbsp; }
+<BR>&nbsp;<FONT COLOR="#FF0000">//Use the iterators to read</FONT>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this->read_all();
+
+<P>&nbsp;<FONT COLOR="#FF0000">//Dequeue all the messages</FONT>
+<BR>&nbsp;this->dequeue_all();
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;
+<BR>&nbsp;}
+
+<P>void read_all(){
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"No. of Messages on Q:%d Bytes on Q:%d \n",
+mq_->message_count(),mq_->message_bytes()));
+<BR>&nbsp;ACE_Message_Block *mb;
+
+<P>&nbsp;<FONT COLOR="#FF0000">//Use the forward iterator</FONT>
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"\n\nBeginning Forward Read \n"));
+<BR>&nbsp;ACE_Message_Queue_Iterator&lt;ACE_NULL_SYNCH> mq_iter_(*mq_);
+<BR>&nbsp;while(mq_iter_.next(mb)){
+<BR>&nbsp; mq_iter_.advance();
+<BR>&nbsp; ACE_DEBUG((LM_INFO,"Read data %d\n",*mb->rd_ptr()));
+<BR>&nbsp; }
+<BR>&nbsp;
+<BR>&nbsp;<FONT COLOR="#FF0000">//Use the reverse iterator</FONT>
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"\n\nBeginning Reverse Read \n"));
+<BR>&nbsp;ACE_Message_Queue_Reverse_Iterator&lt;ACE_NULL_SYNCH>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mq_rev_iter_(*mq_);
+<BR>&nbsp;while(mq_rev_iter_.next(mb)){
+<BR>&nbsp; mq_rev_iter_.advance();
+<BR>&nbsp; ACE_DEBUG((LM_INFO,"Read data %d\n",*mb->rd_ptr()));
+<BR>&nbsp; }
+<BR>&nbsp;
+<BR>&nbsp;}
+
+<P>void dequeue_all(){
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"\n\nBeginning DQ \n"));
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"No. of Messages on Q:%d Bytes on Q:%d \n",
+mq_->message_count(),mq_->message_bytes()));
+<BR>&nbsp;ACE_Message_Block *mb;
+
+<P><FONT COLOR="#FF0000">&nbsp;//dequeue the head of the message queue
+until no more messages are left</FONT>
+<BR>&nbsp;for(int i=0;i&lt;no_msgs_;i++){
+<BR>&nbsp; mq_->dequeue_head(mb);
+<BR>&nbsp; ACE_DEBUG((LM_INFO,"DQd data %d\n",*mb->rd_ptr()));
+<BR>&nbsp; }
+<BR>&nbsp;}
+
+<P>private:
+<BR>&nbsp;Args *args_;
+<BR>&nbsp;ACE_Message_Queue&lt;ACE_NULL_SYNCH> *mq_;
+<BR>&nbsp;int no_msgs_;
+<BR>};
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P>int main(int argc, char* argv[]){
+<BR>&nbsp;QTest test(argc,argv);
+<BR>&nbsp;if(test.start_test()&lt;0)
+<BR>&nbsp; ACE_DEBUG((LM_ERROR,"Program failure \n"));
+<BR>&nbsp;
+<BR>}
+
+<P>&nbsp;<A HREF="ex03.html">Next Example</A>
+</BODY>
+</HTML>
