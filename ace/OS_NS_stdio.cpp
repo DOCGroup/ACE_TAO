@@ -285,6 +285,11 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 #  else
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnprintf (buf, maxlen, format, ap)),
               int, -1, result);
+  // Win32 doesn't regard a full buffer with no 0-terminate as an
+  // overrun.
+  if (result == maxlen)
+    result = -1;
+ 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
   if (result == -1)
     buf[maxlen-1] = '\0';
