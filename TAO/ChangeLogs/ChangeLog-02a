@@ -1,3 +1,10 @@
+Mon Jan 28 13:40:38 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Fixed typo in UTL_ScopeActiveIterator change, the loop
+	  termination should have been !si.is_done(), but I typed
+	  si.is_done().
+
 Mon Jan 28 12:40:15 2002  Ossama Othman  <ossama@uci.edu>
 
 	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
