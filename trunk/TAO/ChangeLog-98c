@@ -1,170 +1,176 @@
+Mon Sep 07 09:37:07 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (TAO_ECG_UDP_Sender::push):
+          renamed loop index "i" to "b" to avoid shadowing local of the
+          same name.
+
 1998-09-07  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_client.cpp
-	  Updated to handle missing commandline arguments
+        * orbsvcs/tests/Concurrency/CC_client.cpp
+          Updated to handle missing commandline arguments
 
 Sun Sep  6 23:06:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/be/be_decl.cpp,
-	  TAO_IDL/util/utl_global.cpp,
-	  orbsvcs/tests/ImplRepo/ir_implrepo_impl.cpp:
-	  Replaced all uses of ACE_OS::strnew() with ACE::strnew() to
-	  reflect the new changes.
+        * TAO_IDL/be/be_decl.cpp,
+          TAO_IDL/util/utl_global.cpp,
+          orbsvcs/tests/ImplRepo/ir_implrepo_impl.cpp:
+          Replaced all uses of ACE_OS::strnew() with ACE::strnew() to
+          reflect the new changes.
 
 Sun Sep  6 17:57:16 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Simple/time/Client_i.cpp: Changed the use of exceptions in
-	  Client_i::time () to the macros, TAO_TRY, etc.
+        * tests/Simple/time/Client_i.cpp: Changed the use of exceptions in
+          Client_i::time () to the macros, TAO_TRY, etc.
 
 Sun Sep  6 14:07:49 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.h: Moved to ACE_NEW_THROW macros
- 	  that Matt Braun wrote into $ACE_ROOt/ace/OS.h so they can be
- 	  accessed by other applications.
+        * orbsvcs/orbsvcs/Log/Logger_i.h: Moved to ACE_NEW_THROW macros
+          that Matt Braun wrote into $ACE_ROOt/ace/OS.h so they can be
+          accessed by other applications.
 
 Sun Sep  6 10:34:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp: 
-	  Fixed some memory corruption problems, thanks to Ravi Nagabhyru
-	  <ravi@future-minds.com> for reporting them and providing a
-	  patch.
+        * TAO_IDL/be/be_interface.cpp:
+          Fixed some memory corruption problems, thanks to Ravi Nagabhyru
+          <ravi@future-minds.com> for reporting them and providing a
+          patch.
 
 Fri Sep 04 20:46:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Updated project source file list.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Updated project source file list.
 
 Fri Sep  4 18:46:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Thruput/TAO/ttcp_i.cpp: 
-	  The use of iostream.h was removed, thanks to John Mulhern
-	  <9107@mn3.lawson.lawson.com> for reporting this.
+        * tests/Thruput/TAO/ttcp_i.cpp:
+          The use of iostream.h was removed, thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for reporting this.
 
-	* TAO_IDL/Makefile: 
-	* TAO_IDL/fe/idl.yy: 
-	* TAO_IDL/fe/y.tab.cpp: 
-	* TAO_IDL/fe/y.tab.cpp.diff: 
-	  Fixed problems for HP-UX 11, thanks to John Mulhern
-	  <9107@mn3.lawson.lawson.com> for reporting this.
+        * TAO_IDL/Makefile:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+          Fixed problems for HP-UX 11, thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for reporting this.
 
 Fri Sep  4 17:10:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils/catior/catior.cpp (catior): Removed a check for "if (tmp
- 	  [0] && !isspace (tmp [0]))" since not all ORBs encode IORs
- 	  consistently.  Thanks to Jeff Hopper for reporting this.
+        * utils/catior/catior.cpp (catior): Removed a check for "if (tmp
+          [0] && !isspace (tmp [0]))" since not all ORBs encode IORs
+          consistently.  Thanks to Jeff Hopper for reporting this.
 
-	* utils/catior/foo/catior.cpp (main): Added a fix for IORs with
- 	  embedded '\0' characters.  Thanks to Jeff Hopper
- 	  <jhopper@nosc.mil> for this.
+        * utils/catior/foo/catior.cpp (main): Added a fix for IORs with
+          embedded '\0' characters.  Thanks to Jeff Hopper
+          <jhopper@nosc.mil> for this.
 
 Fri Sep  4 16:44:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/RtecUDPAdmin.idl: 
-	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_UDP_Admin.h: 
-	* orbsvcs/orbsvcs/Event/EC_UDP_Admin.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.h: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.i: 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	* orbsvcs/tests/EC_Mcast/sample.cfg: 
-	* orbsvcs/tests/EC_Mcast/README: 
-	  New implementation of the EC_Mcast test, the test can now handle
-	  multiple processes, each process joins several multicast groups
-	  and push events to a (potentially different) set of multicast
-	  groups.  Since the configuration is more complicated a sample
-	  file is included.
-	  The test is prepared to support several interesting features,
-	  such as:
-	    + Dynamic changes in the multicast group joined.
-	    + Handle OS limitations wrt the maximum number of mcast groups
-	      per socket.
-	    + Support different mappings for the type->mcast group
-	      relation (currently the event type *is* the multicast
-	      group).
-	  The current implementation also offers the initial interfaces to
-	  observe changes in the subcription and/or publication list of a
-	  *remote* event channel, this will enable the automation and
-	  optimization of the local publication list (there is no sense in
-	  sending an event if nobody is currently interested).
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/RtecUDPAdmin.idl:
+        * orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.h:
+        * orbsvcs/orbsvcs/Event/EC_UDP_Admin.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.i:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Mcast/sample.cfg:
+        * orbsvcs/tests/EC_Mcast/README:
+          New implementation of the EC_Mcast test, the test can now handle
+          multiple processes, each process joins several multicast groups
+          and push events to a (potentially different) set of multicast
+          groups.  Since the configuration is more complicated a sample
+          file is included.
+          The test is prepared to support several interesting features,
+          such as:
+            + Dynamic changes in the multicast group joined.
+            + Handle OS limitations wrt the maximum number of mcast groups
+              per socket.
+            + Support different mappings for the type->mcast group
+              relation (currently the event type *is* the multicast
+              group).
+          The current implementation also offers the initial interfaces to
+          observe changes in the subcription and/or publication list of a
+          *remote* event channel, this will enable the automation and
+          optimization of the local publication list (there is no sense in
+          sending an event if nobody is currently interested).
 
-	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
-	* orbsvcs/orbsvcs/Event_Utilities.i: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
-	* orbsvcs/orbsvcs/RtecEventComm.idl: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp: 
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	* orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp: 
-	  Added a new IDL structure to represent the Event Header, this
-	  will let us factor out the minimum information needed to
-	  transmit QoS and subscription/publication info.
-  	  I also normalized some of the field names in the RtecEventComm
-	  structures.
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.i:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/RtecEventComm.idl:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+          Added a new IDL structure to represent the Event Header, this
+          will let us factor out the minimum information needed to
+          transmit QoS and subscription/publication info.
+          I also normalized some of the field names in the RtecEventComm
+          structures.
 
 Fri Sep  4 16:22:17 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Added macro VX_VME_INIT 
-	  for the VME initialization code in VXWORKS. Added a 
-	  MT_priority class that is used by both the client and server
-	  side for determining the thread priorities.
-	
-	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: cleaned up the #ifdefs
-	  using the new ACE_DEBUG with %A for ACE_timer_t and other macros.
-	  Thanx to Nanbor for implementing the %A option in ACE_DEBUG.		
+        * tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp}: Added macro VX_VME_INIT
+          for the VME initialization code in VXWORKS. Added a
+          MT_priority class that is used by both the client and server
+          side for determining the thread priorities.
 
-	* tests/Cubit/TAO/MT_Cubit/client.{h,cpp}: Modularized the code.
-	  Defining a Client_i helper class. Moved all the static functions to
-	  this class. Clenaed up the #ifdefs using the new ACE_DEBUG support.
+        * tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: cleaned up the #ifdefs
+          using the new ACE_DEBUG with %A for ACE_timer_t and other macros.
+          Thanx to Nanbor for implementing the %A option in ACE_DEBUG.
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: cleaned the #ifdefs.
+        * tests/Cubit/TAO/MT_Cubit/client.{h,cpp}: Modularized the code.
+          Defining a Client_i helper class. Moved all the static functions to
+          this class. Clenaed up the #ifdefs using the new ACE_DEBUG support.
 
-	* tests/Cubit/TAO/MT_Cubit/Timer.{h,cpp}: Changed the double to 
-	  ACE_timer_t. Defines a  class MT_Cubit_Timer which uses pccTimer
-	  for  CHORUS and ACE_High_Res_Timer for other platforms.
-	
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}: cleaned the #ifdefs.
+
+        * tests/Cubit/TAO/MT_Cubit/Timer.{h,cpp}: Changed the double to
+          ACE_timer_t. Defines a  class MT_Cubit_Timer which uses pccTimer
+          for  CHORUS and ACE_High_Res_Timer for other platforms.
+
 Fri Sep  4 14:20:28 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	  Slight modification to the constructor-from-cdr. Since this
-	  constructor sets any_owns_data, the value_ should be set to
-	  0, because the destructor deals only with the cdr for anys
-	  that own their data.
+        * tao/Any.cpp:
+          Slight modification to the constructor-from-cdr. Since this
+          constructor sets any_owns_data, the value_ should be set to
+          0, because the destructor deals only with the cdr for anys
+          that own their data.
 
 Fri Sep 04 14:10:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Re-enable
-	  cube_rti_data test.  
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Re-enable
+          cube_rti_data test.
 
 Fri Sep  4 14:35:58 1998  Aniruddha Gokhale  <gokhale@cs.wustl.edu>
 
-	* tao/IIOP_Interpreter.{h, cpp}:
+        * tao/IIOP_Interpreter.{h, cpp}:
 
-	  Added a new static method called
-	  "calc_union_attr_is_var_sized_member".
+          Added a new static method called
+          "calc_union_attr_is_var_sized_member".
 
-	  It turns out that since variable sized data typed become pointer
-	  variables inside the C++ mapping of union members, the "size"
-	  calculation in IIOP_Interpreter.cpp (calc_union_attributes) was
-	  completely wrong. In addition, it did not take into the account
-	  the size of the vtable. This is necessary since our C++ union
-	  mapping is a class that derives from the TAO_Base_Union class.
+          It turns out that since variable sized data typed become pointer
+          variables inside the C++ mapping of union members, the "size"
+          calculation in IIOP_Interpreter.cpp (calc_union_attributes) was
+          completely wrong. In addition, it did not take into the account
+          the size of the vtable. This is necessary since our C++ union
+          mapping is a class that derives from the TAO_Base_Union class.
 
-	  This code has been verified to work on the Cubit example for the
-	  RTI test which was previously failing.
+          This code has been verified to work on the Cubit example for the
+          RTI test which was previously failing.
 
 Fri Sep 04 13:25:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
