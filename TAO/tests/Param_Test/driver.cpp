@@ -172,6 +172,19 @@ Driver::run (void)
         delete client;
       }
       break;
+	case Options::TEST_BOUNDED_STRING_SEQUENCE:
+      {
+        Param_Test_Client<Test_Bounded_String_Sequence> *client = new
+          Param_Test_Client<Test_Bounded_String_Sequence> (this->orb_ptr_,
+                                                           this->objref_.in(),
+                                                           new Test_Bounded_String_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     case Options::TEST_VAR_STRUCT:
       {
         Param_Test_Client<Test_Var_Struct> *client = new
@@ -204,6 +217,19 @@ Driver::run (void)
           Param_Test_Client<Test_Struct_Sequence> (this->orb_ptr_,
                                                  this->objref_.in(),
                                                  new Test_Struct_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_BOUNDED_STRUCT_SEQUENCE:
+      {
+        Param_Test_Client<Test_Bounded_Struct_Sequence> *client = new
+          Param_Test_Client<Test_Bounded_Struct_Sequence> (this->orb_ptr_,
+												           this->objref_.in(),
+														   new Test_Bounded_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
           retstatus = client->run_sii_test ();
         else
@@ -250,6 +276,84 @@ Driver::run (void)
         delete client;
       }
       break;
+	case Options::TEST_OBJREF_SEQUENCE:
+		{
+		  Param_Test_Client<Test_ObjRef_Sequence> *client = new
+		    Param_Test_Client<Test_ObjRef_Sequence> (this->orb_ptr_,
+													 this->objref_.in(),
+													 new Test_ObjRef_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+    case Options::TEST_ANYSEQ:
+      {
+        Param_Test_Client<Test_AnySeq> *client = new
+          Param_Test_Client<Test_AnySeq> (this->orb_ptr_,
+                                          this->objref_.in(),
+                                          new Test_AnySeq);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+	case Options::TEST_SHORTSEQ:
+      {
+        Param_Test_Client<Test_Short_Sequence> *client = new
+          Param_Test_Client<Test_Short_Sequence> (this->orb_ptr_,
+                                                  this->objref_.in(),
+                                                  new Test_Short_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+  	case Options::TEST_BOUNDED_SHORTSEQ:
+      {
+        Param_Test_Client<Test_Bounded_Short_Sequence> *client = new
+          Param_Test_Client<Test_Bounded_Short_Sequence> (this->orb_ptr_,
+                                                          this->objref_.in(),
+	                                                      new Test_Bounded_Short_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+	case Options::TEST_LONGSEQ:
+      {
+        Param_Test_Client<Test_Long_Sequence> *client = new
+          Param_Test_Client<Test_Long_Sequence> (this->orb_ptr_,
+                                                 this->objref_.in(),
+                                                 new Test_Long_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
+  	case Options::TEST_BOUNDED_LONGSEQ:
+      {
+        Param_Test_Client<Test_Bounded_Long_Sequence> *client = new
+          Param_Test_Client<Test_Bounded_Long_Sequence> (this->orb_ptr_,
+                                                         this->objref_.in(),
+	                                                     new Test_Bounded_Long_Sequence);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     default:
       break;
     }
@@ -262,22 +366,28 @@ template class Param_Test_Client<Test_Short>;
 template class Param_Test_Client<Test_Unbounded_String>;
 template class Param_Test_Client<Test_Fixed_Struct>;
 template class Param_Test_Client<Test_String_Sequence>;
+template class Param_Test_Client<Test_Bounded_String_Sequence>;
 template class Param_Test_Client<Test_Var_Struct>;
 template class Param_Test_Client<Test_Nested_Struct>;
 template class Param_Test_Client<Test_Struct_Sequence>;
+template class Param_Test_Client<Test_Bounded_Struct_Sequence>;
 template class Param_Test_Client<Test_ObjRef>;
 template class Param_Test_Client<Test_TypeCode>;
 template class Param_Test_Client<Test_Any>;
+template class Param_Test_Client<Test_Short_Sequence>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
 #pragma instantiate Param_Test_Client<Test_Fixed_Struct>
 #pragma instantiate Param_Test_Client<Test_String_Sequence>
+#pragma instantiate Param_Test_Client<Test_Bounded_String_Sequence>;
 #pragma instantiate Param_Test_Client<Test_Var_Struct>
 #pragma instantiate Param_Test_Client<Test_Nested_Struct>
+#pragma instantiate Param_Test_Client<Test_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_ObjRef>
 #pragma instantiate Param_Test_Client<Test_TypeCode>
 #pragma instantiate Param_Test_Client<Test_Any>
+#pragma instantiate Param_Test_Client<Test_Short_Sequence>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

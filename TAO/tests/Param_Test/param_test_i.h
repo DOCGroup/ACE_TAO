@@ -90,6 +90,18 @@ public:
       Param_Test::Bounded_Long_Seq_out s3,
       CORBA::Environment &env
      );
+  virtual Param_Test::Short_Seq * test_short_sequence (
+	  const Param_Test::Short_Seq & s1,
+      Param_Test::Short_Seq & s2,
+      Param_Test::Short_Seq_out s3,
+      CORBA::Environment &env
+     );
+  virtual Param_Test::Bounded_Short_Seq * test_bounded_short_sequence (
+	  const Param_Test::Bounded_Short_Seq & s1,
+      Param_Test::Bounded_Short_Seq & s2,
+      Param_Test::Bounded_Short_Seq_out s3,
+      CORBA::Environment &env
+     );
   virtual Param_Test::StrSeq * test_strseq (
       const Param_Test::StrSeq & s1,
       Param_Test::StrSeq & s2,
@@ -126,6 +138,12 @@ public:
       Param_Test::Bounded_Coffee_Mix_out s3,
       CORBA::Environment &env
      );
+  virtual Param_Test::AnySeq * test_anyseq (
+	  const Param_Test::AnySeq & s1,
+	  Param_Test::AnySeq & s2,
+	  Param_Test::AnySeq_out s3,
+	  CORBA::Environment &env
+	  );
   // = End of sequences tests....
 
   virtual Param_Test::Var_Struct *

@@ -129,6 +129,42 @@ Param_Test::Long_Seq * Param_Test_i::test_long_sequence (
   return ret;
 }
 
+Param_Test::Short_Seq * Param_Test_i::test_short_sequence (
+      const Param_Test::Short_Seq & s1,
+      Param_Test::Short_Seq & s2,
+      Param_Test::Short_Seq_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Short_Seq
+    *ret = new Param_Test::Short_Seq,
+    *out = new Param_Test::Short_Seq;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Param_Test::Bounded_Short_Seq * Param_Test_i::test_bounded_short_sequence (
+      const Param_Test::Bounded_Short_Seq & s1,
+      Param_Test::Bounded_Short_Seq & s2,
+      Param_Test::Bounded_Short_Seq_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::Bounded_Short_Seq
+    *ret = new Param_Test::Bounded_Short_Seq,
+    *out = new Param_Test::Bounded_Short_Seq;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
 Param_Test::Bounded_Long_Seq * Param_Test_i::test_bounded_long_sequence (
       const Param_Test::Bounded_Long_Seq & s1,
       Param_Test::Bounded_Long_Seq & s2,
@@ -265,6 +301,26 @@ Param_Test::Bounded_Coffee_Mix * Param_Test_i::test_bounded_coffe_mix (
   return ret;
 }
 
+Param_Test::AnySeq *
+Param_Test_i::test_anyseq (const Param_Test::AnySeq &s1,
+                           Param_Test::AnySeq &s2,
+                           Param_Test::AnySeq_out s3,
+                           CORBA::Environment &env)
+{
+  ACE_UNUSED_ARG (env);
+  // we copy the "in" sequences into all the inout, out and return sequences.
+
+  Param_Test::AnySeq
+    *ret = new Param_Test::AnySeq,
+    *out = new Param_Test::AnySeq;
+
+  // now copy all elements of s1 into the others using the assignment operator
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
 
 // = end of sequences...
 
