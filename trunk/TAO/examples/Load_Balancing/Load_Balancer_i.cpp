@@ -214,10 +214,9 @@ Object_Group_i::~Object_Group_i (void)
 }
 
 char *
-Object_Group_i::id (CORBA::Environment &ACE_TRY_ENV)
+Object_Group_i::id (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup (id_.c_str ());
 }
 

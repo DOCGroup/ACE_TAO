@@ -1,3 +1,11 @@
+Fri Mar 30 11:26:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Load_Balancing/Load_Balancer_i.cpp:
+	* examples/Load_Balancing/Identity_i.cpp:
+	* examples/Load_Balancing_persistent/Identity_i.cpp:
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed
+	  fuzz warnings.
+
 Fri Mar 30 10:48:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Makefile: Updated dependencies.
