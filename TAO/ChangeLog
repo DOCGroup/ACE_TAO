@@ -1,3 +1,9 @@
+Tue Sep 28 15:06:50 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+
+        Updated to include the correct file.
+
 Tue Sep 28 11:01:00 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
@@ -9,59 +15,59 @@ Tue Sep 28 11:01:00 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
 Mon Sep 27 21:01:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
-	  Implemented bounded string sequences.  Pretty easy to do
-	  considering all the previous refactoring.
+        * tests/Sequence_Unit_Tests/bounded_string_sequence.hpp:
+          Implemented bounded string sequences.  Pretty easy to do
+          considering all the previous refactoring.
 
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/Bounded_String.cpp:
-	  Add smoke test for bounded string sequences.
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/Bounded_String.cpp:
+          Add smoke test for bounded string sequences.
 
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
-	  New unit test for bounded string sequences.
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+          New unit test for bounded string sequences.
 
-	* tests/Sequence_Unit_Tests/Unbounded_String.cpp:
-	  Extend the smoke test for unbounded string sequences to test
-	  more functionality.
+        * tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+          Extend the smoke test for unbounded string sequences to test
+          more functionality.
 
-	* tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Refactored some of the tests into a common class used by bounded
-	  and unbounded string sequences.
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Refactored some of the tests into a common class used by bounded
+          and unbounded string sequences.
 
-	* tests/Sequence_Unit_Tests/range_checking.hpp:
-	  Add new operation to check when bounded sequences are extended
-	  beyond their maximum.  The spec only calls that "undefined
-	  behavior" so we let the application decide what to do.  The
-	  class name is all wrong now, needs to be changed.
+        * tests/Sequence_Unit_Tests/range_checking.hpp:
+          Add new operation to check when bounded sequences are extended
+          beyond their maximum.  The spec only calls that "undefined
+          behavior" so we let the application decide what to do.  The
+          class name is all wrong now, needs to be changed.
 
-	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
-	  Correctly implement default_buffer_allocation() for
-	  reference_allocation_traits. 
+        * tests/Sequence_Unit_Tests/allocation_traits.hpp:
+          Correctly implement default_buffer_allocation() for
+          reference_allocation_traits.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
-	  Call range_checking::check_length() before changing the length
-	  of a bounded sequence.
+        * tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+          Call range_checking::check_length() before changing the length
+          of a bounded sequence.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	  Make sure that growing a bounded sequence beyond its maximum
-	  raises an exception.  This is not hard-coded behavior, it is
-	  implemented by the testing_range_checking specialization.
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+          Make sure that growing a bounded sequence beyond its maximum
+          raises an exception.  This is not hard-coded behavior, it is
+          implemented by the testing_range_checking specialization.
 
-	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
-	  Reimplement the testing-mode allocation traits for sequences of
-	  references (strings at this point.)
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+          Reimplement the testing-mode allocation traits for sequences of
+          references (strings at this point.)
 
-	* tests/Sequence_Unit_Tests/testing_range_checking.hpp:
-	  Raise an exception if the length is incremented beyond the
-	  maximum for bounded sequences.
+        * tests/Sequence_Unit_Tests/testing_range_checking.hpp:
+          Raise an exception if the length is incremented beyond the
+          maximum for bounded sequences.
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  Define all traits using value_type.
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          Define all traits using value_type.
 
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	  Add new tests to the script.
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          Add new tests to the script.
 
 Mon Sep 27 15:15:11 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
@@ -80,7 +86,7 @@ Mon Sep 27 15:15:11 MST 2004  Trevor Fields  <fields_t@ociweb.com>
           Readded ImplRepo.pidl for the PortableServer.
           This is temporary fix and will be changed so the
           PortableServer will dynamically load the necessary
-          IMR functions from a dll. 
+          IMR functions from a dll.
 
         * tao/PortableServer/ImplRepo.idl:
           Removed for above change.
@@ -115,34 +121,34 @@ Sun Sep 26 19:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Sep 26 11:13:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Add a number of tests.  In no particular order:
-	  - verify that freebuf() calls release() for each element
-	  - verify that operator=() works correctly.
-	  - verify that exceptions in allocbuf() are handled correctly in
-	    both the constructors, operator= and length()
-	  - verify that exceptions in duplicate() are handled correctly in
-	    both the constructors, operator= and length()
-	  - add tests for the multiple get_buffer() member functions
-	  - add tests for the multiple constructors with a buffer
-	  - add tests for the multiple replace() functions with a buffer
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Add a number of tests.  In no particular order:
+          - verify that freebuf() calls release() for each element
+          - verify that operator=() works correctly.
+          - verify that exceptions in allocbuf() are handled correctly in
+            both the constructors, operator= and length()
+          - verify that exceptions in duplicate() are handled correctly in
+            both the constructors, operator= and length()
+          - add tests for the multiple get_buffer() member functions
+          - add tests for the multiple constructors with a buffer
+          - add tests for the multiple replace() functions with a buffer
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  Finished implementation of all methods, actually uncommented all
-	  the implementations, now that I have tests for them.
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          Finished implementation of all methods, actually uncommented all
+          the implementations, now that I have tests for them.
 
-	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
-	  More T to value_type changes.
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp:
+          More T to value_type changes.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
-	  Refactoed test for "get_buffer() const" to the shared tests.
-	  Also changed the test so it does not depend on having a
-	  constructor from buffer.
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+          Refactoed test for "get_buffer() const" to the shared tests.
+          Also changed the test so it does not depend on having a
+          constructor from buffer.
 
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	  The script was not detecting all (most?) errors.
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          The script was not detecting all (most?) errors.
 
 Sun Sep 26 14:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -184,30 +190,30 @@ Sun Sep 26 14:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Sep 25 21:36:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp:
 
-	  Made a small fix for MSVC6.
+          Made a small fix for MSVC6.
 
 Sat Sep 25 14:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/PortableServer.mpc:
+        * tao/PortableServer.mpc:
 
-	  Fix for the compilation errors that shows up on the
-	  scoreboard. This was essentially due to misuse of gendir
-	  keyword.
+          Fix for the compilation errors that shows up on the
+          scoreboard. This was essentially due to misuse of gendir
+          keyword.
 
 Sat Sep 25 09:54:29 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/value_traits.hpp:
-	  Add a const_value_type typedef, just like the string_traits
-	  have.
+        * tests/Sequence_Unit_Tests/value_traits.hpp:
+          Add a const_value_type typedef, just like the string_traits
+          have.
 
-	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
-	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  Always use "value_type" in favor of "T"
-	  Introduce "const_value_type" to all sequences.
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          Always use "value_type" in favor of "T"
+          Introduce "const_value_type" to all sequences.
 
 Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
@@ -277,12 +283,12 @@ Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
         * tao/PortableServer/ImplRepoS.cpp:
 
           Added support for using the ImR locator and activator services
-	  within the ACE Service Configurator framework. Split locator and
-	  activator into separate libraries and executables.
+          within the ACE Service Configurator framework. Split locator and
+          activator into separate libraries and executables.
 
           Refactored Activator_Options and Locator_Options to facilitate
-	  use in separate libraries. Fixed problems with activator
-	  persistence including support for environment variables.
+          use in separate libraries. Fixed problems with activator
+          persistence including support for environment variables.
 
           Fixed problems with the list() operation and iterators,
           although the better solution will likely be to eliminate
@@ -290,9 +296,9 @@ Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
           Simplified Service_Info class into a simple struct which
           further simplified and enhanced the startup code for
-	  servers. Refactored some locator servant options to throw
-	  NO_IMPLEMENT until the IDL is updated to correctly remove these
-	  operations.
+          servers. Refactored some locator servant options to throw
+          NO_IMPLEMENT until the IDL is updated to correctly remove these
+          operations.
 
           Fixed many miscellaneous bugs and performance problems.
           Removed the ready_check() feature, as the current implementation
@@ -480,22 +486,22 @@ Fri Sep 24 12:39:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Sep 24 12:28:04 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  Changed the template parameter on the string_sequence_element
-	  from charT to the string_traits.  With this change the
-	  "string_sequence_element" no longer depends on the "string"
-	  aspect, with suitable traits it works for object references too!
-	  Also, because all the types depend on the template parameter I
-	  have some hope of working around the MSVC6 bugs.
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          Changed the template parameter on the string_sequence_element
+          from charT to the string_traits.  With this change the
+          "string_sequence_element" no longer depends on the "string"
+          aspect, with suitable traits it works for object references too!
+          Also, because all the types depend on the template parameter I
+          have some hope of working around the MSVC6 bugs.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
-	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
-	  Changed the unit tests so they would compile with boost-1.30.2
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+          Changed the unit tests so they would compile with boost-1.30.2
 
 Fri Sep 24 11:25:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
