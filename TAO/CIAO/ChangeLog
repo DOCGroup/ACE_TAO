@@ -1,3 +1,14 @@
+Fri Mar 11 12:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/ComponentsC.h:
+        * ciao/ComponentsS.h:
+        * DAnCE/ciao/ComponentsC.h:
+        * DAnCE/ciao/ComponentsS.h:
+        * DAnCE/NodeManager/NodeDaemon_Impl.h:
+        * performance-tests/Benchmark/LatencyTest.h:
+        * performance-tests/Benchmark/RoundTripServer/LatencyTest.h:
+          Changed _MSC_VER check
+
 Fri Mar  4 17:13:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Hello_Base/Hello_Base.idl:
