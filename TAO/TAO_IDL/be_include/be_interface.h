@@ -120,7 +120,7 @@ public:
   // write the mapping as a return value on the stream.
 
   // Visiting
-  virtual int accept (be_visitor* visitor);
+  virtual int accept (be_visitor *visitor);
 
   // Narrowing
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);

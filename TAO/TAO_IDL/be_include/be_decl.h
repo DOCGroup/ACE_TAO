@@ -101,7 +101,7 @@ public:
   // return the scope created by this node (if one exists)
 
   // Visiting
-  virtual int accept (be_visitor* visitor);
+  virtual int accept (be_visitor *visitor);
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);

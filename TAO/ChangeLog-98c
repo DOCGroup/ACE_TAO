@@ -1,3 +1,10 @@
+Sat Jan 10 18:06:24 1998    <coryan@MILONGA>
+
+	* Merged changes from tag main_to_poa_merge_7 and
+	  main_to_poa_merge_8.
+	  Resolved many conflicts in TAO_IDL due to similar changes in
+	  both branches.
+
 Sat Jan 10 16:57:42 1998    <coryan@MILONGA>
 
 	* Merged changes from tag main_to_poa_merge_6 and

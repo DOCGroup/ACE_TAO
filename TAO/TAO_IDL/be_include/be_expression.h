@@ -41,7 +41,6 @@ public:
 
   // Visiting
   virtual int accept (be_visitor *visitor);
-
 };
 
 #endif

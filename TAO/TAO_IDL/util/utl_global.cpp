@@ -95,7 +95,9 @@ IDL_GlobalData::IDL_GlobalData()
       pd_include_file_names(NULL),
       pd_n_include_file_names(0),
       pd_n_alloced_file_names(0),
-      pd_parse_state(PS_NoState)
+      pd_parse_state(PS_NoState),
+      pd_idl_src_file (0),
+      export_macro_ (0)
 {
   // empty
 }
@@ -573,5 +575,15 @@ const char *
 IDL_GlobalData::be_get_server_inline_fname ()
 {
   return be_get_server_inline (idl_global->idl_src_file ());
+}
+
+String *IDL_GlobalData::export_macro (void) const
+{
+  return this->export_macro_;
+}
+
+void IDL_GlobalData::export_macro (String *s)
+{
+  this->export_macro_ = s;
 }
 
