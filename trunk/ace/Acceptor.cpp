@@ -504,13 +504,11 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
   
   if (service_name != 0)
-    ACE_ALLOCATOR_RETURN (this->service_name_,
-                          ACE_OS::strdup (service_name),
-                          -1);
+    ACE_ALLOCATOR (this->service_name_,
+                   ACE_OS::strdup (service_name));
   if (service_description != 0)
-    ACE_ALLOCATOR_RETURN (this->service_description_,
-                          ACE_OS::strdup (service_description),
-                          -1);
+    ACE_ALLOCATOR (this->service_description_,
+                   ACE_OS::strdup (service_description));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> 

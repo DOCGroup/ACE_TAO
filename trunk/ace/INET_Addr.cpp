@@ -96,13 +96,13 @@ int
 ACE_INET_Addr::string_to_addr (const char s[])
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
-  // Need to make a duplicate since we'll be overwriting the string.
+  int result;
   char *t;
 
-  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (s), -1)
+  // Need to make a duplicate since we'll be overwriting the string.
+  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (s), -1);
 
   char *ip_addr = ACE_OS::strchr (t, ':');
-  int result;
 
   if (ip_addr == 0) // Assume it's a port number.
     {
@@ -115,6 +115,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
       u_short port = (u_short) ACE_OS::atoi (ip_addr + 1); // Skip over ':'
       result = this->set (port, t);
     }
+
   ACE_OS::free (ACE_MALLOC_T (t));
   return result;
 }
