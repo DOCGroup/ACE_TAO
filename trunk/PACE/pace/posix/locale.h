@@ -13,8 +13,8 @@
  *
  * =========================================================================== */
 
-#ifndef PACE_LOCALE_H
-#define PACE_LOCALE_H
+#ifndef PACE_LOCALE_H_POSIX
+#define PACE_LOCALE_H_POSIX
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -33,25 +33,8 @@ extern "C" {
 typedef struct lconv pace_lconv;
 #endif /* PACE_LCONV */
 
-  /**
-     Fills in pace_lconv with values consistent with the
-     current locality.
-   */
-  PACE_INLINE pace_lconv* pace_localeconv (void);
-
-  /**
-     PACE's implementation of the POSIX function setlocale.
-     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
-     IEEE Std 1003.1, 1996 Edition), Section 8.1.2.
-   */
-  PACE_INLINE char * pace_setlocale (int category, const char * locale);
-
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#if defined (PACE_HAS_INLINE)
-# include "pace/posix/locale.inl"
-#endif /* PACE_HAS_INLINE */
-
-#endif /* PACE_LOCALE_H */
+#endif /* PACE_LOCALE_H_POSIX */
