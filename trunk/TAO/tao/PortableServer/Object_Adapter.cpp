@@ -987,7 +987,7 @@ TAO_Object_Adapter_Factory::init (int /* argc */,
 
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Object_Adapter_Factory,
-                       ACE_TEXT ("PortableServer"),
+                       ACE_TEXT ("TAO_Object_Adapter_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Object_Adapter_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
