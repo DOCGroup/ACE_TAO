@@ -94,6 +94,65 @@ protected:
   // most derived class.
 };
 
+class TAO_RefCountServantBase : public virtual TAO_ServantBase
+{
+  // = TITLE
+  //   Reference counting mix-in class.
+  //
+  // = DESCRIPTION
+  //   The RefCountServantBase mix-in class overrides the inherited
+  //   _add_ref and _remove_ref functions it inherits from
+  //   ServantBase, implementing them to provide true reference
+  //   counting. An instance of a servant class derived from
+  //   RefCountServantBase initially has a reference count of
+  //   one. Invoking _add_ref on the servant instance increases its
+  //   reference count by one. Invoking _remove_ref on the servant
+  //   instance decreases its reference count by one; if the resulting
+  //   reference count equals zero, _remove_ref invokes delete on its
+  //   this pointer in order to destroy the servant. For ORBs that
+  //   operate in multi-threaded environments, the implementations of
+  //   _add_ref and _remove_ref that the RefCountServantBase class
+  //   provides shall be thread-safe.
+  //
+  //   Like ServantBase, RefCountServantBase supports copy
+  //   construction and the default assignment operation. Copy
+  //   construction always sets the reference count of the new servant
+  //   instance to one. The default assignment implementation merely
+  //   returns *this and does not affect the reference count.
+
+public:
+
+  ~TAO_RefCountServantBase (void);
+  // Destructor.
+
+  virtual void _add_ref (void);
+  // Increase reference count by one.
+
+  virtual void _remove_ref (void);
+  // Decreases reference count by one; if the resulting reference
+  // count equals zero, _remove_ref invokes delete on its this pointer
+  // in order to destroy the servant.
+
+protected:
+
+  TAO_RefCountServantBase (void);
+  // Constructor: initial reference count is one.
+
+  TAO_RefCountServantBase (const TAO_RefCountServantBase &);
+  // Copy Constructor: Always sets the reference count of the new
+  // servant instance to one.
+
+  TAO_RefCountServantBase &operator= (const TAO_RefCountServantBase &);
+  // The default assignment implementation merely returns *this and
+  // does not affect the reference count.
+
+private:
+
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
+  // Reference counter.
+
+};
+
 class TAO_Export TAO_Servant_Hash
 {
 public:
