@@ -1,3 +1,13 @@
+Mon Sep 21 18:35:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers.{h,cpp}
+          examples/Bounded_Packet_Relay/BPR_Drivers_T.{h,cpp} (new)
+          examples/Bounded_Packet_Relay/bpr_thread.cpp:
+
+          Factored out templates into separate files, fixed initialization,
+          concurrency, and deadlock problems found in NT testing.
+
 Mon Sep 21 18:27:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp: g++ cannot gork templates typedefs.
