@@ -89,7 +89,7 @@ Server_i::init (int argc, char *argv[], CORBA::Environment &env)
   // Activate the servant in its own child POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("time",
-                                                 this->servant_,
+                                                 &this->servant_,
                                                  env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
