@@ -1,3 +1,14 @@
+Tue Mar 11 12:03:32 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+
+	  Add PLATFORM_SSL_* variables to their corresponding CPPFLAGS and
+	  LDFLAGS "make" variables.  This fixes problems on platforms
+	  where OpenSSL is installed in a location unknown to the compiler
+	  and linker.  Thanks to Phil Mesnier <mesnier_p@ociweb.com> for
+	  detecting the problem.
+
 Tue Mar 11 10:46:29 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/corbafwd.h:
