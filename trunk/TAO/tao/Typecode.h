@@ -153,8 +153,9 @@ public:
                                  TAO_default_environment ()) const;
   // For tk_union. Returns the label. Raises BadKind, Bounds.
 
-  CORBA::TypeCode_ptr discriminator_type (CORBA_Environment &ACE_TRY_ENV =
-                                            TAO_default_environment ()) const;
+  CORBA::TypeCode_ptr discriminator_type (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) const;
   // Returns the discriminator type for tk_union. raises (BadKind).
 
   CORBA::Long default_index (CORBA_Environment &ACE_TRY_ENV =
@@ -270,9 +271,9 @@ public:
   // to my tk_kind field which should be pointed to be tc_base_
 
   const char *root_tc_base_;
-  // base of the topmost level typecode. Applicable only if I have any parents,
-  // else it is the same as tc_base. This helps in case we have indirections
-  // and we need to traverse beyond encapsulation boundaries
+  // base of the topmost level typecode. Applicable only if I have any
+  // parents, else it is the same as tc_base. This helps in case we have
+  // indirections and we need to traverse beyond encapsulation boundaries.
 
   static CORBA::Boolean skip_typecode (TAO_InputCDR &stream);
   // skip a typecode encoding in a given CDR stream.  This is just a
@@ -317,26 +318,35 @@ private:
   // returns member_count (), raises (BadKind). Useful for tk_struct,
   // tk_union, tk_enum, tk_alias, and tk_except.
 
-  CORBA::TypeCode_ptr private_member_type (CORBA::ULong slot,
-                                           CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ()) const;
+  CORBA::TypeCode_ptr private_member_type (
+      CORBA::ULong slot,
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) const;
   // returns member_type (...), raises (BadKind, Bounds); Useful for
   // tk_struct, tk_union, and tk_except
 
   const char *private_member_name (CORBA::ULong slot,
                                    CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ()) const;
-  // returns member_name (...), raises (BadKind, Bounds); Useful for tk_union,
-  // tk_struct, tk_except, and tk_enum
+  // returns member_name (...), raises (BadKind, Bounds); Useful for
+  // tk_union, tk_struct, tk_except, and tk_enum
 
   CORBA::Any_ptr private_member_label (CORBA::ULong n,
                                        CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ()) const;
   // For tk_union. Returns the label. Raises BadKind, Bounds.
 
-  CORBA::TypeCode_ptr private_discriminator_type (CORBA_Environment &ACE_TRY_ENV =
-                                                    TAO_default_environment ()) const;
-  // returns the discriminator type for tk_union. raises (BadKind);
+  CORBA::TypeCode_ptr private_discriminator_type (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) const;
+  // returns the discriminator type for tk_union, and acquires the lock
+  // for the wrapped function below. raises (BadKind)
+
+  CORBA::TypeCode_ptr private_discriminator_type_i (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) const;
+  // Acquires no lock so it can be called internally from blocks
+  // which have a lock.
 
   CORBA::Long private_default_index (CORBA_Environment &ACE_TRY_ENV =
                                        TAO_default_environment ()) const;
@@ -347,8 +357,9 @@ private:
   // returns length, raises (BadKind). Used for tk_string,
   // tk_sequence, and tk_array
 
-  CORBA::TypeCode_ptr private_content_type (CORBA_Environment &ACE_TRY_ENV =
-                                              TAO_default_environment ()) const;
+  CORBA::TypeCode_ptr private_content_type (
+      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+    ) const;
   // returns the content type (element type). Raises (BadKind); Useful
   // for tk_sequence, tk_array, and tk_alias
 
@@ -470,7 +481,8 @@ public:
   CORBA::TCKind  tc_kind_;
   // our kind that will determine what kind of children we may have
 
-  // = data members that indicate if the desired quantify was precomputed or not.
+  // = data members that indicate if the desired quantify 
+  // was precomputed or not.
   CORBA::Boolean tc_id_known_;
   CORBA::Boolean tc_name_known_;
   CORBA::Boolean tc_member_count_known_;
@@ -557,8 +569,8 @@ private:
 class TAO_Export TAO_TypeCodes
 {
   // = TITLE
-  //   This class is a namespace for TypeCode-related static data that is owned
-  //   by the ORB.
+  //   This class is a namespace for TypeCode-related static data that
+  //   is owned by the ORB.
 public:
 
   static void init (void);
