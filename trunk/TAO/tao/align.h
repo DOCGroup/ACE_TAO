@@ -66,6 +66,8 @@ align_binary (const ptr_arith_t value,
 // XXX Returned as "byte pointer" -- CDR module would change to be
 // seen as a "void *".  May want to change this to add XDR cleanly.
 
+// @@ Andy, do we still need this function or is the macro sufficient?
+// If the macro is sufficient can we remove the function?
 #if 0
 static inline u_char *
 ptr_align_binary (const u_char *ptr,
@@ -75,6 +77,6 @@ ptr_align_binary (const u_char *ptr,
 }
 #endif /* 0 */
 #define ptr_align_binary(ptr, alignment) \
-        ((u_char *) align_binary(((ptr_arith_t) (ptr)), (alignment)))
+        ((u_char *) align_binary (((ptr_arith_t) (ptr)), (alignment)))
 
 #endif /* TAO_ALIGN_H */
