@@ -4,6 +4,7 @@
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Default_Constants.h"
 #include "ace/os_include/os_fcntl.h"
@@ -70,11 +71,22 @@ ACE_OS::dlerror (void)
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#if defined(_M_UNIX)
-  ACE_OSCALL_RETURN ((char *)::_dlerror (), char *, 0);
-#else /* _M_UNIX */
-  ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
-#endif /* _M_UNIX */
+  const char *err;
+#   if defined(_M_UNIX)
+  ACE_OSCALL (::_dlerror (), const char *, 0, err);
+#   else /* _M_UNIX */
+  ACE_OSCALL (::dlerror (), const char *, 0, err);
+#   endif /* _M_UNIX */
+  if (err == 0)
+    return 0;
+#   if defined (ACE_USES_WCHAR)
+  const size_t BufLen = 256;
+  static wchar_t buf[BufLen];
+  ACE_OS::strncpy (buf, ACE_TEXT_CHAR_TO_TCHAR (err), BufLen);
+  return buf;
+#   else
+  return const_cast <char *> (err);
+#   endif /* ACE_USES_WCHAR */
 # elif defined (__hpux) || defined (VXWORKS)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
@@ -114,11 +126,14 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
-  ACE_OSCALL (::sgidladd (filename, mode), void *, 0, handle);
+  ACE_OSCALL
+    (::sgidladd (ACE_TEXT_ALWAYS_CHAR (filename), mode), void *, 0, handle);
 #   elif defined (_M_UNIX)
-  ACE_OSCALL (::_dlopen (filename, mode), void *, 0, handle);
+  ACE_OSCALL
+    (::_dlopen (ACE_TEXT_ALWAYS_CHAR (filename), mode), void *, 0, handle);
 #   else
-  ACE_OSCALL (::dlopen (filename, mode), void *, 0, handle);
+  ACE_OSCALL
+    (::dlopen (ACE_TEXT_ALWAYS_CHAR (filename), mode), void *, 0, handle);
 #   endif /* ACE_HAS_SGIDLADD */
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
@@ -198,11 +213,15 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE)
   const wchar_t *symbolname = sname;
+#elif defined (ACE_USES_WCHAR)
+  // WinCE is WCHAR always; other platforms need a char * symbol name
+  ACE_Wide_To_Ascii w_sname (sname);
+  char *symbolname = w_sname.char_rep ();
 #elif defined (ACE_HAS_CHARPTR_DL)
   char *symbolname = const_cast<char *> (sname);
-#elif !defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+#else
   const char *symbolname = sname;
-#endif /* ACE_HAS_CHARPTR_DL */
+#endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
@@ -221,10 +240,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
-
-# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
-
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, ACE_TEXT_ALWAYS_CHAR (sname)), void *, 0);
 
 # elif defined (ACE_WIN32)
 
