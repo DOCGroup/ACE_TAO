@@ -1,3 +1,14 @@
+Sat Sep 11 08:47:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Properties.h:
+
+	  Changed to use TAO_NOTIFY_SERV_SINGLETON_DECLARE.
+
+	* orbsvcs/orbsvcs/Log/NotifyLogNotification.h:
+
+	  Removed #include of CosNamingC.h.  It isn't used, but requires
+	  linking with naming client library with some windows compilers.
+
 Sat Sep 11 00:44:34 2004  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/ast/ast_module.cpp:
