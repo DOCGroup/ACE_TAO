@@ -1904,7 +1904,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "(" << ancestor->full_skel_name ()
                       << "_ptr) impl," << be_nl
                       << "context," << be_nl
-                      << " env" << be_uidt_nl
+                      << " ACE_TRY_ENV" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}\n";
                 }
@@ -1955,7 +1955,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "(" << ancestor->full_skel_name ()
                       << "_ptr) impl," << be_nl
                       << "context," << be_nl
-                      << "env" << be_uidt_nl
+                      << "ACE_TRY_ENV" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}\n";
                 }
@@ -2003,7 +2003,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "(" << ancestor->full_skel_name ()
                           << "_ptr) impl," << be_nl
                           << "context," << be_nl
-                          << "env" << be_uidt_nl
+                          << "ACE_TRY_ENV" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
                           << "}\n";
                     }
