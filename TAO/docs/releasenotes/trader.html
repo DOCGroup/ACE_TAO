@@ -13,13 +13,14 @@
 
 <hr>
 
-<p>The TAO transient Trading Service implementation conforms to the Linked Trader
-conformance criteria as detailed in the COS TradingObject Service specification. This
-document details how to use the TAO Trading Service from four perspectives: 
+<p>The TAO transient Trading Service implements the COS TradingObject Service
+specification, and&nbsp; conforms to the Linked Trader conformance criteria. This document
+details how to use the TAO Trading Service from the following perspectives: 
 
 <ul>
   <li>as an importer bootstrapping to the Trading Service;</li>
-  <li>as a Service Offer exporter;</li>
+  <li>as a service offer exporter;</li>
+  <li>as an administrator;</li>
   <li>as an out-of-the-box server process; </li>
   <li>as a collocated object. </li>
 </ul>
@@ -38,9 +39,8 @@ Service specification</a>. This document has the following layout:
 <ol>
   <li><a href="#TheClientRole">The Client Role</a> <ul>
       <li><a href="#BootstrappingtotheTradingService">Bootstrapping to the Trading Service</a> </li>
-      <li><a href="#The ImporterRolePerformingaQuery">The Importer Role --- Performing a Query</a>
-        <ul>
-          <li><a href="#Constraints">Constraints</a> </li>
+      <li><a href="#The ImporterRolePerformingaQuery">The Importer Role --- Performing a Query</a><ul>
+          <li><a href="#Constraints">Constraints</a></li>
           <li><a href="#Preferences">Preferences</a></li>
           <li><a href="#Policies">Policies</a></li>
           <li><a href="#FilteringProperties">Filtering Properties</a> </li>
@@ -60,16 +60,15 @@ Service specification</a>. This document has the following layout:
         Adjusting Links</a></li>
     </ul>
   </li>
-  <li><a href="#TheServerRole">The Server Role</a> <ul>
-      <li><a href="#TheTAOTradingServiceApplication">The TAO <tt>Trading_Service</tt> Application</a>
-      </li>
+  <li><a href="#TheServerRole">The Server Role</a><ul>
+      <li><a href="#TheTAOTradingServiceApplication">The TAO <tt>Trading_Service</tt> Application</a></li>
       <li><a href="#ColocatingtheTradingServiceinaTAOApplication">Colocating the Trading Service
-        in a TAO Application</a> </li>
+        in a TAO Application</a></li>
     </ul>
   </li>
   <li><a href="#RunningtheTradingServiceTests">Running the Trading Service Tests</a></li>
   <li><a href="#KnownBugsandWorkarounds">Known Bugs and Workarounds</a></li>
-  <li><a href="#FutureWork">Future Work</a> </li>
+  <li><a href="#FutureWork">Future Work</a></li>
 </ol>
 
 <hr>
@@ -77,7 +76,7 @@ Service specification</a>. This document has the following layout:
 <h1><a name="TheClientRole">The Client Role</a></h1>
 
 <p align="left">There are three categories of operations that a client can perform on a
-Trading Service instance: exporting a Service Offer to the Trading Service, importing a
+Trading Service instance: exporting a service offer to the Trading Service, importing a
 list of Service Offers whose properties satisfy a constraint expression, and attending to
 administrative duties --- tweaking policies or adjusting links. The first order of
 business, of course, is obtaining a reference to a Trading Service instance, assuming that
@@ -88,8 +87,8 @@ Service</a></h2>
 
 <p align="left">Like with the Naming Service, the ORB will obtain a reference to a Trading
 Service instance's <tt>Lookup</tt> interface when a client invokes the <tt>CORBA::ORB::resolve_initial_references</tt>
-method and passes the <tt>ObjectID</tt> &quot;<tt>TradingService</tt>&quot;. The following
-TAO code bootstraps to the Trading Service:</p>
+method and passes to it the <tt>ObjectID</tt> &quot;<tt>TradingService</tt>&quot;. The
+following TAO code bootstraps to the Trading Service:</p>
 
 <table border="1" width="100%" cellpadding="6">
   <tr>
@@ -187,25 +186,54 @@ at the end of the specification). The trader iterates over applicable offers, an
 offer determines if its properties meet the constraints, replacing property names in the
 string with their values and computing the result. If the constraint evaluates to true,
 the offer is placed in the pool of matched offers. If the constraint string is
-syntactically invalid, contains property names not found in the Service Type description
+syntactically invalid, contains property names not found in the service type description
 for the listed service type, or has operators with mismatched operand types, the query
 method will throw an <tt>InvalidConstraint</tt> exception. </p>
 
 <p>Operands can be of two types: property names or literals. A property name is an
 unquoted string of alphanumeric characters and underscores that begins with a letter. The
-Service Type describes the type of a property. A literal is an signed or unsigned integer,
+service type describes the type of a property. A literal is an signed or unsigned integer,
 floating point number --- scientific notation acceptable ---, single-quoted string, or
 boolean --- written TRUE or FALSE. </p>
 
-<p>The arithmetic operators --- +, -, *, / --- require numeric operands; boolean operators
---- and, or, not --- require boolean operators; inequality operators --- &lt;, &gt;,
-&lt;=, &gt;= --- require numeric or string operands; equality operators --- !=, == ---
-take any operands, the substring operator --- a tilde (~) --- requires two strings and
-determines if the first string is a substring of the second; the property existence
-operator --- exist --- requires a property name; and the sequence inclusion operator ---
-in --- requires a sequence of a primitive type on the right side, and an operand of the
-same simple type on the right. The 'in' operator returns true if the sequence contains a
-value equal to the left operand. </p>
+<p>The constraint language supports the following operations:</p>
+
+<table border="1" width="100%" cellpadding="3">
+  <tr>
+    <td width="25%">Arithmetic (+, -, *, /)</td>
+    <td width="34%"><tt>Disk_Space*1000 - Amount_Used/10</tt></td>
+    <td width="41%">Accepts two numeric operands.</td>
+  </tr>
+  <tr>
+    <td width="25%">Inequality (&lt;,&gt;,&lt;=,&gt;=)</td>
+    <td width="34%"><tt>Amount_Used &lt; Disk_Space</tt></td>
+    <td width="41%">Accepts two numeric or two string operands.</td>
+  </tr>
+  <tr>
+    <td width="25%">Equality (==, !=)</td>
+    <td width="34%"><tt>Amount_Used == Disk_Space</tt></td>
+    <td width="41%">Accepts two numeric, two string, or two boolean operands.</td>
+  </tr>
+  <tr>
+    <td width="25%">Substring (~)</td>
+    <td width="34%"><tt>'.wustl.edu' ~ Domain_Name</tt></td>
+    <td width="41%">Accept two string operands. Returns true if the right string contains the
+    left.</td>
+  </tr>
+  <tr>
+    <td width="25%">Sequence inclusion (in)</td>
+    <td width="34%"><tt>'sbw1' in User_Queue</tt></td>
+    <td width="41%">Accepts an operand of a primitive CORBA type on the left, and a sequence
+    of the same type on the right. Returns true when the sequence contains the value in the
+    left operand, false otherwise.</td>
+  </tr>
+  <tr>
+    <td width="25%">Property existence (exist)</td>
+    <td width="34%"><tt>exist User_Queue</tt></td>
+    <td width="41%">Accepts a property name. Returns true if the property is defined in the
+    offer.</td>
+  </tr>
+</table>
 
 <h3><a name="Preferences">Preferences</a></h3>
 
@@ -316,9 +344,9 @@ const CosTrading::PolicySeq&amp; policy_seq = policies.policy_seq ();</pre>
 
 <h3><a name="FilteringProperties">Filtering Properties</a></h3>
 
-<p>If the client wants only a subset of the properties defined for a Service Type returned
+<p>If the client wants only a subset of the properties defined for a service type returned
 in matching offers, it can specify those property names in the <tt>desired_properties</tt>
-parameter of the query method. Pass the prop_names method of <tt>CosTrading::Lookup::SpecifiedProperties</tt>
+parameter of the query method. Pass the <tt>prop_names</tt> method of <tt>CosTrading::Lookup::SpecifiedProperties</tt>
 a <tt>CosTrading::PropNameSeq</tt>:</p>
 
 <table border="1" width="100%" cellpadding="3">
@@ -333,14 +361,14 @@ desired_props.prop_names (prop_name_seq);</pre>
 
 <h3><a name="OfferIterators">Offer Iterators</a></h3>
 
-<p>Those offers returned from the query in excess of how_many are placed in an offer
-iterator for deferred retrieval. The <tt>CosTrading::OfferIterator::next_n</tt> method
-will allocate a sequence and fill it with either n offers, or if it has fewer than n
+<p>Those offers returned from the query in excess of <tt>how_many</tt> are placed in an
+offer iterator for deferred retrieval. The <tt>CosTrading::OfferIterator::next_n</tt>
+method will allocate a sequence and fill it with either n offers, or if it has fewer than <tt>n</tt>
 offers, the remaining offers. The <tt>next_n</tt> method returns true if the iterator
 contains more offers, and false if it's been depleted. After finishing with the iterator,
 invoke its <tt>destroy</tt> method to release any server-side resources.</p>
 
-<p>The following code is an example of obtaining offers from a CosTrading::OfferIterator:</p>
+<p>The following code is an example of obtaining offers from a <tt>CosTrading::OfferIterator</tt>:</p>
 
 <table border="1" width="100%" cellpadding="3">
   <tr>
@@ -366,13 +394,14 @@ CORBA::Environment _env;</pre>
 
 <h3><a name="PropertyEvaluation">Property Evaluation</a></h3>
 
-<p>After the client completes a query that used dynamic properties and wants to review the
-property values of the returned offers, it has to distinguish between <tt>Anys</tt>
-containing static properties and anys containing dynamic property structures. The <tt>TAO_Property_Evaluator</tt>
-class is a handy utility to obtain property values that hides from the client whether the
-properties evaluated are static or dynamic. The <tt>TAO_Property_Evaluator</tt> caches the
-value of a dynamic property, and frees the allocated <tt>Anys</tt> during its destruction.
-</p>
+<p>After the client completes a query that used dynamic properties, to review the property
+values of the returned offers, it has to distinguish between <tt>Anys</tt> containing
+static properties and <tt>Anys</tt> containing dynamic property structures. The <tt>TAO_Property_Evaluator</tt>
+class is a handy utility to obtain property values that hides how it evalutes properties
+for the client --- by simple <tt>Any</tt> value extraction for static properties, or by
+calling back to a dynamic property interface. The <tt>TAO_Property_Evaluator</tt> caches
+the value of a dynamic property, and frees the allocated <tt>Anys</tt> during its
+destruction. </p>
 
 <p>The following code demonstrates how to use the <tt>TAO_Property_Evaluator</tt> to dump
 the properties of an offer to the screen. </p>
@@ -407,7 +436,7 @@ for (int length = prop_seq.length (), k = 0; k &lt; length; k++)
 <h2><a name="TheExporterRole">The Exporter Role --- Registering a Service Type and Offer</a></h2>
 
 <p>Before an exporting client can register a new service offer with the Trading Service,
-it needs to ensure first that its Service Type is present in the Service Type Repository
+it needs to ensure first that its service type is present in the service type repository
 of the target trader. The most efficient way to do this is to first invoke the <tt>export</tt>
 method on the <tt>Register</tt> interface, and if it raises an <tt>UnknownServiceType</tt>
 exception, obtain a reference to the Repository, add the Service Type, and attempt the <tt>export</tt>
@@ -426,7 +455,8 @@ CosTrading::TypeRepository_ptr obj = this-&gt;trader_-&gt;type_repos (_env);
 CosTradingRepos::ServiceTypeRepository_var str =
   CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
 TAO_CHECK_ENV_RETURN (_env, -1);
-    TAO_TRY
+
+TAO_TRY
   {
     // Attempt to export the offer.
     offer_id = 
@@ -509,12 +539,12 @@ prop_seq[1].value &lt;&lt;= CORBA::Any::from_boolean (CORBA::B_TRUE);</pre>
   </tr>
 </table>
 
-<p>Export test returns a <tt>CosTrading::OfferId</tt> string, which is required to perform
-the <tt>withdraw</tt> and <tt>modify</tt> operations on the exported offer. Withdraw
-requires that you simply pass the OfferId of the offer to be withdrawn, while modify takes
-two additional sequences: a <tt>CosTrading::PropertyNameSeq</tt> of property names to be
-removed from the offer, and a <tt>CosTrading::PropertySeq</tt> of offers to be added or
-changed in the offer. </p>
+<p>The <tt>export_test</tt> returns a <tt>CosTrading::OfferId</tt> string, which is
+required to perform the <tt>withdraw</tt> and <tt>modify</tt> operations on the exported
+offer. <tt>withdraw</tt> requires that you simply pass the <tt>OfferId</tt> of the offer
+to be withdrawn, while <tt>modify</tt> takes two additional sequences: a <tt>CosTrading::PropertyNameSeq</tt>
+of property names to be removed from the offer, and a <tt>CosTrading::PropertySeq</tt> of
+offers to be added or changed in the offer. </p>
 
 <h3><a name="ImplementingDynamicProperties">Implementing Dynamic Properties</a></h3>
 
@@ -586,7 +616,7 @@ interface, for tweaking global policies, enabling and disabling interfaces, and 
 the trader contents; and the <tt>Link</tt> interface, for attaching to and detaching from
 other traders. </p>
 
-<p>Adjusting policies is straightforward. Here's an example of setting the max_search_card
+<p>Adjusting policies is straightforward. Here's an example of setting the <tt>max_search_card</tt>
 policy:</p>
 
 <table border="1" width="100%" cellpadding="3">
@@ -725,10 +755,10 @@ Service functionality to that server.</p>
 <table border="1" width="100%" cellpadding="3">
   <tr>
     <td width="26%"><tt>-TSthreadsafe</tt></td>
-    <td width="74%">The Trader will use Reader/Writer locks to protect the offer database and
-    link collection, and normal Mutexes for the rest of the shared state --- global policies,
-    support attributes, and interface accessors. (default is not thread safe; Null Mutexes are
-    used)</td>
+    <td width="74%">The Trader will use reader/writer locks to protect the offer database and
+    link collection, and normal thread mutexes for the rest of the shared state --- global
+    policies, support attributes, and interface accessors. (default is not thread safe; Null
+    Mutexes are used)</td>
   </tr>
   <tr>
     <td width="26%"><tt>-TSconformance</tt></td>
@@ -978,14 +1008,14 @@ on the same machine, you must supply them with different ports. For example, add
 <p>To test federated queries, run at least three copies of the <tt>Trading_Service</tt>
 application, each using the <tt>-TSfederate</tt> flag. The traders will form a complete
 graph, with each link follow policy set to <tt>CosTrading::always</tt>. When run with the <tt>-f</tt>
-flag, the <tt>export_test</tt> will add the service types to each of the traders in the
-federation, and export offers to each of the federated traders. When run with the <tt>-f</tt>
-flag, the <tt>import_test </tt>will perform a directed query to a trader two links distant
-from the trader boostrapped to, in addition to performing federated queries.&nbsp;&nbsp; </p>
+flag, the <tt>export_test</tt> will add the service types and export offers to each of the
+traders in the federation. When run with the <tt>-f</tt> flag, the <tt>import_test </tt>will
+perform a directed query to a trader two links distant from the trader boostrapped to, in
+addition to performing federated queries.&nbsp;&nbsp; </p>
 
-<p>By default, the tests dump the contents of service types and offers to the screen so
-the tester can validate the results. To run the tests in quiet mode, where the results of
-the describe and query methods are concealed, use the <tt>-q</tt> flag.</p>
+<p>By default the tests dump the contents of service types and offers to the screen so the
+tester can validate the results. To run the tests in quiet mode, where the results of the
+describe and query methods are concealed, use the <tt>-q</tt> flag.</p>
 
 <hr>
 
@@ -996,7 +1026,7 @@ Service, and the workarounds applied to those problems.</p>
 
 <p><strong>Problem: </strong>TAO has difficulty marshalling and demarshalling object
 references that extend <tt>CORBA::Object</tt> when they occur as a field in a <tt>struct</tt>.
-In the CosTrading IDL there are two <tt>structs</tt> passed that contain such object
+In the CosTrading IDL file there are two <tt>structs</tt> passed that contain such object
 references: <tt>CosTradingDynamic::DynamicProp</tt> and <tt>CosTrading::Link:LinkInfo</tt>.
 <br>
 <strong>Workaround</strong>: Instead of passing object references in the structs, we pass
@@ -1010,13 +1040,6 @@ definition will be necessary. Two additional lines of code will suffice--- a cal
 and either <tt>CosTrading::Lookup::_narrow</tt> or <tt>CosTrading::Register::_narrow</tt>
 depending on the field of LinkInfo.</p>
 
-<p><strong>Problem</strong>: Optimized <tt>octet</tt> sequences are mysteriosly broken in
-the context of the Trading Service. The trader uses <tt>octet</tt> sequences for the query
-identifier used to prevent multiple evaluations of the same federated query. <br>
-<strong>Workaround: </strong>For federated queries to work, compile the TAO library
-without the preprocessor flag <tt>TAO_NO_COPY_OCTET_SEQUENCES</tt> defined. Edit the <tt>tao/orbconf.h</tt>
-file to accomplish this. A real solution to this problem is in the works. </p>
-
 <p><strong>Problem: </strong><tt>CORBA::TypeCodes</tt> currently leak memory. Although the
 Trading Service itself doesn't have any memory leaks, the <tt>TypeCodes</tt> it heavily
 relies on do.<br>
@@ -1024,7 +1047,7 @@ relies on do.<br>
 
 <p><strong>Problem:</strong> g++ version 2.7.2 has link errors when compiling the Trading
 Service applications and tests; the profuse use of virtual inheritence requires explicit
-copy constructors in the base classes for g++ to link properly.<br>
+copy constructors in the skeleton classes for g++ to link properly.<br>
 <strong>Workaround:</strong> This problem is currently being addressed.</p>
 
 <hr>
@@ -1046,7 +1069,7 @@ copy constructors in the base classes for g++ to link properly.<br>
 <hr>
 
 <address>
-  <a href="mailto:sbw1@waltz.cs.wustl.edu">Seth Benjamin Widoff</a> 
+  <a href="mailto:sbw1@cs.wustl.edu">Seth Benjamin Widoff</a> 
 </address>
 <!-- Created: Mon Jun 29 12:26:36 CDT 1998 -->
 <!-- hhmts start -->
