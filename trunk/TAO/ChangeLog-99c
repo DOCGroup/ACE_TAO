@@ -1,3 +1,12 @@
+Fri Jun  4 13:35:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	  Finally was able to remove the last use of
+	  CORBA_Any::replace() to set the return value of the
+	  request to get the Cubit object from the factory.
+	  We are now using the preferred
+	  'req->return_value() >>=' construction.
+
 Fri Jun  4 13:04:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp:
