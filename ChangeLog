@@ -1,3 +1,12 @@
+Sun Oct 29 01:59:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/doxygen-convert-h.pl: (added)
+
+          New script to convert old header files to new doxygen
+          style commented files.  Works well, but some things
+          do throw it for a loop, be sure to check output before
+          checking in.
+
 Sat Oct 28 15:02:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Stats.h:
