@@ -1,3 +1,12 @@
+Wed May 17 12:30:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_union.cpp:
+	  Added a missing case (wchar) to switch statement used to 
+	  compute a valid value for the default case label. I was
+	  looking through IDL code trying to figure out how to
+	  write TypeCodeFactory_i::create_union_tc and I found
+	  this by accident.
+
 Wed May 17 11:53:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/SHMIOP_Connect.cpp: Plugged a memory leak in
