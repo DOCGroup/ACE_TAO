@@ -1,3 +1,11 @@
+Sat Oct 24 17:26:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/OS.h (ACE_TEXT): Moved Nanbor's changes outside of 
+	  ACE_PSOS block.
+	
+	* ace/config-win32.h: Defined ACE_HAS_TEXT_MACRO_CONFLICT, 
+	  seeing that MSVC already defines __TEXT.
+
 Sat Oct 24 15:21:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_TEXT): Changed the macro __TEXT to ACE_TEXT to
