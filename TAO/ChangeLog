@@ -1,3 +1,9 @@
+Tue Sep 14 06:27:15 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* docs/compiler.html:
+
+	  Fix typos.  Change *.i to *.inl.
+
 Tue Sep 14 08:49:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * tao/orbsvcs/tests/AVStreams/Asynch_Three_Stage/input:
