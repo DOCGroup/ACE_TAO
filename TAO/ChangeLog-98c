@@ -1,3 +1,13 @@
+Fri Mar 13 10:34:15 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation.cpp: For return types that are
+	object references, we were using the actual return type and
+	passing its address to the marshaling routine. However, the
+	marshaling routine needs the address of the base class i.e.,
+	CORBA::Object. Due to "public virtual" inheritance all kinds of
+	crazy things happen. So now we had to resort to declaring the
+	return value of type "CORBA::Object_ptr" and things worked fine.
+
 Fri Mar 13 09:57:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbacom.h: use types of known sizes, such as ACE_UINT32
@@ -12,7 +22,7 @@ Thu Mar 12 20:40:09 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
 	* tests/Thruput/TAO/client.cpp:
 	* tests/Thruput/TAO/run_client:
-	* tests/Thruput/TAO/run_server:	
+	* tests/Thruput/TAO/run_server:
 	* tests/Thruput/TAO/run_test: Minor fixes in the scripts and usage
  	message.
 
@@ -20,11 +30,11 @@ Thu Mar 12 18:02:06 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* tao/request.cpp:
 	* tao/typecode.cpp:
-	The is_nil methods of typecode and CORBA had this: 
+	The is_nil methods of typecode and CORBA had this:
 	(CORBA::Boolean) ptr == 0 to test for the nil condition, when we
 	really want this: (CORBA::Boolean) (ptr == 0). This way we cast
 	the result of the expression, and not the pointer, to
-	CORBA::Boolean. 
+	CORBA::Boolean.
 
 Thu Mar 12 17:49:45 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
