@@ -43,7 +43,8 @@
 #include "be_visitor_interface/cdr_op_ch.cpp"
 #include "be_visitor_interface/cdr_op_ci.cpp"
 #include "be_visitor_interface/cdr_op_cs.cpp"
+#include "be_visitor_interface/smart_proxy_ch.cpp"
+#include "be_visitor_interface/smart_proxy_cs.cpp"
 #include "be_visitor_interface/ami_interface_ch.cpp"
-
 
 ACE_RCSID(be, be_visitor_interface, "$Id$")
