@@ -186,6 +186,34 @@ namespace TAO
     return status;
   }
 
+  bool
+  Invocation_Adapter::setup_operation_details_i(TAO_Stub *stub,
+                                                TAO_Operation_Details &details)
+  {
+    bool block = true;
+
+    if (this->type_ == TAO_ONEWAY_INVOCATION)
+      {
+        // Grab the syncscope policy from the ORB.
+        bool has_synchronization = false;
+        Messaging::SyncScope sync_scope;
+
+        stub->orb_core ()->call_sync_scope_hook (stub,
+                                                 has_synchronization,
+                                                 sync_scope);
+        if (has_synchronization && sync_scope == Messaging::SYNC_NONE)
+          {
+            block = false;
+          }
+
+        if (has_synchronization)
+          details.response_flags (CORBA::Octet (sync_scope));
+        else
+          details.response_flags (CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
+      }
+
+    return block;
+  }
 
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
@@ -202,22 +230,8 @@ namespace TAO
     if (is_timeout)
       max_wait_time = &tmp_wait_time;
 
-// bool, need to say here it is must block
-
-// the code here can go to a seperate method, this can then also set the details, which is now done in the invoke_oneway method
-    bool block = true;
-    if (this->type_ == TAO_ONEWAY_INVOCATION)
-    {
-       // Grab the syncscope policy from the ORB.
-       bool has_synchronization = false;
-       Messaging::SyncScope sync_scope;
-
-       stub->orb_core ()->call_sync_scope_hook (stub,
-                                                has_synchronization,
-                                                sync_scope);
-      if (has_synchronization && sync_scope == Messaging::SYNC_NONE)
-      block = false;
-    }
+    bool block = setup_operation_details_i(stub,
+                                           details);
 
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
@@ -258,7 +272,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Adapter::invoke_twoway (TAO_Operation_Details &op,
+  Invocation_Adapter::invoke_twoway (TAO_Operation_Details &details,
                                      CORBA::Object *&effective_target,
                                      Profile_Transport_Resolver &r,
                                      ACE_Time_Value *&max_wait_time
@@ -278,7 +292,7 @@ namespace TAO
 
     TAO::Synch_Twoway_Invocation synch (this->target_,
                                         r,
-                                        op);
+                                        details);
 
     Invocation_Status status =
       synch.remote_twoway (max_wait_time
@@ -300,28 +314,15 @@ namespace TAO
   }
 
   Invocation_Status
-  Invocation_Adapter::invoke_oneway (TAO_Operation_Details &op,
+  Invocation_Adapter::invoke_oneway (TAO_Operation_Details &details,
                                      CORBA::Object *&effective_target,
                                      Profile_Transport_Resolver &r,
                                      ACE_Time_Value *&max_wait_time
                                      ACE_ENV_ARG_DECL)
   {
-    // Grab the syncscope policy from the ORB.
-    bool has_synchronization = false;
-    Messaging::SyncScope sync_scope;
-
-    r.stub ()->orb_core ()->call_sync_scope_hook (r.stub (),
-                                                  has_synchronization,
-                                                  sync_scope);
-
-    if (has_synchronization)
-      op.response_flags (CORBA::Octet (sync_scope));
-    else
-      op.response_flags (CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
-
     TAO::Synch_Oneway_Invocation synch (this->target_,
                                         r,
-                                        op);
+                                        details);
 
     Invocation_Status s =
       synch.remote_oneway (max_wait_time

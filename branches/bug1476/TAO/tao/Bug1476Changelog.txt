@@ -1,3 +1,11 @@
+Fri Jul  2 11:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Adapter.{h,cpp}:
+          Added setup_operation_details_i() which will setup the operation
+          details and determine whether we want to block until a connection
+          is ready or not, this removes duplicated code and we ony determine
+          the settings once in the invocation path.
+
 Thu Jul  1 12:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.{h,cpp}:
