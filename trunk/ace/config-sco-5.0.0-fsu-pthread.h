@@ -27,15 +27,24 @@
 #define ACE_NEEDS_FTRUNCATE
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_MADVISE
+#define	ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
 // Compiler doesn't support static data member templates.
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
+#define	ACE_HAS_NONCONST_MSGSND
+// #define	ACE_LACKS_POSIX_PROTO
+#define	ACE_HAS_SVR4_DYNAMIC_LINKING
+#define ACE_HAS_AUTOMATIC_INIT_FINI
+
+// Platform supports Term Ioctls
+#define ACE_HAS_TERM_IOCTLS
 
 // Platform supports recvmsg and sendmsg.
-//#define ACE_HAS_MSG
+// #define ACE_HAS_MSG
+#define ACE_LACKS_RPC_H
 
 // Compiler/platform contains the <sys/syscall.h> file.
 //#define ACE_HAS_SYSCALL_H
@@ -54,7 +63,7 @@
 //#define ACE_LACKS_T_ERRNO
 
 // Compiler/platform supports poll().
-#define ACE_HAS_POLL
+// #define ACE_HAS_POLL
 
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
@@ -71,7 +80,7 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-#define ACE_HAS_SVR4_GETTIMEOFDAY
+#define ACE_HAS_OSF1_GETTIMEOFDAY
 
 // HP/UX has an undefined syscall for GETRUSAGE...
 //#define ACE_HAS_SYSCALL_GETRUSAGE
@@ -98,11 +107,17 @@
 #define	ACE_HAS_UCONTEXT_T
 
 #define	ACE_NEEDS_SYSTIME_H
+#define	ACE_LACKS_STRCASECMP
 
 // Threads
 #define	ACE_HAS_THREADS
+#if !defined(ACE_MT_SAFE)
+#define ACE_MT_SAFE 1
+#endif
+
 #define	ACE_HAS_PTHREADS
-#define ACE_HAS_FSU_PTHREADS
+#define	ACE_HAS_FSU_PTHREADS
+#define	ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define	ACE_HAS_PTHREAD_T
 #define	ACE_HAS_SIGWAIT
 #define	ACE_HAS_ONEARG_SIGWAIT
@@ -113,11 +128,13 @@
 #define	ACE_HAS_PTHREAD_DSTATE_PTR
 #define	ACE_HAS_PTHREAD_EQUAL
 #define	ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
-#define ACE_LACKS_THREAD_STACK_ADDR
-#define ACE_LACKS_CONDATTR_PSHARED
+#define	ACE_LACKS_THREAD_STACK_ADDR
+#define	ACE_LACKS_CONDATTR_PSHARED
+#define	ACE_LACKS_RWLOCK_T
+#define	ACE_LACKS_SETSCHED
 
 #define	ACE_HAS_POSIX_TIME
-#define ACE_HAS_IP_MULTICAST
+#define	ACE_HAS_IP_MULTICAST
 
 #define PTHREAD_STACK_MIN 1024
 
