@@ -65,15 +65,6 @@ show_chunk (CosNaming::NamingContext_ptr nc,
           ACE_DEBUG ((LM_DEBUG,
                       ": context\n"));
 
-          CosNaming::Name Name;
-          Name.length (1);
-          Name[0].id =
-            CORBA::string_dup (bl[i].binding_name[0].id);
-          Name[0].kind =
-            CORBA::string_dup (bl[i].binding_name[0].kind);
-
-          CORBA::Object_var obj = nc->resolve (Name);
-
           CosNaming::NamingContext_var xc =
             CosNaming::NamingContext::_narrow (obj.in ());
           list_context (xc.in (), level + 1);
@@ -83,7 +74,6 @@ show_chunk (CosNaming::NamingContext_ptr nc,
         {
           if (showIOR)
             {
-              CORBA::Object_var obj = nc->resolve (Name);
               CORBA::String_var str =
                 orb->object_to_string (obj.in (),
                                        ACE_TRY_ENV);

@@ -1,8 +1,9 @@
 Fri Mar 10 12:50:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/nslist/nslist.cpp (show_chunk): Make sure to handle the
-	  case where the "kind" field has a value.  Thanks to Paul
- 	  Calabrese <calabrese_p@ociweb.com> for reporting this.
+	  case where the "kind" field has a value.  Also, removed some
+ 	  redundant code.  Thanks to Paul Calabrese
+ 	  <calabrese_p@ociweb.com> for reporting this.
 
 Fri Mar 10 11:33:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
