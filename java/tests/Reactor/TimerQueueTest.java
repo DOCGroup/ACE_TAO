@@ -26,7 +26,7 @@ public class TimerQueueTest implements EventHandler
 
   public static void main (String args [])
   {
-    TimerQueue tq = new TimerQueue ();
+    TimerQueue tq = new TimerQueue (true);
     TimerQueueTest th1 = new TimerQueueTest ();
     int n = 5;
 
