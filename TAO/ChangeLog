@@ -1,3 +1,29 @@
+Tue Jul 30 08:21:36 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/AMH/Sink_Server/Sink_Server.mpc:
+        * examples/AMI/FL_Callback/FL_Callback.mpc:
+        * examples/Callback_Quoter/Callback_Quoter.mpc:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+        * examples/Event_Comm/Event_Comm.mpc:
+        * examples/Load_Balancing/Load_Balancing.mpc:
+        * examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+        * examples/Logging/Logging.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * examples/PluggableUDP/tests/Basic/Basic.mpc:
+        * examples/PluggableUDP/tests/Performance/Performance.mpc:
+        * examples/PluggableUDP/tests/SimplePerformance/SimplePerformance.mpc:
+        * examples/Quoter/Quoter.mpc:
+        * examples/RTCORBA/Activity/Activity.mpc:
+        * examples/Simple/bank/bank.mpc:
+        * examples/Simple/chat/chat.mpc:
+        * examples/Simple/echo/echo.mpc:
+        * examples/Simple/grid/grid.mpc:
+        * examples/Simple/time-date/time_date.mpc:
+        * examples/Simple/time/time.mpc:
+        * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+
+          Added new mpc files for the TAO examples.
 
 Tue Jul 30 11:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
