@@ -34,6 +34,10 @@
 #include "Service_Context.h"
 #include "Object.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+#include "PICurrent.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
 
@@ -189,11 +193,16 @@ public:
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// Return a reference to the number of interceptors pushed on to
-  /// the current interceptor flow stack.  It is a reference since the
-  /// Portable Interceptor flow stack code must be able to modify this
-  /// value and use that value at a later time without being forced to
-  /// use TSS.
+  /// the current interceptor flow stack.
+  /**
+   * @note It is a reference since the Portable Interceptor flow stack
+   *       code  must be able to modify this value and use that value
+   *       at a later time without being forced to use TSS.
+   */
   size_t &interceptor_count (void);
+
+  /// Return a reference to the "request scope" PICurrent object.
+  TAO_PICurrent_Impl &rs_pi_current (void);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
@@ -269,6 +278,10 @@ private:
   /// The number of interceptors pushed on to the current interceptor
   /// flow stack.
   size_t interceptor_count_;
+
+  /// The "Request Scope Current" (RSC) object, as required by
+  /// Portable Interceptors.
+  TAO_PICurrent_Impl rs_pi_current_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 

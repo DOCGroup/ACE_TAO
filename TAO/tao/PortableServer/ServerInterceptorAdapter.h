@@ -10,8 +10,8 @@
  *   interceptors in tao_idl generated skeletons.
  *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
+ *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
 //=============================================================================
 

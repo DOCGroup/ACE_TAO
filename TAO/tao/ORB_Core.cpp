@@ -156,6 +156,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     refcount_ (1),
     policy_factory_registry_ (),
 #if (TAO_HAS_INTERCEPTORS == 1)
+    pi_current_ (0),
     client_request_interceptors_ (),
     server_request_interceptors_ (),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

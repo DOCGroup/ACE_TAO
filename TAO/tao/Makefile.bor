@@ -139,6 +139,8 @@ OBJFILES = \
 	$(OBJDIR)\Object_Ref_Table.obj \
 	$(OBJDIR)\OctetSeqC.obj \
 	$(OBJDIR)\Parser_Registry.obj \
+	$(OBJDIR)\PICurrent.obj \
+	$(OBJDIR)\PICurrent_ORBInitializer.obj \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \

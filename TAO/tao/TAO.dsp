@@ -667,6 +667,14 @@ SOURCE=.\Parser_Registry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PICurrent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PICurrent_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pluggable.cpp
 # End Source File
 # Begin Source File
@@ -1443,6 +1451,14 @@ SOURCE=.\Parser_Registry.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PICurrent.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PICurrent_ORBInitializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pluggable.h
 # End Source File
 # Begin Source File
@@ -2076,6 +2092,10 @@ SOURCE=.\params.i
 # Begin Source File
 
 SOURCE=.\Parser_Registry.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PICurrent.inl
 # End Source File
 # Begin Source File
 

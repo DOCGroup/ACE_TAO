@@ -45,3 +45,9 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Object_ptr obj)
   // Store the forward reference in the TAO_ServerRequest object.
   this->server_request_.forward_location (obj);
 }
+
+ACE_INLINE TAO_ServerRequest &
+TAO_ServerRequestInfo::server_request (void)
+{
+  return this->server_request_;
+}

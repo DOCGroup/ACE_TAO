@@ -1,0 +1,26 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file   test.idl
+ *
+ * $Id$
+ *
+ * Simple IDL file to test PortableInterceptor::Current
+ * support.
+ *
+ * @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+module PICurrentTest
+{
+
+  interface test
+  {
+    void invoke_me ();
+
+    oneway void shutdown ();
+  };
+
+};

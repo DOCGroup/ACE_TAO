@@ -4,9 +4,12 @@
 
 #include "ServerRequestInfo.h"
 #include "POA.h"
+#include "POA_Policy_Set.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/PolicyC.h"
+#include "tao/ORB_Core.h"
+
 
 ACE_RCSID (TAO_PortableServer,
            ServerRequestInfo,
@@ -172,17 +175,27 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Any *
-TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId,
+TAO_ServerRequestInfo::get_slot (PortableInterceptor::SlotId id,
                                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  // Retrieve the total number of assigned slots from the PICurrent.
+  // No TSS access is incurred.
+  TAO_PICurrent *pi_current =
+    this->server_request_.orb_core ()->pi_current ();
+
+  if (pi_current == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  pi_current->check_validity (id, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Retrieve the request scope PICurrent object.
+  TAO_PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
+
+  return rsc.get_slot (id, ACE_TRY_ENV);
+
 }
 
 IOP::ServiceContext *
@@ -305,9 +318,9 @@ TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
       const PortableServer::ObjectId &id =
         this->servant_upcall_->user_id ();
 
-      CORBA::OctetSeq *obj_id = 0;
+      CORBA::OctetSeq *tmp = 0;
 
-      ACE_NEW_THROW_EX (obj_id,
+      ACE_NEW_THROW_EX (tmp,
                         CORBA::OctetSeq,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
@@ -315,6 +328,8 @@ TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
+
+      CORBA::OctetSeq_var obj_id = tmp;
 
       // @@ It would be nice to avoid this copy.  However, we can't be
       //    sure if the octet sequence will out live the POA from
@@ -329,7 +344,7 @@ TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
       CORBA::Octet *buffer = obj_id->get_buffer ();
       ACE_OS_String::memcpy (buffer, id.get_buffer (), len);
 
-      return obj_id;
+      return obj_id._retn ();
     }
 
   ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
@@ -354,34 +369,88 @@ TAO_ServerRequestInfo::target_most_derived_interface (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Implemented in the generated skeleton.
+
   ACE_THROW_RETURN (CORBA::NO_RESOURCES (1, CORBA::COMPLETED_NO), 0);
 }
 
 CORBA::Policy_ptr
-TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType,
+TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
+  // @@ Currently, it is only possible to retrieve the server policy
+  //    only during and after the receive_request() interception
+  //    point, i.e. within the skeleton.
+  if (this->servant_upcall_ != 0)
+    {
+      TAO_POA_Policy_Set &policies =
+        this->servant_upcall_->poa ().policies ();
+
+      // @@ This brain damaged implementation exists due to the fact
+      //    neither TAO_POA nor TAO_POA_Policy_Set exposes any methods
+      //    useful for retrieving a given Policy in the POA's
+      //    PolicyList.  So, I use the lame interfaces for now.
+      //          -Ossama
+      const CORBA::ULong num_policies = policies.num_policies ();
+      for (CORBA::ULong i = 0; i < num_policies; ++i)
+        {
+          // @@ This incurs at least two locks per loop iteration due
+          //    to the reference counting found within the policy
+          //    object reference!!!
+          CORBA::Policy_var policy = policies.get_policy_by_index (i);
+
+          CORBA::PolicyType ptype = policy->policy_type (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+          if (ptype == type)
+            return policy._retn ();
+        }
+
+      // No policy matching the given PolicyType was found.
+      ACE_THROW_RETURN (CORBA::INV_POLICY (TAO_OMG_VMCID | 3,
+                                           CORBA::COMPLETED_NO),
+                        CORBA::Policy::_nil ());
+    }
+
+  // @@ Technically, we shouldn't be throwing this exception since
+  //    this method should be valid in all server side request
+  //    interception points.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+                                          CORBA::COMPLETED_NO),
                     CORBA::Policy::_nil ());
 }
 
 void
-TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId,
-                                 const CORBA::Any &,
+TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
+                                 const CORBA::Any &data,
                                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::InvalidSlot))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (
-               CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
-                 ENOTSUP),
-               CORBA::COMPLETED_NO));
+  // Retrieve the total number of assigned slots from the PICurrent
+  // object.  No TSS access is incurred.
+  TAO_PICurrent *pi_current =
+    this->server_request_.orb_core ()->pi_current ();
+
+  if (pi_current == 0)
+    ACE_THROW (CORBA::INTERNAL ());
+
+  pi_current->check_validity (id, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Retrieve the "request scope current" (RSC).
+  TAO_PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
+
+  // If the RSC was logically copied to the TSC, then deep copy the
+  // contents of the RSC to the TSC before modifying the RSC.  The TSC
+  // should not be altered by modifications to the RSC.
+  TAO_PICurrent_Impl *tsc = rsc.pi_peer ();
+  if (tsc != 0)
+    tsc->copy (rsc, 1);  // Deep copy
+    
+  rsc.set_slot (id, data, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 CORBA::Boolean
@@ -389,6 +458,8 @@ TAO_ServerRequestInfo::target_is_a (const char * /* id */,
                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Implemented in the generated skeleton.
+
   ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
                                          CORBA::COMPLETED_NO), 0);
 }

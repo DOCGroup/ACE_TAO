@@ -128,6 +128,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
+  /// Retrieve data from the "request scope" PICurrent object.
   virtual CORBA::Any * get_slot (
       PortableInterceptor::SlotId id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -188,6 +189,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Insert data into the "request scope" PICurrent object.
   virtual void set_slot (
       PortableInterceptor::SlotId id,
       const CORBA::Any & data,
@@ -235,6 +237,9 @@ public:
   void forward_reference (CORBA::Object_ptr obj);
 
   //@}
+
+  /// Return a reference to the underlying TAO_ServerRequest object.
+  TAO_ServerRequest &server_request (void);
 
 protected:
 

@@ -388,6 +388,12 @@ module PortableInterceptor
       exception.  Otherwise it will be propagated to the client.  This
       change also has the added benefit of reducing the stub/skeleton
       footprint, particularly for IDL with many interfaces.
+  <li>Implemented <CODE>PortableInterceptor::Current</CODE> interface,
+      <CODE>ORBInitInfo::allocate_slot_id</CODE>,
+      <CODE>ClientRequestInfo::get_slot</CODE>,
+      <CODE>ServerRequestInfo::get_slot</CODE>,
+      <CODE>ServerRequestInfo::set_slot</CODE>, and
+      <CODE>ServerRequestInfo::get_server_policy</CODE> methods.
 </ul>
 
 <hr><P>
@@ -397,8 +403,6 @@ module PortableInterceptor
       optimization to the interceptor chain; the <CODE>direct</CODE>
       collocation optimization will not go through the interceptor
       chain.
-  <li>Implement the <CODE>PortableInterceptor::Current</CODE>
-      interface.  Useful for passing data between interceptors.
   <li>The <CODE>send_poll</CODE> request interception point
       implementation will most likely be deferred until TII is
       supported in TAO.
