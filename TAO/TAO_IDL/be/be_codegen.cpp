@@ -206,7 +206,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                 idl_global->included_idl_files ()[j];
 
           // Make a String out of it.
-          String idl_name_str = idl_name;
+          UTL_String idl_name_str = idl_name;
 
           // Make sure this file was actually got included, not
           // ignored by some #if defined compiler directive.
@@ -388,7 +388,7 @@ TAO_CodeGen::start_server_header (const char *fname)
                 idl_global->included_idl_files ()[j];
 
               // String'ifying the name.
-              String idl_name_str (idl_name);
+              UTL_String idl_name_str (idl_name);
 
               const char* server_hdr =
                 IDL_GlobalData::be_get_server_hdr (&idl_name_str, 1);
@@ -716,7 +716,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
                 idl_global->included_idl_files ()[j];
 
               // Stringifying the name.
-              String idl_name_str (idl_name);
+              UTL_String idl_name_str (idl_name);
 
               const char* implementation_hdr =
                 IDL_GlobalData::be_get_implementation_hdr (&idl_name_str, 1);

@@ -357,7 +357,7 @@ be_generator::create_expr(unsigned long l)
  * Create a BE_Expression node denoting a char * (encapsulated as a String)
  */
 AST_Expression *
-be_generator::create_expr (String *s)
+be_generator::create_expr (UTL_String *s)
 {
   return (AST_Expression *) new be_expression (s);
 }

@@ -45,7 +45,7 @@ typedef union {
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
 
-  String		*sval;		/* String value		*/
+  UTL_String		*sval;		/* String value		*/
   char			*strval;	/* char * value		*/
   Identifier		*idval;		/* Identifier		*/
   UTL_IdList		*idlist;	/* Identifier list	*/

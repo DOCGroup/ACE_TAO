@@ -1,3 +1,39 @@
+Sun Jun  6 20:25:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_expression.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/driver/drv_preproc.cpp:
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/include/utl_error.h:
+	* TAO_IDL/include/utl_string.h:
+	* TAO_IDL/include/utl_strlist.h:
+	* TAO_IDL/util/utl_error.cpp:
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/util/utl_string.cpp:
+	* TAO_IDL/util/utl_strlist.cpp:
+	  Obliterated any references to 'String' this was just a macro
+	  that expanded to the UTL_String class, but was an endless sort
+	  of confusion with just a typedef for 'char*'
+	  Also cleaned up the use of UTL_Strings in the idl_global
+	  interface.
+	  This seems to have put the IDL compiler into usable state
+	  again.
+
 Sun Jun  6 18:55:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp:

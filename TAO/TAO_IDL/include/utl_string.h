@@ -75,11 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-#ifndef String
-#define String  UTL_String
-#endif  // String
-
-class   UTL_String
+class UTL_String
 {
   // =TITLE
   //  UTL_String

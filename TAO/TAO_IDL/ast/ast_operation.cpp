@@ -249,7 +249,7 @@ AST_Operation::dump(ostream &o)
   UTL_ExceptlistActiveIterator *ei;
   AST_Decl		    *d;
   AST_Exception		    *e;
-  String		    *s;
+  UTL_String		    *s;
 
   if (pd_flags == OP_oneway)
     o << "oneway ";
