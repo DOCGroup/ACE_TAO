@@ -24,6 +24,7 @@ $sleeptime = 2;
 
 # other variables
 
+$status = 0;
 $n = 1;
 $leave = 1;
 $ior = 0;
@@ -90,12 +91,17 @@ sub generic_factory
 
 sub client
 {
-  my $exe = $EXEPREFIX."client$EXE_EXT $other -l $debug $cm ".
+  my $exe = $EXEPREFIX."client$EXE_EXT";
+  my $args2 = "$other -l $debug $cm ".
             "-ORBnameserviceior $ior -ORBsvcconf $c_conf";
-
   for ($j = 0; $j < $n; $j++)
   {
-    system ($exe);
+    $client_ = Process::Create($exe, $args2);
+    if ( $client_->TimedWait (60) ) {
+      print STDERR "ERROR: a client has timedout\n";
+      $status = 1;
+      $client_->Kill (); $client_->TimedWait (1);
+    }
   }
 }
 
@@ -107,7 +113,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test [-n num] [-leave] [-onewin]"
+      print "run_test [-n num] [-leave] [-onewin]".
 	"[-twowin] [-d] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
@@ -232,12 +238,19 @@ client ();
 
 if ($leave)
 {
-  $GF->Kill ();
-  $FF->Kill ();
-  $SV->Kill ();
-  $LC->Kill ();
-  $NS->Kill ();
+  $GF->Kill (); $GF->TimedWait (1);
+  $FF->Kill (); $FF->TimedWait (1);
+  $SV->Kill (); $SV->TimedWait (1);
+  $LC->Kill (); $LC->TimedWait (1);
+  $NS->Kill (); $NS->TimedWait (1);
 }
 
 
 unlink $nsiorfile;
+
+if ($status != 0)
+{
+    exit 1;
+}
+
+exit 0;
