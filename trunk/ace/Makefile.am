@@ -455,6 +455,7 @@ TEMPLATE_FILES = \
 
 HEADER_FILES = \
   ACE.h \
+  ACE_export.h \
   ARGV.h \
   ATM_Acceptor.h \
   ATM_Addr.h \
@@ -701,11 +702,12 @@ HEADER_FILES = \
   XTI_ATM_Mcast.h \
   XtReactor.h \
   config.h \
-  inc_user_config.h \
+  config-all.h \
   iosfwd.h \
   post.h \
   pre.h \
   streams.h \
+  svc_export.h \
   ws2tcpip.h
 ## Make sure config.h is in the above header list!
 
