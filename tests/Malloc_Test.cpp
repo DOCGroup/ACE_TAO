@@ -54,14 +54,10 @@ static MALLOC *
 myallocator (const void *base_addr = 0)
 {
   static ACE_MMAP_Memory_Pool_Options options (base_addr);
-  static MALLOC *static_allocator;
-
-  ACE_NEW_RETURN (static_allocator,
-                  MALLOC ("test_file",
-                          "test_lock",
-                          &options),
-                  0);
-  return static_allocator;
+  static MALLOC static_allocator ("test_file",
+                                  "test_lock",
+                                  &options);
+  return &static_allocator;
 }
 
 static Test_Data *
@@ -81,7 +77,6 @@ initialize (MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
                         0);
-
   allocator->free (gap);
 
   ACE_ALLOCATOR_RETURN (ptr,
@@ -181,18 +176,22 @@ child (void)
 {
   void *bar;
   // Perform "busy waiting" here until the parent stores data under a
-  // new name called "bar" in <ACE_Malloc>.  This isn't really a good
-  // design -- it's just to test that synchronization is working
-  // across processes via <ACE_Malloc>.
-  while (myallocator ()->find ("bar",
-                               bar) == -1)
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("(%P) spinning in child!\n")));
+  // new name called "bar" in <ACE_Malloc>.  This isn't a good design
+  // -- it's just to test that synchronization is working across
+  // processes via <ACE_Malloc>.
+  for (ACE_Time_Value timeout (0, 1000 * 10);
+       myallocator ()->find ("bar",
+                             bar) == -1;
+       )
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P) sleeping for 10 milliseconds!\n")));
+      ACE_OS::sleep (timeout);
+    }
 
   print ("child",
          ACE_reinterpret_cast (Test_Data *,
                                bar));
-
   return 0;
 }
 
@@ -204,7 +203,7 @@ main (int argc, ASYS_TCHAR *[])
       ACE_START_TEST (ASYS_TEXT ("Malloc_Test"));
       ACE_INIT_LOG (ASYS_TEXT ("Malloc_Test-child"));
 
-      // No arguments means we're the initial test.
+      // No arguments means we're the parent process.
       ACE_Process_Options options (1);
       options.command_line (ACE_TEXT (".") 
                             ACE_DIRECTORY_SEPARATOR_STR
@@ -212,14 +211,16 @@ main (int argc, ASYS_TCHAR *[])
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" run_as_test"));
 
-      Test_Data *data = initialize (myallocator (PARENT_BASE_ADDR));
+      MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
+      Test_Data *data = initialize (myalloc);
       ACE_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) data allocated at address %x in parent\n"),
+                  ASYS_TEXT ("(%P) PARENT allocator at = %x, data allocated at %x\n"),
+                  myalloc,
                   data));
-
-      int result = myallocator ()->bind ("foo", data);
+      myalloc->dump ();
+      int result = myalloc->bind ("foo", data);
       ACE_ASSERT (result != -1);
 
       ACE_Process p;
@@ -229,8 +230,9 @@ main (int argc, ASYS_TCHAR *[])
       parent (data);
 
       // Synchronize on the exit of the child.
-      p.wait ();
-      myallocator ()->remove ();
+      result = p.wait ();
+      ACE_ASSERT (result != -1);
+      myalloc->remove ();
       ACE_END_TEST;
       return 0;
     }
@@ -240,14 +242,15 @@ main (int argc, ASYS_TCHAR *[])
       ACE_APPEND_LOG (ASYS_TEXT ("Malloc_Test-child"));
 
       void *data = 0;
-      int result = myallocator (CHILD_BASE_ADDR)->find ("foo",
-                                                        data);
+      MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
+      int result = myalloc->find ("foo", data);
       ACE_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) data allocated at address %x in child\n"),
+                  ASYS_TEXT ("(%P) CHILD allocator at = %x, data allocated at %x\n"),
+                  myalloc, 
                   data));
-
+      myalloc->dump ();
       child ();
       ACE_END_LOG;
       return 0;

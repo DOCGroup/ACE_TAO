@@ -10327,7 +10327,7 @@ ACE_INLINE int
 ACE_OS::kill (pid_t pid, int signum)
 {
   ACE_TRACE ("ACE_OS::kill");
-#if defined (ACE_WIN32) || defined (CHORUS) || defined(ACE_PSOS)
+#if defined (ACE_WIN32) || defined (CHORUS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);

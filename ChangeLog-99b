@@ -1,5 +1,12 @@
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Malloc_Test.cpp: Improved the test by printing out 
+	  additional diagnostic information.  Also validated that it works
+ 	  when ACE_DEFAULT_BASE_ADDR == 0 on Solaris using SunCC (with
+ 	  purify) and EGCS.
+
+	* ace/Malloc: Added a dump() method to ACE_Malloc_Header.
+
 	* ace/Process_Manager.cpp (ACE_Process_Descriptor): Changed
 	  a -1 to a 0 to prevent a compiler warning.  Thanks to
 	  David Levine and DEC UNIX for reporting this.

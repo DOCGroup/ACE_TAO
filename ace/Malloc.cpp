@@ -24,13 +24,24 @@ ACE_Allocator *ACE_Allocator::allocator_ = 0;
 int ACE_Allocator::delete_allocator_ = 0;
 
 void
+ACE_Malloc_Header::dump (void) const
+{
+  ACE_TRACE ("ACE_Malloc_Header::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ns_.next_block = %x"), (ACE_Malloc_Header *) this->s_.next_block_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ns_.size = %d\n"), this->s_.size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+void
 ACE_Control_Block::dump (void) const
 {
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ((ACE_Name_Node *) this->name_head_)->dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
