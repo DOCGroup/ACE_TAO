@@ -503,10 +503,5 @@ private:
 
 };
 
-#if defined (ACE_TURN_NOMINMAX_OFF)
-#undef NOMINMAX
-#undef ACE_TURN_NOMINMAX_OFF
-#endif
-
 #endif /* ACE_WIN32 */
 #endif /* ACE_REGISTRY_H */

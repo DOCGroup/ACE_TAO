@@ -756,8 +756,19 @@ struct ACE_cond_t
   long waiters_;
   // Number of waiting threads.
 
+  ACE_thread_mutex waiters_lock_;
+  // Serialize access to the waiters count.
+
   ACE_sema_t sema_;
   // Queue up threads waiting for the condition to become signaled.
+  
+  ACE_event_t waiters_done_;
+  // An auto reset event used by the broadcast/signal thread to wait
+  // for the waiting thread(s) to wake up and get a chance at the
+  // semaphore.
+
+  size_t was_broadcast_;
+  // Keeps track of whether we were broadcasting or just signaling.
 };
 
 struct ACE_rwlock_t
@@ -2180,6 +2191,7 @@ public:
                         LPCTSTR name = 0, void *arg = 0,
                         int max = 0x7fffffff);
   static int sema_post (ACE_sema_t *s);
+  static int sema_post (ACE_sema_t *s, size_t release_count);
   static int sema_trywait (ACE_sema_t *s);
   static int sema_wait (ACE_sema_t *s);
 
