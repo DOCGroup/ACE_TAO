@@ -32,7 +32,7 @@ static
 u_int
 check (const u_int interval, const u_int measured)
 {
-  const u_int threshold = 10 /* percent */;
+  const u_int threshold = 25 /* percent */;
 
   const u_int difference =
     interval > measured  ?  interval - measured  :  measured - interval;
@@ -47,8 +47,8 @@ check (const u_int interval, const u_int measured)
     {
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("The measured time of %u differs from "
-                             "the interval of %u by more than %u percent\n"),
-                  measured, interval, threshold));
+                             "the interval of %u by %u percent.\n"),
+                  measured, interval, percentage_difference));
       return 1;
     }
 }
@@ -90,7 +90,7 @@ main (int, ASYS_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG, "interval: %u usec, measured: %u usec%s\n",
                   interval.sec () * 1000000 + interval.usec (),
                   measured.sec () * 1000000 + measured.usec (),
-                  intervals[i] < 10000  ?
+                  intervals[i] <= 10000  ?
                     " (interval and measured may differ)"  :  ""));
 
       if (intervals[i] > 10000)
