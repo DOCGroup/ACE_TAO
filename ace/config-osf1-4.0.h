@@ -63,6 +63,7 @@
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
+#   define ACE_HAS_USING_KEYWORD
 
 //    9: nested comment not allowed.  (/usr/include/pdsc.h!) (nestcomment)
 //  177: variable was declared but never referenced (declbutnotref)
@@ -101,8 +102,10 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
+# define ACE_HAS_USING_KEYWORD
 #elif defined (__KCC)
 # include "ace/config-kcc-common.h"
+#else
 # error unsupported compiler on Digital Unix
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ && !_KCC */
 

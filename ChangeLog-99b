@@ -1,20 +1,25 @@
+Thu Aug 12 20:54:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1-4.0.h: added ACE_HAS_USING_KEYWORD
+          for cxx and Rational compilers. [Bug 163]
+
 Thu Aug 12 20:47:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cached_Accept_Conn_Test.cpp:
-	  Made the <debug> and <connection_accepted> variables global
-	  instead of static, because otherwise Sun/CC automatic template
-	  instantiation cannot find them at link time.  The variables are
-	  used in template code that is defined and used in the same file, 
-	  but Sun/CC does not seem to understand that.
+        * tests/Cached_Accept_Conn_Test.cpp:
+          Made the <debug> and <connection_accepted> variables global
+          instead of static, because otherwise Sun/CC automatic template
+          instantiation cannot find them at link time.  The variables are
+          used in template code that is defined and used in the same file,
+          but Sun/CC does not seem to understand that.
 
 Thu Aug 12 17:14:35 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Changed typedef of WChar to ACE_UINT16. The CDR operations
-	  are already using write_2, read_2 and SHORT_SIZE, and
-	  in the process of implementing wchars and wstrings in
-	  IDL, it's going to be important to optimize for the
-	  Unicode common case.
+        * ace/OS.h:
+          Changed typedef of WChar to ACE_UINT16. The CDR operations
+          are already using write_2, read_2 and SHORT_SIZE, and
+          in the process of implementing wchars and wstrings in
+          IDL, it's going to be important to optimize for the
+          Unicode common case.
 
 Thu Aug 12 16:24:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
