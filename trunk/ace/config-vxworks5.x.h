@@ -28,16 +28,23 @@
 #   define ACE_MAIN ace_main
 # endif /* ! ACE_MAIN */
 
-  // Even though the documentation suggests that g++/VxWorks 5.3.1
-  // (Tornado 1.0.1) supports long long, Wind River tech support says
-  // that it doesn't.  It causes undefined symbols for math functions.
-# define ACE_LACKS_LONGLONG_T
-
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
+// An explicit check for Tornado 2.1, which had very limited release.
+// See include/makeinclude/platform_vxworks5.x_g++.GNU for details
+// on version conventions used by ACE for VxWorks.
 # if defined (ACE_VXWORKS) && ACE_VXWORKS == 0x542
+    // Older versions of Tornado accidentally omitted math routines from
+    // the link library to support long long arithmetic. These could be
+    // found and used from another library in the distro.
+    // Recent versions of Tornado include these symbols, so we no longer
+    // have a problem.
+#   define ACE_LACKS_LONGLONG_T
 #   define ACE_LACKS_CLEARERR
+    // This is for inofficial(!) gcc2.96 shipped with Tornado2.1.0 for
+    // Hitachi SuperH platform.
+#   define ACE_LACKS_AUTO_PTR
 # endif /* ACE_VXWORKS == 0x542 */
 
 #elif defined (ghs)
