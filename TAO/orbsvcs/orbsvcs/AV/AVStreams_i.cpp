@@ -1909,28 +1909,58 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec,
     {
       for (u_int i=0;i<flow_spec.length ();i++)
         {
-          TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
-          for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
-               begin != end; ++begin)
-            {
-              TAO_FlowSpec_Entry *entry = *begin;
-              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
-                {
-                  entry->protocol_object ()->destroy ();
-                  break;
-                }
-            }
+          {
+            TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
+            for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
+                 begin != end; ++begin)
+              {
+                TAO_FlowSpec_Entry *entry = *begin;
+                if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
+                  {
+                    if (entry->protocol_object ())
+                      entry->protocol_object ()->destroy ();
+                    break;
+                  }
+              }
+          }
+          {
+            TAO_AV_FlowSpecSetItor end = this->reverse_flow_spec_set.end ();
+            for (TAO_AV_FlowSpecSetItor begin = this->reverse_flow_spec_set.begin ();
+                 begin != end; ++begin)
+              {
+                TAO_FlowSpec_Entry *entry = *begin;
+                if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
+                  {
+                    if (entry->protocol_object ())
+                      entry->protocol_object ()->destroy ();
+                    break;
+                  }
+              }
+          }
         }
     }
   else
     {
-      TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
-      for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
-           begin != end; ++begin)
-        {
-          TAO_FlowSpec_Entry *entry = *begin;
-          entry->protocol_object ()->destroy ();
-        }
+      {
+        TAO_AV_FlowSpecSetItor end = this->forward_flow_spec_set.end ();
+        for (TAO_AV_FlowSpecSetItor begin = this->forward_flow_spec_set.begin ();
+             begin != end; ++begin)
+          {
+            TAO_FlowSpec_Entry *entry = *begin;
+            if (entry->protocol_object ())
+              entry->protocol_object ()->destroy ();
+          }
+      }
+      {
+        TAO_AV_FlowSpecSetItor end = this->reverse_flow_spec_set.end ();
+        for (TAO_AV_FlowSpecSetItor begin = this->reverse_flow_spec_set.begin ();
+             begin != end; ++begin)
+          {
+            TAO_FlowSpec_Entry *entry = *begin;
+            if (entry->protocol_object ())
+              entry->protocol_object ()->destroy ();
+          }
+      }
     }
 
   // Make the upcall into the app

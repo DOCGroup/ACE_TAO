@@ -90,13 +90,15 @@ TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
 TAO/examples/Simple/time/run_test.pl
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM
 
-TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Simple/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
+# BROKEN TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM

@@ -11,8 +11,8 @@
 
 LDLIBS     = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
-SERVER_OBJS = server.o
-CLIENT_OBJS = ftp.o
+RECEIVER_OBJS = receiver.o
+SENDER_OBJS = sender.o
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -20,11 +20,11 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-FILES = ftp server
+FILES = sender receiver
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
-BIN2 = server ftp
+BIN2 = receiver sender
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
@@ -50,17 +50,10 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
             -I$(TAO_ROOT)
 
-#server:$(addprefix $(VDIR),$(SERVER_OBJS))
-#	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-#ftp:$(addprefix $(VDIR),$(CLIENT_OBJS))
-#    $(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
-.obj/ftp.o .obj/ftp.so .shobj/ftp.o .shobj/ftp.so: ftp.cpp ftp.h $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/sender.o .obj/sender.so .shobj/sender.o .shobj/sender.so: sender.cpp sender.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -494,7 +487,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
+.obj/receiver.o .obj/receiver.so .shobj/receiver.o .shobj/receiver.so: receiver.cpp receiver.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \

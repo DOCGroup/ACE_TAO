@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -9,87 +10,103 @@
 //    distributer.h
 //
 // = DESCRIPTION
-//    Process to receive data from the sender and send it to the receiver
+//    Process to receive data from the sender and send it to the
+//    receiver.
 //
 // = AUTHOR
 //    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef DISTRIBUTER_H
-#define DISTRIBUTER_H
-
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
-class Distributer_Callback : public TAO_AV_Callback
+class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
   // = TITLE
-  //    Defines a class for the distributer application callback
-  //    for receiving data.
+  //    Application defined callback object.
   //
   // = DESCRIPTION
-  //    This class overides the methods of the TAO_AV_Callback so the 
-  //    AVStreams can make upcalls to the application.
-  
+  //    AVStreams calls this class when data shows up from a sender.
 public:
 
+  Distributer_Receiver_Callback (void);
+  // Constructor.
+
+  // Method that is called when there is data to be received from a
+  // sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      const ACE_Addr &peer_address);
-  // Method that is called when there is data to be received from the sender
 
+  // Called when the sender is done sending data and wants to close
+  // down the connection.
   int handle_destroy (void);
-  // Called when the sender has finished reading the file and wants
-  // to close down the connection.
-  
-  void flowname (const ACE_CString &flowname);
-  ACE_CString flowname (void);
-  // Accessor methods to set and get the flowname corresponding
-  // to the callback
-  
-
-protected:
-  ACE_CString flowname_;
-
-};
-
-class Distributer_StreamEndPoint : public TAO_Client_StreamEndPoint
-{
-  // = TITLE
-  //    Defines the distributer aplication stream endpoint
-  //
-  // = DESCRIPTION
-  //    This is the class that overrides the tao_server_endpoint to handle
-  //    pre and post connect processing.
-public:
-
-  
-  int set_protocol_object (const char *,
-			   TAO_AV_Protocol_Object *object);
-  // Store the reference to the protocol object corresponding
-  // to the transport
-  
-  int get_callback (const char *flowname,
-                    TAO_AV_Callback *&callback);
-  // Create the distributer application sender callback.
-  
 
 private:
-  Distributer_Callback callback_;
-  // Reference to the application callback.
+  int frame_count_;
+  // Count of the frames passing through us.
 };
+
+class Distributer_Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
+{
+  // = TITLE
+  //    Application defined stream endpoint object.
+  //
+  // = DESCRIPTION
+  //    AVStreams calls this class during connection setup.
+public:
+  // Create a receiver application callback.
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback);
+
+private:
+  Distributer_Receiver_Callback callback_;
+  // Receiver application callback.
+};
+
+class Distributer_Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
+{
+  // = TITLE
+  //    Defines a sender stream endpoint.
+public:
+  int get_callback (const char *flowname,
+                    TAO_AV_Callback *&callback);
+  // Create the application callback and return its handle to
+  // AVStreams for further application callbacks.
+
+  int set_protocol_object (const char *flowname,
+                           TAO_AV_Protocol_Object *object);
+  // Set protocol object corresponding to the transport protocol
+  // chosen.
+
+protected:
+  TAO_AV_Callback callback_;
+  // Application callback.
+};
+
+typedef TAO_AV_Endpoint_Reactive_Strategy_A
+          <Distributer_Sender_StreamEndPoint,
+           TAO_VDev,
+           AV_Null_MediaCtrl>
+        SENDER_ENDPOINT_STRATEGY;
+
+typedef TAO_AV_Endpoint_Reactive_Strategy_B
+          <Distributer_Receiver_StreamEndPoint,
+           TAO_VDev,
+           AV_Null_MediaCtrl>
+        RECEIVER_ENDPOINT_STRATEGY;
 
 class Distributer
 {
   // = TITLE
-  //    Defines the distributer application class.
-  // 
+  //    Distributer Application.
+  //
   // = DESCRIPTION
-  //    The distributer progarm that acts as intermediate receiver
-  //    that receives data from the sender process.
+  //    The distributer is the intermediate receiver that receives
+  //    data from the sender and forwards to a receiver.
 public:
   Distributer (void);
   // Constructor
@@ -102,42 +119,38 @@ public:
             CORBA::Environment &);
   // Initialize data components.
 
-  int set_sender_protocol_object  (TAO_AV_Protocol_Object *object);
-  TAO_AV_Protocol_Object* get_sender_protocol_object (void);
-  // Accessor methods to set/get the protocol object of the receiver/sender
-  //  process
-
-  int bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-			const ACE_CString &mmdevice_name,
-			CORBA::Environment &ACE_TRY_ENV);
+  void bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
+                         const ACE_CString &mmdevice_name,
+                         CORBA::Environment &ACE_TRY_ENV);
   // Resolve the reference of the mmdevice from the naming service.
 
-  TAO_StreamCtrl* get_receiver_streamctrl (void);
+  TAO_StreamCtrl *receiver_streamctrl (void);
   // Get the stream control of the receiver
 
-  void stream_created (void);
-  // Called when stream created
+  int sender_protocol_object  (TAO_AV_Protocol_Object *object);
+  TAO_AV_Protocol_Object *sender_protocol_object (void);
+  // Accessor methods to set/get our sender protocol object
 
-  void stream_destroyed (void);
-  // Called when stream destroyed
-
-  int parse_args (int argc,
-                  char **argv);
-
-  int done (void);
-  // Return the flag that suggests orb shutdown.
+  // Flag to know when we are done.
+  int done (void) const;
+  void done (int);
 
 protected:
-  TAO_Naming_Client my_naming_client_;
-  // The Naming Service Client.
+  TAO_Naming_Client naming_client_;
+  // The Naming Service client.
 
-  TAO_AV_Endpoint_Reactive_Strategy_A 
-  <Distributer_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> a_endpoint_strategy_;
-  // The reactive strategy of the distributer receiver.
+  SENDER_ENDPOINT_STRATEGY sender_endpoint_strategy_;
+  // The sender endpoint strategy.
 
-  TAO_MMDevice* distributer_mmdevice_;
+  RECEIVER_ENDPOINT_STRATEGY receiver_endpoint_strategy_;
+  // The receiver endpoint strategy.
+
+  TAO_MMDevice* distributer_receiver_mmdevice_;
   // The distributer receiver multimedia device
-  
+
+  TAO_MMDevice* distributer_sender_mmdevice_;
+  // The distributer receiver multimedia device
+
   AVStreams::MMDevice_var receiver_mmdevice_;
   // The receiver MMDevice.
 
@@ -147,38 +160,12 @@ protected:
   TAO_AV_Protocol_Object *sender_protocol_object_;
   // The sender protocol object
 
-  int count_;
-  // Number of frames sent.
-  
-  ACE_CString sender_address_;
-  // Address of the  distributer host machine or a multicast address 
+  TAO_StreamCtrl* receiver_streamctrl_;
+  // Stream controller for the receivers
 
-  ACE_CString receiver_address_;
-  // Address of the  distributer host machine or a multicast address 
-  
   ACE_CString protocol_;
   // Selected protocol - default is UDP
 
-  TAO_StreamCtrl* receiver_streamctrl_;
-  // Video stream controller for the stream between receivers and distributer
-
-  int stream_count_;
-  // Number of active streams. When a stream is disconnected this 
-  // count is decremented.
-
   int done_;
-  // Flag to indicate orb shutdown
-
-  ACE_CString host_sender_port_;
-  //Distributer sender streamendpoint port
-
-  ACE_CString host_receiver_port_;
-  //Distributer receiver streamendpoint port
+  // Flag to know when we are done.
 };
-
-typedef ACE_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
-
-#endif /*DISTRIBUTER_H*/
-
-
-

@@ -11,72 +11,71 @@ int
 Sender_StreamEndPoint::get_callback (const char *,
                                      TAO_AV_Callback *&callback)
 {
-  // Create and return the sender application callback to AVStreams
+  // Create and return the client application callback and return to the AVStreams
   // for further upcalls.
   callback = &this->callback_;
-
-  // Get the stream controller for this stream.
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Any_ptr streamctrl_any =
-        this->get_property_value ("Related_StreamCtrl",
-                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      AVStreams::StreamCtrl_ptr streamctrl;
-      *streamctrl_any >>= streamctrl;
-
-      // Store reference to the streamctrl
-      SENDER::instance ()->streamctrl (streamctrl);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender_StreamEndPoint::get_callback failed");
-
-      return -1;
-    }
-  ACE_ENDTRY;
-
   return 0;
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *,
+Sender_StreamEndPoint::set_protocol_object (const char *flowname,
                                             TAO_AV_Protocol_Object *object)
 {
-  // Set the sender protocol object corresponding to the transport
-  // protocol selected.
-  SENDER::instance ()->protocol_object (object);
+  Connection_Manager &connection_manager =
+    SENDER::instance ()->connection_manager ();
+
+  // Add to the map of protocol objects.
+  connection_manager.protocol_objects ().bind (flowname,
+                                               object);
+
+  // Store the related streamctrl.
+  connection_manager.add_streamctrl (flowname,
+                                     this);
+
+  return 0;
+}
+
+CORBA::Boolean
+Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
+{
+  // If another receiver of the same flowname is in the map, destroy
+  // the old stream.
+  for (CORBA::ULong i = 0;
+       i < flowspec.length ();
+       i++)
+    {
+      TAO_Forward_FlowSpec_Entry entry;
+      entry.parse (flowspec[i].in ());
+
+      ACE_CString flowname (entry.flowname ());
+
+      Connection_Manager &connection_manager =
+        SENDER::instance ()->connection_manager ();
+
+      int result =
+        connection_manager.protocol_objects ().find (flowname);
+
+      // If the flowname is found.
+      if (result == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "\nSender switching receivers\n\n"));
+
+          // Destroy old stream with the same flowname.
+          connection_manager.destroy (flowname);
+        }
+    }
   return 0;
 }
 
 Sender::Sender (void)
   : sender_mmdevice_ (0),
-    streamctrl_ (0),
     frame_count_ (0),
     filename_ ("input"),
     input_file_ (0),
-    frame_rate_ (10),
-    protocol_object_ (0),
-    mb_ (BUFSIZ)
+    frame_rate_ (5),
+    mb_ (BUFSIZ),
+    sender_name_ ("sender")
 {
-}
-
-void
-Sender::protocol_object (TAO_AV_Protocol_Object *object)
-{
-  // Set the sender protocol object corresponding to the transport
-  // protocol selected.
-  this->protocol_object_ = object;
-}
-
-void
-Sender::streamctrl (AVStreams::StreamCtrl_ptr streamctrl)
-{
-  // Set the sender protocol object corresponding to the transport
-  // protocol selected.
-  this->streamctrl_ = streamctrl;
 }
 
 int
@@ -84,7 +83,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:r:d");
+  ACE_Get_Opt opts (argc, argv, "s:f:r:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -96,6 +95,9 @@ Sender::parse_args (int argc,
           break;
         case 'r':
           this->frame_rate_ = ACE_OS::atoi (opts.optarg);
+          break;
+        case 's':
+          this->sender_name_ = opts.optarg;
           break;
         case 'd':
           TAO_debug_level++;
@@ -111,7 +113,7 @@ Sender::parse_args (int argc,
 int
 Sender::init (int argc,
               char **argv,
-              CORBA::Environment &ACE_TRY_ENV)
+              CORBA::Environment& ACE_TRY_ENV)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -120,9 +122,9 @@ Sender::init (int argc,
   if (result != 0)
     return result;
 
-  // Initialize the naming services
+  // Initialize the connection manager.
   result =
-    this->naming_client_.init (TAO_AV_CORE::instance ()->orb ());
+    this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
     return result;
 
@@ -158,17 +160,17 @@ Sender::init (int argc,
 
   AVStreams::MMDevice_var mmdevice =
     this->sender_mmdevice_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN(-1);
+  ACE_CHECK_RETURN (-1);
 
-  CosNaming::Name name (1);
-  name.length (1);
-  name [0].id =
-    CORBA::string_dup ("Sender");
+  // Register the object reference with the Naming Service and bind to
+  // the receivers
+  this->connection_manager_.bind_to_receivers (this->sender_name_,
+                                               mmdevice.in (),
+                                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  // Register the sender object with the naming server.
-  this->naming_client_->rebind (name,
-                                mmdevice.in (),
-                                ACE_TRY_ENV);
+  // Connect to the receivers
+  this->connection_manager_.connect_to_receivers (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -262,12 +264,16 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           // Start timer before sending the frame.
           elapsed_timer.start ();
 
-          // If we have a receiver, send to it.
-          if (this->protocol_object_)
+          Connection_Manager::Protocol_Objects &protocol_objects =
+            this->connection_manager_.protocol_objects ();
+
+          // Send frame to all receivers.
+          for (Connection_Manager::Protocol_Objects::iterator iterator = protocol_objects.begin ();
+               iterator != protocol_objects.end ();
+               ++iterator)
             {
-              // Send frame.
               int result =
-                this->protocol_object_->send_frame (&this->mb_);
+                (*iterator).int_id_->send_frame (&this->mb_);
 
               if (result < 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -284,16 +290,6 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           this->mb_.reset ();
 
         } // end while
-
-      // If a stream was setup, destroy it.
-      if (this->streamctrl_)
-        {
-          // File reading is complete, destroy the stream.
-          AVStreams::flowSpec stop_spec;
-          this->streamctrl_->destroy (stop_spec,
-                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
     }
   ACE_CATCHANY
     {
@@ -305,6 +301,12 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
   return 0;
 }
 
+Connection_Manager &
+Sender::connection_manager (void)
+{
+  return this->connection_manager_;
+}
+
 int
 main (int argc,
       char **argv)
@@ -312,18 +314,18 @@ main (int argc,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0,
-                         ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA",
                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Get the POA_var object from Object_var
+      //Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in (),
                                         ACE_TRY_ENV);
@@ -342,7 +344,7 @@ main (int argc,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Initialize the Sender.
+      // Initialize the Client.
       int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv,
@@ -351,19 +353,17 @@ main (int argc,
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Sender::init failed\n"),
-                          -1);
+                           "client::init failed\n"), -1);
 
       SENDER::instance ()->pace_data (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Hack for now....
-      ACE_OS::sleep (1);
+      SENDER::instance ()->connection_manager ().destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender Failed\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Sender Failed\n");
       return -1;
     }
   ACE_ENDTRY;

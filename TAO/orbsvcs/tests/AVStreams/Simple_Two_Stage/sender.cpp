@@ -14,30 +14,6 @@ Sender_StreamEndPoint::get_callback (const char *,
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
   callback = &this->callback_;
-
-  // Get the stream controller for this stream.
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Any_ptr streamctrl_any =
-        this->get_property_value ("Related_StreamCtrl",
-                                  ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      AVStreams::StreamCtrl_ptr streamctrl;
-      *streamctrl_any >>= streamctrl;
-
-      // Store reference to the streamctrl
-      SENDER::instance ()->streamctrl (streamctrl);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Sender_StreamEndPoint::get_callback failed");
-
-      return -1;
-    }
-  ACE_ENDTRY;
-
   return 0;
 }
 
@@ -57,8 +33,8 @@ Sender::Sender (void)
     frame_count_ (0),
     filename_ ("input"),
     input_file_ (0),
-    frame_rate_ (10),
-    protocol_object_ (0),
+    protocol_ ("UDP"),
+    frame_rate_ (30),
     mb_ (BUFSIZ)
 {
 }
@@ -71,20 +47,12 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
   this->protocol_object_ = object;
 }
 
-void
-Sender::streamctrl (AVStreams::StreamCtrl_ptr streamctrl)
-{
-  // Set the sender protocol object corresponding to the transport
-  // protocol selected.
-  this->streamctrl_ = streamctrl;
-}
-
 int
 Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:r:d");
+  ACE_Get_Opt opts (argc, argv, "f:p:r:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -93,6 +61,9 @@ Sender::parse_args (int argc,
         {
         case 'f':
           this->filename_ = opts.optarg;
+          break;
+        case 'p':
+          this->protocol_ = opts.optarg;
           break;
         case 'r':
           this->frame_rate_ = ACE_OS::atoi (opts.optarg);
@@ -105,6 +76,34 @@ Sender::parse_args (int argc,
           return -1;
         }
     }
+  return 0;
+}
+
+// Method to get the object reference of the receiver
+int
+Sender::bind_to_receiver (CORBA::Environment &ACE_TRY_ENV)
+{
+  CosNaming::Name name (1);
+  name.length (1);
+  name [0].id =
+    CORBA::string_dup ("Receiver");
+
+  // Resolve the receiver object reference from the Naming Service
+  CORBA::Object_var receiver_mmdevice_obj =
+    this->naming_client_->resolve (name,
+                                   ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  this->receiver_mmdevice_ =
+    AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in (),
+                                  ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Could not resolve Receiver_MMdevice in Naming service <%s>\n"),
+                      -1);
+
   return 0;
 }
 
@@ -147,6 +146,27 @@ Sender::init (int argc,
     ACE_DEBUG ((LM_DEBUG,
                 "File opened successfully\n"));
 
+  // Resolve the object reference of the receiver from the Naming Service.
+  if (this->bind_to_receiver (ACE_TRY_ENV) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Error binding to the naming service\n"),
+                      -1);
+
+  // Initialize the  QoS
+  AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
+
+  // Create the forward flow specification to describe the flow.
+  TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
+                                    "IN",
+                                    "USER_DEFINED",
+                                    "",
+                                    this->protocol_.c_str (),
+                                    0);
+
+  AVStreams::flowSpec flow_spec (1);
+  flow_spec.length (1);
+  flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+
   // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
                   TAO_MMDevice (&this->endpoint_strategy_),
@@ -158,18 +178,28 @@ Sender::init (int argc,
 
   AVStreams::MMDevice_var mmdevice =
     this->sender_mmdevice_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN(-1);
-
-  CosNaming::Name name (1);
-  name.length (1);
-  name [0].id =
-    CORBA::string_dup ("Sender");
-
-  // Register the sender object with the naming server.
-  this->naming_client_->rebind (name,
-                                mmdevice.in (),
-                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
+
+  ACE_NEW_RETURN (this->streamctrl_,
+                  TAO_StreamCtrl,
+                  -1);
+
+  PortableServer::ServantBase_var safe_streamctrl =
+    this->streamctrl_;
+
+  // Bind/Connect the sender and receiver MMDevices.
+  CORBA::Boolean bind_result =
+    this->streamctrl_->bind_devs (mmdevice.in (),
+                                  this->receiver_mmdevice_.in (),
+                                  the_qos.inout (),
+                                  flow_spec,
+                                  ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (bind_result == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "streamctrl::bind_devs failed\n"),
+                      -1);
 
   return 0;
 }
@@ -262,19 +292,15 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
           // Start timer before sending the frame.
           elapsed_timer.start ();
 
-          // If we have a receiver, send to it.
-          if (this->protocol_object_)
-            {
-              // Send frame.
-              int result =
-                this->protocol_object_->send_frame (&this->mb_);
+          // Send frame.
+          int result =
+            this->protocol_object_->send_frame (&this->mb_);
 
-              if (result < 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "send failed:%p",
-                                   "Sender::pace_data send\n"),
-                                  -1);
-            }
+          if (result < 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "send failed:%p",
+                               "Sender::pace_data send\n"),
+                              -1);
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender::pace_data frame %d was sent succesfully\n",
@@ -285,15 +311,16 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
         } // end while
 
-      // If a stream was setup, destroy it.
-      if (this->streamctrl_)
-        {
-          // File reading is complete, destroy the stream.
-          AVStreams::flowSpec stop_spec;
-          this->streamctrl_->destroy (stop_spec,
-                                      ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      // File reading is complete, destroy the stream.
+      AVStreams::flowSpec stop_spec;
+      this->streamctrl_->destroy (stop_spec,
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Shut the orb down.
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0,
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -354,11 +381,9 @@ main (int argc,
                            "Sender::init failed\n"),
                           -1);
 
-      SENDER::instance ()->pace_data (ACE_TRY_ENV);
+      // Start sending data.
+      result = SENDER::instance ()->pace_data (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      // Hack for now....
-      ACE_OS::sleep (1);
     }
   ACE_CATCHANY
     {
