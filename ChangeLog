@@ -1,3 +1,9 @@
+Mon May 06 15:45:35 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/parser/debug_validator/Debug_Validator.dsp: Fixed
+	  rum-time library options to avoid compilation errors when MFC is
+	  enabled.
+
 Mon May  6 14:26:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Proactor_Test.cpp: Fixed unused variable warnings in
@@ -6,7 +12,7 @@ Mon May  6 14:26:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Mon May  6 13:37:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/generate_performance_chart.sh: Changed the range of the y
-	  range for the plots. 
+	  range for the plots.
 
 Mon May  6 07:39:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -15,7 +21,7 @@ Mon May  6 07:39:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Sun May  5 19:14:34 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue_T.cpp: Modified all the enqueue*() methods so that 
+	* ace/Message_Queue_T.cpp: Modified all the enqueue*() methods so that
 	  their calls to notify() occur *outside* of the monitor lock.
   	  This change prevents deadlock from occurring when a reactor's
  	  notification pipe is full.  Thanks to Sasha Agranov
