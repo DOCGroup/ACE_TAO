@@ -1,3 +1,16 @@
+Thu Nov 16 10:23:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/GIOP_Messsage_Acceptors.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Utils.cpp:
+	* tao/GIOP_Utils.h:
+
+	  Removed temporary and call to conversion function in
+	  TAO_GIOP_Message_Acceptors::send_reply_exception() and
+	  TAO_GIOP_Message_Lite::send_reply_exception(). These
+	  were the only uses of the conversion function, so that
+	  was removed from TAO_GIOP_Utils as well.
+
 Thu Nov 16 09:57:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO_Server_Request.cpp:
