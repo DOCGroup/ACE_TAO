@@ -182,6 +182,7 @@ namespace BMDevice_Impl
       ACE_ENV_ARG_DECL);
 
       // Supported operations.
+      /*
       virtual void
       component_UUID (
       const char * new_component_UUID
@@ -192,7 +193,7 @@ namespace BMDevice_Impl
       component_UUID (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
+*/
       // Public port operations.
 
       virtual ::BasicSP::ReadData_ptr
@@ -338,7 +339,7 @@ namespace BMDevice_Impl
       ::BasicSP::TimeOutConsumer_var
       consumes_timeout_;
 
-      ACE_CString component_UUID_;
+      //ACE_CString component_UUID_;
 
       private:
 

@@ -163,6 +163,7 @@ namespace BMClosedED_Impl
       ACE_CHECK;
       my_uuid += "_prepare_capture_publisher";
 
+      ACE_DEBUG ((LM_DEBUG, "======== connection_uuid is: %s =============\n", my_uuid.c_str ()));
       this->container_->push_event (ev,
                                     my_uuid.c_str ()
                                     ACE_ENV_ARG_PARAMETER);
@@ -260,6 +261,7 @@ namespace BMClosedED_Impl
 
   namespace CIAO_GLUE_BasicSP
   {
+    /*
     void
     BMClosedED_Servant::component_UUID (
     const char * new_component_UUID
@@ -276,7 +278,7 @@ namespace BMClosedED_Impl
     {
       return CORBA::string_dup (this->component_UUID_.c_str ());
     }
-
+*/
  
     BMClosedED_Servant::BMClosedED_Servant (
     ::BasicSP::CCM_BMClosedED_ptr exe,

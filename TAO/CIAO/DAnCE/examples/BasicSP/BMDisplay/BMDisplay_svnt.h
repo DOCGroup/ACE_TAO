@@ -143,6 +143,7 @@ namespace BMDisplay_Impl
       ACE_ENV_ARG_DECL);
 
       // Supported operations.
+      /*
       virtual void
       component_UUID (
       const char * new_component_UUID
@@ -153,7 +154,7 @@ namespace BMDisplay_Impl
       component_UUID (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
+*/
       // Public port operations.
 
       // Servant class for the data_ready consumer.
@@ -296,7 +297,7 @@ namespace BMDisplay_Impl
       ::BasicSP::DataAvailableConsumer_var
       consumes_data_ready_;
 
-      ACE_CString component_UUID_;
+      //ACE_CString component_UUID_;
 
       private:
 
