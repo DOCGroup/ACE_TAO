@@ -1,3 +1,10 @@
+Thu Apr 22 17:06:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Recursive_Condition_Test.cpp: Fixed broken log string. Also,
+	  when checking nesting level, ignore it if get_nesting_level() returns
+	  -1, ENOTSUP. This will be the case for native Pthreads recursive
+	  mutexes.
+
 Thu Apr 22 16:51:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_Thread.h:
