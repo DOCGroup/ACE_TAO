@@ -1,3 +1,14 @@
+Mon Jun 19 11:49:43 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: export environment
+          variables that are set on the host (for cross-compilation).
+          The cross-compile g++ needs ENV_PREFIX in order to link
+          properly.
+
+        * ace/config-lynxos.h: added ACE_LACKS_PTHREAD_SIGMASK with
+          LynxOS 3.1.0.  In addition to not be declared in the system
+          headers, pthread_sigmask () isn't in the threads libs.
+
 Mon Jun 19 10:43:27 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: use -mthreads
