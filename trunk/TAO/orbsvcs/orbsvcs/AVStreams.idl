@@ -276,7 +276,9 @@ module AVStreams
       // Note, some of these device params are standardised by OMG
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)
-        raises (CosPropertyService::PropertyException,
+        //   raises (CosPropertyService::PropertyException,
+        //      streamOpFailed);
+        raises (PropertyException,
                 streamOpFailed);
       // Multicasting operations are not supported yet.
     };
@@ -603,8 +605,9 @@ module AVStreams
         raises (AVStreams::notSupported);
 
       void set_dev_params(in CosPropertyService::Properties new_settings)
-        raises (CosPropertyService::PropertyException, AVStreams::streamOpFailed);
-
+        //      raises (CosPropertyService::PropertyException, AVStreams::streamOpFailed);
+        raises (PropertyException, AVStreams::streamOpFailed);
+      
       void set_protocol_restriction(in AVStreams::protocolSpec the_spec)
         raises (AVStreams::notSupported);
 
