@@ -7,6 +7,9 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "ProxyPushSupplier_i.h"
 
+// @@ Pradeep: In general the same comments that I did for the
+// Consumer side apply. 
+
 class PushConsumerWrapper : public POA_RtecEventComm::PushConsumer
 {
   // = TITLE
@@ -84,8 +87,8 @@ PushConsumerWrapper::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 }
 
 ProxyPushSupplier_i::ProxyPushSupplier_i
-(const RtecEventChannelAdmin::ConsumerQOS &qos,
-RtecEventChannelAdmin::ProxyPushSupplier_ptr pps)
+        (const RtecEventChannelAdmin::ConsumerQOS &qos,
+	 RtecEventChannelAdmin::ProxyPushSupplier_ptr pps)
   : qos_ (qos),
     pps_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (pps))
 {

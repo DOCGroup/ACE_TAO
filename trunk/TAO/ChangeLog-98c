@@ -1,3 +1,9 @@
+Mon Jan 04 12:04:37 1999  Carlos O'Ryan  <coryan@JIG>
+
+	* orbsvcs/orbsvcs/CosEvent/*
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp: 
+	  Another code review for Pradeep.
+
 Mon Jan  4 07:39:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:

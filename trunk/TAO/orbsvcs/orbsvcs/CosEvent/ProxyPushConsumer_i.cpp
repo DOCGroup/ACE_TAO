@@ -29,6 +29,12 @@ public:
   // Disconnects the push supplier.
 
 private:
+  // @@ Pradeep: are you sure you want to go through the CORBA
+  // interface? Maybe the implementation (ProxyPushConsumer_i) is good
+  // enough at this point?  The tradeoff is flexibility (your scheme
+  // can use remote CosPushSuppliers), but suffers some performance
+  // penalty: do you need the extra flexibility? Can you use it? [I
+  // suspect the answers are "not" for both]
   CosEventComm::PushSupplier_ptr supplier_;
   // The Cos PushSupplier that we're proxying for.
 };
@@ -42,6 +48,7 @@ PushSupplierWrapper::PushSupplierWrapper
 
 PushSupplierWrapper::~PushSupplierWrapper ()
 {
+  // @@ Pradeep: same about _var
   CORBA::release (this->supplier_);
 }
 
@@ -87,6 +94,12 @@ void
 ProxyPushConsumer_i::push (const CORBA::Any &data,
                      CORBA::Environment &TAO_TRY_ENV)
 {
+  // @@ Pradeep: you are making a memory allocation here, maybe you
+  // want to rewrite this as follows:
+  // RtecEventComm::Event buffer[1];
+  // // Create an event set that does not own the buffer....
+  // RtecEventComm::EventSet events (1, 1, buffer, 0);
+  // events.length (1);
   RtecEventComm::EventSet events (1);
   events.length (1);
 
@@ -94,6 +107,9 @@ ProxyPushConsumer_i::push (const CORBA::Any &data,
   RtecEventComm::Event eqos =
     qos_.publications[0].event;
 
+  // @@ Pradeep: this is exposed in the interface: you *must* document
+  // that, either in the header file and/or the release notes (or
+  // both).
   // NOTE: we initialize the <EventHeader> field using the 1st
   // <publications> from the <SupplierQOS>.so we assume that
   // publications[0] is initialized.
@@ -144,6 +160,8 @@ ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier_ptr push_
   if (this->connected ())
     TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
                    TAO_TRY_ENV);
+  // @@ You may want to throw something here, like CORBA::NO_MEMORY,
+  // there are macros to handle that (ACE_NEW_THROW)
   ACE_NEW (this->wrapper_,
            PushSupplierWrapper (push_supplier));
   this->ppc_->connect_push_supplier (this->wrapper_->_this (TAO_TRY_ENV),
