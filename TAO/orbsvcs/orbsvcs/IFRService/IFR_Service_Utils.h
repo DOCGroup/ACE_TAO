@@ -43,7 +43,7 @@ public:
   int init_with_orb (int argc,
                      ACE_TCHAR *argv [],
                      CORBA::ORB_ptr orb,
-                     int use_multicast_server=1 );
+                     int use_multicast_server = 1);
   // Initialize the IFR Service with the command line arguments and
   // the ORB.
 

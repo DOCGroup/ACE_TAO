@@ -71,21 +71,21 @@ module CosNotification
   //@}
 
   /**
-   * @struct EventType
+   * @struct _EventType
    *
    * @brief Define event type names.
    *
    * Different vertical industries (domains) can define well-known
    * events (event_types).  This structure is used for that purpose
    */
-  struct EventType {
+  struct _EventType {
     /// The name of the vertical industry defining the event type.
     string domain_name;
     /// The type of event.
     string type_name;
   };
   /// A sequence of event types
-  typedef sequence<EventType> EventTypeSeq;
+  typedef sequence<_EventType> EventTypeSeq;
 
   /**
    * @struct PropertyRange
@@ -191,7 +191,7 @@ module CosNotification
    */
   struct FixedEventHeader {
     /// The event type
-    EventType event_type;
+    _EventType event_type;
     /// A (possibly unique) name for the particular event
     string event_name;
   };
