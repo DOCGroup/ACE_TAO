@@ -1,3 +1,19 @@
+Thu Aug 23 05:24:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp: Added new and improved test that
+	  it better documented and fixes some minor bugs.  Thanks to
+	  Edan Ayal for this.
+
+Wed Aug 22 19:04:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp: Enable this test to work
+	  on platforms that don't support DLLs.  Thanks to Edan Ayal
+ 	  <edana@bandwiz.com> for suggestion this and providing the code.
+	
+	* tests/Logging_Strategy_Test.cpp (parse_args): Changed 'n' for 'N'
+	  since that controls the max number of log files.  Thanks to Edan
+ 	  Ayal <edana@bandwiz.com> for reporting this.
+
 Thu Aug 23 07:30:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/SString.{h,i}: Added clear() method to the ACE_CString and
