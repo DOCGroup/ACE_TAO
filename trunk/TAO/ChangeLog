@@ -1,3 +1,9 @@
+Sat Apr 26 08:42:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Environment.cpp: Removed operator= for
+	  CORBA::Environment_var since they shoudl be taken care by the
+	  template classes. 
+
 Fri Apr 25 22:29:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp: Added explicit
