@@ -1,3 +1,10 @@
+Tue Mar 30 21:31:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile (RELEASE_LIB_FILES): added bin/ and etc/.
+          Thanks to John Lindal <jafl@alice.wonderland.caltech.edu>
+          for reporting that the ACE library Makefile needs
+          bin/ace_components.
+
 Tue Mar 30 18:49:58 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * bin/make_release: Added .ico to binary file types.
@@ -8,89 +15,89 @@ Tue Mar 30 12:23:23 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Mar 30 11:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.h (ACE_Adaptive_Lock): Clarified a comment about how
- 	  to define a constructor in a subclass that initializes the
- 	  lock_.  Thanks to Michael Kircher for reporting this.
+        * ace/Synch.h (ACE_Adaptive_Lock): Clarified a comment about how
+          to define a constructor in a subclass that initializes the
+          lock_.  Thanks to Michael Kircher for reporting this.
 
 Tue Mar 30 10:37:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.i (getpwnam_r): Added patch contributed by Roland Gigler
-	  <roland@mch.pn.siemens.de> for getpwnam_r on SCO UnixWare 7.
+        * ace/OS.i (getpwnam_r): Added patch contributed by Roland Gigler
+          <roland@mch.pn.siemens.de> for getpwnam_r on SCO UnixWare 7.
 
 Mon Mar 29 20:22:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	* m4/features.m4:
-	  Added new M4 macro include file, and moved asynchronous IO tests
-	  to `m4/features.m4'.  The asynchronous IO tests were improved by
-	  making them run-time tests.  Cross-compiled platforms will fall
-	  back to a compile-time test.  Thanks to Alex for providing
-	  run-time tests.  The tests are based on his AIO tests found in
-	  the examples/Reactor/Proactor directory.
+        * configure.in:
+        * m4/features.m4:
+          Added new M4 macro include file, and moved asynchronous IO tests
+          to `m4/features.m4'.  The asynchronous IO tests were improved by
+          making them run-time tests.  Cross-compiled platforms will fall
+          back to a compile-time test.  Thanks to Alex for providing
+          run-time tests.  The tests are based on his AIO tests found in
+          the examples/Reactor/Proactor directory.
 
 Sun Mar 28 18:02:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	  Enabled the C++ libtool support mentioned below.  Removed all
-	  references to CXXCPPFLAGS since the CPPFLAGS variable is used
-	  by autoconf for both C and C++.
+        * configure.in:
+          Enabled the C++ libtool support mentioned below.  Removed all
+          references to CXXCPPFLAGS since the CPPFLAGS variable is used
+          by autoconf for both C and C++.
 
-	* ltconfig:
-	  Added my experimental libtool C++ support.  The hacks I made
-	  allow it to build C++ shared libraries.
-	
-	* m4/acinclude.m4:
-	* m4/threads.m4: 
-	  Renamed some variables.  Namespace pollution was breaking most
-	  of the tests.
+        * ltconfig:
+          Added my experimental libtool C++ support.  The hacks I made
+          allow it to build C++ shared libraries.
+
+        * m4/acinclude.m4:
+        * m4/threads.m4:
+          Renamed some variables.  Namespace pollution was breaking most
+          of the tests.
 
 Sun Mar 28 12:20:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/CORBA_macros.h: Moved ACE_NEW_THROW* and ACE_GUARD_THROW*
-	  macros from OS.h to CORBA_macros.h.  Also added
-	  ACE_*GUARD_THROW_EX which has the new ACE try macros semantics.
-	  CORBA_macros.h needs to include "OS.h" to source in the correct
-	  platform configuration macros.
+        * ace/OS.h:
+        * ace/CORBA_macros.h: Moved ACE_NEW_THROW* and ACE_GUARD_THROW*
+          macros from OS.h to CORBA_macros.h.  Also added
+          ACE_*GUARD_THROW_EX which has the new ACE try macros semantics.
+          CORBA_macros.h needs to include "OS.h" to source in the correct
+          platform configuration macros.
 
 Sun Mar 28 13:27:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/exceptions.html:
-	Added a new example
+        * docs/exceptions.html:
+        Added a new example
 
 Fri Mar 26 23:35:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added ACE_NEEDS_SCHED_H.
+        * ace/config-freebsd-pthread.h: Added ACE_NEEDS_SCHED_H.
 
-	* ace/config-irix6.x-g++.h:
-	* ace/config-irix6.x-kcc.h:
-	* ace/config-irix6.x-sgic++.h:
-	* ace/OS.h: Reverted changes about ACE_LASKS_SCHED_H.
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix6.x-kcc.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/OS.h: Reverted changes about ACE_LASKS_SCHED_H.
 
-	* ace/config-dgux-4.x-ghs.h:
-	* ace/config-irix6.x-sgic++.h:
-	* ace/README:
-	* ace/OS.h: Renamed ACE_LACKS_SCHED_H with ACE_NEEDS_SCHED_H to
-	  refect what it really means.  The original name was quite
-	  confusing.
+        * ace/config-dgux-4.x-ghs.h:
+        * ace/config-irix6.x-sgic++.h:
+        * ace/README:
+        * ace/OS.h: Renamed ACE_LACKS_SCHED_H with ACE_NEEDS_SCHED_H to
+          refect what it really means.  The original name was quite
+          confusing.
 
 Fri Mar 26 18:16:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-g++.h:
-	* ace/config-irix6.x-kcc.h:
-	* ace/config-irix6.x-sgic++.h:
-	  There is no need to explicitly include <sched.h> or to define
-	  ACE_LACKS_SCHED_H the file is present in IRIX 6.4.
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix6.x-kcc.h:
+        * ace/config-irix6.x-sgic++.h:
+          There is no need to explicitly include <sched.h> or to define
+          ACE_LACKS_SCHED_H the file is present in IRIX 6.4.
 
 Fri Mar 26 17:57:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Defined cuserid as an extern "C"
-	  function.
+        * ace/config-freebsd-pthread.h: Defined cuserid as an extern "C"
+          function.
 
-	* ace/OS.h: <sched.h> should only be included when !defined
-	  (ACE_LACKS_SCHED_H).
+        * ace/OS.h: <sched.h> should only be included when !defined
+          (ACE_LACKS_SCHED_H).
 
-	  Thanks to Eric Eide <eeide@cs.utah.edu> for sending the patch.
+          Thanks to Eric Eide <eeide@cs.utah.edu> for sending the patch.
 
 Fri Mar 26 17:12:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -101,23 +108,23 @@ Fri Mar 26 17:12:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Mar 26 17:02:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
-	  Improved ACE_HAS_USING_KEYWORD test so that it works for platforms
-	  that support the `using' keyword but don't have the `std' namespace.
+        * configure.in:
+          Improved ACE_HAS_USING_KEYWORD test so that it works for platforms
+          that support the `using' keyword but don't have the `std' namespace.
 
-	  Updated ACE_HAS_TEMPLATE_SPECIALIZATION test so that it works for
-	  compilers that require the "template<>" syntax for specialization.
+          Updated ACE_HAS_TEMPLATE_SPECIALIZATION test so that it works for
+          compilers that require the "template<>" syntax for specialization.
 
-	  Improved ACE_HAS_ONLY_SCHED_OTHER by checking for run time errors
-	  when a thread scheduling policy other than SCHED_OTHER is set.
-	  Thanks to David for suggesting this modification.
+          Improved ACE_HAS_ONLY_SCHED_OTHER by checking for run time errors
+          when a thread scheduling policy other than SCHED_OTHER is set.
+          Thanks to David for suggesting this modification.
 
-	* m4/acinclude.m4:
-	  Added support for converting warnings to errors for Sun C++.
+        * m4/acinclude.m4:
+          Added support for converting warnings to errors for Sun C++.
 
-	* m4/threads.m4:
-	  Added test to check if `-Kthread' compiler flag enables thread
-	  support.  SCO UnixWare 7 uses this flag.
+        * m4/threads.m4:
+          Added test to check if `-Kthread' compiler flag enables thread
+          support.  SCO UnixWare 7 uses this flag.
 
 Fri Mar 26 07:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
