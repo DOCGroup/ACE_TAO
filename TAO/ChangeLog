@@ -1,3 +1,9 @@
+Tue Dec  2 17:31:34 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf.xml:
+          Changed to use TAO_FT_ClientORB intead of TAO_FT_ORB due
+          to the seperation of FT ORB framework.
+
 Tue Dec  2 18:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.{i,cpp}:
