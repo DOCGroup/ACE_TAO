@@ -1,18 +1,50 @@
-//
 // $Id$
-//
 
 #include "Stock_i.h"
 #include <orbsvcs/Event_Utilities.h>
 
+///derive a class from the tie template class to release itself by ref_count
+class MyTieStock:public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
+{
+  friend Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
+                                         const char *full_name,
+                                         CORBA::Double price,CORBA::Boolean);
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
+
+protected:
+  MyTieStock (Quoter_Stock_i *tp,
+              CORBA::Boolean release)
+    : POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> (tp,release),
+      ref_count_(0) {}
+
+public:
+  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  {
+    ++this->ref_count_;
+  }
+
+  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  {
+    CORBA::ULong new_count = --this->ref_count_;
+
+    if (new_count == 0)
+      delete this;
+  }
+};
+
 Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
                                 const char *full_name,
                                 CORBA::Double price)
-  :  supplier_personality_ (this)
+  : supplier_personality_ (*new MyTieStock (this, 0))
 {
   this->data_.symbol = symbol;
   this->data_.full_name = full_name;
   this->data_.price = price;
+}
+
+Quoter_Stock_i::~Quoter_Stock_i (void)
+{
+  delete &this->supplier_personality_;
 }
 
 char *

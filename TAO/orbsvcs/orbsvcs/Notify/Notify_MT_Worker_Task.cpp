@@ -68,6 +68,17 @@ TAO_Notify_MT_Worker_Task::close (u_long)
   this->process_event (mb, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  // We can not wait for ourselves to quit
+  if (this->thr_mgr ())
+    {
+      // call this->thr_mgr()->task() in the main thread will assert()
+      // fail in ACE_Thread_Manager::thread_desc_self (void) so I get
+      // task this way.
+      ACE_Thread_Descriptor *mydesc = this->thr_mgr ()->thread_descriptor (ACE_OS::thr_self ());
+
+      if (mydesc && mydesc->task () == this)
+        return -1;
+    }
   return this->wait ();
 }
 
