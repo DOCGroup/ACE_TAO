@@ -6,7 +6,7 @@ Sat Nov 09 09:47:37 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs\tests\Notify\Basic:
+	* orbsvcs/tests/Notify/Basic:
 
 	  - Renamed the following file to make consistent:
 
@@ -26,15 +26,15 @@ Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  - Added run_test.pl so that these tests can be run in the
 	    nightly built.
 
-	* orbsvcs\tests\Notify\performance-tests\RedGreen: Added
+	* orbsvcs/tests/Notify/performance-tests/RedGreen: Added
 	  run_test.pl so that these tests can be run in the nightly built.
 
-	* orbsvcs\tests\Notify:
+	* orbsvcs/tests/Notify:
 
 	  Updated the following project files so that they can be included
 	  in the mega Notify test workspace:
 
-	  orbsvcs\tests\Notify\Notify_Tests.dsw
+	  orbsvcs/tests/Notify/Notify_Tests.dsw
 
 	  - Basic/ConnectDisconnect.dsp
 	  - Basic/IdAssignment.dsp
@@ -67,21 +67,21 @@ Fri Nov 08 19:18:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  - performance-tests/RedGreen/RedGreen.dsp
 	  - performance-tests/Throughput/Throughput.dsp
 
-	* orbsvcs\tests\Notify\Notify_Tests.dsw: Add projects, updated
+	* orbsvcs/tests/Notify/Notify_Tests.dsw: Add projects, updated
 	  names, and updated dependencies.
 
-	* orbsvcs\tests\Notify\Sequence_Multi_ETCL_Filter: Renamed file to
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter: Renamed file to
 	  fix missing "e":
 
 	  Added   Sequence_Multi_ETCL_Filter.mpc
 	  Removed Sequenc_Multi_ETCL_Filter.mpc
 
-	* orbsvcs\tests\Notify\Basic\IdAssignment.h: Fixed filename in
+	* orbsvcs/tests/Notify/Basic/IdAssignment.h: Fixed filename in
 	  comments.
 
-	* orbsvcs\tests\Notify\Basic\Simple.cpp:
-	* orbsvcs\tests\Notify\Basic\IdAssignment.cpp:
-	* orbsvcs\tests\Notify\Basic\ConnectDisconnect.cpp:
+	* orbsvcs/tests/Notify/Basic/Simple.cpp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
 
 	  Reduce debugging statements.
 
@@ -125,7 +125,7 @@ Thu Nov  7 12:03:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tao/Incoming_Mesage_Queue.cpp (duplicate): In duplicate () the
 	  copy constructor should be called instead of the plain
-	  constructor. Thanks tp Simon McQueen <sm@prismtechnologies.com>
+	  constructor. Thanks to Simon McQueen <sm@prismtechnologies.com>
 	  for pointing this out.
 
 Thu Nov  7 09:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
