@@ -585,67 +585,83 @@ be_visitor_operation_interceptors_cs::
 
   *os << "::arguments (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))"<<  be_uidt_nl
-      << "{" << be_idt_nl
-      << "// Generate the argument list on demand." << be_nl
-      << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
-      << "TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);"
-      << be_uidt_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl
-      << be_nl;
+      << "{" << be_idt_nl;
 
-  size_t parameter_count = this->count_non_out_parameters (node);
-
-  if (node->argument_count () == 0 ||
-      parameter_count == 0 ||
-      // Now make sure that we have some in and inout
-      // parameters. Otherwise, there is nothing to be put into
-      // the Dyanmic::Paramlist.
-      (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
-      !(this->has_param_type (node, AST_Argument::dir_INOUT))))
+  if (be_global->any_support ())
     {
-      *os << "return parameter_list;" << be_uidt_nl;
+      *os << "// Generate the argument list on demand." << be_nl
+          << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
+          << "TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);"
+          << be_uidt_nl
+          << "ACE_CHECK_RETURN (0);" << be_nl
+          << be_nl;
+
+      size_t parameter_count = this->count_non_out_parameters (node);
+
+      if (node->argument_count () == 0 ||
+          parameter_count == 0 ||
+          // Now make sure that we have some in and inout
+          // parameters. Otherwise, there is nothing to be put into
+          // the Dyanmic::Paramlist.
+          (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
+          !(this->has_param_type (node, AST_Argument::dir_INOUT))))
+        {
+          *os << "return parameter_list;" << be_uidt_nl;
+        }
+      else
+        {
+          *os << "Dynamic::ParameterList_var safe_parameter_list = "
+              << "parameter_list;" << be_nl;
+
+          // Precompute the length of the Dynamic::ParameterList.  This is
+          // a nice optimization since it reduces the number of additional
+          // allocations to one, instead of one for each argument, in
+          // addition to remove all copying that occured when growing the
+          // sequence for each parameter.
+
+          *os << be_nl
+              << "parameter_list->length (" << parameter_count << ");"
+              << be_nl;
+
+          *os << "CORBA::ULong len = 0;" << be_nl << be_nl;
+
+          // The insertion operator is different for different nodes.  We
+          // change our scope to go to the argument scope to be able to
+          // decide this.
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
+          visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "visit_operation - "
+                                 "codegen for argument pre invoke failed\n"),
+                                -1);
+            }
+
+          delete visitor;
+
+          *os << be_nl
+              << "return safe_parameter_list._retn ();";
+        }
     }
   else
     {
-      *os << "Dynamic::ParameterList_var safe_parameter_list = "
-          << "parameter_list;" << be_nl;
-
-      // Precompute the length of the Dynamic::ParameterList.  This is
-      // a nice optimization since it reduces the number of additional
-      // allocations to one, instead of one for each argument, in
-      // addition to remove all copying that occured when growing the
-      // sequence for each parameter.
-
-      *os << be_nl
-          << "parameter_list->length (" << parameter_count << ");"
-          << be_nl;
-
-      *os << "CORBA::ULong len = 0;" << be_nl << be_nl;
-
-      // The insertion operator is different for different nodes.  We
-      // change our scope to go to the argument scope to be able to
-      // decide this.
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (node->accept (visitor) == -1))
+      if (be_global->use_raw_throw ())
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for argument pre invoke failed\n"),
-                            -1);
+          *os << "throw (CORBA::NO_IMPLEMENT ());" << be_nl
+              << "return 0;";
         }
-
-      delete visitor;
-
-      *os << be_nl
-          << "return safe_parameter_list._retn ();" << be_uidt_nl;
+      else
+        {
+          *os << "ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);";
+        }
     }
 
-  *os << "}\n\n";
+  *os << be_uidt_nl << "}\n\n";
 
   os->decr_indent ();
 
@@ -742,7 +758,7 @@ be_visitor_operation_interceptors_cs::
         }
     }
 
-  *os << be_uidt_nl << "}\n\n" << be_nl;
+  *os << be_uidt_nl << "}\n\n";
 
   os->decr_indent ();
 
