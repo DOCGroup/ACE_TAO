@@ -7,7 +7,7 @@
 
 /// Default constructor.
 MyImpl::BMDevice_exec_i::BMDevice_exec_i (void)
-  : str_ ("starting_data")
+  : str_ ("BM DEVICE DATA")
 {
 
 }
@@ -32,6 +32,9 @@ MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *
   // Nitify others
   BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "BMDevice, received a timeout from EC \n"));
+
   this->context_->push_data_available (event
                                        ACE_ENV_ARG_PARAMETER);
 }
@@ -41,6 +44,13 @@ MyImpl::BMDevice_exec_i::data_read (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->str_;
+}
+
+char *
+MyImpl::BMDevice_exec_i::get_data (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->data_read (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // Operations from Components::SessionComponent

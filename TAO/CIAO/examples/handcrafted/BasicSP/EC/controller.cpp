@@ -54,7 +54,7 @@ parse_args (int argc, char *argv[])
       }
 
   if (rategen_ior_ == 0)
-    rategen_ior_ = "file://rategen.ior";
+    rategen_ior_ = "file://ec.ior";
 
   if (rate == 0)
     rate = 3;
