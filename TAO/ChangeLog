@@ -1,3 +1,13 @@
+Tue Feb 15 07:09:41 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        
+          Added generation of forward declaration of the associated
+          event consumer interface, if the valuetype node being
+          processed happens to be an eventtype. Also added the _ptr
+          typedef, so it can be seen by a component declaration
+          that occurs later in the same scope.
+
 Tue Feb 15 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/RTEvent/lib/Servant_var.h:
