@@ -3047,7 +3047,7 @@ ACE::strend (const char *s)
   return s;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__))
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__) || defined (_AIX))
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
