@@ -50,10 +50,12 @@
 // @@ @@ @@ This conditional compilation is meant to be catch abnormal
 //          exceptions so the debugger can catch the exception for us.
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
-#define TAO_CATCHANY TAO_CATCH (TAO_DONT_CATCH, ex)
+#define TAO_CATCHALL TAO_CATCH (TAO_DONT_CATCH, ex)
 #else
-#define TAO_CATCHANY } catch (...) {
+#define TAO_CATCHALL } catch (...) {
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
+
+#define TAO_CATCHANY TAO_CATCH(CORBA_Exception, ex)
 
 #define TAO_ENDTRY }} while (0)
 
@@ -192,6 +194,11 @@ if (TAO_TRY_ENV.exception () != 0 && \
 } while (0); \
 do { \
 if (TAO_TRY_ENV.exception () != 0)
+
+#define TAO_CATCHALL \
+} while (0); \
+do { \
+continue;
 
 // The first "while" closes the local scope.  The second "while"
 // closes the TAO_TRY_ENV scope.
