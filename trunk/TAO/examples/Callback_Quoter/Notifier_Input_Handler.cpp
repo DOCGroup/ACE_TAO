@@ -234,7 +234,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
       // and remove the devil from the picture i.e '\n' ! ;)
 
       ssize_t strlen = ACE_OS::read (ACE_STDIN,
-				     buf,
+`				     buf,
 				     sizeof buf);
       if (buf[strlen -1] == '\n')
 	buf[strlen -1] = '\0';
