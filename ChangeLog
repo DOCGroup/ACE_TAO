@@ -1,3 +1,9 @@
+Mon Feb 18 18:23:49  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.h: Clarified behavior with respect to remaining
+          queued notifications when end_reactor_event_loop() is called
+          or when the reactor instance is closed/deleted.
+
 Mon Feb 18 19:28:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/README:
@@ -26,7 +32,8 @@ Mon Feb 18 19:28:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
           unlikely that anyone wants to export all specializations of a
           class template. When B is a template and D is a class, the
           construction 'class ACE_Export D : public B<D>' should
-          give no problems, but unfornately there is a bug in the vc++ compiler.
+          give no problems, but unfornately there is a bug in the vc++
+          compiler.
 
           That's why we now explicit export the template instantations in ace.
 
