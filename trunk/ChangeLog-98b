@@ -1,3 +1,10 @@
+Tue Dec 15 11:27:24 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-chorus.h: added ACE_LACKS_READLINK.
+
+        * ace/config-psos*.h,config-vxworks-5.x.h: added ACE_LACKS_READLINK
+          and ACE_LACKS_LSTAT.
+
 Tue Dec 15 08:44:18 1998  Steve Huston  <shuston@riverace.com>
 
         * examples/NT_Service: New example program, shows how to create,
@@ -8,32 +15,32 @@ Tue Dec 15 08:44:18 1998  Steve Huston  <shuston@riverace.com>
 
 Tue Dec 15 07:32:49 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* OS.h:
+        * OS.h:
 
-	  Moved the definition of IOV_MAX after we have included the
-	  limits.h file. Before make ing this change, we were getting lots
-	  of warnings on SunOS 5.6 about redefinition of IOV_MAX.
+          Moved the definition of IOV_MAX after we have included the
+          limits.h file. Before make ing this change, we were getting lots
+          of warnings on SunOS 5.6 about redefinition of IOV_MAX.
 
 Mon Dec 14 15:39:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile: 
-	  Updated dependencies.
+        * tests/Makefile:
+          Updated dependencies.
 
 Mon Dec 14 10:49:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Static_Performance.dsw: Quick and dirty workspace to build
-	  several static version's performance tests.
+        * Static_Performance.dsw: Quick and dirty workspace to build
+          several static version's performance tests.
 
-	* ace/ace_lib.dsp: Removed "__ACE_INLINE__=0" from the default
-	  static release build settings.
+        * ace/ace_lib.dsp: Removed "__ACE_INLINE__=0" from the default
+          static release build settings.
 
-	* performance-tests/Misc/basic_perf.dsp:
-	* performance-tests/Misc/context_switch_time.dsp: Added static
-	  build configurations.
+        * performance-tests/Misc/basic_perf.dsp:
+        * performance-tests/Misc/context_switch_time.dsp: Added static
+          build configurations.
 
-	* tests/RB_Tree_Test.dsp: Redid the project file.  A VC 6 only
-	  compiler option somehow got into the file.  Thanks to Ulf
-	  Jaehrig <jaehrig@desys.com> for reporting this.
+        * tests/RB_Tree_Test.dsp: Redid the project file.  A VC 6 only
+          compiler option somehow got into the file.  Thanks to Ulf
+          Jaehrig <jaehrig@desys.com> for reporting this.
 
 Mon Dec 14 10:24:59 1998 Fred Kuhns <fredk@arl.wustl.edu>
 
