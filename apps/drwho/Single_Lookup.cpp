@@ -2,6 +2,7 @@
 
 #include "Options.h"
 #include "Single_Lookup.h"
+#include "ace/ACE.h"
 
 Single_Lookup::Single_Lookup (const char *usr_name)
 {

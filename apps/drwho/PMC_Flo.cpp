@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "BS_Client.h"
 #include "PMC_Flo.h"
+#include "ace/ACE.h"
 
 // This function "encodes" a list of friends by putting the userid's
 // in a contiguous block.  This block can then be transmitted over to
@@ -32,7 +33,7 @@ PMC_Flo::encode (char *packet, int &packet_length)
            this->friend_count ());
 
   buf_ptr += MAXUSERIDNAMELEN;
-  
+
   // Iterate through all the friends, copying them into the packet
   // buffer.
 
@@ -44,11 +45,11 @@ PMC_Flo::encode (char *packet, int &packet_length)
 
   if (Options::get_opt (Options::DEBUG) != 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "packet_length = %d\n",
                   packet_length));
       ACE_OS::write (ACE_STDERR, packet, packet_length);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "\n"));
     }
 
@@ -57,7 +58,7 @@ PMC_Flo::encode (char *packet, int &packet_length)
 
 // This method is responsible for transforming the msg from the server
 // back into a form usable by the client.
-   
+
 int
 PMC_Flo::decode (char *packet, int &packet_length)
 {
@@ -87,7 +88,7 @@ PMC_Flo::decode (char *packet, int &packet_length)
       char *login_name = cp;
 
       for (cp = (char *) ACE::strend (cp);
-           *(cp = this->handle_protocol_entries (cp, login_name)) != '\t'; 
+           *(cp = this->handle_protocol_entries (cp, login_name)) != '\t';
 )
 	continue;
     }

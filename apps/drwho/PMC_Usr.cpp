@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "SL_Client.h"
 #include "PMC_Usr.h"
+#include "ace/ACE.h"
 
 int
 PMC_Usr::encode (char *packet, int &packet_length)
@@ -30,7 +31,7 @@ PMC_Usr::encode (char *packet, int &packet_length)
                   "packet_length = %d\n",
                   packet_length));
       ACE_OS::write (ACE_STDERR, packet, packet_length);
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "\n"));
     }
   return 1;
@@ -38,7 +39,7 @@ PMC_Usr::encode (char *packet, int &packet_length)
 
 // This method is responsible for transforming the msg from the server
 // back into a form usable by the client.
-   
+
 int
 PMC_Usr::decode (char *packet, int &packet_length)
 {
@@ -51,7 +52,7 @@ PMC_Usr::decode (char *packet, int &packet_length)
       ACE_DEBUG ((LM_DEBUG,
                   "\n"));
     }
-  
+
   char *cp = packet;
 
   if (*cp != '\n')
@@ -72,14 +73,14 @@ PMC_Usr::process (void)
 {
   Protocol_Record *prp = this->get_each_friend ();
   Drwho_Node *np  = prp->get_drwho_list ();
-  
+
   if (np == 0)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "<unknown>"));
   else
     {
-      // First try to get a login session that is active... 
-      
+      // First try to get a login session that is active...
+
       for (; np != 0; np = np->next_)
 	if (np->active_count_ > 0)
 	  {
@@ -90,7 +91,7 @@ PMC_Usr::process (void)
 	    if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
 	      return;
 	  }
-      
+
       for (np = prp->get_drwho_list ();
            np != 0;
            np = np->next_)
@@ -99,7 +100,7 @@ PMC_Usr::process (void)
 	    ACE_DEBUG ((LM_DEBUG,
                         "%s ",
                         np->get_host_name ()));
-	    
+
 	    if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
 	      return;
 	  }

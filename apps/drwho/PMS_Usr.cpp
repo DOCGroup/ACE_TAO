@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "SL_Server.h"
 #include "PMS_Usr.h"
+#include "ace/ACE.h"
 
 // This function "encodes" a list of friends by putting the userid's in
 // a contiguous block.  This block can then be transmitted over to the
@@ -53,7 +54,7 @@ PMS_Usr::encode (char *packet, int &packet_length)
 // This function takes a packet received from the client and calls the
 // appropriate Protocol_Manager routine to build the local table of
 // friends.
-   
+
 int
 PMS_Usr::decode (char *packet, int &packet_length)
 {

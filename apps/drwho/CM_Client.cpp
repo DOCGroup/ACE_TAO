@@ -9,13 +9,11 @@
 int
 CM_Client::open (short port_number)
 {
-  int max_packet_size = UDP_PACKET_SIZE;
-  
   Comm_Manager::sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 
   if (Comm_Manager::sokfd_ == ACE_INVALID_HANDLE)
     return -1;
-  
+
   ACE_OS::memset ((char *) &this->sin_,
                   0,
                   sizeof this->sin_);
@@ -43,7 +41,7 @@ CM_Client::receive (int timeout)
       if (ACE_OS::select (Comm_Manager::sokfd_ + 1,
                           &this->read_fd_,
                           0,
-                          0, 
+                          0,
                           this->top_) <= 0)
 	break;
       else
@@ -80,9 +78,9 @@ CM_Client::receive (int timeout)
     }
 
   for (const char *host_name;
-       Multicast_Manager::get_next_non_responding_host (host_name); 
+       Multicast_Manager::get_next_non_responding_host (host_name);
        )
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "%s did not respond\n",
                 host_name));
   return 1;
@@ -92,10 +90,10 @@ int
 CM_Client::send (void)
 {
   int packet_length = 0;
-  
+
   if (this->mux (this->send_packet_, packet_length) < 0)
     return -1;
-  
+
   // Ship off the info to all the hosts.
 
   while (Multicast_Manager::get_next_host_addr (this->sin_.sin_addr) != 0)
@@ -105,8 +103,8 @@ CM_Client::send (void)
 	  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
                                                sizeof this->sin_.sin_addr,
                                                AF_INET);
-          
-	  ACE_DEBUG ((LM_DEBUG, 
+
+	  ACE_DEBUG ((LM_DEBUG,
                       "sending to server host %s (%s)\n",
                       np->h_name,
                       inet_ntoa (this->sin_.sin_addr)));
@@ -136,4 +134,3 @@ CM_Client::~CM_Client (void)
 
   ACE_OS::closesocket (Comm_Manager::sokfd_);
 }
-

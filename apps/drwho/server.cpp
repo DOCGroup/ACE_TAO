@@ -21,6 +21,7 @@
 
 #include "Options.h"
 #include "SMR_Server.h"
+#include "ace/ACE.h"
 
 static char *
 tstamp (void)
@@ -59,7 +60,7 @@ started_by_inetd (void)
                               &size) == 0;
 }
 
-// Does the drwho service. 
+// Does the drwho service.
 
 static void
 do_drwho (SMR_Server &smr_server)
@@ -68,7 +69,7 @@ do_drwho (SMR_Server &smr_server)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 Options::program_name));
-	  
+
   if (smr_server.send () == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",

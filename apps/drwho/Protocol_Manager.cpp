@@ -7,17 +7,16 @@
 // it exists, otherwise a new node is created.  Note that if a
 // Drwho_Node is found it is moved to the front of the list so that
 // subsequent finds are faster (i.e., self-organizing!)
-     
+
 Drwho_Node *
 Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
 {
-  for (Drwho_Node **temp = &head;
-       *temp != 0;
-       temp = &(*temp)->next_)
+  Drwho_Node **temp = &head;
+  for (; *temp != 0; temp = &(*temp)->next_)
     if (ACE_OS::strcmp (key_name,
                         (*temp)->get_login_name ()) == 0)
       break;
-  
+
   if (*temp == 0)
     ACE_NEW_RETURN (head,
                     Drwho_Node (key_name, head),
@@ -25,7 +24,7 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
   else
     {
       Drwho_Node *t = *temp;
-      
+
       *temp = (*temp)->next_;
       t->next_ = head;
 
@@ -71,13 +70,13 @@ Protocol_Manager::friend_count (void)
 
 // Returns total number of users logged in throughout the system.
 
-int 
+int
 Protocol_Manager::get_total_users (void)
 {
   return Protocol_Manager::total_users;
 }
 
-void			
+void
 Protocol_Manager::increment_total_users (int remote_users)
 {
   Protocol_Manager::total_users += remote_users;

@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "HT_Server.h"
 #include "PMS_Ruser.h"
+#include "ace/ACE.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -33,7 +34,7 @@ PMS_Ruser::encode (char *packet, int &packet_length)
     buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
                                                            prp->get_host ()),
                                              prp->get_drwho_list ());
-  
+
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
 
@@ -85,9 +86,9 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   else
     {
       passwd *pwent = getpwnam (np->get_login_name ());
-      char *cp = 
-        (char *) ACE_OS::strchr (np->set_real_name (pwent == 0 
-                                                    ? np->get_login_name () 
+      char *cp =
+        (char *) ACE_OS::strchr (np->set_real_name (pwent == 0
+                                                    ? np->get_login_name ()
                                                     : ACE::strnew (pwent->pw_gecos)),
                                  ',');
       if (cp != 0)
@@ -98,7 +99,7 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
     np->inactive_count_++;
   else
     np->active_count_++;
-  
+
   return prp;
 }
 
@@ -120,7 +121,7 @@ PMS_Ruser::handle_protocol_entries (char *buf_ptr,
     }
 
   return buf_ptr;
-}     
+}
 
 PMS_Ruser::PMS_Ruser (void)
 {
