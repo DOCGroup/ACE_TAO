@@ -21,6 +21,10 @@
 #include "testS.h"
 #include "ace/Profile_Timer.h"
 
+//#define USING_PURIFY
+//#define USING_PURIFY_FOR_SERVANT_LOOKUP
+//#define USING_PURIFY_FOR_UNDERBAR_THIS
+
 #if defined (USING_PURIFY)
 #include "pure.h"
 #endif /* USING_PURIFY */
@@ -62,6 +66,9 @@ main (int argc, char **argv)
   // Create an array of objects
   test_var *objects = new test_var[iterations];
 
+  // Create an array of objects
+  PortableServer::ObjectId_var *object_ids = new PortableServer::ObjectId_var[iterations];
+
   // Size of the active object map
   u_long active_object_map_size = TAO_ORB_Core_instance ()->server_factory ()->active_object_map_size ();
 
@@ -94,42 +101,79 @@ main (int argc, char **argv)
     }
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
 
-  // Profile timer
-  ACE_Profile_Timer timer;
-  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-      
-  // We start the profile timer here...
-  timer.start ();
-  
-#if defined (USING_PURIFY)
-  // Reset Quantify data recording; whatever happened in the past is
-  // not relevant to this test.
-  QuantifyClearData ();
-  QuantifyStartRecordingData ();
-#endif /* USING_PURIFY */
+  {
+    // Profile timer
+    ACE_Profile_Timer timer;
+    ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+    
+    // We start the profile timer here...
+    timer.start ();
+    
+#if defined (USING_PURIFY_FOR_UNDERBAR_THIS)
+    // Reset Quantify data recording; whatever happened in the past is
+    // not relevant to this test.
+    QuantifyClearData ();
+    QuantifyStartRecordingData ();
+#endif /* USING_PURIFY_FOR_UNDERBAR_THIS */
+    
+    for (i = 0; i < iterations; i++)
+      {
+        objects[i] = servants[i]._this ();
+      }
+    
+#if defined (USING_PURIFY_FOR_UNDERBAR_THIS)
+    // Stop recording data here; whatever happens after this in the test
+    // is not relevant to this test.
+    QuantifyStopRecordingData ();
+#endif /* USING_PURIFY_FOR_UNDERBAR_THIS */
+    
+    // stop the timer.
+    timer.stop ();
+    timer.elapsed_time (elapsed_time);
+    
+    // compute average time.
+    print_stats (elapsed_time, i);
+  }
 
-  for (i = 0; i < iterations; i++)
-    {
-      objects[i] = servants[i]._this ();
-    }
-
-#if defined (USING_PURIFY)
-  // Stop recording data here; whatever happens after this in the test
-  // is not relevant to this test.
-  QuantifyStopRecordingData ();
-#endif /* USING_PURIFY */
-
-  // stop the timer.
-  timer.stop ();
-  timer.elapsed_time (elapsed_time);
-      
-  // compute average time.
-  print_stats (elapsed_time, i);
+  {
+    // Profile timer
+    ACE_Profile_Timer timer;
+    ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+    
+    // We start the profile timer here...
+    timer.start ();
+    
+#if defined (USING_PURIFY_FOR_SERVANT_LOOKUP)
+    // Reset Quantify data recording; whatever happened in the past is
+    // not relevant to this test.
+    QuantifyClearData ();
+    QuantifyStartRecordingData ();
+#endif /* USING_PURIFY_FOR_SERVANT_LOOKUP */
+    
+    for (i = 0; i < iterations; i++)
+      {
+        object_ids[i] = root_poa->servant_to_id (&servants[i]);
+      }
+    
+#if defined (USING_PURIFY_FOR_SERVANT_LOOKUP)
+    // Stop recording data here; whatever happens after this in the test
+    // is not relevant to this test.
+    QuantifyStopRecordingData ();
+#endif /* USING_PURIFY_FOR_SERVANT_LOOKUP */
+    
+    // stop the timer.
+    timer.stop ();
+    timer.elapsed_time (elapsed_time);
+    
+    // compute average time.
+    print_stats (elapsed_time, i);
+  }
 
   // Cleanup
   delete[] objects;
   delete[] servants;
-  
+  delete[] hash_counter;
+
   // Destroy RootPOA. 
   root_poa->destroy (1,
                      1);
