@@ -1,3 +1,12 @@
+Mon Nov 29 15:46:31 1999 Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/notify/Notify_Constraint_Interpreter.{h,cpp}:
+	* orbsvcs/orbsvcs/notify/Notify_Constraint_Visitors.{h,cpp}:
+	* orbsvcs/orbsvcs/notify/Notify_FilterFactory_i.{h,cpp}:
+	* orbsvcs/orbsvcs/notify/Notify_Filter_i.{h,cpp}:
+	Added these files to integrate with the Trader's TCL
+	implementation.
+
 Mon Nov 29 15:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
@@ -19,7 +28,7 @@ Mon Nov 29 14:15:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
 	* performance-tests/RTCorba/Oneways/Reliable/README:
 	  Test suite for reliable and buffered oneway requests. Latency
-	  and throughput measurements are made for each type of 
+	  and throughput measurements are made for each type of
 	  SyncScope policy value (and for buffered oneway requests
 	  if the SyncScope policy value is SYNC_NONE). The same
 	  measurements are also made on twoway requests for
@@ -51,7 +60,7 @@ Mon Nov 29 11:45:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  written, this list was changed to include only the
 	  immediate ancestors, for the purpose of generating
 	  the inhertance list in the class declaration. So such a
-	  flat list had to be added, maintained, and the 
+	  flat list had to be added, maintained, and the
 	  signatures of all related functions changed. Thanks to
 	  Jochen Linkohr <Jochen.Linkohr@stz-rechnereinsatz.de>
 	  for uncovering this bug.
@@ -109,7 +118,7 @@ Sun Nov 28 17:26:54 1999  Ossama Othman  <othman@cs.wustl.edu>
                 --enable-rt-corba       enable Real-Time CORBA support
 
 	  Other minor updates.
-	
+
 	* tao/Makefile.am:
 
 	  Added orb.idl and Policy.pidl to the of headers to be installed.
