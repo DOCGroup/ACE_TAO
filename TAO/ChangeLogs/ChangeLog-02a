@@ -1,3 +1,13 @@
+Wed Nov 15 11:17:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Cleanup_Func_Registry.cpp: Added a missing a template
+	  instantiation for ACE_Array_Base <ACE_CLEANUP_FUNC>
+	
+	* tao/ORB_Core.cpp:  Added a missing template instantiation of
+	  ACE_Array_Base <void*> 
+
+	* tao/ORBInitInfo.cpp: Fixed a warning in gcc build
+	
 Wed Nov 15 08:35:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_PolicyFactory.h:
