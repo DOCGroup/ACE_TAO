@@ -1,3 +1,9 @@
+Wed May 19 15:54:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode_Constants.cpp:
+	  Added some typecodes to fini() that I had forgotten to
+	  add before.
+
 Wed May 19 15:25:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
