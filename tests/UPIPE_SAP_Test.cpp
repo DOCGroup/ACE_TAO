@@ -27,7 +27,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // Global pattern
-static ACE_UPIPE_Addr addr ("pattern");
+static ACE_UPIPE_Addr addr (__TEXT ("pattern"));
 
 // connector thread.
 

@@ -23,7 +23,7 @@
 
 static int release_mutex = 1;
 static int child_process = 0;
-static char *mutex_name = ACE_DEFAULT_MUTEX;
+static char *mutex_name = ACE_DEFAULT_MUTEX_A;
 
 // Explain usage and exit.
 static void 
@@ -63,7 +63,7 @@ parse_args (int argc, char *argv[])
 static void
 acquire_release (void)
 {
-  ACE_Process_Mutex mutex (mutex_name);
+  ACE_Process_Mutex mutex (ACE_WIDE_STRING (mutex_name));
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
   // Grab the lock 

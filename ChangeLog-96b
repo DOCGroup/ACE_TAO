@@ -1,3 +1,21 @@
+Tue Dec 10 22:59:26 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests: Added Service_Config_Test to Win32 makefiles.
+
+	* ace/OS.i (inet_aton): We need to cast htonl to (long)
+
+	* tests: Added/Fixed UNICODE behavior of the following:
+
+	  MM_Shared_Memory_Test.cpp
+	  Mem_Map_Test.cpp 
+	  Mutex_Test.cpp
+	  Naming_Test.cpp 
+	  Process_Mutex_Test.cpp 
+	  SPIPE_Test.cpp
+	  Time_Service_Test.cpp 
+	  Tokens_Test.cpp 
+	  UPIPE_SAP_Test.cpp
+
 Tue Dec 10 00:33:08 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (inet_aton): We need to cast -1 to (ACE_UINT32).

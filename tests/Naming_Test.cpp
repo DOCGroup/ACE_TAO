@@ -127,10 +127,10 @@ main (int argc, char *argv[])
 
   name_options->parse_args (argc, argv);
 
-  char temp_file [BUFSIZ];
+  TCHAR temp_file [BUFSIZ];
   ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
 					    ACE_DIRECTORY_SEPARATOR_CHAR));
-  ACE_OS::strcat (temp_file, "XXXXXX");
+  ACE_OS::strcat (temp_file, __TEXT ("XXXXXX"));
   
   // Set the database name using mktemp to generate a unique file name
   name_options->database (ACE_OS::mktemp (temp_file));
@@ -153,10 +153,10 @@ main (int argc, char *argv[])
   // No more bindings in database so find should return -1
   find (ns_context, -1, -1);
 
-  ::sprintf (temp_file, "%s%s%s",
-             name_options->namespace_dir (),
-	     ACE_DIRECTORY_SEPARATOR_STR,
-	     name_options->database ());
+  ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
+		   name_options->namespace_dir (),
+		   ACE_DIRECTORY_SEPARATOR_STR,
+		   name_options->database ());
 
   // Remove any existing files.  No need to check return value here
   // since we don't care if the file doesn't exist.
