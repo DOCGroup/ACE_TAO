@@ -11,27 +11,15 @@
  * the hosts that have NodeApplication install to function properly.
  */
 
-
-#include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
-//@@ The old ServerActivator is replaced.
-
-#include "ciao/ComponentInstallation_Impl.h"
-//@@ I have decided to keep this interface as a help class --Tao
-
-#include "NodeManager_Impl.h"
+#include "NodeDaemon_Impl.h"
 #include "ciao/Server_init.h"
 #include "tao/IORTable/IORTable.h"
+
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 
 const char *ior_file_name_ = "daemon.ior";
-const char *comserv_path_ = "../ComponentServer/ComponentServer";
-//@@ this will be changed to ... --Tao
-
-CORBA::ULong spawn_wait_ = 5;
-const char *installation_datafile_ = "CIAO_Installation_Data.ini";
-char *section_name_ = 0;
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
 
@@ -39,7 +27,7 @@ char *svcconf_config_ = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:n:o:d:s:c:m:");
+  ACE_Get_Opt get_opts (argc, argv, "o:c:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -49,40 +37,21 @@ parse_args (int argc, char *argv[])
        ior_file_name_ = get_opts.opt_arg ();
       break;
 
-      case 'n':  // get the path name to the component server
-        comserv_path_ = get_opts.opt_arg ();
-      break;
-
-      case 'd':  // time to wait before we consider a ComponentServer
-                 // fails to start.
-        spawn_wait_ = ACE_OS::atoi (get_opts.opt_arg ());
-      break;
-
-      case 'i':  // get the name for the ComponentInstallation data file
-        installation_datafile_ = get_opts.opt_arg ();
-        break;
-
-      case 's':  // get the section name to use in ComponentInstallation data file
-        section_name_ = get_opts.opt_arg ();
-        break;
-
       case 'c':  // get the default svc.conf filename for ComponentServer
         default_svcconf_ = get_opts.opt_arg ();
-        break;
+      break;
 
       case 'm':  // get the svc.conf map configuration filename
         svcconf_config_ = get_opts.opt_arg ();
-        break;
+      break;
 
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
-                           "-n <component server pathname>\n"
                            "-o <ior_output_file>\n"
-                           "-d <time (in second) to wait for component server>\n"
+                           "-c <svc.conf file>\n"
                            "-i <installation data filename>\n"
-                           "-s <section name to use in installation data file>\n"
                            "\n",
                            argv [0]),
                           -1);
@@ -161,74 +130,12 @@ main (int argc, char *argv[])
       // Implicit activation
       CIAO::NodeDaemon_var daemon = daemon_servant->_this ();
 
-      // Create and install the ComponentInstallation servant
-
-      CIAO::ComponentInstallation_Impl *installation_servant = 0;
-
-      ACE_NEW_RETURN (installation_servant,
-                      CIAO::ComponentInstallation_Impl (orb.in (),
-                                                        poa.in ()),
-                      -1);
-
-      installation_servant->init (installation_datafile_,
-                                  section_name_
-                                  ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::ServantBase_var safe_installation (installation_servant);
-
-      Components::Deployment::ComponentInstallation_var installation
-        = installation_servant->_this ();
-
-      CORBA::String_var str = orb->object_to_string (installation.in ()
+      CORBA::String_var str = orb->object_to_string (daemon.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind ("ComponentInstallation", str.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind ("NodeManager", str.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      //@@ Is the binding with the Daemon really necessary? --Tao
-      // This turned out to be for the debug purpose.
-      if (daemon_servant->bind ("ComponentInstallation", installation.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to register ComponentInstallation with CIAO Daemon\n"),
-                          -1);
-
-      // Create and install the NodeApplicationManager servant
-      //@@ Node CIAO_NodeApplicationManager got actually created.
-      CIAO::CIAO_NodeApplicationManager_Impl *nam_servant = 0;
-
-      ACE_NEW_RETURN (nam_servant,
-                      CIAO::CIAO_NodeApplicationManager_Impl (orb.in (),
-							      poa.in ()),
-                      -1);
-
-      nam_servant->init (comserv_path_,
-			 spawn_wait_,
-			 str.in (),
-			 default_svcconf_,
-			 svcconf_config_
-			 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      PortableServer::ServantBase_var safe_nam (nam_servant);
-
-      //Do we need a narrow/_is_a here? Maybe the client side verification is enough.
-      Deployment::NodeApplicationManager_ptr nam
-        = nam_servant->_ciao_get_objref ();
-
-      str = orb->object_to_string (nam
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      adapter->bind ("NodeApplicationManager", str.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      //@@ Again, is this necessary? For debugging.
-      if (daemon_servant->bind ("NodeApplicationManager", nam) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to register NodeApplicationManager with CIAO NodeDaemon\n"),
-                          -1);
 
       // Now register daemon with IOR table and write its IOR.
       str = orb->object_to_string (daemon.in ()

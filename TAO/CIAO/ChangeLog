@@ -1,3 +1,21 @@
+Fri May 21 20:12:43 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/NodeManager/NodeDaemon.idl:
+        * DnC/NodeManager/NodeDaemon.mpc:
+        * DnC/NodeManager/NodeDaemon_Impl.h:
+        * DnC/NodeManager/NodeDaemon_Impl.cpp:
+        * DnC/NodeManager/Node_Daemon.cpp:
+        * DnC/NodeManager/NodeApplicationManager_Impl.h:
+        * DnC/NodeManager/NodeApplicationManager_Impl.cpp:
+
+          Updated these files inline with the Specification i.e. removed
+          un-necessary methods along with making the
+          NodeApplicationManager a CORBA::Object rather than a CORBA
+          server. In this case, the NodeManager, i.e. the NodeDaemon, will
+          share the same ORB with the the Application Manager. Further,
+          the mpc file was updated to make things compile and link
+          properly.
+
 Thu May 20 23:29:54 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.xsd:

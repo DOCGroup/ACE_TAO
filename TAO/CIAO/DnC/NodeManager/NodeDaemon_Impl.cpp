@@ -2,9 +2,14 @@
 
 #include "NodeDaemon_Impl.h"
 
-#if !defined (__ACE_INLINE__)
-# include "NodeDaemon_Impl.inl"
-#endif /* __ACE_INLINE__ */
+CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
+                                        CORBA::ORB_ptr orb,
+                                        PortableServer::POA_ptr poa)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    name_ (CORBA::string_dup (name))
+{
+}
 
 CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
 {
@@ -35,22 +40,6 @@ CIAO::NodeDaemon_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::string_dup (this->name_.in ());
 }
 
-CORBA::Object_ptr
-CIAO::NodeDaemon_Impl::get_service (const char * svc_name
-				    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CIAO::NotFound))
-{
-  CORBA::Object_ptr found = CORBA::Object::_nil ();
-
-  this->table_.find (svc_name, found);
-
-  if (CORBA::is_nil (found))
-    ACE_THROW_RETURN (CIAO::NotFound (), 0);
-
-  return CORBA::Object::_duplicate (found);
-}
-
 void
 CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -61,7 +50,7 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 int
 CIAO::NodeDaemon_Impl::bind (const char *id,
-                         CORBA::Object_ptr obj)
+                             CORBA::Object_ptr obj)
 {
   // Make sure that the supplied Object reference is valid,
   // i.e. not nil.
@@ -113,13 +102,12 @@ CIAO::NodeDaemon_Impl::unbind (const char *id)
   return result;
 }
 
-
+///////////////////////////////////////////////////////////////////////
 void
-CIAO::NodeDaemon_Impl::
-joinDomain (const Deployment::Domain & domain,
-	    Deployment::TargetManager_ptr manager,
-	    Deployment::Logger_ptr log
-	    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & domain,
+                                   Deployment::TargetManager_ptr manager,
+                                   Deployment::Logger_ptr log
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Implementation undefined.
@@ -128,8 +116,7 @@ joinDomain (const Deployment::Domain & domain,
 
 
 void
-CIAO::NodeDaemon_Impl::
-leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Implementation undefined.
@@ -137,25 +124,21 @@ leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 
 ::Deployment::NodeApplicationManager_ptr
-CIAO::NodeDaemon_Impl::
-preparePlan (const Deployment::DeploymentPlan & plan
-	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException
-		   , Deployment::StartError
-		   , Deployment::PlanError
-		   ))
+CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan & plan
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError,
+                   Deployment::PlanError))
 {
   //Implementation undefined.
-  return CORBA::nil();
+  return ::Deployment::NodeApplicationManager::_nil ();
 }
 
 
 void
-CIAO::NodeDaemon_Impl::
-destroyManager (Deployment::NodeApplicationManager_ptr appManager
-		ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException
-		   , Deployment::StopError))
+CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr appManager
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {
-
+  // Empty implementation
 }
