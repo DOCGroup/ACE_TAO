@@ -3921,9 +3921,9 @@ realclean: clean
  Notify/Notify_Factory.h Notify/Notify_Channel_Objects_Factory.h
 
 .obj/Notify_FilterAdmin_i.o .obj/Notify_FilterAdmin_i.so .shobj/Notify_FilterAdmin_i.o .shobj/Notify_FilterAdmin_i.so: Notify/Notify_FilterAdmin_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h \
+ Notify/Notify_FilterAdmin_i.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h \
+ Notify/Notify_ID_Pool_T.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -4269,10 +4269,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h
+ Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
+ Notify/Notify_Event.h Notify/notify_export.h
 
 .obj/Notify_Filter_i.o .obj/Notify_Filter_i.so .shobj/Notify_Filter_i.o .shobj/Notify_Filter_i.so: Notify/Notify_Filter_i.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -4997,7 +4995,7 @@ realclean: clean
  Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp
 
 .obj/Notify_QoSAdmin_i.o .obj/Notify_QoSAdmin_i.so .shobj/Notify_QoSAdmin_i.o .shobj/Notify_QoSAdmin_i.so: Notify/Notify_QoSAdmin_i.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h \
+ Notify/Notify_QoSAdmin_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
@@ -5309,7 +5307,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h
+ Notify/notify_export.h
 
 .obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.so .shobj/Notify_Constraint_Interpreter.o .shobj/Notify_Constraint_Interpreter.so: \
  Notify/Notify_Constraint_Interpreter.cpp \

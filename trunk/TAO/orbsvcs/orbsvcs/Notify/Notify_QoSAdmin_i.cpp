@@ -1,6 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
-#include "orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h"
+#include "Notify_QoSAdmin_i.h"
 
 ACE_RCSID(Notify, Notify_QoSAdmin_i, "$Id$")
 
