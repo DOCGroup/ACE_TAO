@@ -1,29 +1,37 @@
+Tue Apr 24 16:39:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.lst:
+          Add Reliable_Oneways, Blocking_Sync_None, Oneway_Buffering,
+          Big_Oneways, Big_Twoways, Big_Request_Muxing and
+          Queued_Message_Test to the nightly builds.  Most of these tests
+          are part of the 132 regression test suite.
+
 Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Makefile: Refactored some stuff to improve the
-	  ACE subsetting as follows:
-  
+        * ace/Makefile: Refactored some stuff to improve the
+          ACE subsetting as follows:
+
           . Moved Malloc_Instantiations.cpp from libACEUtils to the
-	    component libACE_Memory.
+            component libACE_Memory.
 
-	  . Moved Handle_Set.* to libACE_Utils to satisfy ACE.*
+          . Moved Handle_Set.* to libACE_Utils to satisfy ACE.*
 
-	  . Moved Dynamic_Service_Base to libACE_Svcconf
+          . Moved Dynamic_Service_Base to libACE_Svcconf
 
-	  . Build a new component libACE_Timer with :
-	    Timer_Wheel.*,Timer_Queue.*,Timer_List.*,Timer_Heap.*,Timer_Hash.*
-	    Timeprobe.* Time_Request_Reply.* System_Time.* Profile_Timer.*
-	    High_Res_Timer.* 
-  
+          . Build a new component libACE_Timer with :
+            Timer_Wheel.*,Timer_Queue.*,Timer_List.*,Timer_Heap.*,Timer_Hash.*
+            Timeprobe.* Time_Request_Reply.* System_Time.* Profile_Timer.*
+            High_Res_Timer.*
+
           Thanks to Thomas Groth <groth.th@nord-com.net> for these
- 	  suggestions.
-	
-	* docs/ACE-guidelines.html: Updated the discussion of using
-	  open() rather than constructors.  Thanks to Stan Pinte
- 	  <spinte@latinia.com> for motivating this.
+          suggestions.
 
-	* ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
-	  Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
+        * docs/ACE-guidelines.html: Updated the discussion of using
+          open() rather than constructors.  Thanks to Stan Pinte
+          <spinte@latinia.com> for motivating this.
+
+        * ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
+          Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
 
 Sat Apr 14 10:51:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -67,9 +75,9 @@ Mon Apr 23 13:36:27 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Apr 23 07:08:09 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Based_Pointer_T.h: Updated the documentation to 
-	  explain how ACE_Based_Pointer<T> (NULL) behaves.  Thanks to Tom
- 	  Moog <tmoog@polhode.com> for motivating this.
+        * ace/Based_Pointer_T.h: Updated the documentation to
+          explain how ACE_Based_Pointer<T> (NULL) behaves.  Thanks to Tom
+          Moog <tmoog@polhode.com> for motivating this.
 
 Sun Apr 22 14:26:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 

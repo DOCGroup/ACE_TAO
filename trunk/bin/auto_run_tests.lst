@@ -70,7 +70,18 @@ TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
 # BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
+TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
+TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_timeout.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_timeout_reactive.pl: !MINIMUM
+TAO/tests/Big_Oneways/run_test.pl: !ST
+TAO/tests/Big_Twoways/run_test.pl: !ST
+TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM
 TAO/examples/Buffered_Oneways/run_test.pl: !MINIMUM
+TAO/tests/Queued_Message_Test/Queued_Message_Test
+
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: !MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !SUNCC5_1
