@@ -433,40 +433,7 @@ TAO_Connector::make_mprofile (const char *string,
 }
 
 
-int
-TAO_Connector::find_handler (TAO_Base_Connection_Property *prop,
-                             TAO_Connection_Handler *&handler)
-{
-  // Compose the ExternId
-  TAO_Cache_ExtId ext_id (prop);
-  TAO_Cache_IntId int_id;
 
-  int retval =
-    this->orb_core ()->connection_cache ().find (ext_id,
-                                                 int_id);
-
-  if (retval == 0)
-    {
-      handler = int_id.handler ();
-    }
-
-  return retval;
-}
-
-int
-TAO_Connector::add_handler (TAO_Base_Connection_Property *prop,
-                            TAO_Connection_Handler *handler)
-{
-  // Compose the ExternId & Intid
-  TAO_Cache_ExtId ext_id (prop);
-  TAO_Cache_IntId int_id  (handler);
-
-  int retval =
-    this->orb_core ()->connection_cache ().bind (ext_id,
-                                                 int_id);
-
-  return retval;
-}
 
 // ****************************************************************
 

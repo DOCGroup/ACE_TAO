@@ -1,6 +1,40 @@
 /* -*- C++ -*- */
 //$Id$
 
+
+ACE_INLINE int
+TAO_Connection_Cache_Manager::
+    cache_handler (TAO_Base_Connection_Property *prop,
+                   TAO_Connection_Handler *handler)
+{
+  // Compose the ExternId & Intid
+  TAO_Cache_ExtId ext_id (prop);
+  TAO_Cache_IntId int_id (handler);
+
+  return this->bind (ext_id,
+                     int_id);
+
+}
+
+ACE_INLINE int
+TAO_Connection_Cache_Manager::
+    find_handler (TAO_Base_Connection_Property *prop,
+                  TAO_Connection_Handler *&handler)
+{
+  // Compose the ExternId
+  TAO_Cache_ExtId ext_id (prop);
+  TAO_Cache_IntId int_id;
+
+  int retval = this->find (ext_id,
+                           int_id);
+  if (retval == 0)
+    {
+      handler = int_id.handler ();
+    }
+
+  return retval;
+}
+
 ACE_INLINE int
 TAO_Connection_Cache_Manager::bind (TAO_Cache_ExtId &ext_id,
                                     TAO_Cache_IntId &int_id)

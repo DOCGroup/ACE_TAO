@@ -74,6 +74,17 @@ public:
   virtual ~TAO_Connection_Cache_Manager (void);
   // Destructor
 
+  int cache_handler (TAO_Base_Connection_Property *prop,
+                     TAO_Connection_Handler *handler);
+  // Add the handler to the cache. The handler has the property
+  // definition based on which caching can be done
+
+
+  int find_handler (TAO_Base_Connection_Property *prop,
+                    TAO_Connection_Handler *&handler);
+  // Check the Connection Cache to check whether the connection exists
+  // in the Cache and return the connection
+
   int open (size_t size = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = 0);
   // Initialize a <HASH_MAP> with <size> elements.

@@ -11,6 +11,8 @@
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/IIOP_Transport.h"
+#include "tao/IIOP_Endpoint.h"
+#include "tao/Connection_Cache_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
@@ -141,6 +143,24 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
   // Verify that we can resolve the peer hostname.
   else if (addr.addr_to_string (client, sizeof (client)) == -1)
     return -1;
+
+  // Construct an  IIOP_Endpoint object
+  TAO_IIOP_Endpoint endpoint (addr,
+                              0);
+
+  // Construct a property object
+  TAO_Base_Connection_Property prop (&endpoint);
+
+  // Add the handler to Cache
+  if (this->orb_core ()->connection_cache ().cache_handler (&prop,
+                                                            this) == -1)
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) unable to cache the handle \n")));
+        }
+    }
 
   if (TAO_debug_level > 0)
     {

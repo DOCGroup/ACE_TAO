@@ -25,6 +25,8 @@ TAO_Connection_Cache_Manager::~TAO_Connection_Cache_Manager (void)
   delete this->cache_lock_;
 }
 
+
+
 int
 TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                                       TAO_Cache_IntId &int_id)
