@@ -1,4 +1,4 @@
-#!/bin/sh -f
+#!/bin/sh
 # This is the UNIX version of the one-button ACE tests.
 # Contributed by Michael Rueger <m_rueger@SYSCOMP.DE>
 # mrm@cisco.com - Change to for loop  script could be more generic if we put 
@@ -43,7 +43,8 @@ run()
 
 echo "Starting tests..."
 FILES=`ls *_Test 2>/dev/null`
-if [ "$FILES" = "" ]; then
+
+if [ -z $FILES ]; then
   echo "ERROR: no test programs generated matching pattern *_Test."
   echo "ERROR: Try compiling the test programs first."
   exit 1

@@ -74,7 +74,7 @@ int main( int argc, char *argv[])
   return 1;
 }
 
-trapapp::valid() const 
+int trapapp::valid() const 
 { 
  return valid_; 
 }

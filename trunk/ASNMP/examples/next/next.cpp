@@ -72,7 +72,7 @@ int main( int argc, char *argv[])
   return 1;
 }
 
-nextapp::valid() const 
+int nextapp::valid() const 
 { 
  return valid_; 
 }

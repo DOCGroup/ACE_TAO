@@ -72,7 +72,7 @@ int main( int argc, char *argv[])
   return 1;
 }
 
-walkapp::valid() const 
+int walkapp::valid() const 
 { 
  return valid_; 
 }
@@ -159,8 +159,8 @@ class MibIter {
 };
 
 MibIter::MibIter(Snmp* snmp, Pdu& pdu, UdpTarget *target): 
-  snmp_(snmp), pdu_(pdu), first_(0), 
- valid_(0), target_(target)
+  snmp_(snmp), target_(target), pdu_(pdu), first_(0), 
+ valid_(0)
 {
   // verify we have a valid oid to begin iterating with
   Oid oid;

@@ -77,9 +77,9 @@ ACE_RCSID(tests, Counter64_Test, "$Id$")
 static void TestCounter64()
 {
   static unsigned long ul = ULONG_MAX;
-  LLONG ll =  (LLONG) 0x7fffffffffffffff;
+  LLONG ll =  (LLONG) 0x7fffffffffffffffLL;
   LLONG mll =  (LLONG) ((-ll) - 1);
-  ULLONG ull =  (ULLONG) 0xffffffffffffffff;
+  ULLONG ull =  (ULLONG) 0xffffffffffffffffULL;
   long double ld = (LLONG) ll;
 
   cerr << "max unsigned long long is " << ull << endl;

@@ -38,6 +38,7 @@
 //----[ includes ]-----------------------------------------------------
 // ACE OS Adaption layer
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
