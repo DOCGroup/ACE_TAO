@@ -1,3 +1,8 @@
+Thu Jan  1 17:59:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/OS_NS_Thread.h:
+	  Removed not needed doxygen close group tag
+
 Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.local.GNU:
@@ -15,7 +20,7 @@ Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
           LIB_UNCHECKED, then sets LIB= if sufficient components weren't
           built, but only after we already set CLEANUP_LIB=$LIB.  Which
           meant we ended up not cleaning anything.  Thanks to Bala for
-          noticing the problem and motivating the fix.        
+          noticing the problem and motivating the fix.
 
 Thu Jan  1 16:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
