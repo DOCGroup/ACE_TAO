@@ -255,20 +255,29 @@ void* POA_CORBA::Policy::_downcast (
   return 0;
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+
   TAO_Skeleton skel; // pointer to skeleton for operation
   const char *opname = req.operation (); // retrieve operation name
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
-  {
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
-else
+    {
+      ACE_THROW (CORBA_BAD_OPERATION ());
+    }
+  else
     skel (req, this, context, ACE_TRY_ENV);
-}
+
+#else /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
+  ACE_UNUSED_ARG (req);
+  ACE_UNUSED_ARG (context);
+
+  ACE_THROW (CORBA::BAD_OPERATION ());
+
 #endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+}
 
 const char* POA_CORBA::Policy::_interface_repository_id (void) const
 {

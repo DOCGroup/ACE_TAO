@@ -100,11 +100,7 @@ public:
   class Policy;
   typedef Policy *Policy_ptr;
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   class TAO_Export  Policy :  public virtual TAO_ServantBase
-#else
-  class TAO_Export  Policy :  public virtual TAO_Local_ServantBase
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   {
   protected:
     Policy (void);
@@ -169,6 +165,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -176,7 +173,6 @@ public:
         CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     CORBA_Policy_ptr _this (
         CORBA_Environment &ACE_TRY_ENV =
