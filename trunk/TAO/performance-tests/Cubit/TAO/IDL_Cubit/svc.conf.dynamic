@@ -1,9 +1,8 @@
 # $Id$
 #
 # Please see $TAO_ROOT/docs/Options.html for details on these options.
-# You must build TAO with TAO_USES_STATIC_SERVICE defined in order
-# to use this file.
+#
 
-static TAO_Resource_Factory "-ORBresources global -ORBreactorlock null"
-static TAO_Default_Client_Strategy_Factory "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
-static TAO_Default_Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null"
+dynamic Resource_Factory Service_Object * TAO:_make_TAO_Resource_Factory() "-ORBresources global -ORBreactorlock null"
+dynamic Client_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Client_Strategy_Factory() "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
+dynamic Server_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Server_Strategy_Factory() "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null"
