@@ -161,7 +161,7 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
       //    IOR, i.e. secure invocation policies on a per-object
       //    basis, rather than on a per-endpoint basis.  If no secure
       //    invocation policies have been set then we should use the
-      //    below default SSLIOP::SSL component.      
+      //    below default SSLIOP::SSL component.
       cdr << this->ssl_component_;
 
       // TAO extension, replace the contents of the octet sequence with
@@ -235,7 +235,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
           return -1;
         }
 
-      if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+      if (this->orb_core_->orb_params ()->std_profile_components () != 0)
         {
           ssliop_profile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
 
