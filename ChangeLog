@@ -1,3 +1,250 @@
+Sat Jan  1 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated VxWorks instructions and some other small improvements
+
+        * ace/Activation_Queue.h:
+        * ace/Active_Map_Manager.h:
+        * ace/Arg_Shifter.h:
+        * ace/Lib_Find.h:
+        * ace/Local_Memory_Pool.h:
+        * ace/Pipe.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Hash_T.h:
+          Doxygen improvements
+
+        * ace/Async_Acceptor.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+          Just check for msvc, not for _MSC_VER > 1020, that version is really
+          ancient and we always have a bigger version number
+
+        * ace/config-all.h:
+          When ACE_HAS_VERBOSE_NOTSUP is defined, we use ACE_OS::fprintf, so
+          always include OS_NS_stdio.h, it doesn't work to include cstdio. This
+          fixes compile problems with VxWorks when ACE_HAS_VERBOSE_NOTSUP is
+          defined. Also there is no need to include vxWorks.h for VxWorks.
+
+        * ace/Configuration.cpp (create_index):
+          Improved error message to make clear something went wrong
+
+        * ace/Dirent.cpp:
+        * ace/OS_Memory.cpp:
+        * ace/OS_TLI.cpp:
+          Removed construction to silence the HP aCC compiler, empty cpp
+          files are used a lot in the ACE_OS files and there it is not needed,
+          so zap it here.
+
+        * ace/MMAP_Memory_Pool.h:
+          Define private copy constructor and assignment operator for
+          ACE_MMAP_Memory_Pool_Options. This class contains pointers
+          it is not allowed to copy them, so prevent that.
+
+        * ace/Naming_Context.cpp:
+          Replaced ACE cast macro with the C++ version. Just don't use argv[0]
+          without checking argc in the parse_args method. Under VxWorks it can
+          happen that argc and argv are 0, so reading argv[0] returns random
+          memory. When argc = 0, then we just don't have a program name
+
+        * ace/OS_Errno.h:
+          Prevent copying of ACE_Errno_Guard
+
+        * ace/UUID.cpp:
+          Added missing \n in several ACE_DEBUG statements
+
+        * ace/OS_Log_Msg_Attributes.h:
+          Prevent copying of ACE_OS_Log_Msg_Attributes
+
+        * ace/config-lite.h:
+          VxWorks deliver also a pthread implementation. This can be used by
+          defined ACE_HAS_PTHREADS, but when this is set, we don't need some
+          special VxWorks types, so changed some checks for VXWORKS to
+          VXWORKS && !defined ACE_HAS_PTHREADS
+
+        * ace/OS_NS_stropts.inl:
+        * ace/OS_NS_arpa_inet.inl:
+        * ace/Service_Object.cpp:
+        * ace/String_Base.cpp:
+        * ace/OS_NS_stdlib.inl:
+          Replaced c-style cast with C++ cast
+
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_time.cpp:
+        * ace/Pipe.cpp:
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+          Replaced ACE cast macros with C++ casts
+
+        * ace/Default_Constants.h:
+          Added ACE_LIB_TEXT to ACE_DEFAULT_SERVER_PORT_STR to fix compile
+          errors in Unicode builds
+
+        * ace/OS_Memory.h:
+          Removed not needed check for borland
+
+        * ace/OS_NS_sys_wait.inl:
+          Added ACE_LACKS_WAIT and ACE_LACKS_WAITPID, these defines are set
+          in the needed config files to determine if the OS has wait and
+          waitpid
+
+        * ace/config-chorus.h:
+          Added ACE_LACKS_WAIT
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_WAIT, ACE_LACKS_SOCKETPAIR and ACE_LACKS_DUP2
+
+        * ace/OS_NS_signal.h:
+          Removed commented out typedefs
+
+        * ace/OS_NS_sys_socket.inl:
+          Replaced C style cast with C++ const_cast and in socketpair
+          just only check for ACE_LACKS_SOCKETPAIR, this define is now
+          also set for win32
+
+        * ace/OS_NS_unistd.inl (dup2):
+          Check for ACE_LACKS_DUP2 instead for specific OS defines
+
+        * ace/Time_Value.h:
+          Prevent copying of ACE_Countdown_Time
+
+        * ace/config-g++-common.h:
+          Cleaned up this file, removed code for pre 2.8 versions of gcc, these
+          are already dropped with the x.4 release. Makes maintenance a lot
+          easier.
+
+        * ace/config-vxworks5.x.h:
+          Added several defines, detect pentium or not on the CPU define that
+          is set. Make several defines dependent on ACE_HAS_PTHREADS, when this
+          is set, we want to use the pthread library of VxWorks.
+
+        * ace/config-psosim-g++.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab-mips.h:
+          Added ACE_LACKS_WAIT, ACE_LACKS_WAITPID and ACE_LACKS_DUP2
+
+        * ace/config-integritySCA.h:
+          Added ACE_LACKS_WAIT, ACE_LACKS_WAITPID
+
+        * ace/OS_NS_time.inl:
+          VxWorks defines asctime_r and ctime_r but with a 3rd size_t*,
+          this is not according to the spec, so a new define
+          ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R is added on which we
+          can determine to use this variant of asctime_r and ctime_r.
+          A support request to WindRiver has been make to get these
+          methods spec compliant in newer versions of VxWorks.
+
+        * ace/Object_Manager_Base.{h,cpp}:
+          Replaced ACE cast macros with C++ casts, use unsigned int instaead
+          of u_int because u_int is not defined with VxWorks when using
+          the pthread support
+
+        * ace/README:
+          Documented the new defines
+
+        * ace/OS_NS_string.{h,cpp,inl}:
+        * ace/config-doxygen.h:
+        * configure.ac:
+          Removed ACE_LACKS_STRCHR and ACE_LACKS_STRCSPN and the related
+          code, these defines aren't set in any config file so the emulation
+          is not needed anymore
+
+        * ace/Log_Msg.cpp:
+          When a buffer overflow has occured, just don't log anything anymore,
+          when for example a backend is used, the pointer to that backend
+          can also be corrupted. So, just only log when there is no overflow.
+
+        * ace/SOCK_Dgram_Bcast.cpp:
+          Replaced ACE cast with C++ cast, also handle VxWorks specially and
+          when setsockopt fails, use ACE_ERROR_RETURN to return -1 and log an
+          error message so that the log explains what goes wrong.
+
+        * ace/os_include/os_time.h:
+          VxWorks doesn't have 2 arg ctime_r and asctime_r
+
+        * ace/os_include/os_signal.h:
+          Don't include sigLib.h with VxWorks when ACE_HAS_PTHREADS is defined
+
+        * ace/Malloc_T.h:
+          Moved ACE_Malloc_Lock_Adapter_T to the end of this file to prevent
+          compile problems with VxWorks.
+
+        * ace/OS_NS_sys_shm.cpp:
+          Removed some code that was already marked as not used.
+
+        * ace/OS_NS_Thread.{h,cpp,inl}:
+          Removed old code that was guarded using ifdef 0. Don't use
+          ACE_OS_TRACE in thr_getspecific_native because this method is
+          used in the trace functionality and are tracing again in this
+          macro, so we get a stack overflow. Changed several checks for
+          VxWorks to include ACE_HAS_PTHREADS. Made several methods
+          smaller by combining includes and reducing duplicated code.
+          Replaced ACE casts with C++ casts.
+
+        * ace/OS_NS_stdlib.cpp:
+          Just include os_limits.h instead of limits directly
+
+        * ace/os_include/os_limits.h:
+          Dependent on ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB include
+          limits or limits.h, just as we do for new
+
+        * ace/Unbounded_Set.{h,cpp}:
+          Doxygen update and return a Unbounded_Set& from the operator=
+          to allow chaining.
+
+        * examples/Misc/test_trace.cpp:
+          Replaced variable with name _ by trace, this fixes compile warning
+          with VxWorks.
+
+        * tests/UPIPE_SAP_Test.cpp:
+        * tests/Conn_Test.cpp:
+          Removed explicit template instantiations for Borland C++, we don't use
+          that.
+
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+          Replaced argv[0] with fixed program name, because argc could be zero
+          with VxWorks and then we get a crash when using argv[0].
+
+        * tests/Config_Test.cpp:
+          Logged an error if tests.reg can't be opened.
+
+        * tests/FIFO_Test.cpp:
+          Only run this test when ACE_LACKS_MKFIFO is not defined, other
+          platforms then win32 also can lack this. Replaced ACE casts with
+          C++ casts.
+
+        * tests/Log_Msg_Test.cpp:
+          Don't try to overflow the log buffer with VxWorks, this will result
+          in a crash and then the rest of this test is not done.
+
+        * tests/MT_Reactor_Timer_Test.cpp:
+          Rewrote this test a little to use ACE_ERROR instead of ACE_ASSERT,
+          under VxWorks the log files are only written at the moment the
+          tests ends normally and with the ACE_ASSERT we just didn't get
+          a log file, with the ACE_ERROR we get one and can look better why
+          it fails under VxWorks.
+
+        * tests/Signal_Test.cpp:
+          Replace ACE casts with C++ casts and changed the return types of the
+          thread functions to fix compile errors with VxWorks.
+
+        * tests/run_test.lst:
+          Enabled some more tests for VxWorks.
+
+        * tests/run_test.pl:
+          Added .out to the program names generated in the VxWorks script
+
 Fri Dec 31 15:23:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Service_Config.cpp:
