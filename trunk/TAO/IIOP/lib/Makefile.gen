@@ -1,0 +1,13 @@
+# @(#)Makefile.gen	1.4 95/09/10
+# ORB library Makefile
+#
+
+include		$(ROOT)/Makefile.conf
+
+CPPFLAGS +=	-I$(ROOT)/lib
+CCFLAGS +=	-pic
+
+default:	$(FILES:%.cpp=../obj/%.o)
+
+../obj/%.o :	%.cpp
+	$(COMPILE.cc) $(OUTPUT_OPTION) -o $@ $<
