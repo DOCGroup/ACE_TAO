@@ -168,7 +168,8 @@ ACE_Task_Base::activate (long flags,
 			 int force_active,
 			 long priority,
 			 int grp_id,
-			 ACE_Task_Base *task)
+			 ACE_Task_Base *task,
+			 ACE_hthread_t thread_handles[])
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
@@ -196,7 +197,8 @@ ACE_Task_Base::activate (long flags,
 					   flags,
 					   priority,
 					   grp_id,
-					   task);
+					   task,
+					   thread_handles);
   if (this->grp_id_ == -1)
     return -1;
   else
