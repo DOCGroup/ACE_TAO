@@ -1,6 +1,6 @@
 // $Id$
 
 workspace {
-  ./Config_Handlers
   Deployment.mpc
+  ./Config_Handlers
 }
