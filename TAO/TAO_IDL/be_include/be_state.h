@@ -255,4 +255,22 @@ public:
 typedef ACE_Singleton<be_state_attribute, ACE_SYNCH_RECURSIVE_MUTEX>
 	TAO_BE_STATE_ATTRIBUTE;
 
+class be_state_exception : public be_state
+{
+  // =TITLE
+  // be_state_exception
+  // =DESCRIPTION
+  // exception code generation
+public:
+  be_state_exception (void);
+  // constructor
+
+  virtual int gen_code (be_type *bt, be_decl *d, be_type *type=0);
+  // code generation for node "d" whose type is "bt". The third
+  // parameter is used for recursive invocation involving a typedef
+};
+
+typedef ACE_Singleton<be_state_exception, ACE_SYNCH_RECURSIVE_MUTEX>
+	TAO_BE_STATE_EXCEPTION;
+
 #endif /* end of be_state */

@@ -1,17 +1,37 @@
+Thu Dec 11 14:06:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_exception,be_state_exception}.cpp: Support for
+	exceptions added. Added a new file called
+	"be_state_exception.cpp".
+
+	* TAO_IDL/be_include/be_state.h: Added a new singleton for
+	be_state_exception.
+
+	* TAO_IDL/be/be_state.cpp: Template instantiations for
+	be_state_exception.
+
+	* TAO/docs/releasenotes/index.html: Updated to include exception
+	support.
+
+	* TAO/tao/except.{h,cpp}: Moved the TypeCode member from the
+	private section to the protected section so that derived classes
+	can set it. Also, changed the variable from _type to type_ to
+	stick to the ACE design standards.
+
 Thu Dec 11 00:01:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO version 0.0.42, released Thu Dec 11 00:01:41 1997.
 
 Wed Dec 10 23:04:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
 	  Still struggling with g++, it seems to use the wrong cast for
 	  IDL generated T_out classes.
 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Logger/clnt.cpp: 
-	* orbsvcs/tests/Logger/clnt.h: 
-	* orbsvcs/tests/Logger/svr.cpp: 
+	* orbsvcs/tests/Logger/Makefile:
+	* orbsvcs/tests/Logger/clnt.cpp:
+	* orbsvcs/tests/Logger/clnt.h:
+	* orbsvcs/tests/Logger/svr.cpp:
 	  These files were missed in the orbsvcs hierarchy
 	  reorganization.
 
