@@ -1127,38 +1127,41 @@ Please submit corrections, additions, or clarifications to the
 the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
 
 A few additional Windows Notes, from Paul von Behren:<p>
-<UL>
-  <LI>Cygnus has created a Win32 API which is compatible with a
+<ul>
+  <li>Cygnus has created a Win32 API which is compatible with a
       ``generic'' Unix environment.  Using this library, they have ported a
       large collection of GNU tools to WinNT/95 - including a port of
       gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">
       http://www.cygnus.com/misc/gnu-win32/</A>
       WindRiver provides a subset of these tools - including make
       and gcc cross-compilers.<p>
-  <LI>To set up the command-prompt build environemnt, run
+  <li>To set up the command-prompt build environemnt, run
       <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
       implicitly within the Tornado IDE.<p>
-  <LI>To run <code>ace_ld</code>, you still need perl installed -
+  <li>To run <code>ace_ld</code>, you still need perl installed -
       see <A href="http://www.activestate.com/software/default.htm">
       http://www.activestate.com/software/default.htm</A> for Windows
       perl.<p>
-  <LI>There's a bug in the windows port of Make (or at least an
-      incompatability) related to ACE Make's directory-spanning
-      logic (<code>ACE_ROOT\include\makeinclude\rules.nested.GNU</code>
-      (the error message says something about "dir unexpected").<p>
-  <LI>But make does work in "leaf" directories (those with no
-      subdirectries).  You can make the <code>ACE_ROOT\ace directory</code>
+  <li>There's a incompatibility between the NT command shell and ACE make's
+      directory-spanning logic in
+      <code>ACE_ROOT\include\makeinclude\rules.nested.GNU</code>
+      (the error message says something about "dir unexpected").
+      <a href="mailto:Dave_Steele@Mitel.COM">Dave Steele</a> reports
+      that it does not happen when using bash.  He notes:  the problem is
+      with the implementation of the "for" command in the NT command shell
+      - it expects variables in the form "%i" rather than "dir".<p>
+  <li>But make does work in "leaf" directories (those with no
+      subdirectories).  You can make the <code>ACE_ROOT\ace directory</code>
       creating the library libACE.a.  If perl is available, make also works
-      in the ACE_ROOT\tests directory (ignore the final error
-      attempting to run /bin/true).<p>
-  <LI>The Tornado IDE will use a standard Makefile for project
+      in the ACE_ROOT\tests directory.<p>
+  <li>The Tornado IDE will use a standard Makefile for project
       builds, but does not have a GUI interface for managing the
       Makefile.  By default, it will use rules from Makefile in the current
       directory and you can configure it to add certain Makefile
       targets to the project.  If you have <code>ACE_ROOT</code> defined
       before starting Tornado, you can specify an ACE Makefile as a Tornado
       target and Tornado will then call make from the menu.<p>
-</UL>
+</ul>
 
 And Chris Ryan's instructions for building for VxWorks targets
 on Windows NT hosts:
