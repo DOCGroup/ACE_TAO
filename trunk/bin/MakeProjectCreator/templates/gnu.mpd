@@ -107,15 +107,13 @@ $(OUTPUT_DIRECTORY):
 	-@mkdir -p "$(OUTPUT_DIRECTORY)"
 
 <%if(sharedname || staticname || exename)%>
-<%if(libs)%>
-<%if(libpaths)%>
+<%if(libs && libpaths)%>
 LIBCHECK = $(shell for lib in <%libs%>; do for libpath in <%libpaths%>; do full="`echo $$libpath/lib$$lib.* $$libpath/$$lib.lib | tr ' ' '\012' | grep -v \* | head -1`"; if [ -r "$$full" ]; then break; else full=; fi; done; if [ -z "$$full" ]; then echo $$lib; exit; fi; done; echo 1)
-<%endif%>
+<%else%>
+LIBCHECK = 1
 <%endif%>
 <%endif%>
 <%if(!exename)%>
-<%if(libs)%>
-<%if(libpaths)%>
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
 <%endfor%>
@@ -153,8 +151,6 @@ else
   all: require_warning
 endif
 <%endfor%>
-<%endif%>
-<%endif%>
 
 <%if(tagname)%>
 ifeq (,$(<%tagname%>))
@@ -222,8 +218,6 @@ endif
 <%endif%>
 <%endif%>
 <%if(exename)%>
-<%if(libs)%>
-<%if(libpaths)%>
 <%foreach(requires)%>
 ifeq ($(<%require%>),1)
 <%endfor%>
@@ -245,8 +239,6 @@ else
   all: require_warning
 endif
 <%endfor%>
-<%endif%>
-<%endif%>
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
