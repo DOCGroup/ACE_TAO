@@ -1,3 +1,10 @@
+Sat Feb 17 13:26:17 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/POSIX_Asynch_IO.cpp (thread_function): Zapped the unused
+	  result local variable and also changed the logic to bailout if
+ 	  handle_events() returns -1.  This fixes a warning reported by
+ 	  KCC.
+
 Fri Feb 16 17:39:16 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
         * ace/config-qnx-rtp.h: Commented out ACE_HAS_NONSTATIC_OBJECT_MANAGER. 
