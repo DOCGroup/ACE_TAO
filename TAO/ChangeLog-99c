@@ -1,8 +1,28 @@
+Mon Jan 18 22:01:13 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+	* orbsvcs/tests/CosEC_Multiple/run_test.pl
+	  Added this script to run the test.
+	  This is still *under construction*.
+	* orbsvcs/tests/CosEC_Multiple/README:
+          Updated the README to reflect all the new options.
+	* orbsvcs/tests/CosEC_Multiple/CosECConsumer{.h,cpp}:
+	  Added an <event_count> parameter.
+	* orbsvcs/tests/CosEC_Multiple/CosECSupplier{.h,cpp}:
+	  Added an <event_count> parameter.
+	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
+	  modified the <shutdown> method to check for nil pointer.
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	  1. Removed the code to [un]register the local scheduler with
+	  the naming service.This fixed the "-s global option not working" bug.
+	  2. Modified the <init_SupplierQOS> method to scan for just 1 pair
+	    of {sourceid, event type} from the command line.
+	* orbsvcs/CosEvent_Service/README:
+	  Updated the README to reflect all the new options.
+
 Mon Jan 18 17:37:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Channel_Clients.h: 
-	* orbsvcs/orbsvcs/Event/Channel_Clients.i: 
-	* orbsvcs/orbsvcs/Event/Channel_Clients_T.i: 
+	* orbsvcs/orbsvcs/Channel_Clients.h:
+	* orbsvcs/orbsvcs/Event/Channel_Clients.i:
+	* orbsvcs/orbsvcs/Event/Channel_Clients_T.i:
 	  There was an horrible confusion with this files. I removed some
 	  obsolote versions and fixed an include.  Thanks to Jeff
 	  Olszewski <jolszewski@std.saic.com> for pointing this out.
