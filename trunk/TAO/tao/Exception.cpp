@@ -3,17 +3,17 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
+#include "Exception.h"
+#include "Typecode.h"
+#include "Environment.h"
+#include "Any.h"
+#include "CDR.h"
+#include "ORB.h"
+#include "ORB_Core.h"
+#include "Any_SystemException.h"
+
 #include "ace/streams.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/Malloc_Allocator.h"
-#include "tao/Exception.h"
-#include "tao/Typecode.h"
-#include "tao/Environment.h"
-#include "tao/Any.h"
-#include "tao/CDR.h"
-#include "tao/ORB.h"
-#include "tao/ORB_Core.h"
-#include "tao/Dynamic_Adapter.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"
@@ -1083,6 +1083,15 @@ static char *repo_id_array [] = {
       0
   };
 
+
+TAO::excp_factory excp_array [] = {
+#define TAO_SYSTEM_EXCEPTION(name) \
+      &CORBA::name::_tao_create,
+      STANDARD_EXCEPTION_LIST
+#undef  TAO_SYSTEM_EXCEPTION
+      0
+    };
+
 void
 TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -1132,16 +1141,6 @@ CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id
                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
-  typedef CORBA::SystemException* (*funcp)(void);
-
-    funcp excp_array [] = {
-#define TAO_SYSTEM_EXCEPTION(name) \
-      &CORBA::name::_tao_create,
-      STANDARD_EXCEPTION_LIST
-#undef  TAO_SYSTEM_EXCEPTION
-      0
-    };
-
   for (CORBA::ULong i = 0;
        i < array_sz;
        ++i)
@@ -1260,54 +1259,10 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-template<> \
-CORBA::Boolean \
-TAO::Any_Dual_Impl_T<CORBA::name >::marshal_value (TAO_OutputCDR &cdr) \
-{ \
-  ACE_TRY_NEW_ENV \
-    { \
-      this->value_->_tao_encode (cdr \
-                                 ACE_ENV_ARG_PARAMETER); \
-      ACE_TRY_CHECK; \
-      return 1; \
-    } \
-  ACE_CATCHANY \
-    { \
-    } \
-  ACE_ENDTRY; \
-  return 0; \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
-template<> \
-CORBA::Boolean \
-TAO::Any_Dual_Impl_T<CORBA::name >::demarshal_value (TAO_InputCDR &cdr) \
-{ \
-  ACE_TRY_NEW_ENV \
-    { \
-      this->value_->_tao_decode (cdr \
-                                 ACE_ENV_ARG_PARAMETER); \
-      ACE_TRY_CHECK; \
-      return 1; \
-    } \
-  ACE_CATCHANY \
-    { \
-    } \
-  ACE_ENDTRY; \
-  return 0; \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-#define TAO_SYSTEM_EXCEPTION(name) \
 void \
 CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
 { \
-  TAO::Any_Dual_Impl_T<CORBA::name >::insert_copy ( \
+  TAO::Any_SystemException::insert_copy ( \
       any, \
       CORBA::name ::_tao_any_destructor, \
       CORBA::_tc_ ## name, \
@@ -1322,7 +1277,7 @@ STANDARD_EXCEPTION_LIST
 void \
 CORBA::operator<<= (CORBA::Any &any, CORBA::name *ex) \
 { \
-  TAO::Any_Dual_Impl_T<CORBA::name >::insert ( \
+  TAO::Any_SystemException::insert ( \
       any, \
       CORBA::name ::_tao_any_destructor, \
       CORBA::_tc_ ## name, \
@@ -1338,12 +1293,12 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
                             const CORBA::name *&ex) \
 { \
   return \
-    TAO::Any_Dual_Impl_T<CORBA::name >::extract ( \
+    TAO::Any_SystemException::extract ( \
         any, \
         CORBA::name ::_tao_any_destructor, \
         CORBA::_tc_ ## name, \
-        ex \
-      ); \
+        (const CORBA::SystemException *&) ex, \
+        &CORBA::name ::_tao_create); \
 }
 
 STANDARD_EXCEPTION_LIST
