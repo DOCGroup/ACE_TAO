@@ -8,7 +8,7 @@ ACE_ROOT = $(top_srcdir)/..
 
 ## Makefile.TAO_IDL_FE.am
 
-lib_LTLIBRARIES = libTAO_IDL_FE.la
+noinst_LTLIBRARIES = libTAO_IDL_FE.la
 
 libTAO_IDL_FE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -86,12 +86,6 @@ libTAO_IDL_FE_la_SOURCES = \
   util/utl_string.cpp \
   util/utl_strlist.cpp
 
-libTAO_IDL_FE_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_IDL_FE_la_LIBADD = \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 noinst_HEADERS = \
   fe/y.tab.h \
   include/TAO_IDL_FE_Export.h \
@@ -165,7 +159,7 @@ noinst_HEADERS = \
 
 ## Makefile.TAO_IDL_BE.am
 
-lib_LTLIBRARIES += libTAO_IDL_BE.la
+noinst_LTLIBRARIES += libTAO_IDL_BE.la
 
 libTAO_IDL_BE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -260,13 +254,6 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_valuetype.cpp \
   be/be_visitor_valuetype_fwd.cpp
 
-libTAO_IDL_BE_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_IDL_BE_la_LIBADD = \
-  libTAO_IDL_FE.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
 noinst_HEADERS += \
   be_include/TAO_IDL_BE_Export.h \
   be_include/be_argument.h \
@@ -352,7 +339,6 @@ noinst_HEADERS += \
   be_include/be_visitor_valuetype_fwd.h
 
 ## Makefile.TAO_IDL_EXE.am
-
 bin_PROGRAMS = tao_idl
 
 tao_idl_CPPFLAGS = \
@@ -360,7 +346,8 @@ tao_idl_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(srcdir)/include \
   -I$(srcdir)/be_include \
-  -I$(srcdir)/fe
+  -I$(srcdir)/fe \
+  -DTAO_IDL_INCLUDE_DIR="\"$(includedir)/tao\""
 
 tao_idl_SOURCES = \
   driver/drv_args.cpp \

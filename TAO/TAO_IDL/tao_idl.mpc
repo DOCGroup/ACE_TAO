@@ -16,6 +16,10 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
     optimize =
   }
 
+  specific(automake) {
+    macros += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
+  }
+
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
