@@ -657,126 +657,133 @@ CORBA_ORB::multicast_query (char *buf,
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
   ACE_SOCK_Stream stream;
+  ACE_SOCK_Dgram dgram;
+
+  ssize_t result = 0;
 
   // Bind listener to any port and then find out what the port was.
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "acceptor.open () || "
-                       "acceptor.get_local_addr () failed"),
-                      -1);
-
-  // Send a Multicast with service name and a port no.
-  ACE_SOCK_Dgram dgram;
-
-  // This starts out initialized to all zeros!
-  ACE_INET_Addr multicast_addr (port,
-                                ACE_DEFAULT_MULTICAST_ADDR);
-
-  // Open the datagram.
-  if (dgram.open (ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open the Datagram!\n"),
-                      -1);
-
-  // Convert the port that we are listening at to Network Byte Order.
-  ACE_UINT16 response_port =
-    ACE_HTONS (my_addr.get_port_number ());
-
-  // Length of data to be sent. This is sent as a header.
-  CORBA::Short data_len =
-    ACE_HTONS (sizeof (ACE_UINT16) + ACE_OS::strlen (service_name));
-
-  // Vector to be sent.
-  const int iovcnt = 3;
-  iovec iovp[iovcnt];
-
-  // The length of data to be sent.
-  iovp[0].iov_base = (char *) &data_len;
-  iovp[0].iov_len  = sizeof (CORBA::Short);
-
-  // The port at which we are listening.
-  iovp[1].iov_base = (char *) &response_port;
-  iovp[1].iov_len  = sizeof (ACE_UINT16);
-
-  // The service name string.
-  iovp[2].iov_base = (char *) service_name;
-  iovp[2].iov_len  = ACE_OS::strlen (service_name);
-
-  // Send the multicast.
-  ssize_t result = dgram.send (iovp,
-                               iovcnt,
-                               multicast_addr);
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "\nsent multicast request."));
-
-  // Check for errors.
-  if (result == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "error sending IIOP multicast"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "acceptor.open () || "
+                  "acceptor.get_local_addr () failed"));
+      result = -1;
+    }
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n%s; Sent multicast."
-                    "# of bytes sent is %d.\n",
-                    __FILE__,
-                    result));
-
-      // Wait for response until
-      // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
-      ACE_Time_Value tv (timeout == 0
-                         ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-                         : *timeout);
-
-      // Accept reply connection from server.
-      if (acceptor.accept (stream,
-                           0,
-                           &tv) == -1)
+      // This starts out initialized to all zeros!
+      ACE_INET_Addr multicast_addr (port,
+                                    ACE_DEFAULT_MULTICAST_ADDR);
+      // Open the datagram.
+      if (dgram.open (ACE_Addr::sap_any) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%p\n",
-                      "multicast_query: unable to accept"));
+                      "Unable to open the Datagram!\n"));
           result = -1;
         }
       else
         {
-          // Receive the IOR.
-          result = stream.recv (buf,
-                                BUFSIZ,
-                                0,
-                                timeout);
-          // Close socket now.
-          stream.close ();
+          // Convert the port we're listening on into network byte
+          // order.
+          ACE_UINT16 response_port =
+            ACE_HTONS (my_addr.get_port_number ());
+
+          // Length of data to be sent. This is sent as a header.
+          CORBA::Short data_len =
+            ACE_HTONS (sizeof (ACE_UINT16) 
+                       + ACE_OS::strlen (service_name)); 
+
+          // Vector to be sent.
+          const int iovcnt = 3;
+          iovec iovp[iovcnt];
+
+          // The length of data to be sent.
+          iovp[0].iov_base = (char *) &data_len;
+          iovp[0].iov_len  = sizeof (CORBA::Short);
+
+          // The port at which we are listening.
+          iovp[1].iov_base = (char *) &response_port;
+          iovp[1].iov_len  = sizeof (ACE_UINT16);
+
+          // The service name string.
+          iovp[2].iov_base = (char *) service_name;
+          iovp[2].iov_len  = ACE_OS::strlen (service_name);
+
+          // Send the multicast.
+          result = dgram.send (iovp,
+                               iovcnt,
+                               multicast_addr);
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nsent multicast request."));
 
           // Check for errors.
           if (result == -1)
             ACE_ERROR ((LM_ERROR,
                         "%p\n",
-                        "error reading IIOP multicast response"));
+                        "error sending IIOP multicast"));
           else
             {
-              // Null terminate message.
-              buf[result] = 0;
-
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "%s: service resolved to IOR <%s>\n",
+                            "\n%s; Sent multicast."
+                            "# of bytes sent is %d.\n",
                             __FILE__,
-                            buf));
+                            result));
+              // Wait for response until
+              // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+              ACE_Time_Value tv (timeout == 0
+                                 ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
+                                 : *timeout);
+              // Accept reply connection from server.
+              if (acceptor.accept (stream,
+                                   0,
+                                   &tv) == -1)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "%p\n",
+                              "multicast_query: unable to accept"));
+                  result = -1;
+                }
+              else
+                {
+                  // Receive the IOR.
+                  result = stream.recv (buf,
+                                        BUFSIZ,
+                                        0,
+                                        timeout);
+                  // Close socket now.
+                  stream.close ();
+
+                  // Check for errors.
+                  if (result == -1)
+                    ACE_ERROR ((LM_ERROR,
+                                "%p\n",
+                                "error reading IIOP multicast response"));
+                  else
+                    {
+                      // Null terminate message.
+                      buf[result] = 0;
+
+                      if (TAO_debug_level > 0)
+                        ACE_DEBUG ((LM_DEBUG,
+                                    "%s: service resolved to IOR <%s>\n",
+                                    __FILE__,
+                                    buf));
+                    }
+                }
             }
         }
     }
 
-  // We don't need the dgram anymore.  Make sure this is closed way
-  // down here to avoid race conditions...
+  // We don't need the dgram or acceptor anymore.  
   dgram.close ();
+  acceptor.close ();
 
   return result == -1 ? -1 : 0;
 }
-
 // @@ This will have to be sanitized of transport specific calls
 //    in order to support pluggable protocols!  But, it does use
 //    UDP and multicast.  Not all transport protocols may support
