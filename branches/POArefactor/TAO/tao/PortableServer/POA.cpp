@@ -904,8 +904,8 @@ TAO_POA::the_children_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::POAList_var children;
-  CORBA::ULong child_current = ACE_static_cast (CORBA::ULong,
-                                                this->children_.current_size ());
+  CORBA::ULong child_current = static_cast <CORBA::ULong>
+                                           (this->children_.current_size ());
   ACE_NEW_THROW_EX (children,
                     PortableServer::POAList (child_current),
                     CORBA::NO_MEMORY ());
@@ -1553,8 +1553,8 @@ TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
   if (wait_for_completion)
     {
       TAO_POA_Current_Impl *poa_current_impl =
-        ACE_static_cast (TAO_POA_Current_Impl *,
-                         TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+        static_cast <TAO_POA_Current_Impl *>
+                    (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
 
       while (1)
         {
@@ -2141,8 +2141,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
           // If they are the same servant, then check if we are in an
           // upcall.
           TAO_POA_Current_Impl *poa_current_impl =
-            ACE_static_cast(TAO_POA_Current_Impl *,
-                            TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+            static_cast <TAO_POA_Current_Impl *>
+                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
           // If we are in an upcall on the default servant, return the
           // ObjectId associated with the current invocation.
           if (poa_current_impl != 0 &&
@@ -2769,8 +2769,8 @@ TAO_POA::locate_servant_i (const char *operation,
       // not own the data.
       poa_current_impl.object_id_.replace (system_id.maximum (),
                                            system_id.length (),
-                                           ACE_const_cast (CORBA::Octet *,
-                                                           system_id.get_buffer ()),
+                                           const_cast <CORBA::Octet *>
+                                                      (system_id.get_buffer ()),
                                            0);
 
       servant_upcall.user_id (&system_id);
@@ -3140,9 +3140,9 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
   else if (is_system_id)
     {
       // System ids have fixed size.
-      poa_name_size = ACE_static_cast (CORBA::ULong,
-                                       key.length () - starting_at -
-                                       TAO_Active_Object_Map::system_id_size ());
+      poa_name_size = static_cast <CORBA::ULong>
+                                  (key.length () - starting_at -
+                                   TAO_Active_Object_Map::system_id_size ());
     }
   else
     {
@@ -3360,7 +3360,7 @@ TAO_POA::set_folded_name (void)
   length += this->name_.length ();
   length += TAO_POA::name_separator_length ();
 
-  this->folded_name_.length (ACE_static_cast (CORBA::ULong, length));
+  this->folded_name_.length (static_cast <CORBA::ULong> (length));
   CORBA::Octet *folded_name_buffer = this->folded_name_.get_buffer ();
 
   if (this->parent_ != 0)
@@ -3385,8 +3385,8 @@ TAO_POA::string_to_ObjectId (const char *string)
   // We DO NOT include the zero terminator, as this is simply an
   // artifact of the way strings are stored in C.
   //
-  CORBA::ULong buffer_size = ACE_static_cast (CORBA::ULong,
-                                              ACE_OS::strlen (string));
+  CORBA::ULong buffer_size = static_cast <CORBA::ULong>
+                                         (ACE_OS::strlen (string));
 
   // Create the buffer for the Id
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
@@ -3795,7 +3795,7 @@ TAO_POA::create_stub_object (const TAO::ObjectKey &object_key,
   // profiles than there are endpoints.  In some cases, there can be
   // less profiles than endpoints.
   int result =
-    mprofile.set (ACE_static_cast (CORBA::ULong, profile_count));
+    mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
     error = 1;
 
