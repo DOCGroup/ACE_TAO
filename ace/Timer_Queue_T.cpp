@@ -87,7 +87,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_w
 
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Time_Value *
 ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>::calculate_timeout (ACE_Time_Value *max_wait_time,
-							   ACE_Time_Value*& the_timeout)
+							   ACE_Time_Value *the_timeout)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
   
