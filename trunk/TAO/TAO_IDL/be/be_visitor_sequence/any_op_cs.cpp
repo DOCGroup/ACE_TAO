@@ -54,8 +54,9 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << node->name () << " &_tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", &"
-      << "_tao_elem, 1, _tao_env);" << be_uidt_nl
+      << "_tao_any.replace (" << node->tc_name () << ", new "
+      << node->name () << "(_tao_elem), 1, _tao_env);"
+      << " // copy the value" << be_uidt_nl
       << "}" << be_nl;
 
   *os << "void operator<<= (CORBA::Any &_tao_any, "
