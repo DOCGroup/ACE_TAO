@@ -12,7 +12,6 @@ ACE_RCSID(SPIPE_SAP, server, "$Id$")
 
 // Maximum per-process open I/O descriptors.
 const int MAX_HANDLES = 200;
-const int PERMS = 0666;
 
 int
 main (int argc, char *argv[])

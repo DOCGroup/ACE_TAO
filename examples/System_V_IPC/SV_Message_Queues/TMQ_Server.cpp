@@ -24,7 +24,7 @@ handler (int)
 int
 main (int, char *[])
 {
-  char *username = ACE_OS::cuserid (0);
+  char *username = ACE_OS::cuserid (ACE_static_cast (char *, 0));
   Message_Data msg_data ((int) ACE_OS::getpid (), username, "I received your message.");
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data, 0, msg_data.length ());
   ACE_Typed_SV_Message<Message_Data> recv_msg (SRV_ID);

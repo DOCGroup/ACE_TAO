@@ -1,3 +1,20 @@
+Thu Dec  7 13:16:23 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/IPC_SAP/SPIPE_SAP/server.cpp:
+
+          Removed PERMS global variable, since it wasn't being
+          used (which KCC noticed).
+
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+
+          When calling ACE_OS::cuserid and passing a NULL pointer, it
+          should be cast to something like char * or wchar_t *.  In
+          this case it should be a char *, so I added a 
+          ACE_static_cast for it.
+
 Thu Dec  7 02:31:44 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-WinCE.h:

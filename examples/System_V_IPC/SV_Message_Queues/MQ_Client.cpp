@@ -13,7 +13,7 @@ main (int, char *[])
   ACE_SV_Message_Queue msgque (SRV_KEY);
   Message_Block send_msg (SRV_ID,
                           pid,
-                          ACE_OS::cuserid (0),
+                          ACE_OS::cuserid (ACE_static_cast (char *, 0)),
                           "did you get this?");
   Message_Block recv_msg (pid);
 
