@@ -279,7 +279,7 @@ public:
   CORBA::Short server_priority (void) const;
   void server_priority (CORBA::Short value);
 
-  //#if (TAO_HAS_RT_CORBA == 1)
+  #if (TAO_HAS_RT_CORBA == 1)
 
   TAO_ServerProtocolPolicy *server_protocol (void) const;
   void server_protocol (TAO_ServerProtocolPolicy *policy);
@@ -287,7 +287,7 @@ public:
   TAO_PriorityBandedConnectionPolicy *priority_bands (void) const;
   void priority_bands (TAO_PriorityBandedConnectionPolicy *policy);
 
-  //#endif /* TAO_HAS_RT_CORBA == 1 */
+  #endif /* TAO_HAS_RT_CORBA == 1 */
 
   TAO_Acceptor_Filter *make_filter (CORBA::Environment &ACE_TRY_ENV);
   // Create acceptor filter based on POA's policies.
