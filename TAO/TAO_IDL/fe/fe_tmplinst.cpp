@@ -41,6 +41,32 @@ template class ACE_Hash_Map_Manager<ACE_CString,
                                     int, 
                                     ACE_Null_Mutex>;
 
+template class ACE_Hash_Map_Manager<ACE_CString, 
+                                    ACE_CString, 
+                                    ACE_Null_Mutex>
+template class ACE_Hash_Map_Entry<ACE_CString, 
+                                  ACE_CString>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, 
+                                             ACE_CString, 
+                                             ACE_Hash<ACE_CString>, 
+                                             ACE_Equal_To<ACE_CString>, 
+                                             ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, 
+                                        ACE_CString, 
+                                        ACE_Hash<ACE_CString>, 
+                                        ACE_Equal_To<ACE_CString>, 
+                                        ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, 
+                                                ACE_CString, 
+                                                ACE_Hash<ACE_CString>, 
+                                                ACE_Equal_To<ACE_CString>, 
+                                                ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, 
+                                       ACE_CString, 
+                                       ACE_Hash<ACE_CString>, 
+                                       ACE_Equal_To<ACE_CString>, 
+                                       ACE_Null_Mutex>;
+
 template class ACE_Node<AST_Decl *>;
 template class ACE_Unbounded_Set<AST_Decl *>;
 template class ACE_Unbounded_Set_Iterator<AST_Decl *>;
@@ -96,6 +122,32 @@ template class ACE_Unbounded_Stack_Iterator<char *>;
                                             ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, 
                                          int, 
+                                         ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, 
+                                       ACE_CString>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, 
+                                                  ACE_CString, 
+                                                  ACE_Hash<ACE_CString>, 
+                                                  ACE_Equal_To<ACE_CString>, 
+                                                  ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, 
+                                             ACE_CString, 
+                                             ACE_Hash<ACE_CString>, 
+                                             ACE_Equal_To<ACE_CString>, 
+                                             ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, 
+                                                     ACE_CString, 
+                                                     ACE_Hash<ACE_CString>, 
+                                                     ACE_Equal_To<ACE_CString>, 
+                                                     ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, 
+                                            ACE_CString, 
+                                            ACE_Hash<ACE_CString>, 
+                                            ACE_Equal_To<ACE_CString>, 
+                                            ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, 
+                                         ACE_CString, 
                                          ACE_Null_Mutex>
 
 #pragma instantiate ACE_Node<AST_Decl *>
