@@ -40,7 +40,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #$(VDIR)%.o:     %.C
 #VOBJS   = $(LSRC:%.C=$(VDIR)%.o)
 
-DCFLAGS = -g 
 LDFLAGS += -L$(PBHOME)/lib
 CPPFLAGS += -I$(PBHOME)/include 
 

@@ -54,7 +54,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-DCFLAGS = -g
 
 #$(IDL_SRC): cubit.idl
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
