@@ -267,5 +267,8 @@ TAO_Notify_Buffering_Strategy::discard (void)
       result = -1;
     }
 
+  if (result != -1)
+    ACE_Message_Block::release (mb);
+
   return result;
 }
