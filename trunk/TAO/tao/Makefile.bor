@@ -8,12 +8,12 @@ DIRS = \
 	PortableServer \
 	DynamicAny \
 	DynamicInterface \
-        IFR_Client \
 	IORTable \
 	IORManipulation \
 	Strategies \
         Domain \
-	SmartProxies
+        SmartProxies \
+        IFR_Client \
 
 OBJFILES = \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
@@ -80,6 +80,7 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\GIOPC.obj \
         $(OBJDIR)\IFR_TypeCodes.obj \
+        $(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
