@@ -399,7 +399,7 @@ Package=<4>
     Project_Dep_Name CosNotification
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name DsLogAdmin
+    Project_Dep_Name DsEventLogAdmin
     End Project Dependency
 }}}
 
