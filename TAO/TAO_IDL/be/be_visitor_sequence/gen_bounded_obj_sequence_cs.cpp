@@ -105,9 +105,9 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" **tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " **, this->buffer_);" << be_nl
       << class_name << "::freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
@@ -126,16 +126,16 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
   *os << "void" << be_nl
       << full_class_name << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor);
+  bt->accept(visitor);
   *os <<" **tmp = ACE_reinterpret_cast (";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << " **, this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (tmp[i]);" << be_nl
       << "tmp[i] = ";
-  pt->accept (visitor);
+  bt->accept (visitor);
   *os << "::_nil ();" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}\n" << be_nl;
@@ -153,21 +153,21 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
 	  << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
 	  << ")" << be_uidt_nl
 	  << "{" << be_idt_nl;
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << " **tmp = ACE_static_cast (";
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << "**, target);" << be_nl
 	  << "*tmp = ";
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << "::_narrow (src, ACE_TRY_ENV);" << be_uidt_nl
 	  << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
 	  << "{" << be_idt_nl;
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << " **tmp = ACE_static_cast (";
-      pt->accept (visitor);
+      bt->accept (visitor);
       *os << "**, src);" << be_nl
 	  << "return *tmp;" << be_uidt_nl
 	  << "}" << be_nl;
