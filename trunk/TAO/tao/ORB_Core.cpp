@@ -83,7 +83,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   this->tm_.wait_on_exit (0);
 
 #if defined(ACE_MVS)
-  ACE_NEW (this->from_iso8859_, ACE_ISO8859_IBM1047);
+  ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
 #endif /* ACE_MVS */
 }

@@ -1,29 +1,35 @@
+Mon Jul 12 13:54:45 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp (TAO_ORB_Core): fixed MVS "from" codeset
+          translator.  Thanks to Jim Rogers <jrogers@viasoft.com> for
+          this fix.
+
 Mon Jul 12 12:58:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_scope.cpp:
-	  Corrected a mistake in the logic that caused a
-	  failed lookup of a field to be given the type of
-	  the previous field (if any). As a by-product, the
-	  use of 'int' as a type (illegal) causes a lookup
-	  error output for '_cxx_int'. This is not wholly
-	  informative, but the corresponding syntax error
-	  (based on the parse state) is 'illegal component
-	  in scoped name', which is even less informative.
-	  Thanks to Surovegin Eugene <Surovegin@SoftLab.RU>
-	  for pointing out the code generation problem.
+        * TAO_IDL/util/utl_scope.cpp:
+          Corrected a mistake in the logic that caused a
+          failed lookup of a field to be given the type of
+          the previous field (if any). As a by-product, the
+          use of 'int' as a type (illegal) causes a lookup
+          error output for '_cxx_int'. This is not wholly
+          informative, but the corresponding syntax error
+          (based on the parse state) is 'illegal component
+          in scoped name', which is even less informative.
+          Thanks to Surovegin Eugene <Surovegin@SoftLab.RU>
+          for pointing out the code generation problem.
 
 Mon Jul 12 12:25:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed some broken idl
-	  flags.  Added -I../../tao flag to when compiling all idl files
-	  so people won't have trouble compiling orbsvcs even when they
-	  don't have ACE_ROOT or TAO_ROOT defined.
-	  Thanks to John Morey <jmorey@tbi.com> for suggesting this.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed some broken idl
+          flags.  Added -I../../tao flag to when compiling all idl files
+          so people won't have trouble compiling orbsvcs even when they
+          don't have ACE_ROOT or TAO_ROOT defined.
+          Thanks to John Morey <jmorey@tbi.com> for suggesting this.
 
-	* TAO-INSTALL.html:
-	* docs/compiler.html: Added more explanation about setting
-	  TAO_ROOT or ACE_ROOT.
+        * TAO-INSTALL.html:
+        * docs/compiler.html: Added more explanation about setting
+          TAO_ROOT or ACE_ROOT.
 
 Mon Jul 12 10:47:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
