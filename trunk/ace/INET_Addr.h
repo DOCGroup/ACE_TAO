@@ -114,10 +114,15 @@ public:
   virtual void set_addr (void *, int len);
   // Set a pointer to the address.
 
-  virtual int addr_to_string (ASYS_TCHAR addr[], size_t) const;
-  // Transform the current <ACE_INET_Addr> address into string format,
-  // which is in the form "ip-number:port-number" (e.g.,
-  // "tango.cs.wustl.edu:1234" or "128.252.166.57:1234").
+  virtual int addr_to_string (ASYS_TCHAR buffer[], 
+                              size_t size,
+                              int ipaddr_format = 0) const;
+  // Transform the current <ACE_INET_Addr> address into string format.
+  // If <ipaddr_format> is non-0 this produces "ip-number:port-number"
+  // (e.g., "128.252.166.57:1234"), whereas if <ipaddr_format> is 0
+  // this produces "ip-name:port-number" (e.g.,
+  // "tango.cs.wustl.edu:1234").  Returns -1 if the <size> of the
+  // <buffer> is too small, else 0.
 
   virtual int string_to_addr (const ASYS_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be

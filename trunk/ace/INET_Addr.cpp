@@ -16,14 +16,32 @@ ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 // Transform the current address into string format.
 
 int
-ACE_INET_Addr::addr_to_string (ASYS_TCHAR s[], size_t) const
+ACE_INET_Addr::addr_to_string (ASYS_TCHAR s[],
+                               size_t size,
+                               int ipaddr_format) const
 {
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
-  // This should check to make sure len is long enough...
-  ACE_OS::sprintf (s, ASYS_TEXT ("%s:%d"),
-                   ASYS_WIDE_STRING (this->get_host_addr ()),
-                   this->get_port_number ());
-  return 0;
+
+  size_t total_len =
+    ACE_OS::strlen (ipaddr_format == 0 ?
+                    this->get_host_name () :
+                    this->get_host_addr ())
+    + ACE_OS::strlen ("65536") // Assume the max port number.
+    + sizeof (':')
+    + sizeof ('\0'); // For trailing '\0'.
+
+  if (size < total_len)
+    return -1;
+  else
+    {
+      ACE_OS::sprintf (s, 
+                       ASYS_TEXT ("%s:%d"),
+                       ASYS_WIDE_STRING (ipaddr_format == 0 
+                                         ? this->get_host_name ()
+                                         : this->get_host_addr ()),
+                       this->get_port_number ());
+      return 0;
+    }
 }
 
 void
