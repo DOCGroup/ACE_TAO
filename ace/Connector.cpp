@@ -478,7 +478,8 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
             }
           else
             {
-              (*sh_copy)->close (0);
+              if (*sh_copy)
+                (*sh_copy)->close (0);
             }
         }
       return -1;

@@ -1,3 +1,20 @@
+Tue Jan 25 14:05:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Leader_Follower.h (TAO_LF_Client_Thread_Helper and
+	  TAO_LF_Leader_Thread_Helper): Auto-pointer like classes that
+	  help manage the leader follower object.
+	  TAO_LF_Client_Thread_Helper helps with set_client_thread and
+	  reset_client_thread while TAO_LF_Leader_Thread_Helper helps with
+	  set_leader_thread and reset_leader_thread.
+
+	* tao/Wait_Strategy.cpp (TAO_Muxed_Wait_On_Leader_Follower::wait
+	  and TAO_Exclusive_Wait_On_Leader_Follower::wait):
+
+	  We now use guards to make sure that the leader follower object
+	  has consistent information even when errors occur.  Previously,
+	  there were many return and exceptional conditions where the
+	  leader follower object was left in an inconsistent state.
+
 Tue Jan 25 12:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
