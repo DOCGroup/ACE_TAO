@@ -218,12 +218,12 @@ Mon Jun 30 11:44:34 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Mon Jun 30 11:52:22 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs\examples\Notify\Lanes\Consumer.cpp:
-	* orbsvcs\examples\Notify\Lanes\Consumer_Client.cpp:
-	* orbsvcs\examples\Notify\Lanes\ORB_Objects.cpp:
-	* orbsvcs\examples\Notify\Lanes\ORB_Run_Task.cpp:
-	* orbsvcs\examples\Notify\Lanes\Supplier.cpp:
-	* orbsvcs\examples\Notify\Lanes\Supplier_Client.cpp:
+	* orbsvcs/examples/Notify/Lanes/Consumer.cpp:
+	* orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Objects.cpp:
+	* orbsvcs/examples/Notify/Lanes/ORB_Run_Task.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier.cpp:
+	* orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
 
 	  Removed references to .inl files.
 	
