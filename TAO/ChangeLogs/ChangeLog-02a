@@ -1,30 +1,34 @@
+Sun Jun 24 08:59:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tests/Makefile: Added Oneways_Invoking_Twoways to the builds.
+
 Sun Jun 24 08:42:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Oneways_Invoking_Twoways: Another stress test that clearly
-	  brings the problem in bug 575 to the fore.
-	
-	* tests/Oneways_Invoking_Twoways/Client_Task.cpp:
+        * tests/Oneways_Invoking_Twoways: Another stress test that clearly
+          brings the problem in bug 575 to the fore.
+
+        * tests/Oneways_Invoking_Twoways/Client_Task.cpp:
         * tests/Oneways_Invoking_Twoways/Sender_i.h:
-	* tests/Oneways_Invoking_Twoways/server.cpp:
-	* tests/Oneways_Invoking_Twoways/Client_Task.h
-	* tests/Oneways_Invoking_Twoways/Client_Task.cpp:
-	* tests/Oneways_Invoking_Twoways/Receiver_i.cpp:
-	* tests/Oneways_Invoking_Twoways/Receiver_i.h:
-	* tests/Oneways_Invoking_Twoways/Server_Task.h:
-	* tests/Oneways_Invoking_Twoways/Server_Task.cpp:
-	* tests/Oneways_Invoking_Twoways/client.cpp:
-	* tests/Oneways_Invoking_Twoways/Makefile:
-	* tests/Oneways_Invoking_Twoways/Makefile.bor:
-	* tests/Oneways_Invoking_Twoways/svcconf:
-	* tests/Oneways_Invoking_Twoways/Test.idl:
-	* tests/Oneways_Invoking_Twoways/README:
-	* tests/Oneways_Invoking_Twoways/Sender_i.h:
-	* tests/Oneways_Invoking_Twoways/Sender_i.cpp:
-	* tests/Oneways_Invoking_Twoways/run_test.pl:
-	* tests/Oneways_Invoking_Twoways/run_test_svc.pl: New files for
-	  the test.
-	
-	
+        * tests/Oneways_Invoking_Twoways/server.cpp:
+        * tests/Oneways_Invoking_Twoways/Client_Task.h
+        * tests/Oneways_Invoking_Twoways/Client_Task.cpp:
+        * tests/Oneways_Invoking_Twoways/Receiver_i.cpp:
+        * tests/Oneways_Invoking_Twoways/Receiver_i.h:
+        * tests/Oneways_Invoking_Twoways/Server_Task.h:
+        * tests/Oneways_Invoking_Twoways/Server_Task.cpp:
+        * tests/Oneways_Invoking_Twoways/client.cpp:
+        * tests/Oneways_Invoking_Twoways/Makefile:
+        * tests/Oneways_Invoking_Twoways/Makefile.bor:
+        * tests/Oneways_Invoking_Twoways/svcconf:
+        * tests/Oneways_Invoking_Twoways/Test.idl:
+        * tests/Oneways_Invoking_Twoways/README:
+        * tests/Oneways_Invoking_Twoways/Sender_i.h:
+        * tests/Oneways_Invoking_Twoways/Sender_i.cpp:
+        * tests/Oneways_Invoking_Twoways/run_test.pl:
+        * tests/Oneways_Invoking_Twoways/run_test_svc.pl: New files for
+          the test.
+
+
 Fri Jun 22 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
@@ -3704,7 +3708,7 @@ Wed May 23 11:45:09 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Also added code to consolidate the message block before
           calling the typecode constructor. Typecodes constructed
           from a message block large enough to be chained were returning
-          garbage values from some accessors. Thanks to Arturo Josè
+          garbage values from some accessors. Thanks to Arturo Jos
           Montes Sinning <mitosys@colomsat.net.co> and to Philippe
           Merle <Philippe.Merle@lifl.fr> for simultaneously discovering
           this bug, and to Carlos for seeing the fix right away.
@@ -8889,7 +8893,7 @@ Wed Apr 18 10:28:53 2001  Jeff Parsons <parsons@cs.wustl.edu>
           only inefficiency, but also a crash if the union's
           active member is a pointer type, since the code
           deallocates the old member first. Thanks to
-          Uwe Jäger <jaeger@varial.de> for pointing out the missing
+          Uwe Jger <jaeger@varial.de> for pointing out the missing
           check.
 
 Wed Apr 18 09:44:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
