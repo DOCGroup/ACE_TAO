@@ -1,3 +1,7 @@
+Thu Feb 22 03:52:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACE version 5.1.13 released.
+
 Thu Feb 22 03:31:06 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
 	* ace/OS.i (dlsym): 
