@@ -65,6 +65,7 @@ public:
   int max_key_length (void);
   void reorder (void);
   void sort (void);
+  void string_sort (void);
   int read_keys (void);
   int output (void);
 
@@ -94,6 +95,7 @@ private:
   void output_keylength_table (void);
   void output_hash_function (void);
   void output_lookup_function (void);
+  int output_binary_search_function(void);
   int output_lookup_array (void);
   void output_strcasecmp (void);  
   int output_types (void);
@@ -138,6 +140,9 @@ private:
 
   int hash_sort;		
   // True if sorting by hash value. 
+
+  int key_sort;
+  // True if sorting by key value.
 
   int additional_code;		
   // True if any additional C code is included. 
