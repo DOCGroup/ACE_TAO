@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MALLOC_T_H
 #define ACE_MALLOC_T_H
 #include "ace/pre.h"
