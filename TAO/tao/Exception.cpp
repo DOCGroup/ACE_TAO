@@ -810,7 +810,7 @@ CORBA_ExceptionList::item (CORBA::ULong slot,
 void
 CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 CORBA_ExceptionList_ptr
