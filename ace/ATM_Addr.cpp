@@ -59,7 +59,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
   this->set (sap, selector);
 }
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap,
+ACE_ATM_Addr::ACE_ATM_Addr (const ATM_Addr *sap,
                             unsigned char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -155,7 +155,7 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
 }
 
 int
-ACE_ATM_Addr::set (const ATMSAPAddress *sap,
+ACE_ATM_Addr::set (const ATM_Addr *sap,
                    unsigned char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
@@ -376,13 +376,7 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
 
   return ACE_OS::memcmp (&atm_addr_,
                          &sap.atm_addr_,
-#if defined (ACE_HAS_FORE_ATM_XTI)
-                         sizeof (struct ATMSAPAddress)) == 0;
-#elif defined (ACE_HAS_FORE_ATM_WS2)
-                         sizeof( struct sockaddr_atm )) == 0;
-#else
-                         sizeof (ATMSAPAddress)) == 0;
-#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
+                         sizeof (ATM_Addr)) == 0;
 }
 
 void
@@ -400,218 +394,172 @@ ACE_ATM_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-// Some OSes (namely, AIX) have implemented the v5 t_getprotaddr()
-// command.  Others, like Irix, still use the v4 t_getname().  Both
-// are offered here.
+// char *
+// ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
+//                                 int qos_kb,
+//                                 int flags,
+//                                 long *optsize)
+// {
+// #if defined (ACE_HAS_FORE_ATM_XTI)
+//   struct t_opthdr *popt;
+//   char *buf;
+//   int qos_cells;
+//   struct t_info info;
 
-#ifdef aix
-#define T_GETPROTADDR(fd, laddr, raddr)	ACE_OS::t_getprotaddr(fd, laddr, raddr)
-#else
-#define T_GETPROTADDR(fd, laddr, raddr) ACE_OS::t_getname(fd, laddr.addr, LOCALNAME)
-#endif /* aix */
-
-int
-ACE_ATM_Addr::get_local_address (ACE_HANDLE fd,
-                                 u_char addr[])
-{
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  ATMSAPAddress local_addr;
-  struct t_bind boundaddr;
-
-  boundaddr.addr.maxlen = sizeof local_addr;
-  boundaddr.addr.buf = (char *) &local_addr;
-
-  if (T_GETPROTADDR (fd, &boundaddr, 0) == -1)
-    {
-      ACE_OS::t_error ("T_GETPROTADDR (local_address)");
-      return -1;
-    }
-
-  ACE_OS::memcpy (addr,
-                  local_addr.sap.t_atm_sap_addr.address,
-                  ATMNSAP_ADDR_LEN);
-  return 0;
-#elif defined (ACE_HAS_FORE_ATM_WS2)
-  // WinSock2 part
-  // No need to make inctl call, just return the address stored
-  ACE_UNUSED_ARG( fd );
-
-  ASYS_TCHAR local_addr[ ATM_ADDR_SIZE + 1 ];
-
-  this -> addr_to_string( &local_addr, ATM_ADDR_SIZE + 1 );
-  ACE_OS::memcpy(addr, &local_addr, ATM_ADDR_SIZE);
-
-  return 0;
-#else
-  ACE_UNUSED_ARG (fd);
-  ACE_UNUSED_ARG (addr);
-  return -1;
-#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
-}
-
-char *
-ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
-                                int qos_kb,
-                                int flags,
-                                long *optsize)
-{
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  struct t_opthdr *popt;
-  char *buf;
-  int qos_cells;
-  struct t_info info;
-
-  if (ACE_OS::t_getinfo (fd, &info) == -1)
-    {
-      ACE_OS::t_error ("t_getinfo");
-      return 0;
-    }
+//   if (ACE_OS::t_getinfo (fd, &info) == -1)
+//     {
+//       ACE_OS::t_error ("t_getinfo");
+//       return 0;
+//     }
  
-  buf = (char *) ACE_OS::malloc (info.options);
+//   buf = (char *) ACE_OS::malloc (info.options);
 
-  if (buf == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
-                       info.options),
-                      0);
+//   if (buf == 0)
+//     ACE_ERROR_RETURN ((LM_ERROR,
+//                        ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
+//                        info.options),
+//                       0);
 
-  popt = (struct t_opthdr *) buf;
+//   popt = (struct t_opthdr *) buf;
 
-  if (flags & OPT_FLAGS_CPID)
-    {
-      // This constructs the T_ATM_ORIG_ADDR option, which is used to
-      // signal the UNI 3.1 Calling Party ID Information Element.
-      t_atm_addr *source_addr;
+//   if (flags & OPT_FLAGS_CPID)
+//     {
+//       // This constructs the T_ATM_ORIG_ADDR option, which is used to
+//       // signal the UNI 3.1 Calling Party ID Information Element.
+//       t_atm_addr *source_addr;
 
-      popt->len	= sizeof (struct t_opthdr) + sizeof (t_atm_addr);
-      popt->level = T_ATM_SIGNALING;
-      popt->name = T_ATM_ORIG_ADDR;
-      popt->status = 0;
+//       popt->len	= sizeof (struct t_opthdr) + sizeof (t_atm_addr);
+//       popt->level = T_ATM_SIGNALING;
+//       popt->name = T_ATM_ORIG_ADDR;
+//       popt->status = 0;
 
-      source_addr = 
-        (t_atm_addr *)((char *) popt + sizeof (struct t_opthdr));
+//       source_addr = 
+//         (t_atm_addr *)((char *) popt + sizeof (struct t_opthdr));
 
-      source_addr->address_format = T_ATM_ENDSYS_ADDR;
-      source_addr->address_length = ATMNSAP_ADDR_LEN;
+//       source_addr->address_format = T_ATM_ENDSYS_ADDR;
+//       source_addr->address_length = ATMNSAP_ADDR_LEN;
 
-      if (get_local_address (fd, source_addr->address))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("Can't get local address!\n")));
-          ACE_OS::free (buf);
-          return 0;
-        }
+//       ACE_OS::memcpy(source_addr->address,
+//                      atm_addr_.sap.t_atm_sap_addr.address,
+//                      20);
+//       //if (get_local_address (fd, source_addr->address))
+//       //  {
+//       //    ACE_ERROR ((LM_ERROR,
+//       //                ASYS_TEXT ("Can't get local address!\n")));
+//       //    ACE_OS::free (buf);
+//       //    return 0;
+//       //  }
 
-      popt = T_OPT_NEXTHDR (buf, info.options , popt);
-    }
+//       popt = T_OPT_NEXTHDR (buf, info.options , popt);
+//     }
 
-  // This constructs all options necessary (bearer cap., QoS, and
-  // Traffic Descriptor) to signal for a CBR connection with the
-  // specified QoS in kbit/sec., and/or specify a PMP connection.
+//   // This constructs all options necessary (bearer cap., QoS, and
+//   // Traffic Descriptor) to signal for a CBR connection with the
+//   // specified QoS in kbit/sec., and/or specify a PMP connection.
 
-  // For FORE 200e cards, the adapter shapes traffic to CBR with rate
-  // equal to PCR CLP=0+1 (traffic.forward.PCR_all_traffic)
+//   // For FORE 200e cards, the adapter shapes traffic to CBR with rate
+//   // equal to PCR CLP=0+1 (traffic.forward.PCR_all_traffic)
 
-  qos_cells = (qos_kb * 1000) / (48*8);
+//   qos_cells = (qos_kb * 1000) / (48*8);
 
-  if ((qos_cells > 0 && qos_cells < LINE_RATE) 
-      || (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP)))
-    {
-      struct t_atm_bearer *bearer;
-      struct t_atm_traffic *traffic;
+//   if ((qos_cells > 0 && qos_cells < LINE_RATE) 
+//       || (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP)))
+//     {
+//       struct t_atm_bearer *bearer;
+//       struct t_atm_traffic *traffic;
 
-      // T_ATM_BEARER_CAP: Broadband bearer capability
-      popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_bearer);
-      popt->level = T_ATM_SIGNALING;
-      popt->name = T_ATM_BEARER_CAP;
-      popt->status = 0;
+//       // T_ATM_BEARER_CAP: Broadband bearer capability
+//       popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_bearer);
+//       popt->level = T_ATM_SIGNALING;
+//       popt->name = T_ATM_BEARER_CAP;
+//       popt->status = 0;
 
-      bearer = (struct t_atm_bearer *)((char *) popt + sizeof (struct t_opthdr));
-      bearer->bearer_class = T_ATM_CLASS_X;
+//       bearer = (struct t_atm_bearer *)((char *) popt + sizeof (struct t_opthdr));
+//       bearer->bearer_class = T_ATM_CLASS_X;
 
-      if (qos_cells)
-        {
-          bearer->traffic_type = T_ATM_CBR;
-          bearer->timing_requirements = T_ATM_END_TO_END;
-        }
-      else
-        {
-          bearer->traffic_type	 = 0; // UBR
-          bearer->timing_requirements = 0;
-        }
-      bearer->clipping_susceptibility = T_ATM_NULL;
+//       if (qos_cells)
+//         {
+//           bearer->traffic_type = T_ATM_CBR;
+//           bearer->timing_requirements = T_ATM_END_TO_END;
+//         }
+//       else
+//         {
+//           bearer->traffic_type	 = 0; // UBR
+//           bearer->timing_requirements = 0;
+//         }
+//       bearer->clipping_susceptibility = T_ATM_NULL;
 
-      if (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP))
-        bearer->connection_configuration = T_ATM_1_TO_MANY;
-      else
-        bearer->connection_configuration = T_ATM_1_TO_1;
+//       if (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP))
+//         bearer->connection_configuration = T_ATM_1_TO_MANY;
+//       else
+//         bearer->connection_configuration = T_ATM_1_TO_1;
 
-      popt = T_OPT_NEXTHDR (buf, info.options, popt);
+//       popt = T_OPT_NEXTHDR (buf, info.options, popt);
 
-      // T_ATM_TRAFFIC: traffic descriptor
-      popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_traffic);
-      popt->level = T_ATM_SIGNALING;
-      popt->name = T_ATM_TRAFFIC;
-      popt->status = 0;
+//       // T_ATM_TRAFFIC: traffic descriptor
+//       popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_traffic);
+//       popt->level = T_ATM_SIGNALING;
+//       popt->name = T_ATM_TRAFFIC;
+//       popt->status = 0;
 
-      traffic = (struct t_atm_traffic *)((char *) popt + sizeof (struct t_opthdr));
+//       traffic = (struct t_atm_traffic *)((char *) popt + sizeof (struct t_opthdr));
 
-      traffic->forward.PCR_high_priority = T_ATM_ABSENT;
-      traffic->forward.PCR_all_traffic = qos_cells ? qos_cells : LINE_RATE;
-      traffic->forward.SCR_high_priority = T_ATM_ABSENT;
-      traffic->forward.SCR_all_traffic = T_ATM_ABSENT;
-      traffic->forward.MBS_high_priority = T_ATM_ABSENT;
-      traffic->forward.MBS_all_traffic = T_ATM_ABSENT;
-      traffic->forward.tagging = T_NO;
+//       traffic->forward.PCR_high_priority = T_ATM_ABSENT;
+//       traffic->forward.PCR_all_traffic = qos_cells ? qos_cells : LINE_RATE;
+//       traffic->forward.SCR_high_priority = T_ATM_ABSENT;
+//       traffic->forward.SCR_all_traffic = T_ATM_ABSENT;
+//       traffic->forward.MBS_high_priority = T_ATM_ABSENT;
+//       traffic->forward.MBS_all_traffic = T_ATM_ABSENT;
+//       traffic->forward.tagging = T_NO;
 
-      traffic->backward.PCR_high_priority = T_ATM_ABSENT;
-      traffic->backward.PCR_all_traffic	= 
-        (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP)) 
-        ? 0 : qos_cells ? qos_cells : LINE_RATE;
-      traffic->backward.SCR_high_priority = T_ATM_ABSENT;
-      traffic->backward.SCR_all_traffic	= T_ATM_ABSENT;
-      traffic->backward.MBS_high_priority = T_ATM_ABSENT;
-      traffic->backward.MBS_all_traffic	= T_ATM_ABSENT;
-      traffic->backward.tagging = T_NO;
+//       traffic->backward.PCR_high_priority = T_ATM_ABSENT;
+//       traffic->backward.PCR_all_traffic	= 
+//         (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP)) 
+//         ? 0 : qos_cells ? qos_cells : LINE_RATE;
+//       traffic->backward.SCR_high_priority = T_ATM_ABSENT;
+//       traffic->backward.SCR_all_traffic	= T_ATM_ABSENT;
+//       traffic->backward.MBS_high_priority = T_ATM_ABSENT;
+//       traffic->backward.MBS_all_traffic	= T_ATM_ABSENT;
+//       traffic->backward.tagging = T_NO;
 
-      traffic->best_effort = qos_cells ? T_NO : T_YES;
+//       traffic->best_effort = qos_cells ? T_NO : T_YES;
 
-      popt = T_OPT_NEXTHDR (buf,
-                            info.options,
-                            popt);
-    }
+//       popt = T_OPT_NEXTHDR (buf,
+//                             info.options,
+//                             popt);
+//     }
 
-  if (qos_cells > 0 && qos_cells < LINE_RATE)
-    {
-      struct t_atm_qos *qos;
+//   if (qos_cells > 0 && qos_cells < LINE_RATE)
+//     {
+//       struct t_atm_qos *qos;
 
-      // T_ATM_QOS: Quality of Service
-      popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_qos);
-      popt->level = T_ATM_SIGNALING;
-      popt->name = T_ATM_QOS;
-      popt->status = 0;
+//       // T_ATM_QOS: Quality of Service
+//       popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_qos);
+//       popt->level = T_ATM_SIGNALING;
+//       popt->name = T_ATM_QOS;
+//       popt->status = 0;
 
-      qos = (struct t_atm_qos *)((char *) popt + sizeof (struct t_opthdr));
-      qos->coding_standard = T_ATM_ITU_CODING;
-      qos->forward.qos_class = T_ATM_QOS_CLASS_1;
-      qos->backward.qos_class = T_ATM_QOS_CLASS_1;
+//       qos = (struct t_atm_qos *)((char *) popt + sizeof (struct t_opthdr));
+//       qos->coding_standard = T_ATM_ITU_CODING;
+//       qos->forward.qos_class = T_ATM_QOS_CLASS_1;
+//       qos->backward.qos_class = T_ATM_QOS_CLASS_1;
 
-      popt = T_OPT_NEXTHDR (buf, info.options, popt);
-    }
+//       popt = T_OPT_NEXTHDR (buf, info.options, popt);
+//     }
 
-  // return actual size of options and option buffer to user
-  *optsize = (char *) popt - buf;
+//   // return actual size of options and option buffer to user
+//   *optsize = (char *) popt - buf;
 
-  return buf;
-#elif defined (ACE_HAS_FORE_ATM_WS2)
-  // WinSock Part 
-  // Unlike XTI, WinSock does QoS with a QoS class passed into 
-  // connect call, so it may be better to do this in XXX_Connector 
-#else
-  ACE_UNUSED_ARG (fd);
-  ACE_UNUSED_ARG (qos_kb);
-  ACE_UNUSED_ARG (flags);
-  ACE_UNUSED_ARG (optsize);
-  return 0;
-#endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
-}
+//   return buf;
+// #elif defined (ACE_HAS_FORE_ATM_WS2)
+//   // WinSock Part 
+//   // Unlike XTI, WinSock does QoS with a QoS class passed into 
+//   // connect call, so it may be better to do this in XXX_Connector 
+// #else
+//   ACE_UNUSED_ARG (fd);
+//   ACE_UNUSED_ARG (qos_kb);
+//   ACE_UNUSED_ARG (flags);
+//   ACE_UNUSED_ARG (optsize);
+//   return 0;
+// #endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
+// }
