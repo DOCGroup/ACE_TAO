@@ -1,3 +1,19 @@
+Wed Aug 23 00:28:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.h: Made the policies() accessor public.
+
+	* tao/POA.cpp: 
+
+	  - server_protocol(): Call CORBA::release() rather than delete on
+	  <this->server_protocol_> since that way is politically correct.
+	  Also, copying of the user value is made simpler by using the
+	  copy constructor rather than calling copy().
+
+	  - TAO_POA_Policies: Added a copy constructor since we now keep
+	  pointers in this class.  Also, in the constructor of
+	  TAO_POA_Policies, improved the memory management of the policies
+	  obtained from the ORB Core.
+
 Tue Aug 22 16:41:02 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
