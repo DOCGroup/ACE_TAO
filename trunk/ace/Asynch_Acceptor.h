@@ -19,7 +19,7 @@
 #include "ace/OS.h"
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-// This only works on platforms that support async i/o
+// This only works on platforms that support async i/o.
 
 #include "ace/Asynch_IO.h"
 
@@ -133,7 +133,7 @@ protected:
   ACE_HANDLE handle (void) const;
   // Return the listen handle.
 
-  void parse_address (ACE_Message_Block &message_block,
+  void parse_address (const ACE_Asynch_Accept::Result &result,
 		      ACE_INET_Addr &remote_address,
 		      ACE_INET_Addr &local_address);
   // This parses the address from read buffer.
@@ -146,7 +146,7 @@ protected:
 private:
   ACE_HANDLE listen_handle_;
   // Handle used to listen for new connections.
-
+  
   ACE_Asynch_Accept asynch_accept_;
   // <Asynch_Accept> used to make life easier :-)
 

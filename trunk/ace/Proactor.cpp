@@ -6,9 +6,9 @@
 ACE_RCSID(ace, Proactor, "$Id$")
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) \
-    || (defined (ACE_HAS_AIO_CALLS))
-// This only works on Win32 platforms and on Unix platforms with aio
-// calls.
+  || (defined (ACE_HAS_AIO_CALLS))
+  // This only works on Win32 platforms and on Unix platforms with aio
+  // calls.
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -18,8 +18,8 @@ ACE_RCSID(ace, Proactor, "$Id$")
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Proactor::proactor_ = 0;
+  // Process-wide ACE_Proactor.
+  ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
 // Controls whether the Proactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
@@ -29,35 +29,35 @@ int ACE_Proactor::delete_proactor_ = 0;
 sig_atomic_t ACE_Proactor::end_event_loop_ = 0;
 
 class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
-  // = TITLE
-  //     A Handler for timer. It helps in the management of timers
-  //     registered with the Proactor.
-  //
-  // = DESCRIPTION
-  //     This object has a thread that will wait on the earliest time
-  //     in a list of timers and an event. When a timer expires, the
-  //     thread will post a completion event on the port and go back
-  //     to waiting on the timer queue and event. If the event is
-  //     signaled, the thread will refresh the time it is currently
-  //     waiting on (in case the earliest time has changed)
+// = TITLE
+//     A Handler for timer. It helps in the management of timers
+//     registered with the Proactor.
+//
+// = DESCRIPTION
+//     This object has a thread that will wait on the earliest time
+//     in a list of timers and an event. When a timer expires, the
+//     thread will post a completion event on the port and go back
+//     to waiting on the timer queue and event. If the event is
+//     signaled, the thread will refresh the time it is currently
+//     waiting on (in case the earliest time has changed)
 {
   friend class ACE_Proactor;
   // Proactor has special privileges
   // Access needed to: timer_event_
 
-public:
+ public:
   ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
-  // Constructor
+  // Constructor.
 
   ~ACE_Proactor_Timer_Handler (void);
-  // Destructor
-
-protected:
+  // Destructor.
+  
+ protected:
   virtual int svc (void);
   // Run by a daemon thread to handle deferred processing. In other
   // words, this method will do the waiting on the earliest timer and
   // event.
-
+  
   ACE_Auto_Event timer_event_;
   // Event to wait on.
 
@@ -77,10 +77,10 @@ ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
 
 ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
 {
-  // Mark for closing down
+  // Mark for closing down.
   this->shutting_down_ = 1;
 
-  // Signal timer event
+  // Signal timer event.
   this->timer_event_.signal ();
 }
 
@@ -115,7 +115,7 @@ ACE_Proactor_Timer_Handler::svc (void)
 	    time = 0;
 	}
 
-      // Wait for event upto <time> milli seconds
+      // Wait for event upto <time> milli seconds.
       int result = ::WaitForSingleObject (this->timer_event_.handle (),
 					  time);
       switch (result)
@@ -168,7 +168,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("Failure in dealing with timers: ")
                        ASYS_TEXT ("PostQueuedCompletionStatus failed\n")),
-                       -1);
+                      -1);
   return 0;
 }
 
@@ -292,7 +292,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
                 ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("CreateIoCompletionPort")));
 
-  // set the timer queue
+  // Set the timer queue.
   this->timer_queue (tq);
 
   // Create the timer handler
@@ -686,63 +686,76 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
                   "Signal code for this signal delivery : %d\n",
                   sig_info.si_code));
       
-      // Is the signal code an aio completion one?
-      if ((sig_info.si_code != SI_ASYNCIO) &&
-          (sig_info.si_code != SI_QUEUE))
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Unexpected signal code (%d) returned on completion querying\n",
-                           sig_info.si_code),
-                          0);
-
       // Retrive the result pointer.
       ACE_Asynch_Result *asynch_result =
         (ACE_Asynch_Result *) sig_info.si_value.sival_ptr;
       
-      // Retrieve the aiocb from Result ptr.
-      // @@ Some checking should be done to make sure this pointer
-      // is valid. Otherwise <aio_error> will bomb.
-      aiocb* aiocb_ptr =
-        (aiocb *)asynch_result->aiocb_ptr ();
-      
-      // Analyze error and return values. Return values are
-      // actually <errno>'s associated with the <aio_> call
-      // corresponding to aiocb_ptr.
-      int error_code = aio_error (aiocb_ptr);
-      if (error_code == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p:Invalid control block was sent to <aio_error> for compleion querying\n"),
-                          -1);
+      // Check the <signal code> and act according to that.
+      if (sig_info.si_code == SI_ASYNCIO)
+        {
+          // Retrieve the aiocb from Result ptr.
+          // @@ Some checking should be done to make sure this pointer
+          // is valid. Otherwise <aio_error> will bomb.
+          aiocb* aiocb_ptr =
+            (aiocb *)asynch_result->aiocb_ptr ();
+          
+          // Analyze error and return values. Return values are
+          // actually <errno>'s associated with the <aio_> call
+          // corresponding to aiocb_ptr.
+          int error_code = aio_error (aiocb_ptr);
+          if (error_code == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%p:Invalid control block was sent to <aio_error> for compleion querying\n"),
+                              -1);
 
-      if (error_code != 0)
-        // Error occurred in the <aio_>call. Return the errno
-        // corresponding to that <aio_> call.
-        ACE_ERROR_RETURN ((LM_ERROR, 
-                           "%p:An AIO call has failed\n"),
-                          error_code);
-      
-      // No error occured in the AIO operation.
-      int nbytes = aio_return (aiocb_ptr);
-      if (nbytes == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p:Invalid control block was send to <aio_return>\n"),
-                          -1);
+          if (error_code != 0)
+            // Error occurred in the <aio_>call. Return the errno
+            // corresponding to that <aio_> call.
+            ACE_ERROR_RETURN ((LM_ERROR, 
+                               "%p:An AIO call has failed\n"),
+                              error_code);
           
-      // <nbytes> have been successfully transmitted.
-      size_t bytes_transferred = nbytes;
+          // No error occured in the AIO operation.
+          int nbytes = aio_return (aiocb_ptr);
+          if (nbytes == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%p:Invalid control block was send to <aio_return>\n"),
+                              -1);
           
-      // @@ Completion key for the the handle. Not implemented for
-      // Unix yet.
-      void *completion_key = 0;
+          // <nbytes> have been successfully transmitted.
+          size_t bytes_transferred = nbytes;
           
           // Call the application code.
-      this->application_specific_code (asynch_result,
-                                       bytes_transferred,
-                                       1,  // Result : True.
-                                       completion_key,
-                                       0); // Error.
+          this->application_specific_code (asynch_result,
+                                           bytes_transferred,
+                                           1,  // Result : True.
+                                           0,  // No completion_signal.
+                                           0); // Error.
+        }
+      else if (sig_info.si_code == SI_QUEUE)
+        {
+          // @@ Just debugging.
+          ACE_DEBUG ((LM_DEBUG, "<sigqueue>'d signal received\n"));
+          
+          // Should be from the <Asynch_Accept> call.
+          this->application_specific_code (asynch_result,
+                                           0, // No bytes transferred.
+                                           1, // Result : True.
+                                           0, // No completion key.
+                                           0);
+          
+        }
+      else
+        // Unknown signal code.
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Unexpected signal code (%d) returned on completion querying\n",
+                           sig_info.si_code),
+                          -1);
     }
   else 
     {
+      //  Not RT_SIGNALS approach. Using <aiocb> control blocks.
+      
       // Is there any entries in the list.
       if (this->aiocb_list_cur_size_ == 0)
         // No aio is pending.
@@ -801,9 +814,6 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
           // Bytes transfered is what the aio_return gives back.
       size_t bytes_transferred = nbytes;
 
-      // @@
-      void *completion_key = 0;
-
       // Retrive the result pointer.
       ACE_Asynch_Result *asynch_result = (ACE_Asynch_Result *)
         aiocb_list_[ai]->aio_sigevent.sigev_value.sival_ptr;
@@ -819,7 +829,7 @@ ACE_Proactor::handle_events (unsigned long milli_seconds)
       this->application_specific_code (asynch_result,
                                        bytes_transferred,
                                        1,
-                                       completion_key,
+                                       0, // No completion key.
                                        0);
     }
   return 0;

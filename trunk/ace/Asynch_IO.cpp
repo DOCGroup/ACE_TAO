@@ -5,14 +5,14 @@
 
 ACE_RCSID(ace, Asynch_IO, "$Id$")
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) \
-    || (defined (ACE_HAS_AIO_CALLS))
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 // This only works on Win32 platforms
 
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
 #include "ace/INET_Addr.h"
+#include "ace/Task_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Asynch_IO.i"
@@ -157,15 +157,15 @@ ACE_Asynch_Operation::cancel (void)
 #if defined (ACE_HAS_AIO_CALLS)
   // @@ <aio_cancel> will come here soon.
   return 0;
-#else /* ACE_HAS_AIO_CALLS */
+#elif (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020))
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020))
+
   return (int) ::CancelIo (this->handle_);
-#else
+
+#else /* Not ACE_HAS_WINNT4 && ACE_HAS_WINNT4!=0 && _MSC... */
   ACE_NOTSUP_RETURN (-1);
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && (defined (_MSC_VER) && (_MSC_VER > 1020)) */
 #endif /* ACE_HAS_AIO_CALLS */
 }
 
@@ -773,14 +773,10 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
                            ACE_HANDLE accept_handle,
                            const void *act)
 {
-#if defined (ACE_HAS_AIO_CALLS)
-  ACE_UNUSED_ARG (message_block);
-  ACE_UNUSED_ARG (bytes_to_read);
-  ACE_UNUSED_ARG (accept_handle);
-  ACE_UNUSED_ARG (act);
-  return 0;
-#else /* ACE_HAS_AIO_CALLS */
-#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS))
+
+  // Common code for both WIN and POSIX.
+  
   // Sanity check: make sure that enough space has been allocated by
   // the caller. 
   size_t address_size = sizeof (sockaddr_in) + sizeof (sockaddr);
@@ -791,8 +787,11 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
   if (available_space < space_needed)
     ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Buffer too small\n")), -1);
 
+#if !defined (ACE_HAS_AIO_CALLS)
+  // WIN Specific.
+  
   int close_accept_handle = 0;
-  // If the <accept_handle> is invalid, we will create a new socket
+  // If the <accept_handle> is invalid, we will create a new socket.
   if (accept_handle == ACE_INVALID_HANDLE)
     {
       accept_handle = ACE_OS::socket (PF_INET,
@@ -806,6 +805,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
         // Remember to close the socket down if failures occur.
         close_accept_handle = 1;
     }
+#endif /* Not ACE_HAS_AIO_CALLS */
 
   Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -818,8 +818,32 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
                           this->proactor_->get_handle ()),
                   -1);
 
+#if defined (ACE_HAS_AIO_CALLS)
+  // Code specific to the POSIX Implementation.
+  
+  // Make the auxillary class for doing accept and initiate
+  // accept. This class will be delete itself when the accept succeeds
+  // or some failures occur there.
+  ACE_Asynch_Accept_Handler *accept_handler = 0;
+  
+  ACE_NEW_RETURN (accept_handler, 
+                  ::ACE_Asynch_Accept_Handler (result),
+                  -1);
+  
+  int return_val = accept_handler->activate (THR_NEW_LWP |
+                                             THR_DETACHED);
+  if (return_val == -1)
+    // Something went wrong.
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:%p:\n",
+                       "Could not create thread to do Asynch_Accept"),
+                      -1);
+  return 0;
+#else /* Not ACE_HAS_AIO_CALLS */
+  // Code specific to WIN platforms.
+  
   u_long bytes_read;
-
+  
   // Initiate the accept.
   int initiate_result = ::AcceptEx ((SOCKET) result->listen_handle (),
                                     (SOCKET) result->accept_handle (),
@@ -850,15 +874,16 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
         // Close the newly created socket
         ACE_OS::closesocket (accept_handle);
 
-      // Cleanup dynamically allocated Asynch_Result
+      // Cleanup dynamically allocated Asynch_Result.
       delete result;
 
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
-#else /* ACE_HAS_WINNT4 ... */
-  ACE_NOTSUP_RETURN (-1);
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
 #endif /* ACE_HAS_AIO_CALLS */
+
+#else /* ACE_HAS_WINNT4 .......|| ACE_HAS_AIO_CALLS */
+  ACE_NOTSUP_RETURN (-1);
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || (defined (ACE_HAS_AIO_CALLS) */
 }
 
 // ************************************************************
@@ -917,9 +942,98 @@ ACE_Asynch_Accept::Result::complete (u_long bytes_transferred,
   // Appropriately move the pointers in the message block.
   this->message_block_.wr_ptr (bytes_transferred);
 
-  // Callback: notify <handler> of completion
+  // Callback: notify <handler> of completion.
   this->handler_.handle_accept (*this);
 }
+
+// ************************************************************
+
+#if defined (ACE_HAS_AIO_CALLS)
+ACE_Asynch_Accept_Handler::ACE_Asynch_Accept_Handler (ACE_Asynch_Accept::Result *result)
+  : result_ (result)
+{
+}  
+
+ACE_Asynch_Accept_Handler::~ACE_Asynch_Accept_Handler (void)
+{
+  // We shouldnt delete the result_ inside, because the completion is
+  // going thru the proactor's handle_events, it will delete the
+  // result after the calling the application specific code.
+}
+
+int
+ACE_Asynch_Accept_Handler::svc (void)
+{
+  // @@ Can this wait forever for accept?
+
+  // There is not going to be any data read. So we can use the
+  // <message_block> itself to take the <remote_address> as well as
+  // the size of that address.
+  
+  // We will have atleast 2 * (sizeof (sockaddr_in) + sizeof (sockaddr)).
+  size_t buffer_size = sizeof (sockaddr_in) + sizeof (sockaddr);
+  
+  // Parameters for the <accept> call.
+  int *address_size = (int *)this->result_->message_block ().wr_ptr ();
+  *address_size = buffer_size;
+  
+  // Increment the wr_ptr.
+  this->result_->message_block ().wr_ptr (sizeof (int));
+  
+  // @@ Debugging.
+  ACE_DEBUG ((LM_DEBUG,
+              "Asynch_Accept_Handler::svc : Listen_handle = [%d]\n",
+              this->result_->listen_handle ()));
+  
+  // Issue <accept> now.
+  ACE_HANDLE new_handle = ACE_OS::accept (this->result_->listen_handle (),
+                                          (struct sockaddr *) this->result_->message_block ().wr_ptr (),
+                                          address_size);
+  if (new_handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:(%P | %t):%p:\n",
+                       "<accept> system call failed"),
+                      -1);
+  
+  // Accept has completed.
+
+  // Update the <wr_ptr> for the <message block>.
+  this->result_->message_block ().wr_ptr (*address_size);
+  
+  // @@ Just debugging.
+  ACE_DEBUG ((LM_DEBUG, "%N:%l:Address_size = [%d], New_handle = [%d]\n", *address_size, new_handle));
+  
+  // Store the new handle.
+  this->result_->accept_handle_ = new_handle;
+  
+  // Signal the main process about this completion.
+  
+  // Get this process id.
+  pid_t pid = ACE_OS::getpid ();
+  if (pid == (pid_t) -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "Error:(%P | %t):%p:<getpid> failed.\n"),
+                      -1);
+  
+  // Set the signal information.
+  sigval value;
+  value.sival_ptr = (void *) this->result_;
+  
+  // Queue the signal.
+  if (sigqueue (pid, ACE_SIG_AIO, value) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "Error:(%P | %t):%p:\n",
+                       "<sigqueue> failed.\n"),
+                      -1);
+  
+  // @@ Just debugging. 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P | %t): Accept is done. Signal is queued. Exiting thread\n"));
+  
+  return 0;
+}  
+
+#endif /* ACE_HAS_AIO_CALLS */
 
 // ************************************************************
 

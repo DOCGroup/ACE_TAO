@@ -1,4 +1,4 @@
-// $Id: test_proactor.cpp,v
+// $Id$
 
 // ============================================================================
 //
@@ -34,7 +34,7 @@ ACE_RCSID(Proactor, test_proactor, "$Id$")
 
 static char *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
-static char *file = "test_proactor.cpp";
+static char *file = "make.log";
 static char *dump_file = "output";
 static int done = 0;
 static int initial_read_size = BUFSIZ;
@@ -104,7 +104,10 @@ Receiver::open (ACE_HANDLE handle,
 		ACE_Message_Block &message_block)
 {
   // New connection, initiate stuff
-
+  
+  // @@ Debugging.
+  ACE_DEBUG ((LM_DEBUG, "%N:%l:Receiver::open called\n"));
+  
   // Cache the new connection
   this->handle_ = handle;
 
@@ -132,19 +135,29 @@ Receiver::open (ACE_HANDLE handle,
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Asynch_Read_Stream::open"));
       return;
     }
-
+  
   // Duplicate the message block so that we can keep it around
   ACE_Message_Block &duplicate = *message_block.duplicate ();
 
-  // Initial data (data which came with the AcceptEx call)
-  ACE_Asynch_Read_Stream::Result fake_result (*this,
-                                              this->handle_,
-                                              duplicate,
-                                              initial_read_size,
-                                              0,
-                                              ACE_INVALID_HANDLE);
-  // This will call the callback
-  fake_result.complete (message_block.length (), 1, 0);
+  // Fake the result and make the <handle_read_stream> get
+  // called. But, not, if there is '0' is transferred. 
+  if (message_block.length () != 0)
+    {
+      // Fake the result so that we will get called back.
+      ACE_Asynch_Read_Stream::Result fake_result (*this,
+                                                  this->handle_,
+                                                  duplicate,
+                                                  initial_read_size,
+                                                  0,
+                                                  ACE_INVALID_HANDLE);
+      // This will call the callback.
+      fake_result.complete (message_block.length (), 1, 0);
+    }
+  else 
+    // Otherwise, make sure we proceed. Initiate reading the
+    // stream. 
+    if (this->initiate_read_stream () == -1)
+      return;
 }
 
 int
@@ -197,7 +210,10 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 	return;
     }
   else
-    done = 1;
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receiver completed\n"));
+      done = 1;
+    }
 }
 
 void
@@ -579,3 +595,9 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Asynch_Acceptor<Receiver>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Asynch_Acceptor<Receiver>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
