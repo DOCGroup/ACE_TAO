@@ -3,12 +3,16 @@
 // ============================================================================
 //
 // = FILENAME
-//    Event_Sup.cpp
+//    Logging_Sup.cpp
 //
 // = DESCRIPTION
-//   Event Supplier for the flight simulator
+//   Event Supplier for visualizing scheduling behavior, using arrival
+//   and dispatch data logged by an event channel dispatch command object
 //
 // = AUTHOR
+//    Chris Gill (cdgill@cs.wustl.edu)
+//
+//    Adapted from the DOVE simulation event supplier
 //    originally
 //    David Levine (levine@cs.wustl.edu) and
 //    Tim Harrison (harrison@cs.wustl.edu)
@@ -29,10 +33,10 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "Event_Sup.h"
+#include "Logging_Sup.h"
 #include "NavWeapC.h"
 
-ACE_RCSID(Event_Supplier, Event_Sup, "$Id$")
+ACE_RCSID(Event_Supplier, Logging_Sup, "$Id$")
 
 static const char usage [] =
 "[[-?]\n"
@@ -41,7 +45,7 @@ static const char usage [] =
 "                 [-f name of schedler input data file]]\n";
 
 
-Event_Supplier::Event_Supplier (int argc, char** argv)
+Logging_Supplier::Logging_Supplier (int argc, char** argv)
 : argc_(argc),
   argv_(argv),
   total_messages_(10),
@@ -50,20 +54,20 @@ Event_Supplier::Event_Supplier (int argc, char** argv)
   navigation_.roll = navigation_.pitch = 0;
 }
 
-Event_Supplier::~Event_Supplier ()
+Logging_Supplier::~Logging_Supplier ()
 {
   this->dOVE_Supplier_.disconnect ();
 }
 
 int
-Event_Supplier::init ()
+Logging_Supplier::init ()
 {
   this->get_options (argc_, argv_);
   return this->dOVE_Supplier_.connect ("MIB_unknown");
 }
 
 void
-Event_Supplier::start_generating_events (void)
+Logging_Supplier::start_generating_events (void)
 {
   unsigned long total_sent = 0;
 
@@ -112,7 +116,7 @@ Event_Supplier::start_generating_events (void)
 }
 
 void
-Event_Supplier::load_schedule_data
+Logging_Supplier::load_schedule_data
       (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data)
 {
   Schedule_Viewer_Data *data = 0;
@@ -236,7 +240,7 @@ Event_Supplier::load_schedule_data
 // the event channel.
 
 void
-Event_Supplier::insert_event_data (CORBA::Any &data,
+Logging_Supplier::insert_event_data (CORBA::Any &data,
                                   ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter)
 {
   static u_long last_completion = 0;
@@ -259,16 +263,16 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.roll = (navigation_.roll >= 180) ? -180 : navigation_.roll + 1;
         navigation_.pitch =  (navigation_.pitch >= 90) ? -90 : navigation_.pitch + 1;
 
-        navigation_.utilization =            (*sched_data)->utilitzation;
-        navigation_.overhead =               (*sched_data)->overhead;
+        navigation_.utilization =            0.0;
+        navigation_.overhead =               0.0;
         navigation_.arrival_time_secs =      0;
-        navigation_.arrival_time_usecs =     (*sched_data)->arrival_time;
+        navigation_.arrival_time_usecs =     0;
         navigation_.deadline_time_secs =     0;
-        navigation_.deadline_time_usecs =    (*sched_data)->deadline_time;
+        navigation_.deadline_time_usecs =    0;
         navigation_.completion_time_secs =   0;
-        navigation_.completion_time_usecs =  (*sched_data)->completion_time;
+        navigation_.completion_time_usecs =  0;
         navigation_.computation_time_secs =  0;
-        navigation_.computation_time_usecs = (*sched_data)->computation_time;
+        navigation_.computation_time_usecs = 0;
 
 
         // because the scheduler data does not supply these values
@@ -298,26 +302,22 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.weapon5_identifier = CORBA::string_alloc (1);
         strcpy (weapons_.weapon5_identifier, "");
         weapons_.weapon5_status = 0;
-        weapons_.utilization =     (*sched_data)->utilitzation;
-        weapons_.overhead =         (*sched_data)->overhead;
+        weapons_.utilization =            0.0;
+        weapons_.overhead =               0.0;
         weapons_.arrival_time_secs =      0;
-        weapons_.arrival_time_usecs =     (*sched_data)->arrival_time;
+        weapons_.arrival_time_usecs =     0;
         weapons_.deadline_time_secs =     0;
-        weapons_.deadline_time_usecs =    (*sched_data)->deadline_time;
+        weapons_.deadline_time_usecs =    0;
         weapons_.completion_time_secs  =  0;
-        weapons_.completion_time_usecs =  (*sched_data)->completion_time;
+        weapons_.completion_time_usecs =  0;
         weapons_.computation_time_secs =  0;
-        weapons_.computation_time_usecs = (*sched_data)->computation_time;
-
-        // because the scheduler data does not supply these values
-        weapons_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
-        weapons_.overhead = (double) (ACE_OS::rand() % 10);
+        weapons_.computation_time_usecs = 0;
 
         data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
       }
       else {
         ACE_ERROR ((LM_ERROR,
-                    "Event_Supplier::insert_event_data:"
+                    "Logging_Supplier::insert_event_data:"
                     "unrecognized operation name [%s]",
                     (*sched_data)->operation_name));
       }
@@ -339,7 +339,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
     }
     else
       ACE_ERROR ((LM_ERROR,
-                  "Event_Supplier::insert_event_data:"
+                  "Logging_Supplier::insert_event_data:"
                   "Could Not access scheduling data"));
 
     schedule_iter.advance ();
@@ -350,7 +350,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
   TAO_CATCHANY
   {
     ACE_ERROR ((LM_ERROR,
-                "(%t)Error in Event_Supplier::insert_event_data.\n"));
+                "(%t)Error in Logging_Supplier::insert_event_data.\n"));
   }
   TAO_ENDTRY;
 }
@@ -360,7 +360,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 // Function get_options.
 
 unsigned int
-Event_Supplier::get_options (int argc, char *argv [])
+Logging_Supplier::get_options (int argc, char *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, "f:m:");
   int opt;
@@ -438,10 +438,10 @@ main (int argc, char *argv [])
 
 
       // Create the demo supplier.
-      Event_Supplier *event_Supplier_ptr;
+      Logging_Supplier *event_Supplier_ptr;
 
       ACE_NEW_RETURN (event_Supplier_ptr,
-                      Event_Supplier(argc, argv),
+                      Logging_Supplier(argc, argv),
                       -1);
 
       // Initialize everthing
