@@ -38,6 +38,7 @@ $IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service");
 $SV      = new PerlACE::Process ("server");
 $CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile"
                                  . " $lookup_by_name");
+$CL2     = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile -n");
 
 unlink $ifr_iorfile;
 unlink $svr_iorfile;
@@ -46,7 +47,7 @@ $IFR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($ifr_iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$ifr_iorfile>\n";
-    $IFR->Kill (); 
+    $IFR->Kill ();
     exit 1;
 }
 
@@ -55,7 +56,7 @@ $SV->Spawn ();
 if (PerlACE::waitforfile_timed ($svr_iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$svr_iorfile>\n";
     $IFR->Kill ();
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
@@ -75,13 +76,6 @@ if ($client != 0) {
     $status = 1;
 }
 
-$server = $SV->TerminateWaitKill (5);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
-
 $TAO_IFR->Arguments ("-r $test_idl");
 
 $tresult = $TAO_IFR->SpawnWaitKill (30);
@@ -91,6 +85,20 @@ if ($tresult != 0) {
     $status = 1;
 }
 
+# Do another lookup to check it really has been removed.
+$client = $CL2->SpawnWaitKill (60);
+
+if ($client == 0) {
+  print STDERR "ERROR: second client run returned $client\n";
+  $status = 1;
+}
+
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 $server = $IFR->TerminateWaitKill (5);
 
 if ($server != 0) {
@@ -102,4 +110,3 @@ unlink $ifr_iorfile;
 unlink $svr_iorfile;
 
 exit $status;
-

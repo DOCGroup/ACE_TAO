@@ -54,8 +54,25 @@ TAO_DynStruct_i::init (const CORBA::Any& any
 
   this->type_ = tc;
 
-  // Member_count works with aliased type codes.
-  CORBA::ULong numfields = this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->set_from_any (any
+                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+
+// This code is common to from_any() and the init() overload that takes
+// an Any argument.
+void
+TAO_DynStruct_i::set_from_any (const CORBA::Any & any
+                               ACE_ENV_ARG_DECL)
+{
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (any.type ()
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::ULong numfields = unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Resize the array.
@@ -70,7 +87,7 @@ TAO_DynStruct_i::init (const CORBA::Any& any
                     any._tao_byte_order ());
 
   // If we have an exception type, unmarshal the repository ID.
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ()
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (any.type ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -79,12 +96,6 @@ TAO_DynStruct_i::init (const CORBA::Any& any
       CORBA::String_var str;
       cdr >> str.out ();
     }
-
-  // member_type() does not work with aliased type codes.
-  CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
@@ -134,10 +145,15 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
 
   CORBA::TypeCode_var mtype;
 
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+  TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
-      mtype = tc->member_type (i
-                               ACE_ENV_ARG_PARAMETER);
+      mtype = unaliased_tc->member_type (i
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Recursively initialize each member.
@@ -214,10 +230,14 @@ TAO_DynStruct_i::current_member_name (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  // Member_name works with aliased type codes.
+  // member_name() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   const char *name =
-    this->type_->member_name (this->current_position_
-                              ACE_ENV_ARG_PARAMETER);
+    unaliased_tc->member_name (this->current_position_
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return CORBA::string_dup (name);
@@ -251,9 +271,14 @@ TAO_DynStruct_i::current_member_kind (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::tk_null);
     }
 
-  CORBA::TypeCode_var tc =
-    this->type_.in ()->member_type (this->current_position_
+  // member_type() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  CORBA::TypeCode_var tc =
+  unaliased_tc->member_type (this->current_position_
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
@@ -387,11 +412,17 @@ TAO_DynStruct_i::get_members_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
 
   DynamicAny::NameDynAnyPairSeq_var safe_retval = members;
 
+  // member_name() does not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+    TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   // Assign name and value to each pearl on the string.
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
-        CORBA::string_dup (this->type_.in ()->member_name (i));
+      CORBA::string_dup (unaliased_tc->member_name (i));
 
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
@@ -486,7 +517,6 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
     {
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
-
   CORBA::TypeCode_var tc = any.type ();
   CORBA::Boolean equivalent = this->type_->equivalent (tc.in ()
                                                        ACE_ENV_ARG_PARAMETER);
@@ -494,56 +524,11 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
 
   if (equivalent)
     {
-      // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
-      TAO_InputCDR cdr (mb,
-                        any._tao_byte_order ());
-
-      // If we have an exception type, unmarshal the repository ID.
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (kind == CORBA::tk_except)
-        {
-          CORBA::String_var str;
-          cdr >> str.out ();
-        }
-
-      CORBA::TypeCode_var field_tc;
-
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
-        {
-          field_tc = this->type_.in ()->member_type (i
-                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          // This Any constructor is a TAO extension.
-          CORBA::Any field_any (field_tc.in (),
-                               0,
-                               cdr.byte_order (),
-                               cdr.start ());
-
-          this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
-
-          this->da_members_[i] =
-            TAO_DynAnyFactory::make_dyn_any (field_any
-                                                       ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          // Move to the next field in the CDR stream.
-          (void) TAO_Marshal_Object::perform_skip (field_tc.in (),
-                                                   &cdr
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
-
-      this->current_position_ = this->component_count_ ? 0 : -1;
+       this->set_from_any (any ACE_ENV_ARG_PARAMETER);
     }
   else
     {
-      ACE_THROW (DynamicAny::DynAny::InvalidValue ());
+      ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
     }
 }
 

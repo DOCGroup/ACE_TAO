@@ -196,10 +196,11 @@ TAO_Naming_Server::parse_args (int argc,
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_LIB_TEXT ("usage:  %s ")
-                           ACE_LIB_TEXT ("-NScontextname <contextname> ")
+                           ACE_LIB_TEXT ("-d ")
                            ACE_LIB_TEXT ("-o <ior_output_file> ")
                            ACE_LIB_TEXT ("-p <pid_file_name> ")
                            ACE_LIB_TEXT ("-f <persistence_file_name> ")
+                           ACE_LIB_TEXT ("-s <context_size> ")
                            ACE_LIB_TEXT ("-b <base_address> ")
                            ACE_LIB_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
                            ACE_LIB_TEXT ("-u <storable_persistence_directory (not used with -f)> ")

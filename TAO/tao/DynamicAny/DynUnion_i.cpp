@@ -48,11 +48,18 @@ TAO_DynUnion_i::init (const CORBA::Any& any
 
   this->init_common ();
 
-  // Set the from_factory arg to TRUE, so any problems will throw
-  // InconsistentTypeCode.
-  this->set_from_any (any,
-                      1
-                      ACE_ENV_ARG_PARAMETER);
+  // Map TypeMismatch to InconsistentTypeCode.2
+  ACE_TRY
+  {
+     this->set_from_any (any
+                         ACE_ENV_ARG_PARAMETER);
+     ACE_CHECK;
+  }
+  ACE_CATCH(DynamicAny::DynAny::TypeMismatch, ex)
+  {
+     ACE_TRY_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+  }
+  ACE_ENDTRY;
   ACE_CHECK;
 }
 
@@ -74,7 +81,11 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
 
   this->init_common ();
 
-  CORBA::Any_var first_label = tc->member_label (this->current_position_
+  // member_type()/member_label() do not work with aliased type codes.
+  CORBA::TypeCode_var unaliased_tc =
+  TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+  CORBA::Any_var first_label = unaliased_tc->member_label (this->current_position_
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -84,8 +95,8 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::TypeCode_var first_type = tc->member_type (this->current_position_
-                                                    ACE_ENV_ARG_PARAMETER);
+  CORBA::TypeCode_var first_type = unaliased_tc->member_type (this->current_position_
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Recursively initialize the member to its default value.
@@ -135,8 +146,7 @@ TAO_DynUnion_i::_tao_QueryInterface (ptr_arith_t type)
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
-                              CORBA::Boolean from_factory
+TAO_DynUnion_i::set_from_any (const CORBA::Any & any
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -243,14 +253,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
 
       if (default_index == -1)
         {
-          if (from_factory)
-            {
-              ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
-            }
-          else
-            {
-              ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
-            }
+           set_to_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
       else
         {
@@ -704,10 +707,7 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any
       // May be changed in set_from_any().
       this->component_count_ = 2;
 
-      // Set the from_factory arg to FALSE, so any problems will throw
-      // TypeMismatch.
-      this->set_from_any (any,
-                          0
+      this->set_from_any (any
                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -1017,4 +1017,3 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
       return 0;
   }
 }
-
