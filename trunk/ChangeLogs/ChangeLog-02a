@@ -1,3 +1,8 @@
+Wed Dec 27 15:32:43 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+ 	* examples/Reactor/WFMO_Reactor/test_network_events.cpp:
+	  Added missing ;
+
 Wed Dec 27 11:11:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Map_Manager/test_hash_map_manager.cpp:
