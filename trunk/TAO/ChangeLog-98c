@@ -6,6 +6,10 @@ Wed Jul 22 11:55:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  also broken, we use TypeCode::equal() instead; thanks to Darrell
 	  Brunsch for reporting this.
 
+	* tao/NVList.cpp: 
+	  We were passing a TypeCode_var without calling .in() first,
+	  thansk to Seth B. Widoff for catching up this one.
+
 Wed Jul 22 11:18:51 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* Makefile: Updated the Makefile to include the server_i and
