@@ -129,7 +129,7 @@ TAO_Creation_Time::creation_time (void) const
 ACE_INLINE int
 TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
-#if defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
   return 1;
 #else
@@ -142,7 +142,7 @@ TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 ACE_INLINE int
 TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
-#if defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
   return 0;
 #else
@@ -155,7 +155,7 @@ TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 ACE_INLINE int
 TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
-#if defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
   return 1;
 #else
@@ -168,7 +168,7 @@ TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 ACE_INLINE int
 TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 {
-#if defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 1)
   ACE_UNUSED_ARG (rhs);
   return 0;
 #else
@@ -399,7 +399,7 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
 //
 // Forwarding related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE void
 TAO_POA::forward_object (const PortableServer::ObjectId &oid,

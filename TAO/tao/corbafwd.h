@@ -169,7 +169,7 @@ typedef class CORBA_Exception *CORBA_Exception_ptr;
 TAO_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class CORBA_WrongTransaction;
 typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
@@ -737,7 +737,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_SystemException SystemException;
   typedef CORBA_UserException  UserException;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   typedef CORBA_DynAny DynAny;
   typedef DynAny *DynAny_ptr;
@@ -1155,7 +1155,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr req);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
@@ -1172,7 +1172,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (ServerRequest_ptr req);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   TAO_NAMESPACE_INLINE_FUNCTION void release (Request_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
@@ -1268,7 +1268,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Bounds;
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Current;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_NamedValue;
 #endif /* End of Minimum CORBA */
   enum
@@ -1402,7 +1402,7 @@ TAO_NAMESPACE CORBA
 
   TAO_NAMESPACE_STORAGE_CLASS const PolicyType SecConstruction;
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   typedef CORBA_ConstructionPolicy ConstructionPolicy;
   typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
   typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;

@@ -270,7 +270,7 @@ private:
   int old_type_;
 };
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // DII analogue of the above.
 

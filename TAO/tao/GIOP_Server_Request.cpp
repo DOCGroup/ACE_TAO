@@ -57,7 +57,7 @@ TAO_GIOP_ServerRequest::
        sync_with_server_ (0),
        lazy_evaluation_ (0),
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
        params_ (0),
 
@@ -97,7 +97,7 @@ TAO_GIOP_ServerRequest::
         sync_with_server_ (0),
         lazy_evaluation_ (0),
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
         params_ (0),
 
@@ -119,7 +119,7 @@ TAO_GIOP_ServerRequest::
 TAO_GIOP_ServerRequest::~TAO_GIOP_ServerRequest (void)
 {
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   if (this->params_)
     CORBA::release (this->params_);
@@ -142,7 +142,7 @@ TAO_GIOP_ServerRequest::oa (void)
   return this->orb_core_->root_poa ();
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
 // inout/out/return values later on.
@@ -190,7 +190,7 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
   else
   {
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
     const PortableServer::ForwardRequest *forward_request = 0;
 
@@ -291,7 +291,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
   this->mesg_base_->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
                                            *this->outgoing_);
 
-#if defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 1)
   *this->outgoing_ << this->service_info_;
 #else
   if (this->lazy_evaluation_ == 0 || this->params_ == 0)

@@ -12,7 +12,7 @@
 #include "tao/Environment.h"
 #include "tao/CDR.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // default constructor
 CORBA_WrongTransaction::CORBA_WrongTransaction (void)

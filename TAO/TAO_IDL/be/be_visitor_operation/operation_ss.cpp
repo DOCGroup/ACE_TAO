@@ -181,7 +181,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptor and do preinvoke
-  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << "TAO_ServerRequestInterceptor_Adapter" << be_idt_nl
       << "_tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));" << be_uidt_nl
       << "ACE_CHECK;" << be_nl
@@ -256,7 +256,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "TAO_INTERCEPTOR_CHECK;\n\n";
 
   // do postinvoke, and check for exception.
-  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << "_tao_vfr.postinvoke (" << be_idt << be_idt_nl
       << "_tao_server_request.request_id ()," << be_nl;
 

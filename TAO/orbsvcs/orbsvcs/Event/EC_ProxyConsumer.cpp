@@ -49,7 +49,7 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
       return 0;
     }
 
-#if !defined(TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   return this->supplier_->_non_existent (ACE_TRY_ENV);
 #else
   return 0;

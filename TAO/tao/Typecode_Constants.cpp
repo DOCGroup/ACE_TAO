@@ -187,7 +187,7 @@ TAO_NAMESPACE_END
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InvalidName = 0;
 
-#if !defined(TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 0;
 
@@ -603,7 +603,7 @@ TAO_TypeCodes::init (void)
                          0,
                          sizeof (CORBA_ORB::ObjectId));
 
-#if !defined(TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
   {
     TAO_ENCAP_BYTE_ORDER,   // byte order
@@ -1936,7 +1936,7 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_ORBid);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   CORBA::release (CORBA_ORB::_tc_InconsistentTypeCode);
 
   CORBA::release (CORBA::_tc_ConstructionPolicy);

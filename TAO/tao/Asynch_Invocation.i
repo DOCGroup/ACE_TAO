@@ -33,7 +33,7 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
 
 //****************************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE
 TAO_GIOP_DII_Deferred_Invocation::

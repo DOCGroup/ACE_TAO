@@ -263,7 +263,7 @@ CORBA::Policy_ptr POA_CORBA::_tao_collocated_DomainManager::get_domain_policy  (
   );
 }
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {

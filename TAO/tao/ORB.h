@@ -379,7 +379,7 @@ public:
              TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   // = Interceptor registration routine
   //   Currently, we only support one interceptor per-ORB.
 
@@ -404,7 +404,7 @@ public:
   // accessor to the server-side interceptor.  You get a duplicate.
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   // Typedefs for CORBA_ORB_RequestSeq,
   // which is an argument of send_multiple_requests_*().
@@ -803,7 +803,7 @@ private:
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.

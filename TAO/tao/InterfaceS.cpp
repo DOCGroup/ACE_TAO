@@ -186,7 +186,7 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
   POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *)_tao_object_reference;
 
   CORBA::DefinitionKind _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -223,7 +223,7 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -271,7 +271,7 @@ void POA_CORBA::IRObject::destroy_skel (
 {
   POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *)_tao_object_reference;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -308,7 +308,7 @@ void POA_CORBA::IRObject::destroy_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -773,7 +773,7 @@ void POA_CORBA::Contained::_get_id_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -810,7 +810,7 @@ void POA_CORBA::Contained::_get_id_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -865,7 +865,7 @@ void POA_CORBA::Contained::_set_id_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -903,7 +903,7 @@ void POA_CORBA::Contained::_set_id_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -946,7 +946,7 @@ void POA_CORBA::Contained::_get_name_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -983,7 +983,7 @@ void POA_CORBA::Contained::_get_name_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1038,7 +1038,7 @@ void POA_CORBA::Contained::_set_name_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1076,7 +1076,7 @@ void POA_CORBA::Contained::_set_name_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1119,7 +1119,7 @@ void POA_CORBA::Contained::_get_version_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1156,7 +1156,7 @@ void POA_CORBA::Contained::_get_version_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1211,7 +1211,7 @@ void POA_CORBA::Contained::_set_version_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1249,7 +1249,7 @@ void POA_CORBA::Contained::_set_version_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1292,7 +1292,7 @@ void POA_CORBA::Contained::_get_defined_in_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::Container_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1329,7 +1329,7 @@ void POA_CORBA::Contained::_get_defined_in_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1378,7 +1378,7 @@ void POA_CORBA::Contained::_get_absolute_name_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::String_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1415,7 +1415,7 @@ void POA_CORBA::Contained::_get_absolute_name_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1464,7 +1464,7 @@ void POA_CORBA::Contained::_get_containing_repository_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::Repository_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1501,7 +1501,7 @@ void POA_CORBA::Contained::_get_containing_repository_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1550,7 +1550,7 @@ void POA_CORBA::Contained::describe_skel (
   POA_CORBA::Contained *_tao_impl = (POA_CORBA::Contained *)_tao_object_reference;
 
   CORBA::Contained::Description_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1587,7 +1587,7 @@ void POA_CORBA::Contained::describe_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -1646,7 +1646,7 @@ void POA_CORBA::Contained::move_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -1686,7 +1686,7 @@ void POA_CORBA::Contained::move_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2414,7 +2414,7 @@ void POA_CORBA::Container::lookup_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2452,7 +2452,7 @@ void POA_CORBA::Container::lookup_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2510,7 +2510,7 @@ void POA_CORBA::Container::contents_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2549,7 +2549,7 @@ void POA_CORBA::Container::contents_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2611,7 +2611,7 @@ void POA_CORBA::Container::lookup_name_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2652,7 +2652,7 @@ void POA_CORBA::Container::lookup_name_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2712,7 +2712,7 @@ void POA_CORBA::Container::describe_contents_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2752,7 +2752,7 @@ void POA_CORBA::Container::describe_contents_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2812,7 +2812,7 @@ void POA_CORBA::Container::create_module_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2852,7 +2852,7 @@ void POA_CORBA::Container::create_module_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -2916,7 +2916,7 @@ void POA_CORBA::Container::create_constant_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -2958,7 +2958,7 @@ void POA_CORBA::Container::create_constant_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3020,7 +3020,7 @@ void POA_CORBA::Container::create_struct_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3061,7 +3061,7 @@ void POA_CORBA::Container::create_struct_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3125,7 +3125,7 @@ void POA_CORBA::Container::create_union_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3167,7 +3167,7 @@ void POA_CORBA::Container::create_union_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3229,7 +3229,7 @@ void POA_CORBA::Container::create_enum_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3270,7 +3270,7 @@ void POA_CORBA::Container::create_enum_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3332,7 +3332,7 @@ void POA_CORBA::Container::create_alias_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3373,7 +3373,7 @@ void POA_CORBA::Container::create_alias_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3435,7 +3435,7 @@ void POA_CORBA::Container::create_interface_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3476,7 +3476,7 @@ void POA_CORBA::Container::create_interface_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3550,7 +3550,7 @@ void POA_CORBA::Container::create_value_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3597,7 +3597,7 @@ void POA_CORBA::Container::create_value_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3659,7 +3659,7 @@ void POA_CORBA::Container::create_value_box_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3700,7 +3700,7 @@ void POA_CORBA::Container::create_value_box_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -3762,7 +3762,7 @@ void POA_CORBA::Container::create_exception_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -3803,7 +3803,7 @@ void POA_CORBA::Container::create_exception_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -4712,7 +4712,7 @@ void POA_CORBA::IDLType::_get_type_skel (
   POA_CORBA::IDLType *_tao_impl = (POA_CORBA::IDLType *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -4749,7 +4749,7 @@ void POA_CORBA::IDLType::_get_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5204,7 +5204,7 @@ void POA_CORBA::Repository::lookup_id_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5242,7 +5242,7 @@ void POA_CORBA::Repository::lookup_id_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5298,7 +5298,7 @@ void POA_CORBA::Repository::get_primitive_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5336,7 +5336,7 @@ void POA_CORBA::Repository::get_primitive_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5392,7 +5392,7 @@ void POA_CORBA::Repository::create_string_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5430,7 +5430,7 @@ void POA_CORBA::Repository::create_string_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5486,7 +5486,7 @@ void POA_CORBA::Repository::create_wstring_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5524,7 +5524,7 @@ void POA_CORBA::Repository::create_wstring_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5582,7 +5582,7 @@ void POA_CORBA::Repository::create_sequence_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5621,7 +5621,7 @@ void POA_CORBA::Repository::create_sequence_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5679,7 +5679,7 @@ void POA_CORBA::Repository::create_array_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5718,7 +5718,7 @@ void POA_CORBA::Repository::create_array_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -5776,7 +5776,7 @@ void POA_CORBA::Repository::create_fixed_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -5815,7 +5815,7 @@ void POA_CORBA::Repository::create_fixed_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -6863,7 +6863,7 @@ void POA_CORBA::ConstantDef::_get_type_skel (
   POA_CORBA::ConstantDef *_tao_impl = (POA_CORBA::ConstantDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -6900,7 +6900,7 @@ void POA_CORBA::ConstantDef::_get_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -6949,7 +6949,7 @@ void POA_CORBA::ConstantDef::_get_type_def_skel (
   POA_CORBA::ConstantDef *_tao_impl = (POA_CORBA::ConstantDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -6986,7 +6986,7 @@ void POA_CORBA::ConstantDef::_get_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -7041,7 +7041,7 @@ void POA_CORBA::ConstantDef::_set_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -7079,7 +7079,7 @@ void POA_CORBA::ConstantDef::_set_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -7122,7 +7122,7 @@ void POA_CORBA::ConstantDef::_get_value_skel (
   POA_CORBA::ConstantDef *_tao_impl = (POA_CORBA::ConstantDef *)_tao_object_reference;
 
   CORBA::Any_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -7159,7 +7159,7 @@ void POA_CORBA::ConstantDef::_get_value_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -7214,7 +7214,7 @@ void POA_CORBA::ConstantDef::_set_value_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -7252,7 +7252,7 @@ void POA_CORBA::ConstantDef::_set_value_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -8218,7 +8218,7 @@ void POA_CORBA::StructDef::_get_members_skel (
   POA_CORBA::StructDef *_tao_impl = (POA_CORBA::StructDef *)_tao_object_reference;
 
   CORBA::StructMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -8255,7 +8255,7 @@ void POA_CORBA::StructDef::_get_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -8310,7 +8310,7 @@ void POA_CORBA::StructDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -8348,7 +8348,7 @@ void POA_CORBA::StructDef::_set_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -8861,7 +8861,7 @@ void POA_CORBA::UnionDef::_get_discriminator_type_skel (
   POA_CORBA::UnionDef *_tao_impl = (POA_CORBA::UnionDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -8898,7 +8898,7 @@ void POA_CORBA::UnionDef::_get_discriminator_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -8947,7 +8947,7 @@ void POA_CORBA::UnionDef::_get_discriminator_type_def_skel (
   POA_CORBA::UnionDef *_tao_impl = (POA_CORBA::UnionDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -8984,7 +8984,7 @@ void POA_CORBA::UnionDef::_get_discriminator_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -9039,7 +9039,7 @@ void POA_CORBA::UnionDef::_set_discriminator_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -9077,7 +9077,7 @@ void POA_CORBA::UnionDef::_set_discriminator_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -9120,7 +9120,7 @@ void POA_CORBA::UnionDef::_get_members_skel (
   POA_CORBA::UnionDef *_tao_impl = (POA_CORBA::UnionDef *)_tao_object_reference;
 
   CORBA::UnionMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -9157,7 +9157,7 @@ void POA_CORBA::UnionDef::_get_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -9212,7 +9212,7 @@ void POA_CORBA::UnionDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -9250,7 +9250,7 @@ void POA_CORBA::UnionDef::_set_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -9830,7 +9830,7 @@ void POA_CORBA::EnumDef::_get_members_skel (
   POA_CORBA::EnumDef *_tao_impl = (POA_CORBA::EnumDef *)_tao_object_reference;
 
   CORBA::EnumMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -9867,7 +9867,7 @@ void POA_CORBA::EnumDef::_get_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -9922,7 +9922,7 @@ void POA_CORBA::EnumDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -9960,7 +9960,7 @@ void POA_CORBA::EnumDef::_set_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -10449,7 +10449,7 @@ void POA_CORBA::AliasDef::_get_original_type_def_skel (
   POA_CORBA::AliasDef *_tao_impl = (POA_CORBA::AliasDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -10486,7 +10486,7 @@ void POA_CORBA::AliasDef::_get_original_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -10541,7 +10541,7 @@ void POA_CORBA::AliasDef::_set_original_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -10579,7 +10579,7 @@ void POA_CORBA::AliasDef::_set_original_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -11034,7 +11034,7 @@ void POA_CORBA::PrimitiveDef::_get_kind_skel (
   POA_CORBA::PrimitiveDef *_tao_impl = (POA_CORBA::PrimitiveDef *)_tao_object_reference;
 
   CORBA::PrimitiveKind _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -11071,7 +11071,7 @@ void POA_CORBA::PrimitiveDef::_get_kind_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -11515,7 +11515,7 @@ void POA_CORBA::StringDef::_get_bound_skel (
   POA_CORBA::StringDef *_tao_impl = (POA_CORBA::StringDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -11552,7 +11552,7 @@ void POA_CORBA::StringDef::_get_bound_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -11607,7 +11607,7 @@ void POA_CORBA::StringDef::_set_bound_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -11645,7 +11645,7 @@ void POA_CORBA::StringDef::_set_bound_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -12112,7 +12112,7 @@ void POA_CORBA::WstringDef::_get_bound_skel (
   POA_CORBA::WstringDef *_tao_impl = (POA_CORBA::WstringDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -12149,7 +12149,7 @@ void POA_CORBA::WstringDef::_get_bound_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -12204,7 +12204,7 @@ void POA_CORBA::WstringDef::_set_bound_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -12242,7 +12242,7 @@ void POA_CORBA::WstringDef::_set_bound_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -12711,7 +12711,7 @@ void POA_CORBA::FixedDef::_get_digits_skel (
   POA_CORBA::FixedDef *_tao_impl = (POA_CORBA::FixedDef *)_tao_object_reference;
 
   CORBA::UShort _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -12748,7 +12748,7 @@ void POA_CORBA::FixedDef::_get_digits_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -12803,7 +12803,7 @@ void POA_CORBA::FixedDef::_set_digits_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -12841,7 +12841,7 @@ void POA_CORBA::FixedDef::_set_digits_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -12884,7 +12884,7 @@ void POA_CORBA::FixedDef::_get_scale_skel (
   POA_CORBA::FixedDef *_tao_impl = (POA_CORBA::FixedDef *)_tao_object_reference;
 
   CORBA::Short _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -12921,7 +12921,7 @@ void POA_CORBA::FixedDef::_get_scale_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -12976,7 +12976,7 @@ void POA_CORBA::FixedDef::_set_scale_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -13014,7 +13014,7 @@ void POA_CORBA::FixedDef::_set_scale_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -13542,7 +13542,7 @@ void POA_CORBA::SequenceDef::_get_bound_skel (
   POA_CORBA::SequenceDef *_tao_impl = (POA_CORBA::SequenceDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -13579,7 +13579,7 @@ void POA_CORBA::SequenceDef::_get_bound_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -13634,7 +13634,7 @@ void POA_CORBA::SequenceDef::_set_bound_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -13672,7 +13672,7 @@ void POA_CORBA::SequenceDef::_set_bound_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -13715,7 +13715,7 @@ void POA_CORBA::SequenceDef::_get_element_type_skel (
   POA_CORBA::SequenceDef *_tao_impl = (POA_CORBA::SequenceDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -13752,7 +13752,7 @@ void POA_CORBA::SequenceDef::_get_element_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -13801,7 +13801,7 @@ void POA_CORBA::SequenceDef::_get_element_type_def_skel (
   POA_CORBA::SequenceDef *_tao_impl = (POA_CORBA::SequenceDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -13838,7 +13838,7 @@ void POA_CORBA::SequenceDef::_get_element_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -13893,7 +13893,7 @@ void POA_CORBA::SequenceDef::_set_element_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -13931,7 +13931,7 @@ void POA_CORBA::SequenceDef::_set_element_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -14488,7 +14488,7 @@ void POA_CORBA::ArrayDef::_get_length_skel (
   POA_CORBA::ArrayDef *_tao_impl = (POA_CORBA::ArrayDef *)_tao_object_reference;
 
   CORBA::ULong _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -14525,7 +14525,7 @@ void POA_CORBA::ArrayDef::_get_length_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -14580,7 +14580,7 @@ void POA_CORBA::ArrayDef::_set_length_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -14618,7 +14618,7 @@ void POA_CORBA::ArrayDef::_set_length_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -14661,7 +14661,7 @@ void POA_CORBA::ArrayDef::_get_element_type_skel (
   POA_CORBA::ArrayDef *_tao_impl = (POA_CORBA::ArrayDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -14698,7 +14698,7 @@ void POA_CORBA::ArrayDef::_get_element_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -14747,7 +14747,7 @@ void POA_CORBA::ArrayDef::_get_element_type_def_skel (
   POA_CORBA::ArrayDef *_tao_impl = (POA_CORBA::ArrayDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -14784,7 +14784,7 @@ void POA_CORBA::ArrayDef::_get_element_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -14839,7 +14839,7 @@ void POA_CORBA::ArrayDef::_set_element_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -14877,7 +14877,7 @@ void POA_CORBA::ArrayDef::_set_element_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -15459,7 +15459,7 @@ void POA_CORBA::ExceptionDef::_get_type_skel (
   POA_CORBA::ExceptionDef *_tao_impl = (POA_CORBA::ExceptionDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -15496,7 +15496,7 @@ void POA_CORBA::ExceptionDef::_get_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -15545,7 +15545,7 @@ void POA_CORBA::ExceptionDef::_get_members_skel (
   POA_CORBA::ExceptionDef *_tao_impl = (POA_CORBA::ExceptionDef *)_tao_object_reference;
 
   CORBA::StructMemberSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -15582,7 +15582,7 @@ void POA_CORBA::ExceptionDef::_get_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -15637,7 +15637,7 @@ void POA_CORBA::ExceptionDef::_set_members_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -15675,7 +15675,7 @@ void POA_CORBA::ExceptionDef::_set_members_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -16189,7 +16189,7 @@ void POA_CORBA::AttributeDef::_get_type_skel (
   POA_CORBA::AttributeDef *_tao_impl = (POA_CORBA::AttributeDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -16226,7 +16226,7 @@ void POA_CORBA::AttributeDef::_get_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -16275,7 +16275,7 @@ void POA_CORBA::AttributeDef::_get_type_def_skel (
   POA_CORBA::AttributeDef *_tao_impl = (POA_CORBA::AttributeDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -16312,7 +16312,7 @@ void POA_CORBA::AttributeDef::_get_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -16367,7 +16367,7 @@ void POA_CORBA::AttributeDef::_set_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -16405,7 +16405,7 @@ void POA_CORBA::AttributeDef::_set_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -16448,7 +16448,7 @@ void POA_CORBA::AttributeDef::_get_mode_skel (
   POA_CORBA::AttributeDef *_tao_impl = (POA_CORBA::AttributeDef *)_tao_object_reference;
 
   CORBA::AttributeMode _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -16485,7 +16485,7 @@ void POA_CORBA::AttributeDef::_get_mode_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -16540,7 +16540,7 @@ void POA_CORBA::AttributeDef::_set_mode_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -16578,7 +16578,7 @@ void POA_CORBA::AttributeDef::_set_mode_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17201,7 +17201,7 @@ void POA_CORBA::OperationDef::_get_result_skel (
   POA_CORBA::OperationDef *_tao_impl = (POA_CORBA::OperationDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17238,7 +17238,7 @@ void POA_CORBA::OperationDef::_get_result_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17287,7 +17287,7 @@ void POA_CORBA::OperationDef::_get_result_def_skel (
   POA_CORBA::OperationDef *_tao_impl = (POA_CORBA::OperationDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17324,7 +17324,7 @@ void POA_CORBA::OperationDef::_get_result_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17379,7 +17379,7 @@ void POA_CORBA::OperationDef::_set_result_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17417,7 +17417,7 @@ void POA_CORBA::OperationDef::_set_result_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17460,7 +17460,7 @@ void POA_CORBA::OperationDef::_get_params_skel (
   POA_CORBA::OperationDef *_tao_impl = (POA_CORBA::OperationDef *)_tao_object_reference;
 
   CORBA::ParDescriptionSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17497,7 +17497,7 @@ void POA_CORBA::OperationDef::_get_params_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17552,7 +17552,7 @@ void POA_CORBA::OperationDef::_set_params_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17590,7 +17590,7 @@ void POA_CORBA::OperationDef::_set_params_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17633,7 +17633,7 @@ void POA_CORBA::OperationDef::_get_mode_skel (
   POA_CORBA::OperationDef *_tao_impl = (POA_CORBA::OperationDef *)_tao_object_reference;
 
   CORBA::OperationMode _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17670,7 +17670,7 @@ void POA_CORBA::OperationDef::_get_mode_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17725,7 +17725,7 @@ void POA_CORBA::OperationDef::_set_mode_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17763,7 +17763,7 @@ void POA_CORBA::OperationDef::_set_mode_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17806,7 +17806,7 @@ void POA_CORBA::OperationDef::_get_contexts_skel (
   POA_CORBA::OperationDef *_tao_impl = (POA_CORBA::OperationDef *)_tao_object_reference;
 
   CORBA::ContextIdSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17843,7 +17843,7 @@ void POA_CORBA::OperationDef::_get_contexts_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17898,7 +17898,7 @@ void POA_CORBA::OperationDef::_set_contexts_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -17936,7 +17936,7 @@ void POA_CORBA::OperationDef::_set_contexts_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -17979,7 +17979,7 @@ void POA_CORBA::OperationDef::_get_exceptions_skel (
   POA_CORBA::OperationDef *_tao_impl = (POA_CORBA::OperationDef *)_tao_object_reference;
 
   CORBA::ExceptionDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -18016,7 +18016,7 @@ void POA_CORBA::OperationDef::_get_exceptions_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -18071,7 +18071,7 @@ void POA_CORBA::OperationDef::_set_exceptions_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -18109,7 +18109,7 @@ void POA_CORBA::OperationDef::_set_exceptions_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -18872,7 +18872,7 @@ void POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
   POA_CORBA::InterfaceDef *_tao_impl = (POA_CORBA::InterfaceDef *)_tao_object_reference;
 
   CORBA::InterfaceDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -18909,7 +18909,7 @@ void POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -18964,7 +18964,7 @@ void POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -19002,7 +19002,7 @@ void POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -19052,7 +19052,7 @@ void POA_CORBA::InterfaceDef::is_a_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -19090,7 +19090,7 @@ void POA_CORBA::InterfaceDef::is_a_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -19139,7 +19139,7 @@ void POA_CORBA::InterfaceDef::describe_interface_skel (
   POA_CORBA::InterfaceDef *_tao_impl = (POA_CORBA::InterfaceDef *)_tao_object_reference;
 
   CORBA::InterfaceDef::FullInterfaceDescription_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -19176,7 +19176,7 @@ void POA_CORBA::InterfaceDef::describe_interface_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -19240,7 +19240,7 @@ void POA_CORBA::InterfaceDef::create_attribute_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -19282,7 +19282,7 @@ void POA_CORBA::InterfaceDef::create_attribute_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -19352,7 +19352,7 @@ void POA_CORBA::InterfaceDef::create_operation_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -19397,7 +19397,7 @@ void POA_CORBA::InterfaceDef::create_operation_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -20036,7 +20036,7 @@ void POA_CORBA::ValueMemberDef::_get_type_skel (
   POA_CORBA::ValueMemberDef *_tao_impl = (POA_CORBA::ValueMemberDef *)_tao_object_reference;
 
   CORBA::TypeCode_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -20073,7 +20073,7 @@ void POA_CORBA::ValueMemberDef::_get_type_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -20122,7 +20122,7 @@ void POA_CORBA::ValueMemberDef::_get_type_def_skel (
   POA_CORBA::ValueMemberDef *_tao_impl = (POA_CORBA::ValueMemberDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -20159,7 +20159,7 @@ void POA_CORBA::ValueMemberDef::_get_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -20214,7 +20214,7 @@ void POA_CORBA::ValueMemberDef::_set_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -20252,7 +20252,7 @@ void POA_CORBA::ValueMemberDef::_set_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -20295,7 +20295,7 @@ void POA_CORBA::ValueMemberDef::_get_access_skel (
   POA_CORBA::ValueMemberDef *_tao_impl = (POA_CORBA::ValueMemberDef *)_tao_object_reference;
 
   CORBA::Visibility _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -20332,7 +20332,7 @@ void POA_CORBA::ValueMemberDef::_get_access_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -20387,7 +20387,7 @@ void POA_CORBA::ValueMemberDef::_set_access_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -20425,7 +20425,7 @@ void POA_CORBA::ValueMemberDef::_set_access_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21028,7 +21028,7 @@ void POA_CORBA::ValueDef::_get_supported_interface_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::InterfaceDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21065,7 +21065,7 @@ void POA_CORBA::ValueDef::_get_supported_interface_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21120,7 +21120,7 @@ void POA_CORBA::ValueDef::_set_supported_interface_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21158,7 +21158,7 @@ void POA_CORBA::ValueDef::_set_supported_interface_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21201,7 +21201,7 @@ void POA_CORBA::ValueDef::_get_initializers_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::InitializerSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21238,7 +21238,7 @@ void POA_CORBA::ValueDef::_get_initializers_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21293,7 +21293,7 @@ void POA_CORBA::ValueDef::_set_initializers_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21331,7 +21331,7 @@ void POA_CORBA::ValueDef::_set_initializers_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21374,7 +21374,7 @@ void POA_CORBA::ValueDef::_get_base_value_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::ValueDef_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21411,7 +21411,7 @@ void POA_CORBA::ValueDef::_get_base_value_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21466,7 +21466,7 @@ void POA_CORBA::ValueDef::_set_base_value_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21504,7 +21504,7 @@ void POA_CORBA::ValueDef::_set_base_value_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21547,7 +21547,7 @@ void POA_CORBA::ValueDef::_get_abstract_base_values_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::ValueDefSeq_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21584,7 +21584,7 @@ void POA_CORBA::ValueDef::_get_abstract_base_values_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21639,7 +21639,7 @@ void POA_CORBA::ValueDef::_set_abstract_base_values_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21677,7 +21677,7 @@ void POA_CORBA::ValueDef::_set_abstract_base_values_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21720,7 +21720,7 @@ void POA_CORBA::ValueDef::_get_is_abstract_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21757,7 +21757,7 @@ void POA_CORBA::ValueDef::_get_is_abstract_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21812,7 +21812,7 @@ void POA_CORBA::ValueDef::_set_is_abstract_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21850,7 +21850,7 @@ void POA_CORBA::ValueDef::_set_is_abstract_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21893,7 +21893,7 @@ void POA_CORBA::ValueDef::_get_is_custom_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -21930,7 +21930,7 @@ void POA_CORBA::ValueDef::_get_is_custom_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -21985,7 +21985,7 @@ void POA_CORBA::ValueDef::_set_is_custom_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22023,7 +22023,7 @@ void POA_CORBA::ValueDef::_set_is_custom_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22066,7 +22066,7 @@ void POA_CORBA::ValueDef::_get_is_truncatable_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::Boolean _tao_retval = 0;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22103,7 +22103,7 @@ void POA_CORBA::ValueDef::_get_is_truncatable_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22158,7 +22158,7 @@ void POA_CORBA::ValueDef::_set_is_truncatable_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22196,7 +22196,7 @@ void POA_CORBA::ValueDef::_set_is_truncatable_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22246,7 +22246,7 @@ void POA_CORBA::ValueDef::is_a_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22284,7 +22284,7 @@ void POA_CORBA::ValueDef::is_a_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22333,7 +22333,7 @@ void POA_CORBA::ValueDef::describe_value_skel (
   POA_CORBA::ValueDef *_tao_impl = (POA_CORBA::ValueDef *)_tao_object_reference;
 
   CORBA::ValueDef::FullValueDescription_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22370,7 +22370,7 @@ void POA_CORBA::ValueDef::describe_value_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22434,7 +22434,7 @@ void POA_CORBA::ValueDef::create_value_member_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22476,7 +22476,7 @@ void POA_CORBA::ValueDef::create_value_member_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22540,7 +22540,7 @@ void POA_CORBA::ValueDef::create_attribute_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22582,7 +22582,7 @@ void POA_CORBA::ValueDef::create_attribute_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -22652,7 +22652,7 @@ void POA_CORBA::ValueDef::create_operation_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -22697,7 +22697,7 @@ void POA_CORBA::ValueDef::create_operation_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -23709,7 +23709,7 @@ void POA_CORBA::ValueBoxDef::_get_original_type_def_skel (
   POA_CORBA::ValueBoxDef *_tao_impl = (POA_CORBA::ValueBoxDef *)_tao_object_reference;
 
   CORBA::IDLType_var _tao_retval;
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -23746,7 +23746,7 @@ void POA_CORBA::ValueBoxDef::_get_original_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,
@@ -23801,7 +23801,7 @@ void POA_CORBA::ValueBoxDef::_set_original_type_def_skel (
   ))
     ACE_THROW (CORBA::MARSHAL () );
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ServerRequestInterceptor_Adapter
     _tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));
   ACE_CHECK;
@@ -23839,7 +23839,7 @@ void POA_CORBA::ValueBoxDef::_set_original_type_def_skel (
 
       TAO_INTERCEPTOR_CHECK;
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
       _tao_vfr.postinvoke (
           _tao_server_request.request_id (),
           1,

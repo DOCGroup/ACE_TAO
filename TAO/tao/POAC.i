@@ -3093,7 +3093,7 @@ PortableServer::Current_out::operator-> (void)
 
 // ****************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::ForwardRequest &_tao_aggregate)
 {

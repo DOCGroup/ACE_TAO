@@ -87,7 +87,7 @@ private:
 
 //***********************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class TAO_Export TAO_GIOP_DII_Deferred_Invocation : public TAO_GIOP_Invocation
 {

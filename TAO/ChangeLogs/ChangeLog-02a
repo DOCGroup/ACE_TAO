@@ -1,3 +1,105 @@
+Mon Mar 27 23:30:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h: Changed the following macro definitions to be 0
+	  or 1 so users can modify the configuration in their config.h
+	  files.
+
+	  (TAO_HAS_MINIMUM_CORBA): Default to 0.
+
+	  (TAO_HAS_INTERCEPTORS): Default to 1 when
+	  TAO_HAS_MINIMUM_CORBA==0, otherwise, default to 0.
+
+	  (TAO_NO_IOR_TABLE): Default to 0 when TAO_HAS_MINIMUM_CORBA==0,
+	  otherwise, for it to 1.
+
+	  (POA_NO_TIMESTAMP): Default to 0
+
+	  (TAO_USE_DOTTED_DECIMAL_ADDRESSES): Default to 0.
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* performance-tests/Latency/dii_client.cpp:
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Context.cpp:
+	* tao/Context.h:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/DomainS.cpp:
+	* tao/DomainS_T.i:
+	* tao/DynAnyC.cpp:
+	* tao/DynAnyC.h:
+	* tao/DynAnyS.cpp:
+	* tao/DynAny_i.cpp:
+	* tao/DynAny_i.h:
+	* tao/DynArray_i.cpp:
+	* tao/DynArray_i.h:
+	* tao/DynEnum_i.cpp:
+	* tao/DynEnum_i.h:
+	* tao/DynSequence_i.cpp:
+	* tao/DynSequence_i.h:
+	* tao/DynStruct_i.cpp:
+	* tao/DynStruct_i.h:
+	* tao/DynUnion_i.cpp:
+	* tao/DynUnion_i.h:
+	* tao/Forwarding_Servant.cpp:
+	* tao/Forwarding_Servant.h:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoS.cpp:
+	* tao/InconsistentTypeCodeC.cpp:
+	* tao/InconsistentTypeCodeC.h:
+	* tao/Interceptor.cpp:
+	* tao/Interceptor.h:
+	* tao/Interceptor.i:
+	* tao/InterceptorC.cpp:
+	* tao/InterceptorC.h:
+	* tao/InterceptorC.i:
+	* tao/InterceptorS.cpp:
+	* tao/InterceptorS.h:
+	* tao/InterfaceS.cpp:
+	* tao/NVList.cpp:
+	* tao/NVList.h:
+	* tao/ORB.cpp:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB_Core.cpp:
+	* tao/Object.cpp
+	* tao/Object.h:
+	* tao/POA.cpp:
+	* tao/POA.h:
+	* tao/POA.i:
+	* tao/POAC.cpp:
+	* tao/POAC.h:
+	* tao/POAC.i:
+	* tao/POA_CORBA.h:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
+	* tao/Request.cpp:
+	* tao/Request.h:
+	* tao/Servant_Base.cpp:
+	* tao/Servant_Base.h:
+	* tao/Server_Request.h:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/Typecode_Constants.cpp:
+	* tao/WrongTransactionC.cpp:
+	* tao/WrongTransactionC.h:
+	* tao/corbafwd.h: Changed the macro checking statements of
+	  aforementioned macros.
+
 Mon Mar 27 20:37:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/POAC.cpp:
@@ -6,7 +108,7 @@ Mon Mar 27 20:37:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  working with the new Any operators. The
 	  PortableServer::ForwardRequest >>= operator and
 	  TAO_GIOP_ServerRequest::set_exception have been changed
-	  to do the right thing. This fixes the failing of 
+	  to do the right thing. This fixes the failing of
 	  examples/POA/Forwarding on all platforms (except where
 	  minimum CORBA is defined). Changing the Any operators
 	  for IDL-defined exceptions, and modifying the rest of

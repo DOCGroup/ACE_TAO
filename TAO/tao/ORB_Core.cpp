@@ -279,7 +279,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // @@ This option will be treated as a suggestion to each loaded
   //    protocol to use a character representation for the numeric
   //    address, otherwise use a logical name. fredk
-#if defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
+#if (TAO_USE_DOTTED_DECIMAL_ADDRESSES == 1)
   int dotted_decimal_addresses = 1;
 #else
   int dotted_decimal_addresses = 0;

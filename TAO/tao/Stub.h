@@ -113,7 +113,7 @@ class TAO_Export TAO_Stub
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   void do_dynamic_call (const char *opname,
                         CORBA::Boolean is_roundtrip,
@@ -313,7 +313,7 @@ public:
   // temporary.
 
 protected:
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,

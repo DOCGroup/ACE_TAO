@@ -36,7 +36,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 TAO_NAMESPACE  PortableInterceptor
 {
 
