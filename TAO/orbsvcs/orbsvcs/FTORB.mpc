@@ -48,7 +48,6 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
        FaultTolerance/FT_ClientService_Activate.cpp
        FaultTolerance/FT_Endpoint_Selector_Factory.cpp
        FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp
-       PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_Service_Callbacks.cpp
     }
   }
@@ -72,7 +71,6 @@ project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
        FaultTolerance/FT_ServerPolicyFactory.cpp
        FaultTolerance/FT_ServerPolicy_i.cpp
        FaultTolerance/FT_ServerRequest_Interceptor.cpp
-       PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_ServerService_Activate.cpp
     }
   }
