@@ -31,7 +31,7 @@ template <class PROXY>
 class COW_Collection_Default_Factory
 {
 public:
-  typedef TAO_ESF_Proxy_List<PROXY>::Iterator PROXY_ITER;
+  typedef ACE_TYPENAME TAO_ESF_Proxy_List<PROXY>::Iterator PROXY_ITER;
   typedef TAO_ESF_Copy_On_Write<PROXY, TAO_ESF_Proxy_List<PROXY>,PROXY_ITER, ACE_SYNCH> COLLECTION;
   typedef TAO_ESF_Proxy_Collection<PROXY> BASE_COLLECTION;
 
