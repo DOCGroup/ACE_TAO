@@ -13,6 +13,7 @@ DIRS  =	orbsvcs \
 	Scheduling_Service \
 	Event_Service \
 	Dump_Schedule \
+	Concurrency_Service \
 	tests \
 
 #----------------------------------------------------------------------------
