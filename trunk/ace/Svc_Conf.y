@@ -310,9 +310,9 @@ pathname
 void
 yyerror (const char *s)
 {
-#if defined (ACE_NDEBUG)
+#if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (s);
-#endif /* ACE_NDEBUG */
+#endif /* ACE_NLOGGING */
 
   ACE_ERROR ((LM_ERROR,
               ASYS_TEXT ("[error %d] on line %d: %s\n"),

@@ -760,9 +760,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
     {
       char *key = map_entry->ext_id_.char_rep ();
       char *value = map_entry->int_id_.value ().char_rep ();
-#if !defined (ACE_NDEBUG)
+#if !defined (ACE_NLOGGING)
       const char *type = map_entry->int_id_.type ();
-#endif /* ! ACE_NDEBUG */
+#endif /* ! ACE_NLOGGING */
 
       ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
                   key, value, type));
