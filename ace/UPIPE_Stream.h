@@ -40,6 +40,8 @@ public:
 
   ACE_UPIPE_Stream (void);
 
+  virtual ~ACE_UPIPE_Stream (void);
+
   int close (void);
   // Shut down the UPIPE and release resources.
 
