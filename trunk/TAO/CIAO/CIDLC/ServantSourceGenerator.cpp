@@ -736,7 +736,7 @@ namespace
 
         os<< "Consumer_var retv;"
            << "ACE_Active_Map_Manager_Key key;" << endl
-           << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)"
+           << "if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == false)"
            << endl
            << "{"
            << "ACE_THROW_RETURN (" << endl

@@ -8,9 +8,13 @@
 
 #include "CCM_Base.idl"
 
+/**
+ * @ Note: This needs deprecation.
+ *
+ */
 module CIAO
 {
-  valuetype Cookie : ::Components::Cookie
+  valuetype Cookie : Components::Cookie
   {
     CORBA::OctetSeq get_cookie ();
   };
