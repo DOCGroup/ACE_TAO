@@ -34,6 +34,8 @@ Wed Oct  2 01:08:51 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/SString.cpp (ACE_NS_WString): Fix the silly off-by-one error
           causing heap corruption and core dumps in $ACE_ROOT/Naming_Test.
+          Thanks to Vladislav <vladislav@gtss.spb.ru> for reporting the
+          problem.
 
 Tue Oct  1 20:46:35 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
