@@ -153,9 +153,6 @@ namespace TAO
     /// The profile that has been selected for this invocation.
     TAO_Profile *profile_;
 
-    /// Has the transport been idle?
-    mutable bool is_released_;
-
     /// List of inconsistent policies
     /**
      * If current effective policies cause the invocation to raise
@@ -176,8 +173,11 @@ namespace TAO
      */
     CORBA::PolicyList *inconsistent_policies_;
 
+    /// Has the transport been idle?
+    mutable bool is_released_;
+
     /// Should we block while trying to make a connection
-    const bool blocked_;
+    bool const blocked_;
   };
 } // TAO namespace end
 

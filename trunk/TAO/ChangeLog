@@ -21,7 +21,7 @@ Fri Feb  4 01:25:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Thu Feb  3 19:27:58 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (reply_timed_out): 
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (reply_timed_out):
 
 	  A slightly modified fix for [BUGID2038]. Once Torsten confirms
 	  this works, I will close the bugzilla entry.
@@ -38,7 +38,7 @@ Wed Feb  2 22:17:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
         * TAO_IDL/be/be_visitor_array/array_cs.cpp:
         * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
-        
+
           Changed C-style casts in generated code for arrays
           to c++-style casts. Thanks again to Johhny Willemsen
           <jwillemsen@remedy.nl> for digging these up.

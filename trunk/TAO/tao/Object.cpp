@@ -80,9 +80,9 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 CORBA::Object::Object (IOP::IOR *ior,
                        TAO_ORB_Core *orb_core)
   : servant_ (0)
+    , proxy_broker_ (0)
     , is_collocated_ (0)
     , is_local_ (0)
-    , proxy_broker_ (0)
     , is_evaluated_ (0)
     , ior_ (ior)
     , orb_core_ (orb_core)
