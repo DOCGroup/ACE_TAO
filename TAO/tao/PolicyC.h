@@ -139,7 +139,7 @@ public:
   ~CORBA_PolicyList (void); // dtor
 };
 typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
-static CORBA::TypeCode_ptr _tc_PolicyList_seq;
+// not used: static CORBA::TypeCode_ptr _tc_PolicyList_seq;
 
 
 #endif /* end #if !defined */
