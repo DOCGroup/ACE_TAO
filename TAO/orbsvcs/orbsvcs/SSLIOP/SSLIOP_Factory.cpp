@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/SSLIOP_Factory.h"
-#include "tao/SSLIOP_Acceptor.h"
-#include "tao/SSLIOP_Connector.h"
+#include "SSLIOP_Factory.h"
+#include "SSLIOP_Acceptor.h"
+#include "SSLIOP_Connector.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, SSLIOP_Factory, "$Id$")

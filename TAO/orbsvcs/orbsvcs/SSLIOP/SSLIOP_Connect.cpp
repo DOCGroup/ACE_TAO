@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/SSLIOP_Connect.h"
+#include "SSLIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -9,7 +9,7 @@
 #include "tao/GIOP.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/SSLIOP_Connect.i"
+# include "SSLIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, SSLIOP_Connect, "$Id$")

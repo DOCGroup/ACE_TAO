@@ -99,7 +99,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/SSLIOP_Profile.i"
+# include "SSLIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_SSLIOP_PROFILE_H */

@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/SSLIOP_Profile.h"
-#include "tao/SSLIOP_Connect.h"
+#include "SSLIOP_Profile.h"
+#include "SSLIOP_Connect.h"
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
@@ -13,7 +13,7 @@
 ACE_RCSID(tao, SSLIOP_Profile, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "tao/SSLIOP_Profile.i"
+# include "SSLIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr &addr,

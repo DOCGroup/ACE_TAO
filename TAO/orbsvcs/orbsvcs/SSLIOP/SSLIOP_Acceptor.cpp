@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/SSLIOP_Acceptor.h"
-#include "tao/SSLIOP_Profile.h"
+#include "SSLIOP_Acceptor.h"
+#include "SSLIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -10,7 +10,7 @@
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/SSLIOP_Acceptor.i"
+#include "SSLIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, SSLIOP_Acceptor, "$Id$")
@@ -42,14 +42,11 @@ template class TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SOC
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (void)
-  : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
-    iiop_acceptor_ (),
+  : TAO_IIOP_Acceptor (),
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
-    accept_strategy_ (0),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0)
+    accept_strategy_ (0)
 {
 }
 
@@ -108,6 +105,19 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   pfile->tagged_components ().set_tao_priority (this->priority ());
 
+  IOP::TaggedComponent component;
+  component.tag = IOP::TAG_SSL_SEC_TRANS;
+  // @@???? Check this code, only intended as guidelines...
+  TAO_OutputCDR cdr;
+  CORBA::Boolean byte_order = ACE_CDR_BYTE_ORDER;
+  cdr << this->ssl_component_;
+  // TAO extension, replace the contents of the octet sequence with
+  // the CDR stream
+  component.component_data.replace (cdr.total_length (),
+				    cdr.start ());
+  
+  pfile->tagged_components ().set_component (component);
+
   return 0;
 }
 
@@ -135,10 +145,14 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            const char *address,
                            const char *options)
 {
-  if (address == 0)
+  if (this->TAO_IIOP_Acceptor::open (orb_core,
+				     major,
+				     minor,
+				     address,
+				     options) != 0)
     return -1;
 
-  if (this->iiop_acceptor_.open (orb_core,
+  if (this->base_acceptor_.open (orb_core,
                                  major,
                                  minor,
                                  address,
