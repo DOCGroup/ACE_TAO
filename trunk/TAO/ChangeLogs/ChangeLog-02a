@@ -1,3 +1,58 @@
+Mon Jun 19 02:40:37 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+	* examples/Content_Server/SMI_Iterator/Makefile:
+	* examples/Content_Server/SMI_Iterator/Web_Server.dsw:
+	* examples/Content_Server/SMI_Iterator/Web_Server.idl:
+	* examples/Content_Server/SMI_Iterator/client.cpp:
+	* examples/Content_Server/SMI_Iterator/client.dsp:
+	* examples/Content_Server/SMI_Iterator/server.cpp:
+	* examples/Content_Server/SMI_Iterator/server:
+
+	  Example that demonstrates use of Iterator pattern using
+	  synchronous method invocations to retrieve "chunks" of data from
+	  a content server.
+
+	* examples/Content_Server/AMI_Iterator/Callback.cpp:
+	* examples/Content_Server/AMI_Iterator/Callback.h:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+	* examples/Content_Server/AMI_Iterator/Makefile:
+	* examples/Content_Server/AMI_Iterator/Web_Server.idl:
+	* examples/Content_Server/AMI_Iterator/client.cpp:
+	* examples/Content_Server/AMI_Iterator/server.cpp:
+
+	  Example that demonstrates use of AMI to improve
+	  performance/responsiveness on the client side, without making
+	  any changes to the server code from the above SMI_Iterator
+	  example.
+
+	* examples/Content_Server/AMI_Observer/Callback.cpp:
+	* examples/Content_Server/AMI_Observer/Callback.h:
+	* examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
+	* examples/Content_Server/AMI_Observer/Makefile:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+	* examples/Content_Server/AMI_Observer/Push_Web_Server.idl:
+	* examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
+	* examples/Content_Server/AMI_Observer/client.cpp:
+	* examples/Content_Server/AMI_Observer/server.cpp:
+
+	  Example that demonstrates use of Observer pattern with AMI.  The
+	  server pushes chunks of data asynchronously (using AMI) to a
+	  client callback.  AMI is used both on the client and the server
+	  side.
+
 Sun Jun 18 20:59:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Leader_Follower.i:
