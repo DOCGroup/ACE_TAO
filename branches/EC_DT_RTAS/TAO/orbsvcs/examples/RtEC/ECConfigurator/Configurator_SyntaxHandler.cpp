@@ -383,7 +383,7 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
     }
 
   // visit Consumer children
-  QoSVector subs;
+  Kokyu_EC::QoSVector subs;
   vs->subscriptions->visit(this,&subs);
 
   SupplierVector dependants; //dependants push_back
@@ -398,10 +398,10 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
 
   // TODO: negotiate event types
   ECSupplier::EventTypeVector subtypes;
-  QoSVector::iterator subiter = subs.begin();
+  Kokyu_EC::QoSVector::iterator subiter = subs.begin();
   for (; subiter != subs.end(); ++subiter)
     {
-      QoSVector::value_type qos = *subiter;
+      Kokyu_EC::QoSVector::value_type qos = *subiter;
       subtypes.push_back(qos.type);
     }
 
@@ -419,7 +419,7 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
       ACE_ASSERT(ecsupplier); // shouldn't have got here with no Supplier
 
       //TODO: multi-type consumer subs
-      QoSVector::value_type qos = subs[0]; //for now just use this
+      Kokyu_EC::QoSVector::value_type qos = subs[0]; //for now just use this
       // if multiple timeouts, this won't reg supplier multiple times
       consumer->pushDependant(ecsupplier);
       ec->add_consumer_with_supplier(consumer,
@@ -446,14 +446,14 @@ int
 Configurator_SyntaxHandler::parseSubscriptions (Subscriptions* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  QoSVector *subs = static_cast<QoSVector*> (arg);
+  Kokyu_EC::QoSVector *subs = static_cast<Kokyu_EC::QoSVector*> (arg);
   ACE_ASSERT(subs);
 
   // parse Subscriptions
   EventNameVector::iterator eniter = vs->eventnames.begin();
   for (; eniter != vs->eventnames.end(); eniter++)
     {
-      QoSVector::value_type subqos;
+      Kokyu_EC::QoSVector::value_type subqos;
       ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Subscription %s\n"),(*eniter)->str.c_str()));
       if (this->eventqostable.find((*eniter)->str,subqos))
         {
@@ -507,10 +507,10 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
     }
 
   // visit Supplier children
-  QoSVector pubs;
+  Kokyu_EC::QoSVector pubs;
   vs->publications->visit(this,&pubs);
 
-  QoSVector trigs;
+  Kokyu_EC::QoSVector trigs;
   vs->triggers->visit(this,&trigs);
 
   // Register Supplier
@@ -524,7 +524,7 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
   ECSupplier::EventType type = 100 * vs->id;
 
   ECSupplier::EventTypeVector pubtypes;
-  QoSVector::iterator pubiter = pubs.begin();
+  Kokyu_EC::QoSVector::iterator pubiter = pubs.begin();
   for (; pubiter != pubs.end(); ++pubiter,++type)
     {
       pubtypes.push_back(type);
@@ -535,10 +535,10 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
                  ECSupplier(vs->id,pubtypes),-1);
 
   //for each trigger timeout, set up a timer
-  QoSVector::iterator qositer = trigs.begin();
+  Kokyu_EC::QoSVector::iterator qositer = trigs.begin();
   for (; qositer != trigs.end(); ++qositer)
     {
-      QoSVector::value_type qos = *qositer;
+      Kokyu_EC::QoSVector::value_type qos = *qositer;
       // Timeout QoS only has period and phase
       ECSupplier_Timeout_Handler *timeout;
       ACE_NEW_RETURN(timeout,
@@ -565,14 +565,14 @@ int
 Configurator_SyntaxHandler::parsePublications (Publications* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  QoSVector *pubs = static_cast<QoSVector*> (arg);
+  Kokyu_EC::QoSVector *pubs = static_cast<Kokyu_EC::QoSVector*> (arg);
   ACE_ASSERT(pubs);
 
   // parse Publications
   EventNameVector::iterator eniter = vs->eventnames.begin();
   for (; eniter != vs->eventnames.end(); eniter++)
     {
-      QoSVector::value_type pubqos;
+      Kokyu_EC::QoSVector::value_type pubqos;
       ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Publication %s\n"),(*eniter)->str.c_str()));
       // TODO: fix segfault in this vicinity
       if (this->eventqostable.find((*eniter)->str,pubqos))
@@ -590,14 +590,14 @@ int
 Configurator_SyntaxHandler::parseTriggers (Triggers* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  QoSVector *trigs = static_cast<QoSVector*> (arg);
+  Kokyu_EC::QoSVector *trigs = static_cast<Kokyu_EC::QoSVector*> (arg);
   ACE_ASSERT(trigs);
 
   // parse Triggers
   TimeoutNameVector::iterator tniter = vs->timeoutnames.begin();
   for (; tniter != vs->timeoutnames.end(); tniter++)
     {
-      QoSVector::value_type trigqos;
+      Kokyu_EC::QoSVector::value_type trigqos;
       ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Trigger Timeout %s\n"),(*tniter)->str.c_str()));
       if (this->timeoutqostable.find((*tniter)->str,trigqos))
         {

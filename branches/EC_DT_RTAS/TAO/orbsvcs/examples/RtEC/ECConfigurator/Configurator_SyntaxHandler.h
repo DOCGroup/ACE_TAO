@@ -126,7 +126,6 @@ public:
   void setNameTable(NameTable &nt);
 
   typedef ACE_Hash_Map_Manager<ACE_CString,RtEventChannelAdmin::SchedInfo,ACE_Null_Mutex> QoSTable;
-  typedef std::vector<RtEventChannelAdmin::SchedInfo> QoSVector;
 
   typedef std::vector<RtEventChannelAdmin::RtSchedEventChannel_var> ECVector;
   typedef std::vector<Kokyu_EC*> KokyuECVector;
