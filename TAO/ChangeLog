@@ -1,3 +1,22 @@
+Thu Mar 24 09:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.{h,cpp}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.{h,cpp}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.{h,cpp}:
+          Changed the type of the timer_id_ member from int to long, the timer_id
+          returned from the reactor is of type long
+
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.{h,cpp}:
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp.{h,cpp}:
+          Use cancel_timer instead of remove_handler to cancel a timer scheduled
+          in the reactor. Fixes bugzilla bug [1693]
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.{h,cpp}:
+          Initialise the timer_id with -1 in the constructor and define it as a
+          long
+
 Thu Mar 24 07:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
