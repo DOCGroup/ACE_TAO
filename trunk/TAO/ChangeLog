@@ -1,3 +1,19 @@
+Mon Sep 13 12:18:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+
+	  Updated.
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+
+	  Changed to inherit from core.mpb so services will be installed.
+
 Mon Sep 13 12:06:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:

@@ -7,7 +7,7 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.RTEvent_Logging_Service.am 
 
-noinst_PROGRAMS = RTEvent_Logging_Service
+bin_PROGRAMS = RTEvent_Logging_Service
 
 RTEvent_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \

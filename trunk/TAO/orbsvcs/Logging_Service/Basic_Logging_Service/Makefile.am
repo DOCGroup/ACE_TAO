@@ -7,7 +7,7 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Basic_Logging_Service.am 
 
-noinst_PROGRAMS = Basic_Logging_Service
+bin_PROGRAMS = Basic_Logging_Service
 
 Basic_Logging_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
