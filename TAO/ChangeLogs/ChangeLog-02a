@@ -1,3 +1,12 @@
+Fri Apr  6 16:41:42 2001  Angelo Corsaro  <angelo@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (collocation_strategy): 
+	  In the case in which the POA had set the NON RETAIN policy the 
+	  collocation optimization was not taking place, the problem was
+	  caused by the fact that we were testing for a non null servant.
+	  This bug has been now fixed, and collocation will work as
+	  expected even if the POA has the NON RETAIN policy set.
+
 Fri Apr  6 17:08:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Single_Read/run_test.pl: Added this file to the
