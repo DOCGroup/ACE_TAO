@@ -40,8 +40,6 @@ be_visitor_module_ih::~be_visitor_module_ih (void)
 int
 be_visitor_module_ih::visit_module (be_module *node)
 {
-  TAO_OutStream *os; // output stream
-
   if (!node->impl_hdr_gen () && !node->imported ()) // not generated and not imported
     {
       
@@ -55,5 +53,4 @@ be_visitor_module_ih::visit_module (be_module *node)
       
     }
   return 0;
-
 }
