@@ -1,5 +1,9 @@
 Fri Sep  4 17:10:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* utils/catior/catior.cpp (catior): Removed a check for "if (tmp
+ 	  [0] && !isspace (tmp [0]))" since not all ORBs encode IORs
+ 	  consistently.  Thanks to Jeff Hopper for reporting this.
+
 	* utils/catior/foo/catior.cpp (main): Added a fix for IORs with
  	  embedded '\0' characters.  Thanks to Jeff Hopper
  	  <jhopper@nosc.mil> for this.
