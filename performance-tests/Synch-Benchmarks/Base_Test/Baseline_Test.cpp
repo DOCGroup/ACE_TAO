@@ -3,55 +3,137 @@
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Service_Repository.h"
 #include "ace/Synch.h"
+#include "ace/Get_Opt.h"
 
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 #include "Performance_Test.h"
 
-ACE_RCSID(Synch_Benchmarks, Baseline_Test, "$Id$")
+#if !defined (__ACE_INLINE__)
+#include "ace/Baseline_Test.i"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(Synch_Benchmarks, Benchmark_Baseline, "$Id$")
+
+Baseline_Options baseline_options;
+// Static Baseline Options holds the test configuration information
+// and the test statistics.
 
 Benchmark_Baseline_Test_Base::Benchmark_Baseline_Test_Base (void)
   : Benchmark_Base (Benchmark_Base::BASELINE)
 {
 }
 
-Baseline_Test::Baseline_Test (void)
-  : n_lwps_ (0),
-    orig_n_lwps_ (0)
+int
+Benchmark_Baseline_Test_Base::init (int argc, char *argv[])
+{
+  return baseline_options.parse_test_args (argc, argv);
+}
+
+Baseline_Options::Baseline_Options (void)
+  : test_try_lock_ (0),
+    multiply_factor_ (10),
+    iteration_ (10000)
+{
+}
+
+int
+Baseline_Options::parse_method_args (int argc, char *argv[])
+{
+  ACE_Get_Opt getopt (argc, argv, "t");
+
+  while ((c = getopt ()) != -1)
+    switch (c)
+      {
+      case 't':
+        this->test_try_lock_ = 1;
+        break;
+
+      default:
+        ACE_ERROR ((LM_ERROR, "Invalid arguemnt %c used.\n", c));
+        break;
+      }
+  return 0;
+}
+
+int
+Baseline_Options::parse_test_args (int argc, char *argv[])
+{
+  this->total_iteration_ = 0;
+  this->real_ = 0;
+  this->system_ = 0;
+  this->user_ = 0;
+  // Start a new test, reset statistic info.
+
+  ACE_Get_Opt getopt (argc, argv, "m:i:");
+
+  while ((c = getopt ()) != -1)
+    switch (c)
+      {
+      case 'm':
+        {
+          int tmp = ACE_OS::atoi (getopt.optarg);
+          if (tmp <= 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%d is not a valid value for multiply_factor\n",
+                               tmp), -1);
+          else
+            this->multiply_factor_ = ACE_static_cast (size_t, tmp);
+        }
+        break;
+
+      case 'i':
+        {
+          int tmp = ACE_OS::atoi (getopt.optarg);
+          if (tmp <= 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%d is not a valid value for iteration\n",
+                               tmp), -1);
+          else
+            this->iteration_ = ACE_static_cast (size_t, tmp);
+        }
+        break;
+
+      default:
+        ACE_ERROR ((LM_ERROR, "Invalid argument %c used\n", c));
+        break;
+      }
+  return 0;
+}
+
+Benchmark_Baseline::Benchmark_Baseline (void)
+  : get_lock_ (2),
+    let_go_lock_ (2)
 {
 }
 
 // Initialize and run the benchmarks tests.
 
 int
-Performance_Test::init (int argc, char **argv)
+Benchmark_Baseline::init (int argc, char **argv)
 {
-  options.parse_args (argc, argv);
+  return baseline_options.parse_method_args (argc, argv);
+}
+
+int
+Benchmark_Baseline::pre_run_test (Benchmark_Base *bb)
+{
+  Benchmark_Baseline_Test_Base *bp = (Benchmark_Baseline_Test_Base *) bb;
+
+  if (baseline_options.test_try_lock ())
+    {
+      // @@ spawn a thread and acquire the lock.
+      ACE_Thread_Manager::instance ()->
+        spawn (ACE_static_cast (ACE_THR_FUNC, this->svc_run));
+
+      this->get_lock_.wait ();
+      // Wait until the lock is held by the spawning thread.
+    }
   return 0;
 }
 
 int
-Performance_Test::pre_run_test (Benchmark_Base *bb)
-{
-  this->orig_n_lwps_ = ACE_Thread::getconcurrency ();
-  this->n_lwps_ = options.n_lwps ();
-  Benchmark_Performance *bp = (Benchmark_Performance *) bb;
-
-  if (this->n_lwps_ > 0)
-    ACE_Thread::setconcurrency (this->n_lwps_);
-
-      // We should probably use a "barrier" here rather than
-      // THR_SUSPENDED since many OS platforms lack the ability to
-      // create suspended threads...
-  if (ACE_Thread_Manager::instance ()->spawn_n
-      (options.thr_count (), ACE_THR_FUNC (bp->svc_run),
-       (void *) bp, options.t_flags () | THR_SUSPENDED) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n%a", "couldn't spawn threads", 1));
-  return 0;
-}
-
-int
-Performance_Test::run_test (void)
+Benchmark_Baseline::run_test (void)
 {
   // Tell the threads that we are not finished.
   Benchmark_Performance::done (0);
@@ -76,15 +158,6 @@ Performance_Test::run_test (void)
   // Tell the threads that we are finished.
   Benchmark_Performance::done (1);
 
-  ACE_DEBUG ((LM_DEBUG, "------------------------------------------------------------------------\n"));
-  ACE_DEBUG ((LM_DEBUG, "targ 0x%x (%s, %s, %s)\n"
-	     "n_lwps_orig = %d, n_lwps_set = %d, n_lwps_end = %d\n",
-	     options.t_flags (),
-	     (options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
-	     (options.t_flags () & THR_BOUND)	? "THR_BOUND"    : "Not Bound",
-	     (options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
-	     this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
-
   int count = options.count ();
   float rate  = count / (float (options.sleep_time ()));
 
@@ -105,15 +178,19 @@ Performance_Test::run_test (void)
 }
 
 int
-Performance_Test::post_run_test (void)
+Benchmark_Baseline::post_run_test (void)
 {
+  if (baseline_options.test_try_lock ())
+    // Release the lock we hold.
+    this->let_go_lock_.wait ();
+
   return 0;
 }
 
 int
-Performance_Test::valid_test_object (Benchmark_Base *bb)
+Benchmark_Baseline::valid_test_object (Benchmark_Base *bb)
 {
-  return (bb->benchmark_type () == Benchmark_Base::PERFORMANCE);
+  return (bb->benchmark_type () == Benchmark_Base::BASELINE);
 }
 
 ACE_SVC_FACTORY_DEFINE (Performance_Test)

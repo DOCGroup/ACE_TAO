@@ -65,6 +65,12 @@ Performance_Test::run_test (void)
   performance_test_options.stop_timer ();
   ACE_DEBUG ((LM_DEBUG, "\nstopping timer\n"));
 
+  return 0;
+}
+
+int
+Performance_Test::post_run_test (void)
+{
   // Stop thread(s) from making any further progress.
   ACE_Thread_Manager::instance ()->suspend_all ();
 
@@ -89,12 +95,6 @@ Performance_Test::run_test (void)
               rate,
               (1.0e6 / rate) / synch_count));
   performance_test_options.print_results ();
-  return 0;
-}
-
-int
-Performance_Test::post_run_test (void)
-{
   // Allow thread(s) to finish up.
   ACE_Thread_Manager::instance ()->resume_all ();
 
