@@ -1,3 +1,27 @@
+Thu Jan  1 09:40:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tests/Smart_Proxies/Makefile:
+	  
+	  Added new directories into theMakefile. 
+	
+	* tests/Smart_Proxies/Collocation/Coll_Tester.h:
+	* tests/Smart_Proxies/Collocation/Diamond_i.h:
+
+	  Fixed warnings with g++. This is an indication these files have
+	  never been compiled with g++. 
+	
+	* tests/Smart_Proxies/Collocation/Makefile:
+	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
+	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
+	* tests/Smart_Proxies/Collocation/Makefile.main:
+
+	  New makefiles for building these directories. 
+
+	* tests/Smart_Proxies/Collocation/main.cpp:
+	* tests/Smart_Proxies/Collocation/svc.conf:
+
+	  Cosmetic fixes.
+	
 Thu Jan  1 15:40:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/DynamicInterface/DII_ClientRequestInfo.{h,cpp}:
