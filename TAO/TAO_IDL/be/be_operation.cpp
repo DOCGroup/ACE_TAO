@@ -546,11 +546,11 @@ be_operation::gen_server_skeletons (void)
       // instantiate a scope iterator.
 
       while (!(si->is_done ()))
-	{
-	  // get the next AST decl node
-	  d = si->item ();
-	  if (!d->imported ())
-	    {
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (!d->imported ())
+            {
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
@@ -605,6 +605,7 @@ be_operation::gen_server_skeletons (void)
       *ss << "impl->" << this->local_name () << "(";
     }
 
+#if 0
   // emit code for passing arguments to the upcall
   if (this->nmembers () > 0)
     {
@@ -614,12 +615,12 @@ be_operation::gen_server_skeletons (void)
       // instantiate a scope iterator.
 
       while (!(si->is_done ()))
-	{
-	  // get the next AST decl node
-	  d = si->item ();
-	  if (!d->imported ())
-	    {
-	      bd = be_argument::narrow_from_decl (d);
+        {
+          // get the next AST decl node
+          d = si->item ();
+          if (!d->imported ())
+            {
+              bd = be_argument::narrow_from_decl (d);
               // only if this is an argument node
               if (d->node_type () == AST_Decl::NT_argument)
                 {
@@ -630,6 +631,15 @@ be_operation::gen_server_skeletons (void)
         } // end of while
       delete si; // free the iterator object
     } // end of arg list
+#endif
+  cg->push (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
+  if (be_scope::gen_server_skeletons () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+       "be_operation::gen_server_skeletons - argument in upcall\n"),
+                        -1);
+    }
+  cg->pop ();
   *ss << "_tao_enviroment);" << nl;
 
   // if there is any return type, send it via the ServerRequest

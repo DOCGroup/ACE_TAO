@@ -783,7 +783,7 @@ be_structure::gen_encapsulation (void)
 
   // XXXASG - byte order must be based on what m/c we are generating code -
   // TODO
-  *cs << "0, // byte order" << nl;
+  *cs << "MY_BYTE_SEX, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
