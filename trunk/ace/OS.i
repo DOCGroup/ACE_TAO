@@ -3700,7 +3700,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
-#if 1
+
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
@@ -3726,7 +3726,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
             {
               result = -1;               
               // we know that we have the lock again, we have this guarantee,
-              // but something went wrong
+              // but something went wrong 
             }
           rw->important_writer_ = 0;
           rw->num_waiting_writers_--;
@@ -3748,12 +3748,6 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 
   return result;
 
-#else  /* 0 */
-  ACE_UNUSED_ARG (rw);
-  errno = EBUSY;
-  return -1;
-  // report that we were not able to upgrade
-#endif /* 0 */
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
