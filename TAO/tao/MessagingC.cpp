@@ -2231,12 +2231,17 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #endif /* TAO_POLLER */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class TAO_Unbounded_Sequence<Messaging::PolicyValue>;
+
 #if defined(TAO_POLLER)
   template class TAO_Object_Field_T<Messaging::ReplyHandler>;
   template class TAO_Object_Field_T<Messaging::Poller>;
 #endif /* TAO_POLLER */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Unbounded_Sequence<Messaging::PolicyValue>
 
 #if defined(TAO_POLLER)
 #  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler>

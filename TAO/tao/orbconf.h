@@ -250,11 +250,37 @@
 #define TAO_OBJID_ROOTPOA          "RootPOA"
 #define TAO_OBJID_POACURRENT       "POACurrent"
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
+#define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
+#define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
 
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
+
+// CORBA Messaging
+// #define TAO_HAS_CORBA_MESSAGING
+
+// The maximum value for an standard PolicyType, we use this trick to
+// pack the standard policies and the TAO extension in a single
+// array.
+// The motivation for such a low-level optimization is that policies
+// can be set on a per-object level, allocating a complex data
+// structure (such as a hash map) or a big array for each object is
+// not feasible.
+#define TAO_MAX_STANDARD_POLICIES 64
+
+// The number of TAO specific policies
+#define TAO_POLICIES_COUNT 32
+
+// The size of the Policy array, the number of policies supported in
+// TAO is limited by this number.
+#define TAO_MAX_POLICIES (TAO_MAX_STANDARD_POLICIES+TAO_POLICIES_COUNT)
+
+// TAO may define its own policies, they are defined in a range far
+// from the standard policies.
+#define TAO_MIN_PROPIETARY_POLICY 1024
+#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT) 
 
 #endif  /* TAO_ORB_CONFIG_H */

@@ -58,8 +58,6 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 .PRECIOUS: PP_TestC.cpp PP_TestS.cpp PP_TestC.h PP_TestS.h
-#$(IDL_SRC): PP_Test.idl
-#	$(TAO_ROOT)/TAO_IDL/tao_idl PP_Test.idl
 
 server:	$(addprefix $(VDIR),$(PP_TEST_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

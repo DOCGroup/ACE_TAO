@@ -99,8 +99,6 @@ TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 CPPFLAGS += -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
 .PRECIOUS: $(IDL_HDR) $(IDL_SRC)
-#$(IDL_HDR) $(IDL_SRC): param_test.idl
-#	$(TAO_IDL/tao_idl param_test.idl
 
 server:	$(addprefix $(VDIR),$(PARAM_TEST_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

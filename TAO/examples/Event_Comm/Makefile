@@ -85,8 +85,6 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 .PRECIOUS: Event_CommC.cpp Event_CommS.cpp Event_CommC.h Event_CommS.h
-#$(IDL_SRC): event.idl
-#	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
 supplier: $(addprefix $(VDIR),$(SUPPLIER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

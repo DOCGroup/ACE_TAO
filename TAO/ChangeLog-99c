@@ -1,3 +1,49 @@
+Mon Apr 12 09:52:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	  Keep working on the CORBA Messaging framework.
+
+	* tao/orbconf.h:
+	* tao/ORB.h:
+	* tao/ORB.cpp: 
+	  Added support for "PolicyCurrent" and "ORBPolicyManager" into
+	  resolve_initial_references()
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  Added methods to set and query the TSS PolicyCurrent and the
+	  per-ORB PolicyManager.
+
+	* tao/Object.h:
+	* tao/Object.cpp:
+	  Implemented the standard methods to access and query policies,
+	  but they just delegate on the TAO_Stub methods.
+
+	* tao/Stub.h:
+	* tao/Stub.cpp:
+	  Added methods to set and query the policies.
+
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/Policy_Manager.cpp:
+	  Simple implementation of the CORBA::PolicyManager and
+	  CORBA::PolicyCurrent interfaces. There is a helper class shared
+	  between both implementations that is also used by the
+	  corresponding methods in CORBA::Object (and TAO_Stub).
+
+	* tao/MessagingC.cpp:
+	  Added missing template instantiation
+
+	* tests/Param_Test/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/Quoter/Makefile:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* performance-tests/Pluggable/Makefile:
+	* performance-tests/Thruput/TAO/Makefile:
+	  Removed extra rules to compile .idl files, they were giving me
+	  headaches when running parallel compiles.
+
 Mon Apr 12 03:30:18 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp (gen_extraction):
