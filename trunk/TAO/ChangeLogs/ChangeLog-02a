@@ -1,3 +1,18 @@
+Wed Oct 17 12:22:09 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  (add_transport_to_cache, process_listen_point_list):
+
+	  Set the SSL port in the TAO_SSLIOP_Endpoint.  Previously we were
+	  relying on the port that was set in the underlying
+	  TAO_IIOP_Endpoint, which is not technically correct.  This fix
+	  also addresses a bi-dir GIOP over SSLIOP issue.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (get_listen_point):
+
+	  Synchronized this method implementation with the more up-to-date
+	  IIOP version.
+
 Wed Oct 17 11:01:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av: Generated dependency. This should

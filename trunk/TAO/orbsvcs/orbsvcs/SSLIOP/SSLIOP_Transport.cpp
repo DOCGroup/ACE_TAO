@@ -43,20 +43,6 @@ TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
   delete this->messaging_object_;
 }
 
-#if 0
-TAO_SSL_SVC_HANDLER *
-TAO_SSLIOP_Transport::service_handler (void)
-{
-  return this->connection_handler_;
-}
-
-ACE_HANDLE
-TAO_SSLIOP_Transport::handle (void)
-{
-  return this->connection_handler_->get_handle ();
-}
-#endif
-
 ACE_Event_Handler *
 TAO_SSLIOP_Transport::event_handler_i (void)
 {
@@ -283,7 +269,7 @@ TAO_SSLIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return -1;
 
-  cdr.reset_byte_order (ACE_static_cast(int,byte_order));
+  cdr.reset_byte_order (ACE_static_cast (int, byte_order));
 
   IIOP::ListenPointList listen_list;
   if ((cdr >> listen_list) == 0)
@@ -341,20 +327,20 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
 int
 TAO_SSLIOP_Transport::get_listen_point (
-    IIOP::ListenPointList &listen_point_list,
-    TAO_Acceptor *acceptor)
+  IIOP::ListenPointList &listen_point_list,
+  TAO_Acceptor *acceptor)
 {
-  TAO_SSLIOP_Acceptor *iiop_acceptor =
+  TAO_SSLIOP_Acceptor *ssliop_acceptor =
     ACE_dynamic_cast (TAO_SSLIOP_Acceptor *,
                       acceptor);
 
   // Get the array of endpoints serviced by <iiop_acceptor>
   const ACE_INET_Addr *endpoint_addr =
-    iiop_acceptor->endpoints ();
+    ssliop_acceptor->endpoints ();
 
   // Get the count
   size_t count =
-    iiop_acceptor->endpoint_count ();
+    ssliop_acceptor->endpoint_count ();
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
@@ -364,52 +350,54 @@ TAO_SSLIOP_Transport::get_listen_point (
     {
        ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Could not resolve local host")
-                          ACE_TEXT (" address in set_bidir_context_info()\n")),
+                          ACE_TEXT (" address in get_listen_point()\n")),
                         -1);
     }
 
+  // Note: Looks like there is no point in sending the list of
+  // endpoints on interfaces on which this connection has not
+  // been established. If this is wrong, please correct me.
+  CORBA::String_var local_interface;
 
+  // Get the hostname for the local address
+  if (ssliop_acceptor->hostname (this->orb_core_,
+                                 local_addr,
+                                 local_interface.out ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Could not resolve local host")
+                         ACE_TEXT (" name \n")),
+                        -1);
+    }
 
   for (size_t index = 0;
        index <= count;
        index++)
     {
+      ACE_INET_Addr tmp_addr;
+      CORBA::String_var acceptor_interface;
+
       // Get the listen point on that acceptor if it has the same
       // interface on which this connection is established
+      if (ssliop_acceptor->hostname (this->orb_core_,
+                                     tmp_addr,
+                                     acceptor_interface.out ()) == -1)
+          continue;
 
-      // Note: Looks like there is no point in sending the list of
-      // endpoints on interfaces on which this connection has not
-      // been established. If this is wrong, please correct me.
-      char local_interface[MAXHOSTNAMELEN + 1];
-      char acceptor_interface[MAXHOSTNAMELEN + 1];
-
-      if (endpoint_addr[index].get_host_name (acceptor_interface,
-                                              sizeof (acceptor_interface)) ==
-          -1)
-        continue;
-
-      if (local_addr.get_host_name (local_interface,
-                                    sizeof (local_interface)) == -1)
-        continue;
-
-      // @@ This is very bad for performance, but it is a one time
-      // affair
-      if (ACE_OS::strcmp (local_interface,
-                          acceptor_interface) == 0)
+      if (local_addr.get_ip_address()
+          == endpoint_addr[index].get_ip_address())
         {
-          // We have the connection and the acceptor endpoint on the
-          // same interface
-          IIOP::ListenPoint point;
-          point.host = CORBA::string_dup (local_interface);
-          point.port = endpoint_addr[index].get_port_number ();
-
           // Get the count of the number of elements
           CORBA::ULong len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
-          // Add the new length to the list
-          listen_point_list[len] = point;
+
+          // We have the connection and the acceptor endpoint on the
+          // same interface
+          IIOP::ListenPoint &point = listen_point_list[len];
+          point.host = CORBA::string_dup (local_interface.in ());
+          point.port = endpoint_addr[index].get_port_number ();
         }
     }
 
@@ -419,13 +407,5 @@ TAO_SSLIOP_Transport::get_listen_point (
 void
 TAO_SSLIOP_Transport::transition_handler_state_i (void)
 {
-  connection_handler_ = 0;
+  this->connection_handler_ = 0;
 }
-
-#if 0
-TAO_Connection_Handler*
-TAO_SSLIOP_Transport::connection_handler (void) const
-{
-  return connection_handler_;
-}
-#endif
