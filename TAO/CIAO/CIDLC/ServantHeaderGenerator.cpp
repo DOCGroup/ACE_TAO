@@ -1852,13 +1852,44 @@ namespace
     virtual void
     pre (Type& t)
     {
-      os << "namespace " << t.name () << "{";
+      os << endl 
+         << "namespace " << t.name () << "{";
     }
 
     virtual void
     post (Type& t)
     {
       os << "}";
+    }
+  };
+  
+  struct IncludesEmitter : Traversal::QuoteIncludes,
+                           Traversal::BracketIncludes,
+                           EmitterBase
+  {
+    IncludesEmitter (Context& c)
+      : EmitterBase (c)
+    {
+    }
+
+    virtual void
+    traverse (SemanticGraph::QuoteIncludes& qi)
+    {
+      os << "#include \""
+         << regex::perl_s (qi.file ().string (),
+                           "/(\\.(idl|cidl))?$/S.h/")
+         << "\""
+         << endl;
+    }
+
+    virtual void
+    traverse (SemanticGraph::BracketIncludes& bi)
+    {
+      os << "#include \""
+         << regex::perl_s (bi.file ().string (),
+                           "/(\\.(idl|cidl))?$/S.h/")
+         << "\""
+         << endl;  
     }
   };
 }
@@ -1909,8 +1940,8 @@ ServantHeaderEmitter::pre (TranslationUnit& u)
   guard = regex::perl_s (guard, "/\\./_/");
 
   os << "#ifndef " << guard << endl
-     << "#define " << guard << endl
-     << "#include \"ace/pre.h\"" << endl << endl;
+     << "#define " << guard << endl << endl
+     << "#include /**/ \"ace/pre.h\"" << endl << endl;
 
   string export_include = cl_.get_value ("export-include", "");
 
@@ -1933,23 +1964,18 @@ ServantHeaderEmitter::pre (TranslationUnit& u)
   // they are in synch with the IDL compiler's options.
   os << "#include \""
      << regex::perl_s (file_name,
-                       "/(\\.(idl|cidl))?$/S.h/")
-     << "\""
-     << endl
-     << "#include \""
-     << regex::perl_s (file_name,
                        "/(\\.(idl|cidl))?$/" + suffix + "C.h/")
      << "\""
      << endl << endl;
+
+  os << "#if !defined (ACE_LACKS_PRAGMA_ONCE)" << endl
+     << "# pragma once" << endl
+     << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
 
   os << "#include \"ciao/Container_Base.h\"" << endl
      << "#include \"tao/LocalObject.h\"" << endl
      << "#include \"tao/PortableServer/Key_Adapters.h\"" << endl
      << "#include \"ace/Active_Map_Manager_T.h\"" << endl << endl;
-
-  os << "#if !defined (ACE_LACKS_PRAGMA_ONCE)" << endl
-     << "# pragma once" << endl
-     << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
 }
 
 void
@@ -1967,21 +1993,36 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   unit.edge_traverser (contains_principal);
 
   //--
-  Traversal::TranslationRegion region;
-  contains_principal.node_traverser (region);
+  Traversal::TranslationRegion principal_region;
+  contains_principal.node_traverser (principal_region);
 
   // Layer 2
   //
-  Traversal::ContainsRoot contains_root;
-  Traversal::Includes includes;
+  Traversal::TranslationRegion included_region;
 
-  region.edge_traverser (includes);
-  region.edge_traverser (contains_root);
+  // Inclusion handling is somewhat tricky because we want
+  // to print only top-level #includes.
+
+  Traversal::ContainsRoot contains_root;
+  Traversal::QuoteIncludes quote_includes;
+  Traversal::BracketIncludes bracket_includes;
+  IncludesEmitter includes_emitter (c);
+
+  principal_region.edge_traverser (includes_emitter);
+  principal_region.edge_traverser (quote_includes);
+  principal_region.edge_traverser (bracket_includes);
+  principal_region.edge_traverser (contains_root);
+
+  included_region.edge_traverser (quote_includes);
+  included_region.edge_traverser (bracket_includes);
+  included_region.edge_traverser (contains_root);
 
   //--
   Traversal::Root root;
-  includes.node_traverser (region);
+
   contains_root.node_traverser (root);
+  quote_includes.node_traverser (included_region);
+  bracket_includes.node_traverser (included_region);
 
   // Layer 3
   //
@@ -2053,7 +2094,8 @@ ServantHeaderEmitter::post (TranslationUnit& u)
 
   guard = regex::perl_s (guard, "/\\./_/");
 
-  os << "#include \"ace/post.h\"" << endl
+  os << endl
+     << "#include /**/ \"ace/post.h\"" << endl << endl
      << "#endif /* " << guard << " */"
      << endl << endl;
 }
