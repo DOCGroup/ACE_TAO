@@ -57,6 +57,8 @@ public MUF_Scheduling::SchedulingParameterPolicy,
        public TAO_Local_RefCounted_Object
 {
  public:
+    MUF_Sched_Param_Policy ();
+    MUF_Sched_Param_Policy (const MUF_Sched_Param_Policy &rhs);
 
     MUF_Scheduling::SchedulingParameter value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -64,6 +66,14 @@ public MUF_Scheduling::SchedulingParameterPolicy,
     void value (const MUF_Scheduling::SchedulingParameter & value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+     virtual CORBA::Policy_ptr copy (
+       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
+
+     virtual void destroy (
+       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
     MUF_Scheduling::SchedulingParameter value_;

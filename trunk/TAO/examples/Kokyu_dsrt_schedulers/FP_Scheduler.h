@@ -41,6 +41,9 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
        public TAO_Local_RefCounted_Object
 {
  public:
+     FP_Segment_Sched_Param_Policy ();
+     FP_Segment_Sched_Param_Policy (const FP_Segment_Sched_Param_Policy &rhs);
+
      FP_Scheduling::SegmentSchedulingParameter value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
@@ -55,6 +58,14 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
+
+     virtual CORBA::Policy_ptr copy (
+       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
+
+     virtual void destroy (
+       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
  private:
   FP_Scheduling::SegmentSchedulingParameter value_;
