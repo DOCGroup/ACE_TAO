@@ -15,12 +15,6 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request
                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
-    {
-      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -67,6 +61,12 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request
 
   // Outgoing reply must have the same byte order as the incoming one.
   request->_tao_reply_byte_order (target_request->_tao_byte_order ());
+
+  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
+    {
+      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 CORBA::RepositoryId
