@@ -22,6 +22,7 @@ tmp=/tmp
 ####
 target=
 run_command=
+chorus=
 if [ $# -eq 1 ]; then
   target=$1
   if rsh $target help | head -1 | egrep CHORUS/ClassiX > /dev/null; then
@@ -41,7 +42,7 @@ run()
   echo running $1
   /bin/rm -f core log/$1.log
 
-  if [ "$chorus" -eq 1 ]; then
+  if [ "$chorus" ]; then
     #### Assumes that the PATH has been set on the target.
     rsh $target $run_command $1
   else
