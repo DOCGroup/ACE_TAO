@@ -1,3 +1,14 @@
+Sun Jun 20 00:34:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* docs/LocalObject.html:
+	* docs/Tags.html:
+
+	  Updated deocumentation.
+	
+	* docs/libraries.html:
+
+	  New documentation for different libraries in $TAO_ROOT/tao.
+
 Sat Jun 19 21:56:52 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp (push_structured_events):
