@@ -19,66 +19,26 @@
 
 // Constructor
 
-Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
-  : POA_Cubit_Factory (key)
+Cubit_Factory_i::Cubit_Factory_i (void)
 {
-  // Create implementation object with user specified key.
-
-  this->numobjs_ = numobjs;
-  this->my_cubit_ = new Cubit_i_ptr [this->numobjs_];
-
-  static char obj_str [MAXNAMELEN];
-
-  for (u_int i = 0; i < this->numobjs_; i++)
-    {
-      ACE_OS::memset (obj_str, '\0', MAXNAMELEN);
-      ACE_OS::sprintf (obj_str, "key%d", i);
-
-      my_cubit_[i] = new Cubit_i (obj_str);
-
-      if (my_cubit_[i] == 0)
-        ACE_ERROR ((LM_ERROR,
-                    " (%P|%t) Unable to create implementation object%d\n",
-                    i));
-
-    }
 }
 
 // Destructor
 
 Cubit_Factory_i::~Cubit_Factory_i (void)
 {
-  delete [] this->my_cubit_;
 }
 
 Cubit_ptr
-Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
+Cubit_Factory_i::make_cubit (const char *,
+			     CORBA::Environment &env)
 {
-  for (size_t i = 0; i < this->numobjs_; i++)
-    {
-      Cubit_ptr cubit = this->my_cubit_[i]->_this (env);
-      if (env.exception () != 0)
-	{
-	  env.print_exception ("my_cubit::_this");
-	  return Cubit::_nil ();
-	}
-      auto_ptr<TAO::ObjectKey> the_key = cubit->key (env);
-      
-      const char *obj_str = (char *) &((*the_key)[0]);
-
-      // Keys matched.
-      if (ACE_OS::memcmp (obj_str, key, the_key->length()) == 0)
-        return cubit;
-      CORBA::release (cubit);
-    }
-
-  return Cubit::_nil ();
+  return my_cubit_._this (env);
 }
 
 // Constructor
 
-Cubit_i::Cubit_i (const char *obj_name)
-  : POA_Cubit (obj_name)
+Cubit_i::Cubit_i (const char *)
 {
 }
 

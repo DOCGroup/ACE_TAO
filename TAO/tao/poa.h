@@ -486,6 +486,7 @@ protected:
 
   virtual void pre_invoke (const TAO::ObjectKey &key,
                            const PortableServer::ObjectId &id,
+                           PortableServer::Servant servant,
                            CORBA::Environment &env);
 
   virtual void post_invoke (PortableServer::Servant servant,
@@ -738,8 +739,11 @@ public:
   virtual const TAO::ObjectKey &object_key (void) const;
   // Get the object key.
 
-  virtual void in_upcall (int yesno);
-  // Set whether we're in an upcall (non-zero is yes).
+  virtual void servant (PortableServer::Servant servant);
+  // Set the servant for the current upcall.
+
+  virtual PortableServer::Servant servant (void) const;
+  // Get the servant for the current upcall.
 
   virtual int in_upcall (void) const;
   // Get whether we're in an upcall (non-zero is yes).
@@ -763,14 +767,14 @@ private:
   const PortableServer::ObjectId *object_id_;
   // The object ID of the current context.
 
-  int in_upcall_;
-  // Flag which indicates whether we're in an upcall.
-
   const TAO::ObjectKey *object_key_;
   // The object key of the current context.
 
   PortableServer::ServantLocator::Cookie cookie_;
   // Servant Locator's cookie
+
+  PortableServer::Servant servant_;
+  // The servant for the current upcall.
 
   // = Hidden because we don't allow these
   TAO_POA_Current (const TAO_POA_Current &);

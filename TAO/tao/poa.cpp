@@ -2181,6 +2181,7 @@ TAO_POA::dispatch_servant_i (const TAO::ObjectKey &key,
   // Setup for upcall
   poa->pre_invoke (key,
                    id.in (),
+		   servant,
                    env);
 
   servant->_dispatch (req,
@@ -2196,6 +2197,7 @@ TAO_POA::dispatch_servant_i (const TAO::ObjectKey &key,
 void
 TAO_POA::pre_invoke (const TAO::ObjectKey &key,
                      const PortableServer::ObjectId &id,
+		     PortableServer::Servant servant,
                      CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -2206,7 +2208,7 @@ TAO_POA::pre_invoke (const TAO::ObjectKey &key,
   poa_current->POA_impl (this);
   poa_current->object_key (key);
   poa_current->object_id (id);
-  poa_current->in_upcall (1);
+  poa_current->servant (servant);
 }
 
 void
@@ -3178,7 +3180,7 @@ TAO_Strategy_POA_Manager::lock (void)
 TAO_POA_Current::TAO_POA_Current (void)
   : poa_impl_ (0),
     object_id_ (0),
-    in_upcall_ (0),
+    servant_ (0),
     object_key_ (0),
     cookie_ (0)
 {
@@ -3224,7 +3226,7 @@ TAO_POA_Current::clear (void)
 {
   this->poa_impl_ = 0;
   this->object_id_ = 0;
-  this->in_upcall_ = 0;
+  this->servant_ = 0;
   this->object_key_ = 0;
   this->cookie_ = 0;
 }
@@ -3235,7 +3237,7 @@ TAO_POA_Current::context_is_valid (void)
   return
     this->poa_impl_ != 0 &&
     this->object_id_ != 0 &&
-    this->in_upcall_ != 0 &&
+    this->servant_ != 0 &&
     this->object_key_ != 0;
 }
 
@@ -3276,15 +3278,21 @@ TAO_POA_Current::object_key (void) const
 }
 
 void
-TAO_POA_Current::in_upcall (int yesno)
+TAO_POA_Current::servant (PortableServer::Servant servant)
 {
-  this->in_upcall_ = yesno;
+  this->servant_ = servant;
+}
+
+PortableServer::Servant
+TAO_POA_Current::servant (void) const
+{
+  return this->servant_;
 }
 
 int
 TAO_POA_Current::in_upcall (void) const
 {
-  return this->in_upcall_;
+  return (this->servant_ != 0);
 }
 
 PortableServer::ServantLocator::Cookie

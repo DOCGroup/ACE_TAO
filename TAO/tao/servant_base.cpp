@@ -1,3 +1,6 @@
+//
+// $Id$
+//
 #include "tao/corba.h"
 
 TAO_ServantBase::TAO_ServantBase (void)
@@ -95,7 +98,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
-  if (poa_current->in_upcall ())
+  if (poa_current->in_upcall () && this == poa_current->servant ())
     {
       stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
                               IIOP::Profile (orb_core->orb_params ()->addr (),
@@ -169,7 +172,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
   // exception.
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   TAO_POA_Current *poa_current = orb_core->poa_current ();
-  if (!poa_current->in_upcall ())
+  if (!poa_current->in_upcall () || this != poa_current->servant ())
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
       env.exception (exception);
