@@ -87,6 +87,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CDR_Array_Test"=.\CDR_Array_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "CDR_Test"=.\CDR_Test.dsp - Package Owner=<4>
 
 Package=<5>

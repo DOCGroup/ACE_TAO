@@ -48,6 +48,17 @@ ld < CDR_Test
 write 2, "CDR_Test ", 9
 ace_main; unld "CDR_Test"
 
+ld < CDR_Array_Test
+write 2, "CDR_Array_Test ", 9
+ace_main; unld "CDR_Array_Test"
+
+##
+## @@ I'm not sure if File_Test can run on vxworks.
+##    
+## ld < CDR_File_Test
+## write 2, "CDR_File_Test ", 9
+## ace_main; unld "CDR_File_Test"
+
 ld < DLList_Test
 write 2, "DLList_Test ", 13
 ace_main; unld "DLList_Test"

@@ -103,6 +103,18 @@ public:
   static void swap_4 (const char *orig, char *target);
   static void swap_8 (const char *orig, char *target);
   static void swap_16 (const char *orig, char *target);
+  static void swap_2_array (const char *orig,
+			    char *target,
+			    size_t length);
+  static void swap_4_array (const char *orig,
+			    char *target,
+			    size_t length);
+  static void swap_8_array (const char *orig,
+			    char *target,
+			    size_t length);
+  static void swap_16_array (const char *orig,
+			     char *target,
+			     size_t length);
   // Do byte swapping for each basic IDL type size.  There exist only
   // routines to put byte, halfword (2 bytes), word (4 bytes),
   // doubleword (8 bytes) and quadword (16 byte); because those are
@@ -118,7 +130,7 @@ public:
   // To understand how a "best fit" is computed look at the
   // algorithm in the code.
   // Basically the buffers grow exponentially, up to a certain point,
-  // then the buffer size grows linearly. 
+  // then the buffer size grows linearly.
   // The advantage of this algorithm is that is rapidly grows to a
   // large value, but does not explode at the end.
 
@@ -630,7 +642,7 @@ public:
     // another without requiring any extra memory allocations, data
     // copies or too many temporaries.
     Transfer_Contents (ACE_InputCDR &rhs);
-    
+
     ACE_InputCDR &rhs_;
   };
   ACE_InputCDR (Transfer_Contents rhs);
