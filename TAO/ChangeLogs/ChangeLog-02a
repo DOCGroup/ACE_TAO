@@ -1,30 +1,36 @@
+Mon Sep 25 12:44:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile.bor:
+	* tao/PortableServer/Makefile.bor: Removed some files that were
+	  removed longback from the repository.
+
 Sun Sep 24 12:20:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Abstract_ServantBase.cpp
 	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
 
 	  Removed ";" at the end of the ACE_RCSID entry, to avoid
-	  having this notified as extra ";" on OSF1 builds. 
+	  having this notified as extra ";" on OSF1 builds.
 
 Sat Sep 23 22:30:05 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
-        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i: 
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
         * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
         * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
           removed warnings about obsolete const return type.
-                
+
         * orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp: 
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
         * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
-        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h: 
-        * orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp: 
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
         * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
-        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i: 
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
         * orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h:
-        * orbsvcs/orbsvcs/Notify/Notify_Factory.cpp: 
+        * orbsvcs/orbsvcs/Notify/Notify_Factory.cpp:
           Debug messages print if TAO_debug_level > 0
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
           Fixed a race condition in _decr_refcnt
 
