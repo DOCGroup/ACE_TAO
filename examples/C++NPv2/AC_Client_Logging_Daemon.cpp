@@ -334,8 +334,14 @@ int AC_CLD_Connector::connect_svc_handler
       (svc_handler, remote_addr, timeout,
        local_addr, reuse_addr, flags, perms) == -1) return -1;
   SSL_clear (ssl_);
+#if defined (ACE_WIN32)
+  // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
+  // See ace/config-lite.h for the typedefs.
   SSL_set_fd (ssl_,
               reinterpret_cast<int> (svc_handler->get_handle ()));
+#else
+  SSL_set_fd (ssl_, svc_handler->get_handle ());
+#endif /* ACE_WIN32 */
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 

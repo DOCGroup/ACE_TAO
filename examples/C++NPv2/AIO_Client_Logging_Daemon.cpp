@@ -257,8 +257,13 @@ int AIO_CLD_Connector::validate_connection
   }
 
   SSL_clear (ssl_);
+#if defined (ACE_WIN32)
+  // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
+  // See ace/config-lite.h for the typedefs.
   SSL_set_fd (ssl_, reinterpret_cast<int> (result.connect_handle ()));
-
+#else
+  SSL_set_fd (ssl_, result.connect_handle ());
+#endif /* ACE_WIN32 */
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 
   if (SSL_connect (ssl_) == -1
