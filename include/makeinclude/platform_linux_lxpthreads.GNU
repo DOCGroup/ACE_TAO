@@ -43,7 +43,7 @@ endif
 
 CC      = gcc
 CXX     = g++
-CFLAGS  += -Wall -pipe \
+CFLAGS  += -W -Wall -pipe \
            -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
            $(PLATFORM_AIO_SUPPORT)
 CCFLAGS += $(CFLAGS) $(NO_IMPLICIT_TEMPLATES)

@@ -33,7 +33,7 @@ endif # ! i86pc
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -pipe #### -Winline
+CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DLD             = $(CXX)
 LD              = $(CXX)

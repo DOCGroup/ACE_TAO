@@ -139,7 +139,7 @@ endif # ! static_libs
 
 CC              = cc$(TOOLENV)
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-                   -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -Wall
+                   -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -W -Wall
 CCFLAGS         += $(CFLAGS)
 ifeq (,$(rtti))
   #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
