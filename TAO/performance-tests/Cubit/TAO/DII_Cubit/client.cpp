@@ -22,7 +22,6 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
 
 // Since we don't yet have an interface repository or dynamic-Any, we
 // just get the info from the IDL-generated files, since we're mainly
