@@ -50,7 +50,7 @@ static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
 // #define ACE_YYDEBUG 1
 
 // Efficient memory allocation technique.
-ACE_Obstack *ace_obstack;
+ACE_Obstack_T<ACE_TCHAR> *ace_obstack = 0;
 
 // Keeps track of the number of errors encountered so far.
 int ace_yyerrno = 0;
@@ -577,7 +577,7 @@ ace_yynewstate:
       /* Extend the stack our own way.  */
       if (ace_yystacksize >= ACE_YYMAXDEPTH)
 	{
-	  ace_yyerror("parser stack overflow");
+	  ace_yyerror(ACE_LIB_TEXT ("parser stack overflow"));
 	  if (ace_yyfree_stacks)
 	    {
 	      free (ace_yyss);
@@ -1109,7 +1109,7 @@ ace_yyerrlab:   /* here on detecting error */
       if (ace_yyn > ACE_YYFLAG && ace_yyn < ACE_YYLAST)
 	{
 	  int size = 0;
-	  char *msg;
+	  ACE_TCHAR *msg;
 	  int x, count;
 
 	  count = 0;
@@ -1117,11 +1117,11 @@ ace_yyerrlab:   /* here on detecting error */
 	  for (x = (ace_yyn < 0 ? -ace_yyn : 0);
 	       x < (sizeof(ace_yytname) / sizeof(char *)); x++)
 	    if (ace_yycheck[x + ace_yyn] == x)
-	      size += strlen(ace_yytname[x]) + 15, count++;
-	  msg = (char *) malloc(size + 15);
+	      size += ACE_OS::strlen(ace_yytname[x]) + 15, count++;
+	  msg = new ACE_TCHAR[size + 15];
 	  if (msg != 0)
 	    {
-	      strcpy(msg, "parse error");
+	      ACE_OS::strcpy (msg, ACE_LIB_TEXT ("parse error"));
 
 	      if (count < 5)
 		{
@@ -1130,21 +1130,21 @@ ace_yyerrlab:   /* here on detecting error */
 		       x < (sizeof(ace_yytname) / sizeof(char *)); x++)
 		    if (ace_yycheck[x + ace_yyn] == x)
 		      {
-			strcat(msg, count == 0 ? ", expecting `" : " or `");
-			strcat(msg, ace_yytname[x]);
-			strcat(msg, "'");
+			ACE_OS::strcat (msg, count == 0 ? ACE_LIB_TEXT (", expecting `") : ACE_LIB_TEXT (" or `"));
+			ACE_OS::strcat (msg, ACE_TEXT_CHAR_TO_TCHAR (ace_yytname[x]));
+			ACE_OS::strcat (msg, ACE_LIB_TEXT ("'"));
 			count++;
 		      }
 		}
-	      ace_yyerror(msg);
-	      free(msg);
+	      ace_yyerror (msg);
+	      delete [] msg;
 	    }
 	  else
-	    ace_yyerror ("parse error; also virtual memory exceeded");
+	    ace_yyerror (ACE_LIB_TEXT ("parse error; also virtual memory exceeded"));
 	}
       else
 #endif /* ACE_YYERROR_VERBOSE */
-	ace_yyerror("parse error");
+	ace_yyerror(ACE_LIB_TEXT ("parse error"));
     }
 
   goto ace_yyerrlab1;
@@ -1401,7 +1401,7 @@ int
 main (int argc, char *argv[])
 {
   ace_yyin = stdin;
-  ace_obstack = new ACE_Obstack;
+  ace_obstack = new ACE_Obstack_T<ACE_TCHAR>;
 
   // Try to reopen any filename argument to use ACE_YYIN.
   if (argc > 1 && (ace_yyin = freopen (argv[1], "r", stdin)) == 0)

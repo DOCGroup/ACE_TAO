@@ -148,8 +148,8 @@ struct ace_yy_buffer_state
 	{
 	FILE *ace_yy_input_file;
 
-	char *ace_yy_ch_buf;		/* input buffer */
-	char *ace_yy_buf_pos;		/* current position in input buffer */
+	ACE_TCHAR *ace_yy_ch_buf;		/* input buffer */
+	ACE_TCHAR *ace_yy_buf_pos;		/* current position in input buffer */
 
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
@@ -211,7 +211,7 @@ static ACE_YY_BUFFER_STATE ace_yy_current_buffer = 0;
 
 
 /* ace_yy_hold_char holds the character lost when ace_yytext is formed. */
-static char ace_yy_hold_char;
+static ACE_TCHAR ace_yy_hold_char;
 
 static int ace_yy_n_chars;		/* number of characters read into ace_yy_ch_buf */
 
@@ -219,7 +219,7 @@ static int ace_yy_n_chars;		/* number of characters read into ace_yy_ch_buf */
 int ace_yyleng;
 
 /* Points to current character in buffer. */
-static char *ace_yy_c_buf_p = (char *) 0;
+static ACE_TCHAR *ace_yy_c_buf_p = (ACE_TCHAR *) 0;
 static int ace_yy_init = 1;		/* whether we need to initialize */
 static int ace_yy_start = 0;	/* start state number */
 
@@ -238,9 +238,9 @@ void ace_yy_init_buffer ACE_YY_PROTO(( ACE_YY_BUFFER_STATE b, FILE *file ));
 void ace_yy_flush_buffer ACE_YY_PROTO(( ACE_YY_BUFFER_STATE b ));
 #define ACE_YY_FLUSH_BUFFER ace_yy_flush_buffer( ace_yy_current_buffer )
 
-ACE_YY_BUFFER_STATE ace_yy_scan_buffer ACE_YY_PROTO(( char *base, ace_yy_size_t size ));
-ACE_YY_BUFFER_STATE ace_yy_scan_string ACE_YY_PROTO(( ace_yyconst char *ace_yy_str ));
-ACE_YY_BUFFER_STATE ace_yy_scan_bytes ACE_YY_PROTO(( ace_yyconst char *bytes, int len ));
+ACE_YY_BUFFER_STATE ace_yy_scan_buffer ACE_YY_PROTO(( ACE_TCHAR *base, ace_yy_size_t size ));
+ACE_YY_BUFFER_STATE ace_yy_scan_string ACE_YY_PROTO(( ace_yyconst ACE_TCHAR *ace_yy_str ));
+ACE_YY_BUFFER_STATE ace_yy_scan_bytes ACE_YY_PROTO(( ace_yyconst ACE_TCHAR *bytes, int len ));
 
 static void *ace_yy_flex_alloc ACE_YY_PROTO(( ace_yy_size_t ));
 static void *ace_yy_flex_realloc ACE_YY_PROTO(( void *, ace_yy_size_t ));
@@ -264,16 +264,16 @@ static void ace_yy_flex_free ACE_YY_PROTO(( void * ));
 
 #define ACE_YY_AT_BOL() (ace_yy_current_buffer->ace_yy_at_bol)
 
-typedef unsigned char ACE_YY_CHAR;
+typedef ACE_TCHAR ACE_YY_CHAR;
 FILE *ace_yyin = (FILE *) 0, *ace_yyout = (FILE *) 0;
 typedef int ace_yy_state_type;
-extern char *ace_yytext;
+extern ACE_TCHAR *ace_yytext;
 #define ace_yytext_ptr ace_yytext
 
 static ace_yy_state_type ace_yy_get_previous_state ACE_YY_PROTO(( void ));
 static ace_yy_state_type ace_yy_try_NUL_trans ACE_YY_PROTO(( ace_yy_state_type current_state ));
 static int ace_yy_get_next_buffer ACE_YY_PROTO(( void ));
-static void ace_yy_fatal_error ACE_YY_PROTO(( ace_yyconst char msg[] ));
+static void ace_yy_fatal_error ACE_YY_PROTO(( ace_yyconst ACE_TCHAR msg[] ));
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up ace_yytext.
@@ -493,7 +493,7 @@ static ace_yyconst short int ace_yy_chk[482] =
     } ;
 
 static ace_yy_state_type ace_yy_last_accepting_state;
-static char *ace_yy_last_accepting_cpos;
+static ACE_TCHAR *ace_yy_last_accepting_cpos;
 
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
@@ -502,7 +502,7 @@ static char *ace_yy_last_accepting_cpos;
 #define ace_yymore() ace_yymore_used_but_not_detected
 #define ACE_YY_MORE_ADJ 0
 #define ACE_YY_RESTORE_ACE_YY_MORE_OFFSET
-char *ace_yytext;
+ACE_TCHAR *ace_yytext;
 #line 1 "Svc_Conf.l"
 #define INITIAL 0
 #line 2 "Svc_Conf.l"
@@ -546,15 +546,15 @@ extern int ace_yywrap ACE_YY_PROTO(( void ));
 #endif
 
 #ifndef ACE_YY_NO_UNPUT
-static void ace_yyunput ACE_YY_PROTO(( int c, char *buf_ptr ));
+static void ace_yyunput ACE_YY_PROTO(( int c, ACE_TCHAR *buf_ptr ));
 #endif
 
 #ifndef ace_yytext_ptr
-static void ace_yy_flex_strncpy ACE_YY_PROTO(( char *, ace_yyconst char *, int ));
+static void ace_yy_flex_strncpy ACE_YY_PROTO(( ACE_TCHAR *, ace_yyconst ACE_TCHAR *, int ));
 #endif
 
 #ifdef ACE_YY_NEED_STRLEN
-static int ace_yy_flex_strlen ACE_YY_PROTO(( ace_yyconst char * ));
+static int ace_yy_flex_strlen ACE_YY_PROTO(( ace_yyconst ACE_TCHAR * ));
 #endif
 
 #ifndef ACE_YY_NO_INPUT
@@ -624,16 +624,16 @@ ACE_YY_MALLOC_DECL
 		int c = '*', n; \
 		for ( n = 0; n < max_size && \
 			     (c = getc( ace_yyin )) != EOF && c != '\n'; ++n ) \
-			buf[n] = (char) c; \
+			buf[n] = (ACE_TCHAR) c; \
 		if ( c == '\n' ) \
-			buf[n++] = (char) c; \
+			buf[n++] = (ACE_TCHAR) c; \
 		if ( c == EOF && ferror( ace_yyin ) ) \
-			ACE_YY_FATAL_ERROR( "input in flex scanner failed" ); \
+			ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("input in flex scanner failed")); \
 		result = n; \
 		} \
-	else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
+	else if ( ((result = fread( buf, sizeof (ACE_TCHAR), max_size, ace_yyin )) == 0) \
 		  && ferror( ace_yyin ) ) \
-		ACE_YY_FATAL_ERROR( "input in flex scanner failed" );
+		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("input in flex scanner failed"));
 #endif
 
 /* No semi-colon after return; correct usage is to write "ace_yyterminate();" -
@@ -682,7 +682,7 @@ ACE_YY_MALLOC_DECL
 ACE_YY_DECL
 	{
 	register ace_yy_state_type ace_yy_current_state;
-	register char *ace_yy_cp = 0, *ace_yy_bp = 0;
+	register ACE_TCHAR *ace_yy_cp = 0, *ace_yy_bp = 0;
 	register int ace_yy_act;
 
 #line 40 "Svc_Conf.l"
@@ -869,11 +869,11 @@ ACE_YY_RULE_SETUP
 #line 60 "Svc_Conf.l"
 { // Check for first type of string, i.e.,
                         // "double quotes" delimited.  
-                        char *s = strrchr (ace_yytext, '"');
+                        ACE_TCHAR *s = ACE_OS::strrchr (ace_yytext, '"');
                         if (s == 0)
                           // Check for second type of string, i.e.,
                           // 'single quotes' delimited.
-                          s = strrchr (ace_yytext, '\'');
+                          s = ACE_OS::strrchr (ace_yytext, '\'');
 
                         ACE_ASSERT (s != 0);
                         // Eliminate the opening and closing double or
@@ -934,7 +934,7 @@ ACE_SVC_CONF_ECHO;
 
 	case ACE_YY_END_OF_BUFFER:
 		{
-		/* Amount of text matched not including the EOB char. */
+		/* Amount of text matched not including the EOB ACE_TCHAR. */
 		int ace_yy_amount_of_matched_text = (int) (ace_yy_cp - ace_yytext_ptr) - 1;
 
 		/* Undo the effects of ACE_YY_DO_BEFORE_ACTION. */
@@ -1056,7 +1056,7 @@ ACE_SVC_CONF_ECHO;
 
 	default:
 		ACE_YY_FATAL_ERROR(
-			"fatal flex scanner internal error--no action found" );
+			ACE_LIB_TEXT ("fatal flex scanner internal error--no action found"));
 	} /* end of action switch */
 		} /* end of scanning one token */
 	} /* end of ace_yylex */
@@ -1072,14 +1072,14 @@ ACE_SVC_CONF_ECHO;
 
 static int ace_yy_get_next_buffer()
 	{
-	register char *dest = ace_yy_current_buffer->ace_yy_ch_buf;
-	register char *source = ace_yytext_ptr;
+	register ACE_TCHAR *dest = ace_yy_current_buffer->ace_yy_ch_buf;
+	register ACE_TCHAR *source = ace_yytext_ptr;
 	register int number_to_move, i;
 	int ret_val;
 
 	if ( ace_yy_c_buf_p > &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] )
 		ACE_YY_FATAL_ERROR(
-		"fatal flex scanner internal error--end of buffer missed" );
+		ACE_LIB_TEXT ("fatal flex scanner internal error--end of buffer missed"));
 
 	if ( ace_yy_current_buffer->ace_yy_fill_buffer == 0 )
 		{ /* Don't try to fill the buffer, so this is an EOF. */
@@ -1123,7 +1123,7 @@ static int ace_yy_get_next_buffer()
 			{ /* Not enough room in the buffer - grow it. */
 #ifdef ACE_YY_USES_REJECT
 			ACE_YY_FATAL_ERROR(
-"input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
+ACE_LIB_TEXT ("input buffer overflow, can't enlarge buffer because scanner uses REJECT"));
 #else
 
 			/* just a shorter name for the current buffer */
@@ -1141,7 +1141,7 @@ static int ace_yy_get_next_buffer()
 				else
 					b->ace_yy_buf_size *= 2;
 
-				b->ace_yy_ch_buf = (char *)
+				b->ace_yy_ch_buf = (ACE_TCHAR *)
 					/* Include room in for 2 EOB chars. */
 					ace_yy_flex_realloc( (void *) b->ace_yy_ch_buf,
 							 b->ace_yy_buf_size + 2 );
@@ -1152,7 +1152,7 @@ static int ace_yy_get_next_buffer()
 
 			if ( ! b->ace_yy_ch_buf )
 				ACE_YY_FATAL_ERROR(
-				"fatal error - scanner input buffer overflow" );
+				ACE_LIB_TEXT ("fatal error - scanner input buffer overflow"));
 
 			ace_yy_c_buf_p = &b->ace_yy_ch_buf[ace_yy_c_buf_p_offset];
 
@@ -1200,12 +1200,12 @@ static int ace_yy_get_next_buffer()
 	}
 
 
-/* ace_yy_get_previous_state - get the state just before the EOB char was reached */
+/* ace_yy_get_previous_state - get the state just before the EOB ACE_TCHAR was reached */
 
 static ace_yy_state_type ace_yy_get_previous_state()
 	{
 	register ace_yy_state_type ace_yy_current_state;
-	register char *ace_yy_cp;
+	register ACE_TCHAR *ace_yy_cp;
 
 	ace_yy_current_state = ace_yy_start;
 	ace_yy_current_state += ACE_YY_AT_BOL();
@@ -1245,7 +1245,7 @@ ace_yy_state_type ace_yy_current_state;
 #endif
 	{
 	register int ace_yy_is_jam;
-	register char *ace_yy_cp = ace_yy_c_buf_p;
+	register ACE_TCHAR *ace_yy_cp = ace_yy_c_buf_p;
 
 	register ACE_YY_CHAR ace_yy_c = 1;
 	if ( ace_yy_accept[ace_yy_current_state] )
@@ -1268,14 +1268,14 @@ ace_yy_state_type ace_yy_current_state;
 
 #ifndef ACE_YY_NO_UNPUT
 #ifdef ACE_YY_USE_PROTOS
-static void ace_yyunput( int c, register char *ace_yy_bp )
+static void ace_yyunput( int c, register ACE_TCHAR *ace_yy_bp )
 #else
 static void ace_yyunput( c, ace_yy_bp )
 int c;
-register char *ace_yy_bp;
+register ACE_TCHAR *ace_yy_bp;
 #endif
 	{
-	register char *ace_yy_cp = ace_yy_c_buf_p;
+	register ACE_TCHAR *ace_yy_cp = ace_yy_c_buf_p;
 
 	/* undo effects of setting up ace_yytext */
 	*ace_yy_cp = ace_yy_hold_char;
@@ -1284,9 +1284,9 @@ register char *ace_yy_bp;
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
 		register int number_to_move = ace_yy_n_chars + 2;
-		register char *dest = &ace_yy_current_buffer->ace_yy_ch_buf[
+		register ACE_TCHAR *dest = &ace_yy_current_buffer->ace_yy_ch_buf[
 					ace_yy_current_buffer->ace_yy_buf_size + 2];
-		register char *source =
+		register ACE_TCHAR *source =
 				&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move];
 
 		while ( source > ace_yy_current_buffer->ace_yy_ch_buf )
@@ -1298,10 +1298,10 @@ register char *ace_yy_bp;
 			ace_yy_n_chars = ace_yy_current_buffer->ace_yy_buf_size;
 
 		if ( ace_yy_cp < ace_yy_current_buffer->ace_yy_ch_buf + 2 )
-			ACE_YY_FATAL_ERROR( "flex scanner push-back overflow" );
+			ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("flex scanner push-back overflow"));
 		}
 
-	*--ace_yy_cp = (char) c;
+	*--ace_yy_cp = (ACE_TCHAR) c;
 
 
 	ace_yytext_ptr = ace_yy_bp;
@@ -1455,16 +1455,16 @@ int size;
 
 	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
+		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()"));
 
 	b->ace_yy_buf_size = size;
 
 	/* ace_yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->ace_yy_ch_buf = (char *) ace_yy_flex_alloc( b->ace_yy_buf_size + 2 );
+	b->ace_yy_ch_buf = (ACE_TCHAR *) ace_yy_flex_alloc( b->ace_yy_buf_size + 2 );
 	if ( ! b->ace_yy_ch_buf )
-		ACE_YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
+		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()"));
 
 	b->ace_yy_is_our_buffer = 1;
 
@@ -1559,10 +1559,10 @@ ACE_YY_BUFFER_STATE b;
 
 #ifndef ACE_YY_NO_SCAN_BUFFER
 #ifdef ACE_YY_USE_PROTOS
-ACE_YY_BUFFER_STATE ace_yy_scan_buffer( char *base, ace_yy_size_t size )
+ACE_YY_BUFFER_STATE ace_yy_scan_buffer( ACE_TCHAR *base, ace_yy_size_t size )
 #else
 ACE_YY_BUFFER_STATE ace_yy_scan_buffer( base, size )
-char *base;
+ACE_TCHAR *base;
 ace_yy_size_t size;
 #endif
 	{
@@ -1576,7 +1576,7 @@ ace_yy_size_t size;
 
 	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR( "out of dynamic memory in ace_yy_scan_buffer()" );
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_buffer()"));
 
 	b->ace_yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
 	b->ace_yy_buf_pos = b->ace_yy_ch_buf = base;
@@ -1597,10 +1597,10 @@ ace_yy_size_t size;
 
 #ifndef ACE_YY_NO_SCAN_STRING
 #ifdef ACE_YY_USE_PROTOS
-ACE_YY_BUFFER_STATE ace_yy_scan_string( ace_yyconst char *ace_yy_str )
+ACE_YY_BUFFER_STATE ace_yy_scan_string( ace_yyconst ACE_TCHAR *ace_yy_str )
 #else
 ACE_YY_BUFFER_STATE ace_yy_scan_string( ace_yy_str )
-ace_yyconst char *ace_yy_str;
+ace_yyconst ACE_TCHAR *ace_yy_str;
 #endif
 	{
 	int len;
@@ -1614,23 +1614,23 @@ ace_yyconst char *ace_yy_str;
 
 #ifndef ACE_YY_NO_SCAN_BYTES
 #ifdef ACE_YY_USE_PROTOS
-ACE_YY_BUFFER_STATE ace_yy_scan_bytes( ace_yyconst char *bytes, int len )
+ACE_YY_BUFFER_STATE ace_yy_scan_bytes( ace_yyconst ACE_TCHAR *bytes, int len )
 #else
 ACE_YY_BUFFER_STATE ace_yy_scan_bytes( bytes, len )
-ace_yyconst char *bytes;
+ace_yyconst ACE_TCHAR *bytes;
 int len;
 #endif
 	{
 	ACE_YY_BUFFER_STATE b;
-	char *buf;
+	ACE_TCHAR *buf;
 	ace_yy_size_t n;
 	int i;
 
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = len + 2;
-	buf = (char *) ace_yy_flex_alloc( n );
+	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n );
 	if ( ! buf )
-		ACE_YY_FATAL_ERROR( "out of dynamic memory in ace_yy_scan_bytes()" );
+		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_bytes()"));
 
 	for ( i = 0; i < len; ++i )
 		buf[i] = bytes[i];
@@ -1639,7 +1639,7 @@ int len;
 
 	b = ace_yy_scan_buffer( buf, n );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR( "bad buffer in ace_yy_scan_bytes()" );
+		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("bad buffer in ace_yy_scan_bytes()"));
 
 	/* It's okay to grow etc. this buffer, and we should throw it
 	 * away when we're done.
@@ -1675,7 +1675,7 @@ int new_state;
 
 		if ( ! ace_yy_start_stack )
 			ACE_YY_FATAL_ERROR(
-			"out of memory expanding start-condition stack" );
+			ACE_LIB_TEXT ("out of memory expanding start-condition stack"));
 		}
 
 	ace_yy_start_stack[ace_yy_start_stack_ptr++] = ACE_YY_START;
@@ -1689,7 +1689,7 @@ int new_state;
 static void ace_yy_pop_state()
 	{
 	if ( --ace_yy_start_stack_ptr < 0 )
-		ACE_YY_FATAL_ERROR( "start-condition stack underflow" );
+		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("start-condition stack underflow"));
 
 	BEGIN(ace_yy_start_stack[ace_yy_start_stack_ptr]);
 	}
@@ -1708,13 +1708,13 @@ static int ace_yy_top_state()
 #endif
 
 #ifdef ACE_YY_USE_PROTOS
-static void ace_yy_fatal_error( ace_yyconst char msg[] )
+static void ace_yy_fatal_error( ace_yyconst ACE_TCHAR msg[] )
 #else
 static void ace_yy_fatal_error( msg )
-char msg[];
+ACE_TCHAR msg[];
 #endif
 	{
-	(void) fprintf( stderr, "%s\n", msg );
+	(void) ACE_OS::fprintf( stderr, "%s\n", msg );
 	exit( ACE_YY_EXIT_FAILURE );
 	}
 
@@ -1740,11 +1740,11 @@ char msg[];
 
 #ifndef ace_yytext_ptr
 #ifdef ACE_YY_USE_PROTOS
-static void ace_yy_flex_strncpy( char *s1, ace_yyconst char *s2, int n )
+static void ace_yy_flex_strncpy( ACE_TCHAR *s1, ace_yyconst ACE_TCHAR *s2, int n )
 #else
 static void ace_yy_flex_strncpy( s1, s2, n )
-char *s1;
-ace_yyconst char *s2;
+ACE_TCHAR *s1;
+ace_yyconst ACE_TCHAR *s2;
 int n;
 #endif
 	{
@@ -1756,10 +1756,10 @@ int n;
 
 #ifdef ACE_YY_NEED_STRLEN
 #ifdef ACE_YY_USE_PROTOS
-static int ace_yy_flex_strlen( ace_yyconst char *s )
+static int ace_yy_flex_strlen( ace_yyconst ACE_TCHAR *s )
 #else
 static int ace_yy_flex_strlen( s )
-ace_yyconst char *s;
+ace_yyconst ACE_TCHAR *s;
 #endif
 	{
 	register int n;
@@ -1789,14 +1789,14 @@ void *ptr;
 ace_yy_size_t size;
 #endif
 	{
-	/* The cast to (char *) in the following accommodates both
+	/* The cast to (ACE_TCHAR *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
 	 * that use void* generic pointers.  It works with the latter
 	 * because both ANSI C and C++ allow castless assignment from
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return (void *) realloc( (char *) ptr, size );
+	return (void *) realloc( (ACE_TCHAR *) ptr, size );
 	}
 
 #ifdef ACE_YY_USE_PROTOS
@@ -1853,7 +1853,7 @@ ace_yy_push_buffer (FILE *file)
 }
 
 void
-ace_yy_push_buffer (const char *directive)
+ace_yy_push_buffer (const ACE_TCHAR *directive)
 {
   // External synchronization is required.
 
