@@ -11,6 +11,8 @@
 
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
+#include "tao/Messaging.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 
