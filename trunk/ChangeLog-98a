@@ -1,3 +1,10 @@
+Wed Dec 24 04:25:49 1997    <nw1@DINGO>
+
+	* ace/OS.i (sema_init): Added checking for initial semaphore
+ 	  counts and set the semaphore to non-signaled state if the
+ 	  initial count is zero.  Changed the internal variable lock from
+ 	  a mutex to a thread_mutex (Critical Section.)
+
 Tue Dec 23 21:06:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/TLI_Stream.cpp (get_remote_addr): added ACE_UNUSED_ARG
