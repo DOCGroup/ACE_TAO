@@ -211,6 +211,7 @@ AH_TEMPLATE([IP_DROP_MEMBERSHIP],[])
 dnl Specify sizes of given built-in types.  If a size isn't defined here,
 dnl then ace/Basic_Types.h will attempt to deduce the size.
 dnl AH_TEMPLATE([ACE_SIZEOF_CHAR],[Size of native "char" type])
+AH_TEMPLATE([ACE_SIZEOF_WCHAR],[Size of native "wchar_t" type])
 AH_TEMPLATE([ACE_SIZEOF_SHORT],[Size of the native "short" type])
 AH_TEMPLATE([ACE_SIZEOF_INT],[Size of the native "int" type])
 AH_TEMPLATE([ACE_SIZEOF_LONG],[Size of the native "long" type])

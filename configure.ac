@@ -1650,6 +1650,10 @@ if test "$cross_compiling" != yes; then
   dnl if test "$ac_cv_sizeof_char" != "0"; then
   dnl   AC_DEFINE([ACE_SIZEOF_CHAR],[SIZEOF_CHAR])
   dnl fi
+  AC_CHECK_SIZEOF([wchar_t]) 
+  if test "$ac_cv_sizeof_wchar_t" != 0; then
+    AC_DEFINE_UNQUOTED([ACE_SIZEOF_WCHAR],[$ac_cv_sizeof_wchar_t])
+  fi
   AC_CHECK_SIZEOF([short])
   if test "$ac_cv_sizeof_short" != 0; then
     AC_DEFINE_UNQUOTED([ACE_SIZEOF_SHORT],[$ac_cv_sizeof_short])
