@@ -33,11 +33,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_stat.h"
 
+
 ACE_RCSID(Proactor, test_proactor, "$Id$")
 
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
+
+#include "test_proactor.h"
+
 
 // Host that we're connecting to.
 static ACE_TCHAR *host = 0;
@@ -57,51 +61,6 @@ static int done = 0;
 // Size of each initial asynchronous <read> operation.
 static int initial_read_size = BUFSIZ;
 
-class Receiver : public ACE_Service_Handler
-{
-  // = TITLE
-  //     The class will be created by <ACE_Asynch_Acceptor> when new
-  //     connections arrive.  This class will then receive data from
-  //     the network connection and dump it to a file.
-public:
-  // = Initialization and termination.
-  Receiver (void);
-  ~Receiver (void);
-
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
-  // This is called after the new connection has been accepted.
-
-protected:
-  // These methods are called by the framework
-
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous <read> operation from the socket
-  // complete.
-
-  virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
-  // This is called when an asynchronous <write> to the file
-  // completes.
-
-private:
-  int initiate_read_stream (void);
-  // Initiate an asynchronous <read> operation on the socket.
-
-  ACE_Asynch_Read_Stream rs_;
-  // rs (read stream): for reading from a socket.
-
-  ACE_HANDLE dump_file_;
-  // File for dumping data.
-
-  ACE_Asynch_Write_File wf_;
-  // wf (write file): for writing to a file.
-
-  u_long file_offset_;
-  // Offset for the file.
-
-  ACE_HANDLE handle_;
-  // Handle for IO to remote peer.
-};
 
 Receiver::Receiver (void)
   : dump_file_ (ACE_INVALID_HANDLE),
