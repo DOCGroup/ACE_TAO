@@ -160,6 +160,9 @@ TAO_ServerRequest::orb (void)
 void
 TAO_ServerRequest::init_reply (void)
 {
+  if (!this->outgoing_)
+    return;  // Collocated
+
   // Construct our reply generator.
   TAO_Pluggable_Reply_Params_Base reply_params;
 

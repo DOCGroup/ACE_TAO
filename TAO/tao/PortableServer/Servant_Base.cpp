@@ -189,8 +189,7 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                                   void *servant_upcall,
-                                                   void *derived_this
+                                                   void *servant_upcall
                                                    ACE_ENV_ARG_DECL)
 {
   TAO_Skeleton skel;
@@ -219,9 +218,10 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   ACE_TRY
     {
-      // Invoke the skeleton, it will demarshal the arguments,
-      // invoke the right operation on the skeleton class
-      // (<derived_this>), and marshal any results.
+      // Invoke the skeleton, it will demarshal the arguments, invoke
+      // the right operation on the skeleton class, and marshal any
+      // results.  De/marshaling will only occur in the uncollocated
+      // case.
       skel (req,
             servant_upcall
             ACE_ENV_ARG_PARAMETER);
@@ -254,8 +254,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 }
 
 void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
-                                                    void *servant_upcall,
-                                                    void *derived_this
+                                                    void *servant_upcall
                                                     ACE_ENV_ARG_DECL)
 {
   TAO_Skeleton skel;
@@ -281,11 +280,11 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   ACE_TRY
     {
-      // Invoke the skeleton, it will demarshal the arguments,
-      // invoke the right operation on the skeleton class
-      // (<derived_this>), and marshal any results.
+      // Invoke the skeleton, it will demarshal the arguments, invoke
+      // the right operation on the skeleton class, and marshal any
+      // results.  De/marshaling will only occur in the uncollocated
+      // case.
       skel (req,
-            derived_this,
             servant_upcall
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

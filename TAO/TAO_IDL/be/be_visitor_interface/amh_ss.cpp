@@ -143,8 +143,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
       << "{" << be_idt_nl
       << "this->asynchronous_upcall_dispatch (" << be_idt << be_idt_nl
       << "req," << be_nl
-      << "context," << be_nl
-      << "this" << be_nl
+      << "context" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}";

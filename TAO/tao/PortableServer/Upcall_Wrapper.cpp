@@ -37,11 +37,14 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              ACE_ENV_ARG_DECL
                              )
 {
-  this->pre_upcall (server_request.incoming (),
-                    args,
-                    nargs
-                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (server_request.incoming ())
+    {
+      this->pre_upcall (*server_request.incoming (),
+                        args,
+                        nargs
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -149,11 +152,14 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
   if (!interceptor_adapter.location_forwarded ())
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     {
-      this->post_upcall (server_request.outgoing (),
-                         args,
-                         nargs
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      if (server_request.outgoing ())
+        { 
+          this->post_upcall (*server_request.outgoing (),
+                             args,
+                             nargs
+                             ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 }
 

@@ -118,16 +118,16 @@ public:
   CORBA::ORB_ptr orb (void);
 
   /// Return the ORB core pointer member.
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core (void) const;
 
   /// Start a Reply message.
   void init_reply (void);
 
   /// Retrieve the incoming stream.
-  TAO_InputCDR &incoming (void);
+  TAO_InputCDR * incoming (void) const;
 
   /// Retrieve the outgoing stream.
-  TAO_OutputCDR &outgoing (void);
+  TAO_OutputCDR * outgoing (void) const;
 
   /// Is the response expected?
   CORBA::Boolean response_expected (void) const;
