@@ -217,6 +217,20 @@ int
 be_visitor_amh_interface_ss::generate_downcast_implementation (be_interface *node,
                                                                TAO_OutStream *os)
 {
+  // Make sure the queues are empty.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+
+
+  // Insert ourselves in the queue.
+  if (node->get_insert_queue ().enqueue_tail (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "error generating entries\n"),
+                        -1);
+    }
+
   TAO_IDL_Downcast_Implementation_Worker worker;
   return node->traverse_inheritance_graph (worker, os);
 }
@@ -246,20 +260,37 @@ emit (be_interface *derived,
       be_interface *base)
 {
   if (derived == base)
-    return 0;
+    {
+      return 0;
+    }
 
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString amh_name ("POA_");
+  *os << "," << be_idt_nl;
 
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
-  base->compute_full_name ("AMH_", "", buf);
-  amh_name += buf;
-  delete[] buf;
+  if (base->is_nested ())
+    {
+      be_decl *scope;
+      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
-  *os << amh_name.c_str () << " (rhs)," << be_nl;
+      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", AMH_"
+          << base->local_name () << ") (rhs)";
+    }
+  else
+    {
+      // @@ This whole thing would be more efficient if we could pass the
+      // ACE_CString to compute_full_name, after all it uses that
+      // internally.
+      ACE_CString amh_name ("POA_");
+
+      // @@ The following code is *NOT* exception-safe.
+      char *buf = 0;
+      base->compute_full_name ("AMH_", "", buf);
+      amh_name += buf;
+      delete[] buf;
+
+      *os << amh_name.c_str () << " (rhs)";
+    }
+
+  *os << be_uidt;
 
   return 0;
 }
@@ -268,6 +299,20 @@ int
 be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
                                                  TAO_OutStream *os)
 {
+  // Make sure the queues are empty.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+
+
+  // Insert ourselves in the queue.
+  if (node->get_insert_queue ().enqueue_tail (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "error generating entries\n"),
+                        -1);
+    }
+
   TAO_IDL_Copy_Ctor_Worker worker;
   return node->traverse_inheritance_graph (worker, os);
 }
