@@ -120,7 +120,6 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 
 int
 ACE_SOCK_Dgram::open (const ACE_Addr &local, 
-                      const ACE_QoS_Params &qos_params,
                       int protocol_family, 
                       int protocol,
                       ACE_Protocol_Info *protocolinfo,
@@ -140,14 +139,7 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                               protocol_family) == -1)
     return -1;
   else
-    // Pass the QoS parameters.
-    return ACE_OS::join_leaf (this->get_handle (),
-                              ACE_reinterpret_cast (const sockaddr *,
-                                                    local.get_addr ()),
-                              local.get_size (),
-                              qos_params) == ACE_INVALID_HANDLE
-      ? -1 
-      : 0;
+    return 0;
 }
 
 // Here's the general-purpose open routine.
@@ -189,7 +181,6 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 }
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
-                                const ACE_QoS_Params &qos_params,
                                 int protocol_family, 
                                 int protocol,
                                 ACE_Protocol_Info *protocolinfo,
@@ -199,7 +190,6 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
   if (this->open (local,
-                  qos_params,
                   protocol_family,
                   protocol,
                   protocolinfo,
