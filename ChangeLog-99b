@@ -1,3 +1,9 @@
+Wed Jul 28 13:26:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: for VxWorks (thru Tornado 1.0.1),
+          -fno-implicit-templates is broken for x86 targets,
+          not all targets.
+
 Wed Jul 28 13:09:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-subsets.html: updated libACE size breakdown.
