@@ -1,3 +1,32 @@
+Fri Oct 10 22:05:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Priority_Test.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.cidl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
+	* tests/RTCCM/Priority_Test/Controllers/ControllerEI.idl:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.h:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec_export.h:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_stub_export.h:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_svnt_export.h:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.h:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.h:
+	* tests/RTCCM/Priority_Test/Workers/README:
+	* tests/RTCCM/Priority_Test/Workers/Worker.cidl:
+	* tests/RTCCM/Priority_Test/Workers/Worker.idl:
+	* tests/RTCCM/Priority_Test/Workers/Worker.mpc:
+	* tests/RTCCM/Priority_Test/Workers/WorkerEI.idl:
+	* tests/RTCCM/Priority_Test/Workers/Worker_exec_export.h:
+	* tests/RTCCM/Priority_Test/Workers/Worker_stub_export.h:
+	* tests/RTCCM/Priority_Test/Workers/Worker_svnt_export.h:
+	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd: New files for
+	  test Worker components.
+
 Thu Oct 09 00:59:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/RTCCM/Priority_Test/Priority_Test.idl:
