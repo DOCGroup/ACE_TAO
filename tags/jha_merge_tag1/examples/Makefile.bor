@@ -1,0 +1,19 @@
+#
+# Makefile for building the ACE examples
+#
+
+DIRS = \
+        IPC_SAP \
+        Log_Msg \
+        Map_Manager \
+        Mem_Map \
+        Misc \
+        Naming \
+        Reactor \
+        Registry \
+        RMCast \
+        Service_Configurator \
+        Synch \
+        Threads
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
