@@ -1,3 +1,8 @@
+Wed Mar 30 18:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/libraries.html:
+	  Documented the new ImR_Client library
+
 Wed Mar 30 10:38:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
