@@ -29,7 +29,7 @@
 
 namespace
 {
-  int config_run = 0;
+  bool time_master = false;
   ACE_CString sched_type ="rms";
   FILE * ior_output_file;
   ACE_CString ior_output_filename = "node1_ec.ior";
@@ -163,7 +163,7 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       Node1_EC supplier_ec;
-      if (supplier_ec.init(sched_type.c_str(), poa.in(),orb->orb_core()->reactor()) == -1)
+      if (supplier_ec.init(time_master,sched_type.c_str(), poa.in(),orb->orb_core()->reactor()) == -1)
         {
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
         }
@@ -233,7 +233,7 @@ main (int argc, char* argv[])
 #endif //ACE_HAS_DSUI
 
       rt.activate(); //need thread creation flags? or priority?
-      ACE_Time_Value stop_time(300,0);
+      ACE_Time_Value stop_time(340,0); //5min + allowance for gateway init and synchronous EC start
       orb->run (stop_time ACE_ENV_ARG_PARAMETER);
       //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -266,7 +266,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "cs:o:i:");
+  ACE_Get_Opt get_opts (argc, argv, "ms:o:i:");
   int c;
   //these used for handline '-i':
   const char* input_file;
@@ -297,6 +297,9 @@ int parse_args (int argc, char *argv[])
       case 's':
         sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
+      case 'm':
+        time_master = true;
+        break;
 
       case '?':
       default:
@@ -304,8 +307,10 @@ int parse_args (int argc, char *argv[])
                            "Usage:  %s -s <rms|muf|edf>"
                            " [-o iorfile]"
                            " [-i consumer_ec_ior]"
+                           " [-m]"
                            "\n"
-                           "For multiple consumers, specify -i multiple times\n",
+                           "For multiple consumers, specify -i multiple times\n"
+                           "If '-m' is present, this node will tell the others when to start\n",
                            argv [0]),
                           -1);
       }
