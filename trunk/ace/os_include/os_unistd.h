@@ -40,6 +40,12 @@
 #  include /**/ <unistd.h>
 #endif /* !ACE_LACKS_UNISTD_H */
 
+#if defined (VXWORKS)
+// for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(), getwd(), 
+// and isatty()
+#  include /**/ <ioLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

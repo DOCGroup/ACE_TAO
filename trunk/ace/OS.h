@@ -688,28 +688,10 @@ typedef u_int ACE_thread_key_t;
 
 
 #   elif defined (VXWORKS)
-// For mutex implementation using mutual-exclusion semaphores (which
-// can be taken recursively).
-#     include /**/ <semLib.h>
-
-#     include /**/ <envLib.h>
-#     include /**/ <hostLib.h>
-#     include /**/ <ioLib.h>
-#     include /**/ <remLib.h>
-#     include /**/ <selectLib.h>
-#     include /**/ <sigLib.h>
-#     include /**/ <sockLib.h>
-#     include /**/ <sysLib.h>
+//#     include /**/ <remLib.h> I don't see where this is used...
+//#     include /**/ <sysLib.h>  this is for board specific routines (not used by ACE)
 #     include /**/ <taskLib.h>
 #     include /**/ <taskHookLib.h>
-#     include /**/ <inetLib.h>
-extern "C"
-struct sockaddr_un {
-  short sun_family;    // AF_UNIX.
-  char  sun_path[108]; // path name.
-};
-
-#     define NSIG (_NSIGS + 1)
 
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support

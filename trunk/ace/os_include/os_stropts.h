@@ -54,6 +54,11 @@
 #  include /**/ <stropts.h>
 #endif /* !ACE_LACKS_STROPTS_H */
 
+#if defined (VXWORKS)
+// for ioctl()
+#  include /**/ <ioLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

@@ -32,6 +32,11 @@
 #  include /**/ <stdio.h>
 #endif /* !ACE_LACKS_STDIO_H */
 
+#if defined (VXWORKS)
+// for remove(), rename()
+#  include /**/ <ioLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

@@ -39,6 +39,10 @@
 #  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #endif /* !ACE_LACKS_NETDB_H */
 
+#if defined (VXWORKS)
+#  include /**/ <hostLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

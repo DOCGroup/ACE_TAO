@@ -32,6 +32,10 @@
    }
 #endif /* !ACE_LACKS_ARPA_INET_H */
 
+#if defined (VXWORKS)
+#  include /**/ <inetLib.h>
+#endif /* VXWORKS */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
