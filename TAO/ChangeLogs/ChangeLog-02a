@@ -1,3 +1,18 @@
+Wed Sep  5 17:26:12 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  
+	  Made changes to TAO_StreamEndPoint::change_qos to allow passing
+	  a null AVStreams::QoS to the TAO_AV_Flow_Handler::change_qos.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i:	
+
+	  Added a missing parameter to the ACE_DEBUG statement to print the flow name.
+	
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:	
+
+	  Facilitated the passing of null AVStreams::QoS to the negotiator.
+
 Wed Sep  5 17:26:12 2001  Anand Krishnan  <anandk@cs.wustl.edu>
 
 	* orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: 
