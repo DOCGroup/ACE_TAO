@@ -24,7 +24,7 @@ ifeq ($(CPU),PPC604)
   TOOLENV = ppc
 else
 ifeq ($(CPU),I80486)
-  CCFLAGS += -B$(GCCLIB_DIR)/ -DCPU=I80486 -m486
+  CCFLAGS += -DCPU=I80486 -m486 #### -B$(GCCLIB_DIR)/
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/i386-wrs-vxworks/cygnus-2.7.2-960126
   LIB_DIR = $(HOST_DIR)/i386-wrs-vxworks/lib
   TOOLENV = 386
@@ -39,14 +39,14 @@ HOST_DIR	= $(WIND_BASE)/host/sun4-solaris2
 BIN_DIR		= $(HOST_DIR)/bin
 
 
-CC		= $(BIN_DIR)/g++$(TOOLENV)
+CC		= g++$(TOOLENV) #### or: $(BIN_DIR)/g++$(TOOLENV)
 CXX		= $(CC)
-CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -nostdinc -O -fvolatile -nostdlib -fno-builtin -fno-defer-pop -Wall
+CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -Wall
 CCFLAGS		+= $(DCFLAGS) $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
 INCLDIRS	+=
 LD		= $(CXX)
-LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR)
+LDFLAGS		+= -r -L$(LIB_DIR) #### -L$(GCCLIB_DIR)
 PIC		=
 AR		= ar$(TOOLENV)
 ARFLAGS		= rv
