@@ -1,3 +1,14 @@
+Sat Nov 28 10:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/corba.h: Added TAO_Export to global variable <TC_opaque>.
+
+	* tao/Typecode.h (CORBA_TypeCode): Added TAO_Export for Bounds and
+	  BadKind excepiton classes.
+
+	* tao/ORB.{h,cpp} (operator==,operator!=): Added comparison
+	  operations for non-native long double.  We also need other
+	  comparison operators for our long double to work transparently.
+
 Thu Nov 26 11:37:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Invocation.cpp (invoke): Variable <tcp> must be
