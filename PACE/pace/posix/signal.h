@@ -20,6 +20,10 @@
 #include "pace/sys/types.h"
 #include "pace/time.h"
 
+#if defined (PACE_HAS_CPLUSPLUS)
+extern "C" {
+#endif /* PACE_HAS_CPLUSPLUS */
+
 #ifndef PACE_SIG_PF
 # define PACE_SIG_PF
 # if (PACE_LYNXOS)
@@ -32,10 +36,6 @@
   typedef void (*pace_sig_pf)(int);
 # endif /* PACE_LYNXOS */
 #endif /* PACE_SIG_PF */
-
-#if defined (PACE_HAS_CPLUSPLUS)
-extern "C" {
-#endif /* PACE_HAS_CPLUSPLUS */
 
 #ifndef PACE_SIG_ATOMIC_T
 #define PACE_SIG_ATOMIC_T

@@ -1,7 +1,12 @@
+Mon Jul 24 15:57:24 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/posix/signal.h
+	  Moved pace_sig_pf back inside the extern "C" {}
+
 Mon Jul 24 14:19:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/TODO:
-	 
+
 	  Updated.
 
 Mon Jul 24 14:02:54 2000  Luther J Baker  <luther@cs.wustl.edu>
@@ -23,13 +28,13 @@ Sun Jul 23 20:36:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 Sun Jul 23 20:21:02 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/*:
-	 
+
 	  Cleaned up alot of implementation.
-	
+
 	  Got rid of separate 'emulation' functions because only win32
 	  is in this directory (if we supported multiple platforms in
 	  this directory, then the code would get messy so we would do
-	  better to inline and call emulation funcs according to the 
+	  better to inline and call emulation funcs according to the
 	  platform at hand).
 
 	  Inserted ACE style macros for WIN32 OS calls. Set errno
