@@ -21,7 +21,7 @@ static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, const char *svc_na
 /* Efficient memory allocation technique.*/
 ACE_Obstack *ace_obstack;
 
-#line 23 "y.tab.c"
+#line 23 "Svc_Conf_y.cpp"
 #define ACE_DYNAMIC 257
 #define ACE_STATIC 258
 #define ACE_SUSPEND 259
@@ -344,7 +344,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 346 "y.tab.c"
+#line 346 "Svc_Conf_y.cpp"
 #define YYABORT goto ace_yyabort
 #define YYACCEPT goto ace_yyaccept
 #define YYERROR goto ace_yyerrlab
@@ -865,7 +865,7 @@ case 40:
 #line 237 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 866 "y.tab.c"
+#line 866 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;
