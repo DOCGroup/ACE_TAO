@@ -20,18 +20,8 @@
  * error control
  * ---------------------------------------------------------------------- */
 
-#include <errno.h>
+#include "pace/errno.h"
 int errno;
-
-/* specific to win32 */
-
-#if !defined (ENOSYS)
-# define ENOSYS EFAULT /* Operation not supported or unknown error. */
-#endif /* !ENOSYS */
-
-#if !defined (ENOTSUP)
-# define ENOTSUP ENOSYS  /* Operation not supported. */
-#endif /* !ENOTSUP */
 
 # define PACE_ERRNO_NO_SUPPORT_RETURN(FAILVALUE) \
 return ( (errno = ENOTSUP), FAILVALUE)
