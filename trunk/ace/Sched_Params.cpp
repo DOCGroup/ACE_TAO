@@ -18,7 +18,6 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/ACE.h"
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
