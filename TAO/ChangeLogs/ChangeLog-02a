@@ -1,3 +1,14 @@
+Wed May 29 13:28:12 2002 Johnny Willemsen  <jwillemsen@remedy.nl?
+
+	* tao/Strategies/DIOP_Acceptor.h:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Acceptor.h:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Acceptor.h:
+	* tao/Strategies/UIOP_Connector.h:
+	  Corrected filename where documentation of TAO_Acceptor and
+	  TAO_Connector can be found.
+
 Wed May 29 13:11:44 2002 Johnny Willemsen  <jwillemsen@remedy.nl?
 
 	* tao/PortableServer/IORInfo.h:

@@ -54,7 +54,7 @@ public:
   /**
    * @name The TAO_Connector Methods
    *
-   * Please check the documentation in Pluggable.h for details.
+   * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
   int open (TAO_ORB_Core *orb_core);
@@ -72,7 +72,7 @@ protected:
   /**
    * @name More TAO_Connector Methods
    *
-   * Please check the documentation in Transport_Acceptor.h for details.
+   * Please check the documentation in Transport_Connector.h for details.
    */
   //@{
   int set_validate_endpoint (TAO_Endpoint *ep);
