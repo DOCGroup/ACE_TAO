@@ -1787,7 +1787,7 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
   reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
-  reaction.sa_sigaction = ACE_SIGNAL_C_FUNC(sig_handler); // (SIG_DFL);
+  reaction.sa_sigaction = ACE_SIGNAL_C_FUNC (sig_handler); // (SIG_DFL);
   int sigaction_return = ACE_OS::sigaction (signal_number,
                                             &reaction,
                                             0);
