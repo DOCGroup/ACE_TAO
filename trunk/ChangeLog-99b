@@ -1,3 +1,12 @@
+Fri Jul 23 11:35:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Connection/non_blocking/tests_lsock_{acceptor,
+          connector.cpp}: disabled if ACE_LACKS_UNIX_DOMAIN_SOCKETS.
+          Thanks to Alain Magloire <alain@qnx.com> for reporting this.
+
+        * examples/Connection/non_blocking/Makefile: removed unneeded
+          LIBS (=$(ACELIB)) and BUILD macro definitions.
+
 Fri Jul 23 10:07:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_qnx_neutrino.GNU: added
