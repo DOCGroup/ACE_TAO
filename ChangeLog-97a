@@ -1,3 +1,9 @@
+Mon Apr 07 08:05:03 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-win32.h: enabled ACE_HAS_UNICODE by default.
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
+	  suggesting this.
+
 Sun Apr 06 22:51:02 1997    <irfan@TWOSTEP>
 
 	* ace/Proactor: Complete rewrite of Proactor that pushes all the
@@ -142,7 +148,9 @@ Sun Apr 06 20:01:57 1997  David L. Levine  <levine@cs.wustl.edu>
 	  "quantify" make command options.  To build Purified versions
 	  of all executables in the current direction, for example:
 
-		% make purify=1
+		% make clean; make purify=1
+
+	  These options assume that purify or quantify are in your PATH.
 
 	* ace/Task.{h,cpp}: removed ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 	  from ACE_Task_Exit declaration and ACE_Task_Exit::instance ().
