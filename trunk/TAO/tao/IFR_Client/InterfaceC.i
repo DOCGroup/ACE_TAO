@@ -27,7 +27,7 @@ CORBA_IRObject::CORBA_IRObject (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->CORBA_IRObject_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -194,7 +194,7 @@ IR_Contained::IR_Contained (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_Contained_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -361,7 +361,7 @@ IR_Repository::IR_Repository (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_Repository_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -528,7 +528,7 @@ IR_Container::IR_Container (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_Container_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -888,7 +888,7 @@ IR_ModuleDef::IR_ModuleDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ModuleDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -1055,7 +1055,7 @@ IR_ConstantDef::IR_ConstantDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ConstantDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -1222,7 +1222,7 @@ IR_IDLType::IR_IDLType (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_IDLType_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -1389,7 +1389,7 @@ IR_StructDef::IR_StructDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_StructDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -1556,7 +1556,7 @@ IR_UnionDef::IR_UnionDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_UnionDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -1723,7 +1723,7 @@ IR_EnumDef::IR_EnumDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_EnumDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -1890,7 +1890,7 @@ IR_AliasDef::IR_AliasDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_AliasDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -2057,7 +2057,7 @@ IR_InterfaceDef::IR_InterfaceDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_InterfaceDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -2224,7 +2224,7 @@ IR_ExceptionDef::IR_ExceptionDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ExceptionDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -2391,7 +2391,7 @@ IR_NativeDef::IR_NativeDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_NativeDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -2912,7 +2912,7 @@ IR_ValueDef::IR_ValueDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ValueDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -3433,7 +3433,7 @@ IR_ValueBoxDef::IR_ValueBoxDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ValueBoxDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -3600,7 +3600,7 @@ IR_ComponentDef::IR_ComponentDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ComponentDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -4121,7 +4121,7 @@ IR_ProvidesDef::IR_ProvidesDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ProvidesDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -4642,7 +4642,7 @@ IR_UsesDef::IR_UsesDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_UsesDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -5163,7 +5163,7 @@ IR_HomeDef::IR_HomeDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_HomeDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -5684,7 +5684,7 @@ IR_EventDef::IR_EventDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_EventDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -5851,7 +5851,7 @@ IR_EmitsDef::IR_EmitsDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_EmitsDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -6372,7 +6372,7 @@ IR_PublishesDef::IR_PublishesDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_PublishesDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -6893,7 +6893,7 @@ IR_ConsumesDef::IR_ConsumesDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ConsumesDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -7414,7 +7414,7 @@ IR_FactoryDef::IR_FactoryDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_FactoryDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -7935,7 +7935,7 @@ IR_FinderDef::IR_FinderDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_FinderDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -8456,7 +8456,7 @@ IR_PrimaryKeyDef::IR_PrimaryKeyDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_PrimaryKeyDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -11479,7 +11479,7 @@ IR_PrimitiveDef::IR_PrimitiveDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_PrimitiveDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -11646,7 +11646,7 @@ IR_StringDef::IR_StringDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_StringDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -11813,7 +11813,7 @@ IR_SequenceDef::IR_SequenceDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_SequenceDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -11980,7 +11980,7 @@ IR_ArrayDef::IR_ArrayDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ArrayDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -12147,7 +12147,7 @@ IR_WstringDef::IR_WstringDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_WstringDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -12314,7 +12314,7 @@ IR_FixedDef::IR_FixedDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_FixedDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -12481,7 +12481,7 @@ IR_ComponentRepository::IR_ComponentRepository (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ComponentRepository_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -13034,7 +13034,7 @@ IR_TypedefDef::IR_TypedefDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_TypedefDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -14322,7 +14322,7 @@ IR_AttributeDef::IR_AttributeDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_AttributeDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -15461,7 +15461,7 @@ IR_OperationDef::IR_OperationDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_OperationDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
@@ -17555,7 +17555,7 @@ IR_ValueMemberDef::IR_ValueMemberDef (
   )
   : CORBA_Object (objref, _tao_collocated, servant)
 {
-  this->_tao_setup_collocation (_tao_collocated);
+  this->IR_ValueMemberDef_setup_collocation (_tao_collocated);
 }
 
 // *************************************************************
