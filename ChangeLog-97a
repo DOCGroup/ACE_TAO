@@ -1,3 +1,7 @@
+Thu May 22 08:14:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Tokens_Test.cpp: added deletes to avoid memory leaks.
+
 Wed May 21 16:15:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/{config-irix6.2*.h,README}: removed ACE_LACKS_IOSTREAM_SETGET
