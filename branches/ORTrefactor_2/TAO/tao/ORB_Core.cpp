@@ -2804,6 +2804,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                                    "ior_interceptor_adapter \n");
             }
           ACE_ENDTRY;
+          ACE_CHECK_RETURN(0)
         }
     }
 

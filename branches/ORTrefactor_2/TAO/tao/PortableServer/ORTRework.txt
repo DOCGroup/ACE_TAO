@@ -1,23 +1,33 @@
+Wed Aug 25 12:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp (ior_interceptor_adapter):
+          Added ACE_CHECK_RETURN after the ACE_ENDTRY as last check for
+          uncaught exceptions
+
+        * tao/PortableServer/POA.cpp (object_reference_template_adapter):
+          Changed logic that when adapter_name_i fails we don't have a not
+          activated adapter. The guard here seems to cause a problem on Linux
+
 Wed Aug 25 12:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/POA.i:
+        * tao/PortableServer/POA.i:
           Added missing returns statements
 
 Wed Aug 25 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/POA.cpp (object_reference_template_adapter):
+        * tao/PortableServer/POA.cpp (object_reference_template_adapter):
           Fixed for emulated exception case
 
 Wed Aug 25 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/POA.i:
+        * tao/PortableServer/POA.i:
           Removed the throw from get_obj_ref_factory() and
           get_adapter_template() when we can't retrieve these, exceptions
           are already thrown in the IORInterceptor and we call the
           get_adapter_template() also from the POA and we don't want to have
           an exception then.
 
-        * tao/POA.cpp:
+        * tao/PortableServer/POA.cpp:
           In the destroy_i() check whether get_adapter_template() doesn't
           return zero, if it returns zero, then we don't have an
           adapter_template, so don't add it to the array, this can happen when
