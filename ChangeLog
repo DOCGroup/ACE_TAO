@@ -1,3 +1,9 @@
+Wed Aug 28 19:56:16 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/ACE-subsets.html: Updated the document to point to the
+	  soreduce tool and to remove the discussion of PACE.  Thanks to
+	  Chumsu Kim <chskim@add.re.kr> for motivating this.
+
 Wed Aug 28 14:24:36 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.h: Fixed Doxygenation of ACE_Log_Msg. Thanks to
