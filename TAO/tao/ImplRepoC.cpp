@@ -998,7 +998,7 @@ ImplementationRepository::Administration::_duplicate (Administration_ptr obj)
 
 // default constructor
 ImplementationRepository::Administration::AlreadyRegistered::AlreadyRegistered (void)
-  : CORBA_UserException (::ImplementationRepository::Administration::_tc_AlreadyRegistered)
+  : CORBA_UserException ("IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0")
 {
 }
 
@@ -1015,7 +1015,7 @@ void ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destr
 
 // copy constructor
 ImplementationRepository::Administration::AlreadyRegistered::AlreadyRegistered (const ::ImplementationRepository::Administration::AlreadyRegistered &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -1082,9 +1082,15 @@ static const CORBA::Long _oc_ImplementationRepository_Administration_AlreadyRegi
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration_AlreadyRegistered (CORBA::tk_except, sizeof (_oc_ImplementationRepository_Administration_AlreadyRegistered), (char *) &_oc_ImplementationRepository_Administration_AlreadyRegistered, 0, sizeof (ImplementationRepository::Administration::AlreadyRegistered));
 CORBA::TypeCode_ptr ImplementationRepository::Administration::_tc_AlreadyRegistered = &_tc_TAO_tc_ImplementationRepository_Administration_AlreadyRegistered;
 
+CORBA::TypeCode_ptr
+ImplementationRepository::Administration::AlreadyRegistered::_type (void) const
+{
+  return _tc_AlreadyRegistered;
+}
+
 // default constructor
 ImplementationRepository::Administration::CannotActivate::CannotActivate (void)
-  : CORBA_UserException (::ImplementationRepository::Administration::_tc_CannotActivate)
+  : CORBA_UserException ("IDL:ImplementationRepository/Administration/CannotActivate:1.0")
 {
 }
 
@@ -1101,7 +1107,7 @@ void ImplementationRepository::Administration::CannotActivate::_tao_any_destruct
 
 // copy constructor
 ImplementationRepository::Administration::CannotActivate::CannotActivate (const ::ImplementationRepository::Administration::CannotActivate &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->reason = CORBA::string_dup (_tao_excp.reason.in ());
 }
@@ -1163,7 +1169,7 @@ CORBA::Exception *ImplementationRepository::Administration::CannotActivate::_all
 ImplementationRepository::Administration::CannotActivate::CannotActivate (
   const char * _tao_reason
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (ImplementationRepository::Administration::_tc_CannotActivate))
+  : CORBA_UserException (CORBA::string_dup ("IDL:ImplementationRepository/Administration/CannotActivate:1.0"))
 {
     this->reason = CORBA::string_dup (_tao_reason);
 }
@@ -1181,9 +1187,15 @@ static const CORBA::Long _oc_ImplementationRepository_Administration_CannotActiv
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration_CannotActivate (CORBA::tk_except, sizeof (_oc_ImplementationRepository_Administration_CannotActivate), (char *) &_oc_ImplementationRepository_Administration_CannotActivate, 0, sizeof (ImplementationRepository::Administration::CannotActivate));
 CORBA::TypeCode_ptr ImplementationRepository::Administration::_tc_CannotActivate = &_tc_TAO_tc_ImplementationRepository_Administration_CannotActivate;
 
+CORBA::TypeCode_ptr
+ImplementationRepository::Administration::CannotActivate::_type (void) const
+{
+  return _tc_CannotActivate;
+}
+
 // default constructor
 ImplementationRepository::Administration::NotFound::NotFound (void)
-  : CORBA_UserException (::ImplementationRepository::Administration::_tc_NotFound)
+  : CORBA_UserException ("IDL:ImplementationRepository/Administration/NotFound:1.0")
 {
 }
 
@@ -1200,7 +1212,7 @@ void ImplementationRepository::Administration::NotFound::_tao_any_destructor (vo
 
 // copy constructor
 ImplementationRepository::Administration::NotFound::NotFound (const ::ImplementationRepository::Administration::NotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
   }
 
@@ -1266,6 +1278,12 @@ static const CORBA::Long _oc_ImplementationRepository_Administration_NotFound[] 
 };
 static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration_NotFound (CORBA::tk_except, sizeof (_oc_ImplementationRepository_Administration_NotFound), (char *) &_oc_ImplementationRepository_Administration_NotFound, 0, sizeof (ImplementationRepository::Administration::NotFound));
 CORBA::TypeCode_ptr ImplementationRepository::Administration::_tc_NotFound = &_tc_TAO_tc_ImplementationRepository_Administration_NotFound;
+
+CORBA::TypeCode_ptr
+ImplementationRepository::Administration::NotFound::_type (void) const
+{
+  return _tc_NotFound;
+}
 
 void ImplementationRepository::Administration::activate_server (
     const char * server,

@@ -91,7 +91,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &,
 }
 
 CORBA_ORB::InvalidName::InvalidName (void)
-  : CORBA_UserException (CORBA::ORB::_tc_InvalidName)
+  : CORBA_UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0")
 {
 }
 
@@ -100,7 +100,7 @@ CORBA::ORB::InvalidName::~InvalidName (void)
 }
 
 CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 

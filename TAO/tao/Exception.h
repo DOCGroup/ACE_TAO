@@ -69,14 +69,14 @@ public:
   const char *_id (void) const;
   // Return the repository ID of the Exception.
 
-  CORBA::TypeCode_ptr _type (void) const;
-  // Return the TypeCode corresponding to the currently stored.
+  virtual CORBA::TypeCode_ptr _type (void) const;
+  // Will be overridden in the concrete derived classes.
 
   // = To implement the narrow method.
   virtual int _is_a (const char* repository_id) const;
 
-  CORBA_Exception (CORBA::TypeCode_ptr type);
-  // Constructor from a TypeCode.
+  CORBA_Exception (const char* repository_id);
+  // Constructor from a respository id.
 
   void _tao_print_exception (const char *info,
                              FILE *f = stdout) const;
@@ -92,6 +92,9 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &) = 0;
 
+  static void _tao_any_destructor (void *);
+  // Used in the non-copying Any insertion operator.
+
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -100,10 +103,10 @@ protected:
   CORBA_Exception (void);
   // Default constructor is protected.
 
-  CORBA::TypeCode_ptr type_;
-  // Type of the Exception.
-
 private:
+  char *id_;
+  // Storage of our repository id.
+
   CORBA::ULong refcount_;
   // Reference count to avoid copying overhead.
 
@@ -144,8 +147,8 @@ public:
 
   // = TAO specific extension.
 
-  CORBA_UserException (CORBA::TypeCode_ptr tc);
-  // Constructor from a TypeCode.
+  CORBA_UserException (const char* repository_id);
+  // Constructor from a repository id.
 
   virtual int _is_a (const char *interface_id) const;
   // Used for narrowing
@@ -220,10 +223,10 @@ public:
   // value.
 
 protected:
-  CORBA_SystemException (CORBA::TypeCode_ptr tc,
+  CORBA_SystemException (const char *repository_id,
                          CORBA::ULong code,
                          CORBA::CompletionStatus completed);
-  // Ctor using a TypeCode.
+  // Ctor using a repository id.
 
 private:
   CORBA::ULong minor_;
@@ -244,12 +247,18 @@ public: \
   CORBA_ ## name (void); \
   CORBA_ ## name (CORBA::ULong code, \
                   CORBA::CompletionStatus completed) \
-    : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
+    : CORBA_SystemException ("IDL:omg.org/CORBA/" #name ":1.0", code, completed) \
     { } \
   static CORBA_##name * _downcast (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
   virtual void _raise (void); \
-}
+  virtual CORBA::TypeCode_ptr _type (void) const; \
+  static void _tao_any_destructor (void*); \
+}; \
+TAO_Export void operator<<= (CORBA::Any &, const CORBA_##name &); \
+TAO_Export void operator<<= (CORBA::Any &, CORBA_##name *); \
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
+                                       const CORBA_##name *&)
 
 
 TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
@@ -332,6 +341,9 @@ public:
 
   virtual int _is_a (const char *type_id) const;
   // Helper method to implement _downcast.
+
+  virtual CORBA::TypeCode_ptr _type (void) const;
+  // This class has a specific typecode.
 
 private:
   CORBA_Any *exception_;

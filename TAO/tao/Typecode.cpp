@@ -27,7 +27,7 @@
 ACE_RCSID(tao, Typecode, "$Id$")
 
 CORBA_TypeCode::Bounds::Bounds (void)
-  : CORBA_UserException (CORBA::TypeCode::_tc_Bounds)
+  : CORBA_UserException ("IDL:omg.orb/CORBA/TypeCode/Bounds:1.0")
 {
 }
 
@@ -69,7 +69,7 @@ CORBA_TypeCode::Bounds::_is_a (const char* interface_id) const
 }
 
 CORBA_TypeCode::BadKind::BadKind (void)
-  : CORBA_UserException (CORBA::TypeCode::_tc_BadKind)
+  : CORBA_UserException ("IDL:omg.orb/CORBA/TypeCode/BadKind:1.0")
 {
 }
 

@@ -32,7 +32,7 @@ ACE_RCSID(tao, InconsistentTypeCodeC, "$Id$")
 
 // default constructor
 CORBA_ORB_InconsistentTypeCode::CORBA_ORB_InconsistentTypeCode (void)
-  : CORBA_UserException (CORBA::ORB::_tc_InconsistentTypeCode)
+  : CORBA_UserException ("IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0")
 {
 }
 
@@ -45,7 +45,7 @@ CORBA_ORB_InconsistentTypeCode::~CORBA_ORB_InconsistentTypeCode (void)
 CORBA_ORB_InconsistentTypeCode::CORBA_ORB_InconsistentTypeCode (
     const CORBA_ORB_InconsistentTypeCode &_tao_excp
   )
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 

@@ -216,7 +216,7 @@ TAO_NAMESPACE_END
 
 // default constructor
 PortableServer::ForwardRequest::ForwardRequest (void)
-  : CORBA_UserException (::PortableServer::_tc_ForwardRequest)
+  : CORBA_UserException ("IDL:PortableServer/ForwardRequest:1.0")
 {
 }
 
@@ -233,7 +233,7 @@ void PortableServer::ForwardRequest::_tao_any_destructor (void *x)
 
 // copy constructor
 PortableServer::ForwardRequest::ForwardRequest (const ::PortableServer::ForwardRequest &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
 }
@@ -295,7 +295,7 @@ CORBA::Exception *PortableServer::ForwardRequest::_alloc (void)
 PortableServer::ForwardRequest::ForwardRequest (
   const CORBA::Object_ptr  _tao_forward_reference
 )
-  : CORBA_UserException  (CORBA::TypeCode::_duplicate (PortableServer::_tc_ForwardRequest))
+  : CORBA_UserException  (CORBA::string_dup ("IDL:PortableServer/ForwardRequest:1.0"))
 {
     this->forward_reference = CORBA::Object::_duplicate (_tao_forward_reference);
 }
@@ -319,6 +319,12 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ForwardRequest, &_tc_TAO_tc_PortableServer_ForwardRequest)
 TAO_NAMESPACE_END
+
+CORBA::TypeCode_ptr
+PortableServer::ForwardRequest::_type (void) const
+{
+  return _tc_ForwardRequest;
+}
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
@@ -1121,9 +1127,9 @@ void PortableServer::POAManager::AdapterInactive::_tao_decode (
 
 // copy constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POAManager::AdapterInactive&
@@ -1508,9 +1514,9 @@ PortableServer::POA::AdapterAlreadyExists::~AdapterAlreadyExists (void)
 
 // copy constructor
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (const ::PortableServer::POA::AdapterAlreadyExists &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::AdapterAlreadyExists&
@@ -1573,9 +1579,9 @@ PortableServer::POA::AdapterNonExistent::~AdapterNonExistent (void)
 
 // copy constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (const ::PortableServer::POA::AdapterNonExistent &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::AdapterNonExistent&
@@ -1638,7 +1644,7 @@ PortableServer::POA::InvalidPolicy::~InvalidPolicy (void)
 
 // copy constructor
 PortableServer::POA::InvalidPolicy::InvalidPolicy (const ::PortableServer::POA::InvalidPolicy &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
     this->index = _tao_excp.index;
 }
@@ -1714,9 +1720,9 @@ PortableServer::POA::NoServant::~NoServant (void)
 
 // copy constructor
 PortableServer::POA::NoServant::NoServant (const ::PortableServer::POA::NoServant &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::NoServant&
@@ -1781,9 +1787,9 @@ PortableServer::POA::ObjectAlreadyActive::~ObjectAlreadyActive (void)
 
 // copy constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (const ::PortableServer::POA::ObjectAlreadyActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::ObjectAlreadyActive&
@@ -1846,9 +1852,9 @@ PortableServer::POA::ObjectNotActive::~ObjectNotActive (void)
 
 // copy constructor
 PortableServer::POA::ObjectNotActive::ObjectNotActive (const ::PortableServer::POA::ObjectNotActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::ObjectNotActive&
@@ -1911,9 +1917,9 @@ PortableServer::POA::ServantAlreadyActive::~ServantAlreadyActive (void)
 
 // copy constructor
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (const ::PortableServer::POA::ServantAlreadyActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::ServantAlreadyActive&
@@ -1976,9 +1982,9 @@ PortableServer::POA::ServantNotActive::~ServantNotActive (void)
 
 // copy constructor
 PortableServer::POA::ServantNotActive::ServantNotActive (const ::PortableServer::POA::ServantNotActive &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::ServantNotActive&
@@ -2041,9 +2047,9 @@ PortableServer::POA::WrongAdapter::~WrongAdapter (void)
 
 // copy constructor
 PortableServer::POA::WrongAdapter::WrongAdapter (const ::PortableServer::POA::WrongAdapter &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::WrongAdapter&
@@ -2106,9 +2112,9 @@ PortableServer::POA::WrongPolicy::~WrongPolicy (void)
 
 // copy constructor
 PortableServer::POA::WrongPolicy::WrongPolicy (const ::PortableServer::POA::WrongPolicy &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::POA::WrongPolicy&
@@ -2239,9 +2245,9 @@ PortableServer::Current::NoContext::~NoContext (void)
 
 // copy constructor
 PortableServer::Current::NoContext::NoContext (const ::PortableServer::Current::NoContext &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 PortableServer::Current::NoContext&
