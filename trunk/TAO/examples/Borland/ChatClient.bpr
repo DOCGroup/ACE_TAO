@@ -36,8 +36,8 @@
   <OPTIONS>
     <IDLCFLAGS value="-I$(BCB)\include -I$(BCB)\include\vcl -I..\..\.. -I..\.. -src_suffix cpp 
       -DACE_HAS_VCL=1 -boa"/>
-    <CFLAG1 value="-O2 -H=obj\ChatClient.csm -Hh=pch.h -Hc -Vx -Ve -X- -a8 -b- -k- -vi -c -tW 
-      -tWM"/>
+    <CFLAG1 value="-Og -Ov -OS -H=obj\ChatClient.csm -Hh=pch.h -Hc -Vx -Ve -X- -a8 -b- -k- 
+      -vi -c -tW -tWM"/>
     <PFLAGS value="-N2obj -N0obj -$Y- -$L- -$D- -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
