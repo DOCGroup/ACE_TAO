@@ -1,3 +1,11 @@
+Wed Mar 30 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.{h,cpp,inl}:
+	  Regenerated
+
+	* orbsvcs/orbsvcs/HTIOP/htiop_endpoints.pidl:
+	  Added -Sc to suppries the Tie files, we don't need them
+
 Wed Mar 30 19:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/IFRService/*S.cpp:
