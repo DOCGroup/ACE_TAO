@@ -478,7 +478,7 @@ CORBA_SystemException::_info (void) const
         }
 
       const char *errno_indication;
-      char unknown_errno [32];
+      char unknown_errno [255];
       CORBA::ULong minor_code = this->minor () & 0x7FU;
       switch (minor_code)
         {
@@ -549,8 +549,8 @@ CORBA_SystemException::_info (void) const
           {
             // 7 bits of some other errno.
             ACE_OS::sprintf (unknown_errno,
-                             "low 7 bits of errno: %3u",
-                             minor_code);
+                             "low 7 bits of errno: %3u %s",
+                             minor_code, ACE_OS_String::strerror(minor_code));
 
             errno_indication = unknown_errno;
           }
