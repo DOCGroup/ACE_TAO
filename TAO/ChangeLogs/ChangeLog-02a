@@ -1,3 +1,13 @@
+Sat Oct 06 23:41:11 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
+	  (register_handler_i):
+
+	  Set the reactor and handler in the ACE_SSL_SOCK_Stream so that
+	  the reactor is notified if data is still pending for read or
+	  write.  This is necessary since SSL is record-oriented, and the
+	  underlying SSL implementation may buffer data.
+
 Sat Oct  6 11:14:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/MessagingC.h: Moved the #if defines before #include
