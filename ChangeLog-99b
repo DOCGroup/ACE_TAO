@@ -1,3 +1,9 @@
+Sat Apr 17 18:34:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Auto_Ptr.i (operator=): Changed <a> to <rhs>.  Thanks to
+	  David Levine and Jean-Marc Strauss <strauss@club-internet.fr>
+	  for reporting this.
+
 Sat Apr 17 08:34:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Naming/Makefile,performance-tests/Misc/Makefile,

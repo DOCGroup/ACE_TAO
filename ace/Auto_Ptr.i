@@ -11,8 +11,8 @@ ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (X *p)
 }
 
 template<class X> ACE_INLINE
-ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap)
-  : p_ (ap.release ())
+ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &rhs)
+  : p_ (rhs.release ())
 {
   ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
 }
@@ -94,8 +94,8 @@ ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (X *p)
 }
 
 template<class X> ACE_INLINE
-ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap)
-  : p_ (ap.release ())
+ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &rhs)
+  : p_ (rhs.release ())
 {
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
 }
