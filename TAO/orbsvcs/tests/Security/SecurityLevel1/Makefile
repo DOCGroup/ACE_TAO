@@ -228,6 +228,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
@@ -280,7 +281,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  SLevel1_TestS_T.h SLevel1_TestS_T.i SLevel1_TestS_T.cpp \
  SLevel1_TestS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
@@ -446,6 +447,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
@@ -775,6 +777,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
+ $(TAO_ROOT)/tao/objectid.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \

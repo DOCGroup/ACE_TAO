@@ -1,3 +1,8 @@
+Thu May  2 00:39:48 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/*/Maefile: Updated dependencies. This
+	  should fix a lot of SunCC51 errors. 
+
 Thu May  2 00:28:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/miopconf.h: Fixed fuzz errors. 
