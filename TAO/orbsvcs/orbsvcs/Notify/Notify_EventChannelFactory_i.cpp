@@ -35,7 +35,7 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA, C
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
 
   channelfactory->my_ref_ = CosNotifyChannelAdmin::EventChannelFactory
-    ::_narrow (obj._retn (), ACE_TRY_ENV);
+    ::_narrow (obj.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
 
   return CosNotifyChannelAdmin::EventChannelFactory::
@@ -104,7 +104,7 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
 
   this->ec_ids_.next ();
 
-  return CosNotifyChannelAdmin::EventChannel::_narrow (obj._retn ());
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 
 CosNotifyChannelAdmin::ChannelIDSeq*
@@ -133,12 +133,12 @@ TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::Chan
     }
   ACE_CATCHANY // Translate any exception to "not found"
     {
-      ACE_THROW_RETURN (CosNotifyChannelAdmin::ChannelNotFound (),
-                        CosNotifyChannelAdmin::EventChannel::_nil ());
+      ACE_TRY_THROW (CosNotifyChannelAdmin::ChannelNotFound ());
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
-  return CosNotifyChannelAdmin::EventChannel::_narrow (obj._retn ());
+  return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

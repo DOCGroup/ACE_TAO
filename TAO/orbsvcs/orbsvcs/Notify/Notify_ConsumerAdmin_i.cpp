@@ -3,6 +3,7 @@
 #include "Notify_ConsumerAdmin_i.h"
 #include "Notify_ProxyPushSupplier_i.h"
 #include "Notify_StructuredProxyPushSupplier_i.h"
+#include "Notify_SequenceProxyPushSupplier_i.h"
 #include "Notify_EventChannel_i.h"
 #include "Notify_Resource_Manager.h"
 #include "Notify_Event_Manager.h"
@@ -40,10 +41,45 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID myID,
   this->myID_ = myID;
   this->myOperator_ = myOperator;
 
-  this->event_manager_->
-    subscribe_for_default_events (this,
-                                  ACE_TRY_ENV);
-  ACE_CHECK;
+  // Initially we set up things so that all listeners are subscribed for
+  // all the events so that things "work" even if we don't twiddle with
+  // the subscriptions. The side effect is that whenever we start setting
+  // up subscriptions, we must remove the special event type otherwise we
+  // will get the same event twice!
+  // check with the resource manager if this option is enabled.
+  if (this->resource_manager_->default_subscription_enabled () == 1)
+    {
+      TAO_Notify_EventType& special_type =
+        TAO_Notify_EventType::special_event_type ();
+
+      this->subscription_list_.insert (special_type);
+    }
+}
+
+void
+TAO_Notify_ConsumerAdmin_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  this->is_destroyed_ = 1;
+
+  // deactivate ourselves
+  this->resource_manager_->deactivate_object (this, this->my_POA_.in (),
+                                              ACE_TRY_ENV);
+  this->cleanup_i (ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_ConsumerAdmin_i::subscription_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType
+                   ))
+{
+  this->event_manager_->subscribe_for_events (this->event_listener_list_,
+                                              &this->subscription_list_,
+                                              added, removed, ACE_TRY_ENV);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -60,31 +96,61 @@ TAO_Notify_ConsumerAdmin_i::get_event_manager (void)
   return this->event_manager_;
 }
 
-void
-TAO_Notify_ConsumerAdmin_i::subscribe_for_events (TAO_Notify_Event_Listener *listener)
+TAO_Notify_FilterAdmin_i&
+TAO_Notify_ConsumerAdmin_i::get_filter_admin (void)
 {
-  this->event_listener_list_.insert (listener);
+  return this->filter_admin_;
 }
 
 void
-TAO_Notify_ConsumerAdmin_i::unsubscribe_from_events (TAO_Notify_Event_Listener *listener)
+TAO_Notify_ConsumerAdmin_i::register_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV)
+{
+  // register it.
+  this->event_listener_list_.insert (listener);
+
+  // subscribe it to our current subscriptions.
+  CosNotification::EventTypeSeq added (this->subscription_list_.size ());
+  CosNotification::EventTypeSeq removed (0);
+
+  added.length (this->subscription_list_.size ());
+  removed.length (0);
+
+  // copy value to the added list.
+  EVENTTYPE_LIST::ITERATOR iter (this->subscription_list_);
+  TAO_Notify_EventType* event_type;
+
+  CORBA::ULong i = 0;
+  for (iter.first (); iter.next (event_type); iter.advance (), ++i)
+    added[i] = event_type->event_type_;
+
+  this->event_manager_->subscribe_for_events (listener,
+                                              0,
+                                              added, removed, ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_ConsumerAdmin_i::unregister_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV)
 {
   this->event_listener_list_.remove (listener);
-}
 
-void
-TAO_Notify_ConsumerAdmin_i::dispatch_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV)
-{
-  this->event_manager_->dispatch_event (data, &this->event_listener_list_,
-                                        ACE_TRY_ENV);
-}
+  // unsubscribe it to our current subscriptions.
+  CosNotification::EventTypeSeq added (0);
+  CosNotification::EventTypeSeq removed (this->subscription_list_.size ());
 
-void
-TAO_Notify_ConsumerAdmin_i::dispatch_event (const CosNotification::StructuredEvent & notification, CORBA::Environment &ACE_TRY_ENV)
-{
-  this->event_manager_->dispatch_event (notification,
-                                        &this->event_listener_list_,
-                                        ACE_TRY_ENV);
+  removed.length (this->subscription_list_.size ());
+  added.length (0);
+
+  // copy value to the added list.
+  EVENTTYPE_LIST::ITERATOR iter (this->subscription_list_);
+  TAO_Notify_EventType* event_type;
+
+  CORBA::ULong i = 0;
+  for (iter.first (); iter.next (event_type); iter.advance (), ++i)
+    removed[i] = event_type->event_type_;
+
+  this->event_manager_->subscribe_for_events (listener,
+                                              0,
+                                              added, removed, ACE_TRY_ENV);
 }
 
 void
@@ -95,9 +161,6 @@ TAO_Notify_ConsumerAdmin_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
                                         ACE_TRY_ENV);
   this->proxy_pushsupplier_POA_ = PortableServer::POA::_nil ();
   this->my_POA_ = PortableServer::POA::_nil ();
-
-  // TODO: check if we had subscribed successfully
-  this->event_manager_->unsubscribe_from_events (this, ACE_TRY_ENV);
 }
 
 void
@@ -204,7 +267,7 @@ TAO_Notify_ConsumerAdmin_i::get_proxy_supplier (CosNotifyChannelAdmin::ProxyID p
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
 
-  return CosNotifyChannelAdmin::ProxySupplier::_narrow (obj._retn ());
+  return CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in ());
 }
 
 CosNotifyChannelAdmin::ProxySupplier_ptr
@@ -235,6 +298,26 @@ TAO_Notify_ConsumerAdmin_i::obtain_struct_proxy_pushsupplier_i (CosNotifyChannel
     activate_object_with_id (proxy_id,
                              this->proxy_pushsupplier_POA_.in (),
                              struct_proxy_pushsupplier,
+                             ACE_TRY_ENV);
+}
+
+CORBA::Object_ptr
+TAO_Notify_ConsumerAdmin_i::obtain_sequence_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Notify_SequenceProxyPushSupplier_i* seq_proxy_pushsupplier =
+    this->resource_manager_->create_seq_proxy_pushsupplier (this,
+                                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  PortableServer::ServantBase_var proxy_pushsupplier_var (seq_proxy_pushsupplier);
+
+  seq_proxy_pushsupplier->init (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  return this->resource_manager_->
+    activate_object_with_id (proxy_id,
+                             this->proxy_pushsupplier_POA_.in (),
+                             seq_proxy_pushsupplier,
                              ACE_TRY_ENV);
 }
 
@@ -284,6 +367,13 @@ TAO_Notify_ConsumerAdmin_i::obtain_notification_push_supplier (CosNotifyChannelA
       break;
 
     case CosNotifyChannelAdmin::SEQUENCE_EVENT:
+      {
+        obj = this->obtain_sequence_proxy_pushsupplier_i (proxy_id,
+                                                          ACE_TRY_ENV);
+        ACE_CHECK_RETURN (CosNotifyChannelAdmin::ProxySupplier::_nil ());
+      }
+      break;
+
     default:
       ACE_THROW_RETURN (CORBA::BAD_PARAM (),
                         CosNotifyChannelAdmin::ProxySupplier::_nil ());
@@ -291,22 +381,8 @@ TAO_Notify_ConsumerAdmin_i::obtain_notification_push_supplier (CosNotifyChannelA
 
   this->proxy_pushsupplier_ids_.next ();
 
-  return CosNotifyChannelAdmin::ProxySupplier::_narrow (obj._retn (),
+  return CosNotifyChannelAdmin::ProxySupplier::_narrow (obj.in (),
                                                         ACE_TRY_ENV);
-}
-
-void
-TAO_Notify_ConsumerAdmin_i::destroy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
-{
-  this->is_destroyed_ = 1;
-
-  // deactivate ourselves
-  this->resource_manager_->deactivate_object (this, this->my_POA_.in (),
-                                              ACE_TRY_ENV);
-  this->cleanup_i (ACE_TRY_ENV);
 }
 
 CosNotification::QoSProperties*
@@ -336,55 +412,6 @@ TAO_Notify_ConsumerAdmin_i::validate_qos (const CosNotification::QoSProperties &
                    ))
 {
   this->qos_admin_.validate_qos (required_qos, available_qos, ACE_TRY_ENV);
-}
-
-const EVENTTYPE_LIST&
-TAO_Notify_ConsumerAdmin_i::get_subscription_list (void) const
-{
-  return this->subscription_list_;
-}
-
-void
-TAO_Notify_ConsumerAdmin_i::subscription_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException,
-                   CosNotifyComm::InvalidEventType
-                   ))
-{
-  TAO_Notify_EventType event_type;
-  EVENTTYPE_LIST added_list;
-  EVENTTYPE_LIST removed_list;
-
-  CORBA::ULong length = removed.length ();
-  CORBA::ULong i = 0;
-  for (i = 0 ; i < length; ++i)
-    {
-      event_type = removed[i];
-      if (this->subscription_list_.remove (event_type) == 0)
-        removed_list.insert (event_type);
-    }
-
-  length = added.length ();
-  for (i = 0 ; i < length; ++i)
-    {
-      event_type = added[i];
-      if (this->subscription_list_.insert (event_type) == 0)
-        added_list.insert (event_type);
-    }
-
-  this->event_manager_->
-    update_subscription_for_events (this,
-                                    added_list, removed_list,
-                                    ACE_TRY_ENV);
-  ACE_CHECK;
-  // If our updated list becomes empty we should subscribe to the default
-  // type i,e everything.
-  if (this->subscription_list_.is_empty ())
-    {
-      this->event_manager_->subscribe_for_default_events (this,
-                                                                ACE_TRY_ENV);
-      ACE_CHECK;
-    }
 }
 
 CosNotifyFilter::FilterID
@@ -435,13 +462,30 @@ TAO_Notify_ConsumerAdmin_i::remove_all_filters (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_Notify_ConsumerAdmin_i::obtain_push_supplier (CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_Notify_ConsumerAdmin_i::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  // TODO:!!
-  return 0;
+  TAO_Notify_CosEC_ProxyPushSupplier_i* cosec_proxy;
+
+  ACE_NEW_THROW_EX (cosec_proxy,
+                    TAO_Notify_CosEC_ProxyPushSupplier_i (this, this->resource_manager_),
+                    CORBA::NO_MEMORY ());
+
+  PortableServer::ServantBase_var proxy_var (cosec_proxy);
+
+  cosec_proxy->init (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPushSupplier::_nil ());
+
+  PortableServer::POA_var def_poa =
+    this->resource_manager_->get_default_POA ();
+
+  CORBA::Object_var obj = this->resource_manager_->
+    activate_object (def_poa.in (), cosec_proxy, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosEventChannelAdmin::ProxyPushSupplier::_nil ());
+
+  return CosEventChannelAdmin::ProxyPushSupplier::_narrow (obj.in ());
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr

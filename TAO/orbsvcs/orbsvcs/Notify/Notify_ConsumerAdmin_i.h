@@ -35,13 +35,13 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_Event_Listener, public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
+class TAO_ORBSVCS_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_ConsumerAdmin_i
   //
   // = DESCRIPTION
-  //
+  //   Implements the CosNotifyChannelAdmin::ConsumerAdmin interface.
   //
 
  public:
@@ -64,23 +64,17 @@ class TAO_ORBSVCS_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_Event_Li
   TAO_Notify_Event_Manager* get_event_manager (void);
   // Accesor for the event manager.
 
+  TAO_Notify_FilterAdmin_i& get_filter_admin (void);
+  // Get our filter admin.
+
   void deactivate_proxy_pushsupplier (PortableServer::Servant servant, CORBA::Environment &ACE_TRY_ENV);
   // Deactivate servant from <proxy_pushsupplier_POA_>.
 
-  const EVENTTYPE_LIST& get_subscription_list (void) const;
-  // Get the list of subscriptions that are required by this CA.
+  void register_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV);
+  // Register with parent for subscription updates.
 
-  void subscribe_for_events (TAO_Notify_Event_Listener *listener);
-  // Event Listeners that register with the CA receive all the events
-  // that come to it via the Event Manager. These events must first pass the
-  // CA's filtering, ofcourse.
-
-  void unsubscribe_from_events (TAO_Notify_Event_Listener *listener);
-  // Unsubscribe
-
-  // = TAO_Event_Listener methods
-  virtual void dispatch_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV);
-  virtual void dispatch_event (const CosNotification::StructuredEvent & notification, CORBA::Environment &ACE_TRY_ENV);
+  void unregister_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV);
+  // Unregister with parent for subscription updates.
 
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
@@ -285,6 +279,9 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
  CORBA::Object_ptr obtain_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
  // Obtain a structured proxy pushsupplier object.
 
+ CORBA::Object_ptr obtain_sequence_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
+ // Obtain a sequence proxy pushsupplier object.
+
  // = Data members
   TAO_Notify_EventChannel_i* my_channel_;
   // The channel to which we belong.
@@ -309,11 +306,10 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
   // We create and own this POA.
 
   EVENTTYPE_LIST subscription_list_;
-  // The list of event types that we're interested in receiving.
+  // The list of event types that all our interested in receiving.
 
   EVENT_LISTENER_LIST event_listener_list_;
-  // The list of event listeners that have registered with us to
-  // received events.
+  // The list of event listeners that have registered with us
 
   TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
     CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushsupplier_ids_;

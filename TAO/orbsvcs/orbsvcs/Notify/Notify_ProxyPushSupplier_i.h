@@ -8,7 +8,8 @@
 //   Notify_ProxyPushSupplier_i.h
 //
 // = DESCRIPTION
-//   implements CosNotifyChannelAdmin::ProxyPushSupplier
+//   implements CosNotifyChannelAdmin::ProxyPushSupplier and
+//   CosEventChannelAdmin::ProxyPushSupplier
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
@@ -36,7 +37,7 @@ class TAO_ORBSVCS_Export TAO_Notify_ProxyPushSupplier_i : public TAO_Notify_Prox
   //   TAO_Notify_ProxyPushSupplier_i
   //
   // = DESCRIPTION
-  //
+  //   implements CosNotifyChannelAdmin::ProxyPushSupplier.
   //
 
 public:
@@ -46,16 +47,6 @@ public:
 
   virtual ~TAO_Notify_ProxyPushSupplier_i (void);
   // Destructor
-
-  // = Notify_Event_Listener methods
-  void dispatch_event (const CORBA::Any & data, CORBA::Environment &ACE_TRY_ENV);
-  void dispatch_event (const CosNotification::StructuredEvent & notification,
-                       CORBA::Environment &ACE_TRY_ENV);
-  // Dispatch event to consumer.
-
-  // = Update Listener method
-  void dispatch_update (EVENTTYPE_LIST& added, EVENTTYPE_LIST& removed);
-  // The event manager invokes this to send publication updates
 
   // = Interface methods
   virtual void connect_any_push_consumer (
@@ -76,7 +67,13 @@ virtual void disconnect_push_supplier (
   ));
 
  protected:
-// = Helper methods
+ virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+ // Deliver the event to the consumer.
+
+ virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
+ // Deliver the update to the consumer.
+
+  // = Helper methods
  virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
  // Cleanup all resources used by this object.
 
@@ -87,6 +84,41 @@ virtual void disconnect_push_supplier (
   CosEventComm::PushConsumer_var cosec_push_consumer_;
   CosNotifyComm::PushConsumer_var notify_push_consumer_;
   // The consumer connected to us.
+};
+
+class TAO_ORBSVCS_Export TAO_Notify_CosEC_ProxyPushSupplier_i : public POA_CosEventChannelAdmin::ProxyPushSupplier, public virtual PortableServer::RefCountServantBase
+{
+  // = TITLE
+  //   TAO_Notify_CosEC_ProxyPushSupplier_i
+  //
+  // = DESCRIPTION
+  //   implements CosEventChannelAdmin::ProxyPushSupplier by delegating
+  //   to TAO_Notify_ProxyPushSupplier_i.
+  //
+public:
+  // = Initialization and termination methods.
+  TAO_Notify_CosEC_ProxyPushSupplier_i(TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager);
+  // Constructor.
+
+  ~TAO_Notify_CosEC_ProxyPushSupplier_i (void);
+  // Destructor.
+
+  void init (CORBA::Environment &ACE_TRY_ENV);
+  // Init.
+
+  virtual void disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  // Ends the event communication and disposes this object.
+
+  virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer, CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventChannelAdmin::AlreadyConnected,
+                     CosEventChannelAdmin::TypeError));
+  // Connects the <push_consumer> to the Event Channel.
+
+ protected:
+  TAO_Notify_ProxyPushSupplier_i notify_proxy_;
+  // The proxy that we delegate too.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
