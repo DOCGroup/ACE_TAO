@@ -1,3 +1,12 @@
+Mon Sep 27 09:25:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        
+          Put back the recently-removed ACE_UINT64_DBLCAST_ADAPTER,
+          so now it and static_cast<double> are both applied to the
+          computation of elapsed_time_per_invocation, which will hopefully
+          satisfy both MSVC 6 and MSVC 7.1.
+
 Mon Sep 27 12:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/xerces.mpb:
