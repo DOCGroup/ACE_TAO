@@ -576,9 +576,14 @@ server_endpoint::block_for_connection (
 		    list->refcount++;
 		    return list;
 		}
-		FD_SET (list->fd, &read_fdset);
+#if defined(_WIN32)
+#  define FDSET_CAST (SOCKET)
+#else
+#  define FDSET_CAST
+#endif
+		FD_SET (FDSET_CAST list->fd, &read_fdset);
 		if (list->fd > max_fd)
-		    max_fd = list->fd;
+		    max_fd = FDSET_CAST list->fd;
 	    }
 	}
 
@@ -724,7 +729,7 @@ server_endpoint::block_for_connection (
 
 void
 server_endpoint::shutdown_connections (
-    void 		(*close_conn) (int &, void *),
+    void 		(*close_conn) (ACE_HANDLE &, void *),
     void		*info
 )
 {
