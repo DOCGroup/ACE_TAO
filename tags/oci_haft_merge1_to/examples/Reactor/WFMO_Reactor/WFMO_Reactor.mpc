@@ -1,0 +1,111 @@
+project(*Abandoned): aceexe {
+  exename = abandoned
+  Source_Files {
+    Abandoned.cpp
+  }
+}
+
+project(*APC): aceexe {                                
+  exename = apc
+  Source_Files {
+    APC.cpp
+  }
+}
+
+project(*Console_Input): aceexe {                                
+  exename = console_input
+  Source_Files {
+    Console_Input.cpp
+  }
+}
+
+project(*Directory_Changes): aceexe {                                
+  exename = directory_changes
+  Source_Files {
+    Directory_Changes.cpp
+  }
+}
+
+project(*Exceptions): aceexe {                                
+  exename = exceptions
+  Source_Files {
+    Exceptions.cpp
+  }
+}
+
+project(*Handle_Close): aceexe {                                
+  exename = handle_close
+  Source_Files {
+    Handle_Close.cpp
+  }
+}
+
+project(*Multithreading): aceexe {                                
+  exename = multithreading
+  Source_Files {
+    Multithreading.cpp
+  }
+}
+
+project(*Network_Events): aceexe {                                
+  exename = network_events
+  Source_Files {
+    Network_Events.cpp
+  }
+}
+
+project(*Prerun_State_Changes): aceexe {                                
+  exename = prerun_state_changes
+  Source_Files {
+    Prerun_State_Changes.cpp
+  }
+}
+
+project(*Registration): aceexe {
+  exename = registration                                
+  Source_Files {
+    Registration.cpp
+  }
+}
+
+project(*Registry_Changes): aceexe {                                
+  exename = registry_changes
+  Source_Files {
+    Registry_Changes.cpp
+  }
+}
+
+project(*Removals): aceexe {
+  exename = removals                                
+  Source_Files {
+    Removals.cpp
+  }
+}
+
+project(*Suspended_Removals): aceexe {                                
+  exename = suspended_removals
+  Source_Files {
+    Suspended_Removals.cpp
+  }
+}
+
+project(*Talker): aceexe {    
+  exename = talker                            
+  Source_Files {
+    Talker.cpp
+  }
+}
+
+project(*Timeouts): aceexe {                                
+  exename = timeouts
+  Source_Files {
+    Timeouts.cpp
+  }
+}
+
+project(*Window_Messages): aceexe {                                
+  exename = window_messages
+  Source_Files {
+    Window_Messages.cpp
+  }
+}

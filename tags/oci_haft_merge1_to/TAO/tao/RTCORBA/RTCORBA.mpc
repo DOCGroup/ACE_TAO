@@ -1,0 +1,5 @@
+project : taolib, core {
+  sharedname   = TAO_RTCORBA
+  dynamicflags = TAO_RTCORBA_BUILD_DLL
+  include_dir  = tao/RTCORBA
+}

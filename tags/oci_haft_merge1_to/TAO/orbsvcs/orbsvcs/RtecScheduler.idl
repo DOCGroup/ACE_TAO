@@ -1,0 +1,380 @@
+// $Id$
+
+#ifndef TAO_RTEC_SCHEDULER_IDL
+#define TAO_RTEC_SCHEDULER_IDL
+
+#include "TimeBase.idl"
+#include "RtecBase.idl"
+#pragma prefix ""
+
+module RtecScheduler
+{
+  // Module TimeBase defines the OMG Time Service.
+  typedef TimeBase::TimeT Time; // 100 nanoseconds
+  typedef Time Quantum_t;
+
+  typedef long Period_t; // 100 nanoseconds
+
+  enum Criticality_t
+  // Defines the criticality of the operation.
+  // For use with Dynamic Scheduler.
+  {
+    VERY_LOW_CRITICALITY,
+    LOW_CRITICALITY,
+    MEDIUM_CRITICALITY,
+    HIGH_CRITICALITY,
+    VERY_HIGH_CRITICALITY
+  };
+
+  enum Importance_t
+  // Defines the importance of the operation,
+  // which can be used by the Scheduler as a
+  // "tie-breaker" when other scheduling
+  // parameters are equal.
+  {
+    VERY_LOW_IMPORTANCE,
+    LOW_IMPORTANCE,
+    MEDIUM_IMPORTANCE,
+    HIGH_IMPORTANCE,
+    VERY_HIGH_IMPORTANCE
+  };
+
+  enum Info_Type_t
+  // Defines type of operation information.
+  {
+    OPERATION,
+    CONJUNCTION,
+    DISJUNCTION,
+    REMOTE_DEPENDANT
+  };
+
+  typedef RtecBase::Dependency_Type_t Dependency_Type_t;
+  typedef RtecBase::handle_t handle_t;
+  typedef RtecBase::Dependency_Info Dependency_Info;
+
+  typedef sequence<Dependency_Info> Dependency_Set;
+
+  typedef RtecBase::OS_Priority OS_Priority;
+  typedef RtecBase::Preemption_Subpriority_t Preemption_Subpriority_t;
+  typedef RtecBase::Preemption_Priority_t Preemption_Priority_t;
+
+  struct RT_Info
+    // = TITLE
+    //   Describes the QoS for an "RT_Operation".
+    //
+    // = DESCRIPTION
+    // The CPU requirements and QoS for each
+    // "entity" implementing an application
+    // operation is described by the following
+    // information.
+  {
+    // Application-defined string that uniquely
+    // identifies the operation.
+    string entry_point;
+
+    // The scheduler-defined unique identifier.
+    handle_t handle;
+
+    // Execution times.
+    Time worst_case_execution_time;
+    Time typical_execution_time;
+
+    // To account for server data caching.
+    Time cached_execution_time;
+
+    // For rate-base operations, this expresses
+    // the rate.  0 means "completely pasive",
+    // i.e., this operation only executes when
+    // called.
+    Period_t period;
+
+    // Operation Criticality (user assigned significance).
+    Criticality_t criticality;
+
+    // Operation importance, used to "break ties".
+    Importance_t importance;
+
+    // For time-slicing (for BACKGROUND operations only).
+    Quantum_t quantum;
+
+    // The number of internal threads contained by
+    // the operation.
+    long threads;
+
+    // The following attributes are defined by
+    // the Scheduler once the off-line schedule
+    // is computed.
+
+    // The operations we depend upon.
+    Dependency_Set dependencies;
+
+    // The OS thread priority for processing the
+    // events generated from this RT_Info.=
+    OS_Priority priority;
+
+    // For ordering RT_Info's with equal priority.
+    Preemption_Subpriority_t preemption_subpriority;
+
+    // The queue number for this RT_Info.
+    Preemption_Priority_t preemption_priority;
+
+    // Info_Type
+    Info_Type_t info_type;
+
+    // Token reserved for the scheduler's internal use:
+    // information placed here from outside the scheduler
+    // implementation is prone to be overwritten.
+    unsigned long long volatile_token;
+  };
+
+  enum Dispatching_Type_t
+  // Defines the type of prioritization strategy
+  // to be used by a dispatching queue
+  {
+    STATIC_DISPATCHING,
+    DEADLINE_DISPATCHING,
+    LAXITY_DISPATCHING
+  };
+
+  struct Config_Info
+    // = TITLE
+    //   Describes configuration information for a dispatching queue
+    //
+    // = DESCRIPTION
+    // The CPU requirements and QoS for each
+    // "entity" implementing an application
+    // operation is described by the following
+    // information.
+  {
+    // preemption priority for messages dispatched by the queue
+    Preemption_Priority_t preemption_priority;
+
+    // OS priority of the dispatching thread associated with the queue
+    OS_Priority thread_priority;
+
+    // type of dispatching queue
+    Dispatching_Type_t dispatching_type;
+  };
+
+  typedef sequence<Config_Info> Config_Info_Set;
+
+  enum Anomaly_Severity
+  // Defines the type of prioritization strategy
+  // to be used by a dispatching queue
+  {
+    ANOMALY_FATAL,
+    ANOMALY_ERROR,
+    ANOMALY_WARNING,
+    ANOMALY_NONE
+  };
+
+  struct Scheduling_Anomaly
+    // = TITLE
+    //   Describes an anomalous condition encountered during scheduling.
+    //
+    // = DESCRIPTION
+    // The severity and description of an anomolous
+    // condition encountered during schedule computation
+    // is described by the following information.
+  {
+    // Application-defined string that describes
+    // the anomalous condition.
+    string description;
+
+    // Severity of the anomaly
+    Anomaly_Severity severity;
+  };
+
+  typedef sequence<Scheduling_Anomaly> Scheduling_Anomaly_Set;
+
+  exception CYCLIC_DEPENDENCIES {};
+  // There are cycles in the registered dependencies.
+
+  exception UNRESOLVED_LOCAL_DEPENDENCIES {};
+  // There are unresolved local dependencies: one
+  // or more nodes that are not declared as having
+  // unresolved remote dependencies has no threads,
+  // period, or dependencies on another node.
+
+  exception THREAD_SPECIFICATION {};
+  // A node that specifies threads does not specify a period.
+
+  exception DUPLICATE_NAME {};
+  // The application is trying to register the same task again.
+
+  exception UNKNOWN_TASK {};
+  // The RT_Info handle was not valid.
+
+  exception NOT_SCHEDULED {};
+  // The application is trying to obtain scheduling information, but
+  // none is available.
+
+  exception UTILIZATION_BOUND_EXCEEDED {};
+  exception INSUFFICIENT_THREAD_PRIORITY_LEVELS {};
+  exception TASK_COUNT_MISMATCH {};
+  // Problems while computing scheduling.
+
+  exception UNKNOWN_PRIORITY_LEVEL {};
+  // Problems obtaining run-time dispatch queue info.
+
+  exception SYNCHRONIZATION_FAILURE {};
+  // Problems acquiring a synchronization resource.
+
+  exception INTERNAL {};
+  // Problems with the internal scheduler data structures.
+
+  typedef sequence<RT_Info> RT_Info_Set;
+
+  // TODO: Find a reasonable name for this interface, maybe we should
+  // change the name of the module to RtecSchedulerAdmin and name this
+  // Scheduler
+  interface Scheduler
+    // = DESCRIPTION
+    //   This class holds all the RT_Info's for a single application.
+    //   During the configuration run this will be implemented as a
+    //   single remote object, whose services are used by the
+    //   suppliers, consumers and the EC.
+    //   At run-time each process will hold a copy of the compiled
+    //   version of the Scheduler, using the precomputed data to
+    //   resolve requests (avoiding any remote calls) and ignoring any
+    //   requests for modifying its state.
+    //   A Factory class will be used to choose the proper
+    //   implementation.
+    //
+    //   This class must be registered with the naming service using a
+    //   well known name ("Scheduler" seems the obvious choice), the
+    //   Naming Context will account for different applications and
+    //   modes.
+    //
+    //   Once the scheduling data is computed it can be retrieved
+    //   remotely to generate the code for the run-time version.
+  {
+    handle_t create (in string entry_point)
+      raises (DUPLICATE_NAME, INTERNAL, SYNCHRONIZATION_FAILURE);
+    // Creates a new RT_Info entry for the function identifier
+    // "entry_point", it can be any string, but the fully qualified
+    // name function name is suggested.
+    // Returns a handle to the RT_Info.
+
+    handle_t lookup (in string entry_point)
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE);
+    // Lookups a handle for entry_point.
+
+    RT_Info get (in handle_t handle)
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE);
+    // Retrieve information about an RT_Info.
+
+    void set (in handle_t handle,
+              in Criticality_t criticality,
+              in Time wc_time,
+              in Time typical_time,
+              in Time cached_time,
+              in Period_t period,
+              in Importance_t importance,
+              in Quantum_t quantum,
+              in long threads,
+              in Info_Type_t info_type)
+      raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
+    // Set the attributes of an RT_Info.
+    // Notice that some values may not be modified (like priority).
+    // Criticality and Info_Type are only used with the Dynamic Scheduler.
+
+    void add_dependency (in handle_t handle,
+                         in handle_t dependency,
+                         in long number_of_calls,
+                         in Dependency_Type_t dependency_type)
+      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
+    // Adds <dependency> to <handle>.
+    // Dependency_Type_t is only used with the Dynamic Scheduler.
+
+    void priority (in handle_t handle,
+                   out OS_Priority o_priority,
+                   out Preemption_Subpriority_t p_subpriority,
+                   out Preemption_Priority_t p_priority)
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
+    void entry_point_priority (in string entry_point,
+                               out OS_Priority o_priority,
+                               out Preemption_Subpriority_t p_subpriority,
+                               out Preemption_Priority_t p_priority)
+      raises (UNKNOWN_TASK, SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
+    // Obtain the run time priorities.
+    // TODO: Do we need the two interfaces or is it simply confusing?
+    // If we should to keep only the <handle> version: Are the extra
+    // round-trips too expensive?
+    // If we choose only the <entry_point> version: Are the copies for
+    // the string affordable?
+
+    void compute_scheduling (in long minimum_priority,
+                             in long maximum_priority,
+                             out RT_Info_Set infos,
+                             out Config_Info_Set configs,
+                             out Scheduling_Anomaly_Set anomalies)
+      raises (UTILIZATION_BOUND_EXCEEDED,
+              SYNCHRONIZATION_FAILURE,
+              INSUFFICIENT_THREAD_PRIORITY_LEVELS,
+              TASK_COUNT_MISMATCH,
+              INTERNAL,
+              DUPLICATE_NAME);
+    // Computes the scheduling priorities, returns the RT_Info's with
+    // their priorities properly filled.
+    // This info can be cached by a Run_Time_Scheduler service or
+    // dumped into a C++ file for compilation and even faster (static)
+    // lookup.
+
+    // TODO: The dependencies field can be removed from the RT_Info
+    // and made part of the secrets of "Application", adding the
+    // following to satisfy curious clients:
+    //
+    // struct Dependency {
+    //   long number_of_calls;
+    //   Dependency_Type_t dependency_type;
+    //   handle_t dependency;
+    // };
+    // typedef sequence<Dependency> Dependency_Set;
+    //
+    // Dependency_Set dependencies (in handle_t handle)
+    //    raises (UNKNOWN_TASK);
+    // Returns the list of dependencies
+    //
+    // long number_of_dependencies (in handle_t handle)
+    //    raises (UNKNOWN_TASK);
+    // Returns the number of dependencies.
+
+    void dispatch_configuration (in Preemption_Priority_t p_priority,
+                                 out OS_Priority o_priority,
+                                 out Dispatching_Type_t d_type)
+      raises (NOT_SCHEDULED,
+              SYNCHRONIZATION_FAILURE,
+              UNKNOWN_PRIORITY_LEVEL);
+    // Returns the thread priority and dispatching type assigned
+    // to the dispatching priority level that was passed in.  This
+    // information is used to configure the queues through wich
+    // the scheduled operations are to be dispatched.
+    //
+    // If the schedule has not been computed:
+    //    raises (NOT_SCHEDULED);
+    //
+    // If the schedule has been computed, but the passed
+    // priority level is outside those assigned:
+    //    raises (UNKNOWN_PRIORITY_LEVEL);
+
+
+    Preemption_Priority_t last_scheduled_priority ()
+      raises (SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
+    // Returns the last priority number assigned to an operation in the schedule.
+    // The number returned is one less than the total number of scheduled priorities.
+    // All scheduled priorities range from 0 to the number returned, inclusive.
+    //
+    // If the schedule has not been computed:
+    //    raises (NOT_SCHEDULED);
+
+    void get_config_infos(out Config_Info_Set configs)
+      raises (SYNCHRONIZATION_FAILURE, NOT_SCHEDULED);
+    // Provides the set of Config_Infos associated with the current schedule.
+    //
+    // If the schedule has not been computed:
+    //    raises (NOT_SCHEDULED);
+  };
+};
+
+#endif /* TAO_RTEC_SCHEDULER_IDL */

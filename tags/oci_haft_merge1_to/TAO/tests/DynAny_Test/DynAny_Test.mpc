@@ -1,0 +1,15 @@
+project(*Basic): taoserver, dynamicany {
+  exename  = basic_test
+
+  Source_Files {
+    data.cpp
+    driver.cpp
+    test_dynany.cpp
+    test_dynarray.cpp
+    test_dynenum.cpp
+    test_dynsequence.cpp
+    test_dynstruct.cpp
+    test_dynunion.cpp
+    test_wrapper.cpp
+  }
+}

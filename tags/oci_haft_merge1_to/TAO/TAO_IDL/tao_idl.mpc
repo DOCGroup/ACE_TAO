@@ -1,0 +1,58 @@
+// This project must be named TAO_IDL_EXE instead of TAO_IDL
+// because otherwise mpc won't work correctly. 
+project(TAO_IDL_EXE) : aceexe, taoversion, core, tao_output {
+  exename   = tao_idl
+  libs     += TAO_IDL_BE TAO_IDL_FE
+  includes += include be_include fe 
+  install   = $(ACE_ROOT)/bin
+  after    += TAO_IDL_BE TAO_IDL_FE gperf_exe
+  idlpreprocessor = 1
+
+  Source_Files {
+    tao_idl.cpp
+    driver/drv_args.cpp
+    driver/drv_preproc.cpp
+  }
+
+  Header_Files {
+    include/drv_extern.h
+    include/drv_private.h
+  }
+}
+
+
+project(TAO_IDL_BE) : acelib, taoversion, core, tao_output {
+  sharedname   = TAO_IDL_BE
+  libs        += TAO_IDL_FE
+  includes    += include be_include fe
+  dynamicflags = TAO_IDL_BE_BUILD_DLL
+  staticflags += TAO_AS_STATIC_LIBS
+  after       += TAO_IDL_FE
+
+  Source_Files {
+    be
+  }
+
+  Header_Files {
+    be_include
+  }
+}
+
+
+project(TAO_IDL_FE) : acelib, taoversion, core, tao_output {
+  sharedname   = TAO_IDL_FE
+  includes    += include fe
+  dynamicflags = TAO_IDL_FE_BUILD_DLL
+  staticflags += TAO_AS_STATIC_LIBS
+
+  Source_Files {
+    fe
+    ast
+    util
+    narrow
+  }
+
+  Header_Files {
+    include
+  }
+}

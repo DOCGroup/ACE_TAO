@@ -1,0 +1,23 @@
+project(*progress): taoserver, strategies, messaging {
+  exename   = progress
+  idlflags -= -Sc
+  idlflags += -GC
+  requires += fl_reactor ami
+
+  Source_Files {
+    Progress_i.cpp
+    progress.cpp
+  }
+}
+
+project(*peer): taoserver, strategies, messaging {
+  exename   = peer
+  idlflags -= -Sc
+  idlflags += -GC
+  requires += fl_reactor ami
+
+  Source_Files {
+    Peer_i.cpp
+    peer.cpp
+  }
+}

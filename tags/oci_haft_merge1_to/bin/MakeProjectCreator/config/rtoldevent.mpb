@@ -1,0 +1,4 @@
+project : rtevent, rtsched {
+  after   += RTOLDEvent
+  libs    += TAO_RTOLDEvent
+}

@@ -1,0 +1,5 @@
+conditional_include "idl_compiler"
+
+ssl_libs = ssl crypto
+zzip_libs = z zzip
+conditional_include "zziplib"

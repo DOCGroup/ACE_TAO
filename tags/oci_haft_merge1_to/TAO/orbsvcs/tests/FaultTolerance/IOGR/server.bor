@@ -1,0 +1,57 @@
+#
+# Makefile for building	the IOGR tests
+#
+
+NAME = server
+
+TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
+	-I$(ACE_ROOT)\TAO -Ge 1
+
+IDLFILES = \
+	$(IDLDIR)\test.idl
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\testS.obj \
+	$(OBJDIR)\test_i.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_IORMANIP_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS)	\
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_EVENT_CFLAGS) \
+	$(TAO_NOTIFY_CFLAGS) \
+        $(TAO_FTORB_CFLAGS)
+
+CPPDIR = .;FaultTolerance
+
+IDLDIR = .
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_IORMANIP_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_NAMING_LIB) \
+	$(TAO_EVENT_LIB) \
+	$(TAO_NOTIFY_LIB) \
+        $(TAO_FTORB_LIB)
+
+all: idl_src_files
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+
+#
+# IDL Build rules
+#
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
+
+$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
+	$(TAO_IDL) $**

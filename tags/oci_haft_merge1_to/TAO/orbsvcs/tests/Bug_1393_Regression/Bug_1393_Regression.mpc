@@ -1,0 +1,6 @@
+project(*Client): taoclient, ifr_client {
+  exename = client
+  Source_Files  {
+    client.cpp
+  }
+}

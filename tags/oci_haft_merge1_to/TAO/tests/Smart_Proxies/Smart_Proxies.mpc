@@ -1,0 +1,18 @@
+project(*Server): taoserver, smart_proxies {
+  idlflags += -Gsp
+
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, smart_proxies {
+  idlflags += -Gsp
+
+  Source_Files {
+    testC.cpp
+    Smart_Proxy_Impl.cpp
+    client.cpp
+  }
+}
+

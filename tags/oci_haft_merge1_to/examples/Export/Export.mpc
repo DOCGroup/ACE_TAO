@@ -1,0 +1,17 @@
+project(*Lib) : acelib {
+  dynamicflags += TEST_BUILD_DLL
+  Source_Files {
+    dll.cpp
+  }
+  Header_Files {
+    dll.h
+    test_export.h
+  }
+}
+
+project(*test) : aceexe {
+  after += Export_Lib
+  Source_Files {
+    test.cpp
+  }
+}

@@ -1,0 +1,11 @@
+NAME = export_dll
+
+OBJFILES = $(OBJDIR)\dll.obj
+
+CFLAGS = $(ACE_CFLAGS) -DTEST_BUILD_DLL
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>

@@ -1,0 +1,5 @@
+project : portableserver {
+  after   += CosProperty
+  libs    += TAO_CosProperty
+  comps   += Property
+}

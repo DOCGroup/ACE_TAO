@@ -1,0 +1,28 @@
+#
+# Makefile for building the TAO IORTable library
+#
+
+NAME = TAO_IORTable
+
+OBJFILES = \
+	$(OBJDIR)\IORTable.obj \
+	$(OBJDIR)\IORTableC.obj \
+	$(OBJDIR)\Table_Adapter.obj \
+	$(OBJDIR)\IOR_Table_Impl.obj
+
+RESOURCE = $(OBJDIR)\TAO_IORTable.res
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORTABLE_CFLAGS) \
+	-DTAO_IORTABLE_BUILD_DLL
+
+CPPDIR = .
+
+INCDIR_NAME = tao\IORTable
+INCLUDES = \
+	*.h *.i \
+	 IORTable.pidl
+
+LIBFILES = $(TAO_LIB) $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

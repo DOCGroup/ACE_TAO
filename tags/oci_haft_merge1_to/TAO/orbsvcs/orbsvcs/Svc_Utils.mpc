@@ -1,0 +1,19 @@
+project(Svc_Utils) : orbsvcslib, core, portableserver {
+  sharedname   = TAO_Svc_Utils
+  idlflags    += -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=svc_utils_export.h
+  dynamicflags = TAO_SVC_UTILS_BUILD_DLL
+
+  IDL_Files {
+    TimeBase.idl
+    RtecBase.idl
+  }
+
+  Source_Files {
+    TimeBaseC.cpp
+    TimeBaseS.cpp
+    RtecBaseC.cpp
+    RtecBaseS.cpp
+    Time_Utilities.cpp
+    IOR_Multicast.cpp
+  }
+}
