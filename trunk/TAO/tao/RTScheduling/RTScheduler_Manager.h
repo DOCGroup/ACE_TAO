@@ -78,7 +78,8 @@ private:
   RTScheduling::Scheduler_var rtscheduler_;
 };
 
-class TAO_RTScheduler_Export TAO_RTScheduler_Manager_var : public TAO_Base_var
+class TAO_RTScheduler_Export TAO_RTScheduler_Manager_var
+  : private TAO_Base_var
 {
 public:
   TAO_RTScheduler_Manager_var (void); // default constructor

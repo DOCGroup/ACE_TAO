@@ -1,14 +1,27 @@
-//$Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file   Current.h
+ *
+ *  $Id$
+ *
+ *  @author
+ */
+//=============================================================================
+
+
 #ifndef TAO_RTSCHEDULER_CURRENT_H
 #define TAO_RTSCHEDULER_CURRENT_H
+
 #include /**/ "ace/pre.h"
 
 #include "rtscheduler_export.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "RTScheduler.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -182,7 +195,8 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 /**
  * @class TAO_RTScheduler_Current_var
  */
-class TAO_RTScheduler_Export TAO_RTScheduler_Current_var : public TAO_Base_var
+class TAO_RTScheduler_Export TAO_RTScheduler_Current_var
+  : private TAO_Base_var
 {
 public:
 
@@ -370,4 +384,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
-#endif /*TAO_RTSCHEDULER_CURRENT_H*/
+
+#endif /* TAO_RTSCHEDULER_CURRENT_H*/

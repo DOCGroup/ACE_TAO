@@ -1,3 +1,75 @@
+Wed Jan 12 22:36:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ObjRefTemplate/ORT_Adapter_Impl.h (tao_ort_template_):
+
+	  Removed this attribute.  A local variable within the activate()
+	  method is all that is needed.
+
+	  (ORT_Adapter_Impl):
+
+	  Removed default constructor declaration.  The compiler generated
+	  one will now suffice since all remaining class members define
+	  suitable default constructors.
+
+	* tao/ObjRefTemplate/ORT_Adapter_Impl.cpp:
+
+	  Coding convention improvements.
+
+	  (ORT_Adapter_Impl):
+
+	  Removed default constructor implementation.  See default
+	  constructor declaration removal description above.
+
+	  (activate):
+
+	  Fixed invalid widening assignment from
+	  PortableInterceptor::ObjectReferenceTemplate_var to
+	  PortableInterceptor::ObjectReferenceFactory_var.
+
+	* tao/PortableServer/ORT_Adapter.h (release):
+
+	  Added this new pure virtual method.  It allows the POA to
+	  explicitly release an ObjectReferenceTemplate instance without
+	  pulling in valuetype related code.
+
+	* tao/PortableServer/POA.cpp (destroy_i):
+
+	  Fixed memory leak related to tricky ObjectReferenceTemplate
+	  memory management.
+
+	* tao/PortableServer/POA.h:
+
+	  Cosmetic improvement.
+
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+	* tao/RTCORBA/Priority_Mapping_Manager.h:
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/RTScheduler_Manager.h:
+
+	  Changed all TAO-specific "_var" classes to inherit privately,
+	  rather than publicly, from TAO_Base_var.  Public inheritance in
+	  this case is not correct since (1) the TAO-specific "_var"
+	  classes are not meant to satisfy an "IS-A" relationship with
+	  TAO_Base_var, and (2) since it allows some invalid widening
+	  assignments to occur.
+
+	* tao/Valuetype/Value_VarOut_T.h (TAO_Value_Var_T):
+
+	  Inherit privately from TAO_Base_var and declare a private copy
+	  constructor and assignment operator that accept a reference to a
+	  constant TAO_Base_var.  Prevents invalid widening assignments.
+
+	* tao/Valuetype/Value_VarOut_T.cpp (TAO_Value_Var_T):
+
+	  Explicitly initialize TAO_Base_var base class in base member
+	  initializer list of copy constructor.
+
+	* orbsvcs/tests/Concurrency/CC_command.cpp (execute):
+
+	  Replaced use of insecure gets() function call with one to
+	  getchar().  The latter is all that is needed since only one
+	  character is needed from stdin.
+
 Wed Jan 12 19:53:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:

@@ -6,110 +6,113 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_methods.h"
 
-ACE_RCSID (ORT,
+
+ACE_RCSID (ObjRefTemplate,
            ORT_Adapter_Impl,
            "$Id$")
 
-namespace TAO
+
+TAO::ORT_Adapter_Impl::~ORT_Adapter_Impl (void)
 {
-  ORT_Adapter_Impl::ORT_Adapter_Impl (void)
-    : tao_ort_template_ (0)
-  {
-  }
+}
 
-  ORT_Adapter_Impl::~ORT_Adapter_Impl (void)
-  {
-  }
+char *
+TAO::ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // No need to duplicate, the ort_template_ method has to do the duplicate
+  return this->ort_template_->server_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
-  char *
-  ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // No need to duplicate, the ort_template_ method has to do the duplicate
-    return this->ort_template_->server_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  }
+char *
+TAO::ORT_Adapter_Impl::tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // No need to duplicate, the ort_template_ method has to do the duplicate
+  return this->ort_template_->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
-  char *
-  ORT_Adapter_Impl::tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // No need to duplicate, the ort_template_ method has to do the duplicate
-    return this->ort_template_->orb_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  }
+PortableInterceptor::AdapterName *
+TAO::ORT_Adapter_Impl::tao_adapter_name (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // No need to duplicate, the ort_template_ method has to do the duplicate
+  return this->ort_template_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
-  PortableInterceptor::AdapterName *
-  ORT_Adapter_Impl::tao_adapter_name (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // No need to duplicate, the ort_template_ method has to do the duplicate
-    return this->ort_template_->adapter_name (ACE_ENV_SINGLE_ARG_PARAMETER);
-  }
+CORBA::Object_ptr
+TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
+                                    const PortableInterceptor::ObjectId &id
+                                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->ort_factory_->make_object (repo_id,
+                                          id
+                                          ACE_ENV_ARG_PARAMETER);
+}
 
-  CORBA::Object_ptr
-  ORT_Adapter_Impl::make_object (const char *repo_id,
-                                 const PortableInterceptor::ObjectId &id
-                                 ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    return this->ort_factory_->make_object (repo_id,
-                                            id
-                                            ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ObjectReferenceTemplate *
+TAO::ORT_Adapter_Impl::get_adapter_template (void)
+{
+  CORBA::add_ref (this->ort_template_.in ());
 
-  PortableInterceptor::ObjectReferenceTemplate *
-  ORT_Adapter_Impl::get_adapter_template (void)
-  {
-    CORBA::add_ref (ort_template_.in ());
+  return this->ort_template_;
+}
 
-    return ort_template_;
-  }
+PortableInterceptor::ObjectReferenceFactory *
+TAO::ORT_Adapter_Impl::get_obj_ref_factory (void)
+{
+  CORBA::add_ref (this->ort_factory_.in ());
 
-  PortableInterceptor::ObjectReferenceFactory *
-  ORT_Adapter_Impl::get_obj_ref_factory (void)
-  {
-    CORBA::add_ref (ort_factory_.in ());
+  return this->ort_factory_;
+}
 
-    return ort_factory_;
-  }
+int
+TAO::ORT_Adapter_Impl::set_obj_ref_factory (
+  PortableInterceptor::ObjectReferenceFactory *cf
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  this->ort_factory_ = cf;
 
-  int
-  ORT_Adapter_Impl::set_obj_ref_factory (
-    PortableInterceptor::ObjectReferenceFactory *cf
-    ACE_ENV_ARG_DECL_NOT_USED)
-  {
-    ort_factory_ = cf;
+  CORBA::add_ref (this->ort_factory_.in ());
 
-    CORBA::add_ref (ort_factory_.in ());
+  return 0;
+}
 
-    return 0;
-  }
+void
+TAO::ORT_Adapter_Impl::release (
+  PortableInterceptor::ObjectReferenceTemplate * t)
+{
+  CORBA::remove_ref (t);
+}
 
-  int
-  ORT_Adapter_Impl::activate (const char *server_id,
-                              const char *orb_id,
-                              PortableInterceptor::AdapterName *adapter_name,
-                              PortableServer::POA_ptr poa
-                              ACE_ENV_ARG_DECL)
-  {
-    // No need to lock here, there is one instance for each POA and
-    // when the POA creates and actives an ORT_Adapter it will lock
-    // itself. Create an ObjectReferenceTemplate for this POA.
+int
+TAO::ORT_Adapter_Impl::activate (
+  const char *server_id,
+  const char *orb_id,
+  PortableInterceptor::AdapterName *adapter_name,
+  PortableServer::POA_ptr poa
+  ACE_ENV_ARG_DECL)
+{
+  // No need to lock here, there is one instance for each POA and
+  // when the POA creates and actives an ORT_Adapter it will lock
+  // itself. Create an ObjectReferenceTemplate for this POA.
 
-    ACE_NEW_THROW_EX (this->tao_ort_template_,
-                      ObjectReferenceTemplate (server_id,
-                                               orb_id,
-                                               adapter_name,
-                                               poa),
-                      CORBA::NO_MEMORY ());
-    ACE_CHECK_RETURN (-1);
+  ObjectReferenceTemplate * t;
+  ACE_NEW_THROW_EX (t,
+                    ObjectReferenceTemplate (server_id,
+                                             orb_id,
+                                             adapter_name,
+                                             poa),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (-1);
 
-    this->ort_template_ = this->tao_ort_template_;
+  this->ort_template_ = t;
 
-    // Must increase ref count since this->obj_ref_factory_ will
-    // decrease it upon destruction.
-    CORBA::add_ref (this->ort_template_.in ());
-    this->ort_factory_ = this->ort_template_;
+  // Must increase ref count since this->obj_ref_factory_ will
+  // decrease it upon destruction.
+  CORBA::add_ref (t);
+  this->ort_factory_ = t;
 
-    return 0;
-  }
+  return 0;
 }

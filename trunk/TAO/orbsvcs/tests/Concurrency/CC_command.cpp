@@ -105,15 +105,15 @@ CC_Start_Cmd::~CC_Start_Cmd()
 
 int CC_Start_Cmd::execute(void)
 {
-  if(excep_)
+  if (excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing start command (script file: %s)\n", cfg_name_);
+  printf ("Executing start command (script file: %s)\n", cfg_name_);
 
   char cmd_line[1024];
   int success = ACE_OS::sprintf(&cmd_line[0], "%s -c %s",
@@ -460,19 +460,19 @@ CC_Wait_Cmd::~CC_Wait_Cmd()
 
 int CC_Wait_Cmd::execute(void)
 {
-  if(excep_)
+  if (excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing wait command\n");
+  printf ("Executing wait command\n");
 
-  char s[1];
-  printf("%s", prompt_);
-  ACE_OS::gets(&s[0]);
+  printf ("%s", prompt_);
+  (void) ACE_OS::getchar ();
+
   return 1; // CC_SUCCESS
 }
 
@@ -490,7 +490,7 @@ CC_Excep_Cmd::~CC_Excep_Cmd(void)
 int
 CC_Excep_Cmd::execute(void)
 {
-  printf("Executing excep command (expected: %s)\n", ex_);
+  printf ("Executing excep command (expected: %s)\n", ex_);
   // First we check to see if an exception has occured. If not we fail
   // because we expected to see one
   if(excep_==0)
@@ -505,7 +505,7 @@ CC_Excep_Cmd::execute(void)
     }
   else
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
@@ -539,7 +539,7 @@ CC_Print_Cmd::~CC_Print_Cmd(void)
 int
 CC_Print_Cmd::execute(void)
 {
-  printf("%s\n", msg_);
+  printf ("%s\n", msg_);
   return 1; // CC_SUCCESS
 }
 
@@ -562,13 +562,13 @@ CC_Lookup_Cmd::execute(void)
 {
   if(excep_)
     {
-      printf("Exception: %s\n", excep_->_rep_id ());
+      printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
       excep_ = 0;
       return 0; // CC_FAIL
     }
 
-  printf("Executing lookup command (lock set: %s)\n", name_);
+  printf ("Executing lookup command (lock set: %s)\n", name_);
 
   // Do the lookup if we haven't done it before
   if(cc_lockset_.in() == 0)
