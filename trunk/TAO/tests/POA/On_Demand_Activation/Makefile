@@ -6,8 +6,8 @@ BIN = server
 
 MYFILES = Servant_Activator Servant_Locator
 
-LSRC = 	$(addsuffix .cpp,$(MYFILES))
-LOBJ =  $(addsuffix .o,$(MYFILES))
+SRC = 	$(addsuffix .cpp,$(MYFILES))
+OBJ =  $(addsuffix .o,$(MYFILES))
 
 CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
