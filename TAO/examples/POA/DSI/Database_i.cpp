@@ -420,4 +420,6 @@ template class ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mut
 #pragma instantiate ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Malloc_LIFO_Iterator_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
 #pragma instantiate ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex> *ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

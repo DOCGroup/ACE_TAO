@@ -440,4 +440,6 @@ template class ACE_Unbounded_Set_Iterator <TAO_AV_Protocol_Object*>;
 #pragma instantiate  ACE_Node <TAO_AV_Protocol_Object*>
 #pragma instantiate ACE_Unbounded_Set <TAO_AV_Protocol_Object*>
 #pragma instantiate ACE_Unbounded_Set_Iterator <TAO_AV_Protocol_Object*>
+#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<Sender, ACE_Null_Mutex> *ACE_Singleton<Sender, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

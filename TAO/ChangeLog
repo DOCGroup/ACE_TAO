@@ -1,3 +1,29 @@
+Wed Oct 20 19:03:01 2004  Olli Savia  <ops@iki.fi>
+
+        * examples/POA/DSI/Database_i.cpp:
+        * examples/RTCORBA/Activity/Activity.cpp:
+        * examples/RTCORBA/Activity/Task_Stats.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/RTScheduling/Task_Stats.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * orbsvcs/tests/Notify/lib/LookupManager.cpp:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+          Added explicit static template member instantiations.
+
 Wed Oct 20 10:28:52 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
