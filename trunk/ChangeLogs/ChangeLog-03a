@@ -1,3 +1,14 @@
+Tue Feb 22 09:16:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/streams.h: Commented out an inclusion of the file
+	  <iomanip.h> as this was causing problems with Qt. 
+
+	* ace/Signal.h: One of the variables for the constructors of
+	  ACE_Sig_Action  was named as "signals". This apparently causes
+	  conflict with the Qt library as the library has a macro by that
+	  name. So it was changed as "signalss". Thanks to James Briggs
+	  <James.Briggs@dsto.defence.gov.au> for reporting this.
+
 Tue Feb 22 01:52:09 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Block.cpp: Refactored the code in duplicate()
