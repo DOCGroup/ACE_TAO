@@ -170,8 +170,33 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
       << "return *this;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
+
+  //operator= from T_var @@Bala
+*os << "ACE_INLINE " << full_object_manager << " &" << be_nl
+      << full_object_manager << "::operator= ("; 
+  pt->accept (visitor); 
+  *os << "_var p)" << be_nl
+      << "// Assignment from "; 
+  pt->accept (visitor); 
+  *os << "_var ." << be_nl
+      << "{" << be_idt_nl
+      << "if (this->release_)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (*this->ptr_);" << be_nl
+      << "*this->ptr_ = ";
+  pt->accept (visitor);
+  *os <<"::_duplicate(p.in());" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_idt_nl
+      << "*this->ptr_ = p.in ();" << be_uidt_nl
+      << be_nl
+      << "return *this;" << be_uidt_nl
+      << "}" << be_nl
+      << be_nl;
+
   
-  // operator -> @@Bala
+  
+  // operator -> 
   *os << "ACE_INLINE " << be_nl;
     pt->accept (visitor);
   *os << "*"<< be_nl
