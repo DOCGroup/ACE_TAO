@@ -60,13 +60,10 @@ ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
   // For all platforms other than Win32, we are going to create a
   // machine wide unquie name if one is not provided by the user.  On
   // Win32, unnamed synchronization objects are acceptable.
-  TCHAR ace_name[BUFSIZ];
+  TCHAR ace_name[100];
   if (name == 0)
     {
-      // The process ID will provide uniqueness between processes on
-      // the same machine. The "this" pointer will provide uniqueness
-      // between other mutex objects in the same process.
-      ACE_OS::sprintf (ace_name, "%d %d", ACE_OS::getpid (), this);
+      ACE::unique_name (this, ace_name, sizeof ace_name);
       name = ace_name;
     }
 #endif
