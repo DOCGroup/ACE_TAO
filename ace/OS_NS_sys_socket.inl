@@ -118,7 +118,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::closesocket");
 #if defined (ACE_WIN32)
-  ACE_OS::shutdown (handle, SD_SEND);
+  ACE_OS::shutdown (handle, ACE_SHUTDOWN_WRITE);
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #elif defined (ACE_PSOS_DIAB_PPC)
   ACE_OSCALL_RETURN (::pna_close (handle), int, -1);
