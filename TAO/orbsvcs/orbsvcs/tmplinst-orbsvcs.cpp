@@ -8,6 +8,8 @@
 #include "orbsvcs/RtecSchedulerC.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class TAO_Object_Manager<CORBA_Object>;
+template class TAO_Object_Manager<CORBA_TypeCode>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Object>;
 template class TAO_Unbounded_Object_Sequence<CORBA_TypeCode>;
 template class TAO_Unbounded_Sequence<CosLifeCycle::NVP>;
@@ -23,6 +25,8 @@ template class TAO_Unbounded_Sequence<RtecEventChannelAdmin::Publication>;
 template class TAO_Unbounded_Sequence<RtecScheduler::Dependency_Info>;
 template class TAO_Unbounded_Sequence<RtecScheduler::RT_Info>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate TAO_Object_Manager<CORBA_Object>
+#pragma instantiate TAO_Object_Manager<CORBA_TypeCode>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Object>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_TypeCode>
 #pragma instantiate TAO_Unbounded_Sequence<CosLifeCycle::NVP>
