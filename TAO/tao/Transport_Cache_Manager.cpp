@@ -490,20 +490,20 @@ TAO_Transport_Cache_Manager::purge (void)
                     ACE_DEBUG ((LM_INFO,
                                 ACE_TEXT ("TAO (%P|%t) - ")
                                 ACE_TEXT ("Unable to push transport %lu on the to-be-closed stack, so it will leak\n"),
-                                transport)); 
+                                transport));
                   }
 
                 if (TAO_debug_level > 0)
                   {
                     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
                                           ACE_TEXT ("Idle transport found in ")
-                                          ACE_TEXT ("cache: 0x%x\n"),
-                                          transport));
+                                          ACE_TEXT ("cache: [%d] \n"),
+                                          transport->id ()));
                   }
 
                 // We need to save the cache_map_entry before we
                 // set it to zero, so we can call purge_entry_i()
-                // after we call close_connection_i().
+                // after we call close_connection_no_purge ().
                 HASH_MAP_ENTRY* entry = transport->cache_map_entry ();
 
                 // This is a bit ugly, but we must do this to
@@ -529,7 +529,7 @@ TAO_Transport_Cache_Manager::purge (void)
       if (transports_to_be_closed.pop (transport) == 0)
         {
           if (transport)
-            transport->close_connection_i ();
+            transport->close_connection_no_purge ();
           TAO_Transport::release (transport);
         }
     }
