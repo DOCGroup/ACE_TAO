@@ -1,10 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#if defined (__CYGWIN32__)
-#  include /**/ <getopt.h>
-#endif
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
