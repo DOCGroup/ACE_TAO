@@ -18,6 +18,6 @@ TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock,
 
 TAO_Synch_Refcountable::~TAO_Synch_Refcountable (void)
 {
-  ACE_ASSERT(this->refcount_ == 0);
+  ACE_ASSERT (this->refcount_ == 0);
   delete this->refcount_lock_;
 }
