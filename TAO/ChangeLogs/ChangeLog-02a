@@ -1,3 +1,20 @@
+Wed Sep 13 21:37:38 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation.cpp
+	* tao/UIOP_Connector.cpp
+	* tao/UIOP_Endpoint.cpp
+	* tao/UIOP_Endpoint.h
+	* tao/UIOP_Endpoint.i
+	* tao/UIOP_Profile.h
+	* tao/UIOP_Profile.i
+	* tao/Makefile:
+	* tao/*/Makefile:
+	* tao/Makefile.bor:
+
+	  Fixed compilation problems introduced by
+	  ChangeLogTag:Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+	  and updated Makefiles.
+
 Wed Sep 13 18:15:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
@@ -24,13 +41,13 @@ Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  Endpoints.  In other words, Endpoint represents a single server
 	  contact point for a client.
 
-	  Some of the motivations for this change: 
+	  Some of the motivations for this change:
 	  - smaller iors
-	  - preparation for TAG_ALTERNATE_IIOP 
+	  - preparation for TAG_ALTERNATE_IIOP
 	  support
 	  - preparation for new connection cache scheme
 	  - more organized iors => easier policy-based endpoint selection
-	
+
 	* tao/uiop_endpoints.pidl
 	* tao/iiop_endpoints.pidl
 	* tao/uiop_endpoints.h
@@ -43,7 +60,7 @@ Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  Pidl files above define data structures for representing a list
 	  of endpoints from a single profile on the wire.  Pidl files are
 	  used to generate .h, .cpp and .i above.
-	
+
 	* tao/Invocation.h
 	* tao/Invocation.cpp
 	* tao/Pluggable.h
@@ -95,7 +112,7 @@ Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  - TAO_Acceptor::is_collocated now takes Endpoint* rather than
 	  Profile* as its argument
 	  - TAO_Acceptor_Registry::is_collocated now searches for a
-	  "collocation match" among all endpoints of all profiles	
+	  "collocation match" among all endpoints of all profiles
 
 	* tao/Tagged_Components.h
 	* tao/Tagged_Components.i
@@ -103,11 +120,11 @@ Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	  Removed TAO-specific priority tagged component.  It is no longer
 	  necessary since each endpoint stores its priority.
-	
+
 	* tao/corbafwd.h
 
 	  Removed TAO_TAG_PRIORITY.  Added TAO_TAG_ENDPOINTS.
-	
+
 	* tao/TAO.dsp
 	* tao/TAO_Static.dsp
 	* tao/Makefile
@@ -123,7 +140,7 @@ Wed Sep 13 15:54:47 2000  Ossama Othman  <ossama@uci.edu>
 	  CORBA::Boolean.  Forward declare TAO_ORB_Core since some class
 	  methods declared in this header take TAO_ORB_Core pointer
 	  arguments.
-	
+
 	* tao/Acceptor_Impl.cpp:
 
 	  Include "tao/ORB_Table.h" to pull in the TAO_ORB_Table
@@ -145,7 +162,7 @@ Wed Sep 13 15:54:47 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/TAO.dsp:
 
 	  Added the new `ORB_Table.*' files to the list of sources.
-	
+
 	* tests/ORB_init/ORB_init.cpp (main):
 
 	  Initialize another ORB but don't explicitly destroy it to allow

@@ -36,6 +36,7 @@ OBJFILES = \
 	$(OBJDIR)\DomainC.obj \
 	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Encodable.obj \
+	$(OBJDIR)\Endpoint.obj \
 	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Exclusive_TMS.obj \
@@ -53,6 +54,8 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connect.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
+	$(OBJDIR)\IIOP_Endpoint.obj \
+	$(OBJDIR)\iiop_endpoints.obj \
 	$(OBJDIR)\IIOP_Factory.obj \
 	$(OBJDIR)\IIOP_Lite_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
@@ -118,6 +121,7 @@ OBJFILES = \
 	$(OBJDIR)\SHMIOP_Acceptor.obj \
 	$(OBJDIR)\SHMIOP_Connect.obj \
 	$(OBJDIR)\SHMIOP_Connector.obj \
+	$(OBJDIR)\SHMIOP_Endpoint.obj \
 	$(OBJDIR)\SHMIOP_Factory.obj \
 	$(OBJDIR)\SHMIOP_Profile.obj \
 	$(OBJDIR)\SHMIOP_Transport.obj \
@@ -142,6 +146,8 @@ OBJFILES = \
 	$(OBJDIR)\UIOP_Acceptor.obj \
 	$(OBJDIR)\UIOP_Connect.obj \
 	$(OBJDIR)\UIOP_Connector.obj \
+	$(OBJDIR)\uiop_endpoints.obj \
+	$(OBJDIR)\UIOP_Endpoint.obj \
 	$(OBJDIR)\UIOP_Factory.obj \
 	$(OBJDIR)\UIOP_Lite_Factory.obj \
 	$(OBJDIR)\UIOP_Profile.obj \
