@@ -148,13 +148,13 @@ ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum
        iter.next (item) != 0;
        ++iter)   
     {
-      ACE_DEBUG ((LM_DEBUG, "in purge loop\n"));
       // Ah! an item with lower ATTTRIBUTES...
       if ((min.attributes () > (*iter).int_id_->caching_attributes ().attributes ()) && ((*iter).int_id_->active () != 1))
         {
-          ACE_DEBUG ((LM_DEBUG, "LRU: Found minimum\n"));
           min = (*iter).int_id_->caching_attributes ();
+
           key = &(*iter).ext_id_;
+
           value = &(*iter).int_id_;
         }
     }   
