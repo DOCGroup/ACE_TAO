@@ -3048,13 +3048,15 @@ ACE_OS::free (void *ptr)
 ACE_INLINE struct passwd *
 ACE_OS::getpwnam (const char *name)
 {
-#if !defined(ACE_LACKS_PWD_FUNCTIONS)
-# if !defined(ACE_WIN32)
-  return ::getpwnam(name);
-# else
-  ACE_NOTSUP_RETURN (0);
-# endif /* ACE_WIN32 */
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
+#if !defined (ACE_WIN32)
+  return ::getpwnam (name);
 #else
+  ACE_UNUSED_ARG (name);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_WIN32 */
+#else
+  ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_LACKS_PWD_FUNCTIONS */
 }
@@ -3063,20 +3065,31 @@ ACE_INLINE struct passwd *
 ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
                     char *buffer, int buflen)
 {
-#if !defined(ACE_LACKS_PWD_FUNCTIONS)
-# if defined(ACE_HAS_REENTRANT_FUNCTIONS) && defined(ACE_MT_SAFE)
-#  if !defined(ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
-  return ::getpwnam_r(name, pwent, buffer, buflen);
-#  else 
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
+  return ::getpwnam_r (name, pwent, buffer, buflen);
+#else 
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (pwent);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
-#  endif /* NOT ACE_LACKS_PWD_REENTRANT_FUNCTIONS */
-# else
+#endif /* NOT ACE_LACKS_PWD_REENTRANT_FUNCTIONS */
+#else
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (pwent);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
-# endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (pwent);
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
 #endif /* NOT ACE_LACKS_PWD_FUNCTIONS */
 }
-
 
 // DNS accessors.
 
