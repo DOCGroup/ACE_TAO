@@ -18,23 +18,23 @@
 #include "ace/Thread_Manager.h"
 
 template <class TASK>
-class Logrec_Module : public ACE_Module<ACE_MT_SYNCH>
+class Logrec_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Module (const ACE_TCHAR *name)
-    : ACE_Module<ACE_MT_SYNCH>
+    : ACE_Module<ACE_SYNCH>
                     (name,
                      &task_, // Initialize writer-side task.
                      0,      // Ignore reader-side task.
                      0,
-                     ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER) {}
+                     ACE_Module<ACE_SYNCH>::M_DELETE_READER) {}
 private:
   TASK task_;
 };
 #define LOGREC_MODULE(NAME) \
   typedef Logrec_Module<NAME> NAME##_Module
 
-class Logrec_Reader : public ACE_Task<ACE_MT_SYNCH>
+class Logrec_Reader : public ACE_Task<ACE_SYNCH>
 {
 private:
   ACE_TString filename_; // Name of logfile.
@@ -191,22 +191,22 @@ public:
   }
 };
 
-class Logrec_Reader_Module : public ACE_Module<ACE_MT_SYNCH>
+class Logrec_Reader_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Reader_Module (const ACE_TString &filename)
-    : ACE_Module<ACE_MT_SYNCH>
+    : ACE_Module<ACE_SYNCH>
                     (ACE_TEXT ("Logrec Reader"),
                      &task_, // Initialize writer-side.
                      0,      // Ignore reader-side.
                      0,
-                     ACE_Module<ACE_MT_SYNCH>::M_DELETE_READER),
+                     ACE_Module<ACE_SYNCH>::M_DELETE_READER),
       task_ (filename) {}
 private:
   Logrec_Reader task_;
 };
 
-class Logrec_Writer : public ACE_Task<ACE_MT_SYNCH>
+class Logrec_Writer : public ACE_Task<ACE_SYNCH>
 {
 public:
   // Initialization hook method.
@@ -230,7 +230,7 @@ public:
 
 LOGREC_MODULE (Logrec_Writer);
 
-class Logrec_Formatter : public ACE_Task<ACE_MT_SYNCH>
+class Logrec_Formatter : public ACE_Task<ACE_SYNCH>
 {
 public:
   typedef void (*FORMATTER[5])(ACE_Message_Block *);
@@ -298,7 +298,7 @@ Logrec_Formatter::FORMATTER Logrec_Formatter::format_ = {
 
 LOGREC_MODULE (Logrec_Formatter);
 
-class Logrec_Separator : public ACE_Task<ACE_MT_SYNCH>
+class Logrec_Separator : public ACE_Task<ACE_SYNCH>
 {
 private:
   ACE_Lock_Adapter<ACE_Thread_Mutex> lock_strategy_;
@@ -342,7 +342,7 @@ int main (int argc, char *argv[])
                        "usage: %s logfile\n", argv[0]),
                       1);
   ACE_TString logfile (ACE_TEXT_CHAR_TO_TCHAR (argv[1]));
-  ACE_Stream<ACE_MT_SYNCH> stream;
+  ACE_Stream<ACE_SYNCH> stream;
 
   if (stream.push
       (new Logrec_Writer_Module (ACE_TEXT ("Writer"))) != -1
