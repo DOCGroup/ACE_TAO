@@ -1,3 +1,73 @@
+Wed May 16 11:10:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	The following checkins are for bug #884. Please see the detailed
+	documentation of the bug for the motivation of the following
+	change. The idea behind this change is to use a different
+        read-parse mechanism for protocols like SHMIOP which uses the
+	reactor for signalling rather than for data availability. 
+
+	* tao/GIOP_Message_Reactive_Handler.cpp:
+	* tao/GIOP_Message_Reactive_Handler.h:
+	* tao/GIOP_Message_Reactive_Handler.inl: Renamed the existing
+	  GIOP_Message_Handler classes. The name change was necessary to
+	  indicate that this class uses the reactor for reading data from
+	  the transport. 
+
+	* tao/GIOP_Message_Handler.h:
+	* tao/GIOP_Message_Handler.cpp:
+	* tao/GIOP_Message_Handler.inl: Removed them from the repository. 
+	
+	* tao/GIOP_Message_Base.h: Used the
+	  TAO_GIOP_Message_Reactive_Handler class instead of the deprecated
+	  TAO_GIOP_Message_Handler class.
+
+
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.i: Added a query method message_fragmented ()
+	  that returns whether the incoming message is fragmented or not.
+
+	* tao/Transport.cpp:
+	* tao/Transport.h: Removed the reactor_signalling () method that
+	  was a hack added for 1.1.13. 
+	
+	* tao/Makefile:
+	* tao/TAO.dsp: Added the new files. 
+
+	* tao/BiDir_GIOP/Makefile
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	* tao/SmartProxies/Makefile: Updated dependencies. 
+	
+	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
+	* tao/Strategies/GIOP_Message_NonReactive_Base.h:
+	* tao/Strategies/GIOP_Message_NonReactive_Base.inl:
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.inl: A new
+	  strategy for reading and parsing GIOP messages. This is useful
+	  for protocols like SHMIOP which uses the reactor for
+	  signalling. Further protocols like SHMIOP can guarentee the
+	  availability of data in one shot with no flow contro
+	  mechanisms in place.  This strategy basically reads the GIOP
+	  header, determines the size of the message, then grows its
+	  buffers to read the whole message from the transport and sends
+	  it to the higher lares for further processing. 
+
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h: Made SHMIOP use the above
+	  nonreactive handler strategy. 
+	
+	* tao/Strategies/Makefile:
+	* tao/Strategies/TAO_Strategies.dsp: Added new files.
+	
+
 Wed May 16 10:27:26 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* examples/PluggableUDP/tests/Basic/client.dsp:

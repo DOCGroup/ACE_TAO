@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
-#include "tao/GIOP_Message_Handler.h"
+#include "tao/GIOP_Message_Reactive_Handler.h"
 #include "tao/GIOP_Utils.h"
 
 class TAO_Pluggable_Reply_Params;
@@ -30,17 +30,18 @@ class TAO_Pluggable_Reply_Params;
 /**
  * @class TAO_GIOP_Message_Base
  *
- * @brief Definitions of GIOP specific stuff
+ * @brief Definitions of the GIOP specific stuff.
  *
  * This class will hold the specific details common to all the GIOP
  * versions. Some of them which are here may be shifted if things
- * start changing between versions
+ * start changing between versions. This class uses the
+ * TAO_GIOP_Message_Reactive_Handler to read and parse messages.
  */
 
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
 public:
-  friend class TAO_GIOP_Message_Handler;
+  friend class TAO_GIOP_Message_Reactive_Handler;
 
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
@@ -79,10 +80,7 @@ public:
   /// This method reads the message on the connection. Returns 0 when
   /// there is short read on the connection. Returns 1 when the full
   /// message is read and handled. Returns -1 on errors. If <block> is
-  /// 1, then reply is read in a blocking manner. <bytes> indicates the
-  /// number of bytes that needs to be read from the connection.
-  /// GIOP uses this read to unmarshall the message details that appear
-  /// on the connection.
+  /// 1, then reply is read in a blocking manner.
   virtual int read_message (TAO_Transport *transport,
                             int block = 0,
                             ACE_Time_Value *max_wait_time = 0);
@@ -122,13 +120,7 @@ public:
       CORBA::Exception &x
     );
 
-private:
-
-  /// Writes the GIOP header in to <msg>
-  /// NOTE: If the GIOP header happens to change in the future, we can
-  /// push this method in to the generator_parser classes.
-  int write_protocol_header (TAO_GIOP_Message_Type t,
-                             TAO_OutputCDR &msg);
+protected:
 
   /// Processes the <GIOP_REQUEST> messages
   int process_request (TAO_Transport *transport,
@@ -140,6 +132,24 @@ private:
                               TAO_ORB_Core *orb_core,
                               TAO_InputCDR &input);
 
+  /// Set the state
+  void set_state (CORBA::Octet major,
+                  CORBA::Octet minor);
+
+  /// Print out a debug messages..
+  void dump_msg (const char *label,
+                 const u_char *ptr,
+                 size_t len);
+
+private:
+
+  /// Writes the GIOP header in to <msg>
+  /// NOTE: If the GIOP header happens to change in the future, we can
+  /// push this method in to the generator_parser classes.
+  int write_protocol_header (TAO_GIOP_Message_Type t,
+                             TAO_OutputCDR &msg);
+
+
   /// Make a <GIOP_LOCATEREPLY> and hand that over to the transport so
   /// that it can be sent over the connection.
   /// NOTE:As on date 1.1 & 1.2 seem to have similar headers. Till an
@@ -150,10 +160,6 @@ private:
 
   /// Send error messages
   int  send_error (TAO_Transport *transport);
-
-  /// Set the state
-  void set_state (CORBA::Octet major,
-                  CORBA::Octet minor);
 
   /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Version &version,
@@ -168,10 +174,6 @@ private:
                             IOP::ServiceContextList *svc_info,
                             CORBA::Exception *x);
 
-  /// Print out a debug messages..
-  void dump_msg (const char *label,
-                 const u_char *ptr,
-                 size_t len);
 
   /// Write the locate reply header
   virtual int generate_locate_reply_header (
@@ -189,7 +191,7 @@ private:
 
   /// Thr message handler object that does reading and parsing of the
   /// incoming messages
-  TAO_GIOP_Message_Handler message_handler_;
+  TAO_GIOP_Message_Reactive_Handler message_handler_;
 
   /// Output CDR
   TAO_OutputCDR *output_;
@@ -207,11 +209,13 @@ private:
   /// A buffer that we will use to initialise the CDR stream
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
 
-  /// The generator and parser state.
-  TAO_GIOP_Message_Generator_Parser *generator_parser_;
-
   /// All the implementations of GIOP message generator and parsers
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
+
+protected:
+
+  /// The generator and parser state.
+  TAO_GIOP_Message_Generator_Parser *generator_parser_;
 };
 
 

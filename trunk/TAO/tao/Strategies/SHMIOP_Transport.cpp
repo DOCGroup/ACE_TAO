@@ -17,7 +17,7 @@
 #include "tao/debug.h"
 
 #include "tao/GIOP_Message_Lite.h"
-#include "tao/GIOP_Message_Base.h"
+#include "GIOP_Message_NonReactive_Base.h"
 
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Transport.i"
@@ -43,7 +43,7 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
+               TAO_GIOP_Message_NonReactive_Base (orb_core));
     }
 }
 
@@ -96,7 +96,6 @@ TAO_SHMIOP_Transport::recv_i (char *buf,
                                                   max_wait_time);
 }
 
-
 int
 TAO_SHMIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
                                             int block)
@@ -123,14 +122,9 @@ TAO_SHMIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
   // here.. We loop here to see whether we have read more than one
   // message in our read.
 
-  // Set the result state
-  result = 1;
-
   // See we use the reactor semantics again
-  while (result > 0)
-    {
-      result = this->process_message ();
-    }
+  result = this->process_message ();
+
 
   return result;
 }
@@ -227,18 +221,13 @@ TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
 }
 
 int
-TAO_SHMIOP_Transport::reactor_signalling (void)
-{
-  return 1;
-}
-
-int
 TAO_SHMIOP_Transport::process_message (void)
 {
   // Check whether we have messages for processing
   int retval =
     this->messaging_object_->more_messages ();
 
+  // The messages are fragmented, so we go back to the reactor.
   if (retval <= 0)
     return retval;
 
@@ -349,7 +338,7 @@ TAO_SHMIOP_Transport::process_message (void)
       return -1;
     }
 
-  return 1;
+  return 0;
 }
 
 void
