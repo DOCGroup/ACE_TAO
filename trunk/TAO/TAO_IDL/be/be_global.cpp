@@ -58,6 +58,7 @@ BE_GlobalData::BE_GlobalData (void)
     tc_support_ (I_TRUE),
     obv_opt_accessor_ (0),
     gen_impl_files_ (I_FALSE),
+    gen_impl_debug_info_ (I_FALSE),
     gen_copy_ctor_ (I_FALSE),
     gen_assign_op_ (I_FALSE),
     gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
@@ -708,6 +709,18 @@ idl_bool
 BE_GlobalData::gen_impl_files (void) const
 {
   return this->gen_impl_files_;
+}
+
+void
+BE_GlobalData::gen_impl_debug_info (idl_bool val)
+{
+  this->gen_impl_debug_info_ = val;
+}
+
+idl_bool
+BE_GlobalData::gen_impl_debug_info (void) const
+{
+  return this->gen_impl_debug_info_;
 }
 
 void

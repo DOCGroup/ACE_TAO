@@ -53,8 +53,11 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   ACE_OS::sprintf (namebuf, "%s", node->flat_name ());
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  if (be_global->gen_impl_debug_info ())
+    {
+      *os << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+    }
 
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
@@ -104,7 +107,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   *os << "//Destructor " << be_nl
       << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
-      << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
+      << be_global->impl_class_suffix () << " (void);";
 
 
   // Generate code for elements in the scope (e.g., operations).
@@ -135,7 +138,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
     }
 
 
-  *os << be_nl
+  *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
   return 0;
