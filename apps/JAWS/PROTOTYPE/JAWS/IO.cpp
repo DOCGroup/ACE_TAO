@@ -243,15 +243,12 @@ JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
   JAWS_Data_Block *db = ioh->message_block ();
   ACE_HANDLE listen_handle = db->policy ()->acceptor ()->get_handle ();
 
-  JAWS_Asynch_IO_Handler *aioh =
-    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
-
-  ACE_Asynch_Accept aa;
+  //JAWS_Asynch_IO_Handler *aioh =
+  //  ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
   size_t bytes_to_read = JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE;
 
-  if (aa.open (*(aioh->handler ()), listen_handle) == -1
-      || aa.accept (*db, bytes_to_read) == -1)
+  if (db->policy ()->acceptor ()->accept (bytes_to_read, ioh) == -1)
     ioh->accept_error ();
 }
 

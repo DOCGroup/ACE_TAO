@@ -218,6 +218,24 @@ JAWS_Asynch_Handler::~JAWS_Asynch_Handler (void)
 }
 
 void
+JAWS_Asynch_Handler::open (ACE_HANDLE h,
+                           ACE_Message_Block &mb)
+{
+  // ioh_ set from the ACT hopefully
+  this->dispatch_handler ();
+  
+  this->handler ()->mb_->copy (mb.rd_ptr (), mb.length ());
+  this->handler ()->accept_complete (h);
+}
+
+void
+JAWS_Asynch_Handler::act (const void *act_ref)
+{
+  // Set the ioh from the act
+  this->ioh_ = (JAWS_IO_Handler *) act;
+}
+
+void
 JAWS_Asynch_Handler::dispatch_handler (void)
 {
 #if 0
@@ -324,6 +342,7 @@ JAWS_Asynch_Handler::handle_transmit_file (const
 void
 JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
+  // This routine is never actually called.
   this->dispatch_handler ();
 
   if (result.success ())
