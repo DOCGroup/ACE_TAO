@@ -731,7 +731,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOT_USED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -741,7 +741,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_postactivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -751,7 +751,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_activate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -761,7 +761,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_passivate (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
@@ -771,7 +771,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ccm_remove (" << endl
-         << STRS[ENV_SNGL_SRC] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
