@@ -37,7 +37,10 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
 				      int argc,
                                       char **argv)
 {
-  this->init (orb, child_poa, argc, argv);
+  if (this->init (orb, child_poa, argc, argv) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) %p\n",
+                "TAO_Naming_Server::init"));
 }
 
 // Function to initialize the name server object under the passed ORB
@@ -87,7 +90,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                           "NameService") == 0)
 	{
           // Get the naming context ptr to NameService.
-          this->naming_context_var_ =
+          this->naming_context_ =
             this->naming_context_impl_._this (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
@@ -250,7 +253,7 @@ TAO_Naming_Server::naming_service_ior (void)
 CosNaming::NamingContext_ptr
 TAO_Naming_Server::operator -> (void) const
 {
-  return this->naming_context_var_.ptr ();
+  return this->naming_context_.ptr ();
 }
 
 // Destructor.
@@ -270,7 +273,35 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::operator -> (void) const
 {
-  return this->naming_context_var_.ptr ();
+  return this->naming_context_.ptr ();
+}
+
+int 
+TAO_Naming_Client::init (CORBA::ORB_ptr orb,
+                         int argc,
+                         char **argv)
+{
+  TAO_TRY
+    {
+      CORBA::Object_var naming_obj =
+	orb->resolve_initial_references ("NameService");
+      if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the NameService.\n"),
+			  -1);
+      this->naming_context_ =
+        CosNaming::NamingContext::_narrow (naming_obj.in (), 
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("init");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  return 0;
 }
 
 TAO_Naming_Client::TAO_Naming_Client (void)
