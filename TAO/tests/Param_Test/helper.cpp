@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "helper.h"
+#include "ace/os_include/os_ctype.h"
 
 const CORBA::ULong TEST_BUFSIZE = 128;
 
