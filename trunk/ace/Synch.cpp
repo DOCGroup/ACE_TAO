@@ -23,6 +23,65 @@ ACE_Lock::~ACE_Lock (void)
 {
 }
 
+ACE_Adaptive_Lock::ACE_Adaptive_Lock (void)
+  : lock_ (0)
+{
+}
+
+int
+ACE_Adaptive_Lock::remove (void)
+{
+  return this->lock_->remove ();
+}
+
+int
+ACE_Adaptive_Lock::acquire (void)
+{
+  return this->lock_->acquire ();
+}
+
+int
+ACE_Adaptive_Lock::tryacquire (void)
+{
+  return this->lock_->tryacquire ();
+}
+
+int
+ACE_Adaptive_Lock::release (void)
+{
+  return this->lock_->release ();
+}
+
+int
+ACE_Adaptive_Lock::acquire_read (void)
+{
+  return this->lock_->acquire_read ();
+}
+
+int
+ACE_Adaptive_Lock::acquire_write (void)
+{
+  return this->lock_->acquire_write ();
+}
+
+int
+ACE_Adaptive_Lock::tryacquire_read (void)
+{
+  return this->lock_->tryacquire_read ();
+}
+
+int
+ACE_Adaptive_Lock::tryacquire_write (void)
+{
+  return this->lock_->tryacquire_write ();
+}
+
+void
+ACE_Adaptive_Lock::dump (void) const
+{
+  //  return this->lock_->dump ();
+}
+
 ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
   : ts_obj_ (object),
     func_ (f)

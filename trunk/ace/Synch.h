@@ -90,6 +90,41 @@ public:
   // already had the lock, <errno> is set to <EBUSY>.
 };
 
+class ACE_Adaptive_Lock : public ACE_Lock
+{
+  // = TITLE
+  //    An adaptive general locking class that defers the decision of
+  //    lock type to run time.
+  //
+  // = DESCRIPTION
+  //    This class, as ACE_Lock, provide a set of general locking APIs.
+  //    However, it defers our decision of what kind of lock to use
+  //    to the run time and delegates all locking operations to the actual
+  //    lock.  Users must overwrite the constructor to initialize <lock_>.
+public:
+  virtual ~ACE_Adaptive_Lock (void) = 0;
+
+  // = Lock/unlock operations.
+
+  virtual int remove (void);
+  virtual int acquire (void);
+  virtual int tryacquire (void);
+  virtual int release (void);
+  virtual int acquire_read (void);
+  virtual int acquire_write (void);
+  virtual int tryacquire_read (void);
+  virtual int tryacquire_write (void);
+  void dump () const;
+
+protected:
+  ACE_Adaptive_Lock (void);
+  // Create and initialize create the actual lcok used in the class.
+  // The default constructor simply set the <lock_> to 0 (null).
+  // You must overwrite this method for this class to work.
+
+  ACE_Lock *lock_;
+};
+
 class ACE_Export ACE_File_Lock
 {
   // = TITLE
@@ -1336,7 +1371,7 @@ private:
 #if 0
 // The following two classes are commented out since there doesn't
 // appear to be a portable and robust means of implementing this
-// functionality across platforms. 
+// functionality across platforms.
 
 class ACE_Export ACE_Process_Condition
 {
