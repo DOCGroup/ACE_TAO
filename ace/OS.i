@@ -11832,7 +11832,7 @@ ACE_OS::strenvdup (const char *str)
 #endif /* ACE_HAS_WINCE */
 }
 
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR) && defined (ACE_WIN32)
 ACE_INLINE wchar_t *
 ACE_OS::strenvdup (const wchar_t *str)
 {
