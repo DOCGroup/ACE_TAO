@@ -1,3 +1,17 @@
+Thu May 10 14:12:42 2001  Jeff Parsons  <parsons@cs.wustli.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+          When generating the typecode for members of a struct
+          or union, the setting of the visitor's context's scope
+          to the enclosing struct or union had to be moved inside
+          the loop, and reset with each iteration. If any of the
+          members is itself a scope, it will change the context's
+          state as part of its own processing, and the next member
+          will have an incorrect scope in its context, leading to
+          a crash of the IDL compiler. Thanks to the many, many
+          ACE+TAO users who reported this crash
+
 Thu May 10 11:05:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/POA/Create_Reference/create_reference.cpp:
