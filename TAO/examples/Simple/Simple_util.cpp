@@ -198,8 +198,8 @@ Server<Servant>::run (CORBA::Environment &env)
 template <class Servant> int
 Server<Servant>::register_name (void)
 {
-  this->namingServer.init (this->orb_manager_.orb(),
-                           this->orb_manager_.child_poa ());
+  this->naming_server_.init (this->orb_manager_.orb(),
+                             this->orb_manager_.child_poa ());
   // create the name for the naming service
 
   CosNaming::Name bindName;
@@ -214,9 +214,9 @@ Server<Servant>::register_name (void)
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      namingServer->rebind (bindName,
-                            object.in(),
-                            ACE_TRY_ENV);
+      naming_server_->rebind (bindName,
+                              object.in(),
+                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Test for INS.
@@ -400,7 +400,7 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
   ACE_TRY
     {
       // Initialize the naming services.
-      if (naming_client.init (orb_.in ()) != 0)
+      if (naming_client_.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
@@ -412,7 +412,7 @@ Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &AC
       CORBA::string_dup (this->name_);
 
       CORBA::Object_var obj =
-        naming_client->resolve (server_name,
+        naming_client_->resolve (server_name,
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
