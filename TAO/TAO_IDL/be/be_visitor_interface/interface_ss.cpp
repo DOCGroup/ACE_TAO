@@ -618,18 +618,6 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor_context ctx = *this->ctx_;
 
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS);
-  be_visitor_interface_upcall_command_ss ii_visitor (&ctx);
-
-  if (node->accept (&ii_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ss::"
-                         "generate_proxy_classes - "
-                         "codegen for upcall command classes failed\n"),
-                        -1);
-    }
-
   // Strategized Proxy Broker Implementation.
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())

@@ -147,12 +147,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS:
-      {
-        be_visitor_operation_upcall_command_ss visitor (&ctx);
-        status = get_op.accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
       {
         be_visitor_operation_tie_sh visitor (&ctx);
@@ -319,12 +313,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
       {
         be_visitor_operation_smart_proxy_cs visitor (&ctx);
-        status = set_op.accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_UPCALL_COMMAND_SS:
-      {
-        be_visitor_operation_upcall_command_ss visitor (&ctx);
         status = set_op.accept (&visitor);
         break;
       }

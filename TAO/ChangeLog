@@ -41,9 +41,7 @@ Thu Nov 11 20:41:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Enabled and fixed support for generation of "SArg_Traits"
 	  template specializations in generated skeleton sources
 
-	* TAO_IDL/be/be_visitor_interface/upcall_command_ss.cpp:
 	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
-	* TAO_IDL/be_include/be_visitor_interface/upcall_command_ss.h:
 	* TAO_IDL/be_include/be_visitor_operation/upcall_command_ss.h:
 
 	  New visitors that generate operation-specific concrete
@@ -55,12 +53,8 @@ Thu Nov 11 20:41:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Removed remaining vestiges of the now non-existent interceptor
 	  related visitors.
 
-	* TAO_IDL/be/be_visitor_interface.cpp:
 	* TAO_IDL/be/be_visitor_operation.cpp:
 	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be_include/be_visitor_interface.h:
 	* TAO_IDL/be_include/be_visitor_operation.h:
 
 	  Likewise.
