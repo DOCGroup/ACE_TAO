@@ -66,6 +66,141 @@ private:
   // Method that is going to be invoked.
 };
 
+/////////////////////////////
+// Unary functor templates //
+/////////////////////////////
+
+template <class OPERAND>
+class ACE_Unary_Functor_Base
+{
+  // = TITLE
+  //    Defines a class template that allows us to invoke a function object
+  //    over a single non-const parameterized type without knowing anything 
+  //    about the function and operand objects except their types.
+  //
+  // = DESCRIPTION
+  //    This class declares an interface to execute a unary operation over a
+  //    single object of the non-const paramterized type.  A class can invoke 
+  //    such operation without knowing anything about it, or how it was 
+  //    implemented.
+  //
+public:
+
+  virtual ~ACE_Unary_Functor_Base () {};
+  // Virtual destructor.
+
+  virtual int execute (OPERAND &operand) = 0;
+  // Invokes the function object.
+
+  virtual ACE_Unary_Functor_Base * clone () = 0;
+  // Creates another object of the same type.
+};
+
+template <class OPERAND>
+class ACE_Const_Unary_Functor_Base
+{
+  // = TITLE
+  //    Defines a class template that allows us to invoke a function object
+  //    over a single parameterized type without knowing anything about 
+  //    the function and operand objects except their types.
+  //
+  // = DESCRIPTION
+  //    This class declares an interface to execute a unary operation over a
+  //    single object of the paramterized type.  A class can invoke such 
+  //    an operation without knowing anything about it, or its implementation.
+  //
+public:
+
+  virtual ~ACE_Const_Unary_Functor_Base () {};
+  // Virtual destructor.
+
+  virtual int execute (const OPERAND &operand) = 0;
+  // Invokes the function object.
+
+  virtual ACE_Const_Unary_Functor_Base * clone () = 0;
+  // Creates another object of the same type.
+};
+
+/////////////////////////////
+// Binary functor templates //
+/////////////////////////////
+
+template <class OPERAND1, class OPERAND2>
+class ACE_Binary_Functor_Base
+{
+  // = TITLE
+  //    Defines a class template that allows us to invoke a binary function 
+  //    object over two non-const parameterized types without knowing anything 
+  //    about the function and operand objects except their types.
+  //
+  // = DESCRIPTION
+  //    This class declares an interface to execute a binary operation over two
+  //    objects of the paramterized non-const types.  A class can invoke such 
+  //    an operation without knowing anything about it, or its implementation.
+  //
+public:
+
+  virtual ~ACE_Binary_Functor_Base () {};
+  // Virtual destructor.
+
+  virtual int execute (OPERAND1 &operand1, OPERAND2 &operand2) = 0;
+  // Invokes the function object.
+
+  virtual ACE_Binary_Functor_Base * clone () = 0;
+  // Creates another object of the same type.
+};
+
+template <class OPERAND1, class OPERAND2>
+class ACE_Const_Binary_Functor_Base
+{
+  // = TITLE
+  //    Defines a class template that allows us to invoke a binary function 
+  //    object over two parameterized types without knowing anything about 
+  //    the function and operand objects except their types.
+  //
+  // = DESCRIPTION
+  //    This class declares an interface to execute a binary operation over two
+  //    objects of the paramterized types.  A class can invoke such 
+  //    an operation without knowing anything about it, or its implementation.
+  //
+public:
+
+  virtual ~ACE_Const_Binary_Functor_Base () {};
+  // Virtual destructor.
+
+  virtual int execute (const OPERAND1 &operand1, const OPERAND2 &operand2) = 0;
+  // Invokes the function object.
+
+  virtual ACE_Const_Binary_Functor_Base * clone () = 0;
+  // Creates another object of the same type.
+};
+
+
+template <class OPERAND1, class OPERAND2>
+class ACE_Less_Than_Functor : 
+  public ACE_Const_Binary_Functor_Base<OPERAND1, OPERAND2>
+{
+  // = TITLE
+  //    Defines a class template that allows us to invoke a binary less than 
+  //    function over two parameterized types without knowing anything about 
+  //    the function and operand objects except their types.
+  //
+  // = DESCRIPTION
+  //    This class depends on the definition 
+  //    objects of the paramterized types.  A class can invoke such 
+  //    an operation without knowing anything about it, or its implementation.
+  //
+public:
+
+  virtual int execute (const OPERAND1 &operand1, const OPERAND2 &operand2);
+  // Invokes the function object.
+
+  virtual 
+    ACE_Const_Binary_Functor_Base<OPERAND1, OPERAND2>
+	  * clone ();
+  // Creates another object of the same type.
+};
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_T.i"
