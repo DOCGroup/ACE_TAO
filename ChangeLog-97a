@@ -1,5 +1,9 @@
 Mon Feb 24 20:28:10 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.h: use signed __int64 for ACE_hrtime_t because VC++
+	  won't convert unsigned __int64 to double.  Thanks to Irfan
+	  <irfan@cs.wustl.edu> for reporting this.
+
 	* include/makeinclude/platform_{irix5.3_g++,linux*,m88k,
 	  osf1_4.0_g++,sco-nothread,sunos*g++,unixware_g++}.GNU:
 	  changed C++ compiler (CXX) from gcc to g++ so that libg++
