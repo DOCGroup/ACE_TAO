@@ -424,7 +424,7 @@ public:
   // Explicitly destroy the mutex.
 
   int acquire (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire lock ownership (wait on queue if necessary).
 
   int tryacquire (void);
   // Conditionally acquire lock (i.e., don't wait on queue).  Returns
@@ -432,7 +432,7 @@ public:
   // the lock, <errno> is set to <EBUSY>.
 
   int release (void);
-  // Release lock and unblock a thread at head of priority queue.
+  // Release lock and unblock a thread at head of queue.
 
   int acquire_read (void);
   // Acquire mutex ownership.  This calls <acquire> and is only
@@ -479,8 +479,9 @@ private:
 
 class ACE_Export ACE_Process_Mutex
   // = TITLE
-  //     ACE_Mutex wrapper (valid in same process, as well as across
-  //     processes).
+  //     A wrapper for mutexes that can be used across processes on
+  //     the same host machine, as well as within a process, of
+  //     course.
 {
 public:
   ACE_Process_Mutex (LPCTSTR name = 0,
@@ -493,7 +494,7 @@ public:
   // Explicitly destroy the mutex.
 
   int acquire (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire lock ownership (wait on queue if necessary).
 
   int tryacquire (void);
   // Conditionally acquire lock (i.e., don't wait on queue).  Returns
@@ -501,13 +502,13 @@ public:
   // the lock, <errno> is set to <EBUSY>.
 
   int release (void);
-  // Release lock and unblock a thread at head of priority queue.
+  // Release lock and unblock a thread at head of queue.
 
   int acquire_read (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire lock ownership (wait on queue if necessary).
 
   int acquire_write (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire lock ownership (wait on queue if necessary).
 
   int tryacquire_read (void);
   // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
@@ -544,13 +545,54 @@ class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
 {
 public:
   ACE_RW_Process_Mutex (LPCTSTR name = 0,
-			void *arg = 0);
+                        void *arg = 0);
+  // Create a readers/writer <Process_Mutex>, passing in the optional
+  // <name>.
+
+  ~ACE_RW_Process_Mutex (void);
+
+  int remove (void);
+  // Explicitly destroy the mutex.
+
+  int acquire (void);
+  // Acquire lock ownership (wait on queue if necessary).
+
+  int tryacquire (void);
+  // Conditionally acquire lock (i.e., don't wait on queue).  Returns
+  // -1 on failure.  If we "failed" because someone else already had
+  // the lock, <errno> is set to <EBUSY>.
+
+  int release (void);
+  // Release lock and unblock a thread at head of queue.
+
+  int acquire_read (void);
+  // Acquire lock ownership (wait on queue if necessary).
+
+  int acquire_write (void);
+  // Acquire lock ownership (wait on queue if necessary).
+
+  int tryacquire_read (void);
+  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
+  // failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
+
+  int tryacquire_write (void);
+  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
+  // failure.  If we "failed" because someone else already had the
+  // lock, <errno> is set to <EBUSY>.
+
+  const ACE_File_Lock &lock (void) const;
+  // Return the underlying lock.
 
   void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+private:
+  ACE_File_Lock lock_;
+  // We need this to get the readers/writer semantics...
 };
 
 class ACE_Null_Barrier
@@ -848,7 +890,7 @@ public:
   // Explicitly destroy the mutex.
 
   int acquire (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
+  // Acquire lock ownership (wait on queue if necessary).
 
   int tryacquire (void);
   // Conditionally acquire lock (i.e., don't wait on queue).  Returns
@@ -856,7 +898,7 @@ public:
   // the lock, <errno> is set to <EBUSY>.
 
   int release (void);
-  // Release lock and unblock a thread at head of priority queue.
+  // Release lock and unblock a thread at head of queue.
 
   int acquire_read (void);
   // Acquire mutex ownership.  This calls <acquire> and is only here

@@ -1,3 +1,13 @@
+Sat Nov 29 13:12:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch: Conditionally inlined all the ACE_Process_Mutex
+ 	  wrapper calls and moved them into the Synch.i file.  I'm not
+ 	  sure why there weren't here before.
+
+	* ace/Synch: Reimplemented ACE_RW_Process_Mutex to use
+ 	  ACE_File_Lock, which provides the proper readers/writer
+ 	  semantics that had been lacking in the previous implementation.
+
 Fri Nov 28 04:25:23 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace: Removed redundant trailing commas from

@@ -82,64 +82,14 @@ ACE_Process_Mutex::~ACE_Process_Mutex (void)
   delete this->lock_;
 }
 
-// Explicitly destroy the mutex.
-int
-ACE_Process_Mutex::remove (void)
-{
-  return this->lock_->remove ();
-}
-
-// Acquire lock ownership (wait on priority queue if necessary).
-int
-ACE_Process_Mutex::acquire (void)
-{
-  return this->lock_->acquire ();
-}
-
-// Conditionally acquire lock (i.e., don't wait on queue).
-int
-ACE_Process_Mutex::tryacquire (void)
-{
-  return this->lock_->tryacquire ();
-}
-
-// Release lock and unblock a thread at head of priority queue.
-int
-ACE_Process_Mutex::release (void)
-{
-  return this->lock_->release ();
-}
-
-// Acquire lock ownership (wait on priority queue if necessary).
-int
-ACE_Process_Mutex::acquire_read (void)
-{
-  return this->lock_->acquire_read ();
-}
-
-// Acquire lock ownership (wait on priority queue if necessary).
-int ACE_Process_Mutex::acquire_write (void)
-{
-  return this->lock_->acquire_write ();
-}
-
-// Conditionally acquire a lock (i.e., won't block).
-int
-ACE_Process_Mutex::tryacquire_read (void)
-{
-  return this->lock_->tryacquire_read ();
-}
-
-// Conditionally acquire a lock (i.e., won't block).
-int
-ACE_Process_Mutex::tryacquire_write (void)
-{
-  return this->lock_->tryacquire_write ();
-}
-
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (LPCTSTR name,
                                             void *arg)
-  : ACE_Process_Mutex (name, arg)
+  : lock_ (name, arg)
+{
+// ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
+}
+
+ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex (void)
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
 }
@@ -148,7 +98,9 @@ void
 ACE_RW_Process_Mutex::dump (void) const
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::dump");
-  ACE_Process_Mutex::dump ();
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  this->lock_.dump ();
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 void
