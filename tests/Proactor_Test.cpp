@@ -1599,7 +1599,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
       proactor_type = DEFAULT;        // Proactor type = default
 #endif
       threads = 3;                    // size of Proactor thread pool
+
+#if defined(__sgi) || defined (ACE_LINUX_COMMON_H)
+      ACE_DEBUG (( LM_DEBUG,
+                   "Weak AIO implementation, test will work with 1 client"));
+      senders = 1;                   // number of senders
+#else
       senders = 20;                   // number of senders
+#endif   
+
       loglevel = 1;                   // log level : 0 full/ 1 only errors
       seconds = 20;                   // time to run in seconds
       return 0;
