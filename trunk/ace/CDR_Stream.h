@@ -704,7 +704,7 @@ public:
   //   CDR stream from a socket or file.
 
   int grow (size_t newsize);
-  // Grow the internal buffer, reset rd_ptr() to the first byte in the 
+  // Grow the internal buffer, reset rd_ptr() to the first byte in the
   // new buffer that is properly aligned, and set wr_ptr() to
   // rd_ptr() + newsize
 
@@ -712,6 +712,15 @@ public:
   // After reading and partially parsing the contents the user can
   // detect a change in the byte order, this method will let him
   // change it.
+
+  void reset (const ACE_Message_Block *data,
+              int byte_order);
+  // Re-initialize the CDR stream, copying the contents of the chain
+  // of message_blocks starting from <data>.
+
+  ACE_Message_Block * steal_contents (void);
+  // Re-initialize the CDR stream, copying the contents of the chain
+  // of message_blocks starting from <data>.
 
   char* rd_ptr (void);
   // Returns the current position for the rd_ptr....

@@ -580,32 +580,12 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
 
 ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
                             int byte_order)
-  : start_ (ACE_CDR::total_length (data, 0) + ACE_CDR::MAX_ALIGNMENT),
- // @@ We may need allocators for the previous line, and the size may
- // be a standard ACE_*CDR size...
-    do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
+  : start_ (),
     good_bit_ (1),
     char_translator_ (0),
     wchar_translator_ (0)
 {
-  // We must copy the contents of <data> into the new buffer, but
-  // respecting the alignment.
-  ptr_arith_t curalign =
-    ptr_arith_t(data->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  ptr_arith_t tmpalign =
-    ptr_arith_t(this->start_.rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  int offset = curalign - tmpalign;
-  if (offset < 0)
-    offset += ACE_CDR::MAX_ALIGNMENT;
-  this->start_.rd_ptr (offset);
-  this->start_.wr_ptr (offset);
-
-  for (const ACE_Message_Block* i = data;
-       i != 0;
-       i = i->cont ())
-    {
-      this->start_.copy (i->rd_ptr (), i->length ());
-    }
+  this->reset (data, byte_order);
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
@@ -993,8 +973,6 @@ ACE_InputCDR::skip_bytes (size_t len)
   return 0;
 }
 
-
-
 int
 ACE_InputCDR::grow (size_t newsize)
 {
@@ -1004,4 +982,43 @@ ACE_InputCDR::grow (size_t newsize)
   ACE_CDR::mb_align (&this->start_);
   this->start_.wr_ptr (newsize);
   return 0;
+}
+
+void
+ACE_InputCDR::reset (const ACE_Message_Block* data,
+                     int byte_order)
+{
+  this->reset_byte_order (byte_order);
+  this->start_.size (ACE_CDR::total_length (data, 0)
+                     + ACE_CDR::MAX_ALIGNMENT);
+
+  // We must copy the contents of <data> into the new buffer, but
+  // respecting the alignment.
+  ptr_arith_t curalign =
+    ptr_arith_t(data->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+  ptr_arith_t tmpalign =
+    ptr_arith_t(this->start_.rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+  int offset = curalign - tmpalign;
+  if (offset < 0)
+    offset += ACE_CDR::MAX_ALIGNMENT;
+  this->start_.rd_ptr (offset);
+  this->start_.wr_ptr (offset);
+
+  for (const ACE_Message_Block* i = data;
+       i != 0;
+       i = i->cont ())
+    {
+      this->start_.copy (i->rd_ptr (), i->length ());
+    }
+}
+
+ACE_Message_Block*
+ACE_InputCDR::steal_contents (void)
+{
+  ACE_Message_Block* block =
+    this->start_.clone ();
+  this->start_.data_block (block->data_block ()->clone ());
+  ACE_CDR::mb_align (&this->start_);
+
+  return block;
 }
