@@ -21,6 +21,7 @@
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
 // particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
 #include "ace/Basic_Types.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -265,15 +266,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #if defined (major)
 #undef major
 #endif /* major*/
-
-#if !defined (ACE_NESTED_CLASS)
-#if defined (ACE_HAS_BROKEN_NAMESPACES)
-#define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS
-#else /* !ACE_HAS_BROKEN_NAMSPACES*/
-#define ACE_NESTED_CLASS(SCOPE,CLASS) SCOPE::CLASS
-#endif /* ACE_HAS_BROKEN_NAMSPACES*/
-#endif /*ACE_NESTED_CLASS */
-
 
 #if !defined (TAO_EXPORT_NESTED_CLASSES) \
     && defined (ACE_EXPORT_NESTED_CLASSES)

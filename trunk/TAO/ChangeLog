@@ -1,3 +1,64 @@
+Mon Mar 10 08:10:02 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
+
+	  Fixed unused argument warning on platforms where
+	  ACE_HAS_IP_MULTICAST is not defined.
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+	  (TAO_Log_Constraint_Visitor):
+
+	  Added missing semi-colon for the ACE_LACKS_LONGLONG_T case.
+	  Fixes a syntax error.
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (copy_attributes):
+
+	  Return value of get_max_size() should be assigned to a
+	  CORBA::ULongLong, not CORBA::ULong.
+
+	  (remove_old_records):
+	  (check_capacity_alarm_threshold)
+	  (reset_capacity_alarm_threshold):
+
+	  Corrected CORBA::LongLong/ULongLong mismatches.
+
+	  Use the ACE_UINT64_DBLCAST_ADAPTER when casting a
+	  CORBA::ULongLong to a double to work around problems when
+	  CORBA::ULongLong is an emulated type.
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (purge_old_records):
+
+	  Do not explicitly cast integers to a CORBA::ULongLong.  That
+	  breaks on platforms where 64 bit integers are emulated.
+
+	  Changed loop variable type to match the type used in the
+	  comparison that dictates when the loop should stop,
+	  i.e. "CORBA::ULong" -> "CORBA::ULongLong".
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (retrieve):
+
+	  Corrected format specifier for platforms that lack 64 bit
+	  integer support.
+
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp (get_percentage_full):
+
+	  Explicitly mark the integer literal used in a multiplication
+	  with a CORBA::ULongLong variable as unsigned since there is no
+	  operator that multiplies a signed integer with a
+	  CORBA::ULongLong on platforms where the latter is emulated,
+	  i.e. no native 64 bit unsigned integer exists.
+
+	* tao/orbconf.h:
+
+	  Removed redefinition of ACE_NESTED_CLASS macro, and include
+	  "ace/Global_Macros.h" instead.  It is already defined in that
+	  header.
+
+	* tests/Nested_Upcall_Crash/server.cpp (main):
+
+	  Cast the return value of ACE_OS::gethrtime() to ACE_RANDR_TYPE
+	  to fix an error on VxWorks builds.
+
 Mon Mar 10 08:22:01 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FaultTolerance/IOGR/Manager.bor: Fixed this BCB

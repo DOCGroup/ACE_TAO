@@ -7,7 +7,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(Nested_Upcall_Crash, server, "$Id$")
+ACE_RCSID (Nested_Upcall_Crash,
+           server,
+           "$Id$")
 
 const char *ior_output_file = "test.ior";
 ACE_RANDR_TYPE seed;
@@ -80,14 +82,15 @@ main (int argc, char *argv[])
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
+      policy_current->set_policy_overrides (policies,
+                                            CORBA::ADD_OVERRIDE
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      seed = ACE_OS::gethrtime();
+      seed = (ACE_RANDR_TYPE) ACE_OS::gethrtime ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
