@@ -1,3 +1,12 @@
+Sun Mar 04 23:00:59 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.h (run):
+
+	  Updated comments for the ORB::run() method.  This method, as
+	  implemented by TAO, no longer returns an "int" error status (see
+	  Carlos' ChangeLog entry from Feb 13).  The CORBA spec calls for
+	  a "void" return type.
+
 Sun Mar 04 21:43:51 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/CosEvent_Service/Makefile:
