@@ -1,3 +1,15 @@
+Fri Mar  7 08:51:56 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/StringProcessor.pm:
+
+          Reverted my change from "Fri Mar  7 06:35:09 2003  Chad Elliott"
+          to Parser.pm and factored out code from that module and Driver
+          into a new module, StringProcessor.pm.  Driver and Parser now
+          inherit from StringProcessor.
+
 Fri Mar  7 07:19:46 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/apps/svcconf/svcconf.mpc:
