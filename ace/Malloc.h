@@ -105,7 +105,7 @@ public:
 
 #if (ACE_MALLOC_PADDING > 1)
 #define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
-                                  (sizeof (ACE_Malloc_Header)) / sizeof (long)))
+                                  (sizeof (ACE_MALLOC_HEADER_PTR) + sizeof (size_t)) / sizeof (long)))
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 ? 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING > 0 */
 
@@ -193,13 +193,13 @@ public:
 #if defined (ACE_HAS_MALLOC_STATS)
   // Keep statistics about ACE_Malloc state and performance.
   ACE_Malloc_Stats malloc_stats_;
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
-                                      + sizeof (ACE_Malloc_Header *) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
+                                      + sizeof (ACE_MALLOC_HEADER_PTR) \
                                       + MAXNAMELEN  \
                                       + sizeof (ACE_Malloc_Stats)))
 #else
-#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_Name_Node *) \
-                                      + sizeof (ACE_Malloc_Header *) \
+#define ACE_CONTROL_BLOCK_SIZE ((int)(sizeof (ACE_NAME_NODE_PTR) \
+                                      + sizeof (ACE_MALLOC_HEADER_PTR *) \
                                       + MAXNAMELEN))
 #endif /* ACE_HAS_MALLOC_STATS */
 
