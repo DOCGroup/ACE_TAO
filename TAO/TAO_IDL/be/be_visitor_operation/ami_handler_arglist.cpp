@@ -125,7 +125,7 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << " (" << be_idt << be_idt << be_nl;
+  *os << " (" << be_idt << be_idt << "\n";
 
   // First argument is a the return value of the operation.
 
@@ -147,6 +147,9 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
 
   be_visitor_context ctx = *this->ctx_;
 
+  // Root scope necessary to return user defined type, too.
+  ctx.scope(0);
+
   // Set the state.
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RESULT_ARG);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -165,7 +168,7 @@ be_visitor_operation_ami_handler_arglist::visit_operation (be_operation *node)
   visitor = 0;
 
   if (result_printed)
-    *os << ", " << be_nl;
+    *os << ",\n";
 
   // Rest of the arguments.
 
@@ -269,7 +272,9 @@ be_visitor_operation_ami_handler_arglist::visit_argument (be_argument *node)
                          "Bad interface\n"),
                         -1);
     }
-  ctx.scope (intf); // set new scope
+  // root scope for user defined types you allways need the root-scope
+  // to use them for the ReplyHandler-Class
+  ctx.scope (0); // set new scope
 
   switch (this->ctx_->state ())
     {
