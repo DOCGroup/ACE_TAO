@@ -1,3 +1,18 @@
+Tue Mar  5 10:52:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp
+	  (create_policy):
+
+	  Enabled support for creation of the
+	  SecurityLevel2::InvocationCredentialsPolicy.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+
+	  Include "tao/debug.h" to pull in "TAO_debug_level" declaration
+	  in minimum CORBA builds.  Thanks to Stan Sosnovsky
+	  <sosnovsky_stan@emc.com> for pointing out the problem.
+
 Tue Mar  5 12:52:30 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Forwarder.cpp:

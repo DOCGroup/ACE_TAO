@@ -912,7 +912,8 @@ realclean: clean
  SecurityC.i \
  SecurityLevel1C.i \
  SecurityLevel2C.i \
- Security/QOPPolicy.h Security/EstablishTrustPolicy.h
+ Security/QOPPolicy.h Security/EstablishTrustPolicy.h \
+ Security/InvocationCredentialsPolicy.h
 
 .obj/Security_Current.o .obj/Security_Current.so .shobj/Security_Current.o .shobj/Security_Current.so: Security/Security_Current.cpp \
  Security/Security_Current.h \

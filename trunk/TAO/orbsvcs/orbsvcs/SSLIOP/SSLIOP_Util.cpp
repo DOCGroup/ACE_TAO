@@ -12,6 +12,7 @@ ACE_RCSID (TAO_SSLIOP,
 #include "SSLIOP_Current.h"
 
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 
 int
