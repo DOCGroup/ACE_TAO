@@ -17,10 +17,10 @@
 #include "ace/OS.h"
 
 // Define old style feature selector.
-#define _POSIX_SOURCE
+//#define _POSIX_SOURCE
 
 // Use 9/93 POSIX.1 .2 and .4 definitions only.
-#define _POSIX_C_SOURCE 199309L
+//#define _POSIX_C_SOURCE 199309L
 
 #include <unistd.h>
 #include <stdio.h>
@@ -50,30 +50,32 @@ int have_asynchio (void)
 
   // Call sysconf to find out runtime values.
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
               sysconf(_SC_AIO_LISTIO_MAX),
               errno));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of AIO_MAX is %d, errno = %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of AIO_MAX is %d, errno = %d\n",
               sysconf (_SC_AIO_MAX),
               errno));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of _POSIX_ASYNCHRONOUS_IO is %d, errno = %d\n",
-              sysconf (_SC_ASYNCHRONOUS_IO)));
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of _POSIX_ASYNCHRONOUS_IO is %d, errno = %d\n",
+              sysconf (_SC_ASYNCHRONOUS_IO),
+              errno));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of _POSIX_REALTIME_SIGNALS is %d, errno = %d\n",
-              sysconf (_SC_REALTIME_SIGNALS)));
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of _POSIX_REALTIME_SIGNALS is %d, errno = %d\n",
+              sysconf (_SC_REALTIME_SIGNALS),
+              errno));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of RTSIG_MAX %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of RTSIG_MAX %d\n",
               sysconf (_SC_RTSIG_MAX)));
   return 1;
 }
@@ -101,7 +103,7 @@ int have_asynchio (void)
 {
   int i, res, num_ok;
 
-  ACE_DEBUG ((LM_DEBUG,
+  ACE_ERROR ((LM_DEBUG,
               "_POSIX_ASYNC_IO_ is not defined.."));
   ACE_DEBUG ((LM_DEBUG,
               "AIO might *not* be supported everwhere.."));
@@ -112,30 +114,30 @@ int have_asynchio (void)
 
   // Call sysconf to find out runtime values.
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
               sysconf(_SC_AIO_LISTIO_MAX),
               errno));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of AIO_MAX is %d, errno = %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of AIO_MAX is %d, errno = %d\n",
               sysconf (_SC_AIO_MAX),
               errno));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of _POSIX_ASYNCHRONOUS_IO is %d, errno = %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of _POSIX_ASYNCHRONOUS_IO is %d\n",
               sysconf (_SC_ASYNCHRONOUS_IO)));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of _POSIX_REALTIME_SIGNALS is %d, errno = %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of _POSIX_REALTIME_SIGNALS is %d\n",
               sysconf (_SC_REALTIME_SIGNALS)));
 
   errno = 0;
-  ACE_DEBUG ((LM_DEBUG,
-              "Runtime value of RTSIG_MAX %d\n",
+  ACE_ERROR ((LM_ERROR,
+              "(%p):Runtime value of RTSIG_MAX %d\n",
               sysconf (_SC_RTSIG_MAX)));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -158,12 +160,12 @@ int have_asynchio (void)
       else if (res < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%p:Asynch I/O is not allowed >:-<"));
+                      "(%p):Asynch I/O is not allowed >:-<"));
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Asynch. I/O is allowed :-), res = %d, errno = %d\n",
+          ACE_ERROR ((LM_ERROR,
+                      "(%p):Asynch. I/O is allowed :-), res = %d, errno = %d\n",
                       res,
                       errno));
           num_ok++;
