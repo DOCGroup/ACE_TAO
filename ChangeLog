@@ -1,3 +1,12 @@
+Fri Jan  9 12:23:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set dummy_label to 0. This dummy_label is used by the TAO OBV
+          tests which don't compile because of some bugs. The idea was
+          good, but when dummy_label is not in this file it is set by
+          default to 1. When the OBV tests work again, just remove the
+          requires from the corresponding MPC files.
+
 Fri Jan  9 12:14:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_auto_compile.pl:
@@ -6,7 +15,7 @@ Fri Jan  9 12:14:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Fri Jan  9 10:15:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_auto_compile.pl:
-          When using MPC with Static builds we don't have dependencies 
+          When using MPC with Static builds we don't have dependencies
           between the libraries in the generated dsw's. The build order
           is then handled in this file, but when using MPC we use generate
           different filenames than previously. Added the option -MPC, when
