@@ -222,7 +222,8 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->refcount_;
-  if (this->refcount_ == 0)
+  if (this->refcount_ == 0 &&
+      this->is_registered ())
     {
       // Set the flag to indicate that it is no longer registered with
       // the reactor, so that it isn't included in the set that is
