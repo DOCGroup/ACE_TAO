@@ -5741,7 +5741,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 }
 
 ACE_INLINE size_t
-ACE_OS::strftime (const char *s, size_t maxsize, const char *format,
+ACE_OS::strftime (char *s, size_t maxsize, const char *format,
                   const struct tm *timeptr)
 {
   return ::strftime (s, maxsize, format, timeptr);
