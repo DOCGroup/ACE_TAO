@@ -34,10 +34,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 /// Policy factory for all FTCORBA related policies.
-class TAO_FT_Export TAO_FT_ClientPolicyFactory :
+class TAO_FT_ClientORB_Export TAO_FT_ClientPolicyFactory :
   public PortableInterceptor::PolicyFactory,
   public TAO_Local_RefCounted_Object
 {
