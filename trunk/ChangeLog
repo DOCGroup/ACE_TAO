@@ -1,3 +1,9 @@
+Sat Jun 19 13:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Signals/SigInfo.cpp:
+          Use ACE_DEBUG to output a message that fork is needed, and
+          don't include ace/streams.h, it is not needed
+
 Sat Jun 19 13:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.h:
