@@ -20,6 +20,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 #if defined (_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -100,7 +101,7 @@ protected:
 };
 
 #if defined (_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* COSEVENT_SERVICE_H */

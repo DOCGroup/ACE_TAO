@@ -71,7 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //
 
 #if defined (ACE_WIN32)
-#pragma    warning(disable:4250)
+#pragma warning(push)
+#pragma warning(disable:4250)
 #endif /* ACE_WIN32 */
 
 // ACE includes
@@ -134,4 +135,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "be_interface_strategy.h" // strategy for interface nodes
 
-#endif           // _BE_BE_HH
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+#endif           /* _BE_BE_HH */

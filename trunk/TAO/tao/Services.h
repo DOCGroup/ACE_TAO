@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -539,7 +540,7 @@ CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ServiceInformation::_tao_seq_S
 
 
 #if defined(_MSC_VER)
-#pragma warning(default:4250)
+#pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_SERVICES_H */

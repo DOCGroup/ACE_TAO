@@ -28,6 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -76,5 +77,9 @@ private:
   CORBA::ULong max_rec_list_len_;
   // Max rec list length.
 };
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #endif /* TLS_ITERATOR_H */
