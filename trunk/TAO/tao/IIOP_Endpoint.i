@@ -10,15 +10,14 @@ TAO_IIOP_Endpoint::object_addr (void) const
   //   2. The DNS setup may have changed dynamically.
   //   ...etc..
 
-  // We need to modify the object_addr_ in this method.  Do so using a
-  // non-const copy of the <this> pointer.
-  TAO_IIOP_Endpoint *endpoint =
-    ACE_const_cast (TAO_IIOP_Endpoint *,
-                    this);
-
   // Double checked locking optimization.
   if (this->object_addr_.get_type () != AF_INET)
     {
+      // We need to modify the object_addr_ in this method.  Do so
+      // using a non-const copy of the <this> pointer.
+      TAO_IIOP_Endpoint *endpoint =
+        ACE_const_cast (TAO_IIOP_Endpoint *, this);
+
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
                         endpoint->addr_lookup_lock_,
