@@ -1,3 +1,14 @@
+Thu Nov 11 14:55:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDLbe/be_visitor_valuetype/field_cs.cpp:
+        
+          In accessing or marshaling valuetype members that are interfaces
+          changed calls to _duplicate() and marshal() to use the
+          corresponding methods in TAO::Obref_Traits<>, in case the
+          interface in question has been forward declared but not
+          yet defined.
+
 Wed Nov 10 11:25:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
