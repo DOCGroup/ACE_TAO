@@ -1,3 +1,10 @@
+Wed Apr 21 10:33:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	* DnC/DnC_*:
+
+	Switched back the the OMG IDL DnC file.
+
 Tue Apr 20 21:37:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * Dnc/Config_Handlers/Config_Handlers.mpc:
