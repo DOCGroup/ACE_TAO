@@ -128,7 +128,7 @@ CServerApp::~CServerApp()
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      the_shutdown_orb->shutdown (0, // wait_for_completion
+      the_shutdown_orb->shutdown (0 // wait_for_completion
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

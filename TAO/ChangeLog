@@ -1,3 +1,8 @@
+Tue May 18 09:35:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/NamingViewer/BindDialog.h:
+          Fixed include path
+
 Mon May 17 17:33:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_union.cpp:
@@ -6,7 +11,7 @@ Mon May 17 17:33:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
         * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
         * TAO_IDL/be_include/be_union.h:
-        
+
           Removed generation of empty union default case (as distinguished
           from the non-empty explicit default case when the IDL union
           has an explicit default case label) when the discriminator
