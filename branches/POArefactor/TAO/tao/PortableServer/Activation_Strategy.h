@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Thread_Strategy.h
+ *  @file Activation_Strategy.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_THREAD_STRATEGY_H
-#define TAO_THREAD_STRATEGY_H
+#ifndef TAO_ACTIVATION_STRATEGY_H
+#define TAO_ACTIVATION_STRATEGY_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -36,15 +36,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Thread_Strategy :
+    class TAO_PortableServer_Export Activation_Strategy :
        public virtual Policy_Strategy
     {
     public:
       virtual ~Thread_Strategy (void);
-
-      virtual void enter () = 0;
-
-      virtual void exit () = 0;
 
       void init(CORBA::PolicyList *policy_list)
       {
@@ -52,41 +48,20 @@ namespace TAO
       }
     };
 
-    class TAO_PortableServer_Export Single_Thread_Strategy :
-       public virtual Thread_Strategy
+    class TAO_PortableServer_Export Implicit_Activation_Strategy :
+       public virtual Activation_Strategy
     {
     public:
-      virtual ~Single_Thread_Strategy (void);
-
-      virtual void enter ()
-      {
-        lock.acquire();
-      }
-
-      virtual void exit ()
-      {
-        lock.release();
-      }
+      virtual ~Implicit_Activation_Strategy (void);
 
     private:
-      TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };
 
-    class TAO_PortableServer_Export ORBControl_Thread_Strategy :
-       public virtual Thread_Strategy
+    class TAO_PortableServer_Export Explicit_Activation_Strategy :
+       public virtual Activation_Strategy
     {
     public:
-      virtual ~ORBControl_Thread_Strategy (void);
-
-      virtual void enter ()
-      {
-        // Noop
-      }
-
-      virtual void exit ()
-      {
-        // Noop
-      }
+      virtual ~Explicit_Activation_Strategy (void);
     };
   }
 }
@@ -94,4 +69,4 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_THREAD_STRATEGY_H */
+#endif /* TAO_ACTIVATION_STRATEGY_H */
