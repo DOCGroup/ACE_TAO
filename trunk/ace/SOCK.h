@@ -74,8 +74,6 @@ protected:
 	    int protocol_family, 
             int protocol = 0,
 	    int reuse_addr = 0);
-  ACE_SOCK (int type, int protocol_family, 
-            int protocol = 0, int reuse_addr = 0);
   // Constructor with arguments to call the <socket> system call.
 };
 
