@@ -10,7 +10,8 @@ Wed Apr 21 16:41:08 1999  David L. Levine  <levine@cs.wustl.edu>
           take forever on LynxOS 3.0.0.
 
         * tests/run_tests.sh: enabled Reactor_Performance_Test,
-          Priority_Reactor_Test, and Time_Service_Test on LynxOS.
+          Priority_Reactor_Test, Time_Service_Test, and Tokens_Test
+          on LynxOS.
 
 Wed Apr 21 16:35:21 1999  Steve Huston  <shuston@riverace.com>
 
