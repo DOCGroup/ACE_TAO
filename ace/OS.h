@@ -2340,13 +2340,7 @@ public:
 
   // = A set of wrappers for miscellaneous operations.
   static int atoi (const char *s);
-  
-  // Include if_arp so that getmacaddr can use the
-  // arp structure.
-#   if defined (sun)
-#     include /**/ <net/if_arp.h>
-#   endif
-  
+
   struct macaddr_node_t {
     unsigned char node[6];
   };
