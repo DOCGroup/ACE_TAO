@@ -1,3 +1,12 @@
+Sun Jan 16 15:54:39 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/default_resource.cpp:
+
+	  Moved template instantiations related to ACE_LOCAL_MEMORY_POOL
+	  to ace/ACE.cpp.  The idea is to place this set of template
+	  instantiations in a "common" area, since ace/Configuration.cpp
+	  also needs these templates instantations.
+
 Fri Jan 14 08:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/README,
