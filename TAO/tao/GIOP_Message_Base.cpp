@@ -374,11 +374,10 @@ TAO_GIOP_Message_Base::message_type (void)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
                     ACE_TEXT ("wrong message.\n")));
-        return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
+
 
     }
 
-  // In case of some errors
   return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
 
@@ -436,8 +435,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     default:
       return -1;
     }
-
-  return -1;
 }
 
 int
