@@ -1,3 +1,11 @@
+Wed Jul  7 14:35:33 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* docs/static_ciao_contents.html: 
+	* docs/static_config_example.html: 
+	* docs/static_config_rtexample.html: 
+
+	  Updated documentation for CIAO Static configurator.
+
 Wed Jul  7 12:22:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
