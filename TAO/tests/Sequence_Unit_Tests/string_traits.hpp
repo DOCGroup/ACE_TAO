@@ -39,7 +39,7 @@ struct string_traits_decorator
   }
 
   inline static void copy_range(
-      char_type ** begin, char_type ** end, char ** dst)
+      char_type ** begin, char_type ** end, char_type ** dst)
   {
     std::transform(begin, end, dst, &derived::duplicate);
   }
