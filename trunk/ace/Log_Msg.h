@@ -124,24 +124,26 @@ class ACE_Thread_Descriptor;
  * abstraction.
  *
  * This class is very flexible since it allows formatted error
- * messages to be printed in a thread-safe manner to stderr or a
- * distributed logger.  Moreover, the message is kept in a
- * thread-specific storage location (i.e. there is one ACE_Log_Msg
- * object per thread), which can be used to communicate errors
- * between framework methods and callers.
- * A message is logged by the log() method, only if the message
- * priority is currently enabled.  The ACE_Log_Msg class uses
- * two priority masks to control its logging behavior.  The
- * <priority_mask_> object attribute is thread specific and
- * specifies the priority levels logged by the thread.  The
- * <process_priority_mask_> class attribute is not thread
- * specific and specifies the priority levels that will be
- * logged by all threads in the process.  By default, all
- * levels are enabled for <priority_mask_> and all levels
- * are disabled for <process_priority_mask_> (i.e. each thread
- * determines which priority levels will be logged).  Both
- * priority masks can be modified using the priority_mask()
- * method of this class.
+ * messages to be printed in a thread-safe manner to various
+ * locations, such as stdout, stderr, cerr, a distributed logger, etc.
+ * The current message is also kept in a thread-specific storage
+ * location (i.e., there is one ACE_Log_Msg object per-thread), which
+ * can be used to communicate errors between framework methods and
+ * callers.  A message is logged by the log() method, only if the
+ * message priority is currently enabled.  Moreover, only the current
+ * log message is stored here -- it will be overwritten by the
+ * subsequent call to <log>.
+ *
+ * The ACE_Log_Msg class uses two priority masks to control its
+ * logging behavior.  The <priority_mask_> object attribute is thread
+ * specific and specifies the priority levels logged by the thread.
+ * The <process_priority_mask_> class attribute is not thread specific
+ * and specifies the priority levels that will be logged by all
+ * threads in the process.  By default, all levels are enabled for
+ * <priority_mask_> and all levels are disabled for
+ * <process_priority_mask_> (i.e. each thread determines which
+ * priority levels will be logged).  Both priority masks can be
+ * modified using the priority_mask() method of this class.
  */
 class ACE_Export ACE_Log_Msg
 {
@@ -500,7 +502,9 @@ private:
   /// File where the error occurred.
   char file_[MAXPATHLEN + 1];
 
-  /// The error message.
+  /// The log message, which resides in thread-specific storage.  Note
+  /// that only the current log message is stored here -- it will be
+  /// overwritten by the subsequent call to <log>.
   ACE_TCHAR msg_[ACE_Log_Record::MAXLOGMSGLEN];
 
   /// Indicates whether we should restart system calls that are
