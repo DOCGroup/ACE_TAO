@@ -1,3 +1,9 @@
+Mon Sep 21 15:48:34 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Acceptor: It's now possible to select if you want to reuse
+ 	  the PEER_ACCEPTOR addr.  Thanks to Chuck Gehr for suggesting
+ 	  this.
+
 Mon Sep 21 15:00:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,cpp} (join): Allow passing back of thread's
