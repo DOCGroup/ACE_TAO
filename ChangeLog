@@ -1,3 +1,15 @@
+Fri Feb  6 06:35:32 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+
+          Updated the usage to reflect the new Cbx workspace type.
+
+        * bin/MakeProjectCreator/modules/CbxWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/MWC.pm:
+
+          Added the workspace counterpart to the CbxProjectCreator.  Thanks
+          to Johnny Willemsen for providing me an example workspace.
+
 Fri Feb  6 11:48:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.local.GNU:

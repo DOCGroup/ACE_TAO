@@ -25,6 +25,7 @@ sub new {
                                       'VC7WorkspaceCreator',
                                       'VC71WorkspaceCreator',
                                       'BorlandWorkspaceCreator',
+                                      'CbxWorkspaceCreator',
                                       'GHSWorkspaceCreator',
                                       'EM3WorkspaceCreator',
                                       'VA4WorkspaceCreator',
