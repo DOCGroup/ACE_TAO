@@ -1,0 +1,5 @@
+This note describes architectural differences between the Sun IIOP
+Reference implementation (SIR) and a new architecture based on ACE.
+After narrating the SIR architecture, shortcomings of that design are
+highlighted, and a solution known as The ACE ORB (TAO) presented.
+

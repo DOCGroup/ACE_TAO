@@ -1,0 +1,53 @@
+#!build
+default:
+	library
+	:defines=__IIOP_BUILD
+	:defines=DEBUG
+../lib/any.cpp
+	C++
+../lib/cdr.cpp
+	C++
+../lib/connmgr.cpp
+	C++
+../lib/corbacom.cpp
+	C++
+../lib/debug.cpp
+	C++
+../lib/except.cpp
+	C++
+../lib/giop.cpp
+	C++
+../lib/iiopobj.cpp
+	C++
+../lib/iioporb.cpp
+	C++
+../lib/interp.cpp
+	C++
+../lib/invoke.cpp
+	C++
+../lib/marshal.cpp
+	C++
+../lib/nvlist.cpp
+	C++
+../lib/object.cpp
+	C++
+../lib/orbobj.cpp
+	C++
+../lib/principa.cpp
+	C++
+../lib/request.cpp
+	C++
+../lib/svrrqst.cpp
+	C++
+../lib/t-sizes.cpp
+	C++
+../lib/tc_const.cpp
+	C++
+../lib/tcpoa.cpp
+	C++
+../lib/toa.cpp
+	C++
+../lib/typecode.cpp
+	C++
+../lib/roa.cpp
+	C++

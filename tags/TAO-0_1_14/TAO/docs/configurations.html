@@ -1,0 +1,231 @@
+<HTML>
+  <HEAD>
+    <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
+    <TITLE>Configuring TAO's Components</TITLE>
+  </HEAD>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+    <H1 ALIGN=CENTER>Configuring TAO's Components</H1>
+
+    <H2>Overview</H2>
+    <blockquote>
+      <p>As described in the <a href="Options.html">options</a>
+	documentation, various components in TAO can be "tuned" by specifying
+	options for those components.  Here we present some examples of how to
+	combine these options to achieve certain effects on ORB operations.</P>
+    </blockquote>
+
+    <H2>Where Are Options Specified?</H2>
+    <blockquote>
+      <p>TAO configures itself using the ACE Service Configurator
+      framework.  Thus, options are specified in the familiar
+      <code>svc.conf</code> file (if you want to use a different file
+      name, use the <a
+      href="Options.html#svcfonf"><code>-ORBsvcconf</code></a>
+      option</p>
+    </blockquote>
+
+
+    <H2>Roadmap</H2>
+
+    <blockquote>
+      <P>Details for the following configurations are provided.</P>
+
+      <UL>
+	<LI><A HREF="#reactive">Single-threaded, reactive model.</A>
+	<LI><A HREF="#tpc">Multiple threads, thread-per-connection model.</A>
+	<LI><A HREF="#multiorb">Multiple threads, orb-per-thread model.</A>
+	<LI><A HREF="#multiorb-tpc">Multiple threads, orb-per-thread, thread-per-connection.</A>
+      </UL>
+
+      <p>Each configuration has the following information:</p>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	<tr>
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+	<tr>
+	  <th>Options</th>
+	  <td>Specifies the options for each service in order to utilize this configuration.</td>
+	</tr>
+      </table>
+      </p>
+
+    </blockquote>
+
+    <H2>Configurations</H2>
+
+    <blockquote>
+
+      <H3>Single-threaded, reactive model.<A NAME="reactive"></A></H3>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	  <th>Typical Use</th>
+	  <td>
+	    This is definitely the most common use of an ORB in a
+	    server situation, where there is a single thread handling
+	    requests from multiple clients.
+	  </td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>1</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Operating System or whoever creates the main thread in a process.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Resources are stored process-wide.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>The single thread processes all connection requests and CORBA messages.</td>
+	</tr>
+
+	<tr>
+	  <th>Options</th>
+	  <td>
+	    <code>TAO_Resource_Manager</code>: <code>-ORBresources global</code><br>
+	    <code>TAO_Server_Strategy_Factory</code>: <code>-ORBconcurrency reactive</code>
+	  </td>
+	</tr>
+      </table>
+      </p>
+
+      <H3>Multiple threads, thread-per-connection model.<A NAME="tpc"></A></H3>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+      </table>
+      </p>
+
+      <H3>Multiple threads, orb-per-thread model.<A NAME="multiorb"></A></H3>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+      </table>
+      </p>
+
+      <H3>Multiple threads, orb-per-thread, thread-per-connection.<A NAME="multiorb-tpc"></A></H3>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+      </table>
+      </p>
+
+    </blockquote>
+
+</blockquote>
+
+<P><HR><P>
+Back to the TAO <A HREF="components.html">components documentation</A>.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</HTML>

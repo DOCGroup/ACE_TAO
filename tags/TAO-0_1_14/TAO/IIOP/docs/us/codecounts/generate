@@ -1,0 +1,24 @@
+#/bin/sh
+
+error()
+{
+  ret=$1; shift
+  echo "ERROR: " $@
+  return $ret
+}
+
+test -x ${CCCC:=/usr/local/bin/cccc} \
+	|| error 1 "Value of \$CCCC ($CCCC) not found."
+
+test -d ${TOPDIR:=../../../lib} \
+	|| error 1 "Unable to locate \$TOPDIR ($TOPDIR)."
+
+find $TOPDIR \( -name '*.h' -o -name '*.i' -o -name '*.hh' -o -name '*.cpp' \) -print |
+while read file
+do
+  outname=`basename $file`.cccc
+  $CCCC $file > $outname 2>&1
+  echo -n "."
+done
+
+echo
