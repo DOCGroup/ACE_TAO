@@ -1,3 +1,8 @@
+Tue Aug 31 14:47:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added a note on building egcs with the
+	 -fsquangle option contributed by Skye Sweeney.
+	
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* bin/clone.cpp: Modified this program so that it'll work more
