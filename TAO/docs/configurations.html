@@ -176,7 +176,8 @@ Roadmap</h3>
       <ul>
         <li><tt>reactive</tt>: In this approach, each thread
         in the thread pool has an ORB that accepts and processes
-            requests reactively. <P>
+            requests reactively. This is also called as the
+        "ORB-per-thread" model <P>  
 
         <li><P><tt>leader/followers</tt>: In this model, the user must
 	  create several threads, all of which invoke
@@ -187,14 +188,9 @@ Roadmap</h3>
 	  doing so the ORB will selects another thread in the pool to
 	  become the leader.
 	  In other words the threads in the pool take turns to
-	  process the events.
+	  process the events. This is the default configuration of the ORB. 
 	</p>
-	<p>
-	  Notice that this configuration requires the
-	  <CODE>ACE_TP_Reactor</CODE>, i.e.
-	  you must use the <CODE>-ORBReactorType tp</CODE> in the
-	  configuration file.
-	</p>
+
 	</li>
 
       </UL><P>
@@ -370,10 +366,7 @@ The following are common ORB configurations used by TAO applications.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
-            select_mt</tt> (default) or other thread-safe platform specific
-            reactors.<br>
-            <br><tt>TAO_Server_Strategy_Factory</tt>:
+        <td><tt>TAO_Server_Strategy_Factory</tt>:
             <tt>-ORBConcurrency thread-per-connection</tt></td>
       </tr>
     </table>
@@ -416,11 +409,10 @@ The following are common ORB configurations used by TAO applications.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
-            select_mt</tt> (default) or other thread-safe platform specific
-            reactors.<br>
-            <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBConcurrency reactive</tt></td>
+        <td> The default settings just works fine. However, one could
+            use  <br><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
+            "<em>which</em>"</tt>, for a thread-safe platform specific reactor.<br>
+            </td>
       </tr>
 </table>
 <P>
@@ -455,16 +447,13 @@ The following are common ORB configurations used by TAO applications.<P>
 
       <td>There are threads running ORB's event loops which handle
           connection requests and handler threads which service
-          requests form establiched connections.</td>
+          requests from established connections.</td>
     </tr>
 
     <tr>
       <th align=left>Options</th>
 
-      <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
-            select_mt</tt> (default) or other thread-safe platform specific
-            reactors.<br>
-          <br><tt>TAO_Server_Strategy_Factory</tt>:
+      <td><tt>TAO_Server_Strategy_Factory</tt>:
           <tt>-ORBConcurrency thread-per-connection</tt></td>
     </tr>
 </table>
@@ -510,10 +499,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
-            tp</tt>.<br>
-            <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBConcurrency reactive</tt></td>
+        <td> The default settings work great for this</td>
       </tr>
     </table>
     <P>
@@ -554,10 +540,7 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
       <tr>
         <th align=left>Options</th>
 
-        <td><tt>TAO_Advanced_Resource_Factory</tt>: <tt>-ORBReactorType
-            tp</tt>.<br>
-            <br><tt>TAO_Server_Strategy_Factory</tt>:
-            <tt>-ORBConcurrency reactive</tt></td>
+        <td> The default settings work well for this</td>
       </tr>
 </table>
 </ul>
