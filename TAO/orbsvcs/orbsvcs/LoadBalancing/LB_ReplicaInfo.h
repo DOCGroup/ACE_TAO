@@ -26,8 +26,8 @@
 #include "orbsvcs/LoadBalancingC.h"
 
 class TAO_LB_ReplicaInfo;
-typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfoSet;
-typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfoSetIterator;
+typedef ACE_Unbounded_Set<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfo_Set;
+typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaInfo *> TAO_LB_ReplicaInfo_Set_Iterator;
 
 
 /**

@@ -25,7 +25,7 @@
 #include "orbsvcs/LoadBalancingC.h"
 
 class TAO_LB_PropertyManager
-  : public virtual LoadBalancing::PropertManager
+  : public virtual LoadBalancing::PropertyManager
 {
 public:
 
@@ -149,37 +149,37 @@ public:
 
   //@}
 
-  /// Type-specific property hash map.
-  typedef ACE_Hash_Map_Manager_Ex<
-    const char *,
-    LoadBalancing::Property,
-    ACE_Hash<const ACE_TCHAR *>,
-    TAO_LB_Property_Equal_To,
-    ACE_SYNCH_MUTEX> Type_Prop_Table;
+//   /// Type-specific property hash map.
+//   typedef ACE_Hash_Map_Manager_Ex<
+//     const char *,
+//     LoadBalancing::Property,
+//     ACE_Hash<const ACE_TCHAR *>,
+//     TAO_LB_Property_Equal_To,
+//     ACE_SYNCH_MUTEX> Type_Prop_Table;
 
-  typedef ACE_Hash_Map_Manager_Ex<
-    ACE_UINT32,                // Use the FactoryCreationId as the hash.
-    LoadBalancing::Property,
-    ACE_Hash<ACE_UINT32>,
-    TAO_LB_Property_Equal_To,
-    ACE_SYNCH_MUTEX> Creation_Prop_Table;
+//   typedef ACE_Hash_Map_Manager_Ex<
+//     ACE_UINT32,                // Use the FactoryCreationId as the hash.
+//     LoadBalancing::Property,
+//     ACE_Hash<ACE_UINT32>,
+//     TAO_LB_Property_Equal_To,
+//     ACE_SYNCH_MUTEX> Creation_Prop_Table;
 
-  typedef Creation_Prop_Table Dynamic_Prop_Table;
+//   typedef Creation_Prop_Table Dynamic_Prop_Table;
 
 private:
 
   /// Table of global default object group properties.
-  Default_Prop_Table default_properties_;
+//   Default_Prop_Table default_properties_;
 
-  /// Table of type-specific object group properties.
-  Type_Prop_Table type_properties_;
+//   /// Table of type-specific object group properties.
+//   Type_Prop_Table type_properties_;
 
-  /// Table of object group properties used when the object group was
-  /// created.
-  Creation_Prop_Table creation_properties_;
+//   /// Table of object group properties used when the object group was
+//   /// created.
+//   Creation_Prop_Table creation_properties_;
 
-  /// Table of object group properties used at run-time.
-  Dynamic_Prop_Table dynamic_properties_;
+//   /// Table of object group properties used at run-time.
+//   Dynamic_Prop_Table dynamic_properties_;
 
 };
 

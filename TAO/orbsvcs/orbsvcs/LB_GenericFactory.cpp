@@ -2,8 +2,9 @@
 
 #include "LB_GenericFactory.h"
 #include "LB_ReplicaInfo.h"
-#include "LB_ObjectGroup_Map.h"
+#include "LB_PropertyManager.h"
 
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (LoadBalancing,
            LB_GenericFactory,
@@ -58,17 +59,11 @@ TAO_LB_GenericFactory::create_object (
   auto_ptr<TAO_LB_ObjectGroup_Map_Entry> safe_object_group_entry (
     object_group_entry);
 
-  if (this->property_manager_.infrastructure_controlled_membership ())
-    {
-      this->populate_object_group (object_group_entry, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-
   // Set the RepositoryId associated with the created ObjectGroupMap
   // entry.
-  object_group_entry.type_id = CORBA::string_dup (type_id);
+  object_group_entry->type_id = CORBA::string_dup (type_id);
 
-  TAO_LB_GenericFactory::FactoryCreationId fcid = this->next_fcid_;
+  CORBA::ULong fcid = this->next_fcid_;
 
   // The ObjectId for the newly created object group is comprised
   // solely of the FactoryCreationId.
@@ -86,6 +81,12 @@ TAO_LB_GenericFactory::create_object (
   object_group_entry->object_group =
     CORBA::Object::_duplicate (object_group.in ());
 
+  if (this->property_manager_.infrastructure_controlled_membership ())
+    {
+      this->populate_object_group (object_group_entry, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+
   // Allocate a new FactoryCreationId for use as an "out" parameter.
   LoadBalancing::GenericFactory::FactoryCreationId *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -101,7 +102,7 @@ TAO_LB_GenericFactory::create_object (
 
   // Only increment the next FactoryCreationId if the object group was
   // successfully created.
-  factory_creation_id <<= fcid;
+  *tmp <<= fcid;
 
   // Now associate the ObjectId with the ObjectGroup reference.  In
   // this implementation, the FactoryCreationId is the ObjectId.
@@ -111,8 +112,8 @@ TAO_LB_GenericFactory::create_object (
   // parameter we successfully created, and no exception was thrown.
   // Otherwise, an invalid object group entry would remain inside the
   // map.
-  if (this->object_group_map_.bind (oid, object_group_entry) != 0)
-    ACE_THROW_RETURN (TAO_LoadBalancer::ObjectNotCreated (),
+  if (this->object_group_map_.bind (oid.in (), object_group_entry) != 0)
+    ACE_THROW_RETURN (LoadBalancing::ObjectNotCreated (),
                       CORBA::Object::_nil ());
 
   // No longer need to protect the allocated ObjectGroup_Map entry.
@@ -139,7 +140,7 @@ TAO_LB_GenericFactory::delete_object (
     {
       // Successfully extracted the FactoryCreationId.  Now find the
       // object group map corresponding to it.
-      TAO_LB_ObjectGroup_Entry *object_group = 0;
+      TAO_LB_ObjectGroup_Map_Entry *object_group = 0;
 
       if (this->object_group_map_.find (fcid, object_group) == -1)
         ACE_THROW (LoadBalancing::ObjectNotFound ());
@@ -148,11 +149,11 @@ TAO_LB_GenericFactory::delete_object (
 
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, guard, object_group->lock);
-        for (TAO_LB_ReplicaInfoSetIterator i = replica_infos.begin ();
+        for (TAO_LB_ReplicaInfo_Set_Iterator i = replica_infos.begin ();
              i != replica_infos.end ();
              ++i)
           {
-            TAO_LB_ReplicaInfo *replica_info = (*i).ext_id_;
+            TAO_LB_ReplicaInfo *replica_info = (*i);
 
             LoadBalancing::GenericFactory_ptr factory =
               replica_info->factory_info.the_factory.in ();
@@ -162,14 +163,14 @@ TAO_LB_GenericFactory::delete_object (
             // factory deletes it.
             if (!CORBA::is_nil (factory))
               {
-                LoadBalancing::GenericFactory::FactoryCreationId
-                  &replica_fcid = replica_info->factory_creation_id;
+                const LoadBalancing::GenericFactory::FactoryCreationId
+                  &replica_fcid = replica_info->factory_creation_id.in ();
 
-                factory->delete_object (replica_fcid.in (), ACE_TRY_ENV);
+                factory->delete_object (replica_fcid, ACE_TRY_ENV);
                 ACE_CHECK;
               }
 
-            (void) replica_info->unbind (&(*i));
+            (void) replica_infos.remove (replica_info);
 
             delete replica_info;
           }
@@ -186,7 +187,7 @@ TAO_LB_GenericFactory::delete_object (
 
 void
 TAO_LB_GenericFactory::populate_object_group (
-  TAO_LB_ObjectGroup_Map::Map_Entry *object_group_entry,
+  TAO_LB_ObjectGroup_Map_Entry *object_group_entry,
   CORBA::Environment &ACE_TRY_ENV)
 {
   for (CORBA::ULong j = 0; j < factory_infos_count; ++j)
@@ -209,18 +210,18 @@ TAO_LB_GenericFactory::populate_object_group (
       LoadBalancing::FactoryInfo &factory_info =
         factory_infos[j];
 
-      TAO_LoadBalancer::GenericFactory_ptr factory =
-        factory_info.the_factory;
+      LoadBalancing::GenericFactory_ptr factory =
+        factory_info.the_factory.in ();
 
       LoadBalancing::GenericFactory::FactoryCreationId_var
         replica_fcid;
 
       CORBA::Object_var replica =
-        factory->create_object (type_id,
+        factory->create_object (object_group_entry->type_id.in (),
                                 factory_info.the_criteria,
                                 replica_fcid.out (),
                                 ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      ACE_CHECK;
 
 #if 0
       // @@ Should an "_is_a()" be performed here?  While it appears
@@ -232,18 +233,17 @@ TAO_LB_GenericFactory::populate_object_group (
       // GenericFactory creates.
       CORBA::Boolean right_type_id =
         replica->_is_a (type_id, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      ACE_CHECK;
 
       if (!right_type_id)
         {
           // An Object of incorrect type was created.  Delete it, and
           // throw a NoFactory exception.
-          factory->delete_object (replica_fcid,
+          factory->delete_object (replica_fcid.in (),
                                   ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          ACE_CHECK;
 
-          ACE_THROW_RETURN (TAO_LoadBalancer::NoFactory (),
-                            CORBA::Object::_nil ());
+          ACE_THROW (LoadBalancing::NoFactory ());
         }
 #endif  /* 0 */
 
@@ -256,9 +256,19 @@ TAO_LB_GenericFactory::populate_object_group (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      ACE_CHECK;
 
       auto_ptr<TAO_LB_ReplicaInfo> safe_replica_info (replica_info);
+
+      if (object_group_entry->replica_infos.insert (replica_info) != 0)
+        {
+          // An Object of incorrect type was created.  Delete it, and
+          // throw a NoFactory exception.
+          factory->delete_object (replica_fcid.in (), ACE_TRY_ENV);
+          ACE_CHECK;
+
+          ACE_THROW (LoadBalancing::ObjectNotCreated ());
+        }
 
       replica_info->replica = replica;
 
@@ -266,25 +276,14 @@ TAO_LB_GenericFactory::populate_object_group (
 
       replica_info->factory_creation_id = replica_fcid;
 
-      if (object_group_entry.replica_infos.insert (replica_info) != 0)
-        {
-          // An Object of incorrect type was created.  Delete it, and
-          // throw a NoFactory exception.
-          factory->delete_object (replica_fcid, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-          ACE_THROW_RETURN (TAO_LoadBalancer::ObjectNotCreated (),
-                            CORBA::Object::_nil ());
-        }
-
       // No longer need to protect the allocated Replica_Map.
       safe_replica_info.release ();
     }
 }
 
 void
-TAO_LoadBalancing_ReplicationManager_i::get_ObjectId (
-  TAO_LB_GenericFactory::FactoryCreationId fcid,
+TAO_LB_GenericFactory::get_ObjectId (
+  CORBA::ULong fcid,
   PortableServer::ObjectId_out oid)
 {
   // Since the POA used by the ReplicationManager uses the NON_RETAIN
@@ -316,3 +315,21 @@ TAO_LoadBalancing_ReplicationManager_i::get_ObjectId (
 
   oid = PortableServer::string_to_ObjectId (oid_str);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class auto_ptr<TAO_LB_ObjectGroup_Map_Entry>;
+template class ACE_Auto_Basic_Ptr<TAO_LB_ObjectGroup_Map_Entry>;
+
+template class auto_ptr<TAO_LB_ReplicaInfo>;
+template class ACE_Auto_Basic_Ptr<TAO_LB_ReplicaInfo>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr<TAO_LB_ObjectGroup_Map_Entry>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_LB_ObjectGroup_Map_Entry>
+
+#pragma instantiate auto_ptr<TAO_LB_ReplicaInfo>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_LB_ReplicaInfo>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

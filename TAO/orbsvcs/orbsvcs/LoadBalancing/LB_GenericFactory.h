@@ -26,10 +26,10 @@
 
 #include "orbsvcs/LoadBalancingC.h"
 
+#include "LB_ObjectGroup_Map.h"
 
 /// Forward declarations.
 class TAO_LB_PropertyManager;
-class TAO_LB_ObjectGroup_Map;
 
 
 /**
@@ -96,7 +96,7 @@ private:
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
-  void populate_object_group (TAO_LB_ObjectGroupMap::Map_Entry,
+  void populate_object_group (TAO_LB_ObjectGroup_Map_Entry *entry,
                               CORBA::Environment &ACE_TRY_ENV);
 
   /// Get a new ObjectId to be used when creating a new ObjectGroup.
@@ -105,8 +105,8 @@ private:
    * the scope of a given ReplicationManager.  A value suitable for
    * use in a map association <ext_id> is also returned.
    */
-  void get_ObjectId (PortableServer::ObjectId &oid,
-                     TAO_LB_ObjectGroup_EXT_ID &ext_id);
+  void get_ObjectId (CORBA::ULong fcid,
+                     PortableServer::ObjectId_out oid);
 
 
 private:
