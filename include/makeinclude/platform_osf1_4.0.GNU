@@ -17,20 +17,20 @@ ifndef CXX_VERSION
   CXX_VERSION := $(shell $(CXX) -V)
 endif # CXX_VERSION
 
+CXX_1136 =
+CXX_1180 =
 #### 6.1-029 and later support msg 1136.  We disable it by default.
-ifeq (6.0-,$(findstring 6.0-,$(CXX_VERSION)))
-  CXX_HAS_MSG_1136 = 0
-else
+ifneq (6.0-,$(findstring 6.0-,$(CXX_VERSION)))
 ifeq (6.1-,$(findstring 6.1-,$(CXX_VERSION)))
   ifeq (6.1-029,$(findstring 6.1-029,$(CXX_VERSION)))
-    CXX_HAS_MSG_1136 = 1
-  else  # 6.1, but not -029
-    CXX_HAS_MSG_1136 = 0
-  endif # 6.1, but not -029
+    CXX_1136 = ,1136
+  endif # 6.1-029
 else  # 6.2 or later
-  CXX_HAS_MSG_1136 = 1
+  CXX_1136 = ,1136
+  #### 6.2-009 has 1180, but 6.2-007 doesn't.
+  CXX_1180 = ,1180
 endif # 6.2 or later
-endif # 6.0
+endif # ! 6.0
 
 #### These flags can only be used with cxx Version 6.0 and later.
 #### They are enabled by default; they can be disabled by settting
@@ -46,13 +46,11 @@ endif # 6.0
 #  835: unreferenced_function_param
 #  839: no_corresponding_delete (until this is fixed in libTAO)
 # 1136: conversion to integral type of smaller size could lose data
+# 1180: statement causes unreachable return
 ifneq ($(CXX_VER),CXX_5)
   WARNING_FLAGS += -w0 -msg_display_number
-  ifeq (0,$(CXX_HAS_MSG_1136))
-    WARNING_FLAGS += -msg_disable 9,174,193,236,401,610,835,839
-  else  # CXX_HAS_MSG_1136
-    WARNING_FLAGS += -msg_disable 9,174,193,236,401,610,835,839,1136
-  endif # CXX_HAS_MSG_1136
+  WARNING_FLAGS += \
+    -msg_disable 9,174,193,236,401,610,835,839$(CXX_1136)$(CXX_1180)
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
