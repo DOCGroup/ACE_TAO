@@ -1,3 +1,42 @@
+Wed Dec 30 16:43:35 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	The following files have been added to the newly created
+	Time_Service directory under orbsvcs/
+
+	* orbsvcs/Time_Service/Server_i.h: This is the server driver
+	  program for the Time Service. It registers the
+	  TAO_Time_Service_Server with the orb and listens infinitely
+	  within orb.run () for invocations from the clerk.
+
+	* orbsvcs/Time_Service/Server_i.cpp: This is the server driver
+	  program for the Time Service. It registers the
+	  TAO_Time_Service_Server with the orb and listens infinitely
+	  within orb.run () for invocations from the clerk.
+
+	* orbsvcs/Time_Service/Clerk_i.h : This is the clerk driver
+	  program for the Time Service. It registers the
+	  TAO_Time_Service_Clerk with the orb. It also gets the IORs
+	  of the various time servers in the network and passes them to
+	  the TAO_Time_Service_Clerk. It listens for invocations from
+	  the clients.
+
+	* orbsvcs/Time_Service/Clerk_i.cpp: This is the clerk driver
+	  program for the Time Service. It registers the
+	  TAO_Time_Service_Clerk with the orb. It also gets the IORs
+	  of the various time servers in the network and passes them to
+	  the TAO_Time_Service_Clerk. It listens for invocations from
+	  the clients.
+
+	* orbsvcs/Time_Service/server.cpp: This is the server wrapper
+	  program.
+
+	* orbsvcs/Time_Service/clerk.cpp: This is the clerk wrapper
+	  program.
+
+	* orbsvcs/Time_Service/Makefile: This is the Makefile for this
+	  directory that generates the server and the clerk binaries.
+
+
 Wed Dec 30 16:26:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	The following files have been added to the newly created Time
