@@ -1,3 +1,9 @@
+Sun Apr 16 21:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Smart_Proxies/client.dsp:
+	* tests/Smart_Proxies/server.dsp:
+	  Added some options for the release version to ward of build errors.
+	
 Sun Apr 16 21:23:43 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* orbsvcs/examples/Log/test/BasicLog_Test.cpp (init):
