@@ -54,10 +54,19 @@ To run the client, type
        ubstring             for unbounded string
        fixed_struct         for fixed sized structs
        strseq         	    for sequences of strings
+       bounded_strseq       for bounded sequences of strings
        var_struct           for variable structs
        nested_struct        for nested structs
        struct_seq           for sequences of structs
+       bounded_struct_seq   for bounded sequences of structs
+       any                  for Any
        objref               for object references
+       objref_sequence      for sequences object references
+       any_sequence         for sequences of Any
+       short_sequence       for sequences of shorts
+       long_sequence        for sequences of shorts
+       bounded_short_sequence for bounded sequences of shorts
+       bounded_long_sequence  for bounded sequences of shorts
 
 
 	There are 2 options of giving the Param_obj-ref-key i.e IOR to the client:

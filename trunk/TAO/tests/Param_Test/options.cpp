@@ -91,18 +91,34 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_FIXED_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "strseq"))
           this->test_type_ = Options::TEST_STRING_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bounded_strseq"))
+          this->test_type_ = Options::TEST_BOUNDED_STRING_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "var_struct"))
           this->test_type_ = Options::TEST_VAR_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "nested_struct"))
           this->test_type_ = Options::TEST_NESTED_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "struct_seq"))
           this->test_type_ = Options::TEST_STRUCT_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "bounded_struct_seq"))
+          this->test_type_ = Options::TEST_BOUNDED_STRUCT_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "objref"))
           this->test_type_ = Options::TEST_OBJREF;
         else if (!ACE_OS::strcmp (get_opts.optarg, "typecode"))
           this->test_type_ = Options::TEST_TYPECODE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "any"))
           this->test_type_ = Options::TEST_ANY;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "objref_sequence"))
+    	  this->test_type_ = Options::TEST_OBJREF_SEQUENCE;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "any_sequence"))
+    	  this->test_type_ = Options::TEST_ANYSEQ;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "short_sequence"))
+	  this->test_type_ = Options::TEST_SHORTSEQ;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "bounded_short_sequence"))
+	  this->test_type_ = Options::TEST_BOUNDED_SHORTSEQ;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "long_sequence"))
+	  this->test_type_ = Options::TEST_LONGSEQ;
+	else if (!ACE_OS::strcmp (get_opts.optarg, "bounded_long_sequence"))
+	  this->test_type_ = Options::TEST_BOUNDED_LONGSEQ;
         break;
       case '?':
       default:

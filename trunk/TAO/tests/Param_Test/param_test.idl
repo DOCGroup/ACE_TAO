@@ -63,6 +63,16 @@ interface Param_Test
 
   // = Sequences of long, strings, Var_Struct and Object
   // references...
+  typedef sequence<short> Short_Seq;
+  Short_Seq test_short_sequence (in Short_Seq s1,
+								 inout Short_Seq s2,
+								 out Short_Seq s3);
+
+  typedef sequence<short,32> Bounded_Short_Seq;
+  Bounded_Short_Seq test_bounded_short_sequence (in Bounded_Short_Seq s1,
+										         inout Bounded_Short_Seq s2,
+   										         out Bounded_Short_Seq s3);
+
   typedef sequence<long> Long_Seq;
   Long_Seq test_long_sequence (in Long_Seq s1,
 			       inout Long_Seq s2,
@@ -103,6 +113,16 @@ interface Param_Test
 					     inout Bounded_Coffee_Mix s2,
 					     out Bounded_Coffee_Mix s3);
 
+  typedef sequence<any> AnySeq;
+  AnySeq test_anyseq (in AnySeq s1,
+				      inout AnySeq s2,
+					  out AnySeq s3);
+
+/*  typedef sequence<any, 32> Bounded_AnySeq;
+  Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
+									  inout Bounded_AnySeq s2,
+									  out Bounded_AnySeq s3);
+*/
 
   typedef string DUMMY;
   // variable structures
