@@ -17,7 +17,10 @@
 #if !defined (ACE_OBJECT_MANAGER_H)
 #define ACE_OBJECT_MANAGER_H
 
-#include "ace/Containers.h"
+#include "ace/OS.h"
+
+// Forward declaration.
+template <class T> class ACE_Unbounded_Queue;
 
 class ACE_Export ACE_Object_Manager
   // = TITLE
@@ -77,7 +80,7 @@ private:
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
 
-public:  
+public:
   // For template instantiation, with some compilers that need the
   // struct definition to be public.
   typedef struct object_info
@@ -89,28 +92,33 @@ public:
 
 private:
 
-  ACE_Unbounded_Queue<object_info_t> registered_objects_;
+  ACE_Unbounded_Queue<object_info_t> *registered_objects_;
   // Keeps track of all the registered objects.
 
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
-  // Register an object or array for deletion at program termination.
-  // See description of static version above for return values.
-
-  // = Make these private to prevent explicit instantiation.
-  ACE_Object_Manager (void);
-  ~ACE_Object_Manager (void);
+  int shutting_down_;           // Non-zero if this being destroyed
 
   static ACE_Object_Manager *instance (void);
   // Accessor to singleton instance.  Because static member functions
   // are provided in the interface, this does not need to be public.
 
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
+  // Register an object or array for deletion at program termination.
+  // See description of static version above for return values.
+
+public:
+  // Application code should not use these explicitly, so they're
+  // hidden here.
+  ACE_Object_Manager (void);
+  ~ACE_Object_Manager (void);
+private:
+
+#if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   friend class ACE_Object_Manager_Destroyer;
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
   // Disallow copying by not implementing the following . . .
   ACE_Object_Manager (const ACE_Object_Manager &);
   ACE_Object_Manager &operator= (const ACE_Object_Manager &);
-
-  int  shutting_down_;		// Non-zero if this being destroyed
 };
 
 #if defined (__ACE_INLINE__)
