@@ -1,7 +1,22 @@
+Wed Dec  8 15:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAOC.{h,cpp,i,inl}:
+        * tao/TAOA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/TAO.diff:
+          Removed this file, no diffs are needed anymore
+
+        * tao/TAO.pidl:
+          Removed instructions about applying patches, not needed anymore
+
 Wed Dec  8 11:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CurrentC.{h,cpp,i,inl}:
-        * tao/Current.cpp:
+        * tao/CurrentA.cpp:
           Regenerated and replace .i file with .inl variant
 
         * tao/Makefile.am:
