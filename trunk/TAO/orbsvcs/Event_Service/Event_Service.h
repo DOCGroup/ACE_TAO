@@ -77,7 +77,7 @@ private:
     ES_OLD_MT
   };
 
-  enum Sched_type_t {SCHED_NONE, SCHED_GLOBAL, SCHED_LOCAL};
+  enum Sched_type_t {ES_SCHED_NONE, ES_SCHED_GLOBAL, ES_SCHED_LOCAL};
 
 private:
   /// The module factory for the EC.
