@@ -1,5 +1,8 @@
 Mon Jan 20 10:04:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* algobase.h: wrapped min/max templates with #if ! defined (VXWORKS)
+	  because it already has them.
+
 	* bstring.h: wrapped basic_string<char> template instantiation
 	  so that it's not used with GreenHills compiler.
 
