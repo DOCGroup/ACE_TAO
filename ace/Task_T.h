@@ -37,7 +37,7 @@ template <ACE_SYNCH_DECL> class ACE_Module;
  * in ACE.
  */
 template <ACE_SYNCH_DECL>
-class ACE_Export ACE_Task : public ACE_Task_Base
+class ACE_Task : public ACE_Task_Base
 {
 public:
   friend class ACE_Module<ACE_SYNCH_USE>;

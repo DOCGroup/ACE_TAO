@@ -1,3 +1,10 @@
+Fri Feb 08 11:24:36 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/String_Base.h:
+	* ace/Task_T.h:  Removed the ACE_Export decl from ACE_Task and
+	  ACE_String_Base.  They were added as work-aronds for a VC7's
+	  internal compiler bug but didn't seem to solve the problem.
+
 Thu Feb  7 16:19:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-all.h: Define new macros, ACE_nothrow and ACE_nothrow_t,
@@ -25,7 +32,7 @@ Thu Feb  7 07:52:47 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Tue Feb  5 07:25:49 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* tests/TP_Reactor_Test.cpp: Improved the comments to clarify the 
+	* tests/TP_Reactor_Test.cpp: Improved the comments to clarify the
 	  differences between this test and the Thread_Pool_Reactor_Test.cpp.
 	  Thanks to Alex Libman for explaining this.
 
@@ -40,7 +47,7 @@ Thu Feb  7 08:16:24 2002  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 Wed Feb  6 06:57:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Disabled TP_Reactor_Test as the test is
-	  hanging. 
+	  hanging.
 
 Tue Feb  5 11:59:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -56,10 +63,10 @@ Mon Feb  4 19:58:03 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* ace/Log_Msg.cpp:
 
-	  Fixed minor bug in what's just commited before. 
+	  Fixed minor bug in what's just commited before.
 	  Thanks to Craig Rodrigues <crodrigu@bbn.com>
 	  for pointing it out.
-	
+
 Mon Feb  4 14:11:14 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* ace/Log_Msg.h:
@@ -68,7 +75,7 @@ Mon Feb  4 14:11:14 2002  Boris Kolpackov  <bosk@ipmce.ru>
 	  Added ability to install custom backend which is a
 	  per-process entity as opposite to callback which is
 	  a per-thread not-inheritable entity.
-	
+
 Sun Feb  3 17:59:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-sunos5.5.h (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION):
