@@ -97,19 +97,6 @@ public:
 
   // = Template Methods Called by <handle_input>
 
-  enum RequestStatus
-  {
-    Error = -1,
-    Request,      // A CORBA Request was received
-    LocateRequest // A CORBA LocateRequest was received
-  };
-
-  virtual RequestStatus recv_request (TAO_InputCDR &msg,
-				      CORBA::Environment &env);
-  // Extract a message from the stream associated with <peer()> and
-  // place it into <msg>.  Return either <Request> or <LocateRequest>
-  // if success, <Error> with <errno> and <env> set if problems.
-
   virtual int handle_message (TAO_InputCDR &msg,
                               TAO_OutputCDR &response,
 			      int &response_required,

@@ -1,3 +1,10 @@
+Sat Apr 18 01:27:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Timeprobe.h: Added more timeprobes to POA, ORB, and GIOP.
+
+	* TAO: Change the use of time probes.  The new ACE scheme is now
+ 	  used.
+
 Mon May 25 11:58:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Quoter/client.cpp: 

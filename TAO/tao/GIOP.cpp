@@ -354,8 +354,7 @@ TAO_GIOP::read_buffer (TAO_SOCK_Stream &peer,
 
 TAO_GIOP::Message_Type
 TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
-                        TAO_InputCDR &msg,
-                        CORBA::Environment &env)
+                        TAO_InputCDR &msg)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_RECV_REQUEST_START);
 
@@ -375,10 +374,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
 
   CDR::mb_align (msg.start_);
   if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN) == -1)
-    {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-      return TAO_GIOP::MessageError;
-    }
+    return TAO_GIOP::MessageError;
 
   char *header = msg.start_->rd_ptr ();
   ssize_t len = TAO_GIOP::read_buffer (connection,
@@ -413,7 +409,6 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
           /* NOTREACHED */
         }
 
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return TAO_GIOP::MessageError;
     }
 
@@ -428,7 +423,6 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         && header [2] == 'O'
         && header [3] == 'P'))
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
       return TAO_GIOP::MessageError;
     }
@@ -439,7 +433,6 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   if (!(header [4] == TAO_GIOP_MessageHeader::MY_MAJOR
         && header [5] <= TAO_GIOP_MessageHeader::MY_MINOR))
     {
-      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
       return TAO_GIOP::MessageError;
     }
@@ -466,10 +459,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   assert (message_size <= UINT_MAX);
 
   if (CDR::grow (msg.start_, TAO_GIOP_HEADER_LEN + message_size) == -1)
-    {
-      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-      return TAO_GIOP::MessageError;
-    }
+    return TAO_GIOP::MessageError;
 
   // Growing the buffer may have reset the rd_ptr(), but we want to
   // leave it just after the GIOP header (that was parsed already);
@@ -510,7 +500,6 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         }
 
       // clean up, and ...
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
       return TAO_GIOP::MessageError;
     }
@@ -829,8 +818,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-                                                     this->inp_stream_,
-                                                     env);
+                                                     this->inp_stream_);
   switch (m)
     {
     case TAO_GIOP::Reply:
@@ -1181,8 +1169,7 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
 
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-                                                     this->inp_stream_,
-                                                     env);
+                                                     this->inp_stream_);
   switch (m)
     {
     case TAO_GIOP::Reply:
