@@ -669,6 +669,7 @@ SOURCE=.\CosConcurrencyControl.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSCO="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosConcurrencyControl.idl
@@ -676,7 +677,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -716,7 +717,7 @@ InputName=CosConcurrencyControl
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -755,6 +756,7 @@ SOURCE=.\CosLifeCycle.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSLI="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosLifeCycle.idl
@@ -762,7 +764,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -802,7 +804,7 @@ InputName=CosLifeCycle
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -841,6 +843,7 @@ SOURCE=.\CosNaming.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSNA="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
@@ -848,7 +851,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -888,7 +891,7 @@ InputName=CosNaming
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -927,6 +930,7 @@ SOURCE=.\CosTimeBase.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTI="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTimeBase.idl
@@ -934,7 +938,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -974,7 +978,7 @@ InputName=CosTimeBase
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1013,6 +1017,7 @@ SOURCE=.\CosTrading.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__COSTR="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosTrading.idl
@@ -1020,7 +1025,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1060,7 +1065,7 @@ InputName=CosTrading
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1099,6 +1104,7 @@ SOURCE=.\LifeCycleService.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LIFEC="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\LifeCycleService.idl
@@ -1106,7 +1112,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1146,7 +1152,7 @@ InputName=LifeCycleService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1185,6 +1191,7 @@ SOURCE=.\Logger.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__LOGGE="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Logger.idl
@@ -1192,7 +1199,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1232,7 +1239,7 @@ InputName=Logger
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1271,6 +1278,7 @@ SOURCE=.\RtecEventChannelAdmin.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECE="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventChannelAdmin.idl
@@ -1278,7 +1286,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1318,7 +1326,7 @@ InputName=RtecEventChannelAdmin
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1357,6 +1365,7 @@ SOURCE=.\RtecEventComm.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECEV="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecEventComm.idl
@@ -1364,7 +1373,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1404,7 +1413,7 @@ InputName=RtecEventComm
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1443,6 +1452,7 @@ SOURCE=.\RtecScheduler.idl
 
 !IF  "$(CFG)" == "ORB Services Static - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__RTECS="..\..\tao_idl\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\RtecScheduler.idl
@@ -1450,7 +1460,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\Release\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1490,7 +1500,7 @@ InputName=RtecScheduler
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export\
- -Wb,export_include=orbsvcs_export.h $(InputName).idl
+  -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
