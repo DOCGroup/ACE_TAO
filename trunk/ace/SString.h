@@ -41,13 +41,20 @@ class ACE_Export ACE_CString
   //   empty string.
 public:
   friend ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
-  friend ostream &operator << (ostream &, const ACE_CString &);
+  friend ostream &operator<< (ostream &, const ACE_CString &);
+
+  static const int npos;
+  // No position constant
 
   ACE_CString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
   ACE_CString (const char *s, ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory. 
+
+  ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0);
+  // Constructor that copies <len> chars of <s> into dynamically
+  // allocated memory (will NUL terminate the result).
 
   ACE_CString (const ACE_CString &);
   // Copy constructor.
@@ -56,21 +63,39 @@ public:
   // Constructor that copies <s> into dynamically allocated memory.
   // Probable loss of data. Please use with care.
 
+  ACE_CString (char c, ACE_Allocator *alloc = 0);
+  // Constructor that copies <c> into dynamically allocated memory. 
+
   ~ACE_CString (void);
   // Deletes the memory...
 
-  ACE_CString (const char *s, size_t len, ACE_Allocator *alloc = 0);
-  // Constructor that copies <len> chars of <s> into dynamically
-  // allocated memory (will NUL terminate the result).
+  char operator[] (size_t index) const;
+  // Return the <index'th> character in the string (doesn't perform
+  // bounds checking).
 
-  void operator= (const ACE_CString &);
+  char &operator[] (size_t index);
+  // Return the <index'th> character by reference in the string
+  // (doesn't perform bounds checking).
+
+  ACE_CString &operator= (const ACE_CString &);
   // Assignment operator (does copy memory).
 
-  size_t length (void) const;
-  // Return the length of the string.
+  ACE_CString substring (size_t offset, ssize_t length = -1) const;
+  // Return a substring given an offset and length, if length == -1
+  // use rest of str return empty substring if offset or offset/length
+  // are invalid
+
+  ACE_CString substr (size_t offset, ssize_t length = -1) const;
+  // Same as substring
+
+  ACE_CString &operator+= (const ACE_CString &);
+  // Concat operator (copies memory).
 
   u_long hash (void) const;
   // Returns a hash value for this string.
+
+  size_t length (void) const;
+  // Return the length of the string.
 
   char *rep (void) const;
   // Get a copy of the underlying pointer.
@@ -83,22 +108,26 @@ public:
   const char *c_str (void) const;
   // Same as STL String's c_str()
 
-  void operator += (const ACE_CString &);
-  // Concat operator (copies memory).
-
   int strstr (const ACE_CString &s) const;
   // Comparison operator that will match substrings.  Returns the
   // index of the first location that matches, else -1.
 
-  char operator[] (size_t index) const;
-  // Return the <index'th> character in the string (doesn't perform
-  // bounds checking).
+  int find (const ACE_CString &str, int pos = 0) const;
+  // Find <str> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
 
-  ACE_CString substring (size_t offset, ssize_t length = -1);
-  // Return a substring given an offset and length, if length == -1
-  // use rest of str return empty substring if offset or offset/length
-  // are invalid
+  int find (const char *s, int pos = 0) const;
+  // Find <s> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
 
+  int find (char c, int pos = 0) const;
+  // Find <c> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+  
+  int rfind (char c, int pos = npos) const;
+  // Find <c> starting at pos (counting from the end).  Returns the
+  // index of the first location that matches, else npos.
+  
   int operator== (const ACE_CString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -129,7 +158,7 @@ private:
 };
 
 ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
-ostream &operator << (ostream &, const ACE_CString &);
+ostream &operator<< (ostream &, const ACE_CString &);
 
 class ACE_Export ACE_SString
   // = TITLE
@@ -146,6 +175,11 @@ class ACE_Export ACE_SString
   //   ACE_Allocator with a persistable memory pool
 {
 public:
+  friend ostream &operator<< (ostream &, const ACE_SString &);
+
+  static const int npos;
+  // No position constant
+
   ACE_SString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
@@ -159,14 +193,33 @@ public:
   ACE_SString (const ACE_SString &);
   // Copy constructor.
 
-  void operator= (const ACE_SString &);
+  ACE_SString (char c, ACE_Allocator *alloc = 0);
+  // Constructor that copies <c> into dynamically allocated memory. 
+
+  char operator[] (size_t index) const;
+  // Return the <index'th> character in the string (doesn't perform
+  // bounds checking).
+
+  char &operator[] (size_t index);
+  // Return the <index'th> character by reference in the string
+  // (doesn't perform bounds checking).
+
+  ACE_SString &operator= (const ACE_SString &);
   // Assignment operator (does copy memory).
 
-  size_t length (void) const;
-  // Return the length of the string.
+  ACE_SString substring (size_t offset, ssize_t length = -1) const;
+  // Return a substring given an offset and length, if length == -1
+  // use rest of str return empty substring if offset or offset/length
+  // are invalid
+
+  ACE_SString substr (size_t offset, ssize_t length = -1) const;
+  // Same as substring
 
   u_long hash (void) const;
   // Returns a hash value for this string.
+
+  size_t length (void) const;
+  // Return the length of the string.
 
   void rep (char *s);
   // Set the underlying pointer.  Since this does not copy memory or
@@ -175,17 +228,32 @@ public:
   const char *rep (void) const;
   // Get the underlying pointer.
 
-  void operator += (const ACE_SString &);
-  // Concat operator (does copy memory).
+  const char *fast_rep (void) const;
+  // Get the underlying pointer.
+
+  const char *c_str (void) const;
+  // Get the underlying pointer.
 
   int strstr (const ACE_SString &s) const;
   // Comparison operator that will match substrings.  Returns the
   // index of the first location that matches, else -1.
 
-  char operator[] (size_t index) const;
-  // Return the <index'th> character in the string (doesn't perform
-  // bounds checking).
+  int find (const ACE_SString &str, int pos = 0) const;
+  // Find <str> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
 
+  int find (const char *s, int pos = 0) const;
+  // Find <s> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+
+  int find (char c, int pos = 0) const;
+  // Find <c> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+  
+  int rfind (char c, int pos = npos) const;
+  // Find <c> starting at pos (counting from the end).  Returns the
+  // index of the first location that matches, else npos.
+  
   int operator== (const ACE_SString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -227,6 +295,9 @@ class ACE_Export ACE_WString
 {
   friend ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 public:
+  static const int npos;
+  // No position constant
+
   ACE_WString (ACE_Allocator *alloc = 0);
   // Default constructor.
 
@@ -251,6 +322,9 @@ public:
   ACE_WString (const ACE_WString &s);
   // Copy constructor.
 
+  ACE_WString (ACE_USHORT16 c, ACE_Allocator *alloc = 0);
+  // Constructor that copies <c> into dynamically allocated memory. 
+
   ~ACE_WString (void);
   // Deletes the memory...
 
@@ -258,15 +332,22 @@ public:
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).
 
-  void operator= (const ACE_WString &);
+  ACE_USHORT16 &operator[] (size_t index);
+  // Return the <index'th> character by reference in the string
+  // (doesn't perform bounds checking).
+
+  ACE_WString &operator= (const ACE_WString &);
   // Assignment operator (does copy memory).
 
-  ACE_WString substring (size_t offset, ssize_t length = -1);
-  // return a substring given an offset and length, if length == -1
+  ACE_WString substring (size_t offset, ssize_t length = -1) const;
+  // Return a substring given an offset and length, if length == -1
   // use rest of str return empty substring if offset or offset/length
   // are invalid.
 
-  void operator += (const ACE_WString &);
+  ACE_WString substr (size_t offset, ssize_t length = -1) const;
+  // Same as substring
+
+  ACE_WString &operator+= (const ACE_WString &);
   // Concat operator (does copy memory).
 
   u_long hash (void) const;
@@ -291,6 +372,22 @@ public:
   // Comparison operator that will match substrings.  Returns the
   // index of the first location that matches, else -1.
 
+  int find (const ACE_WString &str, int pos = 0) const;
+  // Find <str> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+
+  int find (const ACE_USHORT16 *s, int pos = 0) const;
+  // Find <s> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+
+  int find (ACE_USHORT16 c, int pos = 0) const;
+  // Find <c> starting at pos.  Returns the index of the first
+  // location that matches, else npos.
+  
+  int rfind (ACE_USHORT16 c, int pos = npos) const;
+  // Find <c> starting at pos (counting from the end).  Returns the
+  // index of the first location that matches, else npos.
+  
   int operator== (const ACE_WString &s) const;
   // Equality comparison operator (must match entire string).
 
@@ -308,7 +405,10 @@ public:
 
   static size_t wstrlen (const ACE_USHORT16 *);
   // Computes the length of a "0" terminated ACE_USHORT16 *.
-
+  
+  static const ACE_USHORT16 *strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2);
+  // Traditional style strstr
+  
   void resize (size_t len);
   // This method is designed for high-performance. Please use with
   // care ;-) If the current size of the string is less than <len>,
