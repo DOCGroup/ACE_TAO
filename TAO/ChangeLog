@@ -1,3 +1,21 @@
+Mon Apr 12 12:20:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          - To the logic for generation of ORB include files, added
+            a special case for the occurrence of ValueBase, separating
+            it from the occurrence of a valuetype declaration. This
+            change allows us to avoid the inclusion of ValueFactory.h
+            when all we have is a ValueBase member or parameter.
+            
+          - Move the generation of the include of CDR.h to the stub
+            source file. Now that all CDR operators are uninlined,
+            this include no longer needs to appear in the stub header
+            file.
+
 Mon Apr 12 16:48:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ULongSeqA.cpp:
@@ -61,7 +79,7 @@ Mon Apr 12 11:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_field/field_ci.cpp:
         * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
 
-          Fixed wrabings (and an errror) in the daily builds.
+          Fixed warnings (and an errror) in the daily builds.
 
 Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -72,7 +90,7 @@ Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           destroy_i() on the containers contents. If the container
           is a module that contains another module, the destroy_i()
           we are in will be called recursively so the state must
-          be preserved. Thanks to Ramiro Penataro <ramiro.penataro@iac.es>
+          be preserved. Thanks to Ramiro Penataro <c>
           for reporting the problem.
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
