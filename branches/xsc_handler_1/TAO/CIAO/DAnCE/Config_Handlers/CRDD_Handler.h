@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_CRDD_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_export.h"
+#include "Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,3 +1,17 @@
+2005-01-13 +00  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* DAnCE/Config_Handlers/Config_Handler_export.h:
+	* DAnCE/Config_Handlers/Config_Handlers_export.h:
+	  Removed redundant export files.  One of them is causing cvs
+	  error on win32 where filenames are not case-sensitive.
+	
+	* DAnCE/Config_Handlers/CRDD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/PCD_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.h: Changed to use the header
+	  file: Config_Handler_Export.h.
+
 Wed Dec 22 17:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
