@@ -259,16 +259,8 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl
@@ -289,16 +281,8 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl
@@ -372,16 +356,8 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl
@@ -402,16 +378,8 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "TAO::Objref_Traits<" << node->name () << ">::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao";
         }
 
       *os << "_duplicate (" << be_idt << be_idt_nl

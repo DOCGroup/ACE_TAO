@@ -312,16 +312,8 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "result =" << be_idt_nl;
-
-          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
-
-          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-            {
-              *os << parent->name () << "::";
-            }
-
-          *os << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
+          *os << "result =" << be_idt_nl
+              << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
               << be_idt << be_idt_nl
               << "_tao_union." << f->local_name () << " ()," << be_nl
               << "strm" << be_uidt_nl

@@ -837,13 +837,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
           else
             {
-              AST_Decl *parent = ScopeAsDecl (bt->defined_in ());
-
-              if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-                {
-                  *os << parent->name () << "::";
-                }
-
               *os << "TAO::Objref_Traits<" << bt->name () << ">::tao_marshal ("
                   << be_idt << be_idt_nl
                   << "_tao_sequence[i].in (), strm" << be_uidt_nl
