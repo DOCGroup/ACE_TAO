@@ -1,3 +1,11 @@
+Mon Sep 30 11:13:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-borland-common.h:
+        * ace/config-win32-common.h:
+          Moved the dll export stuff for the Borland compiler from the win32
+          file to the borland file because the Kylix compiler also supports
+          the dll export stuff for shared objects.
+
 Mon Sep 30 10:19:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/rules.bin.GNU:
