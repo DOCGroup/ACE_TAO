@@ -6,7 +6,7 @@ class con_i : public virtual POA_con
 };
 
 int
-main (int argc , char *argv[])
+main (int , char *[])
 {
-    return 0;
+  return 0;
 }
