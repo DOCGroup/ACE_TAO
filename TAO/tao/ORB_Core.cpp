@@ -62,6 +62,7 @@ TAO_default_environment ()
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 const char * TAO_ORB_Core::resource_factory_name_ = "Resource_Factory";
+const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : lock_ (),
@@ -1185,6 +1186,18 @@ void
 TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 {
   TAO_ORB_Core::resource_factory_name_ = resource_factory_name;
+}
+
+void
+TAO_ORB_Core::dynamic_adapter_name (const char *name)
+{
+  TAO_ORB_Core::dynamic_adapter_name_ = name;
+}
+
+const char *
+TAO_ORB_Core::dynamic_adapter_name (void)
+{
+  return TAO_ORB_Core::dynamic_adapter_name_;
 }
 
 TAO_Resource_Factory *

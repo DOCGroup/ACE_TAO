@@ -286,7 +286,9 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
     }
 
   TAO_Dynamic_Adapter *dynamic_adapter =
-    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
+        TAO_ORB_Core::dynamic_adapter_name ()
+      );
 
   dynamic_adapter->create_request (
                        this,
@@ -322,7 +324,9 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
     }
 
   TAO_Dynamic_Adapter *dynamic_adapter =
-    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
+        TAO_ORB_Core::dynamic_adapter_name ()
+      );
 
   dynamic_adapter->create_request (
                        this,
@@ -344,7 +348,9 @@ CORBA_Object::_request (const char *operation,
   if (this->protocol_proxy_)
     {
       TAO_Dynamic_Adapter *dynamic_adapter =
-        ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+        ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
+            TAO_ORB_Core::dynamic_adapter_name ()
+          );
 
       return dynamic_adapter->request (
                                   this,

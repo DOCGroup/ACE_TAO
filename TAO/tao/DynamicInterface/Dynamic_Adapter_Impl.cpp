@@ -9,6 +9,7 @@ ACE_RCSID(DynamicInterface, TAO_Dynamic_Adapter_Impl, "$Id$")
 #include "Request.h"
 #include "Server_Request.h"
 #include "tao/Invocation.h"
+#include "tao/ORB_Core.h"
 
 TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl (void)
 {
@@ -138,6 +139,7 @@ TAO_Dynamic_Adapter_Impl::create_exception_list (
 int
 TAO_Dynamic_Adapter_Impl::Initializer (void)
 {
+  TAO_ORB_Core::dynamic_adapter_name ("Concrete_Dynamic_Adapter");
   ACE_Service_Config::static_svcs ()->insert (
       &ace_svc_desc_TAO_Dynamic_Adapter_Impl
     );
@@ -147,7 +149,7 @@ TAO_Dynamic_Adapter_Impl::Initializer (void)
 
 ACE_STATIC_SVC_DEFINE (
     TAO_Dynamic_Adapter_Impl,
-    ACE_TEXT ("Dynamic_Adapter"),
+    ACE_TEXT ("Concrete_Dynamic_Adapter"),
     ACE_SVC_OBJ_T,
     &ACE_SVC_NAME (TAO_Dynamic_Adapter_Impl),
     ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
