@@ -331,8 +331,8 @@ module	: IDL_MODULE
 	     * Make a new module and add it to the enclosing scope
 	     */
 	    if (s != NULL) {
-	      m = idl_global->gen()->create_module(n, p);
-	      (void) s->fe_add_module(m);
+	      m = idl_global->gen ()->create_module (s, n, p);
+	      (void) s->fe_add_module (m);
 	    }
 	    /*
 	     * Push it on the stack
