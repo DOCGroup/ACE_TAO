@@ -686,12 +686,12 @@ public:
             int priority,
             int signal_number = 0);
 
-#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
-  * Same as above but with scatter support, through chaining of composite
-  * message blocks using the continuation field.
-  * NOTE: Each data block payload must be at least the size of a system memory page
-  * and must be aligned on a system memory page size boundary
+  * Same as above but with scatter support, through chaining of
+  * composite message blocks using the continuation field.
+  * NOTE: Each data block payload must be at least the size of a
+  * system memory page and must be aligned on a system memory page
+  * size boundary
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
@@ -700,7 +700,7 @@ public:
              const void *act,
              int priority,
              int signal_number = 0);
-#endif /**/
+
 
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File (void);
@@ -893,12 +893,12 @@ public:
              int priority,
              int signal_number = 0);
 
-#if ((ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
   /**
-  * Same as above but with gather support, through chaining of composite
-  * message blocks using the continuation field.
-  * NOTE: Each data block payload must be at least the size of a system memory page
-  * and must be aligned on a system memory page size boundary
+  * Same as above but with gather support, through chaining of
+  * composite message blocks using the continuation field.
+  * NOTE: Each data block payload must be at least the size of a
+  * system memory page and must be aligned on a system memory page
+  * size boundary
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
@@ -907,7 +907,6 @@ public:
               const void *act,
               int priority,
               int signal_number = 0);
-#endif /**/
 
   /// Destrcutor.
   virtual ~ACE_WIN32_Asynch_Write_File (void);
