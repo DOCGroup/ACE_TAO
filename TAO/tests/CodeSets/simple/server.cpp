@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
       // Initialize POA
       CORBA::Object_var poa_object=
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check POA
