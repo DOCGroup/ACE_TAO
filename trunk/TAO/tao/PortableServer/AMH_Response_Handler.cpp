@@ -257,7 +257,7 @@ TAO_AMH_Response_Handler::decr_refcount (void)
 
 namespace TAO
 {
-  ACE_INLINE void
+  void
   ARH_Refcount_Functor::operator () (
       TAO_AMH_Response_Handler *arh)
     ACE_THROW_SPEC (())
