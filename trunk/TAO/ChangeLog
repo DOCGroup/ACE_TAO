@@ -1,3 +1,11 @@
+Tue Jan 18 19:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+          Use ACE_ERROR/LM_ERROR to print out error messages instead of
+          ACE_DEBUG/LM_DEBUG, makes it easier to search for messages
+          in the log
+
 Tue Jan 18 19:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Acceptor.cpp:
