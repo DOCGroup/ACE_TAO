@@ -1,3 +1,9 @@
+Thu Aug  3 02:03:28 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	  added orbsvcs/orbsvcs/ESF to the CPP_FLAGS, hoping to fix the
+	  OSF1 link error for Notify.
+	
 Wed Aug  2 18:00:28 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/NT_Naming_Service.bor (CFLAGS):
