@@ -87,6 +87,16 @@ TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyVal
   this->request_processing_ = value;
 }
 
+ACE_INLINE int
+TAO_Creation_Time::creation_time_length (void)
+{
+#if defined (POA_NO_TIMESTAMP)
+  return 0;
+#else
+  return TAO_Creation_Time::max_space_required_for_two_ulong_to_hex;
+#endif /* POA_NO_TIMESTAMP */
+}
+
 ACE_INLINE 
 TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
 {
@@ -120,16 +130,6 @@ TAO_Creation_Time::creation_time (void) const
 }
 
 ACE_INLINE int
-TAO_Creation_Time::creation_time_length (void)
-{
-#if defined (POA_NO_TIMESTAMP)
-  return 0;
-#else
-  return TAO_Creation_Time::max_space_required_for_two_ulong_to_hex;
-#endif /* POA_NO_TIMESTAMP */
-}
-
-ACE_INLINE int
 TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
 {
 #if defined (POA_NO_TIMESTAMP)
@@ -149,6 +149,30 @@ TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
 #else
   return ACE_OS::memcmp (this->time_stamp_,
                          rhs.time_stamp_,
+                         TAO_Creation_Time::creation_time_length ()) != 0;
+#endif /* POA_NO_TIMESTAMP */
+}
+
+ACE_INLINE int
+TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
+{
+#if defined (POA_NO_TIMESTAMP)
+  return 1;
+#else
+  return ACE_OS::memcmp (this->time_stamp_,
+                         rhs.creation_time (),
+                         TAO_Creation_Time::creation_time_length ()) == 0;
+#endif /* POA_NO_TIMESTAMP */
+}
+
+ACE_INLINE int
+TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
+{
+#if defined (POA_NO_TIMESTAMP)
+  return 0;
+#else
+  return ACE_OS::memcmp (this->time_stamp_,
+                         rhs.creation_time (),
                          TAO_Creation_Time::creation_time_length ()) != 0;
 #endif /* POA_NO_TIMESTAMP */
 }
@@ -175,30 +199,6 @@ ACE_INLINE void
 TAO_Temporary_Creation_Time::creation_time (const void *creation_time)
 {
   this->time_stamp_ = (void *) creation_time;
-}
-
-ACE_INLINE int
-TAO_Temporary_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
-{
-#if defined (POA_NO_TIMESTAMP)
-  return 1;
-#else
-  return ACE_OS::memcmp (this->time_stamp_,
-                         rhs.creation_time (),
-                         TAO_Creation_Time::creation_time_length ()) == 0;
-#endif /* POA_NO_TIMESTAMP */
-}
-
-ACE_INLINE int
-TAO_Temporary_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
-{
-#if defined (POA_NO_TIMESTAMP)
-  return 0;
-#else
-  return ACE_OS::memcmp (this->time_stamp_,
-                         rhs.creation_time (),
-                         TAO_Creation_Time::creation_time_length ()) != 0;
-#endif /* POA_NO_TIMESTAMP */
 }
 
 ACE_INLINE TAO_POA *
@@ -555,15 +555,6 @@ TAO_POA::id_separator_length (void)
 }
 
 ACE_INLINE char
-TAO_POA::object_key_type (void)
-{
-  if (this->persistent ())
-    return TAO_POA::persistent_key_type ();
-  else
-    return TAO_POA::transient_key_type ();
-}
-
-ACE_INLINE char
 TAO_POA::persistent_key_type (void)
 {
   return 'P';
@@ -573,6 +564,15 @@ ACE_INLINE char
 TAO_POA::transient_key_type (void)
 {
   return 'T';
+}
+
+ACE_INLINE char
+TAO_POA::object_key_type (void)
+{
+  if (this->persistent ())
+    return TAO_POA::persistent_key_type ();
+  else
+    return TAO_POA::transient_key_type ();
 }
 
 ACE_INLINE CORBA::ULong
