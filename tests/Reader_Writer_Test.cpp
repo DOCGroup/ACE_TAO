@@ -27,7 +27,7 @@
 #if defined (ACE_HAS_THREADS)
 
 // Default number of iterations.
-static size_t n_iterations = 1000;
+static size_t n_iterations = 100;
 
 // Default number of loops.
 static size_t n_loops = 100;
@@ -93,8 +93,13 @@ reader (void *)
 
   ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
 
+  // We use a random pause, around 2msec with 1msec jittering.
+  int usecs = 1000 + ACE_OS::rand() % 2000;
+  ACE_Time_Value pause(0, usecs);
+
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
+      ACE_OS::sleep(pause);
       ACE_Read_Guard<ACE_RW_Mutex> g (rw_mutex);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, " (%t) I'm reader number %d\n", n));
@@ -117,7 +122,8 @@ reader (void *)
       --current_readers;
       //ACE_DEBUG ((LM_DEBUG, " (%t) done with reading guarded data\n"));
 
-      ACE_Thread::yield ();
+      ACE_DEBUG((LM_DEBUG, " (%t) read %d done at %T\n", iterations));
+      // ACE_Thread::yield ();
     }
   return 0;
 }
@@ -133,8 +139,14 @@ writer (void *)
 
   ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
 
+  // We use a random pause, around 2msec with 1msec jittering.
+  int usecs = 1000 + ACE_OS::rand() % 2000;
+  ACE_Time_Value pause(0, usecs);
+
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
+      ACE_OS::sleep(pause);
+
       ACE_Write_Guard<ACE_RW_Mutex> g (rw_mutex);
 
       ++current_writers;
@@ -163,7 +175,9 @@ writer (void *)
       --current_writers;
 
       //ACE_DEBUG ((LM_DEBUG, " (%t) done with guarded data\n"));
-      ACE_Thread::yield ();
+
+      ACE_DEBUG((LM_DEBUG, " (%t) write %d done at %T\n", iterations));
+      // ACE_Thread::yield ();
     }
   return 0;
 }
