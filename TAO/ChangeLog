@@ -1,3 +1,10 @@
+Mon Dec 20 12:22:38 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Muxed_GIOP_Versions/server.cpp:
+
+          Increase the amout of time that the server runs the ORB event loop
+          in order to allow the last client to complete.
+
 Mon Dec 20 09:34:08 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Bug_1436_Regression/run_test.pl:
