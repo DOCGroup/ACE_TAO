@@ -161,6 +161,11 @@ public:
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef Invalid_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   }; // exception CORBA_DynAny::Invalid
 
     static CORBA::TypeCode_ptr _tc_Invalid;
@@ -197,6 +202,11 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef InvalidValue_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
 
   }; // exception CORBA_DynAny::InvalidValue
 
@@ -235,6 +245,11 @@ public:
     // = TAO extension
     static CORBA::Exception *_alloc (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef TypeMismatch_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   }; // exception CORBA_DynAny::TypeMismatch
 
     static CORBA::TypeCode_ptr _tc_TypeMismatch;
@@ -271,6 +286,11 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef InvalidSeq_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
 
   }; // exception CORBA_DynAny::InvalidSeq
 
@@ -621,11 +641,8 @@ typedef CORBA::String_var FieldName_var;
 typedef CORBA::String_out FieldName_out;
 extern  CORBA::TypeCode_ptr  _tc_FieldName;
 
-struct  NameValuePair
-{
-  FieldName_var id;
-  CORBA::Any value;
-};
+// Forward declaration.
+struct NameValuePair;
 
 class  NameValuePair_var
 {
@@ -670,6 +687,18 @@ private:
   NameValuePair *&ptr_;
   // assignment from T_var not allowed
   void operator= (const NameValuePair_var &);
+};
+
+struct  NameValuePair
+{
+  FieldName_var id;
+  CORBA::Any value;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef NameValuePair_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 extern  CORBA::TypeCode_ptr  _tc_NameValuePair;
@@ -866,41 +895,9 @@ public:
 
 #endif /* end #if !defined */
 
-
-#if !defined (_NAMEVALUEPAIRSEQ_CH_)
-#define _NAMEVALUEPAIRSEQ_CH_
-
-// *************************************************************
-// NameValuePairSeq
-// *************************************************************
-
-class TAO_Export NameValuePairSeq : public
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_NameValuePairSeq
-#else /* AHETI */
-  TAO_Unbounded_Sequence<NameValuePair>
-#endif /* AHETI */
-{
-public:
-  NameValuePairSeq (void); // default ctor
-  NameValuePairSeq (CORBA::ULong max); // uses max size
-  NameValuePairSeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    NameValuePair *buffer,
-    CORBA::Boolean release=0
-  );
-  NameValuePairSeq (const NameValuePairSeq &); // copy ctor
-  ~NameValuePairSeq (void); // dtor
-};
+// Forward declarations.
+class NameValuePairSeq;
 typedef NameValuePairSeq *NameValuePairSeq_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_NAMEVALUEPAIRSEQ___VAR_CH_)
-#define _NAMEVALUEPAIRSEQ___VAR_CH_
 
 // *************************************************************
 // class NameValuePairSeq_var
@@ -962,6 +959,46 @@ private:
 
 
 #endif /* end #if !defined */
+
+#if !defined (_NAMEVALUEPAIRSEQ_CH_)
+#define _NAMEVALUEPAIRSEQ_CH_
+
+// *************************************************************
+// NameValuePairSeq
+// *************************************************************
+class TAO_Export NameValuePairSeq : public
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+  _TAO_Unbounded_Sequence_NameValuePairSeq
+#else /* AHETI */
+  TAO_Unbounded_Sequence<NameValuePair>
+#endif /* AHETI */
+{
+public:
+  NameValuePairSeq (void); // default ctor
+  NameValuePairSeq (CORBA::ULong max); // uses max size
+  NameValuePairSeq (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    NameValuePair *buffer,
+    CORBA::Boolean release=0
+  );
+  NameValuePairSeq (const NameValuePairSeq &); // copy ctor
+  ~NameValuePairSeq (void); // dtor
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef NameValuePairSeq_ptr _ptr_type;
+  typedef NameValuePairSeq_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
+};
+
+#endif /* end #if !defined */
+
+
+#if !defined (_NAMEVALUEPAIRSEQ___VAR_CH_)
+#define _NAMEVALUEPAIRSEQ___VAR_CH_
 
 extern  CORBA::TypeCode_ptr  _tc_NameValuePairSeq;
 
@@ -1426,38 +1463,9 @@ public:
 
 #endif /* end #if !defined */
 
-
-#if !defined (_ANYSEQ_CH_)
-#define _ANYSEQ_CH_
-
-// *************************************************************
-// AnySeq
-// *************************************************************
-
-class TAO_Export AnySeq : public
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_AnySeq
-#else /* AHETI */
-  TAO_Unbounded_Sequence<CORBA::Any>
-#endif /* AHETI */
-{
-public:
-  AnySeq (void); // default ctor
-  AnySeq (CORBA::ULong max); // uses max size
-  AnySeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Any *buffer,
-    CORBA::Boolean release=0
-  );
-  AnySeq (const AnySeq &); // copy ctor
-  ~AnySeq (void); // dtor
-};
+// Forward declarations.
+class AnySeq;
 typedef AnySeq *AnySeq_ptr;
-
-#endif /* end #if !defined */
-
 
 #if !defined (_ANYSEQ___VAR_CH_)
 #define _ANYSEQ___VAR_CH_
@@ -1522,6 +1530,43 @@ private:
 
 
 #endif /* end #if !defined */
+
+#if !defined (_ANYSEQ_CH_)
+#define _ANYSEQ_CH_
+
+// *************************************************************
+// AnySeq
+// *************************************************************
+
+class TAO_Export AnySeq : public
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+  _TAO_Unbounded_Sequence_AnySeq
+#else /* AHETI */
+  TAO_Unbounded_Sequence<CORBA::Any>
+#endif /* AHETI */
+{
+public:
+  AnySeq (void); // default ctor
+  AnySeq (CORBA::ULong max); // uses max size
+  AnySeq (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::Any *buffer,
+    CORBA::Boolean release=0
+  );
+  AnySeq (const AnySeq &); // copy ctor
+  ~AnySeq (void); // dtor
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef AnySeq_ptr _ptr_type;
+  typedef AnySeq_var _var_type;
+#endif /* __GNUC__ */
+
+};
+
+#endif /* end #if !defined */
+
 
 extern  CORBA::TypeCode_ptr  _tc_AnySeq;
 

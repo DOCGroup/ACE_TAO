@@ -102,6 +102,11 @@ public:
   // = Obtain a default environment to use with TAO.
   static CORBA_Environment &default_environment (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Environment_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 private:
 
   friend class TAO_ORB_Core;

@@ -306,6 +306,12 @@ public:
                        CORBA::default_environment ());
   // Replace the value of the Any, used in the >>= operators.
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Any_ptr _ptr_type;
+  typedef CORBA_Any_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 protected:
   void free_value (CORBA::Environment &TAO_IN_ENV);
   // Release the <value_>.

@@ -48,6 +48,12 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Context_ptr _ptr_type;
+  typedef CORBA_Context_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 private:
   CORBA::ULong refcount_;
   // reference counting
