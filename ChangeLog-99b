@@ -1,3 +1,17 @@
+Wed Jul 07 21:37:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/test_config.h: removed special ACE_MAX_PROCESSES
+          and ACE_MAX_THREADS values for LynxOS, because most
+          tests don't need them.
+
+        * tests/Process_Mutex_Test.cpp: use only 4 processes
+          instead of ACE_MAX_PROCESSES, on LynxOS only.  Otherwise,
+          the test's ACE_LOG_MSG->op_status assertion fails.
+
+        * ACE-INSTALL.html: removed statements about some tests
+          failing on LynxOS/PPC.  Just Naming_Test and
+          MM_Shared_Memory_Test fail now.
+
 Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/config-ghs-common.h: removed use of native auto_ptrs, as they
@@ -5,17 +19,17 @@ Wed Jul 07 19:51:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Wed Jul  7 17:17:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/ARGV.cpp (ACE_ARGV):
-	* ace/OS.cpp (ACE_OS_Recursive_Thread_Mutex_Guard):
-	* ace/Sched_Params.i (ACE_Sched_Priority_Iterator):
+        * ace/ARGV.cpp (ACE_ARGV):
+        * ace/OS.cpp (ACE_OS_Recursive_Thread_Mutex_Guard):
+        * ace/Sched_Params.i (ACE_Sched_Priority_Iterator):
 
-	  Added some class members to the member initializer lists to fix
-	  some "Effective C++" warnings from EGCS.
+          Added some class members to the member initializer lists to fix
+          some "Effective C++" warnings from EGCS.
 
 Wed Jul  7 16:33:29 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cached_Conn_Test.cpp (main): Added default testing of LRU,
-	  LFU, FIFO caching strategies.
+        * tests/Cached_Conn_Test.cpp (main): Added default testing of LRU,
+          LFU, FIFO caching strategies.
 
         * tests/Cached_Conn_Test.cpp (parse_args):
         * tests/Cache_Map_Manager_Test (parse_args):
@@ -35,43 +49,43 @@ Wed Jul 07 16:06:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Recursive_Mutex_Test.cpp: explicitly set the
           stack size.  This solves the problem on LynxOS/PPC, below, so
- 	  the 65-iteration workaround was removed.  Thanks to Doug for
- 	  this suggestion.
+          the 65-iteration workaround was removed.  Thanks to Doug for
+          this suggestion.
 
 Wed Jul  7 13:27:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-borland.h,
-	  ace/config-win32.h: Added support for the ACE::major_versions(), etc.
-	  for PC versions of ACE, as well as UNIX.  Thanks to 
-	  Jeff Hellzen <jhellzen@my-deja.com> for suggesting this.
+        * ace/config-win32-borland.h,
+          ace/config-win32.h: Added support for the ACE::major_versions(), etc.
+          for PC versions of ACE, as well as UNIX.  Thanks to
+          Jeff Hellzen <jhellzen@my-deja.com> for suggesting this.
 
-	* ace: Added a new Based_Pointer_T.i file that inlines the
-	  small methods.
+        * ace: Added a new Based_Pointer_T.i file that inlines the
+          small methods.
 
-	* ace/Malloc[_T]: Cleaned up the code so that we can use the 
-	  ACE_Based_Pointer<> consistently when
- 	  ACE_HAS_POSITION_INDEPENDENT_MALLOC is enabled and disable.
-	
-	* ace/Malloc.h: By default, ACE_MALLOC_PADDING is set to 1 so that
-	  we don't get "divide by zero" errors.  However, it's only used
- 	  in the computation of the ACE_Malloc_Header if it's > 1.
+        * ace/Malloc[_T]: Cleaned up the code so that we can use the
+          ACE_Based_Pointer<> consistently when
+          ACE_HAS_POSITION_INDEPENDENT_MALLOC is enabled and disable.
 
-	* config-aix-4.x.h,
-	  config-lynxos.h,
-	  config-psos-diab-mips.h,
-	  config-psos-diab-ppc.h,
-	  config-psos-diab.h,
-	  config-psos-tm.h,
-	  config-psosim-g++.h,
-	  config-sunos5.5.h:
-	  Removed the ACE_MALLOC_ALIGN macro since it should no longer
-	  be necessary.
+        * ace/Malloc.h: By default, ACE_MALLOC_PADDING is set to 1 so that
+          we don't get "divide by zero" errors.  However, it's only used
+          in the computation of the ACE_Malloc_Header if it's > 1.
 
-	* ace/Malloc.h: Renamed the macro ACE_MALLOC_ALIGN to
-	  ACE_MALLOC_PADDING, which is more descriptive.  However, I've
- 	  retained ACE_MALLOC_ALIGN for backwards compatibility to keep
- 	  Steve Huston happy ;-).
-  
+        * config-aix-4.x.h,
+          config-lynxos.h,
+          config-psos-diab-mips.h,
+          config-psos-diab-ppc.h,
+          config-psos-diab.h,
+          config-psos-tm.h,
+          config-psosim-g++.h,
+          config-sunos5.5.h:
+          Removed the ACE_MALLOC_ALIGN macro since it should no longer
+          be necessary.
+
+        * ace/Malloc.h: Renamed the macro ACE_MALLOC_ALIGN to
+          ACE_MALLOC_PADDING, which is more descriptive.  However, I've
+          retained ACE_MALLOC_ALIGN for backwards compatibility to keep
+          Steve Huston happy ;-).
+
         * Fixed a typo in the TAO-mail.html program where ace-*
           should have been tao-*.  Thanks to Pedro Alves Ferreira
           <pedro.ferreira@inescn.pt> for reporting this.
