@@ -17,7 +17,8 @@ RT_Notify = \
   Notify/RT_Factory \
   Notify/RT_Notify_Service \
   Notify/RT_POA_Helper \
-  Notify/RT_Properties
+  Notify/RT_Properties \
+  Notify/Structured/RT_StructuredProxyPushSupplier \
 
 ifndef ORBSVCS_COMPONENTS
   ORBSVCS_COMPONENTS = \
@@ -28,7 +29,7 @@ ifneq (,$(findstring RT_Notify, $(ORBSVCS_COMPONENTS)))
   FILES += $(RT_Notify)
 endif # RT_Notify
 
-VPATH = .:Notify
+VPATH = .:Notify:Notify/Structured
 
 ifeq (,$(TAO_ORBSVCS))
 LIB   = $(LIB_UNCHECKED)
@@ -89,4 +90,3 @@ ORBSVCS_COMPONENTS:
 
 compclean:
 	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --remove
-

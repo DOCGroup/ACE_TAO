@@ -1,3 +1,19 @@
+Thu Apr 10 07:06:07 2003 Pradeep Gore <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/RT_lib/Makefile:
+	* orbsvcs/tests/Notify/Test_Filter/Makefile:
+	  Added missing linkage to RTCORBA.
+
+	* orbsvcs/tests/Notify/ThreadPool/supplier.conf:
+	  Corrected the names of the library loaded.
+
+	* orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
+	* orbsvcs/orbsvcs/Makefile.RT_Notification:
+	  Added missing Structured/RT_StructuredProxyPushSupplier.cpp
+
+	* orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp
+	  Corrected ENV usage.
+
 Thu Apr 10 15:01:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:
