@@ -1,12 +1,47 @@
 // $Id$
 
 
-Fault Tolerant Event Service
+Fault Tolerant Real-time Event Service
+==========================================================================================
+
+Introduction
+--------------
+
+The Fault Tolerant Real-time Event Service provides the fault tolerant capability to the
+TAO Real-time Event Service. Essentially, it allows you to start several event services
+in different machines. These event services form an object group which can be treated as
+a logical event service by clients. The clients only communicate with the primary (leader) of
+the object group. The rest event channels in the object group are called backups. Once the primary
+dies, one of the backups will assume the reponsibility of primary and this process is transparent
+to the clients.
+
+The key to provide fault tolerance to event channels is to replicate the states of primary to its
+backups. There are two kinds of states in the event channels, transient and persistent. A transient
+state in the event channels is the events which are yet to be delivered to the consumers. Those events
+are hard to replicate because the time scale is too small. They might be delivered late or out of
+scope if we tried to replicate the events. However, the subscription information occurs at a suitable
+time scale for replication, and is in fact more essential for the delivery of events since it establishes
+a kind of connectivity from suppliers to consumers. Therefore, we only replicate the subscriptions
+
+Once the primary receives the subscription requests from the clients, it
+will replicate the requests to the backup event channels.In order to provide time bounds on replication,
+we introduce the concept of transaction depth. If we say the transaction depth is n, that means a
+subscription method invocation has to be blocked until the first n replicas complete the subscription
+operation, illustrated by the assured-replicate arc in the figure. Other replicas can get the state
+change via a so called soft-replicate which conceptually means the replication is not assured to
+complete before the subscription operation returns.  So, if the soft-replicate fails due to loss
+of the primary, we will have only the assured depth of replication. The clients are allowed to configure
+the transaction depth to tradeoff reliability and responsiveness. Furthermore, it is necessary to
+roll back an operation in some replicas if the transaction depth can not be met. In addition,
+we can use either two-way or AMI calls for assured-replication and one-way operations for soft-replication.
 
 
 Important Note : In current stage, the Fault Tolerant Event Service can only be made under
                  MPC build. The conventional makefiles are yet to be supported.
 
+
+Programs
+-------------
 This directory contains the following programs:
 
   ftrt_eventservice : Implements the functionality of fault tolerant event channel.
@@ -25,7 +60,9 @@ This directory contains the following programs:
 
   ftec : a shell script to start ftrt_eventservice.
 
+
 Quick start:
+-------------
 
   Run the applications as follows:
 
@@ -47,7 +84,7 @@ Quick start:
   $ ./supplier
 
 How do we add a new FTRTEC to the system?
-
+---------------------------------------------
   Just use
 
   ./ftec -j
@@ -88,7 +125,7 @@ Is there any adjustable options for FTRTEC?
 
 
  How do I start the FTRTEC using ftrtec_factory_service?
-
+---------------------------------------------------------------
  The ftrtec_factory_service is a small program that can instaniate a ftrt_eventservice on demand.
  It exports the FT::GenericFactory interface to its client. There are two ways that
  you can get the IOR for the factory object. 1) specify the name you want the factory
@@ -135,7 +172,7 @@ Here are the parameters in create_object() to control how ftrt_eventservice is c
      ftrt_eventservice can be started using sciop.
 
 How do I use the ftrtec_gateway_service program ?
-
+-----------------------------------------------------
     The FTRTEC uses some features in FT CORBA that requires every client to use FT ORB to work. If your
     client is written based other ORBs other than TAO. You cannot get the desired fault tolerance feature.
     In this case you can have the ftec_gateway as an intermediator between the FTRTEC and you client program.
