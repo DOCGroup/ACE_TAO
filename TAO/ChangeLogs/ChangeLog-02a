@@ -1,3 +1,19 @@
+Thu Mar  8 08:34:16 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Makefile:
+          Fixed path to the PluggableUDP directory.
+
+        * examples/PluggableUDP/tests/UDP_i.cpp:
+          Fixed throw spec for the invoke() method.
+
+        * tests/POA/Single_Threaded_POA/Makefile:
+          rules.bin.GNU cannot be included if there is an explicit rule to
+          build the binary.  Cleanup the macros and regenerate
+          dependencies.
+
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+          Fixed warning about unused argument.
+
 Thu Mar  8 10:29:08 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
@@ -7,16 +23,16 @@ Thu Mar  8 10:29:08 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Mar  8 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	    * tests/AMI_Timeouts/timeout_client.cpp:
-		  Added more time to wait for asynch replies in case of local and 
-		  remote timer == 0ms.
+        * tests/AMI_Timeouts/timeout_client.cpp:
+          Added more time to wait for asynch replies in case of local and
+          remote timer == 0ms.
 
-		* tests/AMI_Timeouts/client.cpp:
-		  Removed a memory leak caused by not deleting the client object.
+        * tests/AMI_Timeouts/client.cpp:
+          Removed a memory leak caused by not deleting the client object.
 
-		* tests/AMI_Timeouts/timeout_i.cpp:
-		  Removed some confusing debugging messages. Also, added a check
-		  to accept only timeout exceptions and report others.
+        * tests/AMI_Timeouts/timeout_i.cpp:
+          Removed some confusing debugging messages. Also, added a check
+          to accept only timeout exceptions and report others.
 
 Wed Mar  7 20:07:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 

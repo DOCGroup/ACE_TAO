@@ -25,7 +25,7 @@ DIRS  = Callback_Quoter \
 	Load_Balancing_persistent \
 	Simulator \
 	Content_Server \
-        DIOP
+        PluggableUDP
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

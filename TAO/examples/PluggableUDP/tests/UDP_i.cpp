@@ -31,6 +31,7 @@ UDP_i::invoke (const char * client_name,
                UDP_ptr udpHandler,
                CORBA::Long request_id,
                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
