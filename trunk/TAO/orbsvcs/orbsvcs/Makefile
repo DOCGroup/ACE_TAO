@@ -37,8 +37,11 @@ ifdef av
 IDL_FILES += \
 	CosPropertyServiceS \
 	CosPropertyServiceC \
+	\
 	AVStreamsS \
-	AVStreamsC
+	AVStreamsC \
+	sfpS \
+	sfpC
 endif
 
 ifdef trader
@@ -104,6 +107,7 @@ ifdef av
 ## Add the implementation files
 FILES += \
 	AV/AVStreams_i \
+	AV/sfp \
 	Property/CosPropertyService_i \
 	Property/CosProperty_Hash
 endif
