@@ -666,10 +666,18 @@ protected:
 class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
   // = TITLE
-  //   @@ Please fill in here.
+  //     Deadline based message priority strategy.
   //
   // = DESCRIPTION
-  //   @@ Please fill in here.
+  //     Assigns dynamic message priority according to time to deadline.  The 
+  //     message priority is divided into high and low order bit fields.  The 
+  //     high order bit field is used for dynamic message priority, which is 
+  //     updated whenever the convert_priority (...) method is called.  The 
+  //     low order bit field is used for static message priority and is left 
+  //     unchanged.  The partitioning of the priority value into high and low 
+  //     order bit fields is done according to the arguments passed to the 
+  //     strategy object's constructor.
+  //
 public:
   ACE_Deadline_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
                                  u_long static_bit_field_shift = 10,           // 10 low order bits
@@ -691,10 +699,19 @@ public:
 class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
   // = TITLE
-  //   @@ Please fill in here.
+  //     Laxity based message priority strategy.
   //
   // = DESCRIPTION
-  //   @@ Please fill in here.
+  //     Assigns dynamic message priority according to laxity (time to 
+  //     deadline minus worst case execution time).  The message priority is 
+  //     divided into high and low order bit fields.  The high order
+  //     bit field is used for dynamic message priority, which is 
+  //     updated whenever the convert_priority (...) method is called.  The 
+  //     low order bit field is used for static message priority and is left 
+  //     unchanged.  The partitioning of the priority value into high and low 
+  //     order bit fields is done according to the arguments passed to the 
+  //     strategy object's constructor.
+  //  
 public:
   ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
                                u_long static_bit_field_shift = 10,           // 10 low order bits
