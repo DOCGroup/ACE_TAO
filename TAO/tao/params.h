@@ -241,15 +241,6 @@ private:
   int nodelay_;
   // 1 if we're using TCP_NODELAY and 0 otherwise.
 
-  int cdr_default_size_;
-  // Default size for CDR buffers.
-
-  int cdr_max_exp_size_;
-  // Cutoff value for exponential growth of CDR buffers.
-
-  int cdr_linear_chunk_;
-  // Control for linear growth of CDR buffers.
-
   int cdr_memcpy_tradeoff_;
   // Control the strategy for copying vs. appeding octet sequences in
   // CDR streams.
