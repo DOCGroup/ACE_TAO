@@ -1,3 +1,218 @@
+Thu Jul 25 08:10:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+
+Thu Jul 25 08:05:47 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/PSS/PSDL.ll:
+	* orbsvcs/PSS/PSDL.yy:
+	* orbsvcs/PSS/PSDL_l.cpp:
+	* orbsvcs/PSS/PSDL_y.cpp:
+	* orbsvcs/PSS/PSDL_y.h:
+	* orbsvcs/PSS/PSDL_Interpreter.cpp:
+	* orbsvcs/PSS/PSDL_Interpreter.h:
+
+	  The Lex and the Yacc files and the related classes to build an 
+	  abstract syntax tree for the Persistent State Definition
+	  Language. PSDL is a superset of the IDL. This is needed for the
+	  Persistent State Service (PSS). 
+
+	* orbsvcs/PSS/Makefile:
+	* orbsvcs/PSS/Makefile.parser:
+	  Makefiles to build the libTAO_PSDL, libTAO_PSDL_Datastore 
+	  and the actual PSDL parser, psdl_tao, which is similar to
+	  tao_idl for the IDL.		
+
+	* orbsvcs/PSS/PSDL.dsp:
+	* orbsvcs/PSS/PSDL_Datastore.dsp:
+	* orbsvcs/PSS/PSDL_Parser.dsp:
+	* orbsvcs/PSS/PSDL.dsw:
+	  The workspace and the project files for windows.
+	
+	* orbsvcs/PSS/Dump_Visitor.cpp:
+	* orbsvcs/PSS/Dump_Visitor.h:
+	* orbsvcs/PSS/psdl_tao.cpp:
+	  The classes for the psdl_tao executable. Dump_Visitor is used to
+	  print out the abstract tree, just in case, someone wants to view
+	  it. The psdl_tao.cpp reads the input file and invokes the accept
+	  method which will start the yacc-lex parsing of the input file.
+
+	* orbsvcs/PSS/Makefile.datastore:
+	  Makefile for building libTAO_PSDL_Datastore
+
+	  For making the services persistent, we save the object->IOR
+ 	  mapping in a persistent way. Could be writing to a database,
+	  which can be a simple file or an actual database. Please read
+	  the README for more about this and the future plans with regards
+	  to this.
+
+	  This library provides support to write and read the persistent
+	  data.
+	
+	* orbsvcs/PSS/PSDL_Code_Gen.cpp:
+	* orbsvcs/PSS/PSDL_Code_Gen.h:
+	  This class acts as the interface to the datastore which is used
+	  by the PSS. Before actually saving the object-name stringified
+	  object reference to the datastore, it encodes the stringified
+	  object reference. When trying to get the object reference
+	  associated with an object, it gets the encoded reference from
+	  the datastore and decodes it before passing it back to the
+	  caller.	  
+
+	* orbsvcs/PSS/PSDL_Datastore.cpp:
+	* orbsvcs/PSS/PSDL_Datastore.h:
+	  This class provides the access to the datastore.
+	  The class intializes the database or the related where the data
+	  is saved, binds, unbinds and finds the server-name and its
+	  octetseq from the hash map which is saved to the datastore.
+	
+	* orbsvcs/PSS/PSDL_OctetSeq.cpp:
+	* orbsvcs/PSS/PSDL_OctetSeq.h:
+	* orbsvcs/PSS/PSDL_String.cpp:
+	* orbsvcs/PSS/PSDL_String.h:
+	  These classes provide a wrapper to the CORBA::OctetSeq and
+	  ACE_CString respectively to facilitate saving the encoded object
+	  reference and the object's name persistently. 
+
+	  Thanks to Ossama for helping out with these classes.
+		  
+	* orbsvcs/PSS/PSDL_Node.cpp:
+	* orbsvcs/PSS/PSDL_Node.h:
+	  Each node in the abstract syntax tree is represented by an
+	  instance of TAO_PSDL_Node. Each instance will have information
+	  about the identifier name and its type and has accessibilty to
+	  the get the scope of the node. The scope is needed to get the
+	  parent of the node and its children.
+	
+	* orbsvcs/PSS/PSDL_Exception_Scope.cpp
+	* orbsvcs/PSS/PSDL_Exception_Scope.h
+	* orbsvcs/PSS/PSDL_Interface_Scope.cpp
+	* orbsvcs/PSS/PSDL_Interface_Scope.h
+	* orbsvcs/PSS/PSDL_Module_Scope.cpp
+	* orbsvcs/PSS/PSDL_Module_Scope.h
+	* orbsvcs/PSS/PSDL_Op_Dcl_Scope.cpp
+	* orbsvcs/PSS/PSDL_Op_Dcl_Scope.h
+	* orbsvcs/PSS/PSDL_Struct_Scope.cpp
+	* orbsvcs/PSS/PSDL_Struct_Scope.h
+	* orbsvcs/PSS/PSDL_Simple_Scope.cpp
+	* orbsvcs/PSS/PSDL_Simple_Scope.h
+	* orbsvcs/PSS/PSDL_Root_Scope.cpp
+	* orbsvcs/PSS/PSDL_Root_Scope.h
+	* orbsvcs/PSS/PSDL_Scope.cpp
+	* orbsvcs/PSS/PSDL_Scope.h
+	  Each node in the abstract syntax tree has a scope attached to
+	  it. The scope concerned with each node contains information
+	  about the members of that node, for example if the node is of
+	  type 'interface', the scope will have information regarding the
+	  functions, declarations, exceptions etc. that are valid for that
+	  interface.
+
+	  TAO_PSDL_Scope is the base class. This class provides the way to
+	  add new structures, interfaces and all teh different types of
+	  nodes defined in the PSDL to the tree.
+	  
+	  Individual types override the needed methods to add types that
+	  are valid in their scope. For example, structures wouldnt have
+	  exceptions in their scope. So, PSDL_Struct_Scope neednot worry
+	  about providing support for adding an exception declaration.
+
+	  TAO_PSDL_Simple_Scope is the common class for all types that do
+	  not will not have other types in them. For example, an interface
+	  can have an interface in it which will have its own functions,
+	  declarations etc. So, here the parent interface has a child
+	  which will have its own scope. On the other hand, if the type of
+	  the node is a constant declaration, it will not have sub-nodes
+	  with their scopes. Those kind of identifier types are covered in
+	  TAO_PSDL_Simple_Scope class.
+
+	  TAO_PSDL_Root_Scope provides the root scope to the tree. 
+
+	* orbsvcs/PSS/PSDL_Scope_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Scope_Visitor.h
+	  This is the base class used to generate the code that goes into
+	  the stubs. Uses the visitor pattern. Derived classes override
+	  the methods that are useful to them. Derives from
+	  TAO_PSDL_Node_Visitor.
+	
+	* orbsvcs/PSS/PSDL_Enum_Type_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Enum_Type_Visitor.h
+	* orbsvcs/PSS/PSDL_Exception_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Exception_Visitor.h
+	* orbsvcs/PSS/PSDL_Interface_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Interface_Visitor.h
+	* orbsvcs/PSS/PSDL_Module_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Module_Visitor.h
+	* orbsvcs/PSS/PSDL_Struct_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Struct_Visitor.h
+	* orbsvcs/PSS/PSDL_Type_Dcl_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Type_Dcl_Visitor.h
+ 	  Derived classes from PSDL_Node_Visitor which will override the
+	  relevant methods from the base class.
+
+	* orbsvcs/PSS/PSDL_Node_Visitor.cpp
+	* orbsvcs/PSS/PSDL_Node_Visitor.h
+	  Base class for TAO_PSDL_Scope_Visitor. In addition, holds the
+	  temporary values while building the AST.
+	
+	* orbsvcs/PSS/PSDL_Typecode_Defn.cpp:
+	* orbsvcs/PSS/PSDL_Typecode_Defn.h:
+	  Helper for generation of the typecodes that go to the stubs.
+	
+	* orbsvcs/PSS/PSDL_Visitor_Factory.cpp
+	* orbsvcs/PSS/PSDL_Visitor_Factory.h
+	  Makes the necessary visitor depending on the type of the node.
+	
+	* orbsvcs/PSS/PSDL_Extern.cpp: 
+	* orbsvcs/PSS/PSDL_Extern.h: 
+	  Class to make available the yacc/lex related variables like
+	  yyin, yyparse and yyval outside the PSDL library to psdl_tao
+	  executable.
+	
+	* orbsvcs/PSS/PSDL_Stream.cpp
+	* orbsvcs/PSS/PSDL_Stream.h
+	  Class to help write the generated code to the files. Used to
+	  open the files, keep track of the indentation, newlines and the
+	  operator << and operator >> for the different types.
+	
+	* orbsvcs/PSS/psdl_export.h
+	  The export file.
+
+	* orbsvcs/examples/PSS/README:
+	  Example to show the usage of Persistent State Service. We have a
+	  simple naming service which is made persistent with the use of
+	  PSS.
+	
+	* orbsvcs/examples/PSS/Client.dsp:
+	* orbsvcs/examples/PSS/Server.dsp:
+	* orbsvcs/examples/PSS/Simple_Naming.dsp:
+	* orbsvcs/examples/PSS/PSS.dsw:
+	* orbsvcs/examples/PSS/Makefile:
+	  Project files, workspace and the makefile to build 
+	  the example.
+	
+	* orbsvcs/examples/PSS/server.cpp:
+	* orbsvcs/examples/PSS/Server_i.cpp:
+	* orbsvcs/examples/PSS/Server_i.h:
+	* orbsvcs/examples/PSS/Server.idl:
+	  Server related classes and idl file. The server is registered
+	  with the simple naming service and is shown that it can be
+	  contacted with the help of the persistent Simple_Naming service.
+	
+	* orbsvcs/examples/PSS/Simple_Naming.cpp:
+	* orbsvcs/examples/PSS/Simple_Naming_i.cpp:
+	* orbsvcs/examples/PSS/Simple_Naming_i.h:
+	* orbsvcs/examples/PSS/Simple_Naming.idl:
+	  The Simple_Naming classes and idl file. This is similar to the
+	  naming service but supports only the bind and find
+	  functionality. This is made persistent with the help of PSS.
+	
+	* orbsvcs/examples/PSS/naming_data.psdl:
+	  The psdl file which is exposed to the PSS. Contains the data
+	  structure that is sent to the PSS.
+	
+	* orbsvcs/examples/PSS/client.cpp:
+	  Simple client which tries to use the Simple_Naming to get
+	  access to the server and invoke a method on the server.
+	  
 Thu Jul 25 09:53:27 2002  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
