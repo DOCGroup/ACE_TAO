@@ -171,7 +171,8 @@ void
 ACE_Test_Output::close (void)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  if (this->output_file_ == ACE_LOG_MSG->msg_ostream () ) 
+  if (this->output_file_ &&
+      (this->output_file_ == ACE_LOG_MSG->msg_ostream ())) 
   {
     this->output_file_->flush ();
     this->output_file_->close ();
