@@ -1,7 +1,7 @@
 Mon Oct 09 03:23:22 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_export_file.pl: Changed the script so we can define
-	  a single macro to switch multiple *_HAS_DLL default definition.
+	  a single macro to switch multiple *_HAS_DLL default definitions.
 
 Sat Oct  7 000:50:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
