@@ -74,7 +74,8 @@ Sender::Sender (void)
     protocol_ ("QoS_UDP"),
     frame_rate_ (1.0),
     mb_ (BUFSIZ),
-    address_ ("localhost:8000")
+    address_ (0),
+    peer_addr_ (0)
 {
 }
 
@@ -91,7 +92,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:a:d");
+  ACE_Get_Opt opts (argc, argv, "f:p:r:l:a:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -110,8 +111,11 @@ Sender::parse_args (int argc,
         case 'd':
           TAO_debug_level++;
           break;
-        case 'a':
+        case 'l':
           this->address_ = opts.opt_arg ();
+          break;
+        case 'a':
+          this->peer_addr_ = opts.opt_arg ();
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -244,16 +248,50 @@ Sender::init (int argc,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
 
-  ACE_INET_Addr addr (this->address_.c_str ());
-
   this->flowname_ = "Data_Receiver";
+
+  // Set the address of the ftp client.
+  ACE_INET_Addr* addr;
+  if (this->address_ != 0)
+    ACE_NEW_RETURN (addr,
+		    ACE_INET_Addr (this->address_),
+		    -1);
+  else
+    {
+      char buf [BUFSIZ];
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      ACE_NEW_RETURN (addr,
+		      ACE_INET_Addr ("5000",
+				     buf),
+		      -1);
+    }
+
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
                                     "IN",
                                     "USER_DEFINED",
                                     "",
                                     this->protocol_.c_str (),
-                                    0);
+                                    addr);
+
+  ACE_INET_Addr* peer_addr;
+  if (this->peer_addr_ != 0)
+    ACE_NEW_RETURN (peer_addr,
+		    ACE_INET_Addr (this->peer_addr_),
+		    -1);
+  else
+    {
+      char buf [BUFSIZ];
+      ACE_OS::hostname (buf,
+			BUFSIZ);
+      ACE_NEW_RETURN (peer_addr,
+		      ACE_INET_Addr ("5050",
+				     buf),
+		      -1);
+    }
+
+  entry.set_peer_addr (peer_addr);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);
