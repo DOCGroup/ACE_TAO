@@ -1,3 +1,8 @@
+Fri Dec 10 01:04:52 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* examples/Misc/.cvsignore (Module):
+	Created few ignores to make cvs silent.
+
 Fri Dec 10 00:45:56 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/.cvsignore (Module):
