@@ -1386,6 +1386,9 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
                       TAO_Default_Thread_Lane_Resources_Manager,
                       0);
 
+      // Initialize the resources.
+      thread_lane_resources_manager->initialize (*this);
+
       // Store a copy for later use.
       this->thread_lane_resources_manager_ = thread_lane_resources_manager;
     }
@@ -1867,9 +1870,6 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   CORBA::PolicyList *policy_list,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  (void) this->open (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
   // Add the Polices contained in "policy_list" to each profile so
   // that those policies will be exposed to the client in the IOR.  In
   // particular each CORBA::Policy has to be converted in to
@@ -1878,7 +1878,6 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
   // became in turns the "body" of the IOP::TaggedComponent. This
   // conversion is a responsability of the CORBA::Profile class.  (See
   // orbos\98-05-05.pdf Section 5.4)
-
   if (policy_list->length () != 0)
     {
       TAO_Profile * profile;

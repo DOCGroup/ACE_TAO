@@ -74,15 +74,6 @@ public:
   /// Returns the total number of endpoints in all of its acceptors.
   size_t endpoint_count (void);
 
-  /**
-   * Use <filter> to populate <mprofile> object with profiles.
-   * Different filters implement different strategies for selection
-   * of endpoints to be included into <mprofile>.
-   */
-  int make_mprofile (const TAO_ObjectKey& object_key,
-                     TAO_MProfile &mprofile,
-                     TAO_Acceptor_Filter *filter);
-
   /// Check if there is at least one profile in <mprofile> that
   /// corresponds to a collocated object.
   int is_collocated (const TAO_MProfile& mprofile);

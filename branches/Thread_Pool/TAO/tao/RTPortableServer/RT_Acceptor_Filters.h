@@ -55,11 +55,15 @@ class TAO_RTPortableServer_Export TAO_Server_Protocol_Acceptor_Filter :
 public:
   TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
-  virtual int fill_mprofile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile,
-                             TAO_Acceptor **acceptors_begin,
-                             TAO_Acceptor **acceptors_end);
-  // Populate <mprofile> based on what's in <protocols_>.
+  /// Populate <mprofile> based on what's in <protocols_>.
+  int fill_mprofile (const TAO_ObjectKey &object_key,
+                     TAO_MProfile &mprofile,
+                     TAO_Acceptor **acceptors_begin,
+                     TAO_Acceptor **acceptors_end);
+
+  /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
+  /// tag component of profiles.
+  int encode_endpoints (TAO_MProfile &mprofile);
 
   virtual int validate_acceptor (TAO_Acceptor *acceptor);
   // Template method pattern.  This method is used by <fill_mprofile>

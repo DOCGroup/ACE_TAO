@@ -41,6 +41,13 @@ fill_mprofile (const TAO_ObjectKey &object_key,
           return -1;
     }
 
+  return 0;
+}
+
+int
+TAO_Server_Protocol_Acceptor_Filter::
+encode_endpoints (TAO_MProfile &mprofile)
+{
   // Encode endpoints.
   for (CORBA::ULong i = 0;
        i < mprofile.profile_count ();
@@ -53,7 +60,6 @@ fill_mprofile (const TAO_ObjectKey &object_key,
 
   return 0;
 }
-
 int
 TAO_Server_Protocol_Acceptor_Filter::
 validate_acceptor (TAO_Acceptor * /*acceptor*/)
@@ -96,4 +102,3 @@ TAO_Bands_Acceptor_Filter::validate_acceptor (TAO_Acceptor *acceptor)
     }
   return 0;
 }
-

@@ -89,7 +89,6 @@ void
 TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
@@ -762,4 +761,3 @@ TAO_RT_POA::id (CORBA::Environment &ACE_TRY_ENV)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
