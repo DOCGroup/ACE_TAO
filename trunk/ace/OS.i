@@ -8624,22 +8624,23 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # else  /* ! ACE_LACKS_LONGLONG_T */
   return now;
 # endif /* ! ACE_LACKS_LONGLONG_T */
-
-// #elif defined (linux)
+#elif defined (__GNUG__)  &&  defined (ACE_HAS_POWERPC_TIMER)
+  unsigned int least, most;
+  asm volatile ("aclock:
+                 mftbu 5        /* upper time base register */
+                 mftb 6         /* lower time base register */
+                 mftbu 7        /* upper time base register */
+                 cmpw 5,7    /* check for rollover of upper */
+                 bne aclock
+                 stw 5,%0                           /* most */
+                 stw 6,%1"                         /* least */
+                : "=m" (most), "=m" (least)      /* outputs */
+                :                              /* no inputs */
+                : "5", "6", "7", "memory"    /* constraints */);
+  return 0x100000000llu * most  +  least;
+// #elif defined (linux) && defined (__alpha)
 // NOTE: the following don't seem to work on Linux.  Use ::gettimeofday
 //       instead.
-// #elif defined (__GNUG__) && defined (ACE_HAS_PENTIUM)
-//    ACE_hrtime_t now;
-//
-//    // See comments about the RDTSC Pentium instruction for the ACE_WIN32
-//    // version of ACE_OS::gethrtime (), below.
-//    //
-//    // Read the high-res tick counter directly into memory variable "now".
-//    // The A constraint signifies a 64-bit int.
-//    asm volatile ("rdtsc" : "=A" (now) : : "memory");
-//
-//    return now;
-// #elif deifned (__GNUG__) && defined (__alpha)
 //   ACE_hrtime_t now;
 //
 //   // The following statement is based on code published by:
@@ -8705,7 +8706,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
         }
     }
 
-#elif defined (ACE_HAS_POWERPC) && defined (ghs)
+#elif defined (ghs) && defined (ACE_HAS_POWERPC_TIMER)
   // PowerPC w/ GreenHills compiler on VxWorks
 
   ACE_UNUSED_ARG (op);
