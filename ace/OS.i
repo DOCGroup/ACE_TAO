@@ -7769,6 +7769,13 @@ ACE_OS::getenv (const char *symbol)
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
 }
 
+ACE_INLINE int
+ACE_OS::putenv (const char *string)
+{
+  // ACE_TRACE ("ACE_OS::putenv");
+  ACE_OSCALL_RETURN (::putenv (string), int, -1);
+}
+
 ACE_INLINE
 ACE_Str_Buf::ACE_Str_Buf (void *b, int l, int max)
 {
