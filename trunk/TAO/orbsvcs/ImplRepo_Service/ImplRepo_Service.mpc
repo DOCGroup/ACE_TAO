@@ -31,6 +31,7 @@ project(ImR_Activator) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, ior
 
 project(tao_imr) : orbsvcsexe, core, acexml, minimum_corba, svc_utils, iortable {
   exename  = tao_imr
+  install  = $(ACE_ROOT)/bin
   Source_Files {
     tao_imr.cpp
     tao_imr_i.cpp
