@@ -1,3 +1,9 @@
+Wed Jul 31 23:39:27 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* etc/*.doxygen: Change DOT_PATH from /usr/local/bin/ to 
+	  empty, forcing doxygen to look for the dot program in PATH.
+	  This eliminates warnings in the Doxygen nightly build.
+
 Wed Jul 31 12:23:47 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Malloc.cpp:
