@@ -346,6 +346,12 @@ module PortableInterceptor
       to create the <CODE>octet</CODE> sequence that is part of an
       <CODE>IOP::TaggedComponent</CODE>.  This means that it could
       compliment the IOR interceptor support.
+  <li>Implement the remaining interception points, namely:
+      <CODE>receive_other</CODE>,
+      <CODE>receive_request_service_contexts</CODE> and
+      <CODE>send_other</CODE>.  The <CODE>send_poll</CODE>
+      implementation will most likely be deferred until TII is
+      supported in TAO.
 </ol>
 
 <hr><p>
@@ -354,9 +360,6 @@ module PortableInterceptor
   <li>The current implementation does not go through the interceptor chain
       when using collocation optimizations such as <CODE>direct</CODE> or
       <CODE>ThruPOA</CODE>.
-  <li>While multiple request interceptor support has been implemented,
-      its compliance with the <em>General Flow Rules</em> dictated in
-      the Portable Interceptor specification must be improved.
 </ul>
 
 <hr><P>
