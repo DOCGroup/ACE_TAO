@@ -6,7 +6,8 @@ Thu Jan 29 10:32:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* ace/Module.h: 
 	* ace/Message_Queue.h: 
 	  Workaround HP/C++ compiler bug, it does not support enums inside
-	  templates so we move them into base classes.
+	  templates so we move them into base classes. Thanks to Sundar
+	  T.J <tjsundar@cisco.com> for reporting this problem.
 
 Thu Jan 29 10:14:03 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
