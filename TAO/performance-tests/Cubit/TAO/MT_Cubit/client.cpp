@@ -102,7 +102,7 @@ do_priority_inversion_test (Task_State &ts)
 
   // First activate the Utilization thread.  It will wait until all
   // threads have finished binding.
-  util_thread.activate (THR_BOUND,
+  util_thread.activate (THR_BOUND | ACE_SCHED_FIFO,
                         1,
                         0,
                         priority);
@@ -140,7 +140,7 @@ do_priority_inversion_test (Task_State &ts)
     {
       // The first thread starts at the lowest priority of all the low
       // priority clients.
-      if (low_priority_client.activate (THR_BOUND,
+      if (low_priority_client.activate (THR_BOUND | ACE_SCHED_FIFO,
                                         1,
                                         1,
                                         priority) == -1)
@@ -193,8 +193,11 @@ do_priority_inversion_test (Task_State &ts)
                  usage.ru_nivcsw);
 #endif /* ACE_HAS_GETRUSAGE */
 
-
-  csw = context_switch_time ();
+#if 0 // Disable the calculation of context switch time.  It seems to
+      // hang the machine, when running on single-processor machines.
+      // Instead, to find the context switch time, run $ACE/performance-tests/Misc/context_switch_time
+    csw = context_switch_time ();
+#endif 
 
 #if defined (VXWORKS)
   ACE_OS::printf ("Test done.\n"
@@ -317,7 +320,7 @@ do_thread_per_rate_test (Task_State &ts)
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 40 Hz client with priority %d\n",
                 priority));
-    if (CB_40Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
+    if (CB_40Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -328,7 +331,7 @@ do_thread_per_rate_test (Task_State &ts)
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 20 Hz client with priority %d\n",
                 priority));
-    if (CB_20Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
+    if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -339,7 +342,7 @@ do_thread_per_rate_test (Task_State &ts)
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 10 Hz client with priority %d\n",
                 priority));
-    if (CB_10Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
+    if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -350,7 +353,7 @@ do_thread_per_rate_test (Task_State &ts)
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 5 Hz client with priority %d\n",
                 priority));
-    if (CB_5Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
+    if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
@@ -361,7 +364,7 @@ do_thread_per_rate_test (Task_State &ts)
     ACE_DEBUG ((LM_DEBUG,
                 "Creating 1 Hz client with priority %d\n",
                 priority));
-    if (CB_1Hz_client.activate (THR_BOUND, 1, 0, priority) == -1)
+    if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, priority) == -1)
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
                   "activate failed"));
