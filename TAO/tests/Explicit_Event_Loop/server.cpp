@@ -52,6 +52,8 @@ void do_something_else()
 int
 main (int argc, char *argv[])
 {
+  int ret = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -91,15 +93,14 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA exception occured");
-      return 1;
+      ret = 1;
     }
   ACE_CATCHALL
     {
       cerr << "An unknown exception was caught" << endl;
-      return 1;
+      ret = 1;
     }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN(-1);
-  return 0;
+  return ret;
 }
