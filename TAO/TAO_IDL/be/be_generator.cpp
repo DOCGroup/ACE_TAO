@@ -129,22 +129,36 @@ be_generator::create_module(UTL_ScopedName *n, UTL_StrList *p)
  * Create a BE_Interface node
  */
 AST_Interface *
-be_generator::create_interface(UTL_ScopedName *n,
-                               AST_Interface **ih,
-                               long nih,
-                               UTL_StrList *p)
+be_generator::create_interface (UTL_ScopedName *n,
+                                AST_Interface **ih,
+                                long nih,
+                                AST_Interface **ih_flat,
+                                long nih_flat,
+                                UTL_StrList *p)
 {
-  return (AST_Interface *) new be_interface(n, ih, nih, p);
+  return (AST_Interface *) new be_interface (n, 
+                                             ih, 
+                                             nih,
+                                             ih_flat,
+                                             nih_flat,
+                                             p);
 }
 
 /*
  * Create a BE_InterfaceFwd node
  */
 AST_InterfaceFwd *
-be_generator::create_interface_fwd(UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_interface_fwd (UTL_ScopedName *n, 
+                                    UTL_StrList *p)
 {
-  return (AST_InterfaceFwd *) new be_interface_fwd(this->create_interface (n, 0, -1, p),
-                                                                                  n, p);
+  return (AST_InterfaceFwd *) new be_interface_fwd (this->create_interface (n, 
+                                                                            0, 
+                                                                            -1,
+                                                                            0,
+                                                                            0, 
+                                                                            p),
+                                                    n, 
+                                                    p);
 }
 
 /*

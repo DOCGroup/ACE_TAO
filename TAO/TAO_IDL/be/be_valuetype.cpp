@@ -43,11 +43,14 @@ be_valuetype::be_valuetype (void)
 }
 
 // constructor used to build the AST
-be_valuetype::be_valuetype (UTL_ScopedName *n, AST_Interface **ih, long nih,
-                            UTL_StrList *p, idl_bool set_abstract)
-  : be_interface (n, ih, nih, p),
-    AST_Interface (n, ih, nih, p),
-    AST_Decl (AST_Decl::NT_interface, n, p), // its like an interface
+be_valuetype::be_valuetype (UTL_ScopedName *n, 
+                            AST_Interface **ih, 
+                            long nih,
+                            UTL_StrList *p, 
+                            idl_bool set_abstract)
+  : be_interface (n, ih, nih, 0, 0, p),
+    AST_Interface (n, ih, nih, 0, 0, p),
+    AST_Decl (AST_Decl::NT_interface, n, p), // it's like an interface
     UTL_Scope (AST_Decl::NT_interface),
     full_obv_skel_name_ (0),
     abstract_ (set_abstract)

@@ -62,6 +62,8 @@ public:
   be_interface (UTL_ScopedName *n,
                 AST_Interface **ih,
                 long nih,
+                AST_Interface **ih_flat,
+                long nih_flat,
                 UTL_StrList *p);
   // Constructor that sets its scoped name <n>, a list of inherited interfaces
   // <ih>, the number of inherited interfaces <nih>, and any prgmas <p>
