@@ -1,3 +1,29 @@
+Wed Mar 12 09:48:32 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing Paul Calabrese's <calabrese_p@ociweb.com> MPC related
+        changes.
+
+        * orbsvcs/orbsvcs/AV.mpc:
+
+          Add a dependency on the ACE_QoS library.
+
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+
+          Update these files so we can build the services with MPC
+          on Windows.
+
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+          Add missing mpc file for logging service.
+
+        * orbsvcs/orbsvcs/AV/media-timer.h:
+        * orbsvcs/orbsvcs/AV/media-timer.cpp:
+
+          Removed these files.  They were not removed after the rename.
+
 Tue Mar 11 18:00:12 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Added
@@ -7,31 +33,31 @@ Tue Mar 11 18:00:12 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Mar 11 11:58:12 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
 
-	  Add PLATFORM_SSL_* variables to their corresponding CPPFLAGS and
-	  LDFLAGS "make" variables.  This fixes problems on platforms
-	  where OpenSSL is installed in a location unknown to the compiler
-	  and linker.  Thanks to Phil Mesnier <mesnier_p@ociweb.com> for
-	  detecting the problem.
+          Add PLATFORM_SSL_* variables to their corresponding CPPFLAGS and
+          LDFLAGS "make" variables.  This fixes problems on platforms
+          where OpenSSL is installed in a location unknown to the compiler
+          and linker.  Thanks to Phil Mesnier <mesnier_p@ociweb.com> for
+          detecting the problem.
 
 Tue Mar 11 10:46:29 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Removed CORBA::{add,remove}_ref() static function declarations.
-	  They conflicted with the ones defined in `ValueBase.h'.
+          Removed CORBA::{add,remove}_ref() static function declarations.
+          They conflicted with the ones defined in `ValueBase.h'.
 
-	* tao/ValueBase.h:
+        * tao/ValueBase.h:
 
-	  Corrected CORBA::{add,remove}_ref() static function declarations
-	  so that "inconsistent DLL linkage" warnings no longer occur in
-	  MS Windows TAO builds.
+          Corrected CORBA::{add,remove}_ref() static function declarations
+          so that "inconsistent DLL linkage" warnings no longer occur in
+          MS Windows TAO builds.
 
-	  Include "ace/Basic_Types.h" instead of "ace/OS.h".  The former
-	  is all that is needed for the "ptr_arith_t" typedef.  Inclusion
-	  of "ace/OS.h" is overkill.
+          Include "ace/Basic_Types.h" instead of "ace/OS.h".  The former
+          is all that is needed for the "ptr_arith_t" typedef.  Inclusion
+          of "ace/OS.h" is overkill.
 
 Mon Mar 10 20:24:17 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -40,87 +66,87 @@ Mon Mar 10 20:24:17 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Mon Mar 10 11:03:14 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/DynamicInterface/DII_ClientRequestInfo.h (request_):
+        * tao/DynamicInterface/DII_ClientRequestInfo.h (request_):
 
-	  Changed the type of this class member from CORBA::Request_var to
-	  CORBA::Request_ptr.  There is no need to use "_var" type in this
-	  case.
+          Changed the type of this class member from CORBA::Request_var to
+          CORBA::Request_ptr.  There is no need to use "_var" type in this
+          case.
 
-	* tao/DynamicInterface/DII_ClientRequestInfo.cpp
-	  (TAO_DII_ClientRequestInfo):
+        * tao/DynamicInterface/DII_ClientRequestInfo.cpp
+          (TAO_DII_ClientRequestInfo):
 
-	  No need to increase the reference count since the "request_"
-	  member is no longer a "_var" type, and since the
-	  TAO_DII_ClientRequestInfo instance used in the
-	  CORBA::Request::invoke() methd is local to that method.  This is
-	  a lighter weight solution to the problem that Phil Mesnier
-	  detected and fixed since no CORBA::Request reference count locks
-	  are used.
+          No need to increase the reference count since the "request_"
+          member is no longer a "_var" type, and since the
+          TAO_DII_ClientRequestInfo instance used in the
+          CORBA::Request::invoke() methd is local to that method.  This is
+          a lighter weight solution to the problem that Phil Mesnier
+          detected and fixed since no CORBA::Request reference count locks
+          are used.
 
-	* examples/Callback_Quoter/Supplier_i.cpp (run):
+        * examples/Callback_Quoter/Supplier_i.cpp (run):
 
-	  Fixed unused value warning.
+          Fixed unused value warning.
 
 Mon Mar 10 08:10:02 2003  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
 
-	  Fixed unused argument warning on platforms where
-	  ACE_HAS_IP_MULTICAST is not defined.
+          Fixed unused argument warning on platforms where
+          ACE_HAS_IP_MULTICAST is not defined.
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
-	  (TAO_Log_Constraint_Visitor):
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+          (TAO_Log_Constraint_Visitor):
 
-	  Added missing semi-colon for the ACE_LACKS_LONGLONG_T case.
-	  Fixes a syntax error.
+          Added missing semi-colon for the ACE_LACKS_LONGLONG_T case.
+          Fixes a syntax error.
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (copy_attributes):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (copy_attributes):
 
-	  Return value of get_max_size() should be assigned to a
-	  CORBA::ULongLong, not CORBA::ULong.
+          Return value of get_max_size() should be assigned to a
+          CORBA::ULongLong, not CORBA::ULong.
 
-	  (remove_old_records):
-	  (check_capacity_alarm_threshold)
-	  (reset_capacity_alarm_threshold):
+          (remove_old_records):
+          (check_capacity_alarm_threshold)
+          (reset_capacity_alarm_threshold):
 
-	  Corrected CORBA::LongLong/ULongLong mismatches.
+          Corrected CORBA::LongLong/ULongLong mismatches.
 
-	  Use the ACE_UINT64_DBLCAST_ADAPTER macro when casting a
-	  CORBA::ULongLong to a double to work around problems when
-	  CORBA::ULongLong is an emulated type.
+          Use the ACE_UINT64_DBLCAST_ADAPTER macro when casting a
+          CORBA::ULongLong to a double to work around problems when
+          CORBA::ULongLong is an emulated type.
 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (purge_old_records):
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp (purge_old_records):
 
-	  Do not explicitly cast integers to a CORBA::ULongLong.  That
-	  breaks on platforms where 64 bit integers are emulated.
+          Do not explicitly cast integers to a CORBA::ULongLong.  That
+          breaks on platforms where 64 bit integers are emulated.
 
-	  Changed loop variable type to match the type used in the
-	  comparison that dictates when the loop should stop,
-	  i.e. "CORBA::ULong" -> "CORBA::ULongLong".
+          Changed loop variable type to match the type used in the
+          comparison that dictates when the loop should stop,
+          i.e. "CORBA::ULong" -> "CORBA::ULongLong".
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (retrieve):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (retrieve):
 
-	  Corrected format specifier for platforms that lack 64 bit
-	  integer support.
+          Corrected format specifier for platforms that lack 64 bit
+          integer support.
 
-	* orbsvcs/orbsvcs/Log/PersistStore.cpp (get_percentage_full):
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp (get_percentage_full):
 
-	  Explicitly mark the integer literal used in a multiplication
-	  with a CORBA::ULongLong variable as unsigned since there is no
-	  operator that multiplies a signed integer with a
-	  CORBA::ULongLong on platforms where the latter is emulated,
-	  i.e. no native 64 bit unsigned integer exists.
+          Explicitly mark the integer literal used in a multiplication
+          with a CORBA::ULongLong variable as unsigned since there is no
+          operator that multiplies a signed integer with a
+          CORBA::ULongLong on platforms where the latter is emulated,
+          i.e. no native 64 bit unsigned integer exists.
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Removed redefinition of ACE_NESTED_CLASS macro, and include
-	  "ace/Global_Macros.h" instead.  It is already defined in that
-	  header.
+          Removed redefinition of ACE_NESTED_CLASS macro, and include
+          "ace/Global_Macros.h" instead.  It is already defined in that
+          header.
 
-	* tests/Nested_Upcall_Crash/server.cpp (main):
+        * tests/Nested_Upcall_Crash/server.cpp (main):
 
-	  Cast the return value of ACE_OS::gethrtime() to ACE_RANDR_TYPE
-	  to fix an error on VxWorks builds.
+          Cast the return value of ACE_OS::gethrtime() to ACE_RANDR_TYPE
+          to fix an error on VxWorks builds.
 
 Mon Mar 10 08:22:01 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -147,16 +173,16 @@ Sun Mar  9 16:04:27 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Sun Mar  9 10:06:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/compiler.html: Updated the discussion on what files are
- 	  generated by the TAO IDL compiler.  Thanks to Rob Eger
- 	  <reger@txcorp.com> and Carlos O'Ryan for helping with this.
+        * docs/compiler.html: Updated the discussion on what files are
+          generated by the TAO IDL compiler.  Thanks to Rob Eger
+          <reger@txcorp.com> and Carlos O'Ryan for helping with this.
 
 Sat Mar 08 15:27:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/orbconf.h: The #define for ACE_NESTED_CLASS was busted. The
-	  workaround should be applied on platforms where
-	  ACE_HAS_BROKEN_NAMESPACES is defined instead of just
-	  Win32. Thanks to Johnny Willemsen fo rcatching this.
+        * tao/orbconf.h: The #define for ACE_NESTED_CLASS was busted. The
+          workaround should be applied on platforms where
+          ACE_HAS_BROKEN_NAMESPACES is defined instead of just
+          Win32. Thanks to Johnny Willemsen fo rcatching this.
 
 Fri Mar  7 17:20:24 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -170,14 +196,14 @@ Fri Mar  7 14:17:10 2003  Phil Mesnier  <mesnier_p@ociweb.com>
         * tests/Param_Test/svc.conf.xml: I neglected add the change for
           setting the native wchar codeset id to the xml form of the
           service config. This should address the errors with the wstring
-	  data.
+          data.
 
 Fri Mar  7 10:58:32 2003  Ossama Othman  <ossama@uci.edu>
 
         * tests/Codec/test.idl (Foo::Bar::C):
 
           Changed type of this attribute from "long long" to "unsigned
-	  long long".  It is better supported/emulated by ACE and TAO on
+          long long".  It is better supported/emulated by ACE and TAO on
           platforms that lack 64 bit integer support (e.g. VxWorks).
 
         * tests/Codec/client.cpp:
