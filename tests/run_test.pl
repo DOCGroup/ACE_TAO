@@ -313,12 +313,6 @@ if (defined $opt_d) {
 
 record_resources () if (!defined $opt_d);
 
-if ($OSNAME eq "MSWin32") {
-    $ENV{'PATH'} .= ';'.$PerlACE::Process::ExeSubDir;
-} else {
-    $ENV{'PATH'} .= ':'.$PerlACE::Process::ExeSubDir;
-}
-
 if (defined $opt_v) {
   print "#\n" .
         "# ACE one-button test for VxWorks 5.x.\n" .

@@ -4,6 +4,10 @@ Mon Aug 20 01:49:12 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
           Build non-core DLLs into the common bin directory. This is necessary
           so that the tests can find all the DLLs they need on the path.
 
+        * tests/run_test.pl:
+          Removed the append of the ExeSubDir to the path, since it is no
+          longer needed and never really worked properly anyway.
+
 Mon Aug 20 00:01:29 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Connector.h: Clarify the conditions under which errno
