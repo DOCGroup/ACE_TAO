@@ -51,7 +51,7 @@ rely on  the CORBA::Environment variable to handle exceptions
 on platforms that do not support exception
 handling. (Please note that native exceptions can be turned on
 or off at COMPILE time as an option to your make)
-The exception macros have been modelled with some extra rules to 
+The exception macros have been modelled with some extra rules to
 ensure this works even on
 platforms without native exception support.  See some <a
 href="#examples">quick examples</a> on  how to use ACE exception
@@ -94,7 +94,7 @@ macros.
         </li>
         <li><p><em>ACE_ENV_SINGLE_ARG_DECL</em></p>
         is similar to <code>ACE_ENV_ARG_DECL</code>, but is used when
-        the method takes no other parameters.  It is necessary as a 
+        the method takes no other parameters.  It is necessary as a
         separate macro because it does not contain the leading comma
         that <code>ACE_ENV_ARG_DECL</code> does.
         Example: a CORBA IDL defined method
@@ -547,10 +547,14 @@ macros discussed here.
 
 <P>Before TAO version 1.2.2, IDL defined methods were declared using
 direct mentions of <code>CORBA::Environment ACE_TRY_ENV</code>.
-The problem with this approach was that the ACE_TRY_ENV had 
+The problem with this approach was that the ACE_TRY_ENV had
 to be passed into ORB core method calls even when native exceptions
 are supported. The TAO internal usage of the ACE_ENV_ARG family of
 macros fixes this.</p>
+
+<p>For people who want to continue to use their old code that uses the
+old <code>ACE_TRY_ENV</code> macros, they can define
+<CODE>ACE_ENV_BKWD_COMPAT</CODE> in their <code>config.h</code> file.
 
 <P>CORBA applications that do not need support for emulated exceptions
 can use direct C++ exception handling and omit the CORBA::Environment

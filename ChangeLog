@@ -1,7 +1,12 @@
+Wed Jun 18 21:27:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/exceptions.html: Added documentation for the
+	  ACE_ENV_BKWD_COMPAT macro.
+
 Wed Jun 18 17:28:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_linux.GNU (CXX): Added some default
-	  options specified in the /usr/sys/features.h. 
+	  options specified in the /usr/sys/features.h.
 
 	  Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
           Noseworthy <j.russell.noseworthy@objectsciences.com> for
@@ -14,7 +19,7 @@ Wed Jun 18 17:20:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  ACE_OSTREAM_TYPE instead of ostream.
 
 	* ace/ace/config-sunos5.5.h: Added ACE_HAS_TEMPLATE_TYPEDEFS and
-	  removed ACE_TEMPLATES_REQUIRES_SOURCE. 
+	  removed ACE_TEMPLATES_REQUIRES_SOURCE.
 
 	  Thanks to Keith Snively <ksnively@d-a-s.com> and J. Russell
           Noseworthy <j.russell.noseworthy@objectsciences.com> for
