@@ -2037,8 +2037,8 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/BoundsC.i \
  Load_BalancerC.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i \
- Identity_i.h IdentityS.h IdentityC.h IdentityC.i \
+ $(ACE_ROOT)/ace/Get_Opt.i Identity_i.h \
+ IdentityS.h IdentityC.h IdentityC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
@@ -2223,8 +2223,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
- IdentityC.h \
+ $(TAO_ROOT)/tao/ORB.i IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \

@@ -835,10 +835,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
- AV/AV_export.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- AV/Transport.h \
+ AV/AV_export.h $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -881,8 +879,7 @@ AVSVC_COMPONENTS:
  AV/Transport.i AV/FlowSpec_Entry.i
 
 .obj/Flows_T.o .obj/Flows_T.so .shobj/Flows_T.o .shobj/Flows_T.so: AV/Flows_T.cpp AV/Flows_T.h \
- $(ACE_ROOT)/ace/pre.h \
- AV/AVStreams_i.h \
+ $(ACE_ROOT)/ace/pre.h AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1288,8 +1285,7 @@ AVSVC_COMPONENTS:
  AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.cpp
 
 .obj/Endpoint_Strategy.o .obj/Endpoint_Strategy.so .shobj/Endpoint_Strategy.o .shobj/Endpoint_Strategy.so: AV/Endpoint_Strategy.cpp AV/Endpoint_Strategy.h \
- $(ACE_ROOT)/ace/pre.h \
- AV/AVStreams_i.h \
+ $(ACE_ROOT)/ace/pre.h AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2555,8 +2551,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- AV/Policy.h \
- $(ACE_ROOT)/ace/Addr.h \
+ AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -2962,8 +2957,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- AV/Policy.h \
- $(ACE_ROOT)/ace/Addr.h \
+ AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -3732,8 +3726,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- AV/Policy.h \
- $(ACE_ROOT)/ace/Addr.h \
+ AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -4379,10 +4372,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
- AV/AV_export.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- AV/Transport.h \
+ AV/AV_export.h $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i AV/Transport.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -4489,8 +4480,8 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- AV/RTCP.h AV/source.h \
+ $(ACE_ROOT)/ace/OS.i AV/RTCP.h \
+ AV/source.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -4643,8 +4634,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
- AV/source.i AV/AVStreams_i.h \
+ $(TAO_ROOT)/tao/ORB.i AV/source.i \
+ AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -4923,8 +4914,8 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- AV/RTCP.h AV/source.h \
+ $(ACE_ROOT)/ace/OS.i AV/RTCP.h \
+ AV/source.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -5077,8 +5068,8 @@ AVSVC_COMPONENTS:
  $(TAO_ROOT)/tao/StringSeq.h \
  $(TAO_ROOT)/tao/StringSeq.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
- AV/source.i AV/AVStreams_i.h \
+ $(TAO_ROOT)/tao/ORB.i AV/source.i \
+ AV/AVStreams_i.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
  $(ACE_ROOT)/ace/SOCK.h \
@@ -5354,8 +5345,7 @@ AVSVC_COMPONENTS:
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- AV/Policy.h \
- $(ACE_ROOT)/ace/Addr.h \
+ AV/Policy.h $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

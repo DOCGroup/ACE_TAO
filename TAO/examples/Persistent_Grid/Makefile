@@ -410,8 +410,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i
 
 .obj/GridS.o .obj/GridS.so .shobj/GridS.o .shobj/GridS.so: GridS.cpp GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -718,8 +717,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i \
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -937,8 +935,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- GridC.h \
+ $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1074,8 +1071,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -1258,8 +1254,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- Grid_i.h GridS.h GridC.h \
+ $(TAO_ROOT)/tao/debug.h Grid_i.h \
+ GridS.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -1395,8 +1391,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i \
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
@@ -1708,8 +1703,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i \
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1903,8 +1897,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- GridC.h \
+ $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2040,8 +2033,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: Simple_util.cpp Simple_util.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -2408,8 +2400,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- GridC.h \
+ $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2545,8 +2536,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i
 
 .obj/persistent_client.o .obj/persistent_client.so .shobj/persistent_client.o .shobj/persistent_client.so: persistent_client.cpp Persistent_Client.h \
  Simple_util.h \
@@ -2730,8 +2720,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i \
  Simple_util.cpp \
- $(TAO_ROOT)/tao/debug.h \
- GridC.h \
+ $(TAO_ROOT)/tao/debug.h GridC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -2867,7 +2856,6 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- GridC.i
+ $(TAO_ROOT)/tao/BoundsC.i GridC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
