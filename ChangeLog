@@ -1,3 +1,11 @@
+Wed Jan 22 18:12:41 2003  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/Configurable_Logging_Server.cpp: Change the
+          name of the static service descriptor from Reporter to
+          Reporter_Descriptor. This is more descriptive and matches
+          the book.
+
 Wed Jan 22 18:08:27 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/config-freebsd.h: Add ACE_HAS_SNPRINTF.  Fixes Log_Msg_Test.
