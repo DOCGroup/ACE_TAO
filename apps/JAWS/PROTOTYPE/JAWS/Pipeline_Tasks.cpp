@@ -97,6 +97,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
     {
     case JAWS_IO_Handler::ACCEPT_OK:
       {
+        ACE_DEBUG ((LM_DEBUG, "(%t) ACCEPT_OK\n"));
         result = 0;
         JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
         // Move on to next stage in pipeline
@@ -104,6 +105,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
       }
     case JAWS_IO_Handler::ACCEPT_ERROR:
       {
+        ACE_DEBUG ((LM_DEBUG, "(%t) ACCEPT_ERROR\n"));
         result = -1;
         JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_ERROR");
         // Should recycle the thread
@@ -147,6 +149,7 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   // In asynchronous model, we can --
   //   insert a wait task into the task queue
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) Returning %d\n", result));
   return result;
 }
 
@@ -168,7 +171,7 @@ JAWS_Pipeline_Accept_Task::new_handler (JAWS_Data_Block *data)
   JAWS_IO_Handler *nioh = ioh_factory->create_io_handler ();
   if (nioh == 0)
     {
-      ndb->release ();
+      delete ndb;
       return 0;
     }
 

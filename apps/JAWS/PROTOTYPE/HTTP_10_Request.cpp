@@ -191,6 +191,8 @@ JAWS_HTTP_10_Request::type (void)
         this->type_ = POST;
       else if (ACE_OS::strcmp (this->method (), "PUT") == 0)
         this->type_ = PUT;
+      else if (ACE_OS::strcmp (this->method (), "QUIT") == 0)
+        this->type_ = QUIT;
       else
         this->status_ = STATUS_NOT_IMPLEMENTED;
     }

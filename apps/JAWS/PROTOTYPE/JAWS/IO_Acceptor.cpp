@@ -75,6 +75,12 @@ JAWS_IO_Synch_Acceptor::accept (ACE_SOCK_Stream &new_stream,
                                  restart, reset_new_handle);
 }
 
+int
+JAWS_IO_Synch_Acceptor::accept (size_t)
+{
+  return -1;
+}
+
 ACE_HANDLE
 JAWS_IO_Synch_Acceptor::get_handle (void)
 {
@@ -169,6 +175,13 @@ JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read)
   ACE_UNUSED_ARG (bytes_to_read);
   return -1;
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
+}
+
+int
+JAWS_IO_Asynch_Acceptor::accept (ACE_SOCK_Stream &, ACE_Addr *,
+                                 ACE_Time_Value *, int, int) const
+{
+  return -1;
 }
 
 ACE_HANDLE

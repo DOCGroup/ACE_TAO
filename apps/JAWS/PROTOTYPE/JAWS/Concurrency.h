@@ -80,8 +80,7 @@ class JAWS_Export JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
   //     requests through the message queue.
 {
 public:
-  virtual int open (long flags = THR_NEW_LWP,
-                    int nthreads = 5, int maxthreads = 20);
+  virtual int make (long flags, int nthreads, int maxthreads);
   // Initiate the thread_pool task
 
 private:
@@ -100,7 +99,7 @@ class JAWS_Export JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
   //     activate.
 {
 public:
-  virtual int open (long flags = THR_NEW_LWP, int maxthreads = 20);
+  virtual int make (long flags, int maxthreads);
   // Initiate the thread_per task
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
