@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Connection_Cache_Manager.h"
 #include "tao/Connection_Handler.h"
 #include "tao/debug.h"
@@ -132,9 +134,12 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
             {
               // We have a succesful entry
               value = entry->int_id_;
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P |%t) index in find <%d> \n"),
-                          entry->ext_id_.index ()));
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P |%t) index in find <%d> \n"),
+                              entry->ext_id_.index ()));
+                }
               return 0;
             }
         }
