@@ -1,4 +1,9 @@
-Wed Sep 22 11:4912 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Sep 22 12:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+          Replaced include of PortableServerC.h with LifespanPolicyC.h
+
+Wed Sep 22 11:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:
         * tao/PortableServer/POA.i:
