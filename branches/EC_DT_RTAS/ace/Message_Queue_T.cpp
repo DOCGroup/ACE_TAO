@@ -1355,12 +1355,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
-
-  Object_ID oid;
-  oid.tid = ACE_OS::thr_self();
-  oid.pid = ACE_OS::getpid();
-  oid.queue_id = queue_id_;
-
+  Object_ID oid = first_item->get_ID();
   DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
   DSUI_EVENT_LOG (MSG_QUEUE_FAM, AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
@@ -1652,10 +1647,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head");
 
-  Object_ID oid;
-  oid.tid = ACE_OS::thr_self();
-  oid.pid = ACE_OS::getpid();
-  oid.queue_id = queue_id_;
+  Object_ID oid = first_item->get_ID();
 
   DSUI_EVENT_LOG (MSG_QUEUE_FAM, BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE, 0, sizeof(Object_ID), (char*)&oid);
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
