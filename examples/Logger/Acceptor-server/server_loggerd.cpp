@@ -137,7 +137,11 @@ Logging_Handler::handle_input (ACE_HANDLE)
         if (lp.length () == n)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ")));
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
             lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, cerr);
+#else
+            lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, stderr);
+#endif
           }
         else
           ACE_ERROR ((LM_ERROR,

@@ -1,3 +1,12 @@
+Fri Nov 25 11:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Threads/task_three.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+	* examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Log_Msg/test_log_msg.cpp:
+	  Fixed problems with iostreams for ACE_LACKS_IOSTREAM_TOTALLY builds
+          (VxWorks DIAB).
+
 Fri Nov 25 10:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
