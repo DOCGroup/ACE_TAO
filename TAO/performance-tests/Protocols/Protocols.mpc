@@ -1,15 +1,27 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver {
+project(*Receiver): taoserver {
+
+  exename = receiver
+
   Source_Files {
-    server.cpp
+    receiver.cpp
   }
 }
 
-project(*Client): rt_client {
+project(*Distributor): rt_server {
+
+  exename = distributor
+
   Source_Files {
-    client.cpp
+    distributor.cpp
+  }
+}
+
+project(*Sender): rt_client {
+  Source_Files {
+    sender.cpp
     testC.cpp
   }
 }

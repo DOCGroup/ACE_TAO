@@ -21,7 +21,7 @@ enum Test_Type
   LATENCY
 };
 
-static const char *ior = "file://ior";
+static const char *ior = "file://distributor.ior";
 static int shutdown_server = 0;
 static CORBA::ULong iterations = 5;
 static CORBA::ULong invocation_rate = 5;
@@ -30,7 +30,7 @@ static ACE_UINT32 gsf = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 0;
-static const char *test_protocol = "TCP";
+static const char *test_protocol = "IIOP";
 static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
 static Test_Type test_type = PACED;
@@ -113,7 +113,7 @@ parse_args (int argc, char **argv)
 			     "\t-i <iterations> (defaults to %d)\n"
 			     "\t-k <ior> (defaults to %s)\n"
 			     "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
-			     "\t-p <test protocol> (defaults to %s [valid values are TCP, UDP, and SCIOP])\n"
+			     "\t-p <test protocol> (defaults to %s [valid values are IIOP, DIOP, and SCIOP])\n"
 			     "\t-r <invocation rate> (defaults to %d)\n"
 			     "\t-s <message size> (defaults to %d)\n"
 			     "\t-t <print stats> (defaults to %d)\n"
@@ -201,8 +201,8 @@ private:
 };
 
 Worker::Worker (RTCORBA::RTORB_ptr rtorb,
-                            CORBA::PolicyManager_ptr policy_manager,
-                            test_ptr test)
+		CORBA::PolicyManager_ptr policy_manager,
+		test_ptr test)
   : rtorb_ (RTCORBA::RTORB::_duplicate (rtorb)),
     policy_manager_ (CORBA::PolicyManager::_duplicate (policy_manager)),
     test_ (test::_duplicate (test)),
@@ -213,7 +213,7 @@ Worker::Worker (RTCORBA::RTORB_ptr rtorb,
     missed_start_invocations_ (iterations),
     missed_end_invocations_ (iterations)
 {
-  // Each client will have a random session id.  This helps in
+  // Each sender will have a random session id.  This helps in
   // identifying late packets arriving at the server.
   ACE_OS::srand ((unsigned) ACE_OS::time (NULL));
   this->session_id_ = ACE_OS::rand ();
@@ -275,7 +275,7 @@ Worker::print_stats (void)
               "\n************ Statistics ************\n\n"));
 
   // 
-  // Clients-side stats for PACED invocations are not too relevant
+  // Senders-side stats for PACED invocations are not too relevant
   // since we are doing one way calls.
   //
   if (test_type == PACED)
@@ -532,7 +532,7 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
       ACE_hrtime_t time_before_call = 0;
       ACE_hrtime_t deadline_for_current_call = 0;
 
-      // For PACED and LATENCY, each client call is individually
+      // For PACED and LATENCY, each sender call is individually
       // noted.
       if (test_type == PACED || 
 	  test_type == LATENCY)
@@ -574,7 +574,7 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 	  ACE_CHECK;	  
 	}
 
-      // For PACED and LATENCY, each client call is individually
+      // For PACED and LATENCY, each sender call is individually
       // noted.
       if (test_type == PACED || 
 	  test_type == LATENCY)
