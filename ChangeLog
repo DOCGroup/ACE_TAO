@@ -1,3 +1,10 @@
+Fri Nov  7 23:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_main.h
+        * ace/OS_main.cpp:
+          Added class to get around problems on Windows.  This is a
+          first cut.  If it works out, I'll clean it up.
+
 2003-11-07  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* ace/config-win32-msvc.h:
