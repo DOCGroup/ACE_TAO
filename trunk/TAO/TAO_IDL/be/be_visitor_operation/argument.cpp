@@ -28,8 +28,8 @@ ACE_RCSID(be_visitor_operation, argument, "$Id$")
 
 
 // ************************************************************
-// generic operation visitor to handle the pre/post do_static_call/upcall stuff with
-// arguments
+// generic operation visitor to handle the pre/post
+// do_static_call/upcall stuff with arguments
 // ************************************************************
 
 be_visitor_operation_argument::be_visitor_operation_argument (be_visitor_context
@@ -48,7 +48,6 @@ be_visitor_operation_argument::post_process (void)
   TAO_OutStream *os = this->ctx_->stream ();
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_ARG_DOCALL_CS:
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:

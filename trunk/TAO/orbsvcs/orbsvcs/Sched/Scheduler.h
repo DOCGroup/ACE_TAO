@@ -49,7 +49,7 @@ public:
   typedef RtecScheduler::RT_Info RT_Info;
   typedef RtecScheduler::Config_Info Config_Info;
   typedef RtecScheduler::Time Time;
-  typedef enum RtecScheduler::Dispatching_Type Dispatching_Type;
+  typedef RtecScheduler::Dispatching_Type Dispatching_Type;
 
   // Map some types to simplify re-use.
 

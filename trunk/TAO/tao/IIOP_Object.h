@@ -144,7 +144,7 @@ class TAO_Export IIOP_Object : public STUB_Object
 public:
   virtual void do_static_call (CORBA::Environment &env,
 			       const TAO_Call_Data *info,
-			       ...);
+			       void** args);
   // SII-based "Stub interpreter" for static stubs.  IDL compiler just
   // dumps a read-only description of the call into "calldata" and do
   // varargs calls to this routine, which does all the work.
@@ -239,7 +239,7 @@ protected:
   void put_params (CORBA::Environment &env,
 		   const TAO_Call_Data *info,
 		   TAO_GIOP_Invocation &call,
-		   va_list argp);
+		   void** args);
   // Helper method to factor out common code in static oneway
   // vs. twoway invocations.
 

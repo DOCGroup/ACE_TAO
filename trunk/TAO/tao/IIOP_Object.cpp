@@ -429,9 +429,9 @@ private:
 // which does all the work.
 
 void
-IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
-                             const TAO_Call_Data *info, // call description
-                             ...)                       // ... any parameters
+IIOP_Object::do_static_call (CORBA::Environment &env,
+                             const TAO_Call_Data *info,
+                             void** args)
 
 {
   ACE_FUNCTION_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_START);
@@ -485,10 +485,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
           if (env.exception () != 0) return;
 
-          va_list argp;
-          va_start (argp, info);
-          this->put_params (env, info, call, argp);
-          va_end (argp);
+          this->put_params (env, info, call, args);
           if (env.exception () != 0) return;
 
           ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
@@ -503,23 +500,12 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
               // Now, get all the "return", "out", and "inout"
               // parameters from the response message body.
 
-              va_start (argp, info);
-
-#if defined (sparc)  &&  \
-    defined (__GNUG__)  &&  (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-              // g++ 2.7.x, but not egcs, on sparc.
-
-              // Skip the first arg, due to an apparent bug in g++
-              // 2.7.2.3 on sparc.
-              va_arg (argp, void *);
-#endif /* g++ < 2.8 on sparc */
-
               const TAO_Param_Data *pdp = info->params;
-              for (u_int i = 0;
-                   i < info->param_count;
+              for (void** i = args;
+                   i !=  args + info->param_count;
                    i++, pdp++)
                 {
-                  void *ptr = va_arg (argp, void *);
+                  void *ptr = *i;
 
                   // if it is an inout parameter, it would become
                   // necessary to first release the "in" memory
@@ -576,7 +562,6 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
                         }
                     }
                 }
-              va_end (argp);
               return;
             }
           // ... or maybe this request got forwarded to someplace
@@ -599,10 +584,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
       ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
       if (env.exception () != 0) return;
 
-      va_list argp;
-      va_start (argp, info);
-      this->put_params (env, info, call, argp);
-      va_end (argp);
+      this->put_params (env, info, call, args);
       if (env.exception () != 0) return;
 
       ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
@@ -619,7 +601,7 @@ void
 IIOP_Object::put_params (CORBA::Environment &env,
                          const TAO_Call_Data *info,
                          TAO_GIOP_Invocation &call,
-                         va_list argp)
+                         void** args)
 {
   if (env.exception ())
     {
@@ -636,21 +618,12 @@ IIOP_Object::put_params (CORBA::Environment &env,
   // needed later for allocating "out" memory, otherwise there's
   // just one indirection.
 
-#if defined (sparc)  &&  \
-    defined (__GNUG__)  &&  (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-  // g++ 2.7.x, but not egcs, on sparc.
-
-  // Skip the first arg, due to an apparent bug in g++ 2.7.2.3 on
-  // sparc.
-  va_arg (argp, void *);
-#endif /* g++ < 2.8 on sparc */
-
   const TAO_Param_Data *pdp = info->params;
-  for (u_int i = 0;
-       i < info->param_count;
+  for (void** i = args;
+       i != args + info->param_count;
        i++, pdp++)
     {
-      void *ptr = va_arg (argp, void *);
+      void *ptr = *i;
 
       if (pdp->mode == PARAM_IN)
         call.put_param (pdp->tc, ptr, env);
@@ -669,10 +642,7 @@ IIOP_Object::put_params (CORBA::Environment &env,
     }
 }
 
-// DII analogue of the above.  Differs in how the vararg calling
-// convention is implemented -- DII doesn't use the normal call stack
-// with its implicit typing, but iinstead uses heap-based arguments
-// with explicit typing.
+// DII analogue of the above.
 
 void
 IIOP_Object::do_dynamic_call (const char *opname,
