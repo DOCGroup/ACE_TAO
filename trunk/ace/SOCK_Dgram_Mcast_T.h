@@ -435,7 +435,7 @@ private:
   /// Network interface to which all <send> methods send multicast datagrams.
   ACE_TCHAR *send_net_if_;
 
-  typedef ACE_DLList<ip_mreq>  subscription_list_t;
+  typedef ACE_DLList<ip_mreq> subscription_list_t;
   typedef ACE_DLList_Iterator<ip_mreq>  subscription_list_iter_t;
   /// List of currently subscribed addr/iface pairs (and assc. types).
   ACE_MUTABLE subscription_list_t  subscription_list_;
