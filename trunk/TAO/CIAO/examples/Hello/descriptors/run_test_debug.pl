@@ -17,7 +17,7 @@ $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 # amount of delay between running the servers
 $sleeptime = 1;
 $longsleeptime = 3;
-$DM_args = "-ORBEndpoint iiop://localhost:20000 -n \"${CIAO_ROOT}/tools/ComponentServer/ComponentServer\"";
+$DM_args = "-ORBEndpoint iiop://localhost:20000 -n \"${CIAO_ROOT}/tools/ComponentServer/ComponentServer -ORBdebuglevel 10\"";
 $DM = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon", "$DM_args");
 
 $AM_args = "-o ior -c test.dat";
