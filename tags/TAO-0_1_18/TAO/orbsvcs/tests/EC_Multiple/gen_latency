@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+./latency.pl -k LCL -r 10 LATENCY1.log LATENCY2.log >LTC.LCL.log
+tail +3 LTC.LCL.log | sort -n > LTC.LCL.data
+./latency.pl -k RMT -r 1 LATENCY1.log LATENCY2.log >LTC.RMT.log
+tail +3 LTC.RMT.log | sort -n > LTC.RMT.data
+
+gnuplot <<_EOF_
+set grid xtics ytics
+set xlabel "Time (usecs)"
+set ylabel "Relative frequency"
+
+set terminal postscript eps color
+set output "LTC.LCL.eps"
+plot 'LTC.LCL.data' w i
+set terminal x11
+plot 'LTC.LCL.data' w i
+pause 2
+
+set terminal postscript eps
+set output "LTC.RMT.eps"
+plot 'LTC.RMT.data' w i
+set terminal x11
+plot 'LTC.RMT.data' w i
+pause 2
+
+_EOF_
+
+for i in LTC.LCL LTC.RMT; do
+  gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE \
+    -sOutputFile="${i}.jpg" ${i}.eps quit.ps
+done
