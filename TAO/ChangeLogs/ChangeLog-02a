@@ -1,3 +1,10 @@
+Wed Dec 13 23:57:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+
+          Fixed a warning in MSVC about */*...*/ being mistakenly 
+          recognized as a */ found outside a comment.
+
 Wed Dec 13 23:56:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO.dsp:
