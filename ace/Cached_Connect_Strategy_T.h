@@ -79,7 +79,7 @@ public:
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_TYPENAME CACHING_STRATEGY::ATTRIBUTES ATTRIBUTES;
+  typedef ACE_TYPENAME CACHING_STRATEGY::CACHING_ATTRIBUTES ATTRIBUTES;
   typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, CACHING_STRATEGY, ATTRIBUTES>
           CONNECTION_CACHE;
   typedef ACE_TYPENAME CONNECTION_CACHE::CACHE_ENTRY 
@@ -92,7 +92,7 @@ public:
           CONNECTION_CACHE_ITERATOR;
 
   // = Cleanup of the svc_handler.
-  typedef ACE_Svc_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX> >
+  typedef ACE_Svc_Cleanup_Strategy<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>,ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, ACE_Pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX> >
           SVC_CLEANUP_STRATEGY; 
 
 protected:
@@ -110,6 +110,7 @@ protected:
   // Cleanup hint.
 
   // = Helpers
+
   int check_hint_i (SVC_HANDLER *&sh,
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
@@ -120,15 +121,7 @@ protected:
                     ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::CONNECTION_CACHE_ENTRY *&entry,
                     int &found);
 
-  int connect_svc_handler_i (SVC_HANDLER *&sh,
-                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                             ACE_Time_Value *timeout,
-                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                             int reuse_addr,
-                             int flags,
-                             int perms,
-                             int &found);
-
+ 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                     ACE_Time_Value *timeout,
@@ -138,6 +131,15 @@ protected:
                                     int perms,
                                     ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::CONNECTION_CACHE_ENTRY *&entry,
                                     int &found);
+
+  int connect_svc_handler_i (SVC_HANDLER *&sh,
+                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                             ACE_Time_Value *timeout,
+                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                             int reuse_addr,
+                             int flags,
+                             int perms,
+                             int &found);
 
   CONNECTION_CACHE connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
