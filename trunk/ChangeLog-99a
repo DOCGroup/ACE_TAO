@@ -3244,8 +3244,6 @@ Thu Jul 01 10:53:33 1999  David L. Levine  <levine@cs.wustl.edu>
           Dave Steele <Dave_Steele@Mitel.COM> for helping to figure
           this out.
 
-Thu Jul 01 10:53:33 1999  David L. Levine  <levine@cs.wustl.edu>
-
         * include/makeinclude/platform_vxworks5.x_g++.GNU,
           bin/ace_ld: changed -c option to -C [...] --, so
           that its arguments don't need to be quoted.  I
