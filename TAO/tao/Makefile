@@ -93,10 +93,6 @@ IDL_COMPILER_FILES = \
   Union \
   Operation_Table
 
-INTERFACE_REPO_FILES = 
-
-  
-
 ORB_CORE_FILES = \
   Any \
   CurrentC \
@@ -201,7 +197,7 @@ DYNAMIC_ANY_FILES += \
   InconsistentTypeCodeC
 
 INTERFACE_REPO_FILES += \
-  InterfaceC 
+  InterfaceC
 
 endif # minimum_corba
 
@@ -216,8 +212,16 @@ ifndef TAO_COMPONENTS
     Interpretive_Marshaling \
     IDL_Compiler \
     ORB_Core \
-    Dynamic_Any \
-    Interface_repo
+    Dynamic_Any
+
+  ifeq (1,$(CROSS-COMPILE))
+  else
+  ifeq (1,$(ACE_HAS_GNUG_PRE_2_8))
+  else
+    TAO_COMPONENTS += \
+      Interface_repo
+  endif # ! ACE_HAS_GNUG_PRE_2_8
+  endif # ! CROSS-COMPILE
 endif # TAO_COMPONENTS
 
 ####
