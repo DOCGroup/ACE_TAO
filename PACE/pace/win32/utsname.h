@@ -22,6 +22,11 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#ifndef PACE_UTSNAME
+#define PACE_UTSNAME
+typedef struct utsname pace_utsname;
+#endif /* PACE_UTSNAME */
+
   PACE_INLINE int pace_uname (struct utsname * name);
 
 #if defined (PACE_HAS_CPLUSPLUS)
