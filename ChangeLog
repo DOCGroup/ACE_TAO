@@ -1,3 +1,17 @@
+Wed Jul 24 10:58:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.cpp (ACE_Acceptor::handle_input): When calling select(),
+          use a int value instead of casting a ACE_HANDLE to an int.
+
+        * tests/Cached_Accept_Conn_Test.cpp: Use %@ instead of %d when
+          logging pointers.
+
+        * tests/MT_Reactor_Upcall_Test.cpp: Added ACE_TEXT to char strings
+          where needed. Changed the send to send fixed header, then the
+          variable-size string. Sending all at once doesn't work if the
+          string doesn't immediately follow the size_ member in memory,
+          which happened on Win64.
+
 Wed Jul 24 10:07:24 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
