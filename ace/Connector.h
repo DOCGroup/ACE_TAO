@@ -209,6 +209,9 @@ public:
   /// Close down the Connector
   virtual int close (void);
 
+  /// Return the underlying PEER_ACCEPTOR object.
+  virtual ACE_PEER_CONNECTOR &connector (void) const;
+
   /// Dump the state of an object.
   void dump (void) const;
 
