@@ -603,14 +603,28 @@ TAO_PropertySet::is_type_allowed (CORBA::TypeCode_ptr type)
     return CORBA::B_TRUE;
 
   // Check in the allowed_property_types sequence.
+  CORBA::Boolean ret_val = CORBA::B_FALSE;
   for (size_t ti = 0;
        ti < this->allowed_property_types_.length ();
        ti++)
-    if (this->allowed_property_types_[ti] == type)
-      return CORBA::B_TRUE;
+    TAO_TRY
+    {
+      ret_val = ((const CORBA::TypeCode *)this->allowed_property_types_[ti])->equal (type,
+                                                                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (ret_val == CORBA::B_TRUE)
+        return CORBA::B_TRUE;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("TypeCode::equal");
+      return ret_val;
+    }
+  TAO_ENDTRY;
 
   // Type not found.
-  return CORBA::B_FALSE;
+  return ret_val;
 }
 
 // Tells whether this property is allowed in this property or no.
@@ -1118,20 +1132,22 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &_env)
   TAO_TRY
     {
       // Get all the property names in a names' sequence.
-      CosPropertyService::PropertyNames_var names;
-      CosPropertyService::PropertyNamesIterator_var iter;
+      CosPropertyService::PropertyNames_ptr names_ptr = 0;
+      CosPropertyService::PropertyNames_out names (names_ptr);
+      CosPropertyService::PropertyNamesIterator_ptr iter_ptr = 0;
+      CosPropertyService::PropertyNamesIterator_out iter (iter_ptr);
 
       CORBA::ULong size = this->get_number_of_properties (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->get_all_property_names (size,
-                                    names.out (),
-                                    iter.out (),
+                                    names,
+                                    iter,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Delete all these properties.
-      this->delete_properties (names.in (),
+      this->delete_properties (*names.ptr (),
                                TAO_TRY_ENV);
 
       TAO_CHECK_ENV;
