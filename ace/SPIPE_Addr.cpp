@@ -88,34 +88,49 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
   TCHAR *colonp = ACE_OS::strchr (addr, ':');
   TCHAR temp[BUFSIZ];
 
-  if (colonp == 0) // Assume it's a port number.
+  if (colonp == 0) // Assume it's a local name.
     {
-      ACE_OS::strcpy(temp, __TEXT ( "\\\\.\\pipe\\"));
-      ACE_OS::strcat(temp, addr);
+      ACE_OS::strcpy (temp, __TEXT ( "\\\\.\\pipe\\"));
+      ACE_OS::strcat (temp, addr);
     }
   else
     {
-      ACE_OS::strcpy(temp, __TEXT ("\\\\"));
-      *colonp = __TEXT ('\0');
-      if (ACE_OS::strcmp(addr, __TEXT ("localhost")) == 0)
-	ACE_OS::strcat(temp, __TEXT (".")); // change localhost to .
+      
+      if (ACE_OS::strncmp (addr,
+                           __TEXT ("localhost"),
+                           ACE_OS::strlen ("localhost")) == 0)
+        // change "localhost" to "."
+        ACE_OS::strcpy (temp, __TEXT ("\\\\."));
       else
-	ACE_OS::strcat(temp, addr);
-      ACE_OS::strcat(temp, __TEXT ("\\pipe\\"));
-      ACE_OS::strcat(temp, colonp+1);
+        {
+          ACE_OS::strcpy (temp, __TEXT ("\\\\"));
+
+          TCHAR *t;
+          
+          // We need to allocate a duplicate so that we can write a
+          // NUL character into it.
+          ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (addr), -1);
+
+          t[colonp - addr] = __TEXT ('\0');
+          ACE_OS::strcpy (temp, t);
+
+          ACE_OS::free (t);
+        }
+
+      ACE_OS::strcat (temp, __TEXT ("\\pipe\\"));
+      ACE_OS::strcat (temp, colonp + 1);
     }
   this->ACE_Addr::base_set (AF_SPIPE, 
 			    ACE_OS::strlen (temp) + len);
 
-  ACE_OS::strcpy(this->SPIPE_addr_.rendezvous_, temp) ;
-
+  ACE_OS::strcpy (this->SPIPE_addr_.rendezvous_, temp);
 #else
   this->ACE_Addr::base_set (AF_SPIPE,
                             ACE_OS::strlen (addr) + len);
   ACE_OS::strncpy (this->SPIPE_addr_.rendezvous_,
                    addr,
 		   sizeof this->SPIPE_addr_.rendezvous_);
-#endif
+#endif /* ACE_WIN32 */
   this->SPIPE_addr_.gid_ = gid == 0 ? ACE_OS::getgid () : gid;
   this->SPIPE_addr_.uid_ = uid == 0 ? ACE_OS::getuid () : uid;
   return 0;
