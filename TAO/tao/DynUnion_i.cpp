@@ -1297,8 +1297,8 @@ TAO_DynUnion_i::get_any (CORBA::Environment &env)
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-DU_Extractor<CORBA::Boolean>::check_match (const CORBA_Any& inside_any,
-                                           const CORBA_Any& outside_any)
+DU_Extractor<CORBA::Boolean>::check_match (CORBA_Any& inside_any,
+                                           CORBA_Any& outside_any)
 {
   CORBA::Any::to_boolean member_struct (this->member_index_);
   CORBA::Any::to_boolean arg_struct (this->arg_index_);
@@ -1311,8 +1311,8 @@ DU_Extractor<CORBA::Boolean>::check_match (const CORBA_Any& inside_any,
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
-DU_Extractor<CORBA::Char>::check_match (const CORBA_Any& inside_any,
-                                        const CORBA_Any& outside_any)
+DU_Extractor<CORBA::Char>::check_match (CORBA_Any& inside_any,
+                                        CORBA_Any& outside_any)
 {
   CORBA::Any::to_char member_struct (this->member_index_);
   CORBA::Any::to_char arg_struct (this->arg_index_);
@@ -1324,8 +1324,8 @@ DU_Extractor<CORBA::Char>::check_match (const CORBA_Any& inside_any,
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::WChar_extractor::check_match (const CORBA_Any& inside_any,
-                                              const CORBA_Any& outside_any)
+TAO_DynUnion_i::WChar_extractor::check_match (CORBA_Any& inside_any,
+                                              CORBA_Any& outside_any)
 {
   CORBA::Any::to_wchar member_struct (this->member_index_);
   CORBA::Any::to_wchar arg_struct (this->arg_index_);
@@ -1337,8 +1337,8 @@ TAO_DynUnion_i::WChar_extractor::check_match (const CORBA_Any& inside_any,
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any& inside_any,
-                                             const CORBA_Any& outside_any)
+TAO_DynUnion_i::Enum_extractor::check_match (CORBA_Any& inside_any,
+                                             CORBA_Any& outside_any)
 {
   // Get the CDR stream of one argument...
   ACE_Message_Block *mb = inside_any._tao_get_cdr ();
