@@ -2565,6 +2565,12 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
                          (T *) this->allocator_->malloc (s.size () * sizeof (T)));
           this->max_size_ = s.size ();
         }
+      else
+        {
+          ACE_DES_ARRAY_NOFREE (this->array_,
+                                s.size (),
+                                T);
+        }
 
       this->cur_size_ = s.size ();
 
