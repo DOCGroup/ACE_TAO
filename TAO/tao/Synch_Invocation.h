@@ -119,7 +119,7 @@ namespace TAO
 
 
 #if defined (__ACE_INLINE__)
-# include "Synch_Invocation.inl"
+# include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
