@@ -1,3 +1,39 @@
+Sat Mar  3 16:31:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Acceptor.{cpp,i,h}:
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.{cpp,i,h}:
+	* examples/PluggableUDP/DIOP/DIOP_Connector.{cpp,h}:
+	* examples/PluggableUDP/DIOP/DIOP_Endpoint.{cpp,i,h}:
+	* examples/PluggableUDP/DIOP/DIOP_Factory.{cpp,h}:
+	* examples/PluggableUDP/DIOP/DIOP_Profile.{cpp,i,h}:
+	* examples/PluggableUDP/DIOP/DIOP_Transport.{cpp,i,h}:
+	* examples/PluggableUDP/DIOP/diop_export.h:
+	* examples/PluggableUDP/DIOP/Makefile:
+	* examples/PluggableUDP/DIOP/Makefile.bor:
+	* examples/PluggableUDP/DIOP/TAO_DIOP.dsp:
+	* examples/PluggableUDP/DIOP/TAO_DIOP.dsw:
+	* examples/PluggableUDP/DIOP/TAO_DIOP_Static.dsp:
+	* examples/PluggableUDP/tests/Makefile:
+	* examples/PluggableUDP/tests/Makefile.bor:
+	* examples/PluggableUDP/tests/README:
+	* examples/PluggableUDP/tests/UDP.dsw:
+	* examples/PluggableUDP/tests/UDP.idl:
+	* examples/PluggableUDP/tests/UDP_Client_i.{cpp,h}:
+	* examples/PluggableUDP/tests/UDP_i.{cpp,h}:
+	* examples/PluggableUDP/tests/client.cpp:
+	* examples/PluggableUDP/tests/client.dsp:
+	* examples/PluggableUDP/tests/run_test.pl:
+	* examples/PluggableUDP/tests/server.cpp:
+	* examples/PluggableUDP/tests/server.dsp:
+	* examples/PluggableUDP/tests/svc.conf:
+	  Added UDP pluggable protocol and unit tests as a TAO example.
+	  This code was contributed by Michael Kircher
+	  <Michael.Kircher@mchp.siemens.de> and John Mackenzie
+	  <John.Mackenzie.extern@icn.siemens.de> as a TAO 1.1a
+	  pluggable protocol.  The main changes from the original code
+	  include upgrading the pluggable protocol interfaces with the latest
+	  changes and  moving the code from TAO/tao to a separate library.
+
 Sat Mar 03 15:28:34 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp (open):
@@ -80,7 +116,7 @@ Sat Mar 03 11:14:57 2001  Ossama Othman  <ossama@uci.edu>
 
 Sat Mar  3 10:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (forward_references): 
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (forward_references):
 
 	  Fixed an exception specification.
 
@@ -156,14 +192,14 @@ Fri Mar  2 20:28:27  Angelo Corsaro  <angelo@hermes.doc.wustl.edu>
 	      - TAO_RT_SCHED_LIBS
 	      - TAO_FAULT_TOLERANCE_LIBS
 	      - TAO_COS_TRADING_LIBS
-	    
+
 	  this macros expand to  multiple libraries on QNX RTP,
 	  and this enable to work around a problem that is present
 	  currently in the QNX linker. For all othe platform these
 	  macro expand to the only library associated to the CORBA
-	  service. With this work aroun all the orbsvcs  and almost 
+	  service. With this work aroun all the orbsvcs  and almost
 	  all the orbsvcs test build.
-	  
+
 Fri Mar  2 16:16:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Object.cpp (operator>>):
