@@ -14,6 +14,7 @@ OBJFILES = \
 	$(OBJDIR)\param_testSer.obj \
 	$(OBJDIR)\param_testCli.obj \
 	$(OBJDIR)\driver.obj \
+	$(OBJDIR)\client.obj \
 	$(OBJDIR)\options.obj \
 	$(OBJDIR)\results.obj \
 	$(OBJDIR)\helper.obj \
@@ -26,6 +27,7 @@ OBJFILES = \
 	$(OBJDIR)\bd_string.obj \
 	$(OBJDIR)\bd_wstring.obj \
 	$(OBJDIR)\bd_struct_seq.obj \
+	$(OBJDIR)\bd_array_seq.obj \
 	$(OBJDIR)\fixed_array.obj \
 	$(OBJDIR)\fixed_struct.obj \
 	$(OBJDIR)\nested_struct.obj \
@@ -43,6 +45,7 @@ OBJFILES = \
 	$(OBJDIR)\ub_string.obj \
 	$(OBJDIR)\ub_wstring.obj \
 	$(OBJDIR)\ub_struct_seq.obj \
+	$(OBJDIR)\ub_array_seq.obj \
 	$(OBJDIR)\var_array.obj \
 	$(OBJDIR)\var_struct.obj \
 	$(OBJDIR)\recursive_struct.obj \

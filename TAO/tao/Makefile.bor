@@ -12,6 +12,7 @@ OBJFILES = \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\CDR_Interpreter.obj \
+	$(OBJDIR)\Client_Priority_Policy.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\Connector_Registry.obj \
 	$(OBJDIR)\Context.obj \
@@ -112,6 +113,8 @@ OBJFILES = \
 	$(OBJDIR)\Tagged_Components.obj \
 	$(OBJDIR)\TAO.obj \
 	$(OBJDIR)\TAO_Internal.obj \
+	$(OBJDIR)\TAOC.obj \
+	$(OBJDIR)\TAOS.obj \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \

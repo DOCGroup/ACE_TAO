@@ -14,6 +14,9 @@ Top_i::~Top_i ()
 
 CORBA::String
 Top_i::shape (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("a point.");
 }
@@ -30,12 +33,18 @@ Left_i::~Left_i ()
 
 CORBA::String
 Left_i::shape (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("the left line");
 }
 
 CORBA::String
 Left_i::color (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("black");
 };
@@ -52,12 +61,18 @@ Right_i::~Right_i ()
 
 CORBA::String
 Right_i::shape (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("the right line");
 }
 
 CORBA::String
 Right_i::color (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("red");
   //
@@ -65,6 +80,9 @@ Right_i::color (CORBA::Environment &)
 
 CORBA::Long
 Right_i::width (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return 0;
 }
@@ -81,24 +99,36 @@ Buttom_i::~Buttom_i ()
 
 CORBA::String
 Buttom_i::shape (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("a diamond");
 }
 
 CORBA::String
 Buttom_i::color (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("translucent");
 }
 
 CORBA::Long
 Buttom_i::width (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return 100;
 }
 
 CORBA::String
 Buttom_i::name (CORBA::Environment &)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
 {
   return CORBA::string_dup ("Jubilee");
 }

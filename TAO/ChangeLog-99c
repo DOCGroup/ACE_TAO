@@ -1,3 +1,8 @@
+Fri Oct  1 13:14:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ChangeLog: Added more Borland support.  Thanks to
+	  Christopher Kohlhoff <chris@kohlhoff.com> for this.
+  
 Fri Oct  1 11:16:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
