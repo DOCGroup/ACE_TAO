@@ -5,7 +5,7 @@
 project(SSLIOP) : orbsvcslib, core, security, ssl {
   requires    += interceptors
   sharedname   = TAO_SSLIOP
-  idlflags    += -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=SSLIOP/SSLIOP_Export.h
+  idlflags    += -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h
   dynamicflags = TAO_SSLIOP_BUILD_DLL
   tagchecks   += SSLIOP
   pch_header   =

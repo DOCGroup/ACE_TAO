@@ -14,7 +14,8 @@ libECMcastTests_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DECMCASTTESTS_BUILD_DLL
 
 libECMcastTests_la_SOURCES = \
@@ -22,7 +23,7 @@ libECMcastTests_la_SOURCES = \
   Gateway_EC.cpp
 
 libECMcastTests_la_LDFLAGS = \
-  -version-number  @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libECMcastTests_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
@@ -39,7 +40,6 @@ libECMcastTests_la_LIBADD = \
 noinst_HEADERS = \
   EC_Wrapper.h \
   Gateway_EC.h
-
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -12,7 +12,7 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
   }
 
   IDL_Files {
-    idlflags += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h
+    idlflags += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=orbsvcs/FaultTolerance/FT_ORB_Utils_export.h
     FT_CORBA_ORB.idl
   }
 

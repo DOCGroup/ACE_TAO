@@ -14,7 +14,8 @@ libECTests_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DEC_TEST_BUILD_DLL
 
 libECTests_la_SOURCES = \
@@ -23,6 +24,9 @@ libECTests_la_SOURCES = \
   Counting_Supplier.cpp \
   Driver.cpp \
   Supplier.cpp
+
+libECTests_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libECTests_la_LIBADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -45,7 +49,6 @@ noinst_HEADERS = \
   Supplier.h \
   ectest_export.h \
   Driver.i
-
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -9,16 +9,16 @@ TAO_BUILDDIR = $(top_builddir)
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS = ftrt_eventservice
-endif
-endif
 
 ftrt_eventservice_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel \
   -I$(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
@@ -47,6 +47,8 @@ ftrt_eventservice_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

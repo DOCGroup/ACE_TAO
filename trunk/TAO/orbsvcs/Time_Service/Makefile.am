@@ -7,18 +7,20 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Time_Service_Clerk.am 
 
-noinst_PROGRAMS = Time_Service_Clerk
+bin_PROGRAMS = Time_Service_Clerk
 
 Time_Service_Clerk_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Time_Service_Clerk_SOURCES = \
   Clerk_i.cpp \
-  Time_Service_Clerk.cpp
+  Time_Service_Clerk.cpp \
+  Clerk_i.h
 
 Time_Service_Clerk_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTime.la \
@@ -33,23 +35,22 @@ Time_Service_Clerk_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  Clerk_i.h
-
 ## Makefile.Time_Service_Server.am 
 
-noinst_PROGRAMS += Time_Service_Server
+bin_PROGRAMS += Time_Service_Server
 
 Time_Service_Server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Time_Service_Server_SOURCES = \
   Server_i.cpp \
-  Time_Service_Server.cpp
+  Time_Service_Server.cpp \
+  Server_i.h
 
 Time_Service_Server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTime.la \
@@ -63,9 +64,6 @@ Time_Service_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-noinst_HEADERS += \
-  Server_i.h
 
 ## Clean up template repositories, etc.
 clean-local:

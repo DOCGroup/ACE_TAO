@@ -9,16 +9,16 @@ TAO_BUILDDIR = $(top_builddir)
 
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS = ftrtec_factory_service
-endif
-endif
 
 ftrtec_factory_service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 ftrtec_factory_service_SOURCES = \
   EventChannelFactory_i.cpp \
@@ -46,6 +46,8 @@ ftrtec_factory_service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_ACE_UUID
 
 ## Clean up template repositories, etc.
 clean-local:

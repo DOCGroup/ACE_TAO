@@ -15,8 +15,7 @@ RTEvent_Logging_Service_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs
 
 RTEvent_Logging_Service_SOURCES = \
   RTEvent_Logging_Service.cpp
