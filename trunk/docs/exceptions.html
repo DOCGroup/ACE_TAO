@@ -125,9 +125,17 @@ try macros.
         </LI>
 
         <li><P><code>ACE_CATCHANY</code> catches <em>any</em> exceptions
-            of type <code>CORBA_Exception</code>.
+            of type <code>CORBA_Exception</code>.  The caught
+            exception is stored in a variable call
+            <code>ACE_ANY_EXCEPTION</code>.
             </p>
         </LI>
+
+        <li><p><code>ACE_CATCHALL</code> emulate the <code>catch
+            (...)</code> c++ statement.  It is identical to
+            <code>ACE_CATCHANY</code> on platforms without native
+            exception support.  You can not access the caught
+            exception within the <code>ACE_CATCHALL</code> block.</p>
 
         <li><P>Use <code>ACE_RETHROW</code> to rethrow the same exception
             within a <code>ACE_CATCH</code> or
