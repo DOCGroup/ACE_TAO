@@ -137,18 +137,13 @@ void TAO_Export operator<<= (CORBA::Any &, const TimeBase::IntervalT &); // copy
 void TAO_Export operator<<= (CORBA::Any &, TimeBase::IntervalT*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TimeBase::IntervalT *&);
 
-#ifndef __ACE_INLINE__
-
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::UtcT &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::UtcT &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
-
-#endif /* __ACE_INLINE__ */
-
-
 #if defined (__ACE_INLINE__)
 #include "TimeBaseC.i"
+#else
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::UtcT &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::UtcT &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TimeBase::IntervalT &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)
