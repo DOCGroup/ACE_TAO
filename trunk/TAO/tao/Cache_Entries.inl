@@ -10,7 +10,8 @@ TAO_Cache_IntId::TAO_Cache_IntId (void)
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (TAO_Connection_Handler *handler)
-  : handler_ (handler)
+  : handler_ (handler),
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
 }
 
@@ -18,6 +19,7 @@ ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (const TAO_Cache_IntId &rhs)
 {
   this->handler_ = rhs.handler_;
+  this->recycle_state_ = rhs.recycle_state_;
 }
 
 ACE_INLINE
@@ -29,6 +31,7 @@ ACE_INLINE void
 TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
 {
   this->handler_ = rhs.handler_;
+  this->recycle_state_ = rhs.recycle_state_;
 }
 
 ACE_INLINE int
