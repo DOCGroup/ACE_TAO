@@ -556,6 +556,19 @@ class ACE_Condition
   // = TITLE
   //     ACE_Condition variable wrapper, which allows threads to block
   //     until shared data changes state.
+  //
+  //     A condition variable enables threads to atomically block and
+  //     test the condition under the protection of a mutual exclu-
+  //     sion lock (mutex) until the condition is satisfied.  That is,
+  //     the mutex must have been held by the thread before calling
+  //     wait or signal on the condition.  If the condition is false,
+  //     a thread blocks on a condition variable and atomically
+  //     releases the mutex that is waiting for the condition to
+  //     change.  If another thread changes the condition, it may wake
+  //     up waiting threads by signaling the associated condition
+  //     variable.  The waiting threads, upon awakening, reacquire the
+  //     mutex and re-evaluate the condition.
+  //
 {
 public:
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD, 
@@ -617,6 +630,19 @@ template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   // = TITLE
   //     ACE_Condition variable wrapper that works within processes.
+  //
+  //     A condition variable enables threads to atomically block and
+  //     test the condition under the protection of a mutual exclu-
+  //     sion lock (mutex) until the condition is satisfied.  That is,
+  //     the mutex must have been held by the thread before calling
+  //     wait or signal on the condition.  If the condition is false,
+  //     a thread blocks on a condition variable and atomically
+  //     releases the mutex that is waiting for the condition to
+  //     change.  If another thread changes the condition, it may wake
+  //     up waiting threads by signaling the associated condition
+  //     variable.  The waiting threads, upon awakening, reacquire the
+  //     mutex and re-evaluate the condition.
+  //
 {
 public:
   ACE_Thread_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
