@@ -1,3 +1,16 @@
+Mon May 28 18:43:51 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Thread_Pool_Reactor_Resume_Test.icc: Visual Age C++ config
+          for this new test.
+
+        * tests/tests.icp: Added Thread_Pool_Reactor_Resume_Test.icc.
+
+        * include/makeinclude/platform_aix_ibm.GNU: Added $(ACELIB) to
+          LIBS to get netsvcs stuff to build clean. Thanks to Erik
+          Toubro Nielsen <enielsen@mdsproteomics.dk> for this fix.
+
+        * THANKS: Added Erik Nielsen.
+
 Mon May 28 14:44:29 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.{h cpp}: Add new member, cur_limbo_ to keep track
