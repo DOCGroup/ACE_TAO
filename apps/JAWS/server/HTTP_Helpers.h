@@ -42,7 +42,7 @@ public:
 private:
   static const char * Reason[MAX_STATUS_CODE + 1];
   static int instance_;
-  static ACE_Thread_Mutex lock_;
+  static ACE_SYNCH_MUTEX lock_;
 };
 
 #endif /* HTTP_HELPERS_H */
