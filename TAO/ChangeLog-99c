@@ -1,3 +1,10 @@
+Sun Jun  6 16:14:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Pluggable/PP_Test_Client.h:
+	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+	  Moved member CORBA::ORB_var orb_ ahead of the other
+	  _vars in the declaration/initialization order.
+
 Sun Jun  6 15:41:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
