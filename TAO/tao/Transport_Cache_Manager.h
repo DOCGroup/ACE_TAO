@@ -131,6 +131,9 @@ public:
   /// Purge the entry from the Cache Map
   int purge_entry (HASH_MAP_ENTRY *&);
 
+  /// Mark the entry as invalid for use but keep it in cache.
+  void mark_invalid (HASH_MAP_ENTRY *&);
+
   /// Make the entry idle and ready for use.
   int make_idle (HASH_MAP_ENTRY *&entry);
 
@@ -189,6 +192,9 @@ private:
 
   /// Purge the entry from the Cache Map
   int purge_entry_i (HASH_MAP_ENTRY *&entry);
+
+  /// Mark the entry as invalid for use but keep it in cache.
+  void mark_invalid_i (HASH_MAP_ENTRY *&);
 
 private:
 
