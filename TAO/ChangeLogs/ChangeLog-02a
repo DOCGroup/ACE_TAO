@@ -1,59 +1,67 @@
+Tue Sep  5 18:42:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/ORB_Manager.h:
+          Include PortableServer.h instead of PortableServerC.h.
+          All applications that use the ORB_Manager need the POA, so they
+          must have the RootPOA automagically initialized.  This was not a
+          problem under Linux, but Solaris seems more picky.
+
 Tue Sep  5 18:36:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/tao_idl.dsp:
+        * TAO_IDL/tao_idl.dsp:
 
-	  Changed some minor project options for the release
-	  version - logo display, etc.
+          Changed some minor project options for the release
+          version - logo display, etc.
 
-	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
-	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
 
-	  Added generation of debugging symbols to the release
-	  version. With this we don't get the full display of
-	  source code (only disassembled code) but we do get
-	  a call stack, which can be useful.
+          Added generation of debugging symbols to the release
+          version. With this we don't get the full display of
+          source code (only disassembled code) but we do get
+          a call stack, which can be useful.
 
-	* TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_decl.cpp:
 
-	  Added a temporary variable in the compute_prefix()
-	  function. Passing the entire function call string
-	  scope->decl()->compute_prefix() as an argument to
-	  ACE::strnew was causing a crash in the release version,
-	  so the temporary be_scope *d = scope->decl() was added.
+          Added a temporary variable in the compute_prefix()
+          function. Passing the entire function call string
+          scope->decl()->compute_prefix() as an argument to
+          ACE::strnew was causing a crash in the release version,
+          so the temporary be_scope *d = scope->decl() was added.
 
-	* version_tests.dsw:
+        * version_tests.dsw:
 
-	  Added the FE and BE library projects for the IDL compiler
-	  to the workspace, along with the appropriate dependencies.
+          Added the FE and BE library projects for the IDL compiler
+          to the workspace, along with the appropriate dependencies.
 
 Tue Sep  5 12:12:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
-	  Removed warnings about unused variables and arugments.
+        * TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+          Removed warnings about unused variables and arugments.
 
-	* tao/ORB_Core.cpp:
-	  Removed warning about unreached statement.
+        * tao/ORB_Core.cpp:
+          Removed warning about unreached statement.
 
-	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
-	  Fixed warning about unreached catch clause
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+          Fixed warning about unreached catch clause
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	  Removed warnings about extra ';'
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+          Removed warnings about extra ';'
 
-	* orbsvcs/tests/Event/lib/Makefile:
-	  Add missing TAO_PortableServer library
+        * orbsvcs/tests/Event/lib/Makefile:
+          Add missing TAO_PortableServer library
 
-	* tests/Object_Loader/Makefile:
-	* tests/Object_Loader/svc.conf:
-	  Make the POA dynamically loadable
+        * tests/Object_Loader/Makefile:
+        * tests/Object_Loader/svc.conf:
+          Make the POA dynamically loadable
 
-	* tests/Portable_Interceptors/Benchmark/Makefile:
-	* tests/Portable_Interceptors/Dynamic/Makefile:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
-	  Update dependencies
+        * tests/Portable_Interceptors/Benchmark/Makefile:
+        * tests/Portable_Interceptors/Dynamic/Makefile:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+          Update dependencies
 
 Tue Sep 05 11:10:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
