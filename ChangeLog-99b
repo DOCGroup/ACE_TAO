@@ -1,3 +1,16 @@
+Fri Mar 19 18:56:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Fixed several makefiles that did not have a SRC or LSRC variable 
+	  defined.
+
+	* Re-generated the dependencies for both ACE and TAO, this time on 
+	  a platform that includes the template code.
+
+	* include/makeinclude/rules.local.GNU: 
+	  Now we can run make depend inside a build directory.
+	  Removed any $(ACE_ROOT)/ace/config*.h files from the dependency
+	  list, those are not used. 
+
 Fri Mar 19 18:05:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
