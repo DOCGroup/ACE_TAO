@@ -36,12 +36,10 @@
 
 #include "ace/os_include/os_dlfcn.h"
 #include "ace/os_include/sys/os_mman.h"
-#include "ace/os_include/os_dirent.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/os_include/sys/os_sem.h"
-#include "ace/os_include/os_errno.h"
 
 #include "ace/Time_Value.h"
 

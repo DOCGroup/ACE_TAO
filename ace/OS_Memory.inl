@@ -1,12 +1,8 @@
 // $Id$
 
-#if ! defined (ACE_PSOS_DIAB_MIPS)
-# include /**/ <stdlib.h>
-#endif /* ! ACE_PSOS_DIAB_MIPS */
-
-#if !defined (ACE_LACKS_UNISTD_H) && !defined (ACE_PSOS)
-# include /**/ <unistd.h>
-#endif /* !ACE_LACKS_UNISTD_H && !ACE_PSOS */
+#if !defined (ACE_LACKS_SBRK)
+#  include "ace/os_include/os_unistd.h"
+#endif /* !ACE_LACKS_SBRK */
 
 ACE_INLINE void *
 ACE_OS_Memory::sbrk (int brk)

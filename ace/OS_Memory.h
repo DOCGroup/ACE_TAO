@@ -23,10 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Errno.h"
-
-#ifndef ACE_HAS_WINCE
-#include <stddef.h>
-#endif  // ACE_HAS_WINCE
+#include "ace/os_include/os_stddef.h"
 
 // Allow an installation to replace the lowest-level allocation
 // functions without changing the source of ACE.

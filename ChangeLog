@@ -1,3 +1,41 @@
+Tue Jun 17 18:34:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Removed includes for os_dirent.h and os_errno.h since they are
+          pulled in by OS_Dirent.h and OS_Errno.h.
+
+        * ace/OS_Dirent.h:
+        * ace/os_include/os_dirent.h:
+          Moved all the typedefs to os_dirent.h and changed OS_Dirent.h
+          include it.
+
+        * ace/OS_Errno.h:
+        * ace/os_include/os_errno.h:
+          Moved all the typedefs, declarations, and defines to os_errno.h
+          and included it in OS_Errno.h.
+
+        * ace/OS_Log_Msg_Attributes.h:
+          Include os_stdio.h instead of <stdarg.h> and <stdio.h>.
+
+        * ace/OS_Memory.[h,inl,cpp]:
+          Rearranged includes, and included os_* headers.
+
+        * ace/OS_String.[h,inl]:
+        * ace/config-all.h:
+          Include os_* headers.
+
+        * ace/config-psos-diab-mips.h:
+          Added ACE_LACKS_STDLIB_H and ACE_LACKS_STRING_H.
+
+        * ace/os_include/os_strings.h:
+          Define ACE_LACKS_STRINGS_H if !ACE_HAS_STRINGS.
+
+        * ace/config-borland-common.h:
+          Added following ACE_LACKS_* defines INTTYPES_H,UCONTEXT_H,
+          SYS_SELECT_H, SYS_TIME_H, SYS_RESOURCE_H, SYS_WAIT_H, DLFCN_H,
+          SYS_MMAN_H, SYS_UIO_H, SYS_SOCKET_H, NETINET_IN_H, NETDB_H,
+          NET_IF_H, SYS_IPC_H, and SYS_SEM_H.
+
 Tue Jun 17 13:44:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:

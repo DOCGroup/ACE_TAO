@@ -20,25 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_H_ERRNO)
-void herror (const char *str);
-#endif /* ACE_HAS_H_ERRNO */
-
-#if !defined (ACE_HAS_WINCE)
-# include /**/ <errno.h>
-#endif /* ACE_HAS_WINCE */
-
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && defined (ACE_LACKS_T_ERRNO)
-extern int t_errno;
-#endif /* ACE_WIN32 && !ACE_PSOS && ACE_LACKS_T_ERRNO */
-
-#if !defined (ENOSYS)
-# define ENOSYS EFAULT /* Operation not supported or unknown error. */
-#endif /* !ENOSYS */
-
-#if !defined (ENOTSUP)
-# define ENOTSUP ENOSYS  /* Operation not supported. */
-#endif /* !ENOTSUP */
+#include "ace/os_include/os_errno.h"
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 /**

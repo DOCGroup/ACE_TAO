@@ -17,8 +17,7 @@
 
 #include "ace/config-all.h"
 #include "ace/streams.h"
-#include /**/ <stdarg.h> // LynxOS requires this before stdio.h
-#include /**/ <stdio.h>
+#include "ace/os_include/os_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
