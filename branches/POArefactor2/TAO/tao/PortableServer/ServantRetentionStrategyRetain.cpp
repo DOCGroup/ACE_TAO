@@ -233,21 +233,12 @@ namespace TAO
 
     PortableServer::Servant
     Retain_Servant_Retention_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference
+      CORBA::Object_ptr reference,
+      PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
     {
       PortableServer::Servant servant = 0;
       int result = -1;
-
-      PortableServer::ObjectId system_id;
-      bool is_generated = this->poa_->is_poa_generated (reference, system_id ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (!is_generated)
-        {
-          ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
-                            0);
-        }
 
       // Find user id from system id.
       PortableServer::ObjectId_var user_id;

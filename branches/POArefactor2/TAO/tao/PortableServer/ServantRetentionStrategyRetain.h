@@ -26,12 +26,6 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-namespace CORBA
-{
-  class PolicyError;
-  class PolicyList;
-}
-
 class TAO_POA;
 
 namespace TAO
@@ -82,7 +76,8 @@ namespace TAO
 
       virtual
       PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference
+      reference_to_servant (CORBA::Object_ptr reference,
+                            PortableServer::ObjectId system_id
                             ACE_ENV_ARG_DECL);
 
       virtual

@@ -13,7 +13,6 @@
 #include "tao/PortableServer/RequestProcessingStrategy.h"
 #include "tao/PortableServer/ImplicitActivationStrategy.h"
 #include "tao/PortableServer/IdUniquenessStrategy.h"
-#include "tao/PortableServer/LifespanStrategy.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
@@ -57,10 +56,12 @@ namespace TAO
 
     PortableServer::Servant
     Non_Retain_Servant_Retention_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference
+      CORBA::Object_ptr reference,
+      PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
     {
       ACE_UNUSED_ARG (reference);
+      ACE_UNUSED_ARG (system_id);
 
       // @Johnny, shouldn't we check here whether reference belongs to this POA?
 
