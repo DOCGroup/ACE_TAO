@@ -1,3 +1,14 @@
+Wed Aug 25 23:13:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/POA.cpp:
+	  Use the correct (CORBA 2.3 compliant) minor code for the
+	  BAD_INV_ORDER exception. Thanks to Ossama for pointing this out.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	  Remove unused method to set the orb of an ORB core, really evil
+	  stuff.
+
 Wed Aug 25 22:31:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
