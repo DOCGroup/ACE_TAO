@@ -1,3 +1,12 @@
+Sun Aug 29 18:10:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED_svnt.h:
+	* DAnCE/examples/BasicSP/BMDevice/BMDevice_svnt.h:
+	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay_svnt.h:
+	* DAnCE/examples/BasicSP/EC/EC_svnt.h:
+	  
+	  These files should not be in the repository.
+
 Sat Aug 28 18:44:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc:
