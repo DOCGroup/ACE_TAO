@@ -1,3 +1,12 @@
+Fri Apr 25 10:39:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.xpm:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+	  Andrey changed the implementation of MapView to embedded the
+	  world map in the DLL as I was having some difficulty loading the
+	  gif file at runtime.  Thanks to Andrey Nechypurenko for fixing
+	  it and sending us the patch.
+
 Tue Apr 22 23:07:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/RateGen/RateGen.cidl: Added this
