@@ -177,6 +177,7 @@ TAO_GIOP_Message_NonReactive_Base::more_messages (void)
 
       // Create a new InputCDR stream
       TAO_InputCDR cdr (mesg_block->data_block (),
+                        0, 
                         rd_pos,
                         wr_pos);
 
