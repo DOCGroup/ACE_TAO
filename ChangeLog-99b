@@ -1,3 +1,16 @@
+Tue Feb  2 21:35:21 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/007/client_handler.h: 
+	* docs/tutorials/007/thread_pool.h: 
+	  A couple of syntax goofs.  I'm surprised it compiled for anyone!
+	
+	* docs/tutorials/007/thread_pool.h: 
+	  Changed ACE_Time_Value(0.25) to ACE_Time_Value(0,250000) 
+
+	* docs/tutorials/*/Makefile:
+  	  Added '.depend' to the list of files removed by the CLEAN
+	  target.  I shoulda' done this the other day.
+
 Tue Feb  2 20:02:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * bin/make_release: Added .gz to the list of binary file extensions.
