@@ -504,7 +504,7 @@ DynArray_i::insert_wchar (CORBA::WChar value, CORBA::Environment &env)
 }
 
 void
-DynArray_i::insert_any (CORBA::Any& value, CORBA::Environment &env)
+DynArray_i::insert_any (const CORBA::Any& value, CORBA::Environment &env)
 {
   if (this->get_element_type (env)->kind (env) == CORBA::tk_any)
     {

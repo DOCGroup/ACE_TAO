@@ -532,7 +532,7 @@ DynSequence_i::insert_wchar (CORBA::WChar value, CORBA::Environment &env)
 }
 
 void
-DynSequence_i::insert_any (CORBA::Any& value, CORBA::Environment &env)
+DynSequence_i::insert_any (const CORBA::Any& value, CORBA::Environment &env)
 {
   if (this->get_element_type (env)->kind (env) == CORBA::tk_any)
     {

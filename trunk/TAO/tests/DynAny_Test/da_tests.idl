@@ -10,10 +10,12 @@ module DynAnyTests
     string str;
   };
 
+typedef short foo;
+
   struct test_struct {
-    short s;
+    foo f;
     double d;
-    enclosed_struct es;
+//    enclosed_struct es;
   };
 
   typedef sequence<enclosed_struct> test_seq;
@@ -21,10 +23,26 @@ module DynAnyTests
   const unsigned long DIM = 3;
   typedef long test_array [DIM];
 
+//  typedef long twin_array [DIM];
+
   enum test_enum {
-    ZERO,
-    ONE,
-    TWO,
-    THREE
+    ZEROTH,
+    FIRST,
+    SECOND,
+    THIRD
   };
+
+  union test_union switch (test_enum)
+    {
+      case SECOND:
+        TypeCode tc;
+      case FIRST:
+        short s;
+      case THIRD:
+        string str;
+      case ZEROTH:
+        octet o;
+//      default:
+//        char c;
+    };
 };
