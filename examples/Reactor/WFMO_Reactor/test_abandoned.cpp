@@ -4,32 +4,32 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_abandoned.cpp
 //
 // = DESCRIPTION
 //
 //    Tests the WFMO_Reactor's ability to handle abandoned mutexes.
-//    
+//
 // = AUTHOR
-//    
+//
 //    Irfan Pyarali <irfan@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
 
-ACE_RCSID(ReactorEx, test_abandoned, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_abandoned, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {
 public:
   int handle_signal (int signum,
                      siginfo_t * = 0,
-                     ucontext_t * = 0);  
+                     ucontext_t * = 0);
 
   int handle_timeout (const ACE_Time_Value &tv,
                       const void *arg = 0);
@@ -48,21 +48,21 @@ worker (void *data)
 
   handler->handle_.signal ();
   handler->mutex_->acquire ();
-  
+
   if (!abandon)
     handler->mutex_->release ();
 
   return 0;
 }
 
-int 
+int
 Event_Handler::handle_signal (int signum,
                               siginfo_t *s,
                               ucontext_t *)
 {
   HANDLE handle = s->si_handle_;
   if (handle == this->handle_.handle ())
-    ACE_Reactor::instance ()->register_handler (this, 
+    ACE_Reactor::instance ()->register_handler (this,
                                                 this->mutex_->lock ().proc_mutex_);
   else
     {
@@ -70,27 +70,28 @@ Event_Handler::handle_signal (int signum,
                                                 ACE_Event_Handler::DONT_CALL);
       delete this->mutex_;
     }
-  
+
   return 0;
 }
 
-int 
+int
 Event_Handler::handle_timeout (const ACE_Time_Value &tv,
                                const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  --this->iterations_;
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) timeout occured @ %T, iterations left %d\n",
-              --this->iterations_));  
-  
+              this->iterations_));
+
   if (this->iterations_ == 0)
-    ACE_Reactor::end_event_loop ();    
+    ACE_Reactor::end_event_loop ();
   else
     {
       ACE_NEW_RETURN (this->mutex_,
                       ACE_Process_Mutex,
                       -1);
-      ACE_ASSERT (ACE_Thread_Manager::instance ()->spawn 
-                  (&worker, 
+      ACE_ASSERT (ACE_Thread_Manager::instance ()->spawn
+                  (&worker,
                    this) != -1);
     }
 
@@ -98,25 +99,24 @@ Event_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 Event_Handler event_handler;
-  
-int 
+
+int
 main (int argc, char *argv[])
 {
   event_handler.iterations_ = 5;
-  int result = ACE_Reactor::instance ()->register_handler 
+  int result = ACE_Reactor::instance ()->register_handler
     (&event_handler,
      event_handler.handle_.handle ());
   ACE_ASSERT (result == 0);
 
   ACE_Time_Value timeout (2);
-  result = ACE_Reactor::instance ()->schedule_timer (&event_handler, 
+  result = ACE_Reactor::instance ()->schedule_timer (&event_handler,
                                                      0,
                                                      timeout,
                                                      timeout);
   ACE_ASSERT (result != -1);
-  
+
   ACE_Reactor::run_event_loop ();
 
   return 0;
 }
-
