@@ -6,6 +6,9 @@ Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/corbacom.h: rearranged LongLong typedefs so that they work
           with ACE_LACKS_LONGLONG_T.
 
+        * tao/Timeprobe.cpp (print_times): divide by 1000u instead of 1000
+          to allow overload resolution of ACE_U_LongLong::operator /.
+
 Tue Feb 10 17:39:13 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/SchedEntry.cpp
