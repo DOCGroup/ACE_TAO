@@ -7,7 +7,8 @@ Mon Jan 20 18:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/C++NPv2/Makefile.TPLS:
         * ace/RMCast/Makefile:
           Set the correct x_BUILD_DLL defines. These are needed for the
-          Cygwin/MingW and Kylix compiler.
+          Cygwin/MingW and Kylix compiler. Thanks to Vince Mounts
+          <vince@mounts.cc> for providing the patches.
 
 Mon Jan 20 11:58:00 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
