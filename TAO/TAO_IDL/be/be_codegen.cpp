@@ -171,7 +171,10 @@ TAO_CodeGen::start_client_header (const char *fname)
       else
         *this->client_header_ << "<";
 
-      *this->client_header_ << "tao/corba.h";
+      if (idl_global->gen_locality_constraint ())
+        *this->client_header_ << "tao/corbafwd.h";
+      else
+        *this->client_header_ << "tao/corba.h";
 
       if (idl_global->changing_standard_include_files () == 1)
         *this->client_header_ << "\"\n";
