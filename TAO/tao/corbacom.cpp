@@ -28,7 +28,7 @@ CORBA::String_var::operator= (char *p)
   if (this->ptr_ != p)
     {
       if (this->ptr_ != 0)
-	CORBA::string_free (this->ptr_);
+        CORBA::string_free (this->ptr_);
       this->ptr_ = p;
     }
   return *this;
@@ -47,9 +47,12 @@ CORBA::String_var::operator= (const char *p)
 CORBA::String_var &
 CORBA::String_var::operator= (const CORBA::String_var& r)
 {
-  if (this->ptr_ != 0)
-    CORBA::string_free (this->ptr_);
-  this->ptr_ = CORBA::string_dup (r.ptr_);
+  if (this != &r)
+    {
+      if (this->ptr_ != 0)
+        CORBA::string_free (this->ptr_);
+      this->ptr_ = CORBA::string_dup (r.ptr_);
+    }
   return *this;
 }
 
@@ -106,6 +109,5 @@ CORBA::wstring_copy (const CORBA::WChar *const str)
 void
 CORBA::wstring_free (CORBA::WChar *const str)
 {
-  delete str;
+  delete [] str;
 }
-

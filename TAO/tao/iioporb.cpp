@@ -263,6 +263,7 @@ iiop_string_to_object (CORBA::String string,
     {
       env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
       CORBA::string_free (data->profile.host);
+      data->profile.host = 0;
       data->Release ();
       return 0;
     }

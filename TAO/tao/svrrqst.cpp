@@ -18,7 +18,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (CDR *msg,
                                         CORBA::ORB_ptr the_orb,
                                         CORBA::POA_ptr the_poa)
   : incoming_ (msg),
-    params_ (0), 
+    params_ (0),
     retval_ (0),
     exception_ (0),
     ex_type_ (CORBA::NO_EXCEPTION),
@@ -49,7 +49,7 @@ IIOP_ServerRequest::AddRef (void)
   return refcount_++;
 }
 
-ULONG 
+ULONG
 IIOP_ServerRequest::Release (void)
 {
   {
@@ -65,7 +65,7 @@ IIOP_ServerRequest::Release (void)
   return 0;
 }
 
-TAO_HRESULT 
+TAO_HRESULT
 IIOP_ServerRequest::QueryInterface (REFIID riid,
 				    void **ppv)
 {
@@ -87,7 +87,7 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
 // Unmarshal in/inout params, and set up to marshal the appropriate
 // inout/out/return values later on.
 
-void 
+void
 IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 			    CORBA::Environment &env)
 {
@@ -99,7 +99,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
   // Then unmarshal each "in" and "inout" parameter.
   for (u_int i = 0; i < list->count (); i++)
     {
-      CORBA::NamedValue_ptr nv = list->item (i);
+      CORBA::NamedValue_ptr nv = list->item (i, env);
 
       if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
 	continue;
@@ -158,7 +158,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 // but not both of them.  Results (and exceptions) can be reported
 // only after the parameter list has been provided (maybe empty).
 
-void 
+void
 IIOP_ServerRequest::result (CORBA::Any_ptr value,
 			    CORBA::Environment &env)
 {
@@ -174,7 +174,7 @@ IIOP_ServerRequest::result (CORBA::Any_ptr value,
 
 // Store the exception value.
 
-void 
+void
 IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 			       CORBA::Any_ptr value,
 			       CORBA::Environment &env)
@@ -193,33 +193,33 @@ IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 
 // Invocation attributes.
 
-CORBA::String 
+CORBA::String
 IIOP_ServerRequest::op_name (void)
 {
   return opname_;
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 IIOP_ServerRequest::target (void)
 {
   // XXX implement me!!  Code from TCP_OA exists ...
   return 0;
 }
 
-CORBA::Principal_ptr 
+CORBA::Principal_ptr
 IIOP_ServerRequest::caller (void)
 {
   // XXX ... return client's principal
   return 0;
 }
 
-CORBA::ORB_ptr 
+CORBA::ORB_ptr
 IIOP_ServerRequest::orb (void)
 {
   return orb_;
 }
 
-CORBA::POA_ptr 
+CORBA::POA_ptr
 IIOP_ServerRequest::oa (void)
 {
   return poa_;

@@ -53,9 +53,6 @@ Param_Test_Client<T>::run_sii_test (void)
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
 
-  // initialize parameters for the test
-  this->test_object_->init_parameters ();
-
   // initialize call count and error count
   this->results_.call_count (0);
   this->results_.error_count (0);
@@ -66,8 +63,12 @@ Param_Test_Client<T>::run_sii_test (void)
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
-      this->results_.call_count (this->results_.call_count () + 1);
+      // initialize parameters for the test
+      this->test_object_->init_parameters ();
 
+      this->results_.call_count (this->results_.call_count () + 1);
+      ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+      this->test_object_->print_values ();
       // make the call
       if (this->test_object_->run_sii_test (this->param_test_, env) == -1)
         {
@@ -80,6 +81,8 @@ Param_Test_Client<T>::run_sii_test (void)
           continue;
         }
       // now check if the values returned are as expected
+      ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
+      this->test_object_->print_values ();
       if (this->test_object_->check_validity () == -1)
         {
           this->results_.error_count (this->results_.error_count () + 1);
@@ -87,7 +90,6 @@ Param_Test_Client<T>::run_sii_test (void)
                       "(%N:%l) client.cpp - run_sii_test: "
                       "Invalid results in iteration %d - ",
                       i));
-          this->test_object_->print_values ();
           continue;
         }
     }
@@ -112,9 +114,6 @@ Param_Test_Client<T>::run_dii_test (void)
   CORBA::NVList_ptr nvlist;  // argument list for DII parameters
   CORBA::NVList_ptr retval; // to access teh NamedValue that stores the result
 
-  // initialize parameters for the test
-  this->test_object_->init_parameters ();
-
   // initialize call count and error count
   this->results_.call_count (0);
   this->results_.error_count (0);
@@ -125,6 +124,9 @@ Param_Test_Client<T>::run_dii_test (void)
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)
     {
+      // initialize parameters for the test
+      this->test_object_->init_parameters ();
+
       this->results_.call_count (this->results_.call_count () + 1);
 
       // first create the argument list and populate it
@@ -146,11 +148,13 @@ Param_Test_Client<T>::run_dii_test (void)
       // create the request
       this->param_test_->_create_request (opname,
                                           nvlist,
-                                          retval->item (0),
+                                          retval->item (0, env),
                                           req,
                                           0,
                                           env);
 
+      ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
+      this->test_object_->print_values ();
       // Make the invocation, verify the result.
       req->invoke ();
       if (req->env ()->exception () != 0)
@@ -160,6 +164,8 @@ Param_Test_Client<T>::run_dii_test (void)
           CORBA::release (req);
           continue;
         }
+      ACE_DEBUG ((LM_DEBUG, "\n****** After call values *****\n"));
+      this->test_object_->print_values ();
       // now check if the values returned are as expected
       if (this->test_object_->check_validity (req) ==  -1)
         {
@@ -168,7 +174,6 @@ Param_Test_Client<T>::run_dii_test (void)
                       "(%N:%l) client.cpp - "
                       "Invalid results in run_dii_test in iteration %d",
                       i));
-          this->test_object_->print_values ();
           CORBA::release (req);
           continue;
         }
