@@ -34,15 +34,18 @@ sub pre_workspace {
   my($fh)   = shift;
   my($crlf) = $self->crlf();
 
-  print $fh "<html>$crlf" .
-            "<head>$crlf" .
-            "  <style>$crlf" .
-            "    a {font: 12pt bold verdana, lucida; color: white; padding: 3px;}$crlf" .
-            "    td {font: 12pt bold verdana, lucida; color: white; padding: 3px; background-color: cadetblue;}$crlf" .
-            "    thead tr td {font: 18pt \"trebuchet ms\", helvetica; color: white; padding: 3px; background-color: teal;}$crlf" .
-            "  </style>$crlf" .
-            "</head>$crlf" .
-            "<body>$crlf";
+  print $fh '<html>', $crlf,
+            '<!-- $Id$ -->', $crlf,
+            '<!-- MPC Command: -->', $crlf,
+            "<!-- $0@ARGV -->", $crlf,
+            '<head>', $crlf,
+            '  <style>', $crlf,
+            '    a {font: 12pt bold verdana, lucida; color: white; padding: 3px;}', $crlf,
+            '    td {font: 12pt bold verdana, lucida; color: white; padding: 3px; background-color: cadetblue;}', $crlf,
+            '    thead tr td {font: 18pt "trebuchet ms", helvetica; color: white; padding: 3px; background-color: teal;}', $crlf,
+            '  </style>', $crlf,
+            '</head>', $crlf,
+            '<body>', $crlf;
 }
 
 
