@@ -1,3 +1,9 @@
+Tue Jul 13 09:53:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
+       
+        * Moved the implementation of TAO_Stub::add_forward_profiles
+          outside of the TAO_HAS_CORBA_MESSAGING ifdef's.  Thanks to
+          Stefan <SUllrich@Heimannsystems.com> for identifying this bug.
+
 Tue Jul 13 08:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}: Added accessors
