@@ -181,6 +181,14 @@ TAO_CodeGen::start_client_header (const char *fname)
       else
         *this->client_header_ << ">\n";
 
+      // If the IDL file contains any exceptions, we'll be
+      // generating iostream operators. The following is mainly
+      // for VxWorks.
+
+      *this->client_header_ << "\n#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)\n"
+                            << "#include \"ace/streams.h\"\n"
+                            << "#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */\n";
+
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
       *this->client_header_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
