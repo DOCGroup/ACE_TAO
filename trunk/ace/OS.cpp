@@ -4313,8 +4313,7 @@ ACE_OS::mktime (struct tm *t)
 }
 #endif /* !ACE_HAS_WINCE */
 
-#if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS) || defined (ACE_LACKS_RWLOCK_T)
-// The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i.
+#if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_RWLOCK_T)
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
@@ -4381,7 +4380,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
 }
-#endif /* ! ACE_HAS_THREADS || !ACE_HAS_STHREADS || ACE_LACKS_RWLOCK_T */
+#endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
 #if defined (ACE_PSOS)
 

@@ -3579,7 +3579,7 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
       errno = error;
     }
   return result;
-# endif /* ACE_HAS_STHREADS */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3615,7 +3615,7 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
       errno = error;
     }
   return result;
-# endif /* ACE_HAS_STHREADS */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3658,7 +3658,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   return 0;
-# endif /* ACE_HAS_STHREADS */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3703,7 +3703,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   ACE_PTHREAD_CLEANUP_POP (0);
 #   endif /* defined (ACE_HAS_PTHREADS) */
   return 0;
-# endif /* ACE_HAS_STHREADS */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3754,7 +3754,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   ACE_OS::mutex_unlock (&rw->lock_);
   errno = error;
   return result;
-# endif /* ACE_HAS_STHREADS */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3827,14 +3827,14 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 
   return result;
 
-# endif /* ACE_HAS_STHREADS */
+# endif /* ! ACE_LACKS_RWLOCK_T */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_STHREADS) && !defined (ACE_LACKS_RWLOCK_T)
+#if defined (ACE_HAS_THREADS) && !defined (ACE_LACKS_RWLOCK_T)
 ACE_INLINE int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
@@ -3846,7 +3846,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   name = name;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), ace_result_), int, -1);
 }
-#endif /* ACE_HAS THREADS && ACE_HAS_STHREADS && !defined (ACE_LACKS_RWLOCK_T) */
+#endif /* ACE_HAS THREADS && !defined (ACE_LACKS_RWLOCK_T) */
 
 ACE_INLINE int
 ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
