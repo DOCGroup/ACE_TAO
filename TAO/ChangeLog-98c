@@ -1,3 +1,7 @@
+Tue Nov 18 01:29:00 1997    <nw1@COYOTE>
+
+	* tao/TAO.dsp:  Added Arg_Shifter.cpp into project file.
+
 Tue Nov 18 18:53:57 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* TAO_IDL/be/be_state_typedef.cpp (gen_code): 
