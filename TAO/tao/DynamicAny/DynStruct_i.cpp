@@ -409,10 +409,11 @@ TAO_DynStruct_i::to_any (CORBA::Environment& ACE_TRY_ENV)
        i < this->da_members_.size ();
        i++)
     {
-      // Each component must have been initialied.
+      // @@@ (JP) This is a workaround until we implement the default
+      // intial values defined in CORBA 2.3.1.
       if (!this->da_members_[i].in ())
         {
-          ACE_THROW_RETURN (DynamicAny::DynAny::InvalidValue (),
+          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
                             0);
         }
 
