@@ -2099,7 +2099,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 }
 
 CORBA::OctetSeq *
-TAO_POA::id (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::id (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new CORBA::OctetSeq (this->id_);
